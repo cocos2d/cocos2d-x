@@ -24,7 +24,6 @@ THE SOFTWARE.
 #define __NS_AUTO_RELEASE_POOL_H__
 
 #include "NSObject.h"
-#include <vector>
 
 class NSAutoreleasePool : public NSObject
 {
@@ -36,15 +35,12 @@ public:
 
 	void clear(void);
 private:
-	std::vector<NSObject *> m_managedObjectArray;
+	//todo: add mutable array
 };
 
 class NSPoolManager
 {
 public:
-	
-	~NSPoolManager();
-
 	void finalize(void);
     void push(void);
 	void pop(void);
@@ -56,10 +52,10 @@ public:
 	static NSPoolManager* getInstance();
 
 private:
-	NSPoolManager();
+	NSPoolManager() {};
 
 private:
 	static NSPoolManager *m_pPoolManager;
-}
+};
 
 #endif //__NS_AUTO_RELEASE_POOL_H__

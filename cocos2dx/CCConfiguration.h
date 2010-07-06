@@ -23,8 +23,8 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "include/Cocos2dTypes.h"
-#include "include/NSObject.h"
+#include "Cocos2dTypes.h"
+#include "Cocoa/NSObject.h"
 #include <GLES/gl.h>
 #include <string>
 

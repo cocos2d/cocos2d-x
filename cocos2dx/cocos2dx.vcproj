@@ -208,14 +208,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\CCConfiguration.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\CCDrawingPrimitives.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\ccMacros.h"
 				>
 			</File>
@@ -228,10 +220,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\CGGeometry.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\cocos2d.h"
 				>
 			</File>
@@ -241,38 +229,6 @@
 			</File>
 			<File
 				RelativePath=".\glu.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSArray.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSAutoreleasePool.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSData.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSLock.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSObject.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSSet.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSString.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\NSZone.h"
 				>
 			</File>
 		</Filter>
@@ -345,7 +301,15 @@
 			Name="cocoa"
 			>
 			<File
+				RelativePath=".\cocoa\CGGeometry.h"
+				>
+			</File>
+			<File
 				RelativePath=".\cocoa\NSArray.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\NSArray.h"
 				>
 			</File>
 			<File
@@ -353,7 +317,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cocoa\NSAutoreleasePool.h"
+				>
+			</File>
+			<File
 				RelativePath=".\cocoa\NSData.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\NSData.h"
 				>
 			</File>
 			<File
@@ -361,7 +333,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cocoa\NSLock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\NSMutableArray.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\NSMutableArray.h"
+				>
+			</File>
+			<File
 				RelativePath=".\cocoa\NSObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\NSObject.h"
 				>
 			</File>
 			<File
@@ -369,11 +357,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cocoa\NSSet.h"
+				>
+			</File>
+			<File
 				RelativePath=".\cocoa\NSString.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\cocoa\NSString.h"
+				>
+			</File>
+			<File
 				RelativePath=".\cocoa\NSZone.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\NSZone.h"
 				>
 			</File>
 		</Filter>
@@ -386,7 +386,15 @@
 			>
 		</File>
 		<File
+			RelativePath=".\ccconfiguration.h"
+			>
+		</File>
+		<File
 			RelativePath=".\CCDrawingPrimitives.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\CCDrawingPrimitives.h"
 			>
 		</File>
 		<File

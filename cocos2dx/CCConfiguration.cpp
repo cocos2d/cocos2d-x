@@ -60,12 +60,12 @@ CCConfiguration* CCConfiguration::sharedConfiguration(void)
 BOOL CCConfiguration::checkForGLExtension(const string &searchName)
 {
 	BOOL ret = FALSE;
-	const char *pszSearchName = searchName.c_str();
+	const char *kSearchName = searchName.c_str();
 	
-	if (strstr(g_pGlExtensions, pszSearchName))
+	if (strstr(g_pGlExtensions, kSearchName))
 		ret = TRUE;
 
-	delete pszSearchName;
+	delete kSearchName;
 
 	return ret;
 }

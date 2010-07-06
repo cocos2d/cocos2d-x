@@ -21,21 +21,19 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "NSAutoReleasePool.h"
-using namespace std:
 
 NSAutoreleasePool::NSAutoreleasePool(void)
 {
-	m_managedObjectArray = vector<NSObject *>();
 }
 
 void NSAutoreleasePool::addObject(NSObject *pObject)
 {
-	m_managedObjectArray.push_back(pObject);
+	
 }
 
 void NSAutoreleasePool::removeObject(NSObject *pObject)
 {
-	m_managedObjectArray.po
+	
 }
 
 
@@ -46,8 +44,9 @@ NSPoolManager* NSPoolManager::getInstance(void)
 {
 	static BOOL bInit = FALSE;
 
-	if (bInit == FLASE)
+	if (bInit == FALSE)
 	{
+		bInit = TRUE;
 		m_pPoolManager = new NSPoolManager();
 	}
 

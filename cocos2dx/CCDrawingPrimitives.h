@@ -42,7 +42,7 @@ extern "C" {
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
 
-#include "CGGeometry.h"	// for CGPoint
+#include "Cocoa/CGGeometry.h"	// for CGPoint
 #include "Cocos2dTypes.h"
 
 /** draws a point given x and y coordinate */
