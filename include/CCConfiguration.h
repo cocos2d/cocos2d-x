@@ -1,0 +1,62 @@
+#ifndef __CCCONFIGURATION_H__
+#define __CCCONFIGURATION_H__
+
+#include "include/Cocos2dTypes.h"
+#include "include/NSObject.h"
+#include <GLES/gl.h>
+#include <string>
+
+/**
+ CCConfiguration contains some openGL variables
+ @since v0.99.0
+ */
+class CCConfiguraion : public NSObject
+{
+protected:
+	GLint	m_nMaxTextureSize;
+	GLint	m_nMaxModelviewStackDepth;
+	BOOL	m_bSupportsPVRTC;
+	BOOL	m_bSupportsNPOT;
+	BOOL	m_bSupportsBGRA8888;
+	BOOL	m_bSupportsDiscardFramebuffer;
+
+public:
+	CCConfiguration(void);
+	
+	// OpenGL Max texture size.
+	INT32 getMaxTextureSize(void);
+
+	// OpenGL Max Modelview Stack Depth
+	INT32 getMaxModelviewStackDepth(void);
+
+	/** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
+	 NPOT textures have the following limitations:
+	 - They can't have mipmaps
+	 - They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
+	 
+	 @since v0.99.2
+	 */
+	BOOL isSupportsNPOT(void);
+
+	// Whether or not PVR Texture Compressed is supported
+	BOOL isSupportsPVRTC(void);
+
+	/** Whether or not BGRA8888 textures are supported.
+	 @since v0.99.2
+	 */
+	BOOL isSupportsBGRA8888(void);
+
+	/** Whether or not glDiscardFramebufferEXT is supported
+	 @since v0.99.2
+	 */
+	BOOL isSupportsDiscardFramebuffer(void);
+
+	// returns whether or not an OpenGL is supported
+	BOOL checkForGLExtension(const std::string &searchName);
+
+public:
+	// returns a shared instance of the CCConfiguration
+	static CCConfiguration* sharedConfiguration(void);
+};
+
+#endif // __CCCONFIGURATION_H__

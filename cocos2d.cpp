@@ -1,4 +1,4 @@
-#include "cocos2d.h"
+#include "include/cocos2d.h"
 using namespace std;
 
 string cocos2dVersion()

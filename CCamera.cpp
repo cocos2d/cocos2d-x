@@ -1,10 +1,10 @@
-#include "CCamera.h"
-#include "CCDirector.h"
-#include "ccMacros.h"
+#include "include/CCamera.h"
+#include "include/CCDirector.h"
+#include "include/ccMacros.h"
 
-#include "glu.h"
+#include "include/glu.h"
 
-#include "CCDrawingPrimitives.h"
+#include "include/CCDrawingPrimitives.h"
 
 using namespace std;
 
