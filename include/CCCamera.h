@@ -2,6 +2,7 @@
 #define __CCCAMERA_H__
 
 #include "NSObject.h"
+#include "ccMacros.h"
 #include <string>
 
 class CCCamera : public NSObject
@@ -19,7 +20,7 @@ protected:
 	float m_fUpY;
 	float m_fUpZ;
 
-	BOOL m_bDrity;
+	BOOL m_bDirty;
 public:
 	CCCamera(void);
 	~CCCamera(void);

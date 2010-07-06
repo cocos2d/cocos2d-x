@@ -20,6 +20,7 @@ extern "C" {
  */
 
 #include "CGGeometry.h"	// for CGPoint
+#include "Cocos2dTypes.h"
 
 /** draws a point given x and y coordinate */
 void ccDrawPoint( CGPoint point );
