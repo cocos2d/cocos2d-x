@@ -28,13 +28,13 @@ class NSZone;
 class NSObject;
 class NSString;
 
-class NSCopying
+class CCCopying
 {
 public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 };
 
-class NSObject : public NSCopying
+class NSObject : public CCCopying
 {
 protected:
 	// object id

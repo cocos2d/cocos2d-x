@@ -186,6 +186,10 @@ do {															\
 } while(0)
 */
 
+#ifndef FLT_EPSILON
+#define FLT_EPSILON     1.192092896e-07F
+#endif // FLT_EPSILON
+
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 	        TypeName(const TypeName&);\
 			void operator=(const TypeName&)

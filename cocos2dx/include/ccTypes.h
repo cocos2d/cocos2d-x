@@ -23,8 +23,8 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
-#include "Cocoa/CGGeometry.h"
-#include "Support/Cocos2dTypes.h"
+#include "CGGeometry.h"
+#include "Cocos2dTypes.h"
 #include <GLES/gl.h>
 
 /** RGB color composed of bytes 3 bytes

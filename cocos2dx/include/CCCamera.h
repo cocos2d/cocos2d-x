@@ -49,6 +49,11 @@ public:
 
 	std::string description(void);
 
+	// sets the dirty value
+	void setDirty(BOOL bValue);
+	// get the dirty value
+	BOOL getDirty(void);
+
 	// sets the camera in the defaul position
 	void restore(void);
 	// Sets the camera using gluLookAt using its eye, center and up_vector
