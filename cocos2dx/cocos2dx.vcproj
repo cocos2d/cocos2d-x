@@ -386,7 +386,7 @@
 			>
 		</File>
 		<File
-			RelativePath=".\CDrawingPrimitives.cpp"
+			RelativePath=".\CCDrawingPrimitives.cpp"
 			>
 		</File>
 		<File
