@@ -20,3 +20,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "NSAutoReleasePool.h"
+using namespace std:
+
+NSAutoreleasePool::NSAutoreleasePool(void)
+{
+	m_managedObjectArray = vector<NSObject *>();
+}
+
+void NSAutoreleasePool::addObject(NSObject *pObject)
+{
+	m_managedObjectArray.push_back(pObject);
+}
+
+void NSAutoreleasePool::removeObject(NSObject *pObject)
+{
+	m_managedObjectArray.po
+}
+
+
+// implementiation of NSPoolManager
+NSPoolManager* NSPoolManager::m_pPoolManager = NULL;
+
+NSPoolManager* NSPoolManager::getInstance(void)
+{
+	static BOOL bInit = FALSE;
+
+	if (bInit == FLASE)
+	{
+		m_pPoolManager = new NSPoolManager();
+	}
+
+	return m_pPoolManager;
+}
