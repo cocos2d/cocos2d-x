@@ -20,80 +20,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#ifndef __NS_AUTO_RELEASE_POOL_H__
+#define __NS_AUTO_RELEASE_POOL_H__
 
 #include "NSObject.h"
-#include <assert.h>
+#include <vector>
 
-NSObject* CCCopying::copyWithZone(NSZone *pZone)
+class NSAutoreleasePool : public NSObject
 {
-	assert(0);
-	return NULL;
+public:
+	NSAutoreleasePool(void);
+
+	void addObject(NSObject *pObject);
+	void removeObject(NSObject *pObject);
+
+	void clear(void);
+private:
+	std::vector<NSObject *> m_managedObjectArray;
+};
+
+class NSPoolManager
+{
+public:
+	
+	~NSPoolManager();
+
+	void finalize(void);
+    void push(void);
+	void pop(void);
+
+	void removeObject(NSObject *pObject);
+	void addObject(NSObject *pObject);
+
+public:
+	static NSPoolManager* getInstance();
+
+private:
+	NSPoolManager();
+
+private:
+	static NSPoolManager *m_pPoolManager;
 }
 
-
-NSObject::NSObject(void)
-{
-	static UINT uObjectCount = 0;
-
-	m_uID = ++uObjectCount;
-
-	// when the object is created, the refrence count of it is 1
-	m_uRefrence = 1;
-	m_bManaged = FALSE;
-}
-
-NSObject::~NSObject(void)
-{
-	// if the object is managed, we should remove it
-	// from pool manager
-	if (m_bManaged)
-	{
-        // todo: remove from pool manager
-	}
-}
-
-NSObject* NSObject::copy()
-{
-	return copyWithZone(NULL);
-}
-
-void NSObject::release(void)
-{
-	assert(m_uRefrence > 0);
-	--m_uRefrence;
-
-	if (m_uRefrence == 0)
-	{
-		delete this;
-	}
-}
-
-void NSObject::retain(void)
-{
-	assert(m_uRefrence > 0);
-
-	++m_uRefrence;
-}
-
-NSObject* NSObject::autorelease(void)
-{
-	// todo add to pool manager
-
-	m_bManaged = TRUE;
-	return this;
-}
-
-BOOL NSObject::isSingleRefrence(void)
-{
-	return m_uRefrence == 1;
-}
-
-UINT32 NSObject::retainCount(void)
-{
-	return m_uRefrence;
-}
-
-BOOL NSObject::isEqual(const NSObject *pObject)
-{
-	return this == pObject;
-}
+#endif //__NS_AUTO_RELEASE_POOL_H__
