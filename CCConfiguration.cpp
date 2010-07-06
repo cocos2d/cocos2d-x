@@ -1,6 +1,6 @@
-#include "include/CCConfiguration.h"
-#include "include/ccMarcros.h"
-#include "include/ccConfig.h"
+#include "CCConfiguration.h"
+#include "ccMacros.h"
+#include "ccConfig.h"
 
 using namespace std;
 
@@ -47,7 +47,7 @@ CCConfiguration::CCConfiguration()
 			  );
 }
 
-CCConfiguration* CCConfiguration::sharedConfiguration
+CCConfiguration* CCConfiguration::sharedConfiguration(void)
 {
 	if (! g_pSharedConfiguration)
 	{
@@ -57,7 +57,7 @@ CCConfiguration* CCConfiguration::sharedConfiguration
 	return g_pSharedConfiguration;
 }
 
-BOOL CCConfiguration::checkForGLExtensiton(const string &searchName)
+BOOL CCConfiguration::checkForGLExtension(const string &searchName)
 {
 	
 }

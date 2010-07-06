@@ -32,10 +32,6 @@
 	#define UINT32	UInt32
 	#define INT64	Int64
 	#define UINT64	UInt64
-	#define BOOL	Boolean
-
-	#define FALSE	FALSE
-	#define TRUE	TRUE
 #endif // _UPHONE
 
 #endif // __SUPPORT_COCOS2D_TYPES_H__

@@ -1,14 +1,13 @@
 #ifndef __CCMACROS_H__
 #define __CCMACROS_H__
 
-#include <math>
+#include <math.h>
 
 /**
  @file
  cocos2d helper macros
  */
-
-/*
+ /*
  * if COCOS2D_DEBUG is not defined, or if it is 0 then
  *	all CCLOGXXX macros will be disabled
  *
@@ -22,30 +21,28 @@
  *		CCLOGERROR() will be enabled
  *		CCLOGINFO()	will be enabled 
  */
-/*
+
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define CCLOG(...) do {} while (0)
 #define CCLOGINFO(...) do {} while (0)
 #define CCLOGERROR(...) do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
-#define CCLOG(...) NSLog(__VA_ARGS__)
-#define CCLOGERROR(...) NSLog(__VA_ARGS__)
+#define CCLOG(...) printf(__VA_ARGS__)
+#define CCLOGERROR(...) printf(__VA_ARGS__)
 #define CCLOGINFO(...) do {} while (0)
 
 #elif COCOS2D_DEBUG > 1
-#define CCLOG(...) NSLog(__VA_ARGS__)
-#define CCLOGERROR(...) NSLog(__VA_ARGS__)
-#define CCLOGINFO(...) NSLog(__VA_ARGS__)
+#define CCLOG(...) printf(__VA_ARGS__)
+#define CCLOGERROR(...) printf(__VA_ARGS__)
+#define CCLOGINFO(...) printf(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
-*/
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables
 */
-template <class _T>
-#define CC_SWAP( _T x, _T y )			\
-({ _T temp  = (x);		\
+#define CC_SWAP(x, y)			\
+({ typename(x) temp  = (x);		\
 		x = y; y = temp;		\
 })
 

@@ -1,10 +1,10 @@
-#include "include/CCamera.h"
-#include "include/CCDirector.h"
-#include "include/ccMacros.h"
+#include "CCCamera.h"
+//#include "CCDirector.h"
+#include "ccMacros.h"
 
-#include "include/glu.h"
+#include "glu.h"
 
-#include "include/CCDrawingPrimitives.h"
+#include "CCDrawingPrimitives.h"
 
 using namespace std;
 
@@ -19,8 +19,8 @@ CCCamera::~CCCamera(void)
 string CCCamera::description(void)
 {
 	char des[100];
-	sprintf(des, "<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ);
-	string ret = new String(des);
+	sprintf_s(des, 100, "<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ);
+	string ret(des);
 
 	return ret;
 }
@@ -36,7 +36,7 @@ void CCCamera::restore(void)
 	m_fUpY = 1.0f;
 	m_fUpZ = 0.0f;
 
-	m_bDirty = NO;
+	m_bDirty = FALSE;
 }
 
 void CCCamera::locate(void)
@@ -44,7 +44,7 @@ void CCCamera::locate(void)
 	if (m_bDirty)
 	{
 		gluLookAt(m_fEyeX, m_fEyeY, m_fEyeZ,
-			m_fCenterX, m_fCenterY, m_fCenter_Z,
+			m_fCenterX, m_fCenterY, m_fCenterZ,
 			m_fUpX, m_fUpY, m_fUpZ);
 	}
 }
@@ -89,7 +89,7 @@ void CCCamera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ)
 	*pCenterZ = m_fCenterZ;
 }
 
-void CCCamera::getUpXYZ(float *pUpx, float *pUpY, float *pUpZ)
+void CCCamera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)
 {
 	*pUpX = m_fUpX;
 	*pUpY = m_fUpY;

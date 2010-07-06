@@ -1,4 +1,4 @@
-#include "include/NSObject.h"
+#include "NSObject.h"
 
 NSObject::NSObject(void)
 {
