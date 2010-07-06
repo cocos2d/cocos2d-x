@@ -22,6 +22,14 @@ THE SOFTWARE.
 
 
 #include "NSObject.h"
+#include <assert.h>
+
+NSObject* CCCopying::copyWithZone(NSZone *pZone)
+{
+	assert(0);
+	return NULL;
+}
+
 
 NSObject::NSObject(void)
 {
