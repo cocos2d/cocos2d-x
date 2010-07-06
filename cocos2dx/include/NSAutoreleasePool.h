@@ -23,11 +23,43 @@ THE SOFTWARE.
 #ifndef __NS_AUTO_RELEASE_POOL_H__
 #define __NS_AUTO_RELEASE_POOL_H__
 
-class NSAutoreleasePool
+#include "NSObject.h"
+#include <vector>
+
+class NSAutoreleasePool : public NSObject
 {
 public:
 	NSAutoreleasePool(void);
-	~NSAutoreleasePool(void);
+
+	void addObject(NSObject *pObject);
+	void removeObject(NSObject *pObject);
+
+	void clear(void);
+private:
+	std::vector<NSObject *> m_managedObjectArray;
 };
+
+class NSPoolManager
+{
+public:
+	
+	~NSPoolManager();
+
+	void finalize(void);
+    void push(void);
+	void pop(void);
+
+	void removeObject(NSObject *pObject);
+	void addObject(NSObject *pObject);
+
+public:
+	static NSPoolManager* getInstance();
+
+private:
+	NSPoolManager();
+
+private:
+	static NSPoolManager *m_pPoolManager;
+}
 
 #endif //__NS_AUTO_RELEASE_POOL_H__
