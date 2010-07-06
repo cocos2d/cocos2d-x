@@ -1,5 +1,6 @@
 #include "CCDrawingPrimitives.h"
 
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -101,7 +102,7 @@ void ccDrawCircle(CGPoint center, float r, float a, int segs, BOOL drawLineToCen
 
 	const float coef = 2.0f * (float)M_PI/segs;
 	
-	float *vertices = malloc( sizeof(float)*2*(segs+2));
+	float *vertices = (float *)malloc( sizeof(float)*2*(segs+2));
 	if( ! vertices )
 	{
 		return;
@@ -141,7 +142,7 @@ void ccDrawCircle(CGPoint center, float r, float a, int segs, BOOL drawLineToCen
 
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments)
 {
-	CGPoint vertices[segments + 1];
+	CGPoint *vertices = new CGPoint[segments + 1];
 	
 	float t = 0.0f;
 	for(int i = 0; i < segments; i++)
@@ -162,6 +163,7 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int 
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);	
 	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
+	delete[] vertices;
 	
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -171,7 +173,7 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int 
 
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments)
 {
-	CGPoint vertices[segments + 1];
+	CGPoint *vertices = new CGPoint[segments + 1];
 	
 	float t = 0;
 	for(int i = 0; i < segments; ++i)
@@ -192,6 +194,7 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);	
 	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
+	delete[] vertices;
 	
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
