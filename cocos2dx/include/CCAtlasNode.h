@@ -22,16 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __COCOS2D_DEFINE_H__
-#define __COCOS2D_DEFINE_H__
+#ifndef __CCATLAS_NODE_H__
+#define __CCATLAS_NODE_H__
 
-#define DECLARE_VAR_READONLY_INLINE(varType, varName, funName)\
-	protected: varType varName;\
-	public: inline varType get##funName(void);
 
-#define DECLARE_VAR_READWRITE_INLINE(varType, varName, funName)\
-	protected: varType varName;\
-	public: inline varType get##funName(void);\
-	public: inline void set##funName(varType var);
 
-#endif // __COCOS2D_DEFINE_H__
+
+#endif // __CCATLAS_NODE_H__
+
+
