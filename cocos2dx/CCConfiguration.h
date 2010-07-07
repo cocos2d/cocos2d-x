@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCCONFIGURATION_H__
 
 #include "Cocos2dTypes.h"
-#include "Cocoa/NSObject.h"
+#include "cocoa/NSObject.h"
 #include <GLES/gl.h>
 #include <string>
 
