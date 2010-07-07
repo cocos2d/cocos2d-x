@@ -28,4 +28,30 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include <vector>
 
+class NSMutableArray
+{
+public:
+	NSMutableArray(UINT32 uSize);
+
+	UINT32 count(void);
+	UINT32 getIndexOfObject(NSObject *pObject);
+	BOOL containsObject(NSObject *pObject);
+	NSObject* getLastObject(void);
+
+	// Adding objects
+	void addObject(NSObject *pObject);
+	void addObjectsFromArray(NSMutableArray *pOtherArray);
+    void insertObjectAtIndex(NSObject *pObject, UINT32 uIndex);
+
+	// Removing objects
+	void removeLastObject(void);
+	void removeObject(NSObject *pObject);
+	void removeObjectAtIndex(UINT uIndex);
+	void removeAllObjects(void);
+	
+	void removeObjectsInArray(NSMutableArray *pDeleteArray);
+private:
+	std::vector<NSObject *> m_array;
+};
+
 #endif // __COCOA_NS_MUTATLE_ARRAY_H__
