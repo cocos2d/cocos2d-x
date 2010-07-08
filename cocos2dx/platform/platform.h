@@ -25,4 +25,8 @@ THE SOFTWARE.
 #ifndef __PLATFORM_PLATFORM_H__
 #define __PLATFORM_PLATFORM_H__
 
+#if defined(_UPHONE)
+    #include "uphone/platform_uphone.h"
+#endif // _UPHONE
+
 #endif // __PLATFORM_PLATFORM_H__

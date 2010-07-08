@@ -25,4 +25,12 @@ THE SOFTWARE.
 #ifndef __PLATFORM_PLATFORM_UPHONE_H__
 #define __PLATFORM_PLATFORM_UPHONE_H__
 
+#include "Cocos2dTypes.h"
+
+struct timeval
+{
+	long	tv_sec;		// seconds
+	long	tv_usec;    // microSeconds
+};
+
 #endif // __PLATFORM_PLATFORM_UPHONE_H__
