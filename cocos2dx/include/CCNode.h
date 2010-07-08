@@ -28,15 +28,15 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 
 //#include "CCAction.h"
-//#include "ccTypes.h"
+#include "ccTypes.h"
 //#include "CCTexture2D.h"
-//#include "CCProtocols.h"
-//#include "ccConfig.h"
-//#include "Support/CCArray.h"
+#include "ccConfig.h"
 #include "Cocos2dTypes.h"
 #include "cocoa/CGGeometry.h"
 #include "CCCamera.h"
 #include "Cocos2dDefine.h"
+#include "cocoa/NSMutableArray.h"
+#include "effects/CCGrid.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -111,7 +111,7 @@ protected:
 	//CGPoint m_tPosition;
 
 	// is visible
-	//bool m_bVisible;
+	//bool m_bIsVisible;
 
 	// anchor point in pixels
 	//CGPoint m_tAnchorPointInPixels;	
@@ -129,9 +129,6 @@ protected:
 
 	// transform
 	//CGAffineTransform m_tTransform, m_tInverse;
-	#ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		GLfloat	m_pTransformGL[16];
-	#endif
 
 	// openGL real Z vertex
 	//float m_fVertexZ;
@@ -146,7 +143,7 @@ protected:
 	//int m_iZOrder;
 
 	// array of children
-	//CCArray * m_pChildren;
+	//NSMutableArray * m_pChildren;
 
 	// weakref to parent
 	//CCNode * m_pParent;
@@ -160,18 +157,22 @@ protected:
 	// Is running
 	//bool m_bIsRunning;
 
+	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		GLfloat	m_pTransformGL[16];
+	#endif
 	// To reduce memory, place bools that are not properties here:
 	bool m_bIsTransformDirty;
 	bool m_bIsInverseDirty;
 
-	#ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+
+	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		bool m_bIsTransformGLDirty;
 	#endif
 
 	// variable property
 
 	/** The z order of the node relative to it's "brothers": children of the same parent */
-	DECLARE_VAR_READONLY(int, m_iZOrder, ZOrder)
+	CCX_DECLARE_VAR_READONLY(int, m_iZOrder, ZOrder)
 
 	/** The real openGL Z vertex.
 	Differences between openGL Z vertex and cocos2d Z order:
@@ -181,36 +182,35 @@ protected:
 	@warning: Use it at your own risk since it might break the cocos2d parent-children z order
 	@since v0.8
 	*/
-	DECLARE_VAR_READWRITE(float, m_fVertexZ, VertexZ)
+	CCX_DECLARE_VAR_READWRITE(float, m_fVertexZ, VertexZ)
 
 	/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
-	DECLARE_VAR_READWRITE(float, m_fRotation, Rotation)
+	CCX_DECLARE_VAR_READWRITE(float, m_fRotation, Rotation)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
-	DECLARE_VAR_READWRITE(float, m_fScale, Scale)
+	CCX_DECLARE_VAR_READWRITE(float, m_fScale, Scale)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
-	DECLARE_VAR_READWRITE(float, m_fScaleX, ScaleX)
+	CCX_DECLARE_VAR_READWRITE(float, m_fScaleX, ScaleX)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
-	DECLARE_VAR_READWRITE(float, m_fScaleY, ScaleY)
+	CCX_DECLARE_VAR_READWRITE(float, m_fScaleY, ScaleY)
 
 	/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
-	DECLARE_VAR_READWRITE(CGPoint, m_tPosition, Position)
+	CCX_DECLARE_VAR_READWRITE(CGPoint, m_tPosition, Position)
 
 	/** A CCCamera object that lets you move the node using a gluLookAt
 	*/
 
-	/// @todo CCArray isn't implemented. 
-	//DECLARE_VAR_READONLY(CCArray *, m_pChildren, Children)
+	CCX_DECLARE_VAR_READONLY(NSMutableArray *, m_pChildren, Children)
 
-	DECLARE_VAR_READONLY(CCCamera *, m_pCamera, Camera)
+	CCX_DECLARE_VAR_READONLY(CCCamera *, m_pCamera, Camera)
 
 	/** A CCGrid object that is used when applying effects */
-	//DECLARE_VAR_READWRITE(CCGridBase*, m_pGrid, Grid)
+//	CCX_DECLARE_VAR_READWRITE(CCGridBase *, m_pGrid, Grid)
 
 	/** Whether of not the node is visible. Default is true */
-	DECLARE_VAR_READWRITE(bool, m_bVisible, Visible)
+	CCX_DECLARE_VAR_READWRITE(bool, m_bIsVisible, Visibility)
 
 	/** anchorPoint is the point around which all transformations and positioning manipulations take place.
 	It's like a pin in the node where it is "attached" to its parent.
@@ -219,37 +219,37 @@ protected:
 	The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
 	@since v0.8
 	*/
-	DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPoint, AnchorPoint)
+	CCX_DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPoint, AnchorPoint)
 
 	/** The anchorPoint in absolute pixels.
 	Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
 	*/
-	DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
+	CCX_DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
 	
 	/** The untransformed size of the node.
 	The contentSize remains the same no matter the node is scaled or rotated.
 	All nodes has a size. Layer and Scene has the same size of the screen.
 	@since v0.8
 	*/
-	DECLARE_VAR_READWRITE(CGSize, m_tContentSize, ContentSize)
+	CCX_DECLARE_VAR_READWRITE(CGSize, m_tContentSize, ContentSize)
 
 	/** whether or not the node is running */
-	DECLARE_VAR_READONLY(bool, m_bIsRunning, IsRunning)
+	CCX_DECLARE_VAR_READONLY(bool, m_bIsRunning, IsRunning)
 
 	/** A weak reference to the parent */
-	DECLARE_VAR_READWRITE(CCNode *, m_pParent, Parent)
+	CCX_DECLARE_VAR_READWRITE(CCNode *, m_pParent, Parent)
 
 	/** If true the transformtions will be relative to it's anchor point.
 	* Sprites, Labels and any other sizeble object use it have it enabled by default.
 	* Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
 	*/
-	DECLARE_VAR_READWRITE(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
+	CCX_DECLARE_VAR_READWRITE(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
 
 	/** A tag used to identify the node easily */
-	DECLARE_VAR_READWRITE(int, m_iTag, Tag)
+	CCX_DECLARE_VAR_READWRITE(int, m_iTag, Tag)
 
 	/** A custom user data pointer */
-	DECLARE_VAR_READWRITE(void *, m_pUserData, UserData)
+	CCX_DECLARE_VAR_READWRITE(void *, m_pUserData, UserData)
 
 private:
 
@@ -271,7 +271,7 @@ public:
 	virtual ~CCNode();
 
 	/** initializes the node */
-	void init(void);
+	virtual bool init(void);
 
 	/** allocates and initializes a node.
 	The node will be created as "autorelease".
@@ -383,13 +383,13 @@ public:
 	@since v0.7.1
 	@return An Action pointer
 	*/
-	//CCAction* runAction(CCAction* action);
+//	CCAction* runAction(CCAction* action);
 
 	/** Removes all actions from the running action list */
 	void stopAllActions(void);
 
 	/** Removes an action from the running action list */
-	//void stopAction(CCAction* action);
+//	void stopAction(CCAction* action);
 
 	/** Removes an action from the running action list given its tag
 	@since v0.7.1
@@ -400,7 +400,7 @@ public:
 	@since v0.7.1
 	@return the Action the with the given tag
 	*/
-	//CCAction* getActionByTag(int tag);
+//	CCAction* getActionByTag(int tag);
 
 	/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
 	* Composable actions are counted as 1 action. Example:
@@ -413,7 +413,7 @@ public:
 	// timers
 
 	/** check whether a selector is scheduled. */
-	//bool isScheduled(SEL selector);
+//	bool isScheduled(SEL selector);
 
 	/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
 	Scheduled methods with a lower order value will be called before the ones that have a higher order value.
@@ -440,16 +440,16 @@ public:
 	/** schedules a selector.
 	The scheduled selector will be ticked every frame
 	*/
-	//void schedule(SEL selector);
+//	void schedule(SEL selector);
 
 	/** schedules a custom selector with an interval time in seconds.
 	If time is 0 it will be ticked every frame.
 	If tiem is 0, it is recommended to use 'scheduleUpdate' instead.
 	*/
-	//void schedule(SEL selector, ccTime seconds);
+//	void schedule(SEL selector, ccTime seconds);
 
 	/** unschedules a custom selector.*/
-	//void unschedule(SEL selector);
+//	void unschedule(SEL selector);
 
 	/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
 	Actions are not affected by this method.
@@ -472,22 +472,22 @@ public:
 	/** Returns the local affine transform matrix
 	@since v0.7.1
 	*/
-	//CGAffineTransform nodeToParentTransform(void);
+//	CGAffineTransform nodeToParentTransform(void);
 
 	/** Returns the inverse local affine transform matrix
 	@since v0.7.1
 	*/
-	//CGAffineTransform parentToNodeTransform(void);
+//	CGAffineTransform parentToNodeTransform(void);
 
 	/** Retrusn the world affine transform matrix
 	@since v0.7.1
 	*/
-	//CGAffineTransform nodeToWorldTransform(void);
+//	CGAffineTransform nodeToWorldTransform(void);
 
 	/** Returns the inverse world affine transform matrix
 	@since v0.7.1
 	*/
-	//CGAffineTransform worldToNodeTransform(void);
+//	CGAffineTransform worldToNodeTransform(void);
 
 	/** converts a world coordinate to local coordinate
 	@since v0.7.1
@@ -510,12 +510,12 @@ public:
 	/** convenience methods which take a UITouch instead of CGPoint
 	@since v0.7.1
 	*/
-	//CGPoint convertTouchToNodeSpace(UITouch * touch);
+//	CGPoint convertTouchToNodeSpace(UITouch * touch);
 
 	/** converts a UITouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
 	@since v0.7.1
 	*/
-	//CGPoint convertTouchToNodeSpaceAR:(UITouch * touch);
+//	CGPoint convertTouchToNodeSpaceAR:(UITouch * touch);
 
 };
 

@@ -25,22 +25,22 @@ THE SOFTWARE.
 #ifndef __COCOS2D_DEFINE_H__
 #define __COCOS2D_DEFINE_H__
 
-#define DECLARE_VAR_READONLY(varType, varName, funName)\
+#define CCX_DECLARE_VAR_READONLY(varType, varName, funName)\
 	protected: varType varName;\
 	public: virtual varType get##funName(void);
 
-#define DECLARE_VAR_READWRITE(varType, varName, funName)\
+#define CCX_DECLARE_VAR_READWRITE(varType, varName, funName)\
 	protected: varType varName;\
 	public: virtual varType get##funName(void);\
 	public: virtual void set##funName(varType var);
 
-#define DECLARE_VAR_READONLY_INLINE(varType, varName, funName)\
+#define CCX_DECLARE_VAR_READONLY_INLINE(varType, varName, funName)\
 	protected: varType varName;\
-	public: inline varType get##funName(void){ return varName; };
+	public: inline varType get##funName(void){ return varName; }
 
-#define DECLARE_VAR_READWRITE_INLINE(varType, varName, funName)\
+#define CCX_DECLARE_VAR_READWRITE_INLINE(varType, varName, funName)\
 	protected: varType varName;\
-	public: inline varType get##funName(void){ return varName; };\
-	public: inline void set##funName(varType var){ varName = var; };
+	public: inline varType get##funName(void){ return varName; }\
+	public: inline void set##funName(varType var){ varName = var; }
 
 #endif // __COCOS2D_DEFINE_H__
