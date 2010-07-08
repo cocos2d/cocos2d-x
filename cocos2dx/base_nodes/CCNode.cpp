@@ -28,12 +28,6 @@ using namespace std;
 
 CCNode::CCNode(void)
 {
-	init();
-}
-
-/*initialize*/
-void CCNode::init(void)
-{
 	m_bIsRunning = false;
 	m_fRotation = 0.0f;
 	m_fScaleX = m_fScaleY = 1.0f;
@@ -45,15 +39,15 @@ void CCNode::init(void)
 	m_bIsRelativeAnchorPoint = true;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
 
-	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 
 	m_fVertexZ = 0.0f;
 
-	//m_pGrid = NULL;
+//	m_pGrid = NULL;
 
-	m_bVisible = true;
+	m_bIsVisible = true;
 
 	m_iTag = kCCNodeTagInvalid;
 
@@ -63,10 +57,16 @@ void CCNode::init(void)
 	m_pCamera = NULL;
 
 	// children (lazy allocs)
-	//m_pChildren = NULL;
+	m_pChildren = NULL;
 
 	// userData is always inited as nil
 	m_pUserData = NULL;
+}
+
+/*initialize*/
+bool CCNode::init(void)
+{
+	return false;
 }
 
 float CCNode::getRotation()
@@ -89,14 +89,14 @@ float CCNode::getScaleY()
 	return m_fScaleY;
 }
 
-void CCNode::setVisible(bool bVisible)
+void CCNode::setVisibility(bool bIsVisible)
 {
-	m_bVisible = bVisible;
+	m_bIsVisible = bIsVisible;
 }
 
-bool CCNode::getVisible()
+bool CCNode::getVisibility()
 {
-	return m_bVisible;
+	return m_bIsVisible;
 }
 //
 //CCGridBase* CCNode::getGrid()
@@ -121,7 +121,7 @@ void CCNode::setRotation(float newRotation)
 {
 	m_fRotation = newRotation;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 }
@@ -130,7 +130,7 @@ void CCNode::setScaleX(float newScaleX)
 {
 	m_fScaleX = newScaleX;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 }
@@ -139,7 +139,7 @@ void CCNode::setScaleY(float newScaleY)
 {
 	m_fScaleY = newScaleY;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 }
@@ -148,7 +148,7 @@ void CCNode::setPosition(CGPoint newPosition)
 {
 	m_tPosition = newPosition;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 }
@@ -157,7 +157,7 @@ void CCNode::setIsRelativeAnchorPoint(bool newValue)
 {
 	m_bIsRelativeAnchorPoint = newValue;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 }
@@ -174,7 +174,7 @@ void CCNode::setAnchorPoint(CGPoint point)
 		m_anchorPoint = point;
 		this->m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
 		m_isTransformDirty = m_isInverseDirty = true;
-		#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 			m_bIsTransformGLDirty = true;
 		#endif
 	}*/
@@ -192,7 +192,7 @@ void CCNode::setContentSize(CGSize size)
 	//	m_contentSize = size;
 	//	m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
 	//	m_isTransformDirty = m_isInverseDirty = true;
-	//	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	//	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	//		m_bIsTransformGLDirty = true;
 	//	#endif
 	//}
@@ -219,7 +219,7 @@ void CCNode::setScale(float scale)
 {
 	m_fScaleX = m_fScaleY = scale;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 }
