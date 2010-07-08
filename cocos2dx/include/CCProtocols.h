@@ -60,12 +60,12 @@ class CCRGBAProtocol
 	 Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
 	 @since v0.8
 	 */
-	virtual void setOpacityModifyRGB(BOOL bValue) {}
+	virtual void setOpacityModifyRGB(bool bValue) {}
 
 	/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
 	 @since v0.8
 	 */
-	virtual BOOL doesOpacityModifyRGB(void) = { return FALSE;}
+	virtual bool doesOpacityModifyRGB(void) = { return false;}
 }
 
 /**
