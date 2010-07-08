@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#ifndef __CCNODE_H__
+#define __CCNODE_H__
+
 #include <GLES/gl.h>
 
 //#include "CCAction.h"
@@ -31,7 +34,7 @@ THE SOFTWARE.
 //#include "ccConfig.h"
 //#include "Support/CCArray.h"
 #include "Cocos2dTypes.h"
-//#include "cocoa/CGGeometry.h"
+#include "cocoa/CGGeometry.h"
 #include "CCCamera.h"
 #include "Cocos2dDefine.h"
 
@@ -108,7 +111,7 @@ protected:
 	//CGPoint m_tPosition;
 
 	// is visible
-	//BOOL m_bVisible;
+	//bool m_bVisible;
 
 	// anchor point in pixels
 	//CGPoint m_tAnchorPointInPixels;	
@@ -116,10 +119,10 @@ protected:
 	// anchor point normalized
 	//CGPoint m_tAnchorPoint;	
 
-	// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	// If true the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
-	//BOOL m_bIsRelativeAnchorPoint;
+	//bool m_bIsRelativeAnchorPoint;
 
 	// untransformed size of the node
 	//CGSize m_tContentSize;
@@ -155,20 +158,20 @@ protected:
 	//void *m_pUserData;
 
 	// Is running
-	//BOOL m_bIsRunning;
+	//bool m_bIsRunning;
 
-	// To reduce memory, place BOOLs that are not properties here:
-	BOOL m_bIsTransformDirty;
-	BOOL m_bIsInverseDirty;
+	// To reduce memory, place bools that are not properties here:
+	bool m_bIsTransformDirty;
+	bool m_bIsInverseDirty;
 
-	//#if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	//	BOOL m_bIsTransformGLDirty;
-	//#endif
+	#ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		bool m_bIsTransformGLDirty;
+	#endif
 
 	// variable property
 
 	/** The z order of the node relative to it's "brothers": children of the same parent */
-	DECLARE_VAR_READONLY_INLINE(int, m_iZOrder, ZOrder)
+	DECLARE_VAR_READONLY(int, m_iZOrder, ZOrder)
 
 	/** The real openGL Z vertex.
 	Differences between openGL Z vertex and cocos2d Z order:
@@ -178,36 +181,36 @@ protected:
 	@warning: Use it at your own risk since it might break the cocos2d parent-children z order
 	@since v0.8
 	*/
-	DECLARE_VAR_READWRITE_INLINE(FLOAT, m_fVertexZ, VertexZ)
+	DECLARE_VAR_READWRITE(float, m_fVertexZ, VertexZ)
 
 	/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
-	DECLARE_VAR_READWRITE_INLINE(FLOAT, m_fRotation, Rotation)
+	DECLARE_VAR_READWRITE(float, m_fRotation, Rotation)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
-	DECLARE_VAR_READWRITE_INLINE(FLOAT, m_fScale, Scale)
+	DECLARE_VAR_READWRITE(float, m_fScale, Scale)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
-	DECLARE_VAR_READWRITE_INLINE(FLOAT, m_fScaleX, ScaleX)
+	DECLARE_VAR_READWRITE(float, m_fScaleX, ScaleX)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
-	DECLARE_VAR_READWRITE_INLINE(FLOAT, m_fScaleY, ScaleY)
+	DECLARE_VAR_READWRITE(float, m_fScaleY, ScaleY)
 
 	/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
-	DECLARE_VAR_READWRITE_INLINE(CGPoint, m_tPosition, Position)
+	DECLARE_VAR_READWRITE(CGPoint, m_tPosition, Position)
 
 	/** A CCCamera object that lets you move the node using a gluLookAt
 	*/
 
 	/// @todo CCArray isn't implemented. 
-	DECLARE_VAR_READONLY_INLINE(CCArray *, m_pChildren, Children)
+	//DECLARE_VAR_READONLY(CCArray *, m_pChildren, Children)
 
-	DECLARE_VAR_READONLY_INLINE(CCCamera *, m_pCamera, Camera)
+	DECLARE_VAR_READONLY(CCCamera *, m_pCamera, Camera)
 
 	/** A CCGrid object that is used when applying effects */
-	DECLARE_VAR_READWRITE_INLINE(CCGridBase*, m_pGrid, Grid)
+	//DECLARE_VAR_READWRITE(CCGridBase*, m_pGrid, Grid)
 
-	/** Whether of not the node is visible. Default is YES */
-	DECLARE_VAR_READWRITE_INLINE(BOOL, m_bVisible, Visible)
+	/** Whether of not the node is visible. Default is true */
+	DECLARE_VAR_READWRITE(bool, m_bVisible, Visible)
 
 	/** anchorPoint is the point around which all transformations and positioning manipulations take place.
 	It's like a pin in the node where it is "attached" to its parent.
@@ -216,43 +219,56 @@ protected:
 	The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
 	@since v0.8
 	*/
-	DECLARE_VAR_READWRITE_INLINE(CGPoint, m_tAnchorPoint, AuthorPoint)
+	DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPoint, AnchorPoint)
 
 	/** The anchorPoint in absolute pixels.
 	Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
 	*/
-	DECLARE_VAR_READWRITE_INLINE(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
+	DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
 	
 	/** The untransformed size of the node.
 	The contentSize remains the same no matter the node is scaled or rotated.
 	All nodes has a size. Layer and Scene has the same size of the screen.
 	@since v0.8
 	*/
-	DECLARE_VAR_READWRITE_INLINE(CGSize, m_tContentSize, ContentSize)
+	DECLARE_VAR_READWRITE(CGSize, m_tContentSize, ContentSize)
 
 	/** whether or not the node is running */
-	DECLARE_VAR_READONLY_INLINE(BOOL, m_bIsRunning, IsRunning)
+	DECLARE_VAR_READONLY(bool, m_bIsRunning, IsRunning)
 
 	/** A weak reference to the parent */
-	DECLARE_VAR_READWRITE_INLINE(CCNode *, m_pParent, Parent)
+	DECLARE_VAR_READWRITE(CCNode *, m_pParent, Parent)
 
-	/** If YES the transformtions will be relative to it's anchor point.
+	/** If true the transformtions will be relative to it's anchor point.
 	* Sprites, Labels and any other sizeble object use it have it enabled by default.
 	* Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
 	*/
-	DECLARE_VAR_READWRITE_INLINE(BOOL, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
+	DECLARE_VAR_READWRITE(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
 
 	/** A tag used to identify the node easily */
-	DECLARE_VAR_READWRITE_INLINE(int, m_iTag, Tag)
+	DECLARE_VAR_READWRITE(int, m_iTag, Tag)
 
 	/** A custom user data pointer */
-	DECLARE_VAR_READWRITE_INLINE(void *, m_pUserData, UserData)
+	DECLARE_VAR_READWRITE(void *, m_pUserData, UserData)
+
+private:
+
+	// lazy allocs
+	void childrenAlloc(void);
+
+	// helper that reorder a child
+	void insertChild(CCNode* child, int z);
+
+	// used internally to alter the zOrder variable. DON'T call this method manually
+	void setZOrder(int z);
+
+	void detachChild(CCNode *child, bool doCleanup);
 
 public:
 
 	CCNode();
 
-	~CCNode();
+	virtual ~CCNode();
 
 	/** initializes the node */
 	void init(void);
@@ -260,7 +276,7 @@ public:
 	/** allocates and initializes a node.
 	The node will be created as "autorelease".
 	*/
-	void* node(void);
+	static void* node(void);
 
 	// composition: ADD
 
@@ -284,26 +300,26 @@ public:
 
 	// composition: REMOVE
 
-	/** Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
+	/** Remove itself from its parent node. If cleanup is true, then also remove all actions and callbacks.
 	If the node orphan, then nothing happens.
 	@since v0.99.3
 	*/
-	void removeFromParentAndCleanup(BOOL cleanup);
+	void removeFromParentAndCleanup(bool cleanup);
 
 	/** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
 	@since v0.7.1
 	*/
-	void removeChild(CCNode* node, BOOL cleanup);
+	void removeChild(CCNode* node, bool cleanup);
 
 	/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
 	@since v0.7.1
 	*/
-	void removeChildByTag(int tag, BOOL cleanup);
+	void removeChildByTag(int tag, bool cleanup);
 
 	/** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
 	@since v0.7.1
 	*/
-	void removeAllChildrenWithCleanup(BOOL cleanup);
+	void removeAllChildrenWithCleanup(bool cleanup);
 
 	// composition: GET
 	/** Gets a child from the container given its tag
@@ -322,6 +338,7 @@ public:
 	*/
 	void cleanup(void);
 
+
 	// draw
 
 	/** Override this method to draw your own node.
@@ -335,7 +352,7 @@ public:
 
 	But if you enable any other GL state, you should disable it after drawing your node.
 	*/
-	void draw(void);
+	virtual void draw(void);
 	/** recursive method that visit its children and draw them */
 	void visit(void);
 
@@ -396,7 +413,7 @@ public:
 	// timers
 
 	/** check whether a selector is scheduled. */
-	//BOOL isScheduled(SEL selector);
+	//bool isScheduled(SEL selector);
 
 	/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
 	Scheduled methods with a lower order value will be called before the ones that have a higher order value.
@@ -502,6 +519,7 @@ public:
 
 };
 
+#endif // __CCNODE_H__
 
 
  
