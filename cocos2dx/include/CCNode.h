@@ -27,15 +27,10 @@ THE SOFTWARE.
 
 #include <GLES/gl.h>
 
-//#include "CCAction.h"
-//#include "ccTypes.h"
-//#include "CCTexture2D.h"
-#include "ccConfig.h"
-//#include "Cocos2dTypes.h"
-#include "../cocoa/CGGeometry.h"
-#include "CCCamera.h"
 #include "Cocos2dDefine.h"
+#include "../cocoa/CGGeometry.h"
 #include "../cocoa/NSMutableArray.h"
+#include "CCCamera.h"
 #include "../effects/CCGrid.h"
 
 enum {
@@ -207,7 +202,7 @@ protected:
 	CCX_DECLARE_VAR_READONLY(CCCamera *, m_pCamera, Camera)
 
 	/** A CCGrid object that is used when applying effects */
-//	CCX_DECLARE_VAR_READWRITE(CCGridBase *, m_pGrid, Grid)
+	CCX_DECLARE_VAR_READWRITE(CCGridBase *, m_pGrid, Grid)
 
 	/** Whether of not the node is visible. Default is true */
 	CCX_DECLARE_VAR_READWRITE(bool, m_bIsVisible, Visibility)
