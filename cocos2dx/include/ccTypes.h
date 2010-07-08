@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
-#include "CGGeometry.h"
-#include "platform/platform.h"
+#include "../cocoa/CGGeometry.h"
+#include "../platform/platform.h"
 #include <GLES/gl.h>
 
 /** RGB color composed of bytes 3 bytes
@@ -100,7 +100,8 @@ typedef struct _ccColor4F {
  */
 static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
 {
-	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
+	ccColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
+	return c4;
 }
 
 /** Returns a ccColor4F from a ccColor4B.
@@ -108,7 +109,8 @@ static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
  */
 static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 {
-	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
+	ccColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
+	return c4;
 }
 
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.

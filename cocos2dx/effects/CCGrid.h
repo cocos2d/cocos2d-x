@@ -27,11 +27,11 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCCamera.h"
-#include "base_nodes/CCNode.h"
-#include "cocoa/NSObject.h"
+#include "../cocoa/NSObject.h"
 
 class CCTexture2D;
 class CCGrabber;
+class CCNode;
 
 // Base class for other
 class CCGridBase : public NSObject
@@ -46,8 +46,8 @@ public:
 	void reuse(void);
 
 public:
-	static CCGridBase gridWithSize(ccGridSize obGridSize, CCTexture2D *pobTexture, bool bFlipped);
-	static gridWithSize(ccGridSize obGridSize);
+	static CCGridBase* gridWithSize(ccGridSize obGridSize, CCTexture2D *pobTexture, bool bFlipped);
+	static CCGridBase* gridWithSize(ccGridSize obGridSize);
 
 protected:
 	bool		m_bActive;
