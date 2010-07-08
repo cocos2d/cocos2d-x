@@ -28,11 +28,11 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 
 //#include "CCAction.h"
-#include "ccTypes.h"
+//#include "ccTypes.h"
 //#include "CCTexture2D.h"
 #include "ccConfig.h"
-#include "Cocos2dTypes.h"
-#include "cocoa/CGGeometry.h"
+//#include "Cocos2dTypes.h"
+#include "CGGeometry.h"
 #include "CCCamera.h"
 #include "Cocos2dDefine.h"
 #include "cocoa/NSMutableArray.h"
