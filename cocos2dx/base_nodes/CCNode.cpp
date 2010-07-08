@@ -27,46 +27,38 @@ THE SOFTWARE.
 using namespace std;
 
 CCNode::CCNode(void)
-{
-	m_bIsRunning = false;
-	m_fRotation = 0.0f;
-	m_fScaleX = m_fScaleY = 1.0f;
-	m_tPosition = CGPoint(0,0);
-	m_tAnchorPointInPixels = m_tAnchorPoint = CGPoint(0,0);
-	m_tContentSize = CGSize(0,0);
-
-	// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
-	m_bIsRelativeAnchorPoint = true;
-	m_bIsTransformDirty = m_bIsInverseDirty = true;
-
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
-
-	m_fVertexZ = 0.0f;
-
-//	m_pGrid = NULL;
-
-	m_bIsVisible = true;
-
-	m_iTag = kCCNodeTagInvalid;
-
-	m_iZOrder = 0;
-
-	// lazy alloc
-	m_pCamera = NULL;
-
-	// children (lazy allocs)
-	m_pChildren = NULL;
-
-	// userData is always inited as nil
-	m_pUserData = NULL;
-}
+:m_bIsRunning(false)
+,m_fRotation(0.0f)
+,m_fScaleX(1.0f)
+,m_fScaleY(1.0f)
+,m_tPosition(CGPoint(0,0))
+,m_tAnchorPointInPixels(CGPoint(0,0))
+,m_tAnchorPoint(CGPoint(0,0))
+,m_tContentSize(CGSize(0,0))
+// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
+,m_bIsRelativeAnchorPoint(true)
+,m_bIsTransformDirty(true)
+,m_bIsInverseDirty(true)
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+,m_bIsTransformGLDirty(true)
+#endif
+,m_fVertexZ(0.0f)
+,m_pGrid(NULL)
+,m_bIsVisible(true)
+,m_iTag(kCCNodeTagInvalid)
+,m_iZOrder(0)
+// lazy alloc
+,m_pCamera(NULL)
+// children (lazy allocs)
+,m_pChildren(NULL)
+// userData is always inited as nil
+,m_pUserData(NULL)
+{}
 
 /*initialize*/
 bool CCNode::init(void)
 {
-	return false;
+	return true;
 }
 
 float CCNode::getRotation()
