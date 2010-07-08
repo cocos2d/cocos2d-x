@@ -38,7 +38,7 @@ class CCGridBase : public NSObject
 {
 public:
 	CCGridBase(ccGridSize obGridSize);
-	CCGridBase(ccGridSize obGridSize, CCTexture2D *pobTexture, BOOL bFlipped);
+	CCGridBase(ccGridSize obGridSize, CCTexture2D *pobTexture, bool bFlipped);
 
 	void beforeDraw(void);
 	void afterDraw(CCNode *pobTarget);
@@ -46,17 +46,17 @@ public:
 	void reuse(void);
 
 public:
-	static CCGridBase gridWithSize(ccGridSize obGridSize, CCTexture2D *pobTexture, BOOL bFlipped);
+	static CCGridBase gridWithSize(ccGridSize obGridSize, CCTexture2D *pobTexture, bool bFlipped);
 	static gridWithSize(ccGridSize obGridSize);
 
 protected:
-	BOOL		m_bActive;
+	bool		m_bActive;
 	INT32		m_nReuseGrid;
 	ccGridSize  m_obGridSize;
 	CCTexture2D *m_pobTexture;
     CGPoint		m_obStep;
 	CCGrabber   *p_obGrabber;
-	BOOL        m_bIsTextureFlipped;
+	bool        m_bIsTextureFlipped;
 };
 
 ////////////////////////////////////////////////////////////

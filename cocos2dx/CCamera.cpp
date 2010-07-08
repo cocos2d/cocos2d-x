@@ -60,7 +60,7 @@ void CCCamera::restore(void)
 	m_fUpY = 1.0f;
 	m_fUpZ = 0.0f;
 
-	m_bDirty = FALSE;
+	m_bDirty = false;
 }
 
 void CCCamera::locate(void)

@@ -44,11 +44,11 @@ NSPoolManager* NSPoolManager::m_pPoolManager = NULL;
 
 NSPoolManager* NSPoolManager::getInstance(void)
 {
-	static BOOL bInit = FALSE;
+	static bool bInit = false;
 
-	if (bInit == FALSE)
+	if (bInit == false)
 	{
-		bInit = TRUE;
+		bInit = true;
 		m_pPoolManager = new NSPoolManager();
 	}
 

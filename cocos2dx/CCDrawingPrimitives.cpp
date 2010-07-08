@@ -91,7 +91,7 @@ void ccDrawLine(CGPoint origin, CGPoint destination)
 }
 
 
-void ccDrawPoly(CGPoint *poli, int points, BOOL closePolygon)
+void ccDrawPoly(CGPoint *poli, int points, bool closePolygon)
 {
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
@@ -116,7 +116,7 @@ void ccDrawPoly(CGPoint *poli, int points, BOOL closePolygon)
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawCircle(CGPoint center, float r, float a, int segs, BOOL drawLineToCenter)
+void ccDrawCircle(CGPoint center, float r, float a, int segs, bool drawLineToCenter)
 {
 	int additionalSegment = 1;
 	if (drawLineToCenter)
