@@ -41,7 +41,7 @@ NSObject::NSObject(void)
 
 	// when the object is created, the refrence count of it is 1
 	m_uRefrence = 1;
-	m_bManaged = FALSE;
+	m_bManaged = false;
 }
 
 NSObject::~NSObject(void)
@@ -81,11 +81,11 @@ NSObject* NSObject::autorelease(void)
 {
 	// todo add to pool manager
 
-	m_bManaged = TRUE;
+	m_bManaged = true;
 	return this;
 }
 
-BOOL NSObject::isSingleRefrence(void)
+bool NSObject::isSingleRefrence(void)
 {
 	return m_uRefrence == 1;
 }
@@ -95,7 +95,7 @@ UINT32 NSObject::retainCount(void)
 	return m_uRefrence;
 }
 
-BOOL NSObject::isEqual(const NSObject *pObject)
+bool NSObject::isEqual(const NSObject *pObject)
 {
 	return this == pObject;
 }

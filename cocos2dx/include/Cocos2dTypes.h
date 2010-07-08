@@ -46,7 +46,6 @@ THE SOFTWARE.
     #undef INT32
     #undef INT64
     #undef UINT64
-	#undef BOOL
 
     #define INT8	Int8
     #define UINT8	UInt8

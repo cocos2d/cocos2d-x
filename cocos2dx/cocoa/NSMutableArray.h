@@ -35,7 +35,7 @@ public:
 
 	UINT32 count(void);
 	UINT32 getIndexOfObject(NSObject *pObject);
-	BOOL containsObject(NSObject *pObject);
+	bool containsObject(NSObject *pObject);
 	NSObject* getLastObject(void);
 
 	// Adding objects

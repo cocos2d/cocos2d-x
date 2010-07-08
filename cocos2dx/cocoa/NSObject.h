@@ -44,7 +44,7 @@ protected:
 	// count of refrence
 	UINT32		m_uRefrence;
 	// is the object autoreleased
-	BOOL		m_bManaged;		
+	bool		m_bManaged;		
 public:
 	NSObject(void);
 	~NSObject(void);
@@ -53,9 +53,9 @@ public:
 	virtual void retain(void);
 	NSObject* autorelease(void);
 	NSObject* copy(void);
-	BOOL isSingleRefrence(void);
+	bool isSingleRefrence(void);
 	UINT32 retainCount(void);
-	BOOL isEqual(const NSObject* pObject);
+	bool isEqual(const NSObject* pObject);
 };
 
 #endif // __COCOA_NSOBJECT_H__
