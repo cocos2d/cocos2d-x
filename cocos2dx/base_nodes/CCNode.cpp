@@ -34,26 +34,26 @@ CCNode::CCNode(void)
 /*initialize*/
 void CCNode::init(void)
 {
-	m_bIsRunning = FALSE;
+	m_bIsRunning = false;
 	m_fRotation = 0.0f;
 	m_fScaleX = m_fScaleY = 1.0f;
 	m_tPosition = CGPoint(0,0);
 	m_tAnchorPointInPixels = m_tAnchorPoint = CGPoint(0,0);
 	m_tContentSize = CGSize(0,0);
 
-	// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to FALSE
-	m_bIsRelativeAnchorPoint = TRUE;
-	m_bIsTransformDirty = m_bIsInverseDirty = TRUE;
+	// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
+	m_bIsRelativeAnchorPoint = true;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
 
 	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = TRUE;
+		m_bIsTransformGLDirty = true;
 	#endif
 
 	m_fVertexZ = 0.0f;
 
 	//m_pGrid = NULL;
 
-	m_bVisible = TRUE;
+	m_bVisible = true;
 
 	m_iTag = kCCNodeTagInvalid;
 
@@ -69,7 +69,7 @@ void CCNode::init(void)
 	m_pUserData = NULL;
 }
 
-FLOAT CCNode::getRotation()
+float CCNode::getRotation()
 {
 	return m_fRotation;
 }
@@ -79,22 +79,22 @@ CGPoint CCNode::getPosition()
 	return m_tPosition;
 }
 
-FLOAT CCNode::getScaleX()
+float CCNode::getScaleX()
 {
 	return m_fScaleX;
 }
 
-FLOAT CCNode::getScaleY()
+float CCNode::getScaleY()
 {
 	return m_fScaleY;
 }
 
-void CCNode::setVisible(BOOL bVisible)
+void CCNode::setVisible(bool bVisible)
 {
 	m_bVisible = bVisible;
 }
 
-BOOL CCNode::getVisible()
+bool CCNode::getVisible()
 {
 	return m_bVisible;
 }
@@ -117,52 +117,70 @@ BOOL CCNode::getVisible()
 
 
 // getters synthesized, setters explicit
-void CCNode::setRotation(FLOAT newRotation)
+void CCNode::setRotation(float newRotation)
 {
 	m_fRotation = newRotation;
-	m_bIsTransformDirty = m_bIsInverseDirty = TRUE;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
-void CCNode::setScaleX(FLOAT newScaleX)
+void CCNode::setScaleX(float newScaleX)
 {
 	m_fScaleX = newScaleX;
-	m_bIsTransformDirty = m_bIsInverseDirty = TRUE;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
-void CCNode::setScaleY(FLOAT newScaleY)
+void CCNode::setScaleY(float newScaleY)
 {
 	m_fScaleY = newScaleY;
-	m_bIsTransformDirty = m_bIsInverseDirty = TRUE;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
 void CCNode::setPosition(CGPoint newPosition)
 {
 	m_tPosition = newPosition;
-	m_bIsTransformDirty = m_bIsInverseDirty = TRUE;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
-void CCNode::setIsRelativeAnchorPoint(BOOL newValue)
+void CCNode::setIsRelativeAnchorPoint(bool newValue)
 {
 	m_bIsRelativeAnchorPoint = newValue;
-	m_bIsTransformDirty = m_bIsInverseDirty = TRUE;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
-BOOL CCNode::getIsRelativeAnchorPoint()
+bool CCNode::getIsRelativeAnchorPoint()
 {
 	return m_bIsRelativeAnchorPoint;
 }
 
-//void CCNode::setAnchorPoint(CGPoint point)
-//{
-//	if( ! CGPointEqualToPoint(point, m_anchorPoint) ) 
-//	{
-//		m_anchorPoint = point;
-//		this->m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
-//		m_isTransformDirty = m_isInverseDirty = YES;
-//	}
-//}
+void CCNode::setAnchorPoint(CGPoint point)
+{
+	/*if( ! CGPointEqualToPoint(point, m_anchorPoint) ) 
+	{
+		m_anchorPoint = point;
+		this->m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
+		m_isTransformDirty = m_isInverseDirty = true;
+		#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+			m_bIsTransformGLDirty = true;
+		#endif
+	}*/
+}
 
-CGPoint CCNode::getAuthorPoint()
+CGPoint CCNode::getAnchorPoint()
 {
 	return m_tAnchorPoint;
 }
@@ -173,7 +191,10 @@ void CCNode::setContentSize(CGSize size)
 	//{
 	//	m_contentSize = size;
 	//	m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
-	//	m_isTransformDirty = m_isInverseDirty = YES;
+	//	m_isTransformDirty = m_isInverseDirty = true;
+	//	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	//		m_bIsTransformGLDirty = true;
+	//	#endif
 	//}
 }
 
@@ -188,16 +209,19 @@ CGSize CCNode::getContentSize()
 //	return CGRectApplyAffineTransform(rect, nodeToParentTransform());
 //}
 //
-//FLOAT CCNode::scale()
+//float CCNode::scale()
 //{
 //	UXAssert( m_scaleX == m_scaleY, L"CocosNode#scale. ScaleX != ScaleY. Don't know which one to return");
 //	return m_scaleX;
 //}
 
-void CCNode::setScale(FLOAT scale)
+void CCNode::setScale(float scale)
 {
 	m_fScaleX = m_fScaleY = scale;
-	m_bIsTransformDirty = m_bIsInverseDirty = TRUE;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
 //
@@ -223,7 +247,7 @@ int CCNode::getTag()
 
 void CCNode::setTag(int tag)
 {
-	m_iTag = tag;
+	m_iTag = tag;   
 }
 
 int CCNode::getZOrder()
@@ -231,12 +255,12 @@ int CCNode::getZOrder()
 	return m_iZOrder;
 }
 
-void CCNode::setVertexZ(FLOAT z)
+void CCNode::setVertexZ(float z)
 {
 	m_fVertexZ = z;
 }
 
-FLOAT CCNode::getVertexZ()
+float CCNode::getVertexZ()
 {
 	return m_fVertexZ;
 }
@@ -246,7 +270,7 @@ CGPoint CCNode::getAnchorPointInPixels()
 	return m_tAnchorPointInPixels;
 }
 
-BOOL CCNode::getIsRunning()
+bool CCNode::getIsRunning()
 {
 	return m_bIsRunning;
 }
