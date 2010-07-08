@@ -45,7 +45,7 @@ extern "C" {
  */
 
 #include "Cocoa/CGGeometry.h"	// for CGPoint
-#include "Cocos2dTypes.h"
+#include "platform/platform.h"
 
 /** draws a point given x and y coordinate */
 void ccDrawPoint( CGPoint point );
@@ -60,10 +60,10 @@ void ccDrawLine( CGPoint origin, CGPoint destination );
 
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices. The polygon can be closed or open
  */
-void ccDrawPoly( CGPoint *vertices, int numOfVertices, BOOL closePolygon );
+void ccDrawPoly( CGPoint *vertices, int numOfVertices, bool closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
-void ccDrawCircle( CGPoint center, float radius, float angle, int segments, BOOL drawLineToCenter);
+void ccDrawCircle( CGPoint center, float radius, float angle, int segments, bool drawLineToCenter);
 
 /** draws a quad bezier path
  @since v0.8

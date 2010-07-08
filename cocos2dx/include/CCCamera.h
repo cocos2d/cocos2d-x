@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCCAMERA_H__
 #define __CCCAMERA_H__
 
-#include "Cocoa/NSObject.h"
+#include "cocoa/NSObject.h"
 #include "ccMacros.h"
 #include <string>
 
@@ -44,7 +44,7 @@ protected:
 	float m_fUpY;
 	float m_fUpZ;
 
-	BOOL m_bDirty;
+	bool m_bDirty;
 public:
 	CCCamera(void);
 	~CCCamera(void);
@@ -52,9 +52,9 @@ public:
 	std::string description(void);
 
 	// sets the dirty value
-	void setDirty(BOOL bValue);
+	void setDirty(bool bValue);
 	// get the dirty value
-	BOOL getDirty(void);
+	bool getDirty(void);
 
 	// sets the camera in the defaul position
 	void restore(void);

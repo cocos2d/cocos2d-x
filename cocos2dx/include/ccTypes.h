@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCTYPES_H__
 
 #include "CGGeometry.h"
-#include "Cocos2dTypes.h"
+#include "platform/platform.h"
 #include <GLES/gl.h>
 
 /** RGB color composed of bytes 3 bytes
@@ -114,7 +114,7 @@ static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
  @since v0.99.1
  */
-static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
+static inline bool ccc4FEqual(ccColor4F a, ccColor4F b)
 {
 	return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }

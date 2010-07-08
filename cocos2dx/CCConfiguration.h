@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "Cocos2dTypes.h"
+#include "platform/platform.h"
 #include "cocoa/NSObject.h"
 #include <GLES/gl.h>
 #include <string>
@@ -39,10 +39,10 @@ class CCConfiguration : public NSObject
 protected:
 	GLint	m_nMaxTextureSize;
 	GLint	m_nMaxModelviewStackDepth;
-	BOOL	m_bSupportsPVRTC;
-	BOOL	m_bSupportsNPOT;
-	BOOL	m_bSupportsBGRA8888;
-	BOOL	m_bSupportsDiscardFramebuffer;
+	bool	m_bSupportsPVRTC;
+	bool	m_bSupportsNPOT;
+	bool	m_bSupportsBGRA8888;
+	bool	m_bSupportsDiscardFramebuffer;
 
 public:
 	CCConfiguration(void);
@@ -60,23 +60,23 @@ public:
 	 
 	 @since v0.99.2
 	 */
-	BOOL isSupportsNPOT(void);
+	bool isSupportsNPOT(void);
 
 	// Whether or not PVR Texture Compressed is supported
-	BOOL isSupportsPVRTC(void);
+	bool isSupportsPVRTC(void);
 
 	/** Whether or not BGRA8888 textures are supported.
 	 @since v0.99.2
 	 */
-	BOOL isSupportsBGRA8888(void);
+	bool isSupportsBGRA8888(void);
 
 	/** Whether or not glDiscardFramebufferEXT is supported
 	 @since v0.99.2
 	 */
-	BOOL isSupportsDiscardFramebuffer(void);
+	bool isSupportsDiscardFramebuffer(void);
 
 	// returns whether or not an OpenGL is supported
-	BOOL checkForGLExtension(const std::string &searchName);
+	bool checkForGLExtension(const std::string &searchName);
 
 public:
 	// returns a shared instance of the CCConfiguration
