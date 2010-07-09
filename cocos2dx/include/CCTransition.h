@@ -68,10 +68,10 @@ protected:
 
 public:
 	/** creates a base transition with duration and incoming scene */
-	static void* transitionWithDurationAndScene(ccTime t, CCScene *scene);
+	static CCTransitionScene * transitionWithDurationAndScene(ccTime t, CCScene *scene);
 
 	/** initializes a transition with duration and incoming scene */
-	virtual void* initWithDurationAndScene(ccTime t,CCScene* scene);
+	virtual CCTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene);
 
 	/** called after the transition finishes */
 	void finish(void);
@@ -90,9 +90,9 @@ protected:
 
 public:
 	/** creates a base transition with duration and incoming scene */
-	virtual void* transitionWithDurationAndScene(ccTime t,CCScene* scene, tOrientation orientation);
+	virtual CCOrientedTransitionScene * transitionWithDurationAndScene(ccTime t,CCScene* scene, tOrientation orientation);
 	/** initializes a transition with duration and incoming scene */
-	virtual void* initWithDurationAndScene(ccTime t,CCScene* scene,tOrientation orientation);
+	virtual CCOrientedTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene,tOrientation orientation);
 };
 
 /** CCRotoZoomTransition:
@@ -100,7 +100,9 @@ Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming
 */
 class CCRotoZoomTransition : public CCTransitionScene
 {
-
+public:
+	CCRotoZoomTransition();
+	virtual ~CCRotoZoomTransition();
 };
 
 /** CCJumpZoomTransition:
@@ -108,7 +110,9 @@ Zoom out and jump the outgoing scene, and then jump and zoom in the incoming
 */
 class CCJumpZoomTransition : public CCTransitionScene
 {
-
+public:
+	CCJumpZoomTransition();
+	virtual ~CCJumpZoomTransition();
 };
 
 /** CCMoveInLTransition:
@@ -117,6 +121,8 @@ Move in from to the left the incoming scene.
 class CCMoveInLTransition : public CCTransitionScene, public CCTransitionEaseScene
 {
 public:
+	CCMoveInLTransition();
+	virtual ~CCMoveInLTransition();
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed */
@@ -128,7 +134,9 @@ Move in from to the right the incoming scene.
 */
 class CCMoveInRTransition : public CCMoveInLTransition
 {
-
+public:
+	CCMoveInRTransition();
+	virtual ~CCMoveInRTransition();
 };
 
 /** CCMoveInTTransition:
@@ -136,7 +144,9 @@ Move in from to the top the incoming scene.
 */
 class CCMoveInTTransition : public CCMoveInLTransition 
 {
-
+public:
+	CCMoveInTTransition();
+	virtual ~CCMoveInTTransition();
 };
 
 /** CCMoveInBTransition:
@@ -144,7 +154,9 @@ Move in from to the bottom the incoming scene.
 */
 class CCMoveInBTransition : public CCMoveInLTransition
 {
-
+public:
+	CCMoveInBTransition();
+	virtual ~CCMoveInBTransition();
 };
 
 /** CCSlideInLTransition:
@@ -153,6 +165,9 @@ Slide in the incoming scene from the left border.
 class CCSlideInLTransition : public CCTransitionScene, public CCTransitionEaseScene
 {
 public:
+	CCSlideInLTransition();
+	virtual ~CCSlideInLTransition();
+
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
@@ -164,7 +179,9 @@ Slide in the incoming scene from the right border.
 */
 class CCSlideInRTransition : public CCSlideInLTransition 
 {
-
+public:
+	CCSlideInRTransition();
+	virtual ~CCSlideInRTransition();
 };
 
 /** CCSlideInBTransition:
@@ -172,7 +189,9 @@ Slide in the incoming scene from the bottom border.
 */
 class CCSlideInBTransition : public CCSlideInLTransition
 {
-
+public:
+	CCSlideInBTransition();
+	virtual ~CCSlideInBTransition();
 };
 
 /** CCSlideInTTransition:
@@ -180,7 +199,9 @@ Slide in the incoming scene from the top border.
 */
 class CCSlideInTTransition : public CCSlideInLTransition
 {
-
+public:
+	CCSlideInTTransition();
+	virtual ~CCSlideInTTransition();
 };
 
 /**
@@ -188,7 +209,9 @@ Shrink the outgoing scene while grow the incoming scene
 */
 class CCShrinkGrowTransition : public CCTransitionScene , public CCTransitionEaseScene
 {
-
+public:
+	CCShrinkGrowTransition();
+	virtual ~CCShrinkGrowTransition();
 };
 
 /** CCFlipXTransition:
@@ -197,7 +220,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 */
 class CCFlipXTransition : public CCOrientedTransitionScene
 {
-
+public:
+	CCFlipXTransition();
+	virtual ~CCFlipXTransition();
 };
 
 /** CCFlipYTransition:
@@ -206,7 +231,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 */
 class CCFlipYTransition : public CCOrientedTransitionScene
 {
-
+public:
+	CCFlipYTransition();
+	virtual ~CCFlipYTransition();
 };
 
 /** CCFlipAngularTransition:
@@ -215,7 +242,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 */
 class CCFlipAngularTransition : public CCOrientedTransitionScene
 {
-
+public:
+	CCFlipAngularTransition();
+	virtual ~CCFlipAngularTransition();
 };
 
 /** CCZoomFlipXTransition:
@@ -224,7 +253,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 */
 class CCZoomFlipXTransition : public CCOrientedTransitionScene
 {
-
+public:
+	CCZoomFlipXTransition();
+	virtual ~CCZoomFlipXTransition();
 };
 
 /** CCZoomFlipYTransition:
@@ -233,7 +264,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 */
 class CCZoomFlipYTransition : public CCOrientedTransitionScene
 {
-
+public:
+	CCZoomFlipYTransition();
+	virtual ~CCZoomFlipYTransition();
 };
 
 /** CCZoomFlipAngularTransition:
@@ -242,7 +275,9 @@ The front face is the outgoing scene and the back face is the incoming scene.
 */
 class CCZoomFlipAngularTransition : public CCOrientedTransitionScene
 {
-
+public:
+	CCZoomFlipAngularTransition();
+	virtual ~CCZoomFlipAngularTransition();
 };
 
 /** CCFadeTransition:
@@ -254,12 +289,16 @@ protected:
 	ccColor4B	color;
 
 public:
+
+	CCFadeTransition();
+	virtual ~CCFadeTransition();
+
 	/** creates the transition with a duration and with an RGB color
 	* Example: [FadeTransition transitionWithDuration:2 scene:s withColor:ccc3(255,0,0)]; // red color
 	*/
-	static void* transitionWithDurationAndColor(ccTime duration,CCScene* scene, ccColor3B color);
+	static CCFadeTransition* transitionWithDurationAndColor(ccTime duration,CCScene* scene, ccColor3B color);
 	/** initializes the transition with a duration and with an RGB color */
-	void* initWithDurationAndColor(ccTime duration, CCScene*scene ,ccColor3B color);
+	CCFadeTransition* initWithDurationAndColor(ccTime duration, CCScene*scene ,ccColor3B color);
 };
 
 /**
@@ -269,7 +308,9 @@ Cross fades two scenes using the CCRenderTexture object.
 class CCRenderTexture;
 class CCCrossFadeTransition : public CCTransitionScene
 {
-
+public :
+	CCCrossFadeTransition();
+	virtual ~CCCrossFadeTransition();
 };
 
 /** CCTurnOffTilesTransition:
@@ -277,7 +318,9 @@ Turn off the tiles of the outgoing scene in random order
 */
 class CCTurnOffTilesTransition : public CCTransitionScene ,public CCTransitionEaseScene
 {
-
+public :
+	CCTurnOffTilesTransition();
+	virtual ~CCTurnOffTilesTransition();
 };
 
 /** CCSplitColsTransition:
@@ -286,6 +329,9 @@ The odd columns goes upwards while the even columns goes downwards.
 class CCSplitColsTransition : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
+	CCSplitColsTransition();
+	virtual ~CCSplitColsTransition();
+
 	virtual CCIntervalAction* action(void);
 };
 
@@ -294,7 +340,9 @@ The odd rows goes to the left while the even rows goes to the right.
 */
 class CCSplitRowsTransition : public CCSplitColsTransition
 {
-
+public:
+	CCSplitRowsTransition();
+	virtual ~CCSplitRowsTransition();
 };
 
 /** CCFadeTRTransition:
@@ -303,6 +351,8 @@ Fade the tiles of the outgoing scene from the left-bottom corner the to top-righ
 class CCFadeTRTransition : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
+	CCFadeTRTransition();
+	virtual ~CCFadeTRTransition();
 	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 };
 
@@ -311,7 +361,9 @@ Fade the tiles of the outgoing scene from the top-right corner to the bottom-lef
 */
 class CCFadeBLTransition : public CCFadeTRTransition
 {
-
+public:
+	CCFadeBLTransition();
+	virtual ~CCFadeBLTransition();
 };
 
 /** CCFadeUpTransition:
@@ -319,7 +371,9 @@ class CCFadeBLTransition : public CCFadeTRTransition
 */
 class CCFadeUpTransition : public CCFadeTRTransition
 {
-
+public:
+	CCFadeUpTransition();
+	virtual ~CCFadeUpTransition();
 };
 
 /** CCFadeDownTransition:
@@ -327,7 +381,10 @@ class CCFadeUpTransition : public CCFadeTRTransition
 */
 class CCFadeDownTransition : public CCFadeTRTransition
 {
-
+public:
+	CCFadeDownTransition();
+	virtual ~CCFadeDownTransition();
 };
 
 #endif // __CCTRANSITION_H__
+

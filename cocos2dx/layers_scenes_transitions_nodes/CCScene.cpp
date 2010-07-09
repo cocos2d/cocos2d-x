@@ -25,9 +25,3 @@ THE SOFTWARE.
 #include "CCScene.h"
 
 using namespace std;
-
-bool CCScene::init(void)
-{
-	
-	return true;
-}

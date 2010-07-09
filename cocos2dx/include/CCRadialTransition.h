@@ -36,7 +36,9 @@ THE SOFTWARE.
 ///
 class CCRadialCCWTransition : public CCTransitionScene
 {
-
+public:
+	CCRadialCCWTransition();
+	virtual ~CCRadialCCWTransition();
 };
 
 ///
@@ -44,8 +46,11 @@ class CCRadialCCWTransition : public CCTransitionScene
 ///
 class CCRadialCWTransition : public CCRadialCCWTransition
 {
-
+public:
+	CCRadialCWTransition();
+	virtual ~CCRadialCWTransition();
 };
 
 
 #endif __CCRADIAL_TRANSITION_H__
+

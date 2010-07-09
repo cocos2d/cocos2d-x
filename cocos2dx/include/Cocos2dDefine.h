@@ -26,11 +26,11 @@ THE SOFTWARE.
 #define __COCOS2D_DEFINE_H__
 
 /** CCX_PROPERTY_READONLY is used to declare a protected variable.
-	We can use get method to read the variable.
+	We can use getter to read the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
-	@param funName : "get + funName" is the name of the get method.
-	@warning : The get method is a public virtual function, you should override it first.
+	@param funName : "get + funName" is the name of the getter.
+	@warning : The getter is a public virtual function, you should rewrite it first.
 			The variables and methods declared after CCX_PROPERTY_READONLY are all public.
 			If you need protected or private, please declare.
 */
@@ -39,12 +39,12 @@ THE SOFTWARE.
 	public: virtual varType get##funName(void);
 
 /** CCX_PROPERTY is used to declare a protected variable.
-	We can use get method to read the variable, and use the set method to change the variable.
+	We can use getter to read the variable, and use the setter to change the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
-	@param funName : "get + funName" is the name of the get method.
-					 "set + funName" is the name of the set method.
-	@warning : The get and set methods are public virtual functions, you should override them first.
+	@param funName : "get + funName" is the name of the getter.
+					 "set + funName" is the name of the setter.
+	@warning : The getter and setter are public virtual functions, you should rewrite them first.
 			The variables and methods declared after CCX_PROPERTY are all public.
 			If you need protected or private, please declare.
 */
@@ -54,11 +54,11 @@ THE SOFTWARE.
 	public: virtual void set##funName(varType var);
 
 /** CCX_SYNTHESIZE_READONLY is used to declare a protected variable.
-	We can use get method to read the variable.
+	We can use getter to read the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
-	@param funName : "get + funName" is the name of the get method.
-	@warning : The get method is a public inline function.
+	@param funName : "get + funName" is the name of the getter.
+	@warning : The getter is a public inline function.
 			The variables and methods declared after CCX_SYNTHESIZE_READONLY are all public.
 			If you need protected or private, please declare.
 */
@@ -67,12 +67,12 @@ THE SOFTWARE.
 	public: inline varType get##funName(void){ return varName; }
 
 /** CCX_SYNTHESIZE is used to declare a protected variable.
-	We can use get method to read the variable, and use the set method to change the variable.
+	We can use getter to read the variable, and use the setter to change the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
-	@param funName : "get + funName" is the name of the get method.
-					 "set + funName" is the name of the set method.
-	@warning : The get and set methods are public  inline functions.
+	@param funName : "get + funName" is the name of the getter.
+					 "set + funName" is the name of the setter.
+	@warning : The getter and setter are public  inline functions.
 			The variables and methods declared after CCX_SYNTHESIZE are all public.
 			If you need protected or private, please declare.
 */
@@ -82,6 +82,7 @@ THE SOFTWARE.
 	public: inline void set##funName(varType var){ varName = var; }
 
 #define CCX_SAFE_DELETE(p)  if(p) {delete p; p=NULL;}
-#define CXX_BREAK_IF(cond)  if(cond) break;
+#define CCX_BREAK_IF(cond)  if(cond) break;
 
 #endif // __COCOS2D_DEFINE_H__
+

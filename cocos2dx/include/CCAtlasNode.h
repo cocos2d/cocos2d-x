@@ -85,10 +85,10 @@ public:
 	virtual ~CCAtlasNode();
 
 	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static void* atlasWithTileFile(NSString* tile, int tileWidth, int tileHeight, int itemsToRender);
+	static CCAtlasNode* atlasWithTileFile(NSString* tile, int tileWidth, int tileHeight, int itemsToRender);
 
 	/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	void* initWithTileFile(NSString* tile, int tileWidth, int tileHeight, int itemsToRender;
+	CCAtlasNode* initWithTileFile(NSString* tile, int tileWidth, int tileHeight, int itemsToRender;
 
 	/** updates the Atlas (indexed vertex array).
 	* Shall be overriden in subclasses

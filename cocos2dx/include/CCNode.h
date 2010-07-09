@@ -212,7 +212,26 @@ public:
 	/** allocates and initializes a node.
 	The node will be created as "autorelease".
 	*/
-	static void* node(void);
+	static CCNode * node(void);
+
+	/// @todo callback?  
+	//scene managment
+
+	/** callback that is called every time the CCNode enters the 'stage'.
+	If the CCNode enters the 'stage' with a transition, this callback is called when the transition starts.
+	During onEnter you can't a "sister/brother" node.
+	*/
+	void onEnter();
+	/** callback that is called when the CCNode enters in the 'stage'.
+	If the CCNode enters the 'stage' with a transition, this callback is called when the transition finishes.
+	@since v0.8
+	*/
+	void onEnterTransitionDidFinish();
+	/** callback that is called every time the CCNode leaves the 'stage'.
+	If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
+	During onExit you can't a "sister/brother" node.
+	*/
+	void onExit();
 
 	// composition: ADD
 
@@ -220,19 +239,19 @@ public:
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	void * addChild(CCNode* node);
+	CCNode * addChild(CCNode * node);
 
 	/** Adds a child to the container with a z-order
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	void * addChild(CCNode* node, int zOrder);
+	CCNode * addChild(CCNode * node, int zOrder);
 
 	/** Adds a child to the container with z order and tag
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	void * addChild(CCNode* node, int zOrder, int tag);
+	CCNode * addChild(CCNode * node, int zOrder, int tag);
 
 	// composition: REMOVE
 
@@ -262,7 +281,7 @@ public:
 	@return returns a CCNode object
 	@since v0.7.1
 	*/
-	CCNode* getChildByTag(int tag);
+	CCNode * getChildByTag(int tag);
 
 	/** Reorders a child according to a new z value.
 	* The child MUST be already added.

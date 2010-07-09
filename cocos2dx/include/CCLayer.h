@@ -43,6 +43,8 @@ All features from CCNode are valid, plus the following new features:
 class CCLayer : public CCNode//, public UIAccelerometerDelegate, public CCStandardTouchDelegate, public CCTargetedTouchDelegate
 {
 public:
+	CCLayer();
+	virtual ~CCLayer();
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
 	( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
@@ -60,7 +62,7 @@ public:
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
 	@since v0.8.1
 	*/
-	CCX_SYNTHESIZE(bool, m_bIsTouchEnabled, IsTouchEnabled)
+	CCX_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
 	/** whether or not it will receive Accelerometer events
 	You can enable / disable accelerometer events with this property.
 	@since v0.8.1
@@ -85,15 +87,19 @@ protected:
 	GLubyte m_cSquareColors[4 * 4];
 
 public:
+
+	CCColorLayer();
+	virtual ~CCColorLayer();
+
 	/** creates a CCLayer with color, width and height */
-	static void* layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** creates a CCLayer with color. Width and height are the window size. */
-	static void* layerWithColor(ccColor4B color);
+	static CCColorLayer * layerWithColor(ccColor4B color);
 
 	/** initializes a CCLayer with color, width and height */
-	void* initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	CCColorLayer * initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** initializes a CCLayer with color. Width and height are the window size. */
-	void* initWithColor(ccColor4B color);
+	CCColorLayer * initWithColor(ccColor4B color);
 
 	/** change width */
 	void changeWidth(GLfloat w);
@@ -120,13 +126,17 @@ Features:
 class CCMultiplexLayer : public CCLayer
 {
 protected:
-	unsigned int enabledLayer;
-	NSMutableArray *layers;
+	unsigned int m_iEnabledLayer;
+	NSMutableArray * m_tLayers;
 public:
+
+	CCMultiplexLayer();
+	virtual ~CCMultiplexLayer();
+
 	/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
-	static void* layerWithLayers(CCLayer* layer, ... );
+	static CCMultiplexLayer * layerWithLayers(CCLayer* layer, ... );
 	/** initializes a MultiplexLayer with one or more layers using a variable argument list. */
-	void* initWithLayers(CCLayer* layer, va_list params);
+	CCMultiplexLayer * initWithLayers(CCLayer* layer, va_list params);
 	/** switches to a certain layer indexed by n. 
 	The current (old) layer will be removed from it's parent with 'cleanup:YES'.
 	*/
@@ -138,3 +148,4 @@ public:
 };
 
 #endif // __CCLAYER_H__
+

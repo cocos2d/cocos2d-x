@@ -44,21 +44,25 @@ protected:
 	bool	m_bBack;
 
 public:
-	/**
-	* creates a base transition with duration and incoming scene
-	* if back is TRUE then the effect is reversed to appear as if the incoming 
-	* scene is being turned from left over the outgoing scene
-	*/
-	static void* transitionWithDurationAndScene(ccTime t,CCScene* scene,bool backwards);
+	CCPageTurnTransition();
+	virtual ~CCPageTurnTransition();
 
 	/**
 	* creates a base transition with duration and incoming scene
 	* if back is TRUE then the effect is reversed to appear as if the incoming 
 	* scene is being turned from left over the outgoing scene
 	*/
-	void* initWithDuration(ccTime t,CCScene* scene,bool backwards);
+	static CCPageTurnTransition* transitionWithDurationAndScene(ccTime t,CCScene* scene,bool backwards);
+
+	/**
+	* creates a base transition with duration and incoming scene
+	* if back is TRUE then the effect is reversed to appear as if the incoming 
+	* scene is being turned from left over the outgoing scene
+	*/
+	CCPageTurnTransition* initWithDuration(ccTime t,CCScene* scene,bool backwards);
 
 	CCIntervalAction* actionWithSize(ccGridSize vector);
 };
 
 #endif // __CCPAGE_TURN_TRANSITION_H__
+
