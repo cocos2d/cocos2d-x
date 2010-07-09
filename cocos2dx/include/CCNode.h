@@ -94,20 +94,6 @@ Camera:
 
 class CCNode{
 	
-protected:
-
-	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		GLfloat	m_pTransformGL[16];
-	#endif
-	// To reduce memory, place bools that are not properties here:
-	bool m_bIsTransformDirty;
-	bool m_bIsInverseDirty;
-
-
-	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		bool m_bIsTransformGLDirty;
-	#endif
-
 	// variable property
 
 	/** The z order of the node relative to it's "brothers": children of the same parent */
@@ -189,7 +175,21 @@ protected:
 
 	/** A custom user data pointer */
 	CCX_DECLARE_VAR_READWRITE(void *, m_pUserData, UserData)
+	
+protected:
 
+	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		GLfloat	m_pTransformGL[16];
+	#endif
+	// To reduce memory, place bools that are not properties here:
+	bool m_bIsTransformDirty;
+	bool m_bIsInverseDirty;
+
+
+	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		bool m_bIsTransformGLDirty;
+	#endif
+    
 private:
 
 	// lazy allocs
@@ -208,9 +208,6 @@ public:
 	CCNode();
 
 	virtual ~CCNode();
-
-	/** initializes the node */
-	virtual bool init(void);
 
 	/** allocates and initializes a node.
 	The node will be created as "autorelease".

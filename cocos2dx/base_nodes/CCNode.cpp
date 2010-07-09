@@ -53,12 +53,8 @@ CCNode::CCNode(void)
 ,m_pChildren(NULL)
 // userData is always inited as nil
 ,m_pUserData(NULL)
-{}
-
-/*initialize*/
-bool CCNode::init(void)
 {
-	return true;
+    // nothing
 }
 
 float CCNode::getRotation()
