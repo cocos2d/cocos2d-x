@@ -44,8 +44,6 @@ public:
 	CCScene();
 	virtual ~CCScene();
 
-	/** initializes the scene */
-	virtual bool init(void);
 };
 
 #endif // __CCSCENE_H__
