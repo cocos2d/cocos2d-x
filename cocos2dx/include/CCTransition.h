@@ -330,4 +330,4 @@ class CCFadeDownTransition : public CCFadeTRTransition
 
 };
 
-#endif
+#endif // __CCTRANSITION_H__

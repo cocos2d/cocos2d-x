@@ -137,4 +137,4 @@ public:
 	void switchToAndReleaseMe(unsigned int n);
 };
 
-#endif
+#endif // __CCLAYER_H__

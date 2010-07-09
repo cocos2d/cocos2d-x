@@ -22,30 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCSCENE_H__
-#define __CCSCENE_H__
+#ifndef __CCRADIAL_TRANSITION_H__
+#define __CCRADIAL_TRANSITION_H__
 
-#include "CCNode.h"
 
-/** CCScene is a subclass of CCNode that is used only as an abstract concept.
+#include "CCTransition.h"
 
-CCScene an CCNode are almost identical with the difference that CCScene has it's
-anchor point (by default) at the center of the screen.
+///@todo #include "CCProgressTimer.h"
+///@todo #include "CCProgressTimerActions.h"
 
-For the moment CCScene has no other logic than that, but in future releases it might have
-additional logic.
-
-It is a good practice to use and CCScene as the parent of all your nodes.
-*/
-
-class CCScene : public CCNode
+///
+//	A counter colock-wise radial transition to the next scene
+///
+class CCRadialCCWTransition : public CCTransitionScene
 {
-public:
-	CCScene();
-	virtual ~CCScene();
 
-	/** initializes the scene */
-	virtual bool init(void);
 };
 
-#endif // __CCSCENE_H__
+///
+//	A counter colock-wise radial transition to the next scene
+///
+class CCRadialCWTransition : public CCRadialCCWTransition
+{
+
+};
+
+
+#endif __CCRADIAL_TRANSITION_H__
