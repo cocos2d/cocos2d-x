@@ -60,16 +60,16 @@ protected:
 	bool m_bOpacityModifyRGB;
 
 	/** conforms to CCTextureProtocol protocol */
-	CCX_DECLARE_VAR_READWRITE(CCTextureAtlas *, m_tTextureAtlas, TextureAtlas)
+	CCX_PROPERTY(CCTextureAtlas *, m_tTextureAtlas, TextureAtlas)
 
 	/** conforms to CCTextureProtocol protocol */
-	CCX_DECLARE_VAR_READWRITE(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
 	/** conforms to CCRGBAProtocol protocol */
-	CCX_DECLARE_VAR_READWRITE(GLubyte, m_cOpacity, Opacity)
+	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
 
 	/** conforms to CCRGBAProtocol protocol */
-	CCX_DECLARE_VAR_READWRITE(ccColor3B, m_tColor, Color)
+	CCX_PROPERTY(ccColor3B, m_tColor, Color)
 
 private:
 

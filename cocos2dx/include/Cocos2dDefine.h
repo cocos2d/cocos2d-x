@@ -25,60 +25,63 @@ THE SOFTWARE.
 #ifndef __COCOS2D_DEFINE_H__
 #define __COCOS2D_DEFINE_H__
 
-/** CCX_DECLARE_VAR_READONLY is used to declare a protected variable.
+/** CCX_PROPERTY_READONLY is used to declare a protected variable.
 	We can use get method to read the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
 	@param funName : "get + funName" is the name of the get method.
 	@warning : The get method is a public virtual function, you should override it first.
-			The variables and methods declared after CCX_DECLARE_VAR_READONLY are all public.
+			The variables and methods declared after CCX_PROPERTY_READONLY are all public.
 			If you need protected or private, please declare.
 */
-#define CCX_DECLARE_VAR_READONLY(varType, varName, funName)\
+#define CCX_PROPERTY_READONLY(varType, varName, funName)\
 	protected: varType varName;\
 	public: virtual varType get##funName(void);
 
-/** CCX_DECLARE_VAR_READWRITE is used to declare a protected variable.
+/** CCX_PROPERTY is used to declare a protected variable.
 	We can use get method to read the variable, and use the set method to change the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
 	@param funName : "get + funName" is the name of the get method.
 					 "set + funName" is the name of the set method.
 	@warning : The get and set methods are public virtual functions, you should override them first.
-			The variables and methods declared after CCX_DECLARE_VAR_READWRITE are all public.
+			The variables and methods declared after CCX_PROPERTY are all public.
 			If you need protected or private, please declare.
 */
-#define CCX_DECLARE_VAR_READWRITE(varType, varName, funName)\
+#define CCX_PROPERTY(varType, varName, funName)\
 	protected: varType varName;\
 	public: virtual varType get##funName(void);\
 	public: virtual void set##funName(varType var);
 
-/** CCX_DECLARE_VAR_READONLY_INLINE is used to declare a protected variable.
+/** CCX_SYNTHESIZE_READONLY is used to declare a protected variable.
 	We can use get method to read the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
 	@param funName : "get + funName" is the name of the get method.
 	@warning : The get method is a public inline function.
-			The variables and methods declared after CCX_DECLARE_VAR_READONLY_INLINE are all public.
+			The variables and methods declared after CCX_SYNTHESIZE_READONLY are all public.
 			If you need protected or private, please declare.
 */
-#define CCX_DECLARE_VAR_READONLY_INLINE(varType, varName, funName)\
+#define CCX_SYNTHESIZE_READONLY(varType, varName, funName)\
 	protected: varType varName;\
 	public: inline varType get##funName(void){ return varName; }
 
-/** CCX_DECLARE_VAR_READWRITE_INLINE is used to declare a protected variable.
+/** CCX_SYNTHESIZE is used to declare a protected variable.
 	We can use get method to read the variable, and use the set method to change the variable.
 	@param varType : the type of variable.
 	@param varName : variable name.
 	@param funName : "get + funName" is the name of the get method.
 					 "set + funName" is the name of the set method.
 	@warning : The get and set methods are public  inline functions.
-			The variables and methods declared after CCX_DECLARE_VAR_READWRITE_INLINE are all public.
+			The variables and methods declared after CCX_SYNTHESIZE are all public.
 			If you need protected or private, please declare.
 */
-#define CCX_DECLARE_VAR_READWRITE_INLINE(varType, varName, funName)\
+#define CCX_SYNTHESIZE(varType, varName, funName)\
 	protected: varType varName;\
 	public: inline varType get##funName(void){ return varName; }\
 	public: inline void set##funName(varType var){ varName = var; }
+
+#define CCX_SAFE_DELETE(p)  if(p) {delete p; p=NULL;}
+#define CXX_BREAK_IF(cond)  if(cond) break;
 
 #endif // __COCOS2D_DEFINE_H__

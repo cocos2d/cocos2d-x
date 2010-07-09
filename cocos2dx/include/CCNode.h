@@ -97,7 +97,7 @@ class CCNode{
 	// variable property
 
 	/** The z order of the node relative to it's "brothers": children of the same parent */
-	CCX_DECLARE_VAR_READONLY(int, m_iZOrder, ZOrder)
+	CCX_PROPERTY_READONLY(int, m_iZOrder, ZOrder)
 
 	/** The real openGL Z vertex.
 	Differences between openGL Z vertex and cocos2d Z order:
@@ -107,35 +107,35 @@ class CCNode{
 	@warning: Use it at your own risk since it might break the cocos2d parent-children z order
 	@since v0.8
 	*/
-	CCX_DECLARE_VAR_READWRITE(float, m_fVertexZ, VertexZ)
+	CCX_PROPERTY(float, m_fVertexZ, VertexZ)
 
 	/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
-	CCX_DECLARE_VAR_READWRITE(float, m_fRotation, Rotation)
+	CCX_PROPERTY(float, m_fRotation, Rotation)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
-	CCX_DECLARE_VAR_READWRITE(float, m_fScale, Scale)
+	CCX_PROPERTY(float, m_fScale, Scale)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
-	CCX_DECLARE_VAR_READWRITE(float, m_fScaleX, ScaleX)
+	CCX_PROPERTY(float, m_fScaleX, ScaleX)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
-	CCX_DECLARE_VAR_READWRITE(float, m_fScaleY, ScaleY)
+	CCX_PROPERTY(float, m_fScaleY, ScaleY)
 
 	/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
-	CCX_DECLARE_VAR_READWRITE(CGPoint, m_tPosition, Position)
+	CCX_PROPERTY(CGPoint, m_tPosition, Position)
 
 	/** A CCCamera object that lets you move the node using a gluLookAt
 	*/
 
-	CCX_DECLARE_VAR_READONLY(NSMutableArray *, m_pChildren, Children)
+	CCX_PROPERTY_READONLY(NSMutableArray *, m_pChildren, Children)
 
-	CCX_DECLARE_VAR_READONLY(CCCamera *, m_pCamera, Camera)
+	CCX_PROPERTY_READONLY(CCCamera *, m_pCamera, Camera)
 
 	/** A CCGrid object that is used when applying effects */
-	CCX_DECLARE_VAR_READWRITE(CCGridBase *, m_pGrid, Grid)
+	CCX_PROPERTY(CCGridBase *, m_pGrid, Grid)
 
 	/** Whether of not the node is visible. Default is true */
-	CCX_DECLARE_VAR_READWRITE(bool, m_bIsVisible, Visibility)
+	CCX_PROPERTY(bool, m_bIsVisible, Visibility)
 
 	/** anchorPoint is the point around which all transformations and positioning manipulations take place.
 	It's like a pin in the node where it is "attached" to its parent.
@@ -144,37 +144,37 @@ class CCNode{
 	The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
 	@since v0.8
 	*/
-	CCX_DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPoint, AnchorPoint)
+	CCX_PROPERTY(CGPoint, m_tAnchorPoint, AnchorPoint)
 
 	/** The anchorPoint in absolute pixels.
 	Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
 	*/
-	CCX_DECLARE_VAR_READWRITE(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
+	CCX_PROPERTY(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
 	
 	/** The untransformed size of the node.
 	The contentSize remains the same no matter the node is scaled or rotated.
 	All nodes has a size. Layer and Scene has the same size of the screen.
 	@since v0.8
 	*/
-	CCX_DECLARE_VAR_READWRITE(CGSize, m_tContentSize, ContentSize)
+	CCX_PROPERTY(CGSize, m_tContentSize, ContentSize)
 
 	/** whether or not the node is running */
-	CCX_DECLARE_VAR_READONLY(bool, m_bIsRunning, IsRunning)
+	CCX_PROPERTY_READONLY(bool, m_bIsRunning, IsRunning)
 
 	/** A weak reference to the parent */
-	CCX_DECLARE_VAR_READWRITE(CCNode *, m_pParent, Parent)
+	CCX_PROPERTY(CCNode *, m_pParent, Parent)
 
 	/** If true the transformtions will be relative to it's anchor point.
 	* Sprites, Labels and any other sizeble object use it have it enabled by default.
 	* Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
 	*/
-	CCX_DECLARE_VAR_READWRITE(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
+	CCX_PROPERTY(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
 
 	/** A tag used to identify the node easily */
-	CCX_DECLARE_VAR_READWRITE(int, m_iTag, Tag)
+	CCX_PROPERTY(int, m_iTag, Tag)
 
 	/** A custom user data pointer */
-	CCX_DECLARE_VAR_READWRITE(void *, m_pUserData, UserData)
+	CCX_PROPERTY(void *, m_pUserData, UserData)
 	
 protected:
 

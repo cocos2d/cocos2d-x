@@ -60,12 +60,12 @@ public:
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
 	@since v0.8.1
 	*/
-	CCX_DECLARE_VAR_READWRITE_INLINE(bool, m_bIsTouchEnabled, IsTouchEnabled)
+	CCX_SYNTHESIZE(bool, m_bIsTouchEnabled, IsTouchEnabled)
 	/** whether or not it will receive Accelerometer events
 	You can enable / disable accelerometer events with this property.
 	@since v0.8.1
 	*/
-	CCX_DECLARE_VAR_READWRITE(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+	CCX_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
 };
 
 //
@@ -105,11 +105,11 @@ public:
 	void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_DECLARE_VAR_READONLY(GLubyte, m_cOpacity, Opacity)
+	CCX_PROPERTY_READONLY(GLubyte, m_cOpacity, Opacity)
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_DECLARE_VAR_READONLY(ccColor3B, m_tColor, Color)
+	CCX_PROPERTY_READONLY(ccColor3B, m_tColor, Color)
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
-	CCX_DECLARE_VAR_READWRITE(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 };
 
 /** CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
