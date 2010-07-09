@@ -96,62 +96,6 @@ class CCNode{
 	
 protected:
 
-	// rotation angle
-	//float m_fRotation;
-
-	// scaling factors
-	//float m_fScaleX, m_fScaleY;
-
-	// position of the node
-	//CGPoint m_tPosition;
-
-	// is visible
-	//bool m_bIsVisible;
-
-	// anchor point in pixels
-	//CGPoint m_tAnchorPointInPixels;	
-
-	// anchor point normalized
-	//CGPoint m_tAnchorPoint;	
-
-	// If true the transformtions will be relative to (-transform.x, -transform.y).
-	// Sprites, Labels and any other "small" object uses it.
-	// Scenes, Layers and other "whole screen" object don't use it.
-	//bool m_bIsRelativeAnchorPoint;
-
-	// untransformed size of the node
-	//CGSize m_tContentSize;
-
-	// transform
-	//CGAffineTransform m_tTransform, m_tInverse;
-
-	// openGL real Z vertex
-	//float m_fVertexZ;
-
-	// a Camera
-	//CCCamera * m_pCamera;
-
-	// a Grid
-	//CCGridBase * m_pGrid;
-
-	// z-order value
-	//int m_iZOrder;
-
-	// array of children
-	//NSMutableArray * m_pChildren;
-
-	// weakref to parent
-	//CCNode * m_pParent;
-
-	// a tag. any number you want to assign to the node
-	//int m_iTag;
-
-	// user data field
-	//void *m_pUserData;
-
-	// Is running
-	//bool m_bIsRunning;
-
 	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		GLfloat	m_pTransformGL[16];
 	#endif
@@ -378,13 +322,14 @@ public:
 	@since v0.7.1
 	@return An Action pointer
 	*/
-//	CCAction* runAction(CCAction* action);
+	
+/// @todo	CCAction* runAction(CCAction* action);
 
 	/** Removes all actions from the running action list */
 	void stopAllActions(void);
 
 	/** Removes an action from the running action list */
-//	void stopAction(CCAction* action);
+/// @todo	void stopAction(CCAction* action);
 
 	/** Removes an action from the running action list given its tag
 	@since v0.7.1
@@ -395,7 +340,7 @@ public:
 	@since v0.7.1
 	@return the Action the with the given tag
 	*/
-//	CCAction* getActionByTag(int tag);
+/// @todo	CCAction* getActionByTag(int tag);
 
 	/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
 	* Composable actions are counted as 1 action. Example:
@@ -408,7 +353,7 @@ public:
 	// timers
 
 	/** check whether a selector is scheduled. */
-//	bool isScheduled(SEL selector);
+/// @todo	bool isScheduled(SEL selector);
 
 	/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
 	Scheduled methods with a lower order value will be called before the ones that have a higher order value.
@@ -435,16 +380,16 @@ public:
 	/** schedules a selector.
 	The scheduled selector will be ticked every frame
 	*/
-//	void schedule(SEL selector);
+/// @todo	void schedule(SEL selector);
 
 	/** schedules a custom selector with an interval time in seconds.
 	If time is 0 it will be ticked every frame.
 	If tiem is 0, it is recommended to use 'scheduleUpdate' instead.
 	*/
-//	void schedule(SEL selector, ccTime seconds);
+/// @todo	void schedule(SEL selector, ccTime seconds);
 
 	/** unschedules a custom selector.*/
-//	void unschedule(SEL selector);
+/// @todo	void unschedule(SEL selector);
 
 	/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
 	Actions are not affected by this method.
@@ -467,22 +412,22 @@ public:
 	/** Returns the local affine transform matrix
 	@since v0.7.1
 	*/
-//	CGAffineTransform nodeToParentTransform(void);
+/// @todo	CGAffineTransform nodeToParentTransform(void);
 
 	/** Returns the inverse local affine transform matrix
 	@since v0.7.1
 	*/
-//	CGAffineTransform parentToNodeTransform(void);
+/// @todo	CGAffineTransform parentToNodeTransform(void);
 
 	/** Retrusn the world affine transform matrix
 	@since v0.7.1
 	*/
-//	CGAffineTransform nodeToWorldTransform(void);
+/// @todo	CGAffineTransform nodeToWorldTransform(void);
 
 	/** Returns the inverse world affine transform matrix
 	@since v0.7.1
 	*/
-//	CGAffineTransform worldToNodeTransform(void);
+/// @todo	CGAffineTransform worldToNodeTransform(void);
 
 	/** converts a world coordinate to local coordinate
 	@since v0.7.1
@@ -505,12 +450,12 @@ public:
 	/** convenience methods which take a UITouch instead of CGPoint
 	@since v0.7.1
 	*/
-//	CGPoint convertTouchToNodeSpace(UITouch * touch);
+/// @todo	CGPoint convertTouchToNodeSpace(UITouch * touch);
 
 	/** converts a UITouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
 	@since v0.7.1
 	*/
-//	CGPoint convertTouchToNodeSpaceAR:(UITouch * touch);
+/// @todo	CGPoint convertTouchToNodeSpaceAR:(UITouch * touch);
 
 };
 

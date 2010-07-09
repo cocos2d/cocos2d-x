@@ -40,8 +40,6 @@ All features from CCNode are valid, plus the following features:
 class CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
 {
 protected:
-	// texture atlas
-	//CCTextureAtlas	*textureAtlas_;
 
 	// chars per row
 	int m_iItemsPerRow;
@@ -58,12 +56,6 @@ protected:
 	// height of each char
 	int	m_iItemHeight;
 
-	// blend function
-	//ccBlendFunc		blendFunc_;
-
-	// texture RGBA. 
-	//GLubyte		opacity_;
-	//ccColor3B	color_;
 	ccColor3B	m_tColorUnmodified;
 	bool m_bOpacityModifyRGB;
 
