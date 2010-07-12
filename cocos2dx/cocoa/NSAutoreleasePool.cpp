@@ -23,19 +23,47 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "NSAutoReleasePool.h"
+#include <assert.h>
+#include <stack>
+#include <vector>
+
+using namespace std;
 
 NSAutoreleasePool::NSAutoreleasePool(void)
 {
+	m_pManagedObjectArray = new NSMutableArray();
+}
+
+NSAutoreleasePool::~NSAutoreleasePool(void)
+{
+	delete m_pManagedObjectArray;
 }
 
 void NSAutoreleasePool::addObject(NSObject *pObject)
 {
-	
+	m_pManagedObjectArray->addObject(pObject);
 }
 
 void NSAutoreleasePool::removeObject(NSObject *pObject)
 {
-	
+	m_pManagedObjectArray->removeObject(pObject);
+}
+
+void NSAutoreleasePool::clear(void)
+{
+	if (m_pManagedObjectArray->count())
+	{
+		vector<NSObject *>::iterator iter;
+		for (iter = m_pManagedObjectArray->begin(); iter != m_pManagedObjectArray->end(); ++iter)
+		{
+			if (*iter)
+			{
+				(*iter)->m_bManaged = false;
+			}
+		}
+
+		m_pManagedObjectArray->removeAllObjects();
+	}
 }
 
 
@@ -53,4 +81,70 @@ NSPoolManager* NSPoolManager::getInstance(void)
 	}
 
 	return m_pPoolManager;
+}
+
+NSPoolManager::NSPoolManager(void)
+{
+	m_pReleasePoolStack = new stack<NSAutoreleasePool *>();
+	m_pCurReleasePool = NULL;
+}
+
+NSPoolManager::~NSPoolManager(void)
+{
+	finalize();
+
+	delete m_pReleasePoolStack;
+}
+
+void NSPoolManager::finalize(void)
+{
+	if (m_pReleasePoolStack->size() > 0)
+	{
+		NSAutoreleasePool *pTop;
+		while (pTop = m_pReleasePoolStack->top())
+		{
+			pTop->clear();
+			m_pReleasePoolStack->pop();
+		}
+	}
+}
+
+void NSPoolManager::push(void)
+{
+	NSAutoreleasePool *pPool = new NSAutoreleasePool();
+	m_pCurReleasePool = pPool;
+
+	m_pReleasePoolStack->push(pPool);
+}
+
+void NSPoolManager::pop(void)
+{
+	if (! m_pReleasePoolStack->empty())
+	{
+		m_pReleasePoolStack->pop();
+	}
+}
+
+void NSPoolManager::addObject(NSObject *pObject)
+{
+	getCurReleasePool()->addObject(pObject);
+}
+
+void NSPoolManager::removeObject(NSObject *pObject)
+{
+	assert(m_pCurReleasePool);
+
+	m_pCurReleasePool->removeObject(pObject);
+}
+
+NSAutoreleasePool* NSPoolManager::getCurReleasePool(void)
+{
+	if (! m_pCurReleasePool)
+	{
+		push();
+	}
+
+	assert(m_pCurReleasePool);
+
+	return m_pCurReleasePool;
 }

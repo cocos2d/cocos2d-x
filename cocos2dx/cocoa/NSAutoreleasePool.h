@@ -26,23 +26,29 @@ THE SOFTWARE.
 #define __NS_AUTO_RELEASE_POOL_H__
 
 #include "NSObject.h"
+#include "NSMutablearray.h"
 
-class NSAutoreleasePool : public NSObject
+#include <stack>
+
+class NSAutoreleasePool
 {
 public:
 	NSAutoreleasePool(void);
+	~NSAutoreleasePool(void);
 
 	void addObject(NSObject *pObject);
 	void removeObject(NSObject *pObject);
 
 	void clear(void);
 private:
-	//todo: add mutable array
+	NSMutableArray *m_pManagedObjectArray;
 };
 
 class NSPoolManager
 {
 public:
+    ~NSPoolManager();
+
 	void finalize(void);
     void push(void);
 	void pop(void);
@@ -54,10 +60,15 @@ public:
 	static NSPoolManager* getInstance();
 
 private:
-	NSPoolManager() {};
+	NSPoolManager();
+	NSAutoreleasePool* getCurReleasePool();
 
 private:
 	static NSPoolManager *m_pPoolManager;
+
+private:
+	std::stack<NSAutoreleasePool *> *m_pReleasePoolStack;
+	NSAutoreleasePool *m_pCurReleasePool;
 };
 
 #endif //__NS_AUTO_RELEASE_POOL_H__

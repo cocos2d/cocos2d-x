@@ -56,6 +56,8 @@ public:
 	bool isSingleRefrence(void);
 	UINT32 retainCount(void);
 	bool isEqual(const NSObject* pObject);
+
+	friend class NSAutoreleasePool;
 };
 
 #endif // __COCOA_NSOBJECT_H__
