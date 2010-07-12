@@ -45,6 +45,10 @@ class CCLayer : public CCNode//, public UIAccelerometerDelegate, public CCStanda
 public:
 	CCLayer();
 	virtual ~CCLayer();
+
+	virtual void onEnter();
+	virtual void onExit();
+	
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
 	( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
@@ -91,6 +95,9 @@ public:
 	CCColorLayer();
 	virtual ~CCColorLayer();
 
+	virtual void draw();
+	virtual void setContentSize(CGSize var);
+
 	/** creates a CCLayer with color, width and height */
 	static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** creates a CCLayer with color. Width and height are the window size. */
@@ -111,11 +118,14 @@ public:
 	void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY_READONLY(GLubyte, m_cOpacity, Opacity)
+	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY_READONLY(ccColor3B, m_tColor, Color)
+	CCX_PROPERTY(ccColor3B, m_tColor, Color)
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
 	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+
+private :
+	void updateColor();
 };
 
 /** CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
@@ -127,7 +137,7 @@ class CCMultiplexLayer : public CCLayer
 {
 protected:
 	unsigned int m_iEnabledLayer;
-	NSMutableArray * m_tLayers;
+	NSMutableArray * m_pLayers;
 public:
 
 	CCMultiplexLayer();

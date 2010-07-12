@@ -38,6 +38,8 @@ class CCTransitionEaseScene : public NSObject
 	@since v0.8.2
 	*/
 public:
+	CCTransitionEaseScene();
+	virtual ~CCTransitionEaseScene();
 	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
 };
 
@@ -60,13 +62,22 @@ class CCTransitionScene : public CCScene
 {
 
 protected:
-	CCScene	* m_tInScene;
-	CCScene	* m_tOutScene;
+	CCScene	* m_pInScene;
+	CCScene	* m_pOutScene;
 	ccTime	m_fDuration;
-	BOOL	m_bIsInSceneOnTop;
-	BOOL	m_bIsSendCleanupToScene;
+	bool	m_bIsInSceneOnTop;
+	bool	m_bIsSendCleanupToScene;
 
 public:
+
+	CCTransitionScene();
+	virtual ~CCTransitionScene();
+	virtual void draw();
+	virtual void onEnter();
+	virtual void onExit();
+	virtual void cleanup();
+	virtual void dealloc();
+
 	/** creates a base transition with duration and incoming scene */
 	static CCTransitionScene * transitionWithDurationAndScene(ccTime t, CCScene *scene);
 
@@ -78,6 +89,11 @@ public:
 
 	/** used by some transitions to hide the outter scene */
 	void hideOutShowIn(void);
+
+private: 
+	void sceneOrder();
+	void setNewScene(ccTime dt);
+
 };
 
 /** A CCTransition that supports orientation like.
@@ -89,8 +105,11 @@ protected:
 	tOrientation m_tOrientation;
 
 public:
+	CCOrientedTransitionScene();
+	~CCOrientedTransitionScene();
+
 	/** creates a base transition with duration and incoming scene */
-	virtual CCOrientedTransitionScene * transitionWithDurationAndScene(ccTime t,CCScene* scene, tOrientation orientation);
+	static CCOrientedTransitionScene * transitionWithDurationAndScene(ccTime t,CCScene* scene, tOrientation orientation);
 	/** initializes a transition with duration and incoming scene */
 	virtual CCOrientedTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene,tOrientation orientation);
 };
@@ -103,6 +122,7 @@ class CCRotoZoomTransition : public CCTransitionScene
 public:
 	CCRotoZoomTransition();
 	virtual ~CCRotoZoomTransition();
+	virtual void onEnter();
 };
 
 /** CCJumpZoomTransition:
@@ -113,6 +133,7 @@ class CCJumpZoomTransition : public CCTransitionScene
 public:
 	CCJumpZoomTransition();
 	virtual ~CCJumpZoomTransition();
+	virtual void onEnter();
 };
 
 /** CCMoveInLTransition:
@@ -126,7 +147,11 @@ public:
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed */
-	virtual CCIntervalAction* action(void);
+	CCIntervalAction* action(void);
+
+	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
+
+	virtual void onEnter();
 };
 
 /** CCMoveInRTransition:
@@ -137,6 +162,7 @@ class CCMoveInRTransition : public CCMoveInLTransition
 public:
 	CCMoveInRTransition();
 	virtual ~CCMoveInRTransition();
+	virtual void initScenes();
 };
 
 /** CCMoveInTTransition:
@@ -147,6 +173,7 @@ class CCMoveInTTransition : public CCMoveInLTransition
 public:
 	CCMoveInTTransition();
 	virtual ~CCMoveInTTransition();
+	virtual void initScenes();
 };
 
 /** CCMoveInBTransition:
@@ -157,6 +184,7 @@ class CCMoveInBTransition : public CCMoveInLTransition
 public:
 	CCMoveInBTransition();
 	virtual ~CCMoveInBTransition();
+	virtual void initScenes();
 };
 
 /** CCSlideInLTransition:
@@ -172,6 +200,10 @@ public:
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
 	virtual CCIntervalAction* action(void);
+
+	virtual void onEnter();
+	virtual void sceneOrder();
+	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
 };
 
 /** CCSlideInRTransition:
@@ -182,6 +214,13 @@ class CCSlideInRTransition : public CCSlideInLTransition
 public:
 	CCSlideInRTransition();
 	virtual ~CCSlideInRTransition();
+
+	/** initializes the scenes */
+	virtual void initScenes(void);
+	/** returns the action that will be performed by the incomming and outgoing scene */
+	virtual CCIntervalAction* action(void);
+
+	virtual void sceneOrder();
 };
 
 /** CCSlideInBTransition:
@@ -192,6 +231,13 @@ class CCSlideInBTransition : public CCSlideInLTransition
 public:
 	CCSlideInBTransition();
 	virtual ~CCSlideInBTransition();
+
+	/** initializes the scenes */
+	virtual void initScenes(void);
+	/** returns the action that will be performed by the incomming and outgoing scene */
+	virtual CCIntervalAction* action(void);
+
+	virtual void sceneOrder();
 };
 
 /** CCSlideInTTransition:
@@ -202,6 +248,13 @@ class CCSlideInTTransition : public CCSlideInLTransition
 public:
 	CCSlideInTTransition();
 	virtual ~CCSlideInTTransition();
+
+	/** initializes the scenes */
+	virtual void initScenes(void);
+	/** returns the action that will be performed by the incomming and outgoing scene */
+	virtual CCIntervalAction* action(void);
+
+	virtual void sceneOrder();
 };
 
 /**
@@ -212,6 +265,9 @@ class CCShrinkGrowTransition : public CCTransitionScene , public CCTransitionEas
 public:
 	CCShrinkGrowTransition();
 	virtual ~CCShrinkGrowTransition();
+
+	virtual void onEnter();
+	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
 };
 
 /** CCFlipXTransition:
@@ -223,6 +279,8 @@ class CCFlipXTransition : public CCOrientedTransitionScene
 public:
 	CCFlipXTransition();
 	virtual ~CCFlipXTransition();
+
+	virtual void onEnter();
 };
 
 /** CCFlipYTransition:
@@ -234,6 +292,8 @@ class CCFlipYTransition : public CCOrientedTransitionScene
 public:
 	CCFlipYTransition();
 	virtual ~CCFlipYTransition();
+
+	virtual void onEnter();
 };
 
 /** CCFlipAngularTransition:
@@ -245,6 +305,8 @@ class CCFlipAngularTransition : public CCOrientedTransitionScene
 public:
 	CCFlipAngularTransition();
 	virtual ~CCFlipAngularTransition();
+
+	virtual void onEnter();
 };
 
 /** CCZoomFlipXTransition:
@@ -256,6 +318,8 @@ class CCZoomFlipXTransition : public CCOrientedTransitionScene
 public:
 	CCZoomFlipXTransition();
 	virtual ~CCZoomFlipXTransition();
+
+	virtual void onEnter();
 };
 
 /** CCZoomFlipYTransition:
@@ -267,6 +331,8 @@ class CCZoomFlipYTransition : public CCOrientedTransitionScene
 public:
 	CCZoomFlipYTransition();
 	virtual ~CCZoomFlipYTransition();
+
+	virtual void onEnter();
 };
 
 /** CCZoomFlipAngularTransition:
@@ -278,6 +344,8 @@ class CCZoomFlipAngularTransition : public CCOrientedTransitionScene
 public:
 	CCZoomFlipAngularTransition();
 	virtual ~CCZoomFlipAngularTransition();
+
+	virtual void onEnter();
 };
 
 /** CCFadeTransition:
@@ -299,6 +367,10 @@ public:
 	static CCFadeTransition* transitionWithDurationAndColor(ccTime duration,CCScene* scene, ccColor3B color);
 	/** initializes the transition with a duration and with an RGB color */
 	CCFadeTransition* initWithDurationAndColor(ccTime duration, CCScene*scene ,ccColor3B color);
+
+	virtual CCFadeTransition * initWithDurationAndScene(ccTime t,CCScene* scene); 
+	virtual void onEnter();
+	virtual void onExit();
 };
 
 /**
@@ -311,6 +383,10 @@ class CCCrossFadeTransition : public CCTransitionScene
 public :
 	CCCrossFadeTransition();
 	virtual ~CCCrossFadeTransition();
+
+	virtual void draw();
+	virtual void onEnter();
+	virtual void onExit();
 };
 
 /** CCTurnOffTilesTransition:
@@ -321,6 +397,10 @@ class CCTurnOffTilesTransition : public CCTransitionScene ,public CCTransitionEa
 public :
 	CCTurnOffTilesTransition();
 	virtual ~CCTurnOffTilesTransition();
+
+	virtual void sceneOrder();
+	virtual void onEnter();
+	CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
 };
 
 /** CCSplitColsTransition:
@@ -333,6 +413,8 @@ public:
 	virtual ~CCSplitColsTransition();
 
 	virtual CCIntervalAction* action(void);
+	virtual void onEnter();
+	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
 };
 
 /** CCSplitRowsTransition:
@@ -343,6 +425,8 @@ class CCSplitRowsTransition : public CCSplitColsTransition
 public:
 	CCSplitRowsTransition();
 	virtual ~CCSplitRowsTransition();
+
+	virtual CCIntervalAction* action(void);
 };
 
 /** CCFadeTRTransition:
@@ -354,6 +438,10 @@ public:
 	CCFadeTRTransition();
 	virtual ~CCFadeTRTransition();
 	virtual CCIntervalAction* actionWithSize(ccGridSize size);
+
+	virtual void sceneOrder();
+	virtual void onEnter();
+	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
 };
 
 /** CCFadeBLTransition:
@@ -364,6 +452,7 @@ class CCFadeBLTransition : public CCFadeTRTransition
 public:
 	CCFadeBLTransition();
 	virtual ~CCFadeBLTransition();
+	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 };
 
 /** CCFadeUpTransition:
@@ -374,6 +463,7 @@ class CCFadeUpTransition : public CCFadeTRTransition
 public:
 	CCFadeUpTransition();
 	virtual ~CCFadeUpTransition();
+	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 };
 
 /** CCFadeDownTransition:
@@ -384,6 +474,7 @@ class CCFadeDownTransition : public CCFadeTRTransition
 public:
 	CCFadeDownTransition();
 	virtual ~CCFadeDownTransition();
+	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 };
 
 #endif // __CCTRANSITION_H__

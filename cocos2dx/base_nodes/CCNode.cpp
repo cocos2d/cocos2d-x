@@ -62,40 +62,145 @@ CCNode::~CCNode()
 
 }
 
+
+/// zOrder getter
+int CCNode::getZOrder()
+{
+	return m_iZOrder;
+}
+
+/// ertexZ getter
+float CCNode::getVertexZ()
+{
+	return m_fVertexZ;
+}
+
+
+/// vertexZ setter
+void CCNode::setVertexZ(float var)
+{
+	m_fVertexZ = var;
+}
+
+
+/// rotation getter
 float CCNode::getRotation()
 {
 	return m_fRotation;
 }
 
-CGPoint CCNode::getPosition()
+/// rotation setter
+void CCNode::setRotation(float newRotation)
 {
-	return m_tPosition;
+	m_fRotation = newRotation;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
+
+/// scale getter
+float CCNode::getScale(void)
+{
+	///@todo NSAssert( scaleX_ == scaleY_, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+	return m_fScale;
+}
+
+/// scale setter
+void CCNode::setScale(float scale)
+{
+	m_fScaleX = m_fScaleY = scale;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
+}
+
+/// scaleX getter
 float CCNode::getScaleX()
 {
 	return m_fScaleX;
 }
 
+/// scaleX setter
+void CCNode::setScaleX(float newScaleX)
+{
+	m_fScaleX = newScaleX;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
+}
+
+/// scaleY getter
 float CCNode::getScaleY()
 {
 	return m_fScaleY;
 }
 
-void CCNode::setVisibility(bool bIsVisible)
+/// scaleY setter
+void CCNode::setScaleY(float newScaleY)
 {
-	m_bIsVisible = bIsVisible;
+	m_fScaleY = newScaleY;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
 }
 
-bool CCNode::getVisibility()
+/// position getter
+CGPoint CCNode::getPosition()
 {
-	return m_bIsVisible;
+	return m_tPosition;
 }
+
+/// position setter
+void CCNode::setPosition(CGPoint newPosition)
+{
+	m_tPosition = newPosition;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+	#endif
+}
+
+/// children getter
+NSMutableArray * CCNode::getChildren()
+{
+	return m_pChildren;
+}
+
+/// children getter
+// camera: lazy alloc
+CCCamera* getCamera()
+{
+/** @todo  no declare in class
+if( ! camera_ ) {
+camera_ = [[CCCamera alloc] init];
+
+// by default, center camera at the Sprite's anchor point
+//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
+//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
+
+//		[camera_ setCenterX:0 centerY:0 centerZ:0];
+//		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
+
+}
+
+return camera_;*/
+	return NULL;
+}
+
+
+/// grid getter
 /// @todo
 //CCGridBase* CCNode::getGrid()
 //{
 //	return m_pGrid;
 //}
+
+/// grid setter
 /// @todo
 //void CCNode::setGrid(CCGridBase* pGrid)
 //{
@@ -109,75 +214,52 @@ bool CCNode::getVisibility()
 //}
 
 
-// getters synthesized, setters explicit
-void CCNode::setRotation(float newRotation)
+/// isVisible getter
+bool CCNode::getIsVisible()
 {
-	m_fRotation = newRotation;
-	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+	return m_bIsVisible;
 }
 
-void CCNode::setScaleX(float newScaleX)
+/// isVisible setter
+void CCNode::setIsVisible(bool var)
 {
-	m_fScaleX = newScaleX;
-	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+	m_bIsVisible = var;
 }
 
-void CCNode::setScaleY(float newScaleY)
-{
-	m_fScaleY = newScaleY;
-	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
-}
 
-void CCNode::setPosition(CGPoint newPosition)
-{
-	m_tPosition = newPosition;
-	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
-}
-
-void CCNode::setIsRelativeAnchorPoint(bool newValue)
-{
-	m_bIsRelativeAnchorPoint = newValue;
-	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
-}
-
-bool CCNode::getIsRelativeAnchorPoint()
-{
-	return m_bIsRelativeAnchorPoint;
-}
-/// @todo
-void CCNode::setAnchorPoint(CGPoint point)
-{
-	/*if( ! CGPointEqualToPoint(point, m_anchorPoint) ) 
-	{
-		m_anchorPoint = point;
-		this->m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
-		m_isTransformDirty = m_isInverseDirty = true;
-		#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-			m_bIsTransformGLDirty = true;
-		#endif
-	}*/
-}
-
+/// anchorPoint getter
 CGPoint CCNode::getAnchorPoint()
 {
 	return m_tAnchorPoint;
 }
-/// @todo
+
+/// @todo anchorPoint setter
+void CCNode::setAnchorPoint(CGPoint point)
+{
+	/*if( ! CGPointEqualToPoint(point, m_anchorPoint) ) 
+	{
+	m_anchorPoint = point;
+	this->m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
+	m_isTransformDirty = m_isInverseDirty = true;
+	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+	#endif
+	}*/
+}
+
+/// anchorPointInPixels getter
+CGPoint CCNode::getAnchorPointInPixels()
+{
+	return m_tAnchorPointInPixels;
+}
+
+/// contentSize getter
+CGSize CCNode::getContentSize()
+{
+	return m_tContentSize;
+}
+
+/// @todo contentSize setter
 void CCNode::setContentSize(CGSize size)
 {
 	//if( ! CGSizeEqualToSize(size, m_contentSize) ) 
@@ -191,82 +273,76 @@ void CCNode::setContentSize(CGSize size)
 	//}
 }
 
-CGSize CCNode::getContentSize()
-{
-	return m_tContentSize;
-}
-/// @todo
-//CGRect CCNode::boundingBox()
-//{
-//	CGRect rect = CGRectMake(0, 0, m_contentSize.width, m_contentSize.height);
-//	return CGRectApplyAffineTransform(rect, nodeToParentTransform());
-//}
-/// @todo
-//float CCNode::scale()
-//{
-//	UXAssert( m_scaleX == m_scaleY, L"CocosNode#scale. ScaleX != ScaleY. Don't know which one to return");
-//	return m_scaleX;
-//}
 
-void CCNode::setScale(float scale)
+/// isRunning getter
+bool CCNode::getIsRunning()
 {
-	m_fScaleX = m_fScaleY = scale;
+	return m_bIsRunning;
+}
+
+
+/// parent getter
+CCNode * CCNode::getParent()
+{
+	return m_pParent;
+}
+/// parent setter
+void CCNode::setParent(CCNode * var)
+{
+	m_pParent = var;
+}
+
+/// isRelativeAnchorPoint getter
+bool CCNode::getIsRelativeAnchorPoint()
+{
+	return m_bIsRelativeAnchorPoint;
+}
+/// isRelativeAnchorPoint setter
+void CCNode::setIsRelativeAnchorPoint(bool newValue)
+{
+	m_bIsRelativeAnchorPoint = newValue;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
 	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 	#endif
 }
 
-/// @todo
-//UxMutableArray* CCNode::children()
-//{
-//	return m_pChildrenArray;
-//}
-
-void CCNode::setParent(CCNode* pParentNode)
-{
-	m_pParent = pParentNode;
-}
-
-CCNode* CCNode::getParent()
-{
-	return m_pParent;
-}
-
+/// tag getter
 int CCNode::getTag()
 {
 	return m_iTag;
 }
 
-void CCNode::setTag(int tag)
+/// tag setter
+void CCNode::setTag(int var)
 {
-	m_iTag = tag;   
+	m_iTag = var;
 }
 
-int CCNode::getZOrder()
+/// userData getter
+void * CCNode::getUserData()
 {
-	return m_iZOrder;
+	return m_pUserData;
 }
 
-void CCNode::setVertexZ(float z)
+/// userData setter
+void CCNode::setUserData(void *var)
 {
-	m_fVertexZ = z;
+	m_pUserData = var;
 }
 
-float CCNode::getVertexZ()
-{
-	return m_fVertexZ;
-}
 
-CGPoint CCNode::getAnchorPointInPixels()
-{
-	return m_tAnchorPointInPixels;
-}
 
-bool CCNode::getIsRunning()
-{
-	return m_bIsRunning;
-}
+
+
+/// @todo
+//CGRect CCNode::boundingBox()
+//{
+//	CGRect rect = CGRectMake(0, 0, m_contentSize.width, m_contentSize.height);
+//	return CGRectApplyAffineTransform(rect, nodeToParentTransform());
+//}
+
+
 
 
 /** @todo
@@ -278,37 +354,13 @@ bool CCNode::getIsRunning()
 */
 
 
-/** @todo
-
-@synthesize children = children_;
-@synthesize visible=visible_;
-@synthesize parent=parent_;
-@synthesize grid=grid_;
-@synthesize zOrder=zOrder_;
-@synthesize tag=tag_;
-@synthesize vertexZ = vertexZ_;
-@synthesize isRunning=isRunning_;
-
-
-@synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_, position=position_;
-@synthesize anchorPointInPixels=anchorPointInPixels_, isRelativeAnchorPoint=isRelativeAnchorPoint_;
-@synthesize userData;
-*/
-
-
-
-
-float CCNode::getScale(void)
-{
-	///@todo NSAssert( scaleX_ == scaleY_, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
-	return m_fScale;
-}
-
 
 CCNode * CCNode::node(void)
 {
 /// @todo	return [[[self alloc] init] autorelease];
-	return NULL;
+	CCNode * pNode = new CCNode();
+	pNode->autorelease();
+	return pNode;
 }
 
 void CCNode::cleanup()
@@ -356,25 +408,7 @@ void CCNode::childrenAlloc(void)
 {
 	/// @todo children_ = [[CCArray alloc] initWithCapacity:4];
 }
-/** @todo  no declare in class
-// camera: lazy alloc
-CCCamera* camera
-{
-	if( ! camera_ ) {
-		camera_ = [[CCCamera alloc] init];
 
-		// by default, center camera at the Sprite's anchor point
-		//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
-		//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
-
-		//		[camera_ setCenterX:0 centerY:0 centerZ:0];
-		//		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
-
-	}
-
-	return camera_;
-}
-*/
 CCNode* CCNode::getChildByTag(int aTag)
 {
 	/** @todo
@@ -804,7 +838,7 @@ void CCNode::pauseSchedulerAndActions()
 }
 
 /** @todo
-- (CGAffineTransform)nodeToParentTransform
+CGAffineTransform CCNode::nodeToParentTransform(void)
 {
 	if ( isTransformDirty_ ) {
 
@@ -827,8 +861,8 @@ void CCNode::pauseSchedulerAndActions()
 	}
 
 	return transform_;
-}
-
+}*/
+/** @todo
 - (CGAffineTransform)parentToNodeTransform
 {
 	if ( isInverseDirty_ ) {
@@ -837,8 +871,8 @@ void CCNode::pauseSchedulerAndActions()
 	}
 
 	return inverse_;
-}
-
+}*/
+/** @todo
 - (CGAffineTransform)nodeToWorldTransform
 {
 	CGAffineTransform t = [self nodeToParentTransform];
@@ -847,50 +881,57 @@ void CCNode::pauseSchedulerAndActions()
 		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
 
 	return t;
-}
-
+}*/
+/** @todo
 - (CGAffineTransform)worldToNodeTransform
 {
 	return CGAffineTransformInvert([self nodeToWorldTransform]);
+}*/
+
+CGPoint CCNode::convertToNodeSpace(CGPoint worldPoint)
+{
+	/// @todo return CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
+	return CGPoint(0,0);
 }
 
-- (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
+CGPoint CCNode::convertToWorldSpace(CGPoint nodePoint)
 {
-	return CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
+	/// @todo return CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
+	return CGPoint(0,0);
 }
 
-- (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
+CGPoint CCNode::convertToNodeSpaceAR(CGPoint worldPoint)
 {
-	return CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
-}
-
-- (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint
-{
+	/** @todo
 	CGPoint nodePoint = [self convertToNodeSpace:worldPoint];
-	return ccpSub(nodePoint, anchorPointInPixels_);
+	return ccpSub(nodePoint, anchorPointInPixels_);*/
+	return CGPoint(0,0);
 }
 
-- (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint
+CGPoint CCNode::convertToWorldSpaceAR(CGPoint nodePoint)
 {
+	/** @todo
 	nodePoint = ccpAdd(nodePoint, anchorPointInPixels_);
-	return [self convertToWorldSpace:nodePoint];
+	return [self convertToWorldSpace:nodePoint];*/
+	return CGPoint(0,0);
 }
-
-- (CGPoint)convertToWindowSpace:(CGPoint)nodePoint
+/** @todo no declare in .h file
+CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
 {
+	
 	CGPoint worldPoint = [self convertToWorldSpace:nodePoint];
 	return [[CCDirector sharedDirector] convertToUI:worldPoint];
-}
+}*/
 
 // convenience methods which take a UITouch instead of CGPoint
-
+/** @todo
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
 	CGPoint point = [touch locationInView: [touch view]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpace:point];
-}
-
+}*/
+/** @todo
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
 {
 	CGPoint point = [touch locationInView: [touch view]];

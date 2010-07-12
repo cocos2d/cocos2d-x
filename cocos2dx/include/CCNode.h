@@ -92,8 +92,8 @@ Camera:
 - Each node has a camera. By default it points to the center of the CCNode.
 */ 
 
-class CCNode{
-	
+class CCNode : public NSObject
+{
 	// variable property
 
 	/** The z order of the node relative to it's "brothers": children of the same parent */
@@ -135,7 +135,7 @@ class CCNode{
 	CCX_PROPERTY(CCGridBase *, m_pGrid, Grid)
 
 	/** Whether of not the node is visible. Default is true */
-	CCX_PROPERTY(bool, m_bIsVisible, Visibility)
+	CCX_PROPERTY(bool, m_bIsVisible, IsVisible)
 
 	/** anchorPoint is the point around which all transformations and positioning manipulations take place.
 	It's like a pin in the node where it is "attached" to its parent.
@@ -149,7 +149,7 @@ class CCNode{
 	/** The anchorPoint in absolute pixels.
 	Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
 	*/
-	CCX_PROPERTY(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
+	CCX_PROPERTY_READONLY(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
 	
 	/** The untransformed size of the node.
 	The contentSize remains the same no matter the node is scaled or rotated.
@@ -221,7 +221,7 @@ public:
 	If the CCNode enters the 'stage' with a transition, this callback is called when the transition starts.
 	During onEnter you can't a "sister/brother" node.
 	*/
-	void onEnter();
+	virtual void onEnter();
 	/** callback that is called when the CCNode enters in the 'stage'.
 	If the CCNode enters the 'stage' with a transition, this callback is called when the transition finishes.
 	@since v0.8
@@ -231,7 +231,7 @@ public:
 	If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
 	During onExit you can't a "sister/brother" node.
 	*/
-	void onExit();
+	virtual void onExit();
 
 	// composition: ADD
 
@@ -291,8 +291,10 @@ public:
 	/** Stops all running actions and schedulers
 	@since v0.8
 	*/
-	void cleanup(void);
+	virtual void cleanup(void);
 
+	// @todo no declare in objc,but delcare in .m file
+	virtual void dealloc(void);
 
 	// draw
 
