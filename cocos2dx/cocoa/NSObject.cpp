@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 
 #include "NSObject.h"
+#include "NSAutoreleasePool.h"
 #include <assert.h>
 
 NSObject* CCCopying::copyWithZone(NSZone *pZone)
@@ -50,7 +51,7 @@ NSObject::~NSObject(void)
 	// from pool manager
 	if (m_bManaged)
 	{
-        // todo: remove from pool manager
+		NSPoolManager::getInstance()->removeObject(this);
 	}
 }
 
@@ -79,7 +80,7 @@ void NSObject::retain(void)
 
 NSObject* NSObject::autorelease(void)
 {
-	// todo add to pool manager
+	NSPoolManager::getInstance()->addObject(this);
 
 	m_bManaged = true;
 	return this;
