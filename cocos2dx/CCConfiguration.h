@@ -78,6 +78,8 @@ public:
 	// returns whether or not an OpenGL is supported
 	bool checkForGLExtension(const std::string &searchName);
 
+	CCConfiguration* init(void);
+
 public:
 	// returns a shared instance of the CCConfiguration
 	static CCConfiguration* sharedConfiguration(void);

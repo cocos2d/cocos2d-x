@@ -32,7 +32,11 @@ using namespace std;
 static CCConfiguration *g_pSharedConfiguration;
 static char *g_pGlExtensions;
 
-CCConfiguration::CCConfiguration()
+CCConfiguration::CCConfiguration(void)
+{
+}
+
+CCConfiguration* CCConfiguration::init(void)
 {
 	CCLOG("cocos2d: GL_VENDOR:     %s", glGetString(GL_VENDOR));
 	CCLOG("cocos2d: GL_RENDERER:   %s", glGetString(GL_RENDERER));
@@ -69,6 +73,9 @@ CCConfiguration::CCConfiguration()
 			  "NO"
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 			  );
+
+	return this;
+
 }
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
@@ -83,13 +90,13 @@ CCConfiguration* CCConfiguration::sharedConfiguration(void)
 
 bool CCConfiguration::checkForGLExtension(const string &searchName)
 {
-	bool ret = false;
+	bool bRet = false;
 	const char *kSearchName = searchName.c_str();
 	
 	if (strstr(g_pGlExtensions, kSearchName))
-		ret = true;
+		bRet = true;
 
 	delete kSearchName;
 
-	return ret;
+	return bRet;
 }
