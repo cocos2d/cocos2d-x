@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __COCOA_NS_MUTATLE_ARRAY_H__
 
 #include "NSObject.h"
-#include "platform/platform.h"
+#include "../platform/platform.h"
 #include <vector>
 
 class NSMutableArray

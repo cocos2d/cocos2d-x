@@ -90,8 +90,9 @@ public:
 	/** used by some transitions to hide the outter scene */
 	void hideOutShowIn(void);
 
-private: 
-	void sceneOrder();
+protected:
+	virtual void sceneOrder();
+private:
 	void setNewScene(ccTime dt);
 
 };
@@ -202,8 +203,10 @@ public:
 	virtual CCIntervalAction* action(void);
 
 	virtual void onEnter();
-	virtual void sceneOrder();
+	
 	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
+protected:
+	virtual void sceneOrder();
 };
 
 /** CCSlideInRTransition:
@@ -219,7 +222,7 @@ public:
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
 	virtual CCIntervalAction* action(void);
-
+protected:
 	virtual void sceneOrder();
 };
 
@@ -236,7 +239,7 @@ public:
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
 	virtual CCIntervalAction* action(void);
-
+protected: 
 	virtual void sceneOrder();
 };
 
@@ -253,7 +256,7 @@ public:
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
 	virtual CCIntervalAction* action(void);
-
+protected:
 	virtual void sceneOrder();
 };
 
@@ -398,9 +401,11 @@ public :
 	CCTurnOffTilesTransition();
 	virtual ~CCTurnOffTilesTransition();
 
-	virtual void sceneOrder();
 	virtual void onEnter();
 	CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
+	
+protected:
+	virtual void sceneOrder();
 };
 
 /** CCSplitColsTransition:
@@ -438,10 +443,11 @@ public:
 	CCFadeTRTransition();
 	virtual ~CCFadeTRTransition();
 	virtual CCIntervalAction* actionWithSize(ccGridSize size);
-
-	virtual void sceneOrder();
 	virtual void onEnter();
 	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
+protected:
+	virtual void sceneOrder();
+	
 };
 
 /** CCFadeBLTransition:
