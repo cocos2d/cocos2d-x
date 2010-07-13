@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "../platform/platform.h"
 #include <vector>
 
+typedef std::vector<NSObject *>::iterator NSMutableArrayIterator;
+
 class NSMutableArray
 {
 public:
@@ -51,8 +53,8 @@ public:
 	void removeObjectAtIndex(UINT32 uIndex);
 	void removeAllObjects(void);
 
-	std::vector<NSObject *>::iterator begin(void);
-	std::vector<NSObject *>::iterator end(void);
+	NSMutableArrayIterator begin(void);
+	NSMutableArrayIterator end(void);
 
 public:
 	static NSMutableArray* arrayWithObjects(NSObject *pObject1, ...);
