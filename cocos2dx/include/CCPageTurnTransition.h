@@ -59,9 +59,14 @@ public:
 	* if back is TRUE then the effect is reversed to appear as if the incoming 
 	* scene is being turned from left over the outgoing scene
 	*/
-	CCPageTurnTransition* initWithDuration(ccTime t,CCScene* scene,bool backwards);
+	virtual CCPageTurnTransition* initWithDurationAndScene(ccTime t,CCScene* scene,bool backwards);
 
 	CCIntervalAction* actionWithSize(ccGridSize vector);
+
+	virtual void onEnter();
+
+protected:
+	virtual void sceneOrder();
 };
 
 #endif // __CCPAGE_TURN_TRANSITION_H__

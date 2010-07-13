@@ -39,6 +39,13 @@ class CCRadialCCWTransition : public CCTransitionScene
 public:
 	CCRadialCCWTransition();
 	virtual ~CCRadialCCWTransition();
+
+	virtual void onEnter();
+	virtual void onExit();
+
+protected:
+	virtual void sceneOrder();
+	virtual void radialType();
 };
 
 ///
@@ -49,6 +56,8 @@ class CCRadialCWTransition : public CCRadialCCWTransition
 public:
 	CCRadialCWTransition();
 	virtual ~CCRadialCWTransition();
+protected:
+	virtual void radialType();
 };
 
 

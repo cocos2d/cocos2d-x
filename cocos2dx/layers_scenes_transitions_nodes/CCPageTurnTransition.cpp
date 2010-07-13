@@ -25,3 +25,102 @@ THE SOFTWARE.
 #include "CCPageTurnTransition.h"
 
 using namespace std;
+
+CCPageTurnTransition::CCPageTurnTransition()
+{
+/// @todo
+}
+CCPageTurnTransition::~CCPageTurnTransition()
+{
+/// @todo
+}
+
+/** creates a base transition with duration and incoming scene */
+CCPageTurnTransition * CCPageTurnTransition::transitionWithDurationAndScene(ccTime t, CCScene *scene, bool backwards)
+{
+	CCPageTurnTransition * pTransition = new CCPageTurnTransition();
+	pTransition->initWithDurationAndScene(t,scene,backwards);
+	pTransition->autorelease();
+	return pTransition;
+}
+
+/** initializes a transition with duration and incoming scene */
+CCPageTurnTransition * CCPageTurnTransition::initWithDurationAndScene(ccTime t, CCScene *scene, bool backwards)
+{
+	/** @todo
+	// XXX: needed before [super init]
+	back_ = back;
+
+	if( ( self = [super initWithDuration:t scene:s] ) )
+	{
+		// do something
+	}
+	return self;*/
+	return NULL;
+}
+
+void CCPageTurnTransition::sceneOrder()
+{
+	m_bIsInSceneOnTop = m_bBack;
+}
+
+void CCPageTurnTransition::onEnter()
+{
+	/** @todo
+	[super onEnter];
+
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	int x,y;
+	if( s.width > s.height)
+	{
+		x=16;y=12;
+	}
+	else
+	{
+		x=12;y=16;
+	}
+
+	id action  = [self actionWithSize:ccg(x,y)];
+
+	if(! back_ )
+	{
+		[outScene runAction: [CCSequence actions:
+		action,
+			[CCCallFunc actionWithTarget:self selector:@selector(finish)],
+			[CCStopGrid action],
+			nil]
+		];
+	}
+	else
+	{
+		// to prevent initial flicker
+		inScene.visible = NO;
+		[inScene runAction: [CCSequence actions:
+		[CCShow action],
+			action,
+			[CCCallFunc actionWithTarget:self selector:@selector(finish)],
+			[CCStopGrid action],
+			nil]
+		];
+	}
+*/
+}
+
+
+CCIntervalAction* CCPageTurnTransition:: actionWithSize(ccGridSize vector)
+{
+	/** @todo
+	if( back_ )
+	{
+		// Get hold of the PageTurn3DAction
+		return [CCReverseTime actionWithAction:
+		[CCPageTurn3D actionWithSize:v duration:duration]];
+	}
+	else
+	{
+		// Get hold of the PageTurn3DAction
+		return [CCPageTurn3D actionWithSize:v duration:duration];
+	}*/
+	return NULL;
+}
+
