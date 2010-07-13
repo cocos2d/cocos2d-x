@@ -25,23 +25,21 @@ THE SOFTWARE.
 #ifndef __COCOS_CGGEMETRY_H__
 #define __COCOS_CGGEMETRY_H__
 
+typedef float CGFloat;
+
 class CGPoint
 {
 public:
 	float x;
 	float y;
 
-	CGPoint()
-	{
-		x = 0;
-		y = 0;
-	}
+public:
 
-	CGPoint(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
+	CGPoint();
+	CGPoint(float x, float y);
+
+public:
+	static bool CGPointEqualToPoint(CGPoint point1, CGPoint point2);
 };
 
 class CGSize
@@ -50,42 +48,46 @@ public:
 	float width;
 	float height;
 
-	CGSize()
-	{
-		width = 0;
-		height = 0;
-	}
+public:
+	CGSize();
+	CGSize(float width, float height);
 
-	CGSize(float width, float height)
-	{
-		this->width = width;
-		this->height = height;
-	}
+public:
+	static bool CGSizeEqualToSize(CGSize size1, CGSize size2);
 };
 
 class CGRect
 {
 public:
 	CGPoint origin;
-	CGSize size;
+	CGSize  size;
 
-	CGRect()
-	{
-		origin.x = 0;
-		origin.y = 0;
+public:
+	CGRect();	
+	CGRect(float x, float y, float width, float height);
 
-		size.width = 0;
-		size.height = 0;
-	}
+public:
+	// return the leftmost x-value of 'rect'
+	static CGFloat CGRectGetMinX(CGRect rect);
 
-	CGRect(float x, float y, float width, float height)
-	{
-		origin.x = x;
-		origin.y = y;
+	// return the rightmost x-value of 'rect'
+	static CGFloat CGRectGetMaxX(CGRect rect);
 
-		size.width = width;
-		size.height = height;
-	}
+	// return the midpoint x-value of 'rect'
+	static CGFloat CGRectGetMidX(CGRect rect);
+
+	// Return the bottommost y-value of `rect'
+	static CGFloat CGRectGetMinY(CGRect rect);
+
+	// Return the topmost y-value of `rect'
+	static CGFloat CGRectGetMaxY(CGRect rect);
+
+	// Return the midpoint y-value of `rect'
+	static CGFloat CGRectGetMidY(CGRect rect);
+
+	static bool CGRectEqualToRect(CGRect rect1, CGRect rect2);
+
+    static bool CGRectContainsPoint(CGRect rect, CGPoint point);
 };
 
 #define CGPointMake(x, y) CGPoint((x), (y));
