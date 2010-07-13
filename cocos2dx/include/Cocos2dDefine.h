@@ -84,5 +84,18 @@ THE SOFTWARE.
 #define CCX_SAFE_DELETE(p)  if(p) {delete p; p=NULL;}
 #define CCX_BREAK_IF(cond)  if(cond) break;
 
+#ifdef _DEBUG
+#include "assert.h"
+#define NSAssert(_CONDITION, _TXT)\
+	if(! (_CONDITION) )			\
+	{							\
+		printf( (_TXT) );		\
+		assert( (_CONDITION) );	\
+	}
+#else
+#define NSAssert(_CONDITION, _TXT)
+#endif	
+
+
 #endif // __COCOS2D_DEFINE_H__
 
