@@ -129,9 +129,9 @@ void CCNode::setRotation(float newRotation)
 {
 	m_fRotation = newRotation;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
 }
 
 
@@ -147,9 +147,9 @@ void CCNode::setScale(float scale)
 {
 	m_fScaleX = m_fScaleY = scale;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
 }
 
 /// scaleX getter
@@ -163,9 +163,9 @@ void CCNode::setScaleX(float newScaleX)
 {
 	m_fScaleX = newScaleX;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
 }
 
 /// scaleY getter
@@ -179,9 +179,9 @@ void CCNode::setScaleY(float newScaleY)
 {
 	m_fScaleY = newScaleY;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
 }
 
 /// position getter
@@ -195,9 +195,9 @@ void CCNode::setPosition(CGPoint newPosition)
 {
 	m_tPosition = newPosition;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
 }
 
 /// children getter
@@ -325,9 +325,9 @@ void CCNode::setIsRelativeAnchorPoint(bool newValue)
 {
 	m_bIsRelativeAnchorPoint = newValue;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		m_bIsTransformGLDirty = true;
-	#endif
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
 }
 
 /// tag getter
@@ -731,12 +731,6 @@ void CCNode::onEnterTransitionDidFinish()
 
 void CCNode::onExit()
 {
-	/** @todo callback?
-	[self pauseSchedulerAndActions];
-
-	isRunning_ = NO;	
-
-	[children_ makeObjectsPerformSelector:@selector(onExit)];*/
 	this->pauseSchedulerAndActions();
 
 	m_bIsRunning = false;
@@ -788,7 +782,7 @@ int CCNode::numberOfRunningActions()
 }
 
 
-/// @todo #pragma mark CCNode - Callbacks????
+// CCNode - Callbacks
 
 void CCNode::scheduleUpdate()
 {

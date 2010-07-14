@@ -107,10 +107,9 @@ void CCRadialCCWTransition::onEnter()
 // clean up on exit
 void CCRadialCCWTransition::onExit()
 {
-	/** @todo
 	// remove our layer and release all containing objects 
-	[self removeChildByTag:kSceneRadial cleanup:NO];
-	[super onExit];	*/
+	this->removeChildByTag(kSceneRadial, false);
+	__super::onExit();
 }
 
 /** @todo no declare in .h

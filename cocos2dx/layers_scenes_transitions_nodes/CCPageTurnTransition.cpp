@@ -47,16 +47,14 @@ CCPageTurnTransition * CCPageTurnTransition::transitionWithDurationAndScene(ccTi
 /** initializes a transition with duration and incoming scene */
 CCPageTurnTransition * CCPageTurnTransition::initWithDurationAndScene(ccTime t, CCScene *scene, bool backwards)
 {
-	/** @todo
 	// XXX: needed before [super init]
-	back_ = back;
+	m_bBack = backwards;
 
-	if( ( self = [super initWithDuration:t scene:s] ) )
+	if( __super::initWithDurationAndScene(t, scene) )
 	{
 		// do something
 	}
-	return self;*/
-	return NULL;
+	return this;
 }
 
 void CCPageTurnTransition::sceneOrder()

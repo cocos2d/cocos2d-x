@@ -180,17 +180,16 @@ class CCNode : public NSObject, public SelectorProtocol
 	
 protected:
 
-	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		GLfloat	m_pTransformGL[16];
-	#endif
+#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	GLfloat	m_pTransformGL[16];
+#endif
 	// To reduce memory, place bools that are not properties here:
 	bool m_bIsTransformDirty;
 	bool m_bIsInverseDirty;
 
-
-	#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		bool m_bIsTransformGLDirty;
-	#endif
+#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	bool m_bIsTransformGLDirty;
+#endif
     
 private:
 

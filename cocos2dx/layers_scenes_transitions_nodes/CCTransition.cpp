@@ -36,7 +36,8 @@ CCTransitionScene::CCTransitionScene()
 }
 CCTransitionScene::~CCTransitionScene()
 {
-	/// @todo
+	m_pInScene->release();
+	m_pOutScene->release();
 }
 
 CCTransitionScene * CCTransitionScene::transitionWithDurationAndScene(ccTime t, CCScene *scene)
@@ -80,14 +81,13 @@ void CCTransitionScene::sceneOrder()
 
 void CCTransitionScene::draw()
 {
-	/** @todo
-	if( inSceneOnTop ) {
-		[outScene visit];
-		[inScene visit];
+	if( m_bIsInSceneOnTop ) {
+		m_pOutScene->visit();
+		m_pInScene->visit();
 	} else {
-		[inScene visit];
-		[outScene visit];
-	}*/
+		m_pInScene->visit();
+		m_pOutScene->visit();
+	}
 }
 
 void CCTransitionScene::finish()
@@ -107,6 +107,7 @@ void CCTransitionScene::finish()
 	[outScene.camera restore];
 
 	[self schedule:@selector(setNewScene:) interval:0];*/
+
 }
 
 void CCTransitionScene::setNewScene(ccTime dt)
@@ -138,40 +139,29 @@ void CCTransitionScene::hideOutShowIn()
 // custom onEnter
 void CCTransitionScene::onEnter()
 {
-	/** @todo
-	[super onEnter];
-	[inScene onEnter];*/
+	__super::onEnter();
+	m_pInScene->onEnter();
 	// outScene should not receive the onEnter callback
 }
 
 // custom onExit
 void CCTransitionScene::onExit()
 {
-	/** @todo
-	[super onExit];
-	[outScene onExit];
+	__super::onExit();
+	m_pOutScene->onExit();
 
 	// inScene should not receive the onExit callback
 	// only the onEnterTransitionDidFinish
-	[inScene onEnterTransitionDidFinish];*/
+	m_pInScene->onEnterTransitionDidFinish();
 }
 
 // custom cleanup
 void CCTransitionScene::cleanup()
 {
-	/** @todo
-	[super cleanup];
+	__super::cleanup();
 
-	if( sendCleanupToScene )
-		[outScene cleanup];*/
-}
-
-void CCTransitionScene::dealloc()
-{
-	/** @todo
-	[inScene release];
-	[outScene release];
-	[super dealloc];*/
+	if( m_bIsSendCleanupToScene )
+		m_pOutScene->cleanup();
 }
 
 //
@@ -197,11 +187,11 @@ CCOrientedTransitionScene * CCOrientedTransitionScene::transitionWithDurationAnd
 
 CCOrientedTransitionScene * CCOrientedTransitionScene::initWithDurationAndScene(ccTime t, CCScene *scene, tOrientation orientation)
 {
-	/** @todo
-	if( (self=[super initWithDuration:t scene:s]) )
-		orientation = o;
-	return self;*/
-	return NULL;
+	if ( __super::initWithDurationAndScene(t, scene) )
+	{
+		m_tOrientation = orientation;
+	}
+	return this;
 }
 
 //
@@ -957,27 +947,27 @@ CCFadeTransition::~CCFadeTransition()
 
 CCFadeTransition * CCFadeTransition::transitionWithDurationAndColor(ccTime duration, CCScene *scene, ccColor3B color)
 {
-	return NULL;
-/// @todo	return [[[self alloc] initWithDuration:d scene:s withColor:color] autorelease];
+	CCFadeTransition * pTransition = new CCFadeTransition();
+	pTransition->initWithDurationAndColor(duration, scene, color);
+	pTransition->autorelease();
+	return pTransition;
 }
 
 CCFadeTransition * CCFadeTransition::initWithDurationAndColor(ccTime duration, CCScene *scene, ccColor3B color)
 {
-	/** @todo
-	if( (self=[super initWithDuration:d scene:s]) ) {
-		color.r = aColor.r;
-		color.g = aColor.g;
-		color.b = aColor.b;
+	if (__super::initWithDurationAndScene(duration, scene))
+	{
+		m_tColor.r = color.r;
+		m_tColor.g = color.g;
+		m_tColor.b = color.b;
 	}
-
-	return self;*/
-	return NULL;
+	return this;
 }
 
 CCFadeTransition * CCFadeTransition::initWithDurationAndScene(ccTime t, CCScene *scene)
 {
-	return NULL;
-	/// @todo return [self initWithDuration:d scene:s withColor:ccBLACK];
+	__super::initWithDurationAndScene(t, scene);
+	return this;
 }
 
 void CCFadeTransition :: onEnter()
@@ -1004,9 +994,8 @@ void CCFadeTransition :: onEnter()
 
 void CCFadeTransition::onExit()
 {
-	/** @todo
-	[super onExit];
-	[self removeChildByTag:kSceneFade cleanup:NO];*/
+	__super::onExit();
+	this->removeChildByTag(kSceneFade, false);
 }
 
 
@@ -1097,11 +1086,9 @@ void CCCrossFadeTransition::onEnter()
 // clean up on exit
 void CCCrossFadeTransition::onExit()
 {
-	/** @todo
 	// remove our layer and release all containing objects 
-	[self removeChildByTag:kSceneFade cleanup:NO];
-
-	[super onExit];	*/
+	this->removeChildByTag(kSceneFade, false);
+	__super::onExit();
 }
 
 
@@ -1148,7 +1135,6 @@ void CCTurnOffTilesTransition::onEnter()
 CCIntervalAction* CCTurnOffTilesTransition:: easeActionWithAction(CCIntervalAction* action)
 {
 	return action;
-	//	return [EaseIn actionWithAction:action rate:2.0f];
 }
 
 
@@ -1273,7 +1259,6 @@ CCIntervalAction*  CCFadeTRTransition::actionWithSize(ccGridSize size)
 CCIntervalAction* CCFadeTRTransition:: easeActionWithAction(CCIntervalAction* action)
 {
 	return action;
-	//	return [EaseIn actionWithAction:action rate:2.0f];
 }
 
 

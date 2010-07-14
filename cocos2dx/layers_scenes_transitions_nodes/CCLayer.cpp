@@ -175,7 +175,6 @@ void CCColorLayer::setBlendFunc(ccBlendFunc var)
 
 CCColorLayer * CCColorLayer::layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
 {
-	/// @todo return [[[self alloc] initWithColor:color width:w height:h] autorelease];
 	CCColorLayer * pLayer = new CCColorLayer();
 	pLayer->initWithColorWidthHeight(color,width,height);
 	pLayer->autorelease();
@@ -183,7 +182,6 @@ CCColorLayer * CCColorLayer::layerWithColorWidthHeight(ccColor4B color, GLfloat 
 }
 CCColorLayer * CCColorLayer::layerWithColor(ccColor4B color)
 {
-	/// @todo	return [[[self alloc] initWithColor:color] autorelease];
 	CCColorLayer * pLayer = new CCColorLayer();
 	pLayer->initWithColor(color);
 	pLayer->autorelease();

@@ -76,13 +76,12 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
 	virtual void cleanup();
-	virtual void dealloc();
 
 	/** creates a base transition with duration and incoming scene */
 	static CCTransitionScene * transitionWithDurationAndScene(ccTime t, CCScene *scene);
 
 	/** initializes a transition with duration and incoming scene */
-	virtual CCTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene);
+	CCTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene);
 
 	/** called after the transition finishes */
 	void finish(void);
@@ -112,7 +111,7 @@ public:
 	/** creates a base transition with duration and incoming scene */
 	static CCOrientedTransitionScene * transitionWithDurationAndScene(ccTime t,CCScene* scene, tOrientation orientation);
 	/** initializes a transition with duration and incoming scene */
-	virtual CCOrientedTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene,tOrientation orientation);
+	CCOrientedTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene,tOrientation orientation);
 };
 
 /** CCRotoZoomTransition:
@@ -357,7 +356,7 @@ Fade out the outgoing scene and then fade in the incoming scene.'''
 class CCFadeTransition : public CCTransitionScene
 {
 protected:
-	ccColor4B	color;
+	ccColor4B	m_tColor;
 
 public:
 
@@ -369,9 +368,9 @@ public:
 	*/
 	static CCFadeTransition* transitionWithDurationAndColor(ccTime duration,CCScene* scene, ccColor3B color);
 	/** initializes the transition with a duration and with an RGB color */
-	CCFadeTransition* initWithDurationAndColor(ccTime duration, CCScene*scene ,ccColor3B color);
+	CCFadeTransition* initWithDurationAndColor(ccTime t, CCScene*scene ,ccColor3B color);
 
-	virtual CCFadeTransition * initWithDurationAndScene(ccTime t,CCScene* scene); 
+	CCFadeTransition * initWithDurationAndScene(ccTime t,CCScene* scene); 
 	virtual void onEnter();
 	virtual void onExit();
 };
@@ -402,7 +401,7 @@ public :
 	virtual ~CCTurnOffTilesTransition();
 
 	virtual void onEnter();
-	CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
+	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
 	
 protected:
 	virtual void sceneOrder();
