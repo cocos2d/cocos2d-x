@@ -797,42 +797,39 @@ void CCNode::scheduleUpdate()
 
 void CCNode::scheduleUpdateWithPriority(int priority)
 {
-/// @todo	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
+	CCScheduler::getSharedScheduler()->scheduleUpdateForTarget(this, priority, !m_bIsRunning);
 }
 
 void CCNode::unscheduleUpdate()
 {
-/// @todo	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
+	CCScheduler::getSharedScheduler()->unscheduleUpdateForTarget(this);
 }
 
-/** @todo
--(void) schedule:(SEL)selector
+void CCNode::schedule(SEL_SCHEDULE selector)
 {
-	[self schedule:selector interval:0];
-}*/
+	this->schedule(selector, 0);
+}
 
-/** @todo
--(void) schedule:(SEL)selector interval:(ccTime)interval
+void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 {
-	NSAssert( selector != nil, @"Argument must be non-nil");
-	NSAssert( interval >=0, @"Arguemnt must be positive");
+	NSAssert( selector != NULL, "Argument must be non-nil");
+	NSAssert( interval >=0, "Argument must be positive");
 
-	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_];
-}*/
+	CCScheduler::getSharedScheduler()->scheduleSelector(selector, this, interval, !m_bIsRunning);
+}
 
-/** @todo
--(void) unschedule:(SEL)selector
+void CCNode::unschedule(SEL_SCHEDULE selector)
 {
 	// explicit nil handling
-	if (selector == nil)
+	if (selector == NULL)
 		return;
 
-	[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:self];
-}*/
+	CCScheduler::getSharedScheduler()->unscheduleSelector(selector, this);
+}
 
 void CCNode::unscheduleAllSelectors()
 {
-/// @todo	[[CCScheduler sharedScheduler] unscheduleAllSelectorsForTarget:self];
+	CCScheduler::getSharedScheduler()->unscheduleAllSelectorsForTarget(this);
 }
 
 void CCNode::resumeSchedulerAndActions()

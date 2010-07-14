@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "Cocos2dDefine.h"
 #include "CCCamera.h"
 #include "ccMacros.h"
+#include "../CCScheduler.h"
 #include "../cocoa/CGGeometry.h"
 #include "../cocoa/NSMutableArray.h"
 #include "../cocoa/selector_protocol.h"
@@ -377,11 +378,11 @@ public:
 	// timers
 
 	/** check whether a selector is scheduled. */
-/// @todo	bool isScheduled(SEL selector);
+	bool isScheduled(SEL_SCHEDULE selector);
 
 	/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
 	Scheduled methods with a lower order value will be called before the ones that have a higher order value.
-	Only one "udpate" method could be scheduled per node.
+	Only one "update" method could be scheduled per node.
 
 	@since v0.99.3
 	*/
@@ -389,7 +390,7 @@ public:
 
 	/** schedules the "update" selector with a custom priority. This selector will be called every frame.
 	Scheduled selectors with a lower priority will be called before the ones that have a higher value.
-	Only one "udpate" selector could be scheduled per node (You can't have 2 'update' selectors).
+	Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
 
 	@since v0.99.3
 	*/
@@ -404,16 +405,16 @@ public:
 	/** schedules a selector.
 	The scheduled selector will be ticked every frame
 	*/
-/// @todo	void schedule(SEL selector);
+	void schedule(SEL_SCHEDULE selector);
 
 	/** schedules a custom selector with an interval time in seconds.
 	If time is 0 it will be ticked every frame.
-	If tiem is 0, it is recommended to use 'scheduleUpdate' instead.
+	If time is 0, it is recommended to use 'scheduleUpdate' instead.
 	*/
-/// @todo	void schedule(SEL selector, ccTime seconds);
+	void schedule(SEL_SCHEDULE selector, ccTime interval);
 
 	/** unschedules a custom selector.*/
-/// @todo	void unschedule(SEL selector);
+	void unschedule(SEL_SCHEDULE selector);
 
 	/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
 	Actions are not affected by this method.
