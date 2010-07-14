@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __COCOA_SELECTOR_PROTOCOL_H__
 
 #include "ccTypes.h"
-#include "cocoa/NSObject.h"
+#include "NSObject.h"
 
 class CCNode;
 

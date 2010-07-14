@@ -42,9 +42,9 @@ class CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtoc
 protected:
 
 	// chars per row
-	int m_iItemsPerRow;
+	int m_nItemsPerRow;
 	// chars per column
-	int m_iItemsPerColumn;
+	int m_nItemsPerColumn;
 
 	// texture coordinate x increment
 	float m_fTexStepX;
@@ -52,9 +52,9 @@ protected:
 	float m_fTexStepY;
 
 	// width of each char
-	int	m_iItemWidth;
+	int	m_nItemWidth;
 	// height of each char
-	int	m_iItemHeight;
+	int	m_nItemHeight;
 
 	ccColor3B	m_tColorUnmodified;
 	bool m_bOpacityModifyRGB;

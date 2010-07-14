@@ -28,11 +28,12 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 
 #include "Cocos2dDefine.h"
+#include "CCCamera.h"
+#include "ccMacros.h"
 #include "../cocoa/CGGeometry.h"
 #include "../cocoa/NSMutableArray.h"
-#include "CCCamera.h"
+#include "../cocoa/selector_protocol.h"
 #include "../effects/CCGrid.h"
-#include "ccMacros.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -98,7 +99,7 @@ class CCNode : public NSObject, public SelectorProtocol
 	// variable property
 
 	/** The z order of the node relative to it's "brothers": children of the same parent */
-	CCX_PROPERTY_READONLY(int, m_iZOrder, ZOrder)
+	CCX_PROPERTY_READONLY(int, m_nZOrder, ZOrder)
 
 	/** The real openGL Z vertex.
 	Differences between openGL Z vertex and cocos2d Z order:
@@ -171,7 +172,7 @@ class CCNode : public NSObject, public SelectorProtocol
 	CCX_PROPERTY(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
 
 	/** A tag used to identify the node easily */
-	CCX_PROPERTY(int, m_iTag, Tag)
+	CCX_PROPERTY(int, m_nTag, Tag)
 
 	/** A custom user data pointer */
 	CCX_PROPERTY(void *, m_pUserData, UserData)

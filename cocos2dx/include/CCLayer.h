@@ -136,7 +136,7 @@ Features:
 class CCMultiplexLayer : public CCLayer
 {
 protected:
-	unsigned int m_iEnabledLayer;
+	unsigned int m_nEnabledLayer;
 	NSMutableArray * m_pLayers;
 public:
 

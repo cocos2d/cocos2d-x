@@ -45,8 +45,8 @@ CCNode::CCNode(void)
 ,m_fVertexZ(0.0f)
 ,m_pGrid(NULL)
 ,m_bIsVisible(true)
-,m_iTag(kCCNodeTagInvalid)
-,m_iZOrder(0)
+,m_nTag(kCCNodeTagInvalid)
+,m_nZOrder(0)
 // lazy alloc
 ,m_pCamera(NULL)
 // children (lazy allocs)
@@ -94,14 +94,14 @@ void CCNode::arrayMakeObjectsPerformSelector(NSMutableArray * pArray, callbackFu
 /// zOrder getter
 int CCNode::getZOrder()
 {
-	return m_iZOrder;
+	return m_nZOrder;
 }
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
 void CCNode::setZOrder(int z)
 {
-	m_iZOrder = z;
+	m_nZOrder = z;
 }
 
 /// ertexZ getter
@@ -333,13 +333,13 @@ void CCNode::setIsRelativeAnchorPoint(bool newValue)
 /// tag getter
 int CCNode::getTag()
 {
-	return m_iTag;
+	return m_nTag;
 }
 
 /// tag setter
 void CCNode::setTag(int var)
 {
-	m_iTag = var;
+	m_nTag = var;
 }
 
 /// userData getter
@@ -424,7 +424,7 @@ CCNode* CCNode::getChildByTag(int aTag)
 		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
 		{
 			pNode = static_cast<CCNode*>(*it);
-			if(pNode && pNode->m_iTag == aTag)
+			if(pNode && pNode->m_nTag == aTag)
 				return pNode;
 		}
 	}
@@ -445,7 +445,7 @@ CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
 
 	this->insertChild(child, zOrder);
 
-	child->m_iTag = tag;
+	child->m_nTag = tag;
 
 	child->setParent(this);
 
@@ -457,13 +457,13 @@ CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
 CCNode * CCNode::addChild(CCNode *child, int zOrder)
 {
 	NSAssert( child != NULL, "Argument must be non-nil");
-	return this->addChild(child, zOrder, child->m_iTag);
+	return this->addChild(child, zOrder, child->m_nTag);
 }
 
 CCNode * CCNode::addChild(CCNode *child)
 {
 	NSAssert( child != NULL, "Argument must be non-nil");
-	return this->addChild(child, child->m_iZOrder, child->m_iTag);
+	return this->addChild(child, child->m_nZOrder, child->m_nTag);
 }
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
@@ -563,7 +563,7 @@ void CCNode::insertChild(CCNode* child, int z)
 		{
 			pNode = static_cast<CCNode*>(*it);
 
-			if ( pNode && pNode->m_iZOrder > z ) 
+			if ( pNode && pNode->m_nZOrder > z ) 
 			{
 				added = true;
 				m_pChildren->insertObjectAtIndex(child, index);
