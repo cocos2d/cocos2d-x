@@ -41,6 +41,7 @@ public:
 	UINT32 getIndexOfObject(NSObject *pObject);
 	bool containsObject(NSObject *pObject);
 	NSObject* getLastObject(void);	
+	NSObject* getObjectAtIndex(UINT32 uIndex);
 
 	// Adding objects
 	void addObject(NSObject *pObject);

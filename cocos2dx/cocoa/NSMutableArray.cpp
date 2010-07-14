@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "NSMutableArray.h"
 #include <stdarg.h>
 #include <vector>
+#include <assert.h>
 
 using namespace std;
 
@@ -251,4 +252,17 @@ NSMutableArray* arrayWithArray(NSMutableArray *pArray)
 	}
 
 	return pNewArray;
+}
+
+NSObject* NSMutableArray::getObjectAtIndex(UINT32 uIndex)
+{
+	assert(uIndex < count());
+	assert(uIndex >= 0);
+
+	if (uIndex <= 0 || uIndex >= count())
+	{
+		return NULL;
+	}
+
+	return m_array[uIndex];
 }
