@@ -33,6 +33,7 @@ class CCNode;
 class SelectorProtocol
 {
 public:
+	virtual void update(ccTime dt) {};
 	virtual void tick(ccTime dt){};
 	virtual void callfunc(){};
 	virtual void callfunc(CCNode* pSender){};

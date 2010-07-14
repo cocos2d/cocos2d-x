@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "cocoa/NSObject.h"
 #include "cocoa/selector_protocol.h"
+#include "support/data_support/uthash.h"
 
 //
 // CCTimer
@@ -36,6 +37,8 @@ THE SOFTWARE.
 class CCTimer : public NSObject
 {
 public:
+	CCTimer(void) {}
+
 	// interval in seconds
     ccTime getInterval(void);
 	void setInterval(ccTime fInterval);
@@ -44,7 +47,7 @@ public:
 	CCTimer* initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
 	// Initializes a timer with a target, a selector and an interval in seconds.
-    CCTimer* initWithTargetInterval(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+    CCTimer* initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 	// triggers the timer
 	void update(ccTime dt);
@@ -54,7 +57,7 @@ public:
 	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
 	// Allocates a timer with a target, a selector and an interval in seconds.
-	static CCTimer* timerWithTargetInterval(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 public:
 	SEL_SCHEDULE m_pfnSelector;
@@ -87,6 +90,8 @@ struct _hashUpdateEntry;
 class CCScheduler : public NSObject
 {
 public:
+    ~CCScheduler(void);
+
 	/** Modifies the time of all scheduled callbacks.
 	 You can use this property to create a 'slow motion' or 'fast fordward' effect.
 	 Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
@@ -108,7 +113,14 @@ public:
 
 	 @since v0.99.3
 	 */
-	void scheduleUpdateForTarget(SelectorProtocol *pTarget, INT32 priority, bool bPaused);
+	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused);
+
+	/** Schedules the 'update' selector for a given target with a given priority.
+	 The 'update' selector will be called every frame.
+	 The lower the priority, the earlier it is called.
+	 @since v0.99.3
+	 */
+	void scheduleUpdateForTarget(SelectorProtocol *pTarget, INT32 nPriority, bool bPaused);
 
 	/** Unshedules a selector for a given target.
 	 If you want to unschedule the "update", use unscheudleUpdateForTarget.
@@ -178,6 +190,16 @@ public:
 	 */
 	static void purgeSharedScheduler(void);
 
+private:
+	void removeHashElement(struct _hashSelectorEntry *pElement);
+	CCScheduler();
+	CCScheduler* init(void);
+
+	// update specific
+
+	void priorityIn(struct _listEntry **ppList, SelectorProtocol *pTarget, INT32 nPriority, bool bPaused);
+	void appendIn(struct _listEntry **ppList, SelectorProtocol *pTarget, bool bPaused);
+
 protected:
 	ccTime m_fTimeScale;
 
@@ -193,9 +215,6 @@ protected:
 	struct _hashSelectorEntry *m_pHashForSelectors;
 	struct _hashSelectorEntry *m_pCurrentTarget;
 	bool m_bCurrentTargetSalvaged;
-
-	// Optimization
-    SEL_SCHEDULE m_pfnUpdateSelector;
 };
 
 #endif // __CCSCHEDULER_H__
