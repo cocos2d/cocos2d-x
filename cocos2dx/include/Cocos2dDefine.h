@@ -81,8 +81,10 @@ THE SOFTWARE.
 	public: inline varType get##funName(void){ return varName; }\
 	public: inline void set##funName(varType var){ varName = var; }
 
-#define CCX_SAFE_DELETE(p)  if(p) {delete p; p=NULL;}
-#define CCX_BREAK_IF(cond)  if(cond) break;
+#define CCX_SAFE_DELETE(p)			if(p) { delete p; p=NULL; }
+#define CCX_BREAK_IF(cond)			if(cond) break;
+#define CCX_SAFE_RELEASE(p)			if(p) { p->release(); p = NULL; }
+#define CCX_SAFE_RETAIN(p)			if(p) { p->retain(); }
 
 #ifdef _DEBUG
 #include "assert.h"

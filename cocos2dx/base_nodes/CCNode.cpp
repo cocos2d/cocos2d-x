@@ -59,14 +59,49 @@ CCNode::CCNode(void)
 /// @todo
 CCNode::~CCNode()
 {
+	CCLOGINFO( "cocos2d: deallocing", self);
+
+	// attributes
+	CCX_SAFE_RELEASE(m_pCamera);
+
+	CCX_SAFE_RELEASE(m_pGrid);
+
+	cleanup();
+
+	// children
+	CCX_SAFE_DELETE(m_pChildren);
 
 }
 
+void CCNode::arrayMakeObjectsPerformSelector(NSMutableArray * pArray, callbackFunc func)
+{
+	if(pArray && pArray->count() > 0)
+	{
+		CCNode* pNode;
+		NSMutableArrayIterator it;
+		for( it = pArray->begin(); it != pArray->end(); it++)
+		{
+			pNode = static_cast<CCNode*>(*it);
+
+			if(pNode)
+			{
+				(pNode->*func)();
+			}
+		}
+	}
+}
 
 /// zOrder getter
 int CCNode::getZOrder()
 {
 	return m_iZOrder;
+}
+
+/// zOrder setter : private method
+/// used internally to alter the zOrder variable. DON'T call this method manually 
+void CCNode::setZOrder(int z)
+{
+	m_iZOrder = z;
 }
 
 /// ertexZ getter
@@ -103,7 +138,7 @@ void CCNode::setRotation(float newRotation)
 /// scale getter
 float CCNode::getScale(void)
 {
-	///@todo NSAssert( scaleX_ == scaleY_, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+	NSAssert( m_fScaleX == m_fScaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
 	return m_fScale;
 }
 
@@ -171,47 +206,35 @@ NSMutableArray * CCNode::getChildren()
 	return m_pChildren;
 }
 
-/// children getter
-// camera: lazy alloc
-CCCamera* getCamera()
+/// camera getter: lazy alloc
+CCCamera* CCNode::getCamera()
 {
-/** @todo  no declare in class
-if( ! camera_ ) {
-camera_ = [[CCCamera alloc] init];
-
-// by default, center camera at the Sprite's anchor point
-//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
-//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
-
-//		[camera_ setCenterX:0 centerY:0 centerZ:0];
-//		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
-
-}
-
-return camera_;*/
-	return NULL;
+	if (!m_pCamera)
+	{
+		m_pCamera = new CCCamera();
+	}
+	
+	return m_pCamera;
 }
 
 
 /// grid getter
-/// @todo
-//CCGridBase* CCNode::getGrid()
-//{
-//	return m_pGrid;
-//}
+CCGridBase* CCNode::getGrid()
+{
+	return m_pGrid;
+}
 
 /// grid setter
-/// @todo
-//void CCNode::setGrid(CCGridBase* pGrid)
-//{
-//	if(/*!pGrid &&*/ m_pGrid)
-//		m_pGrid->release();
-//
-//	m_pGrid = pGrid;
-//
-//	if(m_pGrid)
-//		m_pGrid->retain();
-//}
+void CCNode::setGrid(CCGridBase* pGrid)
+{
+	if(m_pGrid)
+		m_pGrid->release();
+
+	m_pGrid = pGrid;
+
+	if(m_pGrid)
+		m_pGrid->retain();
+}
 
 
 /// isVisible getter
@@ -236,15 +259,15 @@ CGPoint CCNode::getAnchorPoint()
 /// @todo anchorPoint setter
 void CCNode::setAnchorPoint(CGPoint point)
 {
-	/*if( ! CGPointEqualToPoint(point, m_anchorPoint) ) 
-	{
-	m_anchorPoint = point;
-	this->m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
-	m_isTransformDirty = m_isInverseDirty = true;
-	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	m_bIsTransformGLDirty = true;
-	#endif
-	}*/
+	//if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) ) 
+	//{
+	//	m_tAnchorPoint = point;
+	//	this->m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
+	//	m_bIsTransformDirty = m_bIsInverseDirty = true;
+	//	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	//	m_bIsTransformGLDirty = true;
+	//	#endif
+	//}
 }
 
 /// anchorPointInPixels getter
@@ -363,63 +386,48 @@ CCNode * CCNode::node(void)
 	return pNode;
 }
 
+
 void CCNode::cleanup()
 {
-	/** @todo
 	// actions
-	[self stopAllActions];
-	[self unscheduleAllSelectors];
-
+	this->stopAllActions();
+	
 	// timers
+	this->unscheduleAllSelectors();	
 
-	[children_ makeObjectsPerformSelector:@selector(cleanup)];*/
+	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::cleanup);
 }
+
 /** @todo  no declare in class
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_];
 }
 */
-/** @todo no declare in class
-- (void) dealloc
-{
-	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	// attributes
-	[camera_ release];
-
-	[grid_ release];
-
-	// children
-
-	for (CCNode *child in children_) {
-		child.parent = nil;
-	}
-
-	[children_ release];
-
-
-	[super dealloc];
-}
-*/
 
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-	/// @todo children_ = [[CCArray alloc] initWithCapacity:4];
+	m_pChildren = new NSMutableArray(4);
 }
 
 CCNode* CCNode::getChildByTag(int aTag)
 {
-	/** @todo
-	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
+	NSAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
 
-	for( CCNode *node in children_ ) {
-		if( node.tag == aTag )
-			return node;
+	
+
+	if(m_pChildren && m_pChildren->count() > 0)
+	{
+		CCNode* pNode;
+		NSMutableArrayIterator it;
+		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
+		{
+			pNode = static_cast<CCNode*>(*it);
+			if(pNode && pNode->m_iTag == aTag)
+				return pNode;
+		}
 	}
-	// not found
-	return nil;*/
 	return NULL;
 }
 
@@ -427,163 +435,164 @@ CCNode* CCNode::getChildByTag(int aTag)
 * If a class want's to extend the 'addChild' behaviour it only needs
 * to override this method
 */
-CCNode * CCNode::addChild(CCNode *node, int zOrder, int tag)
+CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
 {	
-	/** @todo
-	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( child.parent == nil, @"child already added. It can't be added again");
+	NSAssert( child != NULL, "Argument must be non-nil");
+	NSAssert( child->m_pParent == NULL, "child already added. It can't be added again");
 
-	if( ! children_ )
-		[self childrenAlloc];
+	if( ! m_pChildren )
+		this->childrenAlloc();
 
-	[self insertChild:child z:z];
+	this->insertChild(child, zOrder);
 
-	child.tag = aTag;
+	child->m_iTag = tag;
 
-	[child setParent: self];
+	child->setParent(this);
 
-	if( isRunning_ )
-		[child onEnter];
-	return self;*/
-	return NULL;
+	if( m_bIsRunning )
+		child->onEnter();
+	return this;
 }
 
-CCNode * CCNode::addChild(CCNode *node, int zOrder)
+CCNode * CCNode::addChild(CCNode *child, int zOrder)
 {
-	/** @todo
-	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self addChild:child z:z tag:child.tag];*/
-	return NULL;
+	NSAssert( child != NULL, "Argument must be non-nil");
+	return this->addChild(child, zOrder, child->m_iTag);
 }
 
-CCNode * CCNode::addChild(CCNode *node)
+CCNode * CCNode::addChild(CCNode *child)
 {
-	/** @todo
-	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self addChild:child z:child.zOrder tag:child.tag];*/
-	return NULL;
+	NSAssert( child != NULL, "Argument must be non-nil");
+	return this->addChild(child, child->m_iZOrder, child->m_iTag);
 }
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
 {
-	/** @todo
-	[self.parent removeChild:self cleanup:cleanup];*/
+	this->m_pParent->removeChild(this,cleanup);
 }
 
 /* "remove" logic MUST only be on this method
 * If a class want's to extend the 'removeChild' behavior it only needs
 * to override this method
 */
-void CCNode::removeChild(CCNode* node, bool cleanup)
+void CCNode::removeChild(CCNode* child, bool cleanup)
 {
-	/** @todo
 	// explicit nil handling
-	if (child == nil)
+	if (m_pChildren == NULL)
 		return;
 
-	if ( [children_ containsObject:child] )
-		[self detachChild:child cleanup:cleanup];*/
+	if ( m_pChildren->containsObject(child) )
+		this->detachChild(child,cleanup);
 }
 
 void CCNode::removeChildByTag(int tag, bool cleanup)
 {
-	/** @todo
-	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
+	NSAssert( tag != kCCNodeTagInvalid, "Invalid tag");
 
-	CCNode *child = [self getChildByTag:aTag];
+	CCNode *child = this->getChildByTag(tag);
 
-	if (child == nil)
-		CCLOG(@"cocos2d: removeChildByTag: child not found!");
+	if (child == NULL)
+		CCLOG("cocos2d: removeChildByTag: child not found!");
 	else
-		[self removeChild:child cleanup:cleanup];*/
+		this->removeChild(child, cleanup);
 }
 
 void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 {
-	/** @todo
 	// not using detachChild improves speed here
-	for (CCNode *c in children_)
+	if ( m_pChildren && m_pChildren->count() > 0 )
 	{
-		// IMPORTANT:
-		//  -1st do onExit
-		//  -2nd cleanup
-		if (isRunning_)
-			[c onExit];
+		CCNode * pNode;
+		NSMutableArrayIterator it;
+		for ( it = m_pChildren->begin(); it!= m_pChildren->end(); it++ )
+		{
+			pNode = static_cast<CCNode *>(*it);
+			if (pNode)
+			{
+				// IMPORTANT:
+				//  -1st do onExit
+				//  -2nd cleanup
+				if(pNode->m_bIsRunning)
+				{
+					pNode->onExit();
+				}
 
-		if (cleanup)
-			[c cleanup];
-
-		// set parent nil at the end (issue #476)
-		[c setParent:nil];
+				if (cleanup)
+				{
+					pNode->cleanup();
+				}
+				// set parent nil at the end
+				pNode->setParent(NULL);
+			}
+		}
 	}
-
-	[children_ removeAllObjects];*/
+	m_pChildren->removeAllObjects();
 }
 
 void CCNode::detachChild(CCNode *child, bool doCleanup)
 {
-	/** @todo
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
-	if (isRunning_)
-		[child onExit];
+	if (m_bIsRunning)
+		child->onExit();
 
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
 	if (doCleanup)
-		[child cleanup];
+		child->cleanup();
 
-	// set parent nil at the end (issue #476)
-	[child setParent:nil];
+	// set parent nil at the end
+	child->setParent(NULL);
 
-	[children_ removeObject:child];*/
+	m_pChildren->removeObject(child);
 }
 
-// used internally to alter the zOrder variable. DON'T call this method manually
-void CCNode::setZOrder(int z)
-{
-	m_iZOrder = z;
-}
 
 // helper used by reorderChild & add
 void CCNode::insertChild(CCNode* child, int z)
 {
-	/** @todo
 	int index=0;
-	BOOL added = NO;
-	for( CCNode *a in children_ ) {
-		if ( a.zOrder > z ) {
-			added = YES;
-			[ children_ insertObject:child atIndex:index];
-			break;
+	bool added = false;
+
+	if(m_pChildren && m_pChildren->count() > 0)
+	{
+		CCNode* pNode;
+		NSMutableArrayIterator it;
+		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
+		{
+			pNode = static_cast<CCNode*>(*it);
+
+			if ( pNode && pNode->m_iZOrder > z ) 
+			{
+				added = true;
+				m_pChildren->insertObjectAtIndex(child, index);
+				break;
+			}
+			index++;
 		}
-		index++;
 	}
 
 	if( ! added )
-		[children_ addObject:child];
+		m_pChildren->addObject(child);
 
-	[child _setZOrder:z];*/
+	child->setZOrder(z);
 }
 
 void CCNode::reorderChild(CCNode *child, int zOrder)
 {
-	/** @todo
-	NSAssert( child != nil, @"Child must be non-nil");
+	NSAssert( child != NULL, "Child must be non-nil");
 
-	[child retain];
-	[children_ removeObject:child];
+	child->retain();
+	m_pChildren->removeObject(child);
 
-	[self insertChild:child z:z];
-
-	[child release];*/
+	insertChild(child, zOrder);
 }
 
 void CCNode::draw()
 {
 	// override me
-	// Only use this function to draw your staff.
+	// Only use- this function to draw your staff.
 	// DON'T draw your stuff outside this method
 }
 
@@ -708,18 +717,16 @@ void CCNode::transform()
 
 void CCNode::onEnter()
 {
-	/** @todo callback?
-	[children_ makeObjectsPerformSelector:@selector(onEnter)];
+	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onEnter);
 
-	[self resumeSchedulerAndActions];
+	this->resumeSchedulerAndActions();
 
-	isRunning_ = YES;*/
+	m_bIsRunning = true;
 }
 
 void CCNode::onEnterTransitionDidFinish()
 {
-	/** @todo callback?
-	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];*/
+	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onEnterTransitionDidFinish);
 }
 
 void CCNode::onExit()
@@ -730,6 +737,11 @@ void CCNode::onExit()
 	isRunning_ = NO;	
 
 	[children_ makeObjectsPerformSelector:@selector(onExit)];*/
+	this->pauseSchedulerAndActions();
+
+	m_bIsRunning = false;
+
+	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onExit);
 }
 
 /** @todo 

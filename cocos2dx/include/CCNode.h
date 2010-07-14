@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "../cocoa/NSMutableArray.h"
 #include "CCCamera.h"
 #include "../effects/CCGrid.h"
+#include "ccMacros.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -92,7 +93,7 @@ Camera:
 - Each node has a camera. By default it points to the center of the CCNode.
 */ 
 
-class CCNode : public NSObject
+class CCNode : public NSObject, public SelectorProtocol
 {
 	// variable property
 
@@ -124,11 +125,10 @@ class CCNode : public NSObject
 	/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
 	CCX_PROPERTY(CGPoint, m_tPosition, Position)
 
-	/** A CCCamera object that lets you move the node using a gluLookAt
-	*/
-
 	CCX_PROPERTY_READONLY(NSMutableArray *, m_pChildren, Children)
 
+	/** A CCCamera object that lets you move the node using a gluLookAt
+	*/
 	CCX_PROPERTY_READONLY(CCCamera *, m_pCamera, Camera)
 
 	/** A CCGrid object that is used when applying effects */
@@ -203,6 +203,11 @@ private:
 
 	void detachChild(CCNode *child, bool doCleanup);
 
+	typedef void (CCNode::*callbackFunc)(void);
+
+	void arrayMakeObjectsPerformSelector(NSMutableArray * pArray, callbackFunc func);
+
+
 public:
 
 	CCNode();
@@ -222,11 +227,13 @@ public:
 	During onEnter you can't a "sister/brother" node.
 	*/
 	virtual void onEnter();
+
 	/** callback that is called when the CCNode enters in the 'stage'.
 	If the CCNode enters the 'stage' with a transition, this callback is called when the transition finishes.
 	@since v0.8
 	*/
-	void onEnterTransitionDidFinish();
+	virtual void onEnterTransitionDidFinish();
+
 	/** callback that is called every time the CCNode leaves the 'stage'.
 	If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
 	During onExit you can't a "sister/brother" node.
@@ -239,19 +246,19 @@ public:
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	CCNode * addChild(CCNode * node);
+	CCNode * addChild(CCNode * child);
 
 	/** Adds a child to the container with a z-order
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	CCNode * addChild(CCNode * node, int zOrder);
+	CCNode * addChild(CCNode * child, int zOrder);
 
 	/** Adds a child to the container with z order and tag
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	CCNode * addChild(CCNode * node, int zOrder, int tag);
+	CCNode * addChild(CCNode * child, int zOrder, int tag);
 
 	// composition: REMOVE
 
@@ -264,7 +271,7 @@ public:
 	/** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
 	@since v0.7.1
 	*/
-	void removeChild(CCNode* node, bool cleanup);
+	void removeChild(CCNode* child, bool cleanup);
 
 	/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
 	@since v0.7.1
@@ -293,9 +300,6 @@ public:
 	*/
 	virtual void cleanup(void);
 
-	// @todo no declare in objc,but delcare in .m file
-	virtual void dealloc(void);
-
 	// draw
 
 	/** Override this method to draw your own node.
@@ -310,6 +314,7 @@ public:
 	But if you enable any other GL state, you should disable it after drawing your node.
 	*/
 	virtual void draw(void);
+
 	/** recursive method that visit its children and draw them */
 	void visit(void);
 
