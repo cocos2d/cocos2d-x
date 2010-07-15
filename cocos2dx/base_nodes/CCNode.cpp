@@ -83,7 +83,7 @@ void CCNode::arrayMakeObjectsPerformSelector(NSMutableArray * pArray, callbackFu
 		{
 			pNode = static_cast<CCNode*>(*it);
 
-			if(pNode)
+			if(pNode && func)
 			{
 				(pNode->*func)();
 			}
@@ -398,12 +398,15 @@ void CCNode::cleanup()
 	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::cleanup);
 }
 
-/** @todo  no declare in class
-- (NSString*) description
+
+std::string CCNode::description()
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_];
+	char des[100];
+	sprintf_s(des, 100, "<CCNode | Tag = %i>", m_nTag);
+	string ret(des);
+
+	return ret;
 }
-*/
 
 // lazy allocs
 void CCNode::childrenAlloc(void)

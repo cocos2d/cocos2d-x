@@ -215,6 +215,8 @@ public:
 
 	virtual ~CCNode();
 
+	std::string description(void);
+
 	/** allocates and initializes a node.
 	The node will be created as "autorelease".
 	*/
