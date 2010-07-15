@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "CCLayer.h"
 
-using namespace std;
 
 // CCLayer
 CCLayer::CCLayer()

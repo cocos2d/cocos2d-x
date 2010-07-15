@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "CCScene.h"
 
-using namespace std;
 
 CCScene::CCScene()
 {

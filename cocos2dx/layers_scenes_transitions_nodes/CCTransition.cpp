@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "CCTransition.h"
 
-using namespace std;
 
 enum {
 	kSceneFade = 0xFADEFADE,

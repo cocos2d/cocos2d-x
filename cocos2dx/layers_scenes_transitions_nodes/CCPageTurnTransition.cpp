@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "CCPageTurnTransition.h"
 
-using namespace std;
 
 CCPageTurnTransition::CCPageTurnTransition()
 {

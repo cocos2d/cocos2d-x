@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "CCRadialTransition.h"
 
-using namespace std;
 
 
 //#import "CCDirector.h"
