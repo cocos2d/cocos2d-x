@@ -68,6 +68,41 @@ CCPVRTexture::~CCPVRTexture()
 		glDeleteTextures(1, &m_uName);
 }
 
+GLuint CCPVRTexture::getName()
+{
+	return m_uName;
+}
+
+uint32_t CCPVRTexture::getWidth()
+{
+	return m_uWidth;
+}
+
+uint32_t CCPVRTexture::getHeight()
+{
+	return m_uHeight;
+}
+
+GLenum CCPVRTexture::getInternalFormat()
+{
+	return m_uInternalFormat;
+}
+
+bool CCPVRTexture::getHasAlpha()
+{
+	return m_bHasAlpha;
+}
+
+bool CCPVRTexture::getRetainName()
+{
+	return m_bRetainName;
+}
+
+void CCPVRTexture::setRetainName(bool var)
+{
+	m_bRetainName = var;
+}
+
 /** @todo NSData uint8_t
 - (BOOL)unpackPVRData:(NSData *)data
 {
