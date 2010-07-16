@@ -666,7 +666,7 @@ void CCDirector::replaceScene(CCScene *pScene)
 	UINT32 index = m_pobScenesStack->count();
 
 	m_bSendCleanToScene = true;
-	m_pobScenesStack->replace`ObjectAtIndex(index - 1, pScene);
+	m_pobScenesStack->replaceObjectAtIndex(index - 1, pScene);
 
 	m_pNextScene = pScene;
 }
