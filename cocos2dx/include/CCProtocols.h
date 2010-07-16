@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCPROTOCOLS_H__
 
 #include "ccTypes.h"
-#include "CCTexture2D.h"
+#include "textures/CCTexture2D.h"
 
 #include <string>
 
@@ -65,8 +65,8 @@ class CCRGBAProtocol
 	/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
 	 @since v0.8
 	 */
-	virtual bool doesOpacityModifyRGB(void) = { return false;}
-}
+	virtual bool doesOpacityModifyRGB(void) { return false;}
+};
 
 /**
  You can specify the blending fuction.
@@ -79,7 +79,7 @@ class CCBlendProtocol
 
 	// returns the blending function used for the texture
 	virtual ccBlendFunc blendFunc(void);
-}
+};
 
 /** CCNode objects that uses a Texture2D to render the images.
  The texture can have a blending function.
@@ -97,7 +97,7 @@ class CCTextureProtocol : public CCBlendProtocol
 
 	// sets a new texture. it will be retained
 	virtual void setTexture(CCTexture2D *texture) {}
-}
+};
 
 // Common interface for Labels
 class CCLabelProtocol
@@ -111,6 +111,6 @@ class CCLabelProtocol
      @since v0.99.0
     */
 	virtual void setCString(char *pLabel) {}
-}
+};
 
 #endif // __CCPROTOCOLS_H__
