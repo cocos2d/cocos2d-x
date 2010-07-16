@@ -22,3 +22,60 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "NSSet.h"
+
+using namespace std;
+
+NSSet::NSSet(void)
+{
+}
+
+NSSet::NSSet(const NSSet &rSetObject) : m_set(rSetObject.m_set)
+{
+}
+
+NSSet::~NSSet(void)
+{
+}
+
+NSSet* NSSet::copy(void)
+{
+	NSSet *pSet = new NSSet(*this);
+
+	return pSet;
+}
+
+NSSet* NSSet::mutableCopy(void)
+{
+	return copy();
+}
+
+int NSSet::count(void)
+{
+	return (int)m_set.size();
+}
+
+void NSSet::addObject(NSObject *pObject)
+{
+	m_set.insert(pObject);
+}
+
+void NSSet::removeObject(NSObject *pObject)
+{
+	m_set.erase(pObject);
+}
+
+bool NSSet::containsObject(NSObject *pObject)
+{
+	return m_set.find(pObject) != m_set.end();
+}
+
+NSSetIterator NSSet::begin(void)
+{
+	return m_set.begin();
+}
+
+NSSetIterator NSSet::end(void)
+{
+	return m_set.end();
+}

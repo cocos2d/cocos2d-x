@@ -25,5 +25,32 @@ THE SOFTWARE.
 #ifndef __NS_SET_H__
 #define __NS_SET_H__
 
+#include <set>
+#include "NSObject.h"
+
+typedef std::set<NSObject *>::iterator NSSetIterator;
+
+class NSSet : public NSObject
+{
+public:
+	NSSet(void);
+	NSSet(const NSSet &rSetObject);
+	virtual ~NSSet(void);
+
+	NSSet* copy();
+	NSSet* mutableCopy();
+	int count();
+	void addObject(NSObject *pObject);
+	void removeObject(NSObject *pObject);
+	bool containsObject(NSObject *pObject);
+	NSSetIterator begin();
+	NSSetIterator end();
+
+private:
+	std::set<NSObject *> m_set;
+};
+
+typedef NSSet NSMutableSet;
+
 #endif // __NS_SET_H__
 
