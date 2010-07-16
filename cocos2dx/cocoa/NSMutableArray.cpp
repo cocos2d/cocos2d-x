@@ -182,6 +182,23 @@ bool NSMutableArray::containsObject(NSObject *pObject)
 	return bRet;
 }
 
+void NSMutableArray::replaceObjectAtIndex(UINT32 uIndex, NSObject *pObject)
+{
+    if (m_array.empty() || uIndex == 0)
+	{
+		return;
+	}
+
+	// release the object
+	NSObject *pTmp = m_array.at(uIndex);
+	if (pTmp )
+	{
+		pTmp->release();
+	}
+
+	m_array[uIndex] = pObject;
+}
+
 UINT32 NSMutableArray::getIndexOfObject(NSObject *pObject)
 {
 	if (m_array.empty() || (pObject == NULL))

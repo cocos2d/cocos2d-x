@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 typedef std::vector<NSObject *>::iterator NSMutableArrayIterator;
 
-class NSMutableArray
+class NSMutableArray : public NSObject
 {
 public:
 	NSMutableArray(UINT32 uSize = 0);
@@ -53,6 +53,8 @@ public:
 	void removeObject(NSObject *pObject);
 	void removeObjectAtIndex(UINT32 uIndex);
 	void removeAllObjects(void);
+
+	void replaceObjectAtIndex(UINT32 uIndex, NSObject *pObject);
 
 	NSMutableArrayIterator begin(void);
 	NSMutableArrayIterator end(void);
