@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include "CCTouchDelegateProtocol.h"
 #include "CCTouchDispatcher.h"
-#include "cocoa/NSObject.h"
-#include "cocoa/NSSet.h"
+#include "../cocoa/NSObject.h"
+#include "../cocoa/NSSet.h"
 
 /**
  CCTouchHandler

@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "cocoa/CGGeometry.h"
 
 // OpenGL related
-#include "support/EAGLView.h"
+// #include "support/EAGLView.h"
 
 #include "platform/platform.h"
 

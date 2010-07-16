@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
 #include "CCTouchDelegateProtocol.h"
-#include "cocoa/NSObject.h"
+#include "../cocoa/NSObject.h"
 
 typedef enum
 {

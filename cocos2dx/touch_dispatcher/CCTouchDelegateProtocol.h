@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
-#include "cocoa/NSObject.h"
+#include "../cocoa/NSObject.h"
 
 class UITouch;
 class UIEvent;
