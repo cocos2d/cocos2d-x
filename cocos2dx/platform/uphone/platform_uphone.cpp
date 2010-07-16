@@ -22,17 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_PLATFORM_UPHONE_H__
-#define __PLATFORM_PLATFORM_UPHONE_H__
+#include "platform_uphone.h"
+#include "ssDate.h"
 
-#include "Cocos2dTypes.h"
-
-struct timeval
+// although it is not the same as gettimeofday as unix
+// but we only use the diffrences of tow values
+int gettimeofday(timeval *tp, void *tzp)
 {
-	long	tv_sec;		// seconds
-	long	tv_usec;    // microSeconds
-};
+	UINT32 uSeconds = GetSysSecond();
+	tp->tv_sec = uSeconds;
+	tp->tv_usec = 0;
 
-extern int gettimeofday(struct timeval *tp, void *tzp);
-
-#endif // __PLATFORM_PLATFORM_UPHONE_H__
+	return 0;
+}

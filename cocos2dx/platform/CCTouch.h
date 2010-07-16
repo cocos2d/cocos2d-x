@@ -22,17 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_PLATFORM_UPHONE_H__
-#define __PLATFORM_PLATFORM_UPHONE_H__
+#ifndef __PLATFORM_TOUCH_H__
+#define __PLATFORM_TOUCH_H__
 
-#include "Cocos2dTypes.h"
+#include "cocoa/NSObject.h"
 
-struct timeval
+class UITouch : public NSObject
 {
-	long	tv_sec;		// seconds
-	long	tv_usec;    // microSeconds
 };
 
-extern int gettimeofday(struct timeval *tp, void *tzp);
+class UIEvent : public NSObject
+{
+};
 
-#endif // __PLATFORM_PLATFORM_UPHONE_H__
+#endif // __PLATFORM_TOUCH_H__
