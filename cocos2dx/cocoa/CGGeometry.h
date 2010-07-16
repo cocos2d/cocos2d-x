@@ -94,4 +94,14 @@ public:
 #define CGSizeMake(width, height) CGSize((width), (height));
 #define CGRectMake(x, y, width, height) CGRect((x), (y), (width), (height));
 
+
+const CGPoint CGPointZero = CGPointMake(0,0);
+
+/* The "zero" size -- equivalent to CGSizeMake(0, 0). */ 
+const CGSize CGSizeZero = CGSizeMake(0,0);
+
+/* The "zero" rectangle -- equivalent to CGRectMake(0, 0, 0, 0). */ 
+const CGRect CGRectZero = CGRectMake(0,0,0,0);
+
+
 #endif // __COCOS_CGGEMETRY_H__
