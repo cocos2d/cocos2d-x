@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNode.h"
+#include "../support/CGPointExtension.h"
 
 using namespace std;
 
@@ -31,10 +32,10 @@ CCNode::CCNode(void)
 ,m_fRotation(0.0f)
 ,m_fScaleX(1.0f)
 ,m_fScaleY(1.0f)
-,m_tPosition(CGPoint(0,0))
-,m_tAnchorPointInPixels(CGPoint(0,0))
-,m_tAnchorPoint(CGPoint(0,0))
-,m_tContentSize(CGSize(0,0))
+,m_tPosition(CGPointZero)
+,m_tAnchorPointInPixels(CGPointZero)
+,m_tAnchorPoint(CGPointZero)
+,m_tContentSize(CGSizeZero)
 // "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
 ,m_bIsRelativeAnchorPoint(true)
 ,m_bIsTransformDirty(true)
@@ -256,18 +257,17 @@ CGPoint CCNode::getAnchorPoint()
 	return m_tAnchorPoint;
 }
 
-/// @todo anchorPoint setter
 void CCNode::setAnchorPoint(CGPoint point)
 {
-	//if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) ) 
-	//{
-	//	m_tAnchorPoint = point;
-	//	this->m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
-	//	m_bIsTransformDirty = m_bIsInverseDirty = true;
-	//	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	//	m_bIsTransformGLDirty = true;
-	//	#endif
-	//}
+	if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) ) 
+	{
+		m_tAnchorPoint = point;
+		this->m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
+		m_bIsTransformDirty = m_bIsInverseDirty = true;
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+#endif
+	}
 }
 
 /// anchorPointInPixels getter
@@ -285,15 +285,15 @@ CGSize CCNode::getContentSize()
 /// @todo contentSize setter
 void CCNode::setContentSize(CGSize size)
 {
-	//if( ! CGSizeEqualToSize(size, m_contentSize) ) 
-	//{
-	//	m_contentSize = size;
-	//	m_anchorPointInPixels = ccp( m_contentSize.width * m_anchorPoint.x, m_contentSize.height * m_anchorPoint.y );
-	//	m_isTransformDirty = m_isInverseDirty = true;
-	//	#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	//		m_bIsTransformGLDirty = true;
-	//	#endif
-	//}
+	if( ! CGSize::CGSizeEqualToSize(size, m_tContentSize) ) 
+	{
+		m_tContentSize = size;
+		m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
+		m_bIsTransformDirty = m_bIsInverseDirty = true;
+#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+#endif
+	}
 }
 
 
@@ -368,13 +368,12 @@ void CCNode::setUserData(void *var)
 
 
 
-/** @todo
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
 #define RENDER_IN_SUBPIXEL (int)
 #endif
-*/
+
 
 
 

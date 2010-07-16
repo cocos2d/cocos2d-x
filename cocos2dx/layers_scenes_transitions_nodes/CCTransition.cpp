@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTransition.h"
+#include "../support/cgpointextension.h"
 
 
 enum {
@@ -92,20 +93,21 @@ void CCTransitionScene::draw()
 void CCTransitionScene::finish()
 {
 	/** @todo
-	/* clean up 	
-	[inScene setVisible:YES];
-	[inScene setPosition:ccp(0,0)];
-	[inScene setScale:1.0f];
-	[inScene setRotation:0.0f];
-	[inScene.camera restore];
+	// clean up 	
+// 	m_pInScene->setIsVisible(true);
+// 	m_pInScene->setPosition(ccp(0,0));
+// 	m_pInScene->setScale(1.0f);
+// 	m_pInScene->setRotation(0.0f);
+// 	m_pInScene->getCamera()->restore();
+// 
+// 	m_pOutScene->setIsVisible(false);
+// 	m_pOutScene->setPosition(ccp(0,0));
+// 	m_pOutScene->setScale(1.0f);
+// 	m_pOutScene->setRotation(0.0f);
+// 	m_pOutScene->getCamera()->restore();
 
-	[outScene setVisible:NO];
-	[outScene setPosition:ccp(0,0)];
-	[outScene setScale:1.0f];
-	[outScene setRotation:0.0f];
-	[outScene.camera restore];
-
-	[self schedule:@selector(setNewScene:) interval:0];*/
+	this->schedule(&CCTransitionScene::setNewScene, 0);
+//	[self schedule:@selector(setNewScene:) interval:0];*/
 
 }
 
@@ -318,8 +320,8 @@ CCIntervalAction* CCMoveInLTransition::easeActionWithAction(CCIntervalAction* ac
 void CCMoveInLTransition::initScenes()
 {
 	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp( -s.width,0) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition: ccp( -s.width,0);*/
 }
 
 
