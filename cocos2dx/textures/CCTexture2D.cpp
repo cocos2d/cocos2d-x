@@ -429,7 +429,8 @@ CCTexture2D * CCTexture2D::initWithString(NSString *str, NSString *fontName, GLf
 
 void CCTexture2D::drawAtPoint(CGPoint point)
 {
-	GLfloat	coordinates[] = {	0.0f,	m_fMaxT,
+	GLfloat	coordinates[] = {	
+		0.0f,	m_fMaxT,
 		m_fMaxS,m_fMaxT,
 		0.0f,	0.0f,
 		m_fMaxS,0.0f };
@@ -438,13 +439,15 @@ void CCTexture2D::drawAtPoint(CGPoint point)
 		height = (GLfloat)m_uPixelsHigh * m_fMaxT;
 
 #if 0
-	GLfloat		vertices[] = {	-width / 2 + point.x,	-height / 2 + point.y,	0.0f,
+	GLfloat		vertices[] = {	
+		-width / 2 + point.x,	-height / 2 + point.y,	0.0f,
 		width / 2 + point.x,	-height / 2 + point.y,	0.0f,
 		-width / 2 + point.x,	height / 2 + point.y,	0.0f,
 		width / 2 + point.x,	height / 2 + point.y,	0.0f };
 
 #else // anchor is done by cocos2d automagically
-	GLfloat		vertices[] = {	point.x,			point.y,	0.0f,
+	GLfloat		vertices[] = {	
+		point.x,			point.y,	0.0f,
 		width + point.x,	point.y,	0.0f,
 		point.x,			height  + point.y,	0.0f,
 		width + point.x,	height  + point.y,	0.0f };
@@ -458,7 +461,8 @@ void CCTexture2D::drawAtPoint(CGPoint point)
 
 void CCTexture2D::drawInRect(CGRect rect)
 {
-	GLfloat	coordinates[] = {	0.0f,	m_fMaxT,
+	GLfloat	coordinates[] = {	
+		0.0f,	m_fMaxT,
 		m_fMaxS,m_fMaxT,
 		0.0f,	0.0f,
 		m_fMaxS,0.0f };
