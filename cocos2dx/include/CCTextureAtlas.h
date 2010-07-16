@@ -47,7 +47,7 @@ class CCTextureAtlas : public NSObject
 protected:
 	GLushort			*m_pIndices;
 #if CC_TEXTURE_ATLAS_USES_VBO
-	GLuint				buffersVBO_[2]; //0: vertex  1: indices
+	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 
 	/** quantity of quads that are going to be drawn */
@@ -55,11 +55,17 @@ protected:
 	/** quantity of quads that can be stored with the current texture atlas size */
 	CCX_PROPERTY_READONLY(UINT32, m_uCapacity, Capacity)
 	/** Texture of the texture atlas */
-	CCX_PROPERTY(CCTexture2D, m_pTexture, Texture)
+	CCX_PROPERTY(CCTexture2D *, m_pTexture, Texture)
 	/** Quads that are going to be rendered */
-	CCX_PROPERTY(ccV3F_C4B_T2F_Quad, m_pQuads, Quads)
+	CCX_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
 
 public:
+
+	CCTextureAtlas();
+	~CCTextureAtlas();
+
+	std::string description();
+
 	/** creates a TextureAtlas with an filename and with an initial capacity for Quads.
 	* The TextureAtlas capacity can be increased in runtime.
 	*/
@@ -134,7 +140,8 @@ public:
 	/** draws all the Atlas's Quads
 	*/
 	void drawQuads();
-
+private:
+	void initIndices();
 };
 
 #endif //__CCTEXTURE_ATLAS_H__

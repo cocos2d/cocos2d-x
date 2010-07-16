@@ -54,7 +54,7 @@ typedef struct _PVRTexHeader
 
 CCPVRTexture::CCPVRTexture()
 {
-
+	/// @todo nothing???
 }
 
 CCPVRTexture::~CCPVRTexture()

@@ -25,11 +25,15 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_CACHE_H__
 #define __CCTEXTURE_CACHE_H__
 
+#include <iostream>
 #include "../cocoa/NSObject.h"
-//#import <Foundation/Foundation.h>
-//#import <CoreGraphics/CGImage.h>
+#include "../cocoa/NSString.h"
+/// @todo #import <Foundation/Foundation.h>
+/// @todo #import <CoreGraphics/CGImage.h>
 
 class CCTexture2D;
+class CCAsyncObject;
+typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 
 /** Singleton that handles the loading of textures
 * Once the texture is loaded, the next time it will return
@@ -37,11 +41,18 @@ class CCTexture2D;
 */
 class CCTextureCache : public NSObject
 {
+protected:
 	/** @todo NSMutableDictionary, NSLock
 	NSMutableDictionary *textures;
 	NSLock				*dictLock;
 	NSLock				*contextLock;*/
 
+public:
+
+	CCTextureCache();
+	~CCTextureCache();
+
+	std::string description(void);
 
 	/** Retruns ths shared instance of the cache */
 	static CCTextureCache * sharedTextureCache();
@@ -69,6 +80,8 @@ class CCTextureCache : public NSObject
 	*/
 	/// @todo -(void) addImageAsync:(NSString*) filename target:(id)target selector:(SEL)selector;
 
+	void addImageWithAsyncObject(CCAsyncObject* async);
+
 	/** Returns a Texture2D object given an PVRTC RAW filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
 	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
@@ -83,7 +96,7 @@ class CCTextureCache : public NSObject
 	* If the file image was not previously loaded, it will create a new CCTexture2D
 	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
 	*/
-	CCTexture2D* addPVRTCImage(NSString* filename);
+	CCTexture2D* addPVRTCImage(NSString* fileimage);
 
 	/** Returns a Texture2D object given an CGImageRef image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
