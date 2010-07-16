@@ -88,6 +88,11 @@ typedef enum {
 	
 	/// Detault projection is 3D projection
 	kCCDirectorProjectionDefault = kCCDirectorProjection3D,
+
+	// backward compatibility stuff
+	CCDirectorProjection2D = kCCDirectorProjection2D,
+	CCDirectorProjection3D = kCCDirectorProjection3D,
+	CCDirectorProjectionCustom = kCCDirectorProjectionCustom,
 } ccDirectorProjection;
 
 /** @typedef ccDirectorType
@@ -135,6 +140,13 @@ typedef enum {
 	
 	/** Default director is the NSTimer directory */
 	kCCDirectorTypeDefault = kCCDirectorTypeNSTimer,
+
+	// backward compatibility stuff
+	CCDirectorTypeNSTimer = kCCDirectorTypeNSTimer,
+	CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
+	CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
+	CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
+	CCDirectorTypeDefault =kCCDirectorTypeDefault,
 } ccDirectorType;
 
 /** @typedef ccDeviceOrientation
@@ -149,6 +161,12 @@ typedef enum {
     kCCDeviceOrientationLandscapeLeft = UIDeviceOrientationLandscapeLeft,
 	/// Device oriented horizontally, home button on the left
     kCCDeviceOrientationLandscapeRight = UIDeviceOrientationLandscapeRight,
+
+	// Backward compatibility stuff
+	CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
+	CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
+	CCDeviceOrientationLandscapeLeft = kCCDeviceOrientationLandscapeLeft,
+	CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
 } ccDeviceOrientation;
 
 class CCLabelAtlas;
@@ -175,13 +193,18 @@ and when to execute the Scenes.
 */
 class CCDirector : public NSObject
 {
-public: // attribute
+public: 
+	virtual CCDirector* init(void);
+	virtual ~CCDirector(void);
+
+	// attribute
+
 	// The current running Scene. Director can only run one Scene at the time 
 	CCScene* getRunningScene(void);
 
 	// The FPS value
 	double getAnimationInterval(void);
-	void setAnimationInterval(double dValue);
+	virtual void setAnimationInterval(double dValue);
 
 	// Whether or not to display the FPS on the bottom-left corner
 	bool isDisplayFPS(void);
@@ -189,7 +212,7 @@ public: // attribute
 
 	// The EAGLView, where everything is rendered
 	EAGLView* getOpenGLView(void);
-	void getOpenGLView(EAGLView *pobOpenGLView);
+	void setOpenGLView(EAGLView *pobOpenGLView);
 
 	// Pixel format used to create the context
 	tPixelFormat getPiexFormat(void);
@@ -253,21 +276,25 @@ public: // attribute
 	 
 	 @deprecated set setOpenGLView instead. Will be removed in v1.0
 	 */
-	bool attachInWindow(UIWindow *pWindow);
+	// bool attachInWindow(UIWindow *pWindow);
 
 	/** attach in UIView using the full frame.
 	 It will create a EAGLView.
 	 
 	 @deprecated set setOpenGLView instead. Will be removed in v1.0
 	 */
-	bool attachInView(UIView *pView);
+	// bool attachInView(UIView *pView);
 
 	/** attach in UIView using the given frame.
 	 It will create a EAGLView and use it.
 	 
 	 @deprecated set setOpenGLView instead. Will be removed in v1.0
 	 */
-	bool attchInViewWithFrame(UIView *pView, CGRect frame);
+	// bool attchInViewWithFrame(UIView *pView, CGRect frame);
+
+    
+	// set the view where opengl to draw in
+	bool attachWindow(UIWindow *pVindow);
 
 	// Landspace
 
@@ -340,13 +367,13 @@ public: // attribute
 	/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
 	 If you wan't to pause your animation call [pause] instead.
 	 */
-	void stopAnimation(void);
+	virtual void stopAnimation(void);
 
 	/** The main loop is triggered again.
 	 Call this function only if [stopAnimation] was called earlier
 	 @warning Dont' call this function to start the main loop. To run the main loop call runWithScene
 	 */
-	void startAnimation(void);
+	virtual void startAnimation(void);
 
 	// Memory Helper
 
@@ -391,7 +418,7 @@ public:
 
 protected:
 	bool isOpenGLAttached(void);
-	bool initOpenGLViewWithViewWithFrame(UIView *pView, CGRect obRect);
+	// bool initOpenGLViewWithViewWithFrame(UIView *pView, CGRect obRect);
 
 	virtual void preMainLoop(void);
 	void mainLoop(void);
@@ -405,6 +432,9 @@ protected:
 	void showProfilers(void);
 #endif // CC_ENABLE_PROFILERS
 
+private:
+	CCDirector(void) {}
+
 protected:
 	EAGLView	*m_pobOpenGLView;
 
@@ -412,6 +442,7 @@ protected:
 	//NSTimeInterval oldAnimationInterval;
 	// NSTimeInterval -> double
 	double m_dAnimationInterval;
+	double m_dOldAnimationInterval;
 
 	tPixelFormat m_ePixelFormat;
 	tDepthBufferFormat m_eDepthBufferFormat;
@@ -481,15 +512,23 @@ protected:
  *  - Consumes more battery than the "normal" director
  *  - It has some issues while using UIKit objects
  */
+/*
 class CCFastDirector : public CCDirector
 {
+public:
+	static CCFastDirector* getSharedDirector(void);
+
 protected:
 	virtual void preMainLoop(void);
+
+private:
+	CCFastDirector(void) {}
 
 protected:
 	bool isRunning;
 	NSAutoreleasePool *pAutoreleasePool;
 };
+*/
 
 /** ThreadedFastDirector is a Director that triggers the main loop from a thread.
  *
@@ -500,14 +539,21 @@ protected:
  *
  * @since v0.8.2
  */
+/*
 class CCThreadedFastDirector : public CCDirector
 {
+public:
+	static CCThreadedFastDirector* getSharedDirector(void);
 protected:
 	virtual void preMainLoop(void);
+
+private:
+	CCThreadedFastDirector(void){}
 
 protected:
 	bool isRunning;
 };
+*/
 
 /** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  *
@@ -522,11 +568,42 @@ protected:
  */
 class CCDisplayLinkDirector : public CCDirector
 {
-protected:
-    virtual void preMainLoop(void);
+public:
+//	static CCDisplayLinkDirector* getSharedDirector(void);
+	virtual void preMainLoop(void);
+	virtual void setAnimationInterval(double dValue);
 
 protected:
-	CCDirector m_obDisplayLink;
+	CCDisplayLinkDirector(void) {}
+
+protected:
+	bool m_bInvalid;
 };
+
+/** TimerDirector is a Director that calls the main loop from an NSTimer object
+ *
+ * Features and Limitations:
+ * - Integrates OK with UIKit objects
+ * - It the slowest director
+ * - The invertal update is customizable from 1 to 60
+ *
+ * It is the default Director.
+ */
+/*
+class CCTimerDirector : public CCDirector
+{
+public:
+    static CCTimerDirector* getSharedDirector(void);
+
+protected:
+	virtual void preMain(void);
+
+private:
+	CCTimerDirector(void) {}
+
+protected:
+	NSTimer *pAnimationTimer;
+};
+*/
 
 #endif // __CCDIRECTOR_H__
