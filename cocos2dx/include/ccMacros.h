@@ -65,10 +65,10 @@ THE SOFTWARE.
 /** @def CC_SWAP
 simple macro that swaps 2 variables
 */
-#define CC_SWAP(x, y)			\
-({ typename(x) temp  = (x);		\
-		x = y; y = temp;		\
-})
+//#define CC_SWAP(x, y)			\
+//{ typename(x) temp  = (x);		\
+//		x = y; y = temp;		\
+//}
 
 
 /** @def CCRANDOM_MINUS1_1
