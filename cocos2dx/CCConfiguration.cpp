@@ -83,6 +83,7 @@ CCConfiguration* CCConfiguration::sharedConfiguration(void)
 	if (! g_pSharedConfiguration)
 	{
 		g_pSharedConfiguration = new CCConfiguration();
+		g_pSharedConfiguration->init();
 	}
 
 	return g_pSharedConfiguration;
