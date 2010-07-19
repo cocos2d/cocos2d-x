@@ -25,12 +25,19 @@ THE SOFTWARE.
 #ifndef __NSDATA_H__
 #define __NSDATA_H__
 
+#include <string>
+
 class NSData
 {
 public:
 	NSData(void);
 	~NSData(void);
+
+	bool initWithContentsOfFile(const std::string &strPath);
+	void* bytes(void);
+
+private:
+	char *m_pData;
 };
 
 #endif //__NSDATA_H__
-

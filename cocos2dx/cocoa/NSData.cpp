@@ -25,11 +25,47 @@ THE SOFTWARE.
 
 #include "NSData.h"
 
+#include <stdio.h>
+
+using namespace std;
+
 NSData::NSData(void)
 {
+	m_pData = NULL;
 }
 
 NSData::~NSData(void)
 {
+	if (m_pData)
+	{
+		delete[] m_pData;
+	}
 }
 
+bool NSData::initWithContentsOfFile(const string &strPath)
+{
+	FILE *pFile;
+	pFile = fopen(strPath.c_str(), "rb");
+
+	if (! pFile)
+	{
+		return false;
+	}
+
+	fseek(pFile, 0, SEEK_END);
+
+	int nSize = ftell(pFile);
+
+	m_pData = new char[nSize];
+
+	fread(m_pData, sizeof(char), nSize, pFile);
+
+	fclose(pFile);
+
+	return true;
+}
+
+void* NSData::bytes(void)
+{
+	return m_pData;
+}
