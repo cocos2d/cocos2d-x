@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __CCMACROS_H__
 #define __CCMACROS_H__
 
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 /**
