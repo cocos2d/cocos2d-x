@@ -26,13 +26,121 @@ THE SOFTWARE.
 
 using namespace std;
 
-ccColor3B CCAtlasNode::getColor(void)
+
+// implementation CCAtlasNode
+
+// CCAtlasNode - Creation & Init
+
+CCAtlasNode::CCAtlasNode()
+{
+	/// @todo
+}
+
+CCAtlasNode::~CCAtlasNode()
+{
+	/// @todo
+	m_pTextureAtlas->release();
+}
+
+CCAtlasNode * CCAtlasNode::atlasWithTileFile(std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
+{
+	/// @todo
+	CCAtlasNode * pAtlasNode = new CCAtlasNode();
+	pAtlasNode->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
+	pAtlasNode->autorelease();
+	return pAtlasNode;
+}
+
+CCAtlasNode * CCAtlasNode::initWithTileFile(std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
+{
+
+	m_nItemWidth = tileWidth;
+	m_nItemHeight = tileHeight;
+
+	m_cOpacity = 255;
+	m_tColor = m_tColorUnmodified = ccWHITE;
+	m_bOpacityModifyRGB = true;
+
+	m_tBlendFunc.src = CC_BLEND_SRC;
+	m_tBlendFunc.dst = CC_BLEND_DST;
+
+	// double retain to avoid the autorelease pool
+	// also, using: self.textureAtlas supports re-initialization without leaking
+	this->m_pTextureAtlas = new CCTextureAtlas();
+	m_pTextureAtlas->initWithFile(tile, itemsToRender);
+
+	this->updateBlendFunc();
+	this->updateOpacityModifyRGB();
+
+	this->calculateMaxItems();
+	this->calculateTexCoordsSteps();
+
+	return this;
+}
+
+
+// CCAtlasNode - Atlas generation
+
+void CCAtlasNode::calculateMaxItems()
+{
+	CGSize s = m_pTextureAtlas->getTexture()->getContentSize();
+	m_nItemsPerColumn = (int)(s.height / m_nItemHeight);
+	m_nItemsPerRow = (int)(s.width / m_nItemWidth);
+}
+
+void CCAtlasNode:: calculateTexCoordsSteps()
+{
+	CCTexture2D *tex = m_pTextureAtlas->getTexture();
+	m_fTexStepX = m_nItemWidth / (float)tex->getPixelsWide();
+	m_fTexStepY = m_nItemHeight / (float)tex->getPixelsHigh();
+}
+
+void CCAtlasNode::updateAtlasValues()
+{
+	NSAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overriden");
+	//[NSException raise:@"CCAtlasNode:Abstract" format:@"updateAtlasValue not overriden"];
+}
+
+// CCAtlasNode - draw
+void CCAtlasNode::draw()
+{
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);
+
+	glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity);
+
+	bool newBlend = false;
+	if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) 
+	{
+		newBlend = true;
+		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
+	}
+
+	m_pTextureAtlas->drawQuads();
+
+	if( newBlend )
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+
+	// is this chepear than saving/restoring color state ?
+	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
+	// XXX: that they need
+	//	glColor4ub( 255, 255, 255, 255);
+
+	// restore default GL state
+	glEnableClientState(GL_COLOR_ARRAY);
+
+}
+
+// CCAtlasNode - RGBA protocol
+
+ccColor3B CCAtlasNode:: color()
 {
 	if(m_bOpacityModifyRGB)
 	{
 		return m_tColorUnmodified;
 	}
-
 	return m_tColor;
 }
 
@@ -48,20 +156,57 @@ void CCAtlasNode::setColor(ccColor3B color3)
 	}	
 }
 
-GLubyte CCAtlasNode::getOpacity()
+GLubyte CCAtlasNode::opacity()
 {
 	return m_cOpacity;
 }
 
 void CCAtlasNode::setOpacity(GLubyte opacity)
 {
-	// special opacity for premultiplied textures
 	m_cOpacity = opacity;
 
 	// special opacity for premultiplied textures
-	// special opacity for premultiplied textures
-	if( m_bOpacityModifyRGB )		  //v0.99.1
-		setColor( m_bOpacityModifyRGB ? m_tColorUnmodified : m_tColor );	 //--> win32 :  alwyas used m_colorUnmodified color. "if" state no required( issue )
+	if( m_bOpacityModifyRGB )
+		this->setColor(m_bOpacityModifyRGB ? m_tColorUnmodified : m_tColor);
+}
+
+void CCAtlasNode::setOpacityModifyRGB(bool bValue)
+{
+	ccColor3B oldColor	= this->m_tColor;
+	m_bOpacityModifyRGB = bValue;
+	this->m_tColor		= oldColor;
+}
+
+bool CCAtlasNode::doesOpacityModifyRGB()
+{
+	return m_bOpacityModifyRGB;
+}
+
+void CCAtlasNode::updateOpacityModifyRGB()
+{
+	m_bOpacityModifyRGB = m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha();
+}
+
+// CCAtlasNode - CocosNodeTexture protocol
+
+void CCAtlasNode::updateBlendFunc()
+{
+	if( ! m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha() ) {
+		m_tBlendFunc.src = GL_SRC_ALPHA;
+		m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+	}
+}
+
+void CCAtlasNode::setTexture(CCTexture2D *texture)
+{
+	m_pTextureAtlas->setTexture(texture);
+	this->updateBlendFunc();
+	this->updateOpacityModifyRGB();
+}
+
+CCTexture2D * CCAtlasNode::texture()
+{
+	return m_pTextureAtlas->getTexture();
 }
 
 

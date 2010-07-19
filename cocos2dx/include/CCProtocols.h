@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCPROTOCOLS_H__
 
 #include "ccTypes.h"
-#include "textures/CCTexture2D.h"
+#include "CCTexture2D.h"
 
 #include <string>
 

@@ -26,13 +26,12 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <GLES/gl.h>
+#include <string>
 
 #include "Cocos2dDefine.h"
 #include "../cocoa/NSObject.h"
 #include "../cocoa/CGGeometry.h"
 
-#include <iostream>
-using namespace std;
 
 //CONSTANTS:
 
@@ -135,9 +134,9 @@ public:
 	Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	/// @todo CCTexture2D * initWithString(NSString* str, CGSize dimensions, UITextAlignment alignment, NSString* fontName, CGFloat fontSize);
+	/// @todo CCTexture2D * initWithString(string &  str, CGSize dimensions, UITextAlignment alignment, string &  fontName, CGFloat fontSize);
 	/** Initializes a texture from a string with font name and font size */
-	CCTexture2D * initWithString(NSString* str, NSString* fontName, GLfloat fontSize);
+	CCTexture2D * initWithString(std::string &  str, std::string &  fontName, GLfloat fontSize);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a PVRTC file
@@ -146,7 +145,7 @@ public:
 	/** Initializes a texture from a PVRTC buffer */
 	CCTexture2D * initWithPVRTCData(const void* data, int level, int bpp, bool hasAlpha, int length);
 	/** Initializes a texture from a PVRTC file */
-	CCTexture2D * initWithPVRTCFile(NSString* file);
+	CCTexture2D * initWithPVRTCFile(std::string &  file);
 
 	/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
 	If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.

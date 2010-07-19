@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_CACHE_H__
 #define __CCTEXTURE_CACHE_H__
 
-#include <iostream>
 #include "../cocoa/NSObject.h"
-#include "../cocoa/NSString.h"
 /// @todo #import <Foundation/Foundation.h>
 /// @todo #import <CoreGraphics/CGImage.h>
+#include <string>
+
 
 class CCTexture2D;
 class CCAsyncObject;
@@ -69,7 +69,7 @@ public:
 	* Otherwise it will return a reference of a previosly loaded image.
 	* Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
 	*/
-	CCTexture2D* addImage(NSString* fileimage);
+	CCTexture2D* addImage(std::string &fileimage);
 
 	/** Returns a Texture2D object given a file image
 	* If the file image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -78,7 +78,7 @@ public:
 	* Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
 	* @since v0.8
 	*/
-	/// @todo -(void) addImageAsync:(NSString*) filename target:(id)target selector:(SEL)selector;
+	/// @todo -(void) addImageAsync:(string & ) filename target:(id)target selector:(SEL)selector;
 
 	void addImageWithAsyncObject(CCAsyncObject* async);
 
@@ -90,13 +90,13 @@ public:
 	* bpp can only be 2 or 4. 2 means more compression but lower quality.
 	* hasAlpha: whether or not the image contains alpha channel
 	*/
-	CCTexture2D* addPVRTCImage(NSString* fileimage, int bpp, bool hasAlpha, int width);
+	CCTexture2D* addPVRTCImage(std::string &fileimage, int bpp, bool hasAlpha, int width);
 
 	/** Returns a Texture2D object given an PVRTC filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
 	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
 	*/
-	CCTexture2D* addPVRTCImage(NSString* fileimage);
+	CCTexture2D* addPVRTCImage(std::string &fileimage);
 
 	/** Returns a Texture2D object given an CGImageRef image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -105,7 +105,7 @@ public:
 	* If "key" is nil, then a new texture will be created each time.
 	* @since v0.8
 	*/
-	/// @todo CGImageRef CCTexture2D* addCGImage(CGImageRef image, NSString * key);
+	/// @todo CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
 
 	/** Purges the dictionary of loaded textures.
 	* Call this method if you receive the "Memory Warning"
@@ -129,7 +129,7 @@ public:
 	/** Deletes a texture from the cache given a its key name
 	@since v0.99.4
 	*/
-	void removeTextureForKey(NSString* textureKeyName);
+	void removeTextureForKey(std::string &  textureKeyName);
 
 };
 

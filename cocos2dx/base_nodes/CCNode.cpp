@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "../support/CGPointExtension.h"
+#include "../cocoa/CGGeometry.h"
 
 using namespace std;
 
@@ -600,44 +601,53 @@ void CCNode::draw()
 
 void CCNode::visit()
 {
-	/** @todo
-	if (!visible_)
+	if (!m_bIsVisible)
+	{
 		return;
-
+	}
 	glPushMatrix();
 
-	if ( grid_ && grid_.active) {
-		[grid_ beforeDraw];
-		[self transformAncestors];
+	if (m_pGrid && m_pGrid->isActive())
+	{
+		m_pGrid->beforeDraw();
+		this->transformAncestors();
 	}
 
-	[self transform];
+	this->transform();
+	
+	if(m_pChildren && m_pChildren->count() > 0)
+	{
+		CCNode* pNode;
+		NSMutableArrayIterator it;
+		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
+		{
+			pNode = static_cast<CCNode*>(*it);
 
-	ccArray *arrayData;
-	int i = 0, nu;
-	if(children_){
-		arrayData = children_->data;
-		nu = arrayData->num;
-		for(;i<nu; i++){
-			CCNode *child = arrayData->arr[i];
-			if ( child.zOrder < 0 )
-				[child visit];
+			if ( pNode && pNode->m_nZOrder < 0 ) 
+			{
+				pNode->visit();
+			}
 			else
+			{
 				break;
+			}
 		}
+
+		this->draw();
+
+		for ( ; it!=m_pChildren->end(); it++ )
+		{
+			pNode = static_cast<CCNode*>(*it);
+			pNode->visit();
+		}		
 	}
 
-	[self draw];
+	if (m_pGrid && m_pGrid->isActive())
+	{
+		m_pGrid->afterDraw(this);
+	}
 
-	if(children_)
-		for (;i<nu; i++)
-			[arrayData->arr[i] visit];
-
-
-	if ( grid_ && grid_.active)
-		[grid_ afterDraw:self];
-
-	glPopMatrix();*/
+	glPopMatrix();
 }
 
 void CCNode::transformAncestors()
@@ -842,83 +852,77 @@ void CCNode::pauseSchedulerAndActions()
 	[[CCActionManager sharedManager] pauseTarget:self];*/
 }
 
-/** @todo
 CGAffineTransform CCNode::nodeToParentTransform(void)
 {
-	if ( isTransformDirty_ ) {
+	if ( m_bIsTransformDirty ) {
 
-		transform_ = CGAffineTransformIdentity;
+		m_tTransform = CGAffineTransformIdentity;
 
-		if ( !isRelativeAnchorPoint_ && !CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
+		if( ! m_bIsRelativeAnchorPoint && ! CGPoint::CGPointEqualToPoint(m_tAnchorPointInPixels, CGPointZero) )
+			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tAnchorPointInPixels.x, m_tAnchorPointInPixels.y);
 
-		if( ! CGPointEqualToPoint(position_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
-		if( rotation_ != 0 )
-			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
-		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
-			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
+		if( ! CGPoint::CGPointEqualToPoint(m_tPosition, CGPointZero) )
+			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tPosition.x, m_tPosition.y);
+		if( m_fRotation != 0 )
+			m_tTransform = CGAffineTransformRotate(m_tTransform, -CC_DEGREES_TO_RADIANS(m_fRotation));
+		if( ! (m_fScaleX == 1 && m_fScaleY == 1) ) 
+			m_tTransform = CGAffineTransformScale(m_tTransform, m_fScaleX, m_fScaleY);
 
-		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
+		if( ! CGPoint::CGPointEqualToPoint(m_tAnchorPointInPixels, CGPointZero) )
+			m_tTransform = CGAffineTransformTranslate(m_tTransform, -m_tAnchorPointInPixels.x, -m_tAnchorPointInPixels.y);
 
-		isTransformDirty_ = NO;
+		m_bIsTransformDirty = false;
 	}
 
-	return transform_;
-}*/
-/** @todo
-- (CGAffineTransform)parentToNodeTransform
+	return m_tTransform;
+}
+
+CGAffineTransform CCNode::parentToNodeTransform(void)
 {
-	if ( isInverseDirty_ ) {
-		inverse_ = CGAffineTransformInvert([self nodeToParentTransform]);
-		isInverseDirty_ = NO;
+	if ( m_bIsInverseDirty ) {
+		m_tInverse = CGAffineTransformInvert(this->nodeToParentTransform());
+		m_bIsInverseDirty = false;
 	}
 
-	return inverse_;
-}*/
-/** @todo
-- (CGAffineTransform)nodeToWorldTransform
-{
-	CGAffineTransform t = [self nodeToParentTransform];
+	return m_tInverse;
+}
 
-	for (CCNode *p = parent_; p != nil; p = p.parent)
-		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+CGAffineTransform CCNode::nodeToWorldTransform()
+{
+	CGAffineTransform t = this->nodeToParentTransform();
+
+	for (CCNode *p = m_pParent; p != NULL; p = p->getParent())
+		t = CGAffineTransformConcat(t, p->nodeToParentTransform());
 
 	return t;
-}*/
-/** @todo
-- (CGAffineTransform)worldToNodeTransform
+}
+/** @todo*/
+CGAffineTransform CCNode::worldToNodeTransform(void)
 {
-	return CGAffineTransformInvert([self nodeToWorldTransform]);
-}*/
+	return CGAffineTransformInvert(this->nodeToWorldTransform());
+}
 
 CGPoint CCNode::convertToNodeSpace(CGPoint worldPoint)
 {
-	/// @todo return CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
-	return CGPoint(0,0);
+	return CGPointApplyAffineTransform(worldPoint, this->worldToNodeTransform());
 }
 
 CGPoint CCNode::convertToWorldSpace(CGPoint nodePoint)
 {
-	/// @todo return CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
-	return CGPoint(0,0);
+	return CGPointApplyAffineTransform(nodePoint, this->nodeToWorldTransform());
 }
 
 CGPoint CCNode::convertToNodeSpaceAR(CGPoint worldPoint)
 {
-	/** @todo
-	CGPoint nodePoint = [self convertToNodeSpace:worldPoint];
-	return ccpSub(nodePoint, anchorPointInPixels_);*/
-	return CGPoint(0,0);
+	CGPoint nodePoint = this->convertToNodeSpace(worldPoint);
+	return ccpSub(nodePoint, m_tAnchorPointInPixels);
 }
 
 CGPoint CCNode::convertToWorldSpaceAR(CGPoint nodePoint)
 {
-	/** @todo
-	nodePoint = ccpAdd(nodePoint, anchorPointInPixels_);
-	return [self convertToWorldSpace:nodePoint];*/
-	return CGPoint(0,0);
+	/** @todo*/
+	nodePoint = ccpAdd(nodePoint, m_tAnchorPointInPixels);
+	return this->convertToWorldSpace(nodePoint);
 }
 /** @todo no declare in .h file
 CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)

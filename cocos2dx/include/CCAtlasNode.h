@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
+#include "CCTextureAtlas.h"
 
 /** CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
 CCTextureProtocol protocol
@@ -57,66 +58,52 @@ protected:
 	int	m_nItemHeight;
 
 	ccColor3B	m_tColorUnmodified;
+
+	// protocol variables
 	bool m_bOpacityModifyRGB;
-
-	/** conforms to CCTextureProtocol protocol */
-	CCX_PROPERTY(CCTextureAtlas *, m_tTextureAtlas, TextureAtlas)
-
-	/** conforms to CCTextureProtocol protocol */
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
-
-	/** conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
-
-	/** conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(ccColor3B, m_tColor, Color)
-
-private:
-
-	void calculateMaxItems(void);
-	void calculateTexCoordsSteps(void);
-	void updateBlendFunc(void);
-	void updateOpacityModifyRGB(void);
+	ccBlendFunc m_tBlendFunc;
+	GLubyte m_cOpacity;
+	ccColor3B m_tColor;
+	CCTextureAtlas * m_pTextureAtlas;
 
 public:
-
 	CCAtlasNode();
-
-	virtual ~CCAtlasNode();
+	~CCAtlasNode();
 
 	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static CCAtlasNode* atlasWithTileFile(NSString* tile, int tileWidth, int tileHeight, int itemsToRender);
+	static CCAtlasNode * atlasWithTileFile(std::string & tile,int tileWidth, int tileHeight, int itemsToRender);
 
 	/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	CCAtlasNode* initWithTileFile(NSString* tile, int tileWidth, int tileHeight, int itemsToRender;
+	CCAtlasNode * initWithTileFile(std::string & tile, int tileWidth, int tileHeight, int itemsToRender);
 
 	/** updates the Atlas (indexed vertex array).
 	* Shall be overriden in subclasses
 	*/
-	void updateAtlasValues(void);
+	void updateAtlasValues();
 
-public: //CCNode methods
-	virtual void draw(void);
+	virtual void draw();
 
-public: //CCRGBAProtocol methods
+public:
+	// CC RGBA protocol
+
 	/** sets Color
 	@since v0.8
 	*/
-	virtual void setColor(ccColor3B color) = 0;
+	virtual void setColor(ccColor3B color);
 
 	/** returns the color
 	@since v0.8
 	*/
-	virtual ccColor3B color(void) = 0;
+	virtual ccColor3B color(void);
 
 	// returns the opacity
-	virtual GLubyte opacity(void) = 0;
+	virtual GLubyte opacity(void);
 
 	/** sets the opacity.
 	@warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
 	Values goes from 0 to 255, where 255 means fully opaque.
 	*/
-	virtual void setOpacity(GLubyte opacity) = 0;
+	virtual void setOpacity(GLubyte opacity);
 
 	// optional
 
@@ -126,19 +113,34 @@ public: //CCRGBAProtocol methods
 	Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
 	@since v0.8
 	*/
-	virtual void setOpacityModifyRGB(bool bValue) {}
+	virtual void setOpacityModifyRGB(bool bValue);
 
 	/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
 	@since v0.8
 	*/
-	virtual bool doesOpacityModifyRGB(void) = { return false;}
+	virtual bool doesOpacityModifyRGB(void);
 
-public: // CCTextureProtocol methods
+	// CC Blend protocol
+
+	// set the source blending function for the texture
+	virtual void setBlendFunc(ccBlendFunc blendFunc);
+
+	// returns the blending function used for the texture
+	virtual ccBlendFunc blendFunc(void);
+
+	// CC Texture protocol
+
 	// returns the used texture
-	virtual CCTexture2D* texture(void) = 0;
+	virtual CCTexture2D* texture(void);
 
 	// sets a new texture. it will be retained
-	virtual void setTexture(CCTexture2D *texture) {}
+	virtual void setTexture(CCTexture2D *texture);
+
+private :
+	void calculateMaxItems();
+	void calculateTexCoordsSteps();
+	void updateBlendFunc();
+	void updateOpacityModifyRGB();
 
 };
 

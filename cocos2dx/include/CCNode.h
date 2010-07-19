@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "../CCScheduler.h"
 #include "../cocoa/CGGeometry.h"
+#include "../cocoa/CGAffineTransform.h"
 #include "../cocoa/NSMutableArray.h"
 #include "../cocoa/selector_protocol.h"
 #include "../effects/CCGrid.h"
@@ -97,6 +98,7 @@ Camera:
 
 class CCNode : public NSObject, public SelectorProtocol
 {
+
 	// variable property
 
 	/** The z order of the node relative to it's "brothers": children of the same parent */
@@ -179,6 +181,9 @@ class CCNode : public NSObject, public SelectorProtocol
 	CCX_PROPERTY(void *, m_pUserData, UserData)
 	
 protected:
+
+	// transform
+	CGAffineTransform m_tTransform, m_tInverse;
 
 #ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	GLfloat	m_pTransformGL[16];
@@ -438,22 +443,22 @@ public:
 	/** Returns the local affine transform matrix
 	@since v0.7.1
 	*/
-/// @todo	CGAffineTransform nodeToParentTransform(void);
+	CGAffineTransform nodeToParentTransform(void);
 
 	/** Returns the inverse local affine transform matrix
 	@since v0.7.1
 	*/
-/// @todo	CGAffineTransform parentToNodeTransform(void);
+	CGAffineTransform parentToNodeTransform(void);
 
 	/** Retrusn the world affine transform matrix
 	@since v0.7.1
 	*/
-/// @todo	CGAffineTransform nodeToWorldTransform(void);
+	CGAffineTransform nodeToWorldTransform(void);
 
 	/** Returns the inverse world affine transform matrix
 	@since v0.7.1
 	*/
-/// @todo	CGAffineTransform worldToNodeTransform(void);
+	CGAffineTransform worldToNodeTransform(void);
 
 	/** converts a world coordinate to local coordinate
 	@since v0.7.1

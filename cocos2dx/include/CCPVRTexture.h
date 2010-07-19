@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __CCPVRTEXTURE_H__
 #define __CCPVRTEXTURE_H__
 
+#include <string>
+
 //#import <UIKit/UIKit.h>
 #include <GLES/gl.h>
 #include <GLES/glext.h>
@@ -45,9 +47,9 @@ public:
 	CCPVRTexture();
 	~CCPVRTexture();
 
-	CCPVRTexture * initWithContentsOfFile(NSString * path);
+	CCPVRTexture * initWithContentsOfFile(std::string &  path);
 /// @todo	CCPVRTexture * initWithContentsOfURL(NSURL *url);
-	static CCPVRTexture * pvrTextureWithContentsOfFile(NSString *path);
+	static CCPVRTexture * pvrTextureWithContentsOfFile(std::string & path);
 /// @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
 
 	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
