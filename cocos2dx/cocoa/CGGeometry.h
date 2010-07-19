@@ -90,9 +90,9 @@ public:
     static bool CGRectContainsPoint(CGRect rect, CGPoint point);
 };
 
-#define CGPointMake(x, y) CGPoint((x), (y));
-#define CGSizeMake(width, height) CGSize((width), (height));
-#define CGRectMake(x, y, width, height) CGRect((x), (y), (width), (height));
+#define CGPointMake(x, y) CGPoint((x), (y))
+#define CGSizeMake(width, height) CGSize((width), (height))
+#define CGRectMake(x, y, width, height) CGRect((x), (y), (width), (height))
 
 
 const CGPoint CGPointZero = CGPointMake(0,0);
