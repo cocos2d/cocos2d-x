@@ -29,42 +29,45 @@ THE SOFTWARE.
 #include "../platform/platform.h"
 #include <vector>
 
-typedef std::vector<NSObject *>::iterator NSMutableArrayIterator;
-
+template<class T = NSObject*>
 class NSMutableArray : public NSObject
 {
 public:
+	typedef std::vector<T>								NSObjectArray;
+	typedef typename NSObjectArray::iterator			NSMutableArrayIterator;
+	typedef typename NSObjectArray::reverse_iterator	NSMutableArrayRevIterator;
+
+public:
 	NSMutableArray(UINT32 uSize = 0);
     ~NSMutableArray(void);
-
 	UINT32 count(void);
-	UINT32 getIndexOfObject(NSObject *pObject);
-	bool containsObject(NSObject *pObject);
-	NSObject* getLastObject(void);	
-	NSObject* getObjectAtIndex(UINT32 uIndex);
+
+	UINT32 getIndexOfObject(T pObject);
+	bool containsObject(T pObject);
+	T getLastObject(void);
+	T getObjectAtIndex(UINT32 uIndex);
 
 	// Adding objects
-	void addObject(NSObject *pObject);
-	void addObjectsFromArray(NSMutableArray *pArray);
-    void insertObjectAtIndex(NSObject *pObject, UINT32 uIndex);
+	void addObject(T pObject);
+	void addObjectsFromArray(NSMutableArray<T> *pArray);
+    void insertObjectAtIndex(T pObject, UINT32 uIndex);
 
 	// Removing objects
 	void removeLastObject(void);
-	void removeObject(NSObject *pObject);
+	void removeObject(T pObject);
 	void removeObjectAtIndex(UINT32 uIndex);
 	void removeAllObjects(void);
-
-	void replaceObjectAtIndex(UINT32 uIndex, NSObject *pObject);
+	void replaceObjectAtIndex(UINT32 uIndex, T pObject);
 
 	NSMutableArrayIterator begin(void);
 	NSMutableArrayIterator end(void);
 
 public:
-	static NSMutableArray* arrayWithObjects(NSObject *pObject1, ...);
-	static NSMutableArray* arrayWithArray(NSMutableArray *pArray);
+	static NSMutableArray<T>* arrayWithObjects(T pObject1, ...);
+	static NSMutableArray<T>* arrayWithArray(NSMutableArray<T> *pArray);
 
 private:
-	std::vector<NSObject *> m_array;
+	std::vector<T> m_array;
 };
 
 #endif // __COCOA_NS_MUTATLE_ARRAY_H__

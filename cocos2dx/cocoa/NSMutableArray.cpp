@@ -29,27 +29,32 @@ THE SOFTWARE.
 
 using namespace std;
 
-NSMutableArray::NSMutableArray(UINT32 uSize)
+template<class T>
+NSMutableArray<T>::NSMutableArray(UINT32 uSize)
 {
-	m_array = vector<NSObject *>(uSize);
+	m_array = m_array.resize(uSize);
 }
 
-NSMutableArray::~NSMutableArray(void)
+template<class T>
+NSMutableArray<T>::~NSMutableArray(void)
 {
 	removeAllObjects();
 }
 
-vector<NSObject *>::iterator NSMutableArray::begin(void)
+template<class T>
+typename NSMutableArray<T>::NSMutableArrayIterator NSMutableArray<T>::begin(void)
 {
 	return m_array.begin();
 }
 
-vector<NSObject *>::iterator NSMutableArray::end(void)
+template<class T>
+typename NSMutableArray<T>::NSMutableArrayIterator NSMutableArray<T>::end(void)
 {
 	return m_array.end();
 }
 
-void NSMutableArray::addObject(NSObject *pObject)
+template<class T>
+void NSMutableArray<T>::addObject(T pObject)
 {
 	// make sure the pointer is not null
 	if (pObject == NULL)
@@ -64,7 +69,8 @@ void NSMutableArray::addObject(NSObject *pObject)
 	m_array.push_back(pObject);
 }
 
-void NSMutableArray::insertObjectAtIndex(NSObject *pObject, UInt32 uIndex)
+template<class T>
+void NSMutableArray<T>::insertObjectAtIndex(T pObject, UInt32 uIndex)
 {
 	// make sure the object is not null
 	if (pObject == NULL)
@@ -79,11 +85,12 @@ void NSMutableArray::insertObjectAtIndex(NSObject *pObject, UInt32 uIndex)
 	m_array.insert(m_array.begin() + uIndex, pObject);
 }
 
-void NSMutableArray::addObjectsFromArray(NSMutableArray *pArray)
+template<class T>
+void NSMutableArray<T>::addObjectsFromArray(NSMutableArray<T> *pArray)
 {
 	if (pArray && pArray->count() > 0)
 	{
-		vector<NSObject *>::iterator iter;
+		NSMutableArray<T>::NSMutableArrayIterator iter;
 		for (iter = pArray->begin(); iter != pArray->end(); ++iter)
 		{
 			if (*iter)
@@ -94,19 +101,21 @@ void NSMutableArray::addObjectsFromArray(NSMutableArray *pArray)
 	}
 }
 
-UINT32 NSMutableArray::count(void)
+template<class T>
+UINT32 NSMutableArray<T>::count(void)
 {
 	return m_array.size();
 }
 
-void NSMutableArray::removeObject(NSObject *pObject)
+template<class T>
+void NSMutableArray<T>::removeObject(T pObject)
 {
 	if (m_array.empty() || (! pObject))
 	{
 		return;
 	}
 
-	vector<NSObject *>::iterator iter;
+	NSMutableArray<T>::NSMutableArrayIterator iter;
 	int i;
 	for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
 	{
@@ -121,9 +130,10 @@ void NSMutableArray::removeObject(NSObject *pObject)
 	}
 }
 
-void NSMutableArray::removeAllObjects(void)
+template<class T>
+void NSMutableArray<T>::removeAllObjects(void)
 {
-	vector<NSObject *>::iterator iter;
+	NSMutableArray<T>::NSMutableArrayIterator iter;
 	for (iter = m_array.begin(); iter != m_array.end(); ++iter)
 	{
 		if (*iter)
@@ -135,7 +145,8 @@ void NSMutableArray::removeAllObjects(void)
 	m_array.clear();
 }
 
-void NSMutableArray::removeLastObject(void)
+template<class T>
+void NSMutableArray<T>::removeLastObject(void)
 {
 	INT32 count = this->count();
 
@@ -145,14 +156,15 @@ void NSMutableArray::removeLastObject(void)
 	}
 }
 
-void NSMutableArray::removeObjectAtIndex(UINT32 uIndex)
+template<class T>
+void NSMutableArray<T>::removeObjectAtIndex(UINT32 uIndex)
 {
 	if (m_array.empty() || uIndex == 0)
 	{
 		return;
 	}
 
-	NSObject *pObject = m_array.at(uIndex);
+	T pObject = m_array.at(uIndex);
 	if (pObject)
 	{
 		pObject->release();
@@ -161,7 +173,8 @@ void NSMutableArray::removeObjectAtIndex(UINT32 uIndex)
 	m_array.erase(m_array.begin() + uIndex);
 }
 
-bool NSMutableArray::containsObject(NSObject *pObject)
+template<class T>
+bool NSMutableArray<T>::containsObject(T pObject)
 {
 	if (m_array.empty() || (! pObject))
 	{
@@ -169,7 +182,7 @@ bool NSMutableArray::containsObject(NSObject *pObject)
 	}
 
 	bool bRet = false;
-	vector<NSObject *>::iterator iter;
+	NSMutableArray<T>::NSMutableArrayIterator iter;
 	for (iter = m_array.begin(); iter != m_array.end(); ++iter)
 	{
 		if (*iter == pObject)
@@ -182,7 +195,8 @@ bool NSMutableArray::containsObject(NSObject *pObject)
 	return bRet;
 }
 
-void NSMutableArray::replaceObjectAtIndex(UINT32 uIndex, NSObject *pObject)
+template<class T>
+void NSMutableArray<T>::replaceObjectAtIndex(UINT32 uIndex, T pObject)
 {
     if (m_array.empty() || uIndex == 0)
 	{
@@ -190,7 +204,7 @@ void NSMutableArray::replaceObjectAtIndex(UINT32 uIndex, NSObject *pObject)
 	}
 
 	// release the object
-	NSObject *pTmp = m_array.at(uIndex);
+	T pTmp = m_array.at(uIndex);
 	if (pTmp )
 	{
 		pTmp->release();
@@ -199,14 +213,15 @@ void NSMutableArray::replaceObjectAtIndex(UINT32 uIndex, NSObject *pObject)
 	m_array[uIndex] = pObject;
 }
 
-UINT32 NSMutableArray::getIndexOfObject(NSObject *pObject)
+template<class T>
+UINT32 NSMutableArray<T>::getIndexOfObject(T pObject)
 {
 	if (m_array.empty() || (pObject == NULL))
 	{
         return 0;
 	}
 
-	vector<NSObject *>::iterator iter;
+	NSMutableArray<T>::NSMutableArrayIterator iter;
 	UINT32 uRet = 0;
 	INT32 i;
 	for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
@@ -221,9 +236,10 @@ UINT32 NSMutableArray::getIndexOfObject(NSObject *pObject)
 	return uRet;
 }
 
-NSObject* NSMutableArray::getLastObject(void)
+template<class T>
+T NSMutableArray<T>::getLastObject(void)
 {
-	NSObject *pObject = NULL;
+	T pObject = NULL;
 	INT32 count = this->count();
 
 	if (count > 0)
@@ -234,18 +250,19 @@ NSObject* NSMutableArray::getLastObject(void)
 	return pObject;
 }
 
-NSMutableArray* arrayWithObjects(NSObject *pObject1, ...)
+template<class T>
+NSMutableArray<T>* arrayWithObjects(T pObject1, ...)
 {
-	NSMutableArray *pArray = new NSMutableArray();
+	NSMutableArray<T> *pArray = new NSMutableArray<T>();
 
 	va_list params;
 	va_start(params, pObject1);
 
-	NSObject *pFirst = pObject1;
+	T pFirst = pObject1;
 	while (pFirst)
 	{
 		pArray->addObject(pFirst);
-		pFirst = va_arg(params, NSObject *);
+		pFirst = va_arg(params, T);
 	}
 
 	va_end(params);
@@ -253,16 +270,16 @@ NSMutableArray* arrayWithObjects(NSObject *pObject1, ...)
 	return pArray;
 }
 
-NSMutableArray* arrayWithArray(NSMutableArray *pArray)
+template<class T>
+NSMutableArray<T>* NSMutableArray<T>::arrayWithArray(NSMutableArray<T> *pArray)
 {
 	if (pArray == NULL)
 	{
 		return NULL;
 	}
 
-	NSMutableArray *pNewArray = new NSMutableArray();
-	vector<NSObject *>::iterator iter;
-
+	NSMutableArray<T> *pNewArray = new NSMutableArray<T>();
+	NSMutableArray<T>::NSMutableArrayIterator iter;
 	for (iter = pArray->begin(); iter != pArray->end(); ++iter)
 	{
 		pNewArray->addObject(*iter);
@@ -271,7 +288,8 @@ NSMutableArray* arrayWithArray(NSMutableArray *pArray)
 	return pNewArray;
 }
 
-NSObject* NSMutableArray::getObjectAtIndex(UINT32 uIndex)
+template<class T>
+T NSMutableArray<T>::getObjectAtIndex(UINT32 uIndex)
 {
 	assert(uIndex < count());
 	assert(uIndex >= 0);
