@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCTouchDelegateProtocol.h"
 #include "../cocoa/NSObject.h"
+#include "cocoa/NSMutableArray.h"
 
 typedef enum
 {
@@ -49,7 +50,6 @@ enum {
 
 class NSSet;
 class UIEvent;
-class NSMutableArray;
 
 struct ccTouchHandlerHelperData {
 	// we only use the type
@@ -134,18 +134,18 @@ public:
 protected:
 	CCTouchDispatcher() {};
 	void forceRemoveDelegate(CCTouchDelegate *pDelegate);
-	void forceAddHandler(CCTouchHandler *pHandler, NSMutableArray *pArray);
+	void forceAddHandler(CCTouchHandler *pHandler, NSMutableArray<CCTouchHandler*> *pArray);
 	void forceRemoveAllDelegates(void);
 
 protected:
-	NSMutableArray *m_pTargetedHandlers;
-	NSMutableArray *m_pStandardHandlers;
+	NSMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
+	NSMutableArray<CCTouchHandler*> *m_pStandardHandlers;
 
 	bool m_bLocked;
 	bool m_bToAdd;
 	bool m_bToRemove;
-	NSMutableArray *m_pHandlersToAdd;
-	NSMutableArray *m_pHandlersToRemove;
+	NSMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
+	NSMutableArray<CCTouchDelegate*> *m_pHandlersToRemove;
 	bool m_bToQuit;
 
 	bool m_bDispatchEvents;
