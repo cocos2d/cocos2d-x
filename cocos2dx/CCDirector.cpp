@@ -26,9 +26,13 @@ THE SOFTWARE.
 #include "CCScene.h"
 #include "cocoa/NSMutableArray.h"
 #include "CCScheduler.h"
-#include "ccMacro.h"
+#include "ccMacros.h"
 #include "platform/platform.h"
 #include "Cocos2dDefine.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "support/opengl_support/glu.h"
+#include "support/CGPointExtension.h"
+#include "CCTransition.h"
 
 #include <string>
 
@@ -37,7 +41,7 @@ using namespace std;
 // singleton stuff
 static CCDirector *pobSharedDirector = NULL;
 
-#define kDefualtFPS		60  // 60 frames per second
+#define kDefaultFPS		60  // 60 frames per second
 extern string cocos2dVersion(void);
 
 CCDirector* CCDirector::getSharedDirector(void)
@@ -58,7 +62,7 @@ CCDirector* CCDirector::getSharedDirector(void)
 	return pobSharedDirector;
 }
 
-bool CCDirector::setDierectorType(ccDrirectorType obDirectorType)
+bool CCDirector::setDierectorType(ccDirectorType obDirectorType)
 {
 	assert(pobSharedDirector==NULL);
 
@@ -97,7 +101,7 @@ CCDirector* CCDirector::init(void)
 
 	// default values
     m_ePixelFormat = kCCPixelFormatDefault;
-	m_eDepthBufferFormat = 0;
+	m_eDepthBufferFormat = kCCDepthBufferNone; // 0
 
 	// scenes
 	m_pRunningScene = NULL;
@@ -105,7 +109,7 @@ CCDirector* CCDirector::init(void)
 
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;
 
-	m_pobScenesStack = new NSMutableArray(10);
+	m_pobScenesStack = new NSMutableArray<CCScene*>(10);
 
 	// landspace
 	m_obDeviceOrientation = CCDeviceOrientationPortrait;
@@ -128,7 +132,8 @@ CCDirector::~CCDirector(void)
 	CCLOGINFO("cocos2d: deallocing %p", this);
 
 #if CC_DIRECTOR_FAST_FPS
-    FPSLabel->release();
+	//todo
+//    FPSLabel->release();
 #endif 
     
 	m_pRunningScene->release();
@@ -163,7 +168,7 @@ void CCDirector::mainLoop(void)
 	//tick before glClear: issue #533
 	if (! m_bPaused)
 	{
-		CCScheduler::getSharedScheduler->tick(m_fDeltaTime);
+		CCScheduler::getSharedScheduler()->tick(m_fDeltaTime);
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -360,19 +365,19 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glOrthof(0, size.width, 0, size.height, -1000, 1000);
-		glMatrixMode(GL_MODEVIEW);
+		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		break;
 
 	case kCCDirectorProjection3D:
-		glViewport(0, 0, size.width, size.height);
+		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
 			
 		glMatrixMode(GL_MODELVIEW);	
 		glLoadIdentity();
-		gluLookAt( size.width/2, size.height/2, [self getZEye],
+		gluLookAt( size.width/2, size.height/2, getZEye(),
 				 size.width/2, size.height/2, 0,
 				 0.0f, 1.0f, 0.0f);				
 		break;
@@ -567,11 +572,11 @@ CGPoint CCDirector::convertToGL(CGPoint obPoint)
 CGPoint CCDirector::convertToUI(CGPoint obPoint)
 {
 	CGSize winSize = m_obSurfaceSize;
-	int oppositeX = winSize.width - obPoint.x;
-	int oppositeY = winSize.height - obPoint.y;
+	float oppositeX = winSize.width - obPoint.x;
+	float oppositeY = winSize.height - obPoint.y;
 	CGPoint uiPoint;
 
-	switch ()
+	switch (m_eDeviceOrientation)
 	{
 	case CCDeviceOrientationPortrait:
 		uiPoint = ccp(obPoint.x, obPoint.y);
@@ -613,7 +618,7 @@ CGSize CCDirector::getDisplaySize(void)
 	return m_obSurfaceSize;
 }
 
-void CCDirector::applyLandSpace(void)
+void CCDirector::applyLandspace(void)
 {
 	CGSize s = m_obSurfaceSize;
 	float w = s.width / 2;
@@ -665,7 +670,7 @@ void CCDirector::replaceScene(CCScene *pScene)
 
 	UINT32 index = m_pobScenesStack->count();
 
-	m_bSendCleanToScene = true;
+	m_bSendCleanupToScene = true;
 	m_pobScenesStack->replaceObjectAtIndex(index - 1, pScene);
 
 	m_pNextScene = pScene;
@@ -713,13 +718,14 @@ void CCDirector::end(void)
 
 	// don't release the event handlers
 	// They are needed in case the director is run again
-	CCTouchDispatcher->getSharedDispatcher->removeAllDelegates();
+	CCTouchDispatcher::getSharedDispatcher()->removeAllDelegates();
 
 	stopAnimation();
 
 #if CC_DIRECTOR_FAST_FPS
-	FPSLabel->release();
-	FPSLabel = NULL;
+	// todo
+//	FPSLabel->release();
+//	FPSLabel = NULL;
 #endif
 
 	// purge bitmap cache
@@ -742,7 +748,7 @@ void CCDirector::setNextScene(void)
 	bool newIsTransition = dynamic_cast<CCTransitionScene *>(m_pNextScene) != NULL;
 
 	// If it is not a transition, call onExit/cleanup
-	if (! newIsTransiton)
+	if (! newIsTransition)
 	{
 		m_pRunningScene->onExit();
 
@@ -759,7 +765,7 @@ void CCDirector::setNextScene(void)
 	m_pNextScene->retain();
 	m_pNextScene = NULL;
 
-	if (! runningIsTransiton)
+	if (! runningIsTransition)
 	{
 		m_pRunningScene->onEnter();
 		m_pRunningScene->onEnterTransitionDidFinish();
@@ -828,7 +834,7 @@ void CCDirector::showFPS(void)
 	if (m_fAccumDt > CC_DIRECTOR_FPS_INTERVAL)
 	{
 		m_fFrameRate = m_nFrames / m_fAccumDt;
-		m_nFrame = 0;
+		m_nFrames = 0;
 		m_fAccumDt = 0;
         
 		/*
@@ -843,16 +849,6 @@ void CCDirector::showFPS(void)
 #if CC_ENABLE_PROFILERS
 // implement later
 #endif
-
-CGFloat CCDirector::getContentScaleFactor(void)
-{
-	return m_fContentScaleFactor;
-}
-
-void CCDirector::setContentScaleFactor(CGFloat obCGFloatValue)
-{
-	// it is used on iphone 4.0
-}
 
 // should we afford 4 types of director ??
 // I think DisplayLinkDirector is enough

@@ -154,13 +154,13 @@ typedef enum {
  */
 typedef enum {
 	/// Device oriented vertically, home button on the bottom
-	kCCDeviceOrientationPortrait = UIDeviceOrientationPortrait,	
+	kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,	
 	/// Device oriented vertically, home button on the top
-    kCCDeviceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown,
+    kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
 	/// Device oriented horizontally, home button on the right
-    kCCDeviceOrientationLandscapeLeft = UIDeviceOrientationLandscapeLeft,
+    kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
 	/// Device oriented horizontally, home button on the left
-    kCCDeviceOrientationLandscapeRight = UIDeviceOrientationLandscapeRight,
+    kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
 
 	// Backward compatibility stuff
 	CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
@@ -196,6 +196,7 @@ class CCDirector : public NSObject
 public: 
 	virtual CCDirector* init(void);
 	virtual ~CCDirector(void);
+	CCDirector(void) {}
 
 	// attribute
 
@@ -315,7 +316,7 @@ public:
 	CGPoint convertToUI(CGPoint obPoint);
 
 	// rotates the screen if Landscape mode is activated
-	void applyLandSpace(void);
+	void applyLandspace(void);
 
 	// XXX: missing description
 	float getZEye(void);
@@ -414,7 +415,7 @@ public:
 	 @since v0.8.2
 	 */
 	// should we support four types???
-	static bool setDierectorType(ccDrirectorType obDirectorType);
+	static bool setDierectorType(ccDirectorType obDirectorType);
 
 protected:
 	bool isOpenGLAttached(void);
@@ -432,9 +433,6 @@ protected:
 	void showProfilers(void);
 #endif // CC_ENABLE_PROFILERS
 
-private:
-	CCDirector(void) {}
-
 protected:
 	EAGLView	*m_pobOpenGLView;
 
@@ -451,7 +449,7 @@ protected:
 	bool m_bLandscape;
 	
 	/* orientation */
-	ccDeviceOrientation	m_obDeviceOrientation;
+	ccDeviceOrientation	m_eDeviceOrientation;
 	
 	/* display FPS ? */
 	bool   m_bDisplayFPS;
@@ -459,7 +457,8 @@ protected:
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
 #if	CC_DIRECTOR_FAST_FPS
-	CCLabelAtlas *FPSLabel;
+	// todo implement CCLabelAtlas
+//	CCLabelAtlas *FPSLabel;
 #endif
 	
 	/* is the running scene paused */
@@ -476,7 +475,7 @@ protected:
 	bool	m_bSendCleanupToScene;
 
 	/* scheduled scenes */
-	NSMutableArray *m_pobScenesStack;
+	NSMutableArray<CCScene*> *m_pobScenesStack;
 	
 	/* last time the main loop was updated */
 	struct timeval m_sLastUpdate;
@@ -502,7 +501,7 @@ protected:
 #if CC_ENABLE_PROFILERS
 	ccTime m_fAccumDtForProfiler;
 #endif
-}
+};
 
 
 /** FastDirector is a Director that triggers the main loop as fast as possible.
@@ -569,12 +568,13 @@ protected:
 class CCDisplayLinkDirector : public CCDirector
 {
 public:
-//	static CCDisplayLinkDirector* getSharedDirector(void);
+	CCDisplayLinkDirector(void) {}
+
+   //static CCDisplayLinkDirector* getSharedDirector(void);
 	virtual void preMainLoop(void);
 	virtual void setAnimationInterval(double dValue);
-
-protected:
-	CCDisplayLinkDirector(void) {}
+	virtual void startAnimation(void);
+	virtual void stopAnimation();
 
 protected:
 	bool m_bInvalid;
