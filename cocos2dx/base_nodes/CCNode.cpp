@@ -75,15 +75,15 @@ CCNode::~CCNode()
 
 }
 
-void CCNode::arrayMakeObjectsPerformSelector(NSMutableArray * pArray, callbackFunc func)
+void CCNode::arrayMakeObjectsPerformSelector(NSMutableArray<CCNode*> * pArray, callbackFunc func)
 {
 	if(pArray && pArray->count() > 0)
 	{
 		CCNode* pNode;
-		NSMutableArrayIterator it;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for( it = pArray->begin(); it != pArray->end(); it++)
 		{
-			pNode = static_cast<CCNode*>(*it);
+			pNode = (*it);
 
 			if(pNode && func)
 			{
@@ -203,7 +203,7 @@ void CCNode::setPosition(CGPoint newPosition)
 }
 
 /// children getter
-NSMutableArray * CCNode::getChildren()
+NSMutableArray<CCNode*> * CCNode::getChildren()
 {
 	return m_pChildren;
 }
@@ -411,7 +411,7 @@ std::string CCNode::description()
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-	m_pChildren = new NSMutableArray(4);
+	m_pChildren = new NSMutableArray<CCNode*>(4);
 }
 
 CCNode* CCNode::getChildByTag(int aTag)
@@ -423,10 +423,10 @@ CCNode* CCNode::getChildByTag(int aTag)
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
 		CCNode* pNode;
-		NSMutableArrayIterator it;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
 		{
-			pNode = static_cast<CCNode*>(*it);
+			pNode = (*it);
 			if(pNode && pNode->m_nTag == aTag)
 				return pNode;
 		}
@@ -506,7 +506,7 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 	if ( m_pChildren && m_pChildren->count() > 0 )
 	{
 		CCNode * pNode;
-		NSMutableArrayIterator it;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for ( it = m_pChildren->begin(); it!= m_pChildren->end(); it++ )
 		{
 			pNode = static_cast<CCNode *>(*it);
@@ -561,10 +561,10 @@ void CCNode::insertChild(CCNode* child, int z)
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
 		CCNode* pNode;
-		NSMutableArrayIterator it;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
 		{
-			pNode = static_cast<CCNode*>(*it);
+			pNode = (*it);
 
 			if ( pNode && pNode->m_nZOrder > z ) 
 			{
@@ -618,10 +618,10 @@ void CCNode::visit()
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
 		CCNode* pNode;
-		NSMutableArrayIterator it;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
 		{
-			pNode = static_cast<CCNode*>(*it);
+			pNode = (*it);
 
 			if ( pNode && pNode->m_nZOrder < 0 ) 
 			{
@@ -924,13 +924,14 @@ CGPoint CCNode::convertToWorldSpaceAR(CGPoint nodePoint)
 	nodePoint = ccpAdd(nodePoint, m_tAnchorPointInPixels);
 	return this->convertToWorldSpace(nodePoint);
 }
-/** @todo no declare in .h file
+/** @todo CCDirector*/
 CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
 {
 	
-	CGPoint worldPoint = [self convertToWorldSpace:nodePoint];
-	return [[CCDirector sharedDirector] convertToUI:worldPoint];
-}*/
+	CGPoint worldPoint = this->convertToWorldSpace(nodePoint);
+	//return [[CCDirector sharedDirector] convertToUI:worldPoint];
+	return ccp(0,0);
+}
 
 // convenience methods which take a UITouch instead of CGPoint
 /** @todo

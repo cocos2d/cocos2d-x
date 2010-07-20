@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #include "Cocos2dDefine.h"
 #include "CCNode.h"
-/// @todo CCTexture2D.h
-//#include "CCProtocols.h"
-
+#include "CCTexture2D.h"
+#include "CCProtocols.h"
+#include "../touch_dispatcher/CCTouchDelegateProtocol.h"
 //
 // CCLayer
 //
@@ -40,7 +40,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive Accelerometer input
 */
 /// @todo public UIAccelerometerDelegate, public CCStandardTouchDelegate, public CCTargetedTouchDelegate
-class CCLayer : public CCNode//, public UIAccelerometerDelegate, public CCStandardTouchDelegate, public CCTargetedTouchDelegate
+class CCLayer : public CCNode, public CCStandardTouchDelegate, public CCTargetedTouchDelegate//, public UIAccelerometerDelegate
 {
 public:
 	CCLayer();
@@ -83,8 +83,7 @@ All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-/// @todo public CCRGBAProtocol, public CCBlendProtocol
-class CCColorLayer : public CCLayer //, public CCRGBAProtocol, public CCBlendProtocol
+class CCColorLayer : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
 	GLfloat m_fSquareVertices[4 * 2];
@@ -137,7 +136,7 @@ class CCMultiplexLayer : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;
-	NSMutableArray * m_pLayers;
+	NSMutableArray<CCLayer *> * m_pLayers;
 public:
 
 	CCMultiplexLayer();

@@ -96,7 +96,7 @@ Camera:
 - Each node has a camera. By default it points to the center of the CCNode.
 */ 
 
-class CCNode : public NSObject, public SelectorProtocol
+class CCNode : virtual public NSObject, public SelectorProtocol
 {
 
 	// variable property
@@ -129,7 +129,7 @@ class CCNode : public NSObject, public SelectorProtocol
 	/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
 	CCX_PROPERTY(CGPoint, m_tPosition, Position)
 
-	CCX_PROPERTY_READONLY(NSMutableArray *, m_pChildren, Children)
+	CCX_PROPERTY_READONLY(NSMutableArray<CCNode *> *, m_pChildren, Children)
 
 	/** A CCCamera object that lets you move the node using a gluLookAt
 	*/
@@ -211,7 +211,9 @@ private:
 
 	typedef void (CCNode::*callbackFunc)(void);
 
-	void arrayMakeObjectsPerformSelector(NSMutableArray * pArray, callbackFunc func);
+	void arrayMakeObjectsPerformSelector(NSMutableArray<CCNode*> * pArray, callbackFunc func);
+
+	CGPoint convertToWindowSpace(CGPoint nodePoint);
 
 
 public:

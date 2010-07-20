@@ -59,7 +59,7 @@ CCAtlasNode * CCAtlasNode::initWithTileFile(std::string &tile, int tileWidth, in
 
 	m_cOpacity = 255;
 	m_tColor = m_tColorUnmodified = ccWHITE;
-	m_bOpacityModifyRGB = true;
+	m_bIsOpacityModifyRGB = true;
 
 	m_tBlendFunc.src = CC_BLEND_SRC;
 	m_tBlendFunc.dst = CC_BLEND_DST;
@@ -135,9 +135,9 @@ void CCAtlasNode::draw()
 
 // CCAtlasNode - RGBA protocol
 
-ccColor3B CCAtlasNode:: color()
+ccColor3B CCAtlasNode:: getColor()
 {
-	if(m_bOpacityModifyRGB)
+	if(m_bIsOpacityModifyRGB)
 	{
 		return m_tColorUnmodified;
 	}
@@ -148,7 +148,7 @@ void CCAtlasNode::setColor(ccColor3B color3)
 {
 	m_tColor = m_tColorUnmodified = color3;
 
-	if( m_bOpacityModifyRGB )
+	if( m_bIsOpacityModifyRGB )
 	{
 		m_tColor.r = color3.r * m_cOpacity/255;
 		m_tColor.g = color3.g * m_cOpacity/255;
@@ -156,7 +156,7 @@ void CCAtlasNode::setColor(ccColor3B color3)
 	}	
 }
 
-GLubyte CCAtlasNode::opacity()
+GLubyte CCAtlasNode::getOpacity()
 {
 	return m_cOpacity;
 }
@@ -166,28 +166,38 @@ void CCAtlasNode::setOpacity(GLubyte opacity)
 	m_cOpacity = opacity;
 
 	// special opacity for premultiplied textures
-	if( m_bOpacityModifyRGB )
-		this->setColor(m_bOpacityModifyRGB ? m_tColorUnmodified : m_tColor);
+	if( m_bIsOpacityModifyRGB )
+		this->setColor(m_bIsOpacityModifyRGB ? m_tColorUnmodified : m_tColor);
 }
 
-void CCAtlasNode::setOpacityModifyRGB(bool bValue)
+void CCAtlasNode::setIsOpacityModifyRGB(bool bValue)
 {
 	ccColor3B oldColor	= this->m_tColor;
-	m_bOpacityModifyRGB = bValue;
+	m_bIsOpacityModifyRGB = bValue;
 	this->m_tColor		= oldColor;
 }
 
-bool CCAtlasNode::doesOpacityModifyRGB()
+bool CCAtlasNode::getIsOpacityModifyRGB()
 {
-	return m_bOpacityModifyRGB;
+	return m_bIsOpacityModifyRGB;
 }
 
 void CCAtlasNode::updateOpacityModifyRGB()
 {
-	m_bOpacityModifyRGB = m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha();
+	m_bIsOpacityModifyRGB = m_pTextureAtlas->getTexture()->getHasPremultipliedAlpha();
 }
 
 // CCAtlasNode - CocosNodeTexture protocol
+
+ccBlendFunc CCAtlasNode::getBlendFunc()
+{
+	return m_tBlendFunc;
+}
+
+void CCAtlasNode::setBlendFunc(ccBlendFunc blendFunc)
+{
+	m_tBlendFunc = blendFunc;
+}
 
 void CCAtlasNode::updateBlendFunc()
 {
@@ -204,7 +214,7 @@ void CCAtlasNode::setTexture(CCTexture2D *texture)
 	this->updateOpacityModifyRGB();
 }
 
-CCTexture2D * CCAtlasNode::texture()
+CCTexture2D * CCAtlasNode::getTexture()
 {
 	return m_pTextureAtlas->getTexture();
 }

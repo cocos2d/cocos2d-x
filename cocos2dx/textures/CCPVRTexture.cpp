@@ -25,6 +25,9 @@ THE SOFTWARE.
 #include "CCPVRTexture.h"
 #include "ccMacros.h"
 
+using namespace std;
+
+
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 
 static char* gPVRTexIdentifier[] = {"PVR!"};
@@ -230,7 +233,7 @@ bool CCPVRTexture::createGLTexture()
 }
 
 
-CCPVRTexture * CCPVRTexture::initWithContentsOfFile(NSString *path)
+CCPVRTexture * CCPVRTexture::initWithContentsOfFile(string & path)
 {
 	/** @todo
 	if((self = [super init]))
@@ -270,7 +273,7 @@ CCPVRTexture * CCPVRTexture::initWithContentsOfFile(NSString *path)
 }*/
 
 
-CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(NSString * path)
+CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(string &  path)
 {
 	CCPVRTexture * pTexture = new CCPVRTexture();
 	pTexture->initWithContentsOfFile(path);

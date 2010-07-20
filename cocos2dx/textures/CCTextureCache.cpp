@@ -35,12 +35,14 @@ THE SOFTWARE.
 
 using namespace std;
 
+
+
 class CCAsyncObject : NSObject
 {
 public:
 	fpAsyncCallback m_pfnCallback;
 	NSObject* m_pTarget;
-	NSString* m_pData;
+	std::string *  m_pData;
 public:
 	CCAsyncObject();
 	~CCAsyncObject()
@@ -142,7 +144,7 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 }
 
 /** @todo
--(void) addImageAsync: (NSString*) filename target:(id)target selector:(SEL)selector
+-(void) addImageAsync: (string & ) filename target:(id)target selector:(SEL)selector
 {
 	NSAssert(filename != nil, @"TextureCache: fileimage MUST not be nill");
 
@@ -166,9 +168,9 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 	[asyncObject release];
 }*/
 
-CCTexture2D * CCTextureCache::addImage(NSString *path)
+CCTexture2D * CCTextureCache::addImage(string & path)
 {
-	NSAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+	NSAssert(!path.empty(), "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex = NULL;
 
@@ -182,7 +184,7 @@ CCTexture2D * CCTextureCache::addImage(NSString *path)
 	if( ! tex ) {
 
 		// Split up directory and filename
-		NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+		string & fullpath = [CCFileUtils fullPathFromRelativePath: path ];
 
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		if ( [[path lowercaseString] hasSuffix:@".pvr"] )
@@ -210,10 +212,10 @@ CCTexture2D * CCTextureCache::addImage(NSString *path)
 	return tex;
 }
 
-CCTexture2D* CCTextureCache::addPVRTCImage(NSString *path, int bpp, bool hasAlpha, int width)
+CCTexture2D* CCTextureCache::addPVRTCImage(string & path, int bpp, bool hasAlpha, int width)
 {
 	
-	NSAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+	NSAssert(!path.empty(), "TextureCache: fileimage MUST not be nill");
 	NSAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
 	CCTexture2D * tex;
@@ -223,7 +225,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(NSString *path, int bpp, bool hasAlph
 	}
 
 	// Split up directory and filename
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	string & fullpath = [CCFileUtils fullPathFromRelativePath:path];
 
 	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
 	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
@@ -238,9 +240,9 @@ CCTexture2D* CCTextureCache::addPVRTCImage(NSString *path, int bpp, bool hasAlph
 	return tex;
 }
 
-CCTexture2D * CCTextureCache::addPVRTCImage(NSString* fileimage)
+CCTexture2D * CCTextureCache::addPVRTCImage(string &  fileimage)
 {
-	NSAssert(fileimage != NULL, "TextureCache: fileimage MUST not be nill");
+	NSAssert(!fileimage.empty(), "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex;
 /** @todo
@@ -259,7 +261,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(NSString* fileimage)
 }
 
 /** @todo
--(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key
+-(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key
 {
 	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");
 
@@ -315,9 +317,9 @@ void CCTextureCache::removeTexture(CCTexture2D* tex)
 		[textures removeObjectForKey:[keys objectAtIndex:i]];*/
 }
 
-void CCTextureCache::removeTextureForKey(NSString* textureKeyName)
+void CCTextureCache::removeTextureForKey(string &  textureKeyName)
 {
-	if( ! textureKeyName )
+	if( textureKeyName.empty() )
 		return;
 
 /// @todo	[textures removeObjectForKey:textureKeyName];

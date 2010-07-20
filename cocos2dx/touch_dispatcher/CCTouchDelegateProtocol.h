@@ -35,7 +35,7 @@ typedef enum {
 	kTargetedTouchDelegate,
 } eTouchDelegteType;
 
-class CCTouchDelegate : public NSObject
+class CCTouchDelegate : virtual public NSObject
 {
 public:
 	eTouchDelegteType m_eType;

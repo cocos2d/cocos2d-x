@@ -28,7 +28,9 @@ THE SOFTWARE.
 #include "../cocoa/NSObject.h"
 /// @todo #import <Foundation/Foundation.h>
 /// @todo #import <CoreGraphics/CGImage.h>
+//#include "../platform/uphone/NSLock.h"
 #include <string>
+#include <hash_map>
 
 
 class CCTexture2D;
@@ -42,10 +44,10 @@ typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 class CCTextureCache : public NSObject
 {
 protected:
-	/** @todo NSMutableDictionary, NSLock
-	NSMutableDictionary *textures;
-	NSLock				*dictLock;
-	NSLock				*contextLock;*/
+	/// @todo hash_map<*,*>
+	stdext::hash_map<int ,int > textures;
+	//NSLock				*m_pDictLock;
+	//NSLock				*m_pContextLock;
 
 public:
 

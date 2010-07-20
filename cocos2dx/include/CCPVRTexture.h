@@ -40,7 +40,7 @@ THE SOFTWARE.
 class CCPVRTexture : public NSObject
 {
 protected:
-	NSMutableArray * m_pImageData;
+	NSMutableArray<NSData> * m_pImageData;
 
 public:
 

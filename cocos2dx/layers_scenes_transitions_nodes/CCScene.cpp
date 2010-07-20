@@ -23,14 +23,33 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
+#include "../support/CGPointExtension.h"
+//#include "../CCDirector.h"
 
 
 CCScene::CCScene()
 {
-/// @todo
+	this->m_bIsRelativeAnchorPoint = false;
+	m_tAnchorPoint = ccp(0.5f, 0.5f);
 }
 
 CCScene::~CCScene()
 {
 /// @todo
+}
+
+bool CCScene::init()
+{
+	/// @todo CCDirector
+	bool bRet = false;
+// 	do 
+// 	{
+// 		CCDirector * pDirector;
+// 		CCX_BREAK_IF( ! (pDirector = CCDirector::getSharedDirector()) );
+// 		this->setContentSize(pDirector->getWinSize());
+// 		// success
+// 		bRet = true;
+// 	} while (0);
+// 	
+ 	return bRet;
 }

@@ -44,6 +44,7 @@ public:
 	void afterDraw(CCNode *pobTarget);
 	void blit(void);
 	void reuse(void);
+	bool isActive(void);
 
 public:
 	static CCGridBase* gridWithSize(ccGridSize obGridSize, CCTexture2D *pobTexture, bool bFlipped);

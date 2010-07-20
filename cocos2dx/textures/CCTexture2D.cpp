@@ -35,8 +35,10 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "CCTexture2D.h"
-/// @todo #include "CCPVRTexture.h"
+#include "CCPVRTexture.h"
 #include "../CCConfiguration.h"
+
+using namespace std;
 
 
 #if CC_FONT_LABEL_SUPPORT
@@ -349,7 +351,7 @@ return self;
 }*/
 
 // implementation CCTexture2D (Text)
-CCTexture2D * CCTexture2D::initWithString(NSString *str, NSString *fontName, GLfloat fontSize)
+CCTexture2D * CCTexture2D::initWithString(string & str, string & fontName, GLfloat fontSize)
 {
 	/** @todo
 	CGSize dim;
@@ -365,7 +367,7 @@ CCTexture2D * CCTexture2D::initWithString(NSString *str, NSString *fontName, GLf
 	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];
 	}
 
-	- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+	- (id) initWithString:(string & )string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(string & )name fontSize:(CGFloat)size
 	{
 	NSUInteger				width,
 	height,
@@ -516,7 +518,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bp
 	return this;
 }
 
-CCTexture2D * CCTexture2D::initWithPVRTCFile(NSString* file)
+CCTexture2D * CCTexture2D::initWithPVRTCFile(string &  file)
 {
 	/** @todo
 	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {

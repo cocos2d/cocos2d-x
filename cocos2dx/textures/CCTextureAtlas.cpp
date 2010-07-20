@@ -35,6 +35,8 @@ THE SOFTWARE.
 
 // implementation CCTextureAtlas
 
+using namespace std;
+
 
 CCTextureAtlas::CCTextureAtlas()
 {
@@ -87,7 +89,7 @@ void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 
 // TextureAtlas - alloc & init
 
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(NSString *file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(string & file, UINT32 capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
 	pTextureAtlas->initWithFile(file, capacity);
@@ -103,7 +105,7 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, UINT3
 	return pTextureAtlas;
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithFile(NSString *file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::initWithFile(string & file, UINT32 capacity)
 {
 	// retained in property
 	CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addImage(file);	

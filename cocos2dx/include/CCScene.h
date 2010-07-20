@@ -43,6 +43,7 @@ class CCScene : public CCNode
 public:
 	CCScene();
 	virtual ~CCScene();
+	bool init();
 };
 
 #endif // __CCSCENE_H__

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCTouchDelegateProtocol.h"
 #include "../cocoa/NSObject.h"
-#include "cocoa/NSMutableArray.h"
+#include "../cocoa/NSMutableArray.h"
 
 typedef enum
 {

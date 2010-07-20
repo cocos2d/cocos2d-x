@@ -88,13 +88,14 @@ THE SOFTWARE.
 #define CCX_SAFE_RETAIN(p)			if(p) { p->retain(); }
 
 #ifdef _DEBUG
-#include "assert.h"
+#include <assert.h>
+#include <stdio.h>
 #define NSAssert(_CONDITION, _TXT)\
-	if(! (_CONDITION) )			\
-	{							\
-		printf( (_TXT) );		\
-		assert( (_CONDITION) );	\
-	}
+ 	if(! (_CONDITION) )			\
+ 	{							\
+ 		printf( (_TXT) );		\
+ 		assert( (_CONDITION) );	\
+ 	}
 #else
 #define NSAssert(_CONDITION, _TXT)
 #endif	

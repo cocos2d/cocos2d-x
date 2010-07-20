@@ -59,12 +59,13 @@ protected:
 
 	ccColor3B	m_tColorUnmodified;
 
-	// protocol variables
-	bool m_bOpacityModifyRGB;
-	ccBlendFunc m_tBlendFunc;
-	GLubyte m_cOpacity;
-	ccColor3B m_tColor;
 	CCTextureAtlas * m_pTextureAtlas;
+
+	// protocol variables
+	CCX_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
+	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity);
+	CCX_PROPERTY(ccColor3B, m_tColor, Color);
 
 public:
 	CCAtlasNode();
@@ -83,55 +84,10 @@ public:
 
 	virtual void draw();
 
-public:
-	// CC RGBA protocol
-
-	/** sets Color
-	@since v0.8
-	*/
-	virtual void setColor(ccColor3B color);
-
-	/** returns the color
-	@since v0.8
-	*/
-	virtual ccColor3B color(void);
-
-	// returns the opacity
-	virtual GLubyte opacity(void);
-
-	/** sets the opacity.
-	@warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
-	Values goes from 0 to 255, where 255 means fully opaque.
-	*/
-	virtual void setOpacity(GLubyte opacity);
-
-	// optional
-
-	/** sets the premultipliedAlphaOpacity property.
-	If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
-	If set to YES then oapcity will be applied as: glColor(opacity, opacity, opacity, opacity );
-	Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
-	@since v0.8
-	*/
-	virtual void setOpacityModifyRGB(bool bValue);
-
-	/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
-	@since v0.8
-	*/
-	virtual bool doesOpacityModifyRGB(void);
-
-	// CC Blend protocol
-
-	// set the source blending function for the texture
-	virtual void setBlendFunc(ccBlendFunc blendFunc);
-
-	// returns the blending function used for the texture
-	virtual ccBlendFunc blendFunc(void);
-
 	// CC Texture protocol
 
 	// returns the used texture
-	virtual CCTexture2D* texture(void);
+	virtual CCTexture2D* getTexture(void);
 
 	// sets a new texture. it will be retained
 	virtual void setTexture(CCTexture2D *texture);
