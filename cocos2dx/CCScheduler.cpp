@@ -52,13 +52,13 @@ typedef struct _hashUpdateEntry
 // Hash Element used for "selectors with interval"
 typedef struct _hashSelectorEntry
 {
-	NSMutableArray		*timers;
-	SelectorProtocol	*target;	// hash key (retained)
-	UINT32				timerIndex;
-	CCTimer				*currentTimer;
-	bool				currentTimerSalvaged;
-	bool				paused;
-	UT_hash_handle		hh;
+	NSMutableArray<CCTimer*>	*timers;
+	SelectorProtocol			*target;	// hash key (retained)
+	UINT32						timerIndex;
+	CCTimer						*currentTimer;
+	bool						currentTimerSalvaged;
+	bool						paused;
+	UT_hash_handle				hh;
 } tHashSelectorEntry;
 
 // implementation CCTimer
@@ -216,7 +216,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 
 	if (pElement->timers == NULL)
 	{
-		pElement->timers = new NSMutableArray(10);
+		pElement->timers = new NSMutableArray<CCTimer*>(10);
 	}
     
 	// NSMutableArray will increase it's capacity automatically
@@ -245,11 +245,11 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 
 	if (pElement)
 	{
-		NSMutableArrayIterator iter;
+		NSMutableArray<CCTimer*>::NSMutableArrayIterator iter;
 		UINT32 i;
 		for (iter = pElement->timers->begin(), i = 0; iter != pElement->timers->end(); ++iter, ++i)
 		{
-			CCTimer *pTimer = (CCTimer *)(*iter);
+			CCTimer *pTimer = *iter;
 
 			if (pfnSelector == pTimer->m_pfnSelector)
 			{
@@ -553,7 +553,7 @@ void CCScheduler::tick(ccTime dt)
 			// The 'timers' array may change while inside this loop
 			for (elt->timerIndex = 0; elt->timerIndex < elt->timers->count(); ++(elt->timerIndex))
 			{
-				elt->currentTimer = (CCTimer *)elt->timers->getObjectAtIndex(elt->timerIndex);
+				elt->currentTimer = elt->timers->getObjectAtIndex(elt->timerIndex);
 				elt->currentTimerSalvaged = false;
 
 				elt->currentTimer->update(dt);
