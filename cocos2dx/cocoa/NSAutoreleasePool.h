@@ -41,7 +41,7 @@ public:
 
 	void clear(void);
 private:
-	NSMutableArray *m_pManagedObjectArray;
+	NSMutableArray<NSObject*> *m_pManagedObjectArray;
 };
 
 class NSPoolManager

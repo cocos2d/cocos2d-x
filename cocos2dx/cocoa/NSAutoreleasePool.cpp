@@ -31,7 +31,7 @@ using namespace std;
 
 NSAutoreleasePool::NSAutoreleasePool(void)
 {
-	m_pManagedObjectArray = new NSMutableArray();
+	m_pManagedObjectArray = new NSMutableArray<NSObject*>();
 }
 
 NSAutoreleasePool::~NSAutoreleasePool(void)
@@ -53,7 +53,7 @@ void NSAutoreleasePool::clear(void)
 {
 	if (m_pManagedObjectArray->count())
 	{
-		vector<NSObject *>::iterator iter;
+		NSMutableArray<NSObject*>::NSMutableArrayIterator iter;
 		for (iter = m_pManagedObjectArray->begin(); iter != m_pManagedObjectArray->end(); ++iter)
 		{
 			if (*iter)

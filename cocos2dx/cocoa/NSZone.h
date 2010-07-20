@@ -25,11 +25,17 @@ THE SOFTWARE.
 #ifndef __NS_ZONE_H__
 #define __NS_ZONE_H__
 
+#include "platform/platform.h"
+
+class NSObject;
+
 class NSZone
 {
 public:
-	NSZone(void);
-	~NSZone(void);
+	NSZone(NSObject *pObject = NULL);
+
+public:
+	NSObject *m_pCopyObject;
 };
 
 #endif // __NS_ZONE_H__
