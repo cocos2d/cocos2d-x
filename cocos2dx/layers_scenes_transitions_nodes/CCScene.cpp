@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
-#include "../support/CGPointExtension.h"
-//#include "../CCDirector.h"
+#include "support/CGPointExtension.h"
+//#include "CCDirector.h"
 
 
 CCScene::CCScene()

@@ -31,10 +31,10 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #include "Cocos2dDefine.h"
-#include "../cocoa/NSObject.h"
-#include "../cocoa/NSMutableArray.h"
-#include "../cocoa/NSData.h"
-#include "../support/data_support/uthash.h"
+#include "cocoa/NSObject.h"
+#include "cocoa/NSMutableArray.h"
+#include "cocoa/NSData.h"
+#include "support/data_support/uthash.h"
 
 
 class CCPVRTexture : public NSObject

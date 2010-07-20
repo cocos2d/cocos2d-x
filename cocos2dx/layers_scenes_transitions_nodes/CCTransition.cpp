@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTransition.h"
-#include "../support/cgpointextension.h"
+#include "support/cgpointextension.h"
 
 
 enum {

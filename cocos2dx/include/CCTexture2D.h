@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include <string>
 
 #include "Cocos2dDefine.h"
-#include "../cocoa/NSObject.h"
-#include "../cocoa/CGGeometry.h"
+#include "cocoa/NSObject.h"
+#include "cocoa/CGGeometry.h"
 
 
 //CONSTANTS:

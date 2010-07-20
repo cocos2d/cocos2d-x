@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCTexture2D.h"
 #include "CCPVRTexture.h"
-#include "../CCConfiguration.h"
+#include "CCConfiguration.h"
 
 using namespace std;
 

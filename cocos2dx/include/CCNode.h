@@ -30,12 +30,12 @@ THE SOFTWARE.
 #include "Cocos2dDefine.h"
 #include "CCCamera.h"
 #include "ccMacros.h"
-#include "../CCScheduler.h"
-#include "../cocoa/CGGeometry.h"
-#include "../cocoa/CGAffineTransform.h"
-#include "../cocoa/NSMutableArray.h"
-#include "../cocoa/selector_protocol.h"
-#include "../effects/CCGrid.h"
+#include "CCScheduler.h"
+#include "cocoa/CGGeometry.h"
+#include "cocoa/CGAffineTransform.h"
+#include "cocoa/NSMutableArray.h"
+#include "cocoa/selector_protocol.h"
+#include "effects/CCGrid.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -185,14 +185,14 @@ protected:
 	// transform
 	CGAffineTransform m_tTransform, m_tInverse;
 
-#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	GLfloat	m_pTransformGL[16];
 #endif
 	// To reduce memory, place bools that are not properties here:
 	bool m_bIsTransformDirty;
 	bool m_bIsInverseDirty;
 
-#ifdef	CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	bool m_bIsTransformGLDirty;
 #endif
     

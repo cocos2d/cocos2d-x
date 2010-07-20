@@ -23,10 +23,16 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNode.h"
-#include "../support/CGPointExtension.h"
-#include "../cocoa/CGGeometry.h"
+#include "support/CGPointExtension.h"
+#include "cocoa/CGGeometry.h"
 
 using namespace std;
+
+#if CC_COCOSNODE_RENDER_SUBPIXEL
+#define RENDER_IN_SUBPIXEL
+#else
+#define RENDER_IN_SUBPIXEL (int)
+#endif
 
 CCNode::CCNode(void)
 :m_bIsRunning(false)
@@ -41,7 +47,7 @@ CCNode::CCNode(void)
 ,m_bIsRelativeAnchorPoint(true)
 ,m_bIsTransformDirty(true)
 ,m_bIsInverseDirty(true)
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 ,m_bIsTransformGLDirty(true)
 #endif
 ,m_fVertexZ(0.0f)
@@ -131,7 +137,7 @@ void CCNode::setRotation(float newRotation)
 {
 	m_fRotation = newRotation;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
 }
@@ -149,7 +155,7 @@ void CCNode::setScale(float scale)
 {
 	m_fScaleX = m_fScaleY = scale;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
 }
@@ -165,7 +171,7 @@ void CCNode::setScaleX(float newScaleX)
 {
 	m_fScaleX = newScaleX;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
 }
@@ -181,7 +187,7 @@ void CCNode::setScaleY(float newScaleY)
 {
 	m_fScaleY = newScaleY;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
 }
@@ -197,7 +203,7 @@ void CCNode::setPosition(CGPoint newPosition)
 {
 	m_tPosition = newPosition;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
 }
@@ -265,7 +271,7 @@ void CCNode::setAnchorPoint(CGPoint point)
 		m_tAnchorPoint = point;
 		this->m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
 		m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 #endif
 	}
@@ -291,7 +297,7 @@ void CCNode::setContentSize(CGSize size)
 		m_tContentSize = size;
 		m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
 		m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 #endif
 	}
@@ -326,7 +332,7 @@ void CCNode::setIsRelativeAnchorPoint(bool newValue)
 {
 	m_bIsRelativeAnchorPoint = newValue;
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
-#ifdef CCX_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
 }
@@ -356,31 +362,15 @@ void CCNode::setUserData(void *var)
 }
 
 
-
-
-
-/// @todo
-//CGRect CCNode::boundingBox()
-//{
-//	CGRect rect = CGRectMake(0, 0, m_contentSize.width, m_contentSize.height);
-//	return CGRectApplyAffineTransform(rect, nodeToParentTransform());
-//}
-
-
-
-
-#if CC_COCOSNODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL (int)
-#endif
-
-
+CGRect CCNode::boundingBox()
+{
+	CGRect rect = CGRectMake(0, 0, m_tContentSize.width, m_tContentSize.height);
+	return CGRectApplyAffineTransform(rect, nodeToParentTransform());
+}
 
 
 CCNode * CCNode::node(void)
 {
-/// @todo	return [[[self alloc] init] autorelease];
 	CCNode * pNode = new CCNode();
 	pNode->autorelease();
 	return pNode;
@@ -661,33 +651,33 @@ void CCNode::transformAncestors()
 
 void CCNode::transform()
 {	
-	/** @todo
+	/** @todo*/
 	// transformations
 
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	// BEGIN alternative -- using cached transform
 	//
-	if( isTransformGLDirty_ ) {
-		CGAffineTransform t = [self nodeToParentTransform];
-		CGAffineToGL(&t, transformGL_);
-		isTransformGLDirty_ = NO;
+	if( m_bIsTransformGLDirty ) {
+		CGAffineTransform t = this->nodeToParentTransform();
+		CGAffineToGL(&t, m_pTransformGL);
+		m_bIsTransformGLDirty = false;
 	}
 
-	glMultMatrixf(transformGL_);
-	if( vertexZ_ )
-		glTranslatef(0, 0, vertexZ_);
+	glMultMatrixf(m_pTransformGL);
+	if( m_fVertexZ )
+		glTranslatef(0, 0, m_fVertexZ);
 
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-	if ( camera_ && !(grid_ && grid_.active) ) {
-		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
+	if ( m_pCamera && !(m_pGrid && m_pGrid->isActive()) ) {
+		bool translate = (m_tAnchorPointInPixels.x != 0.0f || m_tAnchorPointInPixels.y != 0.0f);
 
 		if( translate )
-			glTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
+			glTranslatef(RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.y), 0);
 
-		[camera_ locate];
+		m_pCamera->locate();
 
 		if( translate )
-			glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+			glTranslatef(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 	}
 
 
@@ -697,33 +687,33 @@ void CCNode::transform()
 	// BEGIN original implementation
 	// 
 	// translate
-	if ( isRelativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
-		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+	if ( m_bIsRelativeAnchorPoint && (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0 ) )
+		glTranslatef( RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
-	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(position_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(position_.y + anchorPointInPixels_.y), vertexZ_);
-	else if ( position_.x !=0 || position_.y !=0 || vertexZ_ != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(position_.x), RENDER_IN_SUBPIXEL(position_.y), vertexZ_ );
+	if (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPosition.y + m_tAnchorPointInPixels.y), m_fVertexZ);
+	else if ( m_tPosition.x !=0 || m_tPosition.y !=0 || m_fVertexZ != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x), RENDER_IN_SUBPIXEL(m_tPosition.y), m_fVertexZ );
 
 	// rotate
-	if (rotation_ != 0.0f )
-		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
+	if (m_fRotation != 0.0f )
+		glRotatef( -m_fRotation, 0.0f, 0.0f, 1.0f );
 
 	// scale
-	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
-		glScalef( scaleX_, scaleY_, 1.0f );
+	if (m_fScaleX != 1.0f || m_fScaleY != 1.0f)
+		glScalef( m_fScaleX, m_fScaleY, 1.0f );
 
-	if ( camera_ && !(grid_ && grid_.active) )
-		[camera_ locate];
+	if ( m_pCamera && !(m_pGrid && m_pGrid->isActive()) )
+		m_pCamera->locate();
 
 	// restore and re-position point
-	if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
-		glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+	if (m_tAnchorPointInPixels.x != 0.0f || m_tAnchorPointInPixels.y != 0.0f)
+		glTranslatef(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
 	//
 	// END original implementation
 #endif
-*/
+
 }
 
 

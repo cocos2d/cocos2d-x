@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCTexture2D.h"
 #include "CCProtocols.h"
-#include "../touch_dispatcher/CCTouchDelegateProtocol.h"
+#include "touch_dispatcher/CCTouchDelegateProtocol.h"
 //
 // CCLayer
 //
