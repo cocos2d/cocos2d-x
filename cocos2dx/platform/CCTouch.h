@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __PLATFORM_TOUCH_H__
 #define __PLATFORM_TOUCH_H__
 
-#include "../cocoa/NSObject.h"
+#include "cocoa/NSObject.h"
 
 class UITouch : public NSObject
 {
