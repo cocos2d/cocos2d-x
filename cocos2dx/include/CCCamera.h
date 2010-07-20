@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCCAMERA_H__
 #define __CCCAMERA_H__
 
-#include "../cocoa/NSObject.h"
+#include "cocoa/NSObject.h"
 #include "ccMacros.h"
 #include <string>
 

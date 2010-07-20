@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TransformUtils.h"
-#include "../cocoa/CGAffineTransform.h"
+#include "cocoa/CGAffineTransform.h"
 
 void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 {

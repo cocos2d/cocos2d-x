@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __SUPPORT_BASE64_H__
 #define __SUPPORT_BASE64_H__
 
-#include "../platform/platform.h"
+#include "platform/platform.h"
 
 #ifdef __cplusplus
 extern "C" {

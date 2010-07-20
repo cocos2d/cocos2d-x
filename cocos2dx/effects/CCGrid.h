@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCCamera.h"
-#include "../cocoa/NSObject.h"
+#include "cocoa/NSObject.h"
 
 class CCTexture2D;
 class CCGrabber;
