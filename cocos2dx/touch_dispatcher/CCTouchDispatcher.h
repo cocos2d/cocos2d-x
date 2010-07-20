@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
 #include "CCTouchDelegateProtocol.h"
-#include "../cocoa/NSObject.h"
-#include "../cocoa/NSMutableArray.h"
+#include "cocoa/NSObject.h"
+#include "cocoa/NSMutableArray.h"
 
 typedef enum
 {
@@ -129,7 +129,7 @@ public:
 
 public:
 	// singleton of the CCTouchDispatcher
-	static CCTouchDispatcher* getSharedDispather();
+	static CCTouchDispatcher* getSharedDispatcher();
 
 protected:
 	CCTouchDispatcher() {};
