@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 #include "CCTouchDispatcher.h"
 #include "CCTouchHandler.h"
-#include "cocoa/NSMutableArray.h"
-#include "cocoa/NSSet.h"
-#include "platform/CCTouch.h"
+#include "../cocoa/NSMutableArray.h"
+#include "../cocoa/NSSet.h"
+#include "../platform/CCTouch.h"
 #include "CCTexture2D.h"
 
 #include <assert.h>
@@ -43,7 +43,7 @@ void CCTouchDispatcher::setDispatchEvents(bool bDispatchEvents)
 
 static CCTouchDispatcher *pSharedDispatcher = NULL;
 
-CCTouchDispatcher* CCTouchDispatcher::getSharedDispather(void)
+CCTouchDispatcher* CCTouchDispatcher::getSharedDispatcher(void)
 {
 	// synchronized ??
 	if (pSharedDispatcher == NULL)

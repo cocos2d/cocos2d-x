@@ -90,6 +90,7 @@ class CCTouchDispatcher : public NSObject, public EAGLTouchDelegate
 public:
 	~CCTouchDispatcher();
 	CCTouchDispatcher* init(void);
+	CCTouchDispatcher() {}
 
 public:
 	// Whether or not the events are going to be dispatched. Default: YES
@@ -132,7 +133,6 @@ public:
 	static CCTouchDispatcher* getSharedDispatcher();
 
 protected:
-	CCTouchDispatcher() {};
 	void forceRemoveDelegate(CCTouchDelegate *pDelegate);
 	void forceAddHandler(CCTouchHandler *pHandler, NSMutableArray<CCTouchHandler*> *pArray);
 	void forceRemoveAllDelegates(void);
