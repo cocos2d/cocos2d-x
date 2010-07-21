@@ -39,11 +39,9 @@ enum {
 
 CCRadialCCWTransition::CCRadialCCWTransition()
 {
-	/// @todo
 }
 CCRadialCCWTransition::~CCRadialCCWTransition()
 {
-	/// @todo
 }
 
 void CCRadialCCWTransition::sceneOrder()

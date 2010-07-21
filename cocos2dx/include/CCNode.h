@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 #include "cocoa/selector_protocol.h"
 #include "effects/CCGrid.h"
+#include "ccConfig.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -229,7 +230,6 @@ public:
 	*/
 	static CCNode * node(void);
 
-	/// @todo callback?  
 	//scene managment
 
 	/** callback that is called every time the CCNode enters the 'stage'.

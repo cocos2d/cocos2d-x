@@ -25,8 +25,6 @@ THE SOFTWARE.
 #include "CCPVRTexture.h"
 #include "ccMacros.h"
 
-using namespace std;
-
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 
@@ -57,7 +55,6 @@ typedef struct _PVRTexHeader
 
 CCPVRTexture::CCPVRTexture()
 {
-	/// @todo nothing???
 }
 
 CCPVRTexture::~CCPVRTexture()
@@ -233,9 +230,9 @@ bool CCPVRTexture::createGLTexture()
 }
 
 
-CCPVRTexture * CCPVRTexture::initWithContentsOfFile(string & path)
+CCPVRTexture * CCPVRTexture::initWithContentsOfFile(const std::string & path)
 {
-	/** @todo
+	/** @todo NSData
 	if((self = [super init]))
 	{
 		NSData *data = [NSData dataWithContentsOfFile:path];
@@ -273,7 +270,7 @@ CCPVRTexture * CCPVRTexture::initWithContentsOfFile(string & path)
 }*/
 
 
-CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(string &  path)
+CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(const std::string &  path)
 {
 	CCPVRTexture * pTexture = new CCPVRTexture();
 	pTexture->initWithContentsOfFile(path);

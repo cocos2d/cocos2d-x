@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "CCTextureCache.h"
 #include "ccMacros.h"
+#include "ccConfig.h"
 
 // support
 #include "CCTexture2D.h"
@@ -34,8 +35,6 @@ THE SOFTWARE.
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
 // implementation CCTextureAtlas
-
-using namespace std;
 
 
 CCTextureAtlas::CCTextureAtlas()
@@ -89,7 +88,7 @@ void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 
 // TextureAtlas - alloc & init
 
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(string & file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const std::string & file, UINT32 capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
 	pTextureAtlas->initWithFile(file, capacity);
@@ -105,7 +104,7 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, UINT3
 	return pTextureAtlas;
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithFile(string & file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::initWithFile(const std::string & file, UINT32 capacity)
 {
 	// retained in property
 	CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addImage(file);	
@@ -145,7 +144,7 @@ CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *tex, UINT32 capaci
 std::string CCTextureAtlas::description()
 {
 	char des[100];
-	sprintf_s(des, 100, "<CCTextureAtlas | totalQuads = %d>", m_uTotalQuads);
+	sprintf_s(des, 100, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
 	string ret(des);
 
 	return ret;
@@ -313,6 +312,7 @@ void CCTextureAtlas::drawNumberOfQuads(UINT32 n)
 {	
 
 	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+
 #define kQuadSize sizeof(m_pQuads[0].bl)
 
 
@@ -342,8 +342,8 @@ void CCTextureAtlas::drawNumberOfQuads(UINT32 n)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 #else // ! CC_TEXTURE_ATLAS_USES_VBO
-
-	int offset = (int)quads_;
+	
+	int offset = (int)m_pQuads;/// @todo my god! how to understand this
 
 	// vertex
 	int diff = offsetof( ccV3F_C4B_T2F, vertices);

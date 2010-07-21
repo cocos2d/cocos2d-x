@@ -27,11 +27,9 @@ THE SOFTWARE.
 
 CCPageTurnTransition::CCPageTurnTransition()
 {
-/// @todo
 }
 CCPageTurnTransition::~CCPageTurnTransition()
 {
-/// @todo
 }
 
 /** creates a base transition with duration and incoming scene */
@@ -63,7 +61,7 @@ void CCPageTurnTransition::sceneOrder()
 
 void CCPageTurnTransition::onEnter()
 {
-	/** @todo
+	/** @todo CCDirector CCCallFunc CCStopGrid
 	[super onEnter];
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -106,7 +104,7 @@ void CCPageTurnTransition::onEnter()
 
 CCIntervalAction* CCPageTurnTransition:: actionWithSize(ccGridSize vector)
 {
-	/** @todo
+	/** @todo CCPageTurn3D
 	if( back_ )
 	{
 		// Get hold of the PageTurn3DAction

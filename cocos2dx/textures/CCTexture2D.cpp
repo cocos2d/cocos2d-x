@@ -38,14 +38,11 @@ THE SOFTWARE.
 #include "CCPVRTexture.h"
 #include "CCConfiguration.h"
 
-using namespace std;
-
 
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
-/// @todo
-//#include "FontManager.h"
-//#include "FontLabelStringDrawing.h"
+/// @todo #include "FontManager.h"
+/// @todo #include "FontLabelStringDrawing.h"
 #endif// CC_FONT_LABEL_SUPPORT
 
 
@@ -164,8 +161,8 @@ CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat
 	m_uPixelsWide = pixelsWide;
 	m_uPixelsHigh = pixelsHigh;
 	m_ePixelFormat = pixelFormat;
-	m_fMaxS = contentSize.width / (float)pixelsWide;
-	m_fMaxT = contentSize.height / (float)pixelsHigh;
+	m_fMaxS = contentSize.width / static_cast<float>(pixelsWide);
+	m_fMaxT = contentSize.height / static_cast<float>(pixelsHigh);
 
 	m_bHasPremultipliedAlpha = false;
 
@@ -177,7 +174,7 @@ std::string CCTexture2D::description(void)
 {
 	char des[100];
 	sprintf_s(des, 100, "<CCTexture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT);
-	string ret(des);
+	std::string ret(des);
 
 	return ret;
 }
@@ -351,9 +348,9 @@ return self;
 }*/
 
 // implementation CCTexture2D (Text)
-CCTexture2D * CCTexture2D::initWithString(string & str, string & fontName, GLfloat fontSize)
+CCTexture2D * CCTexture2D::initWithString(const std::string & str, const std::string & fontName, GLfloat fontSize)
 {
-	/** @todo
+	/** @todo about UIFont
 	CGSize dim;
 
 	#if CC_FONT_LABEL_SUPPORT
@@ -509,7 +506,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bp
 	}
 	glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
 
-	m_tContentSize = CGSizeMake((float)length, (float)length);
+	m_tContentSize = CGSizeMake(static_cast<float>(length), static_cast<float>(length));
 	m_uPixelsWide = length;
 	m_uPixelsHigh = length;
 	m_fMaxS = 1.0f;
@@ -518,7 +515,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bp
 	return this;
 }
 
-CCTexture2D * CCTexture2D::initWithPVRTCFile(string &  file)
+CCTexture2D * CCTexture2D::initWithPVRTCFile(const std::string &  file)
 {
 	if (! CCConfiguration::sharedConfiguration()->isSupportsPVRTC())
 	{
@@ -539,7 +536,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(string &  file)
 		m_uPixelsWide = pvr->getWidth();		// width
 		m_uPixelsHigh = pvr->getHeight();		// height
 		/// be careful : UINT32 to float
-		m_tContentSize = CGSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
+		m_tContentSize = CGSizeMake(static_cast<float>(m_uPixelsWide), static_cast<float>(m_uPixelsHigh));
 
 		pvr->release();
 

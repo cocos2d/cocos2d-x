@@ -24,34 +24,28 @@ THE SOFTWARE.
 
 #include "CCAtlasNode.h"
 
-using namespace std;
-
-
 // implementation CCAtlasNode
 
 // CCAtlasNode - Creation & Init
 
 CCAtlasNode::CCAtlasNode()
 {
-	/// @todo
 }
 
 CCAtlasNode::~CCAtlasNode()
 {
-	/// @todo
 	m_pTextureAtlas->release();
 }
 
-CCAtlasNode * CCAtlasNode::atlasWithTileFile(std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
+CCAtlasNode * CCAtlasNode::atlasWithTileFile(const std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-	/// @todo
 	CCAtlasNode * pAtlasNode = new CCAtlasNode();
 	pAtlasNode->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
 	pAtlasNode->autorelease();
 	return pAtlasNode;
 }
 
-CCAtlasNode * CCAtlasNode::initWithTileFile(std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
+CCAtlasNode * CCAtlasNode::initWithTileFile(const std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
 {
 
 	m_nItemWidth = tileWidth;
@@ -84,15 +78,15 @@ CCAtlasNode * CCAtlasNode::initWithTileFile(std::string &tile, int tileWidth, in
 void CCAtlasNode::calculateMaxItems()
 {
 	CGSize s = m_pTextureAtlas->getTexture()->getContentSize();
-	m_nItemsPerColumn = (int)(s.height / m_nItemHeight);
-	m_nItemsPerRow = (int)(s.width / m_nItemWidth);
+	m_nItemsPerColumn = static_cast<int>(s.height / m_nItemHeight);
+	m_nItemsPerRow = static_cast<int>(s.width / m_nItemWidth);
 }
 
 void CCAtlasNode:: calculateTexCoordsSteps()
 {
 	CCTexture2D *tex = m_pTextureAtlas->getTexture();
-	m_fTexStepX = m_nItemWidth / (float)tex->getPixelsWide();
-	m_fTexStepY = m_nItemHeight / (float)tex->getPixelsHigh();
+	m_fTexStepX = m_nItemWidth / static_cast<float>(tex->getPixelsWide());
+	m_fTexStepY = m_nItemHeight / static_cast<float>(tex->getPixelsHigh());
 }
 
 void CCAtlasNode::updateAtlasValues()

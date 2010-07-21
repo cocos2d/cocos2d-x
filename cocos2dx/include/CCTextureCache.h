@@ -73,7 +73,7 @@ public:
 	* Otherwise it will return a reference of a previosly loaded image.
 	* Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
 	*/
-	CCTexture2D* addImage(std::string &fileimage);
+	CCTexture2D* addImage(const std::string &fileimage);
 
 	/** Returns a Texture2D object given a file image
 	* If the file image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -83,7 +83,7 @@ public:
 	* @since v0.8
 	*/
 	/// @todo selector
-	void addImageAsync(string & filename, NSObject*target, fpAsyncCallback func);
+	void addImageAsync(const string & filename, NSObject*target, fpAsyncCallback func);
 
 	/** Returns a Texture2D object given an PVRTC RAW filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
@@ -93,7 +93,7 @@ public:
 	* bpp can only be 2 or 4. 2 means more compression but lower quality.
 	* hasAlpha: whether or not the image contains alpha channel
 	*/
-	CCTexture2D* addPVRTCImage(std::string &fileimage, int bpp, bool hasAlpha, int width);
+	CCTexture2D* addPVRTCImage(const std::string &fileimage, int bpp, bool hasAlpha, int width);
 
 	/** Returns a Texture2D object given an PVRTC filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
@@ -132,7 +132,7 @@ public:
 	/** Deletes a texture from the cache given a its key name
 	@since v0.99.4
 	*/
-	void removeTextureForKey(std::string &  textureKeyName);
+	void removeTextureForKey(const std::string &  textureKeyName);
 
 };
 

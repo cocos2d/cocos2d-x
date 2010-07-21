@@ -47,7 +47,6 @@ CCLayer::CCLayer()
 
 CCLayer::~CCLayer()
 {
-	/// @todo
 }
 
 
@@ -84,9 +83,9 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 		}
 	}
 	
-	/** @todo
-	if( isTouchEnabled != enabled ) {
-	isTouchEnabled = enabled;
+	/** objc
+	if( m_bIsTouchEnabled != enabled ) {
+		m_bIsTouchEnabled = enabled;
 	if( isRunning_ ) {
 	if( enabled )
 	[self registerWithTouchDispatcher];
@@ -104,7 +103,7 @@ bool CCLayer::getIsAccelerometerEnabled()
 /// isAccelerometerEnabled setter
 void CCLayer::setIsAccelerometerEnabled(bool enabled)
 {
-	/** @todo
+	/** @todo UIAccelerometer
 	if( enabled != isAccelerometerEnabled ) {
 		isAccelerometerEnabled = enabled;
 		if( isRunning_ ) {
@@ -120,7 +119,7 @@ void CCLayer::setIsAccelerometerEnabled(bool enabled)
 /// Callbacks
 void CCLayer::onEnter()
 {
-	/** @todo
+	/** @todo UIAccelerometer
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
 	if (isTouchEnabled)
@@ -145,7 +144,7 @@ void CCLayer::onExit()
 	[super onExit];*/
 }
 
-/** @todo
+/** @todo UITouch
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	NSAssert(NO, @"Layer#ccTouchBegan override me");
@@ -157,11 +156,9 @@ void CCLayer::onExit()
 
 CCColorLayer::CCColorLayer()
 {
-/// @todo
 }
 CCColorLayer::~CCColorLayer()
 {
-/// @todo
 }
 
 // Opacity and RGB color protocol
@@ -288,7 +285,6 @@ void CCColorLayer::updateColor()
 
 void CCColorLayer::draw()
 {		
-	/** @todo*/
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, GL_COLOR_ARRAY
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY
@@ -323,7 +319,6 @@ void CCColorLayer::draw()
 
 CCMultiplexLayer::CCMultiplexLayer()
 {
-/// @todo
 }
 CCMultiplexLayer::~CCMultiplexLayer()
 {

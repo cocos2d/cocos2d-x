@@ -36,7 +36,7 @@ protected:
 public:
 	NSMutableDictionary(void)
 	{
-		m_bBegin = FALSE;
+		m_bBegin = false;
 	}
 
 	~NSMutableDictionary(void)
@@ -44,9 +44,9 @@ public:
 		removeAllObjects();
 	}
 
-	int count()
+	/// return the number of items
+	UINT32 count()
 	{
-		/// @todo return the number of items
 		return m_Map.size();
 	}
 

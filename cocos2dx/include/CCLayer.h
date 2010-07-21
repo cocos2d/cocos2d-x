@@ -39,7 +39,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-/// @todo public UIAccelerometerDelegate, public CCStandardTouchDelegate, public CCTargetedTouchDelegate
+/// @todo public UIAccelerometerDelegate
 class CCLayer : public CCNode, public CCStandardTouchDelegate, public CCTargetedTouchDelegate//, public UIAccelerometerDelegate
 {
 public:

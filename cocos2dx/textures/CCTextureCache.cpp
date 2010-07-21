@@ -30,8 +30,6 @@ THE SOFTWARE.
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
 
-using namespace std;
-
 
 
 class CCAsyncObject : NSObject
@@ -96,9 +94,8 @@ void CCTextureCache::purgeSharedTextureCache()
 
 std::string CCTextureCache::description()
 {
-	/** @todo CCMutableDictionary::count()*/
 	char des[100];
-	sprintf_s(des, 100, "<CCTextureCache | Number of textures = %d>", m_pTextures->count());
+	sprintf_s(des, 100, "<CCTextureCache | Number of textures = %u>", m_pTextures->count());
 	string ret(des);
 
 	return ret;
@@ -108,7 +105,7 @@ std::string CCTextureCache::description()
 // TextureCache - Add Images
 void CCTextureCache::addImageWithAsyncObject(CCAsyncObject* async)
 {
-	/** @todo
+	/** @todo EAGLContext
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 
 	// textures will be created on the main OpenGL context
@@ -142,7 +139,7 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 }
 
 /** @todo selector*/
-void CCTextureCache::addImageAsync(std::string &filename, NSObject *target, fpAsyncCallback func)
+void CCTextureCache::addImageAsync(const std::string &filename, NSObject *target, fpAsyncCallback func)
 {
 	NSAssert(!filename.empty() , "TextureCache: fileimage MUST not be nill");
 
@@ -171,7 +168,7 @@ void CCTextureCache::addImageAsync(std::string &filename, NSObject *target, fpAs
 // 	[asyncObject release];
 }
 
-CCTexture2D * CCTextureCache::addImage(string & path)
+CCTexture2D * CCTextureCache::addImage(const std::string & path)
 {
 	NSAssert(!path.empty(), "TextureCache: fileimage MUST not be nill");
 
@@ -179,7 +176,7 @@ CCTexture2D * CCTextureCache::addImage(string & path)
 
 	// MUTEX:
 	// Needed since addImageAsync calls this method from a different thread
-	/** todo
+	/** todo NSLock
 	[dictLock lock];
 
 	tex=[textures objectForKey: path];
@@ -215,14 +212,14 @@ CCTexture2D * CCTextureCache::addImage(string & path)
 	return tex;
 }
 
-CCTexture2D* CCTextureCache::addPVRTCImage(string & path, int bpp, bool hasAlpha, int width)
+CCTexture2D* CCTextureCache::addPVRTCImage(const std::string & path, int bpp, bool hasAlpha, int width)
 {
 	
 	NSAssert(!path.empty(), "TextureCache: fileimage MUST not be nill");
 	NSAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
 	CCTexture2D * tex;
-/** @todo
+/** @todo NSData
 	if( (tex=[textures objectForKey: path] ) ) {
 		return tex;
 	}
@@ -248,7 +245,6 @@ CCTexture2D * CCTextureCache::addPVRTCImage(string &  fileimage)
 	NSAssert(!fileimage.empty(), "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex;
-/** @todo*/
 	if( (tex = m_pTextures->objectForKey(fileimage )) ) 
 	{
 		return tex;
@@ -265,7 +261,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(string &  fileimage)
 	return tex;
 }
 
-/** @todo
+/** @todo UIImage
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key
 {
 	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");
@@ -294,12 +290,12 @@ CCTexture2D * CCTextureCache::addPVRTCImage(string &  fileimage)
 
 void CCTextureCache::removeAllTextures()
 {
-	/// @todo [textures removeAllObjects];
+	m_pTextures->removeAllObjects();
 }
 
 void CCTextureCache::removeUnusedTextures()
 {
-	/** @todo
+	/** @todo [textures allKeys]
 	NSArray *keys = [textures allKeys];
 	for( id key in keys ) {
 		id value = [textures objectForKey:key];		
@@ -322,12 +318,12 @@ void CCTextureCache::removeTexture(CCTexture2D* tex)
 		[textures removeObjectForKey:[keys objectAtIndex:i]];*/
 }
 
-void CCTextureCache::removeTextureForKey(string &  textureKeyName)
+void CCTextureCache::removeTextureForKey(const std::string &  textureKeyName)
 {
 	if( textureKeyName.empty() )
 		return;
 
-/// @todo	[textures removeObjectForKey:textureKeyName];
+	m_pTextures->removeObjectForKey(textureKeyName);
 }
 
 

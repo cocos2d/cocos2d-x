@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "support/CGPointExtension.h"
 #include "cocoa/CGGeometry.h"
+#include "support/TransformUtils.h"
 //#include "CCDirector.h"
 
-using namespace std;
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -65,7 +65,6 @@ CCNode::CCNode(void)
 {
     // nothing
 }
-/// @todo
 CCNode::~CCNode()
 {
 	CCLOGINFO( "cocos2d: deallocing", self);
@@ -75,6 +74,7 @@ CCNode::~CCNode()
 
 	CCX_SAFE_RELEASE(m_pGrid);
 
+	/// @todo
 	cleanup();
 
 	// children
@@ -290,7 +290,6 @@ CGSize CCNode::getContentSize()
 	return m_tContentSize;
 }
 
-/// @todo contentSize setter
 void CCNode::setContentSize(CGSize size)
 {
 	if( ! CGSize::CGSizeEqualToSize(size, m_tContentSize) ) 
@@ -394,7 +393,7 @@ std::string CCNode::description()
 {
 	char des[100];
 	sprintf_s(des, 100, "<CCNode | Tag = %d>", m_nTag);
-	string ret(des);
+	std::string ret(des);
 
 	return ret;
 }
@@ -500,7 +499,7 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for ( it = m_pChildren->begin(); it!= m_pChildren->end(); it++ )
 		{
-			pNode = static_cast<CCNode *>(*it);
+			pNode = *it;
 			if (pNode)
 			{
 				// IMPORTANT:
@@ -628,7 +627,7 @@ void CCNode::visit()
 
 		for ( ; it!=m_pChildren->end(); it++ )
 		{
-			pNode = static_cast<CCNode*>(*it);
+			pNode = (*it);
 			pNode->visit();
 		}		
 	}
@@ -652,7 +651,6 @@ void CCNode::transformAncestors()
 
 void CCNode::transform()
 {	
-	/** @todo*/
 	// transformations
 
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
@@ -887,7 +885,7 @@ CGAffineTransform CCNode::nodeToWorldTransform()
 
 	return t;
 }
-/** @todo*/
+
 CGAffineTransform CCNode::worldToNodeTransform(void)
 {
 	return CGAffineTransformInvert(this->nodeToWorldTransform());
@@ -911,16 +909,14 @@ CGPoint CCNode::convertToNodeSpaceAR(CGPoint worldPoint)
 
 CGPoint CCNode::convertToWorldSpaceAR(CGPoint nodePoint)
 {
-	/** @todo*/
 	nodePoint = ccpAdd(nodePoint, m_tAnchorPointInPixels);
 	return this->convertToWorldSpace(nodePoint);
 }
-/** @todo CCDirector*/
 CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
 {
 	
 	CGPoint worldPoint = this->convertToWorldSpace(nodePoint);
-	//return [[CCDirector sharedDirector] convertToUI:worldPoint];
+	// @todo CCDirector::getSharedDirector()->convertToUI(worldPoint);
 	return ccp(0,0);
 }
 

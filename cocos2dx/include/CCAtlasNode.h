@@ -72,10 +72,10 @@ public:
 	~CCAtlasNode();
 
 	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static CCAtlasNode * atlasWithTileFile(std::string & tile,int tileWidth, int tileHeight, int itemsToRender);
+	static CCAtlasNode * atlasWithTileFile(const std::string & tile,int tileWidth, int tileHeight, int itemsToRender);
 
 	/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	CCAtlasNode * initWithTileFile(std::string & tile, int tileWidth, int tileHeight, int itemsToRender);
+	CCAtlasNode * initWithTileFile(const std::string & tile, int tileWidth, int tileHeight, int itemsToRender);
 
 	/** updates the Atlas (indexed vertex array).
 	* Shall be overriden in subclasses
