@@ -268,7 +268,7 @@ public:
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	CCNode * addChild(CCNode * child, int zOrder, int tag);
+	virtual CCNode * addChild(CCNode * child, int zOrder, int tag);
 
 	// composition: REMOVE
 
@@ -281,7 +281,7 @@ public:
 	/** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
 	@since v0.7.1
 	*/
-	void removeChild(CCNode* child, bool cleanup);
+	virtual void removeChild(CCNode* child, bool cleanup);
 
 	/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
 	@since v0.7.1
@@ -291,7 +291,7 @@ public:
 	/** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
 	@since v0.7.1
 	*/
-	void removeAllChildrenWithCleanup(bool cleanup);
+	virtual void removeAllChildrenWithCleanup(bool cleanup);
 
 	// composition: GET
 	/** Gets a child from the container given its tag
@@ -303,7 +303,7 @@ public:
 	/** Reorders a child according to a new z value.
 	* The child MUST be already added.
 	*/
-	void reorderChild(CCNode * child, int zOrder);
+	virtual void reorderChild(CCNode * child, int zOrder);
 
 	/** Stops all running actions and schedulers
 	@since v0.8
