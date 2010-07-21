@@ -23,12 +23,26 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCLayer.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+#include <stdarg.h>
 
 
 // CCLayer
 CCLayer::CCLayer()
 {
-	/// @todo
+	/// @todo director
+// 	if( (self=[super init]) ) {
+// 
+// 		CGSize s = [[CCDirector sharedDirector] winSize];
+// 		anchorPoint_ = ccp(0.5f, 0.5f);
+// 		[self setContentSize:s];
+// 		self.isRelativeAnchorPoint = NO;
+// 
+// 		isTouchEnabled = NO;
+// 		isAccelerometerEnabled = NO;
+// 	}
+// 
+// 	return self;
 }
 
 CCLayer::~CCLayer()
@@ -41,7 +55,7 @@ CCLayer::~CCLayer()
 
 void CCLayer::registerWithTouchDispatcher()
 {
-	/// @todo [[CCTouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
+	CCTouchDispatcher::getSharedDispatcher()->addStandardDelegate(this,0);
 }
 
 
@@ -53,6 +67,23 @@ bool CCLayer::getIsTouchEnabled()
 /// isTouchEnabled setter
 void CCLayer::setIsTouchEnabled(bool enabled)
 {
+	if (m_bIsTouchEnabled != enabled)
+	{
+		m_bIsTouchEnabled = enabled;
+		if (m_bIsRunning)
+		{
+			if (enabled)
+			{
+				this->registerWithTouchDispatcher();
+			}
+			else
+			{
+				/// @todo param this error
+				//CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
+			}
+		}
+	}
+	
 	/** @todo
 	if( isTouchEnabled != enabled ) {
 	isTouchEnabled = enabled;
@@ -189,30 +220,26 @@ CCColorLayer * CCColorLayer::layerWithColor(ccColor4B color)
 
 CCColorLayer* CCColorLayer::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
 {
-	/** @todo
-	if( (self=[super init]) ) {
+	// default blend function
+	m_tBlendFunc.src = CC_BLEND_SRC;
+	m_tBlendFunc.dst = CC_BLEND_DST;
 
-		// default blend function
-		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
+	m_tColor.r = color.r;
+	m_tColor.g = color.g;
+	m_tColor.b = color.b;
+	m_cOpacity = color.a;
 
-		color_.r = color.r;
-		color_.g = color.g;
-		color_.b = color.b;
-		opacity_ = color.a;
+	for (UINT32 i=0; i<sizeof(m_pSquareVertices) / sizeof(m_pSquareVertices[0]); i++ )
+		m_pSquareVertices[i] = 0.0f;
 
-		for (NSUInteger i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
-			squareVertices[i] = 0.0f;
-
-		[self updateColor];
-		[self setContentSize:CGSizeMake(w,h)];
-	}
-	return self;*/
-	return NULL;
+	this->updateColor();
+	this->setContentSize(CGSizeMake(width,height));
+	return this;
 }
 
 CCColorLayer * CCColorLayer::initWithColor(ccColor4B color)
 {
-	/** @todo
+	/** @todo director
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [self initWithColor:color width:s.width height:s.height];*/
 	return NULL;
@@ -221,65 +248,63 @@ CCColorLayer * CCColorLayer::initWithColor(ccColor4B color)
 /// override contentSize
 void CCColorLayer::setContentSize(CGSize size)
 {
-	/** @todo
-	squareVertices[2] = size.width;
-	squareVertices[5] = size.height;
-	squareVertices[6] = size.width;
-	squareVertices[7] = size.height;
+	m_pSquareVertices[2] = size.width;
+	m_pSquareVertices[5] = size.height;
+	m_pSquareVertices[6] = size.width;
+	m_pSquareVertices[7] = size.height;
 
-	[super setContentSize:size];*/
+	this->setContentSize(size);
 }
 
 void CCColorLayer::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
- /// @todo	[self setContentSize:CGSizeMake(w,h)];
+	this->setContentSize(CGSizeMake(w, h));
 }
 
 void CCColorLayer::changeWidth(GLfloat w)
 {
-/// @todo	[self setContentSize:CGSizeMake(w,contentSize_.height)];
+	this->setContentSize(CGSizeMake(w, m_tContentSize.height));
 }
 
 void CCColorLayer::changeHeight(GLfloat h)
 {
-/// @todo	[self setContentSize:CGSizeMake(contentSize_.width,h)];
+	this->setContentSize(CGSizeMake(m_tContentSize.width, h));
 }
 
 void CCColorLayer::updateColor()
 {
-	/** @todo
-	for( NSUInteger i=0; i < sizeof(squareColors) / sizeof(squareColors[0]);i++ )
+	for( UINT32 i=0; i < sizeof(m_pSquareColors) / sizeof(m_pSquareColors[0]); i++ )
 	{
 		if( i % 4 == 0 )
-			squareColors[i] = color_.r;
+			m_pSquareColors[i] = m_tColor.r;
 		else if( i % 4 == 1)
-			squareColors[i] = color_.g;
+			m_pSquareColors[i] = m_tColor.g;
 		else if( i % 4 ==2  )
-			squareColors[i] = color_.b;
+			m_pSquareColors[i] = m_tColor.b;
 		else
-			squareColors[i] = opacity_;
-	}*/
+			m_pSquareColors[i] = m_cOpacity;
+	}
 }
 
 void CCColorLayer::draw()
 {		
-	/** @todo
+	/** @todo*/
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, GL_COLOR_ARRAY
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisable(GL_TEXTURE_2D);
 
-	glVertexPointer(2, GL_FLOAT, 0, squareVertices);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
+	glVertexPointer(2, GL_FLOAT, 0, m_pSquareVertices);
+	glColorPointer(4, GL_UNSIGNED_BYTE, 0, m_pSquareColors);
 
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
-		glBlendFunc(blendFunc_.src, blendFunc_.dst);
+	bool newBlend = false;
+	if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) {
+		newBlend = true;
+		glBlendFunc(m_tBlendFunc.src, m_tBlendFunc.dst);
 	}
-	else if( opacity_ != 255 ) {
-		newBlend = YES;
+	else if( m_cOpacity != 255 ) {
+		newBlend = true;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
@@ -290,7 +315,7 @@ void CCColorLayer::draw()
 
 	// restore default GL state
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);*/
+	glEnable(GL_TEXTURE_2D);
 }
 
 
@@ -302,73 +327,63 @@ CCMultiplexLayer::CCMultiplexLayer()
 }
 CCMultiplexLayer::~CCMultiplexLayer()
 {
-	/// @todo
+	m_pLayers->release();
 }
 
 CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 {
-/** @todo	va_list args;
+	va_list args;
 	va_start(args,layer);
 
-	id s = [[[self alloc] initWithLayers: layer vaList:args] autorelease];
+	CCMultiplexLayer * pMultiplexLayer = new CCMultiplexLayer();
+	pMultiplexLayer->initWithLayers(layer, args);
+	pMultiplexLayer->autorelease();
 
 	va_end(args);
-	return s;*/
-	return NULL;
+	return pMultiplexLayer;
 }
 
 CCMultiplexLayer * CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 {
-	/** @todo
-	if( (self=[super init]) ) {
+	m_pLayers = new NSMutableArray<CCLayer*>(5);
+	m_pLayers->retain();
 
-		layers = [[NSMutableArray arrayWithCapacity:5] retain];
+	m_pLayers->addObject(layer);
 
-		[layers addObject: layer];
-
-		CCLayer *l = va_arg(params,CCLayer*);
-		while( l ) {
-			[layers addObject: l];
-			l = va_arg(params,CCLayer*);
-		}
-
-		enabledLayer = 0;
-		[self addChild: [layers objectAtIndex: enabledLayer]];	
+	CCLayer *l = va_arg(params,CCLayer*);
+	while( l ) {
+		m_pLayers->addObject(l);
+		l = va_arg(params,CCLayer*);
 	}
 
-	return self;*/
-	return NULL;
+	m_nEnabledLayer = 0;
+	this->addChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer));
+
+	return this;
 }
 
-/** @todo
--(void) dealloc
-{
-	[layers release];
-	[super dealloc];
-}*/
 
 void CCMultiplexLayer::switchTo(unsigned int n)
 {
-	/** @todo
-	NSAssert( n < [layers count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:YES];
+	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 
-	enabledLayer = n;
+	m_nEnabledLayer = n;
 
-	[self addChild: [layers objectAtIndex:n]];		*/
+	this->addChild(m_pLayers->getObjectAtIndex(n));
 }
 
 void CCMultiplexLayer::switchToAndReleaseMe(unsigned int n)
 {
-	/** @todo
-	NSAssert( n < [layers count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:YES];
+	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 
-	[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
+	//[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
+	m_pLayers->replaceObjectAtIndex(m_nEnabledLayer, NULL);
 
-	enabledLayer = n;
+	m_nEnabledLayer = n;
 
-	[self addChild: [layers objectAtIndex:n]];		*/
+	this->addChild(m_pLayers->getObjectAtIndex(n));
 }

@@ -86,8 +86,8 @@ All features from CCLayer are valid, plus the following new features:
 class CCColorLayer : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
-	GLfloat m_fSquareVertices[4 * 2];
-	GLubyte m_cSquareColors[4 * 4];
+	GLfloat m_pSquareVertices[4 * 2];
+	GLubyte m_pSquareColors[4 * 4];
 
 public:
 

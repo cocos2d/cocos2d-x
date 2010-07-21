@@ -23,9 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTextureCache.h"
-
-
-#include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 //#include "CCDirector.h"
@@ -69,10 +66,13 @@ CCTextureCache * CCTextureCache::sharedTextureCache()
 CCTextureCache::CCTextureCache()
 {
 	NSAssert(sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
-/** @todo NSMutableDictionary	, NSLock
-		textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
-		dictLock = [[NSLock alloc] init];
-		contextLock = [[NSLock alloc] init];*/
+	
+	//textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
+	m_pTextures = new NSMutableDictionary<std::string, CCTexture2D*>();
+	m_pTextures->retain();
+	/** @todo	NSLock	
+	dictLock = [[NSLock alloc] init];
+	contextLock = [[NSLock alloc] init];*/
 }
 
 CCTextureCache::~CCTextureCache()
@@ -96,14 +96,12 @@ void CCTextureCache::purgeSharedTextureCache()
 
 std::string CCTextureCache::description()
 {
-	/** @todo CCMutableDictionary
-	return [NSString stringWithFormat:@"<%@ = %08X | num of textures =  %i>", [self class], self, [textures count]];
+	/** @todo CCMutableDictionary::count()*/
 	char des[100];
-	sprintf_s(des, 100, "<CCTextureCache | num of textures = %d>", m_pTextures->count());
+	sprintf_s(des, 100, "<CCTextureCache | Number of textures = %d>", m_pTextures->count());
 	string ret(des);
 
-	return ret;*/
-	return NULL;
+	return ret;
 }
 
 
@@ -143,30 +141,35 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 	[autoreleasepool release];*/
 }
 
-/** @todo
--(void) addImageAsync: (string & ) filename target:(id)target selector:(SEL)selector
+/** @todo selector*/
+void CCTextureCache::addImageAsync(std::string &filename, NSObject *target, fpAsyncCallback func)
 {
-	NSAssert(filename != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert(!filename.empty() , "TextureCache: fileimage MUST not be nill");
 
 	// optimization
 
 	CCTexture2D * tex;
-
-	if( (tex=[textures objectForKey: filename] ) ) {
-		[target performSelector:selector withObject:tex];
-		return;
-	}
-
-	// schedule the load
-
-	CCAsyncObject *asyncObject = [[CCAsyncObject alloc] init];
-	asyncObject.selector = selector;
-	asyncObject.target = target;
-	asyncObject.data = filename;
-
-	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
-	[asyncObject release];
-}*/
+// 
+// 	if ( (tex = m_pTextures->objectForKey(filename)) )
+// 	{
+// 		target->
+// 	}
+// 	
+// 	if( (tex=[textures objectForKey: filename] ) ) {
+// 		[target performSelector:selector withObject:tex];
+// 		return;
+// 	}
+// 
+// 	// schedule the load
+// 
+// 	CCAsyncObject *asyncObject = [[CCAsyncObject alloc] init];
+// 	asyncObject.selector = selector;
+// 	asyncObject.target = target;
+// 	asyncObject.data = filename;
+// 
+// 	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
+// 	[asyncObject release];
+}
 
 CCTexture2D * CCTextureCache::addImage(string & path)
 {
@@ -245,17 +248,19 @@ CCTexture2D * CCTextureCache::addPVRTCImage(string &  fileimage)
 	NSAssert(!fileimage.empty(), "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex;
-/** @todo
-	if( (tex=[textures objectForKey: fileimage] ) ) {
+/** @todo*/
+	if( (tex = m_pTextures->objectForKey(fileimage )) ) 
+	{
 		return tex;
 	}
 
-	tex = [[CCTexture2D alloc] initWithPVRTCFile: fileimage];
+	tex = new CCTexture2D();
+	tex = tex->initWithPVRTCFile(fileimage);
 	if( tex )
-		[textures setObject: tex forKey:fileimage];
+		m_pTextures-> setObject( tex, fileimage);
 	else
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",fileimage);	
-*/
+		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",fileimage);	
+
 	tex->autorelease();
 	return tex;
 }

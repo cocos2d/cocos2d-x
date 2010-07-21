@@ -180,9 +180,9 @@ void CCTextureAtlas::initIndices()
 
 #if CC_TEXTURE_ATLAS_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif // CC_TEXTURE_ATLAS_USES_VBO
@@ -212,7 +212,7 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, UINT32 index)
 	// last object doesn't need to be moved
 	if( remaining > 0) {
 		// tex coordinates
-		memmove( &m_pQuads[index+1],&m_pQuads[index], sizeof(ccV3F_C4B_T2F_Quad) * remaining );		
+		memmove( &m_pQuads[index+1],&m_pQuads[index], sizeof(m_pQuads[0]) * remaining );		
 	}
 
 	m_pQuads[index] = *quad;
@@ -236,7 +236,7 @@ void CCTextureAtlas::insertQuadFromIndex(UINT32 oldIndex, UINT32 newIndex)
 
 	// tex coordinates
 	ccV3F_C4B_T2F_Quad quadsBackup = m_pQuads[oldIndex];
-	memmove( &m_pQuads[dst],&m_pQuads[src], sizeof(ccV3F_C4B_T2F_Quad) * howMany );
+	memmove( &m_pQuads[dst],&m_pQuads[src], sizeof(m_pQuads[0]) * howMany );
 	m_pQuads[newIndex] = quadsBackup;
 }
 
@@ -250,7 +250,7 @@ void CCTextureAtlas::removeQuadAtIndex(UINT32 index)
 	// last object doesn't need to be moved
 	if( remaining ) {
 		// tex coordinates
-		memmove( &m_pQuads[index],&m_pQuads[index+1], sizeof(ccV3F_C4B_T2F_Quad) * remaining );
+		memmove( &m_pQuads[index],&m_pQuads[index+1], sizeof(m_pQuads[0]) * remaining );
 	}
 
 	m_uTotalQuads--;
@@ -273,8 +273,8 @@ bool CCTextureAtlas::resizeCapacity(UINT32 newCapacity)
 	m_uTotalQuads = MIN(m_uTotalQuads, newCapacity);
 	m_uCapacity = newCapacity;
 
-	void * tmpQuads = realloc( m_pQuads, sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity );
-	void * tmpIndices = realloc( m_pIndices, sizeof(GLushort) * m_uCapacity * 6 );
+	void * tmpQuads = realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
+	void * tmpIndices = realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
 
 	if( ! ( tmpQuads && tmpIndices) ) {
 		CCLOG("cocos2d: CCTextureAtlas: not enough memory");
@@ -313,14 +313,14 @@ void CCTextureAtlas::drawNumberOfQuads(UINT32 n)
 {	
 
 	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
-#define kQuadSize sizeof(ccV3F_C4B_T2F)
+#define kQuadSize sizeof(m_pQuads[0].bl)
 
 
 #if CC_TEXTURE_ATLAS_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(ccV3F_C4B_T2F_Quad) * n, m_pQuads);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0]) * n, m_pQuads);
 
 	// vertices
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, vertices));

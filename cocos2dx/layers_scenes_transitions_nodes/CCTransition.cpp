@@ -32,7 +32,6 @@ enum {
 
 CCTransitionScene::CCTransitionScene()
 {
-	/// @todo
 }
 CCTransitionScene::~CCTransitionScene()
 {
@@ -42,7 +41,6 @@ CCTransitionScene::~CCTransitionScene()
 
 CCTransitionScene * CCTransitionScene::transitionWithDurationAndScene(ccTime t, CCScene *scene)
 {
-/// @todo	return [[[self alloc] initWithDuration:t scene:s] autorelease];
 	CCTransitionScene * pScene = new CCTransitionScene();
 	pScene->initWithDurationAndScene(t,scene);
 	pScene->autorelease();
@@ -51,7 +49,7 @@ CCTransitionScene * CCTransitionScene::transitionWithDurationAndScene(ccTime t, 
 
 CCTransitionScene * CCTransitionScene::initWithDurationAndScene(ccTime t, CCScene *scene)
 {
-	/** @todo
+	/** @todo ccdirector
 	NSAssert( s != nil, @"Argument scene must be non-nil");
 
 	if( (self=[super init]) ) {
@@ -92,29 +90,30 @@ void CCTransitionScene::draw()
 
 void CCTransitionScene::finish()
 {
-	/** @todo
 	// clean up 	
-// 	m_pInScene->setIsVisible(true);
-// 	m_pInScene->setPosition(ccp(0,0));
-// 	m_pInScene->setScale(1.0f);
-// 	m_pInScene->setRotation(0.0f);
-// 	m_pInScene->getCamera()->restore();
-// 
-// 	m_pOutScene->setIsVisible(false);
-// 	m_pOutScene->setPosition(ccp(0,0));
-// 	m_pOutScene->setScale(1.0f);
-// 	m_pOutScene->setRotation(0.0f);
-// 	m_pOutScene->getCamera()->restore();
+ 	m_pInScene->setIsVisible(true);
+ 	m_pInScene->setPosition(ccp(0,0));
+ 	m_pInScene->setScale(1.0f);
+ 	m_pInScene->setRotation(0.0f);
+ 	m_pInScene->getCamera()->restore();
+ 
+ 	m_pOutScene->setIsVisible(false);
+ 	m_pOutScene->setPosition(ccp(0,0));
+ 	m_pOutScene->setScale(1.0f);
+ 	m_pOutScene->setRotation(0.0f);
+ 	m_pOutScene->getCamera()->restore();
 
-	this->schedule(&CCTransitionScene::setNewScene, 0);
-//	[self schedule:@selector(setNewScene:) interval:0];*/
+	//[self schedule:@selector(setNewScene:) interval:0];
+	this->schedule(schedule_selector(CCTransitionScene::setNewScene), 0);
 
 }
 
 void CCTransitionScene::setNewScene(ccTime dt)
 {	
-	/** @todo
-	[self unschedule:_cmd];
+	/** @todo CCDirector
+
+	//[self unschedule:_cmd];
+	this->unschedule(schedule_selector(CCTransitionScene::setNewScene));
 
 	CCDirector *director = [CCDirector sharedDirector];
 

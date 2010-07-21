@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "support/CGPointExtension.h"
 #include "cocoa/CGGeometry.h"
+//#include "CCDirector.h"
 
 using namespace std;
 

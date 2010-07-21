@@ -520,35 +520,37 @@ CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bp
 
 CCTexture2D * CCTexture2D::initWithPVRTCFile(string &  file)
 {
-	/** @todo
-	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
-	CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
-	[self release];
-	return nil;
-	}	
-
-	if( (self = [super init]) ) {
-	CCPVRTexture *pvr = [[CCPVRTexture alloc] initWithContentsOfFile:file];
-	if( pvr ) {
-	pvr.retainName = YES;	// don't dealloc texture on release
-
-	_name = pvr.name;	// texture id
-	_maxS = 1.0f;
-	_maxT = 1.0f;
-	_width = pvr.width;		// width
-	_height = pvr.height;	// height
-	_size = CGSizeMake(_width, _height);
-
-	[pvr release];
-
-	[self setAntiAliasTexParameters];
-	} else {
-
-	CCLOG(@"cocos2d: Couldn't load PVR image");
-	[self release];
-	return nil;
+	if (! CCConfiguration::sharedConfiguration()->isSupportsPVRTC())
+	{
+		CCLOG("cocos2d: WARNING: PVRTC images is not supported");
+		this->release();
+		return NULL;
 	}
-	}*/
+
+	CCPVRTexture *pvr = new CCPVRTexture();
+	pvr = pvr->initWithContentsOfFile(file);
+	if( pvr )
+	{
+		pvr->setRetainName(true);			// don't dealloc texture on release
+
+		m_uName = pvr->getName();				// texture id
+		m_fMaxS = 1.0f;
+		m_fMaxT = 1.0f;
+		m_uPixelsWide = pvr->getWidth();		// width
+		m_uPixelsHigh = pvr->getHeight();		// height
+		/// be careful : UINT32 to float
+		m_tContentSize = CGSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
+
+		pvr->release();
+
+		this->setAntiAliasTexParameters();
+	}
+	else 
+	{
+		CCLOG("cocos2d: Couldn't load PVR image");
+		this->release();
+		return NULL;
+	}
 	return this;
 }
 

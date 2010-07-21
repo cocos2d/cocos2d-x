@@ -30,8 +30,7 @@ THE SOFTWARE.
 /// @todo #import <CoreGraphics/CGImage.h>
 //#include "platform/uphone/NSLock.h"
 #include <string>
-#include <hash_map>
-
+#include "cocoa/NSMutableDictionary.h"
 
 class CCTexture2D;
 class CCAsyncObject;
@@ -44,10 +43,13 @@ typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 class CCTextureCache : public NSObject
 {
 protected:
-	/// @todo hash_map<*,*>
-	stdext::hash_map<int ,int > textures;
+	NSMutableDictionary<std::string, CCTexture2D*> * m_pTextures;
 	//NSLock				*m_pDictLock;
 	//NSLock				*m_pContextLock;
+
+private:
+
+	void addImageWithAsyncObject(CCAsyncObject* async);
 
 public:
 
@@ -80,9 +82,8 @@ public:
 	* Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
 	* @since v0.8
 	*/
-	/// @todo -(void) addImageAsync:(string & ) filename target:(id)target selector:(SEL)selector;
-
-	void addImageWithAsyncObject(CCAsyncObject* async);
+	/// @todo selector
+	void addImageAsync(string & filename, NSObject*target, fpAsyncCallback func);
 
 	/** Returns a Texture2D object given an PVRTC RAW filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
