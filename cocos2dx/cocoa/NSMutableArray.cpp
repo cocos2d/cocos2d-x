@@ -198,19 +198,27 @@ bool NSMutableArray<T>::containsObject(T pObject)
 template<class T>
 void NSMutableArray<T>::replaceObjectAtIndex(UINT32 uIndex, T pObject)
 {
-    if (m_array.empty() || uIndex == 0)
+	if (uIndex >= count())
 	{
+		// index out of range
+		assert(0);
 		return;
 	}
 
 	// release the object
-	T pTmp = m_array.at(uIndex);
-	if (pTmp )
+	T pTmp = m_array[uIndex];
+	if (pTmp)
 	{
-		pTmp->release();
+		pTmp->release();		
 	}
 
 	m_array[uIndex] = pObject;
+
+	// add the ref
+	if (pObject)
+	{
+	    pObject->retain();
+	}
 }
 
 template<class T>
@@ -292,9 +300,8 @@ template<class T>
 T NSMutableArray<T>::getObjectAtIndex(UINT32 uIndex)
 {
 	assert(uIndex < count());
-	assert(uIndex >= 0);
 
-	if (uIndex <= 0 || uIndex >= count())
+	if (uIndex >= count())
 	{
 		return NULL;
 	}
