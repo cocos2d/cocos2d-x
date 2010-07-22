@@ -33,6 +33,7 @@ THE SOFTWARE.
 // CC RGBA protocol
 class CCRGBAProtocol
 {
+public:
     /** sets Color
      @since v0.8
      */
@@ -74,6 +75,7 @@ class CCRGBAProtocol
  */
 class CCBlendProtocol
 {
+putlic:
 	// set the source blending function for the texture
 	virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
 
@@ -92,6 +94,7 @@ class CCBlendProtocol
  */
 class CCTextureProtocol : public CCBlendProtocol
 {
+public:
 	// returns the used texture
 	virtual CCTexture2D* getTexture(void) = 0;
 
@@ -102,6 +105,7 @@ class CCTextureProtocol : public CCBlendProtocol
 // Common interface for Labels
 class CCLabelProtocol
 {
+public:
 	// sets a new label using an string
 	virtual void setString(std::string &label) = 0;
 
