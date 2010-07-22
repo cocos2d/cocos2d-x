@@ -939,7 +939,7 @@ void CCSprite::updateBlendFunc(void)
 	assert (! m_bUsesSpriteSheet);
 
 	// it's possible to have an untextured sprite
-	if (! m_pobTexture || ! m_pobTexture->HasPremultipliedAlpha())
+	if (! m_pobTexture || ! m_pobTexture->getHasPremultipliedAlpha())
 	{
 		m_sBlendFunc.src = GL_SRC_ALPHA;
 		m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
