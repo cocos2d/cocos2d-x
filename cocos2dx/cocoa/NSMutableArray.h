@@ -70,4 +70,6 @@ private:
 	std::vector<T> m_array;
 };
 
+#define NSArray NSMutableArray
+
 #endif // __COCOA_NS_MUTATLE_ARRAY_H__
