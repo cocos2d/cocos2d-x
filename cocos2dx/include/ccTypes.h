@@ -135,6 +135,12 @@ typedef struct _ccVertex3F
 		float y;
 		float z;
 } ccVertex3F;
+
+static inline ccVertex3F vertex3(const float x, const float y, const float z)
+{
+	ccVertex3F c = {x, y, z};
+	return c;
+}
 		
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
