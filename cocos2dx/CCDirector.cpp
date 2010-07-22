@@ -112,7 +112,7 @@ CCDirector* CCDirector::init(void)
 	m_pobScenesStack = new NSMutableArray<CCScene*>(10);
 
 	// landspace
-	m_obDeviceOrientation = CCDeviceOrientationPortrait;
+	m_eDeviceOrientation = CCDeviceOrientationPortrait;
 
 	// FPS
 	m_bDisplayFPS = false;
