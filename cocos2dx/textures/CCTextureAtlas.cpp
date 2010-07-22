@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "CCTextureCache.h"
 #include "ccMacros.h"
-#include "ccConfig.h"
 
 // support
 #include "CCTexture2D.h"

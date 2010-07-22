@@ -27,7 +27,9 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "CCTextureAtlas.h"
+#include "ccTypes.h"
+
+class CCTextureAtlas;
 
 /** CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
 CCTextureProtocol protocol

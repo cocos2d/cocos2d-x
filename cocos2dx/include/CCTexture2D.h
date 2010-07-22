@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "cocoa/CGGeometry.h"
 
-
 //CONSTANTS:
 
 /** @typedef CCTexture2DPixelFormat

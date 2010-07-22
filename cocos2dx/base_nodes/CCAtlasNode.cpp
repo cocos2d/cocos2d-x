@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAtlasNode.h"
+#include "CCTextureAtlas.h"
 
 // implementation CCAtlasNode
 

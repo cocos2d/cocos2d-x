@@ -24,8 +24,9 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "support/CGPointExtension.h"
-#include "cocoa/CGGeometry.h"
 #include "support/TransformUtils.h"
+#include "CCCamera.h"
+#include "effects/CCGrid.h"
 //#include "CCDirector.h"
 
 
@@ -582,12 +583,13 @@ void CCNode::reorderChild(CCNode *child, int zOrder)
 	insertChild(child, zOrder);
 }
 
-void CCNode::draw()
-{
-	// override me
-	// Only use- this function to draw your staff.
-	// DON'T draw your stuff outside this method
-}
+ void CCNode::draw()
+ {
+	 assert(0);
+ 	// override me
+ 	// Only use- this function to draw your staff.
+ 	// DON'T draw your stuff outside this method
+ }
 
 void CCNode::visit()
 {

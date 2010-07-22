@@ -25,18 +25,17 @@ THE SOFTWARE.
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
 
-#include <GLES/gl.h>
-
 #include "Cocos2dDefine.h"
-#include "CCCamera.h"
 #include "ccMacros.h"
 #include "CCScheduler.h"
-#include "cocoa/CGGeometry.h"
 #include "cocoa/CGAffineTransform.h"
 #include "cocoa/NSMutableArray.h"
-#include "cocoa/selector_protocol.h"
-#include "effects/CCGrid.h"
 #include "ccConfig.h"
+
+class CCCamera;
+class CCGridBase;
+class CGPoint;
+
 
 enum {
 	kCCNodeTagInvalid = -1,

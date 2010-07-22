@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTransition.h"
+#include "CCCamera.h"
 #include "support/cgpointextension.h"
 
 

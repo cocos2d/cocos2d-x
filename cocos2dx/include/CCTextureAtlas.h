@@ -25,10 +25,12 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_ATLAS_H__
 #define __CCTEXTURE_ATLAS_H__
 
-
-#include "CCTexture2D.h"
+#include <string>
 #include "ccTypes.h"
+#include "cocoa/NSObject.h"
 #include "ccConfig.h"
+
+class CCTexture2D;
 
 /** A class that implements a Texture Atlas.
 Supported features:

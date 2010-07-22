@@ -89,7 +89,6 @@ THE SOFTWARE.
 
 #ifdef _DEBUG
 #include <assert.h>
-#include <stdio.h>
 #define NSAssert(_CONDITION, _TXT)\
  	if(! (_CONDITION) )			\
  	{							\

@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_CACHE_H__
 #define __CCTEXTURE_CACHE_H__
 
+#include <string>
 #include "cocoa/NSObject.h"
 /// @todo #import <Foundation/Foundation.h>
 /// @todo #import <CoreGraphics/CGImage.h>
 //#include "platform/uphone/NSLock.h"
-#include <string>
 #include "cocoa/NSMutableDictionary.h"
 
 class CCTexture2D;
