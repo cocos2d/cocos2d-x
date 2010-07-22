@@ -34,6 +34,7 @@ class CGRect;
 class CGPoint;
 class CGSize;
 class CCTexture2D;
+class NSZone;
 
 /** A CCSpriteFrame has:
 	- texture: A CCTexture2D that will be used by the CCSprite
@@ -74,15 +75,18 @@ public:
 	}
 
 public:
+	~CCSpriteFrame(void);
+	virtual NSObject* copyWithZone(NSZone *pZone);
+
 	/** Create a CCSpriteFrame with a texture, rect and offset.
 	 It is assumed that the frame was not trimmed.
 	 */
-	CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset);
+	static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset);
 
 	/** Create a CCSpriteFrame with a texture, rect, offset and originalSize.
 	 The originalSize is the size in pixels of the frame before being trimmed.
 	 */
-    CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset, CGSize originalSize);
+    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset, CGSize originalSize);
 
 public:
 	/** Initializes a CCSpriteFrame with a texture, rect and offset.
@@ -104,6 +108,11 @@ protected:
 // an Animation object used within Sprites to perform animations 
 class CCAnimation : public NSObject
 {
+protected:
+	char *m_pszName;
+	float m_fDelay;
+	NSMutableArray<CCSpriteFrame*> *m_pobFrames;
+
 public:
 	// attributes
 
@@ -117,16 +126,23 @@ public:
 
 	// array of frames, retain
 	inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
-	inline void setFrames(NSMutableArray<CCSpriteFrame*> *pobFrames)
+	inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
 	{
-		m_pobFrames = pobFrames;
-		if (pobFrames)
+		if (m_pobFrames)
 		{
-			pobFrames->retain();
+			m_pobFrames->release();
+		}
+
+		m_pobFrames = pFrames;
+		if (pFrames)
+		{
+			pFrames->retain();
 		}
 	}
 
 public:
+	~CCAnimation(void);
+
 	/** Initializes a CCAnimation with a name
 	 @since v0.99.3
 	 */
@@ -135,16 +151,16 @@ public:
 	/** Initializes a CCAnimation with a name and frames
 	 @since v0.99.3
 	 */
-    CCAnimation* initWithName(char *pszName, NSArray<CCSpriteFrame*> *pobFrames);
+    CCAnimation* initWithName(char *pszName, NSArray<CCSpriteFrame*> *pFrames);
 
 	// Initializes a CCAnimation with a name and delay between frames.
     CCAnimation* initWithName(char *pszName, float fDelay);
 
 	// Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
-	CCAnimation* initWithName(char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pobFrames);
+	CCAnimation* initWithName(char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
 
 	// adds a frame to a CCAnimation
-	void addFrame(CCSpriteFrame *pobFrame);
+	void addFrame(CCSpriteFrame *pFrame);
 
 	/** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
 	 Added to facilitate the migration from v0.8 to v0.9.
@@ -165,18 +181,13 @@ public:
 	/** Creates a CCAnimation with a name and frames
 	 @since v0.99.3
 	 */
-	static CCAnimation* animationWithName(const char *pszName, NSArray<CCSpriteFrame*> pFrames);
+	static CCAnimation* animationWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
 
 	// Creates a CCAnimation with a name and delay between frames.
 	static CCAnimation* animationWithName(const char *pszName, float fDelay);
 
 	// Creates a CCAnimation with a name, delay and an array of CCSpriteFrames.
 	static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> pFrames);
-
-protected:
-	char *m_pszName;
-	float m_fDelay;
-	NSMutableArray<CCSpriteFrame*> *m_pobFrames;
 };
 
 #endif //__SPRITE_CCSPRITE_FRAME_H__
