@@ -245,7 +245,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 	NSAssert(fileimage != NULL, "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex;
-	std:string key(fileimage);
+	std::string key(fileimage);
 	if( (tex = m_pTextures->objectForKey(key)) ) 
 	{
 		return tex;
