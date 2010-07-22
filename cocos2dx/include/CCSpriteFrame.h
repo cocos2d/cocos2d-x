@@ -173,6 +173,23 @@ public:
 	 */
 	void addFrameWithTexture(CCTexture2D* pobTexture, CGRect rect);
 
+public:
+	/** Creates a CCAnimation with a name
+	 @since v0.99.3
+	 */
+	static CCAnimation* animationWithName(char *pszName);
+
+	/** Creates a CCAnimation with a name and frames
+	 @since v0.99.3
+	 */
+	static CCAnimation* animationWithName(char *pszName, NSArray<CCSpriteFrame*> pFrames);
+
+	// Creates a CCAnimation with a name and delay between frames.
+	static CCAnimation* animationWithName(char *pszName, float fDelay);
+
+	// Creates a CCAnimation with a name, delay and an array of CCSpriteFrames.
+	static CCAnimation* animationWithName(char *pszName, float fDelay, NSArray<CCSpriteFrame*> pFrames);
+
 protected:
 	char *m_pszName;
 	float m_fDelay;
