@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccTypes.h"
-#include <map>
+#include "cocoa/NSMutableDictionary.h"
+
+#include <string>
 
 class CCSpriteSheet;
 class CCSpriteFrame;
@@ -107,34 +109,6 @@ public:
 	// returns the rect of the CCSprite
 	inline CGRect getTextureRect(void) { return m_obRect; }
 
-	/** whether or not the sprite is flipped horizontally. 
-	 It only flips the texture of the sprite, and not the texture of the sprite's children.
-	 Also, flipping the texture doesn't alter the anchorPoint.
-	 If you want to flip the anchorPoint too, and/or to flip the children too use:
-	 
-		sprite.scaleX *= -1;
-	 */
-	inline bool isFlipX(void) { return m_bFlipX; }
-	inline void setFilpX(bool bFlipX) { m_bFlipX = bFlipX; }
-
-	/** whether or not the sprite is flipped vertically\ 
-	 It only flips the texture of the sprite, and not the texture of the sprite's children.
-	 Also, flipping the texture doesn't alter the anchorPoint.
-	 If you want to flip the anchorPoint too, and/or to flip the children too use:
-	 
-		sprite.scaleY *= -1;
-	 */
-	inline bool isFlipY(void) { return m_bFlipY; }
-	void setFlipY(bool bFlipY) { m_bFlipY = bFlipY; }
-
-	// opacity: conforms to CCRGBAProtocol protocol
-	inline GLubyte getOpacity(void) { return m_nOpacity; }
-	inline void setOpacity(GLubyte nOpacity) { m_nOpacity = nOpacity; }
-
-	// RGB colors: conforms to CCRGBAProtocol protocol
-	inline ccColor3B getColor(void) { return m_sColor; }
-	inline void setColor(ccColor3B sColor) { m_sColor = sColor; }
-
 	// whether or not the Sprite is rendered using a CCSpriteSheet
 	inline bool isUsesSpriteSheet(void) { return m_bUsesSpriteSheet; }
 	inline void setUsesSpriteSheet(bool bUsesSpriteSheet) { m_bUsesSpriteSheet = bUsesSpriteSheet; }
@@ -152,8 +126,8 @@ public:
 	 IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
 	 @since v0.99.0
 	 */
-	inline ccHonorParentTransform getHornorParentTransform(void) { return m_eHornorParentTransform; }
-	inline void setHornorParentTransform(ccHornorParentTransform eHornorParentTransform) { m_eHornorParentTransform = eHornorParentTransform; }
+	inline ccHonorParentTransform getHornorParentTransform(void) { return m_eHonorParentTransform; }
+	inline void setHornorParentTransform(ccHonorParentTransform eHonorParentTransform) { m_eHonorParentTransform = eHonorParentTransform; }
 
 	/** offset position of the sprite. Calculated automatically by editors like Zwoptex.
 	 @since v0.99.0
@@ -188,18 +162,18 @@ public:
 	 If the CCSpriteFrame doesn't exist it will raise an exception.
 	 @since v0.9
 	 */
-	static CCSprite* spriteWithSpriteFrameName(char *pszSpriteFrameName);
+	static CCSprite* spriteWithSpriteFrameName(const char *pszSpriteFrameName);
 
 	/** Creates an sprite with an image filename.
 	 The rect used will be the size of the image.
 	 The offset will be (0,0).
 	 */
-    static CCSprite* spriteWithFile(char *pszFileName);
+    static CCSprite* spriteWithFile(const char *pszFileName);
 
 	/** Creates an sprite with an image filename and a rect.
 	 The offset will be (0,0).
 	 */
-	static CCSprite* spriteWithFile(char *pszFileName, CGRect rect);
+	static CCSprite* spriteWithFile(const char *pszFileName, CGRect rect);
 
 	/** Creates an sprite with a CGImageRef.
 	 @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
@@ -212,7 +186,7 @@ public:
 	 If key is nil, then a new texture will be created each time by the CCTextureCache. 
 	 @since v0.99.0
 	 */
-    static CCSprite* spriteWithCGImage(CGImageRef pImage, char *pszKey);
+    static CCSprite* spriteWithCGImage(CGImageRef pImage, const char *pszKey);
 
 	// Creates an sprite with an CCSpriteSheet and a rect
     static CCSprite* spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
@@ -228,6 +202,8 @@ public:
 	virtual void removeChild(CCNode* pChild, bool bCleanup);
 	virtual void removeAllChildrenWithCleanup(bool bCleanup);
 	virtual void reorderChild(CCNode *pChild, INT32 zOrder);
+	virtual CCNode* addChild(CCNode *pChild);
+	virtual CCNode* addChild(CCNode *pChild, INT32 zOrder);
 	virtual CCNode* addChild(CCNode *pChild, INT32 zOrder, INT32 tag);
 
 	virtual void setDirtyRecursively(bool bValue);
@@ -240,10 +216,23 @@ public:
 	virtual void setAnchorPoint(CGPoint anchor);
 	virtual void setIsRelativeAnchorPoint(bool bRelative);
 	virtual void setIsVisible(bool bVisible);
-	virtual void setFlipX(bool bFlipX);
-	virtual void setFlipY(bool bFlipY);
-	bool flipX(void);
-	bool flipY(void);
+	void setFlipX(bool bFlipX);
+	void setFlipY(bool bFlipY);
+	bool isFlipX(void);
+	bool isFlipY(void);
+
+	void updateColor(void);
+	// RGBAProtocol
+	virtual GLubyte getOpacity(void);
+	virtual void setOpacity(GLubyte opacity);
+	virtual ccColor3B getColor(void);
+	virtual void setColor(ccColor3B color3);
+	virtual void setIsOpacityModifyRGB(bool bValue);
+	virtual bool getIsOpacityModifyRGB(void);
+
+	// CCTextureProtocol
+    virtual void setTexture(CCTexture2D *texture);
+	virtual CCTexture2D* getTexture(void);
 
 	/** Initializes an sprite with a texture.
 	 The rect used will be the size of the texture.
@@ -264,18 +253,18 @@ public:
 	 If the CCSpriteFrame doesn't exist it will raise an exception.
 	 @since v0.9
 	 */
-    CCSprite* initWithSpriteFrameName(char *pszSpriteFrameName);
+    CCSprite* initWithSpriteFrameName(const char *pszSpriteFrameName);
 
 	/** Initializes an sprite with an image filename.
 	 The rect used will be the size of the image.
 	 The offset will be (0,0).
 	 */
-    CCSprite* initWithFile(char *pszFilename);
+    CCSprite* initWithFile(const char *pszFilename);
 
 	/** Initializes an sprite with an image filename, and a rect.
 	 The offset will be (0,0).
 	 */
-    CCSprite* initWithFile(char *pszFilename, CGRect rect);
+    CCSprite* initWithFile(const char *pszFilename, CGRect rect);
 
 	/** Initializes an sprite with a CGImageRef
 	 @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
@@ -288,7 +277,7 @@ public:
 	 If key is nil, then a new texture will be created each time by the CCTextureCache. 
 	 @since v0.99.0
 	 */
-    CCSprite* initWithCGImage(CGImageRef pImage, char *pszKey);
+    CCSprite* initWithCGImage(CGImageRef pImage, const char *pszKey);
 
 	// Initializes an sprite with an CCSpriteSheet and a rect
     CCSprite* initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
@@ -298,13 +287,13 @@ public:
 	// updates the quad according the the rotation, position, scale values.
 	void updateTransform(void);
 
-	// updates the texture rect of the CCSprite.
-	void setTextureRect(CGRect rect);
-
 	/** tell the sprite to use self-render.
 	 @since v0.99.0
 	 */
 	void useSelfRender(void);
+
+	// updates the texture rect of the CCSprite.
+     void setTextureRect(CGRect rect);
 
 	/** tell the sprite to use sprite sheet render.
 	 @since v0.99.0
@@ -320,18 +309,18 @@ public:
 	bool isFrameDisplayed(CCSpriteFrame *pFrame);
 
 	// returns the current displayed frame.
-	CCSpriteFrame* displayFrame(void);
+	CCSpriteFrame* displayedFrame(void);
+
+	// adds an Animation to the Sprite.
+	void addAnimation(CCAnimation *pAnimation);
+
+    // returns an Animation given it's name.
+	CCAnimation* animationByName(const char *pszAnimationName);
 
 	// Animation
 
 	// changes the display frame based on an animation and an index.
-	void setDisplayFrame(char *pszAnimationName, INT32 nFrameIndex);
-
-	// returns an Animation given it's name. 
-	CCAnimation* animationByName(char *pszAnimationName);
-
-	// adds an Animation to the Sprite.
-	void addAnimation(CCAnimation *pAnimation);
+	void setDisplayFrame(const char *pszAnimationName, INT32 nFrameIndex);
 
 protected:
     /*
@@ -346,8 +335,8 @@ protected:
 	void updateTextureCoords(CGRect rect);
 	void updateBlendFunc(void);
 	void initAnimationDictionary(void);
-	void setTextureRect(CGRect rect, CGSzie size);
-    struct transformValues getTransformValues(void);
+	void setTextureRect(CGRect rect, CGSize size);
+    struct transformValues_ getTransformValues(void);
 
 protected:
 	//
@@ -394,7 +383,7 @@ protected:
 	bool m_bFlipY;
 
 	// Animations that belong to the sprite
-	std::map<char *, CCAnimation*> *m_pAnimations;
+	NSMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
 };
 
 #endif // __SPITE_NODE_CCSPRITE_H__
