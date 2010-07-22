@@ -62,7 +62,7 @@ public:
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 The file will be loaded using the TextureMgr.
 	 */
-	CCSpriteSheet* initWithFile(char *pszFileImage, UINT32 uCapacity);
+	CCSpriteSheet* initWithFile(const char *pszFileImage, UINT32 uCapacity);
 
 	void increaceAtlasCapacity(void);
 
@@ -115,13 +115,13 @@ public:
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 The file will be loaded using the TextureMgr.
 	 */
-	static CCSpriteSheet* spriteSheetWithFile(char *pszFileImage);
+	static CCSpriteSheet* spriteSheetWithFile(const char *pszFileImage);
 
 	/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 The file will be loaded using the TextureMgr.
 	*/
-	static CCSpriteSheet* spriteSheetWithFile(char *pszFileImage, UINT32 uCapacity);
+	static CCSpriteSheet* spriteSheetWithFile(const char *pszFileImage, UINT32 uCapacity);
 
 public:
 	// attributes
