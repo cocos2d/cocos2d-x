@@ -116,7 +116,7 @@ public:
 	inline void setDelay(float fDelay) { m_fDelay = fDelay; }
 
 	// array of frames, retain
-	inline NSMutableArray<CCSpriteFrame*> getFrames(void) { return m_pobFrames; }
+	inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
 	inline void setFrames(NSMutableArray<CCSpriteFrame*> *pobFrames)
 	{
 		m_pobFrames = pobFrames;
@@ -125,23 +125,6 @@ public:
 			pobFrames->retain();
 		}
 	}
-
-public:
-	/** Creates a CCAnimation with a name
-	 @since v0.99.3
-	 */
-	CCAnimation* animationWithName(char *pszName);
-
-	/** Creates a CCAnimation with a name and frames
-	 @since v0.99.3
-	 */
-	CCAnimation* animationWithName(char *pszName, NSArray<CCSpriteFrame*> *pobFrames);
-
-	// Creates a CCAnimation with a name and delay between frames.
-	CCAnimation* animationWithName(char *pszName, NSArray<CCSpriteFrame*> *pobFrames, float fDelay);
-
-	// Creates a CCAnimation with a name, delay and an array of CCSpriteFrames
-    CCAnimation* animationWithName(char *pszName, NSArray<CCSpriteFrame*> *pobFrames, float fDelay, NSArray *pobFrames);
 
 public:
 	/** Initializes a CCAnimation with a name
@@ -177,18 +160,18 @@ public:
 	/** Creates a CCAnimation with a name
 	 @since v0.99.3
 	 */
-	static CCAnimation* animationWithName(char *pszName);
+	static CCAnimation* animationWithName(const char *pszName);
 
 	/** Creates a CCAnimation with a name and frames
 	 @since v0.99.3
 	 */
-	static CCAnimation* animationWithName(char *pszName, NSArray<CCSpriteFrame*> pFrames);
+	static CCAnimation* animationWithName(const char *pszName, NSArray<CCSpriteFrame*> pFrames);
 
 	// Creates a CCAnimation with a name and delay between frames.
-	static CCAnimation* animationWithName(char *pszName, float fDelay);
+	static CCAnimation* animationWithName(const char *pszName, float fDelay);
 
 	// Creates a CCAnimation with a name, delay and an array of CCSpriteFrames.
-	static CCAnimation* animationWithName(char *pszName, float fDelay, NSArray<CCSpriteFrame*> pFrames);
+	static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> pFrames);
 
 protected:
 	char *m_pszName;

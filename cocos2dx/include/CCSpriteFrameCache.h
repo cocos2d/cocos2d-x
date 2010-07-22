@@ -33,8 +33,9 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
 #include "cocoa/NSObject.h"
+#include "cocoa/NSMutableDictionary.h"
 
-#include <map>
+#include <string>
 
 class CCSpirte;
 
@@ -52,15 +53,15 @@ public:
 	 * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
 	 * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
 	 */
-	void addSpriteFramesWithFile(char *pszPlist);
+	void addSpriteFramesWithFile(const char *pszPlist);
 
 	// Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
-	void addSpriteFramesWithFile(char *pszPlist, CCTexture2D *pobTexture);
+	void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
 
 	/** Adds an sprite frame with a given name.
 	 If the name already exists, then the contents of the old name will be replaced with the new one.
 	 */
-	void addSpriteFrame(CCSpriteFrame *pobFrame, char *pszFrameName);
+	void addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName);
 
 	/** Purges the dictionary of loaded sprite frames.
 	 * Call this method if you receive the "Memory Warning".
@@ -77,20 +78,20 @@ public:
 	void removeUnusedSpriteFrames(void);
 
 	// Deletes an sprite frame from the sprite frame cache.
-	void removeSpriteFrameByName(char *pszName);
+	void removeSpriteFrameByName(const char *pszName);
 
 	/** Returns an Sprite Frame that was previously added.
 	 If the name is not found it will return nil.
 	 You should retain the returned copy if you are going to use it.
 	 */
-	CCSpriteFrame* spriteFrameByName(char *pszName);
+	CCSpriteFrame* spriteFrameByName(const char *pszName);
 
 	/** Creates an sprite with the name of an sprite frame.
 	 The created sprite will contain the texture, rect and offset of the sprite frame.
 	 It returns an autorelease object.
 	 @deprecated use [CCSprite spriteWithSpriteFrameName:name]. This method will be removed on final v0.9
 	 */
-	CCSprite* createSpriteWithFrameName(char *pszName);
+	CCSprite* createSpriteWithFrameName(const char *pszName);
 
 public:
 	// Retruns ths shared instance of the Sprite Frame cache
@@ -100,7 +101,7 @@ public:
 	static void purgeSharedSpriteFrameCache(void);
 
 protected:
-	std::map<char*, CCSpriteFrame*> *m_pobSpriteFrames;
+	NSMutableDictionary<std::string, CCSpriteFrame*> *m_pobSpriteFrames;
 };
 
 #endif // __SPRITE_CCSPRITE_FRAME_CACHE_H__

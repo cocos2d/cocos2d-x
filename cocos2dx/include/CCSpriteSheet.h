@@ -95,11 +95,15 @@ public:
 	 */
 	void removeChild(CCSprite *pobSprite, bool bDoCleanup);
 
-	void insertChild(CCSprite *pobSprite, bool bDoCleanup);
+	void insertChild(CCSprite *pobSprite, UINT32 uIndex);
 	void removeSpriteFromAtlas(CCSprite *pobSprite);
 
 	UINT32 rebuildIndexInOrder(CCSprite *pobParent, UINT32 uIndex);
 	UINT32 atlasIndexForChild(CCSprite *pobSprite, INT32 nZ);
+
+	// CCTextureProtocol
+	virtual CCTexture2D* getTexture(void);
+	virtual void setTexture(CCTexture2D *texture);
 public:
 	/** creates a CCSpriteSheet with a texture2d and a default capacity of 29 children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
@@ -142,7 +146,7 @@ public:
 	inline void setBlendFunction(ccBlendFunc blendFunc) { m_blendFunc = blendFunc; }
 
 	// descendants (children, gran children, etc)
-	inline CCArray<CCSprite*> getDescendants(void) { return m_pobDescendants; }
+	inline NSArray<CCSprite*>* getDescendants(void) { return m_pobDescendants; }
 
 protected:
 	CCTextureAtlas *m_pobTextureAtlas;
