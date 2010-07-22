@@ -256,13 +256,13 @@ public:
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	CCNode * addChild(CCNode * child);
+	virtual CCNode * addChild(CCNode * child);
 
 	/** Adds a child to the container with a z-order
 	It returns self, so you can chain several addChilds.
 	@since v0.7.1
 	*/
-	CCNode * addChild(CCNode * child, int zOrder);
+	virtual CCNode * addChild(CCNode * child, int zOrder);
 
 	/** Adds a child to the container with z order and tag
 	It returns self, so you can chain several addChilds.
