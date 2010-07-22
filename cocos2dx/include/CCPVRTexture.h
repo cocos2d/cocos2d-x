@@ -47,9 +47,9 @@ public:
 	CCPVRTexture();
 	~CCPVRTexture();
 
-	CCPVRTexture * initWithContentsOfFile(const std::string &  path);
+	CCPVRTexture * initWithContentsOfFile(const char* path);
 /// @todo	CCPVRTexture * initWithContentsOfURL(NSURL *url);
-	static CCPVRTexture * pvrTextureWithContentsOfFile(const std::string & path);
+	static CCPVRTexture * pvrTextureWithContentsOfFile(const char* path);
 /// @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
 
 	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)

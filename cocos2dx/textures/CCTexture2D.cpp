@@ -515,7 +515,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bp
 	return this;
 }
 
-CCTexture2D * CCTexture2D::initWithPVRTCFile(const std::string &  file)
+CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 {
 	if (! CCConfiguration::sharedConfiguration()->isSupportsPVRTC())
 	{

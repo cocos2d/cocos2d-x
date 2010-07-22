@@ -230,7 +230,7 @@ bool CCPVRTexture::createGLTexture()
 }
 
 
-CCPVRTexture * CCPVRTexture::initWithContentsOfFile(const std::string & path)
+CCPVRTexture * CCPVRTexture::initWithContentsOfFile(const char* path)
 {
 	/** @todo NSData
 	if((self = [super init]))
@@ -270,7 +270,7 @@ CCPVRTexture * CCPVRTexture::initWithContentsOfFile(const std::string & path)
 }*/
 
 
-CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(const std::string &  path)
+CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(const char* path)
 {
 	CCPVRTexture * pTexture = new CCPVRTexture();
 	pTexture->initWithContentsOfFile(path);

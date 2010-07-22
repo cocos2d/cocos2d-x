@@ -75,7 +75,7 @@ public:
  */
 class CCBlendProtocol
 {
-putlic:
+public:
 	// set the source blending function for the texture
 	virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
 

@@ -69,14 +69,14 @@ public:
 	/** creates a TextureAtlas with an filename and with an initial capacity for Quads.
 	* The TextureAtlas capacity can be increased in runtime.
 	*/
-	static CCTextureAtlas * textureAtlasWithFile(const std::string &  file , UINT32 capacity);
+	static CCTextureAtlas * textureAtlasWithFile(const char* file , UINT32 capacity);
 
 	/** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
 	* The TextureAtlas capacity can be increased in runtime.
 	*
 	* WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
 	*/
-	CCTextureAtlas * initWithFile(const std::string &  file, UINT32 capacity);
+	CCTextureAtlas * initWithFile(const char* file, UINT32 capacity);
 
 	/** creates a TextureAtlas with a previously initialized Texture2D object, and
 	* with an initial capacity for n Quads. 

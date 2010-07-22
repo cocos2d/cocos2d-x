@@ -96,7 +96,7 @@ std::string CCTextureCache::description()
 {
 	char des[100];
 	sprintf_s(des, 100, "<CCTextureCache | Number of textures = %u>", m_pTextures->count());
-	string ret(des);
+	std::string ret(des);
 
 	return ret;
 }
@@ -139,9 +139,9 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 }
 
 /** @todo selector*/
-void CCTextureCache::addImageAsync(const std::string &filename, NSObject *target, fpAsyncCallback func)
+void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsyncCallback func)
 {
-	NSAssert(!filename.empty() , "TextureCache: fileimage MUST not be nill");
+	NSAssert(filename != NULL , "TextureCache: fileimage MUST not be nill");
 
 	// optimization
 
@@ -168,9 +168,9 @@ void CCTextureCache::addImageAsync(const std::string &filename, NSObject *target
 // 	[asyncObject release];
 }
 
-CCTexture2D * CCTextureCache::addImage(const std::string & path)
+CCTexture2D * CCTextureCache::addImage(const char * path)
 {
-	NSAssert(!path.empty(), "TextureCache: fileimage MUST not be nill");
+	NSAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex = NULL;
 
@@ -212,10 +212,10 @@ CCTexture2D * CCTextureCache::addImage(const std::string & path)
 	return tex;
 }
 
-CCTexture2D* CCTextureCache::addPVRTCImage(const std::string & path, int bpp, bool hasAlpha, int width)
+CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
 {
 	
-	NSAssert(!path.empty(), "TextureCache: fileimage MUST not be nill");
+	NSAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
 	NSAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
 	CCTexture2D * tex;
@@ -240,12 +240,13 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const std::string & path, int bpp, bo
 	return tex;
 }
 
-CCTexture2D * CCTextureCache::addPVRTCImage(string &  fileimage)
+CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 {
-	NSAssert(!fileimage.empty(), "TextureCache: fileimage MUST not be nill");
+	NSAssert(fileimage != NULL, "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * tex;
-	if( (tex = m_pTextures->objectForKey(fileimage )) ) 
+	std:string key(fileimage);
+	if( (tex = m_pTextures->objectForKey(key)) ) 
 	{
 		return tex;
 	}
@@ -253,7 +254,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(string &  fileimage)
 	tex = new CCTexture2D();
 	tex = tex->initWithPVRTCFile(fileimage);
 	if( tex )
-		m_pTextures-> setObject( tex, fileimage);
+		m_pTextures-> setObject( tex, key);
 	else
 		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",fileimage);	
 
@@ -318,7 +319,7 @@ void CCTextureCache::removeTexture(CCTexture2D* tex)
 		[textures removeObjectForKey:[keys objectAtIndex:i]];*/
 }
 
-void CCTextureCache::removeTextureForKey(const std::string &  textureKeyName)
+void CCTextureCache::removeTextureForKey(const std::string & textureKeyName)
 {
 	if( textureKeyName.empty() )
 		return;

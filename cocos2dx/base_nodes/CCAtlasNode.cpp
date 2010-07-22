@@ -37,7 +37,7 @@ CCAtlasNode::~CCAtlasNode()
 	m_pTextureAtlas->release();
 }
 
-CCAtlasNode * CCAtlasNode::atlasWithTileFile(const std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
+CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
 {
 	CCAtlasNode * pAtlasNode = new CCAtlasNode();
 	pAtlasNode->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
@@ -45,7 +45,7 @@ CCAtlasNode * CCAtlasNode::atlasWithTileFile(const std::string &tile, int tileWi
 	return pAtlasNode;
 }
 
-CCAtlasNode * CCAtlasNode::initWithTileFile(const std::string &tile, int tileWidth, int tileHeight, int itemsToRender)
+CCAtlasNode * CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
 {
 
 	m_nItemWidth = tileWidth;

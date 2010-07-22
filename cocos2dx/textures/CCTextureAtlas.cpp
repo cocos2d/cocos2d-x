@@ -88,7 +88,7 @@ void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 
 // TextureAtlas - alloc & init
 
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const std::string & file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, UINT32 capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
 	pTextureAtlas->initWithFile(file, capacity);
@@ -104,7 +104,7 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, UINT3
 	return pTextureAtlas;
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithFile(const std::string & file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::initWithFile(const char * file, UINT32 capacity)
 {
 	// retained in property
 	CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addImage(file);	
@@ -145,7 +145,7 @@ std::string CCTextureAtlas::description()
 {
 	char des[100];
 	sprintf_s(des, 100, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
-	string ret(des);
+	std::string ret(des);
 
 	return ret;
 }
