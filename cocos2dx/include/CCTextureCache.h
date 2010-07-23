@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 /// @todo #import <Foundation/Foundation.h>
 /// @todo #import <CoreGraphics/CGImage.h>
-//#include "platform/uphone/NSLock.h"
 #include "cocoa/NSMutableDictionary.h"
 
 class CCTexture2D;
