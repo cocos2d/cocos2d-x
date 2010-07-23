@@ -46,8 +46,19 @@ class CCSpirte;
 class CCSpriteFrameCache : public NSObject
 {
 public:
-	// Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
-	void addSpriteFramesWithDictionary(std::map<char*, CCSpriteFrame*> *pobDictionary, CCTexture2D *pobTexture);
+	void init(void);
+	~CCSpriteFrameCache(void);
+
+	/*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+	  the pobDictionary look like:
+	  "metadata" -> NSMutableDictionary<string, INT32>
+	  "frames"   -> NSMutableDictionary<string, string>
+	                |
+					|__"x"  -> "123"
+					   "y"  -> "12"
+					   ...
+	 */
+	void addSpriteFramesWithDictionary(NSMutableDictionary<std::string> *pobDictionary, CCTexture2D *pobTexture);
 
 	/** Adds multiple Sprite Frames from a plist file.
 	 * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -99,6 +110,9 @@ public:
 
 	// Purges the cache. It releases all the Sprite Frames and the retained instance.
 	static void purgeSharedSpriteFrameCache(void);
+
+private:
+	CCSpriteFrameCache(void) {}
 
 protected:
 	NSMutableDictionary<std::string, CCSpriteFrame*> *m_pobSpriteFrames;
