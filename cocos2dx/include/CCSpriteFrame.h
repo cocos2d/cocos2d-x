@@ -146,18 +146,18 @@ public:
 	/** Initializes a CCAnimation with a name
 	 @since v0.99.3
 	 */
-	CCAnimation* initWithName(char *pszName);
+	CCAnimation* initWithName(const char *pszName);
 
 	/** Initializes a CCAnimation with a name and frames
 	 @since v0.99.3
 	 */
-    CCAnimation* initWithName(char *pszName, NSArray<CCSpriteFrame*> *pFrames);
+    CCAnimation* initWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
 
 	// Initializes a CCAnimation with a name and delay between frames.
-    CCAnimation* initWithName(char *pszName, float fDelay);
+    CCAnimation* initWithName(const char *pszName, float fDelay);
 
 	// Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
-	CCAnimation* initWithName(char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
+	CCAnimation* initWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
 
 	// adds a frame to a CCAnimation
 	void addFrame(CCSpriteFrame *pFrame);
@@ -165,7 +165,7 @@ public:
 	/** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
 	 Added to facilitate the migration from v0.8 to v0.9.
 	 */
-	void addFrameWithFileName(char *pszFileName);
+	void addFrameWithFileName(const char *pszFileName);
 
 	/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
 	 Added to facilitate the migration from v0.8 to v0.9.
