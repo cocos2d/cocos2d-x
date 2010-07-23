@@ -48,7 +48,7 @@ CCAnimation* CCAnimation::animationWithName(const char *pszName, NSMutableArray<
 	return pAnimation;
 }
 
-CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> pFrames)
+CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
 {
     CCAnimation *pAnimation = new CCAnimation();
 	pAnimation->initWithName(pszName, fDelay, pFrames);
@@ -66,25 +66,25 @@ CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay)
 	return pAnimation;
 }
 
-CCAnimation* CCAnimation::initWithName(char *pszName)
+CCAnimation* CCAnimation::initWithName(const char *pszName)
 {
 	return initWithName(pszName, 0, NULL);
 }
 
-CCAnimation* CCAnimation::initWithName(char *pszName, float fDelay)
+CCAnimation* CCAnimation::initWithName(const char *pszName, float fDelay)
 {
 	return initWithName(pszName, fDelay, NULL);
 }
 
-CCAnimation* CCAnimation::initWithName(char *pszName, NSMutableArray<CCSpriteFrame*> *pFrames)
+CCAnimation* CCAnimation::initWithName(const char *pszName, NSMutableArray<CCSpriteFrame*> *pFrames)
 {
 	return initWithName(pszName, 0, pFrames);
 }
 
-CCAnimation* CCAnimation::initWithName(char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
+CCAnimation* CCAnimation::initWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
 {
 	m_fDelay = fDelay;
-	m_pszName = pszName;
+	m_pszName = const_cast<char*>(pszName);
 	m_pobFrames = NSMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
 
 	return this;
@@ -102,7 +102,7 @@ void CCAnimation::addFrame(CCSpriteFrame *pFrame)
 	m_pobFrames->addObject(pFrame);
 }
 
-void CCAnimation::addFrameWithFileName(char *pszFileName)
+void CCAnimation::addFrameWithFileName(const char *pszFileName)
 {
 	CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
 	CGRect rect = CGRectZero;
@@ -163,7 +163,7 @@ NSObject* CCSpriteFrame::copyWithZone(NSZone *pZone)
 {
 	CCSpriteFrame *pCopy = new CCSpriteFrame();
 	
-	pCopy->initWithTexture(m_texture, m_rect, m_offset, m_originalSize);
+	pCopy->initWithTexture(m_pobTexture, m_obRect, m_obOffset, m_obOriginalSize);
 	
 	return pCopy;
 }
