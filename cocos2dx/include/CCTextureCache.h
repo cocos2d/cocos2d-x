@@ -34,6 +34,7 @@ THE SOFTWARE.
 
 class CCTexture2D;
 class CCAsyncObject;
+class NSLock;
 typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 
 /** Singleton that handles the loading of textures
@@ -44,8 +45,8 @@ class CCTextureCache : public NSObject
 {
 protected:
 	NSMutableDictionary<std::string, CCTexture2D*> * m_pTextures;
-	//NSLock				*m_pDictLock;
-	//NSLock				*m_pContextLock;
+	NSLock				*m_pDictLock;
+	NSLock				*m_pContextLock;
 
 private:
 

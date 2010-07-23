@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
+#include "platform/uphone/NSLock.h"
 //#include "CCDirector.h"
 //#include "Support/CCFileUtils.h"
 
@@ -138,7 +139,7 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 	[autoreleasepool release];*/
 }
 
-/** @todo selector*/
+/** @todo selector, NSThread*/
 void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsyncCallback func)
 {
 	NSAssert(filename != NULL , "TextureCache: fileimage MUST not be nill");
@@ -176,7 +177,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 	// MUTEX:
 	// Needed since addImageAsync calls this method from a different thread
-	/** todo NSLock
+	/** todo NSLock, CCFileUtils, UIImage
 	[dictLock lock];
 
 	tex=[textures objectForKey: path];

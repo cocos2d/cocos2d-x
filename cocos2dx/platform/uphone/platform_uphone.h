@@ -27,12 +27,14 @@ THE SOFTWARE.
 
 #include "Cocos2dTypes.h"
 
-struct timeval
-{
-	long	tv_sec;		// seconds
-	long	tv_usec;    // microSeconds
+ namespace platform_uphone_timeval
+ {
+	 struct timeval
+	 {
+ 		long	tv_sec;		// seconds
+ 		long	tv_usec;    // microSeconds
+	 };
 };
-
 extern int gettimeofday(struct timeval *tp, void *tzp);
 
 #endif // __PLATFORM_PLATFORM_UPHONE_H__

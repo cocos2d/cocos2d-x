@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 // although it is not the same as gettimeofday as unix
 // but we only use the diffrences of tow values
-int gettimeofday(timeval *tp, void *tzp)
+int gettimeofday(platform_uphone_timeval::timeval *tp, void *tzp)
 {
 	UINT32 uSeconds = GetSysSecond();
 	tp->tv_sec = uSeconds;
