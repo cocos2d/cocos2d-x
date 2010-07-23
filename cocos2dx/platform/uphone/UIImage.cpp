@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "UIImage.h"
 
+#include <TG3.h>
+
 using namespace std;
 
 UIImage::UIImage(void)

@@ -25,9 +25,10 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_UIIMAGE_H__
 #define __PLATFORM_UPHONE_UIIMAGE_H__
 
-#include <TG3.h>
 #include <string>
 #include "Cocos2dTypes.h"
+
+class TBitmap;
 
 class UIImage
 {
