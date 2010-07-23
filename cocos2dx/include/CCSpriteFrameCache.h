@@ -37,7 +37,7 @@ THE SOFTWARE.
 
 #include <string>
 
-class CCSpirte;
+class CCSprite;
 
 /** Singleton that handles the loading of the sprite frames.
  It saves in a cache the sprite frames.

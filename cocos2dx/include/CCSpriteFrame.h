@@ -187,7 +187,7 @@ public:
 	static CCAnimation* animationWithName(const char *pszName, float fDelay);
 
 	// Creates a CCAnimation with a name, delay and an array of CCSpriteFrames.
-	static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> pFrames);
+	static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
 };
 
 #endif //__SPRITE_CCSPRITE_FRAME_H__

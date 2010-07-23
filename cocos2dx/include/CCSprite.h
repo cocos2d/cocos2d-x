@@ -178,7 +178,7 @@ public:
 	/** Creates an sprite with a CGImageRef.
 	 @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
 	 */
-	static CCSprite* spriteWithCGImage(CGImageRef pImage);
+//	static CCSprite* spriteWithCGImage(CGImageRef pImage);
 
 	/** Creates an sprite with a CGImageRef and a key.
 	 The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
@@ -186,7 +186,7 @@ public:
 	 If key is nil, then a new texture will be created each time by the CCTextureCache. 
 	 @since v0.99.0
 	 */
-    static CCSprite* spriteWithCGImage(CGImageRef pImage, const char *pszKey);
+//    static CCSprite* spriteWithCGImage(CGImageRef pImage, const char *pszKey);
 
 	// Creates an sprite with an CCSpriteSheet and a rect
     static CCSprite* spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
@@ -269,7 +269,7 @@ public:
 	/** Initializes an sprite with a CGImageRef
 	 @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
 	 */
-	CCSprite* initWithCGImage(CGImageRef pImage);
+//	CCSprite* initWithCGImage(CGImageRef pImage);
 
 	/** Initializes an sprite with a CGImageRef and a key
 	 The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
@@ -277,7 +277,7 @@ public:
 	 If key is nil, then a new texture will be created each time by the CCTextureCache. 
 	 @since v0.99.0
 	 */
-    CCSprite* initWithCGImage(CGImageRef pImage, const char *pszKey);
+//    CCSprite* initWithCGImage(CGImageRef pImage, const char *pszKey);
 
 	// Initializes an sprite with an CCSpriteSheet and a rect
     CCSprite* initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
