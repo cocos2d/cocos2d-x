@@ -26,7 +26,7 @@ THE SOFTWARE.
 //#include "CCDirector.h"
 #include "ccMacros.h"
 
-#include "glu.h"
+#include "support/opengl_support/glu.h"
 
 #include "CCDrawingPrimitives.h"
 
