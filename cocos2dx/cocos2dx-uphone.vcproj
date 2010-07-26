@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\POWERVR-OGLES1.1\Builds\OGLES\Include&quot;;.\include;.\Res;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\POWERVR-OGLES1.1\Builds\OGLES\Include&quot;;.\include;.\Res;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;_UPHONE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -204,6 +204,10 @@
 			Name="include"
 			>
 			<File
+				RelativePath=".\include\CCAction.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCAtlasNode.h"
 				>
 			</File>
@@ -216,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCLayer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\ccMacros.h"
 				>
 			</File>
@@ -224,7 +232,55 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCPageTurnTransition.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCProtocols.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCPVRTexture.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCRadialTransition.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCScene.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCSprite.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCSpriteFrame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCSpriteFrameCache.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCSpriteSheet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTexture2D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTextureAtlas.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTextureCache.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTransition.h"
 				>
 			</File>
 			<File
@@ -237,10 +293,6 @@
 			</File>
 			<File
 				RelativePath=".\include\Cocos2dDefine.h"
-				>
-			</File>
-			<File
-				RelativePath=".\glu.h"
 				>
 			</File>
 		</Filter>
@@ -264,6 +316,26 @@
 		<Filter
 			Name="layers_scenes_transition_nodes"
 			>
+			<File
+				RelativePath=".\layers_scenes_transitions_nodes\CCLayer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\layers_scenes_transitions_nodes\CCPageTurnTransition.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\layers_scenes_transitions_nodes\CCRadialTransition.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\layers_scenes_transitions_nodes\CCScene.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\layers_scenes_transitions_nodes\CCTransition.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="menu_nodes"
@@ -280,26 +352,102 @@
 		<Filter
 			Name="sprite_nodes"
 			>
+			<File
+				RelativePath=".\sprite_nodes\CCSprite.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\sprite_nodes\CCSpriteFrame.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="support"
 			>
+			<File
+				RelativePath=".\support\base64.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\support\base64.h"
+				>
+			</File>
+			<File
+				RelativePath=".\support\CGPointExtension.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\support\CGPointExtension.h"
+				>
+			</File>
+			<File
+				RelativePath=".\support\TransformUtils.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\support\TransformUtils.h"
+				>
+			</File>
 			<Filter
 				Name="data_support"
 				>
+				<File
+					RelativePath=".\support\data_support\uthash.h"
+					>
+				</File>
+				<File
+					RelativePath=".\support\data_support\utlist.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="image_support"
 				>
+				<File
+					RelativePath=".\support\image_support\TGAlib.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\support\image_support\TGAlib.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="opengl_support"
 				>
+				<File
+					RelativePath=".\support\opengl_support\glu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\support\opengl_support\glu.h"
+					>
+				</File>
+				<File
+					RelativePath=".\support\opengl_support\OpenGL_Internal.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
 			Name="textures"
 			>
+			<File
+				RelativePath=".\textures\CCPVRTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\textures\CCTexture2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\textures\CCTextureAtlas.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\textures\CCTextureCache.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="tileMap_parallax_nodes"
@@ -308,20 +456,44 @@
 		<Filter
 			Name="touch_dispatcher"
 			>
+			<File
+				RelativePath=".\touch_dispatcher\CCTouchDelegateProtocol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\touch_dispatcher\CCTouchDispacher.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\touch_dispatcher\CCTouchDispatcher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\touch_dispatcher\CCTouchHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\touch_dispatcher\CCTouchHandler.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="cocoa"
 			>
 			<File
+				RelativePath=".\cocoa\CGAffineTransform.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\CGAffineTransform.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\CGGeometry.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cocoa\CGGeometry.h"
-				>
-			</File>
-			<File
-				RelativePath=".\cocoa\NSArray.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cocoa\NSArray.h"
 				>
 			</File>
 			<File
@@ -341,19 +513,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cocoa\NSLock.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cocoa\NSLock.h"
-				>
-			</File>
-			<File
 				RelativePath=".\cocoa\NSMutableArray.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\cocoa\NSMutableArray.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cocoa\NSMutableDictionary.h"
 				>
 			</File>
 			<File
@@ -373,14 +541,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cocoa\NSString.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cocoa\NSString.h"
-				>
-			</File>
-			<File
 				RelativePath=".\cocoa\NSZone.cpp"
 				>
 			</File>
@@ -388,23 +548,71 @@
 				RelativePath=".\cocoa\NSZone.h"
 				>
 			</File>
+			<File
+				RelativePath=".\cocoa\selector_protocol.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="platform"
 			>
 			<File
-				RelativePath=".\platform\platform.h"
+				RelativePath=".\platform\CCFileUtils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\platform\CCTime.h"
+				>
+			</File>
+			<File
+				RelativePath=".\platform\CCTouch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\platform\Cocos2dTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\platform\NSLock.h"
 				>
 			</File>
 			<Filter
 				Name="uphone"
 				>
 				<File
+					RelativePath=".\platform\uphone\CCFileUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCFileUtils.h"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCTime.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCTime.h"
+					>
+				</File>
+				<File
 					RelativePath=".\platform\uphone\Cocos2dTypes.h"
 					>
 				</File>
 				<File
-					RelativePath=".\platform\uphone\platform_uphone.h"
+					RelativePath=".\platform\uphone\NSLock.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\NSLock.h"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\UIImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\UIImage.h"
 					>
 				</File>
 			</Filter>
@@ -422,6 +630,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\CCDirector.cpp"
+			>
+		</File>
+		<File
 			RelativePath=".\CCDirector.h"
 			>
 		</File>
@@ -435,6 +647,14 @@
 		</File>
 		<File
 			RelativePath=".\effects\CCGrid.h"
+			>
+		</File>
+		<File
+			RelativePath=".\CCScheduler.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\CCScheduler.h"
 			>
 		</File>
 		<File
