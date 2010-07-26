@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "support/opengl_support/glu.h"
 #include "support/CGPointExtension.h"
 #include "CCTransition.h"
+#include "CCTextureCache.h"
 
 #include <string>
 
@@ -208,7 +209,7 @@ void CCDirector::mainLoop(void)
 
 void CCDirector::calculateDeltaTime(void)
 {
-    struct timeval now;
+    struct cc_timeval now;
 
 	if (gettimeofday(&now, NULL) != 0)
 	{
@@ -729,12 +730,14 @@ void CCDirector::end(void)
 #endif
 
 	// purge bitmap cache
-	CCBitmapFontAtlas::purgeCachedData();
+// todo: implement CCBitmapFontAtlas
+//	CCBitmapFontAtlas::purgeCachedData();
 
 	// purge all managers
 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCScheduler::purgeSharedScheduler();
-	CCActionManager::purgeSharedManager();
+// todo: implement CCActionManager
+//	CCActionManager::purgeSharedManager();
 	CCTextureCache::purgeSharedTextureCache();
 
 	// OpenGL view
@@ -795,7 +798,7 @@ void CCDirector::resume(void)
 
 	setAnimationInterval(m_dOldAnimationInterval);
 
-	if (gettimeofday(&m_sLastUpdate, NULL) != 0)
+	if (CCTime::gettimeofday(&m_sLastUpdate, NULL) != 0)
 	{
 		CCLOG("cocos2d: Director: Error in gettimeofday");
 	}
@@ -857,7 +860,7 @@ void CCDirector::showFPS(void)
 // implementation of DisplayLinkDirector
 void CCDisplayLinkDirector::startAnimation(void)
 {
-	if (gettimeofday(&m_sLastUpdate, NULL) != 0)
+	if (CCTime::gettimeofday(&m_sLastUpdate, NULL) != 0)
 	{
 		CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}

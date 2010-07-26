@@ -37,6 +37,7 @@ THE SOFTWARE.
 // #include "support/EAGLView.h"
 
 #include "platform/platform.h"
+#include "platform/CCTime.h"
 
 /** @typedef tPixelFormat
  Possible Pixel Formats for the EAGLView
@@ -478,7 +479,7 @@ protected:
 	NSMutableArray<CCScene*> *m_pobScenesStack;
 	
 	/* last time the main loop was updated */
-	struct timeval m_sLastUpdate;
+	struct cc_timeval m_sLastUpdate;
 
 	/* delta time since last tick to main loop */
 	ccTime m_fDeltaTime;
