@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocos2dx-uphone", "cocos2dx\cocos2dx-uphone.vcproj", "{6AC43F51-A036-4653-B910-BDDC346D15E7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_uphone", "test_uphone\test_uphone.vcproj", "{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{6AC43F51-A036-4653-B910-BDDC346D15E7}.Debug|Win32.Build.0 = Debug|Win32
 		{6AC43F51-A036-4653-B910-BDDC346D15E7}.Release|Win32.ActiveCfg = Release|Win32
 		{6AC43F51-A036-4653-B910-BDDC346D15E7}.Release|Win32.Build.0 = Release|Win32
+		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Debug|Win32.Build.0 = Debug|Win32
+		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Release|Win32.ActiveCfg = Release|Win32
+		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
