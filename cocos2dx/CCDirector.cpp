@@ -27,13 +27,14 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "platform/platform.h"
+#include "platform/Cocos2dTypes.h"
 #include "Cocos2dDefine.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "support/opengl_support/glu.h"
 #include "support/CGPointExtension.h"
 #include "CCTransition.h"
 #include "CCTextureCache.h"
+#include "CCTransition.h"
 
 #include <string>
 
@@ -211,7 +212,7 @@ void CCDirector::calculateDeltaTime(void)
 {
     struct cc_timeval now;
 
-	if (gettimeofday(&now, NULL) != 0)
+	if (CCTime::gettimeofday(&now, NULL) != 0)
 	{
 		CCLOG("error in gettimeofday");
         m_fDeltaTime = 0;
@@ -425,8 +426,9 @@ void CCDirector::setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat)
 
 void CCDirector::purgeCachedData(void)
 {
-	CCBitmapFontAtlas::purgeCacheData();
-	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+	///@todo add needed source
+//	CCBitmapFontAtlas::purgeCacheData();
+//	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCTextureCache::purgeSharedTextureCache();
 }
 

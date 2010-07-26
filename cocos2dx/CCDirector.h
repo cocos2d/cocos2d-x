@@ -36,7 +36,7 @@ THE SOFTWARE.
 // OpenGL related
 // #include "support/EAGLView.h"
 
-#include "platform/platform.h"
+#include "platform/Cocos2dTypes.h"
 #include "platform/CCTime.h"
 
 /** @typedef tPixelFormat
