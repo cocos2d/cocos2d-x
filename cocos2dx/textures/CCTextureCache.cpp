@@ -22,12 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include <cctype>
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
+#include "cocoa/NSData.h"
 #include "platform/NSLock.h"
+#include "platform/CCFileUtils.h"
+#include "platform/UIImage.h"
 //#include "CCDirector.h"
-//#include "Support/CCFileUtils.h"
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
 
@@ -66,12 +69,10 @@ CCTextureCache::CCTextureCache()
 {
 	NSAssert(sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
 	
-	//textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
 	m_pTextures = new NSMutableDictionary<std::string, CCTexture2D*>();
 	m_pTextures->retain();
-	/** @todo	NSLock	
-	dictLock = [[NSLock alloc] init];
-	contextLock = [[NSLock alloc] init];*/
+	m_pDictLock = new NSLock();
+	m_pContextLock = new NSLock();
 }
 
 CCTextureCache::~CCTextureCache()
@@ -171,45 +172,51 @@ void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsy
 
 CCTexture2D * CCTextureCache::addImage(const char * path)
 {
-	NSAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+	NSAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
 	CCTexture2D * tex = NULL;
+	std::string temp(path);
 
 	// MUTEX:
 	// Needed since addImageAsync calls this method from a different thread
-	/** todo NSLock, CCFileUtils, UIImage
-	[dictLock lock];
+	
+	m_pDictLock->lock();
 
-	tex=[textures objectForKey: path];
+	tex = m_pTextures->objectForKey(temp);
 
 	if( ! tex ) {
 
 		// Split up directory and filename
-		string & fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+		std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
 
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
-		if ( [[path lowercaseString] hasSuffix:@".pvr"] )
-			tex = [self addPVRTCImage:fullpath];
-		else {
-
+		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
+		for (UINT32 i = 0; i < temp.length(); ++i)
+			temp[i] = tolower(temp[i]);
+		if (temp.find(".pvr"))
+		{
+			tex = this->addPVRTCImage(fullpath.c_str());
+		}
+		else
+		{
 			// prevents overloading the autorelease pool
-			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
-			[image release];
-
+			UIImage * image = new UIImage();
+			image->initWithContentsOfFile(fullpath);
+			tex = new CCTexture2D();
+			tex->initWithImage(image);
+			CCX_SAFE_DELETE(image);// image->release();
 
 			if( tex )
-				[textures setObject: tex forKey:path];
+				m_pTextures->setObject(tex, path);
 			else
-				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
 
-
-			[tex release];
+			tex->release();
 		}
 	}
 
-	[dictLock unlock];
-*/
+	m_pDictLock->uplock();
+
 	return tex;
 }
 
@@ -220,23 +227,26 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	NSAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
 	CCTexture2D * tex;
-/** @todo NSData
-	if( (tex=[textures objectForKey: path] ) ) {
+	std::string temp(path);
+	if ( (tex = m_pTextures->objectForKey(temp)) )
+	{
 		return tex;
 	}
-
+	
 	// Split up directory and filename
-	string & fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	std::string fullpath( CCFileUtils::fullPathFromRelativePath(path) );
 
-	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
-	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
+	NSData * data = new NSData();
+	data->initWithContentsOfFile(fullpath);
+	tex = new CCTexture2D();
+	tex->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width);
 	if( tex )
-		[textures setObject: tex forKey:path];
+		m_pTextures->setObject(tex, temp);
 	else
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
+		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
 
-	[nsdata release];
-*/
+	CCX_SAFE_DELETE(data);
+
 	tex->autorelease();
 	return tex;
 }

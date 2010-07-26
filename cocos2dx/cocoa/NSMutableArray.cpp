@@ -70,7 +70,7 @@ void NSMutableArray<T>::addObject(T pObject)
 }
 
 template<class T>
-void NSMutableArray<T>::insertObjectAtIndex(T pObject, UInt32 uIndex)
+void NSMutableArray<T>::insertObjectAtIndex(T pObject, UINT32 uIndex)
 {
 	// make sure the object is not null
 	if (pObject == NULL)

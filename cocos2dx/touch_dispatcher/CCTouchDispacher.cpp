@@ -229,7 +229,7 @@ void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 //
 // dispatch events
 //
-void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, UInt32 uIndex)
+void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, UINT32 uIndex)
 {
 	assert(uIndex > 0 && uIndex < 4);
 

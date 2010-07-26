@@ -32,6 +32,8 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "cocoa/CGGeometry.h"
 
+class UIImage;
+
 //CONSTANTS:
 
 /** @typedef CCTexture2DPixelFormat
@@ -126,7 +128,7 @@ public:
 	Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a UIImage object */
-	/// @todo CCTexture2D * initWithImage(UIImage * uiImage);
+	CCTexture2D * initWithImage(UIImage * uiImage);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a string of text.
@@ -198,7 +200,7 @@ public:
 	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
 
 private:
-/// @todo	CCTexture2D * initPremultipliedATextureWithImage(CGImageRef image, UINT32 pixelsWide, UINT32 pixelsHigh);
+	CCTexture2D * initPremultipliedATextureWithImage(UIImage * image, UINT32 pixelsWide, UINT32 pixelsHigh);
 
 };
 

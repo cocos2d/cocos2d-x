@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "CCPVRTexture.h"
 #include "CCConfiguration.h"
+#include "platform/UIImage.h"
 
 
 #if CC_FONT_LABEL_SUPPORT
@@ -126,7 +127,7 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 	return m_bHasPremultipliedAlpha;
 }
 
-CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, UInt32 pixelsWide, UInt32 pixelsHigh, CGSize contentSize)
+CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, UINT32 pixelsWide, UINT32 pixelsHigh, CGSize contentSize)
 {
 	glGenTextures(1, &m_uName);
 	glBindTexture(GL_TEXTURE_2D, m_uName);
@@ -181,50 +182,49 @@ std::string CCTexture2D::description(void)
 
 // implementation CCTexture2D (Image)
 
-/** @todo
-- (id) initWithImage:(UIImage *)uiImage
+CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 {
-NSUInteger				POTWide, POTHigh;
-CGImageRef				CGImage;	
+	UINT32 POTWide, POTHigh;
 
-CGImage = uiImage.CGImage;
+	if(uiImage == NULL)
+	{
+		CCLOG("cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
+		this->release();
+		return NULL;
+	}
 
-if(CGImage == NULL) {
-CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
-[self release];
-return nil;
-}
+	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
 
-CCConfiguration *conf = [CCConfiguration sharedConfiguration];
-
-#if CC_TEXTURE_NPOT_SUPPORT
-if( [conf supportsNPOT] ) {
-POTWide = CGImageGetWidth(CGImage);
-POTHigh = CGImageGetHeight(CGImage);
-
-} else 
+#if 1//CC_TEXTURE_NPOT_SUPPORT
+	if( conf->isSupportsNPOT() ) 
+	{
+		POTWide = uiImage->width();
+		POTHigh = uiImage->height();
+	}
+	else 
 #endif
+	{
+		POTWide = nextPOT(uiImage->width());
+		POTHigh = nextPOT(uiImage->height());
+	}
+
+	unsigned maxTextureSize = conf->getMaxTextureSize();
+	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) 
+	{
+		CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", POTWide, POTHigh, maxTextureSize, maxTextureSize);
+		this->release();
+		return NULL;
+	}
+
+	// always load premultiplied images
+	this->initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
+	return this;
+}
+
+CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UINT32 pixelsWide, UINT32 pixelsHigh)
 {
-POTWide = nextPOT(CGImageGetWidth(CGImage));
-POTHigh = nextPOT(CGImageGetHeight(CGImage));
-}
-
-unsigned maxTextureSize = [conf maxTextureSize];
-if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-CCLOG(@"cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", POTWide, POTHigh, maxTextureSize, maxTextureSize);
-[self release];
-return nil;
-}
-
-// always load premultiplied images
-self = [self initPremultipliedATextureWithImage:CGImage pixelsWide:POTWide pixelsHigh:POTHigh];
-
-return self;
-}
-
--(id) initPremultipliedATextureWithImage:(CGImageRef)image pixelsWide:(NSUInteger)POTWide pixelsHigh:(NSUInteger)POTHigh
-{
-NSUInteger				i;
+/** @todoN
+SUInteger				i;
 CGContextRef			context = nil;
 void*					data = nil;;
 CGColorSpaceRef			colorSpace;
@@ -344,8 +344,9 @@ _hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGI
 CGContextRelease(context);
 free(data);
 
-return self;
-}*/
+return self;*/
+return this;
+}
 
 // implementation CCTexture2D (Text)
 CCTexture2D * CCTexture2D::initWithString(const std::string & str, const std::string & fontName, GLfloat fontSize)
@@ -361,10 +362,11 @@ CCTexture2D * CCTexture2D::initWithString(const std::string & str, const std::st
 	#endif
 	dim = [string sizeWithFont:[UIFont fontWithName:name size:size]];
 
-	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];
-	}
-
-	- (id) initWithString:(string & )string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(string & )name fontSize:(CGFloat)size
+	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];*/
+	return NULL;// tobe deleted
+}
+/** @todo UITextAlignment
+- (id) initWithString:(string & )string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(string & )name fontSize:(CGFloat)size
 	{
 	NSUInteger				width,
 	height,
@@ -419,9 +421,9 @@ CCTexture2D * CCTexture2D::initWithString(const std::string & str, const std::st
 
 	CGContextRelease(context);
 	free(data);
-	*/
-	return this;
-}
+	
+	return self;
+}*/
 
 
 // implementation CCTexture2D (Drawing)

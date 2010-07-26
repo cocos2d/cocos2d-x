@@ -26,7 +26,8 @@ THE SOFTWARE.
 #define __PLATFORM_NSLOCK_H__
 
 #ifdef _UPHONE
-	#include "uphone/NSLock.h"
+#include "uphone/NSLock.h"
 #endif //_UPHONE
 
 #endif //__PLATFORM_NSLOCK_H__
+
