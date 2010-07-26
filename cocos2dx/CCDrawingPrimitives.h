@@ -45,7 +45,7 @@ extern "C" {
  */
 
 #include "Cocoa/CGGeometry.h"	// for CGPoint
-#include "platform/platform.h"
+#include "platform/Cocos2dTypes.h"
 
 /** draws a point given x and y coordinate */
 void ccDrawPoint( CGPoint point );

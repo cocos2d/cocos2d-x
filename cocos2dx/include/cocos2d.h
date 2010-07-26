@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __COCOS2D_H__
 #define __COCOS2D_H__
 
-#include "platform/platform.h"
+#include "platform/Cocos2dTypes.h"
 
 /*
 //
