@@ -34,22 +34,25 @@ class UIImage
 {
 public:
 	UIImage(void);
-	UIImage(INT32 nX, INT32 nY, void *buffer);
+	UIImage(int nX, int nY, void *buffer);
 	~UIImage(void);
 
 	bool initWithContentsOfFile(const std::string &strPath);
-	bool initWithBuffer(INT32 nX, INT32 nY, unsigned char *pBuffer);
+	bool initWithBuffer(int nX, int nY, unsigned char *pBuffer);
 //	bool initWithCGImage(CGImageRef pCGImage);
 
-	bool save(const std::string &strFileName, INT32 nFormat);
+	bool save(const std::string &strFileName, int nFormat);
 
 	UINT32 width(void);
 	UINT32 height(void);
 
 	bool isAlphaPixelFormat(void);
 
-	INT32 CGImageGetBitsPerComponent(void);
-	INT32 CGImageGetColorSpace(void);
+	int CGImageGetBitsPerComponent(void);
+	int CGImageGetColorSpace(void);
+
+	// convert the bitmap to 256 pixel format, and every component is 8 bits
+	UINT8* getRGBA8888Data(void);
 private:
 	TBitmap *m_pBitmap;
 };
