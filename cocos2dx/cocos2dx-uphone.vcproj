@@ -558,23 +558,7 @@
 			Name="platform"
 			>
 			<File
-				RelativePath=".\platform\CCFileUtils.h"
-				>
-			</File>
-			<File
-				RelativePath=".\platform\CCTime.h"
-				>
-			</File>
-			<File
-				RelativePath=".\platform\CCTouch.h"
-				>
-			</File>
-			<File
-				RelativePath=".\platform\Cocos2dTypes.h"
-				>
-			</File>
-			<File
-				RelativePath=".\platform\NSLock.h"
+				RelativePath=".\platform\platform.h"
 				>
 			</File>
 			<Filter

@@ -22,11 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_CCTIME_H__
-#define __PLATFORM_CCTIME_H__
+#ifndef __PLATFORM_H__
+#define __PLATFORM_H__
 
 #ifdef _UPHONE
-#include "uphone/CCTime.h"
-#endif // _UPHONE
+    #include "uphone/CCFileUtils.h"
+    #include "uphone/CCTime.h"
+    #include "uphone/NSLock.h"
+#else 
+    #error "no platform flag defined!!"
+#endif
 
-#endif // __PLATFORM_NSTIME_H__
+#endif // __PLATFORM_H__
