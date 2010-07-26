@@ -29,6 +29,7 @@ THE SOFTWARE.
     #include "uphone/CCFileUtils.h"
     #include "uphone/CCTime.h"
     #include "uphone/NSLock.h"
+	#include "uphone/UIImage.h"
 #else 
     #error "no platform flag defined!!"
 #endif
