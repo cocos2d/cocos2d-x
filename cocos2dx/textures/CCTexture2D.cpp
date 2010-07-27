@@ -220,7 +220,7 @@ CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 	this->initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
 	return this;
 }
-
+/// @todo to be checked
 CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UINT32 POTWide, UINT32 POTHigh)
 {
 	UINT32					i;
@@ -254,7 +254,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 
-	imageSize = CGSizeMake(image->width(), image->height());
+	imageSize = CGSizeMake(static_cast<float>(POTWide), static_cast<float>(POTHigh));
 
 	// Create the bitmap graphics context
 
@@ -263,22 +263,42 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 		case kCCTexture2DPixelFormat_RGBA4444:
 		case kCCTexture2DPixelFormat_RGB5A1:
 //			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(POTHigh * POTWide * 4);
+//			data = malloc(POTHigh * POTWide * 4);
 // 			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);				
 // 			CGColorSpaceRelease(colorSpace);
-			break;
+//			break;
 		case kCCTexture2DPixelFormat_RGB565:
 //			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(POTHigh * POTWide * 4);
+//			data = malloc(POTHigh * POTWide * 4);
 // 			info = kCGImageAlphaNoneSkipLast;
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
 // 			CGColorSpaceRelease(colorSpace);
-			break;
+//			break;
 		case kCCTexture2DPixelFormat_A8:
-			data = malloc(POTHigh * POTWide);
+//			data = malloc(POTHigh * POTWide);
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
+/// @todo get data and convert to POT mode
+			tempData = image->getRGBA8888Data();
+			if(image->width() == POTWide  && image->height() == POTHigh)
+			{
+				data = tempData;
+			}
+			else
+			{
+				data = malloc(POTHigh * POTWide * 4);
+				memset(data, 0, POTHigh * POTWide * 4);
+
+				UINT8* pPixelData = (UINT8*) tempData;
+				UINT8* pTargetData = (UINT8*) data;
+
+				for(UINT32 y=0; y<image->height(); y++)
+				{
+					memcpy(pTargetData+POTWide*4*y, pPixelData+image->width()*4*y, image->width()*4);
+				}
+				CCX_SAFE_DELETE(tempData);
+			}
 			break;                    
 		default:
 			NSAssert(0, "Invalid pixel format");
