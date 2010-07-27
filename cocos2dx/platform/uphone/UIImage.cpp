@@ -33,7 +33,7 @@ UIImage::UIImage(void)
 	m_pBitmap = NULL;
 }
 
-UIImage::UIImage(Int32 nX, Int32 nY, void *buffer)
+UIImage::UIImage(int nX, int nY, void *buffer)
 {
 
 }
@@ -68,7 +68,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath)
 	}
 }
 
-UINT32 UIImage::width(void)
+unsigned int UIImage::width(void)
 {
 	if (! m_pBitmap)
 	{
@@ -78,7 +78,7 @@ UINT32 UIImage::width(void)
 	return m_pBitmap->GetWidth();
 }
 
-UINT32 UIImage::height(void)
+unsigned int UIImage::height(void)
 {
 	if (! m_pBitmap)
 	{
@@ -108,15 +108,16 @@ bool UIImage::isAlphaPixelFormat(void)
 	return bRet;
 }
 
-INT32 UIImage::CGImageGetBitsPerComponent(void)
+// compute how many bits every color component 
+int UIImage::CGImageGetBitsPerComponent(void)
 {
 	if (! m_pBitmap)
 	{
 		return 0;
 	}
 
-	INT32 nRet = 0;
-	INT32 nRowBytes = m_pBitmap->GetRowBytes();
+	int nRet = 0;
+	int nRowBytes = m_pBitmap->GetRowBytes();
 	if (m_pBitmap->HasAlphaData())
 	{
 		// it has alpha data, so
@@ -133,15 +134,18 @@ INT32 UIImage::CGImageGetBitsPerComponent(void)
 	return nRet;
 }
 
-INT32 UIImage::CGImageGetColorSpace(void)
+// 0 -> the bits of every color component is 8
+// 1 -> other
+int UIImage::CGImageGetColorSpace(void)
 {
-	INT32 nBitsPerComponent = CGImageGetBitsPerComponent();
-	if (nBitsPerComponent == 8 || nBitsPerComponent == 0)
+	int nRet = 1;
+
+	if (CGImageGetBitsPerComponent() == 8)
 	{
-		return 0;
+		nRet = 0;
 	}
 
-	return 1;
+	return nRet;
 }
 
 UINT8* UIImage::getRGBA8888Data(void)
