@@ -25,10 +25,6 @@ THE SOFTWARE.
 
 #ifndef __CCDRAWING_PRIMITIVES__
 #define __CCDRAWING_PRIMITIVES__
-
-#ifdef __cplusplus
-extern "C" {
-#endif	
 	
 /**
  @file
@@ -74,9 +70,5 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int 
  @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // __CCDRAWING_PRIMITIVES__

@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <stdlib.h>
 #include <string.h>
 #include <GLES/gl.h>
 
@@ -125,8 +124,8 @@ void ccDrawCircle(CGPoint center, float r, float a, int segs, bool drawLineToCen
 	}
 
 	const float coef = 2.0f * (float)M_PI/segs;
-	
-	float *vertices = (float *)malloc( sizeof(float)*2*(segs+2));
+
+	float *vertices = new float[2*(segs+2)]; //	float *vertices = (float *)malloc( sizeof(float)*2*(segs+2));
 	if( ! vertices )
 	{
 		return;
@@ -160,8 +159,8 @@ void ccDrawCircle(CGPoint center, float r, float a, int segs, bool drawLineToCen
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);	
-	
-	free(vertices);
+
+	delete[] vertices; //	free(vertices);
 }
 
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments)

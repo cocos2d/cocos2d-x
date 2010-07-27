@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "platform/Cocos2dTypes.h"
 #include "Cocos2dDefine.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "support/opengl_support/glu.h"
