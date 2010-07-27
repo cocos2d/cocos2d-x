@@ -558,6 +558,10 @@
 			Name="platform"
 			>
 			<File
+				RelativePath=".\platform\CCTouchPlatform.h"
+				>
+			</File>
+			<File
 				RelativePath=".\platform\platform.h"
 				>
 			</File>
