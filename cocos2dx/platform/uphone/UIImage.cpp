@@ -152,17 +152,21 @@ UINT8* UIImage::getRGBA8888Data(void)
 		const TBitmap *pBitmap;
 		int nW;
 		int nH;
-		int nD;
-		UINT8 *pDataPtr;
 		
-
+        // convert to RGBA8888 format
 		pBitmap = m_pBitmap->DupBitmapTo32();
-		if (pBitmp == NULL)
+		if (pBitmap == NULL)
 		{
 			break;
 		}
 
-		pBufferRet
+		// compute width and height
+		nW = pBitmap->GetWidth();
+		nH = pBitmap->GetHeight();
+
+		// alloc memory and store the bitmap data
+		pBufferRet = new UINT8(nW * nH * 4);
+		memcpy(pBufferRet, pBitmap->GetDataPtr(), nW * nH * 4);
 	} while(0);
 
 	return pBufferRet;

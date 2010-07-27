@@ -25,8 +25,6 @@ THE SOFTWARE.
 #ifndef __SUPPORT_BASE64_H__
 #define __SUPPORT_BASE64_H__
 
-#include "platform/Cocos2dTypes.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif	
@@ -44,7 +42,7 @@ extern "C" {
  *
  @since v0.8.1
  */
-INT32 base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out);
+int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out);
 
 #ifdef __cplusplus
 }

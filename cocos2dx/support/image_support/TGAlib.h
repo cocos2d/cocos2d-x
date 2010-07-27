@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __SUPPORT_DATA_SUPPORT_TGALIB_H__
 #define __SUPPORT_DATA_SUPPORT_TGALIB_H__
 
-#include "platform/Cocos2dTypes.h"
+#include "platform/platform.h"
 
 enum {
 	TGA_OK,

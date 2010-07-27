@@ -25,8 +25,6 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_CCTIME_H__
 #define __PLATFORM_UPHONE_CCTIME_H__
 
-#include "Cocos2dTypes.h"
-
 struct cc_timeval
 {
  	long	tv_sec;		// seconds
@@ -36,7 +34,7 @@ struct cc_timeval
 class CCTime 
 {
 public:
-	static INT32 gettimeofday(struct cc_timeval *tp, void *tzp);
+	static int gettimeofday(struct cc_timeval *tp, void *tzp);
 };
 
 #endif // __PLATFORM_UPHONE_NSTIME_H__

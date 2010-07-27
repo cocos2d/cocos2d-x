@@ -24,14 +24,15 @@ THE SOFTWARE.
 
 #ifndef __SUPPORT_OPGL_SUPPORT_OPGL_INTERNAL_H__
 #define __SUPPORT_OPGL_SUPPORT_OPGL_INTERNAL_H__
+#include <cstdio>
 
 /* Generic error reporting */
-#define REPORT_ERROR(__FORMAT__, ...) printf("%s: %s\n", __FUNCTION__, __VA_ARGS__)
+#define REPORT_ERROR(__FORMAT__, ...) std::printf("%s: %s\n", __FUNCTION__, __VA_ARGS__)
 
 /* EAGL and GL functions calling wrappers that log on error */
-#define CALL_EAGL_FUNCTION(__FUNC__, ...) ({ EAGLError __error = __FUNC__( __VA_ARGS__ ); if(__error != kEAGLErrorSuccess) printf("%s() called from %s returned error %i\n", #__FUNC__, __FUNCTION__, __error); (__error ? false : true); })
+#define CALL_EAGL_FUNCTION(__FUNC__, ...) ({ EAGLError __error = __FUNC__( __VA_ARGS__ ); if(__error != kEAGLErrorSuccess) std::printf("%s() called from %s returned error %i\n", #__FUNC__, __FUNCTION__, __error); (__error ? false : true); })
 //#define CHECK_GL_ERROR() ({ GLenum __error = glGetError(); if(__error) printf("OpenGL error 0x%04X in %s\n", __error, __FUNCTION__); (__error ? NO : YES); })
-#define CHECK_GL_ERROR() ({ GLenum __error = glGetError(); if(__error) printf("OpenGL error 0x%04X in %s\n", __error, __FUNCTION__); })
+#define CHECK_GL_ERROR() ({ GLenum __error = glGetError(); if(__error) std::printf("OpenGL error 0x%04X in %s\n", __error, __FUNCTION__); })
 
 /* Optional delegate methods support */
 #ifndef __DELEGATE_IVAR__

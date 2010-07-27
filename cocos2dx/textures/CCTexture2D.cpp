@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "CCPVRTexture.h"
 #include "CCConfiguration.h"
-#include "platform/UIImage.h"
+#include "platform/platform.h"
 
 
 #if CC_FONT_LABEL_SUPPORT

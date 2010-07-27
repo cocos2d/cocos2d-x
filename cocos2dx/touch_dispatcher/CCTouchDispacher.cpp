@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCTouchHandler.h"
 #include "../cocoa/NSMutableArray.h"
 #include "../cocoa/NSSet.h"
-#include "../platform/CCTouch.h"
+#include "platform/CCTouchPlatform.h"
 #include "CCTexture2D.h"
 
 #include <assert.h>

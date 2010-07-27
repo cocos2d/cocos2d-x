@@ -25,11 +25,10 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_CCFILE_UTILS_H__
 #define __PLATFORM_UPHONE_CCFILE_UTILS_H__
 
-#include "cocoa/NSObject.h"
 #include <ssFile.h>
 
 // Helper class to handle file operations
-class CCFileUtils : public NSObject
+class CCFileUtils
 {
 public:
 	static char* fullPathFromRelativePath(const char *pszRealPath);

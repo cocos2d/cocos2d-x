@@ -27,9 +27,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "cocoa/NSData.h"
-#include "platform/NSLock.h"
-#include "platform/CCFileUtils.h"
-#include "platform/UIImage.h"
+#include "platform/platform.h"
 //#include "CCDirector.h"
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;

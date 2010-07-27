@@ -22,18 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <stdio.h>
+#include <cstdio>
 #include <stdlib.h>
 #include "base64.h"
 
 unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-INT32 _base64Decode( unsigned char *input, UINT32 input_len, unsigned char *output, UINT32 *output_len )
+int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
 {
     static char inalphabet[256], decoder[256];
-    INT32 i, bits, c, char_count, errors = 0;
-	UINT32 input_idx = 0;
-	UINT32 output_idx = 0;
+    int i, bits, c, char_count, errors = 0;
+	unsigned int input_idx = 0;
+	unsigned int output_idx = 0;
 
     for (i = (sizeof alphabet) - 1; i >= 0 ; i--) {
 		inalphabet[alphabet[i]] = 1;
@@ -64,7 +64,7 @@ INT32 _base64Decode( unsigned char *input, UINT32 input_len, unsigned char *outp
 	if( c == '=' ) {
 		switch (char_count) {
 			case 1:
-				fprintf(stderr, "base64Decode: encoding incomplete: at least 2 bits missing");
+				std::fprintf(stderr, "base64Decode: encoding incomplete: at least 2 bits missing");
 				errors++;
 				break;
 			case 2:
@@ -77,7 +77,7 @@ INT32 _base64Decode( unsigned char *input, UINT32 input_len, unsigned char *outp
 			}
 	} else if ( input_idx < input_len ) {
 		if (char_count) {
-			fprintf(stderr, "base64 encoding incomplete: at least %d bits truncated",
+			std::fprintf(stderr, "base64 encoding incomplete: at least %d bits truncated",
 					((4 - char_count) * 6));
 			errors++;
 		}
@@ -87,18 +87,18 @@ INT32 _base64Decode( unsigned char *input, UINT32 input_len, unsigned char *outp
 	return errors;
 }
 
-INT32 base64Decode(unsigned char *in, UINT32 inLength, unsigned char **out)
+int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
 {
-	UINT32 outLength = 0;
+	unsigned int outLength = 0;
 	
 	//should be enough to store 6-bit buffers in 8-bit buffers
 	*out = (unsigned char *)malloc( (size_t)(inLength * 3.0f / 4.0f + 1));
 	if( *out ) {
-		INT32 ret = _base64Decode(in, inLength, *out, &outLength);
+		int ret = _base64Decode(in, inLength, *out, &outLength);
 		
 		if (ret > 0 )
 		{
-			printf("Base64Utils: error decoding");
+			std::printf("Base64Utils: error decoding");
 			free(*out);
 			*out = NULL;			
 			outLength = 0;

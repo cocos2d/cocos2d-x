@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "cocoa/CGGeometry.h"
 #include "CCTexture2D.h"
 #include "cocoa/CGAffineTransform.h"
-
+#include "sstsd.h"
 #include <string.h>
 
 using namespace std;

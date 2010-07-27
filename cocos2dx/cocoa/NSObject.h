@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __COCOA_NSOBJECT_H__
 #define __COCOA_NSOBJECT_H__
 
-#include "platform/Cocos2dTypes.h"
+#include "platform/platform.h"
 class NSZone;
 class NSObject;
 class NSString;

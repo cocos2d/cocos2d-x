@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <cstdio>
 
 /**
  @file
@@ -53,14 +54,14 @@ THE SOFTWARE.
 #define CCLOGERROR(...) do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
-#define CCLOG(...) printf(__VA_ARGS__)
-#define CCLOGERROR(...) printf(__VA_ARGS__)
+#define CCLOG(...) std::printf(__VA_ARGS__)
+#define CCLOGERROR(...) std::printf(__VA_ARGS__)
 #define CCLOGINFO(...) do {} while (0)
 
 #elif COCOS2D_DEBUG > 1
-#define CCLOG(...) printf(__VA_ARGS__)
-#define CCLOGERROR(...) printf(__VA_ARGS__)
-#define CCLOGINFO(...) printf(__VA_ARGS__)
+#define CCLOG(...) std::printf(__VA_ARGS__)
+#define CCLOGERROR(...) std::printf(__VA_ARGS__)
+#define CCLOGINFO(...) std::printf(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
 /** @def CC_SWAP
