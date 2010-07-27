@@ -134,13 +134,13 @@ int UIImage::CGImageGetBitsPerComponent(void)
 	return nRet;
 }
 
-// 0 -> the bits of every color component is 8
+// 0 -> it is a mask
 // 1 -> other
 int UIImage::CGImageGetColorSpace(void)
 {
 	int nRet = 1;
 
-	if (CGImageGetBitsPerComponent() == 8)
+	if (m_pBitmap->GetRowBytes() == 1)
 	{
 		nRet = 0;
 	}
