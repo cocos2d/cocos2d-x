@@ -221,131 +221,134 @@ CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 	return this;
 }
 
-CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UINT32 pixelsWide, UINT32 pixelsHigh)
+CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UINT32 POTWide, UINT32 POTHigh)
 {
-/** @todoN
-SUInteger				i;
-CGContextRef			context = nil;
-void*					data = nil;;
-CGColorSpaceRef			colorSpace;
-void*					tempData;
-unsigned int*			inPixel32;
-unsigned short*			outPixel16;
-BOOL					hasAlpha;
-CGImageAlphaInfo		info;
-CGSize					imageSize;
-CCTexture2DPixelFormat	pixelFormat;
+	UINT32					i;
+	void*					data = NULL;
+	void*					tempData;
+	unsigned int*			inPixel32;
+	unsigned short*			outPixel16;
+	BOOL					hasAlpha;
+	CGSize					imageSize;
+	CCTexture2DPixelFormat	pixelFormat;
 
-info = CGImageGetAlphaInfo(image);
-hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
+	hasAlpha = image->isAlphaPixelFormat();
 
-size_t bpp = CGImageGetBitsPerComponent(image);
-colorSpace = CGImageGetColorSpace(image);
+	size_t bpp = image->CGImageGetBitsPerComponent();
+	int colorSpace = image->CGImageGetColorSpace();
 
-if(colorSpace) {
-if(hasAlpha || bpp >= 8)
-pixelFormat = defaultAlphaPixelFormat;
-else {
-CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
-pixelFormat = kCCTexture2DPixelFormat_RGB565;
-}
-} else  {
-// NOTE: No colorspace means a mask image
-CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is a mask");
-pixelFormat = kCCTexture2DPixelFormat_A8;
-}
+	if(colorSpace)
+	{
+		if(hasAlpha || bpp >= 8)
+			pixelFormat = defaultAlphaPixelFormat();
+		else
+		{
+			CCLOG("cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
+			pixelFormat = kCCTexture2DPixelFormat_RGB565;
+		}
+	}
+	else
+	{
+		// NOTE: No colorspace means a mask image
+		CCLOG("cocos2d: CCTexture2D: Using A8 texture since image is a mask");
+		pixelFormat = kCCTexture2DPixelFormat_A8;
+	}
 
-imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
+	imageSize = CGSizeMake(image->width(), image->height());
 
-// Create the bitmap graphics context
+	// Create the bitmap graphics context
 
-switch(pixelFormat) {          
-case kCCTexture2DPixelFormat_RGBA8888:
-case kCCTexture2DPixelFormat_RGBA4444:
-case kCCTexture2DPixelFormat_RGB5A1:
-colorSpace = CGColorSpaceCreateDeviceRGB();
-data = malloc(POTHigh * POTWide * 4);
-info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
-context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);				
-CGColorSpaceRelease(colorSpace);
-break;
-case kCCTexture2DPixelFormat_RGB565:
-colorSpace = CGColorSpaceCreateDeviceRGB();
-data = malloc(POTHigh * POTWide * 4);
-info = kCGImageAlphaNoneSkipLast;
-context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
-CGColorSpaceRelease(colorSpace);
-break;
-case kCCTexture2DPixelFormat_A8:
-data = malloc(POTHigh * POTWide);
-info = kCGImageAlphaOnly; 
-context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
-break;                    
-default:
-[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
-}
-
-
-CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
-CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
-CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
-
-// Repack the pixel data into the right format
-
-if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
-//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-tempData = malloc(POTHigh * POTWide * 2);
-inPixel32 = (unsigned int*)data;
-outPixel16 = (unsigned short*)tempData;
-for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
-*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
-free(data);
-data = tempData;
-
-}
-else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
-//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-tempData = malloc(POTHigh * POTWide * 2);
-inPixel32 = (unsigned int*)data;
-outPixel16 = (unsigned short*)tempData;
-for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
-*outPixel16++ = 
-((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
-((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
-((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) | // B
-((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
+	switch(pixelFormat) {          
+		case kCCTexture2DPixelFormat_RGBA8888:
+		case kCCTexture2DPixelFormat_RGBA4444:
+		case kCCTexture2DPixelFormat_RGB5A1:
+//			colorSpace = CGColorSpaceCreateDeviceRGB();
+			data = malloc(POTHigh * POTWide * 4);
+// 			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
+// 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);				
+// 			CGColorSpaceRelease(colorSpace);
+			break;
+		case kCCTexture2DPixelFormat_RGB565:
+//			colorSpace = CGColorSpaceCreateDeviceRGB();
+			data = malloc(POTHigh * POTWide * 4);
+// 			info = kCGImageAlphaNoneSkipLast;
+// 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
+// 			CGColorSpaceRelease(colorSpace);
+			break;
+		case kCCTexture2DPixelFormat_A8:
+			data = malloc(POTHigh * POTWide);
+// 			info = kCGImageAlphaOnly; 
+// 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
+			break;                    
+		default:
+			NSAssert(0, "Invalid pixel format");
+			//[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
+	}
 
 
-free(data);
-data = tempData;
+// 	CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
+// 	CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
+// 	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
 
-}
-else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
-//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-tempData = malloc(POTHigh * POTWide * 2);
-inPixel32 = (unsigned int*)data;
-outPixel16 = (unsigned short*)tempData;
-for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
-*outPixel16++ = 
-((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
-((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
-((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
-((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
+	// Repack the pixel data into the right format
+
+	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
+		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
+		tempData = malloc(POTHigh * POTWide * 2);
+		inPixel32 = (unsigned int*)data;
+		outPixel16 = (unsigned short*)tempData;
+		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
+		free(data);
+		data = tempData;
+
+	}
+	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
+		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
+		tempData = malloc(POTHigh * POTWide * 2);
+		inPixel32 = (unsigned int*)data;
+		outPixel16 = (unsigned short*)tempData;
+		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+			*outPixel16++ = 
+			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
+			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
+			((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) | // B
+			((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
 
 
-free(data);
-data = tempData;
-}
-self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh contentSize:imageSize];
+		free(data);
+		data = tempData;
 
-// should be after calling super init
-_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+	}
+	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
+		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
+		tempData = malloc(POTHigh * POTWide * 2);
+		inPixel32 = (unsigned int*)data;
+		outPixel16 = (unsigned short*)tempData;
+		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+			*outPixel16++ = 
+			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
+			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
+			((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
+			((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
 
-CGContextRelease(context);
-free(data);
 
-return self;*/
-return this;
+		free(data);
+		data = tempData;
+	}
+
+	if (data)
+	{
+		this->initWithData(data, pixelFormat, POTWide, POTHigh, imageSize);
+
+		// should be after calling super init
+/// @todo		_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+
+		//CGContextRelease(context);
+		free(data);
+	}
+
+	return this;
 }
 
 // implementation CCTexture2D (Text)
