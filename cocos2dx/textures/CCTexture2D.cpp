@@ -195,7 +195,7 @@ CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 
 	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
 
-#if 1//CC_TEXTURE_NPOT_SUPPORT
+#if CC_TEXTURE_NPOT_SUPPORT
 	if( conf->isSupportsNPOT() ) 
 	{
 		POTWide = uiImage->width();
@@ -225,10 +225,10 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 {
 	UINT32					i;
 	void*					data = NULL;
-	void*					tempData;
-	unsigned int*			inPixel32;
-	unsigned short*			outPixel16;
-	BOOL					hasAlpha;
+	void*					tempData =NULL;
+	unsigned int*			inPixel32 = NULL;
+	unsigned short*			outPixel16 = NULL;
+	bool					hasAlpha;
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
 
@@ -279,9 +279,11 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 //			data = malloc(POTHigh * POTWide);
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
-/// @todo get data and convert to POT mode
-			tempData = image->getRGBA8888Data();
-			if(image->width() == POTWide  && image->height() == POTHigh)
+
+			/// @todo Get image data and convert to POT mode
+			tempData = static_cast<void*>(image->getRGBA8888Data());
+			NSAssert(tempData != NULL, "NULL image data.");
+			if(image->width() == POTWide && image->height() == POTHigh)
 			{
 				data = tempData;
 			}
@@ -293,9 +295,9 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 				UINT8* pPixelData = (UINT8*) tempData;
 				UINT8* pTargetData = (UINT8*) data;
 
-				for(UINT32 y=0; y<image->height(); y++)
+				for(UINT32 y=0; y<image->height(); ++y)
 				{
-					memcpy(pTargetData+POTWide*4*y, pPixelData+image->width()*4*y, image->width()*4);
+					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
 				}
 				CCX_SAFE_DELETE(tempData);
 			}
@@ -319,7 +321,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 		outPixel16 = (unsigned short*)tempData;
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
-		free(data);
+		CCX_SAFE_FREE(data);
 		data = tempData;
 
 	}
@@ -336,7 +338,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 			((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
 
 
-		free(data);
+		CCX_SAFE_FREE(data);
 		data = tempData;
 
 	}
@@ -353,7 +355,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 			((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
 
 
-		free(data);
+		CCX_SAFE_FREE(data);
 		data = tempData;
 	}
 
@@ -365,7 +367,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 /// @todo		_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 
 		//CGContextRelease(context);
-		free(data);
+		CCX_SAFE_FREE(data);
 	}
 
 	return this;

@@ -55,7 +55,7 @@ public:
 	{
 		NSMutableArray<std::string> arrayRet = new NSMutableArray<std::string>;
 		NSObjectMapIter it;
-		for( it= m_Map.begin(); it != m_Map.end(); it++)
+		for( it= m_Map.begin(); it != m_Map.end(); ++it)
 		{
 			arrayRet.addObject(it->first);
 		}
@@ -67,7 +67,7 @@ public:
 	{
 		NSMutableArray<std::string> arrayRet = new NSMutableArray<std::string>;
 		NSObjectMapIter it;
-		for( it= m_Map.begin(); it != m_Map.end(); it++)
+		for( it= m_Map.begin(); it != m_Map.end(); ++it)
 		{
 			if (it->second == object)
 			{
@@ -169,21 +169,21 @@ public:
 	void removeAllObjects()
 	{
 		NSObjectMapIter it;
-		for( it= m_Map.begin(); it != m_Map.end(); it++)
+		for( it= m_Map.begin(); it != m_Map.end(); ++it)
 		{
 			it->second->release();
 		}
 
 		m_Map.clear();
 	}
-/*
-	static NSMutableDictionary<_T, _ValueT>* dictionaryWithContentsOfFile(const NSString& path)
+/** @todo from xml file*/
+	static NSMutableDictionary<_T, _ValueT>* dictionaryWithContentsOfFile(const char * path)
 	{
-		UXAssert(0, L"not implemented : Use the CCFileUtils::DictionaryWithContentsOfFile()"); 
+		NSAssert(0, "not implemented : Use the CCFileUtils::DictionaryWithContentsOfFile()"); 
 
 		return NULL;
 	}
-*/
+
 	static NSMutableDictionary<_T, _ValueT>* dictionaryWithDictionary(NSMutableDictionary<_T, _ValueT>* srcDict)
 	{
 		NSMutableDictionary<_T, _ValueT>* pNewDict = new NSMutableDictionary<_T, _ValueT>();
