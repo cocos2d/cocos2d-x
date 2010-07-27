@@ -143,3 +143,27 @@ INT32 UIImage::CGImageGetColorSpace(void)
 
 	return 1;
 }
+
+UINT8* UIImage::getRGBA8888Data(void)
+{
+	UINT8 *pBufferRet = NULL;
+
+	do {
+		const TBitmap *pBitmap;
+		int nW;
+		int nH;
+		int nD;
+		UINT8 *pDataPtr;
+		
+
+		pBitmap = m_pBitmap->DupBitmapTo32();
+		if (pBitmp == NULL)
+		{
+			break;
+		}
+
+		pBufferRet
+	} while(0);
+
+	return pBufferRet;
+}
