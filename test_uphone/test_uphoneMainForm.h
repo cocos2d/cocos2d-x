@@ -7,13 +7,13 @@
  
 #ifndef  __test_uphone_MainForm_H__
 #define  __test_uphone_MainForm_H__
-#include "TG3.h"
+#include "CCXEGLView.h"
 
-class TMainForm : public TWindow
+class TMainForm : public cocos2d::CCXEGLView
 {
 public:
 
-	TMainForm(TApplication * pApp);
+    TMainForm(TApplication * pApp);
 
 	~TMainForm(void);
 

@@ -289,6 +289,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCXEGLView.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\cocos2d.h"
 				>
 			</File>
@@ -562,6 +566,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\platform\CCXEGLView_platform.h"
+				>
+			</File>
+			<File
+				RelativePath=".\platform\config_platform.h"
+				>
+			</File>
+			<File
 				RelativePath=".\platform\platform.h"
 				>
 			</File>
@@ -582,6 +594,14 @@
 				</File>
 				<File
 					RelativePath=".\platform\uphone\CCTime.h"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXEGLView_uphone.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXEGLView_uphone.h"
 					>
 				</File>
 				<File

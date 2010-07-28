@@ -8,7 +8,10 @@
 #include  "test_uphoneMainForm.h"
 #include  "test_uphone_res_def.h"
 
-TMainForm::TMainForm(TApplication * pApp):TWindow(pApp)
+using namespace cocos2d;
+
+TMainForm::TMainForm(TApplication * pApp)
+: CCXEGLView(pApp)
 {
 	Create(TEST_U_ID_Form1002);
 }
@@ -55,7 +58,7 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 	
 	if (FALSE == bHandled)
 	{
-		return TWindow::EventHandler(pApp,pEvent);
+		return CCXEGLView::EventHandler(pApp,pEvent);
 	}
 	return bHandled;
 }

@@ -32,14 +32,15 @@ THE SOFTWARE.
 #include "cocoa/CGGeometry.h"
 #include "cocoa/NSMutableArray.h"
 #include "cocoa/CGGeometry.h"
+#include "CCXEGLView.h"
 
 // OpenGL related
-// #include "support/EAGLView.h"
+// #include "support/CCXEGLView.h"
 
 #include "platform/platform.h"
 
 /** @typedef tPixelFormat
- Possible Pixel Formats for the EAGLView
+ Possible Pixel Formats for the CCXEGLView
  */
 typedef enum {
 	/** RGB565 pixel format. No alpha. 16-bit. (Default) */
@@ -57,7 +58,7 @@ typedef enum {
 } tPixelFormat;
 
 /** @typedef tDepthBufferFormat
- Possible DepthBuffer Formats for the EAGLView.
+ Possible DepthBuffer Formats for the CCXEGLView.
  Use 16 or 24 bit depth buffers if you are going to use real 3D objects.
  */
 typedef enum {
@@ -171,6 +172,7 @@ typedef enum {
 
 class CCLabelAtlas;
 class CCScene;
+class cocos2d::CCXEGLView;
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -211,9 +213,9 @@ public:
 	bool isDisplayFPS(void);
 	void setDisplayFPS(bool bDisplayFPS);
 
-	// The EAGLView, where everything is rendered
-	EAGLView* getOpenGLView(void);
-	void setOpenGLView(EAGLView *pobOpenGLView);
+	// The CCXEGLView, where everything is rendered
+    cocos2d::CCXEGLView* getOpenGLView(void);
+	void setOpenGLView(cocos2d::CCXEGLView *pobOpenGLView);
 
 	// Pixel format used to create the context
 	tPixelFormat getPiexFormat(void);
@@ -252,11 +254,11 @@ public:
 
     // UI dependent
 
-	/** Uses a new pixel format for the EAGLView.
+	/** Uses a new pixel format for the CCXEGLView.
 	 Call this class method before attaching it to a UIView
 	 Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
 	 
-	 @deprecated Set the pixel format when creating the EAGLView. This method will be removed in v1.0
+	 @deprecated Set the pixel format when creating the CCXEGLView. This method will be removed in v1.0
 	 */
 	void setPixelFormat(tPixelFormat kPixelFormat);
 
@@ -264,7 +266,7 @@ public:
 	 Call this class method before attaching it to a UIWindow/UIView
 	 Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
 	 
-	 @deprecated Set the depth buffer format when creating the EAGLView. This method will be removed in v1.0
+	 @deprecated Set the depth buffer format when creating the CCXEGLView. This method will be removed in v1.0
 	 */
 	void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat);
 
@@ -273,29 +275,29 @@ public:
 	bool detach(void);
 
 	/** attach in UIWindow using the full frame.
-	 It will create a EAGLView.
+	 It will create a CCXEGLView.
 	 
 	 @deprecated set setOpenGLView instead. Will be removed in v1.0
 	 */
 	// bool attachInWindow(UIWindow *pWindow);
 
 	/** attach in UIView using the full frame.
-	 It will create a EAGLView.
+	 It will create a CCXEGLView.
 	 
 	 @deprecated set setOpenGLView instead. Will be removed in v1.0
 	 */
 	// bool attachInView(UIView *pView);
 
 	/** attach in UIView using the given frame.
-	 It will create a EAGLView and use it.
+	 It will create a CCXEGLView and use it.
 	 
 	 @deprecated set setOpenGLView instead. Will be removed in v1.0
 	 */
 	// bool attchInViewWithFrame(UIView *pView, CGRect frame);
 
     
-	// set the view where opengl to draw in
-	bool attachWindow(UIWindow *pVindow);
+// 	// set the view where opengl to draw in
+// 	bool attachWindow(UIWindow *pVindow);
 
 	// Landspace
 
@@ -434,7 +436,7 @@ protected:
 #endif // CC_ENABLE_PROFILERS
 
 protected:
-	EAGLView	*m_pobOpenGLView;
+    cocos2d::CCXEGLView	*m_pobOpenGLView;
 
 	//NSTimeInterval animationInterval;
 	//NSTimeInterval oldAnimationInterval;

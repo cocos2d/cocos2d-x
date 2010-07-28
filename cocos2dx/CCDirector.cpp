@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include <string>
 
 using namespace std;
+using namespace cocos2d;
 
 // singleton stuff
 static CCDirector *pobSharedDirector = NULL;
@@ -265,19 +266,19 @@ void CCDirector::setDisplayFPS(bool bDisplayFPS)
 }
 
 // m_pobOpenGLView
-EAGLView* CCDirector::getOpenGLView(void)
+CCXEGLView* CCDirector::getOpenGLView(void)
 {
 	return m_pobOpenGLView;
 }
 
-void CCDirector::setOpenGLView(EAGLView *pobOpenGLView)
+void CCDirector::setOpenGLView(CCXEGLView *pobOpenGLView)
 {
 	assert(pobOpenGLView);
 
 	if (m_pobOpenGLView != pobOpenGLView)
 	{
 		// because EAGLView is not kind of NSObject
-		delete m_pobOpenGLView(); // [openGLView_ release]
+		delete m_pobOpenGLView; // [openGLView_ release]
 		m_pobOpenGLView = pobOpenGLView;
 
 		// set size
@@ -285,9 +286,9 @@ void CCDirector::setOpenGLView(EAGLView *pobOpenGLView)
 		m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * m_fContentScaleFactor,
 			m_obScreenSize.height * m_fContentScaleFactor);
 
-		CCTouchDispather *pTouchDispather = CCTouchDispather::getSharedDispatcher();
-		m_pobOpenGLView->setTouchDelegate(pTouchDispather);
-        pTouchDispather->setDispatchEvnents(true);
+// 		CCTouchDispather *pTouchDispather = CCTouchDispather::getSharedDispatcher();
+// 		m_pobOpenGLView->setTouchDelegate(pTouchDispather);
+//         pTouchDispather->setDispatchEvnents(true);
 
 		setGLDefaultValues();
 	}
@@ -467,7 +468,7 @@ void CCDirector::setDepthTest(bool bOn)
 // is the view currently attached
 bool CCDirector::isOpenGLAttached(void)
 {
-	return (m_pobOpenGLView->getSuperView() != NULL);
+	return m_pobOpenGLView->isOpenGLReady();
 }
 
 // detach or attach to a view or a window
@@ -735,7 +736,7 @@ void CCDirector::end(void)
 //	CCBitmapFontAtlas::purgeCachedData();
 
 	// purge all managers
-	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+// 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCScheduler::purgeSharedScheduler();
 // todo: implement CCActionManager
 //	CCActionManager::purgeSharedManager();
@@ -748,7 +749,7 @@ void CCDirector::end(void)
 
 void CCDirector::setNextScene(void)
 {
-	bool runningIsTransition = dynamic_cast<CCTransitonScene *>(m_pRunningScene) != NULL;
+	bool runningIsTransition = NULL; // dynamic_cast<CCTransitonScene *>(m_pRunningScene) != NULL;
 	bool newIsTransition = dynamic_cast<CCTransitionScene *>(m_pNextScene) != NULL;
 
 	// If it is not a transition, call onExit/cleanup

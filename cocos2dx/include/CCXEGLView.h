@@ -22,19 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#ifndef __CCX_EGLVIEW_H__
+#define __CCX_EGLVIEW_H__
 
-#include "config_platform.h"
+#include "../platform/CCXEGLView_platform.h"
 
-#ifdef CCX_PLATFORM_UPHONE
-    #include "uphone/CCFileUtils.h"
-    #include "uphone/CCTime.h"
-    #include "uphone/NSLock.h"
-	#include "uphone/UIImage.h"
-    #include "uphone/Cocos2dTypes.h"
-#else 
-    #error
-#endif
-
-#endif // __PLATFORM_H__
+#endif	// end of __CCX_EGLVIEW_H__
