@@ -46,17 +46,17 @@ class CCSprite;
 class CCSpriteFrameCache : public NSObject
 {
 public:
-	void init(void);
+	CCSpriteFrameCache* init(void);
 	~CCSpriteFrameCache(void);
 
 	/*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
 	  the pobDictionary look like:
-	  "metadata" -> NSMutableDictionary<string, INT32>
-	  "frames"   -> NSMutableDictionary<string, string>
-	                |
-					|__"x"  -> "123"
-					   "y"  -> "12"
-					   ...
+	  "metadata" -> NSMutableDictionary<string, string>
+	  "frames"   -> NSMutableDictionary<string, NSMutableDictionary<string, string>*>
+													|
+													|__"x"  -> "123"
+													   "y"  -> "12"
+													   ...
 	 */
 	void addSpriteFramesWithDictionary(NSMutableDictionary<std::string> *pobDictionary, CCTexture2D *pobTexture);
 

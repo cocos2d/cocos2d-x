@@ -41,7 +41,7 @@ public:
 	static NSData* dataWithContentsOfFile(const std::string &strPath);
 
 private:
-	static char *m_pData;
+	char *m_pData;
 };
 
 #endif //__NSDATA_H__

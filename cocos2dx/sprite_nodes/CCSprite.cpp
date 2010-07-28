@@ -104,11 +104,17 @@ CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 	return pobSprite;
 }
 
+
+///@todo implement
 CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 {
+	/*
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 	return spriteWithSpriteFrame(pFrame);
+	*/
+	return NULL;
 }
+
 
 // XXX: deprecated
 /*
@@ -257,10 +263,14 @@ CCSprite* CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 
 CCSprite* CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
+	/*
+	///@ implement later
 	assert(pszSpriteFrameName != NULL);
 
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 	return initWithSpriteFrame(pFrame);
+	*/
+	return NULL;
 }
 
 // XXX: deprecated
@@ -590,8 +600,11 @@ CCNode* CCSprite::addChild(CCNode *pChild, INT32 zOrder, INT32 tag)
 
 	if (m_bUsesSpriteSheet)
 	{
+		/*
+		///@todo implement after SpriteSheet is implemented
 		UINT32 index = m_pobSpriteSheet->atlasIndexForChild(static_cast<CCSprite*>(pChild), zOrder);
 		m_pobSpriteSheet->insertChild(static_cast<CCSprite*>(pChild), index);
+		*/
 	}
 
 	m_bHasChildren = true;
@@ -625,16 +638,21 @@ void CCSprite::reorderChild(CCNode *pChild, INT32 zOrder)
 
 void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 {
+	/*
+	///@todo: implement after implementing the sprite sheet
 	if (m_bUsesSpriteSheet)
 	{
 		m_pobSpriteSheet->removeSpriteFromAtlas(static_cast<CCSprite*>(pChild));
 	}
 
 	__super::removeChild(pChild, bCleanup);
+	*/
 }
 
 void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 {
+	/*
+	///@todo: implement after the implementation of sprite sheet
 	if (m_bUsesSpriteSheet)
 	{
 		CCSprite *pChild;
@@ -649,6 +667,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 	__super::removeAllChildrenWithCleanup(bCleanup);
 	
 	m_bHasChildren = false;
+	*/
 }
 
 //
@@ -966,4 +985,9 @@ void CCSprite::setTexture(CCTexture2D *texture)
 	texture->retain();
 
 	updateBlendFunc();
+}
+
+CCTexture2D* CCSprite::getTexture(void)
+{
+	return m_pobTexture;
 }

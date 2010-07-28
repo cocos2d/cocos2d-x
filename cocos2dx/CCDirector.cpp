@@ -111,7 +111,7 @@ CCDirector* CCDirector::init(void)
 
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;
 
-	m_pobScenesStack = new NSMutableArray<CCScene*>(10);
+	m_pobScenesStack = new NSMutableArray<CCScene*>();
 
 	// landspace
 	m_eDeviceOrientation = CCDeviceOrientationPortrait;
@@ -736,9 +736,9 @@ void CCDirector::end(void)
 //	CCBitmapFontAtlas::purgeCachedData();
 
 	// purge all managers
+	///@todo: implement
 // 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-	CCScheduler::purgeSharedScheduler();
-// todo: implement CCActionManager
+//	CCScheduler::purgeSharedScheduler();
 //	CCActionManager::purgeSharedManager();
 	CCTextureCache::purgeSharedTextureCache();
 

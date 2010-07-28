@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libgles_cl.lib libgles_cm.lib"
 				OutputFile="$(OutDir)/cocos2dx.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport"

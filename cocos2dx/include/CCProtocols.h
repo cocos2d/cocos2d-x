@@ -80,7 +80,7 @@ public:
 	virtual void setBlendFunc(ccBlendFunc blendFunc) = 0;
 
 	// returns the blending function used for the texture
-	virtual ccBlendFunc getBlendFunc(void);
+	virtual ccBlendFunc getBlendFunc(void) = 0;
 };
 
 /** CCNode objects that uses a Texture2D to render the images.
