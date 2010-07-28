@@ -38,7 +38,7 @@ public:
 
 public:
 	static NSData* dataWithBytes(UINT8 *pBytes, int size);
-	static bool dataWithContentsOfFile(const std::string &strPath);
+	static NSData* dataWithContentsOfFile(const std::string &strPath);
 
 private:
 	static char *m_pData;

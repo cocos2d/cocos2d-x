@@ -42,8 +42,10 @@ NSData::~NSData(void)
 	}
 }
 
-bool NSData::dataWithContentsOfFile(const string &strPath)
+NSData* NSData::dataWithContentsOfFile(const string &strPath)
 {
+	NSData *pRet = new NSData();
+
 	FILE *pFile;
 	pFile = fopen(strPath.c_str(), "rb");
 
@@ -56,13 +58,15 @@ bool NSData::dataWithContentsOfFile(const string &strPath)
 
 	int nSize = ftell(pFile);
 
-	m_pData = new char[nSize];
+	fseek(pFile, 0, SEEK_SET);
 
-	fread(m_pData, sizeof(char), nSize, pFile);
+	pRet->m_pData = new char[nSize];
+
+	fread(pRet->m_pData, sizeof(char), nSize, pFile);
 
 	fclose(pFile);
 
-	return true;
+	return pRet;
 }
 
 void* NSData::bytes(void)

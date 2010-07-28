@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCPVRTexture.h"
 #include "ccMacros.h"
+#include "cocoa/NSData.h"
 
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
@@ -232,26 +233,23 @@ bool CCPVRTexture::createGLTexture()
 
 CCPVRTexture * CCPVRTexture::initWithContentsOfFile(const char* path)
 {
-	/** @todo NSData
-	if((self = [super init]))
-	{
-		NSData *data = [NSData dataWithContentsOfFile:path];
+	/** @todo NSData*/
+	NSData *data = NSData::dataWithContentsOfFile(path);
 
-		_imageData = [[NSMutableArray alloc] initWithCapacity:10];
+	m_pImageData = new NSMutableArray<NSData*>(10);
 
-		_name = 0;
-		_width = _height = 0;
-		_internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-		_hasAlpha = FALSE;
+	m_uName = 0;
+	m_uWidth = m_uHeight = 0;
+	m_uInternalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
+	m_bHasAlpha = false;
 
-		_retainName = NO; // cocos2d integration
-
-		if (!data || ![self unpackPVRData:data] || ![self createGLTexture])
-		{
-			[self release];
-			self = nil;
-		}
-	}*/
+	m_bRetainName = false; // cocos2d integration
+/// @todo
+// 	if (!data || ![self unpackPVRData:data] || ![self createGLTexture])
+// 	{
+// 		[self release];
+// 		self = nil;
+// 	}
 
 	return this;
 }

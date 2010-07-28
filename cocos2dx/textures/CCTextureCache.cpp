@@ -234,8 +234,7 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	// Split up directory and filename
 	std::string fullpath( CCFileUtils::fullPathFromRelativePath(path) );
 
-	NSData * data = new NSData();
-	data->initWithContentsOfFile(fullpath);
+	NSData * data = NSData::dataWithContentsOfFile(fullpath);
 	tex = new CCTexture2D();
 	tex->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width);
 	if( tex )
