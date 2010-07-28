@@ -38,9 +38,7 @@ class CCTransitionEaseScene : public NSObject
 	@since v0.8.2
 	*/
 public:
-	CCTransitionEaseScene();
-	virtual ~CCTransitionEaseScene();
-	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
+	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action) = 0;
 };
 
 /** Orientation Type used by some transitions

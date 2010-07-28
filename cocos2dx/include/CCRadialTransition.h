@@ -26,6 +26,21 @@ THE SOFTWARE.
 #define __CCRADIAL_TRANSITION_H__
 
 
+typedef enum {
+	/// Radial Counter-Clockwise 
+	kCCProgressTimerTypeRadialCCW,
+	/// Radial ClockWise
+	kCCProgressTimerTypeRadialCW,
+	/// Horizontal Left-Right
+	kCCProgressTimerTypeHorizontalBarLR,
+	/// Horizontal Right-Left
+	kCCProgressTimerTypeHorizontalBarRL,
+	/// Vertical Bottom-top
+	kCCProgressTimerTypeVerticalBarBT,
+	/// Vertical Top-Bottom
+	kCCProgressTimerTypeVerticalBarTB,
+} CCProgressTimerType;/// @todo to be deleted
+
 #include "CCTransition.h"
 
 ///@todo #include "CCProgressTimer.h"
@@ -45,7 +60,7 @@ public:
 
 protected:
 	virtual void sceneOrder();
-	virtual void radialType();
+	virtual CCProgressTimerType radialType();
 };
 
 ///
@@ -57,7 +72,7 @@ public:
 	CCRadialCWTransition();
 	virtual ~CCRadialCWTransition();
 protected:
-	virtual void radialType();
+	virtual CCProgressTimerType radialType();
 };
 
 

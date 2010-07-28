@@ -1184,7 +1184,7 @@ CCIntervalAction* CCSplitColsTransition:: action()
 }
 
 
-CCIntervalAction* easeActionWithAction(CCIntervalAction * action)
+CCIntervalAction* CCSplitColsTransition::easeActionWithAction(CCIntervalAction * action)
 {
 	return NULL;
 	/// @todo return [CCEaseInOut actionWithAction:action rate:3.0f];

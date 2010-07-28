@@ -49,11 +49,11 @@ void CCRadialCCWTransition::sceneOrder()
 	m_bIsInSceneOnTop = false;
 }
 
-/** @todo no declare in .h
--(CCProgressTimerType) radialType
+/** @todo no declare in .h*/
+CCProgressTimerType CCRadialCCWTransition::radialType()
 {
 	return kCCProgressTimerTypeRadialCCW;
-}*/
+}
 
 void CCRadialCCWTransition::onEnter()
 {
@@ -109,10 +109,10 @@ void CCRadialCCWTransition::onExit()
 	__super::onExit();
 }
 
-/** @todo no declare in .h
--(CCProgressTimerType) radialType
+/** @todo no declare in .h*/
+CCProgressTimerType CCRadialCWTransition::radialType()
 {
 	return kCCProgressTimerTypeRadialCW;
-}*/
+}
 
 
