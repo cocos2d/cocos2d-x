@@ -28,7 +28,9 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "platform/platform.h"
 #include <vector>
+#include <assert.h>
 
+// the element should be pointer of NSObject or it's sub class
 template<class T = NSObject*>
 class NSMutableArray : public NSObject
 {
@@ -38,33 +40,269 @@ public:
 	typedef typename NSObjectArray::reverse_iterator	NSMutableArrayRevIterator;
 
 public:
-	NSMutableArray(UINT32 uSize = 0);
-    ~NSMutableArray(void);
-	UINT32 count(void);
+	NSMutableArray(UINT uSize = 0)
+	{
+		m_array.resize(uSize);
+	}
 
-	UINT32 getIndexOfObject(T pObject);
-	bool containsObject(T pObject);
-	T getLastObject(void);
-	T getObjectAtIndex(UINT32 uIndex);
+	~NSMutableArray(void)
+	{
+		removeAllObjects();
+	}
+
+	UINT32 count(void)
+	{
+		return m_array.size();
+	}
+
+	UINT32 getIndexOfObject(T pObject)
+	{
+		if (m_array.empty() || (pObject == NULL))
+		{
+			return 0;
+		}
+
+		NSMutableArray<T>::NSMutableArrayIterator iter;
+		UINT32 uRet = 0;
+		INT32 i;
+		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
+		{
+			if (*iter == pObject)
+			{
+				uRet = i;
+				break;
+			}
+		}
+
+		return uRet;
+	}
+
+	bool containsObject(T pObject)
+	{
+		if (m_array.empty() || (! pObject))
+		{
+			return false;
+		}
+
+		bool bRet = false;
+		NSMutableArray<T>::NSMutableArrayIterator iter;
+		for (iter = m_array.begin(); iter != m_array.end(); ++iter)
+		{
+			if (*iter == pObject)
+			{
+				bRet = true;
+				break;
+			}
+		}
+
+		return bRet;
+	}
+
+	T getLastObject(void)
+	{
+        T pObject = NULL;
+		INT32 count = this->count();
+
+		if (count > 0)
+		{
+			pObject = m_array[count - 1];
+		}
+
+		return pObject;
+	}
+
+	T getObjectAtIndex(UINT32 uIndex)
+	{
+		assert(uIndex < count());
+
+		if (uIndex >= count())
+		{
+			return NULL;
+		}
+
+		return m_array[uIndex];
+	}
 
 	// Adding objects
-	void addObject(T pObject);
-	void addObjectsFromArray(NSMutableArray<T> *pArray);
-    void insertObjectAtIndex(T pObject, UINT32 uIndex);
+	void addObject(T pObject)
+	{
+		// make sure the pointer is not null
+		if (pObject == NULL)
+		{
+			return;
+		}
+
+		// add the refrence
+		pObject->retain();
+
+		// the array is full, push back
+		m_array.push_back(pObject);
+	}
+
+	void addObjectsFromArray(NSMutableArray<T> *pArray)
+	{
+		if (pArray && pArray->count() > 0)
+		{
+			NSMutableArray<T>::NSMutableArrayIterator iter;
+			for (iter = pArray->begin(); iter != pArray->end(); ++iter)
+			{
+				if (*iter)
+				{
+					m_array.push_back(*iter);
+				}
+			}
+		}
+	}
+
+    void insertObjectAtIndex(T pObject, UINT32 uIndex)
+	{
+		// make sure the object is not null
+		if (pObject == NULL)
+		{
+			return;
+		}
+
+		// add the refrence of the object
+		pObject->retain();
+
+		// insert the object
+		m_array.insert(m_array.begin() + uIndex, pObject);
+	}
 
 	// Removing objects
-	void removeLastObject(void);
-	void removeObject(T pObject);
-	void removeObjectAtIndex(UINT32 uIndex);
-	void removeAllObjects(void);
-	void replaceObjectAtIndex(UINT32 uIndex, T pObject);
+	void removeLastObject(void)
+	{
+		INT32 count = this->count();
 
-	NSMutableArrayIterator begin(void);
-	NSMutableArrayIterator end(void);
+		if (count > 0)
+		{
+			removeObjectAtIndex(count - 1);
+		}
+	}
+
+	void removeObject(T pObject)
+	{
+		if (m_array.empty() || (! pObject))
+		{
+			return;
+		}
+
+		NSMutableArray<T>::NSMutableArrayIterator iter;
+		int i;
+		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
+		{
+			if (*iter == pObject)
+			{
+				m_array.erase(iter);
+
+				pObject->release();
+
+				break;
+			}
+		}
+	}
+
+	void removeObjectAtIndex(UINT32 uIndex)
+	{
+		if (m_array.empty() || uIndex == 0)
+		{
+			return;
+		}
+
+		T pObject = m_array.at(uIndex);
+		if (pObject)
+		{
+			pObject->release();
+		}
+
+		m_array.erase(m_array.begin() + uIndex);
+	}
+
+	void removeAllObjects(void)
+	{
+		NSMutableArray<T>::NSMutableArrayIterator iter;
+		for (iter = m_array.begin(); iter != m_array.end(); ++iter)
+		{
+			if (*iter)
+			{
+				(*iter)->release();
+			}
+		}
+
+		m_array.clear();
+	}
+
+	void replaceObjectAtIndex(UINT32 uIndex, T pObject)
+	{
+		if (uIndex >= count())
+		{
+			// index out of range
+			assert(0);
+			return;
+		}
+
+		// release the object
+		T pTmp = m_array[uIndex];
+		if (pTmp)
+		{
+			pTmp->release();		
+		}
+
+		m_array[uIndex] = pObject;
+
+		// add the ref
+		if (pObject)
+		{
+			pObject->retain();
+		}
+	}
+
+	NSMutableArrayIterator begin(void)
+	{
+		return m_array.begin();
+	}
+
+	NSMutableArrayIterator end(void)
+	{
+		return m_array.end();
+	}
 
 public:
-	static NSMutableArray<T>* arrayWithObjects(T pObject1, ...);
-	static NSMutableArray<T>* arrayWithArray(NSMutableArray<T> *pArray);
+	static NSMutableArray<T>* arrayWithObjects(T pObject1, ...)
+	{
+		NSMutableArray<T> *pArray = new NSMutableArray<T>();
+
+		va_list params;
+		va_start(params, pObject1);
+
+		T pFirst = pObject1;
+		while (pFirst)
+		{
+			pArray->addObject(pFirst);
+			pFirst = va_arg(params, T);
+		}
+
+		va_end(params);
+
+		return pArray;
+	}
+
+	static NSMutableArray<T>* arrayWithArray(NSMutableArray<T> *pArray)
+	{
+		if (pArray == NULL)
+		{
+			return NULL;
+		}
+
+		NSMutableArray<T> *pNewArray = new NSMutableArray<T>();
+		NSMutableArray<T>::NSMutableArrayIterator iter;
+		for (iter = pArray->begin(); iter != pArray->end(); ++iter)
+		{
+			pNewArray->addObject(*iter);
+		}
+
+		return pNewArray;
+	}
 
 private:
 	std::vector<T> m_array;
