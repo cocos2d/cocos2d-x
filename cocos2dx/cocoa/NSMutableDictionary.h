@@ -53,28 +53,28 @@ public:
 	/// return all the keys
 	NSMutableArray<_T> * allKeys()
 	{
-		NSMutableArray<_T> *arrayRet = new NSMutableArray<_T>();
+		NSMutableArray<_T> *pRet = new NSMutableArray<_T>();
 		NSObjectMapIter it;
-		for( it= m_Map.begin(); it != m_Map.end(); ++it)
+		for( it = m_Map.begin(); it != m_Map.end(); ++it)
 		{
-			arrayRet.addObject(it->first);
+			pRet->addObject(it->first);
 		}
-		return arrayRet;
+		return pRet;
 	}
 
 	/** @warning : We use '==' to compare two objects*/
 	NSMutableArray<_T> * allKeysForObject(_ValueT object)
 	{
-		NSMutableArray<_T> *arrayRet = new NSMutableArray<_T>();
+		NSMutableArray<_T> *pRet = new NSMutableArray<_T>();
 		NSObjectMapIter it;
 		for( it= m_Map.begin(); it != m_Map.end(); ++it)
 		{
 			if (it->second == object)
 			{
-				arrayRet.addObject(it->first);
+				pRet->addObject(it->first);
 			}
 		}
-		return arrayRet;
+		return pRet;
 	}
 
 	_ValueT objectForKey(_T key)			///< 
