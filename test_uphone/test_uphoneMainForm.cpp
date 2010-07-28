@@ -6,7 +6,11 @@
 
  
 #include  "test_uphoneMainForm.h"
+
 #include  "test_uphone_res_def.h"
+#include "TG3.h"
+
+#include "touch_dispatcher/CCTouchDelegateProtocol.h"
 
 using namespace cocos2d;
 
@@ -34,7 +38,6 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 		break;
 	case EVENT_WinPaint:
 		{
-			DrawWindow();
 			bHandled = TRUE;
 		}
 		break;

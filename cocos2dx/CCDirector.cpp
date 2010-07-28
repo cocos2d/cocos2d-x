@@ -287,7 +287,7 @@ void CCDirector::setOpenGLView(CCXEGLView *pobOpenGLView)
 			m_obScreenSize.height * m_fContentScaleFactor);
 
  		CCTouchDispatcher *pTouchDispatcher = CCTouchDispatcher::getSharedDispatcher();
-// 		m_pobOpenGLView->setTouchDelegate(pTouchDispather);
+ 		m_pobOpenGLView->setTouchDelegate(pTouchDispatcher);
         pTouchDispatcher->setDispatchEvents(true);
 
 		setGLDefaultValues();

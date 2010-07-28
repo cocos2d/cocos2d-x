@@ -22,41 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_UPHONE_H__
-#define __CCX_EGLVIEW_UPHONE_H__
+#ifndef __CCX_COMMON_UPHONE__
+#define __CCX_COMMON_UPHONE__
 
-#include "GuiBase.h"
-#include "TWindow.h"
+#if defined(_WIN32)
+    #if defined(SS_MAKEDLL)
+    #define CCX_DLL     __declspec(dllexport)
+    #elif defined(SS_IGNORE_EXPORT)
+    #define CCX_DLL
+    #else 		/* use a DLL library */
+    #define CCX_DLL     __declspec(dllimport)
+    #endif
+#else
+    #if defined(SS_SHARED)
+    #define CCX_DLL     __attribute__((visibility("default")))
+    #elif defined(SS_IGNORE_EXPORT)
+    #define CCX_DLL
+    #else
+    #define CCX_DLL
+    #endif
+#endif 
 
-#include "cocoa/CGGeometry.h"
-
-class TApplication;
-class EGLTouchDelegate;
-
-namespace   cocos2d {
-
-
-
-class CCX_DLL CCXEGLView : public TWindow
-{
-public:
-
-    CCXEGLView(TApplication * pApp);
-    ~CCXEGLView();
-
-    virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
-
-    CGSize  getSize();
-    bool    isOpenGLReady();
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void    swapBuffers();
-
-private:
-    bool                m_bOpenGLReady;
-    EGLTouchDelegate *  m_pDelegate;
-};
-
-}   // end of namespace   cocos2d
-
-#endif	// end of __CCX_EGLVIEW_UPHONE_H__
+#endif	// end of __CCX_COMMON_UPHONE__

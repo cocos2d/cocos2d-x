@@ -30,6 +30,8 @@ namespace cocos2d {
 
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
+, m_bOpenGLReady(false)
+, m_pDelegate(NULL)
 {
 
 }
@@ -41,17 +43,62 @@ CCXEGLView::~CCXEGLView()
 
 Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 {
-    return TWindow::EventHandler(pApp, pEvent);
+    Boolean bHandled = FALSE;
+    switch(pEvent->eType)
+    {
+    case EVENT_PenDown:
+        {
+            bHandled = TRUE;
+        }
+        break;
+
+    case EVENT_PenMove:
+        {
+            bHandled = TRUE;
+        }
+        break;
+
+    case EVENT_PenUp:
+        {
+        }
+        break;
+    }
+
+    if (bHandled)
+    {
+        return bHandled;
+    }
+    else
+    {
+        return TWindow::EventHandler(pApp, pEvent);
+    }
 }
 
 CGSize CCXEGLView::getSize()
 {
-    CGSize size;
-    return size;
+    TRectangle rc;
+    GetBounds(&rc);
+    return CGSize((float)rc.Width(), (float)rc.Height());
 }
 
+bool CCXEGLView::isOpenGLReady()
+{
+    return m_bOpenGLReady;
+}
 
+void CCXEGLView::release()
+{
+    CloseWindow();
+}
 
+void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
+{
+    m_pDelegate = pDelegate;
+}
 
+void CCXEGLView::swapBuffers()
+{
+
+}
 
 }

@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __COCOS2D_DEFINE_H__
 #define __COCOS2D_DEFINE_H__
 
+#include "ccxCommon.h"
+
 /** CCX_PROPERTY_READONLY is used to declare a protected variable.
 	We can use getter to read the variable.
 	@param varType : the type of variable.

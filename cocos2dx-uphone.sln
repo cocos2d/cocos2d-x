@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocos2dx-uphone", "cocos2dx\cocos2dx-uphone.vcproj", "{6AC43F51-A036-4653-B910-BDDC346D15E7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_uphone", "test_uphone\test_uphone.vcproj", "{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

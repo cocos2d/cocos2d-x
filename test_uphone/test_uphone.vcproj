@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;..\cocos2dx\include"
+				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;..\cocos2dx\include;..\cocos2dx"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,10 +64,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib ..\..\PRJ_TG3\Common\SoftSupport\EosConfig.lib ..\..\PRJ_TG3\Common\SoftSupport\SoftSupport.lib ..\..\PRJ_TG3\Common\SoftSupport\TG3_DLL.lib"
+				AdditionalDependencies="WS2_32.Lib ..\..\PRJ_TG3\Common\SoftSupport\EosConfig.lib ..\..\PRJ_TG3\Common\SoftSupport\SoftSupport.lib ..\..\PRJ_TG3\Common\SoftSupport\TG3_DLL.lib libcocos2d.lib"
 				OutputFile="$(OutDir)/test_uphone.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport"
+				AdditionalLibraryDirectories="../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport;&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
 				GenerateMapFile="true"
 				MapExports="true"

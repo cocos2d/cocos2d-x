@@ -25,9 +25,11 @@ THE SOFTWARE.
 #ifndef __COCOS_CGGEMETRY_H__
 #define __COCOS_CGGEMETRY_H__
 
+#include "ccxCommon.h"
+
 typedef float CGFloat;
 
-class CGPoint
+class CCX_DLL CGPoint
 {
 public:
 	float x;
@@ -42,7 +44,7 @@ public:
 	static bool CGPointEqualToPoint(CGPoint point1, CGPoint point2);
 };
 
-class CGSize
+class CCX_DLL CGSize
 {
 public:
 	float width;
@@ -56,7 +58,7 @@ public:
 	static bool CGSizeEqualToSize(CGSize size1, CGSize size2);
 };
 
-class CGRect
+class CCX_DLL CGRect
 {
 public:
 	CGPoint origin;
