@@ -40,7 +40,7 @@ class NSData;
 class CCPVRTexture : public NSObject
 {
 protected:
-	NSMutableArray<NSData> * m_pImageData;
+	NSMutableArray<NSData*> * m_pImageData;
 
 public:
 
