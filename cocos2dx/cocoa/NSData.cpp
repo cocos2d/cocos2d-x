@@ -42,7 +42,7 @@ NSData::~NSData(void)
 	}
 }
 
-bool NSData::initWithContentsOfFile(const string &strPath)
+bool NSData::dataWithContentsOfFile(const string &strPath)
 {
 	FILE *pFile;
 	pFile = fopen(strPath.c_str(), "rb");
@@ -68,4 +68,10 @@ bool NSData::initWithContentsOfFile(const string &strPath)
 void* NSData::bytes(void)
 {
 	return m_pData;
+}
+
+///@todo implement
+NSData* NSData::dataWithBytes(UINT8 *pBytes, int size)
+{
+	return NULL;
 }

@@ -25,19 +25,23 @@ THE SOFTWARE.
 #ifndef __NSDATA_H__
 #define __NSDATA_H__
 
+#include "NSObject.h"
 #include <string>
 
-class NSData
+class NSData : public NSObject
 {
 public:
 	NSData(void);
 	~NSData(void);
-
-	bool initWithContentsOfFile(const std::string &strPath);
+	
 	void* bytes(void);
 
+public:
+	static NSData* dataWithBytes(UINT8 *pBytes, int size);
+	static bool dataWithContentsOfFile(const std::string &strPath);
+
 private:
-	char *m_pData;
+	static char *m_pData;
 };
 
 #endif //__NSDATA_H__
