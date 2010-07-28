@@ -48,10 +48,16 @@ public:
 	CCConfiguration(void);
 	
 	// OpenGL Max texture size.
-	INT32 getMaxTextureSize(void);
+	inline int getMaxTextureSize(void)
+	{
+		return m_nMaxTextureSize;
+	}
 
 	// OpenGL Max Modelview Stack Depth
-	INT32 getMaxModelviewStackDepth(void);
+	inline int getMaxModelviewStackDepth(void)
+	{
+		return m_nMaxModelviewStackDepth;
+	}
 
 	/** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
 	 NPOT textures have the following limitations:
@@ -60,20 +66,32 @@ public:
 	 
 	 @since v0.99.2
 	 */
-	bool isSupportsNPOT(void);
+	inline bool isSupportsNPOT(void)
+	{
+		return m_bSupportsNPOT;
+	}
 
 	// Whether or not PVR Texture Compressed is supported
-	bool isSupportsPVRTC(void);
+	inline bool isSupportsPVRTC(void)
+	{
+		return m_bSupportsPVRTC;
+	}
 
 	/** Whether or not BGRA8888 textures are supported.
 	 @since v0.99.2
 	 */
-	bool isSupportsBGRA8888(void);
+	inline bool isSupportsBGRA8888(void)
+	{
+		return m_bSupportsBGRA8888;
+	}
 
 	/** Whether or not glDiscardFramebufferEXT is supported
 	 @since v0.99.2
 	 */
-	bool isSupportsDiscardFramebuffer(void);
+	inline bool isSupportsDiscardFramebuffer(void)
+	{
+		return m_bSupportsDiscardFramebuffer;
+	}
 
 	// returns whether or not an OpenGL is supported
 	bool checkForGLExtension(const std::string &searchName);
