@@ -598,12 +598,12 @@ void CCNode::visit()
 		return;
 	}
 	glPushMatrix();
-
-	if (m_pGrid && m_pGrid->isActive())
-	{
-		m_pGrid->beforeDraw();
-		this->transformAncestors();
-	}
+/// @todo
+// 	if (m_pGrid && m_pGrid->isActive())
+// 	{
+// 		m_pGrid->beforeDraw();
+// 		this->transformAncestors();
+// 	}
 
 	this->transform();
 	
@@ -633,12 +633,11 @@ void CCNode::visit()
 			pNode->visit();
 		}		
 	}
-
-	if (m_pGrid && m_pGrid->isActive())
-	{
-		m_pGrid->afterDraw(this);
-	}
-
+/// @todo
+// 	if (m_pGrid && m_pGrid->isActive())
+// 	{
+// 		m_pGrid->afterDraw(this);
+// 
 	glPopMatrix();
 }
 
@@ -669,7 +668,7 @@ void CCNode::transform()
 		glTranslatef(0, 0, m_fVertexZ);
 
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-	if ( m_pCamera && !(m_pGrid && m_pGrid->isActive()) ) {
+	if ( m_pCamera /** @todo&& !(m_pGrid && m_pGrid->isActive())*/ ) {
 		bool translate = (m_tAnchorPointInPixels.x != 0.0f || m_tAnchorPointInPixels.y != 0.0f);
 
 		if( translate )
@@ -704,7 +703,7 @@ void CCNode::transform()
 	if (m_fScaleX != 1.0f || m_fScaleY != 1.0f)
 		glScalef( m_fScaleX, m_fScaleY, 1.0f );
 
-	if ( m_pCamera && !(m_pGrid && m_pGrid->isActive()) )
+	if ( m_pCamera /** @todo && !(m_pGrid && m_pGrid->isActive())*/ )
 		m_pCamera->locate();
 
 	// restore and re-position point
