@@ -518,10 +518,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cocoa\NSMutableArray.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cocoa\NSMutableArray.h"
 				>
 			</File>
@@ -562,7 +558,7 @@
 			Name="platform"
 			>
 			<File
-				RelativePath=".\platform\CCTouchPlatform.h"
+				RelativePath=".\platform\CCTouch_Platform.h"
 				>
 			</File>
 			<File
