@@ -51,9 +51,9 @@ public:
 	}
 
 	/// return all the keys
-	NSMutableArray<std::string> allKeys()
+	NSMutableArray<_T> allKeys()
 	{
-		NSMutableArray<std::string> arrayRet = new NSMutableArray<std::string>();
+		NSMutableArray<_T> arrayRet = new NSMutableArray<_T>();
 		NSObjectMapIter it;
 		for( it= m_Map.begin(); it != m_Map.end(); ++it)
 		{
@@ -63,9 +63,9 @@ public:
 	}
 
 	/** @warning : We use '==' to compare two objects*/
-	NSMutableArray<std::string> allKeysForObject(_ValueT object)
+	NSMutableArray<_T> allKeysForObject(_ValueT object)
 	{
-		NSMutableArray<std::string> arrayRet = new NSMutableArray<std::string>();
+		NSMutableArray<_T> arrayRet = new NSMutableArray<_T>();
 		NSObjectMapIter it;
 		for( it= m_Map.begin(); it != m_Map.end(); ++it)
 		{
