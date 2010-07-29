@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 NSLock::NSLock(void)
 {
+	m_pLock = new SS_LOCK_t();
 	CriticalSectionInit(m_pLock);
 }
 
