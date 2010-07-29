@@ -38,6 +38,7 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 		break;
 	case EVENT_WinPaint:
 		{
+            DrawWindow();
 			bHandled = TRUE;
 		}
 		break;

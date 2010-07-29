@@ -466,11 +466,15 @@
 			Name="touch_dispatcher"
 			>
 			<File
+				RelativePath=".\touch_dispatcher\CCTouch.h"
+				>
+			</File>
+			<File
 				RelativePath=".\touch_dispatcher\CCTouchDelegateProtocol.h"
 				>
 			</File>
 			<File
-				RelativePath=".\touch_dispatcher\CCTouchDispacher.cpp"
+				RelativePath=".\touch_dispatcher\CCTouchDispatcher.cpp"
 				>
 			</File>
 			<File

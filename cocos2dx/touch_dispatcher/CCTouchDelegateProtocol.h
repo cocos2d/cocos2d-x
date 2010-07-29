@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "cocoa/NSObject.h"
 
-class UITouch;
+class CCTouch;
 class UIEvent;
 
 typedef enum {
@@ -49,12 +49,12 @@ public:
 	/** Return YES to claim the touch.
 	 @since v0.8
 	 */
-	virtual bool ccTouchBegan(UITouch *pTouch, UIEvent *pEvent) { return false;};
+	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
 
 	// optional
-	virtual void ccTouchMoved(UITouch *pTouch, UIEvent *pEvent) {}
-	virtual void ccTouchEnded(UITouch *pTouch, UIEvent *pEvent) {}
-	virtual void ccTouchCancelled(UITouch *pTouch, UIEvent *pEvent) {}
+	virtual void ccTouchMoved(CCTouch *pTouch, UIEvent *pEvent) {}
+	virtual void ccTouchEnded(CCTouch *pTouch, UIEvent *pEvent) {}
+	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
 };
 
 /**

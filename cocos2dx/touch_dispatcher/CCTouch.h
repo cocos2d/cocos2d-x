@@ -22,17 +22,42 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_TOUCH_H__
-#define __PLATFORM_TOUCH_H__
+#ifndef __CC_TOUCH_H__
+#define __CC_TOUCH_H__
 
 #include "cocoa/NSObject.h"
+#include "cocoa/CGGeometry.h"
 
-class UITouch : public NSObject
+// namespace cocos2d {
+
+class CCTouch : public NSObject
 {
+public:
+    CCTouch() {}
+    CCTouch(int nViewId, float x, float y) : m_nViewId(nViewId), m_point(x, y), m_prevPoint(x, y) {}
+
+    CGPoint locationInView(int nViewId) { return m_point; }
+    CGPoint previousLocationInView(int nViewId) { return m_prevPoint; }
+    int view() { return m_nViewId; }
+
+    void SetTouchInfo(int nViewId, float x, float y)
+    {
+        m_nViewId   = nViewId;
+        m_prevPoint = m_point;
+        m_point.x   = x;
+        m_point.y   = y;
+    }
+
+private:
+    int     m_nViewId;
+    CGPoint m_point;
+    CGPoint	m_prevPoint;
 };
 
 class UIEvent : public NSObject
 {
 };
 
-#endif // __PLATFORM_TOUCH_H__
+// }       // end of namespace cocos2d
+
+#endif  // __PLATFORM_TOUCH_H__

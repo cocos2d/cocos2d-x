@@ -921,16 +921,16 @@ CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
 	return ccp(0,0);
 }
 
-// convenience methods which take a UITouch instead of CGPoint
+// convenience methods which take a CCTouch instead of CGPoint
 /** @todo
-- (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
+- (CGPoint)convertTouchToNodeSpace:(CCTouch *)touch
 {
 	CGPoint point = [touch locationInView: [touch view]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpace:point];
 }*/
 /** @todo
-- (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
+- (CGPoint)convertTouchToNodeSpaceAR:(CCTouch *)touch
 {
 	CGPoint point = [touch locationInView: [touch view]];
 	point = [[CCDirector sharedDirector] convertToGL: point];

@@ -479,15 +479,15 @@ public:
 	@since v0.7.1
 	*/
 	CGPoint convertToWorldSpaceAR(CGPoint nodePoint);
-	/** convenience methods which take a UITouch instead of CGPoint
+	/** convenience methods which take a CCTouch instead of CGPoint
 	@since v0.7.1
 	*/
-/// @todo	CGPoint convertTouchToNodeSpace(UITouch * touch);
+/// @todo	CGPoint convertTouchToNodeSpace(CCTouch * touch);
 
-	/** converts a UITouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
+	/** converts a CCTouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
 	@since v0.7.1
 	*/
-/// @todo	CGPoint convertTouchToNodeSpaceAR:(UITouch * touch);
+/// @todo	CGPoint convertTouchToNodeSpaceAR:(CCTouch * touch);
 
 };
 

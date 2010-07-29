@@ -144,8 +144,8 @@ void CCLayer::onExit()
 	[super onExit];*/
 }
 
-/** @todo UITouch
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+/** @todo CCTouch
+-(BOOL) ccTouchBegan:(CCTouch *)touch withEvent:(UIEvent *)event
 {
 	NSAssert(NO, @"Layer#ccTouchBegan override me");
 	return YES;

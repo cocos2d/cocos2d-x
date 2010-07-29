@@ -30,6 +30,8 @@ THE SOFTWARE.
 
 #include "cocoa/CGGeometry.h"
 
+class NSSet;
+class CCTouch;
 class TApplication;
 class EGLTouchDelegate;
 
@@ -54,6 +56,9 @@ public:
 
 private:
     bool                m_bOpenGLReady;
+    bool                m_bCaptured;
+    NSSet *             m_pSet;
+    CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
 };
 

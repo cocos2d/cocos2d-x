@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCTouchHandler.h"
 #include "../cocoa/NSMutableArray.h"
 #include "../cocoa/NSSet.h"
-#include "platform/CCTouch_Platform.h"
+#include "CCTouch.h"
 #include "CCTexture2D.h"
 
 #include <assert.h>
@@ -249,11 +249,11 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, UINT32 uIndex)
 	//
 	if (uTargetedHandlersCount > 0)
 	{
-        UITouch *pTouch;
+        CCTouch *pTouch;
 		NSSetIterator setIter;
 		for (setIter = pTouches->begin(); setIter != pTouches->end(); ++setIter)
 		{
-			pTouch = static_cast<UITouch *>(*setIter);
+			pTouch = static_cast<CCTouch *>(*setIter);
 			CCTargetedTouchHandler *pHandler;
 			NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator arrayIter;
 			for (arrayIter = m_pTargetedHandlers->begin(); arrayIter != m_pTargetedHandlers->end(); ++arrayIter)

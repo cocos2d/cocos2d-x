@@ -26,42 +26,73 @@ THE SOFTWARE.
 
 #include "TG3.h"
 
+#include "cocoa/NSSet.h"
+#include "touch_dispatcher/CCTouch.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
+
 namespace cocos2d {
 
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_bOpenGLReady(false)
+, m_bCaptured(false)
 , m_pDelegate(NULL)
 {
-
+    m_pTouch    = new CCTouch;
+    m_pSet      = new NSSet;
 }
 
 CCXEGLView::~CCXEGLView()
 {
-
+    delete m_pSet;
+    delete m_pTouch;
 }
 
 Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 {
     Boolean bHandled = FALSE;
-    switch(pEvent->eType)
+    if (m_pDelegate && m_pTouch && m_pSet)
     {
-    case EVENT_PenDown:
+        switch(pEvent->eType)
         {
-            bHandled = TRUE;
-        }
-        break;
+        case EVENT_PenDown:
+            if (SetCaptureEx(-1, TRUE))
+            {
+                m_bCaptured = true;
+//                 SS_printf("Down    %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
+                m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+                m_pSet->addObject(m_pTouch);
+                m_pDelegate->touchesBegan(m_pSet, NULL);
+                bHandled = TRUE;
+            }
+            break;
 
-    case EVENT_PenMove:
-        {
-            bHandled = TRUE;
-        }
-        break;
+        case EVENT_PenMove:
+            if (m_bCaptured)
+            {
+                TRectangle rc;
+                GetBounds(&rc);
+                if (rc.IsInRect(pEvent->sParam1, pEvent->sParam2))
+                {
+//                     SS_printf("Move    %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
+                    m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+                    m_pDelegate->touchesMoved(m_pSet, NULL);
+                    bHandled = TRUE;
+                }
+            }
+            break;
 
-    case EVENT_PenUp:
-        {
+        case EVENT_PenUp:
+            if (m_bCaptured)
+            {
+                ReleaseCapture();
+//                 SS_printf("Up      %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
+                m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+                m_pDelegate->touchesEnded(m_pSet, NULL);
+                bHandled = TRUE;
+            }
+            break;
         }
-        break;
     }
 
     if (bHandled)
