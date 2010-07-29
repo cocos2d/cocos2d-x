@@ -37,7 +37,7 @@ class EGLTouchDelegate;
 
 namespace   cocos2d {
 
-
+class CCXEGL;
 
 class CCX_DLL CCXEGLView : public TWindow
 {
@@ -55,11 +55,15 @@ public:
     void    swapBuffers();
 
 private:
-    bool                m_bOpenGLReady;
+    void _initEGL();
+    void _releaseEGL();
+
     bool                m_bCaptured;
     NSSet *             m_pSet;
     CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
+
+    CCXEGL *            m_pEGL;
 };
 
 }   // end of namespace   cocos2d

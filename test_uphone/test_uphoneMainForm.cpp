@@ -31,17 +31,6 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 
 	switch(pEvent->eType)
 	{
-	case EVENT_WinInit:
-		{
-			bHandled = TRUE;
-		}
-		break;
-	case EVENT_WinPaint:
-		{
-            DrawWindow();
-			bHandled = TRUE;
-		}
-		break;
 	case EVENT_CtrlSelect:
 		{
 			//switch(pEvent->sParam1)
