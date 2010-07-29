@@ -53,6 +53,8 @@ class CGRect;
 class CCSpriteSheet : public CCNode, public CCTextureProtocol
 {
 public:
+    ~CCSpriteSheet(void);
+
 	/** initializes a CCSpriteSheet with a texture2d and capacity of children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 */
@@ -64,7 +66,7 @@ public:
 	 */
 	CCSpriteSheet* initWithFile(const char *pszFileImage, UINT32 uCapacity);
 
-	void increaceAtlasCapacity(void);
+	void increaseAtlasCapacity(void);
 
 	/** creates an sprite with a rect in the CCSpriteSheet.
 	 It's the same as:
@@ -93,17 +95,30 @@ public:
 	/** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
 	 @warning Removing a child from a CCSpriteSheet is very slow
 	 */
-	void removeChild(CCSprite *pobSprite, bool bDoCleanup);
+//	void removeChild(CCSprite *pobSprite, bool bDoCleanup);
 
 	void insertChild(CCSprite *pobSprite, UINT32 uIndex);
 	void removeSpriteFromAtlas(CCSprite *pobSprite);
 
 	UINT32 rebuildIndexInOrder(CCSprite *pobParent, UINT32 uIndex);
 	UINT32 atlasIndexForChild(CCSprite *pobSprite, INT32 nZ);
+	unsigned int highestAtlasIndexInChild(CCSprite *pSprite);
+	unsigned int lowestAtlasIndexInChild(CCSprite *pSprite);
 
 	// CCTextureProtocol
 	virtual CCTexture2D* getTexture(void);
 	virtual void setTexture(CCTexture2D *texture);
+	virtual void setBlendFunc(ccBlendFunc blendFunc);
+	virtual ccBlendFunc getBlendFunc(void);
+
+	virtual void visit(void);
+	virtual CCNode * addChild(CCNode * child);
+	virtual CCNode * addChild(CCNode * child, int zOrder);
+	virtual CCNode * addChild(CCNode * child, int zOrder, int tag);
+	virtual void reorderChild(CCNode * child, int zOrder);
+	virtual void removeChild(CCNode* child, bool cleanup);
+	virtual void removeAllChildrenWithCleanup(bool cleanup);
+	virtual void draw(void);
 public:
 	/** creates a CCSpriteSheet with a texture2d and a default capacity of 29 children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
@@ -127,26 +142,25 @@ public:
 	*/
 	static CCSpriteSheet* spriteSheetWithFile(const char *pszFileImage, UINT32 uCapacity);
 
+private:
+	void updateBlendFunc(void);
+
 public:
 	// attributes
 
-	// returns the TextureAtlas that is used, retain
-	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
-	inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas)
-	{
-		m_pobTextureAtlas = pobTextureAtlas;
-		if (pobTextureAtlas)
-		{
-			pobTextureAtlas->retain();
-		}
-	}
-
-	// conforms to CCTextureProtocol protocol
-	inline ccBlendFunc getBlendFunction(void) { return m_blendFunc; }
-	inline void setBlendFunction(ccBlendFunc blendFunc) { m_blendFunc = blendFunc; }
-
 	// descendants (children, gran children, etc)
 	inline NSArray<CCSprite*>* getDescendants(void) { return m_pobDescendants; }
+
+	// TextureAtlas
+	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
+	inline void setTextureAtlas(CCTextureAtlas *pTextureAtlas)
+	{
+		m_pobTextureAtlas = pTextureAtlas;
+		if (pTextureAtlas)
+		{
+			pTextureAtlas->retain();
+		}
+	}
 
 protected:
 	CCTextureAtlas *m_pobTextureAtlas;

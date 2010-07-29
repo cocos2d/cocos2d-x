@@ -369,6 +369,10 @@
 				RelativePath=".\sprite_nodes\CCSpriteFrame.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\sprite_nodes\CCSpriteSheet.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="support"
@@ -656,10 +660,6 @@
 		</File>
 		<File
 			RelativePath=".\CCDrawingPrimitives.h"
-			>
-		</File>
-		<File
-			RelativePath=".\effects\CCGrid.h"
 			>
 		</File>
 		<File
