@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "cocoa/NSMutableDictionary.h"
 
 #include <string>
+#include <map>
 
 class CCSprite;
 
@@ -58,7 +59,7 @@ public:
 													   "y"  -> "12"
 													   ...
 	 */
-	void addSpriteFramesWithDictionary(NSMutableDictionary<std::string> *pobDictionary, CCTexture2D *pobTexture);
+	void addSpriteFramesWithDictionary(std::map<std::string, void*> *pobDictionary, CCTexture2D *pobTexture);
 
 	/** Adds multiple Sprite Frames from a plist file.
 	 * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -115,7 +116,7 @@ private:
 	CCSpriteFrameCache(void) {}
 
 protected:
-	NSMutableDictionary<std::string, CCSpriteFrame*> *m_pobSpriteFrames;
+	std::map<std::string, CCSpriteFrame*> *m_pSpriteFramesMap;
 };
 
 #endif // __SPRITE_CCSPRITE_FRAME_CACHE_H__

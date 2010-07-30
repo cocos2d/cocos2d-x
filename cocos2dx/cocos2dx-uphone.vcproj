@@ -374,6 +374,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\sprite_nodes\CCSpriteFrameCache.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\sprite_nodes\CCSpriteSheet.cpp"
 				>
 			</File>
