@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
+#include <tg3.h>
 #include "CCFileUtils.h"
 #include "Cocos2dDefine.h"
 
@@ -179,11 +180,14 @@ char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 	}
 
 	// get the user data path and append relativepath to it
-    char *pszUserPath = (char*)EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
+	const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
+	char *pszUserPath = new char[TUString::StrLen(pszTmp) + 1];
+	TUString::StrUnicodeToStrUtf8((Char*)pszUserPath, pszTmp);
 	char *pszRet;
 
 	INT32 nLen = strlen(pszRelativePath) + strlen(pszUserPath) + 1;
 	pszRet = new char[nLen];
+	memset(pszRet, 0, nLen);
 	strncat(pszRet, pszUserPath, strlen(pszUserPath));
 	strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
 

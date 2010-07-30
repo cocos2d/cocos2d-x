@@ -40,6 +40,10 @@ UIImage::UIImage(int nX, int nY, void *buffer)
 
 UIImage::~UIImage(void)
 {
+	if (m_pBitmap)
+	{
+		m_pBitmap->Destroy();
+	}
 }
 
 bool UIImage::initWithContentsOfFile(const string &strPath)
@@ -49,10 +53,27 @@ bool UIImage::initWithContentsOfFile(const string &strPath)
 		return false;
 	}
 
-	m_pBitmap = TBitmap::CreateFromFile((TUChar *)(strPath.c_str()));
+	// load the image
 
+	ImageLoader obImgLoader;
+    Image       obImg;
+	TUChar pszPath[strPath.size() + 1];
+    TUString::StrGBToUnicode(pszPath, (const Char *) strPath.c_str());
+    
+	// check if the loading action is successful
+	if (! obImgLoader.loadImage(obImg, pszPath, IT_LOAD_FMT_UNKNOWN))
+	{
+		return false;
+	}
+
+	// init bitmap
+    m_pBitmap = (TBitmap *) obImg.GetTBitmap();
+    m_pBitmap = m_pBitmap->DupBitmapTo32();
+
+	// the hight is 0??
 	if (m_pBitmap && m_pBitmap->GetHeight() == 0)
 	{
+		m_pBitmap->Destroy();
 		m_pBitmap = NULL;
 
 		return false;
@@ -169,7 +190,7 @@ UINT8* UIImage::getRGBA8888Data(void)
 		nH = pBitmap->GetHeight();
 
 		// alloc memory and store the bitmap data
-		pBufferRet = new UINT8(nW * nH * 4);
+		pBufferRet = new UINT8[nW * nH * 4];
 		memcpy(pBufferRet, pBitmap->GetDataPtr(), nW * nH * 4);
 	} while(0);
 

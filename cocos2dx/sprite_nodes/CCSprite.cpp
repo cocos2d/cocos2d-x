@@ -353,6 +353,7 @@ void CCSprite::setTextureRect(CGRect rect, CGSize size)
 	m_obRect = rect;
 
 	setContentSize(size);
+	updateTextureCoords(rect);
 
 	// rendering using SpriteSheet
 	if (m_bUsesSpriteSheet)
@@ -380,36 +381,39 @@ void CCSprite::setTextureRect(CGRect rect, CGSize size)
 
 void CCSprite::updateTextureCoords(CGRect rect)
 {
-	float atlasWidth = (float)m_pobTexture->getPixelsWide();
-	float atlasHeight = (float)m_pobTexture->getPixelsHigh();
-
-	float left = m_obRect.origin.x / atlasWidth;
-	float right = (m_obRect.origin.x + m_obRect.size.width) / atlasWidth;
-	float top = m_obRect.origin.y / atlasHeight;
-	float bottom = (m_obRect.origin.y + m_obRect.size.height) / atlasHeight;
-
-	if (m_bFlipX)
+	if (m_pobTexture)
 	{
-		float tmp = left;
-		left = right;
-		right = tmp;
-	}
+		float atlasWidth = (float)m_pobTexture->getPixelsWide();
+		float atlasHeight = (float)m_pobTexture->getPixelsHigh();
 
-	if (m_bFlipY)
-	{
-		float tmp = top;
-		top = bottom;
-		bottom = tmp;
-	}
+		float left = m_obRect.origin.x / atlasWidth;
+		float right = (m_obRect.origin.x + m_obRect.size.width) / atlasWidth;
+		float top = m_obRect.origin.y / atlasHeight;
+		float bottom = (m_obRect.origin.y + m_obRect.size.height) / atlasHeight;
 
-	m_sQuad.bl.texCoords.u = left;
-	m_sQuad.bl.texCoords.v = bottom;
-	m_sQuad.br.texCoords.u = right;
-	m_sQuad.br.texCoords.v = bottom;
-	m_sQuad.tl.texCoords.u = left;
-	m_sQuad.tl.texCoords.v = top;
-	m_sQuad.tr.texCoords.u = right;
-	m_sQuad.tr.texCoords.v = top;
+		if (m_bFlipX)
+		{
+			float tmp = left;
+			left = right;
+			right = tmp;
+		}
+
+		if (m_bFlipY)
+		{
+			float tmp = top;
+			top = bottom;
+			bottom = tmp;
+		}
+
+		m_sQuad.bl.texCoords.u = left;
+		m_sQuad.bl.texCoords.v = bottom;
+		m_sQuad.br.texCoords.u = right;
+		m_sQuad.br.texCoords.v = bottom;
+		m_sQuad.tl.texCoords.u = left;
+		m_sQuad.tl.texCoords.v = top;
+		m_sQuad.tr.texCoords.u = right;
+		m_sQuad.tr.texCoords.v = top;
+	}
 }
 
 void CCSprite::updateTransform(void)
@@ -978,11 +982,18 @@ void CCSprite::setTexture(CCTexture2D *texture)
 	assert(! m_bUsesSpriteSheet);
 
 	// // accept texture==nil as argument
-	assert(! m_pobTexture);
+	assert((! texture) || dynamic_cast<CCTexture2D*>(texture));
 
-	m_pobTexture->release();
+	if (m_pobTexture)
+	{
+	    m_pobTexture->release();
+	}
+
 	m_pobTexture = texture;
-	texture->retain();
+	if (texture)
+	{
+	    texture->retain();
+	}
 
 	updateBlendFunc();
 }
