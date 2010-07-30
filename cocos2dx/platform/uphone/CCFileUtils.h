@@ -25,13 +25,17 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_CCFILE_UTILS_H__
 #define __PLATFORM_UPHONE_CCFILE_UTILS_H__
 
+#include <string>
+#include <map>
 #include <ssFile.h>
 
+typedef std::map<std::string, void*> CCDictionary;
 // Helper class to handle file operations
 class CCFileUtils
 {
 public:
 	static char* fullPathFromRelativePath(const char *pszRealPath);
+	static std::map<std::string, void*> *dictionaryWithContentsOfFile(const char *pFileName);
 };
 
 #endif // __PLATFORM_UPHONE_CCFILE_UTILS_H__
