@@ -199,7 +199,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 		{
 			// prevents overloading the autorelease pool
 			UIImage * image = new UIImage();
-			image->initWithContentsOfFile(fullpath);
+
+			NSAssert(image->initWithContentsOfFile(fullpath), "")
 			tex = new CCTexture2D();
 			tex->initWithImage(image);
 			CCX_SAFE_DELETE(image);// image->release();
