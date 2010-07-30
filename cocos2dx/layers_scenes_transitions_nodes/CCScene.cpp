@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCScene.h"
 #include "support/CGPointExtension.h"
-//#include "CCDirector.h"
+#include "CCDirector.h"
 
 
 CCScene::CCScene()
@@ -35,21 +35,19 @@ CCScene::CCScene()
 
 CCScene::~CCScene()
 {
-/// @todo
 }
 
 bool CCScene::init()
 {
-	/// @todo CCDirector
 	bool bRet = false;
-// 	do 
-// 	{
-// 		CCDirector * pDirector;
-// 		CCX_BREAK_IF( ! (pDirector = CCDirector::getSharedDirector()) );
-// 		this->setContentSize(pDirector->getWinSize());
-// 		// success
-// 		bRet = true;
-// 	} while (0);
-// 	
+ 	do 
+ 	{
+ 		CCDirector * pDirector;
+ 		CCX_BREAK_IF( ! (pDirector = CCDirector::getSharedDirector()) );
+ 		this->setContentSize(pDirector->getWinSize());
+ 		// success
+ 		bRet = true;
+ 	} while (0);
+ 	
  	return bRet;
 }

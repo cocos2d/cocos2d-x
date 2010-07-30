@@ -342,7 +342,7 @@ void CCTextureAtlas::drawNumberOfQuads(UINT32 n)
 
 #else // ! CC_TEXTURE_ATLAS_USES_VBO
 	
-	int offset = (int)m_pQuads;/// @todo my god! how to understand this
+	int offset = (int)m_pQuads;
 
 	// vertex
 	int diff = offsetof( ccV3F_C4B_T2F, vertices);

@@ -48,7 +48,6 @@ protected:
 	NSLock				*m_pContextLock;
 
 private:
-
 	void addImageWithAsyncObject(CCAsyncObject* async);
 
 public:
@@ -65,7 +64,6 @@ public:
 	@since v0.99.0
 	*/
 	static void purgeSharedTextureCache();
-
 
 	/** Returns a Texture2D object given an file image
 	* If the file image was not previously loaded, it will create a new CCTexture2D
@@ -133,7 +131,7 @@ public:
 	@since v0.99.4
 	*/
 	void removeTextureForKey(const std::string & textureKeyName);
-
 };
 
 #endif //__CCTEXTURE_CACHE_H__
+

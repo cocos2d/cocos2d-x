@@ -27,8 +27,8 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
-//#include "CCDirector.h"
-
+#include "CCDirector.h"
+#include "touch_dispatcher/CCTouch.h"
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -917,24 +917,24 @@ CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
 {
 	
 	CGPoint worldPoint = this->convertToWorldSpace(nodePoint);
-	// @todo CCDirector::getSharedDirector()->convertToUI(worldPoint);
+	CCDirector::getSharedDirector()->convertToUI(worldPoint);
 	return ccp(0,0);
 }
 
 // convenience methods which take a CCTouch instead of CGPoint
-/** @todo
-- (CGPoint)convertTouchToNodeSpace:(CCTouch *)touch
+/** @todo*/
+CGPoint CCNode::convertTouchToNodeSpace(CCTouch *touch)
 {
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[CCDirector sharedDirector] convertToGL: point];
-	return [self convertToNodeSpace:point];
-}*/
-/** @todo
-- (CGPoint)convertTouchToNodeSpaceAR:(CCTouch *)touch
-{
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[CCDirector sharedDirector] convertToGL: point];
-	return [self convertToNodeSpaceAR:point];
+	CGPoint point = touch->locationInView(touch->view());
+	point = CCDirector::getSharedDirector()->convertToGL(point);
+	return this->convertToNodeSpace(point);
 }
-*/
+/** @todo*/
+CGPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
+{
+	CGPoint point = touch->locationInView(touch->view());
+	point = CCDirector::getSharedDirector()->convertToGL(point);
+	return this->convertToNodeSpaceAR(point);
+}
+
 

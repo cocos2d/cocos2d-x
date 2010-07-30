@@ -35,7 +35,7 @@ THE SOFTWARE.
 class CCCamera;
 class CCGridBase;
 class CGPoint;
-
+class CCTouch;
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -482,12 +482,12 @@ public:
 	/** convenience methods which take a CCTouch instead of CGPoint
 	@since v0.7.1
 	*/
-/// @todo	CGPoint convertTouchToNodeSpace(CCTouch * touch);
+	CGPoint convertTouchToNodeSpace(CCTouch * touch);
 
 	/** converts a CCTouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
 	@since v0.7.1
 	*/
-/// @todo	CGPoint convertTouchToNodeSpaceAR:(CCTouch * touch);
+	CGPoint convertTouchToNodeSpaceAR(CCTouch * touch);
 
 };
 

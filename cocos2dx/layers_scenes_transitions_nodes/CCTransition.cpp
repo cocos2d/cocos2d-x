@@ -25,7 +25,8 @@ THE SOFTWARE.
 #include "CCTransition.h"
 #include "CCCamera.h"
 #include "support/cgpointextension.h"
-
+#include "CCDirector.h"
+#include "touch_dispatcher/CCTouchDispatcher.h"
 
 enum {
 	kSceneFade = 0xFADEFADE,
@@ -50,27 +51,23 @@ CCTransitionScene * CCTransitionScene::transitionWithDurationAndScene(ccTime t, 
 
 CCTransitionScene * CCTransitionScene::initWithDurationAndScene(ccTime t, CCScene *scene)
 {
-	/** @todo ccdirector
-	NSAssert( s != nil, @"Argument scene must be non-nil");
+	NSAssert( scene != NULL, "Argument scene must be non-nil");
 
-	if( (self=[super init]) ) {
+	m_fDuration = t;
 
-		duration = t;
+	// retain
+	m_pInScene = scene;
+	m_pInScene->retain();
+	m_pOutScene = CCDirector::getSharedDirector()->getRunningScene();
+	m_pOutScene->retain();
 
-		// retain
-		inScene = [s retain];
-		outScene = [[CCDirector sharedDirector] runningScene];
-		[outScene retain];
+	NSAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
 
-		NSAssert( inScene != outScene, @"Incoming scene must be different from the outgoing scene" );
+	// disable events while transitions
+	CCTouchDispatcher::getSharedDispatcher()->setDispatchEvents(false);
+	this->sceneOrder();
 
-		// disable events while transitions
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
-
-		[self sceneOrder];
-	}
-	return self;*/
-	return NULL;
+	return this;
 }
 
 void CCTransitionScene::sceneOrder()
@@ -111,23 +108,16 @@ void CCTransitionScene::finish()
 
 void CCTransitionScene::setNewScene(ccTime dt)
 {	
-	/** @todo CCDirector
-
 	//[self unschedule:_cmd];
 	this->unschedule(schedule_selector(CCTransitionScene::setNewScene));
-
-	CCDirector *director = [CCDirector sharedDirector];
-
+	CCDirector *director = CCDirector::getSharedDirector();
 	// Before replacing, save the "send cleanup to scene"
-	sendCleanupToScene = [director sendCleanupToScene];
-
-	[director replaceScene: inScene];
-
+	m_bIsSendCleanupToScene = director->isSendCleanupToScene();
+	director->replaceScene(m_pInScene);
 	// enable events while transitions
-	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
-
+	CCTouchDispatcher::getSharedDispatcher()->setDispatchEvents(true);
 	// issue #267
-	[outScene setVisible:YES];	*/
+	m_pOutScene->setIsVisible(true);
 }
 
 void CCTransitionScene::hideOutShowIn()
@@ -170,16 +160,13 @@ void CCTransitionScene::cleanup()
 //
 CCOrientedTransitionScene::CCOrientedTransitionScene()
 {
-/// @todo
 }
 CCOrientedTransitionScene::~CCOrientedTransitionScene()
 {
-/// @todo
 }
 
 CCOrientedTransitionScene * CCOrientedTransitionScene::transitionWithDurationAndScene(ccTime t, CCScene *scene, tOrientation orientation)
 {
-/// @todo	return [[[self alloc] initWithDuration:t scene:s orientation:o] autorelease];
 	CCOrientedTransitionScene * pScene = new CCOrientedTransitionScene();
 	pScene->initWithDurationAndScene(t,scene,orientation);
 	pScene->autorelease();
@@ -200,11 +187,9 @@ CCOrientedTransitionScene * CCOrientedTransitionScene::initWithDurationAndScene(
 //
 CCRotoZoomTransition::CCRotoZoomTransition()
 {
-	/// @todo
 }
 CCRotoZoomTransition::~CCRotoZoomTransition()
 {
-	/// @todo
 }
 
 void CCRotoZoomTransition:: onEnter()
@@ -239,11 +224,9 @@ void CCRotoZoomTransition:: onEnter()
 //
 CCJumpZoomTransition::CCJumpZoomTransition()
 {
-	/// @todo
 }
 CCJumpZoomTransition::~CCJumpZoomTransition()
 {
-	/// @todo
 }
 
 void CCJumpZoomTransition::onEnter()
@@ -280,11 +263,9 @@ void CCJumpZoomTransition::onEnter()
 //
 CCMoveInLTransition::CCMoveInLTransition()
 {
-	/// @todo
 }
 CCMoveInLTransition::~CCMoveInLTransition()
 {
-	/// @todo
 }
 
 void CCMoveInLTransition::onEnter()
@@ -319,30 +300,24 @@ CCIntervalAction* CCMoveInLTransition::easeActionWithAction(CCIntervalAction* ac
 
 void CCMoveInLTransition::initScenes()
 {
-	/** @todo
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
-	m_pInScene->setPosition: ccp( -s.width,0);*/
+	m_pInScene->setPosition( ccp(-s.width,0) );
 }
-
-
 
 //
 // MoveInR
 //
 CCMoveInRTransition::CCMoveInRTransition()
 {
-	/// @todo
 }
 CCMoveInRTransition::~CCMoveInRTransition()
 {
-	/// @todo
 }
 
 void CCMoveInRTransition::initScenes()
 {
-	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp( s.width,0) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition( ccp(s.width,0) );
 }
 
 //
@@ -350,18 +325,15 @@ void CCMoveInRTransition::initScenes()
 //
 CCMoveInTTransition::CCMoveInTTransition()
 {
-	/// @todo
 }
 CCMoveInTTransition::~CCMoveInTTransition()
 {
-	/// @todo
 }
 
 void CCMoveInTTransition::initScenes()
 {
-	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp( 0, s.height) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition( ccp(0,s.height) );
 }
 
 
@@ -370,18 +342,15 @@ void CCMoveInTTransition::initScenes()
 //
 CCMoveInBTransition::CCMoveInBTransition()
 {
-	/// @todo
 }
 CCMoveInBTransition::~CCMoveInBTransition()
 {
-	/// @todo
 }
 
 void CCMoveInBTransition::initScenes()
 {
-	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp( 0, -s.height) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition( ccp(0,-s.height) );
 }
 
 
@@ -396,11 +365,9 @@ void CCMoveInBTransition::initScenes()
 #define ADJUST_FACTOR 0.5f
 CCSlideInLTransition::CCSlideInLTransition()
 {
-	/// @todo
 }
 CCSlideInLTransition::~CCSlideInLTransition()
 {
-	/// @todo
 }
 
 void CCSlideInLTransition::onEnter()
@@ -430,9 +397,8 @@ void CCSlideInLTransition::sceneOrder()
 
 void CCSlideInLTransition:: initScenes()
 {
-	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp( -(s.width-ADJUST_FACTOR),0) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition( ccp(-(s.width-ADJUST_FACTOR),0) );
 }
 
 CCIntervalAction* CCSlideInLTransition::action()
@@ -457,11 +423,9 @@ CCIntervalAction* CCSlideInLTransition::easeActionWithAction(CCIntervalAction* a
 //
 CCSlideInRTransition::CCSlideInRTransition()
 {
-	/// @todo
 }
 CCSlideInRTransition::~CCSlideInRTransition()
 {
-	/// @todo
 }
 
 void CCSlideInRTransition::sceneOrder()
@@ -471,9 +435,8 @@ void CCSlideInRTransition::sceneOrder()
 
 void CCSlideInRTransition::initScenes()
 {
-	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp( s.width-ADJUST_FACTOR,0) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition( ccp(s.width-ADJUST_FACTOR,0) );
 }
 
 
@@ -491,11 +454,9 @@ CCIntervalAction* CCSlideInRTransition:: action()
 //
 CCSlideInTTransition::CCSlideInTTransition()
 {
-	/// @todo
 }
 CCSlideInTTransition::~CCSlideInTTransition()
 {
-	/// @todo
 }
 
 void CCSlideInTTransition::sceneOrder()
@@ -505,9 +466,8 @@ void CCSlideInTTransition::sceneOrder()
 
 void CCSlideInTTransition::initScenes()
 {
-	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp(0,s.height-ADJUST_FACTOR) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition( ccp(0,s.height-ADJUST_FACTOR) );
 }
 
 
@@ -525,11 +485,9 @@ CCIntervalAction* CCSlideInTTransition::action()
 //
 CCSlideInBTransition::CCSlideInBTransition()
 {
-	/// @todo
 }
 CCSlideInBTransition::~CCSlideInBTransition()
 {
-	/// @todo
 }
 
 void CCSlideInBTransition::sceneOrder()
@@ -539,9 +497,8 @@ void CCSlideInBTransition::sceneOrder()
 
 void CCSlideInBTransition:: initScenes()
 {
-	/** @todo
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[inScene setPosition: ccp(0,-(s.height-ADJUST_FACTOR)) ];*/
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_pInScene->setPosition( ccp(0,-(s.height-ADJUST_FACTOR)) );
 }
 
 
@@ -560,11 +517,9 @@ CCIntervalAction* CCSlideInBTransition:: action()
 //
 CCShrinkGrowTransition::CCShrinkGrowTransition()
 {
-	/// @todo
 }
 CCShrinkGrowTransition::~CCShrinkGrowTransition()
 {
-	/// @todo
 }
 
 void CCShrinkGrowTransition::onEnter()
@@ -601,11 +556,9 @@ CCIntervalAction* CCShrinkGrowTransition:: easeActionWithAction(CCIntervalAction
 //
 CCFlipXTransition::CCFlipXTransition()
 {
-	/// @todo
 }
 CCFlipXTransition::~CCFlipXTransition()
 {
-	/// @todo
 }
 
 void CCFlipXTransition::onEnter()
@@ -654,11 +607,9 @@ void CCFlipXTransition::onEnter()
 //
 CCFlipYTransition::CCFlipYTransition()
 {
-	/// @todo
 }
 CCFlipYTransition::~CCFlipYTransition()
 {
-	/// @todo
 }
 
 void CCFlipYTransition::onEnter()
@@ -707,11 +658,9 @@ void CCFlipYTransition::onEnter()
 //
 CCFlipAngularTransition::CCFlipAngularTransition()
 {
-	/// @todo
 }
 CCFlipAngularTransition::~CCFlipAngularTransition()
 {
-	/// @todo
 }
 
 void CCFlipAngularTransition::onEnter()
@@ -758,11 +707,9 @@ void CCFlipAngularTransition::onEnter()
 //
 CCZoomFlipXTransition::CCZoomFlipXTransition()
 {
-	/// @todo
 }
 CCZoomFlipXTransition::~CCZoomFlipXTransition()
 {
-	/// @todo
 }
 
 void CCZoomFlipXTransition::onEnter()
@@ -817,11 +764,9 @@ void CCZoomFlipXTransition::onEnter()
 //
 CCZoomFlipYTransition::CCZoomFlipYTransition()
 {
-	/// @todo
 }
 CCZoomFlipYTransition::~CCZoomFlipYTransition()
 {
-	/// @todo
 }
 
 void CCZoomFlipYTransition::onEnter()
@@ -877,11 +822,9 @@ void CCZoomFlipYTransition::onEnter()
 //
 CCZoomFlipAngularTransition::CCZoomFlipAngularTransition()
 {
-	/// @todo
 }
 CCZoomFlipAngularTransition::~CCZoomFlipAngularTransition()
 {
-	/// @todo
 }
 
 
@@ -938,11 +881,9 @@ void CCZoomFlipAngularTransition::onEnter()
 //
 CCFadeTransition::CCFadeTransition()
 {
-	/// @todo
 }
 CCFadeTransition::~CCFadeTransition()
 {
-	/// @todo
 }
 
 
@@ -999,24 +940,20 @@ void CCFadeTransition::onExit()
 	this->removeChildByTag(kSceneFade, false);
 }
 
-
-
 //
 // Cross Fade Transition
 //
 CCCrossFadeTransition::CCCrossFadeTransition()
 {
-	/// @todo
 }
 CCCrossFadeTransition::~CCCrossFadeTransition()
 {
-	/// @todo
 }
 
 
 void CCCrossFadeTransition:: draw()
 {
-	/// @todo override draw since both scenes (textures) are rendered in 1 scene
+	// override draw since both scenes (textures) are rendered in 1 scene
 }
 
 void CCCrossFadeTransition::onEnter()
@@ -1099,11 +1036,9 @@ void CCCrossFadeTransition::onExit()
 //
 CCTurnOffTilesTransition::CCTurnOffTilesTransition()
 {
-	/// @todo
 }
 CCTurnOffTilesTransition::~CCTurnOffTilesTransition()
 {
-	/// @todo
 }
 
 
@@ -1138,19 +1073,14 @@ CCIntervalAction* CCTurnOffTilesTransition:: easeActionWithAction(CCIntervalActi
 	return action;
 }
 
-
-
-
 //
 // SplitCols Transition
 //
 CCSplitColsTransition::CCSplitColsTransition()
 {
-	/// @todo
 }
 CCSplitColsTransition::~CCSplitColsTransition()
 {
-	/// @todo
 }
 
 
@@ -1196,11 +1126,9 @@ CCIntervalAction* CCSplitColsTransition::easeActionWithAction(CCIntervalAction *
 //
 CCSplitRowsTransition::CCSplitRowsTransition()
 {
-	/// @todo
 }
 CCSplitRowsTransition::~CCSplitRowsTransition()
 {
-	/// @todo
 }
 
 
@@ -1210,18 +1138,14 @@ CCIntervalAction* CCSplitRowsTransition::action()
 	/// @todo return [CCSplitRows actionWithRows:3 duration:duration/2.0f];
 }
 
-
-
 //
 // FadeTR Transition
 //
 CCFadeTRTransition::CCFadeTRTransition()
 {
-	/// @todo
 }
 CCFadeTRTransition::~CCFadeTRTransition()
 {
-	/// @todo
 }
 
 
@@ -1269,11 +1193,9 @@ CCIntervalAction* CCFadeTRTransition:: easeActionWithAction(CCIntervalAction* ac
 
 CCFadeBLTransition::CCFadeBLTransition()
 {
-	/// @todo
 }
 CCFadeBLTransition::~CCFadeBLTransition()
 {
-	/// @todo
 }
 
 CCIntervalAction*  CCFadeBLTransition::actionWithSize(ccGridSize size)
@@ -1282,20 +1204,15 @@ CCIntervalAction*  CCFadeBLTransition::actionWithSize(ccGridSize size)
 	/// @todo return [CCFadeOutBLTiles actionWithSize:v duration:duration];
 }
 
-
-
 //
 // FadeUp Transition
 //
 CCFadeUpTransition::CCFadeUpTransition()
 {
-	/// @todo
 }
 CCFadeUpTransition::~CCFadeUpTransition()
 {
-	/// @todo
 }
-
 
 CCIntervalAction* CCFadeUpTransition::actionWithSize(ccGridSize size)
 {
@@ -1303,17 +1220,14 @@ CCIntervalAction* CCFadeUpTransition::actionWithSize(ccGridSize size)
 	/// @todo return [CCFadeOutUpTiles actionWithSize:v duration:duration];
 }
 
-
 //
 // FadeDown Transition
 //
 CCFadeDownTransition::CCFadeDownTransition()
 {
-	/// @todo
 }
 CCFadeDownTransition::~CCFadeDownTransition()
 {
-	/// @todo
 }
 
 CCIntervalAction* CCFadeDownTransition::actionWithSize(ccGridSize size)

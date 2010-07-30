@@ -22,17 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include <stack>
+#include <string>
 #include <cctype>
 #include "CCTextureCache.h"
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "cocoa/NSData.h"
 #include "platform/platform.h"
-//#include "CCDirector.h"
+#include "CCDirector.h"
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
-
-
 
 class CCAsyncObject : NSObject
 {
@@ -304,27 +304,30 @@ void CCTextureCache::removeAllTextures()
 
 void CCTextureCache::removeUnusedTextures()
 {
-	/** @todo [textures allKeys]
-	NSArray *keys = [textures allKeys];
-	for( id key in keys ) {
-		id value = [textures objectForKey:key];		
-		if( [value retainCount] == 1 ) {
-			CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
-			[textures removeObjectForKey:key];
+	std::vector<std::string> keys = m_pTextures->allKeys();
+	std::vector<std::string>::iterator it;
+	for (it = keys.begin(); it <= keys.end(); it++)
+	{
+		CCTexture2D *value = m_pTextures->objectForKey(*it);
+		if (value->retainCount() == 1)
+		{
+			CCLOG("cocos2d: CCTextureCache: removing unused texture: %s", (*it).c_str());
+			m_pTextures->removeObjectForKey(*it);
 		}
-	}*/
+	}
 }
 
 void CCTextureCache::removeTexture(CCTexture2D* tex)
 {
-	/** @todo
 	if( ! tex )
 		return;
 
-	NSArray *keys = [textures allKeysForObject:tex];
+	std::vector<std::string> keys = m_pTextures->allKeysForObject(tex);
 
-	for( NSUInteger i = 0; i < [keys count]; i++ )
-		[textures removeObjectForKey:[keys objectAtIndex:i]];*/
+	for (UINT32 i = 0; i < keys.size(); i++)
+	{
+		m_pTextures->removeObjectForKey(keys[i]);
+	}
 }
 
 void CCTextureCache::removeTextureForKey(const std::string & textureKeyName)

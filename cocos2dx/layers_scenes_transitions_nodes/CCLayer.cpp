@@ -22,27 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include <stdarg.h>
 #include "CCLayer.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
-#include <stdarg.h>
-
+#include "CCDirector.h"
+#include "support/CGPointExtension.h"
 
 // CCLayer
 CCLayer::CCLayer()
 {
-	/// @todo director
-// 	if( (self=[super init]) ) {
-// 
-// 		CGSize s = [[CCDirector sharedDirector] winSize];
-// 		anchorPoint_ = ccp(0.5f, 0.5f);
-// 		[self setContentSize:s];
-// 		self.isRelativeAnchorPoint = NO;
-// 
-// 		isTouchEnabled = NO;
-// 		isAccelerometerEnabled = NO;
-// 	}
-// 
-// 	return self;
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	this->setContentSize(s);
+	m_bIsRelativeAnchorPoint = false;
+	m_bIsTouchEnabled = false;
+	m_bIsAccelerometerEnabled = false;
 }
 
 CCLayer::~CCLayer()
@@ -77,22 +71,12 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 			}
 			else
 			{
-				/// @todo param this error
-				//CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
+				// have problems?
+				CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCTargetedTouchDelegate*>(this));
+				CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCStandardTouchDelegate*>(this));
 			}
 		}
 	}
-	
-	/** objc
-	if( m_bIsTouchEnabled != enabled ) {
-		m_bIsTouchEnabled = enabled;
-	if( isRunning_ ) {
-	if( enabled )
-	[self registerWithTouchDispatcher];
-	else
-	[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
-	}
-	}*/
 }
 
 /// isAccelerometerEnabled getter
@@ -236,10 +220,8 @@ CCColorLayer* CCColorLayer::initWithColorWidthHeight(ccColor4B color, GLfloat wi
 
 CCColorLayer * CCColorLayer::initWithColor(ccColor4B color)
 {
-	/** @todo director
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	return [self initWithColor:color width:s.width height:s.height];*/
-	return NULL;
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	return this->initWithColorWidthHeight(color, s.width, s.height);
 }
 
 /// override contentSize

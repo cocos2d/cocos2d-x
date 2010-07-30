@@ -49,7 +49,6 @@ void CCRadialCCWTransition::sceneOrder()
 	m_bIsInSceneOnTop = false;
 }
 
-/** @todo no declare in .h*/
 CCProgressTimerType CCRadialCCWTransition::radialType()
 {
 	return kCCProgressTimerTypeRadialCCW;
@@ -57,7 +56,7 @@ CCProgressTimerType CCRadialCCWTransition::radialType()
 
 void CCRadialCCWTransition::onEnter()
 {
-	/** @todo
+	/** @todo CCProgressTimer
 	[super onEnter];
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
@@ -109,7 +108,6 @@ void CCRadialCCWTransition::onExit()
 	__super::onExit();
 }
 
-/** @todo no declare in .h*/
 CCProgressTimerType CCRadialCWTransition::radialType()
 {
 	return kCCProgressTimerTypeRadialCW;

@@ -15,6 +15,7 @@
 #define __CCMUTABLE_DICTIONARY_H__
 
 #include <map>
+#include <vector>
 #include "NSObject.h"
 #include "NSMutableArray.h"
 
@@ -51,30 +52,30 @@ public:
 	}
 
 	/// return all the keys
-	NSMutableArray<_T> * allKeys()
+	std::vector<std::string> allKeys()
 	{
-		NSMutableArray<_T> *pRet = new NSMutableArray<_T>();
+		std::vector<std::string> tRet;
 		NSObjectMapIter it;
 		for( it = m_Map.begin(); it != m_Map.end(); ++it)
 		{
-			pRet->addObject(it->first);
+			tRet.push_back(it->first);
 		}
-		return pRet;
+		return tRet;
 	}
 
 	/** @warning : We use '==' to compare two objects*/
-	NSMutableArray<_T> * allKeysForObject(_ValueT object)
+	std::vector<std::string> allKeysForObject(_ValueT object)
 	{
-		NSMutableArray<_T> *pRet = new NSMutableArray<_T>();
+		std::vector<std::string> tRet;
 		NSObjectMapIter it;
 		for( it= m_Map.begin(); it != m_Map.end(); ++it)
 		{
 			if (it->second == object)
 			{
-				pRet->addObject(it->first);
+				tRet.push_back(it->first);
 			}
 		}
-		return pRet;
+		return tRet;
 	}
 
 	_ValueT objectForKey(_T key)			///< 
@@ -175,13 +176,6 @@ public:
 		}
 
 		m_Map.clear();
-	}
-/** @todo from xml file*/
-	static NSMutableDictionary<_T, _ValueT>* dictionaryWithContentsOfFile(const char * path)
-	{
-		NSAssert(0, "not implemented : Use the CCFileUtils::DictionaryWithContentsOfFile()"); 
-
-		return NULL;
 	}
 
 	static NSMutableDictionary<_T, _ValueT>* dictionaryWithDictionary(NSMutableDictionary<_T, _ValueT>* srcDict)
