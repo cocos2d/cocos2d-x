@@ -128,12 +128,11 @@ void CCLayer::onExit()
 	[super onExit];*/
 }
 
-/** @todo CCTouch
--(BOOL) ccTouchBegan:(CCTouch *)touch withEvent:(UIEvent *)event
+bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
 {
-	NSAssert(NO, @"Layer#ccTouchBegan override me");
-	return YES;
-}*/
+	NSAssert(false, "Layer#ccTouchBegan override me");
+	return true;
+}
 
 /// ColorLayer
 
