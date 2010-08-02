@@ -43,8 +43,8 @@ public:
 
 	bool save(const std::string &strFileName, int nFormat);
 
-	UINT32 width(void);
-	UINT32 height(void);
+	unsigned int width(void);
+	unsigned int height(void);
 
 	bool isAlphaPixelFormat(void);
 

@@ -101,7 +101,7 @@ CCTouchDispatcher::~CCTouchDispatcher(void)
 //
 void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, NSMutableArray<CCTouchHandler*> *pArray)
 {
-	UINT32 u = 0;
+	unsigned int u = 0;
 
 	NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator iter;
 	for (iter = pArray->begin(); iter != pArray->end(); ++iter)
@@ -229,7 +229,7 @@ void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 //
 // dispatch events
 //
-void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, UINT32 uIndex)
+void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int uIndex)
 {
 	assert(uIndex > 0 && uIndex < 4);
 
@@ -237,8 +237,8 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, UINT32 uIndex)
 	m_bLocked = true;
 
 	// optimization to prevent a mutable copy when it is not necessary
-	UINT32 uTargetedHandlersCount = m_pTargetedHandlers->count();
-	UINT32 uStandardHandlersCount = m_pStandardHandlers->count();
+	unsigned int uTargetedHandlersCount = m_pTargetedHandlers->count();
+	unsigned int uStandardHandlersCount = m_pStandardHandlers->count();
 	bool bNeedsMutableSet = (uTargetedHandlersCount && uStandardHandlersCount);
 
 	pMutableTouches = (bNeedsMutableSet ? pTouches->mutableCopy() : pTouches);

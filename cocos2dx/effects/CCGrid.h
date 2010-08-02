@@ -52,7 +52,7 @@ public:
 
 protected:
 	bool		m_bActive;
-	INT32		m_nReuseGrid;
+	int 		m_nReuseGrid;
 	ccGridSize  m_obGridSize;
 	CCTexture2D *m_pobTexture;
     CGPoint		m_obStep;

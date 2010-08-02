@@ -41,7 +41,6 @@ THE SOFTWARE.
  */
 
 #include "Cocoa/CGGeometry.h"	// for CGPoint
-#include "platform/platform.h"
 
 /** draws a point given x and y coordinate */
 void ccDrawPoint( CGPoint point );

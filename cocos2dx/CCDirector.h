@@ -33,11 +33,10 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 #include "cocoa/CGGeometry.h"
 #include "CCXEGLView.h"
+#include "platform/platform.h"
 
 // OpenGL related
 // #include "support/CCXEGLView.h"
-
-#include "platform/platform.h"
 
 /** @typedef tPixelFormat
  Possible Pixel Formats for the CCXEGLView
@@ -455,7 +454,7 @@ protected:
 	
 	/* display FPS ? */
 	bool   m_bDisplayFPS;
-	INT32  m_nFrames;
+	int  m_nFrames;
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
 #if	CC_DIRECTOR_FAST_FPS

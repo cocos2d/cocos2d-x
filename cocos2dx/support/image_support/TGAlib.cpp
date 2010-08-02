@@ -60,7 +60,7 @@ void tgaLoadHeader(FILE *pFile, tImageTGA *psInfo) {
 // loads the image pixels. You shouldn't call this function directly
 void tgaLoadImageData(FILE *pFile, tImageTGA *psInfo) {
 	
-	INT32 mode,total,i;
+	int mode,total,i;
 	unsigned char aux;
 	
 	// mode equal the number of components for each pixel
@@ -83,9 +83,9 @@ void tgaLoadImageData(FILE *pFile, tImageTGA *psInfo) {
 // loads the RLE encoded image pixels. You shouldn't call this function directly
 void tgaLoadRLEImageData(FILE *pFile, tImageTGA *psInfo)
 {
-	UINT32 mode,total,i, index = 0;
+	unsigned int mode,total,i, index = 0;
 	unsigned char aux[4], runlength = 0;
-	UINT32 skip = 0, flag = 0;
+	unsigned int skip = 0, flag = 0;
 	
 	// mode equal the number of components for each pixel
 	mode = psInfo->pixelDepth / 8;
@@ -141,10 +141,10 @@ void tgaLoadRLEImageData(FILE *pFile, tImageTGA *psInfo)
 void tgaFlipImage( tImageTGA *psInfo )
 {
 	// mode equal the number of components for each pixel
-	INT32 mode = psInfo->pixelDepth / 8;
-	INT32 rowbytes = psInfo->width*mode;
+	int mode = psInfo->pixelDepth / 8;
+	int rowbytes = psInfo->width*mode;
 	unsigned char *row = (unsigned char *)malloc(rowbytes);
-	INT32 y;
+	int y;
 	
 	if (row == NULL) return;
 	
@@ -164,7 +164,7 @@ tImageTGA * tgaLoad(const char *pszFilename) {
 	
 	FILE *file;
 	tImageTGA *info;
-	INT32 mode,total;
+	int mode,total;
 	
 	// allocate memory for the info struct and check!
 	info = (tImageTGA *)malloc(sizeof(tImageTGA));
@@ -243,7 +243,7 @@ tImageTGA * tgaLoad(const char *pszFilename) {
 // converts RGB to greyscale
 void tgaRGBtogreyscale(tImageTGA *psInfo) {
 	
-	INT32 mode,i,j;
+	int mode,i,j;
 	
 	unsigned char *newImageData;
 	

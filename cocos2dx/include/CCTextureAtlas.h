@@ -53,9 +53,9 @@ protected:
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 
 	/** quantity of quads that are going to be drawn */
-	CCX_PROPERTY_READONLY(UINT32, m_uTotalQuads, TotalQuads)
+	CCX_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
 	/** quantity of quads that can be stored with the current texture atlas size */
-	CCX_PROPERTY_READONLY(UINT32, m_uCapacity, Capacity)
+	CCX_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
 	/** Texture of the texture atlas */
 	CCX_PROPERTY(CCTexture2D *, m_pTexture, Texture)
 	/** Quads that are going to be rendered */
@@ -71,20 +71,20 @@ public:
 	/** creates a TextureAtlas with an filename and with an initial capacity for Quads.
 	* The TextureAtlas capacity can be increased in runtime.
 	*/
-	static CCTextureAtlas * textureAtlasWithFile(const char* file , UINT32 capacity);
+	static CCTextureAtlas * textureAtlasWithFile(const char* file , unsigned int capacity);
 
 	/** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
 	* The TextureAtlas capacity can be increased in runtime.
 	*
 	* WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
 	*/
-	CCTextureAtlas * initWithFile(const char* file, UINT32 capacity);
+	CCTextureAtlas * initWithFile(const char* file, unsigned int capacity);
 
 	/** creates a TextureAtlas with a previously initialized Texture2D object, and
 	* with an initial capacity for n Quads. 
 	* The TextureAtlas capacity can be increased in runtime.
 	*/
-	static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *tex, UINT32 capacity);
+	static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *tex, unsigned int capacity);
 
 	/** initializes a TextureAtlas with a previously initialized Texture2D object, and
 	* with an initial capacity for Quads. 
@@ -92,31 +92,31 @@ public:
 	*
 	* WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
 	*/
-	CCTextureAtlas * initWithTexture(CCTexture2D *tex, UINT32 capacity);
+	CCTextureAtlas * initWithTexture(CCTexture2D *tex, unsigned int capacity);
 
 	/** updates a Quad (texture, vertex and color) at a certain index
 	* index must be between 0 and the atlas capacity - 1
 	@since v0.8
 	*/
-	void updateQuad(ccV3F_C4B_T2F_Quad* quad, UINT32 index);
+	void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
 
 	/** Inserts a Quad (texture, vertex and color) at a certain index
 	index must be between 0 and the atlas capacity - 1
 	@since v0.8
 	*/
-	void insertQuad(ccV3F_C4B_T2F_Quad* quad, UINT32 index);
+	void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
 
 	/** Removes the quad that is located at a certain index and inserts it at a new index
 	This operation is faster than removing and inserting in a quad in 2 different steps
 	@since v0.7.2
 	*/
-	void insertQuadFromIndex(UINT32 fromIndex, UINT32 newIndex);
+	void insertQuadFromIndex(unsigned int fromIndex, unsigned int newIndex);
 
 	/** removes a quad at a given index number.
 	The capacity remains the same, but the total number of quads to be drawn is reduced in 1
 	@since v0.7.2
 	*/
-	void removeQuadAtIndex(UINT32 index);
+	void removeQuadAtIndex(unsigned int index);
 
 	/** removes all Quads.
 	The TextureAtlas capacity remains untouched. No memory is freed.
@@ -131,13 +131,13 @@ public:
 	* It returns YES if the resize was successful.
 	* If it fails to resize the capacity it will return NO with a new capacity of 0.
 	*/
-	bool resizeCapacity(UINT32 n);
+	bool resizeCapacity(unsigned int n);
 
 
 	/** draws n quads
 	* n can't be greater than the capacity of the Atlas
 	*/
-	void drawNumberOfQuads(UINT32 n);
+	void drawNumberOfQuads(unsigned int n);
 
 	/** draws all the Atlas's Quads
 	*/

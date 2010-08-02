@@ -209,7 +209,7 @@ CCColorLayer* CCColorLayer::initWithColorWidthHeight(ccColor4B color, GLfloat wi
 	m_tColor.b = color.b;
 	m_cOpacity = color.a;
 
-	for (UINT32 i=0; i<sizeof(m_pSquareVertices) / sizeof(m_pSquareVertices[0]); i++ )
+	for (unsigned int i=0; i<sizeof(m_pSquareVertices) / sizeof(m_pSquareVertices[0]); i++ )
 		m_pSquareVertices[i] = 0.0f;
 
 	this->updateColor();
@@ -251,7 +251,7 @@ void CCColorLayer::changeHeight(GLfloat h)
 
 void CCColorLayer::updateColor()
 {
-	for( UINT32 i=0; i < sizeof(m_pSquareColors) / sizeof(m_pSquareColors[0]); i++ )
+	for( unsigned int i=0; i < sizeof(m_pSquareColors) / sizeof(m_pSquareColors[0]); i++ )
 	{
 		if( i % 4 == 0 )
 			m_pSquareColors[i] = m_tColor.r;

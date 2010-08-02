@@ -82,12 +82,12 @@ CCTexture2DPixelFormat CCTexture2D::getPixelFormat()
 	return m_ePixelFormat;
 }
 
-UINT32 CCTexture2D::getPixelsWide()
+unsigned int CCTexture2D::getPixelsWide()
 {
 	return m_uPixelsWide;
 }
 
-UINT32 CCTexture2D::getPixelsHigh()
+unsigned int CCTexture2D::getPixelsHigh()
 {
 	return m_uPixelsHigh;
 }
@@ -127,7 +127,7 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 	return m_bHasPremultipliedAlpha;
 }
 
-CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, UINT32 pixelsWide, UINT32 pixelsHigh, CGSize contentSize)
+CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize)
 {
 	glGenTextures(1, &m_uName);
 	glBindTexture(GL_TEXTURE_2D, m_uName);
@@ -184,7 +184,7 @@ std::string CCTexture2D::description(void)
 
 CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 {
-	UINT32 POTWide, POTHigh;
+	unsigned int POTWide, POTHigh;
 
 	if(uiImage == NULL)
 	{
@@ -221,9 +221,9 @@ CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 	return this;
 }
 /// @todo to be checked
-CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UINT32 POTWide, UINT32 POTHigh)
+CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
-	UINT32					i;
+	unsigned int					i;
 	void*					data = NULL;
 	void*					tempData =NULL;
 	unsigned int*			inPixel32 = NULL;
@@ -295,7 +295,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 				UINT8* pPixelData = (UINT8*) tempData;
 				UINT8* pTargetData = (UINT8*) data;
 
-				for(UINT32 y=0; y<image->height(); ++y)
+				for(unsigned int y=0; y<image->height(); ++y)
 				{
 					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
 				}
@@ -562,7 +562,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 		m_fMaxT = 1.0f;
 		m_uPixelsWide = pvr->getWidth();		// width
 		m_uPixelsHigh = pvr->getHeight();		// height
-		/// be careful : UINT32 to float
+		/// be careful : unsigned int to float
 		m_tContentSize = CGSizeMake(static_cast<float>(m_uPixelsWide), static_cast<float>(m_uPixelsHigh));
 
 		pvr->release();

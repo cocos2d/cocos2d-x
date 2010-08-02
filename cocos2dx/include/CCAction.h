@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "cocoa/NSObject.h"
 #include "cocoa/NSZone.h"
-#include "platform/platform.h"
 
 enum {
 	//! Default tag
@@ -82,8 +81,8 @@ public:
      NSObject* getOriginalTarget(void);
 
 	 // The action tag. An identifier of the action
-	 INT32 getTag(void);
-	 void setTag(INT32 nTag);
+	 int getTag(void);
+	 void setTag(int nTag);
 
 public:
 	// Allocates and initializes the action
@@ -92,7 +91,7 @@ public:
 protected:
 	NSObject	*m_pOriginalTarget;
 	NSObject	*m_pTarget;
-	INT32		m_nTag;
+	int 		m_nTag;
 };
 
 /** Base class actions that do have a finite time duration.

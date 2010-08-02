@@ -42,7 +42,7 @@ CCSpriteSheet* CCSpriteSheet::spriteSheetWithTexture(CCTexture2D *pobTexture)
 	return pSpriteSheet;
 }
 
-CCSpriteSheet* CCSpriteSheet::spriteSheetWithTexture(CCTexture2D *pobTexture, UINT32 uCapacity)
+CCSpriteSheet* CCSpriteSheet::spriteSheetWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity)
 {
 	CCSpriteSheet *pSpriteSheet = new CCSpriteSheet();
 	pSpriteSheet->initWithTexture(pobTexture, uCapacity);
@@ -52,7 +52,7 @@ CCSpriteSheet* CCSpriteSheet::spriteSheetWithTexture(CCTexture2D *pobTexture, UI
 }
 
 // creation with file image
-CCSpriteSheet* CCSpriteSheet::spriteSheetWithFile(const char *pszFileImage, UINT32 uCapacity)
+CCSpriteSheet* CCSpriteSheet::spriteSheetWithFile(const char *pszFileImage, unsigned int uCapacity)
 {
 	CCSpriteSheet *pSpriteSheet = new CCSpriteSheet();
 	pSpriteSheet->initWithFile(pszFileImage, uCapacity);
@@ -71,7 +71,7 @@ CCSpriteSheet* CCSpriteSheet::spriteSheetWithFile(const char *pszFileImage)
 }
 
 // init with CCTexture2D
-CCSpriteSheet* CCSpriteSheet::initWithTexture(CCTexture2D *pobTexture, UINT32 uCapacity)
+CCSpriteSheet* CCSpriteSheet::initWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity)
 {
 	m_blendFunc.src = CC_BLEND_SRC;
 	m_blendFunc.dst = CC_BLEND_DST;
@@ -89,7 +89,7 @@ CCSpriteSheet* CCSpriteSheet::initWithTexture(CCTexture2D *pobTexture, UINT32 uC
 }
 
 // init with FileImage
-CCSpriteSheet* CCSpriteSheet::initWithFile(const char *pszFileImage, UINT32 uCapacity)
+CCSpriteSheet* CCSpriteSheet::initWithFile(const char *pszFileImage, unsigned int uCapacity)
 {
 	CCTexture2D *pTexture2D = CCTextureCache::sharedTextureCache()->addImage(pszFileImage);
 	return initWithTexture(pTexture2D, uCapacity);
@@ -216,7 +216,7 @@ void CCSpriteSheet::removeChild(CCNode *child, bool cleanup)
 	__super::removeChild(pSprite, cleanup);
 }
 
-void CCSpriteSheet::removeChildAtIndex(UINT32 uIndex, bool bDoCleanup)
+void CCSpriteSheet::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 {
 	removeChild(static_cast<CCSprite*>(m_pChildren->getObjectAtIndex(uIndex)), bDoCleanup);
 }
@@ -369,7 +369,7 @@ unsigned int CCSpriteSheet::lowestAtlasIndexInChild(CCSprite *pSprite)
 	}
 }
 
-unsigned int CCSpriteSheet::atlasIndexForChild(CCSprite *pobSprite, INT32 nZ)
+unsigned int CCSpriteSheet::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 {
 	NSMutableArray<CCNode*> *pBrothers = pobSprite->getParent()->getChildren();
 	unsigned int uChildIndex = pBrothers->getIndexOfObject(pobSprite);
@@ -430,7 +430,7 @@ unsigned int CCSpriteSheet::atlasIndexForChild(CCSprite *pobSprite, INT32 nZ)
 
 // add child helper
 
-void CCSpriteSheet::insertChild(CCSprite *pobSprite, UINT32 uIndex)
+void CCSpriteSheet::insertChild(CCSprite *pobSprite, unsigned int uIndex)
 {
 	pobSprite->useSpriteSheetRender(this);
 	pobSprite->setAtlasIndex(uIndex);

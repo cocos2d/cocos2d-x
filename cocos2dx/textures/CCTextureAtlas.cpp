@@ -31,6 +31,8 @@ THE SOFTWARE.
 // support
 #include "CCTexture2D.h"
 
+#include <math.h>
+
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
 // implementation CCTextureAtlas
@@ -55,12 +57,12 @@ CCTextureAtlas::~CCTextureAtlas()
 	m_pTexture->release();
 }
 
-UINT32 CCTextureAtlas::getTotalQuads()
+unsigned int CCTextureAtlas::getTotalQuads()
 {
 	return m_uTotalQuads;
 }
 
-UINT32 CCTextureAtlas::getCapacity()
+unsigned int CCTextureAtlas::getCapacity()
 {
 	return m_uCapacity;
 }
@@ -87,7 +89,7 @@ void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 
 // TextureAtlas - alloc & init
 
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, unsigned int capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
 	pTextureAtlas->initWithFile(file, capacity);
@@ -95,7 +97,7 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, UINT32 c
 	return pTextureAtlas;
 }
 
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, unsigned int capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
 	pTextureAtlas->initWithTexture(tex, capacity);
@@ -103,7 +105,7 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, UINT3
 	return pTextureAtlas;
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithFile(const char * file, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
 {
 	// retained in property
 	CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addImage(file);	
@@ -111,7 +113,7 @@ CCTextureAtlas * CCTextureAtlas::initWithFile(const char * file, UINT32 capacity
 	return initWithTexture(tex, capacity);
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *tex, UINT32 capacity)
+CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *tex, unsigned int capacity)
 {
 
 	m_uCapacity = capacity;
@@ -152,7 +154,7 @@ std::string CCTextureAtlas::description()
 
 void CCTextureAtlas::initIndices()
 {
-	for( UINT32 i=0; i < m_uCapacity; i++)
+	for( unsigned int i=0; i < m_uCapacity; i++)
 	{
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 		m_pIndices[i*6+0] = i*4+0;
@@ -188,16 +190,16 @@ void CCTextureAtlas::initIndices()
 
 // TextureAtlas - Update, Insert, Move & Remove
 
-void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, UINT32 index)
+void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 {
 	NSAssert( index >= 0 && index < m_uCapacity, "updateQuadWithTexture: Invalid index");
 
-	m_uTotalQuads = MAX( index+1, m_uTotalQuads);
+	m_uTotalQuads = max( index+1, m_uTotalQuads);
 
 	m_pQuads[index] = *quad;	
 }
 
-void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, UINT32 index)
+void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 {
 	NSAssert( index >= 0 && index < m_uCapacity, "insertQuadWithTexture: Invalid index");
 
@@ -216,7 +218,7 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, UINT32 index)
 	m_pQuads[index] = *quad;
 }
 
-void CCTextureAtlas::insertQuadFromIndex(UINT32 oldIndex, UINT32 newIndex)
+void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int newIndex)
 {
 	NSAssert( newIndex >= 0 && newIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
 	NSAssert( oldIndex >= 0 && oldIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
@@ -224,7 +226,7 @@ void CCTextureAtlas::insertQuadFromIndex(UINT32 oldIndex, UINT32 newIndex)
 	if( oldIndex == newIndex )
 		return;
 
-	UINT32 howMany = std::abs( oldIndex - newIndex);
+	unsigned int howMany = std::abs( oldIndex - newIndex);
 	int dst = oldIndex;
 	int src = oldIndex + 1;
 	if( oldIndex > newIndex) {
@@ -238,11 +240,11 @@ void CCTextureAtlas::insertQuadFromIndex(UINT32 oldIndex, UINT32 newIndex)
 	m_pQuads[newIndex] = quadsBackup;
 }
 
-void CCTextureAtlas::removeQuadAtIndex(UINT32 index)
+void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
 {
 	NSAssert( index >= 0 && index < m_uTotalQuads, "removeQuadAtIndex: Invalid index");
 
-	UINT32 remaining = (m_uTotalQuads-1) - index;
+	unsigned int remaining = (m_uTotalQuads-1) - index;
 
 
 	// last object doesn't need to be moved
@@ -262,13 +264,13 @@ void CCTextureAtlas::removeAllQuads()
 }
 
 // TextureAtlas - Resize
-bool CCTextureAtlas::resizeCapacity(UINT32 newCapacity)
+bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 {
 	if( newCapacity == m_uCapacity )
 		return true;
 
 	// update capacity and totolQuads
-	m_uTotalQuads = MIN(m_uTotalQuads, newCapacity);
+	m_uTotalQuads = min(m_uTotalQuads, newCapacity);
 	m_uCapacity = newCapacity;
 
 	void * tmpQuads = realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
@@ -307,7 +309,7 @@ void CCTextureAtlas::drawQuads()
 	this->drawNumberOfQuads(m_uTotalQuads);
 }
 
-void CCTextureAtlas::drawNumberOfQuads(UINT32 n)
+void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 {	
 
 	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());

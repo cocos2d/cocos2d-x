@@ -103,8 +103,8 @@ public:
 	inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
 	// The index used on the TextureATlas. Don't modify this value unless you know what you are doing
-	inline UINT32 getAtlasIndex(void) { return m_uAtlasIndex; }
-	inline void setAtlasIndex(UINT32 uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
+	inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
+	inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
 
 	// returns the rect of the CCSprite
 	inline CGRect getTextureRect(void) { return m_obRect; }
@@ -201,10 +201,10 @@ public:
 
 	virtual void removeChild(CCNode* pChild, bool bCleanup);
 	virtual void removeAllChildrenWithCleanup(bool bCleanup);
-	virtual void reorderChild(CCNode *pChild, INT32 zOrder);
+	virtual void reorderChild(CCNode *pChild, int zOrder);
 	virtual CCNode* addChild(CCNode *pChild);
-	virtual CCNode* addChild(CCNode *pChild, INT32 zOrder);
-	virtual CCNode* addChild(CCNode *pChild, INT32 zOrder, INT32 tag);
+	virtual CCNode* addChild(CCNode *pChild, int zOrder);
+	virtual CCNode* addChild(CCNode *pChild, int zOrder, int tag);
 
 	virtual void setDirtyRecursively(bool bValue);
 	virtual void setPosition(CGPoint pos);
@@ -320,7 +320,7 @@ public:
 	// Animation
 
 	// changes the display frame based on an animation and an index.
-	void setDisplayFrame(const char *pszAnimationName, INT32 nFrameIndex);
+	void setDisplayFrame(const char *pszAnimationName, int nFrameIndex);
 
 protected:
     /*
@@ -343,7 +343,7 @@ protected:
 	// Data used when the sprite is rendered using a CCSpriteSheet
 	//
 	CCTextureAtlas			*m_pobTextureAtlas;		// Sprite Sheet texture atlas (weak reference)
-	UINT32					m_uAtlasIndex;			// Absolute (real) Index on the SpriteSheet
+	unsigned int					m_uAtlasIndex;			// Absolute (real) Index on the SpriteSheet
 	CCSpriteSheet			*m_pobSpriteSheet;		// Used spritesheet (weak reference)
 	ccHonorParentTransform	m_eHonorParentTransform;// whether or not to transform according to its parent transformations
 	bool					m_bDirty;				// Sprite needs to be updated

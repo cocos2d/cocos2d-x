@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #ifndef __NS_ZONE_H__
 #define __NS_ZONE_H__
-
 #include "platform/platform.h"
 
 class NSObject;

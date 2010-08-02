@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __COCOA_NS_MUTATLE_ARRAY_H__
 
 #include "cocoa/NSObject.h"
-#include "platform/platform.h"
 #include <vector>
 #include <assert.h>
 
@@ -40,7 +39,7 @@ public:
 	typedef typename NSObjectArray::reverse_iterator	NSMutableArrayRevIterator;
 
 public:
-	NSMutableArray(UINT uSize = 0)
+	NSMutableArray(unsigned int uSize = 0)
 	{
 		m_array.resize(uSize);
 	}
@@ -50,12 +49,12 @@ public:
 		removeAllObjects();
 	}
 
-	UINT32 count(void)
+	unsigned int count(void)
 	{
 		return m_array.size();
 	}
 
-	UINT32 getIndexOfObject(T pObject)
+	unsigned int getIndexOfObject(T pObject)
 	{
 		if (m_array.empty() || (pObject == NULL))
 		{
@@ -63,8 +62,8 @@ public:
 		}
 
 		NSMutableArray<T>::NSMutableArrayIterator iter;
-		UINT32 uRet = 0;
-		INT32 i;
+		unsigned int uRet = 0;
+		int i;
 		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
 		{
 			if (*iter == pObject)
@@ -101,7 +100,7 @@ public:
 	T getLastObject(void)
 	{
         T pObject = NULL;
-		INT32 count = this->count();
+		int count = this->count();
 
 		if (count > 0)
 		{
@@ -111,7 +110,7 @@ public:
 		return pObject;
 	}
 
-	T getObjectAtIndex(UINT32 uIndex)
+	T getObjectAtIndex(unsigned int uIndex)
 	{
 		assert(uIndex < count());
 
@@ -154,7 +153,7 @@ public:
 		}
 	}
 
-    void insertObjectAtIndex(T pObject, UINT32 uIndex)
+    void insertObjectAtIndex(T pObject, unsigned int uIndex)
 	{
 		// make sure the object is not null
 		if (pObject == NULL)
@@ -172,7 +171,7 @@ public:
 	// Removing objects
 	void removeLastObject(void)
 	{
-		INT32 count = this->count();
+		int count = this->count();
 
 		if (count > 0)
 		{
@@ -202,7 +201,7 @@ public:
 		}
 	}
 
-	void removeObjectAtIndex(UINT32 uIndex)
+	void removeObjectAtIndex(unsigned int uIndex)
 	{
 		if (m_array.empty() || uIndex == 0)
 		{
@@ -232,7 +231,7 @@ public:
 		m_array.clear();
 	}
 
-	void replaceObjectAtIndex(UINT32 uIndex, T pObject)
+	void replaceObjectAtIndex(unsigned int uIndex, T pObject)
 	{
 		if (uIndex >= count())
 		{

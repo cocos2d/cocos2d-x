@@ -46,7 +46,7 @@ public:
 	}
 
 	/// return the number of items
-	UINT32 count()
+	unsigned int count()
 	{
 		return m_Map.size();
 	}

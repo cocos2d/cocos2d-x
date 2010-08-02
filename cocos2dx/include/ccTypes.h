@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCTYPES_H__
 
 #include "cocoa/CGGeometry.h"
-#include "platform/platform.h"
 #include <GLES/gl.h>
 
 /** RGB color composed of bytes 3 bytes

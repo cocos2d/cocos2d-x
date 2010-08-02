@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __COCOA_NSOBJECT_H__
 #define __COCOA_NSOBJECT_H__
 
-#include "platform/platform.h"
 class NSZone;
 class NSObject;
 class NSString;
@@ -40,9 +39,9 @@ class NSObject : public CCCopying
 {
 protected:
 	// object id
-    UINT32		m_uID;
+    unsigned int		m_uID;
 	// count of refrence
-	UINT32		m_uRefrence;
+	unsigned int		m_uRefrence;
 	// is the object autoreleased
 	bool		m_bManaged;		
 public:
@@ -54,7 +53,7 @@ public:
 	NSObject* autorelease(void);
 	NSObject* copy(void);
 	bool isSingleRefrence(void);
-	UINT32 retainCount(void);
+	unsigned int retainCount(void);
 	bool isEqual(const NSObject* pObject);
 
 	friend class NSAutoreleasePool;

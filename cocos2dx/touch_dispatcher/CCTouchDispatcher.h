@@ -121,7 +121,7 @@ public:
     the higher the priority */
 	void setPriority(int nPriority, CCTouchDelegate *pDelegate);
 
-	void touches(NSSet *pTouches, UIEvent *pEvent, UINT32 uIndex);
+	void touches(NSSet *pTouches, UIEvent *pEvent, unsigned int uIndex);
 
 	virtual void touchesBegan(NSSet* touches, UIEvent* pEvent);
 	virtual void touchesMoved(NSSet* touches, UIEvent* pEvent);

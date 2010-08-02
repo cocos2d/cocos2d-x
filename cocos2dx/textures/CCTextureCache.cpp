@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "cocoa/NSData.h"
-#include "platform/platform.h"
 #include "CCDirector.h"
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
@@ -147,10 +146,14 @@ void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsy
 
 	CCTexture2D * tex;
 // 
-// 	if ( (tex = m_pTextures->objectForKey(filename)) )
-// 	{
-// 		target->
-// 	}
+// 	if ( (tex = m_pTextures->objectForKey(filename)) )
+
+// 	{
+
+// 		target->
+
+// 	}
+
 // 	
 // 	if( (tex=[textures objectForKey: filename] ) ) {
 // 		[target performSelector:selector withObject:tex];
@@ -189,7 +192,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
-		for (UINT32 i = 0; i < temp.length(); ++i)
+		for (unsigned int i = 0; i < temp.length(); ++i)
 			temp[i] = tolower(temp[i]);
 		if (temp.find(".pvr"))
 		{
@@ -325,7 +328,7 @@ void CCTextureCache::removeTexture(CCTexture2D* tex)
 
 	std::vector<std::string> keys = m_pTextures->allKeysForObject(tex);
 
-	for (UINT32 i = 0; i < keys.size(); i++)
+	for (unsigned int i = 0; i < keys.size(); i++)
 	{
 		m_pTextures->removeObjectForKey(keys[i]);
 	}

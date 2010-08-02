@@ -89,9 +89,9 @@ class CCTexture2D : public NSObject
 	/** pixel format of the texture */
 	CCX_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
 	/** width in pixels */
-	CCX_PROPERTY_READONLY(UINT32, m_uPixelsWide, PixelsWide)
+	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
 	/** hight in pixels */
-	CCX_PROPERTY_READONLY(UINT32, m_uPixelsHigh, PixelsHigh)
+	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
 
 	/** texture name */
 	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
@@ -112,7 +112,7 @@ public:
 	std::string description(void);
 
 	/** Intializes with a texture2d with data */
-	CCTexture2D * initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, UINT32 pixelsWide, UINT32 pixelsHigh, CGSize contentSize);
+	CCTexture2D * initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize);
 
 	/**
 	Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
@@ -200,7 +200,7 @@ public:
 	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
 
 private:
-	CCTexture2D * initPremultipliedATextureWithImage(UIImage * image, UINT32 pixelsWide, UINT32 pixelsHigh);
+	CCTexture2D * initPremultipliedATextureWithImage(UIImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
 };
 

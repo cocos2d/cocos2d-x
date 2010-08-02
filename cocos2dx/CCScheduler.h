@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include "platform/platform.h"
 #include "cocoa/NSObject.h"
 #include "cocoa/selector_protocol.h"
 #include "support/data_support/uthash.h"
@@ -120,7 +119,7 @@ public:
 	 The lower the priority, the earlier it is called.
 	 @since v0.99.3
 	 */
-	void scheduleUpdateForTarget(SelectorProtocol *pTarget, INT32 nPriority, bool bPaused);
+	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
 
 	/** Unshedules a selector for a given target.
 	 If you want to unschedule the "update", use unscheudleUpdateForTarget.
@@ -197,7 +196,7 @@ private:
 
 	// update specific
 
-	void priorityIn(struct _listEntry **ppList, SelectorProtocol *pTarget, INT32 nPriority, bool bPaused);
+	void priorityIn(struct _listEntry **ppList, SelectorProtocol *pTarget, int nPriority, bool bPaused);
 	void appendIn(struct _listEntry **ppList, SelectorProtocol *pTarget, bool bPaused);
 
 protected:

@@ -209,7 +209,7 @@ bool CCPVRTexture::createGLTexture()
 		glBindTexture(GL_TEXTURE_2D, m_uName);
 	}
 
-	for (UINT32 i=0; i < m_pImageData->count(); i++)
+	for (unsigned int i=0; i < m_pImageData->count(); i++)
 	{
 /// @todo NSData		data = m_pImageData->getObjectAtIndex(i);
 /// @todo NSData		glCompressedTexImage2D(GL_TEXTURE_2D, i, m_uInternalFormat, width, height, 0, [data length], [data bytes]);

@@ -36,7 +36,7 @@ NSObject* CCCopying::copyWithZone(NSZone *pZone)
 
 NSObject::NSObject(void)
 {
-	static UINT uObjectCount = 0;
+	static unsigned int uObjectCount = 0;
 
 	m_uID = ++uObjectCount;
 
@@ -91,7 +91,7 @@ bool NSObject::isSingleRefrence(void)
 	return m_uRefrence == 1;
 }
 
-UINT32 NSObject::retainCount(void)
+unsigned int NSObject::retainCount(void)
 {
 	return m_uRefrence;
 }

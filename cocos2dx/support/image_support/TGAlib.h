@@ -38,7 +38,7 @@ enum {
 
 /** TGA format */
 typedef struct sImageTGA {
-	INT32 status;
+	int status;
 	unsigned char type, pixelDepth;
 	
 	/** map width */
@@ -49,7 +49,7 @@ typedef struct sImageTGA {
 	
 	/** raw data */
 	unsigned char *imageData;
-	INT32 flipped;
+	int flipped;
 } tImageTGA;
 
 /// load the image header fields. We only keep those that matter!

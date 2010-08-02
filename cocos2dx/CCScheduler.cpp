@@ -36,7 +36,7 @@ typedef struct _listEntry
 {
 	struct	_listEntry	*prev, *next;
 	SelectorProtocol	*target;		// not retained (retained by hashUpdateEntry)
-	INT32				priority;
+	int				priority;
 	bool				paused;
 	
 } tListEntry;
@@ -54,7 +54,7 @@ typedef struct _hashSelectorEntry
 {
 	NSMutableArray<CCTimer*>	*timers;
 	SelectorProtocol			*target;	// hash key (retained)
-	UINT32						timerIndex;
+	unsigned int						timerIndex;
 	CCTimer						*currentTimer;
 	bool						currentTimerSalvaged;
 	bool						paused;
@@ -246,7 +246,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 	if (pElement)
 	{
 		NSMutableArray<CCTimer*>::NSMutableArrayIterator iter;
-		UINT32 i;
+		unsigned int i;
 		for (iter = pElement->timers->begin(), i = 0; iter != pElement->timers->end(); ++iter, ++i)
 		{
 			CCTimer *pTimer = *iter;
@@ -285,7 +285,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 	}
 }
 
-void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, Int32 nPriority, bool bPaused)
+void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int nPriority, bool bPaused)
 {
 	tListEntry *pListElement = (tListEntry *)malloc(sizeof(*pListElement));
 
@@ -352,7 +352,7 @@ void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool 
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
 }
 
-void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, INT32 nPriority, bool bPaused)
+void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused)
 {
 #if COCOS2D_DEBUG >= 1
 	tHashUpdateEntry *pHashElement = NULL;

@@ -671,7 +671,7 @@ void CCDirector::replaceScene(CCScene *pScene)
 {
 	assert(pScene != NULL);
 
-	UINT32 index = m_pobScenesStack->count();
+	unsigned int index = m_pobScenesStack->count();
 
 	m_bSendCleanupToScene = true;
 	m_pobScenesStack->replaceObjectAtIndex(index - 1, pScene);
@@ -694,7 +694,7 @@ void CCDirector::popScene(void)
 	assert(m_pRunningScene != NULL);
 
 	m_pobScenesStack->removeLastObject();
-	UINT32 c = m_pobScenesStack->count();
+	unsigned int c = m_pobScenesStack->count();
 
 	if (c == 0)
 	{

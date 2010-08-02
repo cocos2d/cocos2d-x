@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 // although it is not the same as gettimeofday as unix
 // but we only use the diffrences of tow values
-INT32 CCTime::gettimeofday(struct cc_timeval *tp, void *tzp)
+int CCTime::gettimeofday(struct cc_timeval *tp, void *tzp)
 {
-	UINT32 uSeconds = GetSysSecond();
+	unsigned int uSeconds = GetSysSecond();
 	tp->tv_sec = uSeconds;
 	tp->tv_usec = 0;
 

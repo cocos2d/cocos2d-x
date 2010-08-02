@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "NSObject.h"
 #include <string>
+#include "platform/platform.h"
 
 class NSData : public NSObject
 {

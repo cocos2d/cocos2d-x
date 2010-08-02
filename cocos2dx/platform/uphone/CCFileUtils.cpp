@@ -185,7 +185,7 @@ char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 	TUString::StrUnicodeToStrUtf8((Char*)pszUserPath, pszTmp);
 	char *pszRet;
 
-	INT32 nLen = strlen(pszRelativePath) + strlen(pszUserPath) + 1;
+	int nLen = strlen(pszRelativePath) + strlen(pszUserPath) + 1;
 	pszRet = new char[nLen];
 	memset(pszRet, 0, nLen);
 	strncat(pszRet, pszUserPath, strlen(pszUserPath));

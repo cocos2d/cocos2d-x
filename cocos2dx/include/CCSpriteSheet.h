@@ -58,13 +58,13 @@ public:
 	/** initializes a CCSpriteSheet with a texture2d and capacity of children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 */
-	CCSpriteSheet* initWithTexture(CCTexture2D *pobTexture, UINT32 uCapacity);
+	CCSpriteSheet* initWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity);
 
 	/** initializes a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 The file will be loaded using the TextureMgr.
 	 */
-	CCSpriteSheet* initWithFile(const char *pszFileImage, UINT32 uCapacity);
+	CCSpriteSheet* initWithFile(const char *pszFileImage, unsigned int uCapacity);
 
 	void increaseAtlasCapacity(void);
 
@@ -90,18 +90,18 @@ public:
 	/** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
 	 @warning Removing a child from a CCSpriteSheet is very slow
 	 */
-	void removeChildAtIndex(UINT32 uIndex, bool bDoCleanup);
+	void removeChildAtIndex(unsigned int uIndex, bool bDoCleanup);
 
 	/** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
 	 @warning Removing a child from a CCSpriteSheet is very slow
 	 */
 //	void removeChild(CCSprite *pobSprite, bool bDoCleanup);
 
-	void insertChild(CCSprite *pobSprite, UINT32 uIndex);
+	void insertChild(CCSprite *pobSprite, unsigned int uIndex);
 	void removeSpriteFromAtlas(CCSprite *pobSprite);
 
-	UINT32 rebuildIndexInOrder(CCSprite *pobParent, UINT32 uIndex);
-	UINT32 atlasIndexForChild(CCSprite *pobSprite, INT32 nZ);
+	unsigned int rebuildIndexInOrder(CCSprite *pobParent, unsigned int uIndex);
+	unsigned int atlasIndexForChild(CCSprite *pobSprite, int nZ);
 	unsigned int highestAtlasIndexInChild(CCSprite *pSprite);
 	unsigned int lowestAtlasIndexInChild(CCSprite *pSprite);
 
@@ -128,7 +128,7 @@ public:
 	/** creates a CCSpriteSheet with a texture2d and capacity of children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 */
-	static CCSpriteSheet* spriteSheetWithTexture(CCTexture2D *pobTexture, UINT32 uCapacity);
+	static CCSpriteSheet* spriteSheetWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity);
 
 	/** creates a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
@@ -140,7 +140,7 @@ public:
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 The file will be loaded using the TextureMgr.
 	*/
-	static CCSpriteSheet* spriteSheetWithFile(const char *pszFileImage, UINT32 uCapacity);
+	static CCSpriteSheet* spriteSheetWithFile(const char *pszFileImage, unsigned int uCapacity);
 
 private:
 	void updateBlendFunc(void);

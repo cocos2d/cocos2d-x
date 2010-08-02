@@ -553,10 +553,10 @@ void CCSprite::draw(void)
 #define kQuadSize sizeof(m_sQuad.bl)
 	glBindTexture(GL_TEXTURE_2D, m_pobTexture->getName());
 
-	INT32 offset = (INT32)&m_sQuad;
+	int offset = (int)&m_sQuad;
 
 	// vertex
-	INT32 diff = offsetof(ccV3F_C4B_T2F, vertices);
+	int diff = offsetof(ccV3F_C4B_T2F, vertices);
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*)(offset + diff));
 
 	// color
@@ -592,12 +592,12 @@ CCNode* CCSprite::addChild(CCNode* pChild)
 	return __super::addChild(pChild);
 }
 
-CCNode* CCSprite::addChild(CCNode *pChild, INT32 zOrder)
+CCNode* CCSprite::addChild(CCNode *pChild, int zOrder)
 {
 	return __super::addChild(pChild, zOrder);
 }
 
-CCNode* CCSprite::addChild(CCNode *pChild, INT32 zOrder, INT32 tag)
+CCNode* CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 {
 	assert(pChild != NULL);
 	CCNode* pRet = __super::addChild(pChild, zOrder, tag);
@@ -606,7 +606,7 @@ CCNode* CCSprite::addChild(CCNode *pChild, INT32 zOrder, INT32 tag)
 	{
 		/*
 		///@todo implement after SpriteSheet is implemented
-		UINT32 index = m_pobSpriteSheet->atlasIndexForChild(static_cast<CCSprite*>(pChild), zOrder);
+		unsigned int index = m_pobSpriteSheet->atlasIndexForChild(static_cast<CCSprite*>(pChild), zOrder);
 		m_pobSpriteSheet->insertChild(static_cast<CCSprite*>(pChild), index);
 		*/
 	}
@@ -616,7 +616,7 @@ CCNode* CCSprite::addChild(CCNode *pChild, INT32 zOrder, INT32 tag)
 	return pRet;
 }
 
-void CCSprite::reorderChild(CCNode *pChild, INT32 zOrder)
+void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 {
     assert(pChild != NULL);
 	assert(m_pChildren->containsObject(pChild));

@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "platform/platform.h"
 #include "cocoa/NSObject.h"
 #include <GLES/gl.h>
 #include <string>
