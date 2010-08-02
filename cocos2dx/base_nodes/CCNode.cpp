@@ -68,18 +68,25 @@ CCNode::CCNode(void)
 }
 CCNode::~CCNode()
 {
-	CCLOGINFO( "cocos2d: deallocing", self);
+	CCLOGINFO( "cocos2d: deallocing" );
 
 	// attributes
 	CCX_SAFE_RELEASE(m_pCamera);
 
 	CCX_SAFE_RELEASE(m_pGrid);
 
-	/// @todo
-	cleanup();
+
+	if(m_pChildren && m_pChildren->count() > 0)
+	{
+		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+		for( it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
+		{
+			(*it)->m_pParent = NULL;
+		}
+	}
 
 	// children
-	CCX_SAFE_DELETE(m_pChildren);
+	CCX_SAFE_RELEASE(m_pChildren);
 
 }
 
@@ -238,12 +245,16 @@ CCGridBase* CCNode::getGrid()
 void CCNode::setGrid(CCGridBase* pGrid)
 {
 	if(m_pGrid)
+	{
 		m_pGrid->release();
+	}
 
 	m_pGrid = pGrid;
 
 	if(m_pGrid)
+	{
 		m_pGrid->retain();
+	}
 }
 
 
@@ -434,7 +445,9 @@ CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
 	NSAssert( child->m_pParent == NULL, "child already added. It can't be added again");
 
 	if( ! m_pChildren )
+	{
 		this->childrenAlloc();
+	}
 
 	this->insertChild(child, zOrder);
 
@@ -443,7 +456,9 @@ CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
 	child->setParent(this);
 
 	if( m_bIsRunning )
+	{
 		child->onEnter();
+	}
 	return this;
 }
 
@@ -472,10 +487,14 @@ void CCNode::removeChild(CCNode* child, bool cleanup)
 {
 	// explicit nil handling
 	if (m_pChildren == NULL)
+	{
 		return;
+	}
 
 	if ( m_pChildren->containsObject(child) )
+	{
 		this->detachChild(child,cleanup);
+	}
 }
 
 void CCNode::removeChildByTag(int tag, bool cleanup)
@@ -485,9 +504,13 @@ void CCNode::removeChildByTag(int tag, bool cleanup)
 	CCNode *child = this->getChildByTag(tag);
 
 	if (child == NULL)
+	{
 		CCLOG("cocos2d: removeChildByTag: child not found!");
+	}
 	else
+	{
 		this->removeChild(child, cleanup);
+	}
 }
 
 void CCNode::removeAllChildrenWithCleanup(bool cleanup)
@@ -505,7 +528,7 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 				// IMPORTANT:
 				//  -1st do onExit
 				//  -2nd cleanup
-				if(pNode->m_bIsRunning)
+				if(m_bIsRunning)
 				{
 					pNode->onExit();
 				}
@@ -528,12 +551,16 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 	//  -1st do onExit
 	//  -2nd cleanup
 	if (m_bIsRunning)
+	{
 		child->onExit();
+	}
 
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
 	if (doCleanup)
+	{
 		child->cleanup();
+	}
 
 	// set parent nil at the end
 	child->setParent(NULL);
@@ -567,7 +594,9 @@ void CCNode::insertChild(CCNode* child, int z)
 	}
 
 	if( ! added )
+	{
 		m_pChildren->addObject(child);
+	}
 
 	child->setZOrder(z);
 }
@@ -664,19 +693,25 @@ void CCNode::transform()
 
 	glMultMatrixf(m_pTransformGL);
 	if( m_fVertexZ )
+	{
 		glTranslatef(0, 0, m_fVertexZ);
+	}
 
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
 	if ( m_pCamera /** @todo&& !(m_pGrid && m_pGrid->isActive())*/ ) {
 		bool translate = (m_tAnchorPointInPixels.x != 0.0f || m_tAnchorPointInPixels.y != 0.0f);
 
 		if( translate )
+		{
 			glTranslatef(RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.y), 0);
+		}
 
 		m_pCamera->locate();
 
 		if( translate )
+		{
 			glTranslatef(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
+		}
 	}
 
 
