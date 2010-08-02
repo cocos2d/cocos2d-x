@@ -411,6 +411,8 @@ public:
 	// enables/disables OpenGL depth test
 	void setDepthTest(bool bOn);
 
+	virtual void preMainLoop(void);
+
 public:
 	// returns a shared instance of the director
 	static CCDirector* getSharedDirector(void);
@@ -437,7 +439,6 @@ protected:
 	bool isOpenGLAttached(void);
 	// bool initOpenGLViewWithViewWithFrame(UIView *pView, CGRect obRect);
 
-	virtual void preMainLoop(void);
 	void mainLoop(void);
 	void setNextScene(void);
 	// shows the FPS in the screen
