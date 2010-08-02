@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "CCTransition.h"
 #include "CCSpriteFrameCache.h"
+#include "cocoa/NSAutoreleasePool.h"
 
 #include <string>
 
@@ -129,6 +130,9 @@ CCDirector* CCDirector::init(void)
     m_fContentScaleFactor = 1;
 	m_obScreenSize = m_obSurfaceSize = CGSizeZero;
 
+	// create autorelease pool
+	NSPoolManager::getInstance()->push();
+
 	return this;
 }
 
@@ -143,6 +147,9 @@ CCDirector::~CCDirector(void)
     
 	m_pRunningScene->release();
 	m_pobScenesStack->release();
+
+	// pop the autorelease pool
+	NSPoolManager::getInstance()->pop();
 
 	pobSharedDirector = NULL;
 }
