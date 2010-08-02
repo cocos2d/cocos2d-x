@@ -609,6 +609,7 @@ void CCNode::reorderChild(CCNode *child, int zOrder)
 	m_pChildren->removeObject(child);
 
 	insertChild(child, zOrder);
+	child->release();
 }
 
  void CCNode::draw()
