@@ -150,7 +150,7 @@ CCSprite* CCSprite::spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect re
 
 CCSprite* CCSprite::init(void)
 {
-	m_bDirty = = m_bRecursiveDirty = false;
+	m_bDirty = m_bRecursiveDirty = false;
 
 	// by default use "Self Render".
 	// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
