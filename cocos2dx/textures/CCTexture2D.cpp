@@ -289,7 +289,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 			}
 			else
 			{
-				data = malloc(POTHigh * POTWide * 4);
+				data = new UINT8[POTHigh * POTWide * 4];
 				memset(data, 0, POTHigh * POTWide * 4);
 
 				UINT8* pPixelData = (UINT8*) tempData;
@@ -316,7 +316,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 
 	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-		tempData = malloc(POTHigh * POTWide * 2);
+		tempData = new UINT8[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -327,7 +327,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-		tempData = malloc(POTHigh * POTWide * 2);
+		tempData = new UINT8[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -344,7 +344,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-		tempData = malloc(POTHigh * POTWide * 2);
+		tempData = new UINT8[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
@@ -355,7 +355,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 			((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
 
 
-		CCX_SAFE_FREE(data);
+		CCX_SAFE_DELETE(data);
 		data = tempData;
 	}
 
@@ -367,7 +367,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, UI
 /// @todo		_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 
 		//CGContextRelease(context);
-		CCX_SAFE_FREE(data);
+		CCX_SAFE_DELETE(data);
 	}
 
 	return this;
