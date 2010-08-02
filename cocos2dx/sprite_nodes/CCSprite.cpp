@@ -164,6 +164,7 @@ CCSprite* CCSprite::init(void)
 	m_sBlendFunc.dst = CC_BLEND_DST;
 
 	// update texture (calls updateBlendFunc)
+    m_pobTexture = NULL;
 	setTexture(NULL);
 
 	// clean the Quad
@@ -551,7 +552,14 @@ void CCSprite::draw(void)
 	}
 
 #define kQuadSize sizeof(m_sQuad.bl)
-	glBindTexture(GL_TEXTURE_2D, m_pobTexture->getName());
+    if (m_pobTexture)
+    {
+        glBindTexture(GL_TEXTURE_2D, m_pobTexture->getName());
+    }
+    else
+    {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
 
 	int offset = (int)&m_sQuad;
 
