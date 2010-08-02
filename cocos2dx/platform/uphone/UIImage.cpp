@@ -24,8 +24,10 @@ THE SOFTWARE.
 
 #include "UIImage.h"
 
+#include <ImageToolKit/IT_ImageLoader.h> 
 #include <TG3.h>
 
+using namespace ImageToolKit;
 using namespace std;
 
 UIImage::UIImage(void)
@@ -57,36 +59,45 @@ bool UIImage::initWithContentsOfFile(const string &strPath)
 
 	ImageLoader obImgLoader;
     Image       obImg;
-	TUChar pszPath[strPath.size() + 1];
+	TUChar *pszPath = new TUChar[strPath.size() + 1];
     TUString::StrGBToUnicode(pszPath, (const Char *) strPath.c_str());
-    
-	// check if the loading action is successful
-	if (! obImgLoader.loadImage(obImg, pszPath, IT_LOAD_FMT_UNKNOWN))
-	{
-		return false;
-	}
+    bool bRet = false;
 
-	// init bitmap
-    m_pBitmap = (TBitmap *) obImg.GetTBitmap();
-    m_pBitmap = m_pBitmap->DupBitmapTo32();
-
-	// the hight is 0??
-	if (m_pBitmap && m_pBitmap->GetHeight() == 0)
+	do
 	{
-		m_pBitmap->Destroy();
-		m_pBitmap = NULL;
+		// check if the loading action is successful
+		if (! obImgLoader.loadImage(obImg, pszPath, IT_LOAD_FMT_UNKNOWN))
+		{
+			bRet = false;
+			break;
+		}
 
-		return false;
-	}
+		// init bitmap
+		m_pBitmap = (TBitmap *) obImg.GetTBitmap();
+		m_pBitmap = m_pBitmap->DupBitmapTo32();
 
-	if (m_pBitmap)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+		// the hight is 0??
+		if (m_pBitmap && m_pBitmap->GetHeight() == 0)
+		{
+			m_pBitmap->Destroy();
+			m_pBitmap = NULL;
+
+			bRet = false;
+			break;
+		}
+
+		if (m_pBitmap)
+		{
+			bRet = true;
+		}
+		else
+		{
+			bRet = false;
+		}
+	} while(0);
+
+	delete[] pszPath;
+	return bRet;
 }
 
 unsigned int UIImage::width(void)
