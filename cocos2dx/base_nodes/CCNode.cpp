@@ -382,10 +382,9 @@ void CCNode::cleanup()
 {
 	// actions
 	this->stopAllActions();
-	
-	// timers
 	this->unscheduleAllSelectors();	
 
+	// timers
 	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::cleanup);
 }
 
