@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "cocoa/CGAffineTransform.h"
 #include "cocoa/NSMutableArray.h"
 #include "ccConfig.h"
+#include "ccxCommon.h"
 
 class CCCamera;
 class CCGridBase;
@@ -96,7 +97,7 @@ Camera:
 - Each node has a camera. By default it points to the center of the CCNode.
 */ 
 
-class CCNode : virtual public NSObject, public SelectorProtocol
+class CCX_DLL CCNode : virtual public NSObject, public SelectorProtocol
 {
 
 	// variable property

@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "cocoa/CGGeometry.h"
 #include "CCXEGLView.h"
 #include "platform/platform.h"
+#include "ccxCommon.h"
 
 // OpenGL related
 // #include "support/CCXEGLView.h"
@@ -192,7 +193,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CCDirector : public NSObject
+class CCX_DLL CCDirector : public NSObject
 {
 public: 
 	virtual CCDirector* init(void);

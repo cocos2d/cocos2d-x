@@ -27,10 +27,11 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "NSObject.h"
+#include "ccxCommon.h"
 
 class CCNode;
 
-class SelectorProtocol
+class CCX_DLL SelectorProtocol
 {
 public:
 	virtual void update(ccTime dt) {};

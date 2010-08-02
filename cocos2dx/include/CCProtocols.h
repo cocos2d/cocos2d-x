@@ -27,11 +27,12 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCTexture2D.h"
+#include "ccxCommon.h"
 
 #include <string>
 
 // CC RGBA protocol
-class CCRGBAProtocol
+class CCX_DLL CCRGBAProtocol
 {
 public:
     /** sets Color
@@ -73,7 +74,7 @@ public:
  You can specify the blending fuction.
  @since v0.99.0
  */
-class CCBlendProtocol
+class CCX_DLL CCBlendProtocol
 {
 public:
 	// set the source blending function for the texture
@@ -92,7 +93,7 @@ public:
  But you can change the blending funtion at any time.
  @since v0.8.0
  */
-class CCTextureProtocol : public CCBlendProtocol
+class CCX_DLL CCTextureProtocol : public CCBlendProtocol
 {
 public:
 	// returns the used texture
@@ -103,7 +104,7 @@ public:
 };
 
 // Common interface for Labels
-class CCLabelProtocol
+class CCX_DLL CCLabelProtocol
 {
 public:
 	// sets a new label using an string

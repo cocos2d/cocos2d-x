@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "ccTypes.h"
 #include "cocoa/NSMutableDictionary.h"
+#include "ccxCommon.h"
 
 #include <string>
 
@@ -87,7 +88,7 @@ typedef enum {
  *    - But the rendering will be slower: 1 draw per children.
  *
  */
-class CCSprite : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
+class CCX_DLL CCSprite : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
 {
 public:
 	virtual void draw(void);

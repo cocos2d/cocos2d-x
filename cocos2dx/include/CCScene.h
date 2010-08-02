@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCSCENE_H__
 
 #include "CCNode.h"
+#include "ccxCommon.h"
 
 /** CCScene is a subclass of CCNode that is used only as an abstract concept.
 
@@ -38,7 +39,7 @@ additional logic.
 It is a good practice to use and CCScene as the parent of all your nodes.
 */
 
-class CCScene : public CCNode
+class CCX_DLL CCScene : public CCNode
 {
 public:
 	CCScene();

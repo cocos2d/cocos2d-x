@@ -25,17 +25,19 @@ THE SOFTWARE.
 #ifndef __COCOA_NSOBJECT_H__
 #define __COCOA_NSOBJECT_H__
 
+#include "ccxCommon.h"
+
 class NSZone;
 class NSObject;
 class NSString;
 
-class CCCopying
+class CCX_DLL CCCopying
 {
 public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 };
 
-class NSObject : public CCCopying
+class CCX_DLL NSObject : public CCCopying
 {
 protected:
 	// object id

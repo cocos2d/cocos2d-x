@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
 #include "cocoa/NSObject.h"
+#include "ccxCommon.h"
 
 class CCTouch;
 class UIEvent;
@@ -35,13 +36,13 @@ typedef enum {
 	kTargetedTouchDelegate,
 } eTouchDelegteType;
 
-class CCTouchDelegate : virtual public NSObject
+class CCX_DLL CCTouchDelegate : virtual public NSObject
 {
 public:
 	eTouchDelegteType m_eType;
 };
 
-class CCTargetedTouchDelegate : public CCTouchDelegate
+class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
 {
 public:
 	CCTargetedTouchDelegate() {m_eType = kTargetedTouchDelegate;}
@@ -65,7 +66,7 @@ public:
 */
 
 class NSSet;
-class CCStandardTouchDelegate : public CCTouchDelegate
+class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
 {
 public:
 	CCStandardTouchDelegate() {m_eType = kStandardTouchDelegate;}

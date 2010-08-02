@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "touch_dispatcher/CCTouchDelegateProtocol.h"
+#include "ccxCommon.h"
 
 //
 // CCLayer
@@ -40,7 +41,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive Accelerometer input
 */
 /// @todo public UIAccelerometerDelegate
-class CCLayer : public CCNode, public CCStandardTouchDelegate, public CCTargetedTouchDelegate//, public UIAccelerometerDelegate
+class CCX_DLL CCLayer : public CCNode, public CCStandardTouchDelegate, public CCTargetedTouchDelegate//, public UIAccelerometerDelegate
 {
 public:
 	CCLayer();
