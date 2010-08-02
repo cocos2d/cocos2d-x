@@ -39,8 +39,8 @@ public:
 	CCTimer(void) {}
 
 	// interval in seconds
-    ccTime getInterval(void);
-	void setInterval(ccTime fInterval);
+	inline ccTime getInterval(void) { return m_fInterval; }
+	inline void setInterval(ccTime fInterval){ m_fInterval = fInterval; }
 
     // Initializes a timer with a target and a selector.
 	CCTimer* initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
@@ -98,8 +98,8 @@ public:
 	 @since v0.8
 	 @warning It will affect EVERY scheduled selector / action.
 	 */
-	ccTime getTimeScale(void);
-	void setTimeScale(ccTime fTimeScale);
+	inline ccTime getTimeScale(void) { return m_fTimeScale; }
+	inline void setTimeScale(ccTime fTimeScale) { m_fTimeScale = fTimeScale; }
 
 	/** 'tick' the scheduler.
 	 You should NEVER call this method, unless you know what you are doing.

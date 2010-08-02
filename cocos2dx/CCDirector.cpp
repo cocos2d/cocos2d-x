@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCTransition.h"
 #include "CCTextureCache.h"
 #include "CCTransition.h"
+#include "CCSpriteFrameCache.h"
 
 #include <string>
 
@@ -234,42 +235,16 @@ void CCDirector::calculateDeltaTime(void)
 	m_sLastUpdate = now;
 }
 
-// attribute
-
-// m_pRunningScene
-CCScene* CCDirector::getRunningScene(void)
-{
-	return m_pRunningScene;
-}
 
 // m_dAnimationInterval
-double CCDirector::getAnimationInterval(void)
-{
-    return m_dAnimationInterval;
-}
-
 void CCDirector::setAnimationInterval(double dValue)
 {
 	CCLOG("cocos2d: Director#setAnimationInterval. Overrride me");
 	assert(0);
 }
 
-// m_bDisplayFPS
-bool CCDirector::isDisplayFPS(void)
-{
-	return m_bDisplayFPS;
-}
-
-void CCDirector::setDisplayFPS(bool bDisplayFPS)
-{
-	m_bDisplayFPS = bDisplayFPS;
-}
 
 // m_pobOpenGLView
-CCXEGLView* CCDirector::getOpenGLView(void)
-{
-	return m_pobOpenGLView;
-}
 
 void CCDirector::setOpenGLView(CCXEGLView *pobOpenGLView)
 {
@@ -292,24 +267,6 @@ void CCDirector::setOpenGLView(CCXEGLView *pobOpenGLView)
 
 		setGLDefaultValues();
 	}
-}
-
-// m_ePixelFormat
-void CCDirector::setPixelFormat(tPixelFormat kPixelFormat)
-{
-	assert(! isOpenGLAttached());
-	m_ePixelFormat = kPixelFormat;
-}
-
-tPixelFormat CCDirector::getPiexFormat(void)
-{
-	return m_ePixelFormat;
-}
-
-// m_bNextDeltaTimeZero
-bool CCDirector::isNextDeltaTimeZero(void)
-{
-	return m_bNextDeltaTimeZero;
 }
 
 void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
@@ -344,18 +301,6 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 		  }
 		  */
 	}
-}
-
-// m_bPaused
-bool CCDirector::isPaused(void)
-{
-	return m_bPaused;
-}
-
-// m_eProjection
-ccDirectorProjection CCDirector::getProjection(void)
-{
-	return m_eProjection;
 }
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
@@ -396,39 +341,11 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 	m_eProjection = kProjection;
 }
 
-ccDeviceOrientation CCDirector::getDeviceOrientation(void)
-{
-	return m_eDeviceOrientation;
-}
-
-// m_bSendCleanupToScene
-bool CCDirector::isSendCleanupToScene(void)
-{
-	return m_bSendCleanupToScene;
-}
-
-// m_fContentScaleFactor
-CGFloat CCDirector::getContentScaleFactor(void)
-{
-	return m_fContentScaleFactor;
-}
-
-void CCDirector::setContentScaleFactor(CGFloat obCGFloatValue)
-{
-	m_fContentScaleFactor = obCGFloatValue;
-}
-
-void CCDirector::setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat)
-{
-    assert(! isOpenGLAttached());
-	m_eDepthBufferFormat = kDepthBufferFormat;
-}
-
 void CCDirector::purgeCachedData(void)
 {
 	///@todo add needed source
 //	CCBitmapFontAtlas::purgeCacheData();
-//	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCTextureCache::purgeSharedTextureCache();
 }
 
@@ -737,8 +654,8 @@ void CCDirector::end(void)
 
 	// purge all managers
 	///@todo: implement
-// 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-//	CCScheduler::purgeSharedScheduler();
+ 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+	CCScheduler::purgeSharedScheduler();
 //	CCActionManager::purgeSharedManager();
 	CCTextureCache::purgeSharedTextureCache();
 

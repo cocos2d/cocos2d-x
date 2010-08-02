@@ -583,3 +583,8 @@ void CCScheduler::tick(ccTime dt)
 
 	m_pCurrentTarget = NULL;
 }
+
+void CCScheduler::purgeSharedScheduler(void)
+{
+	pSharedScheduler->release();
+}

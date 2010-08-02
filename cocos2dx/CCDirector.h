@@ -33,8 +33,10 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 #include "cocoa/CGGeometry.h"
 #include "CCXEGLView.h"
-#include "platform/platform.h"
 #include "ccxCommon.h"
+#include "platform/platform.h"
+
+#include <assert.h>
 
 // OpenGL related
 // #include "support/CCXEGLView.h"
@@ -173,6 +175,7 @@ typedef enum {
 class CCLabelAtlas;
 class CCScene;
 class cocos2d::CCXEGLView;
+struct cc_timeval;
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -203,38 +206,35 @@ public:
 	// attribute
 
 	// The current running Scene. Director can only run one Scene at the time 
-	CCScene* getRunningScene(void);
+	inline CCScene* getRunningScene(void) { return m_pRunningScene; }
 
 	// The FPS value
-	double getAnimationInterval(void);
+	inline double getAnimationInterval(void) { return m_dAnimationInterval; }
 	virtual void setAnimationInterval(double dValue);
 
 	// Whether or not to display the FPS on the bottom-left corner
-	bool isDisplayFPS(void);
-	void setDisplayFPS(bool bDisplayFPS);
+	inline bool isDisplayFPS(void) { return m_bDisplayFPS; }
+	inline void setDisplayFPS(bool bDisplayFPS) { m_bDisplayFPS = bDisplayFPS; }
 
 	// The CCXEGLView, where everything is rendered
-    cocos2d::CCXEGLView* getOpenGLView(void);
+	inline cocos2d::CCXEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
 	void setOpenGLView(cocos2d::CCXEGLView *pobOpenGLView);
 
-	// Pixel format used to create the context
-	tPixelFormat getPiexFormat(void);
-
 	// whether or not the next delta time will be zero
-	bool isNextDeltaTimeZero(void);
+	inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
 	void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
 
 	// The device orientattion
-	ccDeviceOrientation getDeviceOrientation(void);
+	inline ccDeviceOrientation getDeviceOrientation(void) { return m_eDeviceOrientation; }
 	void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
 
 	// Whether or not the Director is paused
-	bool isPaused(void);
+	inline bool isPaused(void) { return m_bPaused; }
 
 	/** Sets an OpenGL projection
 	 @since v0.8.2
 	 */
-	ccDirectorProjection getProjection(void);
+	inline ccDirectorProjection getProjection(void) { return m_eProjection; }
 	void setProjection(ccDirectorProjection kProjection);
 
 	/** Whether or not the replaced scene will receive the cleanup message.
@@ -242,15 +242,19 @@ public:
 	 If the new scene replaces the old one, the it will receive the "cleanup" message.
 	 @since v0.99.0
 	 */
-	bool isSendCleanupToScene(void);
+	inline bool isSendCleanupToScene(void) { return m_bSendCleanupToScene; }
 
 	/** The size in pixels of the surface. It could be different than the screen size.
 	 High-res devices might have a higher surface size than the screen size.
 	 Only available when compiled using SDK >= 4.0.
 	 @since v0.99.4
 	 */
-	CGFloat getContentScaleFactor(void);
-	void setContentScaleFactor(CGFloat obCGFloatValue);
+	inline void setContentScaleFactor(CGFloat obCGFloatValue)
+	{
+		assert(! isOpenGLAttached());
+	    m_fContentScaleFactor = obCGFloatValue;
+	}
+	inline CGFloat getContentScaleFactor(void) { return m_fContentScaleFactor; }
 
     // UI dependent
 
@@ -260,7 +264,13 @@ public:
 	 
 	 @deprecated Set the pixel format when creating the CCXEGLView. This method will be removed in v1.0
 	 */
-	void setPixelFormat(tPixelFormat kPixelFormat);
+	inline void setPixelFormat(tPixelFormat kPixelFormat)
+	{
+		assert(! isOpenGLAttached());
+	    m_ePixelFormat = kPixelFormat;
+	}
+	// Pixel format used to create the context
+	inline tPixelFormat getPiexFormat(void) { return m_ePixelFormat; }
 
 	/** Change depth buffer format of the render buffer.
 	 Call this class method before attaching it to a UIWindow/UIView
@@ -268,7 +278,11 @@ public:
 	 
 	 @deprecated Set the depth buffer format when creating the CCXEGLView. This method will be removed in v1.0
 	 */
-	void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat);
+	inline void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat)
+	{
+        assert(! isOpenGLAttached());
+		m_eDepthBufferFormat = kDepthBufferFormat;
+	}
 
 	// Integration with UI
 	/** detach the cocos2d view from the view/window */
