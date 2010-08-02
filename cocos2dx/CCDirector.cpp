@@ -124,6 +124,8 @@ CCDirector* CCDirector::init(void)
 	// paused ?
 	m_bPaused = false;
 
+	m_pobOpenGLView = NULL;
+
     m_fContentScaleFactor = 1;
 	m_obScreenSize = m_obSurfaceSize = CGSizeZero;
 
