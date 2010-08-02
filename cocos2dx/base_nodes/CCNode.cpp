@@ -950,21 +950,17 @@ CGPoint CCNode::convertToWorldSpaceAR(CGPoint nodePoint)
 }
 CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
 {
-	
 	CGPoint worldPoint = this->convertToWorldSpace(nodePoint);
-	CCDirector::getSharedDirector()->convertToUI(worldPoint);
-	return ccp(0,0);
+	return CCDirector::getSharedDirector()->convertToUI(worldPoint);
 }
 
 // convenience methods which take a CCTouch instead of CGPoint
-/** @todo*/
 CGPoint CCNode::convertTouchToNodeSpace(CCTouch *touch)
 {
 	CGPoint point = touch->locationInView(touch->view());
 	point = CCDirector::getSharedDirector()->convertToGL(point);
 	return this->convertToNodeSpace(point);
 }
-/** @todo*/
 CGPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
 {
 	CGPoint point = touch->locationInView(touch->view());
