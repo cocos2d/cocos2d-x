@@ -203,6 +203,13 @@ UINT8* UIImage::getRGBA8888Data(void)
 		// alloc memory and store the bitmap data
 		pBufferRet = new UINT8[nW * nH * 4];
 		memcpy(pBufferRet, pBitmap->GetDataPtr(), nW * nH * 4);
+		// convert BGRA to RGBA
+		for (int i = 0; i<nW * nH * 4; i+=4)
+		{
+			UINT8 temp = pBufferRet[i];
+			pBufferRet[i] = pBufferRet[i+2];
+			pBufferRet[i+2] = temp;
+		}
 	} while(0);
 
 	return pBufferRet;
