@@ -115,7 +115,9 @@ void CCTransitionScene::finish()
 
 void CCTransitionScene::setNewScene(ccTime dt)
 {	
-	//[self unschedule:_cmd];
+	// [self unschedule:_cmd]; 
+	// "_cmd" is a local variable automatically defined in a method 
+	// that contains the selector for the method
 	this->unschedule(schedule_selector(CCTransitionScene::setNewScene));
 	CCDirector *director = CCDirector::getSharedDirector();
 	// Before replacing, save the "send cleanup to scene"
