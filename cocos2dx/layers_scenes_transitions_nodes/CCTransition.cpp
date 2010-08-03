@@ -917,7 +917,7 @@ CCFadeTransition * CCFadeTransition::initWithDuration(ccTime duration, CCScene *
 
 CCFadeTransition * CCFadeTransition::initWithDuration(ccTime t, CCScene *scene)
 {
-	__super::initWithDuration(t, scene);
+	this->initWithDuration(t, scene, ccBLACK);
 	return this;
 }
 
