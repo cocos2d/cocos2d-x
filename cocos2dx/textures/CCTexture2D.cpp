@@ -254,7 +254,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 
-	imageSize = CGSizeMake(static_cast<float>(POTWide), static_cast<float>(POTHigh));
+	imageSize = CGSizeMake(static_cast<float>(image->width()), static_cast<float>(image->height()));
 
 	// Create the bitmap graphics context
 
