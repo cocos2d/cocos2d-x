@@ -153,7 +153,7 @@ void CCTouchDispatcher::addTargetedDelegate(CCTargetedTouchDelegate *pDelegate, 
 void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 {
 	// XXX: remove it from both handlers ???
-	if (pDelegate->m_eType == kStandardTouchDelegate)
+	if (dynamic_cast<CCStandardTouchDelegate*>(pDelegate))
 	{
 		// remove handler from m_pStandardHandlers
 		CCTouchHandler *pHandler;
@@ -360,7 +360,7 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 		for (iter = m_pHandlersToAdd->begin(); iter != m_pHandlersToAdd->end(); ++iter)
 		{
 			pHandler = *iter;
-			if (pHandler->getDelegate()->m_eType == kStandardTouchDelegate)
+			if (dynamic_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))
 			{
 				forceAddHandler(pHandler, m_pStandardHandlers);
 			}

@@ -31,22 +31,16 @@ THE SOFTWARE.
 class CCTouch;
 class UIEvent;
 
-typedef enum {
-	kStandardTouchDelegate,
-	kTargetedTouchDelegate,
-} eTouchDelegteType;
-
 class CCX_DLL CCTouchDelegate : virtual public NSObject
 {
 public:
-	eTouchDelegteType m_eType;
+	// for RTTI support
+	virtual void v() {};
 };
 
 class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
 {
 public:
-	CCTargetedTouchDelegate() {m_eType = kTargetedTouchDelegate;}
-
 	/** Return YES to claim the touch.
 	 @since v0.8
 	 */
@@ -69,8 +63,6 @@ class NSSet;
 class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
 {
 public:
-	CCStandardTouchDelegate() {m_eType = kStandardTouchDelegate;}
-  
 	// optional
 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
