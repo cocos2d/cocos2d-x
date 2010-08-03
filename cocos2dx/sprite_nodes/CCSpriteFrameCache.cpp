@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCSprite.h"
 #include "support/TransformUtils.h"
+#include "platform/platform.h"
 
 using namespace std;
 
@@ -73,10 +74,10 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 	*/
 
 	map<string, void*>::iterator metadataIter = pobDictionary->find("metadata");
-	map<string, string> *pMetadataMap = NULL;
+	map<string, string*> *pMetadataMap = NULL;
 	if (metadataIter != pobDictionary->end())
 	{
-		pMetadataMap = static_cast<map<string, string>*>(metadataIter->second);
+		pMetadataMap = static_cast<map<string, string*>*>(metadataIter->second);
 	}
 
 	map<string, void*>::iterator framesIter = pobDictionary->find("frames");
@@ -90,10 +91,10 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 	// get the format
 	if (pMetadataMap)
 	{
-		map<string, string>::iterator formatIter = pMetadataMap->find("format");
+		map<string, string*>::iterator formatIter = pMetadataMap->find("format");
 		if (formatIter != pMetadataMap->end())
 		{
-			format = atoi(formatIter->second.c_str());
+			format = atoi(formatIter->second->c_str());
 		}
 	}
 
@@ -107,7 +108,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 
 	
 	map<string, void*>::iterator frameIter;
-	map<string, string> *pFrame;
+	map<string, string*> *pFrame;
 	string key;
 	for (frameIter = pFramesMap->begin(); frameIter != pFramesMap->end(); ++frameIter)
 	{
@@ -120,7 +121,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 		}
 
 		CCSpriteFrame *pSpriteFrame;
-		pFrame = static_cast<map<string, string>*>(frameIter->second);
+		pFrame = static_cast<map<string, string*>*>(frameIter->second);
 		if (format == 0)
 		{
 			/*
@@ -134,14 +135,14 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 			int oh = (int)atof(pFrameDict->objectForKey("originalHeight").c_str());
 			*/
 
-			float x = (float)atof(pFrame->find("x")->second.c_str());
-			float y = (float)atof(pFrame->find("y")->second.c_str());
-			float w = (float)atof(pFrame->find("width")->second.c_str());
-			float h = (float)atof(pFrame->find("height")->second.c_str());
-			float ox = (float)atof(pFrame->find("offsetX")->second.c_str());
-			float oy = (float)atof(pFrame->find("offsetY")->second.c_str());
-			int ow = (int)atof(pFrame->find("originalWidth")->second.c_str());
-			int oh = (int)atof(pFrame->find("originalHeight")->second.c_str());
+			float x = (float)atof(pFrame->find("x")->second->c_str());
+			float y = (float)atof(pFrame->find("y")->second->c_str());
+			float w = (float)atof(pFrame->find("width")->second->c_str());
+			float h = (float)atof(pFrame->find("height")->second->c_str());
+			float ox = (float)atof(pFrame->find("offsetX")->second->c_str());
+			float oy = (float)atof(pFrame->find("offsetY")->second->c_str());
+			int ow = (int)atof(pFrame->find("originalWidth")->second->c_str());
+			int oh = (int)atof(pFrame->find("originalHeight")->second->c_str());
 
 
 
@@ -183,17 +184,32 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 }
 
 ///@todo implement later
-/*
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
 	char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-	
+	map<string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
+
+	return addSpriteFramesWithDictionary(dict, pobTexture);
 }
-*/
 
 ///@todo implement later
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
+	char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
+	map<string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
+	
+	string texturePath = string(pszPlist);
+
+	// remove .xxx
+	size_t startPos = texturePath.find_last_of("."); 
+	texturePath = texturePath.erase(startPos);
+
+	// append .png
+	texturePath = texturePath.append(".png");
+
+	CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());
+
+	return addSpriteFramesWithDictionary(dict, pTexture);
 }
 
 void CCSpriteFrameCache::addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName)
@@ -247,4 +263,12 @@ CCSpriteFrame* CCSpriteFrameCache::spriteFrameByName(const char *pszName)
 	}
 
 	return pFrame;
+}
+
+CCSprite* CCSpriteFrameCache::createSpriteWithFrameName(const char *pszName)
+{
+	map<string, CCSpriteFrame*>::iterator iter = m_pSpriteFramesMap->find(pszName);
+	CCSpriteFrame *pFrame = iter->second;
+
+	return CCSprite::spriteWithSpriteFrame(pFrame);
 }
