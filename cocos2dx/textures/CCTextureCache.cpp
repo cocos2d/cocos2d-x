@@ -64,7 +64,7 @@ CCTextureCache * CCTextureCache::sharedTextureCache()
 
 CCTextureCache::CCTextureCache()
 {
-	NSAssert(sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
+	NSAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
 	
 	m_pTextures = new NSMutableDictionary<std::string, CCTexture2D*>();
 	m_pTextures->retain();
@@ -194,7 +194,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
 		for (unsigned int i = 0; i < temp.length(); ++i)
 			temp[i] = tolower(temp[i]);
-		if (temp.find(".pvr"))
+		if (-1 != temp.find(".pvr"))
 		{
 			tex = this->addPVRTCImage(fullpath.c_str());
 		}
