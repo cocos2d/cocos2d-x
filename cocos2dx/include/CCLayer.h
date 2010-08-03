@@ -46,6 +46,8 @@ class CCX_DLL CCLayer : public CCNode, public CCStandardTouchDelegate, public CC
 public:
 	CCLayer();
 	virtual ~CCLayer();
+	bool init();
+	static CCLayer *node(void);
 
 	virtual void onEnter();
 	virtual void onExit();
