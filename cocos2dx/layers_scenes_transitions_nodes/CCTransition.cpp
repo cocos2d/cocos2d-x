@@ -41,15 +41,15 @@ CCTransitionScene::~CCTransitionScene()
 	m_pOutScene->release();
 }
 
-CCTransitionScene * CCTransitionScene::transitionWithDurationAndScene(ccTime t, CCScene *scene)
+CCTransitionScene * CCTransitionScene::transitionWithDuration(ccTime t, CCScene *scene)
 {
 	CCTransitionScene * pScene = new CCTransitionScene();
-	pScene->initWithDurationAndScene(t,scene);
+	pScene->initWithDuration(t,scene);
 	pScene->autorelease();
 	return pScene;
 }
 
-CCTransitionScene * CCTransitionScene::initWithDurationAndScene(ccTime t, CCScene *scene)
+CCTransitionScene * CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
 {
 	NSAssert( scene != NULL, "Argument scene must be non-nil");
 
@@ -165,17 +165,17 @@ CCOrientedTransitionScene::~CCOrientedTransitionScene()
 {
 }
 
-CCOrientedTransitionScene * CCOrientedTransitionScene::transitionWithDurationAndScene(ccTime t, CCScene *scene, tOrientation orientation)
+CCOrientedTransitionScene * CCOrientedTransitionScene::transitionWithDuration(ccTime t, CCScene *scene, tOrientation orientation)
 {
 	CCOrientedTransitionScene * pScene = new CCOrientedTransitionScene();
-	pScene->initWithDurationAndScene(t,scene,orientation);
+	pScene->initWithDuration(t,scene,orientation);
 	pScene->autorelease();
 	return pScene;
 }
 
-CCOrientedTransitionScene * CCOrientedTransitionScene::initWithDurationAndScene(ccTime t, CCScene *scene, tOrientation orientation)
+CCOrientedTransitionScene * CCOrientedTransitionScene::initWithDuration(ccTime t, CCScene *scene, tOrientation orientation)
 {
-	if ( __super::initWithDurationAndScene(t, scene) )
+	if ( __super::initWithDuration(t, scene) )
 	{
 		m_tOrientation = orientation;
 	}
@@ -887,17 +887,17 @@ CCFadeTransition::~CCFadeTransition()
 }
 
 
-CCFadeTransition * CCFadeTransition::transitionWithDurationAndColor(ccTime duration, CCScene *scene, ccColor3B color)
+CCFadeTransition * CCFadeTransition::transitionWithDuration(ccTime duration, CCScene *scene, ccColor3B color)
 {
 	CCFadeTransition * pTransition = new CCFadeTransition();
-	pTransition->initWithDurationAndColor(duration, scene, color);
+	pTransition->initWithDuration(duration, scene, color);
 	pTransition->autorelease();
 	return pTransition;
 }
 
-CCFadeTransition * CCFadeTransition::initWithDurationAndColor(ccTime duration, CCScene *scene, ccColor3B color)
+CCFadeTransition * CCFadeTransition::initWithDuration(ccTime duration, CCScene *scene, ccColor3B color)
 {
-	if (__super::initWithDurationAndScene(duration, scene))
+	if (__super::initWithDuration(duration, scene))
 	{
 		m_tColor.r = color.r;
 		m_tColor.g = color.g;
@@ -906,9 +906,9 @@ CCFadeTransition * CCFadeTransition::initWithDurationAndColor(ccTime duration, C
 	return this;
 }
 
-CCFadeTransition * CCFadeTransition::initWithDurationAndScene(ccTime t, CCScene *scene)
+CCFadeTransition * CCFadeTransition::initWithDuration(ccTime t, CCScene *scene)
 {
-	__super::initWithDurationAndScene(t, scene);
+	__super::initWithDuration(t, scene);
 	return this;
 }
 

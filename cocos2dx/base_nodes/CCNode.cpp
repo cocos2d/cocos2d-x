@@ -383,9 +383,9 @@ CGRect CCNode::boundingBox()
 
 CCNode * CCNode::node(void)
 {
-	CCNode * pNode = new CCNode();
-	pNode->autorelease();
-	return pNode;
+	CCNode * pRet = new CCNode();
+	pRet->autorelease();
+	return pRet;
 }
 
 

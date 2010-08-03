@@ -76,10 +76,10 @@ public:
 	virtual void cleanup();
 
 	/** creates a base transition with duration and incoming scene */
-	static CCTransitionScene * transitionWithDurationAndScene(ccTime t, CCScene *scene);
+	static CCTransitionScene * transitionWithDuration(ccTime t, CCScene *scene);
 
 	/** initializes a transition with duration and incoming scene */
-	virtual CCTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene);
+	virtual CCTransitionScene * initWithDuration(ccTime t,CCScene* scene);
 
 	/** called after the transition finishes */
 	void finish(void);
@@ -107,9 +107,9 @@ public:
 	~CCOrientedTransitionScene();
 
 	/** creates a base transition with duration and incoming scene */
-	static CCOrientedTransitionScene * transitionWithDurationAndScene(ccTime t,CCScene* scene, tOrientation orientation);
+	static CCOrientedTransitionScene * transitionWithDuration(ccTime t,CCScene* scene, tOrientation orientation);
 	/** initializes a transition with duration and incoming scene */
-	virtual CCOrientedTransitionScene * initWithDurationAndScene(ccTime t,CCScene* scene,tOrientation orientation);
+	virtual CCOrientedTransitionScene * initWithDuration(ccTime t,CCScene* scene,tOrientation orientation);
 };
 
 /** CCRotoZoomTransition:
@@ -364,11 +364,11 @@ public:
 	/** creates the transition with a duration and with an RGB color
 	* Example: [FadeTransition transitionWithDuration:2 scene:s withColor:ccc3(255,0,0)]; // red color
 	*/
-	static CCFadeTransition* transitionWithDurationAndColor(ccTime duration,CCScene* scene, ccColor3B color);
+	static CCFadeTransition* transitionWithDuration(ccTime duration,CCScene* scene, ccColor3B color);
 	/** initializes the transition with a duration and with an RGB color */
-	virtual CCFadeTransition* initWithDurationAndColor(ccTime t, CCScene*scene ,ccColor3B color);
+	virtual CCFadeTransition* initWithDuration(ccTime t, CCScene*scene ,ccColor3B color);
 
-	virtual CCFadeTransition * initWithDurationAndScene(ccTime t,CCScene* scene); 
+	virtual CCFadeTransition * initWithDuration(ccTime t,CCScene* scene); 
 	virtual void onEnter();
 	virtual void onExit();
 };

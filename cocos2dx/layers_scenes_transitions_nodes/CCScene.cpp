@@ -48,6 +48,16 @@ bool CCScene::init()
  		// success
  		bRet = true;
  	} while (0);
- 	
  	return bRet;
+}
+
+CCScene *CCScene::node()
+{
+	CCScene *pRet = new CCScene();
+	if (pRet->init())
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	return NULL;
 }

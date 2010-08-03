@@ -52,14 +52,14 @@ public:
 	* if back is TRUE then the effect is reversed to appear as if the incoming 
 	* scene is being turned from left over the outgoing scene
 	*/
-	static CCPageTurnTransition* transitionWithDurationAndScene(ccTime t,CCScene* scene,bool backwards);
+	static CCPageTurnTransition* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
 
 	/**
 	* creates a base transition with duration and incoming scene
 	* if back is TRUE then the effect is reversed to appear as if the incoming 
 	* scene is being turned from left over the outgoing scene
 	*/
-	virtual CCPageTurnTransition* initWithDurationAndScene(ccTime t,CCScene* scene,bool backwards);
+	virtual CCPageTurnTransition* initWithDuration(ccTime t,CCScene* scene,bool backwards);
 
 	CCIntervalAction* actionWithSize(ccGridSize vector);
 

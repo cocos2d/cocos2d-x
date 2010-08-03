@@ -45,6 +45,7 @@ public:
 	CCScene();
 	virtual ~CCScene();
 	bool init();
+	static CCScene *node(void);
 };
 
 #endif // __CCSCENE_H__

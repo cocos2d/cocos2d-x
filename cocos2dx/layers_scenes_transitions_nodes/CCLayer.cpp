@@ -231,7 +231,7 @@ void CCColorLayer::setContentSize(CGSize size)
 	m_pSquareVertices[6] = size.width;
 	m_pSquareVertices[7] = size.height;
 
-	this->setContentSize(size);
+	__super::setContentSize(size);
 }
 
 void CCColorLayer::changeWidthAndHeight(GLfloat w ,GLfloat h)

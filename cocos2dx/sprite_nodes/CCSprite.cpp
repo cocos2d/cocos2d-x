@@ -320,7 +320,7 @@ void CCSprite::useSelfRender(void)
 	m_bUsesSpriteSheet = false;
 	m_pobTextureAtlas = NULL;
     m_pobSpriteSheet = NULL;
-	m_bDirty = false;
+	m_bDirty = m_bRecursiveDirty = false;
 
 	float x1 = 0 + m_obOffsetPosition.x;
 	float y1 = 0 + m_obOffsetPosition.y;
@@ -851,7 +851,7 @@ void CCSprite::setOpacity(GLubyte opacity)
 	// special opacity for premultiplied textures
 	if (m_bOpacityModifyRGB)
 	{
-		setColor(m_sColor);
+		setColor(m_sColorUnmodified);
 	}
 
 	updateColor();

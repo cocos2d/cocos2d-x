@@ -33,21 +33,21 @@ CCPageTurnTransition::~CCPageTurnTransition()
 }
 
 /** creates a base transition with duration and incoming scene */
-CCPageTurnTransition * CCPageTurnTransition::transitionWithDurationAndScene(ccTime t, CCScene *scene, bool backwards)
+CCPageTurnTransition * CCPageTurnTransition::transitionWithDuration(ccTime t, CCScene *scene, bool backwards)
 {
 	CCPageTurnTransition * pTransition = new CCPageTurnTransition();
-	pTransition->initWithDurationAndScene(t,scene,backwards);
+	pTransition->initWithDuration(t,scene,backwards);
 	pTransition->autorelease();
 	return pTransition;
 }
 
 /** initializes a transition with duration and incoming scene */
-CCPageTurnTransition * CCPageTurnTransition::initWithDurationAndScene(ccTime t, CCScene *scene, bool backwards)
+CCPageTurnTransition * CCPageTurnTransition::initWithDuration(ccTime t, CCScene *scene, bool backwards)
 {
 	// XXX: needed before [super init]
 	m_bBack = backwards;
 
-	if( __super::initWithDurationAndScene(t, scene) )
+	if( __super::initWithDuration(t, scene) )
 	{
 		// do something
 	}
