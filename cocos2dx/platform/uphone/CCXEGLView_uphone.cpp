@@ -25,7 +25,10 @@ THE SOFTWARE.
 #include <windows.h>
 #include "CCXEGLView_uphone.h"
 
+#include "TDC.h"
+
 #include "EGL/egl.h"
+#include "gles/gl.h"
 
 #include "Cocos2dDefine.h"
 #include "cocoa/NSSet.h"
@@ -110,6 +113,7 @@ public:
 
             CCX_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
 
+            pEGL->m_pWnd       = pWindow;
             pEGL->m_eglDisplay = eglDisplay;
             pEGL->m_eglSurface = eglSurface;
             pEGL->m_eglContext = eglContext;
@@ -128,18 +132,45 @@ public:
     {
         if (EGL_NO_DISPLAY != m_eglDisplay)
         {
-            eglSwapBuffers(m_eglDisplay, m_eglSurface);
+            RECT rc;
+            GetClientRect(m_eglWnd, &rc);
+            int nWidth = rc.right - rc.left;
+            int nHeight = rc.bottom - rc.top;
+
+            char *pData = new char[4 * nWidth * nHeight];
+            if (pData == NULL)
+            {
+                return;
+            }
+            glReadPixels(0, 0, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, pData);
+
+            TDC dc(m_pWnd);
+            ColorRefType color;
+            for (int i = 0; i < nHeight; i++)
+            {
+                for (int j = 0; j < nWidth; j++)
+                {
+                    int nIndex = (i * nWidth + j) * 4;
+                    color = RGBA(pData[nIndex],pData[nIndex+1],pData[nIndex+2],pData[nIndex+3]);
+                    dc.DrawPixelEx(j, nHeight - i - 1, color);
+                }
+            }
+
+            delete pData;
+//            eglSwapBuffers(m_eglDisplay, m_eglSurface);
         }
     }
 private:
     CCXEGL() 
-        : m_eglWnd(NULL)
+        : m_pWnd(NULL)
+        , m_eglWnd(NULL)
         , m_eglDC(NULL)
         , m_eglDisplay(EGL_NO_DISPLAY)
         , m_eglSurface(EGL_NO_SURFACE)
-        , m_eglContext(EGL_NO_CONTEXT) {}
+        , m_eglContext(EGL_NO_CONTEXT)
+    {}
 
-
+    TWindow *               m_pWnd;
     EGLNativeWindowType     m_eglWnd;
     EGLNativeDisplayType    m_eglDC;
     EGLDisplay              m_eglDisplay;
@@ -189,7 +220,6 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             m_pSet->addObject(m_pTouch);
             m_pDelegate->touchesBegan(m_pSet, NULL);
-            bHandled = TRUE;
         }
         break;
 
@@ -203,7 +233,6 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 //                     SS_printf("Move    %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
                 m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
                 m_pDelegate->touchesMoved(m_pSet, NULL);
-                bHandled = TRUE;
             }
         }
         break;
@@ -215,7 +244,6 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 //                 SS_printf("Up      %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
             m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             m_pDelegate->touchesEnded(m_pSet, NULL);
-            bHandled = TRUE;
         }
         break;
     }
@@ -252,7 +280,6 @@ void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 
 void CCXEGLView::swapBuffers()
 {
-    // DrawWindow();
     if (m_pEGL)
     {
         m_pEGL->SwapBuffers();
