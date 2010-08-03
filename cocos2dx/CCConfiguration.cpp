@@ -97,7 +97,5 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
 	if (strstr(g_pGlExtensions, kSearchName))
 		bRet = true;
 
-	delete kSearchName;
-
 	return bRet;
 }
