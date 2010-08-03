@@ -211,11 +211,13 @@ UINT8* UIImage::getRGBA8888Data(void)
 		{
 			for (int j = 0; j < nH; ++j)
 			{
-				uB = pBufferRet[i * j * 4];
-				uR = pBufferRet[i * j * 4 + 2];
+				int baseAddr = (j * nW + i) * 4;
 
-				pBufferRet[i * j * 4] = uR;
-				pBufferRet[i * j * 4 + 2] = uB;
+				uB = pBufferRet[baseAddr];
+				uR = pBufferRet[baseAddr + 2];
+
+				pBufferRet[baseAddr] = uR;
+				pBufferRet[baseAddr + 2] = uB;
 			}
 		}
 	} while(0);
