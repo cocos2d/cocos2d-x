@@ -53,21 +53,28 @@ CCTransitionScene * CCTransitionScene::initWithDuration(ccTime t, CCScene *scene
 {
 	NSAssert( scene != NULL, "Argument scene must be non-nil");
 
-	m_fDuration = t;
+	if (__super::init())
+	{
+		m_fDuration = t;
 
-	// retain
-	m_pInScene = scene;
-	m_pInScene->retain();
-	m_pOutScene = CCDirector::getSharedDirector()->getRunningScene();
-	m_pOutScene->retain();
+		// retain
+		m_pInScene = scene;
+		m_pInScene->retain();
+		m_pOutScene = CCDirector::getSharedDirector()->getRunningScene();
+		m_pOutScene->retain();
 
-	NSAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
+		NSAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
 
-	// disable events while transitions
-	CCTouchDispatcher::getSharedDispatcher()->setDispatchEvents(false);
-	this->sceneOrder();
+		// disable events while transitions
+		CCTouchDispatcher::getSharedDispatcher()->setDispatchEvents(false);
+		this->sceneOrder();
 
-	return this;
+		return this;
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 void CCTransitionScene::sceneOrder()
