@@ -94,6 +94,12 @@ int GLES_Init()
 
 void GLES_UnInit(void)
 {
+    if (m_pImg)
+    {
+        delete m_pImg;
+        m_pImg = NULL;
+    }
+
 	if (g_sEGLDisplay != EGL_NO_DISPLAY)
 	{
 		eglMakeCurrent( EGL_NO_DISPLAY, EGL_NO_SURFACE,
@@ -286,7 +292,7 @@ void gles_CaptureScreen()
 
 	HBITMAP hOldmemBitmap = (HBITMAP)SelectObject(hMemDC, hMemBitmap);//将memBitmap选入内存DC
 
-	bool bRes = BitBlt(hMemDC, rect.left, rect.top, Width, Height, g_hDC, 0, 0, SRCCOPY);//复制屏幕图像到内存DC
+	BOOL bRes = BitBlt(hMemDC, rect.left, rect.top, Width, Height, g_hDC, 0, 0, SRCCOPY);//复制屏幕图像到内存DC
 
 	//以下代码保存memDC中的位图到文件
 	BITMAP bmp;
