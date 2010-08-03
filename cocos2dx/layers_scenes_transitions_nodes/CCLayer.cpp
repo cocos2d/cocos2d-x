@@ -30,19 +30,41 @@ THE SOFTWARE.
 
 // CCLayer
 CCLayer::CCLayer()
+:m_bIsTouchEnabled(false)
+,m_bIsAccelerometerEnabled(false)
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	m_tAnchorPoint = ccp(0.5f, 0.5f);
-	this->setContentSize(s);
 	m_bIsRelativeAnchorPoint = false;
-	m_bIsTouchEnabled = false;
-	m_bIsAccelerometerEnabled = false;
 }
 
 CCLayer::~CCLayer()
 {
 }
 
+bool CCLayer::init()
+{
+	bool bRet = false;
+	do 
+	{
+		CCDirector * pDirector;
+		CCX_BREAK_IF( ! (pDirector = CCDirector::getSharedDirector()) );
+		this->setContentSize(pDirector->getWinSize());
+		// success
+		bRet = true;
+	} while (0);
+	return bRet;
+}
+
+CCLayer *CCLayer::node()
+{
+	CCLayer *pRet = new CCLayer();
+	if (pRet->init())
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	return NULL;
+}
 
 /// Touch and Accelerometer related
 
