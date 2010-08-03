@@ -22,49 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_UPHONE_H__
-#define __CCX_EGLVIEW_UPHONE_H__
+#ifndef __CCX_APPLICATION_UPHONE_H__
+#define __CCX_APPLICATION_UPHONE_H__
 
-#include "GuiBase.h"
-#include "TWindow.h"
+#include "ccxCommon.h"
 
-#include "cocoa/CGGeometry.h"
-
-class NSSet;
-class CCTouch;
-class TApplication;
-class EGLTouchDelegate;
+#include "TG3.h"
 
 namespace   cocos2d {
 
-class CCXEGL;
-
-class CCX_DLL CCXEGLView : public TWindow
+class CCX_DLL CCXApplication : public TApplication
 {
 public:
+    CCXApplication();
+    virtual ~CCXApplication();
 
-    CCXEGLView(TApplication * pApp);
-    virtual ~CCXEGLView();
+    virtual Boolean EventHandler(EventType * pEvent);
 
-    virtual Boolean AfterCreate(void);
-    virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
-
-    CGSize  getSize();
-    bool    isOpenGLReady();
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void    swapBuffers();
+    /**
+    @brief	Implement CCDirector and sense init code here.
+    @return TRUE    Initialize success, app continue.
+    @return FALSE   Initialize failed, app terminate.
+    */
+    virtual Boolean initCocos2d() = 0;
 
 private:
-
-    bool                m_bCaptured;
-    NSSet *             m_pSet;
-    CCTouch *           m_pTouch;
-    EGLTouchDelegate *  m_pDelegate;
-
-    CCXEGL *            m_pEGL;
+    MESSAGE_t m_tMsg;
 };
 
-}   // end of namespace   cocos2d
+}       // end of namespace   cocos2d
 
-#endif	// end of __CCX_EGLVIEW_UPHONE_H__
+#endif	// end of __CCX_APPLICATION_UPHONE_H__

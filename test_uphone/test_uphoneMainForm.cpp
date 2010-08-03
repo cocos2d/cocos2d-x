@@ -9,7 +9,7 @@
 
 #include  "test_uphone_res_def.h"
 #include "TG3.h"
-
+#include "ssMsgQueue.h"
 #include "touch_dispatcher/CCTouchDelegateProtocol.h"
 
 using namespace cocos2d;
@@ -31,6 +31,13 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 
 	switch(pEvent->eType)
 	{
+    case EVENT_WinInit:
+        {
+            // do some thing
+            bHandled = TRUE;
+        }
+        break;
+
 	case EVENT_CtrlSelect:
 		{
 			//switch(pEvent->sParam1)
@@ -41,10 +48,12 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 			//}
 		}
 		break;
+
 	case EVENT_WinClose:
 		{
 			// Stop the application since the main form has been closed
 			pApp->SendStopEvent();
+            bHandled = TRUE;
 		}
 		break;
 	}

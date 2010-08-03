@@ -19,6 +19,7 @@ public:
 
 public:
 	virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
+
 protected:
 };
  

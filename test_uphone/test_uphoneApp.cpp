@@ -6,7 +6,11 @@
 
 #include  "test_uphoneApp.h"
 #include  "test_uphoneMainForm.h"
+
+#include "CCDirector.h"
+
 Ttest_uphoneApp::Ttest_uphoneApp()
+: m_pMainWnd(NULL)
 {
 
 }
@@ -14,6 +18,12 @@ Ttest_uphoneApp::Ttest_uphoneApp()
 Ttest_uphoneApp::~Ttest_uphoneApp()
 {
 
+}
+
+Boolean Ttest_uphoneApp::initCocos2d()
+{
+    CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
+    return TRUE;
 }
 
 Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
@@ -24,17 +34,16 @@ Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
 	{
 	case EVENT_AppLoad:
 		{
-			TMainForm *pWin = new TMainForm(this);
-			if (pWin)
+			m_pMainWnd = new TMainForm(this);
+			if (m_pMainWnd)
 			{
-				SetActiveWindow(pWin);
+				SetActiveWindow(m_pMainWnd);
 			}
 			else
 			{	// 窗口创建失败，退出应用。
 				SendStopEvent();
 			}
 		}
-		bHandled = TRUE;
 		break;
 
 	case EVENT_AppStopNotify:
@@ -46,7 +55,7 @@ Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
 	}
 	if (FALSE == bHandled) 
 	{
-		return TApplication::EventHandler(pEvent);
+		return CCXApplication::EventHandler(pEvent);
 	}
 
 	return bHandled;

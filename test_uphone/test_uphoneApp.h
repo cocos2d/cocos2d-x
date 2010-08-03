@@ -6,17 +6,22 @@
 
 #ifndef  __test_uphone_App_H__
 #define  __test_uphone_App_H__
-#include "TG3.h"
+#include "CCXApplication.h"
+#include "CCXEGLView.h"
 
-class  Ttest_uphoneApp  :  public  TApplication
+class  Ttest_uphoneApp  :  public  cocos2d::CCXApplication
 {
 public:
 	Ttest_uphoneApp();
 	~Ttest_uphoneApp();
+
+    virtual Boolean initCocos2d();
+
 public:
 	virtual Boolean EventHandler(EventType * pEvent);
+
 protected:
-private:
+    cocos2d::CCXEGLView * m_pMainWnd;
 };
  
 

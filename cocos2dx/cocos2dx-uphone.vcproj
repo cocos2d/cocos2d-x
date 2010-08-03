@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libgles_cl.lib libgles_cm.lib libxml2.lib ImageToolKit_d.lib"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libgles_cm.lib libxml2.lib ImageToolKit_d.lib"
 				OutputFile="$(OutDir)/libcocos2d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport"
@@ -290,6 +290,10 @@
 			</File>
 			<File
 				RelativePath=".\include\ccTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCXApplication.h"
 				>
 			</File>
 			<File
@@ -578,7 +582,7 @@
 			Name="platform"
 			>
 			<File
-				RelativePath=".\platform\CCTouch_Platform.h"
+				RelativePath=".\platform\CCXApplication_platform.h"
 				>
 			</File>
 			<File
@@ -610,6 +614,14 @@
 				</File>
 				<File
 					RelativePath=".\platform\uphone\CCTime.h"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXApplication_uphone.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXApplication_uphone.h"
 					>
 				</File>
 				<File

@@ -22,9 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include <windows.h>
 #include "CCXEGLView_uphone.h"
-
-#include "TG3.h"
 
 #include "EGL/egl.h"
 
@@ -33,23 +32,119 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
+#define WIN_CLASS_NAME      "OpenGL"
+
+static bool  g_keys[256];               // Array Used For The Keyboard Routine
+static bool  g_active=TRUE;             // Window Active Flag Set To TRUE By Default
+
+EGLNativeWindowType _CreateWnd(int width, int height);
+LRESULT  CALLBACK _WndProc(HWND, UINT, WPARAM, LPARAM);
+
 namespace cocos2d {
 
 class CCXEGL
 {
 public:
+    ~CCXEGL() 
+    {
+        if (EGL_NO_DISPLAY != m_eglDisplay)
+        {
+            eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+            eglTerminate(m_eglDisplay);
+        }
+        if (m_eglDC)
+        {
+            ReleaseDC(m_eglWnd, m_eglDC);
+        }
+        if (m_eglWnd)
+        {
+            DestroyWindow(m_eglWnd);
+        }
+        UnregisterClass(WIN_CLASS_NAME, GetModuleHandle(NULL));
+    }
+
+    static CCXEGL * Create(TWindow * pWindow)
+    {
+        CCXEGL * pEGL = new CCXEGL;
+        Boolean bSuccess = FALSE;
+
+        do 
+        {
+            CCX_BREAK_IF(! pEGL);
+
+            TRectangle rc;
+            pWindow->GetClientBounds(&rc);
+
+            CCX_BREAK_IF(! (pEGL->m_eglWnd = _CreateWnd(rc.Width(), rc.Height())));
+
+            pEGL->m_eglDC = GetDC(pEGL->m_eglWnd);
+            CCX_BREAK_IF(! pEGL->m_eglDC);
+
+            EGLDisplay eglDisplay;
+            CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglDC)));
+
+            EGLint nMajor, nMinor;
+            CCX_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
+
+            const EGLint aConfigAttribs[] =
+            {
+                EGL_LEVEL,				0,
+                EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,
+                EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,
+                EGL_NATIVE_RENDERABLE,	EGL_FALSE,
+                EGL_DEPTH_SIZE,			EGL_DONT_CARE,
+                EGL_NONE,
+            };
+            EGLint iConfigs;
+            EGLConfig eglConfig;
+            CCX_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
+                || (iConfigs != 1));
+
+            EGLSurface eglSurface;
+            eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, pEGL->m_eglWnd, NULL);
+            CCX_BREAK_IF(EGL_NO_SURFACE == eglSurface);
+
+            EGLContext eglContext;
+            eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
+            CCX_BREAK_IF(EGL_NO_CONTEXT == eglContext);
+
+            CCX_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
+
+            pEGL->m_eglDisplay = eglDisplay;
+            pEGL->m_eglSurface = eglSurface;
+            pEGL->m_eglContext = eglContext;
+            bSuccess = TRUE;
+        } while (0);
+
+        if (! bSuccess)
+        {
+            CCX_SAFE_DELETE(pEGL);   
+        }
+
+        return pEGL;
+    }
+
+    void SwapBuffers()
+    {
+        if (EGL_NO_DISPLAY != m_eglDisplay)
+        {
+            eglSwapBuffers(m_eglDisplay, m_eglSurface);
+        }
+    }
+private:
     CCXEGL() 
-    : m_pDC(NULL)
-    , m_eglDisplay(EGL_NO_DISPLAY)
-    , m_eglSurface(EGL_NO_SURFACE)
-    , m_eglContext(EGL_NO_CONTEXT) {}
+        : m_eglWnd(NULL)
+        , m_eglDC(NULL)
+        , m_eglDisplay(EGL_NO_DISPLAY)
+        , m_eglSurface(EGL_NO_SURFACE)
+        , m_eglContext(EGL_NO_CONTEXT) {}
 
-    ~CCXEGL() { CCX_SAFE_DELETE(m_pDC); }
 
-    TDC *       m_pDC;
-    EGLDisplay  m_eglDisplay;
-    EGLSurface  m_eglSurface;
-    EGLContext  m_eglContext;
+    EGLNativeWindowType     m_eglWnd;
+    EGLNativeDisplayType    m_eglDC;
+    EGLDisplay              m_eglDisplay;
+    EGLSurface              m_eglSurface;
+    EGLContext              m_eglContext;
 };
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
@@ -63,9 +158,14 @@ CCXEGLView::CCXEGLView(TApplication * pApp)
 
 CCXEGLView::~CCXEGLView()
 {
-    _releaseEGL();
+    delete m_pEGL;
     delete m_pSet;
     delete m_pTouch;
+}
+
+Boolean CCXEGLView::AfterCreate(void)
+{
+    return (m_pEGL = CCXEGL::Create(this)) ? TRUE : FALSE;
 }
 
 Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
@@ -74,17 +174,6 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     switch(pEvent->eType)
     {
-    case EVENT_WinInit:
-        {
-            _initEGL();
-            if (! m_pEGL)
-            {
-                break;
-            }
-            bHandled = TRUE;
-        }
-        break;
-
     case EVENT_WinPaint:
         {
             swapBuffers();
@@ -129,23 +218,13 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             bHandled = TRUE;
         }
         break;
-
-    case EVENT_WinClose:
-        {
-            // Stop the application since the main form has been closed
-            _releaseEGL();
-        }
-        break;
     }
 
-    if (bHandled)
-    {
-        return bHandled;
-    }
-    else
+    if (! bHandled)
     {
         return TWindow::EventHandler(pApp, pEvent);
     }
+    return bHandled;
 }
 
 CGSize CCXEGLView::getSize()
@@ -162,7 +241,7 @@ bool CCXEGLView::isOpenGLReady()
 
 void CCXEGLView::release()
 {
-    _releaseEGL();
+    CCX_SAFE_DELETE(m_pEGL);
     CloseWindow();
 }
 
@@ -176,79 +255,108 @@ void CCXEGLView::swapBuffers()
     // DrawWindow();
     if (m_pEGL)
     {
-        eglSwapBuffers(m_pEGL->m_eglDisplay, m_pEGL->m_eglSurface);
+        m_pEGL->SwapBuffers();
     }
 }
 
+}       // end of namespace cocos2d
+
 //////////////////////////////////////////////////////////////////////////
-// private member for initialize EGL
+// static function
 //////////////////////////////////////////////////////////////////////////
 
-void CCXEGLView::_initEGL()
+static EGLNativeWindowType _CreateWnd(int width, int height)
 {
-    TDC * pDC = NULL;
-    CCXEGL * pEGL = new CCXEGL;
+    WNDCLASS  wc;                  // Windows Class Structure
+    HINSTANCE hInstance;
+    EGLNativeWindowType hWnd = NULL;
 
-    do 
+    hInstance         = GetModuleHandle( NULL );             // Grab An Instance For Our Window
+    wc.style          = CS_NOCLOSE | CS_HREDRAW | CS_VREDRAW | CS_OWNDC;  // Redraw On Size, And Own DC For Window.
+    wc.lpfnWndProc    = WNDPROC( _WndProc );                  // WndProc Handles Messages
+    wc.cbClsExtra     = 0;                                   // No Extra Window Data
+    wc.cbWndExtra     = 0;                                   // No Extra Window Data
+    wc.hInstance      = hInstance;                           // Set The Instance
+    wc.hIcon          = LoadIcon( NULL, IDI_WINLOGO );       // Load The Default Icon
+    wc.hCursor        = LoadCursor( NULL, IDC_ARROW );       // Load The Arrow Pointer
+    wc.hbrBackground  = NULL;                                // No Background Required For GL
+    wc.lpszMenuName   = NULL;                                // We Don't Want A Menu
+    wc.lpszClassName  = WIN_CLASS_NAME;                            // Set The Class Name
+
+    RegisterClass(&wc);                            // Attempt To Register The Window Class
+
+    RECT rect = {0, 0, width, height};
+    AdjustWindowRectEx(&rect, WS_POPUPWINDOW, false, WS_EX_TOPMOST | WS_EX_APPWINDOW | WS_EX_WINDOWEDGE);
+    hWnd = CreateWindowEx(
+        WS_EX_TOPMOST | WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,       // Extended Style For The Window
+        "OpenGL",                             // Class Name
+        "Effect Test App",                    // Window Title
+        WS_POPUPWINDOW/*WS_OVERLAPPEDWINDOW*/ |                     // Defined Window Style
+        WS_CLIPSIBLINGS |                         // Required Window Style
+        WS_CLIPCHILDREN,                          // Required Window Style
+        0, 0,                                     // Window Position
+        rect.right - rect.left,                                    // Window Width
+        rect.bottom - rect.top,                                   // Window Height
+        NULL,                                     // No Parent Window
+        NULL,                                     // No Menu
+        hInstance,                                // Instance
+        NULL );
+
+    return hWnd;
+}
+
+static LRESULT CALLBACK _WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    switch ( uMsg )      // Check For Windows Messages
     {
-        CCX_BREAK_IF(m_pEGL || ! pEGL);
-
-        pDC = new TDC(this);
-        CCX_BREAK_IF(! pDC);
-
-        EGLNativeDisplayType displayId = (EGLNativeDisplayType) pDC;
-        EGLDisplay eglDisplay;
-        CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(displayId)));
-
-        EGLint nMajor, nMinor;
-        CCX_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
-
-        const EGLint aConfigAttribs[] =
+    case WM_ACTIVATE:
         {
-            EGL_LEVEL,				0,
-            EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,
-            EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,
-            EGL_NATIVE_RENDERABLE,	EGL_FALSE,
-            EGL_DEPTH_SIZE,			EGL_DONT_CARE,
-            EGL_NONE,
-        };
-        EGLint iConfigs;
-        EGLConfig eglConfig;
-        CCX_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
-            || (iConfigs != 1));
+            if ( ! HIWORD( wParam ) )     // Check Minimization State
+            {
+                g_active = TRUE;
+            }
+            else
+            {
+                g_active = FALSE;
+            }
+            return 0;
+        }
 
-        EGLSurface eglSurface;
-        EGLNativeWindowType eglWnd = (EGLNativeWindowType) this;
-        CCX_BREAK_IF(EGL_NO_SURFACE == (eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, eglWnd, NULL)));
+    case WM_SYSCOMMAND:
+        {
+            if ( ( wParam == SC_SCREENSAVE ) ||
+                ( wParam == SC_MONITORPOWER ) )
+            {
+                return 0;
+            }
+            break;
+        }
 
-        EGLContext eglContext;
-        CCX_BREAK_IF(EGL_NO_CONTEXT == (eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL)));
+    case WM_CLOSE:
+        {
+            PostQuitMessage( 0 );
+            return 0;
+        }
 
-        CCX_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
+    case WM_KEYDOWN:
+        {
+            g_keys[wParam] = TRUE;
+            return 0;
+        }
 
-        m_pEGL = pEGL;
-        pEGL->m_eglDisplay = eglDisplay;
-        pEGL->m_eglSurface = eglSurface;
-        pEGL->m_eglContext = eglContext;
-        pEGL->m_pDC = pDC;
-        pDC = NULL;
-        pEGL = NULL;
-    } while (0);
+    case WM_KEYUP:
+        {
+            g_keys[wParam] = FALSE;
+            return 0;
+        }
 
-    CCX_SAFE_DELETE(pDC);
-    CCX_SAFE_DELETE(pEGL);
-}
-
-void CCXEGLView::_releaseEGL()
-{
-    if (! m_pEGL)
-    {
-        return;
+    case WM_SIZE:
+        {
+            //ResizeScene( LOWORD( lParam ), HIWORD( lParam ) );  // LoWord=Width, HiWord=Height
+            return 0;
+        }
     }
 
-    eglMakeCurrent(m_pEGL->m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-    eglTerminate(m_pEGL->m_eglDisplay);
-    CCX_SAFE_DELETE(m_pEGL);
-}
-
+    // Pass All Unhandled Messages To DefWindowProc
+    return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }

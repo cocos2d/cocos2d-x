@@ -22,49 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_UPHONE_H__
-#define __CCX_EGLVIEW_UPHONE_H__
+#ifndef __CCX_APPLICATION_H__
+#define __CCX_APPLICATION_H__
 
-#include "GuiBase.h"
-#include "TWindow.h"
+#include "platform/CCXApplication_platform.h"
 
-#include "cocoa/CGGeometry.h"
-
-class NSSet;
-class CCTouch;
-class TApplication;
-class EGLTouchDelegate;
-
-namespace   cocos2d {
-
-class CCXEGL;
-
-class CCX_DLL CCXEGLView : public TWindow
-{
-public:
-
-    CCXEGLView(TApplication * pApp);
-    virtual ~CCXEGLView();
-
-    virtual Boolean AfterCreate(void);
-    virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
-
-    CGSize  getSize();
-    bool    isOpenGLReady();
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void    swapBuffers();
-
-private:
-
-    bool                m_bCaptured;
-    NSSet *             m_pSet;
-    CCTouch *           m_pTouch;
-    EGLTouchDelegate *  m_pDelegate;
-
-    CCXEGL *            m_pEGL;
-};
-
-}   // end of namespace   cocos2d
-
-#endif	// end of __CCX_EGLVIEW_UPHONE_H__
+#endif	// end of __CCX_APPLICATION_H__
