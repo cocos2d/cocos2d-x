@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 #include "cocoa/NSObject.h"
 
+#include <string.h>
+
 class CGRect;
 class CGPoint;
 class CGSize;
@@ -118,7 +120,17 @@ public:
 
 	// name of the animation
 	inline char* getName(void) { return m_pszName; }
-	inline void setName(char *pszName) { m_pszName = pszName; }
+	inline void setName(const char *pszName)
+	{
+		if (m_pszName)
+		{
+			delete m_pszName;
+		}
+
+		m_pszName = new char[strlen(pszName) + 1];
+		memcpy(m_pszName, pszName, strlen(pszName));
+		m_pszName[strlen(pszName)] = '\0';
+	}
 
 	// delay between frames in seconds
 	inline float getDelay(void) { return m_fDelay; }
