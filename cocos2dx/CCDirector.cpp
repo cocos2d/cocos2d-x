@@ -200,7 +200,11 @@ void CCDirector::mainLoop(void)
 	CC_ENABLE_DEFAULT_GL_STATES();
 
 	// draw the scene
-	m_pRunningScene->visit();
+    if (m_pRunningScene)
+    {
+        m_pRunningScene->visit();
+    }
+
 	if (m_bDisplayFPS)
 	{
 		showFPS();
@@ -590,7 +594,7 @@ void CCDirector::runWithScene(CCScene *pScene)
 	startAnimation();
 
 	// render the 1st frame to avoid flicker (issue #350)
-	mainLoop();
+	//mainLoop();
 }
 
 void CCDirector::replaceScene(CCScene *pScene)
@@ -681,22 +685,28 @@ void CCDirector::setNextScene(void)
 	// If it is not a transition, call onExit/cleanup
 	if (! newIsTransition)
 	{
-		m_pRunningScene->onExit();
+        if (m_pRunningScene)
+        {
+            m_pRunningScene->onExit();
+        }
 
 		// issue #709. the root node (scene) should receive the cleanup message too
 		// otherwise it might be leaked.
-		if (m_bSendCleanupToScene)
+		if (m_bSendCleanupToScene && m_pRunningScene)
 		{
 			m_pRunningScene->cleanup();
 		}
 	}
 
-	m_pRunningScene->release();
-	m_pRunningScene = m_pNextScene;
+    if (m_pRunningScene)
+    {
+        m_pRunningScene->release();
+    }
+    m_pRunningScene = m_pNextScene;
 	m_pNextScene->retain();
 	m_pNextScene = NULL;
 
-	if (! runningIsTransition)
+	if (! runningIsTransition && m_pRunningScene)
 	{
 		m_pRunningScene->onEnter();
 		m_pRunningScene->onEnterTransitionDidFinish();

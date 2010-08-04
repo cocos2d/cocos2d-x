@@ -231,7 +231,7 @@ void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 //
 void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int uIndex)
 {
-	assert(uIndex > 0 && uIndex < 4);
+	assert(uIndex >= 0 && uIndex < 4);
 
 	NSSet *pMutableTouches;
 	m_bLocked = true;
