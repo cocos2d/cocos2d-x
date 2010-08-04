@@ -10,7 +10,7 @@ class HelloWorld : public CCLayer
 {
 public:
     HelloWorld();
-    ~HelloWorld();
+    virtual ~HelloWorld();
 
 private:
     HelloSprite * m_pHSprite;
