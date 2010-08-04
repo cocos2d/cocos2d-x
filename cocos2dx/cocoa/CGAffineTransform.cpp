@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include <math.h>
 
 using namespace std;
+namespace   cocos2d {
 
 CGAffineTransform __CGAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty)
 {
@@ -125,3 +126,4 @@ CGAffineTransform CGAffineTransformInvert(CGAffineTransform t)
     return __CGAffineTransformMake(determinant * t.d, -determinant * t.b, -determinant * t.c, determinant * t.a,
 							determinant * (t.c * t.ty - t.d * t.tx), determinant * (t.b * t.tx - t.a * t.ty) );
 }
+}//namespace   cocos2d 

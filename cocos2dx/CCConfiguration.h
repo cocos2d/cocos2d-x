@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include <GLES/gl.h>
 #include <string>
+namespace   cocos2d {
 
 /**
  CCConfiguration contains some openGL variables
@@ -101,5 +102,6 @@ public:
 	// returns a shared instance of the CCConfiguration
 	static CCConfiguration* sharedConfiguration(void);
 };
+}//namespace   cocos2d 
 
 #endif // __CCCONFIGURATION_H__

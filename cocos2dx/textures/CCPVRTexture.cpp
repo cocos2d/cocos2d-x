@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "cocoa/NSData.h"
 
+namespace   cocos2d {
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 
@@ -285,5 +286,6 @@ CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(const char* path)
 	return [CCPVRTexture pvrTextureWithContentsOfFile:[url path]];
 }*/
 
+}//namespace   cocos2d 
 
 

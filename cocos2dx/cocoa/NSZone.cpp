@@ -23,8 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "NSZone.h"
 #include "cocoa/NSObject.h"
+namespace   cocos2d {
 
 NSZone::NSZone(NSObject *pObject)
 {
 	m_pCopyObject = pObject;
 }
+}//namespace   cocos2d 

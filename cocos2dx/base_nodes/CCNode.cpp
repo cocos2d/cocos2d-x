@@ -36,6 +36,8 @@ THE SOFTWARE.
 #define RENDER_IN_SUBPIXEL (int)
 #endif
 
+namespace   cocos2d {
+
 CCNode::CCNode(void)
 :m_bIsRunning(false)
 ,m_fRotation(0.0f)
@@ -976,4 +978,4 @@ CGPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
 	return this->convertToNodeSpaceAR(point);
 }
 
-
+}//namespace   cocos2d 

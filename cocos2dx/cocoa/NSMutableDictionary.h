@@ -20,6 +20,7 @@
 #include "NSMutableArray.h"
 
 using namespace std;
+namespace   cocos2d {
 
 template<class _T, class _ValueT = NSObject*>
 class NSMutableDictionary : public NSObject
@@ -199,6 +200,7 @@ public:
 };
 
 #define NSDictionary	NSMutableDictionary
+}//namespace   cocos2d 
 
 
 #endif //__CCMUTABLE_DICTIONARY_H__

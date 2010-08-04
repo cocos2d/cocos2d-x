@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "cocoa/selector_protocol.h"
 #include "support/data_support/uthash.h"
+namespace   cocos2d {
 
 //
 // CCTimer
@@ -215,5 +216,6 @@ protected:
 	struct _hashSelectorEntry *m_pCurrentTarget;
 	bool m_bCurrentTargetSalvaged;
 };
+}//namespace   cocos2d 
 
 #endif // __CCSCHEDULER_H__

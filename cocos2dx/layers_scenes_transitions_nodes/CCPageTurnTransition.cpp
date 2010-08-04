@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCPageTurnTransition.h"
 
+namespace   cocos2d {
 
 CCPageTurnTransition::CCPageTurnTransition()
 {
@@ -119,3 +120,4 @@ CCIntervalAction* CCPageTurnTransition:: actionWithSize(ccGridSize vector)
 	return NULL;
 }
 
+}//namespace   cocos2d 

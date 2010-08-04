@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __COCOS_CGGEMETRY_H__
 
 #include "ccxCommon.h"
+namespace   cocos2d {
 
 typedef float CGFloat;
 
@@ -105,5 +106,6 @@ const CGSize CGSizeZero = CGSizeMake(0,0);
 /* The "zero" rectangle -- equivalent to CGRectMake(0, 0, 0, 0). */ 
 const CGRect CGRectZero = CGRectMake(0,0,0,0);
 
+}//namespace   cocos2d 
 
 #endif // __COCOS_CGGEMETRY_H__

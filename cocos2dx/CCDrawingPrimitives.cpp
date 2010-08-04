@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <math.h>
 #include <string.h>
 #include <GLES/gl.h>
+namespace   cocos2d {
 
 void ccDrawPoint(CGPoint point)
 {
@@ -224,3 +225,4 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);	
 }
+}//namespace   cocos2d 

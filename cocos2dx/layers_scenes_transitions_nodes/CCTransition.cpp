@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "support/cgpointextension.h"
 #include "CCDirector.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
+namespace   cocos2d {
 
 enum {
 	kSceneFade = 0xFADEFADE,
@@ -1244,3 +1245,4 @@ CCIntervalAction* CCFadeDownTransition::actionWithSize(ccGridSize size)
 	return NULL;
 	/// @todo return [CCFadeOutDownTiles actionWithSize:v duration:duration];
 }
+}//namespace   cocos2d 

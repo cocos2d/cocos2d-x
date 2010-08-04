@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 
 
+namespace   cocos2d {
 class CCSprite;
 class CGRect;
 
@@ -169,5 +170,6 @@ protected:
 	// all descendants: chlidren, gran children, etc...
 	NSArray<CCSprite*> *m_pobDescendants;
 };
+}//namespace   cocos2d 
 
 #endif // __SPRITE_CCSPRITE_SHEET_H__

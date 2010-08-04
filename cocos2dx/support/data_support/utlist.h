@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #ifndef __SUPPORT_DATA_SUPPORT_UTLIST_H__
 #define __SUPPORT_DATA_SUPPORT_UTLIST_H__
+namespace   cocos2d {
 
 #define UTLIST_VERSION 1.9
 
@@ -489,6 +490,7 @@ do {                                                                            
       if ((cmp(out,elt))==0) break;                                                            \
     }                                                                                          \
 } while(0) 
+}//namespace   cocos2d 
 
 #endif /* __SUPPORT_DATA_SUPPORT_UTLIST_H__ */
 

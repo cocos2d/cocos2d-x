@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 
 #include <string>
+namespace   cocos2d {
 
 class CCSpriteSheet;
 class CCSpriteFrame;
@@ -386,5 +387,6 @@ protected:
 	// Animations that belong to the sprite
 	NSMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
 };
+}//namespace   cocos2d 
 
 #endif // __SPITE_NODE_CCSPRITE_H__

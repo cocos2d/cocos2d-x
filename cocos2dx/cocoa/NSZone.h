@@ -26,6 +26,8 @@ THE SOFTWARE.
 #define __NS_ZONE_H__
 #include "platform/platform.h"
 
+namespace   cocos2d {
+
 class NSObject;
 
 class NSZone
@@ -36,5 +38,7 @@ public:
 public:
 	NSObject *m_pCopyObject;
 };
+}//namespace   cocos2d 
 
 #endif // __NS_ZONE_H__
+

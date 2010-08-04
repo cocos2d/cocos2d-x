@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "ccxCommon.h"
+namespace   cocos2d {
 
 /** CCScene is a subclass of CCNode that is used only as an abstract concept.
 
@@ -47,6 +48,7 @@ public:
 	bool init();
 	static CCScene *node(void);
 };
+}//namespace   cocos2d 
 
 #endif // __CCSCENE_H__
 

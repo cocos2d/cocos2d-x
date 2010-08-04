@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "TransformUtils.h"
 #include "cocoa/CGAffineTransform.h"
+namespace   cocos2d {
 
 void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 {
@@ -43,3 +44,4 @@ void GLToCGAffine(const GLfloat *m, CGAffineTransform *t)
 	t->a = m[0]; t->c = m[4]; t->tx = m[12];
 	t->b = m[1]; t->d = m[5]; t->ty = m[13];
 }
+}//namespace   cocos2d 

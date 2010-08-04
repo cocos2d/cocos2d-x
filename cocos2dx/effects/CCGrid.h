@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "CCCamera.h"
 #include "cocoa/NSObject.h"
+namespace   cocos2d {
 
 class CCTexture2D;
 class CCGrabber;
@@ -108,5 +109,6 @@ protected:
 	GLvoid		*pOriginalVertices;
 	GLushort	*pIndices;
 };
+}//namespace   cocos2d 
 
 #endif // __EFFECTS_CCGRID_H__

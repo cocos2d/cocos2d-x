@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <stdio.h>
 
 using namespace std;
+namespace   cocos2d {
 
 NSData::NSData(void)
 {
@@ -79,3 +80,4 @@ NSData* NSData::dataWithBytes(UINT8 *pBytes, int size)
 {
 	return NULL;
 }
+}//namespace   cocos2d 

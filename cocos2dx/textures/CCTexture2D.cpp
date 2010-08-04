@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "platform/platform.h"
 
+namespace   cocos2d {
 
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
@@ -630,3 +631,4 @@ CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
 	return g_defaultAlphaPixelFormat;
 }
 
+}//namespace   cocos2d 

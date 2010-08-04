@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include <vector>
 #include <assert.h>
 
+namespace   cocos2d {
+
 // the element should be pointer of NSObject or it's sub class
 template<class T = NSObject*>
 class NSMutableArray : public NSObject
@@ -308,5 +310,6 @@ private:
 };
 
 #define NSArray NSMutableArray
+}//namespace   cocos2d 
 
 #endif // __COCOA_NS_MUTATLE_ARRAY_H__

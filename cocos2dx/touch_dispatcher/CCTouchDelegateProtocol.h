@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "ccxCommon.h"
 
+namespace   cocos2d {
 class CCTouch;
 class UIEvent;
 
@@ -69,5 +70,6 @@ public:
 	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
 	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
 };
+}//namespace   cocos2d 
 
 #endif // __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__

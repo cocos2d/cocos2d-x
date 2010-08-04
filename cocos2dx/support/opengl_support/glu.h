@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __SUPPORT_OPGL_SUPPORT_GLU_H__
 
 #include <GLES/gl.h>
+namespace   cocos2d {
 
 /**
  @file
@@ -36,5 +37,6 @@ THE SOFTWARE.
 void gluLookAt(float fEyeX, float fEyeY, float fEyeZ, float fLookAtX, float fLookAtY, float fLookAtZ, float fUpX, float fUpY, float fUpZ);
 /** OpenGL gluPerspective implementation */
 void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
+}//namespace   cocos2d 
 
 #endif // __SUPPORT_OPGL_SUPPORT_GLU_H__

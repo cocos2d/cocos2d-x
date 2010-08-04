@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 #include "support/data_support/uthash.h"
 
+namespace   cocos2d {
 class NSData;
 
 class CCPVRTexture : public NSObject
@@ -65,6 +66,7 @@ private:
 	bool unpackPVRData(NSData *data);
 	bool createGLTexture();
 };
+}//namespace   cocos2d 
 
 
 #endif //__CCPVRTEXTURE_H__

@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <string.h>   /* memcmp,strlen */
 #include <stddef.h>   /* ptrdiff_t */
+namespace   cocos2d {
 
 /* These macros use decltype or the earlier __typeof GNU extension.
    As decltype is only available in newer compilers (VS2010 or gcc 4.3+
@@ -953,5 +954,6 @@ typedef struct UT_hash_handle {
    unsigned keylen;                  /* enclosing struct's key len     */
    unsigned hashv;                   /* result of hash-fcn(key)        */
 } UT_hash_handle;
+}//namespace   cocos2d 
 
 #endif /* __SUPPORT_DATA_SUPPORT_UTHASH_H__*/

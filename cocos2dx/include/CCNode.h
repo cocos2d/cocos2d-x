@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccxCommon.h"
 
+namespace   cocos2d {
 class CCCamera;
 class CCGridBase;
 class CGPoint;
@@ -491,6 +492,7 @@ public:
 	CGPoint convertTouchToNodeSpaceAR(CCTouch * touch);
 
 };
+}//namespace   cocos2d 
 
 #endif // __CCNODE_H__
 

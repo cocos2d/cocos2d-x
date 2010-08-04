@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "NSMutablearray.h"
 
 #include <stack>
+namespace   cocos2d {
 
 class NSAutoreleasePool
 {
@@ -70,5 +71,6 @@ private:
 	std::stack<NSAutoreleasePool *> *m_pReleasePoolStack;
 	NSAutoreleasePool *m_pCurReleasePool;
 };
+}//namespace   cocos2d 
 
 #endif //__NS_AUTO_RELEASE_POOL_H__

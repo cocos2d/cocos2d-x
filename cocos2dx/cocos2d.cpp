@@ -24,8 +24,10 @@ THE SOFTWARE.
 
 #include "include/cocos2d.h"
 using namespace std;
+namespace   cocos2d {
 
 string cocos2dVersion()
 {
 	return "cocos2d-x v0.1";
 }
+}//namespace   cocos2d 

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "cocoa/NSMutableArray.h"
 
 #include <assert.h>
+namespace   cocos2d {
 
 // data structures
 
@@ -596,3 +597,4 @@ void CCScheduler::purgeSharedScheduler(void)
 {
 	pSharedScheduler->release();
 }
+}//namespace   cocos2d 

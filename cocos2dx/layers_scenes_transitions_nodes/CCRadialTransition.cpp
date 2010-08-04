@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCRadialTransition.h"
 
 
+namespace   cocos2d {
 
 //#import "CCDirector.h"
 //#import "CCRadialTransition.h"
@@ -113,4 +114,5 @@ CCProgressTimerType CCRadialCWTransition::radialType()
 	return kCCProgressTimerTypeRadialCW;
 }
 
+}//namespace   cocos2d 
 

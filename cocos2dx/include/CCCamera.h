@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "ccMacros.h"
 #include <string>
+namespace   cocos2d {
 
 class CCCamera : public NSObject
 {
@@ -80,5 +81,6 @@ public:
 private:
 	DISALLOW_COPY_AND_ASSIGN(CCCamera);
 };
+}//namespace   cocos2d 
 
 #endif // __CCCAMERA_H__

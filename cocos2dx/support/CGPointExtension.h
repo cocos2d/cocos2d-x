@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "cocoa/CGGeometry.h"
 
 #include <math.h>
+namespace   cocos2d {
 
 /** Helper macro that creates a CGPoint
  @return CGPoint
@@ -302,6 +303,7 @@ bool ccpLineIntersect(CGPoint p1, CGPoint p2,
 					  CGPoint p3, CGPoint p4,
 					  float *s, float *t);
 
+}//namespace   cocos2d 
 
 #endif // __SUPPORT_CGPOINTEXTENSION_H__
 

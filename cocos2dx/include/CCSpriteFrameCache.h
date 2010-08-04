@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include <string>
 #include <map>
 
+namespace   cocos2d {
 class CCSprite;
 
 /** Singleton that handles the loading of the sprite frames.
@@ -118,5 +119,6 @@ private:
 protected:
 	std::map<std::string, CCSpriteFrame*> *m_pSpriteFramesMap;
 };
+}//namespace   cocos2d 
 
 #endif // __SPRITE_CCSPRITE_FRAME_CACHE_H__

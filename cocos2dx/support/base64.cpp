@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <cstdio>
 #include <stdlib.h>
 #include "base64.h"
+namespace   cocos2d {
 
 unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -106,3 +107,4 @@ int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
 	}
     return outLength;
 }
+}//namespace   cocos2d 

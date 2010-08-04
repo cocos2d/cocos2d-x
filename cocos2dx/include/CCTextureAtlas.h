@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "ccConfig.h"
 
+namespace   cocos2d {
 class CCTexture2D;
 
 /** A class that implements a Texture Atlas.
@@ -145,6 +146,7 @@ public:
 private:
 	void initIndices();
 };
+}//namespace   cocos2d 
 
 #endif //__CCTEXTURE_ATLAS_H__
 

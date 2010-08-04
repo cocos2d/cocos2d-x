@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 
 #include <assert.h>
+namespace   cocos2d {
 
 bool CCTouchDispatcher::isDispatchEvents(void)
 {
@@ -411,3 +412,4 @@ void CCTouchDispatcher::touchesCancelled(NSSet *touches, UIEvent *pEvent)
 		this->touches(touches, pEvent, ccTouchCancelled);
 	}
 }
+}//namespace   cocos2d 

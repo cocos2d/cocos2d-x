@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "ccxCommon.h"
 
+
+namespace   cocos2d {
 class NSZone;
 class NSObject;
 class NSString;
@@ -60,5 +62,6 @@ public:
 
 	friend class NSAutoreleasePool;
 };
+}//namespace   cocos2d 
 
 #endif // __COCOA_NSOBJECT_H__

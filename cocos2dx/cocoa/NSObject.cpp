@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include "NSAutoreleasePool.h"
 #include <assert.h>
+namespace   cocos2d {
 
 NSObject* CCCopying::copyWithZone(NSZone *pZone)
 {
@@ -100,3 +101,4 @@ bool NSObject::isEqual(const NSObject *pObject)
 {
 	return this == pObject;
 }
+}//namespace   cocos2d 

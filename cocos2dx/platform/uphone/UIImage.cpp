@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 using namespace ImageToolKit;
 using namespace std;
+namespace   cocos2d {
 
 UIImage::UIImage(void)
 {
@@ -231,3 +232,4 @@ UINT8* UIImage::getRGBA8888Data(void)
 
 	return pBufferRet;
 }
+}//namespace   cocos2d 

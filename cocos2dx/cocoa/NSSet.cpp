@@ -26,6 +26,8 @@ THE SOFTWARE.
 
 using namespace std;
 
+namespace   cocos2d {
+
 NSSet::NSSet(void)
 {
 }
@@ -79,3 +81,4 @@ NSSetIterator NSSet::end(void)
 {
 	return m_set.end();
 }
+}//namespace   cocos2d 

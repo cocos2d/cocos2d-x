@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "Cocos2dTypes.h"
 
 class TBitmap;
+namespace   cocos2d {
 
 class UIImage
 {
@@ -57,5 +58,6 @@ public:
 private:
 	TBitmap *m_pBitmap;
 };
+}//namespace   cocos2d 
 
 #endif // __PLATFORM_UPHONE_UIIMAGE_H__

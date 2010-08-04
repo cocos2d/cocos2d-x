@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
 
 #include <ssTsd.h>
+namespace   cocos2d {
 
 class NSLock
 {
@@ -34,10 +35,11 @@ public:
 	~NSLock(void);
 
 	void lock(void);
-	void uplock(void);
+	void unlock(void);
 
 private:
 	SS_LOCK_t *m_pLock;
 };
+}//namespace   cocos2d 
 
 #endif // __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
