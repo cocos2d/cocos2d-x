@@ -146,6 +146,9 @@ public:
             {
                 return;
             }
+//            eglSwapBuffers(m_eglDisplay, m_eglSurface);
+//             glClearColor(0.0f, 0, 0, 1.0f);
+//             glClear(GL_COLOR_BUFFER_BIT);
             glReadPixels(0, 0, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, pData);
 
             char * pDst     = (char *)m_pBmp->GetDataPtr();
@@ -155,7 +158,7 @@ public:
 
             for (int i = 0; i < nHeight; i++)
             {
-                pDstRow = pDst + i * nPitch;
+                pDstRow = pDst + (nHeight - i - 1) * nPitch;
                 for (int j = 0; j < nWidth; j++)
                 {
                     *(int *)pDstRow = RGBA(pSrc[0], pSrc[1], pSrc[2], pSrc[3]);
@@ -167,7 +170,6 @@ public:
             dc.DrawBitmap(m_pBmp, 0, 0);
 
             delete pData;
-//            eglSwapBuffers(m_eglDisplay, m_eglSurface);
         }
     }
 private:
