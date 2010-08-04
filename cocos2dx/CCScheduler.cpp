@@ -202,7 +202,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 
 	if (! pElement)
 	{
-		pElement = (tHashSelectorEntry *)calloc(sizeof(*pElement), 1);
+		pElement = new tHashSelectorEntry;
 		pElement->target = pTarget;
 		HASH_ADD_INT(m_pHashForSelectors, target, pElement);
 
@@ -287,7 +287,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 
 void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int nPriority, bool bPaused)
 {
-	tListEntry *pListElement = (tListEntry *)malloc(sizeof(*pListElement));
+	tListEntry *pListElement = new tListEntry;
 
 	pListElement->target = pTarget;
 	pListElement->priority = nPriority;
@@ -332,11 +332,18 @@ void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int
 			DL_APPEND(*ppList, pListElement);
 		}
 	}
+
+	// update hash entry for quick access
+	tHashUpdateEntry *pHashElement = new tHashUpdateEntry();
+	pHashElement->target = pTarget;
+	pHashElement->list = ppList;
+	pHashElement->entry = pListElement;
+	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
 }
 
 void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool bPaused)
 {
-	tListEntry *pListElement = (tListEntry *)malloc(sizeof(*pListElement));
+	tListEntry *pListElement = new tListEntry;
 
 	pListElement->target = pTarget;
 	pListElement->paused = bPaused;
