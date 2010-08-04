@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include "CCTouchDelegateProtocol.h"
 #include "CCTouchDispatcher.h"
-#include "cocoa/NSObject.h"
-#include "cocoa/NSSet.h"
+#include "NSObject.h"
+#include "NSSet.h"
 namespace   cocos2d {
 
 /**

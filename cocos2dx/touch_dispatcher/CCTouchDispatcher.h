@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
 #include "CCTouchDelegateProtocol.h"
-#include "cocoa/NSObject.h"
-#include "cocoa/NSMutableArray.h"
+#include "NSObject.h"
+#include "NSMutableArray.h"
 namespace   cocos2d {
 
 typedef enum

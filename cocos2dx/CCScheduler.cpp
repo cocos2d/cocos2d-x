@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "support/data_support/utlist.h"
-#include "cocoa/NSMutableArray.h"
+#include "NSMutableArray.h"
 
 #include <assert.h>
 namespace   cocos2d {

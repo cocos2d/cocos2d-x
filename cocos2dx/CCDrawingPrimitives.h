@@ -40,7 +40,7 @@ THE SOFTWARE.
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
 
-#include "Cocoa/CGGeometry.h"	// for CGPoint
+#include "CGGeometry.h"	// for CGPoint
 namespace   cocos2d {
 
 /** draws a point given x and y coordinate */

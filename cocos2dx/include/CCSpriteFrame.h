@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "cocoa/NSMutableArray.h"
-#include "cocoa/NSObject.h"
+#include "NSMutableArray.h"
+#include "NSObject.h"
 
 #include <string.h>
 

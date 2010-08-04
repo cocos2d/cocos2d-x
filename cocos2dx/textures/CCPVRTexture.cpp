@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCPVRTexture.h"
 #include "ccMacros.h"
-#include "cocoa/NSData.h"
+#include "NSData.h"
 
 namespace   cocos2d {
 

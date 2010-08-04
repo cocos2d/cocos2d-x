@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "GuiBase.h"
 #include "TWindow.h"
 
-#include "cocoa/CGGeometry.h"
+#include "CGGeometry.h"
 
 class TApplication;
 

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCCamera.h"
-#include "cocoa/NSObject.h"
+#include "NSObject.h"
 namespace   cocos2d {
 
 class CCTexture2D;

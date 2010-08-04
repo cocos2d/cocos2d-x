@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "cocoa/NSObject.h"
+#include "NSObject.h"
 #include <GLES/gl.h>
 #include <string>
 namespace   cocos2d {

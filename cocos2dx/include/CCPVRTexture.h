@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #include "Cocos2dDefine.h"
-#include "cocoa/NSObject.h"
-#include "cocoa/NSMutableArray.h"
+#include "NSObject.h"
+#include "NSMutableArray.h"
 #include "support/data_support/uthash.h"
 
 namespace   cocos2d {

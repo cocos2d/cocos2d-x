@@ -26,10 +26,10 @@ THE SOFTWARE.
 #define __CCTEXTURE_CACHE_H__
 
 #include <string>
-#include "cocoa/NSObject.h"
+#include "NSObject.h"
 /// @todo #import <Foundation/Foundation.h>
 /// @todo #import <CoreGraphics/CGImage.h>
-#include "cocoa/NSMutableDictionary.h"
+#include "NSMutableDictionary.h"
 
 namespace   cocos2d {
 class CCTexture2D;

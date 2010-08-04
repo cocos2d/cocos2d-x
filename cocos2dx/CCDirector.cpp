@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCDirector.h"
 #include "CCScene.h"
-#include "cocoa/NSMutableArray.h"
+#include "NSMutableArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "Cocos2dDefine.h"
@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "CCTransition.h"
 #include "CCSpriteFrameCache.h"
-#include "cocoa/NSAutoreleasePool.h"
+#include "NSAutoreleasePool.h"
 #include "platform/platform.h"
 
 #include <string>
