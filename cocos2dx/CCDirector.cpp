@@ -132,6 +132,8 @@ CCDirector* CCDirector::init(void)
     m_fContentScaleFactor = 1;
 	m_obScreenSize = m_obSurfaceSize = CGSizeZero;
 
+	m_pLastUpdate = new struct cc_timeval();
+
 	// create autorelease pool
 	NSPoolManager::getInstance()->push();
 
@@ -154,6 +156,10 @@ CCDirector::~CCDirector(void)
 	NSPoolManager::getInstance()->pop();
 
 	pobSharedDirector = NULL;
+
+	// delete m_pLastUpdate
+	delete m_pLastUpdate;
+	m_pLastUpdate = NULL;
 }
 
 void CCDirector::setGLDefaultValues(void)
