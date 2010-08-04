@@ -32,8 +32,8 @@ THE SOFTWARE.
 
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
-#include "cocoa/NSObject.h"
-#include "cocoa/NSMutableDictionary.h"
+#include "NSObject.h"
+#include "NSMutableDictionary.h"
 
 #include <string>
 #include <map>

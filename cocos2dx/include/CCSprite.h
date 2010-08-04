@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccTypes.h"
-#include "cocoa/NSMutableDictionary.h"
+#include "NSMutableDictionary.h"
 #include "ccxCommon.h"
 
 #include <string>

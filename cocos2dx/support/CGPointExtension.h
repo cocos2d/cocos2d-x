@@ -41,7 +41,7 @@ THE SOFTWARE.
   - cpvadd( CGPointMake(1,1), CGPointMake(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
-#include "cocoa/CGGeometry.h"
+#include "CGGeometry.h"
 
 #include <math.h>
 namespace   cocos2d {

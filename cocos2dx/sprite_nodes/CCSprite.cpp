@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "support/CGPointExtension.h"
 #include "CCDrawingPrimitives.h"
-#include "cocoa/CGGeometry.h"
+#include "CGGeometry.h"
 #include "CCTexture2D.h"
-#include "cocoa/CGAffineTransform.h"
+#include "CGAffineTransform.h"
 #include "sstsd.h"
 #include <string.h>
 

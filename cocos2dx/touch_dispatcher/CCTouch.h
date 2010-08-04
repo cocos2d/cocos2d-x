@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_TOUCH_H__
 #define __CC_TOUCH_H__
 
-#include "cocoa/NSObject.h"
-#include "cocoa/CGGeometry.h"
+#include "NSObject.h"
+#include "CGGeometry.h"
 
 namespace cocos2d {
 

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "ccMacros.h"
 #include "CCTexture2D.h"
-#include "cocoa/CGGeometry.h"
+#include "CGGeometry.h"
 namespace   cocos2d {
 
 // implementation of CCAnimation

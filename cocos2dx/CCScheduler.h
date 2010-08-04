@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include "cocoa/NSObject.h"
-#include "cocoa/selector_protocol.h"
+#include "NSObject.h"
+#include "selector_protocol.h"
 #include "support/data_support/uthash.h"
 namespace   cocos2d {
 

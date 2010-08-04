@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
-#include "cocoa/CGGeometry.h"
+#include "CGGeometry.h"
 #include <GLES/gl.h>
 namespace   cocos2d {
 

@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "gles/gl.h"
 
 #include "Cocos2dDefine.h"
-#include "cocoa/NSSet.h"
+#include "NSSet.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 

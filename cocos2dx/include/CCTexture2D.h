@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 
 #include "Cocos2dDefine.h"
-#include "cocoa/NSObject.h"
-#include "cocoa/CGGeometry.h"
+#include "NSObject.h"
+#include "CGGeometry.h"
 
 namespace   cocos2d {
 class UIImage;

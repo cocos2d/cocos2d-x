@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "ccTypes.h"
-#include "cocoa/NSObject.h"
+#include "NSObject.h"
 #include "ccConfig.h"
 
 namespace   cocos2d {
