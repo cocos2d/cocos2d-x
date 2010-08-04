@@ -63,6 +63,7 @@ CCNode::CCNode(void)
 ,m_pChildren(NULL)
 // userData is always inited as nil
 ,m_pUserData(NULL)
+,m_pParent(NULL)
 {
     // nothing
 }
@@ -614,7 +615,7 @@ void CCNode::reorderChild(CCNode *child, int zOrder)
 
  void CCNode::draw()
  {
-	 assert(0);
+	 //assert(0);
  	// override me
  	// Only use- this function to draw your staff.
  	// DON'T draw your stuff outside this method
@@ -635,11 +636,12 @@ void CCNode::visit()
 // 	}
 
 	this->transform();
-	
+
+    CCNode* pNode;
+    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
-		CCNode* pNode;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
 		{
 			pNode = (*it);
@@ -653,13 +655,19 @@ void CCNode::visit()
 				break;
 			}
 		}
+    }
 
-		this->draw();
+	this->draw();
 
+    if (m_pChildren && m_pChildren->count() > 0)
+    {
 		for ( ; it!=m_pChildren->end(); it++ )
 		{
 			pNode = (*it);
-			pNode->visit();
+            if (pNode)
+            {
+                pNode->visit();
+            }
 		}		
 	}
 /// @todo
