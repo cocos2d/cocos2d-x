@@ -365,7 +365,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 		this->initWithData(data, pixelFormat, POTWide, POTHigh, imageSize);
 
 		// should be after calling super init
-/// @todo		_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+		m_bHasPremultipliedAlpha = image->isPremultipliedAlpha();
 
 		//CGContextRelease(context);
 		CCX_SAFE_DELETE(data);
