@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
+#include "CCScheduler.h"
 #include "touch_dispatcher/CCTouch.h"
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
@@ -875,16 +876,14 @@ void CCNode::unscheduleAllSelectors()
 
 void CCNode::resumeSchedulerAndActions()
 {
-	/** @todo
-	[[CCScheduler sharedScheduler] resumeTarget:self];
-	[[CCActionManager sharedManager] resumeTarget:self];*/
+	CCScheduler::getSharedScheduler()->resumeTarget(this);
+	/** @todo[[CCActionManager sharedManager] resumeTarget:self];*/
 }
 
 void CCNode::pauseSchedulerAndActions()
 {
-	/** @todo
-	[[CCScheduler sharedScheduler] pauseTarget:self];
-	[[CCActionManager sharedManager] pauseTarget:self];*/
+	CCScheduler::getSharedScheduler()->pauseTarget(this);
+	/** @todo[[CCActionManager sharedManager] pauseTarget:self];*/
 }
 
 CGAffineTransform CCNode::nodeToParentTransform(void)
