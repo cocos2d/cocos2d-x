@@ -261,43 +261,46 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 			{
                 pHandler = static_cast<CCTargetedTouchHandler *>(*arrayIter);
 
-				bool bClaimed = false;
-				if (uIndex == ccTouchBegan)
-				{
-					bClaimed = static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchBegan(pTouch, pEvent);
-					if (bClaimed)
-					{
-						pHandler->getClaimedTouches()->addObject(pTouch);
-					}
-				} else
-				if (pHandler->getClaimedTouches()->containsObject(pTouch))
-				{
-					// moved ended cancelled
-					bClaimed = true;
-					
-					switch (sHelper.m_type)
-					{
-					case ccTouchMoved:
-						static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchMoved(pTouch, pEvent);
-						break;
-					case ccTouchEnded:
-						static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchEnded(pTouch, pEvent);
-						break;
-					case ccTouchCancelled:
-						static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchCancelled(pTouch, pEvent);
-						break;
-					}
-				}
+                if (pHandler)
+                {
+				    bool bClaimed = false;
+				    if (uIndex == ccTouchBegan)
+				    {
+					    bClaimed = static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchBegan(pTouch, pEvent);
+					    if (bClaimed)
+					    {
+						    pHandler->getClaimedTouches()->addObject(pTouch);
+					    }
+				    } else
+				    if (pHandler->getClaimedTouches()->containsObject(pTouch))
+				    {
+					    // moved ended cancelled
+					    bClaimed = true;
+    					
+					    switch (sHelper.m_type)
+					    {
+					    case ccTouchMoved:
+						    static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchMoved(pTouch, pEvent);
+						    break;
+					    case ccTouchEnded:
+						    static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchEnded(pTouch, pEvent);
+						    break;
+					    case ccTouchCancelled:
+						    static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchCancelled(pTouch, pEvent);
+						    break;
+					    }
+				    }
 
-				if (bClaimed && pHandler->isSwallowsTouches())
-				{
-                    if (bNeedsMutableSet)
-					{
-                        pMutableTouches->removeObject(pTouch);
-					}
+				    if (bClaimed && pHandler->isSwallowsTouches())
+				    {
+                        if (bNeedsMutableSet)
+					    {
+                            pMutableTouches->removeObject(pTouch);
+					    }
 
-					break;
-				}
+					    break;
+				    }
+                }
 			}
 		}
 	}
@@ -313,21 +316,24 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 		{
 			pHandler = static_cast<CCStandardTouchHandler*>(*iter);
 
-			switch (sHelper.m_type)
-			{
-			case ccTouchBegan:
-				(static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesBegan(pMutableTouches, pEvent);
-				break;
-			case ccTouchMoved:
-				(static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesMoved(pMutableTouches, pEvent);
-				break;
-			case ccTouchEnded:
-				(static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesEnded(pMutableTouches, pEvent);
-				break;
-			case ccTouchCancelled:
-				(static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesCancelled(pMutableTouches, pEvent);
-				break;
-			}
+            if (pHandler)
+            {
+			    switch (sHelper.m_type)
+			    {
+			    case ccTouchBegan:
+				    (static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesBegan(pMutableTouches, pEvent);
+				    break;
+			    case ccTouchMoved:
+				    (static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesMoved(pMutableTouches, pEvent);
+				    break;
+			    case ccTouchEnded:
+				    (static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesEnded(pMutableTouches, pEvent);
+				    break;
+			    case ccTouchCancelled:
+				    (static_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))->ccTouchesCancelled(pMutableTouches, pEvent);
+				    break;
+			    }
+            }
 		}
 	}
 
