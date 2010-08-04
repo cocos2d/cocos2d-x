@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "CCTransition.h"
 #include "CCSpriteFrameCache.h"
 #include "cocoa/NSAutoreleasePool.h"
+#include "platform/platform.h"
 
 #include <string>
 
@@ -242,11 +243,11 @@ void CCDirector::calculateDeltaTime(void)
 	}
 	else 
 	{
-		m_fDeltaTime = (now.tv_sec - m_sLastUpdate.tv_sec) + (now.tv_usec - m_sLastUpdate.tv_usec) / 1000000.0f;
+		m_fDeltaTime = (now.tv_sec - m_pLastUpdate->tv_sec) + (now.tv_usec - m_pLastUpdate->tv_usec) / 1000000.0f;
 		m_fDeltaTime = MAX(0, m_fDeltaTime);
 	}
 
-	m_sLastUpdate = now;
+	*m_pLastUpdate = now;
 }
 
 
@@ -737,7 +738,7 @@ void CCDirector::resume(void)
 
 	setAnimationInterval(m_dOldAnimationInterval);
 
-	if (CCTime::gettimeofday(&m_sLastUpdate, NULL) != 0)
+	if (CCTime::gettimeofday(m_pLastUpdate, NULL) != 0)
 	{
 		CCLOG("cocos2d: Director: Error in gettimeofday");
 	}
@@ -799,7 +800,7 @@ void CCDirector::showFPS(void)
 // implementation of DisplayLinkDirector
 void CCDisplayLinkDirector::startAnimation(void)
 {
-	if (CCTime::gettimeofday(&m_sLastUpdate, NULL) != 0)
+	if (CCTime::gettimeofday(m_pLastUpdate, NULL) != 0)
 	{
 		CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}

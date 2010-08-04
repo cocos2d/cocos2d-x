@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "cocoa/CGGeometry.h"
 #include "CCXEGLView.h"
 #include "ccxCommon.h"
-#include "platform/platform.h"
 
 #include <assert.h>
 namespace   cocos2d {
@@ -176,7 +175,6 @@ typedef enum {
 class CCLabelAtlas;
 class CCScene;
 class cocos2d::CCXEGLView;
-struct cc_timeval;
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -496,7 +494,7 @@ protected:
 	NSMutableArray<CCScene*> *m_pobScenesStack;
 	
 	/* last time the main loop was updated */
-	struct cc_timeval m_sLastUpdate;
+	struct cc_timeval *m_pLastUpdate;
 
 	/* delta time since last tick to main loop */
 	ccTime m_fDeltaTime;
