@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
+namespace   cocos2d {
 
 class CCAsyncObject : NSObject
 {
@@ -217,7 +218,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 		}
 	}
 
-	m_pDictLock->uplock();
+	m_pDictLock->unlock();
 
 	return tex;
 }
@@ -342,4 +343,5 @@ void CCTextureCache::removeTextureForKey(const std::string & textureKeyName)
 	m_pTextures->removeObjectForKey(textureKeyName);
 }
 
+}//namespace   cocos2d 
 

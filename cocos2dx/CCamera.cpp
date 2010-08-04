@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 
 using namespace std;
+namespace   cocos2d {
 
 CCCamera::CCCamera(void)
 {
@@ -119,3 +120,4 @@ void CCCamera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)
 	*pUpY = m_fUpY;
 	*pUpZ = m_fUpZ;
 }
+}//namespace   cocos2d 

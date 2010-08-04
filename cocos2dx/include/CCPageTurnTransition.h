@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCPAGE_TURN_TRANSITION_H__
 
 #include "CCTransition.h"
+namespace   cocos2d {
 
 /**
 * A transition which peels back the bottom right hand corner of a scene
@@ -68,6 +69,7 @@ public:
 protected:
 	virtual void sceneOrder();
 };
+}//namespace   cocos2d 
 
 #endif // __CCPAGE_TURN_TRANSITION_H__
 

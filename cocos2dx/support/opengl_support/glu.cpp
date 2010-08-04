@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+namespace   cocos2d {
 
 void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
 {	
@@ -127,3 +128,4 @@ void gluLookAt(float fEyeX, float fEyeY, float fEyeZ,
     /* Translate Eye to Origin */
     glTranslatef(-fEyeX, -fEyeY, -fEyeZ);
 }
+}//namespace   cocos2d {

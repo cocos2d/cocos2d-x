@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "support/CGPointExtension.h"
 
+namespace   cocos2d {
+
 const int defaultCapacity = 29;
 
 // creation with CCTexture2D
@@ -529,3 +531,4 @@ void CCSpriteSheet::setTexture(CCTexture2D *texture)
 {
 	m_pobTextureAtlas->setTexture(texture);
 }
+}//namespace   cocos2d 

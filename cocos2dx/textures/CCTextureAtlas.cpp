@@ -37,6 +37,7 @@ THE SOFTWARE.
 
 // implementation CCTextureAtlas
 
+namespace   cocos2d {
 
 CCTextureAtlas::CCTextureAtlas()
 {
@@ -368,3 +369,4 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 }
 
 
+}//namespace   cocos2d 

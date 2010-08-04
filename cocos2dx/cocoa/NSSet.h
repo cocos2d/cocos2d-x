@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include <set>
 #include "NSObject.h"
 
+namespace   cocos2d {
+
 typedef std::set<NSObject *>::iterator NSSetIterator;
 
 class NSSet : public NSObject
@@ -51,6 +53,7 @@ private:
 };
 
 typedef NSSet NSMutableSet;
+}//namespace   cocos2d 
 
 #endif // __NS_SET_H__
 

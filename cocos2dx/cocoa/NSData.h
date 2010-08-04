@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include <string>
 #include "platform/platform.h"
+namespace   cocos2d {
 
 class NSData : public NSObject
 {
@@ -44,5 +45,6 @@ public:
 private:
 	char *m_pData;
 };
+}//namespace   cocos2d 
 
 #endif //__NSDATA_H__

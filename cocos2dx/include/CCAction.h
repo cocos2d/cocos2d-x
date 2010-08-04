@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "cocoa/NSObject.h"
 #include "cocoa/NSZone.h"
+namespace   cocos2d {
 
 enum {
 	//! Default tag
@@ -229,5 +230,6 @@ protected:
 	float m_fTopBoundary;
 	float m_fBottomBoundary;
 };
+}//namespace   cocos2d 
 
 #endif // __ACTIONS_CCACTION_H__

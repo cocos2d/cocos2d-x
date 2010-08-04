@@ -41,6 +41,7 @@ THE SOFTWARE.
  */
 
 #include "Cocoa/CGGeometry.h"	// for CGPoint
+namespace   cocos2d {
 
 /** draws a point given x and y coordinate */
 void ccDrawPoint( CGPoint point );
@@ -69,5 +70,6 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int 
  @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
+}//namespace   cocos2d 
 
 #endif // __CCDRAWING_PRIMITIVES__

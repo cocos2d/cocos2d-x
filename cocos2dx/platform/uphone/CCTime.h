@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #ifndef __PLATFORM_UPHONE_CCTIME_H__
 #define __PLATFORM_UPHONE_CCTIME_H__
+namespace   cocos2d {
 
 struct cc_timeval
 {
@@ -36,5 +37,6 @@ class CCTime
 public:
 	static int gettimeofday(struct cc_timeval *tp, void *tzp);
 };
+}//namespace   cocos2d 
 
 #endif // __PLATFORM_UPHONE_NSTIME_H__

@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "cocoa/NSObject.h"
 #include "cocoa/NSSet.h"
+namespace   cocos2d {
 
 /**
  CCTouchHandler
@@ -102,5 +103,6 @@ protected:
 	bool m_bSwallowsTouches;
 	NSMutableSet *m_pClaimedTouches;
 };
+}//namespace   cocos2d 
 
 #endif // __TOUCH_DISPATCHER_CCTOUCH_HANDLER_H__

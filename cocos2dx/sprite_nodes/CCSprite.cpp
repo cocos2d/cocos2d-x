@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include <string.h>
 
 using namespace std;
+namespace   cocos2d {
 
 #if CC_SPRITESHEET_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -1010,3 +1011,4 @@ CCTexture2D* CCSprite::getTexture(void)
 {
 	return m_pobTexture;
 }
+}//namespace   cocos2d 

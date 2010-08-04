@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 
 using namespace std;
+namespace   cocos2d {
 
 static CCSpriteFrameCache *pSharedSpriteFrameCache = NULL;
 
@@ -272,3 +273,4 @@ CCSprite* CCSpriteFrameCache::createSpriteWithFrameName(const char *pszName)
 
 	return CCSprite::spriteWithSpriteFrame(pFrame);
 }
+}//namespace   cocos2d 

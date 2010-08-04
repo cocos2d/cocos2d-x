@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CGGeometry.h"
 
 // implementation of CGPoint
+namespace   cocos2d {
 
 CGPoint::CGPoint(void)
 {
@@ -130,3 +131,4 @@ bool CGRect::CGRectContainsPoint(CGRect rect, CGPoint point)
 
 	return bRet;
 }
+}//namespace   cocos2d {

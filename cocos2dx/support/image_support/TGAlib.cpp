@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "TGAlib.h"
 
+namespace   cocos2d {
 
 // load the image header fields. We only keep those that matter!
 void tgaLoadHeader(FILE *pFile, tImageTGA *psInfo) {
@@ -291,3 +292,4 @@ void tgaDestroy(tImageTGA *psInfo) {
 		free(psInfo);
 	}
 }
+}//namespace   cocos2d 

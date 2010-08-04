@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "NSLock.h"
+namespace   cocos2d {
 
 NSLock::NSLock(void)
 {
@@ -39,7 +40,8 @@ void NSLock::lock(void)
 	CriticalSectionLock(m_pLock);
 }
 
-void NSLock::uplock(void)
+void NSLock::unlock(void)
 {
 	CriticalSectionUnLock(m_pLock);
 }
+}//namespace   cocos2d 

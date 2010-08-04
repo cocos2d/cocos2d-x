@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCTexture2D.h"
 #include "cocoa/CGGeometry.h"
+namespace   cocos2d {
 
 // implementation of CCAnimation
 
@@ -170,3 +171,4 @@ NSObject* CCSpriteFrame::copyWithZone(NSZone *pZone)
 	
 	return pCopy;
 }
+}//namespace   cocos2d 

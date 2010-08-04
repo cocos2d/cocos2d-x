@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include <string.h>
 
+namespace   cocos2d {
 class CGRect;
 class CGPoint;
 class CGSize;
@@ -201,5 +202,6 @@ public:
 	// Creates a CCAnimation with a name, delay and an array of CCSpriteFrames.
 	static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
 };
+}//namespace   cocos2d 
 
 #endif //__SPRITE_CCSPRITE_FRAME_H__

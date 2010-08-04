@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "CCDirector.h"
 #include "support/CGPointExtension.h"
+namespace   cocos2d {
 
 // CCLayer
 CCLayer::CCLayer()
@@ -385,3 +386,4 @@ void CCMultiplexLayer::switchToAndReleaseMe(unsigned int n)
 
 	this->addChild(m_pLayers->getObjectAtIndex(n));
 }
+}//namespace   cocos2d 

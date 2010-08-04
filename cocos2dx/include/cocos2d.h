@@ -113,6 +113,9 @@ THE SOFTWARE.
 #endif // CC_ENABLE_PROFILERS
 */
 #include <string>
+namespace   cocos2d {
+
 std::string cocos2dVersion();
+}//namespace   cocos2d 
 
 #endif // __COCOS2D_H__

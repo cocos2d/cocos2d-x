@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <string>
 #include <map>
 #include <ssFile.h>
+namespace   cocos2d {
 
 typedef std::map<std::string, void*> CCDictionary;
 // Helper class to handle file operations
@@ -37,5 +38,6 @@ public:
 	static char* fullPathFromRelativePath(const char *pszRealPath);
 	static std::map<std::string, void*> *dictionaryWithContentsOfFile(const char *pFileName);
 };
+}//namespace   cocos2d 
 
 #endif // __PLATFORM_UPHONE_CCFILE_UTILS_H__

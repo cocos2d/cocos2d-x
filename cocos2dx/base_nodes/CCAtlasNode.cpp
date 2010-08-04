@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include "CCAtlasNode.h"
 #include "CCTextureAtlas.h"
 
+namespace   cocos2d {
+
 // implementation CCAtlasNode
 
 // CCAtlasNode - Creation & Init
@@ -215,5 +217,4 @@ CCTexture2D * CCAtlasNode::getTexture()
 	return m_pTextureAtlas->getTexture();
 }
 
-
-
+} // namespace   cocos2d

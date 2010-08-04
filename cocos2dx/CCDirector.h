@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 
 #include <assert.h>
+namespace   cocos2d {
 
 // OpenGL related
 // #include "support/CCXEGLView.h"
@@ -622,5 +623,6 @@ protected:
 	NSTimer *pAnimationTimer;
 };
 */
+}//namespace   cocos2d 
 
 #endif // __CCDIRECTOR_H__

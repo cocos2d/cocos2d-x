@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 
 #include <string>
+namespace   cocos2d {
 
 // CC RGBA protocol
 class CCX_DLL CCRGBAProtocol
@@ -117,5 +118,6 @@ public:
     */
 	virtual void setCString(char *pLabel) {}
 };
+}//namespace   cocos2d 
 
 #endif // __CCPROTOCOLS_H__

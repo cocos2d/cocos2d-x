@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "support/CGPointExtension.h"
 #include "CCDirector.h"
 
+namespace   cocos2d {
 
 CCScene::CCScene()
 {
@@ -61,3 +62,4 @@ CCScene *CCScene::node()
 	}
 	return NULL;
 }
+}//namespace   cocos2d 

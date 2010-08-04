@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <tg3.h>
 #include "CCFileUtils.h"
 #include "Cocos2dDefine.h"
+namespace   cocos2d {
 
 typedef std::pair<std::string, void*> Pair;
 typedef enum 
@@ -199,3 +200,4 @@ CCDictionary *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);
 }
+}//namespace   cocos2d 

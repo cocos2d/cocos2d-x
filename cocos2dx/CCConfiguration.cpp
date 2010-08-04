@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "ccConfig.h"
 
 using namespace std;
+namespace   cocos2d {
 
 // singleton stuff
 static CCConfiguration *g_pSharedConfiguration;
@@ -99,3 +100,4 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
 
 	return bRet;
 }
+}//namespace   cocos2d 

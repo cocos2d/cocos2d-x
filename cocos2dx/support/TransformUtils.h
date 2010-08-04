@@ -26,10 +26,12 @@ THE SOFTWARE.
 #define __SUPPORT_TRANSFORM_UTILS_H__
 
 #include <GLES/gl.h>
+namespace   cocos2d {
 
 struct CGAffineTransform;
 
 void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
 void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);
+}//namespace   cocos2d 
 
 #endif // __SUPPORT_TRANSFORM_UTILS_H__

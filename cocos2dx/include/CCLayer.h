@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "touch_dispatcher/CCTouchDelegateProtocol.h"
 #include "ccxCommon.h"
+namespace   cocos2d {
 
 //
 // CCLayer
@@ -159,6 +160,7 @@ public:
 	*/
 	void switchToAndReleaseMe(unsigned int n);
 };
+}//namespace   cocos2d 
 
 #endif // __CCLAYER_H__
 

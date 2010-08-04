@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocoa/CGGeometry.h"
 #include <GLES/gl.h>
+namespace   cocos2d {
 
 /** RGB color composed of bytes 3 bytes
 @since v0.8
@@ -255,5 +256,6 @@ typedef struct _ccBlendFunc
 //! if you want more resolution redefine it as a double
 typedef float ccTime;
 //typedef double ccTime;
+}//namespace   cocos2d 
 
 #endif //__CCTYPES_H__

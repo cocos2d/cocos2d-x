@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #ifndef __SUPPORT_COCOS2D_TYPES_H__
 #define __SUPPORT_COCOS2D_TYPES_H__
+namespace   cocos2d {
 
 typedef signed char         INT8;	
 typedef unsigned char       UINT8;
@@ -33,5 +34,6 @@ typedef signed int          INT32;
 typedef unsigned int        UINT32;
 typedef long long           INT64;
 typedef unsigned long long  UINT64;	
+}//namespace   cocos2d 
 
 #endif // __SUPPORT_COCOS2D_TYPES_H__

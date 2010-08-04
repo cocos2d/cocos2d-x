@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include "ccxCommon.h"
 
+namespace   cocos2d {
 class CCNode;
 
 class CCX_DLL SelectorProtocol
@@ -55,5 +56,6 @@ typedef void (SelectorProtocol::*SEL_MunuHandler)(NSObject*);
 #define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(*((SEL_CallFuncN*)(&(&_SELECTOR))) )
 #define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(*((SEL_CallFuncND*)(&(&_SELECTOR))) )
 #define menu_selector(_SELECTOR) (SEL_MunuHandler)(*((SEL_MunuHandler*)(&(&_SELECTOR))) )
+}//namespace   cocos2d 
 
 #endif // __COCOA_SELECTOR_PROTOCOL_H__

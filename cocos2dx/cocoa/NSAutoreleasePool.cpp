@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <vector>
 
 using namespace std;
+namespace   cocos2d {
 
 NSAutoreleasePool::NSAutoreleasePool(void)
 {
@@ -148,3 +149,4 @@ NSAutoreleasePool* NSPoolManager::getCurReleasePool(void)
 
 	return m_pCurReleasePool;
 }
+}//namespace   cocos2d {

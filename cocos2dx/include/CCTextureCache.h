@@ -31,9 +31,11 @@ THE SOFTWARE.
 /// @todo #import <CoreGraphics/CGImage.h>
 #include "cocoa/NSMutableDictionary.h"
 
+namespace   cocos2d {
 class CCTexture2D;
 class CCAsyncObject;
 class NSLock;
+
 typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 
 /** Singleton that handles the loading of textures
@@ -132,6 +134,7 @@ public:
 	*/
 	void removeTextureForKey(const std::string & textureKeyName);
 };
+}//namespace   cocos2d 
 
 #endif //__CCTEXTURE_CACHE_H__
 

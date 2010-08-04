@@ -41,6 +41,7 @@ THE SOFTWARE.
 
 using namespace std;
 using namespace cocos2d;
+namespace   cocos2d {
 
 // singleton stuff
 static CCDirector *pobSharedDirector = NULL;
@@ -838,3 +839,4 @@ void CCDisplayLinkDirector::setAnimationInterval(double dValue)
 		startAnimation();
 	}	
 }
+}//namespace   cocos2d 

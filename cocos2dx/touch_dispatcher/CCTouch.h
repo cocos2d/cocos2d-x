@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "cocoa/CGGeometry.h"
 
-// namespace cocos2d {
+namespace cocos2d {
 
 class CCTouch : public NSObject
 {
@@ -58,6 +58,6 @@ class UIEvent : public NSObject
 {
 };
 
-// }       // end of namespace cocos2d
+}       // end of namespace cocos2d
 
 #endif  // __PLATFORM_TOUCH_H__

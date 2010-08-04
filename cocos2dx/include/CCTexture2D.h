@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "cocoa/NSObject.h"
 #include "cocoa/CGGeometry.h"
 
+namespace   cocos2d {
 class UIImage;
 
 //CONSTANTS:
@@ -203,6 +204,7 @@ private:
 	CCTexture2D * initPremultipliedATextureWithImage(UIImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
 };
+}//namespace   cocos2d 
 
 #endif //__CCTEXTURE2D_H__
 

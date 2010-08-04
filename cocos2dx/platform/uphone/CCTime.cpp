@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCTime.h"
 #include <ssDate.h>
+namespace   cocos2d {
 
 // although it is not the same as gettimeofday as unix
 // but we only use the diffrences of tow values
@@ -35,3 +36,4 @@ int CCTime::gettimeofday(struct cc_timeval *tp, void *tzp)
 
 	return 0;
 }
+}//namespace   cocos2d 

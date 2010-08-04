@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "ccTypes.h"
 
+namespace   cocos2d {
 class CCTextureAtlas;
 
 /** CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
@@ -101,6 +102,7 @@ private :
 	void updateOpacityModifyRGB();
 
 };
+}//namespace   cocos2d 
 
 #endif // __CCATLAS_NODE_H__
 

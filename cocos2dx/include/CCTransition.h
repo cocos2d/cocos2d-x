@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCTRANSITION_H__
 
 #include "CCScene.h"
+namespace   cocos2d {
 class CCIntervalAction;
 class CCNode;
 
@@ -479,6 +480,7 @@ public:
 	virtual ~CCFadeDownTransition();
 	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 };
+}//namespace   cocos2d 
 
 #endif // __CCTRANSITION_H__
 

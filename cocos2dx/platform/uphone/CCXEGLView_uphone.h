@@ -30,12 +30,12 @@ THE SOFTWARE.
 
 #include "cocoa/CGGeometry.h"
 
-class NSSet;
-class CCTouch;
 class TApplication;
-class EGLTouchDelegate;
 
 namespace   cocos2d {
+class NSSet;
+class CCTouch;
+class EGLTouchDelegate;
 
 class CCXEGL;
 

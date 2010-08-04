@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __COCOA_CGAFFINETRANSFORM_H__
 
 #include "CGGeometry.h"
+namespace   cocos2d {
 
 struct CGAffineTransform {
   CGFloat a, b, c, d;
@@ -53,5 +54,6 @@ bool CGAffineTransformEqualToTransform(CGAffineTransform t1,CGAffineTransform t2
 CGAffineTransform CGAffineTransformInvert(CGAffineTransform t);
 
 extern const CGAffineTransform CGAffineTransformIdentity;
+}//namespace   cocos2d 
 
 #endif // __COCOA_CGAFFINETRANSFORM_H__
