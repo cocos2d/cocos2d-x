@@ -4,6 +4,8 @@
 #include "CCLayer.h"
 #include "HelloSprite.h"
 
+using namespace cocos2d;
+
 class HelloWorld : public CCLayer
 {
 public:
