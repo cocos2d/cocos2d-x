@@ -4,6 +4,8 @@
 #include "CCSprite.h"
 #include "CCTextureCache.h"
 
+using namespace cocos2d;
+
 class HelloSprite : public CCSprite
 {
 public:
