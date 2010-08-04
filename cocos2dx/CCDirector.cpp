@@ -679,7 +679,7 @@ void CCDirector::end(void)
 
 void CCDirector::setNextScene(void)
 {
-	bool runningIsTransition = NULL; // dynamic_cast<CCTransitonScene *>(m_pRunningScene) != NULL;
+	bool runningIsTransition = dynamic_cast<CCTransitionScene *>(m_pRunningScene) != NULL;
 	bool newIsTransition = dynamic_cast<CCTransitionScene *>(m_pNextScene) != NULL;
 
 	// If it is not a transition, call onExit/cleanup
