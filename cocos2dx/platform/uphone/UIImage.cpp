@@ -140,6 +140,13 @@ bool UIImage::isAlphaPixelFormat(void)
 	return bRet;
 }
 
+// now, uphone only support premultiplied data
+// so, we only return true
+bool UIImage::isPremultipliedAlpha(void)
+{
+	return true;
+}
+
 // compute how many bits every color component 
 int UIImage::CGImageGetBitsPerComponent(void)
 {

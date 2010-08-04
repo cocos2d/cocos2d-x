@@ -47,6 +47,7 @@ public:
 	unsigned int height(void);
 
 	bool isAlphaPixelFormat(void);
+	bool isPremultipliedAlpha(void);
 
 	int CGImageGetBitsPerComponent(void);
 	int CGImageGetColorSpace(void);
