@@ -37,8 +37,8 @@ THE SOFTWARE.
 
 #define WIN_CLASS_NAME      "OpenGL"
 
-static bool  g_keys[256];               // Array Used For The Keyboard Routine
-static bool  g_active=TRUE;             // Window Active Flag Set To TRUE By Default
+static bool  s_keys[256];               // Array Used For The Keyboard Routine
+static bool  s_active=TRUE;             // Window Active Flag Set To TRUE By Default
 
 EGLNativeWindowType _CreateWnd(int width, int height);
 LRESULT  CALLBACK _WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -59,6 +59,10 @@ public:
         {
             ReleaseDC(m_eglWnd, m_eglDC);
         }
+        if (m_pBmp)
+        {
+            m_pBmp->Destroy();
+        }
         if (m_eglWnd)
         {
             DestroyWindow(m_eglWnd);
@@ -70,7 +74,6 @@ public:
     {
         CCXEGL * pEGL = new CCXEGL;
         Boolean bSuccess = FALSE;
-
         do 
         {
             CCX_BREAK_IF(! pEGL);
@@ -79,6 +82,7 @@ public:
             pWindow->GetClientBounds(&rc);
 
             CCX_BREAK_IF(! (pEGL->m_eglWnd = _CreateWnd(rc.Width(), rc.Height())));
+            CCX_BREAK_IF(! (pEGL->m_pBmp = TBitmap::Create(rc.Width(), rc.Height(), 32)));
 
             pEGL->m_eglDC = GetDC(pEGL->m_eglWnd);
             CCX_BREAK_IF(! pEGL->m_eglDC);
@@ -144,17 +148,23 @@ public:
             }
             glReadPixels(0, 0, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, pData);
 
-            TDC dc(m_pWnd);
-            ColorRefType color;
+            char * pDst     = (char *)m_pBmp->GetDataPtr();
+            int nPitch      = m_pBmp->GetRowBytes();
+            char * pDstRow  = NULL;
+            char * pSrc = pData;
+
             for (int i = 0; i < nHeight; i++)
             {
+                pDstRow = pDst + i * nPitch;
                 for (int j = 0; j < nWidth; j++)
                 {
-                    int nIndex = (i * nWidth + j) * 4;
-                    color = RGBA(pData[nIndex],pData[nIndex+1],pData[nIndex+2],pData[nIndex+3]);
-                    dc.DrawPixelEx(j, nHeight - i - 1, color);
+                    *(int *)pDstRow = RGBA(pSrc[0], pSrc[1], pSrc[2], pSrc[3]);
+                    pSrc += 4;
+                    pDstRow += 4;
                 }
             }
+            TDC dc(m_pWnd);
+            dc.DrawBitmap(m_pBmp, 0, 0);
 
             delete pData;
 //            eglSwapBuffers(m_eglDisplay, m_eglSurface);
@@ -163,6 +173,7 @@ public:
 private:
     CCXEGL() 
         : m_pWnd(NULL)
+        , m_pBmp(NULL)
         , m_eglWnd(NULL)
         , m_eglDC(NULL)
         , m_eglDisplay(EGL_NO_DISPLAY)
@@ -171,6 +182,7 @@ private:
     {}
 
     TWindow *               m_pWnd;
+    TBitmap *               m_pBmp;
     EGLNativeWindowType     m_eglWnd;
     EGLNativeDisplayType    m_eglDC;
     EGLDisplay              m_eglDisplay;
@@ -340,11 +352,11 @@ static LRESULT CALLBACK _WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
         {
             if ( ! HIWORD( wParam ) )     // Check Minimization State
             {
-                g_active = TRUE;
+                s_active = TRUE;
             }
             else
             {
-                g_active = FALSE;
+                s_active = FALSE;
             }
             return 0;
         }
@@ -367,13 +379,13 @@ static LRESULT CALLBACK _WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
 
     case WM_KEYDOWN:
         {
-            g_keys[wParam] = TRUE;
+            s_keys[wParam] = TRUE;
             return 0;
         }
 
     case WM_KEYUP:
         {
-            g_keys[wParam] = FALSE;
+            s_keys[wParam] = FALSE;
             return 0;
         }
 
