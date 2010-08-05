@@ -12,13 +12,14 @@
 class  THelloWorldApp  :  public  cocos2d::CCXApplication
 {
 public:
-    THelloWorldApp() : m_pMainWnd(NULL){}
-
+    THelloWorldApp();
+    
     virtual Boolean initCocos2d();
 	virtual Boolean EventHandler(EventType * pEvent);
 
 protected:
-    cocos2d::CCXEGLView * m_pMainWnd;
+    TRectangle              m_rcWnd;
+    cocos2d::CCXEGLView *   m_pMainWnd;
 };
  
 
