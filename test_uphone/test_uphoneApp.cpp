@@ -9,6 +9,8 @@
 
 #include "CCDirector.h"
 
+using namespace cocos2d;
+
 Ttest_uphoneApp::Ttest_uphoneApp()
 : m_pMainWnd(NULL)
 {

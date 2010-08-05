@@ -40,6 +40,8 @@ THE SOFTWARE.
 static bool  s_keys[256];               // Array Used For The Keyboard Routine
 static bool  s_active=TRUE;             // Window Active Flag Set To TRUE By Default
 
+// #define _EGL_SHOW_
+
 EGLNativeWindowType _CreateWnd(int width, int height);
 LRESULT  CALLBACK _WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -146,8 +148,7 @@ public:
             {
                 return;
             }
-//            eglSwapBuffers(m_eglDisplay, m_eglSurface);
-//             glClearColor(0.0f, 0, 0, 1.0f);
+//             glClearColor(1.0f, 1.0f, 0, 1.0f);
 //             glClear(GL_COLOR_BUFFER_BIT);
             glReadPixels(0, 0, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, pData);
 
@@ -168,6 +169,9 @@ public:
             }
             TDC dc(m_pWnd);
             dc.DrawBitmap(m_pBmp, 0, 0);
+#ifdef _EGL_SHOW_
+            eglSwapBuffers(m_eglDisplay, m_eglSurface);
+#endif
 
             delete pData;
         }
@@ -219,6 +223,16 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     switch(pEvent->eType)
     {
+    case EVENT_WinRotationChanged :
+        {
+            TRectangle rc;
+            GetBounds(&rc);
+            SS_printf("%d x %d\n", rc.Width(), rc.Height());
+            CCX_SAFE_DELETE(m_pEGL);
+            m_pEGL = CCXEGL::Create(this);
+        }
+        break;
+
     case EVENT_WinPaint:
         {
             swapBuffers();
@@ -343,6 +357,12 @@ static EGLNativeWindowType _CreateWnd(int width, int height)
         hInstance,                                // Instance
         NULL );
 
+#ifdef _EGL_SHOW_
+    if (hWnd)
+    {
+        ShowWindow(hWnd, SW_SHOW);
+    }
+#endif
     return hWnd;
 }
 
