@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __ACTIONS_CCACTION_H__
 
 #include "ccTypes.h"
-#include "cocoa/NSObject.h"
-#include "cocoa/NSZone.h"
+#include "NSObject.h"
+#include "NSZone.h"
 namespace   cocos2d {
 
 enum {
@@ -43,8 +43,7 @@ public:
     CCAction(void);
 	virtual ~CCAction(void);
 
-	//! Initializes the action
-	CCAction* init(void);
+	std::string description();
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 
@@ -56,7 +55,7 @@ public:
 
 	//! called after the action has finished. It will set the 'target' to nil.
     //! IMPORTANT: You should never call "[action stop]" manually. Instead, use: "[target stopAction:action];"
-    void stop(void);
+    virtual void stop(void);
 
 	//! called every frame with it's delta time. DON'T override unless you know what you are doing.
 	virtual void step(ccTime dt);
@@ -73,17 +72,17 @@ public:
 	 When the 'stop' method is called, target will be set to nil.
 	 The target is 'assigned', it is not 'retained'.
 	 */
-	NSObject* getTarget(void);
+	NSObject* getTarget(void) { return m_pTarget; }
 
 	/** The original target, since target can be nil.
 	 Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
 	 @since v0.8.2
 	*/
-     NSObject* getOriginalTarget(void);
+	NSObject* getOriginalTarget(void) { return m_pOriginalTarget; } 
 
 	 // The action tag. An identifier of the action
-	 int getTag(void);
-	 void setTag(int nTag);
+	int getTag(void) { return m_nTag; }
+	void setTag(int nTag) { m_nTag = nTag; }
 
 public:
 	// Allocates and initializes the action
@@ -105,8 +104,8 @@ class CCFiniteTimeAction : public CCAction
 {
 public:
     //! duration in seconds of the action
-	ccTime getDuration(void);
-	void setDuration(ccTime duration);
+	ccTime getDuration(void) { return m_fDuration; }
+	void setDuration(ccTime duration) { m_fDuration = duration; }
 
 	// returns a reversed action
 	virtual CCFiniteTimeAction* reverse(void);
@@ -150,14 +149,15 @@ public:
 	~CCSpeed(void);
 
 	// alter the speed of the inner function in runtime
-	float getSpeed(void);
-	void setSpeed(float fSpeed);
+	float getSpeed(void) { return m_fSpeed; }
+	void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 
 	// initializes the action
-	CCSpeed* initWithAction(CCInternalAction *pAction, float fRate);
+	CCSpeed* initWithAction(CCIntervalAction *pAction, float fRate);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void startWithTarget(NSObject* pTarget);
+	virtual void stop();
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
 	virtual CCIntervalAction* reverse(void);
@@ -189,8 +189,8 @@ public:
 	~CCFollow(void);
 
 	// alter behavior - turn on/off boundary
-	bool isBoundarySet(void);
-	void setBoudarySet(bool bValue);
+	bool isBoundarySet(void) { return m_bBoundarySet; }
+	void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
 
 	// initializes the action
 	CCFollow* initWithTarget(CCNode *pFollowedNode);
@@ -199,9 +199,9 @@ public:
 	CCFollow* initWithTarget(CCNode *pFollowedNode, CGRect rect);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
-	virtual void startWithTarget(NSObject* pTarget);
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
+	virtual void stop(void);
 
 public:
 	// creates the action with no boundary set
