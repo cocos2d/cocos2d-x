@@ -542,8 +542,6 @@ void CCSprite::draw(void)
 {
 	assert(! m_bUsesSpriteSheet);
 
-    glClearColor(1.0f, 0, 0, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
