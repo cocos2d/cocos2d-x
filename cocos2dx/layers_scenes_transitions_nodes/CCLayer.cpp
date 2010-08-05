@@ -126,29 +126,33 @@ void CCLayer::setIsAccelerometerEnabled(bool enabled)
 /// Callbacks
 void CCLayer::onEnter()
 {
-	/** @todo UIAccelerometer
+	
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
-	if (isTouchEnabled)
-		[self registerWithTouchDispatcher];
+	if (m_bIsTouchEnabled)
+	{
+		this->registerWithTouchDispatcher();
+	}
 
 	// then iterate over all the children
-	[super onEnter];
-
+	__super::onEnter();
+/** @todo UIAccelerometer
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];*/
 }
 
 void CCLayer::onExit()
 {
-	/**
-	if( isTouchEnabled )
-		[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
-
+	if( m_bIsTouchEnabled )
+	{
+		CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCTargetedTouchDelegate*>(this));
+		CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCStandardTouchDelegate*>(this));
+	}
+/**
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
-
-	[super onExit];*/
+*/
+	__super::onExit();
 }
 
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
