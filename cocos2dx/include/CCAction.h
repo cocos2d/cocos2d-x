@@ -37,7 +37,7 @@ enum {
 
 /** Base class for CCAction objects.
  */
-class CCAction : public NSObject 
+class CCX_DLL CCAction : public NSObject 
 {
 public:
     CCAction(void);
@@ -100,9 +100,11 @@ protected:
    - An action with a duration of 35.5 seconds
  Infitite time actions are valid
  */
-class CCFiniteTimeAction : public CCAction
+class CCX_DLL CCFiniteTimeAction : public CCAction
 {
 public:
+	CCFiniteTimeAction(){}
+	virtual ~CCFiniteTimeAction(){}
     //! duration in seconds of the action
 	ccTime getDuration(void) { return m_fDuration; }
 	void setDuration(ccTime duration) { m_fDuration = duration; }
@@ -119,10 +121,11 @@ class CCIntervalAction;
  To repeat the an action for a limited number of times use the Repeat action.
  @warning This action can't be Sequenceable because it is not an IntervalAction
  */
-class CCRepeatForever : public CCAction
+class CCX_DLL CCRepeatForever : public CCAction
 {
 public:
-    ~CCRepeatForever();
+	CCRepeatForever(){}
+	~CCRepeatForever();
 
 	CCRepeatForever* initWithAction(CCIntervalAction *pAction);
 	virtual NSObject* copyWithZone(NSZone *pZone);
@@ -143,10 +146,11 @@ protected:
  Useful to simulate 'slow motion' or 'fast forward' effect.
  @warning This action can't be Sequenceable because it is not an IntervalAction
  */
-class CCSpeed : public CCAction
+class CCX_DLL CCSpeed : public CCAction
 {
 public:
-	~CCSpeed(void);
+	CCSpeed(){}
+	virtual ~CCSpeed(void);
 
 	// alter the speed of the inner function in runtime
 	float getSpeed(void) { return m_fSpeed; }
@@ -183,10 +187,11 @@ class CCNode;
 class CGPoint;
 class CGRect;
 
-class CCFollow : public CCAction
+class CCX_DLL CCFollow : public CCAction
 {
 public:
-	~CCFollow(void);
+	CCFollow(){}
+	virtual ~CCFollow(void);
 
 	// alter behavior - turn on/off boundary
 	bool isBoundarySet(void) { return m_bBoundarySet; }
