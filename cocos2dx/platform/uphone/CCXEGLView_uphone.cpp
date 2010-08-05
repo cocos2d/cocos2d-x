@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include "Cocos2dDefine.h"
 #include "NSSet.h"
+#include "CCDirector.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
@@ -223,7 +224,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     switch(pEvent->eType)
     {
-    case EVENT_WinRotationChanged :
+    case EVENT_WinRotationChanged:
         {
             CCX_SAFE_DELETE(m_pEGL);
             m_pEGL = CCXEGL::Create(this);
@@ -233,7 +234,8 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     case EVENT_WinPaint:
         {
-            swapBuffers();
+            // swapBuffers();
+            CCDirector::getSharedDirector()->preMainLoop();
             bHandled = TRUE;
         }
         break;
