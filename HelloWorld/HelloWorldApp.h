@@ -12,12 +12,9 @@
 class  THelloWorldApp  :  public  cocos2d::CCXApplication
 {
 public:
-	THelloWorldApp();
-	~THelloWorldApp();
+    THelloWorldApp() : m_pMainWnd(NULL){}
 
     virtual Boolean initCocos2d();
-
-public:
 	virtual Boolean EventHandler(EventType * pEvent);
 
 protected:

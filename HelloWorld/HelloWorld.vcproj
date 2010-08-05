@@ -207,14 +207,6 @@
 			<Filter
 				Name="forms"
 				>
-				<File
-					RelativePath=".\HelloWorldMainForm.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\HelloWorldMainForm.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="HelloWorld"
