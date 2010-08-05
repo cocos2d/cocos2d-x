@@ -225,11 +225,9 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     {
     case EVENT_WinRotationChanged :
         {
-            TRectangle rc;
-            GetBounds(&rc);
-            SS_printf("%d x %d\n", rc.Width(), rc.Height());
             CCX_SAFE_DELETE(m_pEGL);
             m_pEGL = CCXEGL::Create(this);
+            bHandled = TRUE;
         }
         break;
 
