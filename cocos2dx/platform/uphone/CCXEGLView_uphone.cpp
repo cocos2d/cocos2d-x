@@ -22,10 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+// #define USE_EGL_UMU
+
+#ifndef USE_EGL_UMU
+// #define _EGL_SHOW_
 #include <windows.h>
+#endif
 #include "CCXEGLView_uphone.h"
 
 #include "TDC.h"
+#undef GetNextWindow        // this micro defined in winuser.h
+#include "TApplication.h"
 
 #include "EGL/egl.h"
 #include "gles/gl.h"
@@ -36,15 +43,16 @@ THE SOFTWARE.
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
+#ifndef USE_EGL_UMU
 #define WIN_CLASS_NAME      "OpenGL"
 
 static bool  s_keys[256];               // Array Used For The Keyboard Routine
 static bool  s_active=TRUE;             // Window Active Flag Set To TRUE By Default
 
-// #define _EGL_SHOW_
-
 EGLNativeWindowType _CreateWnd(int width, int height);
 LRESULT  CALLBACK _WndProc(HWND, UINT, WPARAM, LPARAM);
+#endif
+
 
 namespace cocos2d {
 
@@ -58,19 +66,21 @@ public:
             eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
             eglTerminate(m_eglDisplay);
         }
+#ifndef USE_EGL_UMU
         if (m_eglDC)
         {
             ReleaseDC(m_eglWnd, m_eglDC);
-        }
-        if (m_pBmp)
-        {
-            m_pBmp->Destroy();
         }
         if (m_eglWnd)
         {
             DestroyWindow(m_eglWnd);
         }
         UnregisterClass(WIN_CLASS_NAME, GetModuleHandle(NULL));
+#endif
+        if (m_pBmp)
+        {
+            m_pBmp->Destroy();
+        }
     }
 
     static CCXEGL * Create(TWindow * pWindow)
@@ -83,13 +93,17 @@ public:
 
             TRectangle rc;
             pWindow->GetClientBounds(&rc);
-
-            CCX_BREAK_IF(! (pEGL->m_eglWnd = _CreateWnd(rc.Width(), rc.Height())));
             CCX_BREAK_IF(! (pEGL->m_pBmp = TBitmap::Create(rc.Width(), rc.Height(), 32)));
+#ifdef USE_EGL_UMU
+            pEGL->m_eglWnd = pWindow;
+            TDC dc(pWindow);
+            pEGL->m_eglDC = &dc;
+#else
+            CCX_BREAK_IF(! (pEGL->m_eglWnd = _CreateWnd(rc.Width(), rc.Height())));
 
             pEGL->m_eglDC = GetDC(pEGL->m_eglWnd);
             CCX_BREAK_IF(! pEGL->m_eglDC);
-
+#endif
             EGLDisplay eglDisplay;
             CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglDC)));
 
@@ -139,24 +153,23 @@ public:
     {
         if (EGL_NO_DISPLAY != m_eglDisplay)
         {
-            RECT rc;
-            GetClientRect(m_eglWnd, &rc);
-            int nWidth = rc.right - rc.left;
-            int nHeight = rc.bottom - rc.top;
+            TRectangle rc;
+            m_pWnd->GetClientBounds(&rc);
+
+            int nWidth = rc.Width();
+            int nHeight = rc.Height();
 
             char *pData = new char[4 * nWidth * nHeight];
             if (pData == NULL)
             {
                 return;
             }
-//             glClearColor(1.0f, 1.0f, 0, 1.0f);
-//             glClear(GL_COLOR_BUFFER_BIT);
             glReadPixels(0, 0, nWidth, nHeight, GL_RGBA, GL_UNSIGNED_BYTE, pData);
 
             char * pDst     = (char *)m_pBmp->GetDataPtr();
-            int nPitch      = m_pBmp->GetRowBytes();
+            int    nPitch   = m_pBmp->GetRowBytes();
             char * pDstRow  = NULL;
-            char * pSrc = pData;
+            char * pSrc     = pData;
 
             for (int i = 0; i < nHeight; i++)
             {
@@ -173,7 +186,6 @@ public:
 #ifdef _EGL_SHOW_
             eglSwapBuffers(m_eglDisplay, m_eglSurface);
 #endif
-
             delete pData;
         }
     }
@@ -182,7 +194,9 @@ private:
         : m_pWnd(NULL)
         , m_pBmp(NULL)
         , m_eglWnd(NULL)
+#ifndef USE_EGL_EMU
         , m_eglDC(NULL)
+#endif
         , m_eglDisplay(EGL_NO_DISPLAY)
         , m_eglSurface(EGL_NO_SURFACE)
         , m_eglContext(EGL_NO_CONTEXT)
@@ -224,27 +238,25 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     switch(pEvent->eType)
     {
+    case EVENT_WinInit:
+        bHandled = TRUE;
+        break;
+
     case EVENT_WinRotationChanged:
-        {
-            CCX_SAFE_DELETE(m_pEGL);
-            m_pEGL = CCXEGL::Create(this);
-            bHandled = TRUE;
-        }
+        CCX_SAFE_DELETE(m_pEGL);
+        m_pEGL = CCXEGL::Create(this);
+        bHandled = TRUE;
         break;
 
     case EVENT_WinPaint:
-        {
-            // swapBuffers();
-            CCDirector::getSharedDirector()->preMainLoop();
-            bHandled = TRUE;
-        }
+        CCDirector::getSharedDirector()->preMainLoop();
+        bHandled = TRUE;
         break;
 
     case EVENT_PenDown:
         if (m_pDelegate && m_pTouch && m_pSet && SetCaptureEx(-1, TRUE))
         {
             m_bCaptured = true;
-//                 SS_printf("Down    %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
             m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             m_pSet->addObject(m_pTouch);
             m_pDelegate->touchesBegan(m_pSet, NULL);
@@ -258,7 +270,6 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             GetBounds(&rc);
             if (rc.IsInRect(pEvent->sParam1, pEvent->sParam2))
             {
-//                     SS_printf("Move    %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
                 m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
                 m_pDelegate->touchesMoved(m_pSet, NULL);
             }
@@ -269,11 +280,16 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         if (m_pDelegate && m_pTouch && m_pSet && m_bCaptured)
         {
             ReleaseCapture();
-//                 SS_printf("Up      %4d    %4d\n", pEvent->sParam1, pEvent->sParam2);
             m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             m_pDelegate->touchesEnded(m_pSet, NULL);
         }
         break;
+
+    case EVENT_WinClose:
+        // Stop the application since the main form has been closed
+        pApp->SendStopEvent();
+        break;
+
     }
 
     if (! bHandled)
@@ -319,7 +335,7 @@ void CCXEGLView::swapBuffers()
 //////////////////////////////////////////////////////////////////////////
 // static function
 //////////////////////////////////////////////////////////////////////////
-
+#ifndef USE_EGL_UMU
 static EGLNativeWindowType _CreateWnd(int width, int height)
 {
     WNDCLASS  wc;                  // Windows Class Structure
@@ -421,3 +437,4 @@ static LRESULT CALLBACK _WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
     // Pass All Unhandled Messages To DefWindowProc
     return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
+#endif

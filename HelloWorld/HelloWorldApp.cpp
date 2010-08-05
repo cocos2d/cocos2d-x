@@ -5,22 +5,12 @@
  
 
 #include  "HelloWorldApp.h"
-#include  "HelloWorldMainForm.h"
+#include  "helloworld_res_def.h"
+//#include  "HelloWorldMainForm.h"
 
 #include "CCDirector.h"
 #include "CCScene.h"
 #include "HelloWorld/HelloWorld.h"
-
-THelloWorldApp::THelloWorldApp()
-: m_pMainWnd(NULL)
-{
-
-}
-
-THelloWorldApp::~THelloWorldApp()
-{
-
-}
 
 Boolean THelloWorldApp::initCocos2d()
 {
@@ -42,25 +32,19 @@ Boolean  THelloWorldApp::EventHandler(EventType*  pEvent)
 	switch(pEvent->eType)
 	{
 	case EVENT_AppLoad:
-		{
-            m_pMainWnd = new TMainForm(this);
-            if (m_pMainWnd)
-            {
-                SetActiveWindow(m_pMainWnd);
-            }
-            else
-            {	// 窗口创建失败，退出应用。
-                SendStopEvent();
-            }
-		}
+        m_pMainWnd = new CCXEGLView(this);
+        m_pMainWnd->Create(HELLOW_ID_Form1002);
+        if (m_pMainWnd)
+        {
+            SetActiveWindow(m_pMainWnd);
+        }
+        else
+        {	// 窗口创建失败，退出应用。
+            SendStopEvent();
+        }
+        // do not return bHandle equal TRUE, CCXApplication::EventHandler need do some thing.
 		break;
 
-	case EVENT_AppStopNotify:
-		{
-			
-		}
-		bHandled = FALSE;
-		break;
 	}
 	if (FALSE == bHandled) 
 	{
