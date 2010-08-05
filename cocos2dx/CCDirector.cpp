@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "CCSpriteFrameCache.h"
 #include "NSAutoreleasePool.h"
 #include "platform/platform.h"
-#include "platform/CCXApplication_platform.h"
+#include "CCXApplication.h"
 
 #include <string>
 

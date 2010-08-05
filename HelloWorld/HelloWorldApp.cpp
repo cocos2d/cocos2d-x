@@ -25,7 +25,7 @@ THelloWorldApp::~THelloWorldApp()
 Boolean THelloWorldApp::initCocos2d()
 {
     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
-
+    CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
     CCScene * pScene = CCScene::node();
     CCLayer * pLayer = new HelloWorld();
     pLayer->autorelease();
