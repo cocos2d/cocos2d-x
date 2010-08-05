@@ -131,7 +131,7 @@ public:
 	/** Unschedules the update selector for a given target
 	 @since v0.99.3
 	 */
-	void unscheduleUpdateForTarget(SelectorProtocol *pTarget);
+	void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
 
 	/** Unschedules all selectors for a given target.
 	 This also includes the "update" selector.

@@ -188,6 +188,18 @@
 		<Filter
 			Name="actions"
 			>
+			<File
+				RelativePath=".\actions\CCAction.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\actions\CCActionManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\actions\CCActionManager.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="base_nodes"

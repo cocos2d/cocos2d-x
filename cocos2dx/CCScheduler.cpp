@@ -386,7 +386,7 @@ void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriori
 	}
 }
 
-void CCScheduler::unscheduleUpdateForTarget(SelectorProtocol *pTarget)
+void CCScheduler::unscheduleUpdateForTarget(const SelectorProtocol *pTarget)
 {
 	if (pTarget == NULL)
 	{
