@@ -46,6 +46,19 @@ public:
     */
     virtual Boolean initCocos2d() = 0;
 
+    /**
+    @brief	rotate main window by device orientation.
+    @param  nOritation device orientation enum value.
+    @see    ccDeviceOrientation
+    */
+    void setDeviceOrientation(int nOritation);
+
+    /**
+    @brief	Get current applicaiton instance.
+    @return Current application instance pointer.
+    */
+    static CCXApplication * getSharedApplication();
+
 private:
     MESSAGE_t m_tMsg;
 };
