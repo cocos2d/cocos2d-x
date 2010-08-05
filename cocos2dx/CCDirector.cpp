@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCSpriteFrameCache.h"
 #include "NSAutoreleasePool.h"
 #include "platform/platform.h"
+#include "platform/CCXApplication_platform.h"
 
 #include <string>
 
@@ -321,6 +322,24 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 				break;
 		  }
 		  */
+		switch (m_eDeviceOrientation)
+		{
+		case CCDeviceOrientationPortrait:
+			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortrait);
+			break;
+        case CCDeviceOrientationPortraitUpsideDown:
+			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortraitUpsideDown);
+			break;
+        case CCDeviceOrientationLandscapeLeft:
+			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+			break;
+        case CCDeviceOrientationLandscapeRight:
+			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
+			break;
+		default:
+			CCLOG("Director: Unknown device orientation");
+			break;
+		}
 	}
 }
 
