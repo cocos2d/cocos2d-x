@@ -72,7 +72,7 @@ protected:
 
 public:
 	CCAtlasNode();
-	~CCAtlasNode();
+	virtual ~CCAtlasNode();
 
 	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 	static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);

@@ -65,9 +65,9 @@ protected:
 public:
 
 	CCTextureAtlas();
-	~CCTextureAtlas();
+	virtual ~CCTextureAtlas();
 
-	std::string description();
+	char * description();
 
 	/** creates a TextureAtlas with an filename and with an initial capacity for Quads.
 	* The TextureAtlas capacity can be increased in runtime.

@@ -46,7 +46,7 @@ protected:
 public:
 
 	CCPVRTexture();
-	~CCPVRTexture();
+	virtual ~CCPVRTexture();
 
 	CCPVRTexture * initWithContentsOfFile(const char* path);
 /// @todo	CCPVRTexture * initWithContentsOfURL(NSURL *url);

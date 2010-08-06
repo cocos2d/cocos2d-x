@@ -92,12 +92,10 @@ void CCTextureCache::purgeSharedTextureCache()
 }
 
 
-std::string CCTextureCache::description()
+char * CCTextureCache::description()
 {
-	char des[100];
-	sprintf_s(des, 100, "<CCTextureCache | Number of textures = %u>", m_pTextures->count());
-	std::string ret(des);
-
+	char *ret = new char[100];
+	sprintf_s(ret, 100, "<CCTextureCache | Number of textures = %u>", m_pTextures->count());
 	return ret;
 }
 

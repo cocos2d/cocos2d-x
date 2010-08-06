@@ -105,7 +105,7 @@ protected:
 
 public:
 	CCOrientedTransitionScene();
-	~CCOrientedTransitionScene();
+	virtual ~CCOrientedTransitionScene();
 
 	/** creates a base transition with duration and incoming scene */
 	static CCOrientedTransitionScene * transitionWithDuration(ccTime t,CCScene* scene, tOrientation orientation);

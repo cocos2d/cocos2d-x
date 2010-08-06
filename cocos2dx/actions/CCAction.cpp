@@ -52,12 +52,10 @@ CCAction * CCAction::action()
 	return pRet;
 }
 
-std::string CCAction::description()
+char * CCAction::description()
 {
-	char des[100] ;
-	sprintf_s(des, 100, "<CCAction | Tag = %d>", m_nTag);
-	std::string ret(des);
-
+	char *ret = new char[100] ;
+	sprintf_s(ret, 100, "<CCAction | Tag = %d>", m_nTag);
 	return ret;
 }
 NSObject* CCAction::copyWithZone(NSZone *pZone)
