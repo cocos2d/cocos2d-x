@@ -200,6 +200,10 @@
 				RelativePath=".\actions\CCActionManager.h"
 				>
 			</File>
+			<File
+				RelativePath=".\actions\CCIntervalAction.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="base_nodes"
@@ -234,6 +238,10 @@
 			</File>
 			<File
 				RelativePath=".\include\ccConfig.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCIntervalAction.h"
 				>
 			</File>
 			<File
