@@ -64,7 +64,7 @@ public:
 	}
 	@since v0.8.0
 	*/
-	void registerWithTouchDispatcher(void);
+	virtual void registerWithTouchDispatcher(void);
 
 	/** whether or not it will receive Touch events.
 	You can enable / disable touch events with this property.

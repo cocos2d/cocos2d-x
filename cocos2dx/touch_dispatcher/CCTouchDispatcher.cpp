@@ -172,7 +172,8 @@ void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 			}
 		}
 	}
-	else
+
+	if (dynamic_cast<CCTargetedTouchDelegate*>(pDelegate))
 	{
 		// remove handler from m_pTargetedHandlers
 		NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator iter;
