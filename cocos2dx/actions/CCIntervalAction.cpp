@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "support/CGPointExtension.h"
 
+#include <float.h>
+
 namespace cocos2d {
 
 //
@@ -34,34 +36,95 @@ namespace cocos2d {
 //
 CCIntervalAction* CCIntervalAction::actionWithDuration(ccTime d)
 {
-	return NULL;
+	CCIntervalAction *pAction = new CCIntervalAction();
+	pAction->initWithDuration(d);
+	pAction->autorelease();
+
+	return pAction;
 }
 
 CCIntervalAction* CCIntervalAction::initWithDuration(cocos2d::ccTime d)
 {
-	return NULL;
+	m_fDuration = d;
+
+	// prevent division by 0
+	// This comparison could be in step:, but it might decrease the performance
+	// by 3% in heavy based action games.
+	if (m_fDuration == 0)
+	{
+		m_fDuration = FLT_EPSILON;
+	}
+
+	m_elapsed = 0;
+	m_bFirstTick = true;
+
+	return this;
 }
 
 NSObject* CCIntervalAction::copyWithZone(NSZone *pZone)
 {
-	return NULL;
+	NSZone* pNewZone = NULL;
+	CCIntervalAction* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = static_cast<CCIntervalAction*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		// action's base class , must be called using __super::copyWithZone(), after overriding from derived class
+		assert(0);  
+
+		pCopy = new CCIntervalAction();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	
+	__super::copyWithZone(pZone);
+
+	CCX_SAFE_DELETE(pNewZone);
+
+	pCopy->initWithDuration(m_fDuration);
+
+	return pCopy;
 }
 
 bool CCIntervalAction::isDone(void)
 {
-	return false;
+	return m_elapsed > m_fDuration;
 }
 
 void CCIntervalAction::step(ccTime dt)
 {
+	if (m_bFirstTick)
+	{
+		m_bFirstTick = false;
+		m_elapsed = 0;
+	}
+	else
+	{
+		m_elapsed += dt;
+	}
+
+	update(min(1, m_elapsed/m_fDuration));
 }
 
 void CCIntervalAction::startWithTarget(NSObject *pTarget)
 {
+	__super::startWithTarget(pTarget);
+	m_elapsed = 0.0f;
+	m_bFirstTick = true;
 }
 
 CCIntervalAction* CCIntervalAction::reverse(void)
 {
+	/*
+	 NSException* myException = [NSException
+								exceptionWithName:@"ReverseActionNotImplemented"
+								reason:@"Reverse Action not implemented"
+								userInfo:nil];
+	@throw myException;	
+	*/
 	return NULL;
 }
 
@@ -70,43 +133,154 @@ CCIntervalAction* CCIntervalAction::reverse(void)
 //
 CCSequence* CCSequence::actionOneTwo(cocos2d::CCFiniteTimeAction *pActionOne, cocos2d::CCFiniteTimeAction *pActionTwo)
 {
-	return NULL;
+	CCSequence *pSequence = new CCSequence();
+	pSequence->initOneTwo(pActionOne, pActionTwo);
+	pSequence->autorelease();
+
+	return pSequence;
 }
 
-CCSequence* CCSequence::actions(cocos2d::CCFiniteTimeAction *pAction1, ...)
+CCFiniteTimeAction* CCSequence::actions(cocos2d::CCFiniteTimeAction *pAction1, ...)
 {
-	return NULL;
+	va_list params;
+	va_start(params, pAction1);
+
+	CCFiniteTimeAction *pNow;
+	CCFiniteTimeAction *pPrev = pAction1;
+
+	while (pAction1)
+	{
+		pNow = va_arg(params, CCFiniteTimeAction*);
+		if (pNow)
+		{
+			pPrev = actionOneTwo(pPrev, pNow);
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	va_end(params);
+	return pPrev;
 }
 
 CCSequence* CCSequence::initOneTwo(cocos2d::CCFiniteTimeAction *pActionOne, cocos2d::CCFiniteTimeAction *pActionTwo)
 {
-	return NULL;
+	assert(pActionOne != NULL);
+	assert(pActionTwo != NULL);
+
+	ccTime d = pActionOne->getDuration() + pActionTwo->getDuration();
+	__super::initWithDuration(d);
+
+	m_pActions[0] = pActionOne;
+	pActionOne->retain();
+
+	m_pActions[1] = pActionTwo;
+	pActionTwo->retain();
+
+	return this;
 }
 
 NSObject* CCSequence::copyWithZone(NSZone *pZone)
 {
-	return NULL;
+	NSZone* pNewZone = NULL;
+	CCSequence* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = dynamic_cast<CCSequence*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCSequence();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	__super::copyWithZone(pZone);
+
+	pCopy->initOneTwo(static_cast<CCFiniteTimeAction*>(m_pActions[0]->copy()->autorelease()), 
+				static_cast<CCFiniteTimeAction*>(m_pActions[1]->copy()->autorelease()));
+
+	CCX_SAFE_DELETE(pNewZone);
+	return pCopy;
 }
 
 CCSequence::~CCSequence(void)
 {
+	m_pActions[0]->release();
+	m_pActions[1]->release();
 }
 
 void CCSequence::startWithTarget(cocos2d::NSObject *pTarget)
 {
+	__super::startWithTarget(pTarget);
+	m_split = m_pActions[0]->getDuration() / m_fDuration;
+	m_last = -1;
 }
 
 void CCSequence::stop(void)
 {
+	m_pActions[0]->stop();
+	m_pActions[1]->stop();
+	__super::stop();
 }
 
 void CCSequence::update(cocos2d::ccTime time)
 {
+	int found = 0;
+	ccTime new_t = 0.0f;
+
+	if (time >= m_split)
+	{
+		found = 1;
+		if (m_split == 1)
+		{
+			new_t = 1;
+		}
+		else
+		{
+			new_t = (time - m_split) / (1 - m_split);
+		}
+	}
+	else
+	{
+		found = 0;
+		if (m_split != 0)
+		{
+			new_t = time / m_split;
+		}
+		else
+		{
+			new_t = 1;
+		}
+	}
+
+	if (m_last == -1 && found == 1)
+	{
+		m_pActions[0]->startWithTarget(m_pTarget);
+		m_pActions[0]->update(1.0f);
+		m_pActions[0]->stop();
+	}
+
+	if (m_last != found)
+	{
+		if (m_last != -1)
+		{
+			m_pActions[found]->update(1.0f);
+			m_pActions[found]->stop();
+		}
+
+		m_pActions[found]->startWithTarget(m_pTarget);
+	}
+
+	m_pActions[found]->update(new_t);
+	m_last = found;
 }
 
 CCIntervalAction* CCSequence::reverse(void)
 {
-	return NULL;
+	return CCSequence::actionOneTwo(m_pActions[1]->reverse(), m_pActions[0]->reverse());
 }
 
 //
@@ -114,84 +288,242 @@ CCIntervalAction* CCSequence::reverse(void)
 //
 CCRepeat* CCRepeat::actionWithAction(cocos2d::CCFiniteTimeAction *pAction, unsigned int times)
 {
-	return NULL;
+	CCRepeat* pRepeat = new CCRepeat();
+	pRepeat->initWithAction(pAction, times);
+	pRepeat->autorelease();
+
+	return pRepeat;
 }
 
 CCRepeat* CCRepeat::initWithAction(cocos2d::CCFiniteTimeAction *pAction, unsigned int times)
 {
-	return NULL;
+	ccTime d = pAction->getDuration() * times;
+
+	if (__super::initWithDuration(d))
+	{
+        m_uTimes = times;
+		m_pOther = pAction;
+		pAction->retain();
+
+		m_uTotal = 0;
+	}
+
+	return this;
 }
 
 NSObject* CCRepeat::copyWithZone(cocos2d::NSZone *pZone)
 {
-	return NULL;
+	
+	NSZone* pNewZone = NULL;
+	CCRepeat* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = dynamic_cast<CCRepeat*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCRepeat();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	__super::copyWithZone(pZone);
+
+	pCopy->initWithAction(static_cast<CCFiniteTimeAction*>(m_pOther->copy()->autorelease()), m_uTimes);
+
+	CCX_SAFE_DELETE(pNewZone);
+	return pCopy;
 }
 
 CCRepeat::~CCRepeat(void)
 {
+	m_pOther->release();
 }
 
 void CCRepeat::startWithTarget(cocos2d::NSObject *pTarget)
 {
+	m_uTotal = 0;
+	__super::startWithTarget(pTarget);
+	m_pOther->startWithTarget(pTarget);
 }
 
 void CCRepeat::stop(void)
 {
+	m_pOther->stop();
+	__super::stop();
 }
 
 // issue #80. Instead of hooking step:, hook update: since it can be called by any 
 // container action like Repeat, Sequence, AccelDeccel, etc..
 void CCRepeat::update(cocos2d::ccTime time)
 {
+	ccTime t = time * m_uTimes;
+	if (t > m_uTotal + 1)
+	{
+		m_pOther->update(1.0f);
+		m_uTotal++;
+		m_pOther->stop();
+		m_pOther->startWithTarget(m_pTarget);
+
+		// repeat is over?
+		if (m_uTotal == m_uTimes)
+		{
+			// so, set it in the original position
+			m_pOther->update(0);
+		}
+		else
+		{
+			// no ? start next repeat with the right update
+			// to prevent jerk (issue #390)
+			m_pOther->update(t - m_uTotal);
+		}
+	}
+	else
+	{
+		float r = fmodf(t, 1.0f);
+
+		// fix last repeat position
+		// else it could be 0.
+		if (time == 1.0f)
+		{
+			r = 1.0f;
+			m_uTotal++; // this is the added line
+		}
+
+		m_pOther->update(min(r, 1));
+	}
 }
 
 bool CCRepeat::isDone(void)
 {
-	return false;
+	return m_uTotal == m_uTimes;
 }
 
 CCIntervalAction* CCRepeat::reverse(void)
 {
-	return NULL;
+	return CCRepeat::actionWithAction(m_pOther->reverse(), m_uTimes);
 }
 
 //
 // Spawn
 //
-CCSpawn* CCSpawn::actions(cocos2d::CCFiniteTimeAction *pAction1, ...)
+CCFiniteTimeAction* CCSpawn::actions(cocos2d::CCFiniteTimeAction *pAction1, ...)
 {
-	return NULL;
+	va_list params;
+	va_start(params, pAction1);
+
+	CCFiniteTimeAction *pNow;
+	CCFiniteTimeAction *pPrev = pAction1;
+
+	while (pAction1)
+	{
+		pNow = va_arg(params, CCFiniteTimeAction*);
+		if (pNow)
+		{
+			pPrev = actionOneTwo(pPrev, pNow);
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	va_end(params);
+	return pPrev;
 }
 
-CCSpawn* CCSpawn::initOneTwo(cocos2d::CCFiniteTimeAction *pAction1, cocos2d::CCFiniteTimeAction *pAction2)
+CCSpawn* CCSpawn::actionOneTwo(cocos2d::CCFiniteTimeAction *pAction1, cocos2d::CCFiniteTimeAction *pAction2)
 {
-	return NULL;
+	CCSpawn *pSpawn = new CCSpawn();
+	pSpawn->initOneTwo(pAction1, pAction2);
+	pSpawn->autorelease();
+
+	return pSpawn;
+}
+
+CCSpawn* CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2)
+{
+	assert(pAction1 != NULL);
+	assert(pAction2 != NULL);
+
+	ccTime d1 = pAction1->getDuration();
+	ccTime d2 = pAction2->getDuration();
+
+	// __super::initWithDuration(fmaxf(d1, d2));
+	float maxd = (d1 >= d2 || _isnan(d2)) ? d1 : d2;
+	__super::initWithDuration(maxd);
+
+    m_pOne = pAction1;
+	m_pTwo = pAction2;
+
+	if (d1 > d2)
+	{
+		m_pTwo = CCSequence::actionOneTwo(pAction1, CCDelayTime::actionWithDuration(d1 - d2));
+	} else
+	if (d1 < d2)
+	{
+		m_pOne = CCSequence::actionOneTwo(pAction1, CCDelayTime::actionWithDuration(d2 - d1));
+	}
+
+	pAction1->retain();
+	pAction2->retain();
+	return this;
 }
 
 NSObject* CCSpawn::copyWithZone(cocos2d::NSZone *pZone)
 {
-	return NULL;
+	NSZone* pNewZone = NULL;
+	CCSpawn* pCopy = NULL;
+
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = dynamic_cast<CCSpawn*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCSpawn();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	__super::copyWithZone(pZone);
+
+	pCopy->initOneTwo(	dynamic_cast<CCFiniteTimeAction*>(m_pOne->copy()->autorelease()), 
+					dynamic_cast<CCFiniteTimeAction*>(m_pTwo->copy()->autorelease()));
+
+	CCX_SAFE_DELETE(pNewZone);
+	return pCopy;
 }
 
 CCSpawn::~CCSpawn(void)
 {
+	m_pOne->release();
+	m_pTwo->release();
 }
 
 void CCSpawn::startWithTarget(cocos2d::NSObject *pTarget)
 {
+	__super::startWithTarget(pTarget);
+	m_pOne->startWithTarget(pTarget);
+	m_pTwo->startWithTarget(pTarget);
 }
 
 void CCSpawn::stop(void)
 {
+	m_pOne->stop();
+	m_pTwo->stop();
+	__super::stop();
 }
 
 void CCSpawn::update(cocos2d::ccTime time)
 {
+	m_pOne->update(time);
+	m_pTwo->update(time);
 }
 
 CCIntervalAction* CCSpawn::reverse(void)
 {
-	return NULL;
+	return CCSpawn::actionOneTwo(m_pOne->reverse(), m_pTwo->reverse());
 }
 
 //
@@ -199,25 +531,78 @@ CCIntervalAction* CCSpawn::reverse(void)
 //
 CCRotateTo* CCRotateTo::actionWithDuration(cocos2d::ccTime duration, float fDeltaAngle)
 {
-	return NULL;
+	CCRotateTo* pRotateTo = new CCRotateTo();
+	pRotateTo->initWithDuration(duration, fDeltaAngle);
+	pRotateTo->autorelease();
+
+	return pRotateTo;
 }
 
 CCRotateTo* CCRotateTo::initWithDuration(cocos2d::ccTime duration, float fDeltaAngle)
 {
+	if (__super::initWithDuration(duration))
+	{
+		m_fDstAngle = fDeltaAngle;
+		return this;
+	}
+
 	return NULL;
 }
 
 NSObject* CCRotateTo::copyWithZone(cocos2d::NSZone *pZone)
 {
-	return NULL;
+	NSZone* pNewZone = NULL;
+	CCRotateTo* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject)
+	{
+		//in case of being called at sub class
+		pCopy = dynamic_cast<CCRotateTo*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCRotateTo();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	__super::copyWithZone(pZone);
+
+	pCopy->initWithDuration(m_fDuration, m_fDstAngle);
+
+	//Action *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angle: angle];
+	CCX_SAFE_DELETE(pNewZone);
+	return pCopy;
 }
 
 void CCRotateTo::startWithTarget(cocos2d::NSObject *pTarget)
 {
+	__super::startWithTarget(pTarget);
+
+	m_fStartAngle = (dynamic_cast<CCNode*>(pTarget))->getRotation();
+
+	if (m_fStartAngle > 0)
+	{
+		m_fStartAngle = fmodf(m_fStartAngle, 360.0f);
+	}
+	else
+	{
+		m_fStartAngle = fmodf(m_fStartAngle, -360.0f);
+	}
+
+	m_fDiffAngle = m_fDstAngle - m_fStartAngle;
+	if (m_fDiffAngle > 180)
+	{
+		m_fDiffAngle -= 360;
+	}
+
+	if (m_fDiffAngle < -180)
+	{
+		m_fDiffAngle += 360;
+	}
 }
 
 void CCRotateTo::update(cocos2d::ccTime time)
 {
+	(dynamic_cast<CCNode*>(m_pTarget))->setRotation(m_fStartAngle + m_fDiffAngle * time);
 }
 
 //
@@ -267,6 +652,10 @@ CCMoveTo* CCMoveTo::initWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint 
 NSObject* CCMoveTo::copyWithZone(cocos2d::NSZone *pZone)
 {
 	return NULL;
+}
+
+void CCMoveTo::startWithTarget(NSObject *pTarget)
+{
 }
 
 void CCMoveTo::update(cocos2d::ccTime time)
@@ -366,6 +755,11 @@ CCBezierBy* CCBezierBy::initWithDuration(cocos2d::ccTime t, cocos2d::ccBezierCon
 void CCBezierBy::startWithTarget(cocos2d::NSObject *pTarget)
 {
 	
+}
+
+NSObject* CCBezierBy::copyWithZone(cocos2d::NSZone *pZone)
+{
+	return NULL;
 }
 
 void CCBezierBy::update(cocos2d::ccTime time)
