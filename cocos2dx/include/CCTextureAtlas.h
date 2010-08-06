@@ -85,7 +85,7 @@ public:
 	* with an initial capacity for n Quads. 
 	* The TextureAtlas capacity can be increased in runtime.
 	*/
-	static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *tex, unsigned int capacity);
+	static CCTextureAtlas * textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity);
 
 	/** initializes a TextureAtlas with a previously initialized Texture2D object, and
 	* with an initial capacity for Quads. 
@@ -93,7 +93,7 @@ public:
 	*
 	* WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
 	*/
-	CCTextureAtlas * initWithTexture(CCTexture2D *tex, unsigned int capacity);
+	CCTextureAtlas * initWithTexture(CCTexture2D *texture, unsigned int capacity);
 
 	/** updates a Quad (texture, vertex and color) at a certain index
 	* index must be between 0 and the atlas capacity - 1

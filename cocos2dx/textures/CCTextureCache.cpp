@@ -145,7 +145,7 @@ void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsy
 
 	// optimization
 
-	CCTexture2D * tex;
+//	CCTexture2D * tex;
 // 
 // 	if ( (tex = m_pTextures->objectForKey(filename)) )
 
@@ -176,7 +176,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 {
 	NSAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
-	CCTexture2D * tex = NULL;
+	CCTexture2D * texture = NULL;
 	std::string temp(path);
 
 	// MUTEX:
@@ -184,9 +184,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	
 	m_pDictLock->lock();
 
-	tex = m_pTextures->objectForKey(temp);
+	texture = m_pTextures->objectForKey(temp);
 
-	if( ! tex ) {
+	if( ! texture ) {
 
 		// Split up directory and filename
 		std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
@@ -195,9 +195,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
 		for (unsigned int i = 0; i < temp.length(); ++i)
 			temp[i] = tolower(temp[i]);
-		if (-1 != temp.find(".pvr"))
+		if (std::string::npos != temp.find(".pvr"))
 		{
-			tex = this->addPVRTCImage(fullpath.c_str());
+			texture = this->addPVRTCImage(fullpath.c_str());
 		}
 		else
 		{
@@ -205,22 +205,22 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			UIImage * image = new UIImage();
 			NSAssert(image->initWithContentsOfFile(fullpath), "")
 			CCLOG("cocos2d: Initialize image file %s error!",fullpath);
-			tex = new CCTexture2D();
-			tex->initWithImage(image);
+			texture = new CCTexture2D();
+			texture->initWithImage(image);
 			CCX_SAFE_DELETE(image);// image->release();
 
-			if( tex )
-				m_pTextures->setObject(tex, path);
+			if( texture )
+				m_pTextures->setObject(texture, path);
 			else
 				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
 
-			tex->release();
+			texture->release();
 		}
 	}
 
 	m_pDictLock->unlock();
 
-	return tex;
+	return texture;
 }
 
 CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
@@ -229,50 +229,50 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	NSAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
 	NSAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
-	CCTexture2D * tex;
+	CCTexture2D * texture;
 	std::string temp(path);
-	if ( (tex = m_pTextures->objectForKey(temp)) )
+	if ( (texture = m_pTextures->objectForKey(temp)) )
 	{
-		return tex;
+		return texture;
 	}
 	
 	// Split up directory and filename
 	std::string fullpath( CCFileUtils::fullPathFromRelativePath(path) );
 
 	NSData * data = NSData::dataWithContentsOfFile(fullpath);
-	tex = new CCTexture2D();
-	tex->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width);
-	if( tex )
-		m_pTextures->setObject(tex, temp);
+	texture = new CCTexture2D();
+	texture->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width);
+	if( texture )
+		m_pTextures->setObject(texture, temp);
 	else
 		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
 
 	CCX_SAFE_DELETE(data);
 
-	tex->autorelease();
-	return tex;
+	texture->autorelease();
+	return texture;
 }
 
 CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 {
 	NSAssert(fileimage != NULL, "TextureCache: fileimage MUST not be nill");
 
-	CCTexture2D * tex;
+	CCTexture2D * texture;
 	std::string key(fileimage);
-	if( (tex = m_pTextures->objectForKey(key)) ) 
+	if( (texture = m_pTextures->objectForKey(key)) ) 
 	{
-		return tex;
+		return texture;
 	}
 
-	tex = new CCTexture2D();
-	tex = tex->initWithPVRTCFile(fileimage);
-	if( tex )
-		m_pTextures-> setObject( tex, key);
+	texture = new CCTexture2D();
+	texture = texture->initWithPVRTCFile(fileimage);
+	if( texture )
+		m_pTextures-> setObject( texture, key);
 	else
 		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",fileimage);	
 
-	tex->autorelease();
-	return tex;
+	texture->autorelease();
+	return texture;
 }
 
 /** @todo UIImage
@@ -322,12 +322,12 @@ void CCTextureCache::removeUnusedTextures()
 	}
 }
 
-void CCTextureCache::removeTexture(CCTexture2D* tex)
+void CCTextureCache::removeTexture(CCTexture2D* texture)
 {
-	if( ! tex )
+	if( ! texture )
 		return;
 
-	std::vector<std::string> keys = m_pTextures->allKeysForObject(tex);
+	std::vector<std::string> keys = m_pTextures->allKeysForObject(texture);
 
 	for (unsigned int i = 0; i < keys.size(); i++)
 	{
