@@ -310,14 +310,9 @@ TWindow
     case EVENT_PenMove:
         if (m_pDelegate && m_pTouch && m_pSet && m_bCaptured && pEvent->lParam5 == m_nPenEventNum)
         {
-            TRectangle rc;
-            GetBounds(&rc);
-            if (rc.IsInRect(pEvent->sParam1, pEvent->sParam2))
-            {
 //                SS_printf("PenMove: %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
-                m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
-                m_pDelegate->touchesMoved(m_pSet, NULL);
-            }
+            m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+            m_pDelegate->touchesMoved(m_pSet, NULL);
         }
         break;
 
