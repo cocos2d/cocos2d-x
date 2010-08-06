@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAction.h"
+#include "CCIntervalAction.h"
 #include "ccMacros.h"
 #include "CCNode.h"
 #include "support/CGPointExtension.h"
@@ -118,8 +119,7 @@ CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 //
 CCRepeatForever::~CCRepeatForever()
 {
-	/// @todo CCIntervalAction::release()
-	//m_pOther->release();
+	m_pOther->release();
 }
 CCRepeatForever *CCRepeatForever::actionWithAction(CCIntervalAction *pAction)
 {
@@ -134,8 +134,8 @@ CCRepeatForever *CCRepeatForever::actionWithAction(CCIntervalAction *pAction)
 
 CCRepeatForever *CCRepeatForever::initWithAction(CCIntervalAction *pAction)
 {
-	/// @todo CCIntervalAction::retain()
-	//m_pOther = pAction->retain();
+	pAction->retain();
+	m_pOther = pAction;
 	return this;
 }
 NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
@@ -153,8 +153,7 @@ NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 	}
 	__super::copyWithZone(pZone);
 	// win32 : use the m_pOther's copy object.
-	/// @todo IntervalAction
-	//pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) ); 
+	pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) ); 
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
 }
@@ -162,21 +161,19 @@ NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 void CCRepeatForever::startWithTarget(NSObject* pTarget)
 {
 	__super::startWithTarget(pTarget);
-	/// @todo CCIntervalAction::startWithTarget
-	//m_pOther->startWithTarget(pTarget);
+	m_pOther->startWithTarget(pTarget);
 }
  
 void CCRepeatForever::step(ccTime dt)
 {
-	/// @todo m_pOther->step(dt)
-// 	[other step: dt];
-// 	if( [other isDone] ) {
-// 		ccTime diff = dt + other.duration - other.elapsed;
-// 		[other startWithTarget:target];
-// 
-// 		// to prevent jerk. issue #390
-// 		[other step: diff];
-// 	}
+	m_pOther->step(dt);
+	if (m_pOther->isDone())
+	{
+		ccTime diff = dt + m_pOther->getDuration() - m_pOther->getElapsed();
+		m_pOther->startWithTarget(m_pTarget);
+		// to prevent jerk. issue #390
+		m_pOther->step(diff);
+	}
 }
 
 bool CCRepeatForever::isDone()
@@ -186,9 +183,7 @@ bool CCRepeatForever::isDone()
 
 CCIntervalAction *CCRepeatForever::reverse()
 {
-	/// @todo return CCRepeatForever::actionWithAction(m_pOther->reverse());
-	//return [CCRepeatForever actionWithAction:[other reverse]];
-	return NULL;
+	return dynamic_cast<CCIntervalAction*>(CCRepeatForever::actionWithAction(m_pOther->reverse()));
 }
 
 //
@@ -196,7 +191,7 @@ CCIntervalAction *CCRepeatForever::reverse()
 //
 CCSpeed::~CCSpeed()
 {
-	/// @todo m_pOther->release();
+	m_pOther->release();
 }
 
 CCSpeed * CCSpeed::actionWithAction(CCIntervalAction *pAction, float fRate)
@@ -212,7 +207,8 @@ CCSpeed * CCSpeed::actionWithAction(CCIntervalAction *pAction, float fRate)
 
 CCSpeed * CCSpeed::initWithAction(CCIntervalAction *pAction, float fRate)
 {
-	/// @todo m_pOther = pAction->retain();
+	pAction->retain();
+	m_pOther = pAction;
 	m_fSpeed = fRate;	
 	return this;
 }
@@ -230,8 +226,7 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 		pZone = pNewZone = new NSZone(pRet);
 	}
 	__super::copyWithZone(pZone);
-	/// @todo ccintervalaction
-	//pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) , m_fSpeed );
+	pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) , m_fSpeed );
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
 }
@@ -239,30 +234,28 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 void CCSpeed::startWithTarget(NSObject* pTarget)
 {
 	__super::startWithTarget(pTarget);
-	/// @todo m_pOther->startWithTarget(pTarget);
+	m_pOther->startWithTarget(pTarget);
 }
 
 void CCSpeed::stop()
 {
-	/// @todo  m_pOther->stop();
+	m_pOther->stop();
 	__super::stop();
 }
 
 void CCSpeed::step(ccTime dt)
 {
-	/// @todo m_pOther->step(dt * m_fSpeed);
+	m_pOther->step(dt * m_fSpeed);
 }
 
 bool CCSpeed::isDone()
 {
-	/// @todo return m_pOther->isDone();
-	return false;/// Tobe delete
+	return m_pOther->isDone();
 }
 
 CCIntervalAction *CCSpeed::reverse()
 {
-	/// @todo return [CCSpeed actionWithAction:[other reverse] speed:speed];
-	return NULL;/// Tobe delete
+	return dynamic_cast<CCIntervalAction*>(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
 }
 
 //
