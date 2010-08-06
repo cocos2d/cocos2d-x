@@ -17,7 +17,7 @@ THelloWorldApp::THelloWorldApp()
 
 }
 
-Boolean THelloWorldApp::initCocos2d()
+bool THelloWorldApp::initCocos2d()
 {
     // init director
     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
@@ -42,7 +42,7 @@ Boolean THelloWorldApp::initCocos2d()
 
     // add scene to director
     CCDirector::getSharedDirector()->runWithScene(pScene);
-    return TRUE;
+    return true;
 }
 
 Boolean  THelloWorldApp::EventHandler(EventType*  pEvent)

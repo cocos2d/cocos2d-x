@@ -14,7 +14,7 @@ class  THelloWorldApp  :  public  cocos2d::CCXApplication
 public:
     THelloWorldApp();
     
-    virtual Boolean initCocos2d();
+    virtual bool    initCocos2d();
 	virtual Boolean EventHandler(EventType * pEvent);
 
 protected:

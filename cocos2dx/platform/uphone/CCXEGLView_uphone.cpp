@@ -254,9 +254,14 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_PenDown:
-        if (m_pDelegate && m_pTouch && m_pSet && SetCaptureEx(-1, TRUE))
+        if (m_pDelegate && m_pTouch && m_pSet)
         {
-            m_bCaptured = true;
+            if (! m_bCaptured)
+            {
+                m_bCaptured = (SetCaptureEx(-1, TRUE)) ? true : false;
+                break;
+            }
+//            SS_printf("PenDown: %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
             m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             m_pSet->addObject(m_pTouch);
             m_pDelegate->touchesBegan(m_pSet, NULL);
@@ -270,6 +275,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             GetBounds(&rc);
             if (rc.IsInRect(pEvent->sParam1, pEvent->sParam2))
             {
+//                SS_printf("PenMove: %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
                 m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
                 m_pDelegate->touchesMoved(m_pSet, NULL);
             }
@@ -280,6 +286,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         if (m_pDelegate && m_pTouch && m_pSet && m_bCaptured)
         {
             ReleaseCapture();
+//            SS_printf("PenUp:   %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
             m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             m_pDelegate->touchesEnded(m_pSet, NULL);
         }

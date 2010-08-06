@@ -41,10 +41,10 @@ public:
 
     /**
     @brief	Implement CCDirector and sense init code here.
-    @return TRUE    Initialize success, app continue.
-    @return FALSE   Initialize failed, app terminate.
+    @return true    Initialize success, app continue.
+    @return false   Initialize failed, app terminate.
     */
-    virtual Boolean initCocos2d() = 0;
+    virtual bool initCocos2d() = 0;
 
     /**
     @brief	rotate main window by device orientation.
