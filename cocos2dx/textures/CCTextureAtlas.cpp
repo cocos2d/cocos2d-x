@@ -98,10 +98,10 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, unsigned
 	return pTextureAtlas;
 }
 
-CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, unsigned int capacity)
+CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
-	pTextureAtlas->initWithTexture(tex, capacity);
+	pTextureAtlas->initWithTexture(texture, capacity);
 	pTextureAtlas->autorelease();
 	return pTextureAtlas;
 }
@@ -109,19 +109,19 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *tex, unsig
 CCTextureAtlas * CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
 {
 	// retained in property
-	CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addImage(file);	
+	CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(file);	
 
-	return initWithTexture(tex, capacity);
+	return initWithTexture(texture, capacity);
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *tex, unsigned int capacity)
+CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
 
 	m_uCapacity = capacity;
 	m_uTotalQuads = 0;
 
 	// retained in property
-	this->m_pTexture = tex;
+	this->m_pTexture = texture;
 
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)calloc( sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, 1 );
 	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
@@ -212,7 +212,7 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 
 	// last object doesn't need to be moved
 	if( remaining > 0) {
-		// tex coordinates
+		// texture coordinates
 		memmove( &m_pQuads[index+1],&m_pQuads[index], sizeof(m_pQuads[0]) * remaining );		
 	}
 
@@ -235,7 +235,7 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 		src = newIndex;
 	}
 
-	// tex coordinates
+	// texture coordinates
 	ccV3F_C4B_T2F_Quad quadsBackup = m_pQuads[oldIndex];
 	memmove( &m_pQuads[dst],&m_pQuads[src], sizeof(m_pQuads[0]) * howMany );
 	m_pQuads[newIndex] = quadsBackup;
@@ -250,7 +250,7 @@ void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
 
 	// last object doesn't need to be moved
 	if( remaining ) {
-		// tex coordinates
+		// texture coordinates
 		memmove( &m_pQuads[index],&m_pQuads[index+1], sizeof(m_pQuads[0]) * remaining );
 	}
 
@@ -330,7 +330,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 	// colors
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, colors));
 
-	// tex coords
+	// texture coords
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*) offsetof( ccV3F_C4B_T2F, texCoords));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
@@ -355,7 +355,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 	diff = offsetof( ccV3F_C4B_T2F, colors);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
 
-	// tex coords
+	// texture coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
 

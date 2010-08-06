@@ -88,9 +88,9 @@ void CCAtlasNode::calculateMaxItems()
 
 void CCAtlasNode:: calculateTexCoordsSteps()
 {
-	CCTexture2D *tex = m_pTextureAtlas->getTexture();
-	m_fTexStepX = m_nItemWidth / static_cast<float>(tex->getPixelsWide());
-	m_fTexStepY = m_nItemHeight / static_cast<float>(tex->getPixelsHigh());
+	CCTexture2D *texture = m_pTextureAtlas->getTexture();
+	m_fTexStepX = m_nItemWidth / static_cast<float>(texture->getPixelsWide());
+	m_fTexStepY = m_nItemHeight / static_cast<float>(texture->getPixelsHigh());
 }
 
 void CCAtlasNode::updateAtlasValues()

@@ -127,7 +127,7 @@ public:
 
 	/** Deletes a texture from the cache given a texture
 	*/
-	void removeTexture(CCTexture2D* tex);
+	void removeTexture(CCTexture2D* texture);
 
 	/** Deletes a texture from the cache given a its key name
 	@since v0.99.4
