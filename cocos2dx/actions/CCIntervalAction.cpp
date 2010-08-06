@@ -267,8 +267,8 @@ void CCSequence::update(cocos2d::ccTime time)
 	{
 		if (m_last != -1)
 		{
-			m_pActions[found]->update(1.0f);
-			m_pActions[found]->stop();
+			m_pActions[m_last]->update(1.0f);
+			m_pActions[m_last]->stop();
 		}
 
 		m_pActions[found]->startWithTarget(m_pTarget);
@@ -610,30 +610,62 @@ void CCRotateTo::update(cocos2d::ccTime time)
 //
 CCRotateBy* CCRotateBy::actionWithDuration(cocos2d::ccTime duration, float fDeltaAngle)
 {
-	return NULL;
+	CCRotateBy *pRotateBy = new CCRotateBy();
+	pRotateBy->initWithDuration(duration, fDeltaAngle);
+	pRotateBy->autorelease();
+
+	return pRotateBy;
 }
 
 CCRotateBy* CCRotateBy::initWithDuration(cocos2d::ccTime duration, float fDeltaAngle)
 {
+	if (__super::initWithDuration(duration))
+	{
+		m_fAngle = fDeltaAngle;
+		return this;
+	}
+
 	return NULL;
 }
 
 NSObject* CCRotateBy::copyWithZone(cocos2d::NSZone *pZone)
 {
-	return NULL;
+	NSZone* pNewZone = NULL;
+	CCRotateBy* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = dynamic_cast<CCRotateBy*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCRotateBy();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	__super::copyWithZone(pZone);
+
+	pCopy->initWithDuration(m_fDuration, m_fAngle);
+
+	CCX_SAFE_DELETE(pNewZone);
+	return pCopy;
 }
 
 void CCRotateBy::startWithTarget(cocos2d::NSObject *pTarget)
 {
+	__super::startWithTarget(pTarget);
+	m_fStartAngle = dynamic_cast<CCNode*>(pTarget)->getRotation();
 }
 
 void CCRotateBy::update(cocos2d::ccTime time)
 {
+	// XXX: shall I add % 360
+	dynamic_cast<CCNode*>(m_pTarget)->setRotation(m_fStartAngle + m_fAngle * time);
 }
 
 CCIntervalAction* CCRotateBy::reverse(void)
 {
-	return NULL;
+	return CCRotateBy::actionWithDuration(m_fDuration, -m_fAngle);
 }
 
 //
@@ -641,25 +673,58 @@ CCIntervalAction* CCRotateBy::reverse(void)
 //
 CCMoveTo* CCMoveTo::actionWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint position)
 {
-	return NULL;
+	CCMoveTo *pMoveTo = new CCMoveTo();
+	pMoveTo->initWithDuration(duration, position);
+	pMoveTo->autorelease();
+
+	return pMoveTo;
 }
 
 CCMoveTo* CCMoveTo::initWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint position)
 {
+	if (__super::initWithDuration(duration))
+	{
+		m_endPosition = position;
+		return this;
+	}
+
 	return NULL;
 }
 
 NSObject* CCMoveTo::copyWithZone(cocos2d::NSZone *pZone)
 {
-	return NULL;
+	NSZone* pNewZone = NULL;
+	CCMoveTo* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = dynamic_cast<CCMoveTo*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCMoveTo();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	__super::copyWithZone(pZone);
+
+	pCopy->initWithDuration(m_fDuration, m_endPosition);
+
+	CCX_SAFE_DELETE(pNewZone);
+	return pCopy;
 }
 
 void CCMoveTo::startWithTarget(NSObject *pTarget)
 {
+	__super::startWithTarget(pTarget);
+	m_startPosition = dynamic_cast<CCNode*>(pTarget)->getPosition();
+	m_delta = ccpSub(m_endPosition, m_startPosition);
 }
 
 void CCMoveTo::update(cocos2d::ccTime time)
 {
+	dynamic_cast<CCNode*>(m_pTarget)->setPosition(ccp(m_startPosition.x + m_delta.x * time,
+		m_startPosition.y + m_delta.y * time));
 }
 
 //
@@ -667,17 +732,45 @@ void CCMoveTo::update(cocos2d::ccTime time)
 //
 CCMoveBy* CCMoveBy::actionWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint position)
 {
-	return NULL;
+	CCMoveBy *pMoveBy = new CCMoveBy();
+	pMoveBy->initWithDuration(duration, position);
+	pMoveBy->autorelease();
+
+	return pMoveBy;
 }
 
 CCMoveBy* CCMoveBy::initWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint position)
 {
+	if (CCIntervalAction::initWithDuration(duration))
+	{
+		m_delta = position;
+		return this;
+	}
+
 	return NULL;
 }
 
 NSObject* CCMoveBy::copyWithZone(cocos2d::NSZone *pZone)
 {
-	return NULL;
+	NSZone* pNewZone = NULL;
+	CCMoveBy* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = dynamic_cast<CCMoveBy*>(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCMoveBy();
+		pZone = pNewZone = new NSZone(pCopy);
+	}
+
+	__super::copyWithZone(pZone);
+
+	pCopy->initWithDuration(m_fDuration, m_delta);
+	
+	CCX_SAFE_DELETE(pNewZone);
+	return pCopy;
 }
 
 void CCMoveBy::startWithTarget(cocos2d::NSObject *pTarget)
