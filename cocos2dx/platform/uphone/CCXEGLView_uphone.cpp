@@ -294,7 +294,9 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         {
             bHandled = TRUE;
         }
-        else if (m_pDelegate && m_pTouch && m_pSet && SetCaptureEx(-1, TRUE))
+        else if (m_pDelegate && m_pTouch && m_pSet 
+            && ! PointInControl(pEvent->sParam1, pEvent->sParam2, NULL) 
+            && SetCaptureEx(-1, TRUE))
         {
             m_bCaptured = true;
             m_nPenEventNum = pEvent->lParam5;
@@ -304,7 +306,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             m_pDelegate->touchesBegan(m_pSet, NULL);
         }
         break;
-
+TWindow
     case EVENT_PenMove:
         if (m_pDelegate && m_pTouch && m_pSet && m_bCaptured && pEvent->lParam5 == m_nPenEventNum)
         {
