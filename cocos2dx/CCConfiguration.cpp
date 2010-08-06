@@ -60,14 +60,14 @@ CCConfiguration* CCConfiguration::init(void)
 	CCLOG("cocos2d: GL supports NPOT textures: %s", (m_bSupportsNPOT ? "YES" : "NO"));
 	CCLOG("cocos2d: GL supports discard_framebuffer: %s", (m_bSupportsDiscardFramebuffer ? "YES" : "NO"));
 	
-#ifdef CC_TEXTURE_NPOT_SUPPORT
+#if CC_TEXTURE_NPOT_SUPPORT
 	CCLOG("cocos2d: compiled with NPOT support: %s", "YES");
 #else
 	CCLOG("cocos2d: compiled with NPOT support: %s", "NO");
 #endif // CC_TEXTURE_NPOT_SUPPORT 
 
 	
-#ifdef CC_TEXTURE_ATLAS_USES_VBO
+#if CC_TEXTURE_ATLAS_USES_VBO
 	CCLOG("cocos2d: compiled with VBO support in TextureAtlas : %s", "YES");
 #else
 	CCLOG("cocos2d: compiled with VBO support in TextureAtlas : %s", "NO");
