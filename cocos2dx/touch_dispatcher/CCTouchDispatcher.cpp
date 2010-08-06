@@ -108,16 +108,19 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, NSMutableArray
 	for (iter = pArray->begin(); iter != pArray->end(); ++iter)
 	{
 		CCTouchHandler *h = *iter;
-		if (h->getPriority() < pHandler->getPriority())
-		{
-			++u;
-		}
+        if (h)
+        {
+		    if (h->getPriority() < pHandler->getPriority())
+		    {
+			    ++u;
+		    }
 
-		if (h->getDelegate() == pHandler->getDelegate())
-		{
-			assert(0);
-			return;
-		}
+		    if (h->getDelegate() == pHandler->getDelegate())
+		    {
+			    assert(0);
+			    return;
+		    }
+        }
 	}
 
 	pArray->insertObjectAtIndex(pHandler, u);
@@ -162,7 +165,7 @@ void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 		for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
 		{
 			pHandler = *iter;
-			if (pHandler->getDelegate() == pDelegate)
+			if (pHandler && pHandler->getDelegate() == pDelegate)
 			{
 				m_pStandardHandlers->removeObject(pHandler);
 				break;
@@ -177,7 +180,7 @@ void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 		for (iter = m_pTargetedHandlers->begin(); iter != m_pTargetedHandlers->end(); ++iter)
 		{
 			pHandler = *iter;
-			if (pHandler->getDelegate() == pDelegate)
+			if (pHandler && pHandler->getDelegate() == pDelegate)
 			{
 				m_pTargetedHandlers->removeObject(pHandler);
 				break;

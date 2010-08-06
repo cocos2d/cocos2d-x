@@ -27,11 +27,12 @@ THE SOFTWARE.
 
 #include <string>
 #include "Cocos2dTypes.h"
+#include "ccxCommon.h"
 
 class TBitmap;
 namespace   cocos2d {
 
-class UIImage
+class CCX_DLL UIImage
 {
 public:
 	UIImage(void);

@@ -60,7 +60,7 @@ struct ccTouchHandlerHelperData {
 };
 
 
-class EGLTouchDelegate
+class CCX_DLL EGLTouchDelegate
 {
 public:
 	virtual void touchesBegan(NSSet* touches, UIEvent* pEvent) = 0;
@@ -86,7 +86,7 @@ public:
  @since v0.8.0
  */
 class CCTouchHandler;
-class CCTouchDispatcher : public NSObject, public EGLTouchDelegate
+class CCX_DLL CCTouchDispatcher : public NSObject, public EGLTouchDelegate
 {
 public:
 	~CCTouchDispatcher();

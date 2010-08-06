@@ -199,6 +199,11 @@ UINT8* UIImage::getRGBA8888Data(void)
 		UINT8 uR;
 		UINT8 uB;
 		
+        if (m_pBitmap == NULL)
+        {
+            break;
+        }
+
         // convert to RGBA8888 format
 		pBitmap = m_pBitmap->DupBitmapTo32();
 		if (pBitmap == NULL)
