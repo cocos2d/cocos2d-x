@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\actions\CCInstantAction.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\actions\CCIntervalAction.cpp"
 				>
 			</File>
@@ -238,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\include\ccConfig.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCInstantAction.h"
 				>
 			</File>
 			<File
