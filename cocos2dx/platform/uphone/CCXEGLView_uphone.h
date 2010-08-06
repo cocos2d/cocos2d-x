@@ -63,6 +63,8 @@ private:
     EGLTouchDelegate *  m_pDelegate;
 
     CCXEGL *            m_pEGL;
+
+    int                 m_nPenEventNum;
 };
 
 }   // end of namespace   cocos2d
