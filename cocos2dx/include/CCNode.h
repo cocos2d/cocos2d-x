@@ -38,6 +38,7 @@ class CCCamera;
 class CCGridBase;
 class CGPoint;
 class CCTouch;
+class CCAction;
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -357,13 +358,13 @@ public:
 	@return An Action pointer
 	*/
 	
-/// @todo	CCAction* runAction(CCAction* action);
+	CCAction* runAction(CCAction* action);
 
 	/** Removes all actions from the running action list */
 	void stopAllActions(void);
 
 	/** Removes an action from the running action list */
-/// @todo	void stopAction(CCAction* action);
+	void stopAction(CCAction* action);
 
 	/** Removes an action from the running action list given its tag
 	@since v0.7.1
@@ -374,7 +375,7 @@ public:
 	@since v0.7.1
 	@return the Action the with the given tag
 	*/
-/// @todo	CCAction* getActionByTag(int tag);
+	CCAction* getActionByTag(int tag);
 
 	/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
 	* Composable actions are counted as 1 action. Example:
