@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCScheduler.h"
 #include "touch_dispatcher/CCTouch.h"
+#include "actions/CCActionManager.h"
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -785,50 +786,39 @@ void CCNode::onExit()
 
 	arrayMakeObjectsPerformSelector(m_pChildren, &CCNode::onExit);
 }
-
-/** @todo 
--(CCAction*) runAction:(CCAction*) action
+CCAction * CCNode::runAction(CCAction* action)
 {
-	NSAssert( action != nil, @"Argument must be non-nil");
-
-	[[CCActionManager sharedManager] addAction:action target:self paused:!isRunning_];
+	NSAssert( action = NULL, "Argument must be non-nil");
+	CCActionManager::getSharedManager()->addAction(action, this, !m_bIsRunning);
 	return action;
 }
-*/
 
 void CCNode::stopAllActions()
 {
-	/** @todo
-	[[CCActionManager sharedManager] removeAllActionsFromTarget:self];*/
+	CCActionManager::getSharedManager()->removeAllActionsFromTarget(this);
 }
 
-/** @todo
--(void) stopAction: (CCAction*) action
+void CCNode::stopAction(CCAction* action)
 {
-	[[CCActionManager sharedManager] removeAction:action];
-}*/
+	CCActionManager::getSharedManager()->removeAction(action);
+}
 
 void CCNode::stopActionByTag(int tag)
 {
-	/** @todo
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[[CCActionManager sharedManager] removeActionByTag:aTag target:self];*/
+	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
+	CCActionManager::getSharedManager()->removeActionByTag(tag, this);
 }
 
-/** @todo
--(CCAction*) getActionByTag:(int) aTag
+CCAction * CCNode::getActionByTag(int tag)
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-
-	return [[CCActionManager sharedManager] getActionByTag:aTag target:self];
-}*/
+	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
+	return CCActionManager::getSharedManager()->getActionByTag(tag, this);
+}
 
 int CCNode::numberOfRunningActions()
 {
-/// @todo	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
-	return 0;
+	return CCActionManager::getSharedManager()->numberOfRunningActionsInTarget(this);
 }
-
 
 // CCNode - Callbacks
 
@@ -877,13 +867,13 @@ void CCNode::unscheduleAllSelectors()
 void CCNode::resumeSchedulerAndActions()
 {
 	CCScheduler::getSharedScheduler()->resumeTarget(this);
-	/** @todo[[CCActionManager sharedManager] resumeTarget:self];*/
+	CCActionManager::getSharedManager()->resumeTarget(this);
 }
 
 void CCNode::pauseSchedulerAndActions()
 {
 	CCScheduler::getSharedScheduler()->pauseTarget(this);
-	/** @todo[[CCActionManager sharedManager] pauseTarget:self];*/
+	CCActionManager::getSharedManager()->pauseTarget(this);
 }
 
 CGAffineTransform CCNode::nodeToParentTransform(void)
