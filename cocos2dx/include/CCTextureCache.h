@@ -55,9 +55,9 @@ private:
 public:
 
 	CCTextureCache();
-	~CCTextureCache();
+	virtual ~CCTextureCache();
 
-	std::string description(void);
+	char * description(void);
 
 	/** Retruns ths shared instance of the cache */
 	static CCTextureCache * sharedTextureCache();

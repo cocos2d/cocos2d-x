@@ -143,12 +143,10 @@ CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned 
 	return this;
 }
 
-std::string CCTextureAtlas::description()
+char * CCTextureAtlas::description()
 {
-	char des[100];
-	sprintf_s(des, 100, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
-	std::string ret(des);
-
+	char *ret = new char[100];
+	sprintf_s(ret, 100, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
 	return ret;
 }
 

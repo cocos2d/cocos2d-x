@@ -50,7 +50,7 @@ public:
 	CCCamera(void);
 	~CCCamera(void);
 
-	std::string description(void);
+	char * description(void);
 
 	// sets the dirty value
 	void setDirty(bool bValue);

@@ -43,7 +43,7 @@ public:
     CCAction(void);
 	virtual ~CCAction(void);
 
-	std::string description();
+	char * description();
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 
@@ -125,7 +125,7 @@ class CCX_DLL CCRepeatForever : public CCAction
 {
 public:
 	CCRepeatForever(){}
-	~CCRepeatForever();
+	virtual ~CCRepeatForever();
 
 	CCRepeatForever* initWithAction(CCIntervalAction *pAction);
 	virtual NSObject* copyWithZone(NSZone *pZone);

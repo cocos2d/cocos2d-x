@@ -108,9 +108,9 @@ class CCX_DLL CCTexture2D : public NSObject
 
 public:
 	CCTexture2D();
-	~CCTexture2D();
+	virtual ~CCTexture2D();
 
-	std::string description(void);
+	char * description(void);
 
 	/** Intializes with a texture2d with data */
 	CCTexture2D * initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize);

@@ -405,12 +405,10 @@ void CCNode::cleanup()
 }
 
 
-std::string CCNode::description()
+char * CCNode::description()
 {
-	char des[100] ;
-	sprintf_s(des, 100, "<CCNode | Tag = %d>", m_nTag);
-	std::string ret(des);
-
+	char *ret = new char[100] ;
+	sprintf_s(ret, 100, "<CCNode | Tag = %d>", m_nTag);
 	return ret;
 }
 
