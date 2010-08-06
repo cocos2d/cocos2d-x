@@ -68,8 +68,6 @@ Boolean  THelloWorldApp::EventHandler(EventType*  pEvent)
 // application main entry
 Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
-    THelloWorldApp * pApp= new  THelloWorldApp();
-    pApp->Run();
-    delete pApp;
-    return TRUE;
+    THelloWorldApp app;
+    return app.Run();
 }
