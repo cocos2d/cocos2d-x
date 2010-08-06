@@ -8,6 +8,8 @@
 #include  "test_uphoneMainForm.h"
 
 #include "CCDirector.h"
+#include "CCScene.h"
+#include "tests/controller.h"
 
 using namespace cocos2d;
 
@@ -22,10 +24,19 @@ Ttest_uphoneApp::~Ttest_uphoneApp()
 
 }
 
-Boolean Ttest_uphoneApp::initCocos2d()
+bool Ttest_uphoneApp::initCocos2d()
 {
     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
-    return TRUE;
+    //CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+
+    CCScene * pScene = CCScene::node();
+    CCLayer * pLayer = new TestController();
+    pLayer->autorelease();
+
+    pScene->addChild(pLayer);
+    CCDirector::getSharedDirector()->runWithScene(pScene);
+
+    return true;
 }
 
 Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
