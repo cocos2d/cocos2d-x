@@ -24,11 +24,11 @@ Boolean THelloWorldApp::initCocos2d()
     CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
     // load background image texture and get window size
-    CCTexture2D * pTex = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
+    CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
     CGSize size = CCDirector::getSharedDirector()->getWinSize();
 
     // create sprite instance
-    CCSprite * pSprite = (new CCSprite())->initWithTexture(pTex); 
+    CCSprite * pSprite = (new CCSprite())->initWithTexture(pTexture); 
     pSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
     pSprite->autorelease()->retain();
 
@@ -53,7 +53,7 @@ Boolean  THelloWorldApp::EventHandler(EventType*  pEvent)
 	case EVENT_AppLoad:
         if (! (m_pMainWnd = new CCXEGLView(this)) || ! m_pMainWnd->Create(&m_rcWnd))
         {
-        	// 窗口创建失败，退出应用。
+        	// create window failed, quit application
             SendStopEvent();
             bHandled = TRUE;
             break;
