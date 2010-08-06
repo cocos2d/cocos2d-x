@@ -432,12 +432,8 @@ bool CCDirector::isOpenGLAttached(void)
 bool CCDirector::detach(void)
 {
 	assert(isOpenGLAttached());
-
 	// remove from the superview
 	CCX_SAFE_DELETE(m_pobOpenGLView);
-
-	assert(! isOpenGLAttached());
-
 	return true;
 }
 
