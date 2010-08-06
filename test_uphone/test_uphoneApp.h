@@ -15,7 +15,7 @@ public:
 	Ttest_uphoneApp();
 	~Ttest_uphoneApp();
 
-    virtual Boolean initCocos2d();
+    virtual bool initCocos2d();
 
 public:
 	virtual Boolean EventHandler(EventType * pEvent);

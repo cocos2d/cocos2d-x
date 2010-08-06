@@ -97,6 +97,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="tests\tests_post_commond.bat"
 			/>
 		</Configuration>
 		<Configuration
@@ -288,6 +289,42 @@
 				RelativePath=".\TG3AppDllEntry.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="tests"
+			>
+			<File
+				RelativePath=".\tests\controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\controller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\testBasic.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\testBasic.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\tests.h"
+				>
+			</File>
+			<Filter
+				Name="ActionsTest"
+				>
+				<File
+					RelativePath=".\tests\ActionsTest\ActionsTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\ActionsTest\ActionsTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

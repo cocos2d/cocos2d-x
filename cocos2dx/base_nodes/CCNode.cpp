@@ -786,7 +786,7 @@ void CCNode::onExit()
 }
 CCAction * CCNode::runAction(CCAction* action)
 {
-	NSAssert( action = NULL, "Argument must be non-nil");
+	NSAssert( action != NULL, "Argument must be non-nil");
 	CCActionManager::getSharedManager()->addAction(action, this, !m_bIsRunning);
 	return action;
 }
