@@ -83,7 +83,7 @@ public:
         }
     }
 
-    static CCXEGL * Create(TWindow * pWindow)
+    static CCXEGL * create(TWindow * pWindow)
     {
         CCXEGL * pEGL = new CCXEGL;
         Boolean bSuccess = FALSE;
@@ -137,6 +137,7 @@ public:
             pEGL->m_pWnd       = pWindow;
             pEGL->m_eglDisplay = eglDisplay;
             pEGL->m_eglSurface = eglSurface;
+            pEGL->m_eglConfig  = eglConfig;
             pEGL->m_eglContext = eglContext;
             bSuccess = TRUE;
         } while (0);
@@ -149,7 +150,33 @@ public:
         return pEGL;
     }
 
-    void SwapBuffers()
+    void resizeSurface()
+    {
+        if (! m_pWnd || EGL_NO_DISPLAY == m_eglDisplay)
+        {
+            return;
+        }
+
+        // release old surface
+        if (EGL_NO_SURFACE != m_eglSurface)
+        {
+            eglDestroySurface(m_eglDisplay, m_eglSurface);
+            m_eglSurface = EGL_NO_SURFACE;
+        }
+
+        // resize eglWnd;
+        TRectangle rc;
+        m_pWnd->GetClientBounds(&rc);
+        RECT rcNew = {0, 0, rc.Width(), rc.Height(),};
+        AdjustWindowRectEx(&rcNew, WS_POPUPWINDOW, false, WS_EX_TOPMOST | WS_EX_APPWINDOW | WS_EX_WINDOWEDGE);
+        MoveWindow(m_eglWnd, rcNew.left, rcNew.top, rcNew.right - rcNew.left, rcNew.bottom - rcNew.top, FALSE);
+
+        // create new surface and make current
+        m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglWnd, NULL);
+        eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext);
+    }
+
+    void swapBuffers()
     {
         if (EGL_NO_DISPLAY != m_eglDisplay)
         {
@@ -198,6 +225,7 @@ private:
         , m_eglDC(NULL)
 #endif
         , m_eglDisplay(EGL_NO_DISPLAY)
+        , m_eglConfig(0)
         , m_eglSurface(EGL_NO_SURFACE)
         , m_eglContext(EGL_NO_CONTEXT)
     {}
@@ -207,6 +235,7 @@ private:
     EGLNativeWindowType     m_eglWnd;
     EGLNativeDisplayType    m_eglDC;
     EGLDisplay              m_eglDisplay;
+    EGLConfig               m_eglConfig;
     EGLSurface              m_eglSurface;
     EGLContext              m_eglContext;
 };
@@ -229,7 +258,7 @@ CCXEGLView::~CCXEGLView()
 
 Boolean CCXEGLView::AfterCreate(void)
 {
-    return (m_pEGL = CCXEGL::Create(this)) ? TRUE : FALSE;
+    return (m_pEGL = CCXEGL::create(this)) ? TRUE : FALSE;
 }
 
 Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
@@ -243,8 +272,15 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinRotationChanged:
-        CCX_SAFE_DELETE(m_pEGL);
-        m_pEGL = CCXEGL::Create(this);
+        {
+            if (m_pEGL)
+            {
+                m_pEGL->resizeSurface();
+                UpdateWindow(0);
+            }
+        }
+//         CCX_SAFE_DELETE(m_pEGL);
+//         m_pEGL = CCXEGL::create(this);
         bHandled = TRUE;
         break;
 
@@ -333,7 +369,7 @@ void CCXEGLView::swapBuffers()
 {
     if (m_pEGL)
     {
-        m_pEGL->SwapBuffers();
+        m_pEGL->swapBuffers();
     }
 }
 
