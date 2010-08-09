@@ -6,10 +6,13 @@
 
 using namespace cocos2d;
 
-class TestLayer : public CCLayer
+class BackToMainMenuLayer : public CCLayer
 {
 public:
-    TestLayer();
+    BackToMainMenuLayer();
+
+    // The CallBack for back to the main menu scene
+    // void MainMenuCallback(UxObject* pSender);
 };
 
 class TestScene : public CCScene

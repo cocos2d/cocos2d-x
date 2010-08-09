@@ -3,4 +3,10 @@
 
 #include "ActionsTest/ActionsTest.h"
 
+enum
+{
+    TEST_ACTIONS = 0,
+    TESTS_COUNT,
+};
+
 #endif
