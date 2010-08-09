@@ -8,7 +8,12 @@ namespace   cocos2d {
 
     static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
     {
-        CCDirector::getSharedDirector()->preMainLoop();
+        //CCDirector::getSharedDirector()->preMainLoop();
+        CCXEGLView * pView = CCDirector::getSharedDirector()->getOpenGLView();
+        if (pView)
+        {
+            pView->UpdateWindow(0);
+        }
         int nRtn = Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, (MESSAGE_t *)uData);
         return 1;
     }
