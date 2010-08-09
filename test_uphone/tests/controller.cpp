@@ -1,12 +1,11 @@
 #include "tests.h"
 #include "controller.h"
-#include "testBasic.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
 TestController::TestController()
 {
     /**
-    @todo 添加菜单点击后开始运行测试
+    @todo add menu items for all tests
     */
     
 }
@@ -25,24 +24,9 @@ void TestController::registerWithTouchDispatcher()
 
 bool TestController::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
 {
-    // 运行ActionsTest
+    // run ActionsTest
     TestScene* pScene = new ActionsTestScene();
 
     pScene->runThisTest();
     return true;
 }
-
-// CCScene* NextTest()
-// {
-// 
-// }
-// 
-// CCScene* PreTest()
-// {
-// 
-// }
-// 
-// CCScene* CurrentTest()
-// {
-// 
-// }

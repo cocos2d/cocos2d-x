@@ -16,16 +16,4 @@ public:
     virtual void registerWithTouchDispatcher();
 };
 
-// #include "CCScene.h"
-// 
-// CCScene* NextTest();
-// CCScene* PreTest();
-// CCScene* CurrentTest();
-// 
-// enum
-// {
-//     ActionsTest = 0,
-//     TestsCount,
-// };
-
 #endif
