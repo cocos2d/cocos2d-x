@@ -23,16 +23,16 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTime.h"
-#include <ssDate.h>
+#include <TG3.h>
 namespace   cocos2d {
 
 // although it is not the same as gettimeofday as unix
 // but we only use the diffrences of tow values
 int CCTime::gettimeofday(struct cc_timeval *tp, void *tzp)
 {
-	unsigned int uSeconds = GetSysSecond();
-	tp->tv_sec = uSeconds;
-	tp->tv_usec = 0;
+	unsigned int ms = TimGetTicks();
+	tp->tv_sec = ms * 10 / 1000;
+	tp->tv_usec = ms * 10 % 1000 * 1000;
 
 	return 0;
 }
