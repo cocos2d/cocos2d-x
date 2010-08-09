@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\actions\CCCameraAction.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\actions\CCInstantAction.cpp"
 				>
 			</File>
@@ -238,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCCamera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCCameraAction.h"
 				>
 			</File>
 			<File
