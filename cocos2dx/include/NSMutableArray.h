@@ -263,9 +263,19 @@ public:
 		return m_array.begin();
 	}
 
+	NSMutableArrayRevIterator rbegin(void)
+	{
+		return m_array.rbegin();
+	}
+
 	NSMutableArrayIterator end(void)
 	{
 		return m_array.end();
+	}
+
+	NSMutableArrayRevIterator rend(void)
+	{
+		return m_array.rend();
 	}
 
 public:

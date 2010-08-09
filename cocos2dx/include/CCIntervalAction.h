@@ -269,8 +269,8 @@ public:
 protected:
 	CGPoint m_startPosition;
 	CGPoint m_delta;
-	ccTime height;
-	int jumps;
+	ccTime  m_height;
+	int     m_nJumps;
 };
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
@@ -352,7 +352,7 @@ protected:
   	float m_fStartScaleY;
     float m_fEndScaleX;
 	float m_fEndScaleY;
-	float m_fDletaX;
+	float m_fDeltaX;
 	float m_fDeltaY;
 };
 
@@ -563,7 +563,7 @@ public:
      static CCAnimate* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 protected:
 	CCAnimation *m_pAnimation;
-	NSObject *m_pOrigFrame;
+	CCSpriteFrame *m_pOrigFrame;
     bool m_bRestoreOriginalFrame;
 };
 
