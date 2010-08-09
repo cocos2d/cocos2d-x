@@ -33,18 +33,6 @@ namespace cocos2d {
 	*/
 	class CCCameraAction : public CCIntervalAction //<NSCopying> 
 	{
-	protected:
-		float m_fCenterXOrig;
-		float m_fCenterYOrig;
-		float m_fCenterZOrig;
-
-		float m_fEyeXOrig;
-		float m_fEyeYOrig;
-		float m_fEyeZOrig;
-
-		float m_fUpXOrig;
-		float m_fUpYOrig;
-		float m_fUpZOrig;
 	public:
 		CCCameraAction()
 			:m_fCenterXOrig(0)
@@ -61,6 +49,18 @@ namespace cocos2d {
 		// super methods
 		virtual void startWithTarget(NSObject *pTarget);
 		virtual CCIntervalAction * reverse();
+	protected:
+		float m_fCenterXOrig;
+		float m_fCenterYOrig;
+		float m_fCenterZOrig;
+
+		float m_fEyeXOrig;
+		float m_fEyeYOrig;
+		float m_fEyeZOrig;
+
+		float m_fUpXOrig;
+		float m_fUpYOrig;
+		float m_fUpZOrig;
 	};
 
 	/** CCOrbitCamera action
@@ -69,6 +69,8 @@ namespace cocos2d {
 	class CCOrbitCamera : public CCCameraAction //<NSCopying> 
 	{
 	public:
+		CCOrbitCamera(){}
+		~CCOrbitCamera(){}
 		/** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
 		static CCOrbitCamera * actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
 		/** initializes a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
