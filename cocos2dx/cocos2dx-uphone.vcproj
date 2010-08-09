@@ -485,6 +485,10 @@
 				Name="data_support"
 				>
 				<File
+					RelativePath=".\support\data_support\ccArray.h"
+					>
+				</File>
+				<File
 					RelativePath=".\support\data_support\uthash.h"
 					>
 				</File>

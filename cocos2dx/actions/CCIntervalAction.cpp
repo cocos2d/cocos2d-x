@@ -91,7 +91,7 @@ NSObject* CCIntervalAction::copyWithZone(NSZone *pZone)
 
 bool CCIntervalAction::isDone(void)
 {
-	return m_elapsed > m_fDuration;
+	return m_elapsed >= m_fDuration;
 }
 
 void CCIntervalAction::step(ccTime dt)

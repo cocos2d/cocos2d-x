@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCActionManager.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
+#include "support/data_support/ccArray.h"
 
 namespace cocos2d {
 //
@@ -86,7 +87,7 @@ CCActionManager* CCActionManager::init(void)
 
 void CCActionManager::deleteHashElement(tHashElement *pElement)
 {
-	delete pElement->actions; // ccArrayFree(element->actions);
+	ccArrayFree(pElement->actions);
 	HASH_DEL(m_pTargets, pElement);
 	pElement->target->release();
 	free(pElement);
@@ -97,18 +98,18 @@ void CCActionManager::actionAllocWithHashElement(tHashElement *pElement)
 	// 4 actions per Node by default
 	if (pElement->actions == NULL)
 	{
-		pElement->actions = new NSMutableArray<CCAction*>();
+		pElement->actions = ccArrayNew(4);
+	}else 
+	if (pElement->actions->num == pElement->actions->max)
+	{
+		ccArrayDoubleCapacity(pElement->actions);
 	}
-	// NSMutableArray will expand auto
-    /*
-	else if( element->actions->num == element->actions->max )
-		ccArrayDoubleCapacity(element->actions);
-	*/
+
 }
 
 void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElement)
 {
-	CCAction *pAction = pElement->actions->getObjectAtIndex(uIndex);
+	CCAction *pAction = (CCAction*)pElement->actions->arr[uIndex];
 
 	if (pAction == pElement->currentAction && (! pElement->currentActionSalvaged))
 	{
@@ -116,7 +117,7 @@ void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pEl
 		pElement->currentActionSalvaged = true;
 	}
 
-	pElement->actions->removeObjectAtIndex(uIndex);
+	ccArrayRemoveObjectAtIndex(pElement->actions, uIndex);
 
 	// update actionIndex in case we are in tick. looping over the actions
 	if (pElement->actionIndex >= uIndex)
@@ -124,7 +125,7 @@ void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pEl
 		pElement->actionIndex--;
 	}
 
-	if (pElement->actions->count() == 0)
+	if (pElement->actions->num == 0)
 	{
 		if (m_pCurrentTarget == pElement)
 		{
@@ -191,8 +192,8 @@ void CCActionManager::addAction(cocos2d::CCAction *pAction, NSObject *pTarget, b
 
 	actionAllocWithHashElement(pElement);
 
-	assert(! pElement->actions->containsObject(pAction));
-	pElement->actions->addObject(pAction);
+	assert(! ccArrayContainsObject(pElement->actions, pAction));
+	ccArrayAppendObject(pElement->actions, pAction);
 
 	pAction->startWithTarget(pTarget);
 }
@@ -221,13 +222,13 @@ void CCActionManager::removeAllActionsFromTarget(NSObject *pTarget)
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
 	if (pElement)
 	{
-		if (pElement->actions->containsObject(pElement->currentAction) && (! pElement->currentActionSalvaged))
+		if (ccArrayContainsObject(pElement->actions, pElement->currentAction) && (! pElement->currentActionSalvaged))
 		{
 			pElement->currentAction->retain();
 			pElement->currentActionSalvaged = true;
 		}
 
-		pElement->actions->removeAllObjects();
+		ccArrayRemoveAllObjects(pElement->actions);
 		if (m_pCurrentTarget == pElement)
 		{
 			m_bCurrentTargetSalvaged = true;
@@ -256,7 +257,7 @@ void CCActionManager::removeAction(cocos2d::CCAction *pAction)
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
 	if (pElement)
 	{
-		unsigned int i = pElement->actions->getIndexOfObject(pAction);
+		unsigned int i = ccArrayGetIndexOfObject(pElement->actions, pAction);
 		if (i != -1)
 		{
 			removeActionAtIndex(i, pElement);
@@ -278,12 +279,12 @@ void CCActionManager::removeActionByTag(int tag, NSObject *pTarget)
 
 	if (pElement)
 	{
-		NSMutableArray<CCAction*>::NSMutableArrayIterator iter;
-		unsigned int i = 0;
-		for (iter = pElement->actions->begin(); iter != pElement->actions->end(); ++iter, ++i)
+		unsigned int limit = pElement->actions->num;
+		for (unsigned int i = 0; i < limit; ++i)
 		{
-			CCAction *pAction = *iter;
-			if (pAction && pAction->getTag() == tag && pAction->getTarget() == pTarget)
+			CCAction *pAction = (CCAction*)pElement->actions->arr[i];
+
+			if (pAction->getTag() == tag && pAction->getOriginalTarget() == pTarget)
 			{
 				return removeActionAtIndex(i, pElement);
 			}
@@ -309,13 +310,12 @@ CCAction* CCActionManager::getActionByTag(int tag, NSObject *pTarget)
 	{
 		if (pElement->actions != NULL)
 		{
-			unsigned int i = 0;
-			NSMutableArray<CCAction*>::NSMutableArrayIterator iter;
-			for (iter = pElement->actions->begin(); iter != pElement->actions->end(); ++iter, ++i)
+			unsigned int limit = pElement->actions->num;
+			for (unsigned int i = 0; i < limit; ++i)
 			{
-                CCAction *pAction = *iter;
+				CCAction *pAction = (CCAction*)pElement->actions->arr[i];
 
-				if (pAction && pAction->getTag() == tag)
+				if (pAction->getTag() == tag)
 				{
 					return pAction;
 				}
@@ -337,7 +337,7 @@ int CCActionManager::numberOfRunningActionsInTarget(NSObject *pTarget)
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
 	if (pElement)
 	{
-		return pElement->actions ? pElement->actions->count() : 0;
+		return pElement->actions ? pElement->actions->num : 0;
 	}
 
 	return 0;
@@ -354,11 +354,15 @@ void CCActionManager::update(cocos2d::ccTime dt)
 		if (! m_pCurrentTarget->paused)
 		{
 			// The 'actions' NSMutableArray may change while inside this loop.
-			NSMutableArray<CCAction*>::NSMutableArrayIterator iter;
-			for (iter = m_pCurrentTarget->actions->begin(), m_pCurrentTarget->actionIndex = 0;
-				iter != m_pCurrentTarget->actions->end(); ++iter, m_pCurrentTarget->actionIndex++)
+			for (m_pCurrentTarget->actionIndex = 0; m_pCurrentTarget->actionIndex < m_pCurrentTarget->actions->num;
+				m_pCurrentTarget->actionIndex++)
 			{
-				m_pCurrentTarget->currentAction = *iter;
+				m_pCurrentTarget->currentAction = (CCAction*)m_pCurrentTarget->actions->arr[m_pCurrentTarget->actionIndex];
+				if (m_pCurrentTarget->currentAction == NULL)
+				{
+					continue;
+				}
+
 				m_pCurrentTarget->currentActionSalvaged = false;
 
 				m_pCurrentTarget->currentAction->step(dt);
@@ -386,7 +390,10 @@ void CCActionManager::update(cocos2d::ccTime dt)
 
 		// elt, at this moment, is still valid
 		// so it is safe to ask this here (issue #490)
-		if (m_bCurrentTargetSalvaged && m_pCurrentTarget->actions->count() == 0)
+		elt = static_cast<tHashElement*>(elt->hh.next);
+
+		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
+		if (m_bCurrentTargetSalvaged && m_pCurrentTarget->actions->num == 0)
 		{
 			deleteHashElement(m_pCurrentTarget);
 		}

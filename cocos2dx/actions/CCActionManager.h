@@ -34,9 +34,12 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+
+struct _ccArray;
+
 typedef struct _hashElement
 {
-	NSMutableArray<CCAction*>	*actions;
+	struct _ccArray             *actions;
     NSObject					*target;
 	unsigned int				actionIndex;
 	CCAction					*currentAction;
