@@ -657,9 +657,10 @@ void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 	{
 		m_pobSpriteSheet->removeSpriteFromAtlas(static_cast<CCSprite*>(pChild));
 	}
+	*/
 
 	__super::removeChild(pChild, bCleanup);
-	*/
+	
 }
 
 void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
