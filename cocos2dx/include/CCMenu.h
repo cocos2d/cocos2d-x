@@ -26,9 +26,11 @@ THE SOFTWARE.
 
 #include "CCMenuItem.h"
 #include "CCLayer.h"
+
 namespace cocos2d{
 
-	typedef enum  {
+	typedef enum  
+	{
 		kMenuStateWaiting,
 		kMenuStateTrackingTouch
 	} MenuState;
@@ -41,10 +43,6 @@ namespace cocos2d{
 	*/
 	class CCX_DLL CCMenu : public CCLayer, public CCRGBAProtocol
 	{
-		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(GLubyte, m_cOpacity, Opacity);
-		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(ccColor3B, m_tColor, Color);
 	public:
 		CCMenu(){}
 		virtual ~CCMenu(){}
@@ -69,12 +67,12 @@ namespace cocos2d{
 		void alignItemsHorizontallyWithPadding(float padding);
 
 		/** align items in rows of columns */
-		void alignItemsInColumns(UINT columns, ...);
-		void alignItemsInColumns(UINT columns, va_list args);
+		void alignItemsInColumns(unsigned int columns, ...);
+		void alignItemsInColumns(unsigned int columns, va_list args);
 
 		/** align items in columns of rows */
-		void alignItemsInRows(UINT rows, ...);
-		void alignItemsInRows(UINT rows, va_list args);
+		void alignItemsInRows(unsigned int rows, ...);
+		void alignItemsInRows(unsigned int rows, va_list args);
 
 		//super methods
 		virtual CCNode * addChild(CCNode * child, int zOrder);
@@ -84,11 +82,20 @@ namespace cocos2d{
 		virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
 		virtual void ccTouchCancelled(CCTouch *touch, UIEvent* event);
 		virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
+
+		virtual void setOpacity(GLubyte opacity);
+		virtual GLubyte getOpacity(void);
+		virtual ccColor3B getColor(void);
+		virtual void setColor(ccColor3B color);
+
 	private:
 		CCMenuItem* itemForTouch(CCTouch * touch);
+
 	protected:
 		MenuState m_eState;
 		CCMenuItem *m_pSelectedItem;
+		GLubyte m_cOpacity;
+		ccColor3B m_tColor;
 	};
 }
 

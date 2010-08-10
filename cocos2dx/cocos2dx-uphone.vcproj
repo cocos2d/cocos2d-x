@@ -449,6 +449,14 @@
 		<Filter
 			Name="menu_nodes"
 			>
+			<File
+				RelativePath=".\menu_nodes\CCMenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\menu_nodes\CCMenuItem.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="misc_nodes"
