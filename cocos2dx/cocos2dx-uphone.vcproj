@@ -205,6 +205,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\actions\CCEaseAction.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\actions\CCInstantAction.cpp"
 				>
 			</File>
@@ -250,6 +254,10 @@
 			</File>
 			<File
 				RelativePath=".\include\ccConfig.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCEaseAction.h"
 				>
 			</File>
 			<File
@@ -441,14 +449,6 @@
 		<Filter
 			Name="menu_nodes"
 			>
-			<File
-				RelativePath=".\menu_nodes\CCMenu.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\menu_nodes\CCMenuItem.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="misc_nodes"
