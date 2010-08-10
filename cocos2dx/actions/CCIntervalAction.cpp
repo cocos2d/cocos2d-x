@@ -106,7 +106,8 @@ void CCIntervalAction::step(ccTime dt)
 		m_elapsed += dt;
 	}
 
-	update(min(1, m_elapsed/m_fDuration));
+//	update(min(1, m_elapsed/m_fDuration));
+	update(1 > m_elapsed/m_fDuration ? m_elapsed/m_fDuration : 1);
 }
 
 void CCIntervalAction::startWithTarget(NSObject *pTarget)
@@ -390,7 +391,8 @@ void CCRepeat::update(cocos2d::ccTime time)
 			m_uTotal++; // this is the added line
 		}
 
-		m_pOther->update(min(r, 1));
+//		m_pOther->update(min(r, 1));
+		m_pOther->update(r > 1 ? 1 : r);
 	}
 }
 
