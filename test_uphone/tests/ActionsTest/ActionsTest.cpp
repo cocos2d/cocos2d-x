@@ -96,6 +96,13 @@ CCLayer* RestartAction()
 }
 
 
+void ActionsTestScene::runThisTest()
+{
+    addChild(NextAction());
+
+    CCDirector::getSharedDirector()->replaceScene(this);
+}
+
 
 std::string ActionsDemo::title()
 {
@@ -180,7 +187,7 @@ void ActionsDemo::registerWithTouchDispatcher()
 
 bool ActionsDemo::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
 {
-    CCScene* s = CCScene::node();
+    CCScene* s = new ActionsTestScene();
     s->addChild( NextAction() );
     CCDirector::getSharedDirector()->replaceScene(s);
     return true;
@@ -418,6 +425,7 @@ void ActionBezier::onEnter()
     m_kathia->runAction(bezierTo2);
 
 }
+
 std::string ActionBezier::subtitle()
 {
     return "BezierBy / BezierTo";
