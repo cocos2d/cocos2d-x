@@ -24,10 +24,12 @@ THE SOFTWARE.
 
 #ifndef __CCMENU_ITEM_H__
 #define __CCMENU_ITEM_H__
+
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "selector_protocol.h"
 #include "platform/platform.h"
+
 namespace cocos2d{
 
 	class CCLabel;
