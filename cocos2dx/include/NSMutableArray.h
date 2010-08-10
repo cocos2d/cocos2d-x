@@ -150,7 +150,7 @@ public:
 		{
 			if (*it == NULL)
 			{
-				m_array[count] = *it;
+				m_array[count] = *pObject;
 				return;
 			}
             
