@@ -328,9 +328,9 @@ void ActionRotate::onEnter()
 
     centerSprites(3);
 
-    CCIntervalAction*  actionTo = CCRotateTo::actionWithDuration( 10, 45);
+    CCIntervalAction*  actionTo = CCRotateTo::actionWithDuration( 2, 45);
     CCIntervalAction*  actionTo2 = CCRotateTo::actionWithDuration( 2, -45);
-    CCIntervalAction*  actionTo0 = CCRotateTo::actionWithDuration(15 , 0);
+    CCIntervalAction*  actionTo0 = CCRotateTo::actionWithDuration(2 , 0);
     m_grossini->runAction( CCSequence::actions(actionTo, actionTo0, NULL));
 
 //     CCIntervalAction*  actionBy = CCRotateBy::actionWithDuration(2 ,  360);
@@ -702,11 +702,6 @@ std::string ActionRotateToRepeat ::subtitle()
     return "Repeat/RepeatForever + RotateTo";
 }
 
-// std::string ActionRotateToRepeat::subtitle()
-// {
-//     return "You should see smooth movements (no jerks). issue #390";
-// }
-
 
 //------------------------------------------------------------------
 //
@@ -735,12 +730,6 @@ std::string ActionRotateJerk::subtitle()
 {
     return "RepeatForever / Repeat + Rotate";
 }
-
-// std::string ActionRotateJerk::subtitle()
-// {
-//     return "You should see smooth movements (no jerks). issue #390";
-// }
-
 
 //------------------------------------------------------------------
 //

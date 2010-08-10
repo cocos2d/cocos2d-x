@@ -73,7 +73,6 @@ protected:
     void alignSpritesLeft(unsigned int numberOfSprites);
     virtual std::string title();
     virtual std::string subtitle();
-//     void alignSpritesLeft(unsigned int numberOfSprites);
 
 //     void restartCallback(UxObject* pSender);
 //     void nextCallback(UxObject* pSender);
@@ -231,7 +230,6 @@ class ActionRotateToRepeat : public ActionsDemo
 public:
     virtual void onEnter();
     virtual std::string subtitle();
-/*    virtual UxString subtitle();*/
 };
 
 class ActionRotateJerk : public ActionsDemo
@@ -239,7 +237,6 @@ class ActionRotateJerk : public ActionsDemo
 public:
     virtual void onEnter();
     virtual std::string subtitle();
-/*    virtual UxString subtitle();*/
 };
 
 class ActionCallFunc : public ActionsDemo
