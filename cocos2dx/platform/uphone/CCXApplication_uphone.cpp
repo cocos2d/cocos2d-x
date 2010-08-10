@@ -86,6 +86,13 @@ namespace   cocos2d {
             break;
         }
     }
+
+    CGRect CCXApplication::statusBarFrame()
+    {
+        CGRect rc;
+        return rc;
+    }
+
     //////////////////////////////////////////////////////////////////////////
     /// Implement static class member
     //////////////////////////////////////////////////////////////////////////
@@ -93,4 +100,5 @@ namespace   cocos2d {
     {
         return (CCXApplication *)TApplication::GetCurrentApplication();
     }
+
 }

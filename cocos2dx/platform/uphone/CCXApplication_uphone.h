@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCX_APPLICATION_UPHONE_H__
 #define __CCX_APPLICATION_UPHONE_H__
 
-#include "ccxCommon.h"
+#include "CGGeometry.h"
 
 #include "TG3.h"
 
@@ -52,6 +52,11 @@ public:
     @see    ccDeviceOrientation
     */
     void setDeviceOrientation(int nOritation);
+
+    /**
+    @brief	Get status bar rectangle in EGLView window.
+    */
+    CGRect statusBarFrame();
 
     /**
     @brief	Get current applicaiton instance.
