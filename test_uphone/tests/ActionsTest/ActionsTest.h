@@ -10,11 +10,6 @@
 
 using namespace cocos2d;
 
-CCLayer* CreateLayer(Int32 nIndex);
-CCLayer* NextAction();
-CCLayer* BackAction();
-CCLayer* RestartAction();
-
 enum
 {
     ACTION_MANUAL_LAYER = 0,
@@ -50,12 +45,7 @@ enum
 class ActionsTestScene : public TestScene
 {
 public:
-    virtual void runThisTest()
-    {
-        addChild(NextAction());
-
-        CCDirector::getSharedDirector()->replaceScene(this);
-    }
+    virtual void runThisTest();
 };
 
 class ActionsDemo : public CCLayer
