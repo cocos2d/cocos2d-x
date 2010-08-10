@@ -136,6 +136,27 @@ public:
 		// add the refrence
 		pObject->retain();
 
+		// if the vector is empty, push back
+		if (m_array.empty())
+		{
+			m_array.push_back(pObject);
+			return;
+		}
+
+		// find a position to store
+		int count = 0;;
+        NSMutableArrayIterator it;
+		for (it = m_array.begin(); it != m_array.end(); ++it)
+		{
+			if (*it == NULL)
+			{
+				m_array[count] = *it;
+				return;
+			}
+            
+			++count;
+		} 
+
 		// the array is full, push back
 		m_array.push_back(pObject);
 	}
