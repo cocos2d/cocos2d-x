@@ -373,7 +373,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 }
 
 // implementation CCTexture2D (Text)
-CCTexture2D * CCTexture2D::initWithString(const std::string & str, const std::string & fontName, GLfloat fontSize)
+CCTexture2D * CCTexture2D::initWithString(const char *str, const char *fontName, float fontSize)
 {
 	/** @todo about UIFont
 	CGSize dim;
@@ -389,9 +389,9 @@ CCTexture2D * CCTexture2D::initWithString(const std::string & str, const std::st
 	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];*/
 	return NULL;// tobe deleted
 }
-/** @todo UITextAlignment
-- (id) initWithString:(string & )string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment fontName:(string & )name fontSize:(CGFloat)size
+CCTexture2D * CCTexture2D::initWithString(const char *str, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
+/** @todo UITextAlignment
 	NSUInteger				width,
 	height,
 	i;
@@ -445,9 +445,9 @@ CCTexture2D * CCTexture2D::initWithString(const std::string & str, const std::st
 
 	CGContextRelease(context);
 	free(data);
-	
-	return self;
-}*/
+	*/
+	return this;
+}
 
 
 // implementation CCTexture2D (Drawing)

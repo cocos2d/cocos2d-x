@@ -41,7 +41,7 @@ If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a
 All features from CCNode are valid, plus the following features:
 - opacity and RGB colors
 */
-class CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
+class CCX_DLL CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
 {
 protected:
 
@@ -83,7 +83,7 @@ public:
 	/** updates the Atlas (indexed vertex array).
 	* Shall be overriden in subclasses
 	*/
-	void updateAtlasValues();
+	virtual void updateAtlasValues();
 
 	virtual void draw();
 
