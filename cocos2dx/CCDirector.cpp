@@ -512,8 +512,8 @@ CGPoint CCDirector::convertToGL(CGPoint obPoint)
 		ret = ccp(newX, obPoint.y);
 		break;
 	case CCDeviceOrientationLandscapeLeft:
-		ret.x = obPoint.x;
-		ret.y = obPoint.y;
+		ret.x = obPoint.y;
+		ret.y = obPoint.x;
 		break;
 	case CCDeviceOrientationLandscapeRight:
 		ret.x = newY;

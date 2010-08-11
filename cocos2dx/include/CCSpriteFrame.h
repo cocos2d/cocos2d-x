@@ -109,7 +109,7 @@ protected:
 };
 
 // an Animation object used within Sprites to perform animations 
-class CCAnimation : public NSObject
+class CCX_DLL CCAnimation : public NSObject
 {
 protected:
 	char *m_pszName;
