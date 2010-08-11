@@ -27,7 +27,7 @@ Ttest_uphoneApp::~Ttest_uphoneApp()
 bool Ttest_uphoneApp::initCocos2d()
 {
     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
-    //CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
     CCScene * pScene = CCScene::node();
     CCLayer * pLayer = new TestController();
