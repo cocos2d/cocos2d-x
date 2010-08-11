@@ -269,6 +269,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCLabel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCLabelAtlas.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCLayer.h"
 				>
 			</File>
@@ -421,6 +429,14 @@
 		<Filter
 			Name="label_nodes"
 			>
+			<File
+				RelativePath=".\label_nodes\CCLabel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\label_nodes\CCLabelAtlas.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="layers_scenes_transition_nodes"

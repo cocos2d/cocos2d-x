@@ -109,14 +109,7 @@ class CCX_DLL CCLabelProtocol
 {
 public:
 	// sets a new label using an string
-	virtual void setString(std::string &label) = 0;
-
-	// optional
-	/** sets a new label using a CString.
-     It is faster than setString since it doesn't require to alloc/retain/release an NString object.
-     @since v0.99.0
-    */
-	virtual void setCString(char *pLabel) {}
+	virtual void setString(const char *label) = 0;
 };
 }//namespace   cocos2d 
 
