@@ -1745,7 +1745,10 @@ void CCAnimate::startWithTarget(cocos2d::NSObject *pTarget)
 	__super::startWithTarget(pTarget);
 	CCSprite *pSprite = dynamic_cast<CCSprite*>(pTarget);
 
-	m_pOrigFrame->release();
+	if (m_pOrigFrame)
+	{
+	    m_pOrigFrame->release();
+	}
 
 	if (m_bRestoreOriginalFrame)
 	{
