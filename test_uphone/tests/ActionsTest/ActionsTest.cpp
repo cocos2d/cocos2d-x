@@ -1,6 +1,7 @@
 #include "ActionsTest.h"
 #include "CCIntervalAction.h"
 #include "CCInstantAction.h"
+#include "CCCameraAction.h"
 #include "CCMenu.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
@@ -534,18 +535,18 @@ void ActionAnimate::onEnter()
 
     centerSprites(1);
 
-    CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f);
-    char frameName[100] = {0};
-    for( int i=1;i<15;i++)
-    {
-        sprintf(frameName, "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossini_dance_%02d.png", i);
-        animation->addFrameWithFileName(frameName);
-    }
-
-    CCIntervalAction*  action = CCAnimate::actionWithAnimation( animation, false);
-    CCIntervalAction*  action_back = action->reverse();
-
-    m_grossini->runAction( CCSequence::actions( action, action_back, NULL));
+//     CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f);
+//     char frameName[100] = {0};
+//     for( int i=1;i<15;i++)
+//     {
+//         sprintf(frameName, "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossini_dance_%02d.png", i);
+//         animation->addFrameWithFileName(frameName);
+//     }
+// 
+//     CCIntervalAction*  action = CCAnimate::actionWithAnimation( animation, false);
+//     CCIntervalAction*  action_back = action->reverse();
+// 
+//     m_grossini->runAction( CCSequence::actions( action, action_back, NULL));
 }
 
 std::string ActionAnimate::subtitle()
@@ -590,16 +591,43 @@ void ActionSequence2::onEnter()
 
     m_grossini->setIsVisible(false);
 
-//     CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-//         CCPlace::actionWithPosition(CGPointMake(200,200)),
-//         CCShow::action(),
-//         CCMoveBy::actionWithDuration(1, CGPointMake(100,0)),
-//         CCCallFunc::actionWithTarget(this, callfunc_selector(ActionSequence2::callback1)), //self selector:@selector(callback1)],
-//         CCCallFuncN::actionWithTarget(this, callfuncN_selector(ActionSequence2::callback2)), //self selector:@selector(callback2:)],
-//         CCCallFuncND::actionWithTarget(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba), // self selector:@selector(callback3:data:) data:(void*)0xbebabeba],
-//         NULL) );
+    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+        CCPlace::actionWithPosition(CGPointMake(200,200)),
+        CCShow::action(),
+        CCMoveBy::actionWithDuration(1, CGPointMake(100,0)),
+        CCCallFunc::actionWithTarget(this, callfunc_selector(ActionSequence2::callback1)),
+        CCCallFuncN::actionWithTarget(this, callfuncN_selector(ActionSequence2::callback2)),
+        CCCallFuncND::actionWithTarget(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba),
+        NULL) );
+
+    m_grossini->runAction(action);
+}
+
+void ActionSequence2::callback1()
+{
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+//     CCLabel *label = CCLabel::labelWithString(L"callback 1 called", L"Marker Felt", 16);
+//     label->setPosition(ccp( s.width/4*1,s.height/2));
 // 
-//     m_grossini->runAction(action);
+//     addChild(label);
+}
+
+void ActionSequence2::callback2(NSObject* sender)
+{
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+//     CCLabel *label = CCLabel::labelWithString(L"callback 2 called", L"Marker Felt", 16);
+//     label->setPosition(ccp( s.width/4*2,s.height/2));
+// 
+//     addChild(label);
+}
+
+void ActionSequence2::callback3(NSObject* sender, void* data)
+{
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+//     CCLabel *label = CCLabel::labelWithString(L"callback 3 called", L"Marker Felt", 16);
+//     label->setPosition(ccp( s.width/4*3,s.height/2));
+// 
+//     addChild(label);
 }
 
 std::string ActionSequence2::subtitle()
@@ -618,26 +646,53 @@ void ActionCallFunc::onEnter()
 
     centerSprites(3);
 
-//     CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-//         CCMoveBy::actionWithDuration(2, CGPointMake(200,0)),
-//         CCCallFunc::actionWithTarget(this, callfunc_selector(ActionCallFunc::callback1)), 
-//         NULL));
+    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+        CCMoveBy::actionWithDuration(2, CGPointMake(200,0)),
+        CCCallFunc::actionWithTarget(this, callfunc_selector(ActionCallFunc::callback1)), 
+        NULL));
+
+    CCIntervalAction*  action2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+        CCScaleBy::actionWithDuration(2 ,  2),
+        CCFadeOut::actionWithDuration(2),
+        CCCallFuncN::actionWithTarget(this, callfuncN_selector(ActionSequence2::callback2)), 
+        NULL));
+
+    CCIntervalAction*  action3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+        CCRotateBy::actionWithDuration(3 , 360),
+        CCFadeOut::actionWithDuration(2),
+        CCCallFuncND::actionWithTarget(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba), 
+        NULL));
+
+    m_grossini->runAction(action);
+    m_tamara->runAction(action2);
+    m_kathia->runAction(action3);
+}
+
+
+void ActionCallFunc::callback1()
+{
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+//     CCLabel *label = CCLabel::labelWithString(L"callback 1 called", L"Marker Felt", 16);
+//     label->setPosition(ccp( s.width/4*1,s.height/2));
 // 
-//     CCIntervalAction*  action2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-//         CCScaleBy::actionWithDuration(2 ,  2),
-//         CCFadeOut::actionWithDuration(2),
-//         CCCallFuncN::actionWithTarget(this, callfuncN_selector(ActionSequence2::callback2)), 
-//         NULL));
+//     addChild(label);
+}
+
+void ActionCallFunc::callback2(CCNode* pSender)
+{
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+//     CCLabel *label = CCLabel::labelWithString(L"callback 2 called", L"Marker Felt", 16);
+//     label->setPosition(ccp( s.width/4*2,s.height/2));
 // 
-//     CCIntervalAction*  action3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-//         CCRotateBy::actionWithDuration(3 , 360),
-//         CCFadeOut::actionWithDuration(2),
-//         CCCallFuncND::actionWithTarget(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba), 
-//         NULL));
-// 
-//     m_grossini->runAction(action);
-//     m_tamara->runAction(action2);
-//     m_kathia->runAction(action3);
+//     addChild(label);
+}
+
+void ActionCallFunc::callback3(CCNode* pTarget, void* data)
+{
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+//     CCLabel *label = CCLabel::labelWithString(L"callback 3 called", L"Marker Felt", 16);
+//     label->setPosition(ccp( s.width/4*3,s.height/2));
+//     addChild(label);
 }
 
 std::string ActionCallFunc::subtitle()
@@ -845,28 +900,28 @@ void ActionReverseSequence2::onEnter()
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-
-    CCIntervalAction*  move1 = CCMoveBy::actionWithDuration(1, CGPointMake(250,0));
-    CCIntervalAction*  move2 = CCMoveBy::actionWithDuration(1, CGPointMake(0,50));
-    CCToggleVisibility*  tog1 = new CCToggleVisibility();
-    CCToggleVisibility*  tog2 = new CCToggleVisibility();
-    tog1->autorelease();
-    tog2->autorelease();
-    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));
-    CCIntervalAction*  action = CCRepeat::actionWithAction(dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
+// 
+//     CCIntervalAction*  move1 = CCMoveBy::actionWithDuration(1, CGPointMake(250,0));
+//     CCIntervalAction*  move2 = CCMoveBy::actionWithDuration(1, CGPointMake(0,50));
+//     CCToggleVisibility*  tog1 = new CCToggleVisibility();
+//     CCToggleVisibility*  tog2 = new CCToggleVisibility();
+//     tog1->autorelease();
+//     tog2->autorelease();
+//     CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));
+//     CCIntervalAction*  action = CCRepeat::actionWithAction(dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
 
 
     // Test:
     //   Also test that the reverse of Hide is Show, and vice-versa
-    m_kathia->runAction(action);
-
-    CCIntervalAction*  move_tamara = CCMoveBy::actionWithDuration(1, CGPointMake(100,0));
-    CCIntervalAction*  move_tamara2 = CCMoveBy::actionWithDuration(1, CGPointMake(50,0));
-    CCInstantAction*  hide = new CCHide();
-    hide->autorelease();
-    CCIntervalAction*  seq_tamara = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_tamara, hide, move_tamara2, NULL));
-    CCIntervalAction*  seq_back = seq_tamara->reverse();
-    m_tamara->runAction( CCSequence::actions( seq_tamara, seq_back, NULL));
+//     m_kathia->runAction(action);
+// 
+//     CCIntervalAction*  move_tamara = CCMoveBy::actionWithDuration(1, CGPointMake(100,0));
+//     CCIntervalAction*  move_tamara2 = CCMoveBy::actionWithDuration(1, CGPointMake(50,0));
+//     CCInstantAction*  hide = new CCHide();
+//     hide->autorelease();
+//     CCIntervalAction*  seq_tamara = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_tamara, hide, move_tamara2, NULL));
+//     CCIntervalAction*  seq_back = seq_tamara->reverse();
+//     m_tamara->runAction( CCSequence::actions( seq_tamara, seq_back, NULL));
 }
 std::string ActionReverseSequence2::subtitle()
 {
@@ -913,35 +968,35 @@ void ActionOrbit::onEnter()
 
     centerSprites(3);
 
-//     CCIntervalAction*  orbit1 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, 0, 0);
-//     CCIntervalAction*  action1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-//         orbit1,
-//         orbit1->reverse(),
-//         NULL));
-// 
-//     CCIntervalAction*  orbit2 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, -45, 0);
-//     CCIntervalAction*  action2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-//         orbit2,
-//         orbit2->reverse(),
-//         NULL));
-// 
-//     CCIntervalAction*  orbit3 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, 90, 0);
-//     CCIntervalAction*  action3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-//         orbit3,
-//         orbit3->reverse(),
-//         NULL));
-// 
-//     m_kathia->runAction(CCRepeatForever::actionWithAction(action1));
-//     m_tamara->runAction(CCRepeatForever::actionWithAction(action2));
-//     m_grossini->runAction(CCRepeatForever::actionWithAction(action3));
-// 
-//     CCIntervalAction*  move = CCMoveBy::actionWithDuration(3, CGPointMake(100,-100));
-//     CCIntervalAction*  move_back = move->reverse();
-//     CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move, move_back, NULL));
-//     CCAction*  rfe = CCRepeatForever::actionWithAction(seq);
-//     m_kathia->runAction(rfe);
-//     m_tamara->runAction(dynamic_cast<CCAction*>(rfe->copy()->autorelease()));
-//     m_grossini->runAction(dynamic_cast<CCAction*>(rfe->copy()->autorelease()));
+    CCIntervalAction*  orbit1 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, 0, 0);
+    CCIntervalAction*  action1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+        orbit1,
+        orbit1->reverse(),
+        NULL));
+
+    CCIntervalAction*  orbit2 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, -45, 0);
+    CCIntervalAction*  action2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+        orbit2,
+        orbit2->reverse(),
+        NULL));
+
+    CCIntervalAction*  orbit3 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, 90, 0);
+    CCIntervalAction*  action3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+        orbit3,
+        orbit3->reverse(),
+        NULL));
+
+    m_kathia->runAction(CCRepeatForever::actionWithAction(action1));
+    m_tamara->runAction(CCRepeatForever::actionWithAction(action2));
+    m_grossini->runAction(CCRepeatForever::actionWithAction(action3));
+
+    CCIntervalAction*  move = CCMoveBy::actionWithDuration(3, CGPointMake(100,-100));
+    CCIntervalAction*  move_back = move->reverse();
+    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move, move_back, NULL));
+    CCAction*  rfe = CCRepeatForever::actionWithAction(seq);
+    m_kathia->runAction(rfe);
+    m_tamara->runAction(dynamic_cast<CCAction*>(rfe->copy()->autorelease()));
+    m_grossini->runAction(dynamic_cast<CCAction*>(rfe->copy()->autorelease()));
 }
 
 std::string ActionOrbit::subtitle()

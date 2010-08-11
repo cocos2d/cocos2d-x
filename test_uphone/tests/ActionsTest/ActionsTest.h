@@ -148,10 +148,10 @@ class ActionSequence2 : public ActionsDemo
 public:
     virtual void onEnter();
     virtual std::string subtitle();
-// 
-//     void callback1();
-//     void callback2(UxObject* sender);
-//     void callback3(UxObject* sender, void* data);
+
+    void callback1();
+    void callback2(NSObject* sender);
+    void callback3(NSObject* sender, void* data);
 };
 
 class ActionSpawn : public ActionsDemo
@@ -231,6 +231,10 @@ class ActionCallFunc : public ActionsDemo
 public:
     virtual void onEnter();
     virtual std::string subtitle();
+
+    void callback1();
+    void callback2(CCNode* pTarget);
+    void callback3(CCNode* pTarget, void* data);
 };
 
 #endif
