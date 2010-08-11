@@ -154,7 +154,6 @@ void ActionsDemo::onEnter()
 
     centerSprites(3);
 
-    setIsTouchEnabled(true);
 /**
 @todo add title
 */
@@ -189,19 +188,6 @@ void ActionsDemo::onEnter()
     item3->setPosition( CGPointMake( s.width/2 + 100,30) );
 
     addChild(menu, 1);
-}
-
-void ActionsDemo::registerWithTouchDispatcher()
-{
-    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(dynamic_cast<CCLayer*>(this), 0, true);
-}
-
-bool ActionsDemo::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
-{
-    CCScene* s = new ActionsTestScene();
-    s->addChild( NextAction() );
-    CCDirector::getSharedDirector()->replaceScene(s);
-    return true;
 }
 
 void ActionsDemo::restartCallback(NSObject* pSender)

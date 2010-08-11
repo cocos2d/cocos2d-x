@@ -56,9 +56,6 @@ protected:
     CCSprite*	m_kathia;public:
     virtual void onEnter();
 
-    virtual void registerWithTouchDispatcher();
-    virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
-
     void centerSprites(unsigned int numberOfSprites);
     void alignSpritesLeft(unsigned int numberOfSprites);
     virtual std::string title();
