@@ -81,10 +81,10 @@ CCTouchDispatcher* CCTouchDispatcher::init(void)
 	m_bToQuit = false;
 	m_bLocked = false;
 
-	m_sHandlerHelperData[ccTouchBegan].m_type = ccTouchSelectorBeganBit;
-	m_sHandlerHelperData[ccTouchMoved].m_type = ccTouchSelectorMovedBit;
-	m_sHandlerHelperData[ccTouchEnded].m_type = ccTouchSelectorEndedBit;
-	m_sHandlerHelperData[ccTouchCancelled].m_type = ccTouchSelectorCancelledBit;
+	m_sHandlerHelperData[ccTouchBegan].m_type = ccTouchBegan;
+	m_sHandlerHelperData[ccTouchMoved].m_type = ccTouchMoved;
+	m_sHandlerHelperData[ccTouchEnded].m_type = ccTouchEnded;
+	m_sHandlerHelperData[ccTouchCancelled].m_type = ccTouchCancelled;
 
 	return this;
 }
