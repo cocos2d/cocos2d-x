@@ -1,9 +1,20 @@
 #include "ActionsTest.h"
 #include "CCIntervalAction.h"
 #include "CCInstantAction.h"
+#include "CCMenu.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
 static Int32 s_nActionIdx = -1;
+
+static const char s_pPathGrossini[] = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossini.png";
+static const char s_pPathSister1[]  = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossinis_sister1.png";
+static const char s_pPathSister2[]  = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossinis_sister2.png";
+static const char s_pPathB1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/b1.png";
+static const char s_pPathB2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/b2.png";
+static const char s_pPathR1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/r1.png";
+static const char s_pPathR2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/r2.png";
+static const char s_pPathF1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f1.png";
+static const char s_pPathF2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f2.png";
 
 CCLayer* CreateLayer(Int32 nIndex)
 {
@@ -122,7 +133,7 @@ void ActionsDemo::onEnter()
     // You can create a sprite using a Texture2D
     CCTexture2D *tex = new CCTexture2D();
     UIImage* pImage = new UIImage();
-    pImage->initWithContentsOfFile("/NEWPLUS/TDA_DATA/UserData/grossini.png");
+    pImage->initWithContentsOfFile(s_pPathGrossini);
     tex->initWithImage( pImage );
     m_grossini = CCSprite::spriteWithTexture(tex);
     m_grossini->retain();
@@ -131,10 +142,10 @@ void ActionsDemo::onEnter()
 
     // Example:
     // Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
-    m_tamara = CCSprite::spriteWithFile("/NEWPLUS/TDA_DATA/UserData/grossinis_sister1.png"); 
+    m_tamara = CCSprite::spriteWithFile(s_pPathSister1); 
     m_tamara->retain();
 
-    m_kathia = CCSprite::spriteWithFile("/NEWPLUS/TDA_DATA/UserData/grossinis_sister2.png");
+    m_kathia = CCSprite::spriteWithFile(s_pPathSister2);
     m_kathia->retain();
 
     addChild(m_grossini, 1);
@@ -145,7 +156,7 @@ void ActionsDemo::onEnter()
 
     setIsTouchEnabled(true);
 /**
-@todo add title and menu
+@todo add title
 */
 //     CCLabel* label = CCLabel::labelWithString(title(), "Arial", 28);
 //     addChild(label, 1);
@@ -165,19 +176,19 @@ void ActionsDemo::onEnter()
 
 //     }	
 
-// 
-//     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("images/b1.png", "images/b2.png", this, menu_selector(ActionDemo::backCallback) );
-//     CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("images/r1.png","images/r2.png", this, menu_selector(ActionDemo::restartCallback) );
-//     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("images/f1.png", "images/f2.png", this, menu_selector(ActionDemo::nextCallback) );
-// 
-//     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
-// 
-//     menu->setPosition( CGPointZero );
-//     item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-//     item2->setPosition( CGPointMake( s.width/2, 30) );
-//     item3->setPosition( CGPointMake( s.width/2 + 100,30) );
-// 
-//     addChild(menu, 1);
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionsDemo::backCallback) );
+    CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionsDemo::restartCallback) );
+    CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ActionsDemo::nextCallback) );
+
+    CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+
+    menu->setPosition( CGPointZero );
+    item1->setPosition( CGPointMake( s.width/2 - 100,30) );
+    item2->setPosition( CGPointMake( s.width/2, 30) );
+    item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+
+    addChild(menu, 1);
 }
 
 void ActionsDemo::registerWithTouchDispatcher()
@@ -191,6 +202,27 @@ bool ActionsDemo::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
     s->addChild( NextAction() );
     CCDirector::getSharedDirector()->replaceScene(s);
     return true;
+}
+
+void ActionsDemo::restartCallback(NSObject* pSender)
+{
+    CCScene* s = new ActionsTestScene();
+    s->addChild( RestartAction() );
+    CCDirector::getSharedDirector()->replaceScene(s);
+}
+
+void ActionsDemo::nextCallback(NSObject* pSender)
+{
+    CCScene* s = new ActionsTestScene();
+    s->addChild( NextAction() );
+    CCDirector::getSharedDirector()->replaceScene(s);
+}
+
+void ActionsDemo::backCallback(NSObject* pSender)
+{
+    CCScene* s = new ActionsTestScene();
+    s->addChild( BackAction() );
+    CCDirector::getSharedDirector()->replaceScene(s);
 }
 
 void ActionsDemo::centerSprites(unsigned int numberOfSprites)
