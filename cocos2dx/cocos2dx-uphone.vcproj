@@ -461,6 +461,10 @@
 		<Filter
 			Name="misc_nodes"
 			>
+			<File
+				RelativePath=".\misc_nodes\CCProgressTimer.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="particle_nodes"

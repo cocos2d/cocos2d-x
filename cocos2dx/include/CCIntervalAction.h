@@ -58,7 +58,7 @@ public:
 	inline ccTime getElapsed(void) { return m_elapsed; }
 
 	/** initializes the action */
-	CCIntervalAction* initWithDuration(ccTime d);
+	bool initWithDuration(ccTime d);
 
 	/** returns YES if the action has finished */
 	virtual bool isDone(void);
@@ -85,7 +85,7 @@ public:
 	~CCSequence(void);
 
 	/** initializes the action */
-    CCSequence* initOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+    bool initOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -114,7 +114,7 @@ public:
 	~CCRepeat(void);
 
 	/** initializes a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
-	CCRepeat* initWithAction(CCFiniteTimeAction *pAction, unsigned int times);
+	bool initWithAction(CCFiniteTimeAction *pAction, unsigned int times);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -141,7 +141,7 @@ public:
 	~CCSpawn(void);
 
 	/** initializes the Spawn action with the 2 actions to spawn */
-	CCSpawn* initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+	bool initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -169,7 +169,7 @@ class CCX_DLL CCRotateTo : public CCIntervalAction
 {
 public:
 	/** initializes the action */
-	CCRotateTo* initWithDuration(ccTime duration, float fDeltaAngle);
+	bool initWithDuration(ccTime duration, float fDeltaAngle);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -191,7 +191,7 @@ class CCX_DLL CCRotateBy : public CCIntervalAction
 {
 public:
 	/** initializes the action */
-    CCRotateBy* initWithDuration(ccTime duration, float fDeltaAngle);
+    bool initWithDuration(ccTime duration, float fDeltaAngle);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -199,7 +199,6 @@ public:
 	virtual CCIntervalAction* reverse(void);
 
 public:
-
 	/** creates the action */
 	static CCRotateBy* actionWithDuration(ccTime duration, float fDeltaAngle);
 
@@ -214,7 +213,7 @@ class CCX_DLL CCMoveTo : public CCIntervalAction
 {
 public:
 	/** initializes the action */
-	CCMoveTo* initWithDuration(ccTime duration, CGPoint position);
+	bool initWithDuration(ccTime duration, CGPoint position);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -238,7 +237,7 @@ class CCX_DLL CCMoveBy : public CCMoveTo
 {
 public:
 	/** initializes the action */
-	CCMoveBy* initWithDuration(ccTime duration, CGPoint position);
+	bool initWithDuration(ccTime duration, CGPoint position);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -255,7 +254,7 @@ class CCX_DLL CCJumpBy : public CCIntervalAction
 {
 public:
 	/** initializes the action */
-	CCJumpBy* initWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
+	bool initWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -279,6 +278,10 @@ class CCX_DLL CCJumpTo : public CCJumpBy
 {
 public:
     virtual void startWithTarget(NSObject *pTarget);
+	virtual NSObject* copyWithZone(NSZone* pZone);
+
+public:
+	static CCJumpTo* actionWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
 };
 
 /** bezier configuration structure
@@ -298,7 +301,7 @@ class CCX_DLL CCBezierBy : public CCIntervalAction
 {
 public:
 	/** initializes the action with a duration and a bezier configuration */
-	CCBezierBy* initWithDuration(ccTime t, ccBezierConfig c);
+	bool initWithDuration(ccTime t, ccBezierConfig c);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -321,6 +324,10 @@ class CCX_DLL CCBezierTo : public CCBezierBy
 {
 public:
     virtual void startWithTarget(NSObject *pTarget);
+	virtual NSObject* copyWithZone(NSZone* pZone);
+
+public:
+    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
 };
 
 /** Scales a CCNode object to a zoom factor by modifying it's scale attribute.
@@ -330,10 +337,10 @@ class CCX_DLL CCScaleTo : public CCIntervalAction
 {
 public:
 	/** initializes the action with the same scale factor for X and Y */
-	CCScaleTo* initWithDuration(ccTime duration, float s);
+	bool initWithDuration(ccTime duration, float s);
 
 	/** initializes the action with and X factor and a Y factor */
-	CCScaleTo* initWithDuration(ccTime duration, float sx, float sy);
+	bool initWithDuration(ccTime duration, float sx, float sy);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -363,6 +370,14 @@ class CCX_DLL CCScaleBy : public CCScaleTo
 public:
     virtual void startWithTarget(NSObject *pTarget);
 	virtual CCIntervalAction* reverse(void);
+	virtual NSObject* copyWithZone(NSZone* pZone);
+
+public:
+	/** creates the action with the same scale factor for X and Y */
+	static CCScaleBy* actionWithDuration(ccTime duration, float s);
+
+	/** creates the action with and X factor and a Y factor */
+	static CCScaleBy* actionWithDuration(ccTime duration, float sx, float sy);
 };
 
 /** Blinks a CCNode object by modifying it's visible attribute
@@ -371,7 +386,7 @@ class CCX_DLL CCBlink : public CCIntervalAction
 {
 public:
 	/** initilizes the action */
-	CCBlink* initWithDuration(ccTime duration, unsigned int uBlinks);
+	bool initWithDuration(ccTime duration, unsigned int uBlinks);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void update(ccTime time);
@@ -392,6 +407,10 @@ class CCX_DLL CCFadeIn : public CCIntervalAction
 public:
     virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
+	virtual NSObject* copyWithZone(NSZone* pZone);
+
+public:
+	static CCFadeIn* actionWithDuration(ccTime d);
 };
 
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
@@ -402,6 +421,10 @@ class CCX_DLL CCFadeOut : public CCIntervalAction
 public:
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
+	virtual NSObject* copyWithZone(NSZone* pZone);
+
+public:
+	static CCFadeOut* actionWithDuration(ccTime d);
 };
 
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
@@ -411,7 +434,7 @@ class CCX_DLL CCFadeTo : public CCIntervalAction
 {
 public:
 	/** initializes the action with duration and opacity */
-	CCFadeTo* initWithDuration(ccTime duration, GLubyte opacity);
+	bool initWithDuration(ccTime duration, GLubyte opacity);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -434,7 +457,7 @@ class CCX_DLL CCTintTo : public CCIntervalAction
 {
 public:
 	/** initializes the action with duration and color */
-	CCTintTo* initWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
+	bool initWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -456,7 +479,7 @@ class CCX_DLL CCTintBy : public CCIntervalAction
 {
 public:
 	/** initializes the action with duration and color */
-	CCTintBy* initWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+	bool initWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -484,6 +507,10 @@ class CCX_DLL CCDelayTime : public CCIntervalAction
 public:
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
+	virtual NSObject* copyWithZone(NSZone* pZone);
+
+public:
+	static CCDelayTime* actionWithDuration(ccTime d);
 };
 
 /** Executes an action in reverse order, from time=duration to time=0
@@ -499,7 +526,7 @@ public:
 	~CCReverseTime(void);
 
 	/** initializes the action */
-    CCReverseTime* initWithAction(CCFiniteTimeAction *pAction);
+    bool initWithAction(CCFiniteTimeAction *pAction);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
@@ -531,16 +558,16 @@ public:
 	}
 
 	/** initializes the action with an Animation and will restore the original frame when the animtion is over */
-    CCAnimate* initWithAnimation(CCAnimation *pAnimation);
+    bool initWithAnimation(CCAnimation *pAnimation);
 
 	/** initializes the action with an Animation */
-	CCAnimate* initWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+	bool initWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 
 	/** initializes an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
 	 The 'delay' parameter of the animation will be overrided by the duration parameter.
 	 @since v0.99.0
 	 */
-	CCAnimate* initWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
+	bool initWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(NSObject *pTarget);
