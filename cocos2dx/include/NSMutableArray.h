@@ -299,6 +299,27 @@ public:
 		return m_array.rend();
 	}
 
+	NSMutableArray<T>* copy(void)
+	{
+		NSMutableArray* pArray = new NSMutableArray();
+
+		pArray->m_array.assign(m_array.begin(), m_array.end());
+
+		if(pArray->count() > 0)
+		{
+			NSMutableArrayIterator it;
+			for(it = pArray->begin(); it != pArray->end(); it++)
+			{
+				if(*it)
+				{
+					(*it)->retain();
+				}
+			}
+		}
+
+		return pArray;
+	}
+
 public:
 	static NSMutableArray<T>* arrayWithObjects(T pObject1, ...)
 	{
@@ -323,17 +344,10 @@ public:
 	{
 		if (pArray == NULL)
 		{
-			return NULL;
+			return new NSMutableArray<T>();
 		}
 
-		NSMutableArray<T> *pNewArray = new NSMutableArray<T>();
-		NSMutableArray<T>::NSMutableArrayIterator iter;
-		for (iter = pArray->begin(); iter != pArray->end(); ++iter)
-		{
-			pNewArray->addObject(*iter);
-		}
-
-		return pNewArray;
+		return pArray->copy();
 	}
 
 private:
