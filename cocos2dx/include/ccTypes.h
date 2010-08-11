@@ -150,6 +150,12 @@ typedef struct _ccTex2F {
 	 float v;
 } ccTex2F;
 
+static inline ccTex2F tex2(const float u, const float v)
+{
+	ccTex2F t = {u , v};
+	return t;
+}
+
  
 //! Point Sprite component
 typedef struct _ccPointSprite

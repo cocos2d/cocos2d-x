@@ -478,6 +478,10 @@
 			Name="misc_nodes"
 			>
 			<File
+				RelativePath=".\misc_nodes\CCProgressTimer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\misc_nodes\CCProgressTimer.h"
 				>
 			</File>
