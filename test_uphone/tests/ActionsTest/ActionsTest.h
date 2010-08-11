@@ -64,9 +64,9 @@ protected:
     virtual std::string title();
     virtual std::string subtitle();
 
-//     void restartCallback(UxObject* pSender);
-//     void nextCallback(UxObject* pSender);
-//     void backCallback(UxObject* pSender);
+    void restartCallback(NSObject* pSender);
+    void nextCallback(NSObject* pSender);
+    void backCallback(NSObject* pSender);
 };
 
 class ActionManual : public ActionsDemo
