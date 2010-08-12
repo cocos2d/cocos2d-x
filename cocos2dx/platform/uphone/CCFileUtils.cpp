@@ -72,6 +72,7 @@ public:
 		fseek(fp,0,SEEK_SET);
 		char *buffer = new char[size];
 		fread(buffer,sizeof(char),size,fp);
+		fclose(fp);
 		/*
 		* this initialize the library and check potential ABI mismatches
 		* between the version it was compiled for and the actual shared

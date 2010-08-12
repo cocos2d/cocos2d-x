@@ -48,7 +48,10 @@ NSData* NSData::dataWithContentsOfFile(const string &strPath)
 	NSData *pRet = new NSData();
 
 	FILE *pFile;
-	pFile = fopen(strPath.c_str(), "rb");
+	if(!(pFile = fopen(strPath.c_str(), "rb")))
+	{
+		return NULL;
+	}
 
 	if (! pFile)
 	{

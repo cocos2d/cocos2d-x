@@ -298,7 +298,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 				{
 					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
 				}
-				CCX_SAFE_DELETE(tempData);
+				delete []tempData;
 			}
 			break;                    
 		default:
@@ -354,7 +354,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 			((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
 
 
-		CCX_SAFE_DELETE(data);
+		delete []data;
 		data = tempData;
 	}
 
