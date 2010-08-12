@@ -72,6 +72,12 @@ namespace cocos2d {
 	//
 	// Show
 	//
+	CCShow* CCShow::action()
+	{
+		CCShow* pRet = new CCShow();
+		pRet->autorelease();
+		return pRet;
+	}
 	void CCShow::startWithTarget(NSObject *pTarget)
 	{
 		__super::startWithTarget(pTarget);
@@ -84,6 +90,12 @@ namespace cocos2d {
 	//
 	// Hide
 	//
+	CCHide * CCHide::action()
+	{
+		CCHide *pRet = new CCHide();
+		pRet->autorelease();
+		return pRet;
+	}
 	void CCHide::startWithTarget(NSObject *pTarget)
 	{
 		__super::startWithTarget(pTarget);
@@ -98,11 +110,16 @@ namespace cocos2d {
 	//
 	// ToggleVisibility
 	//
+	CCToggleVisibility * CCToggleVisibility::action()
+	{
+		CCToggleVisibility *pRet = new CCToggleVisibility();
+		pRet->autorelease();
+		return pRet;
+	}
 	void CCToggleVisibility::startWithTarget(NSObject *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		dynamic_cast<CCNode*>(pTarget)->setIsVisible(!dynamic_cast<CCNode*>(pTarget)->getIsVisible());
-
 	}
 	//
 	// FlipX

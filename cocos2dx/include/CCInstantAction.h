@@ -58,6 +58,9 @@ namespace cocos2d {
 		//super method
 		virtual void startWithTarget(NSObject *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
+	public:
+		//override static method
+		static CCShow * action();
 	};
 
 	/** Hide the node
@@ -70,6 +73,9 @@ namespace cocos2d {
 		//super method
 		virtual void startWithTarget(NSObject *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
+	public:
+		//override static method
+		static CCHide * action();
 	};
 
 	/** Toggles the visibility of a node
@@ -81,7 +87,9 @@ namespace cocos2d {
 		virtual ~CCToggleVisibility(){}
 		//super method
 		virtual void startWithTarget(NSObject *pTarget);
-
+	public:
+		//override static method
+		static CCToggleVisibility * action();
 	};
 
 	/** Flips the sprite horizontally
