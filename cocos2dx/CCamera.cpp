@@ -35,6 +35,7 @@ namespace   cocos2d {
 
 CCCamera::CCCamera(void)
 {
+	init();
 }
 
 CCCamera::~CCCamera(void)
@@ -46,6 +47,11 @@ char * CCCamera::description(void)
 	char *ret = new char[100];
 	sprintf_s(ret, 100, "<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ);
 	return ret;
+}
+
+void CCCamera::init(void)
+{
+	restore();
 }
 
 void CCCamera::restore(void)
