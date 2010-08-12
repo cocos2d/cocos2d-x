@@ -50,6 +50,8 @@ public:
 	CCCamera(void);
 	~CCCamera(void);
 
+	void init(void);
+
 	char * description(void);
 
 	// sets the dirty value
