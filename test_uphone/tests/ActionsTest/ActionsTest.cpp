@@ -1,8 +1,10 @@
 #include "ActionsTest.h"
+#include "platform/platform.h"
 #include "CCIntervalAction.h"
 #include "CCInstantAction.h"
 #include "CCCameraAction.h"
 #include "CCMenu.h"
+#include "CCLabel.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
 static Int32 s_nActionIdx = -1;
@@ -134,7 +136,8 @@ void ActionsDemo::onEnter()
     // You can create a sprite using a Texture2D
     CCTexture2D *tex = new CCTexture2D();
     UIImage* pImage = new UIImage();
-    pImage->initWithContentsOfFile(s_pPathGrossini);
+    std::string fullpath( CCFileUtils::fullPathFromRelativePath(s_pPathGrossini));
+    pImage->initWithContentsOfFile(fullpath);
     tex->initWithImage( pImage );
     m_grossini = CCSprite::spriteWithTexture(tex);
     m_grossini->retain();
@@ -142,7 +145,7 @@ void ActionsDemo::onEnter()
     tex->release();
 
     // Example:
-    // Or you can create an sprite using a filename. PNG, JPEG and BMP files are supported. Probably TIFF too
+    // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
     m_tamara = CCSprite::spriteWithFile(s_pPathSister1); 
     m_tamara->retain();
 
@@ -155,28 +158,25 @@ void ActionsDemo::onEnter()
 
     centerSprites(3);
 
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
 /**
 @todo add title
 */
-//     CCLabel* label = CCLabel::labelWithString(title(), "Arial", 28);
-//     addChild(label, 1);
-//     label->setPosition( CGPointMake(s.width/2, s.height-50) );
-// 
-//     std::stringstrSubtitle = subtitle();
+    std::string str = title();
+    const char * pTitle = str.c_str();
+    CCLabel* label = CCLabel::labelWithString(pTitle, "Arial", 28);
+    addChild(label, 1);
+    label->setPosition( CGPointMake(s.width/2, s.height-50) );
 
-//     if( ! strSubtitle.empty() ) 
+    std::string strSubtitle = subtitle();
 
-//     {
+    if( ! strSubtitle.empty() ) 
+    {
+        CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+        addChild(l, 1);
+        l->setPosition( CGPointMake(s.width/2, s.height-80) );
+    }	
 
-//         CCLabel* l = CCLabel::labelWithString(strSubtitle, "Thonburi", 16);
-
-//         addChild(l, 1);
-
-//         l->setPosition( CGPointMake(s.width/2, s.height-80) );
-
-//     }	
-
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionsDemo::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionsDemo::restartCallback) );
     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ActionsDemo::nextCallback) );

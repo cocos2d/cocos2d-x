@@ -17,7 +17,8 @@ using namespace cocos2d;
 TMainForm::TMainForm(TApplication * pApp)
 : CCXEGLView(pApp)
 {
-	Create(TEST_U_ID_Form1002);
+    TRectangle rcWnd(0, 0, pApp->GetScreenWidth(), pApp->GetScreenHeight());
+	Create(&rcWnd);
 }
 
 TMainForm::~TMainForm()
