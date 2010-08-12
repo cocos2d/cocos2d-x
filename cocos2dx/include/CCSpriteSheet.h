@@ -51,7 +51,7 @@ class CGRect;
  * 
  * @since v0.7.1
  */
-class CCSpriteSheet : public CCNode, public CCTextureProtocol
+class CCX_DLL CCSpriteSheet : public CCNode, public CCTextureProtocol
 {
 public:
     ~CCSpriteSheet(void);
