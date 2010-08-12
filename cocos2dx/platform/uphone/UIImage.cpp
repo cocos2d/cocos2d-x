@@ -315,8 +315,8 @@ bool UIImage::loadPng(const char* strFileName)
     // read the data of the file
     png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND, 0);
 
-    png_get_IHDR(png_ptr, info_ptr, &m_width, &m_height, &m_bitDepth, &m_colorType,
-        &m_interlaceType, NULL, NULL);
+    png_get_IHDR(png_ptr, info_ptr, &width, &height, &bitDepth, &colorType,
+        &interlaceType, NULL, NULL);
 
     if (setjmp(png_jmpbuf(png_ptr)))
     {     
@@ -327,12 +327,12 @@ bool UIImage::loadPng(const char* strFileName)
     }
 
     // get the image file data
-    m_rowPointers = png_get_rows(png_ptr, info_ptr);
+    rowPointers = png_get_rows(png_ptr, info_ptr);
 
     // Create a bitmap of 32bits depth
     if(!m_pBitmap)
     {
-        m_pBitmap = TBitmap::Create(m_width, m_height, 32);
+        m_pBitmap = TBitmap::Create(width, height, 32);
     }
     if(!m_pBitmap)
     {
@@ -346,23 +346,23 @@ bool UIImage::loadPng(const char* strFileName)
     pBmpData = reinterpret_cast< UInt32* >( m_pBitmap->GetDataPtr() );
 
     if( info_ptr->color_type & PNG_COLOR_MASK_ALPHA )    {
-        for(int i = 0; i < m_height; i++)
+        for(int i = 0; i < height; i++)
         {
-            for(int j = 0; j < (4 * m_width); j += 4)
+            for(int j = 0; j < (4 * width); j += 4)
             {
-                *pBmpData++ = RGBA( m_rowPointers[i][j], m_rowPointers[i][j + 1], 
-                    m_rowPointers[i][j + 2], m_rowPointers[i][j + 3] );
+                *pBmpData++ = RGBA( rowPointers[i][j], rowPointers[i][j + 1], 
+                    rowPointers[i][j + 2], rowPointers[i][j + 3] );
             }
         }
     }
     else
     {
-        for(int i = 0; i < m_height; i++)
+        for(int i = 0; i < height; i++)
         {
-            for(int j = 0; j < (3 * m_width); j += 3)
+            for(int j = 0; j < (3 * width); j += 3)
             {
-                *pBmpData++ = RGB( m_rowPointers[i][j], m_rowPointers[i][j + 1], 
-                    m_rowPointers[i][j + 2] );
+                *pBmpData++ = RGB( rowPointers[i][j], rowPointers[i][j + 1], 
+                    rowPointers[i][j + 2] );
             }
         }
     }
