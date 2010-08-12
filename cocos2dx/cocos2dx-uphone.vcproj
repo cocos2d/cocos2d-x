@@ -225,6 +225,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCBitmapFontAtlas.h"
+				>
+			</File>
+			<File
 				RelativePath=".\base_nodes\CCNode.cpp"
 				>
 			</File>
@@ -429,6 +433,10 @@
 		<Filter
 			Name="label_nodes"
 			>
+			<File
+				RelativePath=".\label_nodes\CCBitmapFontAtlas.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\label_nodes\CCLabel.cpp"
 				>

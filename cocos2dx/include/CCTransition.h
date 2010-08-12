@@ -146,7 +146,7 @@ public:
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed */
-	CCIntervalAction* action(void);
+	virtual CCIntervalAction* action(void);
 
 	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
 
