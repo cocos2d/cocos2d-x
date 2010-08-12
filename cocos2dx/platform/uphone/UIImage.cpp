@@ -24,10 +24,11 @@ THE SOFTWARE.
 
 #include "UIImage.h"
 
-#include <ImageToolKit/IT_ImageLoader.h> 
+//#include <ImageToolKit/IT_ImageLoader.h> 
 #include <TG3.h>
+#include "png.h"
 
-using namespace ImageToolKit;
+//using namespace ImageToolKit;
 using namespace std;
 namespace   cocos2d {
 
@@ -56,26 +57,36 @@ bool UIImage::initWithContentsOfFile(const string &strPath)
 		return false;
 	}
 
-	// load the image
-
-	ImageLoader obImgLoader;
-    Image       obImg;
-	TUChar *pszPath = new TUChar[strPath.size() + 1];
-    TUString::StrGBToUnicode(pszPath, (const Char *) strPath.c_str());
     bool bRet = false;
-
 	do
 	{
-		// check if the loading action is successful
-		if (! obImgLoader.loadImage(obImg, pszPath, IT_LOAD_FMT_UNKNOWN))
-		{
-			bRet = false;
-			break;
-		}
+        // load the image
+/************************************************************************/
+/*                   Use ImageToolKit load image                        */
+// 	    ImageLoader obImgLoader;
+//      Image       obImg;
+// 	    TUChar *pszPath = new TUChar[strPath.size() + 1];
+//      TUString::StrGBToUnicode(pszPath, (const Char *) strPath.c_str());
+// 		if (! obImgLoader.loadImage(obImg, pszPath, IT_LOAD_FMT_UNKNOWN))
+// 		{
+// 			bRet = false;
+// 			break;
+// 		}
+// 
+// 		// init bitmap
+// 		m_pBitmap = (TBitmap *) obImg.GetTBitmap();
+// 		m_pBitmap = m_pBitmap->DupBitmapTo32();
+//      delete[] pszPath;
+/************************************************************************/
 
-		// init bitmap
-		m_pBitmap = (TBitmap *) obImg.GetTBitmap();
-		m_pBitmap = m_pBitmap->DupBitmapTo32();
+        // use libpng load image
+        bRet = loadPng(strPath.c_str());
+
+        // check if the loading action is successful
+        if (! bRet)
+        {
+            break;
+        }
 
 		// the hight is 0??
 		if (m_pBitmap && m_pBitmap->GetHeight() == 0)
@@ -97,7 +108,6 @@ bool UIImage::initWithContentsOfFile(const string &strPath)
 		}
 	} while(0);
 
-	delete[] pszPath;
 	return bRet;
 }
 
@@ -236,5 +246,132 @@ UINT8* UIImage::getRGBA8888Data(void)
 	} while(0);
 
 	return pBufferRet;
+}
+
+bool UIImage::loadPng(const char* strFileName)
+{
+    char                header[8]; 
+    FILE                *fp;
+    png_structp         png_ptr;
+    png_infop           info_ptr;
+    UInt32               * pBmpData;
+    Int32               pos;
+    Int32               bitDepth;
+    png_uint_32         width;
+    png_uint_32         height;
+    Int32               interlaceType;
+    png_bytep           * rowPointers;
+    Int32               colorType;
+
+    pos = 0;
+    fp = NULL;
+    pBmpData = NULL;
+
+    // open file
+    fp = fopen(strFileName, "rb");
+    if (!fp)
+        return false;
+
+    // read 8 bytes from the beginning of the file
+    fread(header, 1, 8, fp); 
+
+    // close the file if it's not a png
+    if (png_sig_cmp((png_bytep)header, 0, 8))
+    {
+        fclose(fp);
+        return false;
+    }
+
+    // init png_struct
+    png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (!png_ptr)
+    {
+        fclose(fp);
+        return false;
+    }   
+
+    // init png_info
+    info_ptr = png_create_info_struct(png_ptr);
+    if (!info_ptr)
+    {
+        png_destroy_read_struct(&png_ptr, NULL, NULL);
+        fclose(fp);
+        return false;
+    }
+
+    // if something wrong,close file and return
+    if (setjmp(png_jmpbuf(png_ptr)))
+    {       
+        png_destroy_read_struct(&png_ptr, NULL, NULL);
+        png_destroy_info_struct(png_ptr, &info_ptr);
+        fclose(fp);
+        return false;
+    }
+
+    // conect the file pointer to libpng
+    png_init_io(png_ptr, fp);
+    png_set_sig_bytes(png_ptr, 8);
+
+    // read the data of the file
+    png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND, 0);
+
+    png_get_IHDR(png_ptr, info_ptr, &m_width, &m_height, &m_bitDepth, &m_colorType,
+        &m_interlaceType, NULL, NULL);
+
+    if (setjmp(png_jmpbuf(png_ptr)))
+    {     
+        png_destroy_read_struct(&png_ptr, NULL, NULL);
+        png_destroy_info_struct(png_ptr, &info_ptr);
+        fclose(fp);
+        return false;
+    }
+
+    // get the image file data
+    m_rowPointers = png_get_rows(png_ptr, info_ptr);
+
+    // Create a bitmap of 32bits depth
+    if(!m_pBitmap)
+    {
+        m_pBitmap = TBitmap::Create(m_width, m_height, 32);
+    }
+    if(!m_pBitmap)
+    {
+        png_destroy_read_struct(&png_ptr, NULL, NULL);
+        png_destroy_info_struct(png_ptr, &info_ptr);
+        fclose(fp);
+        return false; 
+    }
+
+    // Alpha data
+    pBmpData = reinterpret_cast< UInt32* >( m_pBitmap->GetDataPtr() );
+
+    if( info_ptr->color_type & PNG_COLOR_MASK_ALPHA )    {
+        for(int i = 0; i < m_height; i++)
+        {
+            for(int j = 0; j < (4 * m_width); j += 4)
+            {
+                *pBmpData++ = RGBA( m_rowPointers[i][j], m_rowPointers[i][j + 1], 
+                    m_rowPointers[i][j + 2], m_rowPointers[i][j + 3] );
+            }
+        }
+    }
+    else
+    {
+        for(int i = 0; i < m_height; i++)
+        {
+            for(int j = 0; j < (3 * m_width); j += 3)
+            {
+                *pBmpData++ = RGB( m_rowPointers[i][j], m_rowPointers[i][j + 1], 
+                    m_rowPointers[i][j + 2] );
+            }
+        }
+    }
+
+    // release
+    png_destroy_read_struct(&png_ptr, NULL, NULL);
+    png_destroy_info_struct(png_ptr, &info_ptr);
+    fclose(fp);
+
+    return true;
 }
 }//namespace   cocos2d 

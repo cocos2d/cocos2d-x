@@ -28,11 +28,12 @@ THE SOFTWARE.
 #include <string>
 #include <map>
 #include <ssFile.h>
+#include "ccxCommon.h"
 namespace   cocos2d {
 
 typedef std::map<std::string, void*> CCDictionary;
 // Helper class to handle file operations
-class CCFileUtils
+class CCX_DLL CCFileUtils
 {
 public:
 	static char* fullPathFromRelativePath(const char *pszRealPath);

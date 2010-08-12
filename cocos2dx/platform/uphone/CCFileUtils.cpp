@@ -174,23 +174,36 @@ void characters(void *ctx, const xmlChar *ch, int len)
 }
 char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-	// do not convert an absolute path (starting with '/')
-	if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
-	{
-		return (char*)pszRelativePath;
-	}
+    // get the user data path and append relativepath to it
+    const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
+    char *pszUserPath = new char[TUString::StrLen(pszTmp) + 1];
+    TUString::StrUnicodeToStrUtf8((Char*)pszUserPath, pszTmp);
+    char *pszRet;
 
-	// get the user data path and append relativepath to it
-	const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
-	char *pszUserPath = new char[TUString::StrLen(pszTmp) + 1];
-	TUString::StrUnicodeToStrUtf8((Char*)pszUserPath, pszTmp);
-	char *pszRet;
+#ifndef _TRANZDA_VM_
+    char *pszDriver = "";
+#else
+    char *pszDriver = "D:/Work7";
+#endif
 
-	int nLen = strlen(pszRelativePath) + strlen(pszUserPath) + 1;
-	pszRet = new char[nLen];
-	memset(pszRet, 0, nLen);
-	strncat(pszRet, pszUserPath, strlen(pszUserPath));
-	strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
+    int nLen = 0;
+    if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
+    {
+        nLen = strlen(pszRelativePath) + strlen(pszDriver) + 1;
+        pszRet = new char[nLen];
+        memset(pszRet, 0, nLen);
+        strncat(pszRet, pszDriver, strlen(pszDriver));
+        strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
+    }
+    else
+    {
+        nLen = strlen(pszRelativePath) + strlen(pszDriver) + strlen(pszUserPath) + 1;
+        pszRet = new char[nLen];
+        memset(pszRet, 0, nLen);
+        strncat(pszRet, pszDriver, strlen(pszDriver));
+        strncat(pszRet, pszUserPath, strlen(pszUserPath));
+        strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
+    }
 
 	return pszRet;
 }

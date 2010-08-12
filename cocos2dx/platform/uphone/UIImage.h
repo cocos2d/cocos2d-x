@@ -56,6 +56,10 @@ public:
 
 	// convert the bitmap to 256 pixel format, and every component is 8 bits
 	UINT8* getRGBA8888Data(void);
+
+private:
+    bool loadPng(const char* strFileName);
+
 private:
 	TBitmap *m_pBitmap;
 };
