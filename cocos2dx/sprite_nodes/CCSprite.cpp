@@ -105,14 +105,10 @@ CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 	return pobSprite;
 }
 
-
-///@todo implement
 CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-	/*
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 	return spriteWithSpriteFrame(pFrame);
-	*/
 	return NULL;
 }
 
@@ -265,13 +261,11 @@ CCSprite* CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 
 CCSprite* CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-	/*
-	///@ implement later
 	assert(pszSpriteFrameName != NULL);
 
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 	return initWithSpriteFrame(pFrame);
-	*/
+
 	return NULL;
 }
 
@@ -613,11 +607,8 @@ CCNode* CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 
 	if (m_bUsesSpriteSheet)
 	{
-		/*
-		///@todo implement after SpriteSheet is implemented
 		unsigned int index = m_pobSpriteSheet->atlasIndexForChild(static_cast<CCSprite*>(pChild), zOrder);
 		m_pobSpriteSheet->insertChild(static_cast<CCSprite*>(pChild), index);
-		*/
 	}
 
 	m_bHasChildren = true;
@@ -665,8 +656,6 @@ void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 
 void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 {
-	/*
-	///@todo: implement after the implementation of sprite sheet
 	if (m_bUsesSpriteSheet)
 	{
 		CCSprite *pChild;
@@ -681,7 +670,6 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 	__super::removeAllChildrenWithCleanup(bCleanup);
 	
 	m_bHasChildren = false;
-	*/
 }
 
 //
