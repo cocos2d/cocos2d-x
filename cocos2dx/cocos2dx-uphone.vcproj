@@ -225,10 +225,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\CCBitmapFontAtlas.h"
-				>
-			</File>
-			<File
 				RelativePath=".\base_nodes\CCNode.cpp"
 				>
 			</File>
@@ -246,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCAtlasNode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCBitmapFontAtlas.h"
 				>
 			</File>
 			<File
