@@ -34,9 +34,9 @@ namespace cocos2d{
 		__super::startWithTarget(pTarget);
 		
 		CCCamera *camera = dynamic_cast<CCNode*>(pTarget)->getCamera();
-		camera->setCenterXYZ(m_fCenterXOrig, m_fCenterYOrig, m_fCenterZOrig);
-		camera->setEyeXYZ(m_fEyeXOrig, m_fEyeYOrig, m_fEyeZOrig);
-		camera->setUpXYZ(m_fUpXOrig, m_fUpYOrig, m_fUpZOrig);
+		camera->getCenterXYZ(&m_fCenterXOrig, &m_fCenterYOrig, &m_fCenterZOrig);
+		camera->getEyeXYZ(&m_fEyeXOrig, &m_fEyeYOrig, &m_fEyeZOrig);
+		camera->getUpXYZ(&m_fUpXOrig, &m_fUpYOrig, &m_fUpZOrig);
 	}
 	
 	CCIntervalAction * CCCameraAction::reverse()

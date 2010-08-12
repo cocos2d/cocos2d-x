@@ -141,11 +141,6 @@ public:
 	inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
 	inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
 	{
-		if (m_pobFrames)
-		{
-			m_pobFrames->release();
-		}
-
 		m_pobFrames = pFrames;
 		if (pFrames)
 		{

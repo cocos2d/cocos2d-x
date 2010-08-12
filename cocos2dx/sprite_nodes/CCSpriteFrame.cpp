@@ -98,7 +98,7 @@ CCAnimation::~CCAnimation(void)
 	CCLOGINFO("cocos2d, deallocing %p", this);
 	// [name_ release];
 	delete m_pszName;
-	m_pobFrames->release();
+	CCX_SAFE_RELEASE(m_pobFrames);
 }
 
 void CCAnimation::addFrame(CCSpriteFrame *pFrame)
@@ -150,6 +150,7 @@ CCSpriteFrame* CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect re
 CCSpriteFrame* CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect rect, CGPoint offset, CGSize originalSize)
 {
 	m_pobTexture = pobTexture;
+	pobTexture->retain();
 	m_obOffset = offset;
 	m_obRect = rect;
 	m_obOriginalSize = originalSize;
@@ -160,7 +161,7 @@ CCSpriteFrame* CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect re
 CCSpriteFrame::~CCSpriteFrame(void)
 {
 	CCLOGINFO("cocos2d: deallocing %p", this);
-	m_pobTexture->release();
+	CCX_SAFE_RELEASE(m_pobTexture);
 }
 
 NSObject* CCSpriteFrame::copyWithZone(NSZone *pZone)

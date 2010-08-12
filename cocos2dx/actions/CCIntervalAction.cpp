@@ -806,7 +806,7 @@ bool CCJumpBy::initWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint posit
 	if (__super::initWithDuration(duration))
 	{
         m_delta = position;
-		m_height = m_height;
+		m_height = height;
 		m_nJumps = jumps;
 
 		return true;
@@ -875,7 +875,7 @@ CCJumpTo* CCJumpTo::actionWithDuration(cocos2d::ccTime duration, cocos2d::CGPoin
 NSObject* CCJumpTo::copyWithZone(NSZone* pZone)
 {
 	NSZone* pNewZone = NULL;
-	CCJumpBy* pCopy = NULL;
+	CCJumpTo* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject)
 	{
 		//in case of being called at sub class
@@ -1517,7 +1517,7 @@ void CCTintBy::update(cocos2d::ccTime time)
 
 CCIntervalAction* CCTintBy::reverse(void)
 {
-	return CCTintBy::actionWithDuration(m_fDuration, m_deltaR, m_deltaG, m_deltaB);
+	return CCTintBy::actionWithDuration(m_fDuration, -m_deltaR, -m_deltaG, -m_deltaB);
 }
 
 //
@@ -1678,6 +1678,7 @@ bool CCAnimate::initWithAnimation(cocos2d::CCAnimation *pAnimation, bool bRestor
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
         m_pAnimation = pAnimation;
+		m_pAnimation->retain();
 		m_pOrigFrame = NULL;
 
 		return true;
@@ -1703,6 +1704,7 @@ bool CCAnimate::initWithDuration(cocos2d::ccTime duration, cocos2d::CCAnimation 
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
 		m_pAnimation = pAnimation;
+		m_pAnimation->retain();
 		m_pOrigFrame = NULL;
 
 		return true;
@@ -1736,8 +1738,8 @@ NSObject* CCAnimate::copyWithZone(cocos2d::NSZone *pZone)
 
 CCAnimate::~CCAnimate(void)
 {
-	m_pAnimation->release();
-	m_pOrigFrame->release();
+	CCX_SAFE_RELEASE(m_pAnimation);
+    CCX_SAFE_RELEASE(m_pOrigFrame);
 }
 
 void CCAnimate::startWithTarget(cocos2d::NSObject *pTarget)
@@ -1769,7 +1771,7 @@ void CCAnimate::update(cocos2d::ccTime time)
 	NSMutableArray<CCSpriteFrame*> *pFrames = m_pAnimation->getFrames();
 	unsigned int numberOfFrames = pFrames->count();
 
-	unsigned int idx = (unsigned int)time * numberOfFrames;
+	unsigned int idx = (unsigned int)(time * numberOfFrames);
 
 	if (idx >= numberOfFrames)
 	{

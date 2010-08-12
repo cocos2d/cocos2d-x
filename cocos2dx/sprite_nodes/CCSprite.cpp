@@ -311,8 +311,8 @@ CCSprite* CCSprite::initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect
 
 CCSprite::~CCSprite(void)
 {
-	m_pobTexture->release();
-    delete m_pAnimations;
+	CCX_SAFE_RELEASE(m_pobTexture);
+	CCX_SAFE_RELEASE(m_pAnimations);
 }
 
 void CCSprite::useSelfRender(void)
@@ -994,10 +994,7 @@ void CCSprite::setTexture(CCTexture2D *texture)
 	// // accept texture==nil as argument
 	assert((! texture) || dynamic_cast<CCTexture2D*>(texture));
 
-	if (m_pobTexture)
-	{
-	    m_pobTexture->release();
-	}
+	CCX_SAFE_RELEASE(m_pobTexture);
 
 	m_pobTexture = texture;
 	if (texture)
