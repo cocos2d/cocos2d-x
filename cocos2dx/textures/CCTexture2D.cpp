@@ -68,7 +68,7 @@ static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelForma
 
 CCTexture2D::CCTexture2D()
 {
-
+    m_uName = 0;
 }
 
 CCTexture2D::~CCTexture2D()

@@ -136,7 +136,10 @@ namespace cocos2d{
 		}
 
 		m_pSelectedItem = this->itemForTouch(touch);
-		m_pSelectedItem->selected();
+		if (m_pSelectedItem)
+		{
+			m_pSelectedItem->selected();
+		}
 
 		if (m_pSelectedItem)
 		{
