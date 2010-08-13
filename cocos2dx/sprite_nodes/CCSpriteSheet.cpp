@@ -449,25 +449,46 @@ void CCSpriteSheet::insertChild(CCSprite *pobSprite, unsigned int uIndex)
 	m_pobDescendants->insertObjectAtIndex(pobSprite, uIndex);
 
 	// update indices
-	unsigned int u = uIndex + 1;
-
-	NSMutableArray<CCSprite*>::NSMutableArrayIterator iter;
-	CCSprite *pSprite;
-	for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
+	unsigned int i = 0;
+	if (m_pobDescendants && m_pobDescendants->count() > 0)
 	{
-		CCSprite *child = *iter;
-		child->setAtlasIndex(child->getAtlasIndex() + 1);
-	}
+		NSMutableArray<CCSprite*>::NSMutableArrayIterator iter;
+		for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
+		{
+			if (! *iter)
+			{
+				break;
+			}
+
+			if (i > uIndex)
+			{
+				(*iter)->setAtlasIndex((*iter)->getAtlasIndex() + 1);
+			}
+            
+			++i;
+		}
+	}	
 
 	// add children recursively
 	NSMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
-	NSMutableArray<CCNode*>::NSMutableArrayIterator iterNode;
-	for (iterNode = pChildren->begin(); iterNode != pChildren->end(); ++iterNode)
+	if (pChildren && pChildren->count() > 0)
 	{
-		pSprite = static_cast<CCSprite*>(*iterNode);
-		unsigned int uIndex = atlasIndexForChild(pSprite, pSprite->getZOrder());
-		insertChild(pSprite, uIndex);
+		NSMutableArray<CCNode*>::NSMutableArrayIterator iterNode;
+		CCSprite *pSprite;
+		for (iterNode = pChildren->begin(); iterNode != pChildren->end(); ++iterNode)
+		{
+			pSprite = static_cast<CCSprite*>(*iterNode);
+
+			if (! pSprite)
+			{
+				break;
+			}
+
+			unsigned int uIndex = atlasIndexForChild(pSprite, pSprite->getZOrder());
+			insertChild(pSprite, uIndex);
+		}
 	}
+	
 }
 
 void CCSpriteSheet::removeSpriteFromAtlas(CCSprite *pobSprite)
