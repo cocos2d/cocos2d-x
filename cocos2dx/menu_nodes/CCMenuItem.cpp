@@ -109,7 +109,7 @@ namespace cocos2d{
 	}
 	void CCMenuItemLabel::setLable(CCNode* var)
 	{
-		m_pLabel->release();
+		CCX_SAFE_RELEASE(m_pLabel);
 		var->retain();
 		m_pLabel = var;
 		this->setContentSize(m_pLabel->getContentSize());
@@ -127,7 +127,7 @@ namespace cocos2d{
 		m_fOriginalScale = 1.0f;
 		m_tColorBackup = ccWHITE;
 		m_tDisabledColor = ccc3(126,126,126);
-		m_pLabel = label;
+		this->setLable(label);
 		return this;
 	}
 	CCMenuItemLabel::~CCMenuItemLabel()
@@ -136,9 +136,10 @@ namespace cocos2d{
 	}
 	void CCMenuItemLabel::setString(const char * label)
 	{
-		/** @todo LabelProtocol
-		[label_ setString:string];
-		[self setContentSize: [label_ contentSize]];*/
+		m_pLabel->setString(label);
+		this->setContentSize(m_pLabel->getContentSize());
+// 		[label_ setString:string];
+// 		[self setContentSize: [label_ contentSize]];
 	}
 	void CCMenuItemLabel::activate()
 	{
@@ -229,13 +230,13 @@ namespace cocos2d{
 	CCMenuItemAtlasFont * CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
 		NSAssert( strlen(value) != 0, "value lenght must be greater than 0");
-/// @todo cclabelatlas
-// 		CCLabelAtlas *label = [[CCLabelAtlas alloc] initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap];
-// 		[label autorelease];
-// 
-// 		if((self=[super initWithLabel:label target:rec selector:cb]) ) {
-// 			// do something ?
-// 		}
+		CCLabelAtlas *label = new CCLabelAtlas();
+		label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
+		label->autorelease();
+		if (__super::initWithLabel(label, target, selector))
+		{
+			// do something ?
+		}
 		return this;
 	}
 	//
@@ -252,8 +253,9 @@ namespace cocos2d{
 	void CCMenuItemFont::setFontName(const char *name)
 	{
 		if( _fontNameRelease )
+		{
 			_fontName.clear();
-
+		}
 		_fontName = name;
 		_fontNameRelease = true;
 	}
@@ -278,13 +280,11 @@ namespace cocos2d{
 	CCMenuItemFont * CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
 		NSAssert( strlen(value) != 0, "Value lenght must be greater than 0");
-/// @todo cclabel
-// 		CCLabel *label = [CCLabel labelWithString:value fontName:_fontName fontSize:_fontSize];
-// 
-// 		if((self=[super initWithLabel:label target:rec selector:cb]) ) {
-// 			// do something ?
-// 		}
-
+		CCLabel *label = CCLabel::labelWithString(value, _fontName, _fontSize);
+		if (__super::initWithLabel(label, target, selector))
+		{
+			// do something ?
+		}
 		return this;
 	}
 	//
