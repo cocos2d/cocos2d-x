@@ -642,13 +642,10 @@ void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 
 void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 {
-	/*
-	///@todo: implement after implementing the sprite sheet
 	if (m_bUsesSpriteSheet)
 	{
 		m_pobSpriteSheet->removeSpriteFromAtlas(static_cast<CCSprite*>(pChild));
 	}
-	*/
 
 	__super::removeChild(pChild, bCleanup);
 	

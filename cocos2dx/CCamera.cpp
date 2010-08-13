@@ -88,6 +88,8 @@ void CCCamera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
 	m_fEyeX = fEyeX;
 	m_fEyeY = fEyeY;
 	m_fEyeZ = fEyeZ;
+
+	m_bDirty = true;
 }
 
 void CCCamera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
@@ -95,6 +97,8 @@ void CCCamera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
 	m_fCenterX = fCenterX;
 	m_fCenterY = fCenterY;
 	m_fCenterZ = fCenterZ;
+
+	m_bDirty = true;
 }
 
 void CCCamera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
@@ -102,6 +106,8 @@ void CCCamera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
 	m_fUpX = fUpX;
 	m_fUpY = fUpY;
 	m_fUpZ = fUpZ;
+
+	m_bDirty = true;
 }
 
 void CCCamera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ)
