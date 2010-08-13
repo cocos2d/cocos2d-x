@@ -187,6 +187,12 @@ public:
 		// add the refrence of the object
 		pObject->retain();
 
+		// resize the capacity if the index out of it
+		if (uIndex >= m_array.capacity())
+		{
+			m_array.resize(uIndex + 4);
+		}
+
 		// insert the object
 		m_array.insert(m_array.begin() + uIndex, pObject);
 	}
