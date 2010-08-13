@@ -1,5 +1,7 @@
 #include "tests.h"
 #include "controller.h"
+#include "CCMenu.h"
+#include "CCBitmapFontAtlas.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
 TestController::TestController()
@@ -7,26 +9,20 @@ TestController::TestController()
     /**
     @todo add menu items for all tests
     */
-    
+    CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("ActionsTest", "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/bitmapFontTest3.fnt");
+    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
+
+    CCMenu* pMenu =CCMenu::menuWithItems(pMenuItem, NULL);
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    pMenu->setPosition( CGPointZero );
+    pMenuItem->setPosition( CGPointMake( s.width / 2, s.height / 2) );
+
+    addChild(pMenu, 1);
 }
 
-void TestController::onEnter()
+void TestController::menuCallback(NSObject * pSender)
 {
-    __super::onEnter();
-
-    setIsTouchEnabled(true);
-}
-
-void TestController::registerWithTouchDispatcher()
-{
-    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(dynamic_cast<CCLayer*>(this), 0, true);
-}
-
-bool TestController::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
-{
-    // run ActionsTest
     TestScene* pScene = new ActionsTestScene();
 
     pScene->runThisTest();
-    return true;
 }

@@ -10,10 +10,7 @@ class TestController : public CCLayer
 public:
     TestController();
 
-    virtual void onEnter();
-
-    virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
-    virtual void registerWithTouchDispatcher();
+    void menuCallback(NSObject * pSender);
 };
 
 #endif

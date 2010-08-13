@@ -535,18 +535,18 @@ void ActionAnimate::onEnter()
 
     centerSprites(1);
 
-//     CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f);
-//     char frameName[100] = {0};
-//     for( int i=1;i<15;i++)
-//     {
-//         sprintf(frameName, "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossini_dance_%02d.png", i);
-//         animation->addFrameWithFileName(frameName);
-//     }
-// 
-//     CCIntervalAction*  action = CCAnimate::actionWithAnimation( animation, false);
-//     CCIntervalAction*  action_back = action->reverse();
-// 
-//     m_grossini->runAction( CCSequence::actions( action, action_back, NULL));
+    CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f);
+    char frameName[100] = {0};
+    for( int i=1;i<15;i++)
+    {
+        sprintf(frameName, "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossini_dance_%02d.png", i);
+        animation->addFrameWithFileName(frameName);
+    }
+
+    CCIntervalAction*  action = CCAnimate::actionWithAnimation( animation, false);
+    CCIntervalAction*  action_back = action->reverse();
+
+    m_grossini->runAction( CCSequence::actions( action, action_back, NULL));
 }
 
 std::string ActionAnimate::subtitle()
@@ -900,28 +900,20 @@ void ActionReverseSequence2::onEnter()
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-// 
-//     CCIntervalAction*  move1 = CCMoveBy::actionWithDuration(1, CGPointMake(250,0));
-//     CCIntervalAction*  move2 = CCMoveBy::actionWithDuration(1, CGPointMake(0,50));
-//     CCToggleVisibility*  tog1 = new CCToggleVisibility();
-//     CCToggleVisibility*  tog2 = new CCToggleVisibility();
-//     tog1->autorelease();
-//     tog2->autorelease();
-//     CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));
-//     CCIntervalAction*  action = CCRepeat::actionWithAction(dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
+    CCIntervalAction*  move1 = CCMoveBy::actionWithDuration(1, CGPointMake(250,0));    CCIntervalAction*  move2 = CCMoveBy::actionWithDuration(1, CGPointMake(0,50));    CCToggleVisibility*  tog1 = new CCToggleVisibility();    CCToggleVisibility*  tog2 = new CCToggleVisibility();    tog1->autorelease();    tog2->autorelease();    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));    CCIntervalAction*  action = CCRepeat::actionWithAction(dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
 
 
     // Test:
     //   Also test that the reverse of Hide is Show, and vice-versa
-//     m_kathia->runAction(action);
-// 
-//     CCIntervalAction*  move_tamara = CCMoveBy::actionWithDuration(1, CGPointMake(100,0));
-//     CCIntervalAction*  move_tamara2 = CCMoveBy::actionWithDuration(1, CGPointMake(50,0));
-//     CCInstantAction*  hide = new CCHide();
-//     hide->autorelease();
-//     CCIntervalAction*  seq_tamara = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_tamara, hide, move_tamara2, NULL));
-//     CCIntervalAction*  seq_back = seq_tamara->reverse();
-//     m_tamara->runAction( CCSequence::actions( seq_tamara, seq_back, NULL));
+    m_kathia->runAction(action);
+
+    CCIntervalAction*  move_tamara = CCMoveBy::actionWithDuration(1, CGPointMake(100,0));
+    CCIntervalAction*  move_tamara2 = CCMoveBy::actionWithDuration(1, CGPointMake(50,0));
+    CCInstantAction*  hide = new CCHide();
+    hide->autorelease();
+    CCIntervalAction*  seq_tamara = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_tamara, hide, move_tamara2, NULL));
+    CCIntervalAction*  seq_back = seq_tamara->reverse();
+    m_tamara->runAction( CCSequence::actions( seq_tamara, seq_back, NULL));
 }
 std::string ActionReverseSequence2::subtitle()
 {

@@ -188,7 +188,14 @@ char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 #endif
 
     int nLen = 0;
-    if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
+    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
+    {
+        nLen = strlen(pszRelativePath) + 1;
+        pszRet = new char[nLen];
+        memset(pszRet, 0, nLen);
+        strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
+    }
+    else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
     {
         nLen = strlen(pszRelativePath) + strlen(pszDriver) + 1;
         pszRet = new char[nLen];
