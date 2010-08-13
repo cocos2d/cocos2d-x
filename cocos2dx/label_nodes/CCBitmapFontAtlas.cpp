@@ -396,11 +396,12 @@ namespace cocos2d{
 
 		CGSize tmpSize = CGSizeZero;
 		UINT32 len = m_sString.length();
-		for(UINT32 i=0; i<len; i++) {
+		for(UINT32 i=0; i<len; i++)
+		{
 			INT16 c = m_sString[i];
 			NSAssert( c < kCCBitmapFontAtlasMaxChars, "BitmapFontAtlas: character outside bounds");
 
-			kerningAmount = this->kerningAmountForFirst(prev, (INT16)c);
+			kerningAmount = this->kerningAmountForFirst(prev, c);
 
 			ccBitmapFontDef fontDef = m_pConfiguration->m_pBitmapFontArray[c];
 
@@ -408,8 +409,9 @@ namespace cocos2d{
 
 			CCSprite *fontChar;
 
-			fontChar = (CCSprite*)(this->getChildByTag(i));
-			if( ! fontChar ) {
+			fontChar = dynamic_cast<CCSprite*>(this->getChildByTag(i));
+			if( ! fontChar )
+			{
 				fontChar = new CCSprite();
 				fontChar->initWithSpriteSheet(this, rect);
 				this->addChild(fontChar, 0, i);
