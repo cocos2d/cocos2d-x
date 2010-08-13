@@ -83,7 +83,9 @@ namespace cocos2d{
 		// values for kerning
 		struct _KerningHashElement	*m_pKerningDictionary;
 	public:
-		CCBitmapFontConfiguration(){}
+		CCBitmapFontConfiguration()
+			:m_pKerningDictionary(NULL)
+		{}
 		virtual ~CCBitmapFontConfiguration();
 		char * description();
 		/** allocates a CCBitmapFontConfiguration with a FNT file */
@@ -143,7 +145,9 @@ namespace cocos2d{
 		std::string m_sString;
 		CCBitmapFontConfiguration *m_pConfiguration;
 	public:
-		CCBitmapFontAtlas(){}
+		CCBitmapFontAtlas()
+			:m_pConfiguration(NULL)
+		{}
 		virtual ~CCBitmapFontAtlas();
 		/** Purges the cached data.
 		Removes from memory the cached configurations and the atlas name dictionary.
