@@ -26,6 +26,8 @@ THE SOFTWARE.
 #include "support/CGPointExtension.h"
 #include "CCIntervalAction.h"
 #include "CCSprite.h"
+#include "CCLabelAtlas.h"
+#include "CCLabel.h"
 
 namespace cocos2d{
 
@@ -136,7 +138,7 @@ namespace cocos2d{
 	}
 	void CCMenuItemLabel::setString(const char * label)
 	{
-		m_pLabel->setString(label);
+		dynamic_cast<CCLabelProtocol*>(m_pLabel)->setString(label);
 		this->setContentSize(m_pLabel->getContentSize());
 // 		[label_ setString:string];
 // 		[self setContentSize: [label_ contentSize]];
@@ -280,7 +282,7 @@ namespace cocos2d{
 	CCMenuItemFont * CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
 		NSAssert( strlen(value) != 0, "Value lenght must be greater than 0");
-		CCLabel *label = CCLabel::labelWithString(value, _fontName, _fontSize);
+		CCLabel *label = CCLabel::labelWithString(value, _fontName.c_str(), (float)_fontSize);
 		if (__super::initWithLabel(label, target, selector))
 		{
 			// do something ?
