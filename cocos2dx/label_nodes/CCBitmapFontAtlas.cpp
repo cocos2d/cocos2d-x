@@ -351,7 +351,7 @@ namespace cocos2d{
 	}
 	CCBitmapFontAtlas * CCBitmapFontAtlas::initWithString(const char *theString, const char *fntFile)
 	{	
-		m_pConfiguration->release();// allow re-init
+		CCX_SAFE_RELEASE(m_pConfiguration);// allow re-init
 		m_pConfiguration = FNTConfigLoadFile(fntFile);
 		m_pConfiguration->retain();
 		NSAssert( m_pConfiguration, "Error creating config for BitmapFontAtlas");
