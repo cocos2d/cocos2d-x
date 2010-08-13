@@ -226,14 +226,23 @@ void CCSpriteSheet::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 void CCSpriteSheet::removeAllChildrenWithCleanup(bool bCleanup)
 {
 	// Invalidate atlas index. issue #569
-	CCSprite *pSprite;
-	NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
-	for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
+	if (m_pChildren && m_pChildren->count() > 0)
 	{
-		pSprite = static_cast<CCSprite*>(*iter);
-		pSprite->useSelfRender();
-	}
+		CCSprite *pSprite;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
+		{
+			pSprite = static_cast<CCSprite*>(*iter);
 
+			if (! pSprite)
+			{
+				break;
+			}
+
+			pSprite->useSelfRender();
+		}
+	}
+	
 	__super::removeAllChildrenWithCleanup(bCleanup);
 
 	m_pobDescendants->removeAllObjects();
@@ -255,6 +264,11 @@ void CCSpriteSheet::draw(void)
 		for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
 		{
 			pSprite = *iter;
+
+			if (! pSprite)
+			{
+				break;
+			}
 
 			// fast dispatch
 			if (pSprite->isDirty())
@@ -312,17 +326,27 @@ void CCSpriteSheet::increaseAtlasCapacity(void)
 
 unsigned int CCSpriteSheet::rebuildIndexInOrder(CCSprite *pobParent, unsigned int uIndex)
 {
-	CCSprite *pSprite;
 	NSMutableArray<CCNode*> *pChildren = pobParent->getChildren();
-	NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
-	for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
+
+	if (pChildren && pChildren->count() > 0)
 	{
-		pSprite = static_cast<CCSprite*>(*iter);
-		if (pSprite->getZOrder() < 0)
+		CCSprite *pSprite;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+		for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 		{
-			uIndex = rebuildIndexInOrder(pSprite, uIndex);
+			pSprite = static_cast<CCSprite*>(*iter);
+
+			if (! pSprite)
+			{
+				break;
+			}
+
+			if (pSprite->getZOrder() < 0)
+			{
+				uIndex = rebuildIndexInOrder(pSprite, uIndex);
+			}
 		}
-	}
+	}	
 
 	// ignore self (spritesheet)
 	if (! pobParent->isEqual(this))
@@ -331,12 +355,23 @@ unsigned int CCSpriteSheet::rebuildIndexInOrder(CCSprite *pobParent, unsigned in
 		uIndex++;
 	}
 
-	for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
+	if (pChildren && pChildren->count() > 0)
 	{
-		pSprite = static_cast<CCSprite*>(*iter);
-		if (pSprite->getZOrder() >= 0)
+		CCSprite *pSprite;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+		for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 		{
-			uIndex = rebuildIndexInOrder(pSprite, uIndex);
+			pSprite = static_cast<CCSprite*>(*iter);
+
+			if (! pSprite)
+			{
+				break;
+			}
+
+			if (pSprite->getZOrder() >= 0)
+			{
+				uIndex = rebuildIndexInOrder(pSprite, uIndex);
+			}
 		}
 	}
 
@@ -346,8 +381,8 @@ unsigned int CCSpriteSheet::rebuildIndexInOrder(CCSprite *pobParent, unsigned in
 unsigned int CCSpriteSheet::highestAtlasIndexInChild(CCSprite *pSprite)
 {
 	NSMutableArray<CCNode*> *pChildren = pSprite->getChildren();
-	int count = pChildren->count();
-	if (count == 0)
+
+	if (! pChildren || pChildren->count() == 0)
 	{
 		return pSprite->getAtlasIndex();
 	}
@@ -360,8 +395,8 @@ unsigned int CCSpriteSheet::highestAtlasIndexInChild(CCSprite *pSprite)
 unsigned int CCSpriteSheet::lowestAtlasIndexInChild(CCSprite *pSprite)
 {
 	NSMutableArray<CCNode*> *pChildren = pSprite->getChildren();
-	int count = pChildren->count();
-	if (count == 0)
+
+	if (! pChildren || pChildren->count() == 0)
 	{
 		return pSprite->getAtlasIndex();
 	}
@@ -505,21 +540,33 @@ void CCSpriteSheet::removeSpriteFromAtlas(CCSprite *pobSprite)
 		m_pobDescendants->removeObjectAtIndex(uIndex);
 
 		// update all sprites beyond this one
-		NSMutableArray<CCSprite*>::NSMutableArrayIterator iter;
-		for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
+		unsigned int count = m_pobDescendants->count();
+		
+		for(; uIndex < count; ++uIndex)
 		{
-			(*iter)->setAtlasIndex((*iter)->getAtlasIndex() - 1);
+			CCSprite* s = static_cast<CCSprite*>(m_pobDescendants->getObjectAtIndex(uIndex));
+			s->setAtlasIndex( s->getAtlasIndex() - 1 );
 		}
 	}
 
 	// remove children recursively
 	NSMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
-	CCSprite *pSprite;
-	NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
-	for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
+	
+	if (pChildren && pChildren->count() > 0)
 	{
-		pSprite = static_cast<CCSprite*>(*iter);
-		removeSpriteFromAtlas(pSprite);
+		CCSprite *pSprite;
+		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+		for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
+		{
+			pSprite = static_cast<CCSprite*>(*iter);
+
+			if (! pSprite)
+			{
+				break;
+			}
+
+			removeSpriteFromAtlas(pSprite);
+		}
 	}
 }
 
