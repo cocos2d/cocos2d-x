@@ -21,22 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "CCXBitmapDC.h"
+namespace cocos2d {
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
 
-#include "config_platform.h"
-
-#ifdef CCX_PLATFORM_UPHONE
-    #include "uphone/CCFileUtils.h"
-    #include "uphone/CCTime.h"
-    #include "uphone/NSLock.h"
-	#include "uphone/UIImage.h"
-    #include "uphone/Cocos2dTypes.h"
-    #include "uphone/CCXGLExtFunc.h"
-	#include "uphone/CCXBitmapDC.h"
-#else 
-    #error
-#endif
-
-#endif // __PLATFORM_H__
+}

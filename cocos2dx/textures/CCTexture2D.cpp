@@ -375,77 +375,19 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 // implementation CCTexture2D (Text)
 CCTexture2D * CCTexture2D::initWithString(const char *str, const char *fontName, float fontSize)
 {
-	/** @todo about UIFont
-	CGSize dim;
-
-	#if CC_FONT_LABEL_SUPPORT
-	ZFont *zFont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-	if (zFont != nil)
-	dim = [string sizeWithZFont:zFont];
-	else
-	#endif
-	dim = [string sizeWithFont:[UIFont fontWithName:name size:size]];
-
-	return [self initWithString:string dimensions:dim alignment:UITextAlignmentCenter fontName:name fontSize:size];*/
-	return NULL;// tobe deleted
+	return initWithString(str, CGSizeMake(0,0), UITextAlignmentCenter, fontName, fontSize);
 }
 CCTexture2D * CCTexture2D::initWithString(const char *str, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
-	{
-/** @todo UITextAlignment
-	NSUInteger				width,
-	height,
-	i;
-	CGContextRef			context;
-	void*					data;
-	CGColorSpaceRef			colorSpace;
-	id						uiFont;
+{
+	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(str, dimensions, fontName, fontSize, alignment);
 
-	width = dimensions.width;
-	if((width != 1) && (width & (width - 1))) {
-	i = 1;
-	while(i < width)
-	i *= 2;
-	width = i;
-	}
-	height = dimensions.height;
-	if((height != 1) && (height & (height - 1))) {
-	i = 1;
-	while(i < height)
-	i *= 2;
-	height = i;
-	}
+	void* pBitData = pBitmapDC->GetBuffer();
+	CGSize szImage = pBitmapDC->GetSize();
+	CGSize szText = pBitmapDC->GetTextSize();
 
-	colorSpace = CGColorSpaceCreateDeviceGray();
-	data = calloc(height, width);
-	context = CGBitmapContextCreate(data, width, height, 8, width, colorSpace, kCGImageAlphaNone);
-	CGColorSpaceRelease(colorSpace);
+	initWithData(pBitData, kCCTexture2DPixelFormat_RGBA8888, (UINT)szImage.width, (UINT)szImage.height, szText);
 
-
-	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
-	CGContextTranslateCTM(context, 0.0f, height);
-	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
-	UIGraphicsPushContext(context);
-
-
-	#if CC_FONT_LABEL_SUPPORT
-	uiFont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-	if (uiFont != nil)
-	[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-	else
-	#endif // CC_FONT_LABEL_SUPPORT
-	{
-	uiFont = [UIFont fontWithName:name size:size];
-	[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-	}
-	if( ! uiFont )
-	CCLOG(@"cocos2d: Texture2D: Font '%@' not found", name);
-	UIGraphicsPopContext();
-
-	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
-
-	CGContextRelease(context);
-	free(data);
-	*/
+	delete pBitmapDC;
 	return this;
 }
 
@@ -586,7 +528,7 @@ void CCTexture2D::generateMipmap()
 {
 	NSAssert( m_uPixelsWide == nextPOT(m_uPixelsWide) && m_uPixelsHigh == nextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, this->m_uName );
-	/// @todo include what???	glGenerateMipmapOES(GL_TEXTURE_2D);
+	glGenerateMipmapOES(GL_TEXTURE_2D);
 }
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)
