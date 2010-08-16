@@ -26,14 +26,21 @@ THE SOFTWARE.
 
 #include "TG3.h"
 #include "ccTypes.h"
+#include "Cocos2dDefine.h"
 
 namespace cocos2d{
 	class CCX_DLL CCXBitmapDC
 	{
 	public:
-		CCXBitmapDC();
 		CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
-		~CCXBitmapDC(void);
+		virtual ~CCXBitmapDC(void)
+		{
+			if (m_pBitmap)
+			{
+				m_pBitmap->Destroy();
+				m_pBitmap = NULL;
+			}
+		}
 
 		void* GetBuffer(void);
 		CGSize GetSize();
