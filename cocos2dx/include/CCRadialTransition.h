@@ -25,27 +25,9 @@ THE SOFTWARE.
 #ifndef __CCRADIAL_TRANSITION_H__
 #define __CCRADIAL_TRANSITION_H__
 #include "CCTransition.h"
-///@todo #include "CCProgressTimer.h"
-///@todo #include "CCProgressTimerActions.h"
+#include "misc_nodes/CCProgressTimer.h"
 
 namespace   cocos2d {
-
-typedef enum {
-	/// Radial Counter-Clockwise 
-	kCCProgressTimerTypeRadialCCW,
-	/// Radial ClockWise
-	kCCProgressTimerTypeRadialCW,
-	/// Horizontal Left-Right
-	kCCProgressTimerTypeHorizontalBarLR,
-	/// Horizontal Right-Left
-	kCCProgressTimerTypeHorizontalBarRL,
-	/// Vertical Bottom-top
-	kCCProgressTimerTypeVerticalBarBT,
-	/// Vertical Top-Bottom
-	kCCProgressTimerTypeVerticalBarTB,
-} CCProgressTimerType;/// @todo to be deleted
-
-
 
 ///
 //	A counter colock-wise radial transition to the next scene
