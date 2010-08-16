@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "support/CGPointExtension.h"
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
-#include "CCGrid.h"
+#include "effects/CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
 #include "touch_dispatcher/CCTouch.h"

@@ -248,6 +248,10 @@
 				RelativePath=".\effects\CCGrid.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\effects\CCGrid.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="include"
