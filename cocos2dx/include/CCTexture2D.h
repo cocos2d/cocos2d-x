@@ -31,15 +31,10 @@ THE SOFTWARE.
 #include "Cocos2dDefine.h"
 #include "NSObject.h"
 #include "CGGeometry.h"
+#include "ccTypes.h"
 
 namespace   cocos2d {
 class UIImage;
-typedef enum 
-{
-	UITextAlignmentLeft,
-	UITextAlignmentCenter,
-	UITextAlignmentRight,
-} UITextAlignment;// @todo to be deleted
 
 //CONSTANTS:
 
@@ -142,9 +137,9 @@ public:
 	Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	CCTexture2D * initWithString(const char *str, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+	CCTexture2D * initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
-	CCTexture2D * initWithString(const char *str, const char *fontName, float fontSize);
+	CCTexture2D * initWithString(const char *text, const char *fontName, float fontSize);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a PVRTC file

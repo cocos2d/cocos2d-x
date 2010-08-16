@@ -262,6 +262,14 @@ typedef struct _ccBlendFunc
 //! if you want more resolution redefine it as a double
 typedef float ccTime;
 //typedef double ccTime;
+
+typedef enum 
+{
+	UITextAlignmentLeft,
+	UITextAlignmentCenter,
+	UITextAlignmentRight,
+} UITextAlignment;
+
 }//namespace   cocos2d 
 
 #endif //__CCTYPES_H__

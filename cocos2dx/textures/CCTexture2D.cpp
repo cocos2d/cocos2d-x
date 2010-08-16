@@ -373,13 +373,13 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 }
 
 // implementation CCTexture2D (Text)
-CCTexture2D * CCTexture2D::initWithString(const char *str, const char *fontName, float fontSize)
+CCTexture2D * CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
 {
-	return initWithString(str, CGSizeMake(0,0), UITextAlignmentCenter, fontName, fontSize);
+	return initWithString(text, CGSizeMake(0,0), UITextAlignmentCenter, fontName, fontSize);
 }
-CCTexture2D * CCTexture2D::initWithString(const char *str, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+CCTexture2D * CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 {
-	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(str, dimensions, fontName, fontSize, alignment);
+	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
 
 	void* pBitData = pBitmapDC->GetBuffer();
 	CGSize szImage = pBitmapDC->GetSize();

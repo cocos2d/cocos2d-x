@@ -23,20 +23,25 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCXBITMAP_DC_H__
 #define __CCXBITMAP_DC_H__
-#include "CCTexture2D.h"
+
+#include "TG3.h"
+#include "ccTypes.h"
+
 namespace cocos2d{
 	class CCX_DLL CCXBitmapDC
 	{
 	public:
-		CCXBitmapDC(const char *text, CGSize dimensions, const char *fontName, CGFloat fontSize, UITextAlignment alignment);
-		CCXBitmapDC(int nWidth, int nHeight);
+		CCXBitmapDC();
+		CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
 		~CCXBitmapDC(void);
 
-		void CreateBitmapDC(int nWidth, int nHeight);
 		void* GetBuffer(void);
 		CGSize GetSize();
 		CGSize GetTextSize();
 	protected:
+		TBitmap *m_pBitmap;
+		CGSize m_tTextSize;
+		CGSize m_tScaleSize;
 	};
 }
 
