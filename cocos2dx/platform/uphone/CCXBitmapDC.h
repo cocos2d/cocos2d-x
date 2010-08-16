@@ -21,22 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __CCXBITMAP_DC_H__
+#define __CCXBITMAP_DC_H__
+#include "CCTexture2D.h"
+namespace cocos2d{
+	class CCX_DLL CCXBitmapDC
+	{
+	public:
+		CCXBitmapDC(const char *text, CGSize dimensions, const char *fontName, CGFloat fontSize, UITextAlignment alignment);
+		CCXBitmapDC(int nWidth, int nHeight);
+		~CCXBitmapDC(void);
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+		void CreateBitmapDC(int nWidth, int nHeight);
+		void* GetBuffer(void);
+		CGSize GetSize();
+		CGSize GetTextSize();
+	protected:
+	};
+}
 
-#include "config_platform.h"
-
-#ifdef CCX_PLATFORM_UPHONE
-    #include "uphone/CCFileUtils.h"
-    #include "uphone/CCTime.h"
-    #include "uphone/NSLock.h"
-	#include "uphone/UIImage.h"
-    #include "uphone/Cocos2dTypes.h"
-    #include "uphone/CCXGLExtFunc.h"
-	#include "uphone/CCXBitmapDC.h"
-#else 
-    #error
-#endif
-
-#endif // __PLATFORM_H__
+#endif //__CCXBITMAP_DC_H__

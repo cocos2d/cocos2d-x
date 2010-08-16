@@ -737,6 +737,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\platform\uphone\CCXBitmapDC.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXBitmapDC.h"
+					>
+				</File>
+				<File
 					RelativePath=".\platform\uphone\CCXEGLView_uphone.cpp"
 					>
 				</File>
