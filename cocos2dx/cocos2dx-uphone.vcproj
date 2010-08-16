@@ -244,6 +244,10 @@
 				RelativePath=".\effects\CCGrabber.h"
 				>
 			</File>
+			<File
+				RelativePath=".\effects\CCGrid.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="include"
@@ -274,6 +278,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCEaseAction.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCGrid.h"
 				>
 			</File>
 			<File

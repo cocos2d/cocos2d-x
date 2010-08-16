@@ -55,9 +55,9 @@ public:
 	char * description(void);
 
 	// sets the dirty value
-	void setDirty(bool bValue);
+	inline void setDirty(bool bValue) { m_bDirty = bValue; }
 	// get the dirty value
-	bool getDirty(void);
+	inline bool getDirty(void) { return m_bDirty; }
 
 	// sets the camera in the defaul position
 	void restore(void);
