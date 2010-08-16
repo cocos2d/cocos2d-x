@@ -236,6 +236,14 @@
 		<Filter
 			Name="effects"
 			>
+			<File
+				RelativePath=".\effects\CCGrabber.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\effects\CCGrabber.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="include"
@@ -734,6 +742,14 @@
 				</File>
 				<File
 					RelativePath=".\platform\uphone\CCXEGLView_uphone.h"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXGLExtFunc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXGLExtFunc.h"
 					>
 				</File>
 				<File

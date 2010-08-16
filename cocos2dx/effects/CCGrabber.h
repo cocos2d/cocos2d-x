@@ -21,21 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __EFFECTS_CCGRABBER_H__
+#define __EFFECTS_CCGRABBER_H__
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#include "NSObject.h"
 
-#include "config_platform.h"
+#include <GLES/gl.h>
 
-#ifdef CCX_PLATFORM_UPHONE
-    #include "uphone/CCFileUtils.h"
-    #include "uphone/CCTime.h"
-    #include "uphone/NSLock.h"
-	#include "uphone/UIImage.h"
-    #include "uphone/Cocos2dTypes.h"
-    #include "uphone/CCXGLExtFunc.h"
-#else 
-    #error
-#endif
+namespace cocos2d 
+{
+	class CCTexture2D;
 
-#endif // __PLATFORM_H__
+	/** FBO class that grabs the the contents of the screen */
+	class CCGrabber : public NSObject
+	{
+	public:
+		CCGrabber(void);
+
+		void grab(CCTexture2D *pTexture);
+		void beforeRender(CCTexture2D *pTexture);
+		void afterRender(CCTexture2D *pTexture);
+
+	protected:
+		GLuint m_fbo;
+		GLint m_oldFBO;
+	};
+
+} // end of namespace cocos2d
+
+#endif // __EFFECTS_CCGRABBER_H__
