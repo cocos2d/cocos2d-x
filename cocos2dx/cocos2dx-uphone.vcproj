@@ -216,6 +216,10 @@
 				RelativePath=".\actions\CCIntervalAction.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\actions\CCProgressTimerActions.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="base_nodes"
@@ -302,6 +306,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCPageTurnTransition.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCProgressTimerActions.h"
 				>
 			</File>
 			<File
