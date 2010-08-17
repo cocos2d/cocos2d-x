@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\actions\CCGridAction.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\actions\CCInstantAction.cpp"
 				>
 			</File>
@@ -286,6 +290,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCGrid.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCGridAction.h"
 				>
 			</File>
 			<File

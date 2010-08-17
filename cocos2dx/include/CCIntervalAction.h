@@ -72,6 +72,11 @@ public:
 	/** creates the action */
 	static CCIntervalAction* actionWithDuration(ccTime d);
 
+public:
+    //extention, refer to CCGridAction 
+	void setAmplitudeRate(CGFloat amp);
+	CGFloat getAmplitudeRate(void);
+
 protected:
 	ccTime m_elapsed;
 	bool   m_bFirstTick;

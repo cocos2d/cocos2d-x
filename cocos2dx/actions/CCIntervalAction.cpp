@@ -110,6 +110,20 @@ void CCIntervalAction::step(ccTime dt)
 	update(1 > m_elapsed/m_fDuration ? m_elapsed/m_fDuration : 1);
 }
 
+void CCIntervalAction::setAmplitudeRate(CGFloat amp)
+{
+	// Abstract class needs implementation
+	assert(0);
+}
+
+CGFloat CCIntervalAction::getAmplitudeRate(void)
+{
+	// Abstract class needs implementation
+	assert(0);
+
+	return 0;
+}
+
 void CCIntervalAction::startWithTarget(NSObject *pTarget)
 {
 	__super::startWithTarget(pTarget);
