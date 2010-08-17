@@ -614,7 +614,7 @@ void CCDirector::end(void)
 	// purge all managers
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCScheduler::purgeSharedScheduler();
-	CCActionManager::purgeSharedManager();
+	CCActionManager::getSharedManager()->purgeSharedManager();
 	CCTextureCache::purgeSharedTextureCache();
 
 	// OpenGL view
