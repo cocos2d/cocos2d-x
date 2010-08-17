@@ -1,7 +1,7 @@
 #include "tests.h"
 #include "controller.h"
 #include "CCMenu.h"
-#include "CCBitmapFontAtlas.h"
+#include "CCLabel.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 
 TestController::TestController()
@@ -9,7 +9,7 @@ TestController::TestController()
     /**
     @todo add menu items for all tests
     */
-    CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("ActionsTest", "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/bitmapFontTest3.fnt");
+    CCLabel* label = CCLabel::labelWithString("ActionsTest", "Arial", 22);
     CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
 
     CCMenu* pMenu =CCMenu::menuWithItems(pMenuItem, NULL);

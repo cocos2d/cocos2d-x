@@ -1,32 +1,32 @@
 #include "testBasic.h"
 #include "controller.h"
+#include "CCMenu.h"
+#include "CCLabel.h"
+#include "CCDirector.h"
 
 BackToMainMenuLayer::BackToMainMenuLayer()
 {
     //add the menu item for back to main menu
+    CCLabel* label = CCLabel::labelWithString("MainMenu", "Arial", 20);
+    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(BackToMainMenuLayer::MainMenuCallback));
 
-//     CCLabelAtlas* labelAtlas = CCLabelAtlas::labelAtlasWithString(L"0123456789", L"fonts/fps_images.png", 16, 24, L'.');
-//     CCMenuItemLabel* item = CCMenuItemLabel::itemWithLabel(labelAtlas, this, menu_selector(BackToMainMenuLayer::MainMenuCallback) );
-//     item->setDisabledColor( ccc3(32,32,64) );
-//     item->setColor( ccc3(200,200,255) );
+    CCMenu* pMenu =CCMenu::menuWithItems(pMenuItem, NULL);
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    pMenu->setPosition( CGPointZero );
+    pMenuItem->setPosition( CGPointMake( s.width - 50, 25) );
 
-//     CCMenu *menu = CCMenu::menuWithItems(item, NULL);
-//     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-//     menu->setPosition( CGPointZero );
-//     item->setPosition( CGPointMake( s.width/2 - 100,30) );
-// 
-//     addChild(menu, 1);
+    addChild(pMenu, 1);
 }
 
-// void BackToMainMenuLayer::MainMenuCallback(UxObject* pSender)
-// {
-//     CCScene* pScene = CCScene::node();
-//     CCLayer* pLayer = new TestController();
-//     pLayer->autorelease();
-// 
-//     pScene->addChild(pLayer);
-//     CCDirector::getSharedDirector()->replaceScene(pScene);
-// }
+void BackToMainMenuLayer::MainMenuCallback(NSObject* pSender)
+{
+    CCScene* pScene = CCScene::node();
+    CCLayer* pLayer = new TestController();
+    pLayer->autorelease();
+
+    pScene->addChild(pLayer);
+    CCDirector::getSharedDirector()->replaceScene(pScene);
+}
 
 TestScene::TestScene()
 {
