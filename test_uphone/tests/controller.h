@@ -11,6 +11,7 @@ public:
     TestController();
 
     void menuCallback(NSObject * pSender);
+    void closeCallback(NSObject * pSender);
 };
 
 #endif

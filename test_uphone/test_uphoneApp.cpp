@@ -57,16 +57,6 @@ bool Ttest_uphoneApp::initCocos2d()
 
     m_nTimer = TIMER_Create(3000, TIMER_MODE_NORMAL, TimerCallback1, 0, 0);
     TIMER_Start(m_nTimer, 0);
-    //Sys_Sleep(1000);
-//     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
-//     CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-
-//     CCScene * pSecScene = CCScene::node();
-//     CCLayer * pSecLayer = new TestController();
-//     pSecLayer->autorelease();
-// 
-//     pSecScene->addChild(pSecLayer);
-//     CCDirector::getSharedDirector()->replaceScene(pSecScene);
 
     return true;
 }
@@ -108,13 +98,10 @@ Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
 
 static void TimerCallback1(Int32 nTimerId, UInt32 uUserData)
 {
-//     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
-//     CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    CCScene * pScene = CCScene::node();
+    CCLayer * pLayer = new TestController();
+    pLayer->autorelease();
 
-    CCScene * pSecScene = CCScene::node();
-    CCLayer * pSecLayer = new TestController();
-    pSecLayer->autorelease();
-
-    pSecScene->addChild(pSecLayer);
-    CCDirector::getSharedDirector()->replaceScene(pSecScene);
+    pScene->addChild(pLayer);
+    CCDirector::getSharedDirector()->replaceScene(pScene);
 }

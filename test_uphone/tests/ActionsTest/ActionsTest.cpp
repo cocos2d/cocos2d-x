@@ -71,6 +71,8 @@ CCLayer* CreateLayer(Int32 nIndex)
         pLayer = new ActionReverseSequence2(); break;
     case ACTION_ORBIT_LAYER:
         pLayer = new ActionOrbit(); break;
+    case ACTION_FLLOW_LAYER:
+        pLayer = new ActionFollow(); break;
     default:
         break;
     }
@@ -902,7 +904,15 @@ void ActionReverseSequence2::onEnter()
 
     // Test:
     //   Sequence should work both with IntervalAction and InstantActions
-    CCIntervalAction*  move1 = CCMoveBy::actionWithDuration(1, CGPointMake(250,0));    CCIntervalAction*  move2 = CCMoveBy::actionWithDuration(1, CGPointMake(0,50));    CCToggleVisibility*  tog1 = new CCToggleVisibility();    CCToggleVisibility*  tog2 = new CCToggleVisibility();    tog1->autorelease();    tog2->autorelease();    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));    CCIntervalAction*  action = CCRepeat::actionWithAction(dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
+    CCIntervalAction*  move1 = CCMoveBy::actionWithDuration(1, CGPointMake(250,0));
+    CCIntervalAction*  move2 = CCMoveBy::actionWithDuration(1, CGPointMake(0,50));
+    CCToggleVisibility*  tog1 = new CCToggleVisibility();
+    CCToggleVisibility*  tog2 = new CCToggleVisibility();
+    tog1->autorelease();
+    tog2->autorelease();
+    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));
+    CCIntervalAction*  action = CCRepeat::actionWithAction(dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
+
 
 
     // Test:
@@ -996,4 +1006,32 @@ void ActionOrbit::onEnter()
 std::string ActionOrbit::subtitle()
 {
     return "OrbitCamera action";
+}
+
+//------------------------------------------------------------------
+//
+// ActionFollow
+//
+//------------------------------------------------------------------
+void ActionFollow::onEnter()
+{
+    __super::onEnter();
+
+    centerSprites(1);
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+
+    m_grossini->setPosition(CGPointMake(-200, s.height / 2));
+    CCIntervalAction* move      = CCMoveBy::actionWithDuration(2, CGPointMake(s.width * 3, 0));
+    CCIntervalAction* move_back = move->reverse();
+    CCIntervalAction* seq       = dynamic_cast<CCIntervalAction*> (CCSequence::actions(move, move_back, NULL));
+    CCAction* rep               = CCRepeatForever::actionWithAction(seq);
+
+    m_grossini->runAction(rep);
+
+    this->runAction(CCFollow::actionWithTarget(m_grossini, CGRectMake(0, 0, s.width * 2 - 100, s.height)));
+}
+
+std::string ActionFollow::subtitle()
+{
+    return "Follow action";
 }
