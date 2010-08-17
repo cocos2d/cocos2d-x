@@ -123,7 +123,7 @@ public:
 	 * because it uses this, so it can not be static
 	 @since v0.99.0
 	 */
-	static void purgeSharedManager(void);
+	void purgeSharedManager(void);
  
 public:
 	// returns a shared instance of the CCActionManager 
