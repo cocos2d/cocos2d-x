@@ -381,11 +381,10 @@ CCTexture2D * CCTexture2D::initWithString(const char *text, CGSize dimensions, U
 {
 	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
 
-	void* pBitData = pBitmapDC->GetBuffer();
-	CGSize szImage = pBitmapDC->GetScaleSize();
-	CGSize szText = pBitmapDC->GetTextSize();
+	void* pBitData = pBitmapDC->getBuffer();
+	CGSize size = pBitmapDC->getSize();
 
-	initWithData(pBitData, kCCTexture2DPixelFormat_RGBA8888, (UINT)szImage.width, (UINT)szImage.height, szText);
+	initWithData(pBitData, kCCTexture2DPixelFormat_RGBA8888, (UINT)size.width, (UINT)size.height, size);
 
 	delete pBitmapDC;
 	return this;

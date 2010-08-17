@@ -47,14 +47,11 @@ namespace cocos2d{
 			}
 		}
 
-		void* GetBuffer(void);
-		CGSize GetScaleSize();
-		CGSize GetTextSize();
+		void* getBuffer(void);
+		CGSize getSize();
 	protected:
 		TBitmap *m_pBitmap;
-		ImageToolKit::Image *image;
-		CGSize m_tTextSize;
-		CGSize m_tScaleSize;
+		CGSize m_tSize;
 	};
 }
 
