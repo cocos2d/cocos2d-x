@@ -777,6 +777,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\platform\uphone\NewDeleteOp.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\platform\uphone\NSLock.cpp"
 					>
 				</File>
