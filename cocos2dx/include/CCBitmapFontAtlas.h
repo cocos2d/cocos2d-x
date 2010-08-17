@@ -153,7 +153,7 @@ namespace cocos2d{
 		Removes from memory the cached configurations and the atlas name dictionary.
 		@since v0.99.3
 		*/
-		void purgeCachedData();
+		static void purgeCachedData();
 		/** creates a bitmap font altas with an initial string and the FNT file */
 		static CCBitmapFontAtlas * bitmapFontAtlasWithString(const char *str, const char *fntFile);
 		/** init a bitmap font altas with an initial string and the FNT file */

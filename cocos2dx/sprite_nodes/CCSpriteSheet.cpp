@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "CCSprite.h"
 #include "CCSpriteSheet.h"
-//#include "CCGrid.h"
+#include "effects/CCGrid.h"
 #include "CCDrawingPrimitives.h"
 #include "CCTextureCache.h"
 #include "support/CGPointExtension.h"
@@ -123,23 +123,20 @@ void CCSpriteSheet::visit(void)
 
 	glPushMatrix();
 
-	///@todo implement later
-	/*
-	if ( grid_ && grid_.active) {
-		[grid_ beforeDraw];
-		[self transformAncestors];
+	if (m_pGrid && m_pGrid->isActive())
+	{
+		m_pGrid->beforeDraw();
+        transformAncestors();
 	}
-	*/
 
 	transform();
 
 	draw();
 
-	///@todo: implement later
-	/*
-	if ( grid_ && grid_.active)
-		[grid_ afterDraw:self];
-	*/
+	if (m_pGrid && m_pGrid->isActive())
+	{
+		m_pGrid->afterDraw(this);
+	}
 
 	glPopMatrix();
 }
