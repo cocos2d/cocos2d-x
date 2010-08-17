@@ -9,12 +9,17 @@
 
 #include "CCDirector.h"
 #include "CCScene.h"
+#include "CCSprite.h"
 #include "tests/controller.h"
+#include "CCTextureCache.h"
 
 using namespace cocos2d;
 
+static void TimerCallback1(Int32 nTimerId, UInt32 uUserData);
+
 Ttest_uphoneApp::Ttest_uphoneApp()
 : m_pMainWnd(NULL)
+, m_nTimer(0)
 {
 
 }
@@ -26,15 +31,42 @@ Ttest_uphoneApp::~Ttest_uphoneApp()
 
 bool Ttest_uphoneApp::initCocos2d()
 {
+    // init director
     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
     CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
-    CCScene * pScene = CCScene::node();
-    CCLayer * pLayer = new TestController();
-    pLayer->autorelease();
+    // load background image texture and get window size
+    CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage("/NEWPLUS/TDA_DATA/UserData/HelloWorld.png");
+    CGSize size = CCDirector::getSharedDirector()->getWinSize();
 
+    // create sprite instance
+    CCSprite * pSprite = (new CCSprite())->initWithTexture(pTexture); 
+    pSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
+    pSprite->autorelease()->retain();
+
+    // create layer instance
+    CCLayer * pLayer = new CCLayer();
+    pLayer->addChild(pSprite)->autorelease();
+
+    // add layer to scene
+    CCScene * pScene = CCScene::node();
     pScene->addChild(pLayer);
+
+    // add scene to director
     CCDirector::getSharedDirector()->runWithScene(pScene);
+
+    m_nTimer = TIMER_Create(3000, TIMER_MODE_NORMAL, TimerCallback1, 0, 0);
+    TIMER_Start(m_nTimer, 0);
+    //Sys_Sleep(1000);
+//     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
+//     CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+
+//     CCScene * pSecScene = CCScene::node();
+//     CCLayer * pSecLayer = new TestController();
+//     pSecLayer->autorelease();
+// 
+//     pSecScene->addChild(pSecLayer);
+//     CCDirector::getSharedDirector()->replaceScene(pSecScene);
 
     return true;
 }
@@ -72,4 +104,17 @@ Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
 	}
 
 	return bHandled;
+}
+
+static void TimerCallback1(Int32 nTimerId, UInt32 uUserData)
+{
+//     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
+//     CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+
+    CCScene * pSecScene = CCScene::node();
+    CCLayer * pSecLayer = new TestController();
+    pSecLayer->autorelease();
+
+    pSecScene->addChild(pSecLayer);
+    CCDirector::getSharedDirector()->replaceScene(pSecScene);
 }

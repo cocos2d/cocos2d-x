@@ -112,6 +112,7 @@ CCLayer* RestartAction()
 
 void ActionsTestScene::runThisTest()
 {
+    s_nActionIdx = -1;
     addChild(NextAction());
 
     CCDirector::getSharedDirector()->replaceScene(this);
@@ -156,27 +157,28 @@ void ActionsDemo::onEnter()
     addChild(m_tamara, 2);
     addChild(m_kathia, 3);
 
-    centerSprites(3);
-
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-/**
-@todo add title
-*/
+
+    m_grossini->setPosition( CGPointMake(s.width/2, s.height/3));
+    m_tamara->setPosition( CGPointMake(s.width/2, 2*s.height/3));
+    m_kathia->setPosition( CGPointMake(s.width/2, s.height/2)); 
+
+    // add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
-    CCLabel* label = CCLabel::labelWithString(pTitle, "Arial", 28);
+    CCLabel* label = CCLabel::labelWithString(pTitle, "Arial", 18);
     addChild(label, 1);
-    label->setPosition( CGPointMake(s.width/2, s.height-50) );
+    label->setPosition( CGPointMake(s.width/2, s.height - 30) );
 
     std::string strSubtitle = subtitle();
-
     if( ! strSubtitle.empty() ) 
     {
-        CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+        CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
         addChild(l, 1);
-        l->setPosition( CGPointMake(s.width/2, s.height-80) );
+        l->setPosition( CGPointMake(s.width/2, s.height - 60) );
     }	
 
+    // add menu
     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionsDemo::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionsDemo::restartCallback) );
     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(ActionsDemo::nextCallback) );
@@ -606,28 +608,28 @@ void ActionSequence2::onEnter()
 void ActionSequence2::callback1()
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-//     CCLabel *label = CCLabel::labelWithString(L"callback 1 called", L"Marker Felt", 16);
-//     label->setPosition(ccp( s.width/4*1,s.height/2));
-// 
-//     addChild(label);
+    CCLabel *label = CCLabel::labelWithString("callback 1 called", "Marker Felt", 16);
+    label->setPosition(CGPointMake( s.width/4*1,s.height/2));
+
+    addChild(label);
 }
 
 void ActionSequence2::callback2(NSObject* sender)
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-//     CCLabel *label = CCLabel::labelWithString(L"callback 2 called", L"Marker Felt", 16);
-//     label->setPosition(ccp( s.width/4*2,s.height/2));
-// 
-//     addChild(label);
+    CCLabel *label = CCLabel::labelWithString("callback 2 called", "Marker Felt", 16);
+    label->setPosition(CGPointMake( s.width/4*2,s.height/2));
+
+    addChild(label);
 }
 
 void ActionSequence2::callback3(NSObject* sender, void* data)
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-//     CCLabel *label = CCLabel::labelWithString(L"callback 3 called", L"Marker Felt", 16);
-//     label->setPosition(ccp( s.width/4*3,s.height/2));
-// 
-//     addChild(label);
+    CCLabel *label = CCLabel::labelWithString("callback 3 called", "Marker Felt", 16);
+    label->setPosition(CGPointMake( s.width/4*3,s.height/2));
+
+    addChild(label);
 }
 
 std::string ActionSequence2::subtitle()
@@ -672,27 +674,27 @@ void ActionCallFunc::onEnter()
 void ActionCallFunc::callback1()
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-//     CCLabel *label = CCLabel::labelWithString(L"callback 1 called", L"Marker Felt", 16);
-//     label->setPosition(ccp( s.width/4*1,s.height/2));
-// 
-//     addChild(label);
+    CCLabel *label = CCLabel::labelWithString("callback 1 called", "Marker Felt", 16);
+    label->setPosition(CGPointMake( s.width/4*1,s.height/2));
+
+    addChild(label);
 }
 
 void ActionCallFunc::callback2(CCNode* pSender)
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-//     CCLabel *label = CCLabel::labelWithString(L"callback 2 called", L"Marker Felt", 16);
-//     label->setPosition(ccp( s.width/4*2,s.height/2));
-// 
-//     addChild(label);
+    CCLabel *label = CCLabel::labelWithString("callback 2 called", "Marker Felt", 16);
+    label->setPosition(CGPointMake( s.width/4*2,s.height/2));
+
+    addChild(label);
 }
 
 void ActionCallFunc::callback3(CCNode* pTarget, void* data)
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
-//     CCLabel *label = CCLabel::labelWithString(L"callback 3 called", L"Marker Felt", 16);
-//     label->setPosition(ccp( s.width/4*3,s.height/2));
-//     addChild(label);
+    CCLabel *label = CCLabel::labelWithString("callback 3 called", "Marker Felt", 16);
+    label->setPosition(CGPointMake( s.width/4*3,s.height/2));
+    addChild(label);
 }
 
 std::string ActionCallFunc::subtitle()

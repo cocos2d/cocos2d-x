@@ -12,7 +12,7 @@ public:
     BackToMainMenuLayer();
 
     // The CallBack for back to the main menu scene
-    // void MainMenuCallback(UxObject* pSender);
+    void MainMenuCallback(NSObject* pSender);
 };
 
 class TestScene : public CCScene
