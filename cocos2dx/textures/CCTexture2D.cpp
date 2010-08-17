@@ -382,7 +382,7 @@ CCTexture2D * CCTexture2D::initWithString(const char *text, CGSize dimensions, U
 	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
 
 	void* pBitData = pBitmapDC->GetBuffer();
-	CGSize szImage = pBitmapDC->GetSize();
+	CGSize szImage = pBitmapDC->GetScaleSize();
 	CGSize szText = pBitmapDC->GetTextSize();
 
 	initWithData(pBitData, kCCTexture2DPixelFormat_RGBA8888, (UINT)szImage.width, (UINT)szImage.height, szText);

@@ -23,18 +23,23 @@ THE SOFTWARE.
 ****************************************************************************/
 #include <cstring>
 #include "CCXBitmapDC.h"
+#include "CCXApplication_uphone.h"
+#include "CCDirector.h"
+#include "ImageToolKit/IT_ImageDrawingTool.h"
+
 namespace cocos2d {
 
 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
 		TFont font;
+		font.Create(0, fontSize);
 		int len = strlen(text) + 1;
-		TUChar * pText = new TUChar[len];
-		TUString::StrGBToUnicode(pText, (Char*)text);
+		TUChar *pText = new TUChar[len];
+		TUString::StrUtf8ToStrUnicode(pText, (Char*)text);
 
 		if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
 		{
-			m_tTextSize.width = font.CharsWidth(pText, len);
+			m_tTextSize.width = font.CharsWidth(pText,len);
 			m_tTextSize.height = font.LineHeight();
 		}else
 		{
@@ -48,30 +53,35 @@ namespace cocos2d {
 		{
 			i = 1;
 			while(i < width)
-				i>>=1;
+				i<<=1;
 			width = i;
 		}
-
 		if((height != 1) && (height & (height - 1))) 
 		{
 			i = 1;
 			while(i < height)
-				i >>= 1;
+				i <<= 1;
 			height = i;
 		}
 
 		m_tScaleSize.width = (float)width;
 		m_tScaleSize.height = (float)height;
 
-		m_pBitmap = TBitmap::Create(width, height, 32);
-		TDC dc(NULL);
-		dc.DrawCharsInBitmap(pText, len, m_pBitmap, RGBA(255,0,0,255), RGBA(0,255,0,255), font, GUI_API_STYLE_ALIGNMENT_CENTER);
+		TWindow *pWindow = new TWindow(CCXApplication::getSharedApplication());
+		pWindow->CreateMemWindow(width, height, screenAlphaTransparentFormat);
+   		TDC dc(pWindow);
+		dc.SetFont(font);
+ 		dc.DrawTextXYEx(pText, 0, 0, 0, RGBA(255,255,0,255), RGBA(0,0,0,0), font, 
+			GUI_API_STYLE_ROP_MODE_TRANSPARENT | GUI_API_STYLE_SPECIFY_FORE_COLOR |  
+			GUI_API_STYLE_ALIGNMENT_CENTER | GUI_API_STYLE_ALIGNMENT_MIDDLE);
+ 		m_pBitmap = pWindow->GetBitmap()->DupBitmapTo32();
 	}
 	void *CCXBitmapDC::GetBuffer()
 	{
-		return m_pBitmap->GetDataPtr();
+		UINT8 *data = m_pBitmap->GetDataPtr();
+		return data;
 	}
-	CGSize CCXBitmapDC::GetSize()
+	CGSize CCXBitmapDC::GetScaleSize()
 	{
 		return m_tScaleSize;
 	}
