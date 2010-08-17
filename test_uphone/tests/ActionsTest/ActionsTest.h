@@ -35,6 +35,7 @@ enum
     ACTION_REVERSESEQUENCE_LAYER,
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
+    ACTION_FLLOW_LAYER,
     ACTION_LAYER_COUNT,
 };
 
@@ -235,6 +236,13 @@ public:
     void callback1();
     void callback2(CCNode* pTarget);
     void callback3(CCNode* pTarget, void* data);
+};
+
+class ActionFollow : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string subtitle();
 };
 
 #endif
