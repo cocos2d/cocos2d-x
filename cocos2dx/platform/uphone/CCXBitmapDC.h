@@ -27,12 +27,17 @@ THE SOFTWARE.
 #include "TG3.h"
 #include "ccTypes.h"
 #include "Cocos2dDefine.h"
+#include "ImageToolKit/IT_Image.h"
 
 namespace cocos2d{
 	class CCX_DLL CCXBitmapDC
 	{
 	public:
-		CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+		CCXBitmapDC(const char *text, 
+					CGSize dimensions = CGSizeZero,
+					UITextAlignment alignment = UITextAlignmentCenter,
+					const char *fontName = NULL,
+					float fontSize = 0);
 		virtual ~CCXBitmapDC(void)
 		{
 			if (m_pBitmap)
@@ -43,10 +48,11 @@ namespace cocos2d{
 		}
 
 		void* GetBuffer(void);
-		CGSize GetSize();
+		CGSize GetScaleSize();
 		CGSize GetTextSize();
 	protected:
 		TBitmap *m_pBitmap;
+		ImageToolKit::Image *image;
 		CGSize m_tTextSize;
 		CGSize m_tScaleSize;
 	};
