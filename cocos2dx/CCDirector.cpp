@@ -38,6 +38,8 @@ THE SOFTWARE.
 #include "NSAutoreleasePool.h"
 #include "platform/platform.h"
 #include "CCXApplication.h"
+#include "CCBitmapFontAtlas.h"
+#include "actions/CCActionManager.h"
 
 #include <string>
 
@@ -103,8 +105,8 @@ bool CCDirector::setDierectorType(ccDirectorType obDirectorType)
 CCDirector* CCDirector::init(void)
 {
 	CCLOG("cocos2d: %s", cocos2dVersion());
-	// todo adding a description of type
-	CCLOG("cocos2d: Using Director Type: ");
+
+	CCLOG("cocos2d: Using Director Type: %d", CCDirectorTypeDiaplayLink);
 
 	// default values
     m_ePixelFormat = kCCPixelFormatDefault;
@@ -302,26 +304,7 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 	if (m_eDeviceOrientation != kDeviceOrientation)
 	{
 		m_eDeviceOrientation = kDeviceOrientation;
-		// how to implementation????
-		/*
-        switch( deviceOrientation_) {
-			case CCDeviceOrientationPortrait:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated:NO];
-				break;
-			case CCDeviceOrientationPortraitUpsideDown:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated:NO];
-				break;
-			case CCDeviceOrientationLandscapeLeft:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated:NO];
-				break;
-			case CCDeviceOrientationLandscapeRight:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated:NO];
-				break;
-			default:
-				NSLog(@"Director: Unknown device orientation");
-				break;
-		  }
-		  */
+
 		switch (m_eDeviceOrientation)
 		{
 		case CCDeviceOrientationPortrait:
@@ -436,65 +419,6 @@ bool CCDirector::detach(void)
 	CCX_SAFE_DELETE(m_pobOpenGLView);
 	return true;
 }
-
-/*
-bool CCDirector::attachInWindow(UIWindow *pWindow)
-{
-	if (initOpenGLViewWithView(pWindow, pWindow->bounds())
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool CCDirector::attachInView(UIView *pView)
-{
-	if (initOpenGLViewWithView(pView, pView->bound())
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool CCDirector::attchInViewWithFrame(UIView *pView, CGRect frame)
-{
-	if (initOpenGLViewWithView(pView, frame))
-	{
-		return true;
-	}
-
-	return false;
-}
-
-
-bool CCDirector::initOpenGLViewWithViewWithFrame(UIView *pView, CGRect obRect)
-{
-	assert(! isOpenGLAttached());
-
-	// check if the view is not initiallized
-	if (! m_pobOpenGLView)
-	{
-		// define the pixel format
-		string *pstrFormat = NULL;
-		GLuint uDepthFormat = 0;
-
-		if (m_ePixelFormat == kCCPixelFormatRGBA8888)
-		{
-			pstrFormat = kEAGLColorFormatRGBA8;
-		} else
-		if (m_ePixelFormat == kCCPixelFormatRGB565)
-		{
-			pstrFormat = kEAGLColorFormatRGB565;
-		}
-		else
-		{
-			CCLOG("cocos2d: Director: Unknown pixel format.");
-		}
-	}
-}
-*/
 
 CGPoint CCDirector::convertToGL(CGPoint obPoint)
 {
@@ -685,14 +609,12 @@ void CCDirector::end(void)
 #endif
 
 	// purge bitmap cache
-// todo: implement CCBitmapFontAtlas
-//	CCBitmapFontAtlas::purgeCachedData();
+	CCBitmapFontAtlas::purgeCachedData();
 
 	// purge all managers
-	///@todo: implement
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCScheduler::purgeSharedScheduler();
-//	CCActionManager::purgeSharedManager();
+	CCActionManager::purgeSharedManager();
 	CCTextureCache::purgeSharedTextureCache();
 
 	// OpenGL view
