@@ -376,7 +376,7 @@ namespace cocos2d
 		memcpy(m_pOriginalVertices, m_pVertices, (m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
 	}
 
-	ccVertex3F CCGrid3D::getVertex(ccGridSize pos)
+	ccVertex3F CCGrid3D::vertex(ccGridSize pos)
 	{
 		int index = pos.x * ((m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pVertices;
@@ -386,7 +386,7 @@ namespace cocos2d
 		return vert;
 	}
 
-	ccVertex3F CCGrid3D::getOriginalVertex(cocos2d::ccGridSize pos)
+	ccVertex3F CCGrid3D::originalVertex(cocos2d::ccGridSize pos)
 	{
 		int index = pos.x * ((m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pOriginalVertices;

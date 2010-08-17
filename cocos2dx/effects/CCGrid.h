@@ -103,9 +103,9 @@ namespace cocos2d
         ~CCGrid3D(void);
 
 		/** returns the vertex at a given position */
-		ccVertex3F getVertex(ccGridSize pos);
+		ccVertex3F vertex(ccGridSize pos);
 		/** returns the original (non-transformed) vertex at a given position */
-		ccVertex3F getOriginalVertex(ccGridSize pos);
+		ccVertex3F originalVertex(ccGridSize pos);
 		/** sets a new vertex at a given position */
 		void setVertex(ccGridSize pos, ccVertex3F vertex);
 
