@@ -25,68 +25,66 @@ THE SOFTWARE.
 #include "CCXBitmapDC.h"
 #include "CCXApplication_uphone.h"
 #include "CCDirector.h"
-#include "ImageToolKit/IT_ImageDrawingTool.h"
 
 namespace cocos2d {
 
 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
+		// create font
 		TFont font;
-		font.Create(0, fontSize);
+		font.Create(0, (Int32)fontSize);
 		int len = strlen(text) + 1;
 		TUChar *pText = new TUChar[len];
 		TUString::StrUtf8ToStrUnicode(pText, (Char*)text);
-
+		// calculate text size
 		if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
 		{
-			m_tTextSize.width = font.CharsWidth(pText,len);
-			m_tTextSize.height = font.LineHeight();
+			m_tSize.width = font.CharsWidth(pText,len);
+			m_tSize.height = font.LineHeight();
 		}else
 		{
-			m_tTextSize = dimensions;
+			m_tSize = dimensions;
 		}
 
-		int i;
-		int width = (int)m_tTextSize.width;
-		int height = (int)m_tTextSize.height;
-		if((width!= 1) && (width & (width - 1))) 
-		{
-			i = 1;
-			while(i < width)
-				i<<=1;
-			width = i;
-		}
-		if((height != 1) && (height & (height - 1))) 
-		{
-			i = 1;
-			while(i < height)
-				i <<= 1;
-			height = i;
-		}
-
-		m_tScaleSize.width = (float)width;
-		m_tScaleSize.height = (float)height;
-
+		Int16 width = (Int16)m_tSize.width;
+		Int16 height = (Int16)m_tSize.height;
+		// create memory window
 		TWindow *pWindow = new TWindow(CCXApplication::getSharedApplication());
 		pWindow->CreateMemWindow(width, height, screenAlphaTransparentFormat);
+		// create DC
    		TDC dc(pWindow);
-		dc.SetFont(font);
- 		dc.DrawTextXYEx(pText, 0, 0, 0, RGBA(255,255,0,255), RGBA(0,0,0,0), font, 
-			GUI_API_STYLE_ROP_MODE_TRANSPARENT | GUI_API_STYLE_SPECIFY_FORE_COLOR |  
-			GUI_API_STYLE_ALIGNMENT_CENTER | GUI_API_STYLE_ALIGNMENT_MIDDLE);
+		// set DC styles
+		UInt32 styles = GUI_API_STYLE_ROP_MODE_TRANSPARENT | GUI_API_STYLE_SPECIFY_FORE_COLOR |  
+			GUI_API_STYLE_ALIGNMENT_MIDDLE | GUI_API_STYLE_SPECIFY_FONT;
+		switch (alignment)
+		{
+		case UITextAlignmentLeft:
+			styles |= GUI_API_STYLE_ALIGNMENT_LEFT;
+			break;
+		case UITextAlignmentCenter:
+			styles |= GUI_API_STYLE_ALIGNMENT_CENTER;
+			break;
+		case UITextAlignmentRight:
+			styles |= GUI_API_STYLE_ALIGNMENT_RIGHT;
+			break;
+		default:
+			styles |= GUI_API_STYLE_ALIGNMENT_CENTER;
+			break;
+		}
+		TRectangle rect;
+		pWindow->GetWindowFrameRect(&rect);
+		// draw in memory window
+ 		dc.DrawTextInRectangleEx(pText, 0, RGBA(255,255,255,255), RGBA(0,0,0,0), font, &rect, styles);
  		m_pBitmap = pWindow->GetBitmap()->DupBitmapTo32();
+		// close window
+		pWindow->CloseWindowNow();
 	}
-	void *CCXBitmapDC::GetBuffer()
+	void *CCXBitmapDC::getBuffer()
 	{
-		UINT8 *data = m_pBitmap->GetDataPtr();
-		return data;
+		return m_pBitmap->GetDataPtr();
 	}
-	CGSize CCXBitmapDC::GetScaleSize()
+	CGSize CCXBitmapDC::getSize()
 	{
-		return m_tScaleSize;
-	}
-	CGSize CCXBitmapDC::GetTextSize()
-	{
-		return m_tTextSize;
+		return m_tSize;
 	}
 }
