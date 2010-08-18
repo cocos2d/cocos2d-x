@@ -37,6 +37,7 @@ NSAutoreleasePool::NSAutoreleasePool(void)
 
 NSAutoreleasePool::~NSAutoreleasePool(void)
 {
+	clear();
 	delete m_pManagedObjectArray;
 }
 
@@ -63,7 +64,7 @@ void NSAutoreleasePool::clear(void)
 			}
 		}
 
-		m_pManagedObjectArray->removeAllObjects();
+//		m_pManagedObjectArray->removeAllObjects();
 	}
 }
 
@@ -87,7 +88,6 @@ NSPoolManager* NSPoolManager::getInstance(void)
 NSPoolManager::NSPoolManager(void)
 {
 	m_pReleasePoolStack = new stack<NSAutoreleasePool *>();
-	m_pCurReleasePool = NULL;
 }
 
 NSPoolManager::~NSPoolManager(void)
@@ -104,7 +104,6 @@ void NSPoolManager::finalize(void)
 		NSAutoreleasePool *pTop;
 		while (pTop = m_pReleasePoolStack->top())
 		{
-			pTop->clear();
 			m_pReleasePoolStack->pop();
 		}
 	}
@@ -113,17 +112,18 @@ void NSPoolManager::finalize(void)
 void NSPoolManager::push(void)
 {
 	NSAutoreleasePool *pPool = new NSAutoreleasePool();
-	m_pCurReleasePool = pPool;
 
 	m_pReleasePoolStack->push(pPool);
 }
 
 void NSPoolManager::pop(void)
 {
-	if (! m_pReleasePoolStack->empty())
+	if (m_pReleasePoolStack->top())
 	{
-		m_pReleasePoolStack->pop();
+		delete m_pReleasePoolStack->top();
+	    m_pReleasePoolStack->pop();
 	}
+
 }
 
 void NSPoolManager::addObject(NSObject *pObject)
@@ -133,20 +133,18 @@ void NSPoolManager::addObject(NSObject *pObject)
 
 void NSPoolManager::removeObject(NSObject *pObject)
 {
-	assert(m_pCurReleasePool);
+	assert(m_pReleasePoolStack->top());
 
-	m_pCurReleasePool->removeObject(pObject);
+	m_pReleasePoolStack->top()->removeObject(pObject);
 }
 
 NSAutoreleasePool* NSPoolManager::getCurReleasePool(void)
 {
-	if (! m_pCurReleasePool)
+	if (m_pReleasePoolStack->empty())
 	{
 		push();
 	}
 
-	assert(m_pCurReleasePool);
-
-	return m_pCurReleasePool;
+	return m_pReleasePoolStack->top();
 }
-}//namespace   cocos2d {
+}//namespace   cocos2d

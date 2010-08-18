@@ -25,7 +25,9 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "support/data_support/utlist.h"
+#include "support/data_support/ccArray.h"
 #include "NSMutableArray.h"
+#include "Cocos2dDefine.h"
 
 #include <assert.h>
 namespace   cocos2d {
@@ -37,7 +39,7 @@ typedef struct _listEntry
 {
 	struct	_listEntry	*prev, *next;
 	SelectorProtocol	*target;		// not retained (retained by hashUpdateEntry)
-	int				priority;
+	int				    priority;
 	bool				paused;
 	
 } tListEntry;
@@ -53,9 +55,9 @@ typedef struct _hashUpdateEntry
 // Hash Element used for "selectors with interval"
 typedef struct _hashSelectorEntry
 {
-	NSMutableArray<CCTimer*>	*timers;
+	ccArray          	        *timers;
 	SelectorProtocol			*target;	// hash key (retained)
-	unsigned int						timerIndex;
+	unsigned int				timerIndex;
 	CCTimer						*currentTimer;
 	bool						currentTimerSalvaged;
 	bool						paused;
@@ -134,7 +136,6 @@ CCScheduler::~CCScheduler(void)
 {
 	unscheduleAllSelectors();
 
-	delete pSharedScheduler;
 	pSharedScheduler = NULL;
 }
 
@@ -173,7 +174,10 @@ CCScheduler* CCScheduler::init(void)
 
 void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 {
-	delete pElement->timers;
+	ccArrayFree(pElement->timers);
+	NSObject *pObj = dynamic_cast<NSObject*>(pElement->target);
+	CCX_SAFE_RELEASE(pObj);
+	pElement->target = NULL;
 	HASH_DEL(m_pHashForSelectors, pElement);
 	free(pElement);
 }
@@ -217,16 +221,16 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 
 	if (pElement->timers == NULL)
 	{
-		pElement->timers = new NSMutableArray<CCTimer*>(10);
+		pElement->timers = ccArrayNew(10);
+	}else 
+	if (pElement->timers->num == pElement->timers->max)
+	{
+		ccArrayDoubleCapacity(pElement->timers);
 	}
-    
-	// NSMutableArray will increase it's capacity automatically
-	//else if( element->timers->num == element->timers->max )
-		//ccArrayDoubleCapacity(element->timers);
 
 	CCTimer *pTimer = new CCTimer();
 	pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
-	pElement->timers->addObject(pTimer);
+	ccArrayAppendObject(pElement->timers, pTimer);
 	pTimer->release();
 }
 
@@ -246,11 +250,9 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 
 	if (pElement)
 	{
-		NSMutableArray<CCTimer*>::NSMutableArrayIterator iter;
-		unsigned int i;
-		for (iter = pElement->timers->begin(), i = 0; iter != pElement->timers->end(); ++iter, ++i)
+		for (unsigned int i = 0; i < pElement->timers->num; ++i)
 		{
-			CCTimer *pTimer = *iter;
+			CCTimer *pTimer = static_cast<CCTimer*>(pElement->timers->arr[i]);
 
 			if (pfnSelector == pTimer->m_pfnSelector)
 			{
@@ -260,7 +262,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 					pElement->currentTimerSalvaged = true;
 				}
 
-				pElement->timers->removeObjectAtIndex(i);
+				ccArrayRemoveObjectAtIndex(pElement->timers, i );
 
 				// update timerIndex in case we are in tick:, looping over the actions
 				if (pElement->timerIndex >= i)
@@ -268,7 +270,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 					pElement->timerIndex--;
 				}
 
-				if (pElement->timers->count() == 0)
+				if (pElement->timers->num == 0)
 				{
 					if (m_pCurrentTarget == pElement)
 					{
@@ -337,6 +339,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int
 	// update hash entry for quick access
 	tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
 	pHashElement->target = pTarget;
+	dynamic_cast<NSObject*>(pTarget)->retain();
 	pHashElement->list = ppList;
 	pHashElement->entry = pListElement;
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -345,7 +348,6 @@ void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int
 void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool bPaused)
 {
 	tListEntry *pListElement = (tListEntry *)malloc(sizeof(*pListElement));
-;
 
 	pListElement->target = pTarget;
 	pListElement->paused = bPaused;
@@ -355,7 +357,8 @@ void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool 
 
 	// update hash entry for quicker access
 	tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
-	// hashElement->target = [target retain];
+	pHashElement->target = pTarget;
+	dynamic_cast<NSObject*>(pTarget)->retain();
 	pHashElement->list = ppList;
 	pHashElement->entry = pListElement;
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -402,6 +405,9 @@ void CCScheduler::unscheduleUpdateForTarget(const SelectorProtocol *pTarget)
 		free(pElement->entry);
 
 		// hash entry
+		NSObject *pObj = dynamic_cast<NSObject*>(pElement->target);
+		CCX_SAFE_RELEASE(pObj);
+		pElement->target = NULL;
 		HASH_DEL(m_pHashForUpdates, pElement);
 		free(pElement);
 	}
@@ -447,13 +453,13 @@ void CCScheduler::unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget)
 
 	if (pElement)
 	{
-		if (pElement->timers->containsObject(pElement->currentTimer)
+		if (ccArrayContainsObject(pElement->timers, pElement->currentTimer)
 			&& (! pElement->currentTimerSalvaged))
 		{
 			pElement->currentTimer->retain();
 			pElement->currentTimerSalvaged = true;
 		}
-		pElement->timers->removeAllObjects();
+		ccArrayRemoveAllObjects(pElement->timers);
 
 		if (m_pCurrentTarget == pElement)
 		{
@@ -560,9 +566,9 @@ void CCScheduler::tick(ccTime dt)
 		if (! m_pCurrentTarget->paused)
 		{
 			// The 'timers' array may change while inside this loop
-			for (elt->timerIndex = 0; elt->timerIndex < elt->timers->count(); ++(elt->timerIndex))
+			for (elt->timerIndex = 0; elt->timerIndex < elt->timers->num; ++(elt->timerIndex))
 			{
-				elt->currentTimer = elt->timers->getObjectAtIndex(elt->timerIndex);
+				elt->currentTimer = static_cast<CCTimer*>(elt->timers->arr[elt->timerIndex]);
 				elt->currentTimerSalvaged = false;
 
 				elt->currentTimer->update(dt);
@@ -584,7 +590,7 @@ void CCScheduler::tick(ccTime dt)
 		elt = (tHashSelectorEntry *)elt->hh.next;
 
 		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
-		if (m_bCurrentTargetSalvaged && m_pCurrentTarget->timers->count() == 0)
+		if (m_bCurrentTargetSalvaged && m_pCurrentTarget->timers->num == 0)
 		{
 			removeHashElement(m_pCurrentTarget);
 		}
