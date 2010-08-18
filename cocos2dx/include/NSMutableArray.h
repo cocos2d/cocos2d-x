@@ -230,6 +230,18 @@ public:
 		}
 	}
 
+	void removeObjectsInArray(NSMutableArray<T>* pDeleteArray)
+	{
+		if(pDeleteArray && pDeleteArray->count())
+		{
+			NSObjectArray::iterator it;
+			for( it = pDeleteArray->m_array.begin(); it != pDeleteArray->m_array.end(); it++)
+			{
+				removeObject(*it);
+			}
+		}
+	}
+
 	void removeObjectAtIndex(unsigned int uIndex)
 	{
 		if (m_array.empty() || uIndex == 0)

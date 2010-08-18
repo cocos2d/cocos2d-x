@@ -52,7 +52,7 @@ namespace cocos2d {
 		CCRenderTexture(){}
 		virtual ~CCRenderTexture();
 		/** creates a RenderTexture object with width and height */
-		CCRenderTexture *renderTextureWithWidthAndHeight(int width, int height);
+		static CCRenderTexture *renderTextureWithWidthAndHeight(int width, int height);
 		/** initializes a RenderTexture object with width and height */
 		bool initWithWidthAndHeight(int width, int height);
 		void begin();

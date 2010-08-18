@@ -365,6 +365,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCRibbon.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCScene.h"
 				>
 			</File>
@@ -543,6 +547,10 @@
 			</File>
 			<File
 				RelativePath=".\misc_nodes\CCRenderTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\misc_nodes\CCRibbon.cpp"
 				>
 			</File>
 		</Filter>
