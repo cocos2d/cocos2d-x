@@ -386,5 +386,5 @@ bool UIImage::initWithBuffer(int nX, int nY, unsigned char *pBuffer)
 	/// @todo uiimage::initwithbuffer
 	return false;
 }
-}
+
 }//namespace   cocos2d 
