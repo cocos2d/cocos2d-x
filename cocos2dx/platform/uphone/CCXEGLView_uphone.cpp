@@ -343,9 +343,16 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
 CGSize CCXEGLView::getSize()
 {
-    TRectangle rc;
-    GetBounds(&rc);
-    return CGSize((float)rc.Width(), (float)rc.Height());
+	Coord w, h;
+	TWindow::GetWindowExtent(&w, &h);
+    return CGSize((float)w, (float)h);
+}
+
+CGRect CCXEGLView::getFrame()
+{
+	TRectangle rc;
+	GetClientBounds(&rc);
+	return (CGRect((float)rc.X(), (float)rc.Y(), (float)rc.Width(), (float)rc.Height()));
 }
 
 bool CCXEGLView::isOpenGLReady()

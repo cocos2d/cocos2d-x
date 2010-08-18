@@ -49,6 +49,7 @@ public:
     virtual Boolean AfterCreate(void);
     virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
 
+	CGRect  getFrame();
     CGSize  getSize();
     bool    isOpenGLReady();
     void    release();
