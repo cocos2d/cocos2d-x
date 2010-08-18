@@ -105,7 +105,7 @@ static inline void ccArrayEnsureExtraCapacity(ccArray *arr, unsigned int extra)
 /** Returns index of first occurence of object, UXNotFound if object not found. */
 static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, NSObject* object)
 {
-	for ( UINT i = 0; i < arr->num; i++)
+	for ( unsigned int i = 0; i < arr->num; i++)
 	{
 		if (arr->arr[i] == object) 
 		{
@@ -276,9 +276,9 @@ static inline void ccCArrayEnsureExtraCapacity(ccCArray *arr, unsigned int extra
 }
 
 /** Returns index of first occurence of value, NSNotFound if value not found. */
-static inline UINT ccCArrayGetIndexOfValue(ccCArray *arr, void* value)
+static inline unsigned int ccCArrayGetIndexOfValue(ccCArray *arr, void* value)
 {
-	for (UINT i = 0; i < arr->num; i++)
+	for (unsigned int i = 0; i < arr->num; i++)
 	{
 		if (arr->arr[i] == (NSObject*)value) 
 		{

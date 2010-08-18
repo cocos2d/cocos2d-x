@@ -48,33 +48,25 @@ using namespace cocos2d;
 namespace   cocos2d {
 
 // singleton stuff
-static CCDirector *pobSharedDirector = NULL;
+static CCDisplayLinkDirector s_sharedDirector;
+static bool s_bFirstRun = true;
 
 #define kDefaultFPS		60  // 60 frames per second
 extern string cocos2dVersion(void);
 
 CCDirector* CCDirector::getSharedDirector(void)
 {
-	if (! pobSharedDirector)
+	if (s_bFirstRun)
 	{
-		//
-		// Default Director is TimerDirector
-		// 
-		//pobSharedDirector = new CCTimerDirector();
-		//pobSharedDirector->init();
-
-		// we now only support CCDisplayLinkDirector
-		pobSharedDirector = new CCDisplayLinkDirector();
-		pobSharedDirector->init();
+		s_sharedDirector.init();
+        s_bFirstRun = false;
 	}
 
-	return pobSharedDirector;
+	return &s_sharedDirector;
 }
 
 bool CCDirector::setDierectorType(ccDirectorType obDirectorType)
 {
-	assert(pobSharedDirector==NULL);
-
 	/*
 	switch (obDirectorType)
 	{
@@ -152,13 +144,12 @@ CCDirector::~CCDirector(void)
 //    FPSLabel->release();
 #endif 
     
-	m_pRunningScene->release();
-	m_pobScenesStack->release();
+	CCX_SAFE_RELEASE(m_pRunningScene);
+	CCX_SAFE_RELEASE(m_pobScenesStack);
+
 
 	// pop the autorelease pool
 	NSPoolManager::getInstance()->pop();
-
-	pobSharedDirector = NULL;
 
 	// delete m_pLastUpdate
 	delete m_pLastUpdate;
@@ -613,8 +604,8 @@ void CCDirector::end(void)
 
 	// purge all managers
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-	CCScheduler::purgeSharedScheduler();
 	CCActionManager::getSharedManager()->purgeSharedManager();
+	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
 
 	// OpenGL view

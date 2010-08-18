@@ -69,7 +69,6 @@ private:
 
 private:
 	std::stack<NSAutoreleasePool *> *m_pReleasePoolStack;
-	NSAutoreleasePool *m_pCurReleasePool;
 };
 }//namespace   cocos2d 
 

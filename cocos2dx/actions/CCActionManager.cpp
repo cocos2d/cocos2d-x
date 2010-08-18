@@ -56,8 +56,7 @@ CCActionManager* CCActionManager::getSharedManager(void)
 void CCActionManager::purgeSharedManager(void)
 {
 	CCScheduler::getSharedScheduler()->unscheduleUpdateForTarget(this);
-	delete gSharedManager;
-	gSharedManager = NULL;
+	CCX_SAFE_RELEASE(gSharedManager);
 }
 
 CCActionManager::CCActionManager(void)
