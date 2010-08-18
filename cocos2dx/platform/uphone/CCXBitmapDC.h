@@ -33,6 +33,7 @@ namespace cocos2d{
 	class CCX_DLL CCXBitmapDC
 	{
 	public:
+		CCXBitmapDC(int width, int height);
 		CCXBitmapDC(const char *text, 
 					CGSize dimensions = CGSizeZero,
 					UITextAlignment alignment = UITextAlignmentCenter,
