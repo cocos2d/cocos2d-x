@@ -28,6 +28,10 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+	CCXBitmapDC::CCXBitmapDC(int width, int height)
+	{
+		m_pBitmap->Create(width, height, 32);
+	}
 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
 		// create font

@@ -353,6 +353,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCRenderTexture.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCScene.h"
 				>
 			</File>
@@ -527,6 +531,10 @@
 			</File>
 			<File
 				RelativePath=".\misc_nodes\CCProgressTimer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\misc_nodes\CCRenderTexture.cpp"
 				>
 			</File>
 		</Filter>
