@@ -56,10 +56,13 @@ public:
 	std::vector<std::string> allKeys()
 	{
 		std::vector<std::string> tRet;
-		NSObjectMapIter it;
-		for( it = m_Map.begin(); it != m_Map.end(); ++it)
+		if (m_Map.size() > 0)
 		{
-			tRet.push_back(it->first);
+			NSObjectMapIter it;
+			for( it = m_Map.begin(); it != m_Map.end(); ++it)
+			{
+				tRet.push_back(it->first);
+			}
 		}
 		return tRet;
 	}
@@ -68,12 +71,15 @@ public:
 	std::vector<std::string> allKeysForObject(_ValueT object)
 	{
 		std::vector<std::string> tRet;
-		NSObjectMapIter it;
-		for( it= m_Map.begin(); it != m_Map.end(); ++it)
+		if (m_Map.size() > 0)
 		{
-			if (it->second == object)
+			NSObjectMapIter it;
+			for( it= m_Map.begin(); it != m_Map.end(); ++it)
 			{
-				tRet.push_back(it->first);
+				if (it->second == object)
+				{
+					tRet.push_back(it->first);
+				}
 			}
 		}
 		return tRet;
@@ -170,12 +176,17 @@ public:
 
 	void removeAllObjects()
 	{
-		NSObjectMapIter it;
-		for( it= m_Map.begin(); it != m_Map.end(); ++it)
+		if (m_Map.size() > 0)
 		{
-			it->second->release();
+			NSObjectMapIter it;
+			for( it = m_Map.begin(); it != m_Map.end(); ++it)
+			{
+				if (it->second)
+				{
+					it->second->release();
+				}
+			}
 		}
-
 		m_Map.clear();
 	}
 

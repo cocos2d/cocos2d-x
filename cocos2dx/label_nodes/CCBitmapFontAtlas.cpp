@@ -44,7 +44,8 @@ namespace cocos2d{
 		}
 		std::string key(fntFile);
 		pRet = configurations->objectForKey(key);
-		if( pRet == NULL ) {
+		if( pRet == NULL )
+		{
 			pRet = CCBitmapFontConfiguration::configurationWithFNTFile(fntFile);
 			configurations->setObject(pRet, key);
 		}
@@ -54,7 +55,10 @@ namespace cocos2d{
 
 	void FNTConfigRemoveCache( void )
 	{
-		configurations->removeAllObjects();
+		if (configurations)
+		{
+			configurations->removeAllObjects();
+		}
 	}
 	//
 	//Hash Element
