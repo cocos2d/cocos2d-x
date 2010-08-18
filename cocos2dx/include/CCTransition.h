@@ -101,7 +101,7 @@ private:
 class CCOrientedTransitionScene : public CCTransitionScene
 {
 protected:
-	tOrientation m_tOrientation;
+	tOrientation m_eOrientation;
 
 public:
 	CCOrientedTransitionScene();

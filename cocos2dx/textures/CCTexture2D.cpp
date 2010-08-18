@@ -43,8 +43,6 @@ namespace   cocos2d {
 
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
-/// @todo #include "FontManager.h"
-/// @todo #include "FontLabelStringDrawing.h"
 #endif// CC_FONT_LABEL_SUPPORT
 
 
@@ -219,7 +217,6 @@ CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 	this->initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
 	return this;
 }
-/// @todo to be checked
 CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
 	unsigned int					i;
@@ -279,7 +276,6 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 
-			/// @todo Get image data and convert to POT mode
 			tempData = static_cast<void*>(image->getRGBA8888Data());
 			NSAssert(tempData != NULL, "NULL image data.");
 			if(image->width() == POTWide && image->height() == POTHigh)

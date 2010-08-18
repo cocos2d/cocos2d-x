@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCRadialTransition.h"
-
+#include "CCDirector.h"
 
 namespace   cocos2d {
 
@@ -57,14 +57,14 @@ CCProgressTimerType CCRadialCCWTransition::radialType()
 
 void CCRadialCCWTransition::onEnter()
 {
-	/** @todo CCProgressTimer
-	[super onEnter];
+	__super::onEnter();
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	/** @todo CCProgressTimer, CCRenderTexture
 
 	// create the second render texture for outScene
-	CCRenderTexture *outTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
+	CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidth:size.width height:size.height];
 	outTexture.sprite.anchorPoint= ccp(0.5f,0.5f);
 	outTexture.position = ccp(size.width/2, size.height/2);
 	outTexture.anchorPoint = ccp(0.5f,0.5f);

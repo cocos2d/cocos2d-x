@@ -23,6 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCPageTurnTransition.h"
+#include "CCDirector.h"
+#include "CCIntervalAction.h"
+#include "CCInstantAction.h"
+#include "CCGridAction.h"
 
 namespace   cocos2d {
 
@@ -62,10 +66,8 @@ void CCPageTurnTransition::sceneOrder()
 
 void CCPageTurnTransition::onEnter()
 {
-	/** @todo CCDirector CCCallFunc CCStopGrid
-	[super onEnter];
-
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	__super::onEnter();
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	int x,y;
 	if( s.width > s.height)
 	{
@@ -76,30 +78,36 @@ void CCPageTurnTransition::onEnter()
 		x=12;y=16;
 	}
 
-	id action  = [self actionWithSize:ccg(x,y)];
+	CCIntervalAction *action  = this->actionWithSize(ccg(x,y));
 
-	if(! back_ )
+	if(! m_bBack )
 	{
-		[outScene runAction: [CCSequence actions:
-		action,
-			[CCCallFunc actionWithTarget:self selector:@selector(finish)],
-			[CCStopGrid action],
-			nil]
-		];
+		m_pOutScene->runAction
+		(
+			CCSequence::actions
+			(
+				action,
+				CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
+				CCStopGrid::action(),
+				NULL
+			)
+		);
 	}
 	else
 	{
 		// to prevent initial flicker
-		inScene.visible = NO;
-		[inScene runAction: [CCSequence actions:
-		[CCShow action],
-			action,
-			[CCCallFunc actionWithTarget:self selector:@selector(finish)],
-			[CCStopGrid action],
-			nil]
-		];
+		m_pInScene->setIsVisible(false);
+		m_pInScene->runAction
+		(
+			CCSequence::actions
+			(
+				action,
+				CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
+				CCStopGrid::action(),
+				NULL
+			)
+		);
 	}
-*/
 }
 
 
