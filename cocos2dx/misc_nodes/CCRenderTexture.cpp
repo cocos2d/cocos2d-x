@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCRenderTexture.h"
+#include "CCDirector.h"
 
 namespace cocos2d { 
 
@@ -96,7 +97,7 @@ namespace cocos2d {
 		CGSize textureSize = m_pTexture->getContentSize();
 
 		// Calculate the adjustment ratios based on the old and new projections
-		CGRect frame =CGRectZero;///@todo= [[[CCDirector sharedDirector] openGLView] frame];
+		CGRect frame = CCDirector::getSharedDirector()->getOpenGLView()->getFrame();
 		float widthRatio = frame.size.width / textureSize.width;
 		float heightRatio = frame.size.height / textureSize.height;
 
@@ -114,7 +115,7 @@ namespace cocos2d {
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_nOldFBO);
 		// Restore the original matrix and viewport
 		glPopMatrix();
-		CGRect frame =CGRectZero;/// @todo = [[[CCDirector sharedDirector] openGLView] frame];
+		CGRect frame = CCDirector::getSharedDirector()->getOpenGLView()->getFrame();
 		glViewport(0, 0, (GLsizei)frame.size.width, (GLsizei)frame.size.height);
 
 		glColorMask(TRUE, TRUE, TRUE, TRUE);
