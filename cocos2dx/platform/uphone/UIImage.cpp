@@ -203,7 +203,7 @@ UINT8* UIImage::getRGBA8888Data(void)
 	UINT8 *pBufferRet = NULL;
 
 	do {
-		const TBitmap *pBitmap;
+		TBitmap *pBitmap;
 		int nW;
 		int nH;
 		UINT8 uR;
@@ -243,8 +243,10 @@ UINT8* UIImage::getRGBA8888Data(void)
 				pBufferRet[baseAddr + 2] = uB;
 			}
 		}
-	} while(0);
 
+		pBitmap->Destroy();
+	} while(0);
+	
 	return pBufferRet;
 }
 
@@ -346,9 +348,9 @@ bool UIImage::loadPng(const char* strFileName)
     pBmpData = reinterpret_cast< UInt32* >( m_pBitmap->GetDataPtr() );
 
     if( info_ptr->color_type & PNG_COLOR_MASK_ALPHA )    {
-        for(int i = 0; i < height; i++)
+        for(unsigned int i = 0; i < height; i++)
         {
-            for(int j = 0; j < (4 * width); j += 4)
+            for(unsigned int j = 0; j < (4 * width); j += 4)
             {
                 *pBmpData++ = RGBA( rowPointers[i][j], rowPointers[i][j + 1], 
                     rowPointers[i][j + 2], rowPointers[i][j + 3] );
@@ -357,9 +359,9 @@ bool UIImage::loadPng(const char* strFileName)
     }
     else
     {
-        for(int i = 0; i < height; i++)
+        for(unsigned int i = 0; i < height; i++)
         {
-            for(int j = 0; j < (3 * width); j += 3)
+            for(unsigned int j = 0; j < (3 * width); j += 3)
             {
                 *pBmpData++ = RGB( rowPointers[i][j], rowPointers[i][j + 1], 
                     rowPointers[i][j + 2] );
