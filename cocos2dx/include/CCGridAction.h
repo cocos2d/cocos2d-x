@@ -40,7 +40,7 @@ namespace cocos2d
 		virtual CCIntervalAction* reverse(void);
 
 		/** initializes the action with size and duration */
-		bool initWithSize(ccGridSize gridSize, ccTime duration);
+		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
 		/** returns the grid */
 		virtual CCGridBase* grid(void);
 
