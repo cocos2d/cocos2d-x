@@ -376,4 +376,15 @@ bool UIImage::loadPng(const char* strFileName)
 
     return true;
 }
+bool UIImage::save(const std::string &strFileName, int nFormat)
+{
+	/// @todo uiimage::save
+	return false;
+}
+bool UIImage::initWithBuffer(int nX, int nY, unsigned char *pBuffer)
+{
+	/// @todo uiimage::initwithbuffer
+	return false;
+}
+}
 }//namespace   cocos2d 
