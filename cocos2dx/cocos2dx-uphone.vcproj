@@ -337,6 +337,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCMotionStreak.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCNode.h"
 				>
 			</File>
@@ -537,6 +541,10 @@
 		<Filter
 			Name="misc_nodes"
 			>
+			<File
+				RelativePath=".\misc_nodes\CCMotionStreak.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\misc_nodes\CCProgressTimer.cpp"
 				>
