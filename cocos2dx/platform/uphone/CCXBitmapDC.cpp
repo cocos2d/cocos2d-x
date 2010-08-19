@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCXBitmapDC.h"
 #include "CCXApplication_uphone.h"
 #include "CCDirector.h"
+#include "platform/platform.h"
 
 namespace cocos2d {
 
@@ -37,7 +38,8 @@ namespace cocos2d {
 		// create font
 		TFont font;
 		font.Create(0, (Int32)fontSize);
-		int len = strlen(text) + 1;
+		// text
+		Int32 len = strlen(text) + 1;
 		TUChar *pText = new TUChar[len];
 		TUString::StrUtf8ToStrUnicode(pText, (Char*)text);
 		// calculate text size
@@ -82,6 +84,7 @@ namespace cocos2d {
  		m_pBitmap = pWindow->GetBitmap()->DupBitmapTo32();
 		// close window
 		pWindow->CloseWindowNow();
+		delete [] pText;
 	}
 	void *CCXBitmapDC::getBuffer()
 	{
