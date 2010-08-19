@@ -45,8 +45,6 @@ NSData::~NSData(void)
 
 NSData* NSData::dataWithContentsOfFile(const string &strPath)
 {
-	NSData *pRet = new NSData();
-
 	FILE *pFile;
 	if(!(pFile = fopen(strPath.c_str(), "rb")))
 	{
@@ -57,6 +55,8 @@ NSData* NSData::dataWithContentsOfFile(const string &strPath)
 	{
 		return false;
 	}
+
+	NSData *pRet = new NSData();
 
 	fseek(pFile, 0, SEEK_END);
 
