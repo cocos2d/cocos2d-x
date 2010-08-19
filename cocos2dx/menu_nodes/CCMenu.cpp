@@ -134,52 +134,52 @@ namespace cocos2d{
 		{
 			return false;
 		}
-
 		m_pSelectedItem = this->itemForTouch(touch);
 		if (m_pSelectedItem)
 		{
-			m_pSelectedItem->selected();
-		}
-
-		if (m_pSelectedItem)
-		{
 			m_eState = kMenuStateTrackingTouch;
+			m_pSelectedItem->selected();
 			return true;
 		}
-
 		return false;
 	}
 
 	void CCMenu::ccTouchEnded(CCTouch *touch, UIEvent* event)
 	{
 		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
-
-		m_pSelectedItem->unselected();
-		m_pSelectedItem->activate();
-
+		if (m_pSelectedItem)
+		{
+			m_pSelectedItem->unselected();
+			m_pSelectedItem->activate();
+		}
 		m_eState = kMenuStateWaiting;
 	}
 
 	void CCMenu::ccTouchCancelled(CCTouch *touch, UIEvent* event)
 	{
 		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
-
-		m_pSelectedItem->unselected();
-
+		if (m_pSelectedItem)
+		{
+			m_pSelectedItem->unselected();
+		}
 		m_eState = kMenuStateWaiting;
 	}
 
 	void CCMenu::ccTouchMoved(CCTouch* touch, UIEvent* event)
 	{
 		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
-
 		CCMenuItem *currentItem = this->itemForTouch(touch);
-
 		if (currentItem != m_pSelectedItem) 
 		{
-			m_pSelectedItem->unselected();
+			if (m_pSelectedItem)
+			{
+				m_pSelectedItem->unselected();
+			}
 			m_pSelectedItem = currentItem;
-			m_pSelectedItem->selected();
+			if (m_pSelectedItem)
+			{
+				m_pSelectedItem->selected();
+			}
 		}
 	}
 
