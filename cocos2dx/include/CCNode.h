@@ -121,7 +121,8 @@ class CCX_DLL CCNode : virtual public NSObject, public SelectorProtocol
 	CCX_PROPERTY(float, m_fRotation, Rotation)
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
-	CCX_PROPERTY(float, m_fScale, Scale)
+	float getScale();
+	void setScale(float scale);
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
 	CCX_PROPERTY(float, m_fScaleX, ScaleX)

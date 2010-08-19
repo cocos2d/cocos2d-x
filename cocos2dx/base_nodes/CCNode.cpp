@@ -43,7 +43,6 @@ namespace   cocos2d {
 CCNode::CCNode(void)
 :m_bIsRunning(false)
 ,m_fRotation(0.0f)
-,m_fScale(1.0f)
 ,m_fScaleX(1.0f)
 ,m_fScaleY(1.0f)
 ,m_tPosition(CGPointZero)
@@ -162,7 +161,7 @@ void CCNode::setRotation(float newRotation)
 float CCNode::getScale(void)
 {
 	NSAssert( m_fScaleX == m_fScaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
-	return m_fScale;
+	return m_fScaleX;
 }
 
 /// scale setter
