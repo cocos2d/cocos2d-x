@@ -43,6 +43,7 @@ namespace   cocos2d {
 CCNode::CCNode(void)
 :m_bIsRunning(false)
 ,m_fRotation(0.0f)
+,m_fScale(1.0f)
 ,m_fScaleX(1.0f)
 ,m_fScaleY(1.0f)
 ,m_tPosition(CGPointZero)
