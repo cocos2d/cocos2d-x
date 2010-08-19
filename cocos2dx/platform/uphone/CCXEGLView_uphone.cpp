@@ -323,6 +323,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 //            SS_printf("PenUp:   %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
             m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             m_pDelegate->touchesEnded(m_pSet, NULL);
+			 m_pSet->removeObject(m_pTouch);
             m_bCaptured = false;
         }
         break;

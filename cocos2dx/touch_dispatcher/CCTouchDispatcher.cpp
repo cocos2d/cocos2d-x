@@ -288,9 +288,11 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 						    break;
 					    case ccTouchEnded:
 						    static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchEnded(pTouch, pEvent);
+							pHandler->getClaimedTouches()->removeObject(pTouch);
 						    break;
 					    case ccTouchCancelled:
 						    static_cast<CCTargetedTouchDelegate*>(pHandler->getDelegate())->ccTouchCancelled(pTouch, pEvent);
+							pHandler->getClaimedTouches()->removeObject(pTouch);
 						    break;
 					    }
 				    }
