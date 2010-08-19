@@ -89,5 +89,9 @@ namespace cocos2d {
 	{
 		m_pRibbon->setBlendFunc(blendFunc);
 	}
+	CCRibbon * CCMotionStreak::getRibbon()
+	{
+		return m_pRibbon;
+	}
 
 }// namespace cocos2d
