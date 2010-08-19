@@ -148,7 +148,7 @@ namespace cocos2d{
 		if(m_bIsEnabled)
 		{
 			this->stopAllActions();
-			this->m_fScale = m_fOriginalScale;
+			this->setScale( m_fOriginalScale );
 			__super::activate();
 		}
 	}
@@ -159,7 +159,7 @@ namespace cocos2d{
 		{
 			__super::selected();
 			this->stopActionByTag(kZoomActionTag);
-			m_fOriginalScale = this->m_fScale;
+			m_fOriginalScale = this->getScale();
 			CCAction *zoomAction = CCScaleTo::actionWithDuration(0.1f, m_fOriginalScale * 1.2f);
 	   	 	zoomAction->setTag(kZoomActionTag);
 			this->runAction(zoomAction);
