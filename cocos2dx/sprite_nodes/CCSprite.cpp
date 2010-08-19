@@ -109,7 +109,6 @@ CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 {
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 	return spriteWithSpriteFrame(pFrame);
-	return NULL;
 }
 
 
@@ -265,8 +264,6 @@ CCSprite* CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 	return initWithSpriteFrame(pFrame);
-
-	return NULL;
 }
 
 // XXX: deprecated

@@ -422,8 +422,6 @@ CCNode* CCNode::getChildByTag(int aTag)
 {
 	NSAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
 
-	
-
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
 		CCNode* pNode;
