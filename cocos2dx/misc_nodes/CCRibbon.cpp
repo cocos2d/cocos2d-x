@@ -47,11 +47,12 @@ namespace cocos2d {
 	CCRibbon * CCRibbon::ribbonWithWidth(float w, const char *path, float length, ccColor4B color, float fade)
 	{
 		CCRibbon *pRet = new CCRibbon();
-		if(pRet->initWithWidth(w, path, length, color, fade))
+		if(pRet && pRet->initWithWidth(w, path, length, color, fade))
 		{
 			pRet->autorelease();
 			return pRet;
 		}
+		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
 	bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B color, float fade)

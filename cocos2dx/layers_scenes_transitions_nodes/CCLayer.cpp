@@ -59,11 +59,12 @@ bool CCLayer::init()
 CCLayer *CCLayer::node()
 {
 	CCLayer *pRet = new CCLayer();
-	if (pRet->init())
+	if (pRet && pRet->init())
 	{
 		pRet->autorelease();
 		return pRet;
 	}
+	CCX_SAFE_DELETE(pRet)
 	return NULL;
 }
 

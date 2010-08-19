@@ -41,11 +41,12 @@ namespace cocos2d {
 	{
 		CCRenderTexture *pRet = new CCRenderTexture();
 
-		if(pRet->initWithWidthAndHeight(width,height))
+		if(pRet && pRet->initWithWidthAndHeight(width,height))
 		{
 			pRet->autorelease();
 			return pRet;
 		}
+		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
 	bool CCRenderTexture::initWithWidthAndHeight(int width, int height)

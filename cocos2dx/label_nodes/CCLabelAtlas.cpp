@@ -29,11 +29,12 @@ namespace cocos2d{
 	CCLabelAtlas * CCLabelAtlas::labelAtlasWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 	{
 		CCLabelAtlas *pRet = new CCLabelAtlas();
-		if(pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
+		if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
 		{
 			pRet->autorelease();
 			return pRet;
 		}
+		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
 	CCLabelAtlas * CCLabelAtlas::initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
