@@ -346,11 +346,12 @@ namespace cocos2d{
 	CCBitmapFontAtlas *CCBitmapFontAtlas::bitmapFontAtlasWithString(const char *str, const char *fntFile)
 	{
 		CCBitmapFontAtlas *pRet = new CCBitmapFontAtlas();
-		if(pRet->initWithString(str, fntFile))
+		if(pRet && pRet->initWithString(str, fntFile))
 		{
 			pRet->autorelease();
 			return pRet;
 		}
+		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
 	CCBitmapFontAtlas * CCBitmapFontAtlas::initWithString(const char *theString, const char *fntFile)

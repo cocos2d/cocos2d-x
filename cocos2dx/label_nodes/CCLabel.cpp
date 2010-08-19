@@ -30,21 +30,23 @@ namespace cocos2d{
 	CCLabel * CCLabel::labelWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
 		CCLabel *pRet = new CCLabel();
-		if(pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
+		if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
 		{
 			pRet->autorelease();
 			return pRet;
 		}
+		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
 	CCLabel * CCLabel::labelWithString(const char *label, const char *fontName, float fontSize)
 	{
 		CCLabel *pRet = new CCLabel();
-		if(pRet->initWithString(label, fontName, fontSize))
+		if(pRet && pRet->initWithString(label, fontName, fontSize))
 		{
 			pRet->autorelease();
 			return pRet;
 		}
+		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
 

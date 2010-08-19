@@ -47,14 +47,14 @@ namespace cocos2d{
 		va_list args;
 		va_start(args,item);
 		CCMenu *pRet = new CCMenu();
-		if (pRet->initWithItems(item, args))
+		if (pRet && pRet->initWithItems(item, args))
 		{
 			pRet->autorelease();
 			va_end(args);
 			return pRet;
 		}
-
 		va_end(args);
+		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
 

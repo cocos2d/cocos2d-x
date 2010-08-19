@@ -122,11 +122,12 @@ CCRepeatForever::~CCRepeatForever()
 CCRepeatForever *CCRepeatForever::actionWithAction(CCIntervalAction *pAction)
 {
 	CCRepeatForever *pRet = new CCRepeatForever();
-	if (pRet->initWithAction(pAction))
+	if (pRet && pRet->initWithAction(pAction))
 	{
 		pRet->autorelease();
 		return pRet;
 	}
+	CCX_SAFE_DELETE(pRet);
 	return NULL;
 }
 
@@ -195,11 +196,12 @@ CCSpeed::~CCSpeed()
 CCSpeed * CCSpeed::actionWithAction(CCIntervalAction *pAction, float fRate)
 {
 	CCSpeed *pRet = new CCSpeed();
-	if (pRet->initWithAction(pAction, fRate))
+	if (pRet && pRet->initWithAction(pAction, fRate))
 	{
 		pRet->autorelease();
 		return pRet;
 	}
+	CCX_SAFE_DELETE(pRet)
 	return NULL;
 }
 
@@ -267,21 +269,23 @@ CCFollow::~CCFollow()
 CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode)
 {
 	CCFollow *pRet = new CCFollow();
-	if (pRet->initWithTarget(pFollowedNode))
+	if (pRet && pRet->initWithTarget(pFollowedNode))
 	{
 		pRet->autorelease();
 		return pRet;
 	}
+	CCX_SAFE_DELETE(pRet)
 	return NULL;
 }
 CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, CGRect rect)
 {
 	CCFollow *pRet = new CCFollow();
-	if (pRet->initWithTarget(pFollowedNode, rect))
+	if (pRet && pRet->initWithTarget(pFollowedNode, rect))
 	{
 		pRet->autorelease();
 		return pRet;
 	}
+	CCX_SAFE_DELETE(pRet)
 	return NULL;
 }
 
