@@ -21,14 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "NSAutoreleasePool.h"
 
-#include "NSAutoReleasePool.h"
-#include <assert.h>
-#include <stack>
-#include <vector>
+namespace cocos2d 
+{
 
-using namespace std;
-namespace   cocos2d {
+NSPoolManager	g_PoolManager;
 
 NSAutoreleasePool::NSAutoreleasePool(void)
 {
@@ -37,114 +35,145 @@ NSAutoreleasePool::NSAutoreleasePool(void)
 
 NSAutoreleasePool::~NSAutoreleasePool(void)
 {
-	clear();
 	delete m_pManagedObjectArray;
 }
 
-void NSAutoreleasePool::addObject(NSObject *pObject)
+void NSAutoreleasePool::addObject(NSObject* pObject)
 {
 	m_pManagedObjectArray->addObject(pObject);
+
+	assert(pObject->m_uRefrence > 1);
+
+	pObject->release(); // no ref count, in this case autorelease pool added.
 }
 
-void NSAutoreleasePool::removeObject(NSObject *pObject)
+void NSAutoreleasePool::removeObject(NSObject* pObject)
 {
 	m_pManagedObjectArray->removeObject(pObject);
 }
 
-void NSAutoreleasePool::clear(void)
+void NSAutoreleasePool::clear()
 {
-	if (m_pManagedObjectArray->count())
+	if(m_pManagedObjectArray->count() > 0)
 	{
-		NSMutableArray<NSObject*>::NSMutableArrayIterator iter;
-		for (iter = m_pManagedObjectArray->begin(); iter != m_pManagedObjectArray->end(); ++iter)
+		//NSAutoreleasePool* pReleasePool;
+#ifdef _DEBUG
+		int nIndex = m_pManagedObjectArray->count() - 1;
+#endif
+		NSMutableArray<NSObject*>::NSMutableArrayRevIterator it;
+		for(it = m_pManagedObjectArray->rbegin(); it != m_pManagedObjectArray->rend(); it++)
 		{
-			if (*iter)
-			{
-				(*iter)->m_bManaged = false;
-			}
+			if(!*it)
+				break;
+
+			(*it)->m_bManaged = false;
+			//(*it)->release();
+			//delete (*it);
+#ifdef _DEBUG
+			nIndex--;
+#endif
 		}
 
-//		m_pManagedObjectArray->removeAllObjects();
+		m_pManagedObjectArray->removeAllObjects();
 	}
 }
 
 
-// implementiation of NSPoolManager
-NSPoolManager* NSPoolManager::m_pPoolManager = NULL;
+//--------------------------------------------------------------------
+//
+// NSPoolManager
+//
+//--------------------------------------------------------------------
 
-NSPoolManager* NSPoolManager::getInstance(void)
+NSPoolManager* NSPoolManager::getInstance()
 {
-	static bool bInit = false;
-
-	if (bInit == false)
-	{
-		bInit = true;
-		m_pPoolManager = new NSPoolManager();
-	}
-
-	return m_pPoolManager;
+	return &g_PoolManager;
 }
 
-NSPoolManager::NSPoolManager(void)
+NSPoolManager::NSPoolManager()
 {
-	m_pReleasePoolStack = new stack<NSAutoreleasePool *>();
+	m_pReleasePoolStack = new NSMutableArray<NSAutoreleasePool*>();	
+	m_pCurReleasePool = NULL;
 }
 
-NSPoolManager::~NSPoolManager(void)
+NSPoolManager::~NSPoolManager()
 {
 	finalize();
 
 	delete m_pReleasePoolStack;
 }
 
-void NSPoolManager::finalize(void)
+void NSPoolManager::finalize()
 {
-	if (m_pReleasePoolStack->size() > 0)
+	if(m_pReleasePoolStack->count() > 0)
 	{
-		NSAutoreleasePool *pTop;
-		while (pTop = m_pReleasePoolStack->top())
+		//NSAutoreleasePool* pReleasePool;
+		NSMutableArray<NSAutoreleasePool*>::NSMutableArrayIterator it;
+		for(it = m_pReleasePoolStack->begin(); it != m_pReleasePoolStack->end(); it++)
 		{
-			m_pReleasePoolStack->pop();
+			if(!*it)
+				break;
+
+			(*it)->clear();
+
+			delete (*it);
 		}
 	}
 }
 
-void NSPoolManager::push(void)
+void NSPoolManager::push()
 {
-	NSAutoreleasePool *pPool = new NSAutoreleasePool();
+	NSAutoreleasePool* pPool = new NSAutoreleasePool();	   //ref = 1
+	m_pCurReleasePool = pPool;
 
-	m_pReleasePoolStack->push(pPool);
+	m_pReleasePoolStack->addObject(pPool);				   //ref = 2
+
+	pPool->release();									   //ref = 1
 }
 
-void NSPoolManager::pop(void)
+void NSPoolManager::pop()
 {
-	if (m_pReleasePoolStack->top())
+	int nCount = m_pReleasePoolStack->count();
+
+	if(nCount > 0)
 	{
-		delete m_pReleasePoolStack->top();
-	    m_pReleasePoolStack->pop();
+		assert(m_pCurReleasePool);
+
+		m_pCurReleasePool->clear();
+
+		m_pReleasePoolStack->removeObjectAtIndex(nCount-1);
+
+		if(nCount > 1)
+		{
+			m_pCurReleasePool = m_pReleasePoolStack->getObjectAtIndex(nCount - 2);
+			return;
+		}
 	}
 
+	m_pCurReleasePool = NULL;
 }
 
-void NSPoolManager::addObject(NSObject *pObject)
+void NSPoolManager::removeObject(NSObject* pObject)
+{
+	assert(m_pCurReleasePool);
+
+	m_pCurReleasePool->removeObject(pObject);
+}
+
+void NSPoolManager::addObject(NSObject* pObject)
 {
 	getCurReleasePool()->addObject(pObject);
 }
 
-void NSPoolManager::removeObject(NSObject *pObject)
-{
-	assert(m_pReleasePoolStack->top());
 
-	m_pReleasePoolStack->top()->removeObject(pObject);
-}
-
-NSAutoreleasePool* NSPoolManager::getCurReleasePool(void)
+NSAutoreleasePool* NSPoolManager::getCurReleasePool()
 {
-	if (m_pReleasePoolStack->empty())
-	{
+	if(!m_pCurReleasePool)
 		push();
-	}
 
-	return m_pReleasePoolStack->top();
+	assert(m_pCurReleasePool);
+
+	return m_pCurReleasePool;
 }
-}//namespace   cocos2d
+
+}

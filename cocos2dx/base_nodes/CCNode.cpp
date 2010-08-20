@@ -86,7 +86,10 @@ CCNode::~CCNode()
 		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 		for( it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 		{
-			(*it)->m_pParent = NULL;
+			if (*it)
+			{
+				(*it)->m_pParent = NULL;
+			}		
 		}
 	}
 

@@ -21,18 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __NS_AUTO_RELEASE_POOL_H__
-#define __NS_AUTO_RELEASE_POOL_H__
+#ifndef __AUTORELEASEPOOL_H__
+#define __AUTORELEASEPOOL_H__
 
 #include "NSObject.h"
-#include "NSMutablearray.h"
+#include "NSMutableArray.h"
 
-#include <stack>
-namespace   cocos2d {
-
-class NSAutoreleasePool
+namespace cocos2d {
+class CCX_DLL NSAutoreleasePool : public NSObject
 {
+	NSMutableArray<NSObject*>*	m_pManagedObjectArray;	
 public:
 	NSAutoreleasePool(void);
 	~NSAutoreleasePool(void);
@@ -40,36 +38,30 @@ public:
 	void addObject(NSObject *pObject);
 	void removeObject(NSObject *pObject);
 
-	void clear(void);
-private:
-	NSMutableArray<NSObject*> *m_pManagedObjectArray;
+	void clear();
 };
 
-class NSPoolManager
+class CCX_DLL NSPoolManager
 {
+	NSMutableArray<NSAutoreleasePool*>*	m_pReleasePoolStack;	
+	NSAutoreleasePool*					m_pCurReleasePool;
+
+	NSAutoreleasePool* getCurReleasePool();
 public:
-    ~NSPoolManager();
+	NSPoolManager();
+	~NSPoolManager();
+	void finalize();
+	void push();
+	void pop();
 
-	void finalize(void);
-    void push(void);
-	void pop(void);
+	void removeObject(NSObject* pObject);
+	void addObject(NSObject* pObject);
 
-	void removeObject(NSObject *pObject);
-	void addObject(NSObject *pObject);
-
-public:
 	static NSPoolManager* getInstance();
 
-private:
-	NSPoolManager();
-	NSAutoreleasePool* getCurReleasePool();
-
-private:
-	static NSPoolManager *m_pPoolManager;
-
-private:
-	std::stack<NSAutoreleasePool *> *m_pReleasePoolStack;
+	friend class NSAutoreleasePool;
 };
-}//namespace   cocos2d 
 
-#endif //__NS_AUTO_RELEASE_POOL_H__
+}
+
+#endif //__AUTORELEASEPOOL_H__
