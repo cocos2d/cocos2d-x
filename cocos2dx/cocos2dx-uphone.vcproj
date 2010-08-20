@@ -225,6 +225,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\actions\CCPageTurn3DAction.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\actions\CCProgressTimerActions.cpp"
 				>
 			</File>
@@ -342,6 +346,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCNode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCPageTurn3DAction.h"
 				>
 			</File>
 			<File
