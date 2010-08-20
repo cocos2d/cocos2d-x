@@ -30,6 +30,7 @@ void BackToMainMenuLayer::MainMenuCallback(NSObject* pSender)
 
 TestScene::TestScene()
 {
+    __super::init();
     CCLayer* pLayer = new BackToMainMenuLayer();
     pLayer->autorelease();
 
