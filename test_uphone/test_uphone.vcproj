@@ -325,6 +325,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="TransitionsTest"
+				>
+				<File
+					RelativePath=".\tests\TransitionsTest\TransitionsTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\TransitionsTest\TransitionsTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

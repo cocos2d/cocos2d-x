@@ -39,7 +39,7 @@ namespace   cocos2d {
 *
 * @since v0.8.2
 */
-class CCPageTurnTransition : public CCTransitionScene
+class CCX_DLL CCPageTurnTransition : public CCTransitionScene
 {
 protected:
 	bool	m_bBack;
