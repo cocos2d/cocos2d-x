@@ -223,12 +223,12 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     case 18: return FlipYDownOver::transitionWithDuration(t, s);
     case 19: return FlipAngularLeftOver::transitionWithDuration(t, s);
     case 20: return FlipAngularRightOver::transitionWithDuration(t, s);
-    case 21: return ZoomFlipXLeftOver::transitionWithDuration(t, s);
-    case 22: return ZoomFlipXRightOver::transitionWithDuration(t, s);
-    case 23: return ZoomFlipYUpOver::transitionWithDuration(t, s);
-    case 24: return ZoomFlipYDownOver::transitionWithDuration(t, s);
-    case 25: return ZoomFlipAngularLeftOver::transitionWithDuration(t, s);
-//     case 26: return ZoomFlipAngularRightOver::transitionWithDuration(t, s);
+//     case 21: return ZoomFlipXLeftOver::transitionWithDuration(t, s);
+//     case 22: return ZoomFlipXRightOver::transitionWithDuration(t, s);
+//     case 23: return ZoomFlipYUpOver::transitionWithDuration(t, s);
+//     case 24: return ZoomFlipYDownOver::transitionWithDuration(t, s);
+//     case 25: return ZoomFlipAngularLeftOver::transitionWithDuration(t, s);
+    case 26: return ZoomFlipAngularRightOver::transitionWithDuration(t, s);
     case 27: return CCShrinkGrowTransition::transitionWithDuration(t, s);
     case 28: return CCRotoZoomTransition::transitionWithDuration(t, s);
     case 29: return CCMoveInLTransition::transitionWithDuration(t, s);
@@ -419,7 +419,7 @@ TestLayer2::~TestLayer2()
 
 void TestLayer2::restartCallback(NSObject* pSender)
 {
-    CCScene* s = CCScene::node();
+    CCScene* s = new TransitionsTestScene();
 
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
@@ -433,7 +433,7 @@ void TestLayer2::restartCallback(NSObject* pSender)
 
 void TestLayer2::nextCallback(NSObject* pSender)
 {
-    CCScene* s = CCScene::node();
+    CCScene* s = new TransitionsTestScene();
 
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
@@ -447,7 +447,7 @@ void TestLayer2::nextCallback(NSObject* pSender)
 
 void TestLayer2::backCallback(NSObject* pSender)
 {
-    CCScene* s = CCScene::node();
+    CCScene* s = new TransitionsTestScene();
 
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);

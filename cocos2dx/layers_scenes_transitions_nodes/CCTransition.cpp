@@ -1053,7 +1053,7 @@ void CCFadeTransition :: onEnter()
 	__super::onEnter();
 
 	CCColorLayer* l = CCColorLayer::layerWithColor(m_tColor);
-	m_pOutScene->setIsVisible(false);
+	m_pInScene->setIsVisible(false);
 
 	addChild(l, 2, kSceneFade);
 	CCNode* f = getChildByTag(kSceneFade);
