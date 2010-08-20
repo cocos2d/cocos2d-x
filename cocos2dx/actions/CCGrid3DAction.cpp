@@ -637,53 +637,216 @@ namespace cocos2d
 
 	NSObject* CCLiquid::copyWithZone(cocos2d::NSZone *pZone)
 	{
-		return NULL;
+		NSZone* pNewZone = NULL;
+		CCLiquid* pCopy = NULL;
+		if(pZone && pZone->m_pCopyObject) 
+		{
+			//in case of being called at sub class
+			pCopy = dynamic_cast<CCLiquid*>(pZone->m_pCopyObject);
+		}
+		else
+		{
+			pCopy = new CCLiquid();
+			pZone = pNewZone = new NSZone(pCopy);
+		}
+
+		__super::copyWithZone(pZone);
+
+		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
+
+		CCX_SAFE_DELETE(pNewZone);
+		return pCopy;
 	}
 
 	void CCLiquid::update(cocos2d::ccTime time)
 	{
+		int i, j;
+
+		for (i = 1; i < m_sGridSize.x; ++i)
+		{
+			for (j = 1; j < m_sGridSize.y; ++j)
+			{
+				ccVertex3F v = originalVertex(ccg(i, j));
+				v.x = (v.x + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.x * .01f) * m_fAmplitude * m_fAmplitudeRate));
+				v.y = (v.y + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.y * .01f) * m_fAmplitude * m_fAmplitudeRate));
+				setVertex(ccg(i, j), v);
+			}
+		}
 	}
 
 	// implementation of Waves
 
 	CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		return NULL;
+		CCWaves *pAction = new CCWaves();
+
+		if (pAction)
+		{
+			if (pAction->initWithWaves(wav, amp, h, v, gridSize, duration))
+			{
+				pAction->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pAction);
+			}
+		}
+
+		return pAction;
 	}
 
 	bool CCWaves::initWithWaves(int wav, float amp, bool h, bool v, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
+		if (__super::initWithSize(gridSize, duration))
+		{
+			m_nWaves = wav;
+			m_fAmplitude = amp;
+			m_fAmplitudeRate = 1.0f;
+			m_bHorizontal = h;
+			m_bVertical = v;
+
+			return true;
+		}
+
 		return false;
 	}
 
 	NSObject* CCWaves::copyWithZone(cocos2d::NSZone *pZone)
 	{
-		return NULL;
+		NSZone* pNewZone = NULL;
+		CCWaves* pCopy = NULL;
+		if(pZone && pZone->m_pCopyObject) 
+		{
+			//in case of being called at sub class
+			pCopy = dynamic_cast<CCWaves*>(pZone->m_pCopyObject);
+		}
+		else
+		{
+			pCopy = new CCWaves();
+			pZone = pNewZone = new NSZone(pCopy);
+		}
+
+		__super::copyWithZone(pZone);
+
+		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_bHorizontal, m_bVertical, m_sGridSize, m_fDuration);
+		
+		CCX_SAFE_DELETE(pNewZone);
+		return pCopy;
 	}
 
 	void CCWaves::update(cocos2d::ccTime time)
 	{
+		int i, j;
+
+		for (i = 0; i < m_sGridSize.x + 1; ++i)
+		{
+			for (j = 0; j < m_sGridSize.y + 1; ++j)
+			{
+				ccVertex3F v = originalVertex(ccg(i, j));
+
+				if (m_bVertical)
+				{
+					v.x = (v.x + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.y * .01f) * m_fAmplitude * m_fAmplitudeRate));
+				}
+
+				if (m_bHorizontal)
+				{
+                    v.y = (v.y + (sinf(time * (CGFloat)M_PI * m_nWaves * 2 + v.x * .01f) * m_fAmplitude * m_fAmplitudeRate));
+				}
+
+				setVertex(ccg(i, j), v);
+			}
+		}
 	}
 
 	// implementation of Twirl
 
 	CCTwirl* CCTwirl::actionWithPosition(cocos2d::CGPoint pos, int t, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		return NULL;
+		CCTwirl *pAction = new CCTwirl();
+
+		if (pAction)
+		{
+			if (pAction->initWithPosition(pos, t, amp, gridSize, duration))
+			{
+				pAction->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pAction);
+			}
+		}
+
+		return pAction;
 	}
 
 	bool CCTwirl::initWithPosition(cocos2d::CGPoint pos, int t, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
+		if (__super::initWithSize(gridSize, duration))
+		{
+			m_position = pos;
+			m_nTwirls = t;
+			m_fAmplitude = amp;
+			m_fAmplitudeRate = 1.0f;
+
+			return true;
+		}
+
 		return false;
 	}
 
 	NSObject* CCTwirl::copyWithZone(cocos2d::NSZone *pZone)
 	{
-		return NULL;
+		NSZone* pNewZone = NULL;
+		CCTwirl* pCopy = NULL;
+		if(pZone && pZone->m_pCopyObject)
+		{
+			//in case of being called at sub class
+			pCopy = dynamic_cast<CCTwirl*>(pZone->m_pCopyObject);
+		}
+		else
+		{
+			pCopy = new CCTwirl();
+			pZone = pNewZone = new NSZone(pCopy);
+		}
+
+		__super::copyWithZone(pZone);
+
+
+		pCopy->initWithPosition(m_position, m_nTwirls, m_fAmplitude, m_sGridSize, m_fDuration);
+
+		CCX_SAFE_DELETE(pNewZone);
+		return pCopy;
 	}
 
 	void CCTwirl::update(cocos2d::ccTime time)
 	{
+		int i, j;
+		CGPoint	c = m_position;
+		
+		for (i = 0; i < (m_sGridSize.x+1); ++i)
+		{
+			for (j = 0; j < (m_sGridSize.y+1); ++j)
+			{
+				ccVertex3F v = originalVertex(ccg(i ,j));
+				
+				CGPoint	avg = ccp(i-(m_sGridSize.x/2.0f), j-(m_sGridSize.y/2.0f));
+				CGFloat r = ccpLength(avg);
+				
+				CGFloat amp = 0.1f * m_fAmplitude * m_fAmplitudeRate;
+				CGFloat a = r * cosf( (CGFloat)M_PI/2.0f + time * (CGFloat)M_PI * m_nTwirls * 2 ) * amp;
+				
+				CGPoint	d;
+				
+				d.x = sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x);
+				d.y = cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x);
+				
+				v.x = c.x + d.x;
+				v.y = c.y + d.y;
+
+				setVertex(ccg(i ,j), v);
+			}
+		}
 	}
 
 } // end of namespace cocos2d
