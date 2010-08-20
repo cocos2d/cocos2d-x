@@ -244,7 +244,7 @@ CCSprite* CCSprite::initWithFile(const char *pszFilename, CGRect rect)
 		return initWithTexture(pTexture, rect);
 	}
 
-	delete this;
+	this->release();
 	return NULL;
 }
 
