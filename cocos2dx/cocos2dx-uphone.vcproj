@@ -232,6 +232,10 @@
 				RelativePath=".\actions\CCProgressTimerActions.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\actions\CCTiledGridAction.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="base_nodes"
@@ -410,6 +414,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCTextureCache.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTiledGridAction.h"
 				>
 			</File>
 			<File
