@@ -209,6 +209,10 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 	{
 		pElement = (tHashSelectorEntry *)calloc(sizeof(*pElement), 1);;
 		pElement->target = pTarget;
+		if (pTarget)
+		{
+		    dynamic_cast<NSObject*>(pTarget)->retain();
+		}
 		HASH_ADD_INT(m_pHashForSelectors, target, pElement);
 
 		// Is this the 1st element ? Then set the pause level to all the selectors of this target
