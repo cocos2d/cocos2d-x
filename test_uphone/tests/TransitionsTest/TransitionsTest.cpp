@@ -203,18 +203,18 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     switch(nIndex)
     {
     case 0: return CCJumpZoomTransition::transitionWithDuration(t, s);
-    case 1: return CCCrossFadeTransition::transitionWithDuration(t,s);
-    case 2: return CCRadialCCWTransition::transitionWithDuration(t,s);
-    case 3: return CCRadialCWTransition::transitionWithDuration(t,s);
-    case 4: return PageTransitionForward::transitionWithDuration(t, s);
-    case 5: return PageTransitionBackward::transitionWithDuration(t, s);
-    case 6: return CCFadeTRTransition::transitionWithDuration(t, s);
-    case 7: return CCFadeBLTransition::transitionWithDuration(t, s);
-    case 8: return CCFadeUpTransition::transitionWithDuration(t, s);
-    case 9: return CCFadeDownTransition::transitionWithDuration(t, s);
-    case 10: return CCTurnOffTilesTransition::transitionWithDuration(t, s);
-    case 11: return CCSplitRowsTransition::transitionWithDuration(t, s);
-    case 12: return CCSplitColsTransition::transitionWithDuration(t, s);
+//     case 1: return CCCrossFadeTransition::transitionWithDuration(t,s);
+//     case 2: return CCRadialCCWTransition::transitionWithDuration(t,s);
+//     case 3: return CCRadialCWTransition::transitionWithDuration(t,s);
+//     case 4: return PageTransitionForward::transitionWithDuration(t, s);
+//     case 5: return PageTransitionBackward::transitionWithDuration(t, s);
+//     case 6: return CCFadeTRTransition::transitionWithDuration(t, s);
+//     case 7: return CCFadeBLTransition::transitionWithDuration(t, s);
+//     case 8: return CCFadeUpTransition::transitionWithDuration(t, s);
+//     case 9: return CCFadeDownTransition::transitionWithDuration(t, s);
+//     case 10: return CCTurnOffTilesTransition::transitionWithDuration(t, s);
+//     case 11: return CCSplitRowsTransition::transitionWithDuration(t, s);
+//     case 12: return CCSplitColsTransition::transitionWithDuration(t, s);
     case 13: return CCFadeTransition::transitionWithDuration(t, s);
     case 14: return FadeWhiteTransition::transitionWithDuration(t, s);
     case 15: return FlipXLeftOver::transitionWithDuration(t, s);
@@ -228,7 +228,7 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     case 23: return ZoomFlipYUpOver::transitionWithDuration(t, s);
     case 24: return ZoomFlipYDownOver::transitionWithDuration(t, s);
     case 25: return ZoomFlipAngularLeftOver::transitionWithDuration(t, s);
-    case 26: return ZoomFlipAngularRightOver::transitionWithDuration(t, s);
+//     case 26: return ZoomFlipAngularRightOver::transitionWithDuration(t, s);
     case 27: return CCShrinkGrowTransition::transitionWithDuration(t, s);
     case 28: return CCRotoZoomTransition::transitionWithDuration(t, s);
     case 29: return CCMoveInLTransition::transitionWithDuration(t, s);
@@ -239,6 +239,7 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     case 34: return CCSlideInRTransition::transitionWithDuration(t, s);
     case 35: return CCSlideInTTransition::transitionWithDuration(t, s);
     case 36: return CCSlideInBTransition::transitionWithDuration(t, s);
+    default: break;
     }
 
     return NULL;
@@ -332,7 +333,11 @@ void TestLayer1::restartCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer2();
     s->addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene( restartTransition(TRANSITION_DURATION, s) );
+    CCScene* pScene = restartTransition(TRANSITION_DURATION, s);
+    if (pScene)
+    {
+        CCDirector::getSharedDirector()->replaceScene(pScene);
+    }    
 }
 
 void TestLayer1::nextCallback(NSObject* pSender)
@@ -342,7 +347,11 @@ void TestLayer1::nextCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer2();
     s->addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene( nextTransition(TRANSITION_DURATION, s) );
+    CCScene* pScene = nextTransition(TRANSITION_DURATION, s);
+    if (pScene)
+    {
+        CCDirector::getSharedDirector()->replaceScene(pScene);
+    }
 }
 
 void TestLayer1::backCallback(NSObject* pSender)
@@ -352,7 +361,11 @@ void TestLayer1::backCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer2();
     s->addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene( backTransition(TRANSITION_DURATION, s) );
+    CCScene* pScene = backTransition(TRANSITION_DURATION, s);
+    if (pScene)
+    {
+        CCDirector::getSharedDirector()->replaceScene(pScene);
+    }
 }
 
 void TestLayer1::step(ccTime dt)
@@ -411,7 +424,11 @@ void TestLayer2::restartCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene( restartTransition(TRANSITION_DURATION, s) );
+    CCScene* pScene = restartTransition(TRANSITION_DURATION, s);
+    if (pScene)
+    {
+        CCDirector::getSharedDirector()->replaceScene(pScene);
+    }
 }
 
 void TestLayer2::nextCallback(NSObject* pSender)
@@ -421,7 +438,11 @@ void TestLayer2::nextCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene( nextTransition(TRANSITION_DURATION, s) );
+    CCScene* pScene = nextTransition(TRANSITION_DURATION, s);
+    if (pScene)
+    {
+        CCDirector::getSharedDirector()->replaceScene(pScene);
+    }
 }
 
 void TestLayer2::backCallback(NSObject* pSender)
@@ -431,7 +452,11 @@ void TestLayer2::backCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene( backTransition(TRANSITION_DURATION, s) );
+    CCScene* pScene = backTransition(TRANSITION_DURATION, s);
+    if (pScene)
+    {
+        CCDirector::getSharedDirector()->replaceScene(pScene);
+    }
 }
 
 void TestLayer2::step(ccTime dt)
