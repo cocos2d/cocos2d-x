@@ -109,9 +109,27 @@ void CCRadialCCWTransition::onExit()
 	__super::onExit();
 }
 
+CCRadialCCWTransition* CCRadialCCWTransition::transitionWithDuration(ccTime t, CCScene* scene)
+{
+    CCRadialCCWTransition* pScene = new CCRadialCCWTransition();
+    pScene->initWithDuration(t, scene);
+    pScene->autorelease();
+
+    return pScene;
+}
+
 CCProgressTimerType CCRadialCWTransition::radialType()
 {
 	return kCCProgressTimerTypeRadialCW;
+}
+
+CCRadialCWTransition* CCRadialCWTransition::transitionWithDuration(ccTime t, CCScene* scene)
+{
+    CCRadialCWTransition* pScene = new CCRadialCWTransition();
+    pScene->initWithDuration(t, scene);
+    pScene->autorelease();
+
+    return pScene;
 }
 
 }//namespace   cocos2d 

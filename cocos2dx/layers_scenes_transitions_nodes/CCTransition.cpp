@@ -39,6 +39,17 @@ enum {
 	kSceneFade = 0xFADEFADE,
 };
 
+#define IMPLEMENT_TRANSITIONWITHDURATION(_Type)\
+    _Type* _Type::transitionWithDuration(ccTime t, CCScene* scene)\
+{\
+    _Type* pScene = new _Type();\
+    pScene->initWithDuration(t, scene);\
+    pScene->autorelease();\
+    return pScene;\
+}
+
+
+
 CCTransitionScene::CCTransitionScene()
 {
 }
@@ -242,6 +253,8 @@ void CCRotoZoomTransition:: onEnter()
 	);
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCRotoZoomTransition)
+
 
 //
 // JumpZoom
@@ -285,6 +298,7 @@ void CCJumpZoomTransition::onEnter()
 	);
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCJumpZoomTransition)
 
 //
 // MoveInL
@@ -331,6 +345,8 @@ void CCMoveInLTransition::initScenes()
 	m_pInScene->setPosition( ccp(-s.width,0) );
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCMoveInLTransition)
+
 //
 // MoveInR
 //
@@ -346,6 +362,8 @@ void CCMoveInRTransition::initScenes()
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(s.width,0) );
 }
+
+IMPLEMENT_TRANSITIONWITHDURATION(CCMoveInRTransition)
 
 //
 // MoveInT
@@ -363,6 +381,7 @@ void CCMoveInTTransition::initScenes()
 	m_pInScene->setPosition( ccp(0,s.height) );
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCMoveInTTransition)
 
 //
 // MoveInB
@@ -379,6 +398,8 @@ void CCMoveInBTransition::initScenes()
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,-s.height) );
 }
+
+IMPLEMENT_TRANSITIONWITHDURATION(CCMoveInBTransition)
 
 
 //
@@ -439,6 +460,8 @@ CCIntervalAction* CCSlideInLTransition::easeActionWithAction(CCIntervalAction* a
 //	return [EaseElasticOut actionWithAction:action period:0.4f];
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCSlideInLTransition)
+
 
 //
 // SlideInR
@@ -467,6 +490,8 @@ CCIntervalAction* CCSlideInRTransition:: action()
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(-(s.width-ADJUST_FACTOR),0));
 }
+
+IMPLEMENT_TRANSITIONWITHDURATION(CCSlideInRTransition)
 
 
 //
@@ -497,6 +522,7 @@ CCIntervalAction* CCSlideInTTransition::action()
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,-(s.height-ADJUST_FACTOR)));
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCSlideInTTransition)
 
 //
 // SlideInB
@@ -526,7 +552,7 @@ CCIntervalAction* CCSlideInBTransition:: action()
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,s.height-ADJUST_FACTOR));
 }
 
-
+IMPLEMENT_TRANSITIONWITHDURATION(CCSlideInBTransition)
 
 //
 // ShrinkGrow Transition
@@ -568,7 +594,7 @@ CCIntervalAction* CCShrinkGrowTransition:: easeActionWithAction(CCIntervalAction
 //	return [EaseElasticOut actionWithAction:action period:0.3f];
 }
 
-
+IMPLEMENT_TRANSITIONWITHDURATION(CCShrinkGrowTransition)
 
 //
 // FlipX Transition
@@ -626,6 +652,14 @@ void CCFlipXTransition::onEnter()
 	m_pOutScene->runAction(outA);
 }
 
+CCFlipXTransition* CCFlipXTransition::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+{
+    CCFlipXTransition* pScene = new CCFlipXTransition();
+    pScene->initWithDuration(t, s, o);
+    pScene->autorelease();
+
+    return pScene;
+}
 
 //
 // FlipY Transition
@@ -683,7 +717,14 @@ void CCFlipYTransition::onEnter()
 
 }
 
+CCFlipYTransition* CCFlipYTransition::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+{
+    CCFlipYTransition* pScene = new CCFlipYTransition();
+    pScene->initWithDuration(t, s, o);
+    pScene->autorelease();
 
+    return pScene;
+}
 
 //
 // FlipAngular Transition
@@ -740,6 +781,14 @@ void CCFlipAngularTransition::onEnter()
 	m_pOutScene->runAction(outA);
 }
 
+CCFlipAngularTransition* CCFlipAngularTransition::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+{
+    CCFlipAngularTransition* pScene = new CCFlipAngularTransition();
+    pScene->initWithDuration(t, s, o);
+    pScene->autorelease();
+
+    return pScene;
+}
 
 //
 // ZoomFlipX Transition
@@ -805,7 +854,14 @@ void CCZoomFlipXTransition::onEnter()
 	m_pOutScene->runAction(outA);
 }
 
+CCZoomFlipXTransition* CCZoomFlipXTransition::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+{
+    CCZoomFlipXTransition* pScene = new CCZoomFlipXTransition();
+    pScene->initWithDuration(t, s, o);
+    pScene->autorelease();
 
+    return pScene;
+}
 
 //
 // ZoomFlipY Transition
@@ -871,7 +927,14 @@ void CCZoomFlipYTransition::onEnter()
 	m_pOutScene->runAction(outA);
 }
 
+CCZoomFlipYTransition* CCZoomFlipYTransition::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+{
+    CCZoomFlipYTransition* pScene = new CCZoomFlipYTransition();
+    pScene->initWithDuration(t, s, o);
+    pScene->autorelease();
 
+    return pScene;
+}
 
 //
 // ZoomFlipAngular Transition
@@ -940,6 +1003,14 @@ void CCZoomFlipAngularTransition::onEnter()
 	m_pOutScene->runAction(outA);
 }
 
+CCZoomFlipAngularTransition* CCZoomFlipAngularTransition::transitionWithDuration(ccTime t, CCScene* s, tOrientation o)
+{
+    CCZoomFlipAngularTransition* pScene = new CCZoomFlipAngularTransition();
+    pScene->initWithDuration(t, s, o);
+    pScene->autorelease();
+
+    return pScene;
+}
 
 //
 // Fade Transition
@@ -1095,7 +1166,14 @@ void CCCrossFadeTransition::onExit()
 	__super::onExit();
 }
 
+CCCrossFadeTransition* CCCrossFadeTransition::transitionWithDuration(ccTime d, CCScene* s)
+{
+    CCCrossFadeTransition* Transition = new CCCrossFadeTransition();
+    Transition->initWithDuration(d, s);
+    Transition->autorelease();
 
+    return Transition;
+}
 
 //
 // TurnOffTilesTransition
@@ -1155,6 +1233,8 @@ CCIntervalAction* CCTurnOffTilesTransition:: easeActionWithAction(CCIntervalActi
 	return action;
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCTurnOffTilesTransition)
+
 //
 // SplitCols Transition
 //
@@ -1205,6 +1285,8 @@ CCIntervalAction* CCSplitColsTransition::easeActionWithAction(CCIntervalAction *
 	return CCEaseInOut::actionWithAction(action, 3.0f);
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCSplitColsTransition)
+
 
 //
 // SplitRows Transition
@@ -1222,6 +1304,8 @@ CCIntervalAction* CCSplitRowsTransition::action()
 	return NULL;
 	/// @todo return [CCSplitRows actionWithRows:3 duration:duration/2.0f];
 }
+
+IMPLEMENT_TRANSITIONWITHDURATION(CCSplitRowsTransition)
 
 //
 // FadeTR Transition
@@ -1274,6 +1358,8 @@ CCIntervalAction* CCFadeTRTransition:: easeActionWithAction(CCIntervalAction* ac
 	return action;
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCFadeTRTransition)
+
 
 //
 // FadeBL Transition
@@ -1292,6 +1378,8 @@ CCIntervalAction*  CCFadeBLTransition::actionWithSize(ccGridSize size)
 	/// @todo return [CCFadeOutBLTiles actionWithSize:v duration:duration];
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCFadeBLTransition)
+
 //
 // FadeUp Transition
 //
@@ -1308,6 +1396,8 @@ CCIntervalAction* CCFadeUpTransition::actionWithSize(ccGridSize size)
 	/// @todo return [CCFadeOutUpTiles actionWithSize:v duration:duration];
 }
 
+IMPLEMENT_TRANSITIONWITHDURATION(CCFadeUpTransition)
+
 //
 // FadeDown Transition
 //
@@ -1323,4 +1413,7 @@ CCIntervalAction* CCFadeDownTransition::actionWithSize(ccGridSize size)
 	return NULL;
 	/// @todo return [CCFadeOutDownTiles actionWithSize:v duration:duration];
 }
+
+IMPLEMENT_TRANSITIONWITHDURATION(CCFadeDownTransition)
+
 }//namespace   cocos2d 

@@ -15,6 +15,8 @@ static TestScene* CreateTestScene(int nIdx)
     {
     case TEST_ACTIONS:
         pScene = new ActionsTestScene(); break;
+    case TEST_TRANSITIONS:
+        pScene = new TransitionsTestScene(); break;
     default:
         break;
     }
