@@ -6,19 +6,10 @@
 #include "CCTransition.h"
 #include "CCRadialTransition.h"
 #include "CCPageTurnTransition.h"
+#include "../testResource.h"
 
 #define MAX_LAYER	37
 #define TRANSITION_DURATION (1.2f)
-
-static const char s_back1[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background1.png";
-static const char s_back2[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background2.png";
-static const char s_pPathB1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/b1.png";
-static const char s_pPathB2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/b2.png";
-static const char s_pPathR1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/r1.png";
-static const char s_pPathR2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/r2.png";
-static const char s_pPathF1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f1.png";
-static const char s_pPathF2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f2.png";
-
 
 class FadeWhiteTransition : public CCFadeTransition 
 {

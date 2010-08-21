@@ -361,6 +361,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCProgressTimer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCProgressTimerActions.h"
 				>
 			</File>
@@ -563,10 +567,6 @@
 			</File>
 			<File
 				RelativePath=".\misc_nodes\CCProgressTimer.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\misc_nodes\CCProgressTimer.h"
 				>
 			</File>
 			<File
