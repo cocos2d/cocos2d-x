@@ -3,11 +3,13 @@
 
 #include "ActionsTest/ActionsTest.h"
 #include "TransitionsTest/TransitionsTest.h"
+#include "ProgressActionsTest/ProgressActionsTest.h"
 
 enum
 {
     TEST_ACTIONS = 0,
     TEST_TRANSITIONS,
+    TEST_PROGRESS_ACTIONS,
 //     TEST_TEXTURE2D,
 //     TEST_SPRITE,
 //     TEST_LAYER,
@@ -17,13 +19,13 @@ enum
 //     TEST_ACTIONS_MANAGER,
 //     TEST_INTERVAL,
 //     TEST_TOUCHES,
-//     TEST_PROGRESS_ACTIONS,
     TESTS_COUNT,
 };
 
 const std::string g_aTestNames[TESTS_COUNT] = {
     "ActionsTest",
     "TransitionsTest",
+    "ProgressActionsTest",
 //     "Texture2dTest",
 //     "SpriteTest",
 //     "LayerTest",
@@ -33,7 +35,6 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 //     "ActionManagerTest",
 //     "IntervalTest",
 //     "TouchesTest",
-//     "ProgressActionsTest",
 };
 
 #endif

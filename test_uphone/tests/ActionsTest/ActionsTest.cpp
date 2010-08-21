@@ -6,18 +6,9 @@
 #include "CCMenu.h"
 #include "CCLabel.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
+#include "../testResource.h"
 
 static Int32 s_nActionIdx = -1;
-
-static const char s_pPathGrossini[] = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossini.png";
-static const char s_pPathSister1[]  = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossinis_sister1.png";
-static const char s_pPathSister2[]  = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossinis_sister2.png";
-static const char s_pPathB1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/b1.png";
-static const char s_pPathB2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/b2.png";
-static const char s_pPathR1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/r1.png";
-static const char s_pPathR2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/r2.png";
-static const char s_pPathF1[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f1.png";
-static const char s_pPathF2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f2.png";
 
 CCLayer* CreateLayer(Int32 nIndex)
 {

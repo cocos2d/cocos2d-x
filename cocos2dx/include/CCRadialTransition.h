@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCRADIAL_TRANSITION_H__
 #define __CCRADIAL_TRANSITION_H__
 #include "CCTransition.h"
-#include "misc_nodes/CCProgressTimer.h"
+#include "CCProgressTimer.h"
 
 namespace   cocos2d {
 

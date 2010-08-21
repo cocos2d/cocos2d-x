@@ -310,6 +310,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\tests\testResource.h"
+				>
+			</File>
+			<File
 				RelativePath=".\tests\tests.h"
 				>
 			</File>
@@ -334,6 +338,18 @@
 				</File>
 				<File
 					RelativePath=".\tests\TransitionsTest\TransitionsTest.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="ProgressActionsTest"
+				>
+				<File
+					RelativePath=".\tests\ProgressActionsTest\ProgressActionsTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\ProgressActionsTest\ProgressActionsTest.h"
 					>
 				</File>
 			</Filter>
