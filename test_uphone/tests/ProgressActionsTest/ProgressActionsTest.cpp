@@ -6,25 +6,6 @@
 #include "CCProgressTimerActions.h"
 #include "../testResource.h"
 
-enum {
-	kTagAction1 = 1,
-	kTagAction2 = 2,
-	kTagSlider = 1,
-};
-
-//------------------------------------------------------------------
-//
-// SpriteDemo
-//
-//------------------------------------------------------------------
-
-enum
-{
-	IDC_NEXT = 100,
-	IDC_BACK,
-	IDC_RESTART
-};
-
 static int sceneIdx = -1; 
 
 #define MAX_LAYER	3
@@ -81,6 +62,11 @@ void ProgressActionsTestScene::runThisTest()
 }
 
 
+//------------------------------------------------------------------
+//
+// SpriteDemo
+//
+//------------------------------------------------------------------
 SpriteDemo::SpriteDemo(void)
 {
 }
