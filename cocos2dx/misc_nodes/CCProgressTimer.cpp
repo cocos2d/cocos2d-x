@@ -98,7 +98,7 @@ namespace cocos2d
 	{
 		if (m_fPercentage != fPercentage)
 		{
-			if (fPercentage < 0.f)
+			if (m_fPercentage < 0.f)
 			{
 				m_fPercentage = 0.f;
 			} else
@@ -364,7 +364,7 @@ namespace cocos2d
 			//	Flip the texture coordinates if set
 			if (m_pSprite->isFlipX() || m_pSprite->isFlipY())
 			{
-				for (int i = 0; i < m_nVertexDataCount; ++i)
+				for (int i = 0; i < m_nVertexDataCount - 1; ++i)
 				{
 					if (m_pSprite->isFlipX())
 					{
@@ -373,7 +373,7 @@ namespace cocos2d
 
 					if (m_pSprite->isFlipY())
 					{
-						m_pVertexData[i].texCoords.v = tMax.x - m_pVertexData[i].texCoords.v;
+						m_pVertexData[i].texCoords.v = tMax.y - m_pVertexData[i].texCoords.v;
 					}
 				}
 			}
@@ -392,7 +392,7 @@ namespace cocos2d
 
             if (m_pSprite->isFlipY())
 			{
-				m_pVertexData[m_nVertexDataCount - 1].texCoords.v = tMax.x - m_pVertexData[m_nVertexDataCount - 1].texCoords.v;
+				m_pVertexData[m_nVertexDataCount - 1].texCoords.v = tMax.y - m_pVertexData[m_nVertexDataCount - 1].texCoords.v;
 			}
 		}
 	}
@@ -494,6 +494,13 @@ namespace cocos2d
 			m_pVertexData[vIndexes[0] = 1].texCoords = tex2(0, tMax.y*alpha);
 			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMax.y*alpha);
 		}
+
+		unsigned char index = vIndexes[0];
+		m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
+			                                                   m_pVertexData[index].texCoords.v));
+		index = vIndexes[1];
+		m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
+			                                                   m_pVertexData[index].texCoords.v));
 
 		if (m_pSprite->isFlipY() || m_pSprite->isFlipX()) 
 		{
