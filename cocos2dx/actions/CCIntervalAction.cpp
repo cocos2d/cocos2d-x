@@ -476,7 +476,7 @@ bool CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAct
 
 	if (d1 > d2)
 	{
-		m_pTwo = CCSequence::actionOneTwo(pAction1, CCDelayTime::actionWithDuration(d1 - d2));
+		m_pTwo = CCSequence::actionOneTwo(pAction2, CCDelayTime::actionWithDuration(d1 - d2));
 	} else
 	if (d1 < d2)
 	{
