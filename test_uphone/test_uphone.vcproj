@@ -389,6 +389,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ParticleTest"
+				>
+				<File
+					RelativePath=".\tests\ParticleTest\ParticleTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\ParticleTest\ParticleTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

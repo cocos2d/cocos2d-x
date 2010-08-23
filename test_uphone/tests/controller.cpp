@@ -25,6 +25,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ClickAndMoveTestScene(); break;
     case TEST_ROTATE_WORLD:
         pScene = new RotateWorldTestScene(); break;
+    case TEST_PARTICLE:
+        pScene = new ParticleTestScene(); break;
     default:
         break;
     }
