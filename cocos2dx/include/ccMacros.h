@@ -67,21 +67,21 @@ THE SOFTWARE.
 /** @def CC_SWAP
 simple macro that swaps 2 variables
 */
-//#define CC_SWAP(x, y)			\
-//{ typename(x) temp  = (x);		\
-//		x = y; y = temp;		\
-//}
+#define CC_SWAP(x, y, type)	\
+{	type temp = (x);		\
+	x = y; y = temp;		\
+}
 
 
 /** @def CCRANDOM_MINUS1_1
  returns a random float between -1 and 1
  */
-#define CCRANDOM_MINUS1_1() ((random() / (float)0x3fffffff )-1.0f)
+#define CCRANDOM_MINUS1_1() ((rand() / (float)0x3fffffff )-1.0f)
 
 /** @def CCRANDOM_0_1
  returns a random float between 0 and 1
  */
-#define CCRANDOM_0_1() ((random() / (float)0x7fffffff ))
+#define CCRANDOM_0_1() ((rand() / (float)0x7fffffff ))
 
 /** @def CC_DEGREES_TO_RADIANS
  converts degrees to radians
