@@ -7,6 +7,7 @@
 #include "EffectsTest/EffectsTest.h"
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
 #include "RotateWorldTest/RotateWorldTest.h"
+#include "ParticleTest/ParticleTest.h"
 
 enum
 {
@@ -16,6 +17,7 @@ enum
     TEST_EFFECTS,
     TEST_CLICK_AND_MOVE,
     TEST_ROTATE_WORLD,
+    TEST_PARTICLE,
 //     TEST_TEXTURE2D,
 //     TEST_SPRITE,
 //     TEST_LAYER,
@@ -35,6 +37,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "EffectsTest",
     "ClickAndMoveTest",
     "RotateWorldTest",
+    "ParticleTest",
 //     "Texture2dTest",
 //     "SpriteTest",
 //     "LayerTest",
