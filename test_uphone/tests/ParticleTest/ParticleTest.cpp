@@ -398,28 +398,28 @@ void DemoSnow::onEnter()
 	
 	CGPoint p = m_emitter->getPosition();
 	m_emitter->setPosition( CGPointMake( p.x, p.y-110) );
-// 	m_emitter->m_life = 3;
-// 	m_emitter->m_lifeVar = 1;
-// 	
-// 	// gravity
-// 	m_emitter->m_gravity = CGPointMake(0,-10);
-// 		
-// 	// speed of particles
-// 	m_emitter->m_speed = 130;
-// 	m_emitter->m_speedVar = 30;
-// 	
-// 	
-// 	ccColor4F startColor = m_emitter->m_startColor;
-// 	startColor.r = 0.9f;
-// 	startColor.g = 0.9f;
-// 	startColor.b = 0.9f;
-// 	m_emitter->m_startColor = startColor;
-// 	
-// 	ccColor4F startColorVar = m_emitter->m_startColorVar;
-// 	startColorVar.b = 0.1f;
-// 	m_emitter->m_startColorVar = startColorVar;
-// 	
-// 	m_emitter->m_emissionRate = m_emitter->m_totalParticles/m_emitter->m_life;
+	m_emitter->setLife(3);
+	m_emitter->setLifeVar(1);
+	
+	// gravity
+	m_emitter->setGravity(CGPointMake(0,-10));
+		
+	// speed of particles
+	m_emitter->setSpeed(130);
+	m_emitter->setSpeedVar(30);
+	
+	
+	ccColor4F startColor = m_emitter->getStartColor();
+	startColor.r = 0.9f;
+	startColor.g = 0.9f;
+	startColor.b = 0.9f;
+	m_emitter->setStartColor(startColor);
+	
+	ccColor4F startColorVar = m_emitter->getStartColorVar();
+	startColorVar.b = 0.1f;
+	m_emitter->setStartColorVar(startColorVar);
+	
+	m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
 	
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_snow) );
 	
@@ -474,61 +474,60 @@ void DemoModernArt::onEnter()
 	m_emitter->release();
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
-// 	
-// 	// duration
-// 	m_emitter->m_duration = -1;
-// 	
-// 	// gravity
-// 	m_emitter->m_gravity = CGPointMake(0,0);
-// 	
-// 	// angle
-// 	m_emitter->m_angle = 0;
-// 	m_emitter->m_angleVar = 360;
-// 	
-// 	// radial
-// 	m_emitter->m_radialAccel = 70;
-// 	m_emitter->m_radialAccelVar = 10;
-// 	
-// 	// tagential
-// 	m_emitter->m_tangentialAccel = 80;
-// 	m_emitter->m_tangentialAccelVar = 0;
-// 	
-// 	// speed of particles
-// 	m_emitter->m_speed = 50;
-// 	m_emitter->m_speedVar = 10;
-// 	
-// 	// emitter position
-// 	m_emitter->setPosition( CGPointMake( s.width/2, s.height/2) );
-// 	m_emitter->m_posVar = CGPointZero;
-// 	
-// 	// life of particles
-// 	m_emitter->m_life = 2.0f;
-// 	m_emitter->m_lifeVar = 0.3f;
-// 	
-// 	// emits per frame
-// 	m_emitter->m_emissionRate = m_emitter->m_totalParticles/m_emitter->m_life;
-// 	
-// 	// color of particles
-// 	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-// 	m_emitter->m_startColor = startColor;
-// 	
-// 	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-// 	m_emitter->m_startColorVar = startColorVar;
-// 	
-// 	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-// 	m_emitter->m_endColor = endColor;
-// 	
-// 	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
-// 	m_emitter->m_endColorVar = endColorVar;
-// 	
-// 	// size, in pixels
-// 	m_emitter->m_startSize = 1.0f;
-// 	m_emitter->m_startSizeVar = 1.0f;
-// 	m_emitter->m_endSize = 32.0f;
-// 	m_emitter->m_endSizeVar = 8.0f;
-// 	
+	
+	// duration
+	m_emitter->setDuration(-1);
+	
+	// gravity
+	m_emitter->setGravity(CGPointMake(0,0));
+	
+	// angle
+	m_emitter->setAngle(0);
+	m_emitter->setAngleVar(360);
+	
+	// radial
+	m_emitter->setRadialAccel(70);
+	m_emitter->setRadialAccelVar(10);
+	
+	// tagential
+	m_emitter->setTangentialAccel(80);
+	m_emitter->setTangentialAccelVar(0);
+	
+	// speed of particles
+	m_emitter->setSpeed(50);
+	m_emitter->setSpeedVar(10);
+	
+	// emitter position
+	m_emitter->setPosition( CGPointMake( s.width/2, s.height/2) );
+	m_emitter->setPosVar(CGPointZero);
+	
+	// life of particles
+	m_emitter->setLife(2.0f);
+	m_emitter->setLifeVar(0.3f);
+	
+	// emits per frame
+	m_emitter->setEmissionRate(m_emitter->getTotalParticles()/m_emitter->getLife());
+	
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	m_emitter->setStartColor(startColor);
+	
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	m_emitter->setStartColorVar(startColorVar);
+	
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	m_emitter->setEndColor(endColor);
+	
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+	m_emitter->setEndColorVar(endColorVar);
+	
+	// size, in pixels
+	m_emitter->setStartSize(1.0f);
+	m_emitter->setStartSizeVar(1.0f);
+	m_emitter->setEndSize(32.0f);
+	m_emitter->setEndSizeVar(8.0f);
+	
 	// texture
-	//m_emitter.texture = [[TextureMgr sharedTextureMgr] addImage("images/fire.png"];
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire_scale) );
 	
 	// additive
@@ -556,11 +555,11 @@ void DemoRing::onEnter()
 	m_background->addChild(m_emitter, 10);
 
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_star1_scale) );
-// 	m_emitter->m_lifeVar = 0;
-// 	m_emitter->m_life = 10;
-// 	m_emitter->m_speed = 100;
-// 	m_emitter->m_speedVar = 0;
-// 	m_emitter->m_emissionRate = 10000;
+	m_emitter->setLifeVar(0);
+	m_emitter->setLife(10);
+	m_emitter->setSpeed(100);
+	m_emitter->setSpeedVar(0);
+	m_emitter->setEmissionRate(10000);
 	
 	setEmitterPosition();
 }
