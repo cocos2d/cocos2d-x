@@ -50,6 +50,35 @@ namespace cocos2d {
 	//  cocos2d uses a another approach, but the results are almost identical. 
 	//
 
+	CCParticleSystem::CCParticleSystem()
+		:m_pParticles(NULL)
+#if CC_ENABLE_PROFILERS
+		,m_pProfilingTimer(NULL)
+#endif
+		,m_pTexture(NULL)
+	{
+		m_nParticleCount = 0;
+		m_fEmitCounter = 0.0f;
+
+		m_tCenterOfGravity.x = 0;
+		m_tCenterOfGravity.y = 0;
+
+		m_fStartSpin = 0.0f;
+		m_fStartSpinVar = 0.0f;
+
+		m_nParticleIdx = 0;
+
+		m_fDuration = 0;
+		m_fElapsed = 0;
+		modeA.tangentialAccel = 0;
+		modeA.tangentialAccelVar = 0;
+		m_fEndSize = 0;
+		m_fEndSizeVar = 0;
+		m_fEndSpin = 0;
+
+		m_tPosVar.x = 0.0f;
+		m_tPosVar.y = 0.0f;
+	}
 	// implementation CCParticleSystem
 	CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
 	{
@@ -257,7 +286,7 @@ namespace cocos2d {
 			delete [] m_pParticles;
 			m_pParticles = NULL;
 		}
-		CCX_SAFE_RELEASE(m_pTexture)
+		/// @todo CCX_SAFE_RELEASE(m_pTexture)
 		// profiling
 #if CC_ENABLE_PROFILERS
 		/// @todo [CCProfiler releaseTimer:_profilingTimer];
@@ -541,7 +570,7 @@ namespace cocos2d {
 	// ParticleSystem - CCTexture protocol
 	void CCParticleSystem::setTexture(CCTexture2D* var)
 	{
-		CCX_SAFE_RELEASE(m_pTexture)
+		/// @todo CCX_SAFE_RELEASE(m_pTexture)
 		var->retain();
 		m_pTexture = var;
 
