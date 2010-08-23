@@ -473,8 +473,7 @@ protected:
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
 #if	CC_DIRECTOR_FAST_FPS
-	// todo implement CCLabelAtlas
-//	CCLabelAtlas *FPSLabel;
+	CCLabelAtlas *m_pFPSLabel;
 #endif
 	
 	/* is the running scene paused */

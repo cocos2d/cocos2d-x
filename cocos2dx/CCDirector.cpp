@@ -40,6 +40,11 @@ THE SOFTWARE.
 #include "CCXApplication.h"
 #include "CCBitmapFontAtlas.h"
 #include "actions/CCActionManager.h"
+#include "CCLabelAtlas.h"
+
+#if CC_ENABLE_PROFILERS
+#include "support/CCProfiling.h"
+#endif // CC_ENABLE_PROFILERS
 
 #include <string>
 
@@ -140,8 +145,7 @@ CCDirector::~CCDirector(void)
 	CCLOGINFO("cocos2d: deallocing %p", this);
 
 #if CC_DIRECTOR_FAST_FPS
-	//todo
-//    FPSLabel->release();
+	CCX_SAFE_RELEASE(m_pFPSLabel);
 #endif 
     
 	CCX_SAFE_RELEASE(m_pRunningScene);
@@ -169,7 +173,14 @@ void CCDirector::setGLDefaultValues(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 #if CC_DIRECTOR_FAST_FPS
-	// todo: add needed source code
+	if (! m_pFPSLabel)
+	{
+		CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
+		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+		m_pFPSLabel = CCLabelAtlas::labelAtlasWithString("00.0", "fps_images.png", 16, 24, '.');
+		m_pFPSLabel->retain();
+		CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
+	}
 #endif
 }
 
@@ -357,8 +368,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
 void CCDirector::purgeCachedData(void)
 {
-	///@todo add needed source
-//	CCBitmapFontAtlas::purgeCacheData();
+    CCBitmapFontAtlas::purgeCachedData();
 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCTextureCache::purgeSharedTextureCache();
 }
@@ -406,7 +416,7 @@ bool CCDirector::isOpenGLAttached(void)
 bool CCDirector::detach(void)
 {
 	assert(isOpenGLAttached());
-	// remove from the superview
+
 	CCX_SAFE_DELETE(m_pobOpenGLView);
 	return true;
 }
@@ -594,9 +604,7 @@ void CCDirector::end(void)
 	stopAnimation();
 
 #if CC_DIRECTOR_FAST_FPS
-	// todo
-//	FPSLabel->release();
-//	FPSLabel = NULL;
+	CCX_SAFE_RELEASE(m_pFPSLabel);
 #endif
 
 	// purge bitmap cache
@@ -699,7 +707,6 @@ void CCDirector::preMainLoop(void)
 	assert(0);
 }
 
-// todo: implement later
 #if CC_DIRECTOR_FAST_FPS
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
@@ -714,17 +721,24 @@ void CCDirector::showFPS(void)
 		m_nFrames = 0;
 		m_fAccumDt = 0;
         
-		/*
-		NSString *str = [[NSString alloc] initWithFormat:@"%.1f", frameRate];
-		[FPSLabel setString:str];
-		[str release];
-		*/
+		char *str = new char[10];
+		sprintf(str, "%.1f", m_fFrameRate);
+		m_pFPSLabel->setString(str);
+		delete [] str;
 	}
 }
 #endif // CC_DIRECTOR_FAST_FPS
 
 #if CC_ENABLE_PROFILERS
-// implement later
+void CCDirector::showProfilers()
+{
+	m_fAccumDtForProfiler += m_fDeltaTime;
+	if (m_fAccumDtForProfiler > 1.0f)
+	{
+		m_fAccumDtForProfiler = 0;
+		CCProfiler::getSharedProfiler()->displayTimers();
+	}
+}
 #endif
 
 // should we afford 4 types of director ??
