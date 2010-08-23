@@ -646,6 +646,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\support\CCProfiling.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\support\CCProfiling.h"
+				>
+			</File>
+			<File
 				RelativePath=".\support\CGPointExtension.cpp"
 				>
 			</File>

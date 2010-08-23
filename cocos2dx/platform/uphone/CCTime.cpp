@@ -36,4 +36,10 @@ int CCTime::gettimeofday(struct cc_timeval *tp, void *tzp)
 
 	return 0;
 }
+
+void CCTime::timersub(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end)
+{
+	out->tv_sec = end->tv_sec - start->tv_sec;
+	out->tv_usec = end->tv_usec - start->tv_usec;
+}
 }//namespace   cocos2d 
