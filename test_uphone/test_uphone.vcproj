@@ -377,6 +377,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="RotateWorldTest"
+				>
+				<File
+					RelativePath=".\tests\RotateWorldTest\RotateWorldTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\RotateWorldTest\RotateWorldTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

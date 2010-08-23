@@ -23,6 +23,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new EffectTestScene(); break;
     case TEST_CLICK_AND_MOVE:
         pScene = new ClickAndMoveTestScene(); break;
+    case TEST_ROTATE_WORLD:
+        pScene = new RotateWorldTestScene(); break;
     default:
         break;
     }
