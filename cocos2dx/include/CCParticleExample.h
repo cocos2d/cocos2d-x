@@ -35,6 +35,16 @@ namespace cocos2d {
 		virtual ~CCParticleFire(){}
 		bool init(){ initWithTotalParticles(250); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleFire * node()
+		{
+			CCParticleFire *pRet = new CCParticleFire();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 	//! A fireworks particle system
@@ -44,6 +54,16 @@ namespace cocos2d {
 		virtual ~CCParticleFireworks(){}
 		bool init(){ initWithTotalParticles(1500); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleFireworks * node()
+		{
+			CCParticleFireworks *pRet = new CCParticleFireworks();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! A sun particle system
@@ -53,6 +73,16 @@ namespace cocos2d {
 		virtual ~CCParticleSun(){}
 		bool init(){ initWithTotalParticles(350); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleSun * node()
+		{
+			CCParticleSun *pRet = new CCParticleSun();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! A galaxy particle system
@@ -62,6 +92,16 @@ namespace cocos2d {
 		virtual ~CCParticleGalaxy(){}
 		bool init(){ initWithTotalParticles(200); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleGalaxy * node()
+		{
+			CCParticleGalaxy *pRet = new CCParticleGalaxy();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! A flower particle system
@@ -71,6 +111,16 @@ namespace cocos2d {
 		virtual ~CCParticleFlower(){}
 		bool init(){ initWithTotalParticles(250); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleFlower * node()
+		{
+			CCParticleFlower *pRet = new CCParticleFlower();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! A meteor particle system
@@ -80,6 +130,16 @@ namespace cocos2d {
 		virtual ~CCParticleMeteor(){}
 		bool init(){ initWithTotalParticles(150); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleMeteor * node()
+		{
+			CCParticleMeteor *pRet = new CCParticleMeteor();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! An spiral particle system
@@ -89,6 +149,16 @@ namespace cocos2d {
 		virtual ~CCParticleSpiral(){}
 		bool init(){ initWithTotalParticles(500); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleSpiral * node()
+		{
+			CCParticleSpiral *pRet = new CCParticleSpiral();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! An explosion particle system
@@ -98,6 +168,16 @@ namespace cocos2d {
 		virtual ~CCParticleExplosion(){}
 		bool init(){ initWithTotalParticles(700); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleExplosion * node()
+		{
+			CCParticleExplosion *pRet = new CCParticleExplosion();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! An smoke particle system
@@ -107,6 +187,16 @@ namespace cocos2d {
 		virtual ~CCParticleSmoke(){}
 		bool init(){ initWithTotalParticles(200); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleSmoke * node()
+		{
+			CCParticleSmoke *pRet = new CCParticleSmoke();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! An snow particle system
@@ -116,6 +206,16 @@ namespace cocos2d {
 		virtual ~CCParticleSnow(){}
 		bool init(){ initWithTotalParticles(700); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleSnow * node()
+		{
+			CCParticleSnow *pRet = new CCParticleSnow();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 		//! A rain particle system
@@ -125,6 +225,16 @@ namespace cocos2d {
 		virtual ~CCParticleRain(){}
 		bool init(){ initWithTotalParticles(1000); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
+		static CCParticleRain * node()
+		{
+			CCParticleRain *pRet = new CCParticleRain();
+			if (pRet->init())
+			{
+				pRet->autorelease();
+				return pRet;
+			}
+			return NULL;
+		}
 	};
 
 }// namespace cocos2d
