@@ -14,7 +14,7 @@ enum {
     kTagLabel = 2,
 };
 
-static int actionIdx=1; 
+static int actionIdx=0; 
 static std::string effectsList[] =
 {
 	"Shaky3D",
