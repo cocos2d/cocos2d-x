@@ -339,13 +339,7 @@ namespace cocos2d {
 		CCX_PROPERTY(int, m_nEmitterMode, EmitterMode)
 
 	public:
-		CCParticleSystem()
-			:m_pParticles(NULL)
-#if CC_ENABLE_PROFILERS
-			,m_pProfilingTimer(NULL)
-#endif
-			,m_pTexture(NULL)
-		{}
+		CCParticleSystem();
 		virtual ~CCParticleSystem();
 		/** creates an initializes a CCParticleSystem from a plist file.
 		This plist files can be creted manually or with Particle Designer:
