@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace cocos2d {
 
 	//! A fire particle system
-	class CCParticleFire : public CCQuadParticleSystem
+	class CCX_DLL CCParticleFire : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleFire(){}
@@ -49,7 +49,7 @@ namespace cocos2d {
 	};
 
 	//! A fireworks particle system
-	class CCParticleFireworks : public CCQuadParticleSystem
+	class CCX_DLL CCParticleFireworks : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleFireworks(){}
@@ -69,7 +69,7 @@ namespace cocos2d {
 	};
 
 		//! A sun particle system
-	class CCParticleSun : public CCQuadParticleSystem
+	class CCX_DLL CCParticleSun : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleSun(){}
@@ -89,7 +89,7 @@ namespace cocos2d {
 	};
 
 		//! A galaxy particle system
-	class CCParticleGalaxy : public CCQuadParticleSystem
+	class CCX_DLL CCParticleGalaxy : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleGalaxy(){}
@@ -109,7 +109,7 @@ namespace cocos2d {
 	};
 
 		//! A flower particle system
-	class CCParticleFlower : public CCQuadParticleSystem
+	class CCX_DLL CCParticleFlower : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleFlower(){}
@@ -129,7 +129,7 @@ namespace cocos2d {
 	};
 
 		//! A meteor particle system
-	class CCParticleMeteor : public CCQuadParticleSystem
+	class CCX_DLL CCParticleMeteor : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleMeteor(){}
@@ -149,7 +149,7 @@ namespace cocos2d {
 	};
 
 		//! An spiral particle system
-	class CCParticleSpiral : public CCQuadParticleSystem
+	class CCX_DLL CCParticleSpiral : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleSpiral(){}
@@ -169,7 +169,7 @@ namespace cocos2d {
 	};
 
 		//! An explosion particle system
-	class CCParticleExplosion : public CCQuadParticleSystem
+	class CCX_DLL CCParticleExplosion : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleExplosion(){}
@@ -189,7 +189,7 @@ namespace cocos2d {
 	};
 
 		//! An smoke particle system
-	class CCParticleSmoke : public CCQuadParticleSystem
+	class CCX_DLL CCParticleSmoke : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleSmoke(){}
@@ -209,7 +209,7 @@ namespace cocos2d {
 	};
 
 		//! An snow particle system
-	class CCParticleSnow : public CCQuadParticleSystem
+	class CCX_DLL CCParticleSnow : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleSnow(){}
@@ -229,7 +229,7 @@ namespace cocos2d {
 	};
 
 		//! A rain particle system
-	class CCParticleRain : public CCQuadParticleSystem
+	class CCX_DLL CCParticleRain : public CCQuadParticleSystem
 	{
 	public:
 		CCParticleRain(){}
