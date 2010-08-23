@@ -35,6 +35,7 @@ THE SOFTWARE.
 	#include "uphone/Cocos2dTypes.h"
 	#include "uphone/CCXGLExtFunc.h"
 	#include "uphone/CCXBitmapDC.h"
+    #include "uphone/ZipUtils.h"
 #else 
     #error
 #endif
