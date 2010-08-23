@@ -32,7 +32,7 @@ namespace   cocos2d {
 
 typedef std::set<NSObject *>::iterator NSSetIterator;
 
-class NSSet : public NSObject
+class CCX_DLL NSSet : public NSObject
 {
 public:
 	NSSet(void);
@@ -49,7 +49,7 @@ public:
 	NSSetIterator end();
 
 private:
-	std::set<NSObject *> m_set;
+    std::set<NSObject *> m_set;
 };
 
 typedef NSSet NSMutableSet;
