@@ -342,7 +342,7 @@ namespace cocos2d {
 		CCParticleSystem()
 			:m_pParticles(NULL)
 #if CC_ENABLE_PROFILERS
-			;m_pProfilingTimer(NULL)
+			,m_pProfilingTimer(NULL)
 #endif
 			,m_pTexture(NULL)
 		{}
