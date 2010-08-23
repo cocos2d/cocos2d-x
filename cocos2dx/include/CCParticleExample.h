@@ -31,9 +31,10 @@ namespace cocos2d {
 	//! A fire particle system
 	class CCParticleFire : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleFire(){}
 		virtual ~CCParticleFire(){}
-		bool init(){ initWithTotalParticles(250); }
+		bool init(){ return initWithTotalParticles(250); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleFire * node()
 		{
@@ -50,9 +51,10 @@ namespace cocos2d {
 	//! A fireworks particle system
 	class CCParticleFireworks : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleFireworks(){}
 		virtual ~CCParticleFireworks(){}
-		bool init(){ initWithTotalParticles(1500); }
+		bool init(){ return initWithTotalParticles(1500); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleFireworks * node()
 		{
@@ -69,9 +71,10 @@ namespace cocos2d {
 		//! A sun particle system
 	class CCParticleSun : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleSun(){}
 		virtual ~CCParticleSun(){}
-		bool init(){ initWithTotalParticles(350); }
+		bool init(){ return initWithTotalParticles(350); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleSun * node()
 		{
@@ -88,9 +91,10 @@ namespace cocos2d {
 		//! A galaxy particle system
 	class CCParticleGalaxy : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleGalaxy(){}
 		virtual ~CCParticleGalaxy(){}
-		bool init(){ initWithTotalParticles(200); }
+		bool init(){ return initWithTotalParticles(200); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleGalaxy * node()
 		{
@@ -107,9 +111,10 @@ namespace cocos2d {
 		//! A flower particle system
 	class CCParticleFlower : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleFlower(){}
 		virtual ~CCParticleFlower(){}
-		bool init(){ initWithTotalParticles(250); }
+		bool init(){ return initWithTotalParticles(250); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleFlower * node()
 		{
@@ -126,9 +131,10 @@ namespace cocos2d {
 		//! A meteor particle system
 	class CCParticleMeteor : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleMeteor(){}
 		virtual ~CCParticleMeteor(){}
-		bool init(){ initWithTotalParticles(150); }
+		bool init(){ return initWithTotalParticles(150); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleMeteor * node()
 		{
@@ -145,9 +151,10 @@ namespace cocos2d {
 		//! An spiral particle system
 	class CCParticleSpiral : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleSpiral(){}
 		virtual ~CCParticleSpiral(){}
-		bool init(){ initWithTotalParticles(500); }
+		bool init(){ return initWithTotalParticles(500); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleSpiral * node()
 		{
@@ -164,9 +171,10 @@ namespace cocos2d {
 		//! An explosion particle system
 	class CCParticleExplosion : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleExplosion(){}
 		virtual ~CCParticleExplosion(){}
-		bool init(){ initWithTotalParticles(700); }
+		bool init(){ return initWithTotalParticles(700); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleExplosion * node()
 		{
@@ -183,9 +191,10 @@ namespace cocos2d {
 		//! An smoke particle system
 	class CCParticleSmoke : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleSmoke(){}
 		virtual ~CCParticleSmoke(){}
-		bool init(){ initWithTotalParticles(200); }
+		bool init(){ return initWithTotalParticles(200); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleSmoke * node()
 		{
@@ -202,9 +211,10 @@ namespace cocos2d {
 		//! An snow particle system
 	class CCParticleSnow : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleSnow(){}
 		virtual ~CCParticleSnow(){}
-		bool init(){ initWithTotalParticles(700); }
+		bool init(){ return initWithTotalParticles(700); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleSnow * node()
 		{
@@ -221,9 +231,10 @@ namespace cocos2d {
 		//! A rain particle system
 	class CCParticleRain : public CCQuadParticleSystem
 	{
+	public:
 		CCParticleRain(){}
 		virtual ~CCParticleRain(){}
-		bool init(){ initWithTotalParticles(1000); }
+		bool init(){ return initWithTotalParticles(1000); }
 		virtual bool initWithTotalParticles(int numberOfParticles);
 		static CCParticleRain * node()
 		{
