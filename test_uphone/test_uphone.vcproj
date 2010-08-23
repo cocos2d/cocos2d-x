@@ -353,6 +353,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="EffectsTest"
+				>
+				<File
+					RelativePath=".\tests\EffectsTest\EffectsTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\EffectsTest\EffectsTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

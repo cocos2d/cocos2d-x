@@ -88,7 +88,7 @@ All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CCColorLayer : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
+class CCX_DLL CCColorLayer : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
 	GLfloat m_pSquareVertices[4 * 2];
@@ -137,7 +137,7 @@ Features:
 - It supports one or more children
 - Only one children will be active a time
 */
-class CCMultiplexLayer : public CCLayer
+class CCX_DLL CCMultiplexLayer : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;
