@@ -361,6 +361,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCParticleExample.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCParticleSystem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCPointParticleSystem.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCProgressTimer.h"
 				>
 			</File>
@@ -374,6 +386,10 @@
 			</File>
 			<File
 				RelativePath=".\include\CCPVRTexture.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCQuadParticleSystem.h"
 				>
 			</File>
 			<File
@@ -581,6 +597,22 @@
 		<Filter
 			Name="particle_nodes"
 			>
+			<File
+				RelativePath=".\particle_nodes\CCParticleExample.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\particle_nodes\CCParticleSystem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\particle_nodes\CCPointParticleSystem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\particle_nodes\CCQuadParticleSystem.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="sprite_nodes"

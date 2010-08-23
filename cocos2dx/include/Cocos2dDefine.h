@@ -101,6 +101,13 @@ THE SOFTWARE.
 #define NSAssert(_CONDITION, _TXT)
 #endif	
 
+#ifndef MAX
+#define MAX(a,b)            (((a) > (b)) ? (a) : (b))	
+#endif	
+
+#ifndef MIN
+#define MIN(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
 
 #endif // __COCOS2D_DEFINE_H__
 
