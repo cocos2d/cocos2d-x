@@ -365,6 +365,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ClickAndMoveTest"
+				>
+				<File
+					RelativePath=".\tests\ClickAndMoveTest\ClickAndMoveTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\ClickAndMoveTest\ClickAndMoveTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
