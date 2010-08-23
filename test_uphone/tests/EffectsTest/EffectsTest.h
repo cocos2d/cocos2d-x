@@ -20,7 +20,6 @@ public:
 
 	void checkAnim(ccTime dt);
 
-    virtual std::string title();
 	virtual void onEnter();
 
 	void restartCallback(NSObject* pSender);

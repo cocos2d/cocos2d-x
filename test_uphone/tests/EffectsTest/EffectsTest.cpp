@@ -417,11 +417,6 @@ TextLayer* TextLayer::node()
 	return pLayer;
 }
 
-std::string TextLayer::title()
-{
-	return "No title";
-}
-
 void TextLayer::onEnter()
 {
 	__super::onEnter();
