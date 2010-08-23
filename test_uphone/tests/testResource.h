@@ -13,5 +13,6 @@ static const char s_pPathF2[]       = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Imag
 static const char s_pPathBlock[]    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/blocks.png";
 static const char s_back1[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background1.png";
 static const char s_back2[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background2.png";
+static const char s_back3[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background3.png";
 
 #endif
