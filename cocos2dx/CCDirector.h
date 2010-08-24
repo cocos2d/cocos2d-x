@@ -440,12 +440,18 @@ protected:
 
 	void mainLoop(void);
 	void setNextScene(void);
+
 	// shows the FPS in the screen
+#if CC_DIRECTOR_FAST_FPS
 	void showFPS(void);
+#else
+	void showFPS(void) {}
+#endif // CC_DIRECTOR_FAST_FPS
+
 	// calculates delta time since last time it was called
 	void calculateDeltaTime(void);
 
-#if defined CC_ENABLE_PROFILERS
+#if CC_ENABLE_PROFILERS
 	void showProfilers(void);
 #endif // CC_ENABLE_PROFILERS
 
