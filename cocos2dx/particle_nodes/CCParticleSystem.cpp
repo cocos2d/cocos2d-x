@@ -51,17 +51,53 @@ namespace cocos2d {
 	//
 
 	CCParticleSystem::CCParticleSystem()
-		:m_pParticles(NULL)
+		:m_fElapsed(0)
+		,m_pParticles(NULL)
+		,m_fEmitCounter(0)
+		,m_nParticleIdx(0)
 #if CC_ENABLE_PROFILERS
-		,m_pProfilingTimer(NULL)
+		,m_pProfilingTimer(NULL);
 #endif
+		,m_bIsActive(true)
+		,m_nParticleCount(0)
+		,m_fDuration(0)
+		,m_tCenterOfGravity(CGPointZero)
+		,m_tPosVar(CGPointZero)
+		,m_fLife(0)
+		,m_fLifeVar(0)
+		,m_fAngle(0)
+		,m_fAngleVar(0)
+		,m_fStartSize(0)
+		,m_fStartSizeVar(0)
+		,m_fEndSize(0)
+		,m_fEndSizeVar(0)
+		,m_fStartSpin(0)
+		,m_fStartSpinVar(0)
+		,m_fEndSpin(0)
+		,m_fEndSpinVar(0)
+		,m_fEmissionRate(0)
+		,m_nTotalParticles(0)
 		,m_pTexture(NULL)
+		,m_bIsBlendAdditive(false)
+		,m_ePositionType(kCCPositionTypeFree)
+		,m_bIsAutoRemoveOnFinish(false)
+		,m_nEmitterMode(kCCParticleModeGravity)
 	{
-		m_fElapsed = 0;
-		m_fEmitCounter = 0;
-		m_nParticleIdx = 0;
-		m_nParticleCount = 0;
-		m_tCenterOfGravity = CGPointZero;
+		modeA.gravity = CGPointZero;
+		modeA.speed = 0;
+		modeA.speedVar = 0;
+		modeA.tangentialAccel = 0;
+		modeA.tangentialAccelVar = 0;
+		modeA.radialAccel = 0;
+		modeA.radialAccelVar = 0;
+		modeB.startRadius = 0;
+		modeB.startRadiusVar = 0;
+		modeB.endRadius = 0;
+		modeB.endRadiusVar = 0;			
+		modeB.rotatePerSecond = 0;
+		modeB.rotatePerSecondVar = 0;
+		m_tBlendFunc.src = CC_BLEND_SRC;
+		m_tBlendFunc.dst = CC_BLEND_DST;
 	}
 	// implementation CCParticleSystem
 	CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
