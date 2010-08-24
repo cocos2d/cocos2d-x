@@ -93,7 +93,7 @@ namespace cocos2d {
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			this->m_bIsBlendAdditive = true;
+			this->setIsBlendAdditive(true);
 			return true;
 		}
 		return false;
@@ -163,7 +163,7 @@ namespace cocos2d {
 			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			this->m_bIsBlendAdditive = false;
+			this->setIsBlendAdditive(false);
 			return true;
 		}
 		return false;
@@ -176,7 +176,7 @@ namespace cocos2d {
 		if( __super::initWithTotalParticles(numberOfParticles) )
 		{
 			// additive
-			this->m_bIsBlendAdditive = true;
+			this->setIsBlendAdditive(true);
 
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -311,7 +311,7 @@ namespace cocos2d {
 			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			m_bIsBlendAdditive = true;
+			this->setIsBlendAdditive(true);
 			return true;
 		}
 		return false;
@@ -387,7 +387,7 @@ namespace cocos2d {
 			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			m_bIsBlendAdditive = true;
+			this->setIsBlendAdditive(true);
 			return true;
 		}
 		return false;
@@ -462,7 +462,7 @@ namespace cocos2d {
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			this->m_bIsBlendAdditive = true;
+			this->setIsBlendAdditive(true);
 			return true;
 		}
 		return false;
@@ -538,7 +538,7 @@ namespace cocos2d {
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			this->m_bIsBlendAdditive = false;
+			this->setIsBlendAdditive(false);
 			return true;
 		}
 		return false;
@@ -613,7 +613,7 @@ namespace cocos2d {
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			this->m_bIsBlendAdditive = false;
+			this->setIsBlendAdditive(false);
 			return true;
 		}
 		return false;
@@ -685,7 +685,7 @@ namespace cocos2d {
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			this->m_bIsBlendAdditive = false;
+			this->setIsBlendAdditive(false);
 			return true;
 		}
 		return false;
@@ -760,7 +760,7 @@ namespace cocos2d {
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			this->m_bIsBlendAdditive = false;
+			this->setIsBlendAdditive(false);
 			return true;
 		}
 		return false;
@@ -835,7 +835,7 @@ namespace cocos2d {
 			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
 
 			// additive
-			m_bIsBlendAdditive = false;
+			this->setIsBlendAdditive(false);
 			return true;
 		}
 		return false;

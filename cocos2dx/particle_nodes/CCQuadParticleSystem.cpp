@@ -108,7 +108,7 @@ namespace cocos2d {
 	void CCQuadParticleSystem::setTextureWithRect(CCTexture2D *texture, CGRect rect)
 	{
 		// Only update the texture if is different from the current one
-		if( texture->getName() != m_pTexture->getName() )
+		if( !m_pTexture || texture->getName() != m_pTexture->getName() )
 		{
 			__super::setTexture(texture);
 		}
@@ -131,7 +131,7 @@ namespace cocos2d {
 		NSAssert( CGPoint::CGPointEqualToPoint( spriteFrame->getOffset() , CGPointZero ), "QuadParticle only supports SpriteFrames with no offsets");
 
 		// update texture before updating texture rect
-		if (spriteFrame->getTexture()->getName() != m_pTexture->getName())
+		if ( !m_pTexture || spriteFrame->getTexture()->getName() != m_pTexture->getName())
 		{
 			this->setTexture(spriteFrame->getTexture());
 		}
