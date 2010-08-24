@@ -65,7 +65,7 @@ CCAtlasNode * CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int
 	// also, using: self.textureAtlas supports re-initialization without leaking
 	this->m_pTextureAtlas = new CCTextureAtlas();
 	m_pTextureAtlas->initWithFile(tile, itemsToRender);
-	m_pTextureAtlas->release();
+//	m_pTextureAtlas->release();
 
 	this->updateBlendFunc();
 	this->updateOpacityModifyRGB();
