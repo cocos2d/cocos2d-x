@@ -555,7 +555,7 @@ namespace cocos2d {
 	// ParticleSystem - CCTexture protocol
 	void CCParticleSystem::setTexture(CCTexture2D* var)
 	{
-		/// @todo CCX_SAFE_RELEASE(m_pTexture)
+		CCX_SAFE_RELEASE(m_pTexture)
 		var->retain();
 		m_pTexture = var;
 

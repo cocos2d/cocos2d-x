@@ -90,7 +90,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(true);
@@ -160,7 +160,7 @@ namespace cocos2d {
 			m_fStartSizeVar = 2.0f;
 			m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
-			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(false);
@@ -235,7 +235,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 			return true;
 		}
 		return false;
@@ -308,7 +308,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(true);
@@ -384,7 +384,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(true);
@@ -459,7 +459,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(true);
@@ -535,7 +535,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.5f;
 			m_tEndColorVar.a = 0.0f;
 
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(false);
@@ -610,7 +610,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.5f;
 			m_tEndColorVar.a = 0.0f;
 
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(false);
@@ -682,7 +682,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(false);
@@ -757,7 +757,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(false);
@@ -832,7 +832,7 @@ namespace cocos2d {
 			m_tEndColorVar.b = 0.0f;
 			m_tEndColorVar.a = 0.0f;
 
-			m_pTexture = CCTextureCache::sharedTextureCache()->addImage("fire.png");
+			this->setTexture(CCTextureCache::sharedTextureCache()->addImage("fire.png"));
 
 			// additive
 			this->setIsBlendAdditive(false);
