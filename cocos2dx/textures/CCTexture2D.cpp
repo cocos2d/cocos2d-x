@@ -316,9 +316,8 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 		outPixel16 = (unsigned short*)tempData;
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
-		CCX_SAFE_FREE(data);
+		delete [] data;
 		data = tempData;
-
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
@@ -332,10 +331,8 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 			((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) | // B
 			((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
 
-
-		CCX_SAFE_FREE(data);
+		delete [] data;
 		data = tempData;
-
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
@@ -349,7 +346,6 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 			((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
 			((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
 
-
 		delete []data;
 		data = tempData;
 	}
@@ -362,9 +358,8 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 		m_bHasPremultipliedAlpha = image->isPremultipliedAlpha();
 
 		//CGContextRelease(context);
-		CCX_SAFE_DELETE(data);
+		delete [] data;
 	}
-
 	return this;
 }
 
