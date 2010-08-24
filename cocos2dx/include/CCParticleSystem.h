@@ -361,7 +361,7 @@ namespace cocos2d {
 		bool initWithDictionary(CCDictionary *dictionary);
 
 		//! Initializes a system with a fixed number of particles
-		bool initWithTotalParticles(int numberOfParticles);
+		virtual bool initWithTotalParticles(int numberOfParticles);
 		//! Add a particle to the emitter
 		bool addParticle();
 		//! Initializes a particle

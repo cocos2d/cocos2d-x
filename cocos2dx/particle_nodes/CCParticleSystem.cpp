@@ -57,27 +57,11 @@ namespace cocos2d {
 #endif
 		,m_pTexture(NULL)
 	{
-		m_nParticleCount = 0;
-		m_fEmitCounter = 0.0f;
-
-		m_tCenterOfGravity.x = 0;
-		m_tCenterOfGravity.y = 0;
-
-		m_fStartSpin = 0.0f;
-		m_fStartSpinVar = 0.0f;
-
-		m_nParticleIdx = 0;
-
-		m_fDuration = 0;
 		m_fElapsed = 0;
-		modeA.tangentialAccel = 0;
-		modeA.tangentialAccelVar = 0;
-		m_fEndSize = 0;
-		m_fEndSizeVar = 0;
-		m_fEndSpin = 0;
-
-		m_tPosVar.x = 0.0f;
-		m_tPosVar.y = 0.0f;
+		m_fEmitCounter = 0;
+		m_nParticleIdx = 0;
+		m_nParticleCount = 0;
+		m_tCenterOfGravity = CGPointZero;
 	}
 	// implementation CCParticleSystem
 	CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
@@ -286,7 +270,7 @@ namespace cocos2d {
 			delete [] m_pParticles;
 			m_pParticles = NULL;
 		}
-		/// @todo CCX_SAFE_RELEASE(m_pTexture)
+		CCX_SAFE_RELEASE(m_pTexture)
 		// profiling
 #if CC_ENABLE_PROFILERS
 		/// @todo [CCProfiler releaseTimer:_profilingTimer];
@@ -338,6 +322,7 @@ namespace cocos2d {
 		float startS = MAX(0, m_fStartSize + m_fStartSizeVar * CCRANDOM_MINUS1_1() ); // no negative size
 
 		particle->size = startS;
+
 		if( m_fEndSize == kCCParticleStartSizeEqualToEndSize )
 		{
 			particle->deltaSize = 0;
@@ -408,7 +393,7 @@ namespace cocos2d {
 	void CCParticleSystem::resetSystem()
 	{
 		m_bIsActive = true;
-		m_fElapsed = true;
+		m_fElapsed = 0;
 		for (m_nParticleIdx = 0; m_nParticleIdx < m_nParticleCount; ++m_nParticleIdx)
 		{
 			tCCParticle *p = &m_pParticles[m_nParticleIdx];
@@ -578,9 +563,8 @@ namespace cocos2d {
 		if( m_pTexture && ! m_pTexture->getHasPremultipliedAlpha() &&		
 			( m_tBlendFunc.src == CC_BLEND_SRC && m_tBlendFunc.dst == CC_BLEND_DST ) ) 
 		{
-
-				m_tBlendFunc.src = GL_SRC_ALPHA;
-				m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+			m_tBlendFunc.src = GL_SRC_ALPHA;
+			m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 		}
 	}
 	CCTexture2D * CCParticleSystem::getTexture()
