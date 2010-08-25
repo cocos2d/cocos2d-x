@@ -158,6 +158,7 @@ public:
 
 	// initializes the action
 	CCSpeed* initWithAction(CCIntervalAction *pAction, float fRate);
+	CCSpeed* initWithAction(CCRepeatForever *pAction, float fRate);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void startWithTarget(NSObject* pTarget);
@@ -169,10 +170,12 @@ public:
 public:
 	// creates the action
 	static CCSpeed* actionWithAction(CCIntervalAction *pAction, float fRate);
+	static CCSpeed* actionWithAction(CCRepeatForever *pAction, float fRate);
     
 protected:
 	float m_fSpeed;
 	CCIntervalAction *m_pOther;
+	CCRepeatForever *m_pRepeat;
 };
 
 /** CCFollow is an action that "follows" a node.
