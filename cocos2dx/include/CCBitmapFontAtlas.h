@@ -24,7 +24,6 @@ THE SOFTWARE.
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 #include "CCSpriteSheet.h"
-#include "platform/platform.h"
 namespace cocos2d{
 
 	struct _KerningHashElement;
@@ -75,7 +74,7 @@ namespace cocos2d{
 		// The characters building up the font
 		ccBitmapFontDef	m_pBitmapFontArray[kCCBitmapFontAtlasMaxChars];
 		// FNTConfig: Common Height
-		UINT32 m_uCommonHeight;
+		unsigned int m_uCommonHeight;
 		// Padding
 		ccBitmapFontPadding	m_tPadding;
 		// atlas name
@@ -168,7 +167,7 @@ namespace cocos2d{
 #endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
 	private:
 		char * atlasNameFromFntFile(const char *fntFile);
-		int kerningAmountForFirst(INT16 first, INT16 second);
+		int kerningAmountForFirst(unsigned short first, unsigned short second);
 
 	};
 

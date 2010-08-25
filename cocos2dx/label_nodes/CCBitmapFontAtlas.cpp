@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 #include "CCSprite.h"
 #include "CGPointExtension.h"
+#include "platform/platform.h"
 namespace cocos2d{
 	
 	//
@@ -380,7 +381,7 @@ namespace cocos2d{
 	}
 
 	// BitmapFontAtlas - Atlas generation
-	int CCBitmapFontAtlas::kerningAmountForFirst(INT16 first, INT16 second)
+	int CCBitmapFontAtlas::kerningAmountForFirst(unsigned short first, unsigned short second)
 	{
 		int ret = 0;
 		unsigned int key = (first<<16) | (second & 0xffff);

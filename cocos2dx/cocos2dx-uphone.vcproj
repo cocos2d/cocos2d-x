@@ -522,19 +522,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Makefiles"
-			Filter="TMK3;ARM"
-			>
-			<File
-				RelativePath=".\cocos2dx_Arm.TMK3"
-				>
-			</File>
-			<File
-				RelativePath=".\Makefile.ARM"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="label_nodes"
 			>
 			<File
