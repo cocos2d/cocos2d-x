@@ -1,7 +1,5 @@
 #include "tests.h"
 #include "controller.h"
-// #include "CCLabel.h"
-// #include "touch_dispatcher/CCTouchDispatcher.h"
 
 #define LINE_SPACE          30
 

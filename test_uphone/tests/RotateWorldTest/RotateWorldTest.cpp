@@ -1,9 +1,5 @@
 #include "RotateWorldTest.h"
 #include "../testResource.h"
-// #include "CCLabel.h"
-// #include "CCDirector.h"
-// #include "CCMenu.h"
-// #include "CCIntervalAction.h"
 
 //------------------------------------------------------------------
 //

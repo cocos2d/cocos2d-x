@@ -1,11 +1,4 @@
 #include "TransitionsTest.h"
-// #include "CCDirector.h"
-// #include "CCSprite.h"
-// #include "CCMenu.h"
-// #include "CCLabel.h"
-// #include "CCTransition.h"
-// #include "CCRadialTransition.h"
-// #include "CCPageTurnTransition.h"
 #include "../testResource.h"
 
 #define MAX_LAYER	37
