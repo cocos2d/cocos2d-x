@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCGrid3DAction.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 
 namespace cocos2d
 {

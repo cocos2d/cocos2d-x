@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
 #include "CCTextureCache.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 #include "CCDrawingPrimitives.h"
 #include "CGGeometry.h"
 #include "CCTexture2D.h"

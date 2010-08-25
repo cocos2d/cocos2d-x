@@ -74,6 +74,27 @@ THE SOFTWARE.
 #include "CCPVRTexture.h"
 #include "CCRadialTransition.h"
 #include "CCProgressTimerActions.h"
+#include "CCTouchDispatcher.h"
+
+//
+// cocoa includes
+//
+#include "NSSet.h"
+#include "NSMutableArray.h"
+#include "NSMutableDictionary.h"
+#include "NSObject.h"
+#include "NSZone.h"
+#include "CGGeometry.h"
+#include "CGAffineTransform.h"
+#include "selector_protocol.h"
+#include "CCTouch.h"
+#include "CGPointExtension.h"
+
+//
+// platform specific
+//
+#include "CCXApplication.h"
+#include "CCXEGLView.h"
  
 //
 // cocos2d macros

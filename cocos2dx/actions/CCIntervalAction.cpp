@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCIntervalAction.h"
 #include "CCSprite.h"
 #include "CCNode.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 
 #include <float.h>
 

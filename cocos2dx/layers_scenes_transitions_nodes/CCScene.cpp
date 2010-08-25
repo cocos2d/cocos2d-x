@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 #include "CCDirector.h"
 
 namespace   cocos2d {

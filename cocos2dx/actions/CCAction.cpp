@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCIntervalAction.h"
 #include "ccMacros.h"
 #include "CCNode.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 #include "CCDirector.h"
 #include "NSZone.h"
 

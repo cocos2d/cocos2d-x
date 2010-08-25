@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 #include "CCLayer.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "CCTouchDispatcher.h"
 #include "CCDirector.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 namespace   cocos2d {
 
 // CCLayer

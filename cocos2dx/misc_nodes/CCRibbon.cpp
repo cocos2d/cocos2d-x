@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCRibbon.h"
 #include "CCTextureCache.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 namespace cocos2d {
 
 	/*

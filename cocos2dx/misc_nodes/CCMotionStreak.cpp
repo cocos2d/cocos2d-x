@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCMotionStreak.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 #include "CCRibbon.h"
 namespace cocos2d {
 	/*

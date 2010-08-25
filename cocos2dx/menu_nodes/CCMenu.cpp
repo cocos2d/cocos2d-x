@@ -24,9 +24,9 @@ THE SOFTWARE.
 #include "CCMenu.h"
 #include "CCDirector.h"
 #include "CCXApplication.h"
-#include "support/CGPointExtension.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "CGPointExtension.h"
+#include "CCTouchDispatcher.h"
+#include "CCTouch.h"
 
 #include <vector>
 #include <float.h>

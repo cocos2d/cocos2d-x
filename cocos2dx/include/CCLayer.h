@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "Cocos2dDefine.h"
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
+#include "CCTouchDelegateProtocol.h"
 #include "ccxCommon.h"
 namespace   cocos2d {
 
