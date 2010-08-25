@@ -139,7 +139,7 @@ void DemoBigFlower::onEnter()
 
 	m_background->addChild(m_emitter, 10);
 	m_emitter->release();	// win32 :  use this line or remove this line and use autorelease()
-    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_star1_scale) );
+    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
 
 	m_emitter->setDuration(-1);
 	
@@ -223,7 +223,7 @@ void DemoRotFlower::onEnter()
 
 	m_background->addChild(m_emitter, 10);
 	m_emitter->release();	// win32 : Remove this line
-	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_star2_scale) );
+	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars2) );
 	
 	// duration
 	m_emitter->setDuration(-1);
@@ -349,7 +349,7 @@ void DemoExplosion::onEnter()
 	m_emitter = CCParticleExplosion::node();
 	m_background->addChild(m_emitter, 10);
 	
-	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_star1_scale) );
+	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
 	
 	m_emitter->setIsAutoRemoveOnFinish(true);
 	
@@ -528,7 +528,7 @@ void DemoModernArt::onEnter()
 	m_emitter->setEndSizeVar(8.0f);
 	
 	// texture
-	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire_scale) );
+	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
 	// additive
 	m_emitter->setIsBlendAdditive(false);
@@ -554,7 +554,7 @@ void DemoRing::onEnter()
 
 	m_background->addChild(m_emitter, 10);
 
-	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_star1_scale) );
+	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
 	m_emitter->setLifeVar(0);
 	m_emitter->setLife(10);
 	m_emitter->setSpeed(100);

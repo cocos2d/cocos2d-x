@@ -15,10 +15,11 @@ static const char s_back1[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Imag
 static const char s_back2[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background2.png";
 static const char s_back3[]         = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background3.png";
 static const char s_stars1[]        = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars.png";
+static const char s_stars2[]        = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars2.png";
 static const char s_fire[]          = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/fire.png";
 static const char s_snow[]          = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/snow.png";
-static const char s_star1_scale[]   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars.png";
-static const char s_star2_scale[]   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars2.png";
-static const char s_fire_scale[]    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/fire.png";
+// static const char s_star1_scale[]   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars.png";
+// static const char s_star2_scale[]   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars2.png";
+// static const char s_fire_scale[]    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/fire.png";
 
 #endif
