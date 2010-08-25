@@ -361,7 +361,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\CCParticleExample.h"
+				RelativePath=".\include\CCParticleExamples.h"
 				>
 			</File>
 			<File
@@ -597,7 +597,7 @@
 			Name="particle_nodes"
 			>
 			<File
-				RelativePath=".\particle_nodes\CCParticleExample.cpp"
+				RelativePath=".\particle_nodes\CCParticleExamples.cpp"
 				>
 			</File>
 			<File

@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CCParticleSystem.h"
 #include "CCPointParticleSystem.h"
 #include "CCQuadParticleSystem.h"
-#include "CCParticleExample.h"
+#include "CCParticleExamples.h"
 #include "CCScene.h"
 #include "CCSprite.h"
 #include "CCTextureCache.h"
