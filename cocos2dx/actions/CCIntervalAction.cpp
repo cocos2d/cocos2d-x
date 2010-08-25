@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CGPointExtension.h"
 
 #include <float.h>
+#include <stdarg.h>
 
 namespace cocos2d {
 

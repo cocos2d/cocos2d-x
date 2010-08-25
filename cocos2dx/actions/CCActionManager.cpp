@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "support/data_support/ccArray.h"
+#include "Cocos2dDefine.h"
 
 namespace cocos2d {
 //
