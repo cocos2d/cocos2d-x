@@ -25,6 +25,10 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new RotateWorldTestScene(); break;
     case TEST_PARTICLE:
         pScene = new ParticleTestScene(); break;
+    case TEST_EASE_ACTIONS:
+        pScene = new EaseActionsTestScene(); break;
+    case TEST_MOTION_STREAK:
+        pScene = new MotionStreakTestScene(); break;
     default:
         break;
     }

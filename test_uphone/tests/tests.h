@@ -8,6 +8,8 @@
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
 #include "RotateWorldTest/RotateWorldTest.h"
 #include "ParticleTest/ParticleTest.h"
+#include "EaseActionsTest/EaseActionsTest.h"
+#include "MotionStreakTest/MotionStreakTest.h"
 
 enum
 {
@@ -18,6 +20,8 @@ enum
     TEST_CLICK_AND_MOVE,
     TEST_ROTATE_WORLD,
     TEST_PARTICLE,
+    TEST_EASE_ACTIONS,
+    TEST_MOTION_STREAK,
 //     TEST_TEXTURE2D,
 //     TEST_SPRITE,
 //     TEST_LAYER,
@@ -38,6 +42,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ClickAndMoveTest",
     "RotateWorldTest",
     "ParticleTest",
+    "EaseActionsTest",
+    "MotionStreakTest",
 //     "Texture2dTest",
 //     "SpriteTest",
 //     "LayerTest",

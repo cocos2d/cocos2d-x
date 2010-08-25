@@ -401,6 +401,30 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="EaseActionsTest"
+				>
+				<File
+					RelativePath=".\tests\EaseActionsTest\EaseActionsTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\EaseActionsTest\EaseActionsTest.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="MotionStreakTest"
+				>
+				<File
+					RelativePath=".\tests\MotionStreakTest\MotionStreakTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\MotionStreakTest\MotionStreakTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
