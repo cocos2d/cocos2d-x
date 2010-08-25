@@ -26,7 +26,9 @@ THE SOFTWARE.
 
 #include "CCProtocols.h"
 #include "CCNode.h"
-#include "platform/platform.h"
+
+#include <map>
+
 namespace cocos2d {
 
 #if CC_ENABLE_PROFILERS
