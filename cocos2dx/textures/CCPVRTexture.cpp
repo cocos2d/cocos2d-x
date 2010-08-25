@@ -40,19 +40,19 @@ enum
 
 typedef struct _PVRTexHeader
 {
-	uint32_t headerLength;
-	uint32_t height;
-	uint32_t width;
-	uint32_t numMipmaps;
-	uint32_t flags;
-	uint32_t dataLength;
-	uint32_t bpp;
-	uint32_t bitmaskRed;
-	uint32_t bitmaskGreen;
-	uint32_t bitmaskBlue;
-	uint32_t bitmaskAlpha;
-	uint32_t pvrTag;
-	uint32_t numSurfs;
+	unsigned int headerLength;
+	unsigned int height;
+	unsigned int width;
+	unsigned int numMipmaps;
+	unsigned int flags;
+	unsigned int dataLength;
+	unsigned int bpp;
+	unsigned int bitmaskRed;
+	unsigned int bitmaskGreen;
+	unsigned int bitmaskBlue;
+	unsigned int bitmaskAlpha;
+	unsigned int pvrTag;
+	unsigned int numSurfs;
 } PVRTexHeader;
 
 CCPVRTexture::CCPVRTexture()
@@ -75,12 +75,12 @@ GLuint CCPVRTexture::getName()
 	return m_uName;
 }
 
-uint32_t CCPVRTexture::getWidth()
+unsigned int CCPVRTexture::getWidth()
 {
 	return m_uWidth;
 }
 
-uint32_t CCPVRTexture::getHeight()
+unsigned int CCPVRTexture::getHeight()
 {
 	return m_uHeight;
 }

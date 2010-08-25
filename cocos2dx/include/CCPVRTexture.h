@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "Cocos2dDefine.h"
 #include "NSObject.h"
 #include "NSMutableArray.h"
-#include "support/data_support/uthash.h"
 
 namespace   cocos2d {
 class NSData;
@@ -54,8 +53,8 @@ public:
 /// @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
 
 	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
-	CCX_PROPERTY_READONLY(uint32_t, m_uWidth, Width)
-	CCX_PROPERTY_READONLY(uint32_t, m_uHeight, Height)
+	CCX_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
+	CCX_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
 	CCX_PROPERTY_READONLY(GLenum, m_uInternalFormat, InternalFormat)
 	CCX_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
 
