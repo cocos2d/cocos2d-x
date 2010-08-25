@@ -10,7 +10,7 @@
 #include  "test_uphone_res_def.h"
 #include "TG3.h"
 #include "ssMsgQueue.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
+#include "CCTouchDelegateProtocol.h"
 
 using namespace cocos2d;
 
