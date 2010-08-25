@@ -31,5 +31,5 @@ TestScene::TestScene()
     CCLayer* pLayer = new BackToMainMenuLayer();
     pLayer->autorelease();
 
-    addChild(pLayer);
+    addChild(pLayer, 1000);
 }
