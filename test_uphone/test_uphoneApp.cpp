@@ -32,8 +32,10 @@ Ttest_uphoneApp::~Ttest_uphoneApp()
 bool Ttest_uphoneApp::initCocos2d()
 {
     // init director
-    CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
-    CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    CCDirector * pDirector = CCDirector::getSharedDirector();
+    pDirector->setOpenGLView(m_pMainWnd);
+    pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    pDirector->setDisplayFPS(true);
 
     // load background image texture and get window size
     CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage("/NEWPLUS/TDA_DATA/UserData/HelloWorld.png");

@@ -726,6 +726,8 @@ void CCDirector::showFPS(void)
 		m_pFPSLabel->setString(str);
 		delete [] str;
 	}
+
+    m_pFPSLabel->draw();
 }
 #endif // CC_DIRECTOR_FAST_FPS
 
