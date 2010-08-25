@@ -231,34 +231,6 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     return NULL;
 }							
 
-CCScene* nextTransition( ccTime t, CCScene* s)
-{
-    s_nSceneIdx++;
-    s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
-
-    CCTransitionScene* pTransition = createTransition(s_nSceneIdx, t, s);
-
-    return pTransition;
-}
-
-CCScene* backTransition( ccTime t, CCScene* s)
-{
-    s_nSceneIdx--;
-    int total = MAX_LAYER;
-    if( s_nSceneIdx < 0 )
-        s_nSceneIdx += total;	
-
-    CCTransitionScene* pTransition = createTransition(s_nSceneIdx, t, s);
-
-    return pTransition;
-}
-
-CCScene* restartTransition( ccTime t, CCScene* s)
-{
-    CCTransitionScene* pTransition = createTransition(s_nSceneIdx, t, s);
-
-    return pTransition;
-} 
 
 void TransitionsTestScene::runThisTest()
 {
@@ -319,7 +291,7 @@ void TestLayer1::restartCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer2();
     s->addChild(pLayer);
 
-    CCScene* pScene = restartTransition(TRANSITION_DURATION, s);
+    CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -328,12 +300,15 @@ void TestLayer1::restartCallback(NSObject* pSender)
 
 void TestLayer1::nextCallback(NSObject* pSender)
 {
+    s_nSceneIdx++;
+    s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
+
     CCScene* s = new TransitionsTestScene();
 
     CCLayer* pLayer = new TestLayer2();
     s->addChild(pLayer);
 
-    CCScene* pScene = nextTransition(TRANSITION_DURATION, s);
+    CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -342,12 +317,17 @@ void TestLayer1::nextCallback(NSObject* pSender)
 
 void TestLayer1::backCallback(NSObject* pSender)
 {
+    s_nSceneIdx--;
+    int total = MAX_LAYER;
+    if( s_nSceneIdx < 0 )
+        s_nSceneIdx += total;	
+
     CCScene* s = new TransitionsTestScene();
 
     CCLayer* pLayer = new TestLayer2();
     s->addChild(pLayer);
 
-    CCScene* pScene = backTransition(TRANSITION_DURATION, s);
+    CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -410,7 +390,7 @@ void TestLayer2::restartCallback(NSObject* pSender)
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
 
-    CCScene* pScene = restartTransition(TRANSITION_DURATION, s);
+    CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -419,12 +399,15 @@ void TestLayer2::restartCallback(NSObject* pSender)
 
 void TestLayer2::nextCallback(NSObject* pSender)
 {
+    s_nSceneIdx++;
+    s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
+
     CCScene* s = new TransitionsTestScene();
 
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
 
-    CCScene* pScene = nextTransition(TRANSITION_DURATION, s);
+    CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -433,12 +416,17 @@ void TestLayer2::nextCallback(NSObject* pSender)
 
 void TestLayer2::backCallback(NSObject* pSender)
 {
+    s_nSceneIdx--;
+    int total = MAX_LAYER;
+    if( s_nSceneIdx < 0 )
+        s_nSceneIdx += total;	
+
     CCScene* s = new TransitionsTestScene();
 
     CCLayer* pLayer = new TestLayer1();
     s->addChild(pLayer);
 
-    CCScene* pScene = backTransition(TRANSITION_DURATION, s);
+    CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
