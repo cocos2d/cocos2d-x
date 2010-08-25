@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "CCPVRTexture.h"
 #include "CCConfiguration.h"
 #include "platform/platform.h"
+#include "CCXUIImage.h"
 
 namespace   cocos2d {
 

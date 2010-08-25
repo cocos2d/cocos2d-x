@@ -28,8 +28,10 @@ THE SOFTWARE.
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
 #include <tg3.h>
-#include "CCFileUtils.h"
+
+#include "CCXFileUtils_uphone.h"
 #include "Cocos2dDefine.h"
+
 namespace   cocos2d {
 
 void startElement(void *ctx, const xmlChar *name, const xmlChar **atts);

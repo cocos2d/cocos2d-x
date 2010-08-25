@@ -28,10 +28,8 @@ THE SOFTWARE.
 #include "config_platform.h"
 
 #ifdef CCX_PLATFORM_UPHONE
-	#include "uphone/CCFileUtils.h"
 	#include "uphone/CCTime.h"
 	#include "uphone/NSLock.h"
-	#include "uphone/UIImage.h"
 	#include "uphone/Cocos2dTypes.h"
 	#include "uphone/CCXGLExtFunc.h"
 	#include "uphone/CCXBitmapDC.h"

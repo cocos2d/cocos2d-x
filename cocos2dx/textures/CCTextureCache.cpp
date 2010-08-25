@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "NSData.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
+#include "CCXFileUtils.h"
+#include "CCXUIImage.h"
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
 namespace   cocos2d {

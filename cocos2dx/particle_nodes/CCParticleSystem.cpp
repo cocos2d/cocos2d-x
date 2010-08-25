@@ -26,7 +26,8 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "support/base64.h"
 #include "CGPointExtension.h"
-#include "platform/platform.h"
+//#include "platform/platform.h"
+#include "CCXFileUtils.h"
 
 #if CC_ENABLE_PROFILERS
 #include "Support/CCProfiling.h"

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "UIImage.h"
+#include "CCXUIImage_uphone.h"
 
 //#include <ImageToolKit/IT_ImageLoader.h> 
 #include <TG3.h>

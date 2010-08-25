@@ -473,6 +473,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCXFileUtils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCXUIImage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CGAffineTransform.h"
 				>
 			</File>
@@ -789,11 +797,19 @@
 			Name="platform"
 			>
 			<File
+				RelativePath=".\platform\CCFileUtils_platform.h"
+				>
+			</File>
+			<File
 				RelativePath=".\platform\CCXApplication_platform.h"
 				>
 			</File>
 			<File
 				RelativePath=".\platform\CCXEGLView_platform.h"
+				>
+			</File>
+			<File
+				RelativePath=".\platform\CCXUIImage_platform.h"
 				>
 			</File>
 			<File
@@ -807,14 +823,6 @@
 			<Filter
 				Name="uphone"
 				>
-				<File
-					RelativePath=".\platform\uphone\CCFileUtils.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\platform\uphone\CCFileUtils.h"
-					>
-				</File>
 				<File
 					RelativePath=".\platform\uphone\CCTime.cpp"
 					>
@@ -848,11 +856,27 @@
 					>
 				</File>
 				<File
+					RelativePath=".\platform\uphone\CCXFileUtils_uphone.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXFileUtils_uphone.h"
+					>
+				</File>
+				<File
 					RelativePath=".\platform\uphone\CCXGLExtFunc.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\platform\uphone\CCXGLExtFunc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXUIImage_uphone.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXUIImage_uphone.h"
 					>
 				</File>
 				<File
@@ -869,14 +893,6 @@
 				</File>
 				<File
 					RelativePath=".\platform\uphone\NSLock.h"
-					>
-				</File>
-				<File
-					RelativePath=".\platform\uphone\UIImage.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\platform\uphone\UIImage.h"
 					>
 				</File>
 				<File
