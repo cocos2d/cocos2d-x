@@ -1,8 +1,5 @@
 #include "testBasic.h"
 #include "controller.h"
-// #include "CCMenu.h"
-// #include "CCLabel.h"
-// #include "CCDirector.h"
 
 BackToMainMenuLayer::BackToMainMenuLayer()
 {

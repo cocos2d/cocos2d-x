@@ -1,11 +1,5 @@
 #include "ClickAndMoveTest.h"
-// #include "CCDirector.h"
-// #include "CCSprite.h"
 #include "../testResource.h"
-// #include "CCIntervalAction.h"
-// #include "CCInstantAction.h"
-// #include "touch_dispatcher/CCTouch.h"
-// #include "NSSet.h"
 
 enum
 {

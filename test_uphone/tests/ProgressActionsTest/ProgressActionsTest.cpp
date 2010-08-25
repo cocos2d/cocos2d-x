@@ -1,9 +1,4 @@
 #include "ProgressActionsTest.h"
-// #include "CCDirector.h"
-// #include "CCLabel.h"
-// #include "CCMenu.h"
-// #include "CCProgressTimer.h"
-// #include "CCProgressTimerActions.h"
 #include "../testResource.h"
 
 static int sceneIdx = -1; 

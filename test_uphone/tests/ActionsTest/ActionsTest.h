@@ -2,11 +2,6 @@
 #define _ActionsTest_H_
 
 #include "../testBasic.h"
-// #include "CCDirector.h"
-// #include "CCScene.h"
-// #include "CCLayer.h"
-// #include "CCSprite.h"
-// #include "platform/platform.h"
 #include "cocos2d.h"
 
 using namespace cocos2d;

@@ -1,8 +1,6 @@
 #ifndef _CONTROLLER_H_
 #define _CONTROLLER_H_
 
-// #include "CCLayer.h"
-// #include "CCMenu.h"
 #include "cocos2d.h"
 
 using namespace cocos2d;

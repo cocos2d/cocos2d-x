@@ -1,13 +1,5 @@
 #include "ActionsTest.h"
-// #include "platform/platform.h"
-// #include "CCIntervalAction.h"
-// #include "CCInstantAction.h"
-// #include "CCCameraAction.h"
-// #include "CCMenu.h"
-// #include "CCLabel.h"
-// #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "../testResource.h"
-/*#include "cocos2d.h"*/
 
 static Int32 s_nActionIdx = -1;
 
