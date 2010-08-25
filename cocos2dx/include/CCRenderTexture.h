@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCSprite.h"
-#include "platform/platform.h"
 
 namespace cocos2d {
 	enum  

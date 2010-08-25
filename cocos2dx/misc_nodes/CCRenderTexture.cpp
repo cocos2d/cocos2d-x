@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCRenderTexture.h"
 #include "CCDirector.h"
+#include "platform/platform.h"
 
 namespace cocos2d { 
 
