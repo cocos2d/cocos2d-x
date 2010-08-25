@@ -809,14 +809,14 @@ void ParticleDemo::restartCallback(NSObject* pSender)
 
 void ParticleDemo::nextCallback(NSObject* pSender)
 {
-	CCScene* s = CCScene::node();
+	CCScene* s = new ParticleTestScene();
 	s->addChild( nextParticleAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
 }
 
 void ParticleDemo::backCallback(NSObject* pSender)
 {
-	CCScene* s = CCScene::node();
+	CCScene* s = new ParticleTestScene();
 	s->addChild( backParticleAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
 } 
