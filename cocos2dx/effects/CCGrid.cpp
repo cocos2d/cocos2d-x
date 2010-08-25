@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCGrabber.h"
 
 #include "support/opengl_support/glu.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 
 namespace cocos2d
 {

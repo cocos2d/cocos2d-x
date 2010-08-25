@@ -297,6 +297,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCDirector.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCEaseAction.h"
 				>
 			</File>
@@ -434,6 +438,18 @@
 			</File>
 			<File
 				RelativePath=".\include\CCTiledGridAction.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTouch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTouchDelegateProtocol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCTouchDispatcher.h"
 				>
 			</File>
 			<File
@@ -738,19 +754,7 @@
 			Name="touch_dispatcher"
 			>
 			<File
-				RelativePath=".\touch_dispatcher\CCTouch.h"
-				>
-			</File>
-			<File
-				RelativePath=".\touch_dispatcher\CCTouchDelegateProtocol.h"
-				>
-			</File>
-			<File
 				RelativePath=".\touch_dispatcher\CCTouchDispatcher.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\touch_dispatcher\CCTouchDispatcher.h"
 				>
 			</File>
 			<File
@@ -912,10 +916,6 @@
 		</File>
 		<File
 			RelativePath=".\CCDirector.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\CCDirector.h"
 			>
 		</File>
 		<File

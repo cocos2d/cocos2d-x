@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCTiledGridAction.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 #include "effects/CCGrid.h"
 
 namespace cocos2d

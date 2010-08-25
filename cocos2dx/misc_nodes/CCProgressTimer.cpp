@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "ccMacros.h"
 #include "CCTextureCache.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 
 #include <float.h>
 

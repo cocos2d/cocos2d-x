@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCParticleExample.h"
 #include "CCDirector.h"
 #include "CCTextureCache.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 namespace cocos2d {
 	//
 	// ParticleFire

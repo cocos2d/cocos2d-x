@@ -40,8 +40,8 @@ THE SOFTWARE.
 #include "Cocos2dDefine.h"
 #include "NSSet.h"
 #include "CCDirector.h"
-#include "touch_dispatcher/CCTouch.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+#include "CCTouch.h"
+#include "CCTouchDispatcher.h"
 
 #ifndef USE_EGL_UMU
 #define WIN_CLASS_NAME      "OpenGL"

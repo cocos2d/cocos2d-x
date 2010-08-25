@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 #include "CCDrawingPrimitives.h"
 #include "CCTextureCache.h"
-#include "support/CGPointExtension.h"
+#include "CGPointExtension.h"
 
 namespace   cocos2d {
 
