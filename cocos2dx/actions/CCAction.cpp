@@ -190,10 +190,30 @@ CCIntervalAction *CCRepeatForever::reverse()
 //
 CCSpeed::~CCSpeed()
 {
-	m_pOther->release();
+	if (m_pOther)
+	{
+        CCX_SAFE_RELEASE(m_pOther);
+	}
+	else
+	{
+		CCX_SAFE_RELEASE(m_pRepeat);
+	}
+	
 }
 
 CCSpeed * CCSpeed::actionWithAction(CCIntervalAction *pAction, float fRate)
+{
+	CCSpeed *pRet = new CCSpeed();
+	if (pRet && pRet->initWithAction(pAction, fRate))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	CCX_SAFE_DELETE(pRet)
+	return NULL;
+}
+
+CCSpeed* CCSpeed::actionWithAction(CCRepeatForever *pAction, float fRate)
 {
 	CCSpeed *pRet = new CCSpeed();
 	if (pRet && pRet->initWithAction(pAction, fRate))
@@ -209,9 +229,20 @@ CCSpeed * CCSpeed::initWithAction(CCIntervalAction *pAction, float fRate)
 {
 	pAction->retain();
 	m_pOther = pAction;
+	m_pRepeat = NULL;
 	m_fSpeed = fRate;	
 	return this;
 }
+
+CCSpeed* CCSpeed::initWithAction(CCRepeatForever *pAction, float fRate)
+{
+	pAction->retain();
+	m_pRepeat = pAction;
+	m_pOther = NULL;
+	m_fSpeed = fRate;	
+	return this;
+}
+
 NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 {
 	NSZone* pNewZone = NULL;
@@ -226,7 +257,15 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 		pZone = pNewZone = new NSZone(pRet);
 	}
 	__super::copyWithZone(pZone);
-	pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) , m_fSpeed );
+	if (m_pOther)
+	{
+        pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) , m_fSpeed );
+	}
+	else
+	{
+        pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pRepeat->copy()->autorelease()) , m_fSpeed );
+	}
+	
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
 }
@@ -234,28 +273,63 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 void CCSpeed::startWithTarget(NSObject* pTarget)
 {
 	__super::startWithTarget(pTarget);
-	m_pOther->startWithTarget(pTarget);
+	if (m_pOther)
+	{
+        m_pOther->startWithTarget(pTarget);
+	}
+	else
+	{
+        m_pRepeat->startWithTarget(pTarget);
+	}	
 }
 
 void CCSpeed::stop()
 {
-	m_pOther->stop();
+	if (m_pOther)
+	{
+        m_pOther->stop();
+	}
+	else
+	{
+		m_pRepeat->stop();
+	}
 	__super::stop();
 }
 
 void CCSpeed::step(ccTime dt)
 {
-	m_pOther->step(dt * m_fSpeed);
+	if (m_pOther)
+	{
+        m_pOther->step(dt * m_fSpeed);
+	}
+    else
+	{
+		m_pRepeat->step(dt * m_fSpeed);
+	}
 }
 
 bool CCSpeed::isDone()
 {
-	return m_pOther->isDone();
+	if (m_pOther)
+	{
+        return m_pOther->isDone();
+	}
+	else
+	{
+		return m_pRepeat->isDone();
+	}
 }
 
 CCIntervalAction *CCSpeed::reverse()
 {
-	return dynamic_cast<CCIntervalAction*>(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
+	if (m_pOther)
+	{
+        return dynamic_cast<CCIntervalAction*>(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
+	}
+	else
+	{
+        return dynamic_cast<CCIntervalAction*>(CCSpeed::actionWithAction(m_pRepeat->reverse(), m_fSpeed));
+	}
 }
 
 //
