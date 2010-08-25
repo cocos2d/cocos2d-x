@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "selector_protocol.h"
-#include "platform/platform.h"
 
 namespace cocos2d{
 
@@ -233,7 +232,7 @@ namespace cocos2d{
 		/** conforms with CCRGBAProtocol protocol */
 		CCX_PROPERTY(ccColor3B, m_tColor, Color);
 		/** returns the selected item */
-		CCX_PROPERTY(UINT32, m_uSelectedIndex, SelectedIndex);
+		CCX_PROPERTY(unsigned int, m_uSelectedIndex, SelectedIndex);
 		/** NSMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
 		@since v0.7.2
 		*/
