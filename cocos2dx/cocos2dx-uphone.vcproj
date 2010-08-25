@@ -301,10 +301,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\CCGrid.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\CCGrid3DAction.h"
 				>
 			</File>
