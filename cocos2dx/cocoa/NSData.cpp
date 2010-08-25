@@ -79,7 +79,7 @@ void* NSData::bytes(void)
 }
 
 ///@todo implement
-NSData* NSData::dataWithBytes(UINT8 *pBytes, int size)
+NSData* NSData::dataWithBytes(unsigned char *pBytes, int size)
 {
 	return NULL;
 }
