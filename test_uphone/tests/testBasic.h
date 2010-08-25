@@ -1,8 +1,9 @@
 #ifndef _TEST_BASIC_H_
 #define _TEST_BASIC_H_
 
-#include "CCScene.h"
-#include "CCLayer.h"
+// #include "CCScene.h"
+// #include "CCLayer.h"
+#include "cocos2d.h"
 
 using namespace cocos2d;
 

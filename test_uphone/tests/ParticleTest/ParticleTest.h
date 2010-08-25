@@ -3,8 +3,8 @@
 
 #include "../testBasic.h"
 #include "cocos2d.h"
-#include "touch_dispatcher/CCTouch.h"
-#include "CCParticleExample.h"
+// #include "touch_dispatcher/CCTouch.h"
+// #include "CCParticleExample.h"
 
 class ParticleTestScene : public TestScene
 {

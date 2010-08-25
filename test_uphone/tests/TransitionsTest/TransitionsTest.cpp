@@ -1,11 +1,11 @@
 #include "TransitionsTest.h"
-#include "CCDirector.h"
-#include "CCSprite.h"
-#include "CCMenu.h"
-#include "CCLabel.h"
-#include "CCTransition.h"
-#include "CCRadialTransition.h"
-#include "CCPageTurnTransition.h"
+// #include "CCDirector.h"
+// #include "CCSprite.h"
+// #include "CCMenu.h"
+// #include "CCLabel.h"
+// #include "CCTransition.h"
+// #include "CCRadialTransition.h"
+// #include "CCPageTurnTransition.h"
 #include "../testResource.h"
 
 #define MAX_LAYER	37
@@ -186,7 +186,6 @@ static std::string transitions[] = {
     "SlideInTTransition",
     "SlideInBTransition",
 };
-
 static int s_nSceneIdx = 0;
 
 CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)

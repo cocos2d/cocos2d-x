@@ -1,11 +1,11 @@
 #include "ParticleTest.h"
-#include "CCIntervalAction.h"
-#include "CCMenu.h"
-#include "CCLabel.h"
-#include "CCLabelAtlas.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
+// #include "CCIntervalAction.h"
+// #include "CCMenu.h"
+// #include "CCLabel.h"
+// #include "CCLabelAtlas.h"
+// #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "../testResource.h"
-#include "support/CGPointExtension.h"
+/*#include "support/CGPointExtension.h"*/
 
 enum 
 {

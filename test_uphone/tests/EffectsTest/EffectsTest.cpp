@@ -1,11 +1,11 @@
 #include "EffectsTest.h"
 #include "../testResource.h"
-#include "CCDirector.h"
-#include "CCGrid3DAction.h"
-#include "CCTiledGridAction.h"
-#include "CCPageTurn3DAction.h"
-#include "CCLabel.h"
-#include "CCMenu.h"
+// #include "CCDirector.h"
+// #include "CCGrid3DAction.h"
+// #include "CCTiledGridAction.h"
+// #include "CCPageTurn3DAction.h"
+// #include "CCLabel.h"
+// #include "CCMenu.h"
 
 enum {
     kTagTextLayer = 1,
