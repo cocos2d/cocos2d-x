@@ -42,14 +42,23 @@ namespace cocos2d {
 	//
 	CCEaseAction* CCEaseAction::actionWithAction(cocos2d::CCIntervalAction *pAction)
 	{
-		CCEaseAction *pEaseAction = new CCEaseAction();
-		pEaseAction->initWithAction(pAction);
-		pEaseAction->autorelease();
+		CCEaseAction *pRet = new CCEaseAction();
+		if (pRet)
+		{
+	        if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
 
-		return pEaseAction;
+		return pRet;
 	}
 
-	CCEaseAction* CCEaseAction::initWithAction(cocos2d::CCIntervalAction *pAction)
+	bool CCEaseAction::initWithAction(cocos2d::CCIntervalAction *pAction)
 	{
 		assert(pAction != NULL);
 
@@ -58,10 +67,10 @@ namespace cocos2d {
 			m_pOther = pAction;
 			pAction->retain();
 
-			return this;
+			return true;
 		}
 
-		return NULL;
+		return false;
 	}
 
 	NSObject* CCEaseAction::copyWithZone(cocos2d::NSZone *pZone)
@@ -89,13 +98,13 @@ namespace cocos2d {
 
 	CCEaseAction::~CCEaseAction(void)
 	{
-		m_pOther->release();
+		CCX_SAFE_RELEASE(m_pOther);
 	}
 
 	void CCEaseAction::startWithTarget(cocos2d::NSObject *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		m_pOther->startWithTarget(pTarget);
+		m_pOther->startWithTarget(m_pTarget);
 	}
 
 	void CCEaseAction::stop(void)
@@ -119,22 +128,31 @@ namespace cocos2d {
 	//
 	CCEaseRateAction* CCEaseRateAction::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
 	{
-		CCEaseRateAction *pEaseRateAction = new CCEaseRateAction();
-		pEaseRateAction->initWithAction(pAction, fRate);
-		pEaseRateAction->autorelease();
+		CCEaseRateAction *pRet = new CCEaseRateAction();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fRate))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
 
-		return pEaseRateAction;
+		return pRet;
 	}
 
-	CCEaseRateAction* CCEaseRateAction::initWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	bool CCEaseRateAction::initWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
 	{
 		if (__super::initWithAction(pAction))
 		{
 			m_fRate = fRate;
-			return this;
+			return true;
 		}
 
-		return NULL;
+		return false;
 	}
 
 	NSObject* CCEaseRateAction::copyWithZone(cocos2d::NSZone *pZone)
@@ -174,6 +192,24 @@ namespace cocos2d {
 	//
 	// EeseIn
 	//
+	CCEaseIn* CCEaseIn::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	{
+		CCEaseIn *pRet = new CCEaseIn();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fRate))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet;
+	}
+
 	NSObject* CCEaseIn::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -207,6 +243,24 @@ namespace cocos2d {
 	//
 	// EaseOut
 	//
+	CCEaseOut* CCEaseOut::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	{
+		CCEaseOut *pRet = new CCEaseOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fRate))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet;      
+	}
+
 	NSObject* CCEaseOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -240,6 +294,24 @@ namespace cocos2d {
 	//
 	// EaseInOut
 	//
+	CCEaseInOut* CCEaseInOut::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	{
+		CCEaseInOut *pRet = new CCEaseInOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fRate))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet;        
+	}
+
 	NSObject* CCEaseInOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -294,6 +366,24 @@ namespace cocos2d {
 	//
 	// EaseExponentialIn
 	//
+	CCEaseExponentialIn* CCEaseExponentialIn::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseExponentialIn *pRet = new CCEaseExponentialIn();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet;      
+	}
+
 	NSObject* CCEaseExponentialIn::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -331,6 +421,24 @@ namespace cocos2d {
 	//
 	// EaseExponentialOut
 	//
+	CCEaseExponentialOut* CCEaseExponentialOut::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseExponentialOut *pRet = new CCEaseExponentialOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseExponentialOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -368,6 +476,24 @@ namespace cocos2d {
 	//
 	// EaseExponentialInOut
 	//
+	CCEaseExponentialInOut* CCEaseExponentialInOut::actionWithAction(cocos2d::CCIntervalAction *pAction)
+	{
+		CCEaseExponentialInOut *pRet = new CCEaseExponentialInOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseExponentialInOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -410,6 +536,24 @@ namespace cocos2d {
 	//
 	// EaseSineIn
 	//
+	CCEaseSineIn* CCEaseSineIn::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseSineIn *pRet = new CCEaseSineIn();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseSineIn::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -447,6 +591,24 @@ namespace cocos2d {
 	//
 	// EaseSineOut
 	//
+	CCEaseSineOut* CCEaseSineOut::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseSineOut *pRet = new CCEaseSineOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseSineOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -484,6 +646,24 @@ namespace cocos2d {
 	//
 	// EaseSineInOut
 	//
+	CCEaseSineInOut* CCEaseSineInOut::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseSineInOut *pRet = new CCEaseSineInOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseSineInOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -518,36 +698,54 @@ namespace cocos2d {
 	//
 	CCEaseElastic* CCEaseElastic::actionWithAction(cocos2d::CCIntervalAction *pAction)
 	{
-		CCEaseElastic *pEaseElastic = new CCEaseElastic();
-		pEaseElastic->initWithAction(pAction, 0.3f);
-		pEaseElastic->autorelease();
+		CCEaseElastic *pRet = new CCEaseElastic();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
 
-		return pEaseElastic;
+		return pRet; 
 	}
 
 	CCEaseElastic* CCEaseElastic::actionWithAction(cocos2d::CCIntervalAction *pAction, float fPeriod)
 	{
-		CCEaseElastic *pEaseElastic = new CCEaseElastic();
-		pEaseElastic->initWithAction(pAction, fPeriod);
-		pEaseElastic->autorelease();
+		CCEaseElastic *pRet = new CCEaseElastic();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fPeriod))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
 
-		return pEaseElastic;
+		return pRet; 
 	}
 
-	CCEaseElastic* CCEaseElastic::initWithAction(cocos2d::CCIntervalAction *pAction)
+	bool CCEaseElastic::initWithAction(cocos2d::CCIntervalAction *pAction)
 	{
 		return initWithAction(pAction, 0.3f);
 	}
 
-	CCEaseElastic* CCEaseElastic::initWithAction(cocos2d::CCIntervalAction *pAction, float fPeriod)
+	bool CCEaseElastic::initWithAction(cocos2d::CCIntervalAction *pAction, float fPeriod)
 	{
 		if (__super::initWithAction(pAction))
 		{
 			m_fPeriod = fPeriod;
-			return this;
+			return true;
 		}
 
-		return NULL;
+		return false;
 	}
 
 	NSObject* CCEaseElastic::copyWithZone(cocos2d::NSZone *pZone)
@@ -584,6 +782,42 @@ namespace cocos2d {
     //
 	// EaseElasticIn
 	//
+	CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCIntervalAction *pAction, float fPeriod)
+	{
+		CCEaseElasticIn *pRet = new CCEaseElasticIn();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fPeriod))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
+	CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCIntervalAction *pAction)
+	{
+		CCEaseElasticIn *pRet = new CCEaseElasticIn();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseElasticIn::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -633,6 +867,42 @@ namespace cocos2d {
 	//
 	// EaseElasticOut
 	//
+	CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCIntervalAction *pAction)
+	{
+		CCEaseElasticOut *pRet = new CCEaseElasticOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
+	CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCIntervalAction *pAction, float fPeriod)
+	{
+		CCEaseElasticOut *pRet = new CCEaseElasticOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fPeriod))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject *CCEaseElasticOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -681,6 +951,42 @@ namespace cocos2d {
 	//
 	// EaseElasticInOut
 	//
+	CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCIntervalAction *pAction)
+	{
+		CCEaseElasticInOut *pRet = new CCEaseElasticInOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
+	CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCIntervalAction *pAction, float fPeriod)
+	{
+		CCEaseElasticInOut *pRet = new CCEaseElasticInOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction, fPeriod))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseElasticInOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -745,6 +1051,24 @@ namespace cocos2d {
 	//
 	// EaseBounce
 	//
+	CCEaseBounce* CCEaseBounce::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseBounce *pRet = new CCEaseBounce();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseBounce::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -793,6 +1117,24 @@ namespace cocos2d {
 	//
 	// EaseBounceIn
 	//
+	CCEaseBounceIn* CCEaseBounceIn::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseBounceIn *pRet = new CCEaseBounceIn();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseBounceIn::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -831,6 +1173,24 @@ namespace cocos2d {
 	//
 	// EaseBounceOut
 	//
+	CCEaseBounceOut* CCEaseBounceOut::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseBounceOut *pRet = new CCEaseBounceOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseBounceOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -869,6 +1229,24 @@ namespace cocos2d {
 	//
 	// EaseBounceInOut
 	//
+	CCEaseBounceInOut* CCEaseBounceInOut::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseBounceInOut *pRet = new CCEaseBounceInOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet; 
+	}
+
 	NSObject* CCEaseBounceInOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -912,6 +1290,24 @@ namespace cocos2d {
 	//
 	// EaseBackIn
 	//
+	CCEaseBackIn* CCEaseBackIn::actionWithAction(cocos2d::CCIntervalAction *pAction)
+	{
+		CCEaseBackIn *pRet = new CCEaseBackIn();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet;
+	}
+
 	NSObject* CCEaseBackIn::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -950,6 +1346,24 @@ namespace cocos2d {
 	//
 	// EaseBackOut
 	//
+	CCEaseBackOut* CCEaseBackOut::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseBackOut *pRet = new CCEaseBackOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet;
+	}
+
 	NSObject* CCEaseBackOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
@@ -990,6 +1404,24 @@ namespace cocos2d {
 	//
 	// EaseBackInOut
 	//
+	CCEaseBackInOut* CCEaseBackInOut::actionWithAction(CCIntervalAction* pAction)
+	{
+		CCEaseBackInOut *pRet = new CCEaseBackInOut();
+		if (pRet)
+		{
+			if (pRet->initWithAction(pAction))
+			{
+				pRet->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE(pRet);
+			}
+		}
+
+		return pRet;
+	}
+
 	NSObject* CCEaseBackInOut::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
