@@ -723,8 +723,8 @@ ParticleDemo::ParticleDemo(void)
 
 	addChild( menu, 100 );	
 	
-	CCLabel* labelAtlas = CCLabel::labelWithString("0000", "fonts", 16);
-	addChild(labelAtlas, 100, kTagLabelAtlas);
+    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelAtlasWithString("0000", "fps_images.png", 16, 24, '.');
+    addChild(labelAtlas, 100, kTagLabelAtlas);
 	labelAtlas->setPosition( CGPointMake(254,50) );
 	
 	// moving background
@@ -785,13 +785,13 @@ void ParticleDemo::ccTouchEnded(CCTouch* touch, UIEvent* event)
 
 void ParticleDemo::step(ccTime dt)
 {
-// 	CCLabel* atlas = (CCLabel*)getChildByTag(kTagLabelAtlas);
-// 
-//     char str[5] = {0};
-// 	//std::string str;
-//     sprintf(str, "%4d", m_emitter->getParticleCount());
-// 	//str.format("%4d", m_emitter->getParticleCount());
-// 	atlas->setString(str);
+    if (m_emitter)
+    {
+	    CCLabelAtlas* atlas = (CCLabelAtlas*)getChildByTag(kTagLabelAtlas);
+        char str[5] = {0};
+        sprintf(str, "%04d", m_emitter->getParticleCount());
+	    atlas->setString(str);
+    }
 }
 
 void ParticleDemo::toggleCallback(NSObject* pSender)
