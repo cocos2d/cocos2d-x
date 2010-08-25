@@ -95,6 +95,8 @@ THE SOFTWARE.
 //
 #include "CCXApplication.h"
 #include "CCXEGLView.h"
+#include "CCXUIImage.h"
+#include "CCXFileUtils.h"
  
 //
 // cocos2d macros

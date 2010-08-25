@@ -28,7 +28,8 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCSprite.h"
 #include "support/TransformUtils.h"
-#include "platform/platform.h"
+//#include "platform/platform.h"
+#include "CCXFileUtils.h"
 
 using namespace std;
 namespace   cocos2d {

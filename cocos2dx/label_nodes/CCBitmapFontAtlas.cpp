@@ -27,7 +27,8 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 #include "CCSprite.h"
 #include "CGPointExtension.h"
-#include "platform/platform.h"
+//#include "platform/platform.h"
+#include "CCXFileUtils.h"
 namespace cocos2d{
 	
 	//
