@@ -358,7 +358,7 @@ namespace cocos2d {
 		/** initializes a CCQuadParticleSystem from a NSDictionary.
 		@since v0.99.3
 		*/
-		bool initWithDictionary(CCDictionary *dictionary);
+		bool initWithDictionary(std::map<std::string, void*> *dictionary);
 
 		//! Initializes a system with a fixed number of particles
 		virtual bool initWithTotalParticles(int numberOfParticles);
@@ -380,9 +380,9 @@ namespace cocos2d {
 
 		virtual void update(ccTime dt);
 	private:
-		inline const char * valueForKey(const char *key, CCDictionary *dict)
+		inline const char * valueForKey(const char *key, std::map<std::string, void*> *dict)
 		{
-			CCDictionary::iterator it = dict->find(key);
+			std::map<std::string, void*>::iterator it = dict->find(key);
 			return ((std::string*)(it->second))->c_str();
 		}
 };
