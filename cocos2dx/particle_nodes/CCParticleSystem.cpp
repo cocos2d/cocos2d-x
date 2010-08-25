@@ -114,14 +114,14 @@ namespace cocos2d {
 	bool CCParticleSystem::initWithFile(const char *plistFile)
 	{
 		char *path = CCFileUtils::fullPathFromRelativePath(plistFile);
-		CCDictionary *dict = CCFileUtils::dictionaryWithContentsOfFile(path);
+		std::map<std::string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(path);
 		delete []path;
 
 		NSAssert( dict != NULL, "Particles: file not found");
 		return this->initWithDictionary(dict);
 	}
 
-	bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
+	bool CCParticleSystem::initWithDictionary(std::map<std::string, void*> *dictionary)
 	{
 		int maxParticles = atoi(valueForKey("maxParticles", dictionary));
 		// self, not super

@@ -45,9 +45,9 @@ typedef enum
 class CCDictMaker
 {
 public:
-	CCDictionary *m_pRootDict;
-	CCDictionary *m_pCurDict;
-	std::stack<CCDictionary*> m_tDictStack;
+	std::map<std::string, void*> *m_pRootDict;
+	std::map<std::string, void*> *m_pCurDict;
+	std::stack<std::map<std::string, void*>*> m_tDictStack;
 	std::string m_sCurKey;///< parsed key
 	CCSAXState m_tState;
 public:
@@ -60,7 +60,7 @@ public:
 	~CCDictMaker()
 	{
 	}
-	CCDictionary *dictionaryWithContentsOfFile(const char *pFileName)
+	std::map<std::string, void*> *dictionaryWithContentsOfFile(const char *pFileName)
 	{
 		FILE *fp;
 		if( !(fp = fopen(pFileName, "r")) )
@@ -110,7 +110,7 @@ void startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 	std::string sName((char*)name);
 	if( sName == "dict" )
 	{
-		CCDictionary *pNewDict = new CCDictionary();
+		std::map<std::string, void*> *pNewDict = new std::map<std::string, void*>();
 		if(! pMaker->m_pRootDict)
 		{
 			pMaker->m_pRootDict = pNewDict;
@@ -151,7 +151,7 @@ void endElement(void *ctx, const xmlChar *name)
 		pMaker->m_tDictStack.pop();
 		if ( !pMaker->m_tDictStack.empty() )
 		{
-			pMaker->m_pCurDict = static_cast<CCDictionary*>(pMaker->m_tDictStack.top());
+			pMaker->m_pCurDict = static_cast<std::map<std::string, void*>*>(pMaker->m_tDictStack.top());
 		}
 	}
 }
@@ -216,7 +216,7 @@ char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 	return pszRet;
 }
 
-CCDictionary *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+std::map<std::string, void*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);

@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 namespace   cocos2d {
 
-typedef std::map<std::string, void*> CCDictionary;
 // Helper class to handle file operations
 class CCX_DLL CCFileUtils
 {
