@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "CCLabelAtlas.h"
 #include "CCLabel.h"
 
+#include <stdarg.h>
+
 namespace cocos2d{
 
 	static int _fontSize = kItemSize;
@@ -474,7 +476,7 @@ namespace cocos2d{
 	{
 		m_pSubItems->release();
 	}
-	void CCMenuItemToggle::setSelectedIndex(UINT32 index)
+	void CCMenuItemToggle::setSelectedIndex(unsigned int index)
 	{
 		if( index != m_uSelectedIndex )
 		{
@@ -487,7 +489,7 @@ namespace cocos2d{
 			item->setPosition( ccp( s.width/2, s.height/2 ) );
 		}
 	}
-	UINT32 CCMenuItemToggle::getSelectedIndex()
+	unsigned int CCMenuItemToggle::getSelectedIndex()
 	{
 		return m_uSelectedIndex;
 	}
@@ -506,7 +508,7 @@ namespace cocos2d{
 		// update index
 		if( m_bIsEnabled ) 
 		{
-			UINT32 newIndex = (m_uSelectedIndex + 1) % m_pSubItems->count();
+			unsigned int newIndex = (m_uSelectedIndex + 1) % m_pSubItems->count();
 			this->setSelectedIndex(newIndex);
 		}
 		__super::activate();

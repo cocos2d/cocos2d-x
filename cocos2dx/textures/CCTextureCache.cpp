@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "NSData.h"
 #include "CCDirector.h"
+#include "platform/platform.h"
 
 /// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
 namespace   cocos2d {
