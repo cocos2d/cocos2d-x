@@ -102,10 +102,9 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "ccMacros.h"
 
-#include <string>
 namespace   cocos2d {
 
-std::string cocos2dVersion();
+char* cocos2dVersion();
 }//namespace   cocos2d 
 
 #endif // __COCOS2D_H__
