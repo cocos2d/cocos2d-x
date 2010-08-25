@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "NSObject.h"
 #include <string>
-#include "platform/platform.h"
+
 namespace   cocos2d {
 
 class NSData : public NSObject
@@ -39,7 +39,7 @@ public:
 	void* bytes(void);
 
 public:
-	static NSData* dataWithBytes(UINT8 *pBytes, int size);
+	static NSData* dataWithBytes(unsigned char *pBytes, int size);
 	static NSData* dataWithContentsOfFile(const std::string &strPath);
 
 private:
