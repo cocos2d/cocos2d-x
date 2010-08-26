@@ -220,32 +220,41 @@ namespace cocos2d {
 			// texture		
 			// Try to get the texture from the cache
 			char *textureName = (char *)valueForKey("textureFileName", dictionary);
-			/// @todo image from data
-			char *textureData = (char *)valueForKey("textureImageData", dictionary);
-
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(textureName);
-			/** @todo image from data*/
-			if ( ! m_pTexture && textureData)
+
+			// if it fails, try to get it from the base64-gzipped data			
+			if ( ! m_pTexture )
 			{
-				// if it fails, try to get it from the base64-gzipped data			
-				unsigned char *buffer = NULL;
-				int len = base64Decode((unsigned char*)textureData, strlen(textureData), &buffer);
-				NSAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+				std::map<std::string, void*>::iterator it = dictionary->find("textureImageData");
+				unsigned char *textureData = NULL;
+				unsigned int dataLen = 0;
+				if( it != dictionary->end() )
+				{
+					std::string *str = (std::string*)(it->second);
+					textureData = (unsigned char *)str->c_str();
+					dataLen = str->length();
+				}
+				if(textureData)
+				{
+					unsigned char *buffer = NULL;
+					int decodeLen = base64Decode(textureData, dataLen, &buffer);
+					NSAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
 
-				unsigned char *deflated = NULL;
-				int deflatedLen = ZipUtils::inflateMemory(buffer, len, &deflated);
-				free( buffer );
+					unsigned char *deflated = NULL;
+					int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+					free( buffer );
 
-				NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
-				UIImage *image = new UIImage();
-				image->initWithData(deflated, deflatedLen);
-
-				m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, textureName);
-				free(deflated);
-				delete image;
+					NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
+					UIImage *image = new UIImage();
+					NSAssert(image->initWithData(deflated, deflatedLen), "CCParticleSystem: error init image with Data");
+					
+					m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, textureName);
+					delete [] deflated;
+					delete image;
+				}
+				NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
+				return true;
 			}
-			NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
-			return true;
 		}
 		return false;
 	}
