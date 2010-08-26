@@ -361,6 +361,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCParallaxNode.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCParticleExamples.h"
 				>
 			</File>
@@ -744,6 +748,10 @@
 		<Filter
 			Name="tileMap_parallax_nodes"
 			>
+			<File
+				RelativePath=".\tileMap_parallax_nodes\CCParallaxNode.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="touch_dispatcher"
