@@ -204,8 +204,11 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 		{
 			// prevents overloading the autorelease pool
 			UIImage * image = new UIImage();
-			NSAssert(image->initWithContentsOfFile(fullpath), "")
-			CCLOG("cocos2d: Initialize image file %s error!",fullpath);
+			if(! image->initWithContentsOfFile(fullpath))
+			{
+				delete image;
+				return NULL;
+			}
 			texture = new CCTexture2D();
 			texture->initWithImage(image);
 			CCX_SAFE_DELETE(image);// image->release();
