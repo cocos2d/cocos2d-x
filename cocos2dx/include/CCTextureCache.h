@@ -35,6 +35,7 @@ namespace   cocos2d {
 class CCTexture2D;
 class CCAsyncObject;
 class NSLock;
+class UIImage;
 
 typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 
@@ -109,7 +110,13 @@ public:
 	* @since v0.8
 	*/
 	/// @todo CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
-
+	/** Returns a Texture2D object given an UIImage image
+	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
+	* Otherwise it will return a reference of a previously loaded image
+	* The "key" parameter will be used as the "key" for the cache.
+	* If "key" is nil, then a new texture will be created each time.
+	*/
+	CCTexture2D* addUIImage(UIImage *image, const char *key);
 	/** Purges the dictionary of loaded textures.
 	* Call this method if you receive the "Memory Warning"
 	* In the short term: it will free some resources preventing your app from being killed

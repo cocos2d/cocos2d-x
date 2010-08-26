@@ -26,8 +26,9 @@ THE SOFTWARE.
 #include "CCTextureCache.h"
 #include "support/base64.h"
 #include "CGPointExtension.h"
-//#include "platform/platform.h"
 #include "CCXFileUtils.h"
+#include "CCXUIImage.h"
+#include "platform/platform.h"
 
 #if CC_ENABLE_PROFILERS
 #include "Support/CCProfiling.h"
@@ -220,29 +221,29 @@ namespace cocos2d {
 			// Try to get the texture from the cache
 			char *textureName = (char *)valueForKey("textureFileName", dictionary);
 			/// @todo image from data
-			// char *textureData = (char *)valueForKey("textureImageData", dictionary);
+			char *textureData = (char *)valueForKey("textureImageData", dictionary);
 
 			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(textureName);
-			/** @todo image from data
-			if ( ! texture_ && textureData) {
-
+			/** @todo image from data*/
+			if ( ! m_pTexture && textureData)
+			{
 				// if it fails, try to get it from the base64-gzipped data			
 				unsigned char *buffer = NULL;
-				int len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
-				NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
+				int len = base64Decode((unsigned char*)textureData, strlen(textureData), &buffer);
+				NSAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
 
 				unsigned char *deflated = NULL;
-				int deflatedLen = inflateMemory(buffer, len, &deflated);
+				int deflatedLen = ZipUtils::inflateMemory(buffer, len, &deflated);
 				free( buffer );
 
-				NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
-				NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
-				UIImage *image = [[UIImage alloc] initWithData:data];
+				NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
+				UIImage *image = new UIImage();
+				image->initWithData(deflated, deflatedLen);
 
-				self.texture = [[CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName];
-				[data release];
-				[image release];
-			}*/
+				m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, textureName);
+				free(deflated);
+				delete image;
+			}
 			NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
 			return true;
 		}

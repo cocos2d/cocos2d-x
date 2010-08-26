@@ -276,7 +276,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 	return texture;
 }
 
-/** @todo UIImage
+/** @todo CGImageRef
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key
 {
 	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");
@@ -300,6 +300,33 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 
 	return [tex autorelease];
 }*/
+CCTexture2D* CCTextureCache::addUIImage(UIImage *image, const char *key)
+{
+	NSAssert(image != NULL, "TextureCache: image MUST not be nill");
+
+	CCTexture2D * texture = NULL;
+
+	// If key is nil, then create a new texture each time
+	if( key && (texture = m_pTextures->objectForKey(key)) )
+	{
+		return texture;
+	}
+
+	// prevents overloading the autorelease pool
+	texture = new CCTexture2D();
+	texture->initWithImage(image);
+
+	if(texture && key)
+	{
+		m_pTextures->setObject(texture, key);
+	}
+	else
+	{
+		CCLOG("cocos2d: Couldn't add UIImage in CCTextureCache");
+	}
+	texture->autorelease();
+	return texture;
+}
 
 // TextureCache - Remove
 
