@@ -152,4 +152,19 @@ public:
 	virtual std::string title();
 };
 
+class DemoParticleFromFile : public ParticleDemo
+{
+public:
+    std::string m_title;
+    DemoParticleFromFile(const char *file)
+    {	
+        m_title = file;
+    }
+    virtual void onEnter();
+    virtual std::string title()
+    {
+        return m_title;
+    }
+};
+
 #endif
