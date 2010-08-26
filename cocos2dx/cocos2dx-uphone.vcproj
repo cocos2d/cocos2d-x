@@ -301,6 +301,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCDrawingPrimitives.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCEaseAction.h"
 				>
 			</File>
@@ -931,10 +935,6 @@
 		</File>
 		<File
 			RelativePath=".\CCDrawingPrimitives.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\CCDrawingPrimitives.h"
 			>
 		</File>
 		<File
