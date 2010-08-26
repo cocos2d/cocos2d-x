@@ -40,7 +40,8 @@ public:
 	~UIImage(void);
 
 	bool initWithContentsOfFile(const std::string &strPath);
-	bool initWithBuffer(unsigned char *pBuffer, int nLength);
+	bool initWithData(unsigned char *pBuffer, int nLength);
+	bool initWithBuffer(int tx, int ty, unsigned char *pBuffer);
 //	bool initWithCGImage(CGImageRef pCGImage);
 
 	bool save(const std::string &strFileName, int nFormat);

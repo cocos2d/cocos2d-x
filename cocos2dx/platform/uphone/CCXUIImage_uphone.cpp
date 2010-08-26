@@ -512,7 +512,7 @@ bool UIImage::save(const std::string &strFileName, int nFormat)
 	/// @todo uiimage::save
 	return false;
 }
-bool UIImage::initWithBuffer(unsigned char *pBuffer, int nLength)
+bool UIImage::initWithData(unsigned char *pBuffer, int nLength)
 {
 	bool bRet = true;
 
@@ -537,6 +537,12 @@ bool UIImage::initWithBuffer(unsigned char *pBuffer, int nLength)
 	} while(0);	
 
 	return bRet;
+}
+
+bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
+{
+	/// @todo
+	return false;
 }
 
 }//namespace   cocos2d 
