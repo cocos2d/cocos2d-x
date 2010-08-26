@@ -75,6 +75,7 @@ THE SOFTWARE.
 #include "CCRadialTransition.h"
 #include "CCProgressTimerActions.h"
 #include "CCTouchDispatcher.h"
+#include "CCDrawingPrimitives.h"
 
 //
 // cocoa includes

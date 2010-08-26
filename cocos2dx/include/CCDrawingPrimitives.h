@@ -44,32 +44,32 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 /** draws a point given x and y coordinate */
-void ccDrawPoint( CGPoint point );
+void CCX_DLL ccDrawPoint( CGPoint point );
 
 /** draws an array of points.
  @since v0.7.2
  */
-void ccDrawPoints( CGPoint *points, unsigned int numberOfPoints );
+void CCX_DLL ccDrawPoints( CGPoint *points, unsigned int numberOfPoints );
 
 /** draws a line given the origin and destination point */
-void ccDrawLine( CGPoint origin, CGPoint destination );
+void CCX_DLL ccDrawLine( CGPoint origin, CGPoint destination );
 
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices. The polygon can be closed or open
  */
-void ccDrawPoly( CGPoint *vertices, int numOfVertices, bool closePolygon );
+void CCX_DLL ccDrawPoly( CGPoint *vertices, int numOfVertices, bool closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
-void ccDrawCircle( CGPoint center, float radius, float angle, int segments, bool drawLineToCenter);
+void CCX_DLL ccDrawCircle( CGPoint center, float radius, float angle, int segments, bool drawLineToCenter);
 
 /** draws a quad bezier path
  @since v0.8
  */
-void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments);
+void CCX_DLL ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments);
 
 /** draws a cubic bezier path
  @since v0.8
  */
-void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
+void CCX_DLL ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
 }//namespace   cocos2d 
 
 #endif // __CCDRAWING_PRIMITIVES__

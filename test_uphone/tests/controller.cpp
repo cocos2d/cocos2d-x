@@ -32,6 +32,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new EaseActionsTestScene(); break;
     case TEST_MOTION_STREAK:
         pScene = new MotionStreakTestScene(); break;
+    case TEST_DRAW_PRIMITIVES:
+        pScene = new DrawPrimitivesTestScene(); break;
     default:
         break;
     }
