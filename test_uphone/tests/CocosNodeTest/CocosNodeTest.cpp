@@ -1,0 +1,760 @@
+#include "CocosNodeTest.h"
+#include "../testResource.h"
+
+enum 
+{
+	kTagSprite1 = 1,
+	kTagSprite2 = 2,
+	kTagSprite3 = 3,
+	kTagSlider,
+};
+
+//------------------------------------------------------------------
+//
+// TestCocosNodeDemo
+//
+//------------------------------------------------------------------
+
+static int sceneIdx = -1; 
+
+#define MAX_LAYER	12
+
+CCLayer* createCocosNodeLayer(int nIndex)
+{
+	switch(nIndex)
+	{
+		case 0: return new CameraCenterTest();
+		case 1: return new Test2();
+		case 2: return new Test4();
+		case 3: return new Test5();
+		case 4: return new Test6();
+		case 5: return new StressTest1();
+		case 6: return new StressTest2();
+		case 7: return new NodeToWorld();
+		case 8: return new SchedulerTest1();
+		case 9: return new CameraOrbitTest();
+		case 10: return new CameraZoomTest();
+		case 11: return new CameraCenterTest();
+	}
+
+	return NULL;
+}
+
+CCLayer* nextCocosNodeAction()
+{
+	sceneIdx++;
+	sceneIdx = sceneIdx % MAX_LAYER;
+
+	CCLayer* pLayer = createCocosNodeLayer(sceneIdx);
+	pLayer->autorelease();
+
+	return pLayer;
+}
+
+CCLayer* backCocosNodeAction()
+{
+	sceneIdx--;
+	int total = MAX_LAYER;
+	if( sceneIdx < 0 )
+		sceneIdx += total;	
+	
+	CCLayer* pLayer = createCocosNodeLayer(sceneIdx);
+	pLayer->autorelease();
+
+	return pLayer;
+}
+
+CCLayer* restartCocosNodeAction()
+{
+	CCLayer* pLayer = createCocosNodeLayer(sceneIdx);
+	pLayer->autorelease();
+
+	return pLayer;
+} 
+
+
+TestCocosNodeDemo::TestCocosNodeDemo(void)
+{
+}
+
+TestCocosNodeDemo::~TestCocosNodeDemo(void)
+{
+}
+
+std::string TestCocosNodeDemo::title()
+{
+	return "No title";
+}
+
+std::string TestCocosNodeDemo::subtitle()
+{
+	return "";
+}
+
+void TestCocosNodeDemo::onEnter()
+{
+	__super::onEnter();
+
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+
+	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	addChild(label, 1);
+	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+
+	std::string strSubtitle = subtitle();
+	if( ! strSubtitle.empty() ) 
+	{
+		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+		addChild(l, 1);
+		l->setPosition( CGPointMake(s.width/2, s.height-80) );
+	}	
+
+	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestCocosNodeDemo::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1,s_pPathR2, this, menu_selector(TestCocosNodeDemo::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(TestCocosNodeDemo::nextCallback) );
+
+	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
+
+	menu->setPosition( CGPointZero );
+	item1->setPosition( CGPointMake( s.width/2 - 100,30) );
+	item2->setPosition( CGPointMake( s.width/2, 30) );
+	item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+	
+	addChild(menu, 1);	
+}
+
+void TestCocosNodeDemo::restartCallback(NSObject* pSender)
+{
+	CCScene* s = new CocosNodeTestScene();//CCScene::node();
+	s->addChild(restartCocosNodeAction()); 
+
+	CCDirector::getSharedDirector()->replaceScene(s);
+}
+
+void TestCocosNodeDemo::nextCallback(NSObject* pSender)
+{
+	CCScene* s = new CocosNodeTestScene();//CCScene::node();
+	s->addChild( nextCocosNodeAction() );
+	CCDirector::getSharedDirector()->replaceScene(s);
+}
+
+void TestCocosNodeDemo::backCallback(NSObject* pSender)
+{
+	CCScene* s = new CocosNodeTestScene();//CCScene::node();
+	s->addChild( backCocosNodeAction() );
+	CCDirector::getSharedDirector()->replaceScene(s);
+} 
+
+
+//------------------------------------------------------------------
+//
+// Test2
+//
+//------------------------------------------------------------------
+void Test2::onEnter()
+{
+	__super::onEnter();
+
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	
+	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
+	CCSprite *sp2 = CCSprite::spriteWithFile(s_pPathSister2);
+	CCSprite *sp3 = CCSprite::spriteWithFile(s_pPathSister1);
+	CCSprite *sp4 = CCSprite::spriteWithFile(s_pPathSister2);
+	
+	sp1->setPosition(CGPointMake(100, s.height /2 ));
+	sp2->setPosition(CGPointMake(380, s.height /2 ));
+	addChild(sp1);
+	addChild(sp2);
+	
+	sp3->setScale(0.25f);
+	sp4->setScale(0.25f);
+	
+	dynamic_cast<CCNode*>(sp1)->addChild(sp3);
+	dynamic_cast<CCNode*>(sp2)->addChild(sp4);
+	
+	CCIntervalAction* a1 = CCRotateBy::actionWithDuration(2, 360);
+	CCIntervalAction* a2 = CCScaleBy::actionWithDuration(2, 2);
+	
+	CCAction* action1 = CCRepeatForever::actionWithAction(
+													dynamic_cast<CCIntervalAction*>(CCSequence::actions(a1, a2, a2->reverse(), NULL))
+												);
+	CCAction* action2 = CCRepeatForever::actionWithAction(
+													dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+																						dynamic_cast<CCIntervalAction*>(a1->copy()->autorelease()), 
+																						dynamic_cast<CCIntervalAction*>(a2->copy()->autorelease()), 
+																						a2->reverse(), 
+																						NULL) )
+												);
+	
+	sp2->setAnchorPoint(CGPointMake(0,0));
+	
+	sp1->runAction(action1);
+	sp2->runAction(action2);
+}
+
+std::string Test2::title()
+{
+	return "anchorPoint and children";
+}
+
+
+//------------------------------------------------------------------
+//
+// Test4
+//
+//------------------------------------------------------------------
+#define SID_DELAY2		1
+#define SID_DELAY4		2
+
+Test4::Test4()
+{
+	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
+	CCSprite *sp2 = CCSprite::spriteWithFile(s_pPathSister2);
+	
+	sp1->setPosition( CGPointMake(100,160) );
+	sp2->setPosition( CGPointMake(380,160) );
+	
+	addChild(sp1, 0, 2);
+	addChild(sp2, 0, 3);
+	
+	schedule( schedule_selector(Test4::delay2), 2.0f); 
+	schedule( schedule_selector(Test4::delay4), 4.0f); 
+}
+
+void Test4::delay2(ccTime dt)
+{
+	CCSprite* node = dynamic_cast<CCSprite*>(getChildByTag(2));
+	CCAction* action1 = CCRotateBy::actionWithDuration(1, 360);
+	node->runAction(action1);
+}
+
+void Test4::delay4(ccTime dt)
+{
+	unschedule(schedule_selector(Test4::delay4)); 
+	removeChildByTag(3, false);
+}
+
+std::string Test4::title()
+{
+	return "tags";
+}
+
+
+//------------------------------------------------------------------
+//
+// Test5
+//
+//------------------------------------------------------------------
+Test5::Test5()
+{
+	CCSprite* sp1 = CCSprite::spriteWithFile(s_pPathSister1);
+	CCSprite* sp2 = CCSprite::spriteWithFile(s_pPathSister2);
+	
+	sp1->setPosition(CGPointMake(100,160));
+	sp2->setPosition(CGPointMake(380,160));
+
+	CCRotateBy* rot = CCRotateBy::actionWithDuration(2, 360);
+	CCIntervalAction* rot_back = rot->reverse();
+	CCAction* forever = CCRepeatForever::actionWithAction(
+													dynamic_cast<CCIntervalAction*>(CCSequence::actions(rot, rot_back, NULL)) 
+												);
+	CCAction* forever2 = dynamic_cast<CCAction*>(forever->copy()->autorelease());
+	forever->setTag(101);
+	forever2->setTag(102);
+												  
+	addChild(sp1, 0, kTagSprite1);
+	addChild(sp2, 0, kTagSprite2);
+			
+	sp1->runAction(forever);
+	sp2->runAction(forever2);
+	
+	schedule( schedule_selector(Test5::addAndRemove), 2.0f);
+}
+
+void Test5::addAndRemove(ccTime dt)
+{
+	CCNode* sp1 = getChildByTag(kTagSprite1);
+	CCNode* sp2 = getChildByTag(kTagSprite2);
+
+	sp1->retain();
+	sp2->retain();
+	
+	removeChild(sp1, false);
+	removeChild(sp2, true);
+	
+	addChild(sp1, 0, kTagSprite1);
+	addChild(sp2, 0, kTagSprite2);
+	
+	sp1->release();
+	sp2->release();
+}
+
+std::string Test5::title()
+{
+	return "remove and cleanup";
+}
+
+//------------------------------------------------------------------
+//
+// Test6
+//
+//------------------------------------------------------------------
+Test6::Test6()
+{
+	CCSprite* sp1 = CCSprite::spriteWithFile(s_pPathSister1);
+	CCSprite* sp11 = CCSprite::spriteWithFile(s_pPathSister1);
+
+	CCSprite* sp2 = CCSprite::spriteWithFile(s_pPathSister2);
+	CCSprite* sp21 = CCSprite::spriteWithFile(s_pPathSister2);
+		
+	sp1->setPosition(CGPointMake(100,160));
+	sp2->setPosition(CGPointMake(380,160));
+		
+	CCIntervalAction* rot = CCRotateBy::actionWithDuration(2, 360);
+	CCIntervalAction* rot_back = rot->reverse();
+	CCAction* forever1 = CCRepeatForever::actionWithAction(
+															dynamic_cast<CCIntervalAction*>(CCSequence::actions(rot, rot_back, NULL)));
+	CCAction* forever11 =  dynamic_cast<CCAction*>(forever1->copy()->autorelease());
+
+	CCAction* forever2 =  dynamic_cast<CCAction*>(forever1->copy()->autorelease());
+	CCAction* forever21 =  dynamic_cast<CCAction*>(forever1->copy()->autorelease());
+	
+	addChild(sp1, 0, kTagSprite1);
+	dynamic_cast<CCNode*>(sp1)->addChild(sp11);
+	addChild(sp2, 0, kTagSprite2);
+	dynamic_cast<CCNode*>(sp2)->addChild(sp21);
+	
+	sp1->runAction(forever1);
+	sp11->runAction(forever11);
+	sp2->runAction(forever2);
+	sp21->runAction(forever21);
+	
+	schedule( schedule_selector(Test6::addAndRemove), 2.0f);
+}
+
+void Test6::addAndRemove(ccTime dt)
+{
+	CCNode* sp1 = getChildByTag(kTagSprite1);
+	CCNode* sp2 = getChildByTag(kTagSprite2);
+
+	sp1->retain();
+	sp2->retain();
+	
+	removeChild(sp1, false);
+	removeChild(sp2, true);
+	
+	addChild(sp1, 0, kTagSprite1);
+	addChild(sp2, 0, kTagSprite2);
+	
+	sp1->release();
+	sp2->release();
+
+}
+
+std::string Test6::title()
+{
+	return "remove/cleanup with children";
+}
+
+//------------------------------------------------------------------
+//
+// StressTest1
+//
+//------------------------------------------------------------------
+StressTest1::StressTest1()
+{
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+
+	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
+	addChild(sp1, 0, kTagSprite1);
+	
+	sp1->setPosition( CGPointMake(s.width/2, s.height/2) );		
+
+	schedule( schedule_selector(StressTest1::shouldNotCrash), 1.0f);
+}
+
+void StressTest1::shouldNotCrash(ccTime dt)
+{
+	unschedule(schedule_selector(StressTest1::shouldNotCrash));
+
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+
+	// if the node has timers, it crashes
+	CCNode* explosion = CCParticleSun::node();
+	
+	// if it doesn't, it works Ok.
+//	CocosNode *explosion = [Sprite spriteWithFile:@"grossinis_sister2.png");
+
+	explosion->setPosition( CGPointMake(s.width/2, s.height/2) );
+	
+	runAction( CCSequence::actions(
+							CCRotateBy::actionWithDuration(2, 360),
+							CCCallFuncN::actionWithTarget(this, callfuncN_selector(StressTest1::removeMe)), 
+							NULL) );
+	
+	addChild(explosion);
+}
+
+// remove
+void StressTest1::removeMe(CCNode* node)
+{	
+	m_pParent->removeChild(node, true);
+	nextCallback(this);
+}
+
+
+std::string StressTest1::title()
+{
+	return "stress test #1: no crashes";
+}
+
+//------------------------------------------------------------------
+//
+// StressTest2
+//
+//------------------------------------------------------------------
+StressTest2::StressTest2()
+{
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	
+	CCLayer* sublayer = CCLayer::node();
+	
+	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
+	sp1->setPosition( CGPointMake(80, s.height/2) );
+	
+	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCIntervalAction* move_ease_inout3 = CCEaseInOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 2.0f);
+	CCIntervalAction* move_ease_inout_back3 = move_ease_inout3->reverse();
+	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL));
+	sp1->runAction( CCRepeatForever::actionWithAction(seq3) );
+	sublayer->addChild(sp1, 1);
+
+	CCParticleFire* fire = CCParticleFire::node();
+	fire->setPosition( CGPointMake(80, s.height/2-50) );
+	
+	CCIntervalAction* copy_seq3 = dynamic_cast<CCIntervalAction*>(seq3->copy()->autorelease());
+	
+	fire->runAction( CCRepeatForever::actionWithAction(copy_seq3) );
+	sublayer->addChild(fire, 2);
+			
+	schedule(schedule_selector(StressTest2::shouldNotLeak), 6.0f);
+	
+	addChild(sublayer, 0, kTagSprite1);
+}
+
+void StressTest2::shouldNotLeak(ccTime dt)
+{
+	unschedule( schedule_selector(StressTest2::shouldNotLeak) );
+	CCLayer* sublayer = (CCLayer*)getChildByTag(kTagSprite1);
+	sublayer->removeAllChildrenWithCleanup(true); 
+}
+
+std::string StressTest2::title()
+{
+	return "stress test #2: no leaks";
+}
+
+
+//------------------------------------------------------------------
+//
+// SchedulerTest1
+//
+//------------------------------------------------------------------
+SchedulerTest1::SchedulerTest1()
+{
+	CCLayer*layer = CCLayer::node();
+	//UXLOG("retain count after init is %d", layer->retainCount());                // 1
+	
+	addChild(layer, 0);
+	//UXLOG("retain count after addChild is %d", layer->retainCount());      // 2
+	
+	layer->schedule( schedule_selector(SchedulerTest1::doSomething) );
+	//UXLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
+	
+	layer->unschedule(schedule_selector(SchedulerTest1::doSomething));
+	//UXLOG("retain count after unschedule is %d", layer->retainCount());		// STILL 3!  (win32 is '2')
+}
+
+void SchedulerTest1::doSomething(ccTime dt)
+{
+
+}
+
+std::string SchedulerTest1::title()
+{
+	return "cocosnode scheduler test #1";
+}
+
+//------------------------------------------------------------------
+//
+// NodeToWorld
+//
+//------------------------------------------------------------------
+NodeToWorld::NodeToWorld()
+{
+	//
+	// This code tests that nodeToParent works OK:
+	//  - It tests different anchor Points
+	//  - It tests different children anchor points
+
+	CCSprite *back = CCSprite::spriteWithFile(s_back3);
+	addChild( back, -10);
+	back->setAnchorPoint( CGPointMake(0,0) );
+	CGSize backSize = back->getContentSize();
+	
+	CCMenuItem *item = CCMenuItemImage::itemFromNormalImage(s_PlayNormal, s_PlaySelect);
+	CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+	menu->alignItemsVertically();
+	menu->setPosition( CGPointMake(backSize.width/2, backSize.height/2));
+	back->addChild(menu);
+	
+	CCIntervalAction* rot = CCRotateBy::actionWithDuration(5, 360);
+	CCAction* fe = CCRepeatForever::actionWithAction( rot);
+	item->runAction( fe );
+	
+	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(200,0));
+	CCIntervalAction* move_back = move->reverse();
+	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
+	CCAction* fe2 = CCRepeatForever::actionWithAction( seq );
+	back->runAction(fe2);
+}
+
+std::string NodeToWorld::title()
+{
+	return "nodeToParent transform";
+}
+
+//------------------------------------------------------------------
+//
+// CameraOrbitTest
+//
+//------------------------------------------------------------------
+void CameraOrbitTest::onEnter()
+{
+	__super::onEnter();
+	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection3D);
+}
+
+void CameraOrbitTest::onExit()
+{
+	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
+	__super::onExit();
+}
+
+CameraOrbitTest::CameraOrbitTest()
+{
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+
+	CCSprite *p = CCSprite::spriteWithFile(s_back3);
+	addChild( p, 0);
+	p->setPosition( CGPointMake(s.width/2, s.height/2) );
+	p->setOpacity( 128 );
+	
+	CCSprite* sprite;
+	CCOrbitCamera* orbit;
+	CCCamera* cam;
+	CGSize ss;
+
+	// LEFT
+	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+	sprite->setScale(0.5f);
+	p->addChild(sprite, 0);		
+	sprite->setPosition( CGPointMake(s.width/4*1, s.height/2) );
+	cam = sprite->getCamera();
+	orbit = CCOrbitCamera::actionWithDuration(2, 1, 0, 0, 360, 0, 0);
+	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
+	
+	// CENTER
+	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+	sprite->setScale( 1.0f );
+	p->addChild(sprite, 0);		
+	sprite->setPosition( CGPointMake(s.width/4*2, s.height/2) );
+	orbit = CCOrbitCamera::actionWithDuration(2, 1, 0, 0, 360, 45, 0);
+	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
+	
+	
+	// RIGHT
+	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+	sprite->setScale( 2.0f );
+	p->addChild(sprite, 0);		
+	sprite->setPosition( CGPointMake(s.width/4*3, s.height/2) );
+	ss = sprite->getContentSize();		
+	orbit = CCOrbitCamera::actionWithDuration(2, 1, 0, 0, 360, 90, -45),
+	sprite->runAction( CCRepeatForever::actionWithAction(orbit) );
+			
+	
+	// PARENT
+	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 90);
+	p->runAction( CCRepeatForever::actionWithAction( orbit ) );
+
+	setScale( 1 );
+}
+
+std::string CameraOrbitTest::title()
+{
+	return "Camera Orbit test";
+}
+
+//------------------------------------------------------------------
+//
+// CameraZoomTest
+//
+//------------------------------------------------------------------
+
+void CameraZoomTest::onEnter()
+{
+	__super::onEnter();
+	
+	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection3D);
+}
+
+void CameraZoomTest::onExit()
+{
+	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
+	__super::onExit();
+}
+
+CameraZoomTest::CameraZoomTest()
+{
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	
+	CCSprite *sprite;
+	CCCamera *cam;
+	
+	// LEFT
+	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+	addChild( sprite, 0);		
+	sprite->setPosition( CGPointMake(s.width/4*1, s.height/2) );
+	cam = sprite->getCamera();
+	cam->setEyeXYZ(0, 0, 415);
+	
+	// CENTER
+	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+	addChild( sprite, 0, 40);
+	sprite->setPosition(CGPointMake(s.width/4*2, s.height/2));
+//		cam = [sprite camera);
+//		[cam setEyeX:0 eyeY:0 eyeZ:415/2);
+	
+	// RIGHT
+	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
+	addChild( sprite, 0, 20);
+	sprite->setPosition(CGPointMake(s.width/4*3, s.height/2));
+//		cam = [sprite camera);
+//		[cam setEyeX:0 eyeY:0 eyeZ:-485);
+//		[cam setCenterX:0 centerY:0 centerZ:0);
+
+	m_z = 0;
+	schedule(schedule_selector(CameraZoomTest::updateEye));
+}
+
+void CameraZoomTest::updateEye(ccTime dt)
+{
+	CCNode *sprite;
+	CCCamera *cam;
+	
+	m_z += dt * 100;
+	
+	sprite = getChildByTag(20);
+	cam = sprite->getCamera();
+	cam->setEyeXYZ(0, 0, m_z);
+	
+	sprite = getChildByTag(40);
+	cam = sprite->getCamera();
+	cam->setEyeXYZ(0, 0, m_z);	
+}
+
+std::string CameraZoomTest::title()
+{
+	return "Camera Zoom test";
+}
+
+//------------------------------------------------------------------
+//
+// CameraCenterTest
+//
+//------------------------------------------------------------------
+CameraCenterTest::CameraCenterTest()
+{
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+			
+	CCSprite *sprite;
+	CCOrbitCamera *orbit;
+	
+	// LEFT-TOP
+	sprite = new CCSprite();//::node();
+    sprite->init();
+	addChild( sprite, 0);	
+	sprite->setPosition(CGPointMake(s.width/5*1, s.height/5*1));
+	sprite->setColor(ccRED);
+	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
+	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
+//		[sprite setAnchorPoint: CGPointMake(0,1));
+
+	
+	
+	// LEFT-BOTTOM
+	sprite = new CCSprite();//::node();
+    sprite->init();
+	addChild( sprite, 0, 40);
+	sprite->setPosition(CGPointMake(s.width/5*1, s.height/5*4));
+	sprite->setColor(ccBLUE);
+	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
+	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
+//		[sprite setAnchorPoint: CGPointMake(0,0));
+
+
+	// RIGHT-TOP
+	sprite = new CCSprite();//::node();
+    sprite->init();
+	addChild( sprite, 0);	
+	sprite->setPosition(CGPointMake(s.width/5*4, s.height/5*1));
+	sprite->setColor(ccYELLOW);
+	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
+	sprite->runAction(CCRepeatForever::actionWithAction( orbit) );
+//		[sprite setAnchorPoint: CGPointMake(1,1));
+
+	
+	// RIGHT-BOTTOM
+	sprite = new CCSprite();//::node();
+    sprite->init();
+	addChild( sprite, 0, 40);
+	sprite->setPosition(CGPointMake(s.width/5*4, s.height/5*4));
+	sprite->setColor(ccGREEN);
+	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
+	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
+//		[sprite setAnchorPoint: CGPointMake(1,0));
+
+	// CENTER
+	sprite = new CCSprite();
+    sprite->init();
+	addChild( sprite, 0, 40);
+	sprite->setPosition(CGPointMake(s.width/2, s.height/2));
+	sprite->setColor(ccWHITE);
+	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
+	sprite->runAction(CCRepeatForever::actionWithAction( orbit ) );
+//		[sprite setAnchorPoint: CGPointMake(0.5f, 0.5f));
+}
+
+std::string CameraCenterTest::title()
+{
+	return "Camera Center test";
+}
+
+std::string CameraCenterTest::subtitle()
+{
+	return "Sprites should rotate at the same speed";
+}
+
+void CocosNodeTestScene::runThisTest()
+{
+    CCLayer* pLayer = nextCocosNodeAction();
+    addChild(pLayer);
+
+    CCDirector::getSharedDirector()->replaceScene(this);
+}

@@ -197,6 +197,11 @@ namespace cocos2d{
 			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
+                if (!(*it))
+                {
+                    break;
+                }
+                
 				height += (*it)->getContentSize().height * (*it)->getScaleY() + padding;
 			}
 		}
@@ -207,6 +212,11 @@ namespace cocos2d{
 			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
+                if (!(*it))
+                {
+                    break;
+                }
+                
 				(*it)->setPosition(ccp(0, (*it)->getContentSize().height * (*it)->getScaleY() / 2.0f));
 				y -= (*it)->getContentSize().height * (*it)->getScaleY() + padding;
 			}
@@ -227,6 +237,11 @@ namespace cocos2d{
             NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
+                if (!(*it))
+                {
+                    break;
+                }
+
 				width += (*it)->getContentSize().width * (*it)->getScaleX() + padding;
 			}
 		}
@@ -237,6 +252,11 @@ namespace cocos2d{
             NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
+                if (!(*it))
+                {
+                    break;
+                }
+
 				(*it)->setPosition(ccp(x + (*it)->getContentSize().width * (*it)->getScaleX() / 2.0f, 0));
 				x += (*it)->getContentSize().width * (*it)->getScaleX() + padding;
 			}

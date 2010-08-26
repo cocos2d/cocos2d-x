@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <string>
 namespace   cocos2d {
 
-class CCCamera : public NSObject
+class CCX_DLL CCCamera : public NSObject
 {
 protected:
 	float m_fEyeX;
