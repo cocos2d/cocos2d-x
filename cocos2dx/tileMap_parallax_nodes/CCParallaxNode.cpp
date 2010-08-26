@@ -61,6 +61,12 @@ namespace cocos2d {
 			m_pParallaxArray = NULL;
 		}
 	}
+	CCParallaxNode * CCParallaxNode::node()
+	{
+		CCParallaxNode *pRet = new CCParallaxNode();
+		pRet->autorelease();
+		return pRet;
+	}
 	CCNode * CCParallaxNode::addChild(CCNode * child, int zOrder, int tag)
 	{
 		NSAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
