@@ -603,6 +603,17 @@ void ParallaxParticle::onEnter()
 // 	p->runAction( CCRepeatForever::actionWithAction( seq ) );	
 }
 
+void DemoParticleFromFile::onEnter()
+{
+    __super::onEnter();
+    m_emitter = new CCQuadParticleSystem();
+    std::string filename = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/" + m_title + ".plist";
+    m_emitter->initWithFile(filename.c_str());
+    m_background->addChild(m_emitter, 10);
+
+    setEmitterPosition();
+}
+
 std::string ParallaxParticle::title()
 {
 	return "Parallax + Particles";
@@ -624,7 +635,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	16
+#define MAX_LAYER	25
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -646,6 +657,15 @@ CCLayer* createParticleLayer(int nIndex)
 		case 13: return new DemoModernArt();
 		case 14: return new DemoRing();
 		case 15: return new ParallaxParticle();
+        case 16: return new DemoParticleFromFile("BoilingFoam");
+        case 17: return new DemoParticleFromFile("BurstPipe");
+        case 18: return new DemoParticleFromFile("Comet");
+        case 19: return new DemoParticleFromFile("debian");
+        case 20: return new DemoParticleFromFile("ExplodingRing");
+        case 21: return new DemoParticleFromFile("LavaFlow");
+        case 22: return new DemoParticleFromFile("SpinningPeas");
+        case 23: return new DemoParticleFromFile("SpookyPeas");
+        case 24: return new DemoParticleFromFile("Upsidedown");
 	}
 
 	return NULL;
@@ -823,7 +843,9 @@ void ParticleDemo::backCallback(NSObject* pSender)
 
 void ParticleDemo::setEmitterPosition()
 {
-	m_emitter->setPosition( CGPointMake(200, 70) );
+    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+
+	m_emitter->setPosition( CGPointMake(s.width / 2, s.height / 2) );
 }
 
 void ParticleTestScene::runThisTest()
