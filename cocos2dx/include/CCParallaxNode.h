@@ -24,8 +24,38 @@ THE SOFTWARE.
 #ifndef __CCPARALLAX_NODE_H__
 #define __CCPARALLAX_NODE_H__
 
+#include "CCNode.h"
+#include "support/data_support/ccArray.h"
+
 namespace cocos2d {
 
+	/** CCParallaxNode: A node that simulates a parallax scroller
+
+	The children will be moved faster / slower than the parent according the the parallax ratio.
+
+	*/
+	class CCX_DLL CCParallaxNode : public CCNode 
+	{
+	public:
+		/** Adds a child to the container with a z-order, a parallax ratio and a position offset
+		It returns self, so you can chain several addChilds.
+		@since v0.8
+		*/
+		CCParallaxNode();
+		virtual ~CCParallaxNode();
+		CCParallaxNode * addChild(CCNode * child, int z, CGPoint parallaxRatio, CGPoint positionOffset);
+		// super methods
+		virtual CCNode * addChild(CCNode * child, int zOrder, int tag);
+		virtual void removeChild(CCNode* child, bool cleanup);
+		virtual void removeAllChildrenWithCleanup(bool cleanup);
+		virtual void visit(void);
+	private:
+		CGPoint absolutePosition();
+	protected:
+		/** array that holds the offset / ratio of the children */
+		ccArray *m_pParallaxArray;
+		CGPoint	m_tLastPosition;
+	};
 
 } // namespace cocos2d
 #endif //__CCPARALLAX_NODE_H__

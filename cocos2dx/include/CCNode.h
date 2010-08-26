@@ -329,7 +329,7 @@ public:
 	virtual void draw(void);
 
 	/** recursive method that visit its children and draw them */
-	void visit(void);
+	virtual void visit(void);
 
 	// transformations
 
