@@ -385,7 +385,7 @@ namespace cocos2d {
 		inline const char * valueForKey(const char *key, std::map<std::string, void*> *dict)
 		{
 			std::map<std::string, void*>::iterator it = dict->find(key);
-			return ((std::string*)(it->second))->c_str();
+			return it!=dict->end() ? ((std::string*)(it->second))->c_str() : "";
 		}
 };
 
