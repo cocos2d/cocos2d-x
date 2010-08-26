@@ -577,30 +577,30 @@ std::string DemoRing::title()
 void ParallaxParticle::onEnter()
 {
 	__super::onEnter();
-// 	
-// 	m_background->getParent()->removeChild(m_background, true);
-// 
-// 	CCParallaxNode* p = CCParallaxNode::node(); 
-// 	addChild(p, 5);
-// 
-// 	CCSprite *p1 = CCSprite::spriteWithFile(s_back3);
-// 	CCSprite *p2 = CCSprite::spriteWithFile(s_back3);
-// 	
-// 	p->addChild( p1, 1, CGPointMake(0.5f,1), CGPointMake(0,250) );
-// 	p->addChild(p2, 2, CGPointMake(1.5f,1), CGPointMake(0,50) );
-// 
-// 	m_emitter = CCParticleFlower::node();
-// 
-// 	p1->addChild(m_emitter, 10);
-// 	m_emitter->setPosition( CGPointMake(250,200) );
-// 	
-// 	CCParticleSun* par = CCParticleSun::node();
-// 	p2->addChild(par, 10);
-// 	
-// 	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
-// 	CCIntervalAction* move_back = move->reverse();
-// 	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-// 	p->runAction( CCRepeatForever::actionWithAction( seq ) );	
+	
+	m_background->getParent()->removeChild(m_background, true);
+
+	CCParallaxNode* p = CCParallaxNode::node(); 
+	addChild(p, 5);
+
+	CCSprite *p1 = CCSprite::spriteWithFile(s_back3);
+	CCSprite *p2 = CCSprite::spriteWithFile(s_back3);
+	
+	p->addChild( p1, 1, CGPointMake(0.5f,1), CGPointMake(0,250) );
+	p->addChild(p2, 2, CGPointMake(1.5f,1), CGPointMake(0,50) );
+
+	m_emitter = CCParticleFlower::node();
+
+	p1->addChild(m_emitter, 10);
+	m_emitter->setPosition( CGPointMake(250,200) );
+	
+	CCParticleSun* par = CCParticleSun::node();
+	p2->addChild(par, 10);
+	
+	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
+	CCIntervalAction* move_back = move->reverse();
+	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
+	p->runAction( CCRepeatForever::actionWithAction( seq ) );	
 }
 
 void DemoParticleFromFile::onEnter()

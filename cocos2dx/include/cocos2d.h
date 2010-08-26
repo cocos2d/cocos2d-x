@@ -61,7 +61,7 @@ THE SOFTWARE.
 #include "CCGrid3DAction.h"
 #include "CCGridAction.h"
 #include "CCBitmapFontAtlas.h"
-// #include "CCParallaxNode.h"
+#include "CCParallaxNode.h"
 // #include "CCTMXTiledMap.h"
 // #include "CCTMXLayer.h"
 // #include "CCTMXObjectGroup.h"
