@@ -449,6 +449,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCTMXXMLParser.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCTouch.h"
 				>
 			</File>
@@ -754,6 +758,10 @@
 			>
 			<File
 				RelativePath=".\tileMap_parallax_nodes\CCParallaxNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tileMap_parallax_nodes\CCTMXXMLParser.cpp"
 				>
 			</File>
 		</Filter>
