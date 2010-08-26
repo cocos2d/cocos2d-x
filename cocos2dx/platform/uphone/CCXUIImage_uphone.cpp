@@ -32,6 +32,30 @@ THE SOFTWARE.
 using namespace std;
 namespace   cocos2d {
 
+typedef struct 
+{
+	unsigned char* data;
+	int size;
+	int offset;
+}tImageSource;
+
+// because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
+// the function as a static function
+static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
+{
+	tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
+
+	if((int)(isource->offset + length) <= isource->size)
+	{
+		memcpy(data, isource->data+isource->offset, length);
+		isource->offset += length;
+	}
+	else
+	{
+		png_error(png_ptr, "pngReaderCallback failed");
+	}
+}
+
 UIImage::UIImage(void)
 {
 	m_pBitmap = NULL;
@@ -89,22 +113,13 @@ bool UIImage::initWithContentsOfFile(const string &strPath)
         }
 
 		// the hight is 0??
-		if (m_pBitmap && m_pBitmap->GetHeight() == 0)
+		if (m_pBitmap->GetHeight() == 0)
 		{
 			m_pBitmap->Destroy();
 			m_pBitmap = NULL;
 
 			bRet = false;
 			break;
-		}
-
-		if (m_pBitmap)
-		{
-			bRet = true;
-		}
-		else
-		{
-			bRet = false;
 		}
 	} while(0);
 
@@ -257,7 +272,6 @@ bool UIImage::loadPng(const char* strFileName)
     png_structp         png_ptr;
     png_infop           info_ptr;
     UInt32               * pBmpData;
-    Int32               pos;
     Int32               bitDepth;
     png_uint_32         width;
     png_uint_32         height;
@@ -265,7 +279,6 @@ bool UIImage::loadPng(const char* strFileName)
     png_bytep           * rowPointers;
     Int32               colorType;
 
-    pos = 0;
     fp = NULL;
     pBmpData = NULL;
 
@@ -376,15 +389,154 @@ bool UIImage::loadPng(const char* strFileName)
 
     return true;
 }
+
+bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
+{
+	char                header[8]; 
+	png_structp         png_ptr;
+	png_infop           info_ptr;
+	UInt32               * pBmpData;
+	Int32               pos;
+	Int32               bitDepth;
+	png_uint_32         width;
+	png_uint_32         height;
+	Int32               interlaceType;
+	png_bytep           * rowPointers;
+	Int32               colorType;
+	tImageSource        imageSource;
+
+	pos = 0;
+	pBmpData = NULL;
+
+	// read 8 bytes from the beginning of stream
+	unsigned char *tmp = data;
+	memcpy(header, tmp, 8);
+
+	// close the file if it's not a png
+	if (png_sig_cmp((png_bytep)header, 0, 8))
+	{
+		return false;
+	}
+
+	// init png_struct
+	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	if (!png_ptr)
+	{
+		return false;
+	}   
+
+	// init png_info
+	info_ptr = png_create_info_struct(png_ptr);
+	if (!info_ptr)
+	{
+		png_destroy_read_struct(&png_ptr, NULL, NULL);
+		return false;
+	}
+
+	// if something wrong,close file and return
+	if (setjmp(png_jmpbuf(png_ptr)))
+	{       
+		png_destroy_read_struct(&png_ptr, NULL, NULL);
+		png_destroy_info_struct(png_ptr, &info_ptr);
+		return false;
+	}
+
+	// set the read call back function
+	imageSource.data = data;
+	imageSource.size = nLength;
+	imageSource.offset = 0;
+	png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
+
+	// read the data of the file
+	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND, 0);
+
+	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bitDepth, &colorType,
+		&interlaceType, NULL, NULL);
+
+	if (setjmp(png_jmpbuf(png_ptr)))
+	{     
+		png_destroy_read_struct(&png_ptr, NULL, NULL);
+		png_destroy_info_struct(png_ptr, &info_ptr);
+		return false;
+	}
+
+	// get the image file data
+	rowPointers = png_get_rows(png_ptr, info_ptr);
+
+	// Create a bitmap of 32bits depth
+	if(!m_pBitmap)
+	{
+		m_pBitmap = TBitmap::Create(width, height, 32);
+	}
+	if(!m_pBitmap)
+	{
+		png_destroy_read_struct(&png_ptr, NULL, NULL);
+		png_destroy_info_struct(png_ptr, &info_ptr);
+		return false; 
+	}
+
+	// Alpha data
+	pBmpData = reinterpret_cast< UInt32* >( m_pBitmap->GetDataPtr() );
+
+	if( info_ptr->color_type & PNG_COLOR_MASK_ALPHA )	{
+		for(unsigned int i = 0; i < height; i++)
+		{
+			for(unsigned int j = 0; j < (4 * width); j += 4)
+			{
+				*pBmpData++ = RGBA( rowPointers[i][j], rowPointers[i][j + 1], 
+					rowPointers[i][j + 2], rowPointers[i][j + 3] );
+			}
+		}
+	}
+	else
+	{
+		for(unsigned int i = 0; i < height; i++)
+		{
+			for(unsigned int j = 0; j < (3 * width); j += 3)
+			{
+				*pBmpData++ = RGB( rowPointers[i][j], rowPointers[i][j + 1], 
+					rowPointers[i][j + 2] );
+			}
+		}
+	}
+
+	// release
+	png_destroy_read_struct(&png_ptr, NULL, NULL);
+	png_destroy_info_struct(png_ptr, &info_ptr);
+
+	return true;
+}
+
 bool UIImage::save(const std::string &strFileName, int nFormat)
 {
 	/// @todo uiimage::save
 	return false;
 }
-bool UIImage::initWithBuffer(int nX, int nY, unsigned char *pBuffer)
+bool UIImage::initWithBuffer(unsigned char *pBuffer, int nLength)
 {
-	/// @todo uiimage::initwithbuffer
-	return false;
+	bool bRet = true;
+
+	do 
+	{
+		bRet = loadPngFromStream(pBuffer, nLength);
+		// if load failed, break
+        if (! bRet)
+		{
+			break;
+		}
+
+		// the hight is 0??
+		if (m_pBitmap->GetHeight() == 0)
+		{
+			m_pBitmap->Destroy();
+			m_pBitmap = NULL;
+			bRet = false;
+
+			break;
+		}
+	} while(0);	
+
+	return bRet;
 }
 
 }//namespace   cocos2d 
