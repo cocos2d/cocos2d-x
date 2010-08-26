@@ -40,7 +40,7 @@ public:
 	~UIImage(void);
 
 	bool initWithContentsOfFile(const std::string &strPath);
-	bool initWithBuffer(int nX, int nY, unsigned char *pBuffer);
+	bool initWithBuffer(unsigned char *pBuffer, int nLength);
 //	bool initWithCGImage(CGImageRef pCGImage);
 
 	bool save(const std::string &strFileName, int nFormat);
@@ -59,6 +59,7 @@ public:
 
 private:
     bool loadPng(const char* strFileName);
+	bool loadPngFromStream(unsigned char *data, int nLength);
 
 private:
 	TBitmap *m_pBitmap;
