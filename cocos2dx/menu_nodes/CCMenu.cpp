@@ -183,6 +183,16 @@ namespace cocos2d{
 		}
 	}
 
+	void CCMenu::destroy(void)
+	{
+		release();
+	}
+
+	void CCMenu::keep(void)
+	{
+		retain();
+	}
+
 	//Menu - Alignment
 	void CCMenu::alignItemsVertically()
 	{

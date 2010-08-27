@@ -86,6 +86,7 @@ public:
  @since v0.8.0
  */
 class CCTouchHandler;
+struct _ccCArray;
 class CCX_DLL CCTouchDispatcher : public NSObject, public EGLTouchDelegate
 {
 public:
@@ -139,14 +140,18 @@ protected:
 	void forceRemoveAllDelegates(void);
 
 protected:
-	NSMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
-	NSMutableArray<CCTouchHandler*> *m_pStandardHandlers;
+ 	NSMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
+ 	NSMutableArray<CCTouchHandler*> *m_pStandardHandlers;
+// 	struct _ccCArray *m_pTargetedHandlers;
+// 	struct _ccCArray *m_pStandardHandlers;
 
 	bool m_bLocked;
 	bool m_bToAdd;
 	bool m_bToRemove;
-	NSMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
-	NSMutableArray<CCTouchDelegate*> *m_pHandlersToRemove;
+ 	NSMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
+// 	NSMutableArray<CCTouchDelegate*> *m_pHandlersToRemove;
+	/*struct _ccCArray *m_pHandlersToAdd;*/
+	struct _ccCArray *m_pHandlersToRemove;
 	bool m_bToQuit;
 
 	bool m_bDispatchEvents;

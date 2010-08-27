@@ -229,7 +229,11 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	arr->num -= back;
 }
 
-typedef ccArray ccCArray;
+typedef struct _ccCArray 
+{
+	unsigned int num, max;
+	void**    arr; //equals NSObject** arr;
+} ccCArray;
 
 static inline void ccCArrayRemoveAllValues(ccCArray *arr);
 
@@ -243,7 +247,7 @@ static inline ccCArray* ccCArrayNew(unsigned int capacity)
 	
 	ccCArray *arr = (ccCArray*)malloc( sizeof(ccCArray) );
 	arr->num = 0;
-	arr->arr =  (NSObject**) malloc( capacity * sizeof(NSObject*) );
+	arr->arr =  (void**) malloc( capacity * sizeof(void*) );
 	arr->max = capacity;
 	
 	return arr;
@@ -266,13 +270,17 @@ static inline void ccCArrayFree(ccCArray *arr)
 /** Doubles C array capacity */
 static inline void ccCArrayDoubleCapacity(ccCArray *arr)
 {
-	return ccArrayDoubleCapacity(arr);
+	arr->max *= 2;
+	arr->arr = (void**) realloc(arr->arr, arr->max * sizeof(void*));
 }
 
 /** Increases array capacity such that max >= num + extra. */
 static inline void ccCArrayEnsureExtraCapacity(ccCArray *arr, unsigned int extra)
 {
-	return ccArrayEnsureExtraCapacity(arr,extra);
+	while (arr->max < arr->num + extra)
+	{
+		ccCArrayDoubleCapacity(arr); 
+	}
 }
 
 /** Returns index of first occurence of value, NSNotFound if value not found. */
@@ -280,7 +288,7 @@ static inline unsigned int ccCArrayGetIndexOfValue(ccCArray *arr, void* value)
 {
 	for (unsigned int i = 0; i < arr->num; i++)
 	{
-		if (arr->arr[i] == (NSObject*)value) 
+		if (arr->arr[i] == value) 
 		{
 			return i;
 		}
@@ -295,27 +303,40 @@ static inline bool ccCArrayContainsValue(ccCArray *arr, void* value)
 	return ccCArrayGetIndexOfValue(arr, value) != -1;
 }
 
-/** Inserts a value at a certain position. Behaviour undefined if aray doesn't have enough capacity */
+/** Inserts a value at a certain position. The valid index is [0, num] */
 static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index)
 {
 	int remaining = arr->num - index;
+
+	// make sure it has enough capacity
+	if (arr->num + 1 == arr->max)
+	{
+        ccCArrayDoubleCapacity(arr);
+	}
 	
 	// last Value doesn't need to be moved
 	if( remaining > 0) 
 	{
 		// tex coordinates
-		memmove( &arr->arr[index+1],&arr->arr[index], sizeof(NSObject*) * remaining );
+		memmove( &arr->arr[index+1],&arr->arr[index], sizeof(void*) * remaining );
 	}
 	
 	arr->num++;	
-	arr->arr[index] = (NSObject*)value;
+	arr->arr[index] = value;
 }
 
-/** Appends an value. Bahaviour undefined if array doesn't have enough capacity. */
+/** Appends an value */
 static inline void ccCArrayAppendValue(ccCArray *arr, void* value)
 {
-	arr->arr[arr->num] =  (NSObject*)value;
+	arr->arr[arr->num] =  value;
 	arr->num++;
+
+	// double the capacity for the next append action
+	// if the num >= max
+	if (arr->num >= arr->max)
+	{
+		ccCArrayDoubleCapacity(arr);
+	}
 }
 
 /** Appends an value. Capacity of arr is increased if needed. */

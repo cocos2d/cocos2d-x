@@ -82,6 +82,8 @@ namespace cocos2d{
 		virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
 		virtual void ccTouchCancelled(CCTouch *touch, UIEvent* event);
 		virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
+		virtual void destroy(void);
+		virtual void keep(void);
 
 		virtual void setOpacity(GLubyte opacity);
 		virtual GLubyte getOpacity(void);

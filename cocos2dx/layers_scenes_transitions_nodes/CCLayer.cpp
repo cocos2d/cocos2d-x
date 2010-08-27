@@ -34,6 +34,7 @@ CCLayer::CCLayer()
 :m_bIsTouchEnabled(false)
 ,m_bIsAccelerometerEnabled(false)
 {
+	CCTouchDelegate::m_eTouchDelegateType = ccTouchDeletateAllBit;
 	m_tAnchorPoint = ccp(0.5f, 0.5f);
 	m_bIsRelativeAnchorPoint = false;
 }
@@ -73,6 +74,16 @@ CCLayer *CCLayer::node()
 void CCLayer::registerWithTouchDispatcher()
 {
 	CCTouchDispatcher::getSharedDispatcher()->addStandardDelegate(this,0);
+}
+
+void CCLayer::destroy(void)
+{
+	this->release();
+}
+
+void CCLayer::keep(void)
+{
+	this->retain();
 }
 
 

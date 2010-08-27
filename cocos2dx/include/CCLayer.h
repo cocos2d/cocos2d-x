@@ -53,6 +53,8 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
+	virtual void destroy(void);
+	virtual void keep(void);
 	
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.

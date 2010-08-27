@@ -64,7 +64,7 @@ NSObject* CCAction::copyWithZone(NSZone *pZone)
 	CCAction *pRet = NULL;
 	if (pZone && pZone->m_pCopyObject)
 	{
-		pRet = dynamic_cast<CCAction*>(pZone->m_pCopyObject);
+		pRet = (CCAction*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -143,7 +143,7 @@ NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 	CCRepeatForever* pRet = NULL;
 	if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 	{
-		pRet = dynamic_cast<CCRepeatForever*>(pZone->m_pCopyObject);
+		pRet = (CCRepeatForever*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -152,7 +152,7 @@ NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 	}
 	__super::copyWithZone(pZone);
 	// win32 : use the m_pOther's copy object.
-	pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) ); 
+	pRet->initWithAction( (CCIntervalAction*)(m_pOther->copy()->autorelease()) ); 
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
 }

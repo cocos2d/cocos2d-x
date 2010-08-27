@@ -32,16 +32,34 @@ namespace   cocos2d {
 class CCTouch;
 class UIEvent;
 
-class CCX_DLL CCTouchDelegate : virtual public NSObject
+typedef enum
 {
+	ccTouchDelegateStandardBit = 1 << 0,
+	ccTouchDelegateTargetedBit = 1 << 1,
+	ccTouchDeletateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
+} ccTouchDelegateFlag;
+
+//class CCX_DLL CCTouchDelegate : virtual public NSObject
+class CCX_DLL CCTouchDelegate
+{
+// public:
+// 	// for RTTI support
+// 	virtual void v() {};
+protected:
+	ccTouchDelegateFlag m_eTouchDelegateType;
+
 public:
-	// for RTTI support
-	virtual void v() {};
+	inline ccTouchDelegateFlag getTouchDelegateType(void) { return m_eTouchDelegateType; }
+	// call the release() in child(layer or menu)
+	virtual void destroy(void) {}
+	// call the retain() in child (layer or menu)
+	virtual void keep(void) {}
 };
 
 class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
 {
 public:
+	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
 	/** Return YES to claim the touch.
 	 @since v0.8
 	 */
@@ -64,6 +82,7 @@ class NSSet;
 class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
 {
 public:
+	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
 	// optional
 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
