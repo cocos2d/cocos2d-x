@@ -12,6 +12,7 @@
 #include "MotionStreakTest/MotionStreakTest.h"
 #include "DrawPrimitivesTest/DrawPrimitivesTest.h"
 #include "CocosNodeTest/CocosNodeTest.h"
+#include "TouchesTest/TouchesTest.h"
 
 enum
 {
@@ -26,6 +27,7 @@ enum
     TEST_MOTION_STREAK,
     TEST_DRAW_PRIMITIVES,
     TEST_COCOSNODE,
+    TEST_TOUCHES,
 //     TEST_TEXTURE2D,
 //     TEST_SPRITE,
 //     TEST_LAYER,
@@ -50,6 +52,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "MotionStreakTest",
     "DrawPrimitivesTest",
     "CocosNodeTest",
+    "TouchesTest",
 //     "Texture2dTest",
 //     "SpriteTest",
 //     "LayerTest",

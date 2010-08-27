@@ -449,6 +449,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="TouchesTest"
+				>
+				<File
+					RelativePath=".\tests\TouchesTest\Ball.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\TouchesTest\Ball.h"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\TouchesTest\Paddle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\TouchesTest\Paddle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\TouchesTest\TouchesTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\TouchesTest\TouchesTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

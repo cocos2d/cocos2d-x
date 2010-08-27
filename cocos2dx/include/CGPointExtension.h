@@ -186,47 +186,47 @@ ccpLengthSQ(const CGPoint v)
  @return CGFloat
  @since v0.7.2
  */
-CGFloat ccpLength(const CGPoint v);
+CGFloat CCX_DLL ccpLength(const CGPoint v);
 
 /** Calculates the distance between two points
  @return CGFloat
  @since v0.7.2
  */
-CGFloat ccpDistance(const CGPoint v1, const CGPoint v2);
+CGFloat CCX_DLL ccpDistance(const CGPoint v1, const CGPoint v2);
 
 /** Returns point multiplied to a length of 1.
  @return CGPoint
  @since v0.7.2
  */
-CGPoint ccpNormalize(const CGPoint v);
+CGPoint CCX_DLL ccpNormalize(const CGPoint v);
 
 /** Converts radians to a normalized vector.
  @return CGPoint
  @since v0.7.2
  */
-CGPoint ccpForAngle(const CGFloat a);
+CGPoint CCX_DLL ccpForAngle(const CGFloat a);
 
 /** Converts a vector to radians.
  @return CGFloat
  @since v0.7.2
  */
-CGFloat ccpToAngle(const CGPoint v);
+CGFloat CCX_DLL ccpToAngle(const CGPoint v);
 
 
 /** Clamp a value between from and to.
  @since v0.99.1
  */
-float clampf(float value, float min_inclusive, float max_inclusive);
+float CCX_DLL clampf(float value, float min_inclusive, float max_inclusive);
 
 /** Clamp a point between from and to.
  @since v0.99.1
  */
-CGPoint ccpClamp(CGPoint p, CGPoint from, CGPoint to);
+CGPoint CCX_DLL ccpClamp(CGPoint p, CGPoint from, CGPoint to);
 
 /** Quickly convert CGSize to a CGPoint
  @since v0.99.1
  */
-CGPoint ccpFromSize(CGSize s);
+CGPoint CCX_DLL ccpFromSize(CGSize s);
 
 /** Run a math operation function on each point component
  * absf, fllorf, ceilf, roundf
@@ -235,7 +235,7 @@ CGPoint ccpFromSize(CGSize s);
  * ccpCompOp(p,floorf);
  @since v0.99.1
  */
-CGPoint ccpCompOp(CGPoint p, float (*opFunc)(float));
+CGPoint CCX_DLL ccpCompOp(CGPoint p, float (*opFunc)(float));
 
 /** Linear Interpolation between two points a and b
  @returns
@@ -244,30 +244,30 @@ CGPoint ccpCompOp(CGPoint p, float (*opFunc)(float));
 	otherwise a value between a..b
  @since v0.99.1
  */
-CGPoint ccpLerp(CGPoint a, CGPoint b, float alpha);
+CGPoint CCX_DLL ccpLerp(CGPoint a, CGPoint b, float alpha);
 
 
 /** @returns if points have fuzzy equality which means equal with some degree of variance.
  @since v0.99.1
  */
-bool ccpFuzzyEqual(CGPoint a, CGPoint b, float variance);
+bool CCX_DLL ccpFuzzyEqual(CGPoint a, CGPoint b, float variance);
 
 
 /** Multiplies a nd b components, a.x*b.x, a.y*b.y
  @returns a component-wise multiplication
  @since v0.99.1
  */
-CGPoint ccpCompMult(CGPoint a, CGPoint b);
+CGPoint CCX_DLL ccpCompMult(CGPoint a, CGPoint b);
 
 /** @returns the signed angle in radians between two vector directions
  @since v0.99.1
  */
-float ccpAngleSigned(CGPoint a, CGPoint b);
+float CCX_DLL ccpAngleSigned(CGPoint a, CGPoint b);
 
 /** @returns the angle in radians between two vector directions
  @since v0.99.1
 */
-float ccpAngle(CGPoint a, CGPoint b);
+float CCX_DLL ccpAngle(CGPoint a, CGPoint b);
 
 /** Rotates a point counter clockwise by the angle around a pivot
  @param v is the point to rotate
@@ -276,7 +276,7 @@ float ccpAngle(CGPoint a, CGPoint b);
  @returns the rotated point
  @since v0.99.1
  */
-CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
+CGPoint CCX_DLL ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
 
 /** A general line-line intersection test
  @param p1 
@@ -299,7 +299,7 @@ CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
 	the hit point also is	p1 + s * (p2 - p1);
  @since v0.99.1
  */
-bool ccpLineIntersect(CGPoint p1, CGPoint p2, 
+bool CCX_DLL ccpLineIntersect(CGPoint p1, CGPoint p2, 
 					  CGPoint p3, CGPoint p4,
 					  float *s, float *t);
 

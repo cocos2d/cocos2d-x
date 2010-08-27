@@ -1,5 +1,6 @@
 #include "tests.h"
 #include "controller.h"
+#include "testResource.h"
 
 #define LINE_SPACE          30
 
@@ -36,6 +37,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new DrawPrimitivesTestScene(); break;
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
+    case TEST_TOUCHES:
+        pScene = new PongScene(); break;
     default:
         break;
     }
@@ -46,10 +49,7 @@ static TestScene* CreateTestScene(int nIdx)
 TestController::TestController()
 {
     // add close menu
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
-                                                        "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/close.png",
-                                                        "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/close.png",
-                                                        this, menu_selector(TestController::closeCallback) );
+    CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
 
     CGSize s = CCDirector::getSharedDirector()->getWinSize();

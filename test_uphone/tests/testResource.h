@@ -21,8 +21,8 @@ static const char s_snow[]          = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Imag
 static const char s_streak[]        = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/streak.png";
 static const char s_PlayNormal[]    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/btn-play-normal.png";
 static const char s_PlaySelect[]    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/btn-play-selected.png";
-// static const char s_star1_scale[]   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars.png";
-// static const char s_star2_scale[]   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/stars2.png";
-// static const char s_fire_scale[]    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/fire.png";
+static const char s_Ball[]          = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/ball.png";
+static const char s_Paddle[]        = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/paddle.png";
+static const char s_pPathClose[]    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/close.png";
 
 #endif
