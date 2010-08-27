@@ -126,137 +126,141 @@ namespace cocos2d {
 
 	bool CCParticleSystem::initWithDictionary(std::map<std::string, void*> *dictionary)
 	{
-		int maxParticles = atoi(valueForKey("maxParticles", dictionary));
-		// self, not super
-		if(this->initWithTotalParticles(maxParticles))
+		bool bRet = false;
+		unsigned char *buffer = NULL;
+		unsigned char *deflated = NULL;
+		UIImage *image = NULL;
+		do 
 		{
-			// angle
-			m_fAngle = (float)atof(valueForKey("angle", dictionary));
-			m_fAngleVar = (float)atof(valueForKey("angleVariance", dictionary));
-
-			// duration
-			m_fDuration = (float)atof(valueForKey("duration", dictionary));
-
-			// blend function 
-			m_tBlendFunc.src = atoi(valueForKey("blendFuncSource", dictionary));
-			m_tBlendFunc.dst = atoi(valueForKey("blendFuncDestination", dictionary));
-
-			// color
-			m_tStartColor.r = (float)atof(valueForKey("startColorRed", dictionary));
-			m_tStartColor.g = (float)atof(valueForKey("startColorGreen", dictionary));
-			m_tStartColor.b = (float)atof(valueForKey("startColorBlue", dictionary));
-			m_tStartColor.a = (float)atof(valueForKey("startColorAlpha", dictionary));
-
-			m_tStartColorVar.r = (float)atof(valueForKey("startColorVarianceRed", dictionary));
-			m_tStartColorVar.g = (float)atof(valueForKey("startColorVarianceGreen", dictionary));
-			m_tStartColorVar.b = (float)atof(valueForKey("startColorVarianceBlue", dictionary));
-			m_tStartColorVar.a = (float)atof(valueForKey("startColorVarianceAlpha", dictionary));
-
-			m_tEndColor.r = (float)atof(valueForKey("finishColorRed", dictionary));
-			m_tEndColor.g = (float)atof(valueForKey("finishColorGreen", dictionary));
-			m_tEndColor.b = (float)atof(valueForKey("finishColorBlue", dictionary));
-			m_tEndColor.a = (float)atof(valueForKey("finishColorAlpha", dictionary));
-
-			m_tEndColorVar.r = (float)atof(valueForKey("finishColorVarianceRed", dictionary));
-			m_tEndColorVar.g = (float)atof(valueForKey("finishColorVarianceGreen", dictionary));
-			m_tEndColorVar.b = (float)atof(valueForKey("finishColorVarianceBlue", dictionary));
-			m_tEndColorVar.a = (float)atof(valueForKey("finishColorVarianceAlpha", dictionary));
-
-			// particle size
-			m_fStartSize = (float)atof(valueForKey("startParticleSize", dictionary));
-			m_fStartSizeVar = (float)atof(valueForKey("startParticleSizeVariance", dictionary));
-			m_fEndSize = (float)atof(valueForKey("finishParticleSize", dictionary));
-			m_fEndSizeVar = (float)atof(valueForKey("finishParticleSizeVariance", dictionary));
-
-			// position
-			m_tPosition.x = (float)atof(valueForKey("sourcePositionx", dictionary));
-			m_tPosition.y = (float)atof(valueForKey("sourcePositiony", dictionary));
-			m_tPosVar.x = (float)atof(valueForKey("sourcePositionVariancex", dictionary));
-			m_tPosVar.y = (float)atof(valueForKey("sourcePositionVariancey", dictionary));
-
-			m_nEmitterMode = atoi(valueForKey("emitterType", dictionary));
-
-			// Mode A: Gravity + tangential accel + radial accel
-			if( m_nEmitterMode == kCCParticleModeGravity ) 
+			int maxParticles = atoi(valueForKey("maxParticles", dictionary));
+			// self, not super
+			if(this->initWithTotalParticles(maxParticles))
 			{
-				// gravity
-				modeA.gravity.x = (float)atof(valueForKey("gravityx", dictionary));
-				modeA.gravity.y = (float)atof(valueForKey("gravityy", dictionary));
+				// angle
+				m_fAngle = (float)atof(valueForKey("angle", dictionary));
+				m_fAngleVar = (float)atof(valueForKey("angleVariance", dictionary));
 
-				// speed
-				modeA.speed = (float)atof(valueForKey("speed", dictionary));
-				modeA.speedVar = (float)atof(valueForKey("speedVariance", dictionary));
+				// duration
+				m_fDuration = (float)atof(valueForKey("duration", dictionary));
 
-				// radial acceleration
-				modeA.radialAccel = (float)atof(valueForKey("radialAcceleration", dictionary));
-				modeA.radialAccelVar = (float)atof(valueForKey("radialAccelVariance", dictionary));
+				// blend function 
+				m_tBlendFunc.src = atoi(valueForKey("blendFuncSource", dictionary));
+				m_tBlendFunc.dst = atoi(valueForKey("blendFuncDestination", dictionary));
 
-				// tangential acceleration
-				modeA.tangentialAccel = (float)atof(valueForKey("tangentialAcceleration", dictionary));
-				modeA.tangentialAccelVar = (float)atof(valueForKey("tangentialAccelVariance", dictionary));
-			}
+				// color
+				m_tStartColor.r = (float)atof(valueForKey("startColorRed", dictionary));
+				m_tStartColor.g = (float)atof(valueForKey("startColorGreen", dictionary));
+				m_tStartColor.b = (float)atof(valueForKey("startColorBlue", dictionary));
+				m_tStartColor.a = (float)atof(valueForKey("startColorAlpha", dictionary));
 
-			// or Mode B: radius movement
-			else if( m_nEmitterMode == kCCParticleModeRadius ) 
-			{
-				modeB.startRadius = (float)atof(valueForKey("maxRadius", dictionary));
-				modeB.startRadiusVar = (float)atof(valueForKey("maxRadiusVariance", dictionary));
-				modeB.endRadius = (float)atof(valueForKey("minRadius", dictionary));
-				modeB.endRadiusVar = 0;
-				modeB.rotatePerSecond = (float)atof(valueForKey("rotatePerSecond", dictionary));
-				modeB.rotatePerSecondVar = (float)atof(valueForKey("rotatePerSecondVariance", dictionary));
+				m_tStartColorVar.r = (float)atof(valueForKey("startColorVarianceRed", dictionary));
+				m_tStartColorVar.g = (float)atof(valueForKey("startColorVarianceGreen", dictionary));
+				m_tStartColorVar.b = (float)atof(valueForKey("startColorVarianceBlue", dictionary));
+				m_tStartColorVar.a = (float)atof(valueForKey("startColorVarianceAlpha", dictionary));
 
-			} else {
-				NSAssert( false, "Invalid emitterType in config file");
-			}
+				m_tEndColor.r = (float)atof(valueForKey("finishColorRed", dictionary));
+				m_tEndColor.g = (float)atof(valueForKey("finishColorGreen", dictionary));
+				m_tEndColor.b = (float)atof(valueForKey("finishColorBlue", dictionary));
+				m_tEndColor.a = (float)atof(valueForKey("finishColorAlpha", dictionary));
 
-			// life span
-			m_fLife = (float)atof(valueForKey("particleLifespan", dictionary));
-			m_fLifeVar = (float)atof(valueForKey("particleLifespanVariance", dictionary));
+				m_tEndColorVar.r = (float)atof(valueForKey("finishColorVarianceRed", dictionary));
+				m_tEndColorVar.g = (float)atof(valueForKey("finishColorVarianceGreen", dictionary));
+				m_tEndColorVar.b = (float)atof(valueForKey("finishColorVarianceBlue", dictionary));
+				m_tEndColorVar.a = (float)atof(valueForKey("finishColorVarianceAlpha", dictionary));
 
-			// emission Rate
-			m_fEmissionRate = m_nTotalParticles / m_fLife;
+				// particle size
+				m_fStartSize = (float)atof(valueForKey("startParticleSize", dictionary));
+				m_fStartSizeVar = (float)atof(valueForKey("startParticleSizeVariance", dictionary));
+				m_fEndSize = (float)atof(valueForKey("finishParticleSize", dictionary));
+				m_fEndSizeVar = (float)atof(valueForKey("finishParticleSizeVariance", dictionary));
 
-			// texture		
-			// Try to get the texture from the cache
-			char *textureName = (char *)valueForKey("textureFileName", dictionary);
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(textureName);
+				// position
+				m_tPosition.x = (float)atof(valueForKey("sourcePositionx", dictionary));
+				m_tPosition.y = (float)atof(valueForKey("sourcePositiony", dictionary));
+				m_tPosVar.x = (float)atof(valueForKey("sourcePositionVariancex", dictionary));
+				m_tPosVar.y = (float)atof(valueForKey("sourcePositionVariancey", dictionary));
 
-			// if it fails, try to get it from the base64-gzipped data			
-			if ( ! m_pTexture )
-			{
-				std::map<std::string, void*>::iterator it = dictionary->find("textureImageData");
-				unsigned char *textureData = NULL;
-				unsigned int dataLen = 0;
-				if( it != dictionary->end() )
+				m_nEmitterMode = atoi(valueForKey("emitterType", dictionary));
+
+				// Mode A: Gravity + tangential accel + radial accel
+				if( m_nEmitterMode == kCCParticleModeGravity ) 
 				{
-					std::string *str = (std::string*)(it->second);
-					textureData = (unsigned char *)str->c_str();
-					dataLen = str->length();
+					// gravity
+					modeA.gravity.x = (float)atof(valueForKey("gravityx", dictionary));
+					modeA.gravity.y = (float)atof(valueForKey("gravityy", dictionary));
+
+					// speed
+					modeA.speed = (float)atof(valueForKey("speed", dictionary));
+					modeA.speedVar = (float)atof(valueForKey("speedVariance", dictionary));
+
+					// radial acceleration
+					modeA.radialAccel = (float)atof(valueForKey("radialAcceleration", dictionary));
+					modeA.radialAccelVar = (float)atof(valueForKey("radialAccelVariance", dictionary));
+
+					// tangential acceleration
+					modeA.tangentialAccel = (float)atof(valueForKey("tangentialAcceleration", dictionary));
+					modeA.tangentialAccelVar = (float)atof(valueForKey("tangentialAccelVariance", dictionary));
 				}
-				if(textureData)
+
+				// or Mode B: radius movement
+				else if( m_nEmitterMode == kCCParticleModeRadius ) 
 				{
-					unsigned char *buffer = NULL;
-					int decodeLen = base64Decode(textureData, dataLen, &buffer);
-					NSAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+					modeB.startRadius = (float)atof(valueForKey("maxRadius", dictionary));
+					modeB.startRadiusVar = (float)atof(valueForKey("maxRadiusVariance", dictionary));
+					modeB.endRadius = (float)atof(valueForKey("minRadius", dictionary));
+					modeB.endRadiusVar = 0;
+					modeB.rotatePerSecond = (float)atof(valueForKey("rotatePerSecond", dictionary));
+					modeB.rotatePerSecondVar = (float)atof(valueForKey("rotatePerSecondVariance", dictionary));
 
-					unsigned char *deflated = NULL;
-					int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
-					free( buffer );
+				} else {
+					NSAssert( false, "Invalid emitterType in config file");
+					CCX_BREAK_IF(true);
+				}
 
-					NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
-					UIImage *image = new UIImage();
-					NSAssert(image->initWithData(deflated, deflatedLen), "CCParticleSystem: error init image with Data");
-					
-					m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, textureName);
-					delete [] deflated;
-					delete image;
+				// life span
+				m_fLife = (float)atof(valueForKey("particleLifespan", dictionary));
+				m_fLifeVar = (float)atof(valueForKey("particleLifespanVariance", dictionary));
+
+				// emission Rate
+				m_fEmissionRate = m_nTotalParticles / m_fLife;
+
+				// texture		
+				// Try to get the texture from the cache
+				char *textureName = (char *)valueForKey("textureFileName", dictionary);
+				this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(textureName);
+
+				// if it fails, try to get it from the base64-gzipped data			
+				if ( ! m_pTexture )
+				{
+					char *textureData = (char *)valueForKey("textureImageData", dictionary);
+					int dataLen = strlen(textureData);
+					if(dataLen != 0)
+					{
+						int decodeLen = base64Decode((unsigned char*)textureData, dataLen, &buffer);
+						NSAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+						CCX_BREAK_IF(!buffer);
+
+						int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+						NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
+						CCX_BREAK_IF(!deflated);
+						
+						image = new UIImage();
+						bool isOK = image->initWithData(deflated, deflatedLen);
+						NSAssert(isOK, "CCParticleSystem: error init image with Data");
+						CCX_BREAK_IF(!isOK);
+						
+						m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, textureName);
+					}
 				}
 				NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
-				return true;
+				CCX_BREAK_IF(!m_pTexture);
+				bRet = true;
 			}
-		}
-		return false;
+		} while (0);
+		free( buffer );
+		delete [] deflated;
+		delete image;
+		return bRet;
 	}
 	bool CCParticleSystem::initWithTotalParticles(int numberOfParticles)
 	{
