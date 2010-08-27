@@ -34,9 +34,9 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-void startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
-void endElement(void *ctx, const xmlChar *name);
-void characters(void *ctx, const xmlChar *ch, int len);
+void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
+void plist_endElement(void *ctx, const xmlChar *name);
+void plist_characters(void *ctx, const xmlChar *ch, int len);
 
 typedef std::pair<std::string, void*> Pair;
 typedef enum 
@@ -90,9 +90,9 @@ public:
 		memset( &saxHandler, 0, sizeof(saxHandler) );
 		// Using xmlSAXVersion( &saxHandler, 2 ) generate crash as it sets plenty of other pointers...
 		saxHandler.initialized = XML_SAX2_MAGIC;  // so we do this to force parsing as SAX2.
- 		saxHandler.startElement = &startElement;
- 		saxHandler.endElement = &endElement;
- 		saxHandler.characters = &characters;
+ 		saxHandler.startElement = &plist_startElement;
+ 		saxHandler.endElement = &plist_endElement;
+ 		saxHandler.characters = &plist_characters;
 
 		int result = xmlSAXUserParseMemory( &saxHandler, this, buffer, size );
 		if ( result != 0 )
@@ -111,7 +111,7 @@ public:
 		return m_pRootDict;
 	}
 };
-void startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
+void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 {
 	CCDictMaker *pMaker = static_cast<CCDictMaker*>(ctx);
 	std::string sName((char*)name);
@@ -153,7 +153,7 @@ void startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 		pMaker->m_tState = SAX_NONE;
 	}
 }
-void endElement(void *ctx, const xmlChar *name)
+void plist_endElement(void *ctx, const xmlChar *name)
 {
 	CCDictMaker * pMaker = static_cast<CCDictMaker*>(ctx);
 	std::string sName((char*)name);
@@ -167,7 +167,7 @@ void endElement(void *ctx, const xmlChar *name)
 	}
 	pMaker->m_tState = SAX_NONE;
 }
-void characters(void *ctx, const xmlChar *ch, int len)
+void plist_characters(void *ctx, const xmlChar *ch, int len)
 {
  	CCDictMaker * pMaker = static_cast<CCDictMaker*>(ctx);
 	if (pMaker->m_tState == SAX_NONE)
