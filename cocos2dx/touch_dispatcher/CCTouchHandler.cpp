@@ -69,7 +69,7 @@ CCTouchHandler* CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int
 {
 	assert(pDelegate != NULL);
 
-	m_pDelegate = pDelegate;
+	m_pDelegate = pDelegate; pDelegate->keep();
 	m_nPriority = nPriority;
 	m_nEnabledSelectors = 0;
 
@@ -78,7 +78,7 @@ CCTouchHandler* CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int
 
 CCTouchHandler::~CCTouchHandler(void)
 {
-	m_pDelegate->release();
+    m_pDelegate->destroy();
 }
 
 // implementation of CCStandardTouchHandler
