@@ -36,6 +36,9 @@ namespace cocos2d {
 	*/
 	class CCX_DLL CCParallaxNode : public CCNode 
 	{
+		/** array that holds the offset / ratio of the children */
+		CCX_SYNTHESIZE(ccArray *, m_pParallaxArray, ParallaxArray)
+
 	public:
 		/** Adds a child to the container with a z-order, a parallax ratio and a position offset
 		It returns self, so you can chain several addChilds.
@@ -53,8 +56,6 @@ namespace cocos2d {
 	private:
 		CGPoint absolutePosition();
 	protected:
-		/** array that holds the offset / ratio of the children */
-		ccArray *m_pParallaxArray;
 		CGPoint	m_tLastPosition;
 	};
 

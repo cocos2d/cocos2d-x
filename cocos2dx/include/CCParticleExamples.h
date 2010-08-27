@@ -44,6 +44,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -64,6 +65,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -84,6 +86,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -104,6 +107,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -124,6 +128,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -144,6 +149,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -164,6 +170,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -184,6 +191,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -204,6 +212,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -224,6 +233,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
@@ -244,6 +254,7 @@ namespace cocos2d {
 				pRet->autorelease();
 				return pRet;
 			}
+			CCX_SAFE_DELETE(pRet)
 			return NULL;
 		}
 	};
