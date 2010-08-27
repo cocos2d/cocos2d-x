@@ -33,9 +33,9 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	void startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
-	void endElement(void *ctx, const xmlChar *name);
-	void characters(void *ctx, const xmlChar *ch, int len);
+	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
+	void tmx_endElement(void *ctx, const xmlChar *name);
+	void tmx_characters(void *ctx, const xmlChar *ch, int len);
 	const char * valueForKey(std::string key, StringToStringDictionary dict);
 
 	// implementation CCTMXLayerInfo
@@ -141,9 +141,9 @@ namespace cocos2d {
 		memset( &saxHandler, 0, sizeof(saxHandler) );
 		// Using xmlSAXVersion( &saxHandler, 2 ) generate crash as it sets plenty of other pointers...
 		saxHandler.initialized = XML_SAX2_MAGIC;  // so we do this to force parsing as SAX2.
-		saxHandler.startElement = &startElement;
-		saxHandler.endElement = &endElement;
-		saxHandler.characters = &characters;
+		saxHandler.startElement = &tmx_startElement;
+		saxHandler.endElement = &tmx_endElement;
+		saxHandler.characters = &tmx_characters;
 		
 		int result = xmlSAXUserParseMemory( &saxHandler, this, buffer, size );
 		if ( result != 0 )
@@ -182,7 +182,7 @@ namespace cocos2d {
 
 	}
 	// the XML parser calls here with all the elements
-	void startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
+	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 	{	
 		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
 		std::string elementName = (char*)name;
@@ -424,7 +424,7 @@ namespace cocos2d {
 		}
 	}
 
-	void endElement(void *ctx, const xmlChar *name)
+	void tmx_endElement(void *ctx, const xmlChar *name)
 	{
 		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
 		std::string elementName = (char*)name;
@@ -489,7 +489,7 @@ namespace cocos2d {
 			pTMXMapInfo->setParentElement(TMXPropertyNone);
 		}
 	}
-	void characters(void *ctx, const xmlChar *ch, int len)
+	void tmx_characters(void *ctx, const xmlChar *ch, int len)
 	{
 		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
 		std::string pText((char*)ch,0,len);
