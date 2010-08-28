@@ -176,8 +176,12 @@ void TestController::updateItemsText()
         if (nIdx < TESTS_COUNT)
         {
             std::string menuText = g_aTestNames[nIdx];
-            m_pMenuItems[i]->setString(menuText.c_str());
-            m_pMenuItems[i]->setIsVisible(true);
+
+            if (! menuText.empty())
+            {
+                m_pMenuItems[i]->setString(menuText.c_str());
+                m_pMenuItems[i]->setIsVisible(true);
+            }
         }
     }
 }
