@@ -227,7 +227,7 @@ namespace cocos2d{
                     break;
                 }
                 
-				(*it)->setPosition(ccp(0, (*it)->getContentSize().height * (*it)->getScaleY() / 2.0f));
+				(*it)->setPosition(ccp(0, y - (*it)->getContentSize().height * (*it)->getScaleY() / 2.0f));
 				y -= (*it)->getContentSize().height * (*it)->getScaleY() + padding;
 			}
 		}
