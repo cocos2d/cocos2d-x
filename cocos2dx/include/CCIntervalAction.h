@@ -138,6 +138,30 @@ protected:
 	CCFiniteTimeAction *m_pOther;
 };
 
+/** Repeats an action for ever.
+To repeat the an action for a limited number of times use the Repeat action.
+@warning This action can't be Sequenceable because it is not an IntervalAction
+*/
+class CCX_DLL CCRepeatForever : public CCIntervalAction
+{
+public:
+	CCRepeatForever(){}
+	virtual ~CCRepeatForever();
+
+	CCRepeatForever* initWithAction(CCIntervalAction *pAction);
+	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual void startWithTarget(CCNode* pTarget);
+	virtual void step(ccTime dt);
+	virtual bool isDone(void);
+	virtual CCIntervalAction* reverse(void);
+
+public:
+	static CCRepeatForever* actionWithAction(CCIntervalAction *pAction);
+
+protected:
+	CCIntervalAction *m_pOther;
+};
+
 /** Spawn a new action immediately
  */
 class CCX_DLL CCSpawn : public CCIntervalAction
