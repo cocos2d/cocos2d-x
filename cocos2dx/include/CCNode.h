@@ -99,7 +99,7 @@ Camera:
 - Each node has a camera. By default it points to the center of the CCNode.
 */ 
 
-class CCX_DLL CCNode : public NSObject, public SelectorProtocol
+class CCX_DLL CCNode : public SelectorProtocol, public NSObject
 {
 
 	// variable property
