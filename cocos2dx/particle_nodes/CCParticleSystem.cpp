@@ -258,7 +258,7 @@ namespace cocos2d {
 			}
 		} while (0);
 		CCX_SAFE_FREE(buffer);
-		if(!deflated)
+		if(deflated)
 		{
 			delete [] deflated;
 		}
