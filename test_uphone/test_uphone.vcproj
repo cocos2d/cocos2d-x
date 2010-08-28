@@ -477,6 +477,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="MenuTest"
+				>
+				<File
+					RelativePath=".\tests\MenuTest\MenuTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\MenuTest\MenuTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
