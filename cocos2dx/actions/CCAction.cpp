@@ -77,7 +77,7 @@ NSObject* CCAction::copyWithZone(NSZone *pZone)
 	return pRet;
 }
 
-void CCAction::startWithTarget(NSObject *aTarget)
+void CCAction::startWithTarget(CCNode *aTarget)
 {
 	m_pOriginalTarget = m_pTarget = aTarget;
 }
@@ -157,7 +157,7 @@ NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 	return pRet;
 }
 
-void CCRepeatForever::startWithTarget(NSObject* pTarget)
+void CCRepeatForever::startWithTarget(CCNode* pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_pOther->startWithTarget(pTarget);
@@ -263,14 +263,14 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 	}
 	else
 	{
-        pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pRepeat->copy()->autorelease()) , m_fSpeed );
+        pRet->initWithAction( dynamic_cast<CCRepeatForever*>(m_pRepeat->copy()->autorelease()) , m_fSpeed );
 	}
 	
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 
-void CCSpeed::startWithTarget(NSObject* pTarget)
+void CCSpeed::startWithTarget(CCNode* pTarget)
 {
 	__super::startWithTarget(pTarget);
 	if (m_pOther)

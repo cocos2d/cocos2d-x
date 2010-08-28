@@ -36,7 +36,7 @@ namespace cocos2d
 	{
 	public:
 		virtual NSObject* copyWithZone(NSZone* pZone);
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCIntervalAction* reverse(void);
 
 		/** initializes the action with size and duration */
@@ -88,7 +88,7 @@ namespace cocos2d
 		virtual ~CCAccelDeccelAmplitude(void);
 		bool initWithAction(CCAction *pAction, ccTime duration);
 
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
         virtual CCIntervalAction* reverse(void);
 
@@ -110,7 +110,7 @@ namespace cocos2d
 		~CCAccelAmplitude(void);
 		bool initWithAction(CCAction *pAction, ccTime duration);
 
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
         virtual CCIntervalAction* reverse(void);
 
@@ -129,7 +129,7 @@ namespace cocos2d
 		~CCDeccelAmplitude(void);
 		bool initWithAction(CCAction *pAction, ccTime duration);
 
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
         virtual CCIntervalAction* reverse(void);
 
@@ -149,7 +149,7 @@ namespace cocos2d
 	class CCX_DLL CCStopGrid : public CCInstantAction
 	{
 	public:
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 
 	public:
 		static CCStopGrid* action(void);
@@ -161,7 +161,7 @@ namespace cocos2d
 	public:
         bool initWithTimes(int times);
 
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 
 	public:
 		static CCReuseGrid* actionWithTimes(int times);

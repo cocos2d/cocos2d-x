@@ -65,7 +65,7 @@ public:
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void step(ccTime dt);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual CCIntervalAction* reverse(void);
 
 public:
@@ -93,7 +93,7 @@ public:
     bool initOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
@@ -122,7 +122,7 @@ public:
 	bool initWithAction(CCFiniteTimeAction *pAction, unsigned int times);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
 	virtual bool isDone(void);
@@ -149,7 +149,7 @@ public:
 	bool initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
@@ -177,7 +177,7 @@ public:
 	bool initWithDuration(ccTime duration, float fDeltaAngle);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:
@@ -199,7 +199,7 @@ public:
     bool initWithDuration(ccTime duration, float fDeltaAngle);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
 
@@ -221,7 +221,7 @@ public:
 	bool initWithDuration(ccTime duration, CGPoint position);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:
@@ -245,7 +245,7 @@ public:
 	bool initWithDuration(ccTime duration, CGPoint position);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual CCIntervalAction* reverse(void);
 
 public:
@@ -262,7 +262,7 @@ public:
 	bool initWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
 
@@ -282,7 +282,7 @@ protected:
 class CCX_DLL CCJumpTo : public CCJumpBy
 {
 public:
-    virtual void startWithTarget(NSObject *pTarget);
+    virtual void startWithTarget(CCNode *pTarget);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
@@ -309,7 +309,7 @@ public:
 	bool initWithDuration(ccTime t, ccBezierConfig c);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
 
@@ -328,7 +328,7 @@ protected:
 class CCX_DLL CCBezierTo : public CCBezierBy
 {
 public:
-    virtual void startWithTarget(NSObject *pTarget);
+    virtual void startWithTarget(CCNode *pTarget);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
@@ -348,7 +348,7 @@ public:
 	bool initWithDuration(ccTime duration, float sx, float sy);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:
@@ -373,7 +373,7 @@ protected:
 class CCX_DLL CCScaleBy : public CCScaleTo
 {
 public:
-    virtual void startWithTarget(NSObject *pTarget);
+    virtual void startWithTarget(CCNode *pTarget);
 	virtual CCIntervalAction* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
@@ -442,7 +442,7 @@ public:
 	bool initWithDuration(ccTime duration, GLubyte opacity);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:
@@ -465,7 +465,7 @@ public:
 	bool initWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:
@@ -487,7 +487,7 @@ public:
 	bool initWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
 
@@ -534,7 +534,7 @@ public:
     bool initWithAction(CCFiniteTimeAction *pAction);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);
@@ -575,7 +575,7 @@ public:
 	bool initWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);

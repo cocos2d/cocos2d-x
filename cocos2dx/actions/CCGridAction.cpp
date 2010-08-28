@@ -59,7 +59,7 @@ namespace cocos2d
 		return false;
 	}
 
-	void CCGridAction::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCGridAction::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 
@@ -217,7 +217,7 @@ namespace cocos2d
 		CCX_SAFE_RELEASE(m_pOther);
 	}
 
-	void CCAccelDeccelAmplitude::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCAccelDeccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
@@ -280,7 +280,7 @@ namespace cocos2d
 		CCX_SAFE_DELETE(m_pOther);
 	}
 
-	void CCAccelAmplitude::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCAccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
@@ -336,7 +336,7 @@ namespace cocos2d
 		CCX_SAFE_RELEASE(m_pOther);
 	}
 
-	void CCDeccelAmplitude::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCDeccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
@@ -355,7 +355,7 @@ namespace cocos2d
 
 	// implementation of StopGrid
 
-	void CCStopGrid::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCStopGrid::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 
@@ -401,7 +401,7 @@ namespace cocos2d
 		return true;
 	}
 
-	void CCReuseGrid::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCReuseGrid::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 

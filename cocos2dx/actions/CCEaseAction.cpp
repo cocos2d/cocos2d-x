@@ -101,7 +101,7 @@ namespace cocos2d {
 		CCX_SAFE_RELEASE(m_pOther);
 	}
 
-	void CCEaseAction::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCEaseAction::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		m_pOther->startWithTarget(m_pTarget);

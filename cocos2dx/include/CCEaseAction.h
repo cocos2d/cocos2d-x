@@ -44,7 +44,7 @@ public:
     bool initWithAction(CCIntervalAction *pAction);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
 	virtual CCIntervalAction* reverse(void);

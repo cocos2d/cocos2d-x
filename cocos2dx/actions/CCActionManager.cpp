@@ -174,7 +174,7 @@ void CCActionManager::resumeTarget(NSObject *pTarget)
 
 // run
 
-void CCActionManager::addAction(cocos2d::CCAction *pAction, NSObject *pTarget, bool paused)
+void CCActionManager::addAction(cocos2d::CCAction *pAction, CCNode *pTarget, bool paused)
 {
 	assert(pAction != NULL);
 	assert(pTarget != NULL);

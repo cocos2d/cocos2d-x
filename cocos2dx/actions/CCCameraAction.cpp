@@ -29,7 +29,7 @@ namespace cocos2d{
 	//
 	// CameraAction
 	//
-	void CCCameraAction::startWithTarget(NSObject *pTarget)
+	void CCCameraAction::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		
@@ -92,7 +92,7 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	void CCOrbitCamera::startWithTarget(NSObject *pTarget)
+	void CCOrbitCamera::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		float r, zenith, azimuth;
