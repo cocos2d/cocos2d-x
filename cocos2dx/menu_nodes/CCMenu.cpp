@@ -285,8 +285,7 @@ namespace cocos2d{
 
 	void CCMenu::alignItemsInColumns(unsigned int columns, va_list args)
 	{
-        vector<unsigned int> rows;
-		columns = va_arg(args, unsigned int);
+		vector<unsigned int> rows;
 		while (columns)
 		{
 			rows.push_back(columns);
@@ -395,7 +394,6 @@ namespace cocos2d{
 	void CCMenu::alignItemsInRows(unsigned int rows, va_list args)
 	{
 		vector<unsigned int> columns;
-		rows = va_arg(args, unsigned int);
 		while (rows)
 		{
 			columns.push_back(rows);
