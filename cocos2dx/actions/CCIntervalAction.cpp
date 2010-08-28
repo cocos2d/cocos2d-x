@@ -424,6 +424,79 @@ CCIntervalAction* CCRepeat::reverse(void)
 }
 
 //
+// RepeatForever
+//
+CCRepeatForever::~CCRepeatForever()
+{
+	m_pOther->release();
+}
+CCRepeatForever *CCRepeatForever::actionWithAction(CCIntervalAction *pAction)
+{
+	CCRepeatForever *pRet = new CCRepeatForever();
+	if (pRet && pRet->initWithAction(pAction))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	CCX_SAFE_DELETE(pRet);
+	return NULL;
+}
+
+CCRepeatForever *CCRepeatForever::initWithAction(CCIntervalAction *pAction)
+{
+	pAction->retain();
+	m_pOther = pAction;
+	return this;
+}
+NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
+{
+	NSZone* pNewZone = NULL;
+	CCRepeatForever* pRet = NULL;
+	if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
+	{
+		pRet = (CCRepeatForever*)(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pRet = new CCRepeatForever();
+		pZone = pNewZone = new NSZone(pRet);
+	}
+	__super::copyWithZone(pZone);
+	// win32 : use the m_pOther's copy object.
+	pRet->initWithAction( (CCIntervalAction*)(m_pOther->copy()->autorelease()) ); 
+	CCX_SAFE_DELETE(pNewZone);
+	return pRet;
+}
+
+void CCRepeatForever::startWithTarget(CCNode* pTarget)
+{
+	__super::startWithTarget(pTarget);
+	m_pOther->startWithTarget(pTarget);
+}
+
+void CCRepeatForever::step(ccTime dt)
+{
+	m_pOther->step(dt);
+	if (m_pOther->isDone())
+	{
+		ccTime diff = dt + m_pOther->getDuration() - m_pOther->getElapsed();
+		m_pOther->startWithTarget(m_pTarget);
+		// to prevent jerk. issue #390
+		m_pOther->step(diff);
+	}
+}
+
+bool CCRepeatForever::isDone()
+{
+	return false;
+}
+
+CCIntervalAction *CCRepeatForever::reverse()
+{
+	return (CCIntervalAction*)(CCRepeatForever::actionWithAction(m_pOther->reverse()));
+}
+
+//
 // Spawn
 //
 CCFiniteTimeAction* CCSpawn::actions(cocos2d::CCFiniteTimeAction *pAction1, ...)

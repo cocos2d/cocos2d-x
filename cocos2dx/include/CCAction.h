@@ -118,29 +118,7 @@ protected:
 };
 
 class CCIntervalAction;
-/** Repeats an action for ever.
- To repeat the an action for a limited number of times use the Repeat action.
- @warning This action can't be Sequenceable because it is not an IntervalAction
- */
-class CCX_DLL CCRepeatForever : public CCAction
-{
-public:
-	CCRepeatForever(){}
-	virtual ~CCRepeatForever();
-
-	CCRepeatForever* initWithAction(CCIntervalAction *pAction);
-	virtual NSObject* copyWithZone(NSZone *pZone);
-	virtual void startWithTarget(CCNode* pTarget);
-	virtual void step(ccTime dt);
-	virtual bool isDone(void);
-	virtual CCIntervalAction* reverse(void);
-
-public:
-	static CCRepeatForever* actionWithAction(CCIntervalAction *pAction);
-
-protected:
-	CCIntervalAction *m_pOther;
-};
+class CCRepeatForever;
 
 /** Changes the speed of an action, making it take longer (speed>1)
  or less (speed<1) time.
@@ -159,7 +137,7 @@ public:
 
 	// initializes the action
 	CCSpeed* initWithAction(CCIntervalAction *pAction, float fRate);
-	CCSpeed* initWithAction(CCRepeatForever *pAction, float fRate);
+/*	CCSpeed* initWithAction(CCRepeatForever *pAction, float fRate);*/
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
@@ -171,12 +149,12 @@ public:
 public:
 	// creates the action
 	static CCSpeed* actionWithAction(CCIntervalAction *pAction, float fRate);
-	static CCSpeed* actionWithAction(CCRepeatForever *pAction, float fRate);
+	/*static CCSpeed* actionWithAction(CCRepeatForever *pAction, float fRate);*/
     
 protected:
 	float m_fSpeed;
 	CCIntervalAction *m_pOther;
-	CCRepeatForever *m_pRepeat;
+	/*CCRepeatForever *m_pRepeat;*/
 };
 
 /** CCFollow is an action that "follows" a node.
