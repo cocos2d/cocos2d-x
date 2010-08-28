@@ -13,6 +13,7 @@
 #include "DrawPrimitivesTest/DrawPrimitivesTest.h"
 #include "CocosNodeTest/CocosNodeTest.h"
 #include "TouchesTest/TouchesTest.h"
+#include "MenuTest/MenuTest.h"
 
 enum
 {
@@ -28,15 +29,7 @@ enum
     TEST_DRAW_PRIMITIVES,
     TEST_COCOSNODE,
     TEST_TOUCHES,
-//     TEST_TEXTURE2D,
-//     TEST_SPRITE,
-//     TEST_LAYER,
-//     TEST_SCENE,
-//     TEST_FONT,
-//     TEST_MENU,
-//     TEST_ACTIONS_MANAGER,
-//     TEST_INTERVAL,
-//     TEST_TOUCHES,
+    TEST_MENU,
     TESTS_COUNT,
 };
 
@@ -53,15 +46,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "DrawPrimitivesTest",
     "CocosNodeTest",
     "TouchesTest",
-//     "Texture2dTest",
-//     "SpriteTest",
-//     "LayerTest",
-//     "SceneTest",
-//     "FontTest",
-//     "MenuTest",
-//     "ActionManagerTest",
-//     "IntervalTest",
-//     "TouchesTest",
+    "MenuTest",
 };
 
 #endif

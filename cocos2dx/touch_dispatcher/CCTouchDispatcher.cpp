@@ -446,6 +446,10 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
  		for (iter = m_pHandlersToAdd->begin(); iter != m_pHandlersToAdd->end(); ++iter)
  		{
  			pHandler = *iter;
+            if (! pHandler)
+            {
+                break;
+            }
  			if (dynamic_cast<CCStandardTouchDelegate*>(pHandler->getDelegate()))
  			{
  				forceAddHandler(pHandler, m_pStandardHandlers);

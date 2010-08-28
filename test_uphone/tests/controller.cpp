@@ -39,6 +39,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
         pScene = new PongScene(); break;
+    case TEST_MENU:
+        pScene = new MenuTestScene(); break;
     default:
         break;
     }
