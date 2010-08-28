@@ -257,9 +257,12 @@ namespace cocos2d {
 				bRet = true;
 			}
 		} while (0);
-		free( buffer );
-		delete [] deflated;
-		delete image;
+		CCX_SAFE_FREE(buffer);
+		if(!deflated)
+		{
+			delete [] deflated;
+		}
+		CCX_SAFE_DELETE(image);
 		return bRet;
 	}
 	bool CCParticleSystem::initWithTotalParticles(int numberOfParticles)
