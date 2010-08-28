@@ -341,7 +341,7 @@ namespace cocos2d
 		setTile(pos, coords);
 	}
 
-	void CCShuffleTiles::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCShuffleTiles::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 
@@ -678,7 +678,7 @@ namespace cocos2d
 		setTile(pos, coords);
 	}
 
-	void CCTurnOffTiles::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCTurnOffTiles::startWithTarget(CCNode *pTarget)
 	{
 		int i;
 
@@ -939,7 +939,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCSplitRows::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCSplitRows::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		m_winSize = CCDirector::getSharedDirector()->getWinSize();
@@ -1016,7 +1016,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCSplitCols::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCSplitCols::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		m_winSize = CCDirector::getSharedDirector()->getWinSize();

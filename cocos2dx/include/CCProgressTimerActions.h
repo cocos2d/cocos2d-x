@@ -40,7 +40,7 @@ public:
 	bool initWithDuration(ccTime duration, float fPercent);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:
@@ -60,7 +60,7 @@ public:
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual CCIntervalAction* reverse(void);
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:

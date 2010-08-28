@@ -47,7 +47,7 @@ namespace cocos2d {
 		{}
 		virtual ~CCCameraAction(){}
 		// super methods
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCIntervalAction * reverse();
 	protected:
 		float m_fCenterXOrig;
@@ -79,7 +79,7 @@ namespace cocos2d {
 		void sphericalRadius(float *r, float *zenith, float *azimuth);
 		// super methods
 		virtual NSObject* copyWithZone(NSZone* pZone);
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
 
 	protected:

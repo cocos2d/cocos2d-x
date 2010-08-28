@@ -80,7 +80,7 @@ namespace cocos2d
 		ccGridSize getDelta(ccGridSize pos);
 		void placeTile(ccGridSize pos, Tile *t);
 
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 
@@ -160,7 +160,7 @@ namespace cocos2d
 		void turnOffTile(ccGridSize pos);
 
 		virtual NSObject* copyWithZone(NSZone* pZone);
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
 
 	public:
@@ -229,7 +229,7 @@ namespace cocos2d
 
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 
 	public:
 		static CCSplitRows* actionWithRows(int nRows, ccTime duration);
@@ -247,7 +247,7 @@ namespace cocos2d
 
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 
 	public:
 		static CCSplitCols* actionWithCols(int nCols, ccTime duration);

@@ -72,7 +72,7 @@ public:
 	 If the target is not present, a new instance of this target will be created either paused or paused, and the action will be added to the newly created target.
 	 When the target is paused, the queued actions won't be 'ticked'.
 	 */
-	void addAction(CCAction *pAction, NSObject *pTarget, bool paused);
+	void addAction(CCAction *pAction, CCNode *pTarget, bool paused);
 
     /** Removes all actions from all the targers.
     */

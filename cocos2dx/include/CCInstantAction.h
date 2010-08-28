@@ -56,7 +56,7 @@ namespace cocos2d {
 		CCShow(){}
 		virtual ~CCShow(){}
 		//super method
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
 	public:
 		//override static method
@@ -71,7 +71,7 @@ namespace cocos2d {
 		CCHide(){}
 		virtual ~CCHide(){}
 		//super method
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
 	public:
 		//override static method
@@ -86,7 +86,7 @@ namespace cocos2d {
 		CCToggleVisibility(){}
 		virtual ~CCToggleVisibility(){}
 		//super method
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 	public:
 		//override static method
 		static CCToggleVisibility * action();
@@ -104,7 +104,7 @@ namespace cocos2d {
 		static CCFlipX * actionWithFlipX(bool x);
 		CCFlipX * initWithFlipX(bool x);
 		//super method
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
 		virtual NSObject* copyWithZone(NSZone *pZone);
 
@@ -124,7 +124,7 @@ namespace cocos2d {
 		static CCFlipY * actionWithFlipY(bool y);
 		CCFlipY * initWithFlipY(bool y);
 		//super method
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
 		virtual NSObject* copyWithZone(NSZone *pZone);
 
@@ -144,7 +144,7 @@ namespace cocos2d {
 		/** Initializes a Place action with a position */
 		CCPlace * initWithPosition(CGPoint pos);
 		//super method
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		virtual NSObject* copyWithZone(NSZone *pZone);
 	protected:
 		CGPoint m_tPosition;
@@ -167,7 +167,7 @@ namespace cocos2d {
 		virtual CCCallFunc * initWithTarget(SelectorProtocol* pSelectorTarget);
 		virtual void execute();
 		//super method
-		virtual void startWithTarget(NSObject *pTarget);
+		virtual void startWithTarget(CCNode *pTarget);
 		NSObject * copyWithZone(cocos2d::NSZone *pZone);
 
 	protected:

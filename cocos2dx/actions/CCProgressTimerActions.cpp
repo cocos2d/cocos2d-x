@@ -74,7 +74,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCProgressTo::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCProgressTo::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		m_fFrom = dynamic_cast<kProgressTimerCast>(pTarget)->getPercentage();
@@ -144,7 +144,7 @@ namespace cocos2d
 		return CCProgressFromTo::actionWithDuration(m_fDuration, m_fTo, m_fFrom);
 	}
 
-	void CCProgressFromTo::startWithTarget(cocos2d::NSObject *pTarget)
+	void CCProgressFromTo::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 	}

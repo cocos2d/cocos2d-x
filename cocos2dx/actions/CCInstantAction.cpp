@@ -78,7 +78,7 @@ namespace cocos2d {
 		pRet->autorelease();
 		return pRet;
 	}
-	void CCShow::startWithTarget(NSObject *pTarget)
+	void CCShow::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		dynamic_cast<CCNode*>(pTarget)->setIsVisible(true);
@@ -96,7 +96,7 @@ namespace cocos2d {
 		pRet->autorelease();
 		return pRet;
 	}
-	void CCHide::startWithTarget(NSObject *pTarget)
+	void CCHide::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		dynamic_cast<CCNode*>(pTarget)->setIsVisible(false);
@@ -116,7 +116,7 @@ namespace cocos2d {
 		pRet->autorelease();
 		return pRet;
 	}
-	void CCToggleVisibility::startWithTarget(NSObject *pTarget)
+	void CCToggleVisibility::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		dynamic_cast<CCNode*>(pTarget)->setIsVisible(!dynamic_cast<CCNode*>(pTarget)->getIsVisible());
@@ -136,7 +136,7 @@ namespace cocos2d {
 		m_bFlipX = x;
 		return this;
 	}
-	void CCFlipX::startWithTarget(NSObject *pTarget)
+	void CCFlipX::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		dynamic_cast<CCSprite*>(pTarget)->setFlipX(m_bFlipX);
@@ -182,7 +182,7 @@ namespace cocos2d {
 		return this;
 	}
 
-	void CCFlipY::startWithTarget(NSObject *pTarget)
+	void CCFlipY::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		dynamic_cast<CCSprite*>(pTarget)->setFlipY(m_bFlipY);
@@ -247,7 +247,7 @@ namespace cocos2d {
 		return pRet;
 	}
 
-	void CCPlace::startWithTarget(NSObject *pTarget)
+	void CCPlace::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		dynamic_cast<CCNode*>(m_pTarget)->setPosition(m_tPosition);
@@ -290,7 +290,7 @@ namespace cocos2d {
 		CCX_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
-	void CCCallFunc::startWithTarget(NSObject *pTarget)
+	void CCCallFunc::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
 		this->execute();

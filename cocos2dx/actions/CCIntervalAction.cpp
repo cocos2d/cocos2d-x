@@ -125,7 +125,7 @@ CGFloat CCIntervalAction::getAmplitudeRate(void)
 	return 0;
 }
 
-void CCIntervalAction::startWithTarget(NSObject *pTarget)
+void CCIntervalAction::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_elapsed = 0.0f;
@@ -228,7 +228,7 @@ CCSequence::~CCSequence(void)
 	m_pActions[1]->release();
 }
 
-void CCSequence::startWithTarget(cocos2d::NSObject *pTarget)
+void CCSequence::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_split = m_pActions[0]->getDuration() / m_fDuration;
@@ -358,7 +358,7 @@ CCRepeat::~CCRepeat(void)
 	m_pOther->release();
 }
 
-void CCRepeat::startWithTarget(cocos2d::NSObject *pTarget)
+void CCRepeat::startWithTarget(CCNode *pTarget)
 {
 	m_uTotal = 0;
 	__super::startWithTarget(pTarget);
@@ -520,7 +520,7 @@ CCSpawn::~CCSpawn(void)
 	m_pTwo->release();
 }
 
-void CCSpawn::startWithTarget(cocos2d::NSObject *pTarget)
+void CCSpawn::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_pOne->startWithTarget(pTarget);
@@ -592,7 +592,7 @@ NSObject* CCRotateTo::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCRotateTo::startWithTarget(cocos2d::NSObject *pTarget)
+void CCRotateTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
@@ -670,7 +670,7 @@ NSObject* CCRotateBy::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCRotateBy::startWithTarget(cocos2d::NSObject *pTarget)
+void CCRotateBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_fStartAngle = dynamic_cast<CCNode*>(pTarget)->getRotation();
@@ -733,7 +733,7 @@ NSObject* CCMoveTo::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCMoveTo::startWithTarget(NSObject *pTarget)
+void CCMoveTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_startPosition = dynamic_cast<CCNode*>(pTarget)->getPosition();
@@ -792,7 +792,7 @@ NSObject* CCMoveBy::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCMoveBy::startWithTarget(cocos2d::NSObject *pTarget)
+void CCMoveBy::startWithTarget(CCNode *pTarget)
 {
 	CGPoint dTmp = m_delta;
 	__super::startWithTarget(pTarget);
@@ -853,7 +853,7 @@ NSObject* CCJumpBy::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCJumpBy::startWithTarget(cocos2d::NSObject *pTarget)
+void CCJumpBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_startPosition = dynamic_cast<CCNode*>(pTarget)->getPosition();
@@ -910,7 +910,7 @@ NSObject* CCJumpTo::copyWithZone(NSZone* pZone)
 	return pCopy;
 }
 
-void CCJumpTo::startWithTarget(cocos2d::NSObject *pTarget)
+void CCJumpTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_delta = ccp(m_delta.x - m_startPosition.x, m_delta.y - m_startPosition.y);
@@ -951,7 +951,7 @@ bool CCBezierBy::initWithDuration(cocos2d::ccTime t, cocos2d::ccBezierConfig c)
 	return false;
 }
 
-void CCBezierBy::startWithTarget(cocos2d::NSObject *pTarget)
+void CCBezierBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_startPosition = dynamic_cast<CCNode*>(pTarget)->getPosition();
@@ -1044,7 +1044,7 @@ NSObject* CCBezierTo::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCBezierTo::startWithTarget(cocos2d::NSObject *pTarget)
+void CCBezierTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_sConfig.controlPoint_1 = ccpSub(m_sConfig.controlPoint_1, m_startPosition);
@@ -1123,7 +1123,7 @@ NSObject* CCScaleTo::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCScaleTo::startWithTarget(cocos2d::NSObject *pTarget)
+void CCScaleTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_fStartScaleX = dynamic_cast<CCNode*>(pTarget)->getScaleX();
@@ -1183,7 +1183,7 @@ NSObject* CCScaleBy::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCScaleBy::startWithTarget(cocos2d::NSObject *pTarget)
+void CCScaleBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_fDeltaX = m_fStartScaleX * m_fEndScaleX - m_fStartScaleX;
@@ -1391,7 +1391,7 @@ NSObject* CCFadeTo::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCFadeTo::startWithTarget(cocos2d::NSObject *pTarget)
+void CCFadeTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
@@ -1449,7 +1449,7 @@ NSObject* CCTintTo::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCTintTo::startWithTarget(cocos2d::NSObject *pTarget)
+void CCTintTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
@@ -1513,7 +1513,7 @@ NSObject* CCTintBy::copyWithZone(cocos2d::NSZone *pZone)
 	return pCopy;
 }
 
-void CCTintBy::startWithTarget(cocos2d::NSObject *pTarget)
+void CCTintBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
@@ -1635,7 +1635,7 @@ CCReverseTime::~CCReverseTime(void)
 	m_pOther->release();
 }
 
-void CCReverseTime::startWithTarget(cocos2d::NSObject *pTarget)
+void CCReverseTime::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	m_pOther->startWithTarget(pTarget);
@@ -1757,7 +1757,7 @@ CCAnimate::~CCAnimate(void)
     CCX_SAFE_RELEASE(m_pOrigFrame);
 }
 
-void CCAnimate::startWithTarget(cocos2d::NSObject *pTarget)
+void CCAnimate::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 	CCSprite *pSprite = dynamic_cast<CCSprite*>(pTarget);

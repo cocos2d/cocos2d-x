@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "NSObject.h"
 #include "NSZone.h"
+#include "CCNode.h"
 namespace   cocos2d {
 
 enum {
@@ -51,7 +52,7 @@ public:
 	virtual bool isDone(void);
 
 	//! called before the action start. It will also set the target.
-	virtual void startWithTarget(NSObject *pTarget);
+	virtual void startWithTarget(CCNode *pTarget);
 
 	//! called after the action has finished. It will set the 'target' to nil.
     //! IMPORTANT: You should never call "[action stop]" manually. Instead, use: "[target stopAction:action];"
@@ -72,13 +73,13 @@ public:
 	 When the 'stop' method is called, target will be set to nil.
 	 The target is 'assigned', it is not 'retained'.
 	 */
-	NSObject* getTarget(void) { return m_pTarget; }
+	CCNode* getTarget(void) { return m_pTarget; }
 
 	/** The original target, since target can be nil.
 	 Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
 	 @since v0.8.2
 	*/
-	NSObject* getOriginalTarget(void) { return m_pOriginalTarget; } 
+	CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
 
 	 // The action tag. An identifier of the action
 	int getTag(void) { return m_nTag; }
@@ -89,8 +90,8 @@ public:
 	static CCAction* action();
 
 protected:
-	NSObject	*m_pOriginalTarget;
-	NSObject	*m_pTarget;
+	CCNode	*m_pOriginalTarget;
+	CCNode	*m_pTarget;
 	int 		m_nTag;
 };
 
@@ -129,7 +130,7 @@ public:
 
 	CCRepeatForever* initWithAction(CCIntervalAction *pAction);
 	virtual NSObject* copyWithZone(NSZone *pZone);
-	virtual void startWithTarget(NSObject* pTarget);
+	virtual void startWithTarget(CCNode* pTarget);
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
 	virtual CCIntervalAction* reverse(void);
@@ -161,7 +162,7 @@ public:
 	CCSpeed* initWithAction(CCRepeatForever *pAction, float fRate);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
-	virtual void startWithTarget(NSObject* pTarget);
+	virtual void startWithTarget(CCNode* pTarget);
 	virtual void stop();
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
