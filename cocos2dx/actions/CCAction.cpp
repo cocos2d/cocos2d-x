@@ -146,7 +146,7 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 	CCSpeed* pRet = NULL;
 	if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 	{
-		pRet = dynamic_cast<CCSpeed*>(pZone->m_pCopyObject);
+		pRet = (CCSpeed*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -155,7 +155,7 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 	}
 	__super::copyWithZone(pZone);
 
-	pRet->initWithAction( dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()) , m_fSpeed );
+	pRet->initWithAction( (CCIntervalAction*)(m_pOther->copy()->autorelease()) , m_fSpeed );
 	
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
@@ -185,7 +185,7 @@ bool CCSpeed::isDone()
 
 CCIntervalAction *CCSpeed::reverse()
 {
-	 return dynamic_cast<CCIntervalAction*>(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
+	 return (CCIntervalAction*)(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
 }
 
 //
@@ -273,7 +273,7 @@ NSObject *CCFollow::copyWithZone(NSZone *pZone)
 	CCFollow *pRet = NULL;
 	if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 	{
-		pRet = dynamic_cast<CCFollow*>(pZone->m_pCopyObject);
+		pRet = (CCFollow*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -298,12 +298,12 @@ void CCFollow::step(ccTime dt)
 
 		CGPoint tempPos = ccpSub( m_obHalfScreenSize, m_pobFollowedNode->getPosition());
 
-		dynamic_cast<CCNode*>(m_pTarget)->setPosition(ccp(CLAMP(tempPos.x, m_fLeftBoundary, m_fRightBoundary), 
+		m_pTarget->setPosition(ccp(CLAMP(tempPos.x, m_fLeftBoundary, m_fRightBoundary), 
 								   CLAMP(tempPos.y, m_fBottomBoundary, m_fTopBoundary)));
 	}
 	else
 	{
-		dynamic_cast<CCNode*>(m_pTarget)->setPosition(ccpSub(m_obHalfScreenSize, m_pobFollowedNode->getPosition()));
+		m_pTarget->setPosition(ccpSub(m_obHalfScreenSize, m_pobFollowedNode->getPosition()));
 	}
 #undef CLAMP
 }
