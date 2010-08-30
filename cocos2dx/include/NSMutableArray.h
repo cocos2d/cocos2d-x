@@ -53,7 +53,19 @@ public:
 
 	unsigned int count(void)
 	{
-		return m_array.size();
+		unsigned int uCount = 0;
+		NSObjectArray::iterator it;
+		for (it = m_array.begin(); it != m_array.end(); ++it)
+		{
+			if (*it == NULL)
+			{
+				break;
+			}
+
+			++uCount;
+		}
+
+		return uCount;
 	}
 
 	unsigned int getIndexOfObject(T pObject)
