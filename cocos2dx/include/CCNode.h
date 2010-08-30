@@ -219,7 +219,6 @@ private:
 
 	CGPoint convertToWindowSpace(CGPoint nodePoint);
 
-
 public:
 
 	CCNode();
@@ -441,6 +440,11 @@ public:
 	Called internally by onExit
 	*/
 	void pauseSchedulerAndActions(void);
+
+	// SelecterProtocol methods
+
+	virtual void selectorProtocolRetain(void);
+	virtual void selectorProtocolRelease(void);
 
 
 	// transformation methods

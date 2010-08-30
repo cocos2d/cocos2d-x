@@ -60,6 +60,16 @@ void CCActionManager::purgeSharedManager(void)
 	CCX_SAFE_RELEASE(gSharedManager);
 }
 
+void CCActionManager::selectorProtocolRetain()
+{
+	retain();
+}
+
+void CCActionManager::selectorProtocolRelease()
+{
+	release();
+}
+
 CCActionManager::CCActionManager(void)
 {
 	assert(gSharedManager == NULL);

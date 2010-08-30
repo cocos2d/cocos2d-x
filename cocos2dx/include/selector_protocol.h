@@ -41,6 +41,10 @@ public:
 	virtual void callfunc(CCNode* pSender){};
 	virtual void callfunc(CCNode* pSender, void* pData){};
 	virtual void menuHandler(NSObject* pSender){};
+
+	// the child call responding retain/release function
+	virtual void selectorProtocolRetain(void) {};
+	virtual void selectorProtocolRelease(void) {};
 };
 
 class CCNode;
