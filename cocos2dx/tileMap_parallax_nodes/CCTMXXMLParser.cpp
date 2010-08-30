@@ -51,7 +51,11 @@ namespace cocos2d {
 	CCTMXLayerInfo::~CCTMXLayerInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
-		CCX_SAFE_DELETE(m_pProperties);
+		if (m_pProperties)
+		{
+			m_pProperties->clear();
+			delete m_pProperties;
+		}
 		if( m_bOwnTiles && m_pTiles )
 		{
 			delete [] m_pTiles;
@@ -335,7 +339,7 @@ namespace cocos2d {
 		} 
 		else if(elementName == "object")
 		{
-			char buffer[16];
+			char buffer[32];
 			CCTMXObjectGroup *objectGroup = pTMXMapInfo->getObjectGroups()->getLastObject();
 
 			// The value for "type" was blank or not a valid class name

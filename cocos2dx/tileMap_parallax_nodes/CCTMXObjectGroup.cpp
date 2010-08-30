@@ -46,9 +46,17 @@ namespace cocos2d {
 	}
 	CCTMXObjectGroup::~CCTMXObjectGroup()
 	{
-		CCLOGINFO( "cocos2d: deallocing. ");
-		CCX_SAFE_DELETE(m_pProperties);
-		CCX_SAFE_DELETE(m_pObjects);
+		CCLOGINFO( "cocos2d: deallocing.");
+		if (m_pProperties)
+		{
+			m_pProperties->clear();
+			delete m_pProperties;
+		}
+		if (m_pObjects)
+		{
+			m_pObjects->clear();
+			delete m_pObjects;
+		}
 	}
 	StringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
 	{
