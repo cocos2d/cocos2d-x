@@ -36,7 +36,6 @@ namespace cocos2d {
 	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
 	void tmx_endElement(void *ctx, const xmlChar *name);
 	void tmx_characters(void *ctx, const xmlChar *ch, int len);
-	const char * valueForKey(std::string key, StringToStringDictionary dict);
 
 	// implementation CCTMXLayerInfo
 	CCTMXLayerInfo::CCTMXLayerInfo()
@@ -84,19 +83,18 @@ namespace cocos2d {
 		CCTMXMapInfo *pRet = new CCTMXMapInfo();
 		if(pRet->initWithTMXFile(tmxFile))
 		{
-
-		pRet->autorelease();
-		return pRet;
+			pRet->autorelease();
+			return pRet;
 		}
 		CCX_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
 	{
-		m_pTilesets = new NSMutableArray<CCTMXTilesetInfo *>();
-		m_pLayers = new NSMutableArray<CCTMXLayerInfo *>();
+		m_pTilesets = new NSMutableArray<CCTMXTilesetInfo*>();
+		m_pLayers = new NSMutableArray<CCTMXLayerInfo*>();
 		m_sFilename = CCFileUtils::fullPathFromRelativePath(tmxFile);
-		m_pObjectGroups = new NSMutableArray<void *>();
+		m_pObjectGroups = new NSMutableArray<CCTMXObjectGroup*>();
 		m_pProperties = new StringToStringDictionary();
 		m_pTileProperties = new std::map<int, StringToStringDictionary*>();
 
@@ -175,12 +173,7 @@ namespace cocos2d {
 		CCTMXOrientationIso,
 	};/// @todo to be deleted
 
-	const char * valueForKey(std::string key, StringToStringDictionary dict)
-	{
-		StringToStringDictionary::iterator it = dict.find(key);
-		return it!=dict.end() ? it->second.c_str() : "";
 
-	}
 	// the XML parser calls here with all the elements
 	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 	{	
@@ -198,12 +191,12 @@ namespace cocos2d {
 		}
 		if(elementName == "map")
 		{
-			std::string version = valueForKey("version", attributeDict);
+			std::string version = valueForKey("version", &attributeDict);
 			if ( version != "1.0")
 			{
 				CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %@", version);
 			}
-			std::string orientationStr = valueForKey("orientation", attributeDict);
+			std::string orientationStr = valueForKey("orientation", &attributeDict);
 			if( orientationStr == "orthogonal")
 				pTMXMapInfo->setOrientation(CCTMXOrientationOrtho);
 			else if ( orientationStr  == "isometric")
@@ -214,12 +207,12 @@ namespace cocos2d {
 				CCLOG("cocos2d: TMXFomat: Unsupported orientation: %d", pTMXMapInfo->getOrientation());
 
 			CGSize s;
-			s.width = (float)atof(valueForKey("width", attributeDict));
-			s.height = (float)atof(valueForKey("height", attributeDict));
+			s.width = (float)atof(valueForKey("width", &attributeDict));
+			s.height = (float)atof(valueForKey("height", &attributeDict));
 			pTMXMapInfo->setMapSize(s);
 
-			s.width = (float)atof(valueForKey("tilewidth", attributeDict));
-			s.height = (float)atof(valueForKey("tileheight", attributeDict));
+			s.width = (float)atof(valueForKey("tilewidth", &attributeDict));
+			s.height = (float)atof(valueForKey("tileheight", &attributeDict));
 			pTMXMapInfo->setTileSize(s);
 
 			// The parent element is now "map"
@@ -228,7 +221,7 @@ namespace cocos2d {
 		else if(elementName == "tileset") 
 		{
 			// If this is an external tileset then start parsing that
-			std::string externalTilesetFilename = valueForKey("source", attributeDict);
+			std::string externalTilesetFilename = valueForKey("source", &attributeDict);
 			if (externalTilesetFilename != "")
 			{
 				externalTilesetFilename = CCFileUtils::fullPathFromRelativePath(externalTilesetFilename.c_str());
@@ -237,13 +230,13 @@ namespace cocos2d {
 			else
 			{
 				CCTMXTilesetInfo *tileset = new CCTMXTilesetInfo();
-				tileset->m_sName = valueForKey("name", attributeDict);
-				tileset->m_uFirstGid = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
-				tileset->m_uSpacing = (unsigned int)atoi(valueForKey("spacing", attributeDict));
-				tileset->m_uMargin = (unsigned int)atoi(valueForKey("margin", attributeDict));
+				tileset->m_sName = valueForKey("name", &attributeDict);
+				tileset->m_uFirstGid = (unsigned int)atoi(valueForKey("firstgid", &attributeDict));
+				tileset->m_uSpacing = (unsigned int)atoi(valueForKey("spacing", &attributeDict));
+				tileset->m_uMargin = (unsigned int)atoi(valueForKey("margin", &attributeDict));
 				CGSize s;
-				s.width = (float)atof(valueForKey("tilewidth", attributeDict));
-				s.height = (float)atof(valueForKey("tileheight", attributeDict));
+				s.width = (float)atof(valueForKey("tilewidth", &attributeDict));
+				s.height = (float)atof(valueForKey("tileheight", &attributeDict));
 				tileset->m_tTileSize = s;
 
 				pTMXMapInfo->getTilesets()->addObject(tileset);
@@ -254,7 +247,7 @@ namespace cocos2d {
 		{
 			CCTMXTilesetInfo* info = pTMXMapInfo->getTilesets()->getLastObject();
 			StringToStringDictionary *dict = new StringToStringDictionary();
-			pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
+			pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", &attributeDict)));
 			pTMXMapInfo->getTileProperties()->insert(std::pair<int, StringToStringDictionary*>(pTMXMapInfo->getParentGID(), dict));
 
 			pTMXMapInfo->setParentElement(TMXPropertyTile);
@@ -263,17 +256,17 @@ namespace cocos2d {
 		else if(elementName == "layer")
 		{
 			CCTMXLayerInfo *layer = new CCTMXLayerInfo();
-			layer->m_sName = valueForKey("name", attributeDict);
+			layer->m_sName = valueForKey("name", &attributeDict);
 
 			CGSize s;
-			s.width = (float)atof(valueForKey("width", attributeDict));
-			s.height = (float)atof(valueForKey("height", attributeDict));
+			s.width = (float)atof(valueForKey("width", &attributeDict));
+			s.height = (float)atof(valueForKey("height", &attributeDict));
 			layer->m_tLayerSize = s;
 
-			std::string visible = valueForKey("visible", attributeDict);
+			std::string visible = valueForKey("visible", &attributeDict);
 			layer->m_bVisible = !(visible == "0");
 
-			std::string opacity = valueForKey("opacity", attributeDict);
+			std::string opacity = valueForKey("opacity", &attributeDict);
 			if( opacity != "" )
 			{
 				layer->m_cOpacity = (unsigned char)(255 * atof(opacity.c_str()));
@@ -283,8 +276,8 @@ namespace cocos2d {
 				layer->m_cOpacity = 255;
 			}
 
-			float x = (float)atof(valueForKey("x", attributeDict));
-			float y = (float)atof(valueForKey("y", attributeDict));
+			float x = (float)atof(valueForKey("x", &attributeDict));
+			float y = (float)atof(valueForKey("y", &attributeDict));
 			layer->m_tOffset = ccp(x,y);
 
 			pTMXMapInfo->getLayers()->addObject(layer);
@@ -296,18 +289,18 @@ namespace cocos2d {
 		} 
 		else if(elementName == "objectgroup")
 		{
-			/** @todo CCTMXObjectGroup *objectGroup = [[CCTMXObjectGroup alloc] init];
-			objectGroup.groupName = [attributeDict valueForKey:@"name"];
+			CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup();
+			objectGroup->setGroupName(valueForKey("name", &attributeDict));
 			CGPoint positionOffset;
-			positionOffset.x = [[attributeDict valueForKey:@"x"] intValue] * tileSize_.width;
-			positionOffset.y = [[attributeDict valueForKey:@"y"] intValue] * tileSize_.height;
-			objectGroup.positionOffset = positionOffset;
+			positionOffset.x = (float)atof(valueForKey("x", &attributeDict)) * pTMXMapInfo->getTileSize().width;
+			positionOffset.y = (float)atof(valueForKey("y", &attributeDict)) * pTMXMapInfo->getTileSize().height;
+			objectGroup->setPositionOffset(positionOffset);
 
-			[objectGroups_ addObject:objectGroup];
-			[objectGroup release];
+			pTMXMapInfo->getObjectGroups()->addObject(objectGroup);
+			objectGroup->release();
 
 			// The parent element is now "objectgroup"
-			parentElement = TMXPropertyObjectGroup;*/
+			pTMXMapInfo->setParentElement(TMXPropertyObjectGroup);
 
 		}
 		else if(elementName == "image")
@@ -315,14 +308,14 @@ namespace cocos2d {
 			CCTMXTilesetInfo *tileset = pTMXMapInfo->getTilesets()->getLastObject();
 
 			// build full path
-			std::string imagename = valueForKey("source", attributeDict);		
+			std::string imagename = valueForKey("source", &attributeDict);		
 			tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativePath(imagename.c_str());
 
 		} 
 		else if(elementName == "data")
 		{
-			std::string encoding = valueForKey("encoding", attributeDict);
-			std::string compression = valueForKey("compression", attributeDict);
+			std::string encoding = valueForKey("encoding", &attributeDict);
+			std::string compression = valueForKey("compression", &attributeDict);
 
 			if( encoding == "base64" )
 			{
@@ -342,32 +335,48 @@ namespace cocos2d {
 		} 
 		else if(elementName == "object")
 		{
-			/** @todo CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
+			char buffer[16];
+			CCTMXObjectGroup *objectGroup = pTMXMapInfo->getObjectGroups()->getLastObject();
 
 			// The value for "type" was blank or not a valid class name
 			// Create an instance of TMXObjectInfo to store the object and its properties
-			NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:5];
+			StringToStringDictionary *dict = new StringToStringDictionary();
 
 			// Set the name of the object to the value for "name"
-			[dict setValue:[attributeDict valueForKey:@"name"] forKey:@"name"];
+			std::string key = "name";
+			std::string value = valueForKey("name", &attributeDict);
+			dict->insert(StringToStringPair(key, value));
 
 			// Assign all the attributes as key/name pairs in the properties dictionary
-			[dict setValue:[attributeDict valueForKey:@"type"] forKey:@"type"];
-			int x = [[attributeDict valueForKey:@"x"] intValue] + objectGroup.positionOffset.x;
-			[dict setValue:[NSNumber numberWithInt:x] forKey:@"x"];
-			int y = [[attributeDict valueForKey:@"y"] intValue] + objectGroup.positionOffset.y;
+			key = "type";
+			value = valueForKey("type", &attributeDict);
+			dict->insert(StringToStringPair(key, value));
+
+			int x = atoi(valueForKey("x", &attributeDict)) + (int)objectGroup->getPositionOffset().x;
+			key = "x";
+			value = itoa(x, buffer, 10);
+			dict->insert(StringToStringPair(key, value));
+
+			int y = atoi(valueForKey("y", &attributeDict)) + (int)objectGroup->getPositionOffset().y;
 			// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
-			y = (mapSize_.height * tileSize_.height) - y - [[attributeDict valueForKey:@"height"] intValue];
-			[dict setValue:[NSNumber numberWithInt:y] forKey:@"y"];
-			[dict setValue:[attributeDict valueForKey:@"width"] forKey:@"width"];
-			[dict setValue:[attributeDict valueForKey:@"height"] forKey:@"height"];
+			y = (int)(pTMXMapInfo->getMapSize().height * pTMXMapInfo->getTileSize().height) - y - atoi(valueForKey("height", &attributeDict));
+			key = "y";
+			value = itoa(y, buffer, 10);
+			dict->insert(StringToStringPair(key, value));
+
+			key = "width";
+			value = valueForKey("width", &attributeDict);
+			dict->insert(StringToStringPair(key, value));
+
+			key = "height";
+			value = valueForKey("height", &attributeDict);
+			dict->insert(StringToStringPair(key, value));
 
 			// Add the object to the objectGroup
-			[[objectGroup objects] addObject:dict];
-			[dict release];
+			objectGroup->getObjects()->insert(objectGroup->getObjects()->begin(), dict);
 
 			// The parent element is now "object"
-			parentElement = TMXPropertyObject;*/
+			pTMXMapInfo->setParentElement(TMXPropertyObject);
 
 		} 
 		else if(elementName == "property")
@@ -375,13 +384,13 @@ namespace cocos2d {
 			if ( pTMXMapInfo->getParentElement() == TMXPropertyNone ) 
 			{
 				CCLOG( "TMX tile map: Parent element is unsupported. Cannot add property named '%s' with value '%s'",
-					valueForKey("name", attributeDict), valueForKey("value",attributeDict) );
+					valueForKey("name", &attributeDict), valueForKey("value",&attributeDict) );
 			} 
 			else if ( pTMXMapInfo->getParentElement() == TMXPropertyMap )
 			{
 				// The parent element is the map
-				std::string value = valueForKey("value", attributeDict);
-				std::string key = valueForKey("name", attributeDict);
+				std::string value = valueForKey("value", &attributeDict);
+				std::string key = valueForKey("name", &attributeDict);
 				pTMXMapInfo->getProperties()->insert(StringToStringPair(key, value));
 
 			} 
@@ -389,8 +398,8 @@ namespace cocos2d {
 			{
 				// The parent element is the last layer
 				CCTMXLayerInfo *layer = pTMXMapInfo->getLayers()->getLastObject();
-				std::string value = valueForKey("value", attributeDict);
-				std::string key = valueForKey("name", attributeDict);
+				std::string value = valueForKey("value", &attributeDict);
+				std::string key = valueForKey("name", &attributeDict);
 				// Add the property to the layer
 				layer->m_pProperties->insert(StringToStringPair(key, value));
 
@@ -398,27 +407,29 @@ namespace cocos2d {
 			else if ( pTMXMapInfo->getParentElement() == TMXPropertyObjectGroup ) 
 			{
 				// The parent element is the last object group
-				/** @todo CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
-				[[objectGroup properties] setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];*/
+				CCTMXObjectGroup *objectGroup = pTMXMapInfo->getObjectGroups()->getLastObject();
+				std::string key = valueForKey("name", &attributeDict);
+				std::string value = valueForKey("value", &attributeDict);
+				objectGroup->getProperties()->insert(StringToStringPair(key, value));
 
 			} 
 			else if ( pTMXMapInfo->getParentElement() == TMXPropertyObject )
 			{
 				// The parent element is the last object
-				/** @todo CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
-				NSMutableDictionary *dict = [[objectGroup objects] lastObject];
+				CCTMXObjectGroup *objectGroup = pTMXMapInfo->getObjectGroups()->getLastObject();
+				StringToStringDictionary *dict = *objectGroup->getObjects()->begin();
 
-				NSString *propertyName = [attributeDict valueForKey:@"name"];
-				NSString *propertyValue = [attributeDict valueForKey:@"value"];
+				std::string propertyName = valueForKey("name", &attributeDict);
+				std::string propertyValue = valueForKey("value", &attributeDict);
 
-				[dict setValue:propertyValue forKey:propertyName];*/
+				dict->insert(StringToStringPair(propertyName, propertyValue));
 			} 
 			else if ( pTMXMapInfo->getParentElement() == TMXPropertyTile ) 
 			{
 				StringToStringDictionary *dict;
 				dict = pTMXMapInfo->getTileProperties()->find(pTMXMapInfo->getParentGID())->second;
-				std::string propertyName = valueForKey("name", attributeDict);
-				std::string propertyValue = valueForKey("value", attributeDict);
+				std::string propertyName = valueForKey("name", &attributeDict);
+				std::string propertyValue = valueForKey("value", &attributeDict);
 				dict->insert(StringToStringPair(propertyName, propertyValue));
 			}
 		}
