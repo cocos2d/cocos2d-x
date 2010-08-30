@@ -449,6 +449,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCTMXObjectGroup.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCTMXXMLParser.h"
 				>
 			</File>
@@ -758,6 +762,10 @@
 			>
 			<File
 				RelativePath=".\tileMap_parallax_nodes\CCParallaxNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tileMap_parallax_nodes\CCTMXObjectGroup.cpp"
 				>
 			</File>
 			<File

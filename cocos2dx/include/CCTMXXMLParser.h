@@ -23,14 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
-#include "Cocos2dDefine.h"
+#include "CCTMXObjectGroup.h"
 #include "NSMutableArray.h"
-#include "CGGeometry.h"
-#include <map>
 namespace cocos2d {
 
-	typedef std::map<std::string, std::string> StringToStringDictionary;
-	typedef std::pair<std::string, std::string> StringToStringPair;
 	/*
 	* Internal TMX parser
 	*
@@ -136,7 +132,7 @@ namespace cocos2d {
 		// tilesets
 		CCX_SYNTHESIZE(NSMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
 		// ObjectGroups
-		CCX_SYNTHESIZE(NSMutableArray<void*>*, m_pObjectGroups, ObjectGroups);
+		CCX_SYNTHESIZE(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		// parent element
 		CCX_SYNTHESIZE(int, m_nParentElement, ParentElement);
 		// parent GID
