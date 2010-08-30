@@ -449,6 +449,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCTileMapAtlas.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCTMXObjectGroup.h"
 				>
 			</File>
@@ -762,6 +766,10 @@
 			>
 			<File
 				RelativePath=".\tileMap_parallax_nodes\CCParallaxNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tileMap_parallax_nodes\CCTileMapAtlas.cpp"
 				>
 			</File>
 			<File
