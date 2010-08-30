@@ -33,7 +33,7 @@ namespace cocos2d{
 	{
 		__super::startWithTarget(pTarget);
 		
-		CCCamera *camera = dynamic_cast<CCNode*>(pTarget)->getCamera();
+		CCCamera *camera = pTarget->getCamera();
 		camera->getCenterXYZ(&m_fCenterXOrig, &m_fCenterYOrig, &m_fCenterZOrig);
 		camera->getEyeXYZ(&m_fEyeXOrig, &m_fEyeYOrig, &m_fEyeZOrig);
 		camera->getUpXYZ(&m_fUpXOrig, &m_fUpYOrig, &m_fUpZOrig);
@@ -59,7 +59,7 @@ namespace cocos2d{
 		NSZone* pNewZone = NULL;
 		CCOrbitCamera* pRet = NULL;
 		if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
-			pRet = dynamic_cast<CCOrbitCamera*>(pZone->m_pCopyObject);
+			pRet = (CCOrbitCamera*)(pZone->m_pCopyObject);
 		else
 		{
 			pRet = new CCOrbitCamera();
@@ -118,7 +118,7 @@ namespace cocos2d{
 		float j = sinf(za) * sinf(xa) * r + m_fCenterYOrig;
 		float k = cosf(za) * r + m_fCenterZOrig;
 
-		dynamic_cast<CCNode*>(m_pTarget)->getCamera()->setEyeXYZ(i,j,k);
+		m_pTarget->getCamera()->setEyeXYZ(i,j,k);
 	}
 
 	void CCOrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimuth)
@@ -127,7 +127,7 @@ namespace cocos2d{
 		float r; // radius
 		float s;
 
-		CCCamera* pCamera = dynamic_cast<CCNode*>(m_pTarget)->getCamera();
+		CCCamera* pCamera = m_pTarget->getCamera();
 		pCamera->getEyeXYZ(&ex, &ey, &ez);
 		pCamera->getCenterXYZ(&cx, &cy, &cz);
 

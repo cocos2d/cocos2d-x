@@ -68,7 +68,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCWaves3D*>(pZone->m_pCopyObject);
+			pCopy = (CCWaves3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -146,7 +146,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCFlipX3D*>(pZone->m_pCopyObject);
+			pCopy = (CCFlipX3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -254,7 +254,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCFlipY3D*>(pZone->m_pCopyObject);
+			pCopy = (CCFlipY3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -378,7 +378,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCLens3D*>(pZone->m_pCopyObject);
+			pCopy = (CCLens3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -481,7 +481,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject)
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCRipple3D*>(pZone->m_pCopyObject);
+			pCopy = (CCRipple3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -563,7 +563,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject)
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCShaky3D*>(pZone->m_pCopyObject);
+			pCopy = (CCShaky3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -642,7 +642,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCLiquid*>(pZone->m_pCopyObject);
+			pCopy = (CCLiquid*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -718,7 +718,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCWaves*>(pZone->m_pCopyObject);
+			pCopy = (CCWaves*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -802,7 +802,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject)
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCTwirl*>(pZone->m_pCopyObject);
+			pCopy = (CCTwirl*)(pZone->m_pCopyObject);
 		}
 		else
 		{
