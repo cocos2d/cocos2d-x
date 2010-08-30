@@ -489,6 +489,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ActionManagerTest"
+				>
+				<File
+					RelativePath=".\tests\ActionManagerTest\ActionManagerTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\ActionManagerTest\ActionManagerTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

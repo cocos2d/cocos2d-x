@@ -1,0 +1,71 @@
+#ifndef _ACTION_MANAGER_TEST_H_
+#define _ACTION_MANAGER_TEST_H_
+
+#include "../testBasic.h"
+
+class ActionManagerTest: public CCLayer
+{
+protected:
+    CCTextureAtlas* m_atlas;
+
+	std::string	m_strTitle;
+
+public:
+	ActionManagerTest(void);
+	~ActionManagerTest(void);
+
+	virtual std::string title();
+	virtual void onEnter();
+
+	void restartCallback(NSObject* pSender);
+	void nextCallback(NSObject* pSender);
+	void backCallback(NSObject* pSender);
+};
+
+class CrashTest : public ActionManagerTest
+{
+public:
+	virtual std::string title();
+	virtual void onEnter();
+	void removeThis();
+};
+
+class LogicTest : public ActionManagerTest
+{
+public:
+	virtual std::string title();
+	virtual void onEnter();
+	void bugMe(CCNode* node);
+};
+
+class PauseTest : public ActionManagerTest
+{
+public:
+	virtual std::string title();
+	virtual void onEnter();
+	void unpause(ccTime dt);
+};
+
+class RemoveTest : public ActionManagerTest
+{
+public:
+    virtual std::string title();
+    virtual void onEnter();
+    void stopAction();
+};
+
+class ResumeTest : public ActionManagerTest
+{
+public:
+    virtual std::string title();
+    virtual void onEnter();
+    void resumeGrossini();
+};
+
+class ActionManagerTestScene : public TestScene
+{
+public:
+    virtual void runThisTest();
+};
+
+#endif

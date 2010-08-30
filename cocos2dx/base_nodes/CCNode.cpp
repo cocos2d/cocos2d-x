@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCScheduler.h"
 #include "CCTouch.h"
-#include "actions/CCActionManager.h"
+#include "CCActionManager.h"
 
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
