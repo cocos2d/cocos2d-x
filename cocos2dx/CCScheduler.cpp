@@ -175,8 +175,7 @@ CCScheduler* CCScheduler::init(void)
 void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 {
 	ccArrayFree(pElement->timers);
-	NSObject *pObj = dynamic_cast<NSObject*>(pElement->target);
-	CCX_SAFE_RELEASE(pObj);
+	pElement->target->selectorProtocolRelease();
 	pElement->target = NULL;
 	HASH_DEL(m_pHashForSelectors, pElement);
 	free(pElement);
@@ -211,7 +210,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 		pElement->target = pTarget;
 		if (pTarget)
 		{
-		    dynamic_cast<NSObject*>(pTarget)->retain();
+		    pTarget->selectorProtocolRetain();
 		}
 		HASH_ADD_INT(m_pHashForSelectors, target, pElement);
 
@@ -343,7 +342,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int
 	// update hash entry for quick access
 	tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
 	pHashElement->target = pTarget;
-	dynamic_cast<NSObject*>(pTarget)->retain();
+	pTarget->selectorProtocolRetain();
 	pHashElement->list = ppList;
 	pHashElement->entry = pListElement;
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -362,7 +361,7 @@ void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool 
 	// update hash entry for quicker access
 	tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
 	pHashElement->target = pTarget;
-	dynamic_cast<NSObject*>(pTarget)->retain();
+	pTarget->selectorProtocolRetain();
 	pHashElement->list = ppList;
 	pHashElement->entry = pListElement;
 	HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -409,8 +408,7 @@ void CCScheduler::unscheduleUpdateForTarget(const SelectorProtocol *pTarget)
 		free(pElement->entry);
 
 		// hash entry
-		NSObject *pObj = dynamic_cast<NSObject*>(pElement->target);
-		CCX_SAFE_RELEASE(pObj);
+		pElement->target->selectorProtocolRelease();
 		pElement->target = NULL;
 		HASH_DEL(m_pHashForUpdates, pElement);
 		free(pElement);
