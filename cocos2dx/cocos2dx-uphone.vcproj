@@ -197,10 +197,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\actions\CCActionManager.h"
-				>
-			</File>
-			<File
 				RelativePath=".\actions\CCCameraAction.cpp"
 				>
 			</File>
@@ -274,6 +270,10 @@
 			>
 			<File
 				RelativePath=".\include\CCAction.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\CCActionManager.h"
 				>
 			</File>
 			<File

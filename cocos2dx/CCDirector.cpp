@@ -39,7 +39,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCXApplication.h"
 #include "CCBitmapFontAtlas.h"
-#include "actions/CCActionManager.h"
+#include "CCActionManager.h"
 #include "CCLabelAtlas.h"
 
 #if CC_ENABLE_PROFILERS

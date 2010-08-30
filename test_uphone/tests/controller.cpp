@@ -41,6 +41,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
+    case TEST_ACTION_MANAGER:
+        pScene = new ActionManagerTestScene(); break;
     default:
         break;
     }
