@@ -80,7 +80,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseAction*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseAction*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -90,7 +90,7 @@ namespace cocos2d {
 
 		__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -162,7 +162,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseRateAction*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseRateAction*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -174,7 +174,7 @@ namespace cocos2d {
 		//__super::copyWithZone(pZone);
 
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -217,7 +217,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseIn*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseIn*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -229,7 +229,7 @@ namespace cocos2d {
 		//__super::copyWithZone(pZone);
 
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -268,7 +268,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -280,7 +280,7 @@ namespace cocos2d {
 		//__super::copyWithZone(pZone);
 
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -319,7 +319,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseInOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseInOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -330,7 +330,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction*>(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -391,7 +391,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseExponentialIn*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseExponentialIn*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -402,7 +402,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -446,7 +446,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseExponentialOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseExponentialOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -457,7 +457,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -501,7 +501,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseExponentialInOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseExponentialInOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -512,7 +512,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -561,7 +561,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject)
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseSineIn*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseSineIn*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -572,7 +572,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -616,7 +616,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseSineOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseSineOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -627,7 +627,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -671,7 +671,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseSineInOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseSineInOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -682,7 +682,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -755,7 +755,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseElastic*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseElastic*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -766,7 +766,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -825,7 +825,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseElasticIn*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseElasticIn*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -836,7 +836,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -910,7 +910,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseElasticOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseElasticOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -921,7 +921,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -994,7 +994,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseElasticInOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseElasticInOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1005,7 +1005,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1076,7 +1076,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseBounce*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseBounce*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1087,7 +1087,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1142,7 +1142,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseBounceIn*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseBounceIn*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1153,7 +1153,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1198,7 +1198,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject)
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseBounceOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseBounceOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1209,7 +1209,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1254,7 +1254,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseBounceInOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseBounceInOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1265,7 +1265,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1315,7 +1315,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseBackIn*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseBackIn*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1326,7 +1326,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1371,7 +1371,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseBackOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseBackOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1382,7 +1382,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1429,7 +1429,7 @@ namespace cocos2d {
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCEaseBackInOut*>(pZone->m_pCopyObject);
+			pCopy = (CCEaseBackInOut*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1440,7 +1440,7 @@ namespace cocos2d {
 		
 		//__super::copyWithZone(pZone);
 
-		pCopy->initWithAction(dynamic_cast<CCIntervalAction *>(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;

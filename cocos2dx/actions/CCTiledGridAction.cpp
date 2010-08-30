@@ -77,7 +77,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCShakyTiles3D*>(pZone->m_pCopyObject);
+			pCopy = (CCShakyTiles3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -170,7 +170,7 @@ namespace cocos2d
 		CCShatteredTiles3D* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
-			pCopy = dynamic_cast<CCShatteredTiles3D*>(pZone->m_pCopyObject);
+			pCopy = (CCShatteredTiles3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -268,7 +268,7 @@ namespace cocos2d
 		CCShuffleTiles* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
-			pCopy = dynamic_cast<CCShuffleTiles*>(pZone->m_pCopyObject);
+			pCopy = (CCShuffleTiles*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -325,7 +325,7 @@ namespace cocos2d
 	{
 		ccQuad3 coords = originalTile(pos);
 
-		CGPoint step = dynamic_cast<CCNode*>(m_pTarget)->getGrid()->getStep();
+		CGPoint step = m_pTarget->getGrid()->getStep();
 		coords.bl.x += (int)(t->position.x * step.x);
 		coords.bl.y += (int)(t->position.y * step.y);
 
@@ -440,7 +440,7 @@ namespace cocos2d
 	void CCFadeOutTRTiles::transformTile(cocos2d::ccGridSize pos, float distance)
 	{
 		ccQuad3 coords = originalTile(pos);
-		CGPoint step = dynamic_cast<CCNode*>(m_pTarget)->getGrid()->getStep();
+		CGPoint step = m_pTarget->getGrid()->getStep();
 
 		coords.bl.x += (step.x / 2) * (1.0f - distance);
 		coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -548,7 +548,7 @@ namespace cocos2d
 	void CCFadeOutUpTiles::transformTile(cocos2d::ccGridSize pos, float distance)
 	{
 		ccQuad3 coords = originalTile(pos);
-		CGPoint step = dynamic_cast<CCNode*>(m_pTarget)->getGrid()->getStep();
+		CGPoint step = m_pTarget->getGrid()->getStep();
 
 		coords.bl.y += (step.y / 2) * (1.0f - distance);
 		coords.br.y += (step.y / 2) * (1.0f - distance);
@@ -629,7 +629,7 @@ namespace cocos2d
 		CCTurnOffTiles* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
-			pCopy = dynamic_cast<CCTurnOffTiles*>(pZone->m_pCopyObject);
+			pCopy = (CCTurnOffTiles*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -763,7 +763,7 @@ namespace cocos2d
 		CCWavesTiles3D* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
-			pCopy = dynamic_cast<CCWavesTiles3D*>(pZone->m_pCopyObject);
+			pCopy = (CCWavesTiles3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -841,7 +841,7 @@ namespace cocos2d
 		CCJumpTiles3D* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
-			pCopy = dynamic_cast<CCJumpTiles3D*>(pZone->m_pCopyObject);
+			pCopy = (CCJumpTiles3D*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -923,7 +923,7 @@ namespace cocos2d
 		CCSplitRows* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
-			pCopy = dynamic_cast<CCSplitRows*>(pZone->m_pCopyObject);
+			pCopy = (CCSplitRows*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -1001,7 +1001,7 @@ namespace cocos2d
 		CCSplitCols* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
-			pCopy = dynamic_cast<CCSplitCols*>(pZone->m_pCopyObject);
+			pCopy = (CCSplitCols*)(pZone->m_pCopyObject);
 		}
 		else
 		{

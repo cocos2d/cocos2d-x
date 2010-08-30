@@ -58,7 +58,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCProgressTo*>(pZone->m_pCopyObject);
+			pCopy = (CCProgressTo*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -77,7 +77,7 @@ namespace cocos2d
 	void CCProgressTo::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		m_fFrom = dynamic_cast<kProgressTimerCast>(pTarget)->getPercentage();
+		m_fFrom = ((kProgressTimerCast)(pTarget))->getPercentage();
 
 		// XXX: Is this correct ?
 		// Adding it to support CCRepeat
@@ -89,7 +89,7 @@ namespace cocos2d
 
 	void CCProgressTo::update(cocos2d::ccTime time)
 	{
-		dynamic_cast<kProgressTimerCast>(m_pTarget)->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
+		((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 	}
 
 	// implementation of CCProgressFromTo
@@ -123,7 +123,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCProgressFromTo*>(pZone->m_pCopyObject);
+			pCopy = (CCProgressFromTo*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -151,7 +151,7 @@ namespace cocos2d
 
 	void CCProgressFromTo::update(cocos2d::ccTime time)
 	{
-		dynamic_cast<kProgressTimerCast>(m_pTarget)->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
+		((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 	}
 
 }// end of namespace cocos2d

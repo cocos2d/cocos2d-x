@@ -205,7 +205,7 @@ NSObject* CCSequence::copyWithZone(NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCSequence*>(pZone->m_pCopyObject);
+		pCopy = (CCSequence*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -337,7 +337,7 @@ NSObject* CCRepeat::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCRepeat*>(pZone->m_pCopyObject);
+		pCopy = (CCRepeat*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -347,7 +347,7 @@ NSObject* CCRepeat::copyWithZone(cocos2d::NSZone *pZone)
 
 	__super::copyWithZone(pZone);
 
-	pCopy->initWithAction(static_cast<CCFiniteTimeAction*>(m_pOther->copy()->autorelease()), m_uTimes);
+	pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()), m_uTimes);
 
 	CCX_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -463,7 +463,7 @@ NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 	}
 	__super::copyWithZone(pZone);
 	// win32 : use the m_pOther's copy object.
-	pRet->initWithAction( (CCIntervalAction*)(m_pOther->copy()->autorelease()) ); 
+	pRet->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease())); 
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
 }
@@ -570,7 +570,7 @@ NSObject* CCSpawn::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCSpawn*>(pZone->m_pCopyObject);
+		pCopy = (CCSpawn*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -580,8 +580,8 @@ NSObject* CCSpawn::copyWithZone(cocos2d::NSZone *pZone)
 
 	__super::copyWithZone(pZone);
 
-	pCopy->initOneTwo(	dynamic_cast<CCFiniteTimeAction*>(m_pOne->copy()->autorelease()), 
-					dynamic_cast<CCFiniteTimeAction*>(m_pTwo->copy()->autorelease()));
+	pCopy->initOneTwo((CCFiniteTimeAction*)(m_pOne->copy()->autorelease()), 
+					(CCFiniteTimeAction*)(m_pTwo->copy()->autorelease()));
 
 	CCX_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -648,7 +648,7 @@ NSObject* CCRotateTo::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject)
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCRotateTo*>(pZone->m_pCopyObject);
+		pCopy = (CCRotateTo*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -669,7 +669,7 @@ void CCRotateTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
-	m_fStartAngle = (dynamic_cast<CCNode*>(pTarget))->getRotation();
+	m_fStartAngle = pTarget->getRotation();
 
 	if (m_fStartAngle > 0)
 	{
@@ -694,7 +694,7 @@ void CCRotateTo::startWithTarget(CCNode *pTarget)
 
 void CCRotateTo::update(cocos2d::ccTime time)
 {
-	(dynamic_cast<CCNode*>(m_pTarget))->setRotation(m_fStartAngle + m_fDiffAngle * time);
+	m_pTarget->setRotation(m_fStartAngle + m_fDiffAngle * time);
 }
 
 //
@@ -727,7 +727,7 @@ NSObject* CCRotateBy::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCRotateBy*>(pZone->m_pCopyObject);
+		pCopy = (CCRotateBy*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -746,13 +746,13 @@ NSObject* CCRotateBy::copyWithZone(cocos2d::NSZone *pZone)
 void CCRotateBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
-	m_fStartAngle = dynamic_cast<CCNode*>(pTarget)->getRotation();
+	m_fStartAngle = pTarget->getRotation();
 }
 
 void CCRotateBy::update(cocos2d::ccTime time)
 {
 	// XXX: shall I add % 360
-	dynamic_cast<CCNode*>(m_pTarget)->setRotation(m_fStartAngle + m_fAngle * time);
+	m_pTarget->setRotation(m_fStartAngle + m_fAngle * time);
 }
 
 CCIntervalAction* CCRotateBy::reverse(void)
@@ -790,7 +790,7 @@ NSObject* CCMoveTo::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCMoveTo*>(pZone->m_pCopyObject);
+		pCopy = (CCMoveTo*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -809,13 +809,13 @@ NSObject* CCMoveTo::copyWithZone(cocos2d::NSZone *pZone)
 void CCMoveTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
-	m_startPosition = dynamic_cast<CCNode*>(pTarget)->getPosition();
+	m_startPosition = pTarget->getPosition();
 	m_delta = ccpSub(m_endPosition, m_startPosition);
 }
 
 void CCMoveTo::update(cocos2d::ccTime time)
 {
-	dynamic_cast<CCNode*>(m_pTarget)->setPosition(ccp(m_startPosition.x + m_delta.x * time,
+	m_pTarget->setPosition(ccp(m_startPosition.x + m_delta.x * time,
 		m_startPosition.y + m_delta.y * time));
 }
 
@@ -849,7 +849,7 @@ NSObject* CCMoveBy::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCMoveBy*>(pZone->m_pCopyObject);
+		pCopy = (CCMoveBy*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -910,7 +910,7 @@ NSObject* CCJumpBy::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCJumpBy*>(pZone->m_pCopyObject);
+		pCopy = (CCJumpBy*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -929,7 +929,7 @@ NSObject* CCJumpBy::copyWithZone(cocos2d::NSZone *pZone)
 void CCJumpBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
-	m_startPosition = dynamic_cast<CCNode*>(pTarget)->getPosition();
+	m_startPosition = pTarget->getPosition();
 }
 
 void CCJumpBy::update(cocos2d::ccTime time)
@@ -939,7 +939,7 @@ void CCJumpBy::update(cocos2d::ccTime time)
 	ccTime y = m_height * 4 * frac * (1 - frac);
 	y += m_delta.y * time;
 	ccTime x = m_delta.x * time;
-	dynamic_cast<CCNode*>(m_pTarget)->setPosition(ccp(m_startPosition.x + x, m_startPosition.y + y));
+	m_pTarget->setPosition(ccp(m_startPosition.x + x, m_startPosition.y + y));
 }
 
 CCIntervalAction* CCJumpBy::reverse(void)
@@ -967,7 +967,7 @@ NSObject* CCJumpTo::copyWithZone(NSZone* pZone)
 	if(pZone && pZone->m_pCopyObject)
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCJumpTo*>(pZone->m_pCopyObject);
+		pCopy = (CCJumpTo*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1027,7 +1027,7 @@ bool CCBezierBy::initWithDuration(cocos2d::ccTime t, cocos2d::ccBezierConfig c)
 void CCBezierBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
-	m_startPosition = dynamic_cast<CCNode*>(pTarget)->getPosition();
+	m_startPosition = pTarget->getPosition();
 }
 
 NSObject* CCBezierBy::copyWithZone(cocos2d::NSZone *pZone)
@@ -1037,7 +1037,7 @@ NSObject* CCBezierBy::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCBezierBy*>(pZone->m_pCopyObject);
+		pCopy = (CCBezierBy*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1067,7 +1067,7 @@ void CCBezierBy::update(cocos2d::ccTime time)
 
 	float x = bezierat(xa, xb, xc, xd, time);
 	float y = bezierat(ya, yb, yc, yd, time);
-	dynamic_cast<CCNode*>(m_pTarget)->setPosition(ccpAdd(m_startPosition, ccp(x, y)));
+	m_pTarget->setPosition(ccpAdd(m_startPosition, ccp(x, y)));
 }
 
 CCIntervalAction* CCBezierBy::reverse(void)
@@ -1101,7 +1101,7 @@ NSObject* CCBezierTo::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCBezierTo*>(pZone->m_pCopyObject);
+		pCopy = (CCBezierTo*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1179,7 +1179,7 @@ NSObject* CCScaleTo::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCScaleTo*>(pZone->m_pCopyObject);
+		pCopy = (CCScaleTo*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1199,16 +1199,16 @@ NSObject* CCScaleTo::copyWithZone(cocos2d::NSZone *pZone)
 void CCScaleTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
-	m_fStartScaleX = dynamic_cast<CCNode*>(pTarget)->getScaleX();
-	m_fStartScaleY = dynamic_cast<CCNode*>(pTarget)->getScaleY();
+	m_fStartScaleX = pTarget->getScaleX();
+	m_fStartScaleY = pTarget->getScaleY();
     m_fDeltaX = m_fEndScaleX - m_fStartScaleX;
 	m_fDeltaY = m_fEndScaleY - m_fStartScaleY;
 }
 
 void CCScaleTo::update(cocos2d::ccTime time)
 {
-	dynamic_cast<CCNode*>(m_pTarget)->setScaleX(m_fStartScaleX + m_fDeltaX * time);
-	dynamic_cast<CCNode*>(m_pTarget)->setScaleY(m_fStartScaleY + m_fDeltaY * time);
+	m_pTarget->setScaleX(m_fStartScaleX + m_fDeltaX * time);
+	m_pTarget->setScaleY(m_fStartScaleY + m_fDeltaY * time);
 }
 
 //
@@ -1239,7 +1239,7 @@ NSObject* CCScaleBy::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject)
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCScaleBy*>(pZone->m_pCopyObject);
+		pCopy = (CCScaleBy*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1298,7 +1298,7 @@ NSObject* CCBlink::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCBlink*>(pZone->m_pCopyObject);
+		pCopy = (CCBlink*)(pZone->m_pCopyObject);
 
 	}
 	else
@@ -1319,7 +1319,7 @@ void CCBlink::update(cocos2d::ccTime time)
 {
 	ccTime slice = 1.0f / m_nTimes;
 	ccTime m = fmodf(time, slice);
-	dynamic_cast<CCNode*>(m_pTarget)->setIsVisible(m > slice / 2 ? true : false);
+	m_pTarget->setIsVisible(m > slice / 2 ? true : false);
 }
 
 CCIntervalAction* CCBlink::reverse(void)
@@ -1348,7 +1348,7 @@ NSObject* CCFadeIn::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject)
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCFadeIn*>(pZone->m_pCopyObject);
+		pCopy = (CCFadeIn*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1365,7 +1365,10 @@ NSObject* CCFadeIn::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCFadeIn::update(cocos2d::ccTime time)
 {
-	dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setOpacity((GLubyte)(255 * time));
+	// because we can not use dynamic_cast(), so we cast in c style.
+	// Is it sprite? can it be other node?
+	/* dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setOpacity((GLubyte)(255 * time));*/
+	((CCSprite *)(m_pTarget))->setOpacity((GLubyte)(255 * time));
 }
 
 CCIntervalAction* CCFadeIn::reverse(void)
@@ -1393,7 +1396,7 @@ NSObject* CCFadeOut::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCFadeOut*>(pZone->m_pCopyObject);
+		pCopy = (CCFadeOut*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1410,7 +1413,10 @@ NSObject* CCFadeOut::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCFadeOut::update(cocos2d::ccTime time)
 {
-	dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setOpacity(GLubyte(255 * (1 - time)));
+	// because we can not use dynamic_cast(), so we cast in c style.
+	// Is it sprite? can it be other node?
+	// dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setOpacity(GLubyte(255 * (1 - time)));
+	((CCSprite *)m_pTarget)->setOpacity((GLubyte)(255 * (1 - time)));
 }
 
 CCIntervalAction* CCFadeOut::reverse(void)
@@ -1448,7 +1454,7 @@ NSObject* CCFadeTo::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCFadeTo*>(pZone->m_pCopyObject);
+		pCopy = (CCFadeTo*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1468,12 +1474,12 @@ void CCFadeTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
-	m_fromOpacity = dynamic_cast<CCRGBAProtocol*>(pTarget)->getOpacity();
+	m_fromOpacity = ((CCRGBAProtocol*)(pTarget))->getOpacity();
 }
 
 void CCFadeTo::update(cocos2d::ccTime time)
 {
-	dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
+	((CCRGBAProtocol*)(m_pTarget))->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
 }
 
 //
@@ -1506,7 +1512,7 @@ NSObject* CCTintTo::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCTintTo*>(pZone->m_pCopyObject);
+		pCopy = (CCTintTo*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1526,12 +1532,18 @@ void CCTintTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
-	m_from = dynamic_cast<CCRGBAProtocol*>(pTarget)->getColor();
+	// because we can not use dynamic_cast(), so we cast in c style.
+	// Is it sprite? can it be other node?
+	/*m_from = dynamic_cast<CCRGBAProtocol*>(pTarget)->getColor();*/
+	m_from = ((CCSprite *)(pTarget))->getColor();
 }
 
 void CCTintTo::update(cocos2d::ccTime time)
 {
-	CCRGBAProtocol *pTn = dynamic_cast<CCRGBAProtocol*>(m_pTarget);
+	// because we can not use dynamic_cast(), so we cast in c style.
+	// Is it sprite? can it be other node?
+	/*CCRGBAProtocol *pTn = dynamic_cast<CCRGBAProtocol*>(m_pTarget);*/
+	CCSprite *pTn = (CCSprite *)(m_pTarget);
 	pTn->setColor(ccc3(GLubyte(m_from.r + (m_to.r - m_from.r) * time), 
 		              (GLbyte)(m_from.g + (m_to.g - m_from.g) * time),
 		              (GLbyte)(m_from.b + (m_to.b - m_from.b) * time)));
@@ -1570,7 +1582,7 @@ NSObject* CCTintBy::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCTintBy*>(pZone->m_pCopyObject);
+		pCopy = (CCTintBy*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1590,7 +1602,7 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
-	ccColor3B color = dynamic_cast<CCRGBAProtocol*>(pTarget)->getColor();
+	ccColor3B color = ((CCRGBAProtocol*)(pTarget))->getColor();
 	m_fromR = color.r;
 	m_fromG = color.g;
 	m_fromB = color.b;
@@ -1598,7 +1610,7 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
 
 void CCTintBy::update(cocos2d::ccTime time)
 {
-	dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
+	((CCRGBAProtocol*)(m_pTarget))->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
 		                                                    (GLubyte)(m_fromG + m_deltaG * time),
 															(GLubyte)(m_fromB + m_deltaB * time)));
 }
@@ -1628,7 +1640,7 @@ NSObject* CCDelayTime::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCDelayTime*>(pZone->m_pCopyObject);
+		pCopy = (CCDelayTime*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1687,7 +1699,7 @@ NSObject* CCReverseTime::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCReverseTime*>(pZone->m_pCopyObject);
+		pCopy = (CCReverseTime*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1697,7 +1709,7 @@ NSObject* CCReverseTime::copyWithZone(cocos2d::NSZone *pZone)
 
 	__super::copyWithZone(pZone);
 
-	pCopy->initWithAction(dynamic_cast<CCFiniteTimeAction*>(m_pOther->copy()->autorelease()));
+	pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()));
 
 	CCX_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -1808,7 +1820,7 @@ NSObject* CCAnimate::copyWithZone(cocos2d::NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = dynamic_cast<CCAnimate*>(pZone->m_pCopyObject);
+		pCopy = (CCAnimate*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -1833,7 +1845,7 @@ CCAnimate::~CCAnimate(void)
 void CCAnimate::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
-	CCSprite *pSprite = dynamic_cast<CCSprite*>(pTarget);
+	CCSprite *pSprite = (CCSprite*)(pTarget);
 
 	CCX_SAFE_RELEASE(m_pOrigFrame);
 
@@ -1848,7 +1860,7 @@ void CCAnimate::stop(void)
 {
 	if (m_bRestoreOriginalFrame)
 	{
-		dynamic_cast<CCSprite*>(m_pTarget)->setDisplayFrame(m_pOrigFrame);
+		((CCSprite*)(m_pTarget))->setDisplayFrame(m_pOrigFrame);
 	}
 
 	__super::stop();
@@ -1866,7 +1878,7 @@ void CCAnimate::update(cocos2d::ccTime time)
 		idx = numberOfFrames - 1;
 	}
 
-	CCSprite *pSprite = dynamic_cast<CCSprite*>(m_pTarget);
+	CCSprite *pSprite = (CCSprite*)(m_pTarget);
 	if (! pSprite->isFrameDisplayed(pFrames->getObjectAtIndex(idx)))
 	{
 		pSprite->setDisplayFrame(pFrames->getObjectAtIndex(idx));
@@ -1890,7 +1902,7 @@ CCIntervalAction* CCAnimate::reverse(void)
 				break;
 			}
 
-			pNewArray->addObject(dynamic_cast<CCSpriteFrame*>(pElement->copy()->autorelease()));
+			pNewArray->addObject((CCSpriteFrame*)(pElement->copy()->autorelease()));
 		}
 	}
 

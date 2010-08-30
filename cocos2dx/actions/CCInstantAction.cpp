@@ -41,7 +41,7 @@ namespace cocos2d {
 		CCInstantAction *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
-			pRet = dynamic_cast<CCInstantAction*>(pZone->m_pCopyObject);
+			pRet = (CCInstantAction*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -66,7 +66,7 @@ namespace cocos2d {
 	}
 	CCFiniteTimeAction * CCInstantAction::reverse()
 	{
-		return dynamic_cast<CCFiniteTimeAction*>(copy()->autorelease());
+		return (CCFiniteTimeAction*)(copy()->autorelease());
 	}
 
 	//
@@ -81,11 +81,11 @@ namespace cocos2d {
 	void CCShow::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		dynamic_cast<CCNode*>(pTarget)->setIsVisible(true);
+		pTarget->setIsVisible(true);
 	}
 	CCFiniteTimeAction *CCShow::reverse()
 	{
-		return dynamic_cast<CCFiniteTimeAction*>(CCHide::action());
+		return (CCFiniteTimeAction*)(CCHide::action());
 	}
 	//
 	// Hide
@@ -99,12 +99,12 @@ namespace cocos2d {
 	void CCHide::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		dynamic_cast<CCNode*>(pTarget)->setIsVisible(false);
+		pTarget->setIsVisible(false);
 	}
 
 	CCFiniteTimeAction *CCHide::reverse()
 	{
-		return dynamic_cast<CCFiniteTimeAction*>(CCShow::action());
+		return (CCFiniteTimeAction*)(CCShow::action());
 	}
 
 	//
@@ -119,7 +119,7 @@ namespace cocos2d {
 	void CCToggleVisibility::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		dynamic_cast<CCNode*>(pTarget)->setIsVisible(!dynamic_cast<CCNode*>(pTarget)->getIsVisible());
+		pTarget->setIsVisible(! pTarget->getIsVisible());
 	}
 	//
 	// FlipX
@@ -139,7 +139,7 @@ namespace cocos2d {
 	void CCFlipX::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		dynamic_cast<CCSprite*>(pTarget)->setFlipX(m_bFlipX);
+		((CCSprite*)(pTarget))->setFlipX(m_bFlipX);
 	}
 
 	CCFiniteTimeAction* CCFlipX::reverse()
@@ -153,7 +153,7 @@ namespace cocos2d {
 		CCFlipX *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
-			pRet = dynamic_cast<CCFlipX*>(pZone->m_pCopyObject);
+			pRet = (CCFlipX*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -185,7 +185,7 @@ namespace cocos2d {
 	void CCFlipY::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		dynamic_cast<CCSprite*>(pTarget)->setFlipY(m_bFlipY);
+		((CCSprite*)(pTarget))->setFlipY(m_bFlipY);
 	}
 
 	CCFiniteTimeAction* CCFlipY::reverse()
@@ -199,7 +199,7 @@ namespace cocos2d {
 		CCFlipY *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
-			pRet = dynamic_cast<CCFlipY*>(pZone->m_pCopyObject);
+			pRet = (CCFlipY*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -234,7 +234,7 @@ namespace cocos2d {
 		CCPlace *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
-			pRet = dynamic_cast<CCPlace*>(pZone->m_pCopyObject);
+			pRet = (CCPlace*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -250,7 +250,7 @@ namespace cocos2d {
 	void CCPlace::startWithTarget(CCNode *pTarget)
 	{
 		__super::startWithTarget(pTarget);
-		dynamic_cast<CCNode*>(m_pTarget)->setPosition(m_tPosition);
+		m_pTarget->setPosition(m_tPosition);
 	}
 
 	//
@@ -278,7 +278,7 @@ namespace cocos2d {
 		NSZone* pNewZone = NULL;
 		CCCallFunc* pRet = NULL;
 		if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
-			pRet = dynamic_cast<CCCallFunc*>(pZone->m_pCopyObject);
+			pRet = (CCCallFunc*)(pZone->m_pCopyObject);
 		else
 		{
 			pRet = new CCCallFunc();
@@ -309,7 +309,7 @@ namespace cocos2d {
 	{
 		if(m_pCallFuncN)
 		{
-			(m_pSelectorTarget->*m_pCallFuncN)(dynamic_cast<CCNode*>(m_pTarget));
+			(m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
 		}
 	}
 	CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
@@ -347,7 +347,7 @@ namespace cocos2d {
 		NSZone* pNewZone = NULL;
 		CCCallFuncND* pRet = NULL;
 		if(zone && zone->m_pCopyObject) //in case of being called at sub class
-			pRet = dynamic_cast<CCCallFuncND*>(zone->m_pCopyObject);
+			pRet = (CCCallFuncND*)(zone->m_pCopyObject);
 		else
 		{
 			pRet = new CCCallFuncND();
@@ -363,7 +363,7 @@ namespace cocos2d {
 	{
 		if(m_pCallFuncND)
 		{
-			(m_pSelectorTarget->*m_pCallFuncND)(dynamic_cast<CCNode*>(m_pTarget), m_pData);
+			(m_pSelectorTarget->*m_pCallFuncND)(m_pTarget, m_pData);
 		}
 	}
 	

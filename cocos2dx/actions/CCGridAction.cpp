@@ -65,13 +65,13 @@ namespace cocos2d
 
 		CCGridBase *newgrid = grid();
 
-		CCNode *t = dynamic_cast<CCNode*>(pTarget);
+		CCNode *t = pTarget;
 		CCGridBase *targetGrid = t->getGrid();
 
 		if (targetGrid && targetGrid->getReuseGrid() > 0)
 		{
 			if (targetGrid->isActive() && targetGrid->getGridSize().x == m_sGridSize.x
-				&& targetGrid->getGridSize().y == m_sGridSize.y && dynamic_cast<CCGridBase*>(targetGrid) != NULL)
+				&& targetGrid->getGridSize().y == m_sGridSize.y /*&& dynamic_cast<CCGridBase*>(targetGrid) != NULL*/)
 			{
 				targetGrid->reuse();
 			}
@@ -112,7 +112,7 @@ namespace cocos2d
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = dynamic_cast<CCGridAction*>(pZone->m_pCopyObject);
+			pCopy = (CCGridAction*)(pZone->m_pCopyObject);
 		}
 		else
 		{
@@ -137,19 +137,19 @@ namespace cocos2d
 
 	ccVertex3F CCGrid3DAction::vertex(cocos2d::ccGridSize pos)
 	{
-		CCGrid3D *g = (CCGrid3D*)dynamic_cast<CCNode*>(m_pTarget)->getGrid();
+		CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
 		return g->vertex(pos);
 	}
 
 	ccVertex3F CCGrid3DAction::originalVertex(cocos2d::ccGridSize pos)
 	{
-		CCGrid3D *g = (CCGrid3D*)dynamic_cast<CCNode*>(m_pTarget)->getGrid();
+		CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
 		return g->originalVertex(pos);
 	}
 
 	void CCGrid3DAction::setVertex(cocos2d::ccGridSize pos, cocos2d::ccVertex3F vertex)
 	{
-		CCGrid3D *g = (CCGrid3D*)dynamic_cast<CCNode*>(m_pTarget)->getGrid();
+		CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
 		return g->setVertex(pos, vertex);
 	}
 
@@ -162,19 +162,19 @@ namespace cocos2d
 
 	ccQuad3 CCTiledGrid3DAction::tile(cocos2d::ccGridSize pos)
 	{
-		CCTiledGrid3D *g = (CCTiledGrid3D*)dynamic_cast<CCNode*>(m_pTarget)->getGrid();
+		CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
 		return g->tile(pos);
 	}
 
 	ccQuad3 CCTiledGrid3DAction::originalTile(cocos2d::ccGridSize pos)
 	{
-		CCTiledGrid3D *g = (CCTiledGrid3D*)dynamic_cast<CCNode*>(m_pTarget)->getGrid();
+		CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
 		return g->originalTile(pos);
 	}
 
 	void CCTiledGrid3DAction::setTile(cocos2d::ccGridSize pos, cocos2d::ccQuad3 coords)
 	{
-		CCTiledGrid3D *g = (CCTiledGrid3D*)dynamic_cast<CCNode*>(m_pTarget)->getGrid();
+		CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
 		return g->setTile(pos, coords);
 	}
 
@@ -203,7 +203,7 @@ namespace cocos2d
 		if (__super::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
-			m_pOther = dynamic_cast<CCIntervalAction*>(pAction);
+			m_pOther = (CCIntervalAction*)(pAction);
 			pAction->retain();
 
 			return true;
@@ -233,7 +233,7 @@ namespace cocos2d
 			f = 1 - f;
 		}
 
-		dynamic_cast<CCAccelDeccelAmplitude*>(m_pOther)->setAmplitudeRate(powf(f, m_fRate));
+		((CCAccelDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(f, m_fRate));
 	}
 
 	CCIntervalAction* CCAccelDeccelAmplitude::reverse(void)
@@ -266,7 +266,7 @@ namespace cocos2d
 		if (__super::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
-			m_pOther = dynamic_cast<CCIntervalAction*>(pAction);
+			m_pOther = (CCIntervalAction*)(pAction);
 			pAction->retain();
 
 			return true;
@@ -288,7 +288,7 @@ namespace cocos2d
 
 	void CCAccelAmplitude::update(cocos2d::ccTime time)
 	{
-        dynamic_cast<CCAccelAmplitude*>(m_pOther)->setAmplitudeRate(powf(time, m_fRate));
+        ((CCAccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(time, m_fRate));
 		m_pOther->update(time);
 	}
 
@@ -322,7 +322,7 @@ namespace cocos2d
 		if (__super::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
-			m_pOther = dynamic_cast<CCIntervalAction*>(pAction);
+			m_pOther = (CCIntervalAction*)(pAction);
 			pAction->retain();
 
 			return true;
@@ -344,7 +344,7 @@ namespace cocos2d
 
 	void CCDeccelAmplitude::update(cocos2d::ccTime time)
 	{
-        dynamic_cast<CCDeccelAmplitude*>(m_pOther)->setAmplitudeRate(powf((1 - time), m_fRate));
+        ((CCDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf((1 - time), m_fRate));
 		m_pOther->update(time);
 	}
 
@@ -359,7 +359,7 @@ namespace cocos2d
 	{
 		__super::startWithTarget(pTarget);
 
-		CCGridBase *pGrid = dynamic_cast<CCNode*>(m_pTarget)->getGrid();
+		CCGridBase *pGrid = m_pTarget->getGrid();
 		if (pGrid && pGrid->isActive())
 		{
 			pGrid->setActive(false);
@@ -405,10 +405,9 @@ namespace cocos2d
 	{
 		__super::startWithTarget(pTarget);
 
-		CCNode *myTarget = dynamic_cast<CCNode*>(m_pTarget);
-		if (myTarget->getGrid() && myTarget->getGrid()->isActive())
+		if (m_pTarget->getGrid() && m_pTarget->getGrid()->isActive())
 		{
-			myTarget->getGrid()->setReuseGrid(myTarget->getGrid()->getReuseGrid() + m_nTimes);
+			m_pTarget->getGrid()->setReuseGrid(m_pTarget->getGrid()->getReuseGrid() + m_nTimes);
 		}
 	}
 } // end of namespace cocos2d
