@@ -21,11 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCLayer.h"
 #include "CCTMXLayer.h"
 #include "CCTMXXMLParser.h"
+#include "CCTMXTiledMap.h"
 #include "CCSprite.h"
-#include "CCSpriteSheet.h"
 #include "CCTextureCache.h"
 #include "CGPointExtension.h"
 
@@ -510,18 +509,6 @@ namespace cocos2d {
 		}
 	}
 
-	/** Possible oritentations of the TMX map */
-	enum
-	{
-		/** Orthogonal orientation */
-		CCTMXOrientationOrtho,
-
-		/** Hexagonal orientation */
-		CCTMXOrientationHex,
-
-		/** Isometric orientation */
-		CCTMXOrientationIso,
-	};/// @todo to be deleted
 	//CCTMXLayer - obtaining positions, offset
 	CGPoint CCTMXLayer::calculateLayerOffset(CGPoint pos)
 	{

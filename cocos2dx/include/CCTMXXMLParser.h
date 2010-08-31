@@ -143,6 +143,8 @@ namespace cocos2d {
 		CCX_SYNTHESIZE(std::string, m_sCurrentString, CurrentString);
 		// is stroing characters?
 		CCX_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
+		// properties
+		CCX_SYNTHESIZE(StringToStringDictionary*, m_pProperties, Properties);
 	public:	
 		CCTMXMapInfo(){}
 		virtual ~CCTMXMapInfo();
@@ -153,13 +155,9 @@ namespace cocos2d {
 		/* initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
 
-		inline StringToStringDictionary* getProperties(){return m_pProperties;}
-		inline void setProperties(StringToStringDictionary * var){m_pProperties = var;}
 		inline std::map<int, StringToStringDictionary*>* getTileProperties(){return m_pTileProperties;}
 		inline void setTileProperties(std::map<int, StringToStringDictionary*> * var){m_pTileProperties = var;}
 	protected:
-		// properties
-		StringToStringDictionary* m_pProperties;
 		// tile properties
 		std::map<int, StringToStringDictionary*>* m_pTileProperties;
 	};
