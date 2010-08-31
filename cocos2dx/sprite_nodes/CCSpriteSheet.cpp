@@ -596,4 +596,60 @@ void CCSpriteSheet::setTexture(CCTexture2D *texture)
 {
 	m_pobTextureAtlas->setTexture(texture);
 }
+
+// CCSpriteSheet Extension
+//implementation CCSpriteSheet (TMXTiledMapExtension)
+
+void CCSpriteSheet::addQuadFromSprite(CCSprite *sprite, unsigned int index)
+{
+	NSAssert( sprite != NULL, "Argument must be non-nil");
+	/// @todo NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
+
+	while(index >= m_pobTextureAtlas->getCapacity() || m_pobTextureAtlas->getCapacity() == m_pobTextureAtlas->getTotalQuads())
+	{
+		this->increaseAtlasCapacity();
+	}
+	//
+	// update the quad directly. Don't add the sprite to the scene graph
+	//
+	sprite->useSpriteSheetRender(this);
+	sprite->setAtlasIndex(index);
+
+	ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
+	m_pobTextureAtlas->insertQuad(&quad, index);
+
+	// XXX: updateTransform will update the textureAtlas too using updateQuad.
+	// XXX: so, it should be AFTER the insertQuad
+	sprite->updateTransform();
+}
+
+CCSpriteSheet * CCSpriteSheet::addSpriteWithoutQuad(CCSprite*child, unsigned int z, int aTag)
+{
+	NSAssert( child != NULL, "Argument must be non-nil");
+	/// @todo NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
+
+	// quad index is Z
+	child->setAtlasIndex(z);
+
+	// XXX: optimize with a binary search
+	int i=0;
+	if (m_pobDescendants && m_pobDescendants->count() > 0)
+	{
+		NSMutableArray<CCSprite*>::NSMutableArrayIterator iter;
+		for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
+		{
+			// fast dispatch
+			if (!(*iter) || (*iter)->getAtlasIndex() >=z)
+			{
+				break;
+			}
+			++i;
+		}
+	}
+	m_pobDescendants->insertObjectAtIndex(child, i);
+
+	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
+	__super::addChild(child, z, aTag);
+	return this;
+}
 }//namespace   cocos2d 
