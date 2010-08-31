@@ -113,7 +113,7 @@ public:
 };
 void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 {
-	CCDictMaker *pMaker = static_cast<CCDictMaker*>(ctx);
+	CCDictMaker *pMaker = (CCDictMaker*)(ctx);
 	std::string sName((char*)name);
 	if( sName == "dict" )
 	{
@@ -155,21 +155,21 @@ void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 }
 void plist_endElement(void *ctx, const xmlChar *name)
 {
-	CCDictMaker * pMaker = static_cast<CCDictMaker*>(ctx);
+	CCDictMaker * pMaker = (CCDictMaker*)(ctx);
 	std::string sName((char*)name);
 	if( sName == "dict" )
 	{
 		pMaker->m_tDictStack.pop();
 		if ( !pMaker->m_tDictStack.empty() )
 		{
-			pMaker->m_pCurDict = static_cast<std::map<std::string, void*>*>(pMaker->m_tDictStack.top());
+			pMaker->m_pCurDict = (std::map<std::string, void*>*)(pMaker->m_tDictStack.top());
 		}
 	}
 	pMaker->m_tState = SAX_NONE;
 }
 void plist_characters(void *ctx, const xmlChar *ch, int len)
 {
- 	CCDictMaker * pMaker = static_cast<CCDictMaker*>(ctx);
+ 	CCDictMaker * pMaker = (CCDictMaker*)(ctx);
 	if (pMaker->m_tState == SAX_NONE)
 	{
 		return;

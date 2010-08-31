@@ -89,7 +89,7 @@ typedef enum {
  *    - But the rendering will be slower: 1 draw per children.
  *
  */
-class CCX_DLL CCSprite : public CCNode, public CCTextureProtocol
+class CCX_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 {
 public:
 	virtual void draw(void);
@@ -231,6 +231,8 @@ public:
 	virtual void setColor(ccColor3B color3);
 	virtual void setIsOpacityModifyRGB(bool bValue);
 	virtual bool getIsOpacityModifyRGB(void);
+
+	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol *)this; }
 
 	// CCTextureProtocol
     virtual void setTexture(CCTexture2D *texture);

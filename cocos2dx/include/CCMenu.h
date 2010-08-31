@@ -90,6 +90,8 @@ namespace cocos2d{
 		virtual ccColor3B getColor(void);
 		virtual void setColor(ccColor3B color);
 
+		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+
 	private:
 		CCMenuItem* itemForTouch(CCTouch * touch);
 

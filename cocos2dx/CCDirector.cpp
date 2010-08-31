@@ -623,24 +623,32 @@ void CCDirector::end(void)
 
 void CCDirector::setNextScene(void)
 {
-	bool runningIsTransition = dynamic_cast<CCTransitionScene *>(m_pRunningScene) != NULL;
-	bool newIsTransition = dynamic_cast<CCTransitionScene *>(m_pNextScene) != NULL;
+// 	bool runningIsTransition = dynamic_cast<CCTransitionScene *>(m_pRunningScene) != NULL;
+// 	bool newIsTransition = dynamic_cast<CCTransitionScene *>(m_pNextScene) != NULL;
+	ccSceneFlag runningSceneType = ccNormalScene;
+	ccSceneFlag newSceneType = m_pNextScene->getSceneType();
+
+	if (m_pRunningScene)
+	{
+		runningSceneType = m_pRunningScene->getSceneType();
+	}
 
 	// If it is not a transition, call onExit/cleanup
-	if (! newIsTransition)
-	{
-        if (m_pRunningScene)
-        {
-            m_pRunningScene->onExit();
-        }
-
-		// issue #709. the root node (scene) should receive the cleanup message too
-		// otherwise it might be leaked.
-		if (m_bSendCleanupToScene && m_pRunningScene)
-		{
-			m_pRunningScene->cleanup();
-		}
-	}
+ 	/*if (! newIsTransition)*/
+	if (! (newSceneType & ccTransitionScene))
+ 	{
+         if (m_pRunningScene)
+         {
+             m_pRunningScene->onExit();
+         }
+ 
+ 		// issue #709. the root node (scene) should receive the cleanup message too
+ 		// otherwise it might be leaked.
+ 		if (m_bSendCleanupToScene && m_pRunningScene)
+ 		{
+ 			m_pRunningScene->cleanup();
+ 		}
+ 	}
 
     if (m_pRunningScene)
     {
@@ -650,7 +658,8 @@ void CCDirector::setNextScene(void)
 	m_pNextScene->retain();
 	m_pNextScene = NULL;
 
-	if (! runningIsTransition && m_pRunningScene)
+	/*if (! runningIsTransition && m_pRunningScene)*/
+	if (! (runningSceneType & ccTransitionScene) && m_pRunningScene)
 	{
 		m_pRunningScene->onEnter();
 		m_pRunningScene->onEnterTransitionDidFinish();

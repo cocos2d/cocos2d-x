@@ -118,7 +118,8 @@ namespace cocos2d{
 
 	CCNode * CCMenu::addChild(CCNode * child, int zOrder, int tag)
 	{
-		NSAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");
+		// we can not use RTTI, so we do not known the type of object
+		/*NSAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
 		return __super::addChild(child, zOrder, tag);
 	}
 
@@ -513,8 +514,12 @@ namespace cocos2d{
 				{
 					break;
 				}
-
-				dynamic_cast<CCRGBAProtocol*>(*it)->setOpacity(m_cOpacity);
+                
+				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
+				if (pRGBAProtocol)
+				{
+					pRGBAProtocol->setOpacity(m_cOpacity);
+				}
 			}
 		}
 	}
@@ -538,7 +543,11 @@ namespace cocos2d{
 					break;
 				}
 
-				dynamic_cast<CCRGBAProtocol*>(*it)->setColor(m_tColor);
+				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
+				if (pRGBAProtocol)
+				{
+					pRGBAProtocol->setColor(m_tColor);
+				}
 			}
 		}
 	}

@@ -416,7 +416,7 @@ namespace cocos2d{
 
 			CCSprite *fontChar;
 
-			fontChar = dynamic_cast<CCSprite*>(this->getChildByTag(i));
+			fontChar = (CCSprite*)(this->getChildByTag(i));
 			if( ! fontChar )
 			{
 				fontChar = new CCSprite();
@@ -488,7 +488,7 @@ namespace cocos2d{
 			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
-				(dynamic_cast<CCSprite*>(*it))->setColor(m_tColor);
+				((CCSprite*)(*it))->setColor(m_tColor);
 			}
 		}
 	}
@@ -505,7 +505,11 @@ namespace cocos2d{
 			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
-				(dynamic_cast<CCRGBAProtocol*>(*it))->setOpacity(m_cOpacity);
+				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
+				if (pRGBAProtocol)
+				{
+                    pRGBAProtocol->setOpacity(m_cOpacity);
+				}
 			}
 		}
 	}
@@ -521,7 +525,11 @@ namespace cocos2d{
 			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
-				(dynamic_cast<CCRGBAProtocol*>(*it))->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
+				if (pRGBAProtocol)
+				{
+					pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+				}
 			}
 		}
 	}

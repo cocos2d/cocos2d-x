@@ -39,6 +39,8 @@ class CCGridBase;
 class CGPoint;
 class CCTouch;
 class CCAction;
+class CCRGBAProtocol;
+class CCLabelProtocol;
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -446,6 +448,8 @@ public:
 	virtual void selectorProtocolRetain(void);
 	virtual void selectorProtocolRelease(void);
 
+	virtual CCRGBAProtocol* convertToRGBAProtocol(void) { return NULL; }
+	virtual CCLabelProtocol* convertToLabelProtocol(void) { return NULL; }
 
 	// transformation methods
 

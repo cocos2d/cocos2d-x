@@ -32,6 +32,7 @@ CCScene::CCScene()
 {
 	m_bIsRelativeAnchorPoint = false;
 	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	m_eSceneType = ccNormalScene;
 }
 
 CCScene::~CCScene()

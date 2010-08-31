@@ -130,6 +130,8 @@ public:
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
 	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
+	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+
 private :
 	void updateColor();
 };
