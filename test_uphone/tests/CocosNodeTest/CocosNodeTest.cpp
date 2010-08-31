@@ -170,19 +170,19 @@ void Test2::onEnter()
 	sp3->setScale(0.25f);
 	sp4->setScale(0.25f);
 	
-	dynamic_cast<CCNode*>(sp1)->addChild(sp3);
-	dynamic_cast<CCNode*>(sp2)->addChild(sp4);
+	sp1->addChild(sp3);
+	sp2->addChild(sp4);
 	
 	CCIntervalAction* a1 = CCRotateBy::actionWithDuration(2, 360);
 	CCIntervalAction* a2 = CCScaleBy::actionWithDuration(2, 2);
 	
 	CCAction* action1 = CCRepeatForever::actionWithAction(
-													dynamic_cast<CCIntervalAction*>(CCSequence::actions(a1, a2, a2->reverse(), NULL))
+													(CCIntervalAction*)(CCSequence::actions(a1, a2, a2->reverse(), NULL))
 												);
 	CCAction* action2 = CCRepeatForever::actionWithAction(
-													dynamic_cast<CCIntervalAction*>(CCSequence::actions(
-																						dynamic_cast<CCIntervalAction*>(a1->copy()->autorelease()), 
-																						dynamic_cast<CCIntervalAction*>(a2->copy()->autorelease()), 
+													(CCIntervalAction*)(CCSequence::actions(
+																						(CCIntervalAction*)(a1->copy()->autorelease()), 
+																						(CCIntervalAction*)(a2->copy()->autorelease()), 
 																						a2->reverse(), 
 																						NULL) )
 												);
@@ -224,7 +224,7 @@ Test4::Test4()
 
 void Test4::delay2(ccTime dt)
 {
-	CCSprite* node = dynamic_cast<CCSprite*>(getChildByTag(2));
+	CCSprite* node = (CCSprite*)(getChildByTag(2));
 	CCAction* action1 = CCRotateBy::actionWithDuration(1, 360);
 	node->runAction(action1);
 }
@@ -257,9 +257,9 @@ Test5::Test5()
 	CCRotateBy* rot = CCRotateBy::actionWithDuration(2, 360);
 	CCIntervalAction* rot_back = rot->reverse();
 	CCAction* forever = CCRepeatForever::actionWithAction(
-													dynamic_cast<CCIntervalAction*>(CCSequence::actions(rot, rot_back, NULL)) 
+													(CCIntervalAction*)(CCSequence::actions(rot, rot_back, NULL)) 
 												);
-	CCAction* forever2 = dynamic_cast<CCAction*>(forever->copy()->autorelease());
+	CCAction* forever2 = (CCAction*)(forever->copy()->autorelease());
 	forever->setTag(101);
 	forever2->setTag(102);
 												  
@@ -314,16 +314,16 @@ Test6::Test6()
 	CCIntervalAction* rot = CCRotateBy::actionWithDuration(2, 360);
 	CCIntervalAction* rot_back = rot->reverse();
 	CCAction* forever1 = CCRepeatForever::actionWithAction(
-															dynamic_cast<CCIntervalAction*>(CCSequence::actions(rot, rot_back, NULL)));
-	CCAction* forever11 =  dynamic_cast<CCAction*>(forever1->copy()->autorelease());
+															(CCIntervalAction*)(CCSequence::actions(rot, rot_back, NULL)));
+	CCAction* forever11 =  (CCAction*)(forever1->copy()->autorelease());
 
-	CCAction* forever2 =  dynamic_cast<CCAction*>(forever1->copy()->autorelease());
-	CCAction* forever21 =  dynamic_cast<CCAction*>(forever1->copy()->autorelease());
+	CCAction* forever2 =  (CCAction*)(forever1->copy()->autorelease());
+	CCAction* forever21 =  (CCAction*)(forever1->copy()->autorelease());
 	
 	addChild(sp1, 0, kTagSprite1);
-	dynamic_cast<CCNode*>(sp1)->addChild(sp11);
+	sp1->addChild(sp11);
 	addChild(sp2, 0, kTagSprite2);
-	dynamic_cast<CCNode*>(sp2)->addChild(sp21);
+	sp2->addChild(sp21);
 	
 	sp1->runAction(forever1);
 	sp11->runAction(forever11);
@@ -424,16 +424,16 @@ StressTest2::StressTest2()
 	sp1->setPosition( CGPointMake(80, s.height/2) );
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
-	CCIntervalAction* move_ease_inout3 = CCEaseInOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 2.0f);
+	CCIntervalAction* move_ease_inout3 = CCEaseInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 2.0f);
 	CCIntervalAction* move_ease_inout_back3 = move_ease_inout3->reverse();
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL));
-	sp1->runAction( CCRepeatForever::actionWithAction(seq3) );
+	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL);
+	sp1->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3) );
 	sublayer->addChild(sp1, 1);
 
 	CCParticleFire* fire = CCParticleFire::node();
 	fire->setPosition( CGPointMake(80, s.height/2-50) );
 	
-	CCIntervalAction* copy_seq3 = dynamic_cast<CCIntervalAction*>(seq3->copy()->autorelease());
+	CCIntervalAction* copy_seq3 = (CCIntervalAction*)(seq3->copy()->autorelease());
 	
 	fire->runAction( CCRepeatForever::actionWithAction(copy_seq3) );
 	sublayer->addChild(fire, 2);
@@ -515,8 +515,8 @@ NodeToWorld::NodeToWorld()
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(200,0));
 	CCIntervalAction* move_back = move->reverse();
-	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCAction* fe2 = CCRepeatForever::actionWithAction( seq );
+	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
+	CCAction* fe2 = CCRepeatForever::actionWithAction((CCIntervalAction*)seq);
 	back->runAction(fe2);
 }
 
