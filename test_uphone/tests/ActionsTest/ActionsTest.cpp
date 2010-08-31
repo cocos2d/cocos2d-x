@@ -409,7 +409,7 @@ void ActionBezier::onEnter()
 
     CCIntervalAction*  bezierForward = CCBezierBy::actionWithDuration(3, bezier);
     CCIntervalAction*  bezierBack = bezierForward->reverse();	
-    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( bezierForward, bezierBack, NULL));
+    CCIntervalAction*  seq = (CCIntervalAction*)(CCSequence::actions( bezierForward, bezierBack, NULL));
     CCAction*  rep = CCRepeatForever::actionWithAction(seq);
 
 
@@ -553,7 +553,7 @@ void ActionSequence::onEnter()
 
     alignSpritesLeft(1);
 
-    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action = (CCIntervalAction*)(CCSequence::actions(
         CCMoveBy::actionWithDuration( 2, CGPointMake(240,0)),
         CCRotateBy::actionWithDuration( 2,  540),
         NULL));
@@ -579,7 +579,7 @@ void ActionSequence2::onEnter()
 
     m_grossini->setIsVisible(false);
 
-    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action = (CCIntervalAction*)(CCSequence::actions(
         CCPlace::actionWithPosition(CGPointMake(200,200)),
         CCShow::action(),
         CCMoveBy::actionWithDuration(1, CGPointMake(100,0)),
@@ -634,18 +634,18 @@ void ActionCallFunc::onEnter()
 
     centerSprites(3);
 
-    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action = (CCIntervalAction*)(CCSequence::actions(
         CCMoveBy::actionWithDuration(2, CGPointMake(200,0)),
         CCCallFunc::actionWithTarget(this, callfunc_selector(ActionCallFunc::callback1)), 
         NULL));
 
-    CCIntervalAction*  action2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action2 = (CCIntervalAction*)(CCSequence::actions(
         CCScaleBy::actionWithDuration(2 ,  2),
         CCFadeOut::actionWithDuration(2),
         CCCallFuncN::actionWithTarget(this, callfuncN_selector(ActionSequence2::callback2)), 
         NULL));
 
-    CCIntervalAction*  action3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action3 = (CCIntervalAction*)(CCSequence::actions(
         CCRotateBy::actionWithDuration(3 , 360),
         CCFadeOut::actionWithDuration(2),
         CCCallFuncND::actionWithTarget(this, callfuncND_selector(ActionSequence2::callback3), (void*)0xbebabeba), 
@@ -727,7 +727,7 @@ void ActionRepeatForever::onEnter()
 
     centerSprites(1);
 
-    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>( CCSequence::actions(
+    CCIntervalAction*  action = (CCIntervalAction*)( CCSequence::actions(
         CCDelayTime::actionWithDuration(1),
         CCCallFuncN::actionWithTarget( this, callfuncN_selector(ActionRepeatForever::repeatForever) ), 
         NULL));
@@ -761,9 +761,9 @@ void ActionRotateToRepeat::onEnter()
 
     CCIntervalAction*  act1 = CCRotateTo::actionWithDuration(1, 90);
     CCIntervalAction*  act2 = CCRotateTo::actionWithDuration(1, 0);
-    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(act1, act2, NULL));
+    CCIntervalAction*  seq = (CCIntervalAction*)(CCSequence::actions(act1, act2, NULL));
     CCAction*  rep1 = CCRepeatForever::actionWithAction(seq);
-    CCIntervalAction*  rep2 = CCRepeat::actionWithAction(dynamic_cast<CCFiniteTimeAction*>(seq->copy()->autorelease()), 10);
+    CCIntervalAction*  rep2 = CCRepeat::actionWithAction((CCFiniteTimeAction*)(seq->copy()->autorelease()), 10);
 
     m_tamara->runAction(rep1);
     m_kathia->runAction(rep2);
@@ -786,13 +786,13 @@ void ActionRotateJerk::onEnter()
 
     centerSprites(2);
 
-    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  seq = (CCIntervalAction*)(CCSequence::actions(
         CCRotateTo::actionWithDuration(0.5f, -20),
         CCRotateTo::actionWithDuration(0.5f, 20),
         NULL));
 
     CCIntervalAction*  rep1 = CCRepeat::actionWithAction(seq, 10);
-    CCAction*  rep2 = CCRepeatForever::actionWithAction( dynamic_cast<CCIntervalAction*>(seq->copy()->autorelease()) );
+    CCAction*  rep2 = CCRepeatForever::actionWithAction( (CCIntervalAction*)(seq->copy()->autorelease()) );
 
     m_tamara->runAction(rep1);
     m_kathia->runAction(rep2);
@@ -815,7 +815,7 @@ void ActionReverse::onEnter()
     alignSpritesLeft(1);
 
     CCIntervalAction*  jump = CCJumpBy::actionWithDuration(2, CGPointMake(300,0), 50, 4);
-    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions( jump, jump->reverse(), NULL));
+    CCIntervalAction*  action = (CCIntervalAction*)(CCSequence::actions( jump, jump->reverse(), NULL));
 
     m_grossini->runAction(action);
 }
@@ -838,7 +838,7 @@ void ActionDelayTime::onEnter()
     alignSpritesLeft(1);
 
     CCIntervalAction*  move = CCMoveBy::actionWithDuration(1, CGPointMake(150,0));
-    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, CCDelayTime::actionWithDuration(2), move, NULL));
+    CCIntervalAction*  action = (CCIntervalAction*)(CCSequence::actions( move, CCDelayTime::actionWithDuration(2), move, NULL));
 
     m_grossini->runAction(action);
 }
@@ -862,8 +862,8 @@ void ActionReverseSequence::onEnter()
 
     CCIntervalAction*  move1 = CCMoveBy::actionWithDuration(1, CGPointMake(250,0));
     CCIntervalAction*  move2 = CCMoveBy::actionWithDuration(1, CGPointMake(0,50));
-    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, move2, move1->reverse(), NULL));
-    CCIntervalAction*  action = dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL));
+    CCIntervalAction*  seq = (CCIntervalAction*)(CCSequence::actions( move1, move2, move1->reverse(), NULL));
+    CCIntervalAction*  action = (CCIntervalAction*)(CCSequence::actions( seq, seq->reverse(), NULL));
 
     m_grossini->runAction(action);
 }
@@ -894,8 +894,8 @@ void ActionReverseSequence2::onEnter()
     CCToggleVisibility*  tog2 = new CCToggleVisibility();
     tog1->autorelease();
     tog2->autorelease();
-    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));
-    CCIntervalAction*  action = CCRepeat::actionWithAction(dynamic_cast<CCIntervalAction*>(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
+    CCIntervalAction*  seq = (CCIntervalAction*)(CCSequence::actions( move1, tog1, move2, tog2, move1->reverse(), NULL));
+    CCIntervalAction*  action = CCRepeat::actionWithAction((CCIntervalAction*)(CCSequence::actions( seq, seq->reverse(), NULL)), 3);
 
 
 
@@ -907,7 +907,7 @@ void ActionReverseSequence2::onEnter()
     CCIntervalAction*  move_tamara2 = CCMoveBy::actionWithDuration(1, CGPointMake(50,0));
     CCInstantAction*  hide = new CCHide();
     hide->autorelease();
-    CCIntervalAction*  seq_tamara = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_tamara, hide, move_tamara2, NULL));
+    CCIntervalAction*  seq_tamara = (CCIntervalAction*)(CCSequence::actions( move_tamara, hide, move_tamara2, NULL));
     CCIntervalAction*  seq_back = seq_tamara->reverse();
     m_tamara->runAction( CCSequence::actions( seq_tamara, seq_back, NULL));
 }
@@ -933,7 +933,7 @@ void ActionRepeat::onEnter()
         CCSequence::actions( CCPlace::actionWithPosition(CGPointMake(60,60)), a1, NULL) , 
         3); 
     CCAction*  action2 = CCRepeatForever::actionWithAction(
-        dynamic_cast<CCIntervalAction*>(CCSequence::actions( dynamic_cast<CCIntervalAction*>(a1->copy()->autorelease()), a1->reverse(), NULL))
+        (CCIntervalAction*)(CCSequence::actions((CCIntervalAction*)(a1->copy()->autorelease()), a1->reverse(), NULL))
         );
 
     m_kathia->runAction(action1);
@@ -957,19 +957,19 @@ void ActionOrbit::onEnter()
     centerSprites(3);
 
     CCIntervalAction*  orbit1 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, 0, 0);
-    CCIntervalAction*  action1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action1 = (CCIntervalAction*)(CCSequence::actions(
         orbit1,
         orbit1->reverse(),
         NULL));
 
     CCIntervalAction*  orbit2 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, -45, 0);
-    CCIntervalAction*  action2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action2 = (CCIntervalAction*)(CCSequence::actions(
         orbit2,
         orbit2->reverse(),
         NULL));
 
     CCIntervalAction*  orbit3 = CCOrbitCamera::actionWithDuration(2,1, 0, 0, 180, 90, 0);
-    CCIntervalAction*  action3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(
+    CCIntervalAction*  action3 = (CCIntervalAction*)(CCSequence::actions(
         orbit3,
         orbit3->reverse(),
         NULL));
@@ -980,11 +980,11 @@ void ActionOrbit::onEnter()
 
     CCIntervalAction*  move = CCMoveBy::actionWithDuration(3, CGPointMake(100,-100));
     CCIntervalAction*  move_back = move->reverse();
-    CCIntervalAction*  seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move, move_back, NULL));
+    CCIntervalAction*  seq = (CCIntervalAction*)(CCSequence::actions(move, move_back, NULL));
     CCAction*  rfe = CCRepeatForever::actionWithAction(seq);
     m_kathia->runAction(rfe);
-    m_tamara->runAction(dynamic_cast<CCAction*>(rfe->copy()->autorelease()));
-    m_grossini->runAction(dynamic_cast<CCAction*>(rfe->copy()->autorelease()));
+    m_tamara->runAction((CCAction*)(rfe->copy()->autorelease()));
+    m_grossini->runAction((CCAction*)(rfe->copy()->autorelease()));
 }
 
 std::string ActionOrbit::subtitle()
@@ -1007,7 +1007,7 @@ void ActionFollow::onEnter()
     m_grossini->setPosition(CGPointMake(-200, s.height / 2));
     CCIntervalAction* move      = CCMoveBy::actionWithDuration(2, CGPointMake(s.width * 3, 0));
     CCIntervalAction* move_back = move->reverse();
-    CCIntervalAction* seq       = dynamic_cast<CCIntervalAction*> (CCSequence::actions(move, move_back, NULL));
+    CCIntervalAction* seq       = (CCIntervalAction*)(CCSequence::actions(move, move_back, NULL));
     CCAction* rep               = CCRepeatForever::actionWithAction(seq);
 
     m_grossini->runAction(rep);
