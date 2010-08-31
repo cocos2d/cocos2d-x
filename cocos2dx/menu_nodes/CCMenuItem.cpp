@@ -435,7 +435,7 @@ namespace cocos2d{
 
 		if(disabledImage)
 			disabledSprite = CCSprite::spriteWithFile(disabledImage);
-		return static_cast<CCMenuItemImage*>(initFromNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector));
+		return (CCMenuItemImage*)(initFromNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector));
 	}
 	//
 	// MenuItemToggle
