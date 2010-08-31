@@ -573,16 +573,16 @@ namespace cocos2d{
 				}
 
 				// ignore invisible and disabled items: issue #779, #866
-				if ((*it)->getIsVisible() && static_cast<CCMenuItem*>(*it)->getIsEnabled())
+				if ((*it)->getIsVisible() && ((CCMenuItem*)(*it))->getIsEnabled())
 				{
 					CGPoint local = (*it)->convertToNodeSpace(touchLocation);
 
-					CGRect r = static_cast<CCMenuItem*>(*it)->rect();
+					CGRect r = ((CCMenuItem*)(*it))->rect();
 					r.origin = CGPointZero;
 
 					if (CGRect::CGRectContainsPoint(r, local))
 					{
-						return static_cast<CCMenuItem*>(*it);
+						return (CCMenuItem*)(*it);
 					}
 				}
 			}
