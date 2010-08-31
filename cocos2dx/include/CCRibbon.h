@@ -97,8 +97,8 @@ namespace cocos2d {
 		GLubyte	m_pColors[50*8];
 		float	m_pCreationTime[50];
 		bool	m_bFinished;
-		UINT	m_uEnd;
-		UINT	m_uBegin;
+		unsigned int	m_uEnd;
+		unsigned int	m_uBegin;
 	public:
 		CCRibbonSegment(){}
 		virtual ~CCRibbonSegment();
