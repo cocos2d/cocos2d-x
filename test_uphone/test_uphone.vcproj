@@ -501,6 +501,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="LayerTest"
+				>
+				<File
+					RelativePath=".\tests\LayerTest\LayerTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\LayerTest\LayerTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
