@@ -400,7 +400,7 @@ void CCActionManager::update(cocos2d::ccTime dt)
 
 		// elt, at this moment, is still valid
 		// so it is safe to ask this here (issue #490)
-		elt = static_cast<tHashElement*>(elt->hh.next);
+		elt = (tHashElement*)(elt->hh.next);
 
 		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
 		if (m_bCurrentTargetSalvaged && m_pCurrentTarget->actions->num == 0)

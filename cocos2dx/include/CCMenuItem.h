@@ -107,6 +107,8 @@ namespace cocos2d{
 		virtual GLubyte getOpacity();
 		virtual void setColor(ccColor3B color);
 		virtual ccColor3B getColor();
+
+		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 	protected:
 		ccColor3B	m_tColorBackup;
 		float		m_fOriginalScale;
@@ -189,6 +191,8 @@ namespace cocos2d{
 		virtual ccColor3B getColor(){return ccBLACK;}
 		virtual void setOpacity(GLubyte opacity){}
 		virtual GLubyte getOpacity(){return 0;}
+
+		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 	};
 
 	/** CCMenuItemImage accepts images as items.
@@ -251,6 +255,8 @@ namespace cocos2d{
 		virtual void selected();
 		virtual void unselected();
 		virtual void setIsEnabled(bool var);
+
+		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 	};
 
 }

@@ -78,14 +78,14 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 	map<string, string*> *pMetadataMap = NULL;
 	if (metadataIter != pobDictionary->end())
 	{
-		pMetadataMap = static_cast<map<string, string*>*>(metadataIter->second);
+		pMetadataMap = (map<string, string*>*)(metadataIter->second);
 	}
 
 	map<string, void*>::iterator framesIter = pobDictionary->find("frames");
 	map<string ,void*> *pFramesMap = NULL;
 	if (framesIter != pobDictionary->end())
 	{
-		pFramesMap = static_cast<map<string, void*>*>(framesIter->second);
+		pFramesMap = (map<string, void*>*)(framesIter->second);
 	}
 	int format = 0;
 
@@ -122,7 +122,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 		}
 
 		CCSpriteFrame *pSpriteFrame;
-		pFrame = static_cast<map<string, string*>*>(frameIter->second);
+		pFrame = (map<string, string*>*)(frameIter->second);
 		if (format == 0)
 		{
 			/*

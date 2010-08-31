@@ -162,6 +162,8 @@ namespace cocos2d{
 		// super method
 		virtual void setString(const char *label);
 		virtual void setAnchorPoint(CGPoint var);
+		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 #if CC_BITMAPFONTATLAS_DEBUG_DRAW
 		virtual void draw();
 #endif // CC_BITMAPFONTATLAS_DEBUG_DRAW

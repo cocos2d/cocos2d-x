@@ -55,6 +55,8 @@ namespace cocos2d{
 		* @warning Changing the string is as expensive as creating a new CCLabel. To obtain better performance use CCLabelAtlas
 		*/
 		virtual void setString(const char *label);
+
+		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 	protected:
 		CGSize m_tDimensions;
 		UITextAlignment m_eAlignment;

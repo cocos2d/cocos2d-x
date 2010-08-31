@@ -166,7 +166,7 @@ CCNode* CCSpriteSheet::addChild(CCNode *child, int zOrder, int tag)
 {
 	assert(child != NULL);
 	
- 	CCSprite *pSprite = static_cast<CCSprite*>(child);
+ 	CCSprite *pSprite = (CCSprite*)(child);
 	// check CCSprite is using the same texture id
 	assert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName());
 
@@ -199,7 +199,7 @@ void CCSpriteSheet::reorderChild(CCNode *child, int zOrder)
 // override remove child
 void CCSpriteSheet::removeChild(CCNode *child, bool cleanup)
 {
-	CCSprite *pSprite = static_cast<CCSprite*>(child);
+	CCSprite *pSprite = (CCSprite*)(child);
 
 	// explicit null handling
 	if (pSprite == NULL)
@@ -217,7 +217,7 @@ void CCSpriteSheet::removeChild(CCNode *child, bool cleanup)
 
 void CCSpriteSheet::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 {
-	removeChild(static_cast<CCSprite*>(m_pChildren->getObjectAtIndex(uIndex)), bDoCleanup);
+	removeChild((CCSprite*)(m_pChildren->getObjectAtIndex(uIndex)), bDoCleanup);
 }
 
 void CCSpriteSheet::removeAllChildrenWithCleanup(bool bCleanup)
@@ -229,7 +229,7 @@ void CCSpriteSheet::removeAllChildrenWithCleanup(bool bCleanup)
 		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
 		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 		{
-			pSprite = static_cast<CCSprite*>(*iter);
+			pSprite = (CCSprite*)(*iter);
 
 			if (! pSprite)
 			{
@@ -331,7 +331,7 @@ unsigned int CCSpriteSheet::rebuildIndexInOrder(CCSprite *pobParent, unsigned in
 		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
 		for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 		{
-			pSprite = static_cast<CCSprite*>(*iter);
+			pSprite = (CCSprite*)(*iter);
 
 			if (! pSprite)
 			{
@@ -358,7 +358,7 @@ unsigned int CCSpriteSheet::rebuildIndexInOrder(CCSprite *pobParent, unsigned in
 		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
 		for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 		{
-			pSprite = static_cast<CCSprite*>(*iter);
+			pSprite = (CCSprite*)(*iter);
 
 			if (! pSprite)
 			{
@@ -385,7 +385,7 @@ unsigned int CCSpriteSheet::highestAtlasIndexInChild(CCSprite *pSprite)
 	}
 	else
 	{
-		return highestAtlasIndexInChild(static_cast<CCSprite*>(pChildren->getLastObject()));
+		return highestAtlasIndexInChild((CCSprite*)(pChildren->getLastObject()));
 	}
 }
 
@@ -399,7 +399,7 @@ unsigned int CCSpriteSheet::lowestAtlasIndexInChild(CCSprite *pSprite)
 	}
 	else
 	{
-		return lowestAtlasIndexInChild(static_cast<CCSprite*>(pChildren->getObjectAtIndex(0)));
+		return lowestAtlasIndexInChild((CCSprite*)(pChildren->getObjectAtIndex(0)));
 	}
 }
 
@@ -409,11 +409,11 @@ unsigned int CCSpriteSheet::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 	unsigned int uChildIndex = pBrothers->getIndexOfObject(pobSprite);
 
 	// ignore parent Z if parent is spriteSheet
-	bool bIgnoreParent = static_cast<CCSpriteSheet*>(pobSprite->getParent()) == this;
+	bool bIgnoreParent = (CCSpriteSheet*)(pobSprite->getParent()) == this;
 	CCSprite *pPrevious = NULL;
 	if (uChildIndex > 0)
 	{
-		pPrevious = static_cast<CCSprite*>(pBrothers->getObjectAtIndex(uChildIndex - 1));
+		pPrevious = (CCSprite*)(pBrothers->getObjectAtIndex(uChildIndex - 1));
 	}
 
 	// first child of the sprite sheet
@@ -432,7 +432,7 @@ unsigned int CCSpriteSheet::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 	// first child of an CCSprite ?
 	if (uChildIndex == 0)
 	{
-		CCSprite *p = static_cast<CCSprite*>(pobSprite->getParent());
+		CCSprite *p = (CCSprite*)(pobSprite->getParent());
 
 		// less than parent and brothers
 		if (nZ < 0)
@@ -453,7 +453,7 @@ unsigned int CCSpriteSheet::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 		}
 
 		// else (previous < 0 and sprite >= 0 )
-		CCSprite *p = static_cast<CCSprite*>(pobSprite->getParent());
+		CCSprite *p = (CCSprite*)(pobSprite->getParent());
 		return p->getAtlasIndex() + 1;
 	}
 
@@ -509,7 +509,7 @@ void CCSpriteSheet::insertChild(CCSprite *pobSprite, unsigned int uIndex)
 		CCSprite *pSprite;
 		for (iterNode = pChildren->begin(); iterNode != pChildren->end(); ++iterNode)
 		{
-			pSprite = static_cast<CCSprite*>(*iterNode);
+			pSprite = (CCSprite*)(*iterNode);
 
 			if (! pSprite)
 			{
@@ -541,7 +541,7 @@ void CCSpriteSheet::removeSpriteFromAtlas(CCSprite *pobSprite)
 		
 		for(; uIndex < count; ++uIndex)
 		{
-			CCSprite* s = static_cast<CCSprite*>(m_pobDescendants->getObjectAtIndex(uIndex));
+			CCSprite* s = (CCSprite*)(m_pobDescendants->getObjectAtIndex(uIndex));
 			s->setAtlasIndex( s->getAtlasIndex() - 1 );
 		}
 	}
@@ -555,7 +555,7 @@ void CCSpriteSheet::removeSpriteFromAtlas(CCSprite *pobSprite)
 		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
 		for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 		{
-			pSprite = static_cast<CCSprite*>(*iter);
+			pSprite = (CCSprite*)(*iter);
 
 			if (! pSprite)
 			{

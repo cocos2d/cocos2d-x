@@ -162,8 +162,8 @@ CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat
 	m_uPixelsWide = pixelsWide;
 	m_uPixelsHigh = pixelsHigh;
 	m_ePixelFormat = pixelFormat;
-	m_fMaxS = contentSize.width / static_cast<float>(pixelsWide);
-	m_fMaxT = contentSize.height / static_cast<float>(pixelsHigh);
+	m_fMaxS = contentSize.width / (float)(pixelsWide);
+	m_fMaxT = contentSize.height / (float)(pixelsHigh);
 
 	m_bHasPremultipliedAlpha = false;
 
@@ -251,7 +251,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 
-	imageSize = CGSizeMake(static_cast<float>(image->width()), static_cast<float>(image->height()));
+	imageSize = CGSizeMake((float)(image->width()), (float)(image->height()));
 
 	// Create the bitmap graphics context
 
@@ -277,7 +277,7 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 
-			tempData = static_cast<void*>(image->getRGBA8888Data());
+			tempData = (void*)(image->getRGBA8888Data());
 			NSAssert(tempData != NULL, "NULL image data.");
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{
@@ -465,7 +465,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bp
 	}
 	glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
 
-	m_tContentSize = CGSizeMake(static_cast<float>(length), static_cast<float>(length));
+	m_tContentSize = CGSizeMake((float)(length), (float)(length));
 	m_uPixelsWide = length;
 	m_uPixelsHigh = length;
 	m_fMaxS = 1.0f;
@@ -495,7 +495,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 		m_uPixelsWide = pvr->getWidth();		// width
 		m_uPixelsHigh = pvr->getHeight();		// height
 		/// be careful : unsigned int to float
-		m_tContentSize = CGSizeMake(static_cast<float>(m_uPixelsWide), static_cast<float>(m_uPixelsHigh));
+		m_tContentSize = CGSizeMake((float)(m_uPixelsWide), (float)(m_uPixelsHigh));
 
 		pvr->release();
 

@@ -82,15 +82,15 @@ CCAtlasNode * CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int
 void CCAtlasNode::calculateMaxItems()
 {
 	CGSize s = m_pTextureAtlas->getTexture()->getContentSize();
-	m_nItemsPerColumn = static_cast<int>(s.height / m_nItemHeight);
-	m_nItemsPerRow = static_cast<int>(s.width / m_nItemWidth);
+	m_nItemsPerColumn = (int)(s.height / m_nItemHeight);
+	m_nItemsPerRow = (int)(s.width / m_nItemWidth);
 }
 
 void CCAtlasNode:: calculateTexCoordsSteps()
 {
 	CCTexture2D *texture = m_pTextureAtlas->getTexture();
-	m_fTexStepX = m_nItemWidth / static_cast<float>(texture->getPixelsWide());
-	m_fTexStepY = m_nItemHeight / static_cast<float>(texture->getPixelsHigh());
+	m_fTexStepX = m_nItemWidth / (float)(texture->getPixelsWide());
+	m_fTexStepY = m_nItemHeight / (float)(texture->getPixelsHigh());
 }
 
 void CCAtlasNode::updateAtlasValues()

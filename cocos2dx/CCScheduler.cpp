@@ -255,7 +255,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 	{
 		for (unsigned int i = 0; i < pElement->timers->num; ++i)
 		{
-			CCTimer *pTimer = static_cast<CCTimer*>(pElement->timers->arr[i]);
+			CCTimer *pTimer = (CCTimer*)(pElement->timers->arr[i]);
 
 			if (pfnSelector == pTimer->m_pfnSelector)
 			{
@@ -570,7 +570,7 @@ void CCScheduler::tick(ccTime dt)
 			// The 'timers' array may change while inside this loop
 			for (elt->timerIndex = 0; elt->timerIndex < elt->timers->num; ++(elt->timerIndex))
 			{
-				elt->currentTimer = static_cast<CCTimer*>(elt->timers->arr[elt->timerIndex]);
+				elt->currentTimer = (CCTimer*)(elt->timers->arr[elt->timerIndex]);
 				elt->currentTimerSalvaged = false;
 
 				elt->currentTimer->update(dt);

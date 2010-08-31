@@ -87,6 +87,8 @@ public:
 
 	virtual void draw();
 
+	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+
 	// CC Texture protocol
 
 	// returns the used texture

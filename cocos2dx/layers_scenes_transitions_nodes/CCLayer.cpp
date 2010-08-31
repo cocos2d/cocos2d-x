@@ -107,8 +107,8 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 			else
 			{
 				// have problems?
-				CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCTargetedTouchDelegate*>(this));
-				CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCStandardTouchDelegate*>(this));
+				CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCTargetedTouchDelegate*)(this));
+				CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCStandardTouchDelegate*)(this));
 			}
 		}
 	}
@@ -157,8 +157,8 @@ void CCLayer::onExit()
 {
 	if( m_bIsTouchEnabled )
 	{
-		CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCTargetedTouchDelegate*>(this));
-		CCTouchDispatcher::getSharedDispatcher()->removeDelegate(static_cast<CCStandardTouchDelegate*>(this));
+		CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCTargetedTouchDelegate*)(this));
+		CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCStandardTouchDelegate*)(this));
 	}
 /**
 	if( isAccelerometerEnabled )

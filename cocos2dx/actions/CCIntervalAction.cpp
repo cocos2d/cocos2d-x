@@ -69,7 +69,7 @@ NSObject* CCIntervalAction::copyWithZone(NSZone *pZone)
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = static_cast<CCIntervalAction*>(pZone->m_pCopyObject);
+		pCopy = (CCIntervalAction*)(pZone->m_pCopyObject);
 	}
 	else
 	{
@@ -215,8 +215,8 @@ NSObject* CCSequence::copyWithZone(NSZone *pZone)
 
 	__super::copyWithZone(pZone);
 
-	pCopy->initOneTwo(static_cast<CCFiniteTimeAction*>(m_pActions[0]->copy()->autorelease()), 
-				static_cast<CCFiniteTimeAction*>(m_pActions[1]->copy()->autorelease()));
+	pCopy->initOneTwo((CCFiniteTimeAction*)(m_pActions[0]->copy()->autorelease()), 
+				(CCFiniteTimeAction*)(m_pActions[1]->copy()->autorelease()));
 
 	CCX_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -1365,10 +1365,12 @@ NSObject* CCFadeIn::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCFadeIn::update(cocos2d::ccTime time)
 {
-	// because we can not use dynamic_cast(), so we cast in c style.
-	// Is it sprite? can it be other node?
-	/* dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setOpacity((GLubyte)(255 * time));*/
-	((CCSprite *)(m_pTarget))->setOpacity((GLubyte)(255 * time));
+	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+        pRGBAProtocol->setOpacity((GLubyte)(255 * time));
+	}
+	/*m_pTarget->setOpacity((GLubyte)(255 * time));*/
 }
 
 CCIntervalAction* CCFadeIn::reverse(void)
@@ -1413,10 +1415,12 @@ NSObject* CCFadeOut::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCFadeOut::update(cocos2d::ccTime time)
 {
-	// because we can not use dynamic_cast(), so we cast in c style.
-	// Is it sprite? can it be other node?
-	// dynamic_cast<CCRGBAProtocol*>(m_pTarget)->setOpacity(GLubyte(255 * (1 - time)));
-	((CCSprite *)m_pTarget)->setOpacity((GLubyte)(255 * (1 - time)));
+	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+		pRGBAProtocol->setOpacity(GLubyte(255 * (1 - time)));
+	}
+	/*m_pTarget->setOpacity(GLubyte(255 * (1 - time)));*/	
 }
 
 CCIntervalAction* CCFadeOut::reverse(void)
@@ -1474,12 +1478,22 @@ void CCFadeTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
-	m_fromOpacity = ((CCRGBAProtocol*)(pTarget))->getOpacity();
+	CCRGBAProtocol *pRGBAProtocol = pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+		m_fromOpacity = pRGBAProtocol->getOpacity();
+	}
+	/*m_fromOpacity = pTarget->getOpacity();*/
 }
 
 void CCFadeTo::update(cocos2d::ccTime time)
 {
-	((CCRGBAProtocol*)(m_pTarget))->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
+	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+		pRGBAProtocol->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
+	}
+	/*m_pTarget->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));*/
 }
 
 //
@@ -1531,22 +1545,23 @@ NSObject* CCTintTo::copyWithZone(cocos2d::NSZone *pZone)
 void CCTintTo::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
-
-	// because we can not use dynamic_cast(), so we cast in c style.
-	// Is it sprite? can it be other node?
-	/*m_from = dynamic_cast<CCRGBAProtocol*>(pTarget)->getColor();*/
-	m_from = ((CCSprite *)(pTarget))->getColor();
+    CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+		m_from = pRGBAProtocol->getColor();
+	}
+	/*m_from = pTarget->getColor();*/
 }
 
 void CCTintTo::update(cocos2d::ccTime time)
 {
-	// because we can not use dynamic_cast(), so we cast in c style.
-	// Is it sprite? can it be other node?
-	/*CCRGBAProtocol *pTn = dynamic_cast<CCRGBAProtocol*>(m_pTarget);*/
-	CCSprite *pTn = (CCSprite *)(m_pTarget);
-	pTn->setColor(ccc3(GLubyte(m_from.r + (m_to.r - m_from.r) * time), 
-		              (GLbyte)(m_from.g + (m_to.g - m_from.g) * time),
-		              (GLbyte)(m_from.b + (m_to.b - m_from.b) * time)));
+	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+		pRGBAProtocol->setColor(ccc3(GLubyte(m_from.r + (m_to.r - m_from.r) * time), 
+			(GLbyte)(m_from.g + (m_to.g - m_from.g) * time),
+			(GLbyte)(m_from.b + (m_to.b - m_from.b) * time)));
+	}	
 }
 
 //
@@ -1602,17 +1617,25 @@ void CCTintBy::startWithTarget(CCNode *pTarget)
 {
 	__super::startWithTarget(pTarget);
 
-	ccColor3B color = ((CCRGBAProtocol*)(pTarget))->getColor();
-	m_fromR = color.r;
-	m_fromG = color.g;
-	m_fromB = color.b;
+	CCRGBAProtocol *pRGBAProtocol = pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+		ccColor3B color = pRGBAProtocol->getColor();
+		m_fromR = color.r;
+		m_fromG = color.g;
+		m_fromB = color.b;
+	}	
 }
 
 void CCTintBy::update(cocos2d::ccTime time)
 {
-	((CCRGBAProtocol*)(m_pTarget))->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
-		                                                    (GLubyte)(m_fromG + m_deltaG * time),
-															(GLubyte)(m_fromB + m_deltaB * time)));
+	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
+	if (pRGBAProtocol)
+	{
+		pRGBAProtocol->setColor(ccc3((GLubyte)(m_fromR + m_deltaR * time),
+			(GLubyte)(m_fromG + m_deltaG * time),
+			(GLubyte)(m_fromB + m_deltaB * time)));
+	}	
 }
 
 CCIntervalAction* CCTintBy::reverse(void)
@@ -1739,7 +1762,7 @@ void CCReverseTime::update(cocos2d::ccTime time)
 
 CCIntervalAction* CCReverseTime::reverse(void)
 {
-	return static_cast<CCIntervalAction*>(m_pOther->copy()->autorelease());
+	return (CCIntervalAction*)(m_pOther->copy()->autorelease());
 }
 
 //

@@ -266,13 +266,13 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 		NSSetIterator setIter;
 		for (setIter = pTouches->begin(); setIter != pTouches->end(); ++setIter)
 		{
-			pTouch = static_cast<CCTouch *>(*setIter);
+			pTouch = (CCTouch *)(*setIter);
 			CCTargetedTouchHandler *pHandler;
 			NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator arrayIter;
 			for (arrayIter = m_pTargetedHandlers->begin(); arrayIter != m_pTargetedHandlers->end(); ++arrayIter)
 			/*for (unsigned int i = 0; i < m_pTargetedHandlers->num; ++i)*/
 			{
-                pHandler = static_cast<CCTargetedTouchHandler *>(*arrayIter);
+                pHandler = (CCTargetedTouchHandler *)(*arrayIter);
 
                 if (! pHandler)
                 {
@@ -331,7 +331,7 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 		CCStandardTouchHandler *pHandler;
 		for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
 		{
-			pHandler = static_cast<CCStandardTouchHandler*>(*iter);
+			pHandler = (CCStandardTouchHandler*)(*iter);
 
             if (! pHandler)
             {

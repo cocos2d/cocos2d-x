@@ -604,8 +604,8 @@ CCNode* CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 
 	if (m_bUsesSpriteSheet)
 	{
-		unsigned int index = m_pobSpriteSheet->atlasIndexForChild(static_cast<CCSprite*>(pChild), zOrder);
-		m_pobSpriteSheet->insertChild(static_cast<CCSprite*>(pChild), index);
+		unsigned int index = m_pobSpriteSheet->atlasIndexForChild((CCSprite*)(pChild), zOrder);
+		m_pobSpriteSheet->insertChild((CCSprite*)(pChild), index);
 	}
 
 	m_bHasChildren = true;
@@ -641,7 +641,7 @@ void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 {
 	if (m_bUsesSpriteSheet)
 	{
-		m_pobSpriteSheet->removeSpriteFromAtlas(static_cast<CCSprite*>(pChild));
+		m_pobSpriteSheet->removeSpriteFromAtlas((CCSprite*)(pChild));
 	}
 
 	__super::removeChild(pChild, bCleanup);
@@ -656,7 +656,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
 		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 		{
-			pChild = static_cast<CCSprite*>(*iter);
+			pChild = (CCSprite*)(*iter);
 			m_pobSpriteSheet->removeSpriteFromAtlas(pChild);
 		}
 	}
@@ -681,7 +681,7 @@ void CCSprite::setDirtyRecursively(bool bValue)
 		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
 		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 		{
-			pChild = static_cast<CCSprite*>(*iter);
+			pChild = (CCSprite*)(*iter);
 			pChild->setDirtyRecursively(true);
 		}
 	}
@@ -973,8 +973,9 @@ void CCSprite::setTexture(CCTexture2D *texture)
 	// CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteSheet
 	assert(! m_bUsesSpriteSheet);
 
-	// // accept texture==nil as argument
-	assert((! texture) || dynamic_cast<CCTexture2D*>(texture));
+	// we can not use RTTI, so we do not known the type of object
+	// accept texture==nil as argument
+	/*assert((! texture) || dynamic_cast<CCTexture2D*>(texture));*/
 
 	CCX_SAFE_RELEASE(m_pobTexture);
 

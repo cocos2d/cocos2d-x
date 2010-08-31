@@ -40,6 +40,12 @@ additional logic.
 It is a good practice to use and CCScene as the parent of all your nodes.
 */
 
+typedef enum
+{
+	ccNormalScene     = 1 << 0,
+	ccTransitionScene = 1 << 1,
+} ccSceneFlag;
+
 class CCX_DLL CCScene : public CCNode
 {
 public:
@@ -47,8 +53,11 @@ public:
 	virtual ~CCScene();
 	bool init();
 	static CCScene *node(void);
+	inline ccSceneFlag getSceneType(void) { return m_eSceneType; }
+
+protected:
+	ccSceneFlag m_eSceneType;
 };
 }//namespace   cocos2d 
 
 #endif // __CCSCENE_H__
-

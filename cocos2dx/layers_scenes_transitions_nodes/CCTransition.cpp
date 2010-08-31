@@ -80,6 +80,7 @@ CCTransitionScene * CCTransitionScene::initWithDuration(ccTime t, CCScene *scene
 		m_pInScene->retain();
 		m_pOutScene = CCDirector::getSharedDirector()->getRunningScene();
 		m_pOutScene->retain();
+		m_eSceneType = ccTransitionScene;
 
 		NSAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
 
@@ -229,7 +230,7 @@ void CCRotoZoomTransition:: onEnter()
 	m_pInScene->setAnchorPoint(ccp(0.5f, 0.5f));
 	m_pOutScene->setAnchorPoint(ccp(0.5f, 0.5f));
 
-	CCIntervalAction *rotozoom = static_cast<CCIntervalAction*>(CCSequence::actions
+	CCIntervalAction *rotozoom = (CCIntervalAction*)(CCSequence::actions
 	(
 		CCSpawn::actions
 		(
@@ -280,8 +281,8 @@ void CCJumpZoomTransition::onEnter()
 	CCIntervalAction *scaleIn = CCScaleTo::actionWithDuration(m_fDuration/4, 1.0f);
 	CCIntervalAction *scaleOut = CCScaleTo::actionWithDuration(m_fDuration/4, 0.5f);
 
-	CCIntervalAction *jumpZoomOut = dynamic_cast<CCIntervalAction*>(CCSequence::actions(scaleOut, jump, NULL));
-	CCIntervalAction *jumpZoomIn = dynamic_cast<CCIntervalAction*>(CCSequence::actions(jump, scaleIn, NULL));
+	CCIntervalAction *jumpZoomOut = (CCIntervalAction*)(CCSequence::actions(scaleOut, jump, NULL));
+	CCIntervalAction *jumpZoomIn = (CCIntervalAction*)(CCSequence::actions(jump, scaleIn, NULL));
 
 	CCIntervalAction *delay = CCDelayTime::actionWithDuration(m_fDuration/2);
 
