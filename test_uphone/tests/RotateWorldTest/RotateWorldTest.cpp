@@ -68,10 +68,10 @@ void SpriteLayer::onEnter()
 	CCIntervalAction *rot2 = rot1->reverse();
 	
 	spriteSister1->runAction(CCRepeat::actionWithAction( CCSequence::actions(jump2, jump1, NULL), 5 ));
-	spriteSister2->runAction(CCRepeat::actionWithAction( CCSequence::actions(dynamic_cast<CCFiniteTimeAction *>(jump1->copy()->autorelease()), dynamic_cast<CCFiniteTimeAction *>(jump2->copy()->autorelease()), NULL), 5 ));
+	spriteSister2->runAction(CCRepeat::actionWithAction( CCSequence::actions((CCFiniteTimeAction *)(jump1->copy()->autorelease()), (CCFiniteTimeAction *)(jump2->copy()->autorelease()), NULL), 5 ));
 	
 	spriteSister1->runAction(CCRepeat::actionWithAction( CCSequence::actions(rot1, rot2, NULL), 5 ));
-	spriteSister2->runAction(CCRepeat::actionWithAction( CCSequence::actions(dynamic_cast<CCFiniteTimeAction *>(rot2->copy()->autorelease()), dynamic_cast<CCFiniteTimeAction *>(rot1->copy()->autorelease()), NULL), 5 ));
+	spriteSister2->runAction(CCRepeat::actionWithAction( CCSequence::actions((CCFiniteTimeAction *)(rot2->copy()->autorelease()), (CCFiniteTimeAction *)(rot1->copy()->autorelease()), NULL), 5 ));
 }
 
 //------------------------------------------------------------------
@@ -117,9 +117,9 @@ void RotateWorldMainLayer::onEnter()
 	CCAction* rot = CCRotateBy::actionWithDuration(8, 720);
 	
 	blue->runAction(rot);
-	red->runAction( dynamic_cast<CCAction *>(rot->copy()->autorelease()) );
-	green->runAction( dynamic_cast<CCAction *>(rot->copy()->autorelease()) );
-	white->runAction( dynamic_cast<CCAction *>(rot->copy()->autorelease()) );
+	red->runAction((CCAction *)(rot->copy()->autorelease()));
+	green->runAction((CCAction *)(rot->copy()->autorelease()) );
+	white->runAction((CCAction *)(rot->copy()->autorelease()) );
 }
 
 void RotateWorldTestScene::runThisTest()
