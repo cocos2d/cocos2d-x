@@ -63,8 +63,8 @@ MenuLayer1::MenuLayer1()
 	
 	CCIntervalAction* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
 	CCIntervalAction* color_back = color_action->reverse();
-	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(color_action, color_back, NULL));
-	item6->runAction(CCRepeatForever::actionWithAction(seq));
+	CCFiniteTimeAction* seq = CCSequence::actions(color_action, color_back, NULL);
+	item6->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
 
 	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, item4, item5, item6, NULL);
 	menu->alignItemsVertically();
@@ -83,7 +83,7 @@ MenuLayer1::MenuLayer1()
 		if(*it == NULL)
 			break;
 
-		child = dynamic_cast<CCNode*>(*it);
+		child = (CCNode*)(*it);
 
 		CGPoint dstPoint = child->getPosition();
 		int offset = (int) (s.width/2 + 50);
@@ -229,7 +229,7 @@ void MenuLayer2::menuCallback(NSObject* sender)
 
 void MenuLayer2::menuCallbackOpacity(NSObject* sender)
 {
-	CCMenu* menu = dynamic_cast<CCMenu*>(dynamic_cast<CCNode*>(sender)->getParent());
+	CCMenu* menu = (CCMenu*)(((CCNode*)(sender))->getParent());
 	GLubyte opacity = menu->getOpacity();
 	if( opacity == 128 )
 		menu->setOpacity(255);
@@ -281,12 +281,12 @@ MenuLayer3::MenuLayer3()
 	
 	CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CGPointMake(400,0), 50, 4);
 	item2->runAction( CCRepeatForever::actionWithAction(
-								dynamic_cast<CCIntervalAction*>(CCSequence::actions( jump, jump->reverse(), NULL))
+								(CCIntervalAction*)(CCSequence::actions( jump, jump->reverse(), NULL))
 								)
 					);
 	CCIntervalAction* spin1 = CCRotateBy::actionWithDuration(3, 360);
-	CCIntervalAction* spin2 = dynamic_cast<CCIntervalAction*>(spin1->copy()->autorelease());
-	CCIntervalAction* spin3 = dynamic_cast<CCIntervalAction*>(spin1->copy()->autorelease());
+	CCIntervalAction* spin2 = (CCIntervalAction*)(spin1->copy()->autorelease());
+	CCIntervalAction* spin3 = (CCIntervalAction*)(spin1->copy()->autorelease());
 	
 	item1->runAction( CCRepeatForever::actionWithAction(spin1) );
 	item2->runAction( CCRepeatForever::actionWithAction(spin2) );
