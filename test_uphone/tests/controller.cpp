@@ -43,6 +43,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new MenuTestScene(); break;
     case TEST_ACTION_MANAGER:
         pScene = new ActionManagerTestScene(); break;
+    case TEST_LAYER:
+        pScene = new LayerTestScene(); break;
     default:
         break;
     }
