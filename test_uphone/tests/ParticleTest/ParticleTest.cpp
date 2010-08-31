@@ -599,8 +599,8 @@ void ParallaxParticle::onEnter()
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
 	CCIntervalAction* move_back = move->reverse();
-	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	p->runAction( CCRepeatForever::actionWithAction( seq ) );	
+	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
+	p->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));	
 }
 
 void DemoParticleFromFile::onEnter()
@@ -754,8 +754,8 @@ ParticleDemo::ParticleDemo(void)
 
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0) );
 	CCIntervalAction* move_back = move->reverse();
-	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL ));
-	m_background->runAction( CCRepeatForever::actionWithAction(seq) );
+	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
+	m_background->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq) );
 	
 	
 	schedule( schedule_selector(ParticleDemo::step) );
@@ -770,7 +770,7 @@ void ParticleDemo::onEnter(void)
 {
 	__super::onEnter();
 
-	CCLabel* pLabel = dynamic_cast<CCLabel*>(this->getChildByTag(1000));
+	CCLabel* pLabel = (CCLabel*)(this->getChildByTag(1000));
 	pLabel->setString(title().c_str());
 }
 
