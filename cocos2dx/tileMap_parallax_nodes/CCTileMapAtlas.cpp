@@ -33,7 +33,7 @@ namespace cocos2d {
 	CCTileMapAtlas * CCTileMapAtlas::tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
 	{
 		CCTileMapAtlas *pRet = new CCTileMapAtlas();
-		if (initWithTileFile(tile, mapFile, tileWidth, tileHeight))
+		if (pRet->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
 		{
 			pRet->autorelease();
 			return pRet;

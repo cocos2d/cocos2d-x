@@ -34,6 +34,7 @@ namespace cocos2d {
 
 	typedef std::map<std::string, std::string> StringToStringDictionary;
 	typedef std::pair<std::string, std::string> StringToStringPair;
+	/** only used in StringToStringDictionary, return "" if not found*/
 	const char * valueForKey(std::string key, StringToStringDictionary *dict);
 
 	/** CCTMXObjectGroup represents the TMX object group.
