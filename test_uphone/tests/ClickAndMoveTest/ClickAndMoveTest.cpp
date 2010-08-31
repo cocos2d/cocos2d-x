@@ -30,7 +30,7 @@ MainLayer::MainLayer()
 	sprite->runAction( CCJumpTo::actionWithDuration(4, CGPointMake(300,48), 100, 4) );
 	
 	layer->runAction( CCRepeatForever::actionWithAction( 
-														dynamic_cast<CCIntervalAction*>( CCSequence::actions(	
+														(CCIntervalAction*)( CCSequence::actions(	
 																			CCFadeIn::actionWithDuration(1),
 																			CCFadeOut::actionWithDuration(1),
 																			NULL) )
@@ -40,7 +40,7 @@ MainLayer::MainLayer()
 void MainLayer::ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent)
 {
     NSSetIterator it = pTouches->begin();
-	CCTouch* touch = dynamic_cast<CCTouch*>(*it);
+	CCTouch* touch = (CCTouch*)(*it);
 	
 	CGPoint location = touch->locationInView( touch->view() );
 	CGPoint convertedLocation = CCDirector::getSharedDirector()->convertToGL(location);
