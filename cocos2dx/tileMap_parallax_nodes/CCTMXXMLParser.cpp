@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
 #include "CCTMXXMLParser.h"
+#include "CCTMXTiledMap.h"
 #include "ccMacros.h"
 #include "CCXFileUtils.h"
 #include "CGPointExtension.h"
@@ -163,19 +164,6 @@ namespace cocos2d {
 		delete []buffer;
 		return true;
 	}
-
-	/** Possible oritentations of the TMX map */
-	enum
-	{
-		/** Orthogonal orientation */
-		CCTMXOrientationOrtho,
-
-		/** Hexagonal orientation */
-		CCTMXOrientationHex,
-
-		/** Isometric orientation */
-		CCTMXOrientationIso,
-	};/// @todo to be deleted
 
 
 	// the XML parser calls here with all the elements
