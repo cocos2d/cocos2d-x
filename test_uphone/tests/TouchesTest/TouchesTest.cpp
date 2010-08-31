@@ -74,7 +74,7 @@ PongLayer::PongLayer()
     NSMutableArray<NSObject *>::NSMutableArrayIterator it;
 	for(it = m_paddles->begin(); it != m_paddles->end(); it++)
 	{
-		paddle = dynamic_cast<Paddle*>(*it);
+		paddle = (Paddle*)(*it);
 
 		if(!paddle)
 			break;
@@ -110,7 +110,7 @@ void PongLayer::doStep(ccTime delta)
     NSMutableArray<NSObject *>::NSMutableArrayIterator it;
 	for(it = m_paddles->begin(); it != m_paddles->end(); it++)
 	{
-		paddle = dynamic_cast<Paddle*>(*it);
+		paddle = (Paddle*)(*it);
 
 		if(!paddle)
 			break;
