@@ -117,7 +117,7 @@ TestController::~TestController()
 void TestController::menuCallback(NSObject * pSender)
 {
     // get the userdata, it's the index of the menu item clicked
-    CCMenuItem* pMenuItem = dynamic_cast<CCMenuItem *> (pSender);
+    CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
     void * pUserData = pMenuItem->getUserData();
     int  * nIdx = (int *) pUserData;
 
