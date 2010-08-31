@@ -33,7 +33,7 @@ void MotionStreakTest1::onEnter()
 
 	CCAction* action1 = CCRepeatForever::actionWithAction(a1);
 	CCIntervalAction* motion = CCMoveBy::actionWithDuration(2, CGPointMake(100,0) );
-	m_root->runAction( CCRepeatForever::actionWithAction( dynamic_cast<CCIntervalAction*>(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
+	m_root->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
 	m_root->runAction( action1 );
 }
 
@@ -71,7 +71,7 @@ void MotionStreakTest2::onEnter()
 void MotionStreakTest2::ccTouchesMoved(NSSet* touches, UIEvent* event)
 {
     NSSetIterator it = touches->begin();
-    CCTouch* touch = dynamic_cast<CCTouch*>(*it);
+    CCTouch* touch = (CCTouch*)(*it);
 
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
 	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
