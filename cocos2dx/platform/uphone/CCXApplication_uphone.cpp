@@ -2,7 +2,8 @@
 
 #include "CCDirector.h"
 
-#include "CCXGLExtFunc.h"
+// #include "CCXGLExtFunc.h"
+#include <GLES/glext.h>
 
 namespace   cocos2d {
 
@@ -27,7 +28,6 @@ namespace   cocos2d {
         m_tMsg.type = CCX_ON_APPLICATION_IDLE;
 
         Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, _OnAppIdle, (UInt32)&m_tMsg);
-		loadExtension();
     }
 
     CCXApplication::~CCXApplication()

@@ -86,6 +86,7 @@ public:
 	/// @todo selector
 	void addImageAsync(const char* filename, NSObject*target, fpAsyncCallback func);
 
+#if _POWERVR_SUPPORT_
 	/** Returns a Texture2D object given an PVRTC RAW filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
 	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
@@ -101,6 +102,7 @@ public:
 	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
 	*/
 	CCTexture2D* addPVRTCImage(const char* fileimage);
+#endif
 
 	/** Returns a Texture2D object given an CGImageRef image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.

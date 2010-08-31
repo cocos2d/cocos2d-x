@@ -35,10 +35,13 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "CCTexture2D.h"
-#include "CCPVRTexture.h"
 #include "CCConfiguration.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
+
+#ifdef _POWERVR_SUPPORT_
+    #include "CCPVRTexture.h"
+#endif
 
 namespace   cocos2d {
 
@@ -438,7 +441,7 @@ void CCTexture2D::drawInRect(CGRect rect)
 
 
 // implementation CCTexture2D (PVRTC)
-
+#ifdef _POWERVR_SUPPORT_
 CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length)
 {
 	if( !(CCConfiguration::sharedConfiguration()->isSupportsPVRTC()) )
@@ -509,6 +512,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 	}
 	return this;
 }
+#endif
 
 //
 // Use to apply MIN/MAG filter

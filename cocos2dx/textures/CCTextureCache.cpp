@@ -198,7 +198,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			temp[i] = tolower(temp[i]);
 		if (std::string::npos != temp.find(".pvr"))
 		{
+#ifdef _POWERVR_SUPPORT_
 			texture = this->addPVRTCImage(fullpath.c_str());
+#endif
 		}
 		else
 		{
@@ -227,6 +229,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	return texture;
 }
 
+#ifdef _POWERVR_SUPPORT_
 CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
 {
 	
@@ -278,6 +281,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 	texture->autorelease();
 	return texture;
 }
+#endif
 
 /** @todo CGImageRef
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key

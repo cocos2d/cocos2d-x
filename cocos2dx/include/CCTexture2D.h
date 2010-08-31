@@ -141,6 +141,7 @@ public:
 	/** Initializes a texture from a string with font name and font size */
 	CCTexture2D * initWithString(const char *text, const char *fontName, float fontSize);
 
+#ifdef _POWERVR_SUPPORT_
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a PVRTC file
 	Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
@@ -149,6 +150,7 @@ public:
 	CCTexture2D * initWithPVRTCData(const void* data, int level, int bpp, bool hasAlpha, int length);
 	/** Initializes a texture from a PVRTC file */
 	CCTexture2D * initWithPVRTCFile(const char* file);
+#endif
 
 	/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
 	If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.

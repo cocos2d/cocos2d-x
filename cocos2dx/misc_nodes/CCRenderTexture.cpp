@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
+#include <GLES/glext.h>
 
 namespace cocos2d { 
 

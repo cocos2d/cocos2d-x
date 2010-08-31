@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\PRJ_TG3\Include\ThirdParty\iconv;..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\PRJ_TG3\Include\ThirdParty\libxml2;.\include;.\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty\gles;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;.\"
+				AdditionalIncludeDirectories="..\..\PRJ_TG3\Include\ThirdParty\iconv;..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\PRJ_TG3\Include\ThirdParty\libxml2;.\include;.\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\OpenGL;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;__TG3_PURE_DLL__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -390,10 +390,6 @@
 			</File>
 			<File
 				RelativePath=".\include\CCProtocols.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\CCPVRTexture.h"
 				>
 			</File>
 			<File
@@ -753,10 +749,6 @@
 			Name="textures"
 			>
 			<File
-				RelativePath=".\textures\CCPVRTexture.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\textures\CCTexture2D.cpp"
 				>
 			</File>
@@ -913,14 +905,6 @@
 				</File>
 				<File
 					RelativePath=".\platform\uphone\CCXFileUtils_uphone.h"
-					>
-				</File>
-				<File
-					RelativePath=".\platform\uphone\CCXGLExtFunc.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\platform\uphone\CCXGLExtFunc.h"
 					>
 				</File>
 				<File

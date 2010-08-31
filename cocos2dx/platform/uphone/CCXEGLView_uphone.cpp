@@ -69,11 +69,11 @@ public:
 #ifndef USE_EGL_UMU
         if (m_eglDC)
         {
-            ReleaseDC(m_eglWnd, m_eglDC);
+            ReleaseDC( (HWND)m_eglWnd, (HDC)m_eglDC);
         }
         if (m_eglWnd)
         {
-            DestroyWindow(m_eglWnd);
+            DestroyWindow( (HWND)m_eglWnd);
         }
         UnregisterClass(WIN_CLASS_NAME, GetModuleHandle(NULL));
 #endif
@@ -101,7 +101,7 @@ public:
 #else
             CCX_BREAK_IF(! (pEGL->m_eglWnd = _CreateWnd(rc.Width(), rc.Height())));
 
-            pEGL->m_eglDC = GetDC(pEGL->m_eglWnd);
+            pEGL->m_eglDC = GetDC( (HWND)(pEGL->m_eglWnd) );
             CCX_BREAK_IF(! pEGL->m_eglDC);
 #endif
             EGLDisplay eglDisplay;
@@ -169,7 +169,7 @@ public:
         m_pWnd->GetClientBounds(&rc);
         RECT rcNew = {0, 0, rc.Width(), rc.Height(),};
         AdjustWindowRectEx(&rcNew, WS_POPUPWINDOW, false, WS_EX_TOPMOST | WS_EX_APPWINDOW | WS_EX_WINDOWEDGE);
-        MoveWindow(m_eglWnd, rcNew.left, rcNew.top, rcNew.right - rcNew.left, rcNew.bottom - rcNew.top, FALSE);
+        MoveWindow( (HWND)m_eglWnd, rcNew.left, rcNew.top, rcNew.right - rcNew.left, rcNew.bottom - rcNew.top, FALSE);
 
         // create new surface and make current
         m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglWnd, NULL);

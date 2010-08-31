@@ -31,7 +31,7 @@ THE SOFTWARE.
 	#include "uphone/CCTime.h"
 	#include "uphone/NSLock.h"
 	#include "uphone/Cocos2dTypes.h"
-	#include "uphone/CCXGLExtFunc.h"
+	// #include "uphone/CCXGLExtFunc.h"
 	#include "uphone/CCXBitmapDC.h"
     #include "uphone/ZipUtils.h"
 #else 

@@ -361,7 +361,7 @@ namespace cocos2d {
 			{
 				// generate alpha/color for each point
 				glEnableClientState(GL_COLOR_ARRAY);
-				UINT i = m_uBegin;
+				unsigned int i = m_uBegin;
 				for (; i < m_uEnd; ++i)
 				{
 					int idx = i*8;

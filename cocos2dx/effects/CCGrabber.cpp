@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "support/opengl_support/OpenGL_Internal.h"
 #include "platform/platform.h"
-
+#include <GLES/glext.h>
 
 namespace cocos2d
 {
