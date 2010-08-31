@@ -40,13 +40,13 @@ namespace cocos2d {
 
 	// implementation CCTMXLayerInfo
 	CCTMXLayerInfo::CCTMXLayerInfo()
+		:m_bOwnTiles(true)
+		,m_uMinGID(100000)
+		,m_uMaxGID(0)
+		,m_sName("")
+		,m_pTiles(NULL)
+		,m_tOffset(CGPointZero)
 	{
-		m_bOwnTiles = true;
-		m_uMinGID = 100000;
-		m_uMaxGID = 0;
-		m_sName = "";
-		m_pTiles = NULL;
-		m_tOffset = CGPointZero;
 		m_pProperties= new StringToStringDictionary();;
 	}
 	CCTMXLayerInfo::~CCTMXLayerInfo()
@@ -65,6 +65,14 @@ namespace cocos2d {
 	}
 
 	// implementation CCTMXTilesetInfo
+	CCTMXTilesetInfo::CCTMXTilesetInfo()
+		:m_uFirstGid(0)
+		,m_tTileSize(CGSizeZero)
+		,m_uSpacing(0)
+		,m_uMargin(0)
+		,m_tImageSize(CGSizeZero)
+	{
+	}
 	CCTMXTilesetInfo::~CCTMXTilesetInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
@@ -110,6 +118,15 @@ namespace cocos2d {
 		m_nParentElement = TMXPropertyNone;
 
 		return parseXMLFile(m_sFilename.c_str());
+	}
+	CCTMXMapInfo::CCTMXMapInfo()
+		:m_bStoringCharacters(false)
+		,m_nLayerAttribs(0)
+		,m_tMapSize(CGSizeZero)
+		,m_tTileSize(CGSizeZero)
+		,m_pLayers(NULL)
+		,m_pTilesets(NULL)
+	{
 	}
 	CCTMXMapInfo::~CCTMXMapInfo()
 	{

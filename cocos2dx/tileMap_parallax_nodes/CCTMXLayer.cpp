@@ -101,6 +101,9 @@ namespace cocos2d {
 		,m_pProperties(NULL)
 		,m_pReusedTile(NULL)
 		,m_pAtlasIndexArray(NULL)
+		,m_tLayerSize(CGSizeZero)
+		,m_tMapTileSize(CGSizeZero)
+		,m_sLayerName("")
 	{}
 	CCTMXLayer::~CCTMXLayer()
 	{
@@ -152,7 +155,7 @@ namespace cocos2d {
 		//  - difficult to scale / rotate / etc.
 		m_pobTextureAtlas->getTexture()->setAliasTexParameters();
 
-//		CFByteOrder o = CFByteOrderGetCurrent();
+		//CFByteOrder o = CFByteOrderGetCurrent();
 
 		// Parse cocos2d properties
 		this->parseInternalProperties();
