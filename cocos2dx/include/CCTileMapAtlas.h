@@ -51,7 +51,7 @@ namespace cocos2d {
 		/** TileMap info */
 		CCX_PROPERTY(tImageTGA*, m_pTGAInfo, TGAInfo);
 	public:
-		CCTileMapAtlas(){}
+		CCTileMapAtlas();
 		virtual ~CCTileMapAtlas();
 		/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile.
 		The tile file will be loaded using the TextureMgr.

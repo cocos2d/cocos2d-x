@@ -37,10 +37,10 @@ namespace cocos2d {
 
 	//implementation CCTMXObjectGroup
 
-	CCTMXObjectGroup::CCTMXObjectGroup()	
+	CCTMXObjectGroup::CCTMXObjectGroup()
+		:m_sGroupName("")
+		,m_tPositionOffset(CGPointZero)
 	{
-		m_sGroupName = "";
-		m_tPositionOffset = CGPointZero;
 		m_pObjects = new std::vector<StringToStringDictionary*>();
 		m_pProperties = new StringToStringDictionary();
 	}

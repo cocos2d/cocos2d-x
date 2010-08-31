@@ -100,7 +100,7 @@ namespace cocos2d {
 		// size in pixels of the image
 		CGSize			m_tImageSize;
 	public:
-		CCTMXTilesetInfo(){}
+		CCTMXTilesetInfo();
 		virtual ~CCTMXTilesetInfo();
 		CGRect rectForGID(unsigned int gid);
 	};
@@ -146,7 +146,7 @@ namespace cocos2d {
 		// properties
 		CCX_SYNTHESIZE(StringToStringDictionary*, m_pProperties, Properties);
 	public:	
-		CCTMXMapInfo(){}
+		CCTMXMapInfo();
 		virtual ~CCTMXMapInfo();
 		/** creates a TMX Format with a tmx file */
 		static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
