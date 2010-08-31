@@ -20,25 +20,25 @@ void SpriteEase::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0) );
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease_in = CCEaseIn::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 3.0f);
+	CCIntervalAction* move_ease_in = (CCIntervalAction*)CCEaseIn::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 3.0f);
 	CCIntervalAction* move_ease_in_back = move_ease_in->reverse();
 	
-	CCIntervalAction* move_ease_out = CCEaseOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 3.0f);
+	CCIntervalAction* move_ease_out = CCEaseOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 3.0f);
 	CCIntervalAction* move_ease_out_back = move_ease_out->reverse();
 	
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move_ease_in, move_ease_in_back, NULL));
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move_ease_out, move_ease_out_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions(move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions(move_ease_in, move_ease_in_back, NULL);
+	CCFiniteTimeAction* seq3 = CCSequence::actions(move_ease_out, move_ease_out_back, NULL);
 	
 	
-	CCAction *a2 = m_grossini->runAction( CCRepeatForever::actionWithAction(seq1) );
+	CCAction *a2 = m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1) );
 	a2->setTag(1);
 
-	CCAction *a1 = m_tamara->runAction( CCRepeatForever::actionWithAction(seq2) );
+	CCAction *a1 = m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2) );
 	a1->setTag(1);
 
-	CCAction *a = m_kathia->runAction( CCRepeatForever::actionWithAction(seq3) );
+	CCAction *a = m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3) );
 	a->setTag(1);
 
 	schedule(schedule_selector(SpriteEase::testStopAction), 6);
@@ -71,23 +71,23 @@ void SpriteEaseInOut::onEnter()
 	CCIntervalAction*  move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 //	id move_back = move->reverse();
 	
-	CCIntervalAction*  move_ease_inout1 = CCEaseInOut::actionWithAction(dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 2.0f);
+	CCIntervalAction*  move_ease_inout1 = CCEaseInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 2.0f);
 	CCIntervalAction*  move_ease_inout_back1 = move_ease_inout1->reverse();
 	
-	CCIntervalAction*  move_ease_inout2 = CCEaseInOut::actionWithAction(dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 3.0f);
+	CCIntervalAction*  move_ease_inout2 = CCEaseInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 3.0f);
 	CCIntervalAction*  move_ease_inout_back2 = move_ease_inout2->reverse();
 
-	CCIntervalAction*  move_ease_inout3 = CCEaseInOut::actionWithAction(dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 4.0f);
+	CCIntervalAction*  move_ease_inout3 = CCEaseInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 4.0f);
 	CCIntervalAction*  move_ease_inout_back3 = move_ease_inout3->reverse();
 
 	
-	CCIntervalAction*  seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout1, move_ease_inout_back1, NULL));
-	CCIntervalAction*  seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout2, move_ease_inout_back2, NULL));
-	CCIntervalAction*  seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL));
+	CCFiniteTimeAction*  seq1 = CCSequence::actions( move_ease_inout1, move_ease_inout_back1, NULL);
+	CCFiniteTimeAction*  seq2 = CCSequence::actions( move_ease_inout2, move_ease_inout_back2, NULL);
+	CCFiniteTimeAction*  seq3 = CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL);
 		
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq1) );
-	m_kathia->runAction( CCRepeatForever::actionWithAction(seq2) );
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq3) );
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1) );
+	m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2) );
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3) );
 }
 
 
@@ -109,21 +109,21 @@ void SpriteEaseExponential::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease_in = CCEaseExponentialIn::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_in = CCEaseExponentialIn::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_in_back = move_ease_in->reverse();
 	
-	CCIntervalAction* move_ease_out = CCEaseExponentialOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_out = CCEaseExponentialOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_out_back = move_ease_out->reverse();
 	
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_in, move_ease_in_back, NULL));
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_out, move_ease_out_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease_in, move_ease_in_back, NULL);
+	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_out, move_ease_out_back, NULL);
 	
 
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1) );
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2) );
-	m_kathia->runAction( CCRepeatForever::actionWithAction(seq3) );
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1) );
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2) );
+	m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3) );
 }
 
 
@@ -144,16 +144,16 @@ void SpriteEaseExponentialInOut::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease = CCEaseExponentialInOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
-	CCIntervalAction* move_ease_back = move_ease->reverse();	//--> reverse()가 존재하지 않는다.
+	CCIntervalAction* move_ease = CCEaseExponentialInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_back = move_ease->reverse();	//--> reverse()
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease, move_ease_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease, move_ease_back, NULL);
 	
 	this->positionForTwo();
 	
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
 
 }
 
@@ -175,21 +175,21 @@ void SpriteEaseSine::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease_in = CCEaseSineIn::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_in = CCEaseSineIn::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_in_back = move_ease_in->reverse();
 	
-	CCIntervalAction* move_ease_out = CCEaseSineOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_out = CCEaseSineOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_out_back = move_ease_out->reverse();
 	
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_in, move_ease_in_back, NULL));
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_out, move_ease_out_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease_in, move_ease_in_back, NULL);
+	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_out, move_ease_out_back, NULL);
 	
 	
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));
-	m_kathia->runAction( CCRepeatForever::actionWithAction(seq3));	
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
+	m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3));	
 
 }
 
@@ -211,16 +211,16 @@ void SpriteEaseSineInOut::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease = CCEaseSineInOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease = CCEaseSineInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_back = move_ease->reverse();
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease, move_ease_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease, move_ease_back, NULL);
 
 	this->positionForTwo();
 
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
 }
 
 
@@ -240,19 +240,19 @@ void SpriteEaseElastic::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease_in = CCEaseElasticIn::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_in = CCEaseElasticIn::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_in_back = move_ease_in->reverse();
 	
-	CCIntervalAction* move_ease_out = CCEaseElasticOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_out = CCEaseElasticOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_out_back = move_ease_out->reverse();
 
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_in, move_ease_in_back, NULL));
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_out, move_ease_out_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease_in, move_ease_in_back, NULL);
+	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_out, move_ease_out_back, NULL);
 	
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));
-	m_kathia->runAction( CCRepeatForever::actionWithAction(seq3));	
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
+	m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3));	
 }
 
 
@@ -273,23 +273,23 @@ void SpriteEaseElasticInOut::onEnter()
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 
-	CCIntervalAction* move_ease_inout1 = CCEaseElasticInOut::actionWithAction(dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 0.3f);
+	CCIntervalAction* move_ease_inout1 = CCEaseElasticInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 0.3f);
 	CCIntervalAction* move_ease_inout_back1 = move_ease_inout1->reverse();
 	
-	CCIntervalAction* move_ease_inout2 = CCEaseElasticInOut::actionWithAction(dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 0.45f);
+	CCIntervalAction* move_ease_inout2 = CCEaseElasticInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 0.45f);
 	CCIntervalAction* move_ease_inout_back2 = move_ease_inout2->reverse();
 	
-	CCIntervalAction* move_ease_inout3 = CCEaseElasticInOut::actionWithAction(dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()), 0.6f);
+	CCIntervalAction* move_ease_inout3 = CCEaseElasticInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 0.6f);
 	CCIntervalAction* move_ease_inout_back3 = move_ease_inout3->reverse();
 	
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout1, move_ease_inout_back1, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout2, move_ease_inout_back2, NULL));
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move_ease_inout1, move_ease_inout_back1, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease_inout2, move_ease_inout_back2, NULL);
+	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL);
 	
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_kathia->runAction( CCRepeatForever::actionWithAction(seq2));
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq3)); 
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3)); 
 }
 
 
@@ -311,19 +311,19 @@ void SpriteEaseBounce::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease_in = CCEaseBounceIn::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_in = CCEaseBounceIn::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_in_back = move_ease_in->reverse();
 	
-	CCIntervalAction* move_ease_out = CCEaseBounceOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_out = CCEaseBounceOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_out_back = move_ease_out->reverse();
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_in, move_ease_in_back, NULL));
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_out, move_ease_out_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease_in, move_ease_in_back, NULL);
+	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_out, move_ease_out_back, NULL);
 	
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));
-	m_kathia->runAction( CCRepeatForever::actionWithAction(seq3));	
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
+	m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3));	
 }
 
 
@@ -346,16 +346,16 @@ void SpriteEaseBounceInOut::onEnter()
 		CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease = CCEaseBounceInOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease = CCEaseBounceInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_back = move_ease->reverse();
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease, move_ease_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease, move_ease_back, NULL);
 	
 	this->positionForTwo();
 	
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
 }
 
 
@@ -376,19 +376,19 @@ void SpriteEaseBack::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease_in = CCEaseBackIn::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_in = CCEaseBackIn::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_in_back = move_ease_in->reverse();
 	
-	CCIntervalAction* move_ease_out = CCEaseBackOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease_out = CCEaseBackOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_out_back = move_ease_out->reverse();
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_in, move_ease_in_back, NULL));
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease_out, move_ease_out_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease_in, move_ease_in_back, NULL);
+	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_out, move_ease_out_back, NULL);
 	
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));
-	m_kathia->runAction( CCRepeatForever::actionWithAction(seq3));	
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));
+	m_kathia->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3));	
 }
 
 
@@ -409,16 +409,16 @@ void SpriteEaseBackInOut::onEnter()
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
-	CCIntervalAction* move_ease = CCEaseBackInOut::actionWithAction( dynamic_cast<CCIntervalAction*>(move->copy()->autorelease()) );
+	CCIntervalAction* move_ease = CCEaseBackInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()) );
 	CCIntervalAction* move_ease_back = move_ease->reverse();
 	
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move, move_back, NULL));
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( move_ease, move_ease_back, NULL));
+	CCFiniteTimeAction* seq1 = CCSequence::actions( move, move_back, NULL);
+	CCFiniteTimeAction* seq2 = CCSequence::actions( move_ease, move_ease_back, NULL);
 	
 	this->positionForTwo();
 	
-	m_grossini->runAction( CCRepeatForever::actionWithAction(seq1));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq2));	
+	m_grossini->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq1));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq2));	
 }
 
 
@@ -443,14 +443,14 @@ void SpeedTest::onEnter()
 	CCIntervalAction *rot1 = CCRotateBy::actionWithDuration(4, 360*2);
 	CCIntervalAction *rot2 = rot1->reverse();
 	
-	CCIntervalAction* seq3_1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(jump2, jump1, NULL));
-	CCIntervalAction* seq3_2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( rot1, rot2, NULL));
-	CCIntervalAction* spawn = dynamic_cast<CCIntervalAction*>(CCSpawn::actions(seq3_1, seq3_2, NULL));
-	CCSpeed* action = CCSpeed::actionWithAction( CCRepeatForever::actionWithAction(spawn), 1.0f);
+	CCFiniteTimeAction* seq3_1 = CCSequence::actions(jump2, jump1, NULL);
+	CCFiniteTimeAction* seq3_2 = CCSequence::actions( rot1, rot2, NULL);
+	CCFiniteTimeAction* spawn = CCSpawn::actions(seq3_1, seq3_2, NULL);
+	CCSpeed* action = CCSpeed::actionWithAction(CCRepeatForever::actionWithAction((CCIntervalAction*)spawn), 1.0f);
 	action->setTag(kTagAction1);
 	
-	CCAction* action2 = dynamic_cast<CCAction*>(action->copy()->autorelease());
-	CCAction* action3 = dynamic_cast<CCAction*>(action->copy()->autorelease());
+	CCAction* action2 = (CCAction*)(action->copy()->autorelease());
+	CCAction* action3 = (CCAction*)(action->copy()->autorelease());
 
 	action2->setTag(kTagAction1);
 	action3->setTag(kTagAction1);
@@ -464,9 +464,9 @@ void SpeedTest::onEnter()
 
 void SpeedTest::altertime(ccTime dt)
 {	
-	CCSpeed* action1 = dynamic_cast<CCSpeed*>(m_grossini->getActionByTag(kTagAction1));
-	CCSpeed* action2 = dynamic_cast<CCSpeed*>(m_tamara->getActionByTag(kTagAction1));
-	CCSpeed* action3 = dynamic_cast<CCSpeed*>(m_kathia->getActionByTag(kTagAction1));
+	CCSpeed* action1 = (CCSpeed*)(m_grossini->getActionByTag(kTagAction1));
+	CCSpeed* action2 = (CCSpeed*)(m_tamara->getActionByTag(kTagAction1));
+	CCSpeed* action3 = (CCSpeed*)(m_kathia->getActionByTag(kTagAction1));
 	
 	action1->setSpeed( CCRANDOM_0_1() * 2 );
 	action2->setSpeed( CCRANDOM_0_1() * 2 );
@@ -493,18 +493,18 @@ void SchedulerTest::onEnter()
 	CCIntervalAction* rot1 = CCRotateBy::actionWithDuration(4, 360*2);
 	CCIntervalAction* rot2 = rot1->reverse();
 	
-	CCIntervalAction* seq3_1 = dynamic_cast<CCIntervalAction*>(CCSequence::actions(jump2, jump1, NULL));
-	CCIntervalAction* seq3_2 = dynamic_cast<CCIntervalAction*>(CCSequence::actions( rot1, rot2, NULL));
-	CCIntervalAction* spawn = dynamic_cast<CCIntervalAction*>(CCSpawn::actions(seq3_1, seq3_2, NULL));
-	CCRepeatForever* action = CCRepeatForever::actionWithAction(spawn);
+	CCFiniteTimeAction* seq3_1 = CCSequence::actions(jump2, jump1, NULL);
+	CCFiniteTimeAction* seq3_2 = CCSequence::actions( rot1, rot2, NULL);
+	CCFiniteTimeAction* spawn = CCSpawn::actions(seq3_1, seq3_2, NULL);
+	CCFiniteTimeAction* action = CCRepeatForever::actionWithAction((CCIntervalAction*)spawn);
 	
-	CCRepeatForever* action2 = dynamic_cast<CCRepeatForever*>(action->copy()->autorelease());
-	CCRepeatForever* action3 = dynamic_cast<CCRepeatForever*>(action->copy()->autorelease());
+	CCRepeatForever* action2 = (CCRepeatForever*)(action->copy()->autorelease());
+	CCRepeatForever* action3 = (CCRepeatForever*)(action->copy()->autorelease());
 	
 	
-	m_grossini->runAction( CCSpeed::actionWithAction( action, 0.5f) );
-	m_tamara->runAction( CCSpeed::actionWithAction( action2, 1.5f) );
-	m_kathia->runAction( CCSpeed::actionWithAction( action3, 1.0f) );
+	m_grossini->runAction( CCSpeed::actionWithAction((CCIntervalAction*)action, 0.5f) );
+	m_tamara->runAction( CCSpeed::actionWithAction((CCIntervalAction*)action2, 1.5f) );
+	m_kathia->runAction( CCSpeed::actionWithAction((CCIntervalAction*)action3, 1.0f) );
 	
 	CCParticleSystem* emitter = CCParticleFireworks::node();
 	addChild(emitter);
