@@ -16,6 +16,7 @@
 #include "MenuTest/MenuTest.h"
 #include "ActionManagerTest/ActionManagerTest.h"
 #include "LayerTest/LayerTest.h"
+#include "SceneTest/SceneTest.h"
 
 enum
 {
@@ -34,6 +35,7 @@ enum
     TEST_MENU,
     TEST_ACTION_MANAGER,
     TEST_LAYER,
+    TEST_SCENE,
     TESTS_COUNT,
 };
 
@@ -53,6 +55,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "MenuTest",
     "ActionManagerTest",
     "LayerTest",
+    "SceneTest",
 };
 
 #endif
