@@ -63,11 +63,12 @@ namespace cocos2d{
 		if (mapInfo->getLayers() && mapInfo->getLayers()->count()>0)
 		{
 			CCTMXLayerInfo *layerInfo = NULL;
-			NSMutableArray<CCTMXLayerInfo*>::NSMutableArrayIterator rit;
-			for (rit = mapInfo->getLayers()->begin(); rit != mapInfo->getLayers()->end(); ++rit)
+			NSMutableArray<CCTMXLayerInfo*>::NSMutableArrayIterator it;
+			NSMutableArray<CCTMXLayerInfo*>* layers = mapInfo->getLayers();
+			for (it = layers->begin(); it != layers->end(); ++it)
 			{
-				layerInfo = *rit;
-				if (!layerInfo && layerInfo->m_bVisible)
+				layerInfo = *it;
+				if (layerInfo && layerInfo->m_bVisible)
 				{
 					CCTMXLayer *child = parseLayer(layerInfo, mapInfo);
 					addChild((CCNode*)child, idx, idx);
@@ -131,10 +132,10 @@ namespace cocos2d{
 		if (mapInfo->getTilesets() && mapInfo->getTilesets()->count()>0)
 		{
 			CCTMXTilesetInfo *tileset = NULL;
-			NSMutableArray<CCTMXTilesetInfo*>::NSMutableArrayRevIterator it;
-			for (it = mapInfo->getTilesets()->rbegin(); it != mapInfo->getTilesets()->rend(); ++it)
+			NSMutableArray<CCTMXTilesetInfo*>::NSMutableArrayRevIterator rit;
+			for (rit = mapInfo->getTilesets()->rbegin(); rit != mapInfo->getTilesets()->rend(); ++rit)
 			{
-				tileset = *it;
+				tileset = *rit;
 				if (tileset)
 				{
 					for( unsigned int y=0; y < size.height; y++ )

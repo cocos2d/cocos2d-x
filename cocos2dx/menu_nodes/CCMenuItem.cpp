@@ -107,11 +107,11 @@ namespace cocos2d{
 	{
 		m_tDisabledColor = var;
 	}
-	CCNode *CCMenuItemLabel::getLable()
+	CCNode *CCMenuItemLabel::getLabel()
 	{
 		return m_pLabel;
 	}
-	void CCMenuItemLabel::setLable(CCNode* var)
+	void CCMenuItemLabel::setLabel(CCNode* var)
 	{
 		CCX_SAFE_RELEASE(m_pLabel);
 		var->retain();
@@ -131,7 +131,7 @@ namespace cocos2d{
 		m_fOriginalScale = 1.0f;
 		m_tColorBackup = ccWHITE;
 		m_tDisabledColor = ccc3(126,126,126);
-		this->setLable(label);
+		this->setLabel(label);
 		return this;
 	}
 	CCMenuItemLabel::~CCMenuItemLabel()
