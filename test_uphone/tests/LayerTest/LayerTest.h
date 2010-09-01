@@ -1,7 +1,7 @@
 #ifndef _LAYER_TEST_H_
 #define _LAYER_TEST_H_
 
-#include "cocos2d.h"
+////----#include "cocos2d.h"
 #include "../testBasic.h"
 
 class LayerTest : public CCLayer

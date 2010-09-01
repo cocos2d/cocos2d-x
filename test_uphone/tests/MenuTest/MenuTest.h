@@ -1,7 +1,7 @@
 #ifndef _MENU_TEST_H_
 #define _MENU_TEST_H_
 
-#include "cocos2d.h"
+////----#include "cocos2d.h"
 #include "../testBasic.h"
 
 class MenuLayer1 : public CCLayer

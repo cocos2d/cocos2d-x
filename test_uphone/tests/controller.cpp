@@ -47,6 +47,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new LayerTestScene(); break;
     case TEST_SCENE:
         pScene = new SceneTestScene(); break;
+    case TEST_PARALLAX:
+        pScene = new ParallaxTestScene(); break;
     default:
         break;
     }

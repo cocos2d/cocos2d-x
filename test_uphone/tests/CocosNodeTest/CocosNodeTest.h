@@ -1,7 +1,7 @@
 #ifndef _COCOSNODE_TEST_H_
 #define _COCOSNODE_TEST_H_
 
-#include "cocos2d.h"
+////----#include "cocos2d.h"
 #include "../testBasic.h"
 
 class TestCocosNodeDemo : public CCLayer
