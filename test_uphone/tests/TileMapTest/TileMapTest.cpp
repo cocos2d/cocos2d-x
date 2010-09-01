@@ -167,11 +167,11 @@ TMXOrthoTest2::TMXOrthoTest2()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child;
+	CCSpriteSheet* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = dynamic_cast<CCSpriteSheet*>(*it);
+		child = (CCSpriteSheet*)(*it);
 
 		if(!child)
 			break;
@@ -201,11 +201,11 @@ TMXOrthoTest3::TMXOrthoTest3()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child;
+	CCSpriteSheet* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = dynamic_cast<CCSpriteSheet*>(*it);
+		child = (CCSpriteSheet*)(*it);
 
 		if(!child)
 			break;
@@ -236,11 +236,11 @@ TMXOrthoTest4::TMXOrthoTest4()
 	////----UXLOG("ContentSize: %f, %f", s1.width,s1.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child;
+	CCSpriteSheet* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = dynamic_cast<CCSpriteSheet*>(*it);
+		child = (CCSpriteSheet*)(*it);
 
 		if(!child)
 			break;
@@ -327,11 +327,11 @@ TMXReadWriteTest::TMXReadWriteTest()
 	CCIntervalAction* opacity = CCFadeOut::actionWithDuration(2);
 	CCIntervalAction* fadein = CCFadeIn::actionWithDuration(2);
 	CCIntervalAction* scaleback = CCScaleTo::actionWithDuration(1, 1);
-	CCIntervalAction* finish = dynamic_cast<CCIntervalAction*>(CCCallFuncN::actionWithTarget(this, callfuncN_selector(TMXReadWriteTest::removeSprite)));
+	CCInstantAction* finish = CCCallFuncN::actionWithTarget(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
 	CCFiniteTimeAction* seq0 = CCSequence::actions(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
-	CCIntervalAction* seq1 = dynamic_cast<CCIntervalAction*>(seq0->copy()->autorelease());
-	CCIntervalAction* seq2 = dynamic_cast<CCIntervalAction*>(seq0->copy()->autorelease());
-	CCIntervalAction* seq3 = dynamic_cast<CCIntervalAction*>(seq0->copy()->autorelease());
+	CCIntervalAction* seq1 = (CCIntervalAction*)(seq0->copy()->autorelease());
+	CCIntervalAction* seq2 = (CCIntervalAction*)(seq0->copy()->autorelease());
+	CCIntervalAction* seq3 = (CCIntervalAction*)(seq0->copy()->autorelease());
 	
 	tile0->runAction(seq0);
 	tile1->runAction(seq1);
@@ -355,9 +355,9 @@ TMXReadWriteTest::TMXReadWriteTest()
 void TMXReadWriteTest::removeSprite(NSObject* sender)
 {
 	////----UXLOG("removing tile: %x", sender);
-	CCNode* p = dynamic_cast<CCNode*>(sender)->getParent();
+	CCNode* p = ((CCNode*)sender)->getParent();
 
-	p->removeChild(dynamic_cast<CCNode*>(sender), true);
+	p->removeChild((CCNode*)sender, true);
 	
 	//////----UXLOG("atlas quantity: %d", p->textureAtlas()->totalQuads());
 }
@@ -542,7 +542,7 @@ TMXUncompressedTest::TMXUncompressedTest()
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		layer= dynamic_cast<CCTMXLayer*>(*it);
+		layer= (CCTMXLayer*)(*it);
 
 		if(!layer)
 			break;
@@ -802,8 +802,8 @@ TMXIsoZorder::TMXIsoZorder()
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
 	CCIntervalAction* back = move->reverse();
-	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move, back,NULL));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq) );
+	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*) seq) );
 	
 	schedule( schedule_selector(TMXIsoZorder::repositionSprite) );
 }
@@ -861,8 +861,8 @@ TMXOrthoZorder::TMXOrthoZorder()
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
 	CCIntervalAction* back = move->reverse();
-	CCIntervalAction* seq = dynamic_cast<CCIntervalAction*>(CCSequence::actions(move, back,NULL));
-	m_tamara->runAction( CCRepeatForever::actionWithAction(seq));
+	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
 	
 	schedule( schedule_selector(TMXOrthoZorder::repositionSprite));
 }
