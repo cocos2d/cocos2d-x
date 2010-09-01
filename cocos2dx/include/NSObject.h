@@ -50,7 +50,7 @@ protected:
 	bool		m_bManaged;		
 public:
 	NSObject(void);
-	~NSObject(void);
+	virtual ~NSObject(void);
     
 	virtual void release(void);
 	virtual void retain(void);

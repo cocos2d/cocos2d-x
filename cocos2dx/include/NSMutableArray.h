@@ -210,17 +210,17 @@ public:
 	}
 
 	// Removing objects
-	void removeLastObject(void)
+	void removeLastObject(bool bDeleteObject = true)
 	{
 		int count = this->count();
 
 		if (count > 0)
 		{
-			removeObjectAtIndex(count - 1);
+			removeObjectAtIndex(count - 1, bDeleteObject);
 		}
 	}
 
-	void removeObject(T pObject)
+	void removeObject(T pObject, bool bDeleteObject = true)
 	{
 		if (m_array.empty() || (! pObject))
 		{
@@ -234,8 +234,11 @@ public:
 			if (*iter == pObject)
 			{
 				m_array.erase(iter);
-
-				pObject->release();
+                
+				if (bDeleteObject)
+				{
+                    pObject->release();
+				}			
 
 				break;
 			}
@@ -254,50 +257,47 @@ public:
 		}
 	}
 
-	void removeObjectAtIndex(unsigned int uIndex)
+	void removeObjectAtIndex(unsigned int uIndex, bool bDeleteObject = true)
 	{
 		if (m_array.empty() || uIndex == 0)
 		{
 			return;
 		}
 
-		T pObject = m_array.at(uIndex);
-		if (pObject)
+		if (bDeleteObject)
 		{
-			pObject->release();
+			T pObject = m_array.at(uIndex);
+			if (pObject)
+			{
+				pObject->release();
+			}
 		}
-
+		
 		m_array.erase(m_array.begin() + uIndex);
 	}
 
-	void removeAllObjects(void)
+	void removeAllObjects(bool bDeleteObject = true)
 	{
-		NSMutableArray<T>::NSMutableArrayIterator iter;
-		for (iter = m_array.begin(); iter != m_array.end(); ++iter)
+		if (bDeleteObject)
 		{
-			if (*iter)
+			NSMutableArray<T>::NSMutableArrayIterator iter;
+			for (iter = m_array.begin(); iter != m_array.end(); ++iter)
 			{
-				(*iter)->release();
+				if (*iter)
+				{
+					(*iter)->release();
+				}
 			}
-		}
+		}		
 
 		m_array.clear();
 	}
 
-	void replaceObjectAtIndex(unsigned int uIndex, T pObject)
+	void replaceObjectAtIndex(unsigned int uIndex, T pObject, bool bDeleteObject = true)
 	{
-		if (uIndex >= count())
+		if (m_array[uIndex] && bDeleteObject)
 		{
-			// index out of range
-			assert(0);
-			return;
-		}
-
-		// release the object
-		T pTmp = m_array[uIndex];
-		if (pTmp)
-		{
-			pTmp->release();		
+			m_array[uIndex]->release();
 		}
 
 		m_array[uIndex] = pObject;

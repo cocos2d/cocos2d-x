@@ -43,7 +43,10 @@ namespace cocos2d{
 		CCLabelAtlas()
 			:m_sString("")
 		{}
-		virtual ~CCLabelAtlas(){ m_sString.clear(); }
+		virtual ~CCLabelAtlas()
+		{ 
+			m_sString.clear(); 
+		}
 		/** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
 		static CCLabelAtlas * labelAtlasWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
 
