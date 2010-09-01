@@ -82,7 +82,7 @@ namespace cocos2d{
 		/** the color that will be used to disable the item */
 		CCX_PROPERTY(ccColor3B, m_tDisabledColor, DisabledColor);
 		/** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
-		CCX_PROPERTY(CCNode*, m_pLabel, Lable);
+		CCX_PROPERTY(CCNode*, m_pLabel, Label);
 	public:
 		CCMenuItemLabel()
 			:m_pLabel(NULL)
