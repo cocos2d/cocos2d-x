@@ -49,6 +49,10 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new SceneTestScene(); break;
     case TEST_PARALLAX:
         pScene = new ParallaxTestScene(); break;
+    case TEST_TILE_MAP:
+        pScene = new TileMapTestScene(); break;
+//     case TEST_INTERVAL:
+//         pScene = new IntervalTestScene(); break;
     default:
         break;
     }

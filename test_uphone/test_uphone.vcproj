@@ -537,6 +537,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="TileMapTest"
+				>
+				<File
+					RelativePath=".\tests\TileMapTest\TileMapTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\TileMapTest\TileMapTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
