@@ -49,7 +49,7 @@ CCSpriteFrameCache* CCSpriteFrameCache::sharedSpriteFrameCache(void)
 
 void CCSpriteFrameCache::purgeSharedSpriteFrameCache(void)
 {
-	CCX_SAFE_RELEASE(pSharedSpriteFrameCache);
+	CCX_SAFE_RELEASE_NULL(pSharedSpriteFrameCache);
 }
 
 CCSpriteFrameCache* CCSpriteFrameCache::init(void)

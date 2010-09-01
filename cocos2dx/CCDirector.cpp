@@ -604,7 +604,7 @@ void CCDirector::end(void)
 	stopAnimation();
 
 #if CC_DIRECTOR_FAST_FPS
-	CCX_SAFE_RELEASE(m_pFPSLabel);
+	CCX_SAFE_RELEASE_NULL(m_pFPSLabel);
 #endif
 
 	// purge bitmap cache

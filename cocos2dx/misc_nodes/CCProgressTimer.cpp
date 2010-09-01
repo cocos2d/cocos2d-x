@@ -120,17 +120,18 @@ namespace cocos2d
 		if (m_pSprite != pSprite)
 		{
 			CCX_SAFE_RELEASE(m_pSprite);
-		}
-		m_pSprite = pSprite;
-		pSprite->retain();
 
-		//	Everytime we set a new sprite, we free the current vertex data
-		if (m_pVertexData)
-		{
-			delete[] m_pVertexData;
-			m_pVertexData = NULL;
-			m_nVertexDataCount = 0;
-		}
+			m_pSprite = pSprite;
+			pSprite->retain();
+
+			//	Everytime we set a new sprite, we free the current vertex data
+			if (m_pVertexData)
+			{
+				delete[] m_pVertexData;
+				m_pVertexData = NULL;
+				m_nVertexDataCount = 0;
+			}
+		}		
 	}
 
 	void CCProgressTimer::setType(cocos2d::CCProgressTimerType type)

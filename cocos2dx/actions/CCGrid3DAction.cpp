@@ -40,7 +40,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -240,7 +240,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -349,7 +349,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -451,7 +451,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -536,7 +536,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -614,7 +614,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -688,7 +688,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -773,7 +773,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE(pAction);
+				CCX_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
