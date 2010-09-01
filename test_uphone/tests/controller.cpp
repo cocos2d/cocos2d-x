@@ -45,6 +45,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ActionManagerTestScene(); break;
     case TEST_LAYER:
         pScene = new LayerTestScene(); break;
+    case TEST_SCENE:
+        pScene = new SceneTestScene(); break;
     default:
         break;
     }

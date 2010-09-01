@@ -513,6 +513,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="SceneTest"
+				>
+				<File
+					RelativePath=".\tests\SceneTest\SceneTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\SceneTest\SceneTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
