@@ -24,6 +24,10 @@ THE SOFTWARE.
 
 #include "CCRadialTransition.h"
 #include "CCDirector.h"
+#include "CCRenderTexture.h"
+#include "CCInstantAction.h"
+#include "CCProgressTimerActions.h"
+#include "CGPointExtension.h"
 
 namespace   cocos2d {
 
@@ -61,43 +65,44 @@ void CCRadialCCWTransition::onEnter()
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
 	CGSize size = CCDirector::getSharedDirector()->getWinSize();
-	/** @todo CCProgressTimer, CCRenderTexture
 
 	// create the second render texture for outScene
-	CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidth:size.width height:size.height];
-	outTexture.sprite.anchorPoint= ccp(0.5f,0.5f);
-	outTexture.position = ccp(size.width/2, size.height/2);
-	outTexture.anchorPoint = ccp(0.5f,0.5f);
+	CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
+	outTexture->getSprite()->setAnchorPoint(ccp(0.5f,0.5f));
+	outTexture->setPosition(ccp(size.width/2, size.height/2));
+	outTexture->setAnchorPoint(ccp(0.5f,0.5f));
 
 	// render outScene to its texturebuffer
-	[outTexture clear:0 g:0 b:0 a:1];
-	[outTexture begin];
-	[outScene visit];
-	[outTexture end];
+	outTexture->clear(0,0,0,1);
+	outTexture->begin();
+	m_pOutScene->visit();
+	outTexture->end();
 
 	//	Since we've passed the outScene to the texture we don't need it.
-	[self hideOutShowIn];
+	this->hideOutShowIn();
 
 	//	We need the texture in RenderTexture.
-	CCProgressTimer *outNode = [CCProgressTimer progressWithTexture:outTexture.sprite.texture];
+	CCProgressTimer *outNode = CCProgressTimer::progressWithTexture(outTexture->getSprite()->getTexture());
 	// but it's flipped upside down so we flip the sprite
-	outNode.sprite.flipY = YES;
+	outNode->getSprite()->setFlipY(true);
 	//	Return the radial type that we want to use
-	outNode.type = [self radialType];
-	outNode.percentage = 100.f;
-	outNode.position = ccp(size.width/2, size.height/2);
-	outNode.anchorPoint = ccp(0.5f,0.5f);
+	outNode->setType(radialType());
+	outNode->setPercentage(100.f);
+	outNode->setPosition(ccp(size.width/2, size.height/2));
+	outNode->setAnchorPoint(ccp(0.5f,0.5f));
 
 	// create the blend action
-	CCIntervalAction * layerAction = [CCSequence actions:
-	[CCProgressFromTo actionWithDuration:duration from:100.f to:0.f],
-		[CCCallFunc actionWithTarget:self selector:@selector(finish)],
-		nil ];	
+	CCAction * layerAction = CCSequence::actions
+	(
+		CCProgressFromTo::actionWithDuration(m_fDuration, 100.0f, 0.0f),
+		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
+		NULL
+	);
 	// run the blend action
-	[outNode runAction: layerAction];
+	outNode->runAction(layerAction);
 
 	// add the layer (which contains our two rendertextures) to the scene
-	[self addChild: outNode z:2 tag:kSceneRadial];*/
+	this->addChild(outNode, 2, kSceneRadial);
 }
 
 

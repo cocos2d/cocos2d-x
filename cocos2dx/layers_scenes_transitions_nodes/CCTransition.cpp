@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include "CCCameraAction.h"
 #include "CCLayer.h"
 #include "CCGridAction.h"
+#include "CCRenderTexture.h"
+#include "CCTiledGridAction.h"
 namespace   cocos2d {
 
 enum {
@@ -1094,7 +1096,6 @@ void CCCrossFadeTransition:: draw()
 
 void CCCrossFadeTransition::onEnter()
 {
-	/** @todo ccrendertexture
 	__super::onEnter();
 
 	// create a transparent color layer
@@ -1104,7 +1105,7 @@ void CCCrossFadeTransition::onEnter()
 	CCColorLayer* layer = CCColorLayer::layerWithColor(color);
 
 	// create the first render texture for inScene
-	CCRenderTexture* inTexture = CCRenderTexture::renderTextureWithWidth((int)size.width, (int)size.height);
+	CCRenderTexture* inTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
 	inTexture->getSprite()->setAnchorPoint( ccp(0.5f,0.5f) );
 	inTexture->setPosition( ccp(size.width/2, size.height/2) );
 	inTexture->setAnchorPoint( ccp(0.5f,0.5f) );
@@ -1115,7 +1116,7 @@ void CCCrossFadeTransition::onEnter()
 	inTexture->end();
 
 	// create the second render texture for outScene
-	CCRenderTexture* outTexture = CCRenderTexture::renderTextureWithWidth((int)size.width, (int)size.height);
+	CCRenderTexture* outTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
 	outTexture->getSprite()->setAnchorPoint( ccp(0.5f,0.5f) );
 	outTexture->setPosition( ccp(size.width/2, size.height/2) );
 	outTexture->setAnchorPoint( ccp(0.5f,0.5f) );
@@ -1144,19 +1145,19 @@ void CCCrossFadeTransition::onEnter()
 
 	// create the blend action
 	CCAction* layerAction = CCSequence::actions
-		(
-			CCFadeTo::actionWithDuration(m_fDuration, 0),
-			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),
-			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
-			NULL
-		);
+	(
+		CCFadeTo::actionWithDuration(m_fDuration, 0),
+		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),
+		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
+		NULL
+	);
 
 
 	// run the blend action
 	outTexture->getSprite()->runAction( layerAction );
 
 	// add the layer (which contains our two rendertextures) to the scene
-	addChild(layer, 2, kSceneFade);*/
+	addChild(layer, 2, kSceneFade);
 }
 
 // clean up on exit
@@ -1195,37 +1196,24 @@ void CCTurnOffTilesTransition::sceneOrder()
 
 void CCTurnOffTilesTransition::onEnter()
 {
-	/** @todo ccturnofftiles
 	__super::onEnter();
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	float aspect = s.width / s.height;
 	int x = (int)(12 * aspect);
 	int y = 12;
 
-	CCTurnOffTiles* toff = CCTurnOffTiles::actionWithSize( ccg(x,y), m_duration);
+	CCTurnOffTiles* toff = CCTurnOffTiles::actionWithSize( ccg(x,y), m_fDuration);
 	CCIntervalAction* action = easeActionWithAction(toff);
-	m_outScene->runAction(
-		CCSequence::actions(
-		action,
-		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)), 
-		CCStopGrid::action(),
-		NULL)
-		);*/
-	/** @todo
-	[super onEnter];
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	float aspect = s.width / s.height;
-	int x = 12 * aspect;
-	int y = 12;
-
-	id toff = [CCTurnOffTiles actionWithSize: ccg(x,y) duration:duration];
-	id action = [self easeActionWithAction:toff];
-	[outScene runAction: [CCSequence actions: action,
-		[CCCallFunc actionWithTarget:self selector:@selector(finish)],
-		[CCStopGrid action],
-		nil]
-	];*/
-
+	m_pOutScene->runAction
+	(
+		CCSequence::actions
+		(
+			action,
+			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)), 
+			CCStopGrid::action(),
+			NULL
+		)
+	);
 }
 
 
@@ -1254,12 +1242,12 @@ void CCSplitColsTransition::onEnter()
 
 	CCIntervalAction* split = action();
 	CCIntervalAction* seq = (CCIntervalAction*)CCSequence::actions
-		(
-			split,
-			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),
-			split->reverse(),
-			NULL
-		);
+	(
+		split,
+		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),
+		split->reverse(),
+		NULL
+	);
 
 	this->runAction
 	( 
@@ -1276,8 +1264,7 @@ void CCSplitColsTransition::onEnter()
 
 CCIntervalAction* CCSplitColsTransition:: action()
 {
-	return NULL;
-	/// @todo return [CCSplitCols actionWithCols:3 duration:duration/2.0f];
+	return CCSplitCols::actionWithCols(3, m_fDuration/2.0f);
 }
 
 
@@ -1302,8 +1289,7 @@ CCSplitRowsTransition::~CCSplitRowsTransition()
 
 CCIntervalAction* CCSplitRowsTransition::action()
 {
-	return NULL;
-	/// @todo return [CCSplitRows actionWithRows:3 duration:duration/2.0f];
+	return CCSplitRows::actionWithRows(3, m_fDuration/2.0f);
 }
 
 IMPLEMENT_TRANSITIONWITHDURATION(CCSplitRowsTransition)
@@ -1350,8 +1336,7 @@ void CCFadeTRTransition::onEnter()
 
 CCIntervalAction*  CCFadeTRTransition::actionWithSize(ccGridSize size)
 {
-	return NULL;
-	/// @todo return [CCFadeOutTRTiles actionWithSize:v duration:duration];
+	return CCFadeOutTRTiles::actionWithSize(size, m_fDuration);
 }
 
 CCIntervalAction* CCFadeTRTransition:: easeActionWithAction(CCIntervalAction* action)
@@ -1375,8 +1360,7 @@ CCFadeBLTransition::~CCFadeBLTransition()
 
 CCIntervalAction*  CCFadeBLTransition::actionWithSize(ccGridSize size)
 {
-	return NULL;
-	/// @todo return [CCFadeOutBLTiles actionWithSize:v duration:duration];
+	return CCFadeOutBLTiles::actionWithSize(size, m_fDuration);
 }
 
 IMPLEMENT_TRANSITIONWITHDURATION(CCFadeBLTransition)
@@ -1393,8 +1377,7 @@ CCFadeUpTransition::~CCFadeUpTransition()
 
 CCIntervalAction* CCFadeUpTransition::actionWithSize(ccGridSize size)
 {
-	return NULL;
-	/// @todo return [CCFadeOutUpTiles actionWithSize:v duration:duration];
+	return CCFadeOutUpTiles::actionWithSize(size, m_fDuration);
 }
 
 IMPLEMENT_TRANSITIONWITHDURATION(CCFadeUpTransition)
@@ -1411,8 +1394,7 @@ CCFadeDownTransition::~CCFadeDownTransition()
 
 CCIntervalAction* CCFadeDownTransition::actionWithSize(ccGridSize size)
 {
-	return NULL;
-	/// @todo return [CCFadeOutDownTiles actionWithSize:v duration:duration];
+	return CCFadeOutDownTiles::actionWithSize(size, m_fDuration);
 }
 
 IMPLEMENT_TRANSITIONWITHDURATION(CCFadeDownTransition)
