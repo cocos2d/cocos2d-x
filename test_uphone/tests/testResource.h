@@ -11,6 +11,7 @@ static const char s_pPathR2[]             = "/NEWPLUS/TDA_DATA/Data/cocos2d_test
 static const char s_pPathF1[]             = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f1.png";
 static const char s_pPathF2[]             = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/f2.png";
 static const char s_pPathBlock[]          = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/blocks.png";
+static const char s_back[]                = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background.png";
 static const char s_back1[]               = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background1.png";
 static const char s_back2[]               = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background2.png";
 static const char s_back3[]               = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/background3.png";
@@ -31,5 +32,10 @@ static const char s_pPathClose[]          = "/NEWPLUS/TDA_DATA/Data/cocos2d_test
 static const char s_MenuItem[]            = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/menuitemsprite.png";
 static const char s_SendScore[]           = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/SendScoreButton.png";
 static const char s_PressSendScore[]      = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/SendScoreButtonPressed.png";
+static const char s_Power[]               = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/powered.png";
+
+// tilemaps resource
+static const char s_TilesPng[]                      = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/tiles.png";
+static const char s_LevelMapTga[]                   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/levelmap.tga";
 
 #endif

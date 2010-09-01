@@ -2,7 +2,7 @@
 #define _PARTICLE_TEST_H_
 
 #include "../testBasic.h"
-#include "cocos2d.h"
+////----#include "cocos2d.h"
 // #include "touch_dispatcher/CCTouch.h"
 // #include "CCParticleExample.h"
 

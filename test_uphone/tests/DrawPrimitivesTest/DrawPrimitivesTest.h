@@ -1,7 +1,7 @@
 #ifndef _DRAW_PRIMITIVES_TEST_H_
 #define _DRAW_PRIMITIVES_TEST_H_
 
-#include "cocos2d.h"
+////----#include "cocos2d.h"
 #include "../testBasic.h"
 
 class DrawPrimitivesTest : public CCLayer

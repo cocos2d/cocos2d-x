@@ -525,6 +525,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ParallaxTest"
+				>
+				<File
+					RelativePath=".\tests\ParallaxTest\ParallaxTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\ParallaxTest\ParallaxTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

@@ -2,7 +2,7 @@
 #define _ActionsTest_H_
 
 #include "../testBasic.h"
-#include "cocos2d.h"
+////----#include "cocos2d.h"
 
 using namespace cocos2d;
 

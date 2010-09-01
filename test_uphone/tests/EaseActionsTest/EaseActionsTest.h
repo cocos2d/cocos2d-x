@@ -1,7 +1,7 @@
 #ifndef _EASE_ACTIONS_TEST_H_
 #define _EASE_ACTIONS_TEST_H_
 
-#include "cocos2d.h"
+////----#include "cocos2d.h"
 #include "../testBasic.h"
 
 using namespace cocos2d;

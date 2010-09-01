@@ -1,4 +1,7 @@
-#include "cocos2d.h"
+#ifndef _TOUCHES_TEST__H_
+#define _TOUCHES_TEST__H_
+
+////----#include "cocos2d.h"
 #include "../testBasic.h"
 
 using namespace cocos2d;
@@ -25,3 +28,5 @@ public:
 	void resetAndScoreBallForPlayer(int player);
 	void doStep(ccTime delta);
 };
+
+#endif
