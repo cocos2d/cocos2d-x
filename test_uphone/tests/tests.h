@@ -18,6 +18,8 @@
 #include "LayerTest/LayerTest.h"
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
+#include "TileMapTest/TileMapTest.h"
+//#include "IntervalTest/IntervalTest.h"
 
 enum
 {
@@ -38,6 +40,8 @@ enum
     TEST_LAYER,
     TEST_SCENE,
     TEST_PARALLAX,
+    TEST_TILE_MAP,
+//    TEST_INTERVAL,
     TESTS_COUNT,
 };
 
@@ -59,6 +63,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "LayerTest",
     "SceneTest",
     "ParallaxTest",
+    "TileMapTest",
+//    "IntervalTest",
 };
 
 #endif

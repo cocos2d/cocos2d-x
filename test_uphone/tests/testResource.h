@@ -37,5 +37,11 @@ static const char s_Power[]               = "/NEWPLUS/TDA_DATA/Data/cocos2d_test
 // tilemaps resource
 static const char s_TilesPng[]                      = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/tiles.png";
 static const char s_LevelMapTga[]                   = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/levelmap.tga";
+// static const char s_ISOVertexZ[]                    = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/iso-test-vertexz.tmx";
+// static const char s_OrthTest1[]                     = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/orthogonal-test1.tmx";
+// static const char s_OrthTest2[]                     = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/orthogonal-test2.tmx";
+// static const char s_OrthTest3[]                     = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/orthogonal-test3.tmx";
+// static const char s_OrthTest4[]                     = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/orthogonal-test4.tmx";
+// static const char s_HexaTest[]                      = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/hexa-test.tmx";
 
 #endif
