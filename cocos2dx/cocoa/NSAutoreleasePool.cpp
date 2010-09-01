@@ -49,7 +49,7 @@ void NSAutoreleasePool::addObject(NSObject* pObject)
 
 void NSAutoreleasePool::removeObject(NSObject* pObject)
 {
-	m_pManagedObjectArray->removeObject(pObject);
+	m_pManagedObjectArray->removeObject(pObject, false);
 }
 
 void NSAutoreleasePool::clear()
