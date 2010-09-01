@@ -79,14 +79,14 @@ CCTextureCache::CCTextureCache()
 CCTextureCache::~CCTextureCache()
 {
 	CCLOG("cocos2d: deallocing CCTextureCache.");
+
+	CCX_SAFE_RELEASE(m_pTextures);
+	CCX_SAFE_DELETE(m_pDictLock);
+	CCX_SAFE_DELETE(m_pContextLock);
+	CCX_SAFE_RELEASE(g_sharedTextureCache);
 /// @todo release
-// 	[textures release];
-// 	[dictLock release];
-// 	[contextLock release];
 // 	[auxEAGLcontext release];
 // 	auxEAGLcontext = nil;
-// 	sharedTextureCache = nil;
-// 	[super dealloc];
 }
 
 void CCTextureCache::purgeSharedTextureCache()
@@ -187,15 +187,17 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 	texture = m_pTextures->objectForKey(temp);
 
-	if( ! texture ) {
-
+	if( ! texture ) 
+	{
 		// Split up directory and filename
 		std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
 
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
 		for (unsigned int i = 0; i < temp.length(); ++i)
+		{
 			temp[i] = tolower(temp[i]);
+		}
 		if (std::string::npos != temp.find(".pvr"))
 		{
 #ifdef _POWERVR_SUPPORT_

@@ -590,6 +590,19 @@ namespace cocos2d
 	}
 
 	// implementation of TurnOffTiles
+	CCTurnOffTiles* CCTurnOffTiles::actionWithSize(ccGridSize size, ccTime d)
+	{
+		CCTurnOffTiles* pAction = new CCTurnOffTiles();
+		if (pAction->initWithSize(size, d))
+		{
+			pAction->autorelease();
+		}
+		else
+		{
+			CCX_SAFE_DELETE(pAction);
+		}
+		return pAction;
+	}
 
 	CCTurnOffTiles* CCTurnOffTiles::actionWithSeed(int s, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{

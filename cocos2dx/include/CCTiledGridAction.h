@@ -164,7 +164,8 @@ namespace cocos2d
 		virtual void update(ccTime time);
 
 	public:
-        static CCTurnOffTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
+		static CCTurnOffTiles* actionWithSize(ccGridSize size, ccTime d);
+		static CCTurnOffTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
 
 	protected:
 		int m_nSeed;

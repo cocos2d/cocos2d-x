@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCIntervalAction.h"
 #include "CCInstantAction.h"
 #include "CCGridAction.h"
+#include "CCPageTurn3DAction.h"
 
 namespace   cocos2d {
 
@@ -113,19 +114,19 @@ void CCPageTurnTransition::onEnter()
 
 CCIntervalAction* CCPageTurnTransition:: actionWithSize(ccGridSize vector)
 {
-	/** @todo CCPageTurn3D
-	if( back_ )
+	if( m_bBack )
 	{
 		// Get hold of the PageTurn3DAction
-		return [CCReverseTime actionWithAction:
-		[CCPageTurn3D actionWithSize:v duration:duration]];
+		return CCReverseTime::actionWithAction
+		(
+			CCPageTurn3D::actionWithSize(vector, m_fDuration)
+		);
 	}
 	else
 	{
 		// Get hold of the PageTurn3DAction
-		return [CCPageTurn3D actionWithSize:v duration:duration];
-	}*/
-	return NULL;
+		return CCPageTurn3D::actionWithSize(vector, m_fDuration);
+	}
 }
 
 }//namespace   cocos2d 

@@ -27,8 +27,6 @@ THE SOFTWARE.
 
 #include <string>
 #include "NSObject.h"
-/// @todo #import <Foundation/Foundation.h>
-/// @todo #import <CoreGraphics/CGImage.h>
 #include "NSMutableDictionary.h"
 
 namespace   cocos2d {
