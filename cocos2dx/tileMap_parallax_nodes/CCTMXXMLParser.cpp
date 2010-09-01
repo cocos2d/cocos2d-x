@@ -337,7 +337,7 @@ namespace cocos2d {
 					layerAttribs = pTMXMapInfo->getLayerAttribs();
 					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribGzip);
 				}
-				NSAssert( compression == "gzip", "TMX: unsupported compression method" );
+				NSAssert( compression == "" || compression == "gzip", "TMX: unsupported compression method" );
 			}
 			NSAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip maps are supported" );
 
