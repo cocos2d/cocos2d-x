@@ -15,7 +15,7 @@ enum {
 
 void SpriteEase::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0) );
 	CCIntervalAction* move_back = move->reverse();
@@ -66,7 +66,7 @@ std::string SpriteEase::title()
 
 void SpriteEaseInOut::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 
 	CCIntervalAction*  move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 //	id move_back = move->reverse();
@@ -104,7 +104,7 @@ std::string SpriteEaseInOut::title()
 
 void SpriteEaseExponential::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
@@ -139,7 +139,7 @@ std::string SpriteEaseExponential::title()
 
 void SpriteEaseExponentialInOut::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
@@ -170,7 +170,7 @@ std::string SpriteEaseExponentialInOut::title()
 
 void SpriteEaseSine::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
@@ -206,7 +206,7 @@ std::string SpriteEaseSine::title()
 
 void SpriteEaseSineInOut::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
@@ -236,7 +236,7 @@ std::string SpriteEaseSineInOut::title()
 
 void SpriteEaseElastic::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
@@ -269,7 +269,7 @@ std::string SpriteEaseElastic::title()
 
 void SpriteEaseElasticInOut::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 
@@ -307,7 +307,7 @@ std::string SpriteEaseElasticInOut::title()
 
 void SpriteEaseBounce::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
@@ -341,7 +341,7 @@ std::string SpriteEaseBounce::title()
 
 void SpriteEaseBounceInOut::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 
 		CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
@@ -372,7 +372,7 @@ std::string SpriteEaseBounceInOut::title()
 
 void SpriteEaseBack::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
@@ -405,7 +405,7 @@ std::string SpriteEaseBack::title()
 
 void SpriteEaseBackInOut::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
 	CCIntervalAction* move_back = move->reverse();
 	
@@ -435,7 +435,7 @@ std::string SpriteEaseBackInOut::title()
 
 void SpeedTest::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 
 	// rotate and jump
 	CCIntervalAction *jump1 = CCJumpBy::actionWithDuration(4, CGPointMake(-400,0), 100, 4);
@@ -485,7 +485,7 @@ std::string SpeedTest::title()
 //------------------------------------------------------------------
 void SchedulerTest::onEnter()
 {
-	__super::onEnter();
+	EaseSpriteDemo::onEnter();
 	
 	// rotate and jump
 	CCIntervalAction* jump1 = CCJumpBy::actionWithDuration(4, CGPointMake(-400,0), 100, 4);
@@ -619,7 +619,7 @@ std::string EaseSpriteDemo::title()
 
 void EaseSpriteDemo::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	// Example:
 	// You can create a sprite using a Texture2D

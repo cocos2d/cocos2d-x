@@ -9,7 +9,7 @@
 
 void MotionStreakTest1::onEnter()
 {
-	__super::onEnter();
+	MotionStreakTest::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
   
@@ -55,7 +55,7 @@ std::string MotionStreakTest1::title()
 
 void MotionStreakTest2::onEnter()
 {
-	__super::onEnter();
+	__sMotionStreakTestuper::onEnter();
 
 	setIsTouchEnabled(true);
 
@@ -160,7 +160,7 @@ std::string MotionStreakTest::title()
 
 void MotionStreakTest::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 

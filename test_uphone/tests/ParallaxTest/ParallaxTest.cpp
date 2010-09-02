@@ -235,7 +235,7 @@ std::string ParallaxDemo::title()
 
 void ParallaxDemo::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 

@@ -413,7 +413,7 @@ TextLayer* TextLayer::node()
 
 void TextLayer::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 }
 
 void TextLayer::newOrientation()

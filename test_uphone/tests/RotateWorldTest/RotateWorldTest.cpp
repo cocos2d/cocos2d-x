@@ -8,7 +8,7 @@
 //------------------------------------------------------------------
 void TestLayer::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	float x,y;
 	
@@ -33,7 +33,7 @@ void TestLayer::onEnter()
 //------------------------------------------------------------------
 void SpriteLayer::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	float x,y;
 	
@@ -82,7 +82,7 @@ void SpriteLayer::onEnter()
 
 void RotateWorldMainLayer::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	float x,y;
 	

@@ -25,7 +25,7 @@ Paddle* Paddle::paddleWithTexture(CCTexture2D* aTexture)
 
 bool Paddle::initWithTexture(CCTexture2D* aTexture)
 {
-	if( __super::initWithTexture(aTexture) ) 
+	if( CCSprite::initWithTexture(aTexture) ) 
 	{
 		m_state = kPaddleStateUngrabbed;
 	}

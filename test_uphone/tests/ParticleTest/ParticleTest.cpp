@@ -19,7 +19,7 @@ enum
 //------------------------------------------------------------------
 void DemoFirework::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFireworks::node();
 	m_background->addChild(m_emitter, 10);
@@ -42,7 +42,7 @@ std::string DemoFirework::title()
 //------------------------------------------------------------------
 void DemoFire::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFire::node();
 	m_background->addChild(m_emitter, 10);
@@ -66,7 +66,7 @@ std::string DemoFire::title()
 //------------------------------------------------------------------
 void DemoSun::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSun::node();
 	m_background->addChild(m_emitter, 10);
@@ -88,7 +88,7 @@ std::string DemoSun::title()
 //------------------------------------------------------------------
 void DemoGalaxy::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleGalaxy::node();
 	m_background->addChild(m_emitter, 10);
@@ -110,7 +110,7 @@ std::string DemoGalaxy::title()
 //------------------------------------------------------------------
 void DemoFlower::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFlower::node();
 	m_background->addChild(m_emitter, 10);
@@ -131,7 +131,7 @@ std::string DemoFlower::title()
 //------------------------------------------------------------------
 void DemoBigFlower::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = new CCQuadParticleSystem();
 	m_emitter->initWithTotalParticles(50);
@@ -215,7 +215,7 @@ std::string DemoBigFlower::title()
 //------------------------------------------------------------------
 void DemoRotFlower::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = new CCQuadParticleSystem();
 	m_emitter->initWithTotalParticles(300);
@@ -300,7 +300,7 @@ std::string DemoRotFlower::title()
 //------------------------------------------------------------------
 void DemoMeteor::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleMeteor::node();
 	m_background->addChild(m_emitter, 10);
@@ -322,7 +322,7 @@ std::string DemoMeteor::title()
 //------------------------------------------------------------------
 void DemoSpiral::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSpiral::node();
 	m_background->addChild(m_emitter, 10);
@@ -344,7 +344,7 @@ std::string DemoSpiral::title()
 //------------------------------------------------------------------
 void DemoExplosion::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleExplosion::node();
 	m_background->addChild(m_emitter, 10);
@@ -368,7 +368,7 @@ std::string DemoExplosion::title()
 //------------------------------------------------------------------
 void DemoSmoke::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSmoke::node();
 	m_background->addChild(m_emitter, 10);
@@ -391,7 +391,7 @@ std::string DemoSmoke::title()
 //------------------------------------------------------------------
 void DemoSnow::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSnow::node();
 	m_background->addChild(m_emitter, 10);
@@ -438,7 +438,7 @@ std::string DemoSnow::title()
 //------------------------------------------------------------------
 void DemoRain::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleRain::node();
 	m_background->addChild(m_emitter, 10);
@@ -464,7 +464,7 @@ std::string DemoRain::title()
 //------------------------------------------------------------------
 void DemoModernArt::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = new CCPointParticleSystem();
 	m_emitter->initWithTotalParticles(1000);
@@ -548,7 +548,7 @@ std::string DemoModernArt::title()
 //------------------------------------------------------------------
 void DemoRing::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFlower::node();
 
@@ -576,7 +576,7 @@ std::string DemoRing::title()
 //------------------------------------------------------------------
 void ParallaxParticle::onEnter()
 {
-	__super::onEnter();
+	ParticleDemo::onEnter();
 	
 	m_background->getParent()->removeChild(m_background, true);
 
@@ -605,7 +605,7 @@ void ParallaxParticle::onEnter()
 
 void DemoParticleFromFile::onEnter()
 {
-    __super::onEnter();
+    ParticleDemo::onEnter();
     m_emitter = new CCQuadParticleSystem();
     std::string filename = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/" + m_title + ".plist";
     m_emitter->initWithFile(filename.c_str());
@@ -768,7 +768,7 @@ ParticleDemo::~ParticleDemo(void)
 
 void ParticleDemo::onEnter(void)
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	CCLabel* pLabel = (CCLabel*)(this->getChildByTag(1000));
 	pLabel->setString(title().c_str());
