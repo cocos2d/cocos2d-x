@@ -45,7 +45,7 @@ CCCamera::~CCCamera(void)
 char * CCCamera::description(void)
 {
 	char *ret = new char[100];
-	sprintf_s(ret, 100, "<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ);
+	sprintf(ret, "<CCCamera | center = (%.2f,%.2f,%.2f)>", m_fCenterX, m_fCenterY, m_fCenterZ);
 	return ret;
 }
 

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include <vector>
 #include <assert.h>
+#include <stdarg.h>
 
 namespace   cocos2d {
 
@@ -54,7 +55,7 @@ public:
 	unsigned int count(void)
 	{
 		unsigned int uCount = 0;
-		NSObjectArray::iterator it;
+		NSMutableArrayIterator it;
 		for (it = m_array.begin(); it != m_array.end(); ++it)
 		{
 			if (*it == NULL)
@@ -249,7 +250,7 @@ public:
 	{
 		if(pDeleteArray && pDeleteArray->count())
 		{
-			NSObjectArray::iterator it;
+			NSMutableArrayIterator it;
 			for( it = pDeleteArray->m_array.begin(); it != pDeleteArray->m_array.end(); it++)
 			{
 				removeObject(*it);
