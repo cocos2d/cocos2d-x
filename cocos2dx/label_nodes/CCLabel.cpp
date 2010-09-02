@@ -98,7 +98,7 @@ namespace cocos2d{
 	char * CCLabel::description()
 	{
 		char *ret = new char[100] ;
-		sprintf_s(ret, 100, "<CCLabel | FontName = %s, FontSize = %.1f>", m_sFontName, m_fFontSize);
+		sprintf(ret, "<CCLabel | FontName = %s, FontSize = %.1f>", m_sFontName, m_fFontSize);
 		return ret;
 	}
 }// namespace cocos2d

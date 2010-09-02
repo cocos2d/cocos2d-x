@@ -240,7 +240,7 @@ void CCDirector::calculateDeltaTime(void)
 {
     struct cc_timeval now;
 
-	if (CCTime::gettimeofday(&now, NULL) != 0)
+	if (CCTime::gettimeofdayCocos2d(&now, NULL) != 0)
 	{
 		CCLOG("error in gettimeofday");
         m_fDeltaTime = 0;
@@ -690,7 +690,7 @@ void CCDirector::resume(void)
 
 	setAnimationInterval(m_dOldAnimationInterval);
 
-	if (CCTime::gettimeofday(m_pLastUpdate, NULL) != 0)
+	if (CCTime::gettimeofdayCocos2d(m_pLastUpdate, NULL) != 0)
 	{
 		CCLOG("cocos2d: Director: Error in gettimeofday");
 	}
@@ -760,7 +760,7 @@ void CCDirector::showProfilers()
 // implementation of DisplayLinkDirector
 void CCDisplayLinkDirector::startAnimation(void)
 {
-	if (CCTime::gettimeofday(m_pLastUpdate, NULL) != 0)
+	if (CCTime::gettimeofdayCocos2d(m_pLastUpdate, NULL) != 0)
 	{
 		CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}

@@ -98,7 +98,7 @@ namespace cocos2d{
 	char * CCBitmapFontConfiguration::description(void)
 	{
 		char *ret = new char[100];
-		sprintf_s(ret, 100, "<CCBitmapFontConfiguration | Kernings:%d | Image = %s>", HASH_COUNT(m_pKerningDictionary), m_sAtlasName.c_str());
+		sprintf(ret, "<CCBitmapFontConfiguration | Kernings:%d | Image = %s>", HASH_COUNT(m_pKerningDictionary), m_sAtlasName.c_str());
 		return ret;
 	}
 	void CCBitmapFontConfiguration::purgeKerningDictionary()

@@ -28,7 +28,7 @@ namespace   cocos2d {
 
 // although it is not the same as gettimeofday as unix
 // but we only use the diffrences of tow values
-int CCTime::gettimeofday(struct cc_timeval *tp, void *tzp)
+int CCTime::gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp)
 {
 	unsigned int ms = TimGetTicks();
 	tp->tv_sec = ms * 10 / 1000;
@@ -37,7 +37,7 @@ int CCTime::gettimeofday(struct cc_timeval *tp, void *tzp)
 	return 0;
 }
 
-void CCTime::timersub(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end)
+void CCTime::timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end)
 {
 	out->tv_sec = end->tv_sec - start->tv_sec;
 	out->tv_usec = end->tv_usec - start->tv_usec;
