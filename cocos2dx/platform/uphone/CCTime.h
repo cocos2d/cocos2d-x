@@ -35,8 +35,8 @@ struct cc_timeval
 class CCTime 
 {
 public:
-	static int gettimeofday(struct cc_timeval *tp, void *tzp);
-	static void timersub(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
+	static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
+	static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
 };
 }//namespace   cocos2d 
 
