@@ -21,10 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include <cfloat>
 #include "CCCameraAction.h"
 #include "CCNode.h"
 #include "CCCamera.h"
+#include "platform/CCXMath.h"
+
 namespace cocos2d{
 	//
 	// CameraAction
@@ -97,11 +98,11 @@ namespace cocos2d{
 		CCIntervalAction::startWithTarget(pTarget);
 		float r, zenith, azimuth;
 		this->sphericalRadius(&r, &zenith, &azimuth);
-		if( _isnan(m_fRadius) )
+		if( CCXMath::isnanCocos2d(m_fRadius) )
 			m_fRadius = r;
-		if( _isnan(m_fAngleZ) )
+		if( CCXMath::isnanCocos2d(m_fAngleZ) )
 			m_fAngleZ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
-		if( _isnan(m_fAngleX) )
+		if( CCXMath::isnanCocos2d(m_fAngleX) )
 			m_fAngleX = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
 		m_fRadZ = (CGFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);
