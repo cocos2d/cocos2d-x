@@ -411,7 +411,7 @@ void CCNode::cleanup()
 char * CCNode::description()
 {
 	char *ret = new char[100] ;
-	sprintf_s(ret, 100, "<CCNode | Tag = %d>", m_nTag);
+	sprintf(ret, "<CCNode | Tag = %d>", m_nTag);
 	return ret;
 }
 

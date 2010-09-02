@@ -849,6 +849,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\platform\CCXMath.h"
+				>
+			</File>
+			<File
 				RelativePath=".\platform\CCXUIImage_platform.h"
 				>
 			</File>

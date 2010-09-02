@@ -26,8 +26,8 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCNode.h"
 #include "CGPointExtension.h"
+#include "platform/CCXMath.h"
 
-#include <float.h>
 #include <stdarg.h>
 
 namespace cocos2d {
@@ -542,7 +542,7 @@ bool CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAct
 	ccTime d2 = pAction2->getDuration();
 
 	// __super::initWithDuration(fmaxf(d1, d2));
-	float maxd = (d1 >= d2 || _isnan(d2)) ? d1 : d2;
+	float maxd = (d1 >= d2 || CCXMath::isnanCocos2d(d2)) ? d1 : d2;
 	CCIntervalAction::initWithDuration(maxd);
 
     m_pOne = pAction1;

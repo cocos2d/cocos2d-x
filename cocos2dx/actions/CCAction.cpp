@@ -55,7 +55,7 @@ CCAction * CCAction::action()
 char * CCAction::description()
 {
 	char *ret = new char[100] ;
-	sprintf_s(ret, 100, "<CCAction | Tag = %d>", m_nTag);
+	sprintf(ret,"<CCAction | Tag = %d>", m_nTag);
 	return ret;
 }
 NSObject* CCAction::copyWithZone(NSZone *pZone)
