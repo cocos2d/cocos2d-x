@@ -53,7 +53,7 @@ CCPageTurnTransition * CCPageTurnTransition::initWithDuration(ccTime t, CCScene 
 	// XXX: needed before [super init]
 	m_bBack = backwards;
 
-	if( __super::initWithDuration(t, scene) )
+	if( CCTransitionScene::initWithDuration(t, scene) )
 	{
 		// do something
 	}
@@ -67,7 +67,7 @@ void CCPageTurnTransition::sceneOrder()
 
 void CCPageTurnTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	int x,y;
 	if( s.width > s.height)

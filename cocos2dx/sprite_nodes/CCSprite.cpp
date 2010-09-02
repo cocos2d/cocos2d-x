@@ -589,18 +589,18 @@ void CCSprite::draw(void)
 
 CCNode* CCSprite::addChild(CCNode* pChild)
 {
-	return __super::addChild(pChild);
+	return CCNode::addChild(pChild);
 }
 
 CCNode* CCSprite::addChild(CCNode *pChild, int zOrder)
 {
-	return __super::addChild(pChild, zOrder);
+	return CCNode::addChild(pChild, zOrder);
 }
 
 CCNode* CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 {
 	assert(pChild != NULL);
-	CCNode* pRet = __super::addChild(pChild, zOrder, tag);
+	CCNode* pRet = CCNode::addChild(pChild, zOrder, tag);
 
 	if (m_bUsesSpriteSheet)
 	{
@@ -633,7 +633,7 @@ void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 	}
 	else
 	{
-		__super::reorderChild(pChild, zOrder);
+		CCNode::reorderChild(pChild, zOrder);
 	}
 }
 
@@ -644,7 +644,7 @@ void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 		m_pobSpriteSheet->removeSpriteFromAtlas((CCSprite*)(pChild));
 	}
 
-	__super::removeChild(pChild, bCleanup);
+	CCNode::removeChild(pChild, bCleanup);
 	
 }
 
@@ -661,7 +661,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 		}
 	}
 
-	__super::removeAllChildrenWithCleanup(bCleanup);
+	CCNode::removeAllChildrenWithCleanup(bCleanup);
 	
 	m_bHasChildren = false;
 }
@@ -698,57 +698,57 @@ void CCSprite::setDirtyRecursively(bool bValue)
 
 void CCSprite::setPosition(CGPoint pos)
 {
-	__super::setPosition(pos);
+	CCNode::setPosition(pos);
 	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setRotation(float fRotation)
 {
-	__super::setRotation(fRotation);
+	CCNode::setRotation(fRotation);
 	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setScaleX(float fScaleX)
 {
-	__super::setScaleX(fScaleX);
+	CCNode::setScaleX(fScaleX);
 	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setScaleY(float fScaleY)
 {
-	__super::setScaleY(fScaleY);
+	CCNode::setScaleY(fScaleY);
 	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setScale(float fScale)
 {
-	__super::setScale(fScale);
+	CCNode::setScale(fScale);
 	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setVertexZ(float fVertexZ)
 {
-	__super::setVertexZ(fVertexZ);
+	CCNode::setVertexZ(fVertexZ);
 	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setAnchorPoint(CGPoint anchor)
 {
-	__super::setAnchorPoint(anchor);
+	CCNode::setAnchorPoint(anchor);
 	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setIsRelativeAnchorPoint(bool bRelative)
 {
 	assert(! m_bUsesSpriteSheet);
-	__super::setIsRelativeAnchorPoint(bRelative);
+	CCNode::setIsRelativeAnchorPoint(bRelative);
 }
 
 void CCSprite::setIsVisible(bool bVisible)
 {
 	if (bVisible != m_bIsVisible)
 	{
-		__super::setIsVisible(bVisible);
+		CCNode::setIsVisible(bVisible);
 		if (m_bUsesSpriteSheet && m_bRecursiveDirty)
 		{
 			m_bDirty = m_bRecursiveDirty = true;

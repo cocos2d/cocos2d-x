@@ -147,7 +147,7 @@ void CCLayer::onEnter()
 	}
 
 	// then iterate over all the children
-	__super::onEnter();
+	CCNode::onEnter();
 /** @todo UIAccelerometer
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];*/
@@ -164,7 +164,7 @@ void CCLayer::onExit()
 	if( isAccelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 */
-	__super::onExit();
+	CCNode::onExit();
 }
 
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
@@ -270,7 +270,7 @@ void CCColorLayer::setContentSize(CGSize size)
 	m_pSquareVertices[6] = size.width;
 	m_pSquareVertices[7] = size.height;
 
-	__super::setContentSize(size);
+	CCLayer::setContentSize(size);
 }
 
 void CCColorLayer::changeWidthAndHeight(GLfloat w ,GLfloat h)

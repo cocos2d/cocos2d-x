@@ -55,7 +55,7 @@ namespace cocos2d {
 			texture = CCTextureCache::sharedTextureCache()->addImage(tilesetInfo->m_sSourceImage.c_str());
 		}
 
-		if (__super::initWithTexture(texture, (unsigned int)capacity))
+		if (CCSpriteSheet::initWithTexture(texture, (unsigned int)capacity))
 		{
 			// layerInfo
 			m_sLayerName = layerInfo->m_sName;
@@ -460,7 +460,7 @@ namespace cocos2d {
 		unsigned int zz = (unsigned int) m_pAtlasIndexArray->arr[atlasIndex];
 		m_pTiles[zz] = 0;
 		ccCArrayRemoveValueAtIndex(m_pAtlasIndexArray, atlasIndex);
-		__super::removeChild(sprite, cleanup);
+		CCSpriteSheet::removeChild(sprite, cleanup);
 	}
 	void CCTMXLayer::removeTileAt(CGPoint pos)
 	{
@@ -484,7 +484,7 @@ namespace cocos2d {
 			CCSprite *sprite = (CCSprite*)getChildByTag(z);
 			if( sprite )
 			{
-				__super::removeChild(sprite, true);
+				CCSpriteSheet::removeChild(sprite, true);
 			}
 			else 
 			{
@@ -609,7 +609,7 @@ namespace cocos2d {
 			glAlphaFunc(GL_GREATER, m_fAlphaFuncValue);
 		}
 
-		__super::draw();
+		CCSpriteSheet::draw();
 
 		if( m_bUseAutomaticVertexZ )
 		{

@@ -31,7 +31,7 @@ namespace cocos2d {
 	bool CCQuadParticleSystem::initWithTotalParticles(int numberOfParticles)
 	{
 		// base initialization
-		if( __super::initWithTotalParticles(numberOfParticles) ) 
+		if( CCParticleSystem::initWithTotalParticles(numberOfParticles) ) 
 		{
 			// allocating data space
 			m_pQuads = new ccV2F_C4F_T2F_Quad[m_nTotalParticles];
@@ -110,7 +110,7 @@ namespace cocos2d {
 		// Only update the texture if is different from the current one
 		if( !m_pTexture || texture->getName() != m_pTexture->getName() )
 		{
-			__super::setTexture(texture);
+			CCParticleSystem::setTexture(texture);
 		}
 
 		// convert to Tex coords

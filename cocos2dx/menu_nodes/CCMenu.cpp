@@ -60,7 +60,7 @@ namespace cocos2d{
 
 	CCMenu * CCMenu::initWithItems(CCMenuItem* item, va_list args)
 	{
-		if (__super::init())
+		if (CCLayer::init())
 		{
 			this->m_bIsTouchEnabled = true;
 
@@ -113,14 +113,14 @@ namespace cocos2d{
 	*/
 	CCNode * CCMenu::addChild(CCNode * child, int zOrder)
 	{
-		return __super::addChild(child, zOrder);
+		return CCLayer::addChild(child, zOrder);
 	}
 
 	CCNode * CCMenu::addChild(CCNode * child, int zOrder, int tag)
 	{
 		// we can not use RTTI, so we do not known the type of object
 		/*NSAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
-		return __super::addChild(child, zOrder, tag);
+		return CCLayer::addChild(child, zOrder, tag);
 	}
 
 	//Menu - Events

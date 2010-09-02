@@ -59,7 +59,7 @@ namespace cocos2d
 
 	bool CCShakyTiles3D::initWithRange(int nRange, bool bShakeZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nRandrange = nRange;
 			m_bShakeZ = bShakeZ;
@@ -84,9 +84,8 @@ namespace cocos2d
 			pCopy = new CCShakyTiles3D();
 			pZone = pNewZone = new NSZone(pCopy);
 		}
-
 		
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithRange(m_nRandrange, m_bShakeZ, m_sGridSize, m_fDuration);
 		
@@ -152,7 +151,7 @@ namespace cocos2d
 
 	bool CCShatteredTiles3D::initWithRange(int nRange, bool bShatterZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_bOnce = false;
 			m_nRandrange = nRange;
@@ -179,7 +178,7 @@ namespace cocos2d
 		}
 
 		//copy super class's member
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithRange(m_nRandrange, m_bShatterZ, m_sGridSize, m_fDuration);
 
@@ -250,7 +249,7 @@ namespace cocos2d
 
 	bool CCShuffleTiles::initWithSeed(int s, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nSeed = s;
 			m_pTilesOrder = NULL;
@@ -276,7 +275,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithSeed(m_nSeed, m_sGridSize, m_fDuration);
 
@@ -343,7 +342,7 @@ namespace cocos2d
 
 	void CCShuffleTiles::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCTiledGrid3DAction::startWithTarget(pTarget);
 
 		if (m_nSeed != -1)
 		{
@@ -625,7 +624,7 @@ namespace cocos2d
 
 	bool CCTurnOffTiles::initWithSeed(int s, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nSeed = s;
 			m_pTilesOrder = NULL;
@@ -650,7 +649,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithSeed(m_nSeed, m_sGridSize, m_fDuration);
 
@@ -695,7 +694,7 @@ namespace cocos2d
 	{
 		int i;
 
-		__super::startWithTarget(pTarget);
+		CCTiledGrid3DAction::startWithTarget(pTarget);
 
 		if (m_nSeed != -1)
 		{
@@ -758,7 +757,7 @@ namespace cocos2d
 
 	bool CCWavesTiles3D::initWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nWaves = wav;
 			m_fAmplitude = amp;
@@ -784,7 +783,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 
@@ -836,7 +835,7 @@ namespace cocos2d
 
 	bool CCJumpTiles3D::initWithJumps(int j, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nJumps = j;
 			m_fAmplitude = amp;
@@ -862,7 +861,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 		pCopy->initWithJumps(m_nJumps, m_fAmplitude, m_sGridSize, m_fDuration);
 
 		CCX_SAFE_DELETE(pNewZone);
@@ -927,7 +926,7 @@ namespace cocos2d
 	{
 		m_nRows = nRows;
 
-		return __super::initWithSize(ccg(1, nRows), duration);
+		return CCTiledGrid3DAction::initWithSize(ccg(1, nRows), duration);
 	}
 
 	NSObject* CCSplitRows::copyWithZone(cocos2d::NSZone *pZone)
@@ -944,7 +943,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithRows(m_nRows, m_fDuration);
 
@@ -954,7 +953,7 @@ namespace cocos2d
 
 	void CCSplitRows::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCTiledGrid3DAction::startWithTarget(pTarget);
 		m_winSize = CCDirector::getSharedDirector()->getWinSize();
 	}
 
@@ -1005,7 +1004,7 @@ namespace cocos2d
 	bool CCSplitCols::initWithCols(int nCols, cocos2d::ccTime duration)
 	{
 		m_nCols = nCols;
-		return __super::initWithSize(ccg(nCols, 1), duration);
+		return CCTiledGrid3DAction::initWithSize(ccg(nCols, 1), duration);
 	}
 
 	NSObject* CCSplitCols::copyWithZone(cocos2d::NSZone *pZone)
@@ -1022,7 +1021,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCTiledGrid3DAction::copyWithZone(pZone);
 		pCopy->initWithCols(m_nCols, m_fDuration);
 
 		CCX_SAFE_DELETE(pNewZone);
@@ -1031,7 +1030,7 @@ namespace cocos2d
 
 	void CCSplitCols::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCTiledGrid3DAction::startWithTarget(pTarget);
 		m_winSize = CCDirector::getSharedDirector()->getWinSize();
 	}
 

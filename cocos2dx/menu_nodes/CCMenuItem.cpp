@@ -127,7 +127,7 @@ namespace cocos2d{
 	}
 	CCMenuItemLabel * CCMenuItemLabel::initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
-		__super::initWithTarget(target, selector);
+		CCMenuItem::initWithTarget(target, selector);
 		m_fOriginalScale = 1.0f;
 		m_tColorBackup = ccWHITE;
 		m_tDisabledColor = ccc3(126,126,126);
@@ -151,7 +151,7 @@ namespace cocos2d{
 		{
 			this->stopAllActions();
 			this->setScale( m_fOriginalScale );
-			__super::activate();
+			CCMenuItem::activate();
 		}
 	}
 	void CCMenuItemLabel::selected()
@@ -159,7 +159,7 @@ namespace cocos2d{
 		// subclass to change the default action
 		if(m_bIsEnabled)
 		{
-			__super::selected();
+			CCMenuItem::selected();
 			this->stopActionByTag(kZoomActionTag);
 			m_fOriginalScale = this->getScale();
 			CCAction *zoomAction = CCScaleTo::actionWithDuration(0.1f, m_fOriginalScale * 1.2f);
@@ -172,7 +172,7 @@ namespace cocos2d{
 		// subclass to change the default action
 		if(m_bIsEnabled)
 		{
-			__super::unselected();
+			CCMenuItem::unselected();
 			this->stopActionByTag(kZoomActionTag);
 			CCAction *zoomAction = CCScaleTo::actionWithDuration(0.1f, m_fOriginalScale);
 			zoomAction->setTag(kZoomActionTag);
@@ -193,7 +193,7 @@ namespace cocos2d{
 				m_pLabel->convertToRGBAProtocol()->setColor(m_tColorBackup);
 			}
 		}
-		__super::setIsEnabled(enabled);
+		CCMenuItem::setIsEnabled(enabled);
 	}
 	void CCMenuItemLabel::draw()
 	{
@@ -237,7 +237,7 @@ namespace cocos2d{
 		CCLabelAtlas *label = new CCLabelAtlas();
 		label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
 		label->autorelease();
-		if (__super::initWithLabel(label, target, selector))
+		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
 			// do something ?
 		}
@@ -285,7 +285,7 @@ namespace cocos2d{
 	{
 		NSAssert( strlen(value) != 0, "Value lenght must be greater than 0");
 		CCLabel *label = CCLabel::labelWithString(value, _fontName.c_str(), (float)_fontSize);
-		if (__super::initWithLabel(label, target, selector))
+		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
 			// do something ?
 		}
@@ -335,7 +335,7 @@ namespace cocos2d{
 	}
 	CCMenuItemSprite * CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
-		__super::initWithTarget(target, selector); 
+		CCMenuItem::initWithTarget(target, selector); 
 		this->m_pNormalImage = normalSprite;
 		this->m_pSelectedImage = selectedSprite;
 		this->m_pDisabledImage = disabledSprite;
@@ -460,7 +460,7 @@ namespace cocos2d{
 	}
 	CCMenuItemToggle * CCMenuItemToggle::initWithTarget(SelectorProtocol* target, SEL_MunuHandler selector, CCMenuItem* item, va_list args)
 	{
-		__super::initWithTarget(target, selector);
+		CCMenuItem::initWithTarget(target, selector);
 		this->m_pSubItems = new NSMutableArray<CCMenuItem*>();
 		int z = 0;
 		CCMenuItem *i = item;
@@ -497,12 +497,12 @@ namespace cocos2d{
 	}
 	void CCMenuItemToggle::selected()
 	{
-		__super::selected();
+		CCMenuItem::selected();
 		m_pSubItems->getObjectAtIndex(m_uSelectedIndex)->selected();
 	}
 	void CCMenuItemToggle::unselected()
 	{
-		__super::unselected();
+		CCMenuItem::unselected();
 		m_pSubItems->getObjectAtIndex(m_uSelectedIndex)->unselected();
 	}
 	void CCMenuItemToggle::activate()
@@ -513,11 +513,11 @@ namespace cocos2d{
 			unsigned int newIndex = (m_uSelectedIndex + 1) % m_pSubItems->count();
 			this->setSelectedIndex(newIndex);
 		}
-		__super::activate();
+		CCMenuItem::activate();
 	}
 	void CCMenuItemToggle::setIsEnabled(bool enabled)
 	{
-		__super::setIsEnabled(enabled);
+		CCMenuItem::setIsEnabled(enabled);
 
 		if(m_pSubItems && m_pSubItems->count() > 0)
 		{

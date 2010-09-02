@@ -153,7 +153,7 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 		pRet = new CCSpeed();
 		pZone = pNewZone = new NSZone(pRet);
 	}
-	__super::copyWithZone(pZone);
+	CCAction::copyWithZone(pZone);
 
 	pRet->initWithAction( (CCIntervalAction*)(m_pOther->copy()->autorelease()) , m_fSpeed );
 	
@@ -163,14 +163,14 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 
 void CCSpeed::startWithTarget(CCNode* pTarget)
 {
-	__super::startWithTarget(pTarget);
+	CCAction::startWithTarget(pTarget);
 	m_pOther->startWithTarget(pTarget);
 }
 
 void CCSpeed::stop()
 {
 	m_pOther->stop();
-	__super::stop();
+	CCAction::stop();
 }
 
 void CCSpeed::step(ccTime dt)
@@ -280,7 +280,7 @@ NSObject *CCFollow::copyWithZone(NSZone *pZone)
 		pRet = new CCFollow();
 		pZone = pNewZone = new NSZone(pRet);
 	}
-	__super::copyWithZone(pZone);
+	CCAction::copyWithZone(pZone);
 	// copy member data
 	pRet->m_nTag = m_nTag;
 	CCX_SAFE_DELETE(pNewZone);
@@ -315,7 +315,7 @@ bool CCFollow::isDone()
 void CCFollow::stop()
 {
 	m_pTarget = NULL;
-	__super::stop();
+	CCAction::stop();
 }
 
 }//namespace   cocos2d 

@@ -49,7 +49,7 @@ namespace cocos2d
 
 	bool CCWaves3D::initWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nWaves = wav;
 			m_fAmplitude = amp;
@@ -76,7 +76,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCGrid3DAction::copyWithZone(pZone);
 
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
@@ -123,7 +123,7 @@ namespace cocos2d
 
 	bool CCFlipX3D::initWithDuration(cocos2d::ccTime duration)
 	{
-		return __super::initWithSize(ccg(1, 1), duration);
+		return CCGrid3DAction::initWithSize(ccg(1, 1), duration);
 	}
 
 	bool CCFlipX3D::initWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
@@ -136,7 +136,7 @@ namespace cocos2d
 			return false;
 		}
 
-		return __super::initWithSize(gridSize, duration);
+		return CCGrid3DAction::initWithSize(gridSize, duration);
 	}
 
 	NSObject* CCFlipX3D::copyWithZone(cocos2d::NSZone *pZone)
@@ -154,7 +154,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithSize(m_sGridSize, m_fDuration);
 
@@ -262,7 +262,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCFlipX3D::copyWithZone(pZone);
 
 		pCopy->initWithSize(m_sGridSize, m_fDuration);
 
@@ -358,7 +358,7 @@ namespace cocos2d
 
 	bool CCLens3D::initWithPosition(cocos2d::CGPoint pos, float r, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_position = pos;
 			m_fRadius = r;
@@ -386,8 +386,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
-
+		CCGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithPosition(m_position, m_fRadius, m_sGridSize, m_fDuration);
 		
@@ -460,7 +459,7 @@ namespace cocos2d
 
 	bool CCRipple3D::initWithPosition(cocos2d::CGPoint pos, float r, int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_position = pos;
 			m_fRadius = r;
@@ -489,8 +488,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
-
+		CCGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithPosition(m_position, m_fRadius, m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 		
@@ -545,7 +543,7 @@ namespace cocos2d
 
 	bool CCShaky3D::initWithRange(int range, bool shakeZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nRandrange = range;
 			m_bShakeZ = shakeZ;
@@ -571,7 +569,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithRange(m_nRandrange, m_bShakeZ, m_sGridSize, m_fDuration);
 		
@@ -623,7 +621,7 @@ namespace cocos2d
 
 	bool CCLiquid::initWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nWaves = wav;
 			m_fAmplitude = amp;
@@ -650,7 +648,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 
@@ -697,7 +695,7 @@ namespace cocos2d
 
 	bool CCWaves::initWithWaves(int wav, float amp, bool h, bool v, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_nWaves = wav;
 			m_fAmplitude = amp;
@@ -726,7 +724,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_bHorizontal, m_bVertical, m_sGridSize, m_fDuration);
 		
@@ -782,7 +780,7 @@ namespace cocos2d
 
 	bool CCTwirl::initWithPosition(cocos2d::CGPoint pos, int t, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithSize(gridSize, duration))
+		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
 			m_position = pos;
 			m_nTwirls = t;
@@ -810,7 +808,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCGrid3DAction::copyWithZone(pZone);
 
 
 		pCopy->initWithPosition(m_position, m_nTwirls, m_fAmplitude, m_sGridSize, m_fDuration);

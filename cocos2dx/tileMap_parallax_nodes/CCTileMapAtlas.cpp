@@ -46,7 +46,7 @@ namespace cocos2d {
 	{
 		this->loadTGAfile(mapFile);
 		this->calculateItemsToRender();
-		if( __super::initWithTileFile(tile, tileWidth, tileHeight, m_nItemsToRender) )
+		if( CCAtlasNode::initWithTileFile(tile, tileWidth, tileHeight, m_nItemsToRender) )
 		{
 			m_pPosToAtlasIndex = new StringToIntegerDictionary();
 			this->updateAtlasValues();
