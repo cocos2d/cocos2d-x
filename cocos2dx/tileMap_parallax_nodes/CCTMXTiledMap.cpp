@@ -96,6 +96,7 @@ namespace cocos2d{
 	}
 	CCTMXTiledMap::~CCTMXTiledMap()
 	{
+		m_pObjectGroups->removeAllObjects();
 		m_pObjectGroups->release();
 		if (m_pProperties)
 		{
@@ -104,6 +105,15 @@ namespace cocos2d{
 		}
 		if (m_pTileProperties)
 		{
+			std::map<int, StringToStringDictionary*>::iterator it;
+			for (it = m_pTileProperties->begin(); it != m_pTileProperties->end(); ++it)
+			{
+				if (it->second)
+				{
+					it->second->clear();
+					delete it->second;
+				}
+			}
 			m_pTileProperties->clear();
 			delete m_pTileProperties;
 		}

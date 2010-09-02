@@ -54,6 +54,11 @@ namespace cocos2d {
 		}
 		if (m_pObjects)
 		{
+			std::vector<StringToStringDictionary*>::iterator it;
+			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
+			{
+				CCX_SAFE_DELETE(*it);
+			}
 			m_pObjects->clear();
 			delete m_pObjects;
 		}
