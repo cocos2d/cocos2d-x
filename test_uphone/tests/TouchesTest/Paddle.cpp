@@ -36,13 +36,13 @@ bool Paddle::initWithTexture(CCTexture2D* aTexture)
 void Paddle::onEnter()
 {
     CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, 0, true);
-	__super::onEnter();
+	CCSprite::onEnter();
 }
 
 void Paddle::onExit()
 {
 	CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
-	__super::onExit();
+	CCSprite::onExit();
 }	
 
 bool Paddle::containsTouchLocation(CCTouch* touch)

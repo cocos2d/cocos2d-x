@@ -55,7 +55,7 @@ std::string MotionStreakTest1::title()
 
 void MotionStreakTest2::onEnter()
 {
-	__sMotionStreakTestuper::onEnter();
+	MotionStreakTest::onEnter();
 
 	setIsTouchEnabled(true);
 
