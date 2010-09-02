@@ -154,12 +154,12 @@ CCSprite* CCSpriteSheet::createSpriteWithRect(CGRect rect)
 // override add child
 CCNode* CCSpriteSheet::addChild(CCNode *child)
 {
-	return __super::addChild(child);
+	return CCNode::addChild(child);
 }
 
 CCNode* CCSpriteSheet::addChild(CCNode *child, int zOrder)
 {
-	return __super::addChild(child, zOrder);
+	return CCNode::addChild(child, zOrder);
 }
 
 CCNode* CCSpriteSheet::addChild(CCNode *child, int zOrder, int tag)
@@ -170,7 +170,7 @@ CCNode* CCSpriteSheet::addChild(CCNode *child, int zOrder, int tag)
 	// check CCSprite is using the same texture id
 	assert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName());
 
-	CCNode *pRet = __super::addChild(child, zOrder, tag);
+	CCNode *pRet = CCNode::addChild(child, zOrder, tag);
 
 	unsigned int uIndex = atlasIndexForChild(pSprite, zOrder);
 	insertChild(pSprite, uIndex);
@@ -212,7 +212,7 @@ void CCSpriteSheet::removeChild(CCNode *child, bool cleanup)
 	// cleanup before removing
 	removeSpriteFromAtlas(pSprite);
 
-	__super::removeChild(pSprite, cleanup);
+	CCNode::removeChild(pSprite, cleanup);
 }
 
 void CCSpriteSheet::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
@@ -240,7 +240,7 @@ void CCSpriteSheet::removeAllChildrenWithCleanup(bool bCleanup)
 		}
 	}
 	
-	__super::removeAllChildrenWithCleanup(bCleanup);
+	CCNode::removeAllChildrenWithCleanup(bCleanup);
 
 	m_pobDescendants->removeAllObjects();
 	m_pobTextureAtlas->removeAllQuads();
@@ -649,7 +649,7 @@ CCSpriteSheet * CCSpriteSheet::addSpriteWithoutQuad(CCSprite*child, unsigned int
 	m_pobDescendants->insertObjectAtIndex(child, i);
 
 	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
-	__super::addChild(child, z, aTag);
+	CCNode::addChild(child, z, aTag);
 	return this;
 }
 }//namespace   cocos2d 

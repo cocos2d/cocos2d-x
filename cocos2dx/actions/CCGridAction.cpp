@@ -49,7 +49,7 @@ namespace cocos2d
 
 	bool CCGridAction::initWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (__super::initWithDuration(duration))
+		if (CCIntervalAction::initWithDuration(duration))
 		{
 			m_sGridSize = gridSize;
 
@@ -61,7 +61,7 @@ namespace cocos2d
 
 	void CCGridAction::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 
 		CCGridBase *newgrid = grid();
 
@@ -120,7 +120,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCIntervalAction::copyWithZone(pZone);
 
 		pCopy->initWithSize(m_sGridSize, m_fDuration);
 		
@@ -200,7 +200,7 @@ namespace cocos2d
 
 	bool CCAccelDeccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
 	{
-		if (__super::initWithDuration(duration))
+		if (CCIntervalAction::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
 			m_pOther = (CCIntervalAction*)(pAction);
@@ -219,7 +219,7 @@ namespace cocos2d
 
 	void CCAccelDeccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
 	}
 
@@ -263,7 +263,7 @@ namespace cocos2d
 
 	bool CCAccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
 	{
-		if (__super::initWithDuration(duration))
+		if (CCIntervalAction::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
 			m_pOther = (CCIntervalAction*)(pAction);
@@ -282,7 +282,7 @@ namespace cocos2d
 
 	void CCAccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
 	}
 
@@ -319,7 +319,7 @@ namespace cocos2d
 
 	bool CCDeccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
 	{
-		if (__super::initWithDuration(duration))
+		if (CCIntervalAction::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
 			m_pOther = (CCIntervalAction*)(pAction);
@@ -338,7 +338,7 @@ namespace cocos2d
 
 	void CCDeccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
 	}
 
@@ -357,7 +357,7 @@ namespace cocos2d
 
 	void CCStopGrid::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCInstantAction::startWithTarget(pTarget);
 
 		CCGridBase *pGrid = m_pTarget->getGrid();
 		if (pGrid && pGrid->isActive())
@@ -403,7 +403,7 @@ namespace cocos2d
 
 	void CCReuseGrid::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCInstantAction::startWithTarget(pTarget);
 
 		if (m_pTarget->getGrid() && m_pTarget->getGrid()->isActive())
 		{

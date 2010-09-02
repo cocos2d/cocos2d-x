@@ -31,7 +31,7 @@ namespace cocos2d {
 	//
 	bool CCParticleFire::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -103,7 +103,7 @@ namespace cocos2d {
 	//
 	bool CCParticleFireworks::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// duration
 			m_fDuration= kCCParticleDurationInfinity;
@@ -173,7 +173,7 @@ namespace cocos2d {
 	//
 	bool CCParticleSun::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// additive
 			this->setIsBlendAdditive(true);
@@ -246,7 +246,7 @@ namespace cocos2d {
 	//
 	bool CCParticleGalaxy::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -322,7 +322,7 @@ namespace cocos2d {
 	//
 	bool CCParticleFlower::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -397,7 +397,7 @@ namespace cocos2d {
 	//
 	bool CCParticleMeteor::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -473,7 +473,7 @@ namespace cocos2d {
 	//
 	bool CCParticleSpiral::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) ) 
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) ) 
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -549,7 +549,7 @@ namespace cocos2d {
 	//
 	bool CCParticleExplosion::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) ) 
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) ) 
 		{
 			// duration
 			m_fDuration = 0.1f;
@@ -624,7 +624,7 @@ namespace cocos2d {
 	//
 	bool CCParticleSmoke::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -695,7 +695,7 @@ namespace cocos2d {
 	//
 	bool CCParticleSnow::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) ) 
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) ) 
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;
@@ -770,7 +770,7 @@ namespace cocos2d {
 	//
 	bool CCParticleRain::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCQuadParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			// duration
 			m_fDuration = kCCParticleDurationInfinity;

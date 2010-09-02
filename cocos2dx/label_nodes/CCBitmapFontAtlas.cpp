@@ -363,7 +363,7 @@ namespace cocos2d{
 		m_pConfiguration->retain();
 		NSAssert( m_pConfiguration, "Error creating config for BitmapFontAtlas");
 
-		if (__super::initWithFile(m_pConfiguration->m_sAtlasName.c_str(), strlen(theString)))
+		if (CCSpriteSheet::initWithFile(m_pConfiguration->m_sAtlasName.c_str(), strlen(theString)))
 		{
 			m_cOpacity = 255;
 			m_tColor = ccWHITE;
@@ -543,7 +543,7 @@ namespace cocos2d{
 	{
 		if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) )
 		{
-			__super::setAnchorPoint(point);
+			CCSpriteSheet::setAnchorPoint(point);
 			this->createFontChars();
 		}
 	}
@@ -552,7 +552,7 @@ namespace cocos2d{
 #if CC_BITMAPFONTATLAS_DEBUG_DRAW
 	void CCBitmapFontAtlas::draw()
 	{
-		__super::draw();
+		CCSpriteSheet::draw();
 		CGSize s = this->getContentSize();
 		CGPoint vertices[4]={
 			ccp(0,0),ccp(s.width,0),

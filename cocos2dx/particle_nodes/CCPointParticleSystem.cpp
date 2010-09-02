@@ -28,7 +28,7 @@ namespace cocos2d {
 	//implementation CCPointParticleSystem
 	bool CCPointParticleSystem::initWithTotalParticles(int numberOfParticles)
 	{
-		if( __super::initWithTotalParticles(numberOfParticles) )
+		if( CCParticleSystem::initWithTotalParticles(numberOfParticles) )
 		{
 			m_pVertices = new ccPointSprite[m_nTotalParticles];
 
@@ -139,22 +139,22 @@ namespace cocos2d {
 	void CCPointParticleSystem::setStartSpin(float var)
 	{
 		NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
-		__super::setStartSpin(var);
+		CCParticleSystem::setStartSpin(var);
 	}
 	void CCPointParticleSystem::setStartSpinVar(float var)
 	{
 		NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
-		__super::setStartSpinVar(var);
+		CCParticleSystem::setStartSpinVar(var);
 	}
 	void CCPointParticleSystem::setEndSpin(float var)
 	{
 		NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
-		__super::setEndSpin(var);
+		CCParticleSystem::setEndSpin(var);
 	}
 	void CCPointParticleSystem::setEndSpinVar(float var)
 	{
 		NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
-		__super::setEndSpinVar(var);
+		CCParticleSystem::setEndSpinVar(var);
 	}
 	//
 	// SIZE > 64 IS NOT SUPPORTED
@@ -162,13 +162,13 @@ namespace cocos2d {
 	void CCPointParticleSystem::setStartSize(float size)
 	{
 		NSAssert(size >= 0 && size <= CC_MAX_PARTICLE_SIZE, "PointParticleSystem only supports 0 <= size <= 64");
-		__super::setStartSize(size);
+		CCParticleSystem::setStartSize(size);
 	}
 	void CCPointParticleSystem::setEndSize(float size)
 	{
 		NSAssert( (size == kCCParticleStartSizeEqualToEndSize) ||
 			( size >= 0 && size <= CC_MAX_PARTICLE_SIZE), "PointParticleSystem only supports 0 <= size <= 64");
-		__super::setEndSize(size);
+		CCParticleSystem::setEndSize(size);
 	}
 
 }// namespace cocos2d

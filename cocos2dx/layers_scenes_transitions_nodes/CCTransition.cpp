@@ -73,7 +73,7 @@ CCTransitionScene * CCTransitionScene::initWithDuration(ccTime t, CCScene *scene
 {
 	NSAssert( scene != NULL, "Argument scene must be non-nil");
 
-	if (__super::init())
+	if (CCScene::init())
 	{
 		m_fDuration = t;
 
@@ -160,7 +160,7 @@ void CCTransitionScene::hideOutShowIn()
 // custom onEnter
 void CCTransitionScene::onEnter()
 {
-	__super::onEnter();
+	CCScene::onEnter();
 	m_pInScene->onEnter();
 	// outScene should not receive the onEnter callback
 }
@@ -168,7 +168,7 @@ void CCTransitionScene::onEnter()
 // custom onExit
 void CCTransitionScene::onExit()
 {
-	__super::onExit();
+	CCScene::onExit();
 	m_pOutScene->onExit();
 
 	// inScene should not receive the onExit callback
@@ -179,7 +179,7 @@ void CCTransitionScene::onExit()
 // custom cleanup
 void CCTransitionScene::cleanup()
 {
-	__super::cleanup();
+	CCScene::cleanup();
 
 	if( m_bIsSendCleanupToScene )
 		m_pOutScene->cleanup();
@@ -205,7 +205,7 @@ CCOrientedTransitionScene * CCOrientedTransitionScene::transitionWithDuration(cc
 
 CCOrientedTransitionScene * CCOrientedTransitionScene::initWithDuration(ccTime t, CCScene *scene, tOrientation orientation)
 {
-	if ( __super::initWithDuration(t, scene) )
+	if ( CCTransitionScene::initWithDuration(t, scene) )
 	{
 		m_eOrientation = orientation;
 	}
@@ -224,7 +224,7 @@ CCRotoZoomTransition::~CCRotoZoomTransition()
 
 void CCRotoZoomTransition:: onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 
 	m_pInScene->setScale(0.001f);
 	m_pOutScene->setScale(1.0f);
@@ -271,7 +271,7 @@ CCJumpZoomTransition::~CCJumpZoomTransition()
 
 void CCJumpZoomTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
 	m_pInScene->setScale(0.5f);
@@ -315,7 +315,7 @@ CCMoveInLTransition::~CCMoveInLTransition()
 
 void CCMoveInLTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 	this->initScenes();
 
 	CCIntervalAction *a = this->action();
@@ -423,7 +423,7 @@ CCSlideInLTransition::~CCSlideInLTransition()
 
 void CCSlideInLTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 	this->initScenes();
 
 	CCIntervalAction *in = this->action();
@@ -569,7 +569,7 @@ CCShrinkGrowTransition::~CCShrinkGrowTransition()
 
 void CCShrinkGrowTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 
 	m_pInScene->setScale(0.001f);
 	m_pOutScene->setScale(1.0f);
@@ -611,7 +611,7 @@ CCFlipXTransition::~CCFlipXTransition()
 
 void CCFlipXTransition::onEnter()
 {
-	__super::onEnter();
+	CCOrientedTransitionScene::onEnter();
 
 	CCIntervalAction *inA, *outA;
 	m_pInScene->setIsVisible(false);
@@ -676,7 +676,7 @@ CCFlipYTransition::~CCFlipYTransition()
 
 void CCFlipYTransition::onEnter()
 {
-	__super::onEnter();
+	CCOrientedTransitionScene::onEnter();
 
 	CCIntervalAction *inA, *outA;
 	m_pInScene->setIsVisible(false);
@@ -741,7 +741,7 @@ CCFlipAngularTransition::~CCFlipAngularTransition()
 
 void CCFlipAngularTransition::onEnter()
 {
-	__super::onEnter();
+	CCOrientedTransitionScene::onEnter();
 
 	CCIntervalAction *inA, *outA;
 	m_pInScene->setIsVisible(false);
@@ -805,7 +805,7 @@ CCZoomFlipXTransition::~CCZoomFlipXTransition()
 
 void CCZoomFlipXTransition::onEnter()
 {
-	__super::onEnter();
+	CCOrientedTransitionScene::onEnter();
 
 	CCIntervalAction *inA, *outA;
 	m_pInScene->setIsVisible(false);
@@ -878,7 +878,7 @@ CCZoomFlipYTransition::~CCZoomFlipYTransition()
 
 void CCZoomFlipYTransition::onEnter()
 {
-	__super::onEnter();
+	CCOrientedTransitionScene::onEnter();
 
 	CCIntervalAction *inA, *outA;
 	m_pInScene->setIsVisible(false);
@@ -952,7 +952,7 @@ CCZoomFlipAngularTransition::~CCZoomFlipAngularTransition()
 
 void CCZoomFlipAngularTransition::onEnter()
 {
-	__super::onEnter();
+	CCOrientedTransitionScene::onEnter();
 
 	CCIntervalAction *inA, *outA;
 	m_pInScene->setIsVisible(false);
@@ -1036,7 +1036,7 @@ CCFadeTransition * CCFadeTransition::transitionWithDuration(ccTime duration, CCS
 
 CCFadeTransition * CCFadeTransition::initWithDuration(ccTime duration, CCScene *scene, ccColor3B color)
 {
-	if (__super::initWithDuration(duration, scene))
+	if (CCTransitionScene::initWithDuration(duration, scene))
 	{
 		m_tColor.r = color.r;
 		m_tColor.g = color.g;
@@ -1053,7 +1053,7 @@ CCFadeTransition * CCFadeTransition::initWithDuration(ccTime t, CCScene *scene)
 
 void CCFadeTransition :: onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 
 	CCColorLayer* l = CCColorLayer::layerWithColor(m_tColor);
 	m_pInScene->setIsVisible(false);
@@ -1074,7 +1074,7 @@ void CCFadeTransition :: onEnter()
 
 void CCFadeTransition::onExit()
 {
-	__super::onExit();
+	CCTransitionScene::onExit();
 	this->removeChildByTag(kSceneFade, false);
 }
 
@@ -1096,7 +1096,7 @@ void CCCrossFadeTransition:: draw()
 
 void CCCrossFadeTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
@@ -1165,7 +1165,7 @@ void CCCrossFadeTransition::onExit()
 {
 	// remove our layer and release all containing objects 
 	this->removeChildByTag(kSceneFade, false);
-	__super::onExit();
+	CCTransitionScene::onExit();
 }
 
 CCCrossFadeTransition* CCCrossFadeTransition::transitionWithDuration(ccTime d, CCScene* s)
@@ -1196,7 +1196,7 @@ void CCTurnOffTilesTransition::sceneOrder()
 
 void CCTurnOffTilesTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	float aspect = s.width / s.height;
 	int x = (int)(12 * aspect);
@@ -1237,7 +1237,7 @@ CCSplitColsTransition::~CCSplitColsTransition()
 
 void CCSplitColsTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 	m_pInScene->setIsVisible(false);
 
 	CCIntervalAction* split = action();
@@ -1312,7 +1312,7 @@ void CCFadeTRTransition::sceneOrder()
 
 void CCFadeTRTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	float aspect = s.width / s.height;

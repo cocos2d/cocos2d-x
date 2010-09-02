@@ -52,7 +52,7 @@ namespace cocos2d{
 
 	CCLabel * CCLabel::initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
-		if (__super::init())
+		if (CCSprite::init())
 		{
 			m_tDimensions = dimensions;
 			m_eAlignment = alignment;
@@ -65,7 +65,7 @@ namespace cocos2d{
 	}
 	CCLabel * CCLabel::initWithString(const char *label, const char *fontName, float fontSize)
 	{
-		if (__super::init())
+		if (CCSprite::init())
 		{
 			m_tDimensions = CGSizeZero;
 			m_sFontName = fontName;
@@ -102,5 +102,3 @@ namespace cocos2d{
 		return ret;
 	}
 }// namespace cocos2d
-
-

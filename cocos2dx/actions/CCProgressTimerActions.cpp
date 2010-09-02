@@ -41,7 +41,7 @@ namespace cocos2d
  
 	bool CCProgressTo::initWithDuration(cocos2d::ccTime duration, float fPercent)
 	{
-		if (__super::initWithDuration(duration))
+		if (CCIntervalAction::initWithDuration(duration))
 		{
 			m_fTo = fPercent;
 
@@ -66,7 +66,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCIntervalAction::copyWithZone(pZone);
 
 		pCopy->initWithDuration(m_fDuration, m_fTo);
 
@@ -76,7 +76,7 @@ namespace cocos2d
 
 	void CCProgressTo::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 		m_fFrom = ((kProgressTimerCast)(pTarget))->getPercentage();
 
 		// XXX: Is this correct ?
@@ -105,7 +105,7 @@ namespace cocos2d
 
 	bool CCProgressFromTo::initWithDuration(cocos2d::ccTime duration, float fFromPercentage, float fToPercentage)
 	{
-		if (__super::initWithDuration(duration))
+		if (CCIntervalAction::initWithDuration(duration))
 		{
 			m_fTo = fToPercentage;
 			m_fFrom = fFromPercentage;
@@ -131,7 +131,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		__super::copyWithZone(pZone);
+		CCIntervalAction::copyWithZone(pZone);
 
 		pCopy->initWithDuration(m_fDuration, m_fFrom, m_fTo);
 
@@ -146,7 +146,7 @@ namespace cocos2d
 
 	void CCProgressFromTo::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 	}
 
 	void CCProgressFromTo::update(cocos2d::ccTime time)

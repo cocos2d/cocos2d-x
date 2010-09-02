@@ -39,7 +39,7 @@ namespace cocos2d{
 	}
 	CCLabelAtlas * CCLabelAtlas::initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 	{
-		if (__super::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
+		if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
 		{
 			m_cMapStartChar = startCharMap;
 			this->setString(label);

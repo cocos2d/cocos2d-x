@@ -84,7 +84,7 @@ namespace cocos2d {
 		float y = pos.y * ratio.y + offset.y;
 		child->setPosition(ccp(x,y));
 
-		return (CCParallaxNode*)__super::addChild(child, z, child->getTag());
+		return (CCParallaxNode*)CCNode::addChild(child, z, child->getTag());
 	}
 	void CCParallaxNode::removeChild(CCNode* child, bool cleanup)
 	{
@@ -97,12 +97,12 @@ namespace cocos2d {
 				break;
 			}
 		}
-		__super::removeChild(child, cleanup);
+		CCNode::removeChild(child, cleanup);
 	}
 	void CCParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
 	{
 		ccArrayRemoveAllObjects(m_pParallaxArray);
-		__super::removeAllChildrenWithCleanup(cleanup);
+		CCNode::removeAllChildrenWithCleanup(cleanup);
 	}
 	CGPoint CCParallaxNode::absolutePosition()
 	{
@@ -137,9 +137,7 @@ namespace cocos2d {
 			}
 			m_tLastPosition = pos;
 		}
-		__super::visit();
+		CCNode::visit();
 	}
 
 }// namespace cocos2d
-
-

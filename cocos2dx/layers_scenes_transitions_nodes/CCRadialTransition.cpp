@@ -61,7 +61,7 @@ CCProgressTimerType CCRadialCCWTransition::radialType()
 
 void CCRadialCCWTransition::onEnter()
 {
-	__super::onEnter();
+	CCTransitionScene::onEnter();
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
 	CGSize size = CCDirector::getSharedDirector()->getWinSize();
@@ -111,7 +111,7 @@ void CCRadialCCWTransition::onExit()
 {
 	// remove our layer and release all containing objects 
 	this->removeChildByTag(kSceneRadial, false);
-	__super::onExit();
+	CCTransitionScene::onExit();
 }
 
 CCRadialCCWTransition* CCRadialCCWTransition::transitionWithDuration(ccTime t, CCScene* scene)
@@ -138,4 +138,3 @@ CCRadialCWTransition* CCRadialCWTransition::transitionWithDuration(ccTime t, CCS
 }
 
 }//namespace   cocos2d 
-

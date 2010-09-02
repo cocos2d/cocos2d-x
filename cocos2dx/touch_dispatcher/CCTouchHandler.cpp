@@ -84,7 +84,7 @@ CCTouchHandler::~CCTouchHandler(void)
 // implementation of CCStandardTouchHandler
 CCTouchHandler* CCStandardTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
-	if (__super::initWithDelegate(pDelegate, nPriority))
+	if (CCTouchHandler::initWithDelegate(pDelegate, nPriority))
 	{
 		/*
 		 * we can not do this in c++
@@ -140,7 +140,7 @@ CCTargetedTouchHandler* CCTargetedTouchHandler::handlerWithDelegate(CCTouchDeleg
 
 CCTouchHandler* CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow)
 {
-	if (__super::initWithDelegate(pDelegate, nPriority))
+	if (CCTouchHandler::initWithDelegate(pDelegate, nPriority))
 	{
 		m_pClaimedTouches = new NSMutableSet();
 		m_bSwallowsTouches = bSwallow;

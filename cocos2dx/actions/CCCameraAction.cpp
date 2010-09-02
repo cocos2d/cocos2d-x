@@ -31,7 +31,7 @@ namespace cocos2d{
 	//
 	void CCCameraAction::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 		
 		CCCamera *camera = pTarget->getCamera();
 		camera->getCenterXYZ(&m_fCenterXOrig, &m_fCenterYOrig, &m_fCenterZOrig);
@@ -66,7 +66,7 @@ namespace cocos2d{
 			pZone = pNewZone = new NSZone(pRet);
 		}
 
-		__super::copyWithZone(pZone);
+		CCIntervalAction::copyWithZone(pZone);
 
 		pRet->initWithDuration(m_fDuration, m_fRadius, m_fDeltaRadius, m_fAngleZ, m_fDeltaAngleZ, m_fAngleX, m_fDeltaAngleX);
 
@@ -76,7 +76,7 @@ namespace cocos2d{
 
 	CCOrbitCamera * CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 	{
-		if ( __super::initWithDuration(t) )
+		if ( CCIntervalAction::initWithDuration(t) )
 		{
 			m_fRadius = radius;
 			m_fDeltaRadius = deltaRadius;
@@ -94,7 +94,7 @@ namespace cocos2d{
 
 	void CCOrbitCamera::startWithTarget(CCNode *pTarget)
 	{
-		__super::startWithTarget(pTarget);
+		CCIntervalAction::startWithTarget(pTarget);
 		float r, zenith, azimuth;
 		this->sphericalRadius(&r, &zenith, &azimuth);
 		if( _isnan(m_fRadius) )
