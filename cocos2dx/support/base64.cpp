@@ -93,14 +93,14 @@ int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
 	unsigned int outLength = 0;
 	
 	//should be enough to store 6-bit buffers in 8-bit buffers
-	*out = (unsigned char *)malloc( (size_t)(inLength * 3.0f / 4.0f + 1));
+	*out = new unsigned char[(size_t)(inLength * 3.0f / 4.0f + 1)];
 	if( *out ) {
 		int ret = _base64Decode(in, inLength, *out, &outLength);
 		
 		if (ret > 0 )
 		{
 			std::printf("Base64Utils: error decoding");
-			free(*out);
+			delete [] *out;
 			*out = NULL;			
 			outLength = 0;
 		}

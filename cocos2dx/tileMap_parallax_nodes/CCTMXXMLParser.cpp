@@ -470,7 +470,8 @@ namespace cocos2d {
 			{
 				unsigned char *deflated;
 				ZipUtils::inflateMemory(buffer, len, &deflated);
-				free( buffer );
+				delete [] buffer;
+				buffer = NULL;
 
 				if( ! deflated ) 
 				{

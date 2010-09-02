@@ -60,11 +60,11 @@ namespace cocos2d{
 
 		int idx = 0;
 
-		if (mapInfo->getLayers() && mapInfo->getLayers()->count()>0)
+		NSMutableArray<CCTMXLayerInfo*>* layers = mapInfo->getLayers();
+		if (layers && layers->count()>0)
 		{
 			CCTMXLayerInfo *layerInfo = NULL;
 			NSMutableArray<CCTMXLayerInfo*>::NSMutableArrayIterator it;
-			NSMutableArray<CCTMXLayerInfo*>* layers = mapInfo->getLayers();
 			for (it = layers->begin(); it != layers->end(); ++it)
 			{
 				layerInfo = *it;
@@ -128,12 +128,12 @@ namespace cocos2d{
 		//CFByteOrder o = CFByteOrderGetCurrent();
 
 		CGSize size = layerInfo->m_tLayerSize;
-
-		if (mapInfo->getTilesets() && mapInfo->getTilesets()->count()>0)
+		NSMutableArray<CCTMXTilesetInfo*>* tilesets = mapInfo->getTilesets();
+		if (tilesets && tilesets->count()>0)
 		{
 			CCTMXTilesetInfo *tileset = NULL;
 			NSMutableArray<CCTMXTilesetInfo*>::NSMutableArrayRevIterator rit;
-			for (rit = mapInfo->getTilesets()->rbegin(); rit != mapInfo->getTilesets()->rend(); ++rit)
+			for (rit = tilesets->rbegin(); rit != tilesets->rend(); ++rit)
 			{
 				tileset = *rit;
 				if (tileset)
@@ -195,11 +195,11 @@ namespace cocos2d{
 	CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
 	{
 		std::string sGroupName = groupName;
-		if (m_pChildren && m_pChildren->count()>0)
+		if (m_pObjectGroups && m_pObjectGroups->count()>0)
 		{
 			CCTMXObjectGroup *objectGroup;
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
+			NSMutableArray<CCTMXObjectGroup*>::NSMutableArrayIterator it;
+			for (it = m_pObjectGroups->begin(); it != m_pObjectGroups->end(); ++it)
 			{
 				objectGroup = (CCTMXObjectGroup*)(*it);
 				if (objectGroup && objectGroup->getGroupName() == sGroupName)

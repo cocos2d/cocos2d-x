@@ -257,10 +257,15 @@ namespace cocos2d {
 				bRet = true;
 			}
 		} while (0);
-		CCX_SAFE_FREE(buffer);
+		if (buffer)
+		{
+			delete [] buffer;
+			buffer = NULL;
+		}
 		if(deflated)
 		{
 			delete [] deflated;
+			deflated = NULL;
 		}
 		CCX_SAFE_DELETE(image);
 		return bRet;

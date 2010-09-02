@@ -64,12 +64,13 @@ namespace cocos2d {
 			m_uMinGID = layerInfo->m_uMinGID;
 			m_uMaxGID = layerInfo->m_uMaxGID;
 			m_cOpacity = layerInfo->m_cOpacity;
-			if (!layerInfo->m_pProperties && layerInfo->m_pProperties->size()>0)
+			m_pProperties = new StringToStringDictionary();
+			if (layerInfo->m_pProperties && layerInfo->m_pProperties->size()>0)
 			{
 				StringToStringDictionary::iterator it;
 				for (it = layerInfo->m_pProperties->begin(); it != layerInfo->m_pProperties->end(); ++it)
 				{
-					m_pProperties->insert(*it);
+					m_pProperties->insert(StringToStringPair(it->first, it->second));
 				}
 			}
 
