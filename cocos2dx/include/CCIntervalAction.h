@@ -571,7 +571,7 @@ protected:
 	CCFiniteTimeAction *m_pOther;
 };
 
-class CCX_DLL CCTexture2D;
+class CCTexture2D;
 /** Animates a sprite given the name of an Animation */
 class CCX_DLL CCAnimate : public CCIntervalAction
 {

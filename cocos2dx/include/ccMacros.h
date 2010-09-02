@@ -151,25 +151,25 @@ default gl blend src function. Compatible with premultiplied alpha images.
 
 //---- todo: replace with uphone window
 
-/*
-#define CC_DIRECTOR_INIT()																		\
-do	{																							\
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )								\
-		[CCDirector setDirectorType:kCCDirectorTypeNSTimer];									\
-	CCDirector *__director = [CCDirector sharedDirector];										\
-	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
-	[__director setDisplayFPS:NO];																\
-	[__director setAnimationInterval:1.0/60];													\
-	EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]								\
-									pixelFormat:kEAGLColorFormatRGB565							\
-									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES   				\
-							 preserveBackbuffer:NO];											\
-	[__director setOpenGLView:__glView];														\
-	[window addSubview:__glView];																\
-	[window makeKeyAndVisible];																	\
-} while(0)
-*/
+
+// #define CC_DIRECTOR_INIT()																		\
+// do	{																							\
+// 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
+// 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )								\
+// 		[CCDirector setDirectorType:kCCDirectorTypeNSTimer];									\
+// 	CCDirector *__director = [CCDirector sharedDirector];										\
+// 	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
+// 	[__director setDisplayFPS:NO];																\
+// 	[__director setAnimationInterval:1.0/60];													\
+// 	EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]								\
+// 									pixelFormat:kEAGLColorFormatRGB565							\
+// 									depthFormat:0 GL_DEPTH_COMPONENT24_OES   				\
+// 							 preserveBackbuffer:NO];											\
+// 	[__director setOpenGLView:__glView];														\
+// 	[window addSubview:__glView];																\
+// 	[window makeKeyAndVisible];																	\
+// } while(0)
+
  
  /** @def CC_DIRECTOR_END
   Stops and removes the director from memory.
@@ -180,15 +180,15 @@ do	{																							\
 
 //---- todo: replace with uphone window
 
- /*
-#define CC_DIRECTOR_END()										\
-do {															\
-	CCDirector *__director = [CCDirector sharedDirector];		\
-	EAGLView *__view = [__director openGLView];					\
-	[__view removeFromSuperview];								\
-	[__director end];											\
-} while(0)
-*/
+
+// #define CC_DIRECTOR_END()										\
+// do {															\
+// 	CCDirector *__director = [CCDirector sharedDirector];		\
+// 	EAGLView *__view = [__director openGLView];					\
+// 	[__view removeFromSuperview];								\
+// 	[__director end];											\
+// } while(0)
+
 
 #ifndef FLT_EPSILON
 #define FLT_EPSILON     1.192092896e-07F
