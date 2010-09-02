@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "CCTileMapAtlas.h"
 #include "CCXFileUtils.h"
 #include "CCTextureAtlas.h"
+#include "support\image_support\TGAlib.h"
 
 namespace cocos2d {
 

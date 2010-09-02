@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include <string>
 #include <map>
 #include "CCAtlasNode.h"
-#include "support\image_support\TGAlib.h"
 namespace cocos2d {
 
 	typedef std::map<std::string, int> StringToIntegerDictionary;
@@ -46,10 +45,11 @@ namespace cocos2d {
 	You SHOULD not use this class.
 	Instead, use the newer TMX file format: CCTMXTiledMap
 	*/
+	struct sImageTGA;
 	class CCX_DLL CCTileMapAtlas : public CCAtlasNode 
 	{
 		/** TileMap info */
-		CCX_PROPERTY(tImageTGA*, m_pTGAInfo, TGAInfo);
+		CCX_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
 	public:
 		CCTileMapAtlas();
 		virtual ~CCTileMapAtlas();
@@ -75,7 +75,7 @@ namespace cocos2d {
 		void loadTGAfile(const char *file);
 		void calculateItemsToRender();
 		void updateAtlasValueAt(ccGridSize pos, ccColor3B value, int index);
-		void CCTileMapAtlas::updateAtlasValues();
+		void updateAtlasValues();
 
 	protected:
 		/// x,y to altas dicctionary
