@@ -26,12 +26,12 @@ THE SOFTWARE.
 #include "CCTMXObjectGroup.h"
 #include "CCAtlasNode.h"
 #include "CCSpriteSheet.h"
-#include "support/data_support/ccArray.h"
 namespace cocos2d {
 
 	class CCTMXMapInfo;
 	class CCTMXLayerInfo;
 	class CCTMXTilesetInfo;
+	struct _ccCArray;
 
 	/** CCTMXLayer represents the TMX layer.
 
@@ -160,7 +160,7 @@ namespace cocos2d {
 
 		// used for optimization
 		CCSprite			*m_pReusedTile;
-		ccCArray			*m_pAtlasIndexArray;
+		_ccCArray			*m_pAtlasIndexArray;
 	};
 
 }// namespace cocos2d
