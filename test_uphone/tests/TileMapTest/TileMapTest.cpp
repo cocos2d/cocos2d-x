@@ -137,7 +137,7 @@ TMXOrthoTest::TMXOrthoTest()
 
 void TMXOrthoTest::onEnter()
 {
-	__super::onEnter();
+	TileDemo::onEnter();
 
 	CCDirector::getSharedDirector()->setProjection(CCDirectorProjection3D);
 }
@@ -145,7 +145,7 @@ void TMXOrthoTest::onEnter()
 void TMXOrthoTest::onExit()
 {
 	CCDirector::getSharedDirector()->setProjection(CCDirectorProjection2D);
-	__super::onExit();
+	TileDemo::onExit();
 }
 
 std::string TMXOrthoTest::title()
@@ -944,7 +944,7 @@ void TMXIsoVertexZ::repositionSprite(ccTime dt)
 
 void TMXIsoVertexZ::onEnter()
 {
-	__super::onEnter();
+	TileDemo::onEnter();
 	
 	// TIP: 2d projection should be used
 	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
@@ -954,7 +954,7 @@ void TMXIsoVertexZ::onExit()
 {
 	// At exit use any other projection. 
 	//	CCDirector::getSharedDirector()->setProjection:kCCDirectorProjection3D);
-	__super::onExit();
+	TileDemo::onExit();
 }
 
 std::string TMXIsoVertexZ::title()
@@ -1011,7 +1011,7 @@ void TMXOrthoVertexZ::repositionSprite(ccTime dt)
 
 void TMXOrthoVertexZ::onEnter()
 {
-	__super::onEnter();
+	TileDemo::onEnter();
 	
 	// TIP: 2d projection should be used
 	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
@@ -1021,7 +1021,7 @@ void TMXOrthoVertexZ::onExit()
 {
 	// At exit use any other projection. 
 	//	CCDirector::getSharedDirector()->setProjection:kCCDirectorProjection3D);
-	__super::onExit();
+	TileDemo::onExit();
 }
 
 std::string TMXOrthoVertexZ::title()
@@ -1222,7 +1222,7 @@ std::string TileDemo::subtitle()
 
 void TileDemo::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	m_label->setString(title().c_str());
 	m_subtitle->setString(subtitle().c_str());
