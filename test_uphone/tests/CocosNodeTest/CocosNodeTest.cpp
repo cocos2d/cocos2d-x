@@ -93,7 +93,7 @@ std::string TestCocosNodeDemo::subtitle()
 
 void TestCocosNodeDemo::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -153,7 +153,7 @@ void TestCocosNodeDemo::backCallback(NSObject* pSender)
 //------------------------------------------------------------------
 void Test2::onEnter()
 {
-	__super::onEnter();
+	TestCocosNodeDemo::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	
@@ -532,14 +532,14 @@ std::string NodeToWorld::title()
 //------------------------------------------------------------------
 void CameraOrbitTest::onEnter()
 {
-	__super::onEnter();
+	TestCocosNodeDemo::onEnter();
 	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void CameraOrbitTest::onExit()
 {
 	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
-	__super::onExit();
+	TestCocosNodeDemo::onExit();
 }
 
 CameraOrbitTest::CameraOrbitTest()
@@ -604,7 +604,7 @@ std::string CameraOrbitTest::title()
 
 void CameraZoomTest::onEnter()
 {
-	__super::onEnter();
+	TestCocosNodeDemo::onEnter();
 	
 	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection3D);
 }
@@ -612,7 +612,7 @@ void CameraZoomTest::onEnter()
 void CameraZoomTest::onExit()
 {
 	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
-	__super::onExit();
+	TestCocosNodeDemo::onExit();
 }
 
 CameraZoomTest::CameraZoomTest()

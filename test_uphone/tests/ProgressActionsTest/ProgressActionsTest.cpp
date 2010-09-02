@@ -82,7 +82,7 @@ std::string SpriteDemo::subtitle()
 
 void SpriteDemo::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -141,7 +141,7 @@ void SpriteDemo::backCallback(NSObject* pSender)
 //------------------------------------------------------------------
 void SpriteProgressToRadial::onEnter()
 {
-	__super::onEnter();
+	SpriteDemo::onEnter();
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -174,7 +174,7 @@ std::string SpriteProgressToRadial::subtitle()
 
 void SpriteProgressToHorizontal::onEnter()
 {
-	__super::onEnter();
+	SpriteDemo::onEnter();
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	
@@ -206,7 +206,7 @@ std::string SpriteProgressToHorizontal::subtitle()
 //------------------------------------------------------------------
 void SpriteProgressToVertical::onEnter()
 {
-	__super::onEnter();
+	SpriteDemo::onEnter();
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	

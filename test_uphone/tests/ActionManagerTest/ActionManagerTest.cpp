@@ -80,7 +80,7 @@ std::string ActionManagerTest::title()
 
 void ActionManagerTest::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -132,7 +132,7 @@ void ActionManagerTest::backCallback(NSObject* pSender)
 
 void CrashTest::onEnter()
 {
-	__super::onEnter();
+	ActionManagerTest::onEnter();
 
 	CCSprite* child = CCSprite::spriteWithFile(s_pPathGrossini);
 	child->setPosition( CGPointMake(200,200) );
@@ -173,7 +173,7 @@ std::string CrashTest::title()
 //------------------------------------------------------------------
 void LogicTest::onEnter()
 {
-	__super::onEnter();
+	ActionManagerTest::onEnter();
 
 	CCSprite* grossini = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(grossini, 0, 2);
@@ -209,7 +209,7 @@ void PauseTest::onEnter()
 	// This test MUST be done in 'onEnter' and not on 'init'
 	// otherwise the paused action will be resumed at 'onEnter' time
 	//
-	__super::onEnter();
+	ActionManagerTest::onEnter();
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -251,7 +251,7 @@ std::string PauseTest::title()
 //------------------------------------------------------------------
 void RemoveTest::onEnter()
 {
-    __super::onEnter();
+    ActionManagerTest::onEnter();
 
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -294,7 +294,7 @@ std::string ResumeTest::title()
 
 void ResumeTest::onEnter()
 {
-    __super::onEnter();
+    ActionManagerTest::onEnter();
 
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
 

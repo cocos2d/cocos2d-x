@@ -117,7 +117,7 @@ std::string ActionsDemo::subtitle()
 
 void ActionsDemo::onEnter()
 {
-    __super::onEnter();
+    CCLayer::onEnter();
 
     // Example:
     // You can create a sprite using a Texture2D
@@ -255,7 +255,7 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
 //------------------------------------------------------------------
 void ActionManual::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -284,7 +284,7 @@ std::string ActionManual::subtitle()
 //------------------------------------------------------------------
 void ActionMove::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(3);
 
@@ -311,7 +311,7 @@ std::string ActionMove::subtitle()
 //------------------------------------------------------------------
 void ActionScale::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(3);
 
@@ -337,7 +337,7 @@ std::string ActionScale::subtitle()
 //------------------------------------------------------------------
 void ActionRotate::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(3);
 
@@ -365,7 +365,7 @@ std::string ActionRotate::subtitle()
 //------------------------------------------------------------------
 void ActionJump::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(3);
 
@@ -390,7 +390,7 @@ std::string ActionJump::subtitle()
 //------------------------------------------------------------------
 void ActionBezier::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -443,7 +443,7 @@ std::string ActionBezier::subtitle()
 //------------------------------------------------------------------
 void ActionBlink::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(2);
 
@@ -466,7 +466,7 @@ std::string  ActionBlink::subtitle()
 //------------------------------------------------------------------
 void ActionFade::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(2);
 
@@ -494,7 +494,7 @@ std::string  ActionFade::subtitle()
 
 void ActionTint::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(2);
 
@@ -518,7 +518,7 @@ std::string  ActionTint::subtitle()
 //------------------------------------------------------------------
 void ActionAnimate::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(1);
 
@@ -548,7 +548,7 @@ std::string ActionAnimate::subtitle()
 //------------------------------------------------------------------
 void ActionSequence::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(1);
 
@@ -572,7 +572,7 @@ std::string ActionSequence::subtitle()
 //------------------------------------------------------------------
 void ActionSequence2::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(1);
 
@@ -629,7 +629,7 @@ std::string ActionSequence2::subtitle()
 //------------------------------------------------------------------
 void ActionCallFunc::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(3);
 
@@ -696,7 +696,7 @@ std::string ActionCallFunc::subtitle()
 
 void ActionSpawn::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(1);
 
@@ -722,7 +722,7 @@ std::string ActionSpawn::subtitle()
 //------------------------------------------------------------------
 void ActionRepeatForever::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(1);
 
@@ -754,7 +754,7 @@ std::string ActionRepeatForever::subtitle()
 //------------------------------------------------------------------
 void ActionRotateToRepeat::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(2);
 
@@ -781,7 +781,7 @@ std::string ActionRotateToRepeat ::subtitle()
 //------------------------------------------------------------------
 void ActionRotateJerk::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(2);
 
@@ -809,7 +809,7 @@ std::string ActionRotateJerk::subtitle()
 //------------------------------------------------------------------
 void ActionReverse::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(1);
 
@@ -832,7 +832,7 @@ std::string ActionReverse::subtitle()
 //------------------------------------------------------------------
 void ActionDelayTime::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(1);
 
@@ -855,7 +855,7 @@ std::string ActionDelayTime::subtitle()
 //------------------------------------------------------------------
 void ActionReverseSequence::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(1);
 
@@ -880,7 +880,7 @@ std::string ActionReverseSequence::subtitle()
 //------------------------------------------------------------------
 void ActionReverseSequence2::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(2);
 
@@ -922,7 +922,7 @@ std::string ActionReverseSequence2::subtitle()
 //------------------------------------------------------------------
 void ActionRepeat::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     alignSpritesLeft(2);
 
@@ -951,7 +951,7 @@ std::string ActionRepeat::subtitle()
 //------------------------------------------------------------------
 void ActionOrbit::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(3);
 
@@ -998,7 +998,7 @@ std::string ActionOrbit::subtitle()
 //------------------------------------------------------------------
 void ActionFollow::onEnter()
 {
-    __super::onEnter();
+    ActionsDemo::onEnter();
 
     centerSprites(1);
     CGSize s = CCDirector::getSharedDirector()->getWinSize();

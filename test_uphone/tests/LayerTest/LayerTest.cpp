@@ -75,7 +75,7 @@ std::string LayerTest::title()
 
 void LayerTest::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
@@ -126,7 +126,7 @@ void LayerTest::backCallback(NSObject* pSender)
 //------------------------------------------------------------------
 void LayerTest1::onEnter()
 {
-	__super::onEnter();
+	LayerTest::onEnter();
 
 	setIsTouchEnabled(true);
 	
@@ -186,7 +186,7 @@ std::string LayerTest1::title()
 //------------------------------------------------------------------
 void LayerTest2::onEnter()
 {
-	__super::onEnter();
+	LayerTest::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	CCColorLayer* layer1 = CCColorLayer::layerWithColorWidthHeight( ccc4(255, 255, 0, 80), 100, 300);

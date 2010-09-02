@@ -31,7 +31,7 @@ PongScene::PongScene()
 
 void PongScene::onExit()
 {
-	__super::onExit();
+	TestScene::onExit();
 }
 
 //------------------------------------------------------------------

@@ -6,7 +6,7 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 
 void DrawPrimitivesTest::draw()
 {
-	__super::draw();
+	CCLayer::draw();
 
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	
