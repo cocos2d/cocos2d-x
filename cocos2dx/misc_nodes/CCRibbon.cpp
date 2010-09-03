@@ -328,7 +328,7 @@ namespace cocos2d {
 	char * CCRibbonSegment::description()
 	{
 		char *ret = new char[100] ;
-		sprintf_s(ret, 100, "<CCRibbonSegment | end = %u, begin = %>", m_uEnd, m_uBegin);
+		sprintf(ret, "<CCRibbonSegment | end = %u, begin = %>", m_uEnd, m_uBegin);
 		return ret;
 	}
 	CCRibbonSegment::~CCRibbonSegment()
