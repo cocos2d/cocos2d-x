@@ -59,7 +59,7 @@ class ResumeTest : public ActionManagerTest
 public:
     virtual std::string title();
     virtual void onEnter();
-    void resumeGrossini();
+    void resumeGrossini(ccTime time);
 };
 
 class ActionManagerTestScene : public TestScene
