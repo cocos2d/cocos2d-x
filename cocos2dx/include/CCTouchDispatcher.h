@@ -103,13 +103,13 @@ public:
 	 See StandardTouchDelegate description.
 	 IMPORTANT: The delegate will be retained.
 	 */
-	void addStandardDelegate(CCStandardTouchDelegate *pDelegate, int nPriority);
+	void addStandardDelegate(CCTouchDelegate *pDelegate, int nPriority);
 
 	/** Adds a targeted touch delegate to the dispatcher's list.
 	 See TargetedTouchDelegate description.
 	 IMPORTANT: The delegate will be retained.
 	 */
-	void addTargetedDelegate(CCTargetedTouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches);
+	void addTargetedDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches);
 
 	/** Removes a touch delegate.
 	 The delegate will be released

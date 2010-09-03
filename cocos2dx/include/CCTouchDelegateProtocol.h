@@ -29,8 +29,6 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 
 namespace   cocos2d {
-class CCTouch;
-class UIEvent;
 
 typedef enum
 {
@@ -39,12 +37,11 @@ typedef enum
 	ccTouchDeletateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
 } ccTouchDelegateFlag;
 
-//class CCX_DLL CCTouchDelegate : virtual public NSObject
+class CCTouch;
+class UIEvent;
+class NSSet;
 class CCX_DLL CCTouchDelegate
 {
-// public:
-// 	// for RTTI support
-// 	virtual void v() {};
 protected:
 	ccTouchDelegateFlag m_eTouchDelegateType;
 
@@ -54,41 +51,49 @@ public:
 	virtual void destroy(void) {}
 	// call the retain() in child (layer or menu)
 	virtual void keep(void) {}
-};
 
-class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
-{
-public:
-	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
-	/** Return YES to claim the touch.
-	 @since v0.8
-	 */
 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
 
 	// optional
 	virtual void ccTouchMoved(CCTouch *pTouch, UIEvent *pEvent) {}
 	virtual void ccTouchEnded(CCTouch *pTouch, UIEvent *pEvent) {}
 	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
-};
 
-/**
- CCStandardTouchDelegate.
- 
- This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
- @since v0.8
-*/
-
-class NSSet;
-class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
-{
-public:
-	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
 	// optional
-	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
-	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
-	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
-	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
 };
+
+class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
+ {
+ public:
+ 	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
+ 	// Return YES to claim the touch.
+ 	// @since v0
+ 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
+ 
+ 	// optional
+ 	virtual void ccTouchMoved(CCTouch *pTouch, UIEvent *pEvent) {}
+ 	virtual void ccTouchEnded(CCTouch *pTouch, UIEvent *pEvent) {}
+ 	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
+ };
+ 
+  // CCStandardTouchDelegate.
+  // This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
+  // @since v0.8
+ class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
+ {
+ public:
+ 	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
+ 	// optional
+ 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
+ };
+
 }//namespace   cocos2d 
 
 #endif // __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__

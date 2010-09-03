@@ -53,7 +53,7 @@ public:
 	void setEnalbedSelectors(int nValue);
 
 	// initializes a TouchHandler with a delegate and a priority
-	virtual CCTouchHandler* initWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
+	virtual bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
 
 public:
 	// allocates a TouchHandler with a delegate and a priority 
@@ -71,10 +71,10 @@ protected:
 class CCStandardTouchHandler : public CCTouchHandler
 {
 public:
-	virtual CCTouchHandler* initWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
+	virtual bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
 
 public:
-	static CCStandardTouchHandler* handlerWithDelegate(CCStandardTouchDelegate *pDelegate, int nPriority);
+	static CCStandardTouchHandler* handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
 };
 
 /**
@@ -94,7 +94,7 @@ public:
 	// MutableSet that contains the claimed touches
 	NSMutableSet* getClaimedTouches(void);
 
-	CCTouchHandler* initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
+	bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
 
 public:
 	static CCTargetedTouchHandler* handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);

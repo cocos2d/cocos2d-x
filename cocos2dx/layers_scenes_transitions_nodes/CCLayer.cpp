@@ -34,7 +34,7 @@ CCLayer::CCLayer()
 :m_bIsTouchEnabled(false)
 ,m_bIsAccelerometerEnabled(false)
 {
-	CCTouchDelegate::m_eTouchDelegateType = ccTouchDeletateAllBit;
+	m_eTouchDelegateType = ccTouchDeletateAllBit;
 	m_tAnchorPoint = ccp(0.5f, 0.5f);
 	m_bIsRelativeAnchorPoint = false;
 }
@@ -107,8 +107,7 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 			else
 			{
 				// have problems?
-				CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCTargetedTouchDelegate*)(this));
-				CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCStandardTouchDelegate*)(this));
+				CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
 			}
 		}
 	}
@@ -157,8 +156,7 @@ void CCLayer::onExit()
 {
 	if( m_bIsTouchEnabled )
 	{
-		CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCTargetedTouchDelegate*)(this));
-		CCTouchDispatcher::getSharedDispatcher()->removeDelegate((CCStandardTouchDelegate*)(this));
+		CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
 	}
 /**
 	if( isAccelerometerEnabled )
