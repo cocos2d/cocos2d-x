@@ -146,7 +146,7 @@ CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned 
 char * CCTextureAtlas::description()
 {
 	char *ret = new char[100];
-	sprintf_s(ret, 100, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
+	sprintf(ret, "<CCTextureAtlas | totalQuads = %u>", m_uTotalQuads);
 	return ret;
 }
 
