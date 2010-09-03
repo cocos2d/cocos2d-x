@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include <string.h>
 #include <stdlib.h>
 
 #include "TGAlib.h"
@@ -31,7 +32,7 @@ namespace   cocos2d {
 // load the image header fields. We only keep those that matter!
 void tgaLoadHeader(FILE *pFile, tImageTGA *psInfo) {
 	unsigned char cGarbage;
-	INT16 iGarbage;
+	signed short iGarbage;
 
 	fread(&cGarbage, sizeof(unsigned char), 1, pFile);
 	fread(&cGarbage, sizeof(unsigned char), 1, pFile);
@@ -39,14 +40,14 @@ void tgaLoadHeader(FILE *pFile, tImageTGA *psInfo) {
 	// type must be 2 or 3
 	fread(&psInfo->type, sizeof(unsigned char), 1, pFile);
 
-	fread(&iGarbage, sizeof(INT16), 1, pFile);
-	fread(&iGarbage, sizeof(INT16), 1, pFile);
+	fread(&iGarbage, sizeof(signed short), 1, pFile);
+	fread(&iGarbage, sizeof(signed short), 1, pFile);
 	fread(&cGarbage, sizeof(unsigned char), 1, pFile);
-	fread(&iGarbage, sizeof(INT16), 1, pFile);
-	fread(&iGarbage, sizeof(INT16), 1, pFile);
+	fread(&iGarbage, sizeof(signed short), 1, pFile);
+	fread(&iGarbage, sizeof(signed short), 1, pFile);
 
-	fread(&psInfo->width, sizeof(INT16), 1, pFile);
-	fread(&psInfo->height, sizeof(INT16), 1, pFile);
+	fread(&psInfo->width, sizeof(signed short), 1, pFile);
+	fread(&psInfo->height, sizeof(signed short), 1, pFile);
 	fread(&psInfo->pixelDepth, sizeof(unsigned char), 1, pFile);
 
 	fread(&cGarbage, sizeof(unsigned char), 1, pFile);

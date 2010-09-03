@@ -383,14 +383,18 @@ namespace cocos2d {
 
 			int x = atoi(valueForKey("x", attributeDict)) + (int)objectGroup->getPositionOffset().x;
 			key = "x";
-			value = itoa(x, buffer, 10);
+			/*value = itoa(x, buffer, 10);*/
+			sprintf(buffer, "%d", x);
+			value = buffer;
 			dict->insert(StringToStringPair(key, value));
 
 			int y = atoi(valueForKey("y", attributeDict)) + (int)objectGroup->getPositionOffset().y;
 			// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
 			y = (int)(pTMXMapInfo->getMapSize().height * pTMXMapInfo->getTileSize().height) - y - atoi(valueForKey("height", attributeDict));
 			key = "y";
-			value = itoa(y, buffer, 10);
+			/*value = itoa(y, buffer, 10);*/
+			sprintf(buffer, "%d", y);
+			value = buffer;
 			dict->insert(StringToStringPair(key, value));
 
 			key = "width";
