@@ -84,7 +84,7 @@ public:
 	TMXReadWriteTest(void);
 	virtual std::string title();
 
-	void removeSprite(NSObject* sender);
+	void removeSprite(CCNode* sender);
 	void updateCol(ccTime dt);
 	void repaintWithGID(ccTime dt);
 	void removeTiles(ccTime dt);

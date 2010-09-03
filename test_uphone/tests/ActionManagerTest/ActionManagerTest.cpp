@@ -314,7 +314,7 @@ void ResumeTest::onEnter()
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
 }
 
-void ResumeTest::resumeGrossini()
+void ResumeTest::resumeGrossini(ccTime time)
 {
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 

@@ -352,7 +352,7 @@ TMXReadWriteTest::TMXReadWriteTest()
 	m_gid2 = 0;
 }
 
-void TMXReadWriteTest::removeSprite(NSObject* sender)
+void TMXReadWriteTest::removeSprite(CCNode* sender)
 {
 	////----UXLOG("removing tile: %x", sender);
 	CCNode* p = ((CCNode*)sender)->getParent();

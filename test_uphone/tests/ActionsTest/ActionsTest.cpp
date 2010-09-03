@@ -599,7 +599,7 @@ void ActionSequence2::callback1()
     addChild(label);
 }
 
-void ActionSequence2::callback2(NSObject* sender)
+void ActionSequence2::callback2(CCNode* sender)
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 2 called", "Marker Felt", 16);
@@ -608,7 +608,7 @@ void ActionSequence2::callback2(NSObject* sender)
     addChild(label);
 }
 
-void ActionSequence2::callback3(NSObject* sender, void* data)
+void ActionSequence2::callback3(CCNode* sender, void* data)
 {
     CGSize s = CCDirector::getSharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 3 called", "Marker Felt", 16);
