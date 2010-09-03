@@ -133,7 +133,7 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, NSMutableArray
 	pHandler->retain();
 }
 
-void CCTouchDispatcher::addStandardDelegate(CCStandardTouchDelegate *pDelegate, int nPriority)
+void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
 	CCTouchHandler *pHandler = CCStandardTouchHandler::handlerWithDelegate(pDelegate, nPriority);
 	if (! m_bLocked)
@@ -147,7 +147,7 @@ void CCTouchDispatcher::addStandardDelegate(CCStandardTouchDelegate *pDelegate, 
 	}
 }
 
-void CCTouchDispatcher::addTargetedDelegate(CCTargetedTouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches)
+void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches)
 {
 	CCTouchHandler *pHandler = CCTargetedTouchHandler::handlerWithDelegate(pDelegate, nPriority, bSwallowsTouches);
 	if (! m_bLocked)
@@ -282,7 +282,7 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 				bool bClaimed = false;
 				if (uIndex == ccTouchBegan)
 				{
-					bClaimed = ((CCTargetedTouchDelegate *)(pHandler->getDelegate()))->ccTouchBegan(pTouch, pEvent);
+					bClaimed = pHandler->getDelegate()->ccTouchBegan(pTouch, pEvent);
 					if (bClaimed)
 					{
 						pHandler->getClaimedTouches()->addObject(pTouch);
@@ -296,14 +296,14 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 					switch (sHelper.m_type)
 					{
 					case ccTouchMoved:
-						((CCTargetedTouchDelegate*)(pHandler->getDelegate()))->ccTouchMoved(pTouch, pEvent);
+						pHandler->getDelegate()->ccTouchMoved(pTouch, pEvent);
 						break;
 					case ccTouchEnded:
-						((CCTargetedTouchDelegate*)(pHandler->getDelegate()))->ccTouchEnded(pTouch, pEvent);
+						pHandler->getDelegate()->ccTouchEnded(pTouch, pEvent);
 						pHandler->getClaimedTouches()->removeObject(pTouch);
 						break;
 					case ccTouchCancelled:
-						((CCTargetedTouchDelegate*)(pHandler->getDelegate()))->ccTouchCancelled(pTouch, pEvent);
+						pHandler->getDelegate()->ccTouchCancelled(pTouch, pEvent);
 						pHandler->getClaimedTouches()->removeObject(pTouch);
 						break;
 					}
@@ -341,16 +341,16 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 			switch (sHelper.m_type)
 			{
 			case ccTouchBegan:
-				((CCStandardTouchDelegate*)(pHandler->getDelegate()))->ccTouchesBegan(pMutableTouches, pEvent);
+				pHandler->getDelegate()->ccTouchesBegan(pMutableTouches, pEvent);
 				break;
 			case ccTouchMoved:
-				((CCStandardTouchDelegate*)(pHandler->getDelegate()))->ccTouchesMoved(pMutableTouches, pEvent);
+				pHandler->getDelegate()->ccTouchesMoved(pMutableTouches, pEvent);
 				break;
 			case ccTouchEnded:
-				((CCStandardTouchDelegate*)(pHandler->getDelegate()))->ccTouchesEnded(pMutableTouches, pEvent);
+				pHandler->getDelegate()->ccTouchesEnded(pMutableTouches, pEvent);
 				break;
 			case ccTouchCancelled:
-				((CCStandardTouchDelegate*)(pHandler->getDelegate()))->ccTouchesCancelled(pMutableTouches, pEvent);
+				pHandler->getDelegate()->ccTouchesCancelled(pMutableTouches, pEvent);
 				break;
 			}
 		}

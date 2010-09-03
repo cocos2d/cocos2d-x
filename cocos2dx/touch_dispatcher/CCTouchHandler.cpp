@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "CCTouchHandler.h"
 #include "ccMacros.h"
+#include "Cocos2dDefine.h"
+
 #include <assert.h>
 namespace   cocos2d {
 
@@ -60,12 +62,23 @@ void CCTouchHandler::setEnalbedSelectors(int nValue)
 CCTouchHandler* CCTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
 	CCTouchHandler *pHandler = new CCTouchHandler();
-	pHandler->autorelease();
 
-	return pHandler->initWithDelegate(pDelegate, nPriority);
+	if (pHandler)
+	{
+		if (pHandler->initWithDelegate(pDelegate, nPriority))
+		{
+			pHandler->autorelease();
+		}
+		else
+		{
+			CCX_SAFE_RELEASE_NULL(pHandler);
+		}
+	}
+	
+	return pHandler;
 }
 
-CCTouchHandler* CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
+bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
 	assert(pDelegate != NULL);
 
@@ -73,7 +86,7 @@ CCTouchHandler* CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int
 	m_nPriority = nPriority;
 	m_nEnabledSelectors = 0;
 
-	return this;
+	return true;
 }
 
 CCTouchHandler::~CCTouchHandler(void)
@@ -82,7 +95,7 @@ CCTouchHandler::~CCTouchHandler(void)
 }
 
 // implementation of CCStandardTouchHandler
-CCTouchHandler* CCStandardTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
+bool CCStandardTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
 	if (CCTouchHandler::initWithDelegate(pDelegate, nPriority))
 	{
@@ -97,19 +110,30 @@ CCTouchHandler* CCStandardTouchHandler::initWithDelegate(CCTouchDelegate *pDeleg
 		if( [del respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
 			enabledSelectors_ |= ccTouchSelectorCancelledBit;
 		*/
+
+		return true;
 	}
 
-	return this;
+	return false;
 }
 
-CCStandardTouchHandler* CCStandardTouchHandler::handlerWithDelegate(CCStandardTouchDelegate *pDelegate, int nPriority)
+CCStandardTouchHandler* CCStandardTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
-	CCStandardTouchHandler* pTouchHandler = new CCStandardTouchHandler();
+	CCStandardTouchHandler* pHandler = new CCStandardTouchHandler();
 
-	pTouchHandler->initWithDelegate(pDelegate, nPriority);
-	pTouchHandler->autorelease();
+	if (pHandler)
+	{
+		if (pHandler->initWithDelegate(pDelegate, nPriority))
+		{
+			pHandler->autorelease();
+		}
+		else
+		{
+			CCX_SAFE_RELEASE_NULL(pHandler);
+		}
+	}
 
-	return pTouchHandler;
+	return pHandler;
 }
 
 // implementation of CCTargetedTouchHandler
@@ -131,14 +155,23 @@ NSMutableSet* CCTargetedTouchHandler::getClaimedTouches(void)
 
 CCTargetedTouchHandler* CCTargetedTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow)
 {
-	CCTargetedTouchHandler *pTargetedHandler = new CCTargetedTouchHandler();
-	pTargetedHandler->initWithDelegate(pDelegate, nPriority, bSwallow);
-	pTargetedHandler->autorelease();
+	CCTargetedTouchHandler *pHandler = new CCTargetedTouchHandler();
+	if (pHandler)
+	{
+		if (pHandler->initWithDelegate(pDelegate, nPriority, bSwallow))
+		{
+			pHandler->autorelease();
+		}
+		else
+		{
+			CCX_SAFE_RELEASE_NULL(pHandler);
+		}
+	}
 
-	return pTargetedHandler;
+	return pHandler;
 }
 
-CCTouchHandler* CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow)
+bool CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow)
 {
 	if (CCTouchHandler::initWithDelegate(pDelegate, nPriority))
 	{
@@ -155,9 +188,10 @@ CCTouchHandler* CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDeleg
 		if( [aDelegate respondsToSelector:@selector(ccTouchCancelled:withEvent:)] )
 			enabledSelectors_ |= ccTouchSelectorCancelledBit;
 		*/
+		return true;
 	}
 
-	return this;
+	return false;
 }
 
 CCTargetedTouchHandler::~CCTargetedTouchHandler(void)
