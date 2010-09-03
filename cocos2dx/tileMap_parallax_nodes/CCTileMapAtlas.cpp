@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCTileMapAtlas.h"
 #include "CCXFileUtils.h"
 #include "CCTextureAtlas.h"
-#include "support\image_support\TGAlib.h"
+#include "support/image_support/TGAlib.h"
 
 namespace cocos2d {
 
@@ -147,9 +147,15 @@ namespace cocos2d {
 			// XXX: this method consumes a lot of memory
 			// XXX: a tree of something like that shall be impolemented
 			char buffer[32];
-			std::string key = itoa(position.x, buffer, 10);
+			/*std::string key = itoa(position.x, buffer, 10);*/
+			sprintf(buffer, "%d", position.x);
+			std::string key = buffer;
+			
 			key += ",";
-			key += itoa(position.y, buffer, 10);
+			/*key += itoa(position.y, buffer, 10);*/
+			sprintf(buffer, "%d", position.y);
+			key += buffer;
+
 			int num = m_pPosToAtlasIndex->find(key)->second;
 			this->updateAtlasValueAt(position, tile, num);
 		}	
@@ -218,9 +224,15 @@ namespace cocos2d {
 						this->updateAtlasValueAt(ccg(x,y), value, total);
 
 						char buffer[32];
-						std::string key = itoa(x, buffer, 10);
+						/*std::string key = itoa(x, buffer, 10);*/
+						sprintf(buffer, "%d", x);
+						std::string key = buffer;
+
 						key += ",";
-						key += itoa(y, buffer, 10);
+						/*key += itoa(y, buffer, 10);*/
+						sprintf(buffer, "%d", y);
+						key += buffer;
+
 						m_pPosToAtlasIndex->insert(StringToIntegerPair(key, total));
 
 						total++;
@@ -229,11 +241,11 @@ namespace cocos2d {
 			}
 		}
 	}
-	void CCTileMapAtlas::setTGAInfo(tImageTGA* var)
+	void CCTileMapAtlas::setTGAInfo(struct sImageTGA* var)
 	{
 		m_pTGAInfo = var;
 	}
-	tImageTGA * CCTileMapAtlas::getTGAInfo()
+	struct sImageTGA * CCTileMapAtlas::getTGAInfo()
 	{
 		return m_pTGAInfo;
 	}

@@ -25,7 +25,8 @@ THE SOFTWARE.
 #ifndef __SUPPORT_DATA_SUPPORT_TGALIB_H__
 #define __SUPPORT_DATA_SUPPORT_TGALIB_H__
 
-#include "platform/platform.h"
+#include <stdio.h>
+
 namespace   cocos2d {
 
 enum {
@@ -43,10 +44,10 @@ typedef struct sImageTGA {
 	unsigned char type, pixelDepth;
 	
 	/** map width */
-	INT16 width;
+	signed short width;
 	
 	/** map height */
-	INT16 height;
+	signed short height;
 	
 	/** raw data */
 	unsigned char *imageData;
