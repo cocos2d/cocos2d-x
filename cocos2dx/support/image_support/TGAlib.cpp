@@ -177,6 +177,7 @@ tImageTGA * tgaLoad(const char *pszFilename) {
 	// open the file for reading (binary mode)
 	if(!(file = fopen(pszFilename, "rb")))
 	{
+		free(info);
 		return NULL;
 	}
 	if (file == NULL) {
