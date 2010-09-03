@@ -336,9 +336,9 @@ namespace cocos2d{
 	CCMenuItemSprite * CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
 		CCMenuItem::initWithTarget(target, selector); 
-		this->m_pNormalImage = normalSprite;
-		this->m_pSelectedImage = selectedSprite;
-		this->m_pDisabledImage = disabledSprite;
+		this->m_pNormalImage = normalSprite; CCX_SAFE_RETAIN(normalSprite);
+		this->m_pSelectedImage = selectedSprite; CCX_SAFE_RETAIN(selectedSprite);
+		this->m_pDisabledImage = disabledSprite; CCX_SAFE_RETAIN(disabledSprite);
 		this->setContentSize(m_pNormalImage->getContentSize());
 		return this;
 	}
