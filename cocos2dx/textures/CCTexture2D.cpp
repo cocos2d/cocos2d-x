@@ -177,7 +177,7 @@ CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat
 char * CCTexture2D::description(void)
 {
 	char *ret = new char[100];
-	sprintf_s(ret, 100, "<CCTexture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT);
+	sprintf(ret, "<CCTexture2D | Name = %u | Dimensions = %u x %u | Coordinates = (%.2f, %.2f)>", m_uName, m_uPixelsWide, m_uPixelsHigh, m_fMaxS, m_fMaxT);
 	return ret;
 }
 
