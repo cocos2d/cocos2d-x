@@ -213,7 +213,7 @@ public:
 #ifdef _EGL_SHOW_
             eglSwapBuffers(m_eglDisplay, m_eglSurface);
 #endif
-            delete pData;
+            delete[] pData;
         }
     }
 private:
