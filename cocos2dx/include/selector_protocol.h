@@ -55,11 +55,17 @@ typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
 typedef void (SelectorProtocol::*SEL_CallFuncND)(CCNode*, void*);
 typedef void (SelectorProtocol::*SEL_MunuHandler)(NSObject*);
 
-#define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(*((SEL_SCHEDULE*)(&(&_SELECTOR))) )
-#define callfunc_selector(_SELECTOR) (SEL_CallFunc)(*((SEL_CallFunc*)(&(&_SELECTOR))) )
-#define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(*((SEL_CallFuncN*)(&(&_SELECTOR))) )
-#define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(*((SEL_CallFuncND*)(&(&_SELECTOR))) )
-#define menu_selector(_SELECTOR) (SEL_MunuHandler)(*((SEL_MunuHandler*)(&(&_SELECTOR))) )
+//  #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(*((SEL_SCHEDULE*)(&(&_SELECTOR))) )
+//  #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(*((SEL_CallFunc*)(&(&_SELECTOR))) )
+//  #define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(*((SEL_CallFuncN*)(&(&_SELECTOR))) )
+//  #define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(*((SEL_CallFuncND*)(&(&_SELECTOR))) )
+//  #define menu_selector(_SELECTOR) (SEL_MunuHandler)(*((SEL_MunuHandler*)(&(&_SELECTOR)))
+
+  #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
+  #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
+  #define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(&_SELECTOR)
+  #define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(&_SELECTOR)
+  #define menu_selector(_SELECTOR) (SEL_MunuHandler)(&_SELECTOR)
 }//namespace   cocos2d 
 
 #endif // __COCOA_SELECTOR_PROTOCOL_H__
