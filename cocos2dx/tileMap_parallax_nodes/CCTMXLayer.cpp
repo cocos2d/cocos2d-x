@@ -166,7 +166,7 @@ namespace cocos2d {
 		{
 			for( unsigned int x=0; x < m_tLayerSize.width; x++ ) 
 			{
-				unsigned int pos = x + (unsigned int)m_tLayerSize.width * y;
+				unsigned int pos = (unsigned int)(x + m_tLayerSize.width * y);
 				unsigned int gid = m_pTiles[ pos ];
 
 				// gid are stored in little endian.
@@ -474,7 +474,7 @@ namespace cocos2d {
 		if( gid ) 
 		{
 			unsigned int z = (unsigned int)(pos.x + pos.y * m_tLayerSize.width);
-			unsigned atlasIndex = atlasIndexForExistantZ(z);
+			unsigned int atlasIndex = atlasIndexForExistantZ(z);
 
 			// remove tile from GID map
 			m_pTiles[z] = 0;
@@ -552,25 +552,27 @@ namespace cocos2d {
 	}
 	CGPoint CCTMXLayer::positionForOrthoAt(CGPoint pos)
 	{
-		float x = pos.x * m_tMapTileSize.width + 0.49f;
-		float y = (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + 0.49f;
-		return ccp(x,y);
+		int x = (int)(pos.x * m_tMapTileSize.width + 0.49f);
+		int y = (int)((m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + 0.49f);
+		return ccp((float)x, (float)y);
 	}
 	CGPoint CCTMXLayer::positionForIsoAt(CGPoint pos)
 	{
-		float x = m_tMapTileSize.width /2 * ( m_tLayerSize.width + pos.x - pos.y - 1) + 0.49f;
-		float y = m_tMapTileSize.height /2 * (( m_tLayerSize.height * 2 - pos.x - pos.y) - 2) + 0.49f;	
-		return ccp(x, y);
+		int x = (int)(m_tMapTileSize.width /2 * ( m_tLayerSize.width + pos.x - pos.y - 1) + 0.49f);
+		int y = (int)(m_tMapTileSize.height /2 * (( m_tLayerSize.height * 2 - pos.x - pos.y) - 2) + 0.49f);
+		return ccp((float)x, (float)y);
 	}
 	CGPoint CCTMXLayer::positionForHexAt(CGPoint pos)
 	{
 		float diffY = 0;
 		if( (int)pos.x % 2 == 1 )
+		{
 			diffY = -m_tMapTileSize.height/2 ;
+		}
 
-		float x =  pos.x * m_tMapTileSize.width*3/4 + 0.49f;
-		float y =  (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY + 0.49f;
-		return ccp(x,y);
+		int x = (int)(pos.x * m_tMapTileSize.width*3/4 + 0.49f);
+		int y = (int)((m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY + 0.49f);
+		return ccp((float)x, (float)y);
 	}
 	int CCTMXLayer::vertexZForPos(CGPoint pos)
 	{
