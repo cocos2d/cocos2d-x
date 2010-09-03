@@ -131,11 +131,8 @@ namespace cocos2d {
 	CCTMXMapInfo::~CCTMXMapInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
-		m_pTilesets->removeAllObjects();
 		m_pTilesets->release();
-		m_pLayers->removeAllObjects();
 		m_pLayers->release();
-		m_pObjectGroups->removeAllObjects();
 		m_pObjectGroups->release();
 		if (m_pProperties)
 		{

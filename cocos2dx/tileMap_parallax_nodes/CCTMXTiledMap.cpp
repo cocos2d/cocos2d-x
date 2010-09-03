@@ -96,7 +96,6 @@ namespace cocos2d{
 	}
 	CCTMXTiledMap::~CCTMXTiledMap()
 	{
-		m_pObjectGroups->removeAllObjects();
 		m_pObjectGroups->release();
 		if (m_pProperties)
 		{
