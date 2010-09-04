@@ -86,6 +86,7 @@ THE SOFTWARE.
 #define CCX_SAFE_DELETE(p)			if(p) { delete p; p=NULL; }
 #define CCX_SAFE_FREE(p)			if(p) { free(p); p=NULL; }
 #define CCX_SAFE_RELEASE(p)			if(p) { p->release(); }
+#define CCX_SAFE_RETAIN(p)          if(p) { p->retain(); }
 #define CCX_SAFE_RELEASE_NULL(p)	if(p) { p->release(); p = NULL; }
 #define CCX_SAFE_RETAIN(p)			if(p) { p->retain(); }
 #define CCX_BREAK_IF(cond)			if(cond) break;
