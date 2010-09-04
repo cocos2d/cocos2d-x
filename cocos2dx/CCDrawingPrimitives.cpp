@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "CCDrawingPrimitives.h"
 
-#define _USE_MATH_DEFINES
 #include <math.h>
 #include <string.h>
 #include <GLES/gl.h>
@@ -65,7 +64,6 @@ void ccDrawPoints(CGPoint *points, unsigned int numberOfPoints)
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);	
 }
-
 
 void ccDrawLine(CGPoint origin, CGPoint destination)
 {
