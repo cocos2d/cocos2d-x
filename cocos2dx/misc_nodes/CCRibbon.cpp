@@ -86,6 +86,7 @@ namespace cocos2d {
 		m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
 		m_pTexture = CCTextureCache::sharedTextureCache()->addImage(path);
+		m_pTexture->retain();
 
 		/* default texture parameter */
 		ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
