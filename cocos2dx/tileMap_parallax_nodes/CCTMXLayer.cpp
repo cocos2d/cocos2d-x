@@ -77,6 +77,7 @@ namespace cocos2d {
 
 			// tilesetInfo
 			m_pTileSet = tilesetInfo;
+			CCX_SAFE_RETAIN(m_pTileSet);
 
 			// mapInfo
 			m_tMapTileSize = mapInfo->getTileSize();
