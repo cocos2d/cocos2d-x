@@ -90,7 +90,7 @@ namespace cocos2d{
 		/** allocates a CCBitmapFontConfiguration with a FNT file */
 		static CCBitmapFontConfiguration * configurationWithFNTFile(const char *FNTfile);
 		/** initializes a BitmapFontConfiguration with a FNT file */
-		CCBitmapFontConfiguration * initWithFNTfile(const char *FNTfile);
+		bool initWithFNTfile(const char *FNTfile);
 	private:
 		void parseConfigFile(const char *controlFile);
 		void parseCharacterDefinition(std::string line, ccBitmapFontDef *characterDefinition);
@@ -156,7 +156,7 @@ namespace cocos2d{
 		/** creates a bitmap font altas with an initial string and the FNT file */
 		static CCBitmapFontAtlas * bitmapFontAtlasWithString(const char *str, const char *fntFile);
 		/** init a bitmap font altas with an initial string and the FNT file */
-		CCBitmapFontAtlas * initWithString(const char *str, const char *fntFile);
+		bool initWithString(const char *str, const char *fntFile);
 		/** updates the font chars based on the string to render */
 		void createFontChars();
 		// super method

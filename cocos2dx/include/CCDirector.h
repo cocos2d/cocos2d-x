@@ -198,7 +198,7 @@ and when to execute the Scenes.
 class CCX_DLL CCDirector : public NSObject
 {
 public: 
-	virtual CCDirector* init(void);
+	virtual bool init(void);
 	virtual ~CCDirector(void);
 	CCDirector(void) {}
 

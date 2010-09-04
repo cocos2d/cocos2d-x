@@ -93,20 +93,28 @@ void CCTextureAtlas::setQuads(ccV3F_C4B_T2F_Quad *var)
 CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, unsigned int capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
-	pTextureAtlas->initWithFile(file, capacity);
-	pTextureAtlas->autorelease();
-	return pTextureAtlas;
+	if(pTextureAtlas && pTextureAtlas->initWithFile(file, capacity))
+	{
+		pTextureAtlas->autorelease();
+		return pTextureAtlas;
+	}
+	CCX_SAFE_DELETE(pTextureAtlas);
+	return NULL;
 }
 
 CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
 	CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
-	pTextureAtlas->initWithTexture(texture, capacity);
-	pTextureAtlas->autorelease();
-	return pTextureAtlas;
+	if (pTextureAtlas && pTextureAtlas->initWithTexture(texture, capacity))
+	{
+		pTextureAtlas->autorelease();
+		return pTextureAtlas;
+	}
+	CCX_SAFE_DELETE(pTextureAtlas);
+	return NULL;
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
+bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
 {
 	// retained in property
 	CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(file);	
@@ -114,9 +122,9 @@ CCTextureAtlas * CCTextureAtlas::initWithFile(const char * file, unsigned int ca
 	return initWithTexture(texture, capacity);
 }
 
-CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity)
+bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
-
+	assert(texture != NULL);
 	m_uCapacity = capacity;
 	m_uTotalQuads = 0;
 
@@ -130,7 +138,7 @@ CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned 
 		CCLOG("cocos2d: CCTextureAtlas: not enough memory");
 		CCX_SAFE_FREE(m_pQuads)
 		CCX_SAFE_FREE(m_pIndices)
-		return NULL;
+		return false;
 	}
 
 #if CC_TEXTURE_ATLAS_USES_VBO
@@ -140,7 +148,7 @@ CCTextureAtlas * CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned 
 
 	this->initIndices();
 
-	return this;
+	return true;
 }
 
 char * CCTextureAtlas::description()

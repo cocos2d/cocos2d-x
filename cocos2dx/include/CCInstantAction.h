@@ -102,7 +102,7 @@ namespace cocos2d {
 		virtual ~CCFlipX(){}
 
 		static CCFlipX * actionWithFlipX(bool x);
-		CCFlipX * initWithFlipX(bool x);
+		bool initWithFlipX(bool x);
 		//super method
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
@@ -122,7 +122,7 @@ namespace cocos2d {
 		virtual ~CCFlipY(){}
 			
 		static CCFlipY * actionWithFlipY(bool y);
-		CCFlipY * initWithFlipY(bool y);
+		bool initWithFlipY(bool y);
 		//super method
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
@@ -142,7 +142,7 @@ namespace cocos2d {
 		/** creates a Place action with a position */
 		static CCPlace * actionWithPosition(CGPoint pos);
 		/** Initializes a Place action with a position */
-		CCPlace * initWithPosition(CGPoint pos);
+		bool initWithPosition(CGPoint pos);
 		//super method
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual NSObject* copyWithZone(NSZone *pZone);
@@ -164,7 +164,7 @@ namespace cocos2d {
 		{
 		}
 		static CCCallFunc * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFunc selector);
-		virtual CCCallFunc * initWithTarget(SelectorProtocol* pSelectorTarget);
+		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget);
 		virtual void execute();
 		//super method
 		virtual void startWithTarget(CCNode *pTarget);
@@ -216,7 +216,7 @@ namespace cocos2d {
 		/** creates the action with the callback and the data to pass as an argument */
 		static CCCallFuncND * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
 		/** initializes the action with the callback and the data to pass as an argument */
-		CCCallFuncND * initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
+		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
 		// super method
 		virtual NSObject* copyWithZone(NSZone *pZone);
 		virtual void execute();

@@ -50,9 +50,13 @@ namespace cocos2d{
 	CCOrbitCamera * CCOrbitCamera::actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 	{
 		CCOrbitCamera * pRet = new CCOrbitCamera();
-		pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX);
-		pRet->autorelease();
-		return pRet;
+		if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CCX_SAFE_DELETE(pRet);
+		return NULL;
 	}
 
 	NSObject * CCOrbitCamera::copyWithZone(NSZone *pZone)
@@ -75,7 +79,7 @@ namespace cocos2d{
 		return pRet;
 	}
 
-	CCOrbitCamera * CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
+	bool CCOrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 	{
 		if ( CCIntervalAction::initWithDuration(t) )
 		{
@@ -88,9 +92,9 @@ namespace cocos2d{
 
 			m_fRadDeltaZ = (CGFloat)CC_DEGREES_TO_RADIANS(deltaAngleZ);
 			m_fRadDeltaX = (CGFloat)CC_DEGREES_TO_RADIANS(deltaAngleX);
-			return this;
+			return true;
 		}
-		return NULL;
+		return false;
 	}
 
 	void CCOrbitCamera::startWithTarget(CCNode *pTarget)

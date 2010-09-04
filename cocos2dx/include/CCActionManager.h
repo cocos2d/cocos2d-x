@@ -49,7 +49,7 @@ class CCX_DLL CCActionManager : public NSObject, public SelectorProtocol
 public:
 	CCActionManager(void);
 	~CCActionManager(void);
-	CCActionManager* init(void);
+	bool init(void);
 
     // actions
     

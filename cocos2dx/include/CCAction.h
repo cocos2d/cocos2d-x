@@ -136,7 +136,7 @@ public:
 	void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 
 	// initializes the action
-	CCSpeed* initWithAction(CCIntervalAction *pAction, float fRate);
+	bool initWithAction(CCIntervalAction *pAction, float fRate);
 /*	CCSpeed* initWithAction(CCRepeatForever *pAction, float fRate);*/
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
@@ -180,10 +180,10 @@ public:
 	void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
 
 	// initializes the action
-	CCFollow* initWithTarget(CCNode *pFollowedNode);
+	bool initWithTarget(CCNode *pFollowedNode);
 
 	// initializes the action with a set boundary
-	CCFollow* initWithTarget(CCNode *pFollowedNode, CGRect rect);
+	bool initWithTarget(CCNode *pFollowedNode, CGRect rect);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void step(ccTime dt);

@@ -54,14 +54,14 @@ namespace cocos2d{
 		pRet->autorelease();
 		return pRet;
 	}
-	CCMenuItem * CCMenuItem::initWithTarget(SelectorProtocol *rec, SEL_MunuHandler selector)
+	bool CCMenuItem::initWithTarget(SelectorProtocol *rec, SEL_MunuHandler selector)
 	{
 		m_tAnchorPoint = ccp(0.5f, 0.5f);
 		m_pListener = rec;
 		m_pfnSelector = selector;
 		m_bIsEnabled = true;
 		m_bIsSelected = false;
-		return this;
+		return true;
 	}
 	void CCMenuItem::selected()
 	{
@@ -125,14 +125,14 @@ namespace cocos2d{
 		pRet->autorelease();
 		return pRet;
 	}
-	CCMenuItemLabel * CCMenuItemLabel::initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MunuHandler selector)
+	bool CCMenuItemLabel::initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
 		CCMenuItem::initWithTarget(target, selector);
 		m_fOriginalScale = 1.0f;
 		m_tColorBackup = ccWHITE;
 		m_tDisabledColor = ccc3(126,126,126);
 		this->setLabel(label);
-		return this;
+		return true;
 	}
 	CCMenuItemLabel::~CCMenuItemLabel()
 	{
@@ -231,9 +231,9 @@ namespace cocos2d{
 		pRet->autorelease();
 		return pRet;
 	}
-	CCMenuItemAtlasFont * CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MunuHandler selector)
+	bool CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
-		NSAssert( strlen(value) != 0, "value lenght must be greater than 0");
+		NSAssert( value != NULL && strlen(value) != 0, "value lenght must be greater than 0");
 		CCLabelAtlas *label = new CCLabelAtlas();
 		label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
 		label->autorelease();
@@ -241,7 +241,7 @@ namespace cocos2d{
 		{
 			// do something ?
 		}
-		return this;
+		return true;
 	}
 	//
 	//CCMenuItemFont
@@ -281,15 +281,15 @@ namespace cocos2d{
 		pRet->autorelease();
 		return pRet;
 	}
-	CCMenuItemFont * CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MunuHandler selector)
+	bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
-		NSAssert( strlen(value) != 0, "Value lenght must be greater than 0");
+		NSAssert( value != NULL && strlen(value) != 0, "Value lenght must be greater than 0");
 		CCLabel *label = CCLabel::labelWithString(value, _fontName.c_str(), (float)_fontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
 			// do something ?
 		}
-		return this;
+		return true;
 	}
 	//
 	//CCMenuItemSprite
@@ -333,14 +333,15 @@ namespace cocos2d{
 		pRet->autorelease();
 		return pRet;
 	}
-	CCMenuItemSprite * CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MunuHandler selector)
+	bool CCMenuItemSprite::initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
+		assert(normalSprite != NULL);
 		CCMenuItem::initWithTarget(target, selector); 
 		this->m_pNormalImage = normalSprite; CCX_SAFE_RETAIN(normalSprite);
 		this->m_pSelectedImage = selectedSprite; CCX_SAFE_RETAIN(selectedSprite);
 		this->m_pDisabledImage = disabledSprite; CCX_SAFE_RETAIN(disabledSprite);
 		this->setContentSize(m_pNormalImage->getContentSize());
-		return this;
+		return true;
 	}
 	CCMenuItemSprite::~CCMenuItemSprite()
 	{
@@ -416,26 +417,36 @@ namespace cocos2d{
 	CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
 		CCMenuItemImage *pRet = new CCMenuItemImage();
-		pRet->initFromNormalImage(normalImage, selectedImage, disabledImage, target, selector);
-		pRet->autorelease();
-		return pRet;
+		if (pRet && pRet->initFromNormalImage(normalImage, selectedImage, disabledImage, target, selector))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CCX_SAFE_DELETE(pRet);
+		return NULL;
 	}
 	CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage)
 	{
 		CCMenuItemImage *pRet = new CCMenuItemImage();
-		pRet->initFromNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL);
-		pRet->autorelease();
-		return pRet;
+		if (pRet && pRet->initFromNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CCX_SAFE_DELETE(pRet);
+		return NULL;
 	}
-	CCMenuItemImage * CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MunuHandler selector)
+	bool CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MunuHandler selector)
 	{
 		CCNode *normalSprite = CCSprite::spriteWithFile(normalImage);
 		CCNode *selectedSprite = CCSprite::spriteWithFile(selectedImage); 
 		CCNode *disabledSprite = NULL;
 
 		if(disabledImage)
+		{
 			disabledSprite = CCSprite::spriteWithFile(disabledImage);
-		return (CCMenuItemImage*)(initFromNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector));
+		}
+		return initFromNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector);
 	}
 	//
 	// MenuItemToggle
@@ -458,7 +469,7 @@ namespace cocos2d{
 		va_end(args);
 		return pRet;
 	}
-	CCMenuItemToggle * CCMenuItemToggle::initWithTarget(SelectorProtocol* target, SEL_MunuHandler selector, CCMenuItem* item, va_list args)
+	bool CCMenuItemToggle::initWithTarget(SelectorProtocol* target, SEL_MunuHandler selector, CCMenuItem* item, va_list args)
 	{
 		CCMenuItem::initWithTarget(target, selector);
 		this->m_pSubItems = new NSMutableArray<CCMenuItem*>();
@@ -472,7 +483,7 @@ namespace cocos2d{
 		}
 		m_uSelectedIndex = UINT_MAX;
 		this->setSelectedIndex(0);
-		return this;
+		return true;
 	}
 	CCMenuItemToggle::~CCMenuItemToggle()
 	{

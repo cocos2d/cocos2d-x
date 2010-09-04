@@ -59,13 +59,13 @@ public:
 	/** initializes a CCSpriteSheet with a texture2d and capacity of children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 */
-	CCSpriteSheet* initWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity);
+	bool initWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity);
 
 	/** initializes a CCSpriteSheet with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
 	 The capacity will be increased in 33% in runtime if it run out of space.
 	 The file will be loaded using the TextureMgr.
 	 */
-	CCSpriteSheet* initWithFile(const char *pszFileImage, unsigned int uCapacity);
+	bool initWithFile(const char *pszFileImage, unsigned int uCapacity);
 
 	void increaseAtlasCapacity(void);
 

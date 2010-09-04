@@ -197,7 +197,7 @@ public:
 	static CCSprite* spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect, CGPoint offset);
 
 public:
-	CCSprite* init(void);
+	bool init(void);
 	virtual ~CCSprite(void);
 	CCSprite() {}
 
@@ -242,33 +242,33 @@ public:
 	 The rect used will be the size of the texture.
 	 The offset will be (0,0).
 	 */
-    CCSprite* initWithTexture(CCTexture2D *pTexture);
+    bool initWithTexture(CCTexture2D *pTexture);
 
 	/** Initializes an sprite with a texture and a rect.
 	 The offset will be (0,0).
 	 */
-    CCSprite* initWithTexture(CCTexture2D *pTexture, CGRect rect);
+    bool initWithTexture(CCTexture2D *pTexture, CGRect rect);
 
 	// Initializes an sprite with an sprite frame.
-    CCSprite* initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
+    bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
 	/** Initializes an sprite with an sprite frame name.
 	 An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
 	 If the CCSpriteFrame doesn't exist it will raise an exception.
 	 @since v0.9
 	 */
-    CCSprite* initWithSpriteFrameName(const char *pszSpriteFrameName);
+    bool initWithSpriteFrameName(const char *pszSpriteFrameName);
 
 	/** Initializes an sprite with an image filename.
 	 The rect used will be the size of the image.
 	 The offset will be (0,0).
 	 */
-    CCSprite* initWithFile(const char *pszFilename);
+    bool initWithFile(const char *pszFilename);
 
 	/** Initializes an sprite with an image filename, and a rect.
 	 The offset will be (0,0).
 	 */
-    CCSprite* initWithFile(const char *pszFilename, CGRect rect);
+    bool initWithFile(const char *pszFilename, CGRect rect);
 
 	/** Initializes an sprite with a CGImageRef
 	 @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
@@ -284,7 +284,7 @@ public:
 //    CCSprite* initWithCGImage(CGImageRef pImage, const char *pszKey);
 
 	// Initializes an sprite with an CCSpriteSheet and a rect
-    CCSprite* initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
+    bool initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
 
 	// sprite sheet methods
 

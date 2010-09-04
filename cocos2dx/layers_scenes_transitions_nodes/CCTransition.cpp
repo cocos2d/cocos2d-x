@@ -45,9 +45,11 @@ enum {
     _Type* _Type::transitionWithDuration(ccTime t, CCScene* scene)\
 {\
     _Type* pScene = new _Type();\
-    pScene->initWithDuration(t, scene);\
+	if(pScene && pScene->initWithDuration(t, scene)){\
     pScene->autorelease();\
-    return pScene;\
+	return pScene;}\
+	CCX_SAFE_DELETE(pScene);\
+	return NULL;\
 }
 
 
@@ -64,12 +66,16 @@ CCTransitionScene::~CCTransitionScene()
 CCTransitionScene * CCTransitionScene::transitionWithDuration(ccTime t, CCScene *scene)
 {
 	CCTransitionScene * pScene = new CCTransitionScene();
-	pScene->initWithDuration(t,scene);
-	pScene->autorelease();
-	return pScene;
+	if(pScene && pScene->initWithDuration(t,scene))
+	{
+		pScene->autorelease();
+		return pScene;
+	}
+	CCX_SAFE_DELETE(pScene);
+	return NULL;
 }
 
-CCTransitionScene * CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
+bool CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
 {
 	NSAssert( scene != NULL, "Argument scene must be non-nil");
 
@@ -90,11 +96,11 @@ CCTransitionScene * CCTransitionScene::initWithDuration(ccTime t, CCScene *scene
 		CCTouchDispatcher::getSharedDispatcher()->setDispatchEvents(false);
 		this->sceneOrder();
 
-		return this;
+		return true;
 	}
 	else
 	{
-		return NULL;
+		return false;
 	}
 }
 
@@ -203,13 +209,13 @@ CCOrientedTransitionScene * CCOrientedTransitionScene::transitionWithDuration(cc
 	return pScene;
 }
 
-CCOrientedTransitionScene * CCOrientedTransitionScene::initWithDuration(ccTime t, CCScene *scene, tOrientation orientation)
+bool CCOrientedTransitionScene::initWithDuration(ccTime t, CCScene *scene, tOrientation orientation)
 {
 	if ( CCTransitionScene::initWithDuration(t, scene) )
 	{
 		m_eOrientation = orientation;
 	}
-	return this;
+	return true;
 }
 
 //
@@ -1034,7 +1040,7 @@ CCFadeTransition * CCFadeTransition::transitionWithDuration(ccTime duration, CCS
 	return pTransition;
 }
 
-CCFadeTransition * CCFadeTransition::initWithDuration(ccTime duration, CCScene *scene, ccColor3B color)
+bool CCFadeTransition::initWithDuration(ccTime duration, CCScene *scene, ccColor3B color)
 {
 	if (CCTransitionScene::initWithDuration(duration, scene))
 	{
@@ -1042,13 +1048,13 @@ CCFadeTransition * CCFadeTransition::initWithDuration(ccTime duration, CCScene *
 		m_tColor.g = color.g;
 		m_tColor.b = color.b;
 	}
-	return this;
+	return true;
 }
 
-CCFadeTransition * CCFadeTransition::initWithDuration(ccTime t, CCScene *scene)
+bool CCFadeTransition::initWithDuration(ccTime t, CCScene *scene)
 {
 	this->initWithDuration(t, scene, ccBLACK);
-	return this;
+	return true;
 }
 
 void CCFadeTransition :: onEnter()

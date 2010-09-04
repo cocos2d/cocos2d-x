@@ -114,7 +114,7 @@ public:
 	char * description(void);
 
 	/** Intializes with a texture2d with data */
-	CCTexture2D * initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize);
+	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize);
 
 	/**
 	Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
@@ -130,16 +130,16 @@ public:
 	Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a UIImage object */
-	CCTexture2D * initWithImage(UIImage * uiImage);
+	bool initWithImage(UIImage * uiImage);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a string of text.
 	Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	CCTexture2D * initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+	bool initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
-	CCTexture2D * initWithString(const char *text, const char *fontName, float fontSize);
+	bool initWithString(const char *text, const char *fontName, float fontSize);
 
 #ifdef _POWERVR_SUPPORT_
 	/**
@@ -147,9 +147,9 @@ public:
 	Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a PVRTC buffer */
-	CCTexture2D * initWithPVRTCData(const void* data, int level, int bpp, bool hasAlpha, int length);
+	bool initWithPVRTCData(const void* data, int level, int bpp, bool hasAlpha, int length);
 	/** Initializes a texture from a PVRTC file */
-	CCTexture2D * initWithPVRTCFile(const char* file);
+	bool initWithPVRTCFile(const char* file);
 #endif
 
 	/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
@@ -204,7 +204,7 @@ public:
 	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
 
 private:
-	CCTexture2D * initPremultipliedATextureWithImage(UIImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+	bool initPremultipliedATextureWithImage(UIImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
 };
 }//namespace   cocos2d 

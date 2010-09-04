@@ -320,10 +320,10 @@ namespace cocos2d {
 	//
 	//RibbonSegment
 	//
-	CCRibbonSegment * CCRibbonSegment::init()
+	bool CCRibbonSegment::init()
 	{
 		this->reset();
-		return this;
+		return true;
 	}
 	char * CCRibbonSegment::description()
 	{

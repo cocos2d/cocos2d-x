@@ -79,7 +79,7 @@ public:
 	*
 	* WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
 	*/
-	CCTextureAtlas * initWithFile(const char* file, unsigned int capacity);
+	bool initWithFile(const char* file, unsigned int capacity);
 
 	/** creates a TextureAtlas with a previously initialized Texture2D object, and
 	* with an initial capacity for n Quads. 
@@ -93,7 +93,7 @@ public:
 	*
 	* WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
 	*/
-	CCTextureAtlas * initWithTexture(CCTexture2D *texture, unsigned int capacity);
+	bool initWithTexture(CCTexture2D *texture, unsigned int capacity);
 
 	/** updates a Quad (texture, vertex and color) at a certain index
 	* index must be between 0 and the atlas capacity - 1

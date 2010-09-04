@@ -442,11 +442,12 @@ CCRepeatForever *CCRepeatForever::actionWithAction(CCIntervalAction *pAction)
 	return NULL;
 }
 
-CCRepeatForever *CCRepeatForever::initWithAction(CCIntervalAction *pAction)
+bool CCRepeatForever::initWithAction(CCIntervalAction *pAction)
 {
+	assert(pAction != NULL);
 	pAction->retain();
 	m_pOther = pAction;
-	return this;
+	return true;
 }
 NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 {

@@ -97,12 +97,12 @@ CCActionManager::~CCActionManager(void)
 	gSharedManager = NULL;
 }
 
-CCActionManager* CCActionManager::init(void)
+bool CCActionManager::init(void)
 {
 	CCScheduler::getSharedScheduler()->scheduleUpdateForTarget(this, 0, false);
 	m_pTargets = NULL;
 
-	return this;
+	return true;
 }
 
 // private

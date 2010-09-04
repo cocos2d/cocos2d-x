@@ -110,9 +110,9 @@ public:
 	static CCColorLayer * layerWithColor(ccColor4B color);
 
 	/** initializes a CCLayer with color, width and height */
-	CCColorLayer * initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	bool initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** initializes a CCLayer with color. Width and height are the window size. */
-	CCColorLayer * initWithColor(ccColor4B color);
+	bool initWithColor(ccColor4B color);
 
 	/** change width */
 	void changeWidth(GLfloat w);
@@ -154,7 +154,7 @@ public:
 	/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
 	static CCMultiplexLayer * layerWithLayers(CCLayer* layer, ... );
 	/** initializes a MultiplexLayer with one or more layers using a variable argument list. */
-	CCMultiplexLayer * initWithLayers(CCLayer* layer, va_list params);
+	bool initWithLayers(CCLayer* layer, va_list params);
 	/** switches to a certain layer indexed by n. 
 	The current (old) layer will be removed from it's parent with 'cleanup:YES'.
 	*/

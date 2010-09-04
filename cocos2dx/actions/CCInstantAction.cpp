@@ -131,10 +131,10 @@ namespace cocos2d {
 		pRet->autorelease();
 		return pRet;
 	}
-	CCFlipX *CCFlipX::initWithFlipX(bool x)
+	bool CCFlipX::initWithFlipX(bool x)
 	{
 		m_bFlipX = x;
-		return this;
+		return true;
 	}
 	void CCFlipX::startWithTarget(CCNode *pTarget)
 	{
@@ -176,10 +176,10 @@ namespace cocos2d {
 		pRet->autorelease();
 		return pRet;
 	}
-	CCFlipY * CCFlipY::initWithFlipY(bool y)
+	bool CCFlipY::initWithFlipY(bool y)
 	{
 		m_bFlipY = y;
-		return this;
+		return true;
 	}
 
 	void CCFlipY::startWithTarget(CCNode *pTarget)
@@ -222,10 +222,10 @@ namespace cocos2d {
 		pRet->autorelease();
 		return pRet;
 	}
-	CCPlace * CCPlace::initWithPosition(CGPoint pos)
+	bool CCPlace::initWithPosition(CGPoint pos)
 	{
 		m_tPosition = pos;
-		return this;
+		return true;
 	}
 
 	NSObject * CCPlace::copyWithZone(NSZone *pZone)
@@ -267,10 +267,10 @@ namespace cocos2d {
 
 		return pCallFunc;
 	}
-	CCCallFunc * CCCallFunc::initWithTarget(SelectorProtocol* pSelectorTarget)
+	bool CCCallFunc::initWithTarget(SelectorProtocol* pSelectorTarget)
 	{
 		m_pSelectorTarget = pSelectorTarget;
-		return this;
+		return true;
 	}
 
 	NSObject * CCCallFunc::copyWithZone(cocos2d::NSZone *pZone)
@@ -327,19 +327,24 @@ namespace cocos2d {
 	CCCallFuncND * CCCallFuncND::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d)
 	{
 		CCCallFuncND* pRet = new CCCallFuncND();
-		pRet->initWithTarget(pSelectorTarget, selector, d);
-		pRet->autorelease();
-		return pRet;
+		if (pRet->initWithTarget(pSelectorTarget, selector, d))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CCX_SAFE_DELETE(pRet);
+		return NULL;
 	}
 
-	CCCallFuncND * CCCallFuncND::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d)
+	bool CCCallFuncND::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d)
 	{
 		if( CCCallFunc::initWithTarget(pSelectorTarget) ) 
 		{
 			m_pData = d;	
 			m_pCallFuncND = selector;
+			return true;
 		}
-		return this;
+		return false;
 	}
 
 	NSObject * CCCallFuncND::copyWithZone(NSZone* zone)

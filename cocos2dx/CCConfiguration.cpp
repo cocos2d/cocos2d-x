@@ -37,7 +37,7 @@ CCConfiguration::CCConfiguration(void)
 {
 }
 
-CCConfiguration* CCConfiguration::init(void)
+bool CCConfiguration::init(void)
 {
 	CCLOG("cocos2d: GL_VENDOR:     %s", glGetString(GL_VENDOR));
 	CCLOG("cocos2d: GL_RENDERER:   %s", glGetString(GL_RENDERER));
@@ -73,7 +73,7 @@ CCConfiguration* CCConfiguration::init(void)
 	CCLOG("cocos2d: compiled with VBO support in TextureAtlas : %s", "NO");
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 
-	return this;
+	return true;
 
 }
 

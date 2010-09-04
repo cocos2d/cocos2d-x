@@ -74,7 +74,7 @@ namespace cocos2d {
 		/** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
 		static CCOrbitCamera * actionWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
 		/** initializes a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
-		CCOrbitCamera * initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+		bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
 		/** positions the camera according to spherical coordinates */
 		void sphericalRadius(float *r, float *zenith, float *azimuth);
 		// super methods

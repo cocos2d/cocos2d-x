@@ -67,22 +67,22 @@ CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay)
 	return pAnimation;
 }
 
-CCAnimation* CCAnimation::initWithName(const char *pszName)
+bool CCAnimation::initWithName(const char *pszName)
 {
 	return initWithName(pszName, 0, NULL);
 }
 
-CCAnimation* CCAnimation::initWithName(const char *pszName, float fDelay)
+bool CCAnimation::initWithName(const char *pszName, float fDelay)
 {
 	return initWithName(pszName, fDelay, NULL);
 }
 
-CCAnimation* CCAnimation::initWithName(const char *pszName, NSMutableArray<CCSpriteFrame*> *pFrames)
+bool CCAnimation::initWithName(const char *pszName, NSMutableArray<CCSpriteFrame*> *pFrames)
 {
 	return initWithName(pszName, 0, pFrames);
 }
 
-CCAnimation* CCAnimation::initWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
+bool CCAnimation::initWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
 {
 	m_fDelay = fDelay;
 	m_pszName = new char[strlen(pszName) + 1];
@@ -90,7 +90,7 @@ CCAnimation* CCAnimation::initWithName(const char *pszName, float fDelay, NSMuta
 	m_pszName[strlen(pszName)] = '\0';
 	m_pobFrames = NSMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
 
-	return this;
+	return true;
 }
 
 CCAnimation::~CCAnimation(void)
@@ -142,12 +142,12 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, CGRect r
 	return pSpriteFrame;
 }
 
-CCSpriteFrame* CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect rect, CGPoint offset)
+bool CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect rect, CGPoint offset)
 {
 	return initWithTexture(pobTexture, rect, offset, rect.size);
 }
 
-CCSpriteFrame* CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect rect, CGPoint offset, CGSize originalSize)
+bool CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect rect, CGPoint offset, CGSize originalSize)
 {
 	m_pobTexture = pobTexture;
 	pobTexture->retain();
@@ -155,7 +155,7 @@ CCSpriteFrame* CCSpriteFrame::initWithTexture(CCTexture2D *pobTexture, CGRect re
 	m_obRect = rect;
 	m_obOriginalSize = originalSize;
 
-	return this;
+	return true;
 }
 
 CCSpriteFrame::~CCSpriteFrame(void)

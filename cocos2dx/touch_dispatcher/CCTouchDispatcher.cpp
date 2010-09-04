@@ -68,7 +68,7 @@ CCTouchDispatcher* CCTouchDispatcher::getSharedDispatcher(void)
 }
 */
 
-CCTouchDispatcher* CCTouchDispatcher::init(void)
+bool CCTouchDispatcher::init(void)
 {
 	m_bDispatchEvents = true;
  	m_pTargetedHandlers = new NSMutableArray<CCTouchHandler*>(8);
@@ -87,7 +87,7 @@ CCTouchDispatcher* CCTouchDispatcher::init(void)
 	m_sHandlerHelperData[ccTouchEnded].m_type = ccTouchEnded;
 	m_sHandlerHelperData[ccTouchCancelled].m_type = ccTouchCancelled;
 
-	return this;
+	return true;
 }
 
 CCTouchDispatcher::~CCTouchDispatcher(void)

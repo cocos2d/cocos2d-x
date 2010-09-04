@@ -95,12 +95,12 @@ public:
 	/** Initializes a CCSpriteFrame with a texture, rect and offset.
 	 It is assumed that the frame was not trimmed.
 	 */
-	CCSpriteFrame* initWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset);
+	bool initWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset);
 
 	/** Initializes a CCSpriteFrame with a texture, rect, offset and originalSize.
 	 The originalSize is the size in pixels of the frame before being trimmed.
 	 */
-	CCSpriteFrame* initWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset, CGSize originalSize);
+	bool initWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset, CGSize originalSize);
 protected:
 	CGRect m_obRect;
 	CGPoint m_obOffset;
@@ -154,18 +154,18 @@ public:
 	/** Initializes a CCAnimation with a name
 	 @since v0.99.3
 	 */
-	CCAnimation* initWithName(const char *pszName);
+	bool initWithName(const char *pszName);
 
 	/** Initializes a CCAnimation with a name and frames
 	 @since v0.99.3
 	 */
-    CCAnimation* initWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
+    bool initWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
 
 	// Initializes a CCAnimation with a name and delay between frames.
-    CCAnimation* initWithName(const char *pszName, float fDelay);
+    bool initWithName(const char *pszName, float fDelay);
 
 	// Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
-	CCAnimation* initWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
+	bool initWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
 
 	// adds a frame to a CCAnimation
 	void addFrame(CCSpriteFrame *pFrame);
