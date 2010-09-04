@@ -30,23 +30,8 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include "ccxCommon.h"
 #include "selector_protocol.h"
-#include "support/data_support/uthash.h"
 
 namespace cocos2d {
-
-
-struct _ccArray;
-
-typedef struct _hashElement
-{
-	struct _ccArray             *actions;
-    NSObject					*target;
-	unsigned int				actionIndex;
-	CCAction					*currentAction;
-	bool						currentActionSalvaged;
-	bool						paused;
-	UT_hash_handle				hh;
-} tHashElement;
 
 /** CCActionManager is a singleton that manages all the actions.
  Normally you won't need to use this singleton directly. 99% of the cases you will use the CCNode interface,
@@ -58,6 +43,7 @@ typedef struct _hashElement
  
  @since v0.8
  */
+struct _hashElement;
 class CCX_DLL CCActionManager : public NSObject, public SelectorProtocol
 {
 public:
@@ -137,14 +123,14 @@ public:
 protected:
 	// declared in CCActionManager.m
 
-	void removeActionAtIndex(unsigned int uIndex, tHashElement *pElement);
-    void deleteHashElement(tHashElement *pElement);
-	void actionAllocWithHashElement(tHashElement *pElement);
+	void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
+    void deleteHashElement(struct _hashElement *pElement);
+	void actionAllocWithHashElement(struct _hashElement *pElement);
 	void update(ccTime dt);
 
 protected:
-	tHashElement	*m_pTargets;
-	tHashElement	*m_pCurrentTarget;
+	struct _hashElement	*m_pTargets;
+	struct _hashElement	*m_pCurrentTarget;
 	bool			m_bCurrentTargetSalvaged;
 };
 
