@@ -6,6 +6,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_uphone", "test_uphone\test_uphone.vcproj", "{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
+		{BA00DDF7-0F25-4C1E-B012-FA230C1F6463} = {BA00DDF7-0F25-4C1E-B012-FA230C1F6463}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_sprite", "test_sprite\test_sprite.vcproj", "{E67615DB-B3DF-4AC5-B3CF-C1E8EAE99626}"
@@ -17,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "HelloWorld\He
 	ProjectSection(ProjectDependencies) = postProject
 		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk", "chipmunk\chipmunk.vcproj", "{BA00DDF7-0F25-4C1E-B012-FA230C1F6463}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +43,10 @@ Global
 		{90D08657-A80A-41CD-8AAC-3A3DC8C33041}.Debug|Win32.Build.0 = Debug|Win32
 		{90D08657-A80A-41CD-8AAC-3A3DC8C33041}.Release|Win32.ActiveCfg = Release|Win32
 		{90D08657-A80A-41CD-8AAC-3A3DC8C33041}.Release|Win32.Build.0 = Release|Win32
+		{BA00DDF7-0F25-4C1E-B012-FA230C1F6463}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BA00DDF7-0F25-4C1E-B012-FA230C1F6463}.Debug|Win32.Build.0 = Debug|Win32
+		{BA00DDF7-0F25-4C1E-B012-FA230C1F6463}.Release|Win32.ActiveCfg = Release|Win32
+		{BA00DDF7-0F25-4C1E-B012-FA230C1F6463}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -19,6 +19,7 @@
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
 #include "TileMapTest/TileMapTest.h"
+#include "cocos2dChipmunkDemo.h"
 //#include "IntervalTest/IntervalTest.h"
 
 enum
@@ -42,6 +43,7 @@ enum
     TEST_PARALLAX,
     TEST_TILE_MAP,
 //    TEST_INTERVAL,
+    TESTS_CHIPMUNK,
     TESTS_COUNT,
 };
 
@@ -65,6 +67,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ParallaxTest",
     "TileMapTest",
 //    "IntervalTest",
+    "ChipmunkTest"
 };
 
 #endif

@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\OpenGL;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;..\cocos2dx\include;..\cocos2dx"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
+				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\OpenGL;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;..\cocos2dx\include;..\cocos2dx;..\chipmunk\include\chipmunk;..\chipmunk\Demo;.\tests"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;_USE_MATH_DEFINES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -51,6 +51,8 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				CompileAs="2"
+				DisableSpecificWarnings="4251;4244;4996"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
@@ -548,6 +550,102 @@
 					RelativePath=".\tests\TileMapTest\TileMapTest.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="ChipmunkTest"
+				>
+				<File
+					RelativePath="..\chipmunk\Demo\cocos2dChipmunkDemo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\chipmunk\Demo\cocos2dChipmunkDemo.h"
+					>
+				</File>
+				<Filter
+					Name="TestCases"
+					>
+					<File
+						RelativePath="..\chipmunk\Demo\Bounce.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\drawSpace.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\drawSpace.h"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Joints.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\LogoSmash.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\MagnetsElectric.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\OneWay.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Planet.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Player.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Plink.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Pump.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\PyramidStack.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\PyramidTopple.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Query.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Sensors.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Simple.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Springies.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\TheoJansen.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\Tumble.c"
+						>
+					</File>
+					<File
+						RelativePath="..\chipmunk\Demo\UnsafeOps.c"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<File
