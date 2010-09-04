@@ -558,8 +558,8 @@ bool CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAct
 		m_pOne = CCSequence::actionOneTwo(pAction1, CCDelayTime::actionWithDuration(d2 - d1));
 	}
 
-	pAction1->retain();
-	pAction2->retain();
+	m_pOne->retain();
+	m_pTwo->retain();
 	return true;
 }
 
