@@ -221,4 +221,14 @@ CCTexture2D * CCAtlasNode::getTexture()
 	return m_pTextureAtlas->getTexture();
 }
 
+void CCAtlasNode::setTextureAtlas(CCTextureAtlas* var)
+{
+	m_pTextureAtlas = var;
+	CCX_SAFE_RETAIN(m_pTextureAtlas);
+}
+CCTextureAtlas * CCAtlasNode::getTextureAtlas()
+{
+	return m_pTextureAtlas;
+}
+
 } // namespace   cocos2d

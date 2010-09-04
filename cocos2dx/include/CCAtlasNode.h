@@ -62,7 +62,7 @@ protected:
 
 	ccColor3B	m_tColorUnmodified;
 
-	CCTextureAtlas * m_pTextureAtlas;
+	CCX_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
 
 	// protocol variables
 	CCX_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)

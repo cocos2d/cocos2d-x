@@ -131,6 +131,15 @@ namespace cocos2d {
 			m_pTiles = NULL;
 		}
 	}
+	CCTMXTilesetInfo * CCTMXLayer::getTileSet()
+	{
+		return m_pTileSet;
+	}
+	void CCTMXLayer::setTileSet(CCTMXTilesetInfo* var)
+	{
+		m_pTileSet = var;
+		CCX_SAFE_RETAIN(m_pTileSet);
+	}
 	void CCTMXLayer::releaseMap()
 	{
 		if( m_pTiles )
