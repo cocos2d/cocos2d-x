@@ -100,7 +100,7 @@ bool CCDirector::setDierectorType(ccDirectorType obDirectorType)
 	return true;
 }
 
-CCDirector* CCDirector::init(void)
+bool CCDirector::init(void)
 {
 	CCLOG("cocos2d: %s", cocos2dVersion());
 
@@ -138,7 +138,7 @@ CCDirector* CCDirector::init(void)
 	// create autorelease pool
 	NSPoolManager::getInstance()->push();
 
-	return this;
+	return true;
 }
 
 CCDirector::~CCDirector(void)

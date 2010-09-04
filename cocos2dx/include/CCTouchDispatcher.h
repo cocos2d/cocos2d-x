@@ -91,7 +91,7 @@ class CCX_DLL CCTouchDispatcher : public NSObject, public EGLTouchDelegate
 {
 public:
 	~CCTouchDispatcher();
-	CCTouchDispatcher* init(void);
+	bool init(void);
 	CCTouchDispatcher() {}
 
 public:

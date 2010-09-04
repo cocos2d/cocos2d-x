@@ -78,7 +78,7 @@ public:
 	static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);
 
 	/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	CCAtlasNode * initWithTileFile(const char* tile, int tileWidth, int tileHeight, int itemsToRender);
+	bool initWithTileFile(const char* tile, int tileWidth, int tileHeight, int itemsToRender);
 
 	/** updates the Atlas (indexed vertex array).
 	* Shall be overriden in subclasses

@@ -132,12 +132,13 @@ CCSpeed * CCSpeed::actionWithAction(CCIntervalAction *pAction, float fRate)
 	return NULL;
 }
 
-CCSpeed * CCSpeed::initWithAction(CCIntervalAction *pAction, float fRate)
+bool CCSpeed::initWithAction(CCIntervalAction *pAction, float fRate)
 {
+	assert(pAction != NULL);
 	pAction->retain();
 	m_pOther = pAction;
 	m_fSpeed = fRate;	
-	return this;
+	return true;
 }
 
 NSObject *CCSpeed::copyWithZone(NSZone *pZone)
@@ -219,8 +220,9 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, CGRect rect)
 	return NULL;
 }
 
-CCFollow *CCFollow::initWithTarget(CCNode *pFollowedNode)
+bool CCFollow::initWithTarget(CCNode *pFollowedNode)
 {
+	assert(pFollowedNode != NULL);
 	pFollowedNode->retain();
 	m_pobFollowedNode = pFollowedNode;
 	m_bBoundarySet = false;
@@ -229,11 +231,12 @@ CCFollow *CCFollow::initWithTarget(CCNode *pFollowedNode)
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
 	m_obFullScreenSize = CGPointMake(winSize.width, winSize.height);
 	m_obHalfScreenSize = ccpMult(m_obFullScreenSize, 0.5f);
-	return this;
+	return true;
 }
 
-CCFollow *CCFollow::initWithTarget(CCNode *pFollowedNode, CGRect rect)
+bool CCFollow::initWithTarget(CCNode *pFollowedNode, CGRect rect)
 {
+	assert(pFollowedNode != NULL);
 	pFollowedNode->retain();
 	m_pobFollowedNode = pFollowedNode;
 	m_bBoundarySet = true;
@@ -265,7 +268,7 @@ CCFollow *CCFollow::initWithTarget(CCNode *pFollowedNode, CGRect rect)
 	{
 		m_bBoundaryFullyCovered = true;
 	}
-	return this;
+	return true;
 }
 NSObject *CCFollow::copyWithZone(NSZone *pZone)
 {

@@ -42,15 +42,19 @@ CCAtlasNode::~CCAtlasNode()
 
 CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-	CCAtlasNode * pAtlasNode = new CCAtlasNode();
-	pAtlasNode->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
-	pAtlasNode->autorelease();
-	return pAtlasNode;
+	CCAtlasNode * pRet = new CCAtlasNode();
+	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	CCX_SAFE_DELETE(pRet);
+	return NULL;
 }
 
-CCAtlasNode * CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
+bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-
+	assert(tile != NULL);
 	m_nItemWidth = tileWidth;
 	m_nItemHeight = tileHeight;
 
@@ -73,7 +77,7 @@ CCAtlasNode * CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int
 	this->calculateMaxItems();
 	this->calculateTexCoordsSteps();
 
-	return this;
+	return true;
 }
 
 

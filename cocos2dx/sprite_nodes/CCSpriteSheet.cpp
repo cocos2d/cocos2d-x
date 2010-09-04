@@ -73,7 +73,7 @@ CCSpriteSheet* CCSpriteSheet::spriteSheetWithFile(const char *pszFileImage)
 }
 
 // init with CCTexture2D
-CCSpriteSheet* CCSpriteSheet::initWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity)
+bool CCSpriteSheet::initWithTexture(CCTexture2D *pobTexture, unsigned int uCapacity)
 {
 	m_blendFunc.src = CC_BLEND_SRC;
 	m_blendFunc.dst = CC_BLEND_DST;
@@ -87,11 +87,11 @@ CCSpriteSheet* CCSpriteSheet::initWithTexture(CCTexture2D *pobTexture, unsigned 
 	m_pChildren = new NSMutableArray<CCNode*>();
 	m_pobDescendants = new NSMutableArray<CCSprite*>();
 
-	return this;
+	return true;
 }
 
 // init with FileImage
-CCSpriteSheet* CCSpriteSheet::initWithFile(const char *pszFileImage, unsigned int uCapacity)
+bool CCSpriteSheet::initWithFile(const char *pszFileImage, unsigned int uCapacity)
 {
 	CCTexture2D *pTexture2D = CCTextureCache::sharedTextureCache()->addImage(pszFileImage);
 	return initWithTexture(pTexture2D, uCapacity);

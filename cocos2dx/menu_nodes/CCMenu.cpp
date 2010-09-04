@@ -59,7 +59,7 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	CCMenu * CCMenu::initWithItems(CCMenuItem* item, va_list args)
+	bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
 	{
 		if (CCLayer::init())
 		{
@@ -103,10 +103,10 @@ namespace cocos2d{
 
 			m_pSelectedItem = NULL;
 			m_eState = kMenuStateWaiting;
-			return this;
+			return true;
 		}
 
-		return NULL;
+		return false;
 	}
 
 	/*

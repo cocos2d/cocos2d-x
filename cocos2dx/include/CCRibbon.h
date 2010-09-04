@@ -103,7 +103,7 @@ namespace cocos2d {
 		CCRibbonSegment(){}
 		virtual ~CCRibbonSegment();
 		char * description();
-		CCRibbonSegment * init();
+		bool init();
 		void reset();
 		void draw(float curTime, float fadeTime, ccColor4B color);
 	};

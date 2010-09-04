@@ -80,15 +80,20 @@ namespace cocos2d{
 	CCBitmapFontConfiguration * CCBitmapFontConfiguration::configurationWithFNTFile(const char *FNTfile)
 	{
 		CCBitmapFontConfiguration * pRet = new CCBitmapFontConfiguration();
-		pRet->initWithFNTfile(FNTfile);
-		pRet->autorelease();
-		return pRet;
+		if (pRet->initWithFNTfile(FNTfile))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CCX_SAFE_DELETE(pRet);
+		return NULL;
 	}
-	CCBitmapFontConfiguration * CCBitmapFontConfiguration::initWithFNTfile(const char *FNTfile)
+	bool CCBitmapFontConfiguration::initWithFNTfile(const char *FNTfile)
 	{
+		assert(FNTfile != NULL && strlen(FNTfile)!=0);
 		m_pKerningDictionary = NULL;
 		this->parseConfigFile(FNTfile);
-		return this;
+		return true;
 	}
 	CCBitmapFontConfiguration::~CCBitmapFontConfiguration()
 	{
@@ -357,8 +362,9 @@ namespace cocos2d{
 		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
-	CCBitmapFontAtlas * CCBitmapFontAtlas::initWithString(const char *theString, const char *fntFile)
+	bool CCBitmapFontAtlas::initWithString(const char *theString, const char *fntFile)
 	{	
+		assert(theString != NULL);
 		CCX_SAFE_RELEASE(m_pConfiguration);// allow re-init
 		m_pConfiguration = FNTConfigLoadFile(fntFile);
 		m_pConfiguration->retain();
@@ -372,9 +378,9 @@ namespace cocos2d{
 			m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
 			m_tAnchorPoint = ccp(0.5f, 0.5f);
 			this->setString(theString);
-			return this;
+			return true;
 		}
-		return NULL;
+		return false;
 	}
 	CCBitmapFontAtlas::~CCBitmapFontAtlas()
 	{

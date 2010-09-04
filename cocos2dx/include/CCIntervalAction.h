@@ -148,7 +148,7 @@ public:
 	CCRepeatForever(){}
 	virtual ~CCRepeatForever();
 
-	CCRepeatForever* initWithAction(CCIntervalAction *pAction);
+	bool initWithAction(CCIntervalAction *pAction);
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
 	virtual void step(ccTime dt);

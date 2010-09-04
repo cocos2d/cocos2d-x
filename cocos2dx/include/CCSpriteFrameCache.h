@@ -48,7 +48,7 @@ class CCSprite;
 class CCSpriteFrameCache : public NSObject
 {
 public:
-	CCSpriteFrameCache* init(void);
+	bool init(void);
 	~CCSpriteFrameCache(void);
 
 	/*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.

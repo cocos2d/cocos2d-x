@@ -144,7 +144,7 @@ CCSprite* CCSprite::spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect re
 	return pobSprite;
 }
 
-CCSprite* CCSprite::init(void)
+bool CCSprite::init(void)
 {
 	m_bDirty = m_bRecursiveDirty = false;
 
@@ -194,10 +194,10 @@ CCSprite* CCSprite::init(void)
 	// Atlas: TexCoords
 	setTextureRect(CGRectZero);
 
-	return this;
+	return true;
 }
 
-CCSprite* CCSprite::initWithTexture(CCTexture2D *pTexture, CGRect rect)
+bool CCSprite::initWithTexture(CCTexture2D *pTexture, CGRect rect)
 {
 	assert(pTexture != NULL);
 	// IMPORTANT: [self init] and not [super init];
@@ -205,10 +205,10 @@ CCSprite* CCSprite::initWithTexture(CCTexture2D *pTexture, CGRect rect)
 	setTexture(pTexture);
 	setTextureRect(rect);
 
-	return this;
+	return true;
 }
 
-CCSprite* CCSprite::initWithTexture(CCTexture2D *pTexture)
+bool CCSprite::initWithTexture(CCTexture2D *pTexture)
 {
 	assert(pTexture != NULL);
 
@@ -218,7 +218,7 @@ CCSprite* CCSprite::initWithTexture(CCTexture2D *pTexture)
 	return initWithTexture(pTexture, rect);
 }
 
-CCSprite* CCSprite::initWithFile(const char *pszFilename)
+bool CCSprite::initWithFile(const char *pszFilename)
 {
 	assert(pszFilename != NULL);
 
@@ -231,10 +231,10 @@ CCSprite* CCSprite::initWithFile(const char *pszFilename)
 	}
 
 	this->release();
-	return NULL;
+	return false;
 }
 
-CCSprite* CCSprite::initWithFile(const char *pszFilename, CGRect rect)
+bool CCSprite::initWithFile(const char *pszFilename, CGRect rect)
 {
 	assert(pszFilename != NULL);
 
@@ -245,20 +245,20 @@ CCSprite* CCSprite::initWithFile(const char *pszFilename, CGRect rect)
 	}
 
 	this->release();
-	return NULL;
+	return false;
 }
 
-CCSprite* CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
+bool CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
 	assert(pSpriteFrame != NULL);
 
-	CCSprite* pRet = initWithTexture(pSpriteFrame->getTexture(), pSpriteFrame->getRect());
+	bool bRet = initWithTexture(pSpriteFrame->getTexture(), pSpriteFrame->getRect());
 	setDisplayFrame(pSpriteFrame);
 
-	return pRet;
+	return bRet;
 }
 
-CCSprite* CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
+bool CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
 	assert(pszSpriteFrameName != NULL);
 
@@ -292,12 +292,13 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 }
 */
 
-CCSprite* CCSprite::initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect)
+bool CCSprite::initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect)
 {
-	CCSprite* pRet = initWithTexture(pSpriteSheet->getTexture(), rect);
+	assert(pSpriteSheet != NULL);
+	bool bRet = initWithTexture(pSpriteSheet->getTexture(), rect);
 	useSpriteSheetRender(pSpriteSheet);
 
-	return pRet;
+	return bRet;
 }
 
 CCSprite::~CCSprite(void)

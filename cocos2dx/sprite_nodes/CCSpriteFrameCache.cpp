@@ -52,10 +52,10 @@ void CCSpriteFrameCache::purgeSharedSpriteFrameCache(void)
 	CCX_SAFE_RELEASE_NULL(pSharedSpriteFrameCache);
 }
 
-CCSpriteFrameCache* CCSpriteFrameCache::init(void)
+bool CCSpriteFrameCache::init(void)
 {
 	m_pSpriteFramesMap = new map<string, CCSpriteFrame*>();
-	return this;
+	return true;
 }
 
 CCSpriteFrameCache::~CCSpriteFrameCache(void)

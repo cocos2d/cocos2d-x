@@ -47,9 +47,9 @@ namespace cocos2d{
 		/** creates a CCLabel from a fontname and font size */
 		static CCLabel * labelWithString(const char *label, const char *fontName, float fontSize);
 		/** initializes the CCLabel with a font name, alignment, dimension and font size */
-		CCLabel * initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+		bool initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
 		/** initializes the CCLabel with a font name and font size */
-		CCLabel * initWithString(const char *label, const char *fontName, float fontSize);
+		bool initWithString(const char *label, const char *fontName, float fontSize);
 
 		/** changes the string to render
 		* @warning Changing the string is as expensive as creating a new CCLabel. To obtain better performance use CCLabelAtlas

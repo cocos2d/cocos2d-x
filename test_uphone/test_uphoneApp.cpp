@@ -42,7 +42,8 @@ bool Ttest_uphoneApp::initCocos2d()
     CGSize size = CCDirector::getSharedDirector()->getWinSize();
 
     // create sprite instance
-    CCSprite * pSprite = (new CCSprite())->initWithTexture(pTexture); 
+    CCSprite * pSprite = new CCSprite();
+	pSprite->initWithTexture(pTexture); 
     pSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
     pSprite->autorelease()->retain();
 

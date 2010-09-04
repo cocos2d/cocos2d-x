@@ -87,7 +87,7 @@ public:
 	static CCTransitionScene * transitionWithDuration(ccTime t, CCScene *scene);
 
 	/** initializes a transition with duration and incoming scene */
-	virtual CCTransitionScene * initWithDuration(ccTime t,CCScene* scene);
+	virtual bool initWithDuration(ccTime t,CCScene* scene);
 
 	/** called after the transition finishes */
 	void finish(void);
@@ -117,7 +117,7 @@ public:
 	/** creates a base transition with duration and incoming scene */
 	static CCOrientedTransitionScene * transitionWithDuration(ccTime t,CCScene* scene, tOrientation orientation);
 	/** initializes a transition with duration and incoming scene */
-	virtual CCOrientedTransitionScene * initWithDuration(ccTime t,CCScene* scene,tOrientation orientation);
+	virtual bool initWithDuration(ccTime t,CCScene* scene,tOrientation orientation);
 };
 
 /** CCRotoZoomTransition:
@@ -408,9 +408,9 @@ public:
 	*/
 	static CCFadeTransition* transitionWithDuration(ccTime duration,CCScene* scene, ccColor3B color = ccBLACK);
 	/** initializes the transition with a duration and with an RGB color */
-	virtual CCFadeTransition* initWithDuration(ccTime t, CCScene*scene ,ccColor3B color);
+	virtual bool initWithDuration(ccTime t, CCScene*scene ,ccColor3B color);
 
-	virtual CCFadeTransition * initWithDuration(ccTime t,CCScene* scene); 
+	virtual bool initWithDuration(ccTime t,CCScene* scene); 
 	virtual void onEnter();
 	virtual void onExit();
 };

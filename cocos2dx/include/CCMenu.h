@@ -50,7 +50,7 @@ namespace cocos2d{
 		static CCMenu* menuWithItems(CCMenuItem* item, ...);
 
 		/** initializes a CCMenu with it's items */
-		CCMenu * initWithItems(CCMenuItem* item, va_list args);
+		bool initWithItems(CCMenuItem* item, va_list args);
 
 		/** align items vertically */
 		void alignItemsVertically();

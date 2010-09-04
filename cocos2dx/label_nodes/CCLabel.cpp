@@ -50,8 +50,9 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	CCLabel * CCLabel::initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	bool CCLabel::initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
+		assert(label != NULL);
 		if (CCSprite::init())
 		{
 			m_tDimensions = dimensions;
@@ -59,21 +60,22 @@ namespace cocos2d{
 			m_sFontName = fontName;
 			m_fFontSize = fontSize;
 			this->setString(label);
-			return this;
+			return true;
 		}
-		return NULL;
+		return false;
 	}
-	CCLabel * CCLabel::initWithString(const char *label, const char *fontName, float fontSize)
+	bool CCLabel::initWithString(const char *label, const char *fontName, float fontSize)
 	{
+		assert(label != NULL);
 		if (CCSprite::init())
 		{
 			m_tDimensions = CGSizeZero;
 			m_sFontName = fontName;
 			m_fFontSize = fontSize;
 			this->setString(label);
-			return this;
+			return true;
 		}
-		return NULL;
+		return false;
 	}
 	void CCLabel::setString(const char *label)
 	{

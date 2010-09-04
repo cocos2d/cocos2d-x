@@ -130,7 +130,7 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 	return m_bHasPremultipliedAlpha;
 }
 
-CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize)
+bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize)
 {
 	glGenTextures(1, &m_uName);
 	glBindTexture(GL_TEXTURE_2D, m_uName);
@@ -170,7 +170,7 @@ CCTexture2D * CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat
 
 	m_bHasPremultipliedAlpha = false;
 
-	return this;
+	return true;
 }
 
 
@@ -183,7 +183,7 @@ char * CCTexture2D::description(void)
 
 // implementation CCTexture2D (Image)
 
-CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
+bool CCTexture2D::initWithImage(UIImage * uiImage)
 {
 	unsigned int POTWide, POTHigh;
 
@@ -191,7 +191,7 @@ CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 	{
 		CCLOG("cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
 		this->release();
-		return NULL;
+		return false;
 	}
 
 	CCConfiguration *conf = CCConfiguration::sharedConfiguration();
@@ -218,10 +218,9 @@ CCTexture2D* CCTexture2D::initWithImage(UIImage * uiImage)
 	}
 
 	// always load premultiplied images
-	this->initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
-	return this;
+	return initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
 }
-CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
+bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
 	unsigned int					i;
 	void*					data = NULL;
@@ -364,15 +363,15 @@ CCTexture2D * CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, un
 		//CGContextRelease(context);
 		delete [] data;
 	}
-	return this;
+	return true;
 }
 
 // implementation CCTexture2D (Text)
-CCTexture2D * CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
+bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
 {
 	return initWithString(text, CGSizeMake(0,0), UITextAlignmentCenter, fontName, fontSize);
 }
-CCTexture2D * CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+bool CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 {
 	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
 
@@ -382,7 +381,7 @@ CCTexture2D * CCTexture2D::initWithString(const char *text, CGSize dimensions, U
 	initWithData(pBitData, kCCTexture2DPixelFormat_RGBA8888, (UINT)size.width, (UINT)size.height, size);
 
 	delete pBitmapDC;
-	return this;
+	return true;
 }
 
 
@@ -442,13 +441,13 @@ void CCTexture2D::drawInRect(CGRect rect)
 
 // implementation CCTexture2D (PVRTC)
 #ifdef _POWERVR_SUPPORT_
-CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length)
+bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length)
 {
 	if( !(CCConfiguration::sharedConfiguration()->isSupportsPVRTC()) )
 	{
 		CCLOG("cocos2d: WARNING: PVRTC images is not supported.");
 		this->release();
-		return NULL;
+		return false;
 	}
 
 	glGenTextures(1, &m_uName);
@@ -474,7 +473,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCData(const void *data, int level, int bp
 	m_fMaxS = 1.0f;
 	m_fMaxT = 1.0f;
 
-	return this;
+	return true;
 }
 
 CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
@@ -483,7 +482,7 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 	{
 		CCLOG("cocos2d: WARNING: PVRTC images is not supported");
 		this->release();
-		return NULL;
+		return false;
 	}
 
 	CCPVRTexture *pvr = new CCPVRTexture();
@@ -508,9 +507,9 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 	{
 		CCLOG("cocos2d: Couldn't load PVR image");
 		this->release();
-		return NULL;
+		return false;
 	}
-	return this;
+	return true;
 }
 #endif
 

@@ -223,19 +223,27 @@ void CCColorLayer::setBlendFunc(ccBlendFunc var)
 CCColorLayer * CCColorLayer::layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
 {
 	CCColorLayer * pLayer = new CCColorLayer();
-	pLayer->initWithColorWidthHeight(color,width,height);
-	pLayer->autorelease();
-	return pLayer;
+	if( pLayer && pLayer->initWithColorWidthHeight(color,width,height))
+	{
+		pLayer->autorelease();
+		return pLayer;
+	}
+	CCX_SAFE_DELETE(pLayer);
+	return NULL;
 }
 CCColorLayer * CCColorLayer::layerWithColor(ccColor4B color)
 {
 	CCColorLayer * pLayer = new CCColorLayer();
-	pLayer->initWithColor(color);
-	pLayer->autorelease();
-	return pLayer;
+	if(pLayer && pLayer->initWithColor(color))
+	{
+		pLayer->autorelease();
+		return pLayer;
+	}
+	CCX_SAFE_DELETE(pLayer);
+	return NULL;
 }
 
-CCColorLayer* CCColorLayer::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
+bool CCColorLayer::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
 {
 	// default blend function
 	m_tBlendFunc.src = CC_BLEND_SRC;
@@ -247,17 +255,20 @@ CCColorLayer* CCColorLayer::initWithColorWidthHeight(ccColor4B color, GLfloat wi
 	m_cOpacity = color.a;
 
 	for (unsigned int i=0; i<sizeof(m_pSquareVertices) / sizeof(m_pSquareVertices[0]); i++ )
+	{
 		m_pSquareVertices[i] = 0.0f;
+	}
 
 	this->updateColor();
 	this->setContentSize(CGSizeMake(width,height));
-	return this;
+	return true;
 }
 
-CCColorLayer * CCColorLayer::initWithColor(ccColor4B color)
+bool CCColorLayer::initWithColor(ccColor4B color)
 {
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
-	return this->initWithColorWidthHeight(color, s.width, s.height);
+	this->initWithColorWidthHeight(color, s.width, s.height);
+	return true;
 }
 
 /// override contentSize
@@ -349,14 +360,18 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 	va_start(args,layer);
 
 	CCMultiplexLayer * pMultiplexLayer = new CCMultiplexLayer();
-	pMultiplexLayer->initWithLayers(layer, args);
-	pMultiplexLayer->autorelease();
-
+	if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
+	{
+		pMultiplexLayer->autorelease();
+		va_end(args);
+		return pMultiplexLayer;
+	}
 	va_end(args);
-	return pMultiplexLayer;
+	CCX_SAFE_DELETE(pMultiplexLayer);
+	return NULL;
 }
 
-CCMultiplexLayer * CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
+bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 {
 	m_pLayers = new NSMutableArray<CCLayer*>(5);
 	m_pLayers->retain();
@@ -372,7 +387,7 @@ CCMultiplexLayer * CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list para
 	m_nEnabledLayer = 0;
 	this->addChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer));
 
-	return this;
+	return true;
 }
 
 

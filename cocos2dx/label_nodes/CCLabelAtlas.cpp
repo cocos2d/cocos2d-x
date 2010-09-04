@@ -37,15 +37,16 @@ namespace cocos2d{
 		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
-	CCLabelAtlas * CCLabelAtlas::initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 	{
+		assert(label != NULL);
 		if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
 		{
 			m_cMapStartChar = startCharMap;
 			this->setString(label);
-			return this;
+			return true;
 		}
-		return NULL;
+		return false;
 	}
 
 	//CCLabelAtlas - Atlas generation
