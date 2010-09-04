@@ -44,10 +44,10 @@ public:
 	inline void setInterval(ccTime fInterval){ m_fInterval = fInterval; }
 
     // Initializes a timer with a target and a selector.
-	CCTimer* initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
+	bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
 	// Initializes a timer with a target, a selector and an interval in seconds.
-    CCTimer* initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+    bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 	// triggers the timer
 	void update(ccTime dt);
@@ -193,7 +193,7 @@ public:
 private:
 	void removeHashElement(struct _hashSelectorEntry *pElement);
 	CCScheduler();
-	CCScheduler* init(void);
+	bool init(void);
 
 	// update specific
 
