@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __PLATFORM_UPHONE_UIIMAGE_H__
 
 #include <string>
-#include "Cocos2dTypes.h"
 #include "ccxCommon.h"
 
 class TBitmap;
@@ -56,7 +55,7 @@ public:
 	int CGImageGetColorSpace(void);
 
 	// convert the bitmap to 256 pixel format, and every component is 8 bits
-	UINT8* getRGBA8888Data(void);
+	unsigned char* getRGBA8888Data(void);
 
 private:
     bool loadPng(const char* strFileName);

@@ -213,16 +213,16 @@ int UIImage::CGImageGetColorSpace(void)
 	return nRet;
 }
 
-UINT8* UIImage::getRGBA8888Data(void)
+unsigned char* UIImage::getRGBA8888Data(void)
 {
-	UINT8 *pBufferRet = NULL;
+	unsigned char *pBufferRet = NULL;
 
 	do {
 		TBitmap *pBitmap;
 		int nW;
 		int nH;
-		UINT8 uR;
-		UINT8 uB;
+		unsigned char uR;
+		unsigned char uB;
 		
         if (m_pBitmap == NULL)
         {
@@ -241,7 +241,7 @@ UINT8* UIImage::getRGBA8888Data(void)
 		nH = pBitmap->GetHeight();
 
 		// alloc memory and store the bitmap data
-		pBufferRet = new UINT8[nW * nH * 4];
+		pBufferRet = new unsigned char[nW * nH * 4];
 		memcpy(pBufferRet, pBitmap->GetDataPtr(), nW * nH * 4);
 
 		// translate BGRA to RGBA
