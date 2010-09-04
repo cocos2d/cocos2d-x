@@ -780,10 +780,13 @@ void CCDisplayLinkDirector::startAnimation(void)
 
 void CCDisplayLinkDirector::preMainLoop(void)
 {
-	if (! m_bInvalid)
-	{
-		mainLoop();
-	}
+ 	if (! m_bInvalid)
+ 	{
+ 		mainLoop();
+ 
+ 		// release the objects
+ 		NSPoolManager::getInstance()->pop();
+ 	}
 }
 
 void CCDisplayLinkDirector::stopAnimation(void)

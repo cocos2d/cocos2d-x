@@ -98,7 +98,12 @@ NSPoolManager::NSPoolManager()
 
 NSPoolManager::~NSPoolManager()
 {
+	
 	finalize();
+
+	// we only release the last autorelease pool here 
+	m_pCurReleasePool = NULL;
+	m_pReleasePoolStack->removeObjectAtIndex(0);
 
 	delete m_pReleasePoolStack;
 }
@@ -133,24 +138,25 @@ void NSPoolManager::push()
 
 void NSPoolManager::pop()
 {
-	int nCount = m_pReleasePoolStack->count();
+ 	int nCount = m_pReleasePoolStack->count();
 
-	if(nCount > 0)
-	{
-		assert(m_pCurReleasePool);
+	assert(m_pCurReleasePool);
 
-		m_pCurReleasePool->clear();
-
+	m_pCurReleasePool->clear();
+ 
+  	if(nCount > 1)
+  	{
 		m_pReleasePoolStack->removeObjectAtIndex(nCount-1);
 
-		if(nCount > 1)
-		{
-			m_pCurReleasePool = m_pReleasePoolStack->getObjectAtIndex(nCount - 2);
-			return;
-		}
+// 		if(nCount > 1)
+// 		{
+// 			m_pCurReleasePool = m_pReleasePoolStack->getObjectAtIndex(nCount - 2);
+// 			return;
+// 		}
+		m_pCurReleasePool = m_pReleasePoolStack->getObjectAtIndex(nCount - 2);
 	}
 
-	m_pCurReleasePool = NULL;
+	/*m_pCurReleasePool = NULL;*/
 }
 
 void NSPoolManager::removeObject(NSObject* pObject)
