@@ -115,6 +115,7 @@ namespace cocos2d {
 		{
 			m_pProperties->clear();
 			delete m_pProperties;
+			m_pProperties = NULL;
 		}
 
 		if( m_pAtlasIndexArray )

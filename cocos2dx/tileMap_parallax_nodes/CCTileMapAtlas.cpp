@@ -72,6 +72,7 @@ namespace cocos2d {
 		{
 			m_pPosToAtlasIndex->clear();
 			delete m_pPosToAtlasIndex;
+			m_pPosToAtlasIndex = NULL;
 		}
 	}
 	void CCTileMapAtlas::releaseMap()

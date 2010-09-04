@@ -101,6 +101,7 @@ namespace cocos2d{
 		{
 			m_pProperties->clear();
 			delete m_pProperties;
+			m_pProperties = NULL;
 		}
 		if (m_pTileProperties)
 		{
@@ -115,6 +116,7 @@ namespace cocos2d{
 			}
 			m_pTileProperties->clear();
 			delete m_pTileProperties;
+			m_pTileProperties = NULL;
 		}
 	}
 	
