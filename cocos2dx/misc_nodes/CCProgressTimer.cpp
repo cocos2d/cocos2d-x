@@ -74,6 +74,7 @@ namespace cocos2d
 	bool CCProgressTimer::initWithTexture(cocos2d::CCTexture2D *pTexture)
 	{
 		m_pSprite = CCSprite::spriteWithTexture(pTexture);
+		CCX_SAFE_RETAIN(m_pSprite);
 		m_fPercentage = 0.f;
 		m_pVertexData = NULL;
         m_nVertexDataCount = 0;
