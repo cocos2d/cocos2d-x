@@ -27,12 +27,24 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "support/data_support/ccArray.h"
 #include "Cocos2dDefine.h"
+#include "support/data_support/uthash.h"
 
 namespace cocos2d {
 //
 // singleton stuff
 //
 static CCActionManager *gSharedManager = NULL;
+
+typedef struct _hashElement
+{
+	struct _ccArray             *actions;
+	NSObject					*target;
+	unsigned int				actionIndex;
+	CCAction					*currentAction;
+	bool						currentActionSalvaged;
+	bool						paused;
+	UT_hash_handle		hh;
+} tHashElement;
 
 CCActionManager* CCActionManager::getSharedManager(void)
 {
