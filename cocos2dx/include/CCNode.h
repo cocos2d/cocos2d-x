@@ -27,11 +27,13 @@ THE SOFTWARE.
 
 #include "Cocos2dDefine.h"
 #include "ccMacros.h"
-#include "CCScheduler.h"
 #include "CGAffineTransform.h"
 #include "NSMutableArray.h"
 #include "ccConfig.h"
 #include "ccxCommon.h"
+#include "selector_protocol.h"
+
+#include <gles/gl.h>
 
 namespace   cocos2d {
 class CCCamera;

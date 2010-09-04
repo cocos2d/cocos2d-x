@@ -413,6 +413,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCScheduler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCSprite.h"
 				>
 			</File>
