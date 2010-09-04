@@ -79,7 +79,6 @@ bool CCSpriteSheet::initWithTexture(CCTexture2D *pobTexture, unsigned int uCapac
 	m_blendFunc.dst = CC_BLEND_DST;
 	m_pobTextureAtlas = new CCTextureAtlas();
 	m_pobTextureAtlas->initWithTexture(pobTexture, uCapacity);
-	m_pobTextureAtlas->autorelease();
 
 	updateBlendFunc();
 
