@@ -966,10 +966,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\CCScheduler.h"
-			>
-		</File>
-		<File
 			RelativePath=".\cocos2d.cpp"
 			>
 		</File>
