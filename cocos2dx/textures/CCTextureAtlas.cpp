@@ -55,7 +55,7 @@ CCTextureAtlas::~CCTextureAtlas()
 	glDeleteBuffers(2, m_pBuffersVBO);
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 
-	m_pTexture->release();
+	CCX_SAFE_RELEASE(m_pTexture);
 }
 
 unsigned int CCTextureAtlas::getTotalQuads()
@@ -76,6 +76,7 @@ CCTexture2D* CCTextureAtlas::getTexture()
 void CCTextureAtlas::setTexture(CCTexture2D * var)
 {
 	m_pTexture = var;
+	CCX_SAFE_RETAIN(m_pTexture);
 }
 
 ccV3F_C4B_T2F_Quad* CCTextureAtlas::getQuads()
@@ -130,6 +131,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 	// retained in property
 	this->m_pTexture = texture;
+	CCX_SAFE_RETAIN(m_pTexture);
 
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)calloc( sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, 1 );
 	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
