@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCParallaxNode.h"
 #include "CGPointExtension.h"
+#include "support/data_support/ccArray.h"
 
 namespace cocos2d {
 
