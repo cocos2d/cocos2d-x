@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CGPointExtension.h"
 //#include "platform/platform.h"
 #include "CCXFileUtils.h"
+#include "support/data_support/uthash.h"
 namespace cocos2d{
 	
 	//
