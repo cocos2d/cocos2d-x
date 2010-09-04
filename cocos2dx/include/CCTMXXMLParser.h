@@ -128,11 +128,11 @@ namespace cocos2d {
 		// tiles width & height
 		CCX_SYNTHESIZE(CGSize, m_tTileSize, TileSize);
 		// Layers
-		CCX_SYNTHESIZE(NSMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
+		CCX_PROPERTY(NSMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
 		// tilesets
-		CCX_SYNTHESIZE(NSMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
+		CCX_PROPERTY(NSMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
 		// ObjectGroups
-		CCX_SYNTHESIZE(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
+		CCX_PROPERTY(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		// parent element
 		CCX_SYNTHESIZE(int, m_nParentElement, ParentElement);
 		// parent GID

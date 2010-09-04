@@ -252,17 +252,9 @@ CCGridBase* CCNode::getGrid()
 /// grid setter
 void CCNode::setGrid(CCGridBase* pGrid)
 {
-	if(m_pGrid)
-	{
-		m_pGrid->release();
-	}
-
+	CCX_SAFE_RELEASE(m_pGrid);
 	m_pGrid = pGrid;
-
-	if(m_pGrid)
-	{
-		m_pGrid->retain();
-	}
+	CCX_SAFE_RETAIN(m_pGrid);
 }
 
 

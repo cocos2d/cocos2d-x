@@ -106,7 +106,7 @@ namespace cocos2d {
 		/** map orientation */
 		CCX_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
 		/** object groups */
-		CCX_SYNTHESIZE(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
+		CCX_PROPERTY(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/** properties */
 		CCX_SYNTHESIZE(StringToStringDictionary*, m_pProperties, Properties);
 	public:

@@ -157,7 +157,33 @@ namespace cocos2d {
 			m_pTileProperties = NULL;
 		}
 	}
-
+	NSMutableArray<CCTMXLayerInfo*> * CCTMXMapInfo::getLayers()
+	{
+		return m_pLayers;
+	}
+	void CCTMXMapInfo::setLayers(NSMutableArray<CCTMXLayerInfo*>* var)
+	{
+		m_pLayers = var;
+		CCX_SAFE_RETAIN(m_pLayers);
+	}
+	NSMutableArray<CCTMXTilesetInfo*> * CCTMXMapInfo::getTilesets()
+	{
+		return m_pTilesets;
+	}
+	void CCTMXMapInfo::setTilesets(NSMutableArray<CCTMXTilesetInfo*>* var)
+	{
+		m_pTilesets = var;
+		CCX_SAFE_RETAIN(m_pTilesets);
+	}
+	NSMutableArray<CCTMXObjectGroup*> * CCTMXMapInfo::getObjectGroups()
+	{
+		return m_pObjectGroups;
+	}
+	void CCTMXMapInfo::setObjectGroups(NSMutableArray<CCTMXObjectGroup*>* var)
+	{
+		m_pObjectGroups = var;
+		CCX_SAFE_RETAIN(m_pObjectGroups);
+	}
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 	{
 		FILE *fp = NULL;

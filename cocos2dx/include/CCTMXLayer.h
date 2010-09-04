@@ -69,7 +69,7 @@ namespace cocos2d {
 		/** pointer to the map of tiles */
 		CCX_SYNTHESIZE(unsigned int*, m_pTiles, Tiles);
 		/** Tilset information for the layer */
-		CCX_SYNTHESIZE(CCTMXTilesetInfo*, m_pTileSet, TileSet);
+		CCX_PROPERTY(CCTMXTilesetInfo*, m_pTileSet, TileSet);
 		/** Layer orientation, which is the same as the map orientation */
 		CCX_SYNTHESIZE(int, m_nLayerOrientation, LayerOrientation);
 		/** properties from the layer. They can be added using Tiled */
