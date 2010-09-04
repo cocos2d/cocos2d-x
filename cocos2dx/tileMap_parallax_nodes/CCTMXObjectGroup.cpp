@@ -51,6 +51,7 @@ namespace cocos2d {
 		{
 			m_pProperties->clear();
 			delete m_pProperties;
+			m_pProperties = NULL;
 		}
 		if (m_pObjects)
 		{
@@ -61,6 +62,7 @@ namespace cocos2d {
 			}
 			m_pObjects->clear();
 			delete m_pObjects;
+			m_pObjects = NULL;
 		}
 	}
 	StringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
