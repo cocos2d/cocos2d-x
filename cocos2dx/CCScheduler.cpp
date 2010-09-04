@@ -86,19 +86,19 @@ CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSel
 	return pTimer;
 }
 
-CCTimer* CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector)
+bool CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector)
 {
     return initWithTarget(pTarget, pfnSelector, 0);
 }
 
-CCTimer* CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
+bool CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
 {
 	m_pTarget = pTarget;
 	m_pfnSelector = pfnSelector;
 	m_fElapsed = -1;
 	m_fInterval = fSeconds;
 
-	return this;
+	return true;
 }
 
 void CCTimer::update(ccTime dt)
@@ -150,7 +150,7 @@ CCScheduler* CCScheduler::getSharedScheduler(void)
 	return pSharedScheduler;
 }
 
-CCScheduler* CCScheduler::init(void)
+bool CCScheduler::init(void)
 {
 	m_fTimeScale = 1.0f;
 
@@ -169,7 +169,7 @@ CCScheduler* CCScheduler::init(void)
     m_bCurrentTargetSalvaged = false;
 	m_pHashForSelectors = NULL;
 
-	return this;
+	return true;
 }
 
 void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
