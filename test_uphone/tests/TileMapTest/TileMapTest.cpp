@@ -357,7 +357,10 @@ void TMXReadWriteTest::removeSprite(CCNode* sender)
 	////----UXLOG("removing tile: %x", sender);
 	CCNode* p = ((CCNode*)sender)->getParent();
 
-	p->removeChild((CCNode*)sender, true);
+	if (p)
+	{
+        p->removeChild((CCNode*)sender, true);
+	}	
 	
 	//////----UXLOG("atlas quantity: %d", p->textureAtlas()->totalQuads());
 }
@@ -375,7 +378,7 @@ void TMXReadWriteTest::updateCol(ccTime dt)
 
 	for( int y=0; y< s.height; y++ ) 
 	{
-		layer->setTileGID(m_gid2, ccp(3,y));
+		layer->setTileGID(m_gid2, ccp((float)3, (float)y));
 	}
 	
 	m_gid2 = (m_gid2 + 1) % 80;
@@ -391,9 +394,9 @@ void TMXReadWriteTest::repaintWithGID(ccTime dt)
 	CGSize s = layer->getLayerSize();
 	for( int x=0; x<s.width;x++) 
 	{
-		int y = s.height-1;
-		unsigned int tmpgid = layer->tileGIDAt( ccp(x,y) );
-		layer->setTileGID(tmpgid+1, ccp(x,y));
+		int y = (int)s.height-1;
+		unsigned int tmpgid = layer->tileGIDAt( ccp((float)x, (float)y) );
+		layer->setTileGID(tmpgid+1, ccp((float)x, (float)y));
 	}
 }
 
@@ -407,7 +410,7 @@ void TMXReadWriteTest::removeTiles(ccTime dt)
 
 	for( int y=0; y< s.height; y++ ) 
 	{
-		layer->removeTileAt( ccp(5,y) );
+		layer->removeTileAt( ccp(5.0, (float)y) );
 	}
 }
 
@@ -643,10 +646,10 @@ void TMXOrthoObjectsTest::draw()
 		
 		glLineWidth(3);
 		
-		ccDrawLine( ccp(x,y), ccp(x+width,y) );
-		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
-		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
-		ccDrawLine( ccp(x,y+height), ccp(x,y) );
+		ccDrawLine( ccp((float)x, (float)y), ccp((float)(x+width), (float)y) );
+		ccDrawLine( ccp((float)(x+width), (float)y), ccp((float)(x+width), (float)(y+height)) );
+		ccDrawLine( ccp((float)(x+width), (float)(y+height)), ccp((float)x, (float)(y+height)) );
+		ccDrawLine( ccp((float)x, (float)(y+height)), ccp((float)x, (float)y) );
 		
 		glLineWidth(1);
 	}
