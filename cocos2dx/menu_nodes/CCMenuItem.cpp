@@ -351,9 +351,9 @@ namespace cocos2d{
 	}
 	CCMenuItemSprite::~CCMenuItemSprite()
 	{
-		m_pNormalImage->release();
-		m_pSelectedImage->release();
-		m_pDisabledImage->release();
+		CCX_SAFE_RELEASE(m_pNormalImage);
+		CCX_SAFE_RELEASE(m_pSelectedImage);
+		CCX_SAFE_RELEASE(m_pDisabledImage);
 	}
 	void CCMenuItemSprite::draw()
 	{
