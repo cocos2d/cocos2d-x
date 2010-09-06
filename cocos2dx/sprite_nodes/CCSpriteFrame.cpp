@@ -85,9 +85,7 @@ bool CCAnimation::initWithName(const char *pszName, NSMutableArray<CCSpriteFrame
 bool CCAnimation::initWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
 {
 	m_fDelay = fDelay;
-	m_pszName = new char[strlen(pszName) + 1];
-	memcpy(m_pszName, pszName, strlen(pszName));
-	m_pszName[strlen(pszName)] = '\0';
+	m_nameStr = pszName;
 	m_pobFrames = NSMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
 
 	return true;
@@ -97,7 +95,7 @@ CCAnimation::~CCAnimation(void)
 {
 	CCLOGINFO("cocos2d, deallocing %p", this);
 	// [name_ release];
-	delete m_pszName;
+	m_nameStr.clear();
 	CCX_SAFE_RELEASE(m_pobFrames);
 }
 
