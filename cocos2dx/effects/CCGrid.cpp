@@ -42,6 +42,7 @@ namespace cocos2d
 		m_sGridSize = gridSize;
 
 		m_pTexture = pTexture;
+		CCX_SAFE_RETAIN(m_pTexture);
 		m_bIsTextureFlipped = bFlipped;
 
 		CGSize texSize = m_pTexture->getContentSize();
