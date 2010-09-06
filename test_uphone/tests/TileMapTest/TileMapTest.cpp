@@ -604,10 +604,10 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	
 	////----UXLOG("----> Iterating over all the group objets");
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
-	std::vector<StringToStringDictionary*> * objects = group->getObjects();
+	NSArray<StringToStringDictionary*> * objects = group->getObjects();
 
 	StringToStringDictionary* dict;
-	std::vector<StringToStringDictionary*>::iterator it;
+	NSArray<StringToStringDictionary*>::NSMutableArrayIterator it;
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
 		dict = (*it);//dynamic_cast<StringToStringDictionary*>(*it);
@@ -628,9 +628,9 @@ void TMXOrthoObjectsTest::draw()
 	CCTMXTiledMap* map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
-	std::vector<StringToStringDictionary*> * objects = group->getObjects();
+	NSArray<StringToStringDictionary*> * objects = group->getObjects();
 	StringToStringDictionary* dict;
-	std::vector<StringToStringDictionary*>::iterator it;
+	NSArray<StringToStringDictionary*>::NSMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -638,11 +638,14 @@ void TMXOrthoObjectsTest::draw()
 		
 		if(!dict)
 			break;
-
-		int x = atoi(valueForKey("x", dict));
-		int y = atoi(valueForKey("y", dict));//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
-		int width = atoi(valueForKey("width", dict));//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
-		int height = atoi(valueForKey("height", dict));//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+		std::string key = "x";
+		int x = dict->objectForKey(key)->toInt();
+		key = "y";
+		int y = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+		key = "width";
+		int width = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+		key = "height";
+		int height = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
 		glLineWidth(3);
 		
@@ -683,11 +686,11 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
     //UxMutableArray* objects = group->objects();
-	std::vector<StringToStringDictionary*> * objects = group->getObjects();
+	NSArray<StringToStringDictionary*> * objects = group->getObjects();
 	//UxMutableDictionary<std::string>* dict;
     StringToStringDictionary* dict;
 	//NSMutableArray<NSObject*>::NSMutableArrayIterator it;
-    std::vector<StringToStringDictionary*>::iterator it;
+    NSArray<StringToStringDictionary*>::NSMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -705,9 +708,9 @@ void TMXIsoObjectsTest::draw()
 	CCTMXTiledMap *map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
 
-	std::vector<StringToStringDictionary*> * objects = group->getObjects();
+	NSArray<StringToStringDictionary*> * objects = group->getObjects();
 	StringToStringDictionary* dict;
-	std::vector<StringToStringDictionary*>::iterator it;
+	NSArray<StringToStringDictionary*>::NSMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -715,11 +718,14 @@ void TMXIsoObjectsTest::draw()
 
 		if(!dict)
 			break;
-
-		int x = atoi(valueForKey("x", dict));//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
-		int y = atoi(valueForKey("y", dict));//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
-		int width = atoi(valueForKey("width", dict));//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
-		int height = atoi(valueForKey("height", dict));//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
+		std::string key = "x";
+		int x = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("x"))->getNumber();
+		key = "y";
+		int y = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("y"))->getNumber();
+		key = "width";
+		int width = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("width"))->getNumber();
+		key = "height";
+		int height = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
 		glLineWidth(3);
 		

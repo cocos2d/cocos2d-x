@@ -25,63 +25,62 @@ THE SOFTWARE.
 #include "ccMacros.h"
 namespace cocos2d {
 
-	const char * valueForKey(const char* key, StringToStringDictionary *dict)
-	{
-		std::string pKey = key;
-		if (!dict)
-		{
-			return "";
-		}
-		StringToStringDictionary::iterator it = dict->find(pKey);
-		return it!=dict->end() ? it->second.c_str() : "";
-	}
-
 	//implementation CCTMXObjectGroup
 
 	CCTMXObjectGroup::CCTMXObjectGroup()
 		:m_sGroupName("")
 		,m_tPositionOffset(CGPointZero)
 	{
-		m_pObjects = new std::vector<StringToStringDictionary*>();
+		m_pObjects = new NSArray<StringToStringDictionary*>();
 		m_pProperties = new StringToStringDictionary();
 	}
 	CCTMXObjectGroup::~CCTMXObjectGroup()
 	{
 		CCLOGINFO( "cocos2d: deallocing.");
-		if (m_pProperties)
-		{
-			m_pProperties->clear();
-			delete m_pProperties;
-			m_pProperties = NULL;
-		}
-		if (m_pObjects)
-		{
-			std::vector<StringToStringDictionary*>::iterator it;
-			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
-			{
-				CCX_SAFE_DELETE(*it);
-			}
-			m_pObjects->clear();
-			delete m_pObjects;
-			m_pObjects = NULL;
-		}
+		CCX_SAFE_RELEASE(m_pObjects);
+		CCX_SAFE_RELEASE(m_pProperties);
 	}
 	StringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
 	{
-		std::vector<StringToStringDictionary*>::iterator it;
-		for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
+		if (m_pObjects && m_pObjects->count() > 0)
 		{
-			if ( *it && strcmp(valueForKey("name", *it), objectName)==0 )
+			NSArray<StringToStringDictionary*>::NSMutableArrayIterator it;
+			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
 			{
-				return *it;
+				NSString *name = (*it)->objectForKey("name");
+				if (name && name->m_sString == objectName)
+				{
+					return *it;
+				}
 			}
 		}
 		// object not found
-		return NULL;
+		return NULL;	
 	}
-	const char *CCTMXObjectGroup::propertyNamed(const char* propertyName)
+	NSString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
 	{
-		return valueForKey(propertyName, m_pProperties);
+		return m_pProperties->objectForKey(propertyName);
+	}
+
+	StringToStringDictionary * CCTMXObjectGroup::getProperties()
+	{ 
+		return m_pProperties;
+	}
+	void CCTMXObjectGroup::setProperties(StringToStringDictionary * properties)
+	{
+		CCX_SAFE_RELEASE(m_pProperties);
+		m_pProperties = properties;
+		CCX_SAFE_RETAIN(m_pProperties);
+	}
+	NSArray<StringToStringDictionary*> *CCTMXObjectGroup::getObjects()
+	{
+		return m_pObjects;
+	}
+	void CCTMXObjectGroup::setObjects(NSArray<StringToStringDictionary*> * objects)
+	{
+		CCX_SAFE_RELEASE(m_pObjects);
+		m_pObjects = objects;
+		CCX_SAFE_RETAIN(m_pObjects);
 	}
 
 }// namespace cocos2d

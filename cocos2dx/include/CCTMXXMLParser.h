@@ -23,8 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
-#include "CCTMXObjectGroup.h"
 #include "NSMutableArray.h"
+#include "NSMutableDictionary.h"
+#include "CGGeometry.h"
+#include "Cocos2dDefine.h"
 namespace cocos2d {
 
 	/*
@@ -117,14 +119,10 @@ namespace cocos2d {
 	This information is obtained from the TMX file.
 
 	*/
+	class CCTMXObjectGroup;
 	class CCX_DLL CCTMXMapInfo : public NSObject
 	{	
-		// tmx filename
-	protected:	
-		std::string m_sFileName;
 	public:	
-		inline const char* getFileName(){ return m_sFileName.c_str(); }
-		inline void setFileName(const char *fileName){ m_sFileName = fileName; }
 		// map orientation
 		CCX_SYNTHESIZE(int,	m_nOrientation, Orientation);
 		// map width & height
@@ -143,16 +141,10 @@ namespace cocos2d {
 		CCX_SYNTHESIZE(unsigned int, m_uParentGID, ParentGID);
 		// layer attribs
 		CCX_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
-		// current string
-	protected:	
-		std::string m_sCurrentString;
-	public:	
-		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
-		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
 		// is stroing characters?
 		CCX_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
 		// properties
-		CCX_SYNTHESIZE(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
 	public:	
 		CCTMXMapInfo();
 		virtual ~CCTMXMapInfo();
@@ -162,12 +154,22 @@ namespace cocos2d {
 		bool initWithTMXFile(const char *tmxFile);
 		/* initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
+	
+		NSDictionary<int, StringToStringDictionary*> * getTileProperties();
+		void setTileProperties(NSDictionary<int, StringToStringDictionary*> * tileProperties);
 
-		inline std::map<int, StringToStringDictionary*>* getTileProperties(){return m_pTileProperties;}
-		inline void setTileProperties(std::map<int, StringToStringDictionary*> * var){m_pTileProperties = var;}
+		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
+		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
+		inline const char* getFileName(){ return m_sFileName.c_str(); }
+		inline void setFileName(const char *fileName){ m_sFileName = fileName; }
+
 	protected:
+		// tmx filename
+		std::string m_sFileName;
+		// current string
+		std::string m_sCurrentString;
 		// tile properties
-		std::map<int, StringToStringDictionary*>* m_pTileProperties;
+		NSDictionary<int, StringToStringDictionary*>* m_pTileProperties;
 	};
 
 }// namespace cocos2d

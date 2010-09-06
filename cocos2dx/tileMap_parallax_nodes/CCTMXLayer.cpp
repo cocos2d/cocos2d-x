@@ -65,15 +65,7 @@ namespace cocos2d {
 			m_uMinGID = layerInfo->m_uMinGID;
 			m_uMaxGID = layerInfo->m_uMaxGID;
 			m_cOpacity = layerInfo->m_cOpacity;
-			m_pProperties = new StringToStringDictionary();
-			if (layerInfo->m_pProperties && layerInfo->m_pProperties->size()>0)
-			{
-				StringToStringDictionary::iterator it;
-				for (it = layerInfo->m_pProperties->begin(); it != layerInfo->m_pProperties->end(); ++it)
-				{
-					m_pProperties->insert(StringToStringPair(it->first, it->second));
-				}
-			}
+			m_pProperties = StringToStringDictionary::dictionaryWithDictionary(layerInfo->m_pProperties);
 
 			// tilesetInfo
 			m_pTileSet = tilesetInfo;
@@ -112,12 +104,7 @@ namespace cocos2d {
 	{
 		CCX_SAFE_RELEASE(m_pTileSet);
 		CCX_SAFE_RELEASE(m_pReusedTile);
-		if (m_pProperties)
-		{
-			m_pProperties->clear();
-			delete m_pProperties;
-			m_pProperties = NULL;
-		}
+		CCX_SAFE_RELEASE(m_pProperties);
 
 		if( m_pAtlasIndexArray )
 		{
@@ -204,29 +191,32 @@ namespace cocos2d {
 	}
 
 	// CCTMXLayer - Properties
-	const char *CCTMXLayer::propertyNamed(const char *propertyName)
+	NSString *CCTMXLayer::propertyNamed(const char *propertyName)
 	{
-		return valueForKey(propertyName, m_pProperties);
+		return m_pProperties->objectForKey(propertyName);
 	}
 	void CCTMXLayer::parseInternalProperties()
 	{
 		// if cc_vertex=automatic, then tiles will be rendered using vertexz
 
-		std::string vertexz = propertyNamed("cc_vertexz");
-		if( vertexz != "" )
+		NSString *vertexz = propertyNamed("cc_vertexz");
+		if( vertexz ) 
 		{
-			if( vertexz == "automatic" )
+			if( vertexz->m_sString == "automatic" )
 			{
 				m_bUseAutomaticVertexZ = true;
 			}
 			else
 			{
-				m_nVertexZvalue = atoi(vertexz.c_str());
+				m_nVertexZvalue = vertexz->toInt();
 			}
 		}
 
-		std::string alphaFuncVal = propertyNamed("cc_alpha_func");
-		m_fAlphaFuncValue = (float)atof(alphaFuncVal.c_str());
+		NSString *alphaFuncVal = propertyNamed("cc_alpha_func");
+		if (alphaFuncVal)
+		{
+			m_fAlphaFuncValue = alphaFuncVal->toFloat();
+		}
 	}
 
 	// CCTMXLayer - obtaining tiles/gids
@@ -633,6 +623,16 @@ namespace cocos2d {
 		}
 	}
 
+	StringToStringDictionary * CCTMXLayer::getProperties()
+	{
+		return m_pProperties;
+	}
+	void CCTMXLayer::setProperties(StringToStringDictionary* var)
+	{
+		CCX_SAFE_RETAIN(m_pProperties);
+		m_pProperties = var;
+		CCX_SAFE_RELEASE(m_pProperties);
+	}
 
 }// namespace cocos2d
 

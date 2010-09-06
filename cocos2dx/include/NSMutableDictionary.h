@@ -221,6 +221,7 @@ public:
 };
 
 #define NSDictionary	NSMutableDictionary
+typedef NSDictionary<std::string, NSString*> StringToStringDictionary;
 }//namespace   cocos2d 
 
 

@@ -96,28 +96,9 @@ namespace cocos2d{
 	}
 	CCTMXTiledMap::~CCTMXTiledMap()
 	{
-		m_pObjectGroups->release();
-		if (m_pProperties)
-		{
-			m_pProperties->clear();
-			delete m_pProperties;
-			m_pProperties = NULL;
-		}
-		if (m_pTileProperties)
-		{
-			std::map<int, StringToStringDictionary*>::iterator it;
-			for (it = m_pTileProperties->begin(); it != m_pTileProperties->end(); ++it)
-			{
-				if (it->second)
-				{
-					it->second->clear();
-					delete it->second;
-				}
-			}
-			m_pTileProperties->clear();
-			delete m_pTileProperties;
-			m_pTileProperties = NULL;
-		}
+		CCX_SAFE_RELEASE(m_pProperties);
+		CCX_SAFE_RELEASE(m_pObjectGroups);
+		CCX_SAFE_RELEASE(m_pTileProperties);
 	}
 	NSMutableArray<CCTMXObjectGroup*> * CCTMXTiledMap::getObjectGroups()
 	{
@@ -128,6 +109,16 @@ namespace cocos2d{
 		CCX_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 		CCX_SAFE_RETAIN(m_pObjectGroups);
+	}
+	StringToStringDictionary * CCTMXTiledMap::getProperties()
+	{
+		return m_pProperties;
+	}
+	void CCTMXTiledMap::setProperties(StringToStringDictionary* var)
+	{
+		CCX_SAFE_RETAIN(m_pProperties);
+		m_pProperties = var;
+		CCX_SAFE_RELEASE(m_pProperties);
 	}
 	// private
 	CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
@@ -238,17 +229,15 @@ namespace cocos2d{
 	{
 		return objectGroupNamed(groupName);
 	}
-	const char * CCTMXTiledMap::propertyNamed(const char *propertyName)
+	NSString * CCTMXTiledMap::propertyNamed(const char *propertyName)
 	{
-		return valueForKey(propertyName, m_pProperties);
+		return m_pProperties->objectForKey(propertyName);
 	}
-	StringToStringDictionary * CCTMXTiledMap::propertiesForGID(int GID)
+	NSDictionary<std::string, NSString*> * CCTMXTiledMap::propertiesForGID(int GID)
 	{
-		std::map<int, StringToStringDictionary*>::iterator it;
-		it = m_pTileProperties->find(GID);
-		return it!=m_pTileProperties->end() ? it->second : NULL;
+		return m_pTileProperties->objectForKey(GID);
 	}
-
+		
 
 }// namespace cocos2d
 
