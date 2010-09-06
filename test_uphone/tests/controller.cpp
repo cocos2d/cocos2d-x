@@ -51,8 +51,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ParallaxTestScene(); break;
     case TEST_TILE_MAP:
         pScene = new TileMapTestScene(); break;
-//     case TEST_INTERVAL:
-//         pScene = new IntervalTestScene(); break;
+    case TEST_INTERVAL:
+        pScene = new IntervalTestScene(); break;
     case TESTS_CHIPMUNK:
 		CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationPortrait);
         pScene = new ChipmunkTestScene(); break;
