@@ -945,6 +945,18 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="makefile"
+			>
+			<File
+				RelativePath=".\Lib_Cocos2d_Arm_Uphone.TMK3"
+				>
+			</File>
+			<File
+				RelativePath=".\Makefile.ARM"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\CCamera.cpp"
 			>

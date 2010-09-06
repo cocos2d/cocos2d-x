@@ -233,7 +233,10 @@ void CCDirector::mainLoop(void)
 	glPopMatrix();
 
 	// swap buffers
-	m_pobOpenGLView->swapBuffers();
+	if (m_pobOpenGLView)
+    {
+        m_pobOpenGLView->swapBuffers();
+    }
 }
 
 void CCDirector::calculateDeltaTime(void)

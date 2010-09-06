@@ -22,9 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-// #define USE_EGL_UMU
+#ifdef _TRANZDA_VM_
 
-#ifndef USE_EGL_UMU
+// #define USE_EMU_TG3_EGL_LIB
+
+#ifndef USE_EMU_TG3_EGL_LIB
 // #define _EGL_SHOW_
 #include <windows.h>
 #endif
@@ -32,6 +34,13 @@ THE SOFTWARE.
 
 #include "TDC.h"
 #undef GetNextWindow        // this micro defined in winuser.h
+
+#else   // _TRANZDA_VM_
+
+#include "TG3.h"
+
+#endif	// _TRANZDA_VM_
+
 #include "TApplication.h"
 
 #include "EGL/egl.h"
@@ -43,7 +52,7 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 
-#ifndef USE_EGL_UMU
+#if ! defined(USE_EMU_TG3_EGL_LIB) && defined(_TRANZDA_VM_)
 #define WIN_CLASS_NAME      "OpenGL"
 
 static bool  s_keys[256];               // Array Used For The Keyboard Routine
@@ -51,11 +60,13 @@ static bool  s_active=TRUE;             // Window Active Flag Set To TRUE By Def
 
 EGLNativeWindowType _CreateWnd(int width, int height);
 LRESULT  CALLBACK _WndProc(HWND, UINT, WPARAM, LPARAM);
-#endif
+#endif // USE_EMU_TG3_EGL_LIB
 
 
 namespace cocos2d {
 
+#ifdef _TRANZDA_VM_
+// impliment for uPhone emulator
 class CCXEGL
 {
 public:
@@ -66,7 +77,15 @@ public:
             eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
             eglTerminate(m_eglDisplay);
         }
-#ifndef USE_EGL_UMU
+		if (EGL_NO_CONTEXT != m_eglContext)
+		{
+			eglDestroyContext(m_eglDisplay, m_eglContext);
+		}
+		if (EGL_NO_SURFACE != m_eglSurface)
+		{
+			eglDestroySurface(m_eglDisplay, m_eglSurface);
+		}
+#ifndef USE_EMU_TG3_EGL_LIB
         if (m_eglDC)
         {
             ReleaseDC( (HWND)m_eglWnd, (HDC)m_eglDC);
@@ -94,7 +113,7 @@ public:
             TRectangle rc;
             pWindow->GetClientBounds(&rc);
             CCX_BREAK_IF(! (pEGL->m_pBmp = TBitmap::Create(rc.Width(), rc.Height(), 32)));
-#ifdef USE_EGL_UMU
+#ifdef USE_EMU_TG3_EGL_LIB
             pEGL->m_eglWnd = pWindow;
             TDC dc(pWindow);
             pEGL->m_eglDC = &dc;
@@ -239,6 +258,119 @@ private:
     EGLSurface              m_eglSurface;
     EGLContext              m_eglContext;
 };
+
+#else	// _TRANZDA_VM_
+
+// impliment for uPhone device
+class CCXEGL
+{
+public:
+	~CCXEGL() 
+	{
+		if (EGL_NO_DISPLAY != m_eglDisplay)
+		{
+			eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+			eglTerminate(m_eglDisplay);
+		}
+		if (EGL_NO_CONTEXT != m_eglContext)
+		{
+			eglDestroyContext(m_eglDisplay, m_eglContext);
+		}
+		if (EGL_NO_SURFACE != m_eglSurface)
+		{
+			eglDestroySurface(m_eglDisplay, m_eglSurface);
+		}
+	}
+
+	static CCXEGL * create(TWindow * pWindow)
+	{
+		CCXEGL * pEGL = new CCXEGL;
+		Boolean bSuccess = FALSE;
+		do 
+		{
+			CCX_BREAK_IF(! pEGL);
+
+			TRectangle rc;
+			pWindow->GetClientBounds(&rc);
+			pEGL->m_eglWnd = pWindow;
+
+			EGLDisplay eglDisplay;
+			CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglDC)));
+
+			EGLint nMajor, nMinor;
+			CCX_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
+
+			const EGLint aConfigAttribs[] =
+			{
+				EGL_LEVEL,				0,
+				EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,
+				EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,
+				EGL_NATIVE_RENDERABLE,	EGL_FALSE,
+				EGL_DEPTH_SIZE,			EGL_DONT_CARE,
+				EGL_NONE,
+			};
+			EGLint iConfigs;
+			EGLConfig eglConfig;
+			CCX_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
+				|| (iConfigs != 1));
+
+			EGLSurface eglSurface;
+			eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, pEGL->m_eglWnd, NULL);
+			CCX_BREAK_IF(EGL_NO_SURFACE == eglSurface);
+
+			EGLContext eglContext;
+			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
+			CCX_BREAK_IF(EGL_NO_CONTEXT == eglContext);
+
+			CCX_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
+
+			pEGL->m_eglDisplay = eglDisplay;
+			pEGL->m_eglSurface = eglSurface;
+			pEGL->m_eglConfig  = eglConfig;
+			pEGL->m_eglContext = eglContext;
+			bSuccess = TRUE;
+		} while (0);
+
+		if (! bSuccess)
+		{
+			CCX_SAFE_DELETE(pEGL);   
+		}
+
+		return pEGL;
+	}
+
+	void resizeSurface()
+	{
+		// do nothing on uPhone device, because of TWindow can't change size
+	}
+
+	void swapBuffers()
+	{
+		if (EGL_NO_DISPLAY != m_eglDisplay)
+		{
+			eglSwapBuffers(m_eglDisplay, m_eglSurface);
+		}
+	}
+private:
+	CCXEGL() 
+		: m_eglWnd(NULL)
+		, m_eglDC(EGL_DEFAULT_DISPLAY)
+		, m_eglDisplay(EGL_NO_DISPLAY)
+		, m_eglConfig(0)
+		, m_eglSurface(EGL_NO_SURFACE)
+		, m_eglContext(EGL_NO_CONTEXT)
+	{}
+
+	EGLNativeWindowType     m_eglWnd;
+	EGLNativeDisplayType    m_eglDC;
+	EGLDisplay              m_eglDisplay;
+	EGLConfig               m_eglConfig;
+	EGLSurface              m_eglSurface;
+	EGLContext              m_eglContext;
+};
+
+#endif	// _TRANZDA_VM_
+
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_bCaptured(false)
@@ -385,7 +517,7 @@ void CCXEGLView::swapBuffers()
 //////////////////////////////////////////////////////////////////////////
 // static function
 //////////////////////////////////////////////////////////////////////////
-#ifndef USE_EGL_UMU
+#if  defined(_TRANZDA_VM_) && ! defined(USE_EMU_TG3_EGL_LIB)
 static EGLNativeWindowType _CreateWnd(int width, int height)
 {
     WNDCLASS  wc;                  // Windows Class Structure
