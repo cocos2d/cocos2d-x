@@ -253,7 +253,9 @@ namespace cocos2d {
 					}
 				}
 				NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
+				
 				CCX_BREAK_IF(!m_pTexture);
+				this->m_pTexture->retain();
 				bRet = true;
 			}
 		} while (0);
