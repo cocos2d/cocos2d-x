@@ -22,8 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+// pre configure
 #ifdef _TRANZDA_VM_     // under uphone emulator
     #define CCX_PLATFORM_UPHONE
 #else
-    #error "no platform flag defined!!"
+//     #error  "no platform macro defined!"
+#endif
+
+// user configure
+
+#if ! defined(CCX_PLATFORM_UPHONE) && defined(CCX_UNDER_UPHONE)
+	#define CCX_PLATFORM_UPHONE	// under uphone
+#endif
+
+
+// post configure
+
+#if ! defined(CCX_PLATFORM_UPHONE)
+#error "no platform macro defined!"
 #endif

@@ -12,11 +12,13 @@ OUTPUT_FILENAME =  libcocos2d.so
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
-DEFINES += -D_MY_MARCO_
+DEFINES += -DCCX_UNDER_UPHONE \
+          -D__TG3_PURE_DLL__ -D_ENABLE_CHECK_POINT_
 INCLUDE_PATH += -I. -I./Res \
                -I./ -I./Res -I./include -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2 \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libpng
+LIBS +=  -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2 -lz -lxml2 -lpng14 -lImageToolKit
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -34,6 +36,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCDrawingPrimitives.o \
 	$(OBJECTS_DIR)/CCScheduler.o \
 	$(OBJECTS_DIR)/cocos2d.o \
+	$(OBJECTS_DIR)/profile.o \
 	$(OBJECTS_DIR)/CCAction.o \
 	$(OBJECTS_DIR)/CCActionManager.o \
 	$(OBJECTS_DIR)/CCCameraAction.o \
@@ -139,6 +142,9 @@ $(OBJECTS_DIR)/CCScheduler.o : ./CCScheduler.cpp
 
 $(OBJECTS_DIR)/cocos2d.o : ./cocos2d.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cocos2d.o ./cocos2d.cpp
+
+$(OBJECTS_DIR)/profile.o : ./profile.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/profile.o ./profile.cpp
 
 $(OBJECTS_DIR)/CCAction.o : ./actions/CCAction.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAction.o ./actions/CCAction.cpp

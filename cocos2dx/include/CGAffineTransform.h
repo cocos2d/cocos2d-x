@@ -33,14 +33,13 @@ struct CGAffineTransform {
   CGFloat tx, ty;
 };
 
-
-inline CGAffineTransform __CGAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
+CGAffineTransform __CGAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
 #define CGAffineTransformMake __CGAffineTransformMake
 
-inline CGPoint __CGPointApplyAffineTransform(CGPoint point, CGAffineTransform t);
+CGPoint __CGPointApplyAffineTransform(CGPoint point, CGAffineTransform t);
 #define CGPointApplyAffineTransform __CGPointApplyAffineTransform
 
-inline CGSize __CGSizeApplyAffineTransform(CGSize size, CGAffineTransform t);
+CGSize __CGSizeApplyAffineTransform(CGSize size, CGAffineTransform t);
 #define CGSizeApplyAffineTransform __CGSizeApplyAffineTransform
 
 CGAffineTransform CGAffineTransformMakeIdentity();

@@ -26,6 +26,8 @@ THE SOFTWARE.
 #include <math.h>
 
 using namespace std;
+
+
 namespace   cocos2d {
 
 CGAffineTransform __CGAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty)
