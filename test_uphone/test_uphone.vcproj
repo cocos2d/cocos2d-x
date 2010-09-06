@@ -647,6 +647,18 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="IntervalTest"
+				>
+				<File
+					RelativePath=".\tests\IntervalTest\IntervalTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\IntervalTest\IntervalTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
