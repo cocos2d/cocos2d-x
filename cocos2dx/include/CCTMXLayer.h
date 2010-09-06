@@ -61,7 +61,11 @@ namespace cocos2d {
 	class CCX_DLL CCTMXLayer : public CCSpriteSheet
 	{
 		/** name of the layer */
-		CCX_SYNTHESIZE(std::string, m_sLayerName, LayerName);
+	protected:
+		std::string m_sLayerName;
+	public:
+		inline const char* getLayerName(){ return m_sLayerName.c_str(); }
+		inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
 		/** size of the layer in tiles */
 		CCX_SYNTHESIZE(CGSize, m_tLayerSize, LayerSize);
 		/** size of the map's tile (could be differnt from the tile's size) */

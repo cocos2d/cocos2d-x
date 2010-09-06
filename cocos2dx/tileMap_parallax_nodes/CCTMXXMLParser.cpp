@@ -107,7 +107,7 @@ namespace cocos2d {
 	{
 		m_pTilesets = new NSMutableArray<CCTMXTilesetInfo*>();
 		m_pLayers = new NSMutableArray<CCTMXLayerInfo*>();
-		m_sFilename = CCFileUtils::fullPathFromRelativePath(tmxFile);
+		m_sFileName = CCFileUtils::fullPathFromRelativePath(tmxFile);
 		m_pObjectGroups = new NSMutableArray<CCTMXObjectGroup*>();
 		m_pProperties = new StringToStringDictionary();
 		m_pTileProperties = new std::map<int, StringToStringDictionary*>();
@@ -118,7 +118,7 @@ namespace cocos2d {
 		m_nLayerAttribs = TMXLayerAttribNone;
 		m_nParentElement = TMXPropertyNone;
 
-		return parseXMLFile(m_sFilename.c_str());
+		return parseXMLFile(m_sFileName.c_str());
 	}
 	CCTMXMapInfo::CCTMXMapInfo()
 		:m_bStoringCharacters(false)
@@ -577,7 +577,7 @@ namespace cocos2d {
 		{
 			std::string currentString = pTMXMapInfo->getCurrentString();
 			currentString += pText;
-			pTMXMapInfo->setCurrentString(currentString);
+			pTMXMapInfo->setCurrentString(currentString.c_str());
 		}
 	}
 

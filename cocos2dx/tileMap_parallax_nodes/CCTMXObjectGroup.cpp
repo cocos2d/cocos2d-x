@@ -25,13 +25,14 @@ THE SOFTWARE.
 #include "ccMacros.h"
 namespace cocos2d {
 
-	const char * valueForKey(std::string key, StringToStringDictionary *dict)
+	const char * valueForKey(const char* key, StringToStringDictionary *dict)
 	{
+		std::string pKey = key;
 		if (!dict)
 		{
 			return "";
 		}
-		StringToStringDictionary::iterator it = dict->find(key);
+		StringToStringDictionary::iterator it = dict->find(pKey);
 		return it!=dict->end() ? it->second.c_str() : "";
 	}
 
