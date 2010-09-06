@@ -35,7 +35,7 @@ namespace cocos2d {
 	typedef std::map<std::string, std::string> StringToStringDictionary;
 	typedef std::pair<std::string, std::string> StringToStringPair;
 	/** only used in StringToStringDictionary, return "" if not found*/
-	CCX_DLL const char * valueForKey(std::string key, StringToStringDictionary *dict);
+	CCX_DLL const char * valueForKey(const char* key, StringToStringDictionary *dict);
 
 	/** CCTMXObjectGroup represents the TMX object group.
 	@since v0.99.0
@@ -43,7 +43,11 @@ namespace cocos2d {
 	class CCX_DLL CCTMXObjectGroup : public NSObject
 	{
 		/** name of the group */
-		CCX_SYNTHESIZE(std::string, m_sGroupName, GroupName);
+	protected:	
+		std::string m_sGroupName;
+	public:	
+		inline const char* getGroupName(){ return m_sGroupName.c_str(); }
+		inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
 		/** offset position of child objects */
 		CCX_SYNTHESIZE(CGPoint, m_tPositionOffset, PositionOffset);
 		/** array of the objects */

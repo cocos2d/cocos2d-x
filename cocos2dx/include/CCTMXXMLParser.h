@@ -120,7 +120,11 @@ namespace cocos2d {
 	class CCX_DLL CCTMXMapInfo : public NSObject
 	{	
 		// tmx filename
-		CCX_SYNTHESIZE(std::string, m_sFilename, Filename);
+	protected:	
+		std::string m_sFileName;
+	public:	
+		inline const char* getFileName(){ return m_sFileName.c_str(); }
+		inline void setFileName(const char *fileName){ m_sFileName = fileName; }
 		// map orientation
 		CCX_SYNTHESIZE(int,	m_nOrientation, Orientation);
 		// map width & height
@@ -140,7 +144,11 @@ namespace cocos2d {
 		// layer attribs
 		CCX_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
 		// current string
-		CCX_SYNTHESIZE(std::string, m_sCurrentString, CurrentString);
+	protected:	
+		std::string m_sCurrentString;
+	public:	
+		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
+		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
 		// is stroing characters?
 		CCX_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
 		// properties
