@@ -130,7 +130,6 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, NSMutableArray
  	}
 
 	pArray->insertObjectAtIndex(pHandler, u);
-	pHandler->retain();
 }
 
 void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPriority)
