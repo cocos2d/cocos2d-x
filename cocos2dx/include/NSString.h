@@ -35,10 +35,18 @@ namespace cocos2d {
 		NSString()
 			:m_sString("")
 		{}
+		NSString(const char * str)
+		{
+			m_sString = str;
+		}
 		virtual ~NSString(){ m_sString.clear(); }
 		int toInt()
 		{
 			return atoi(m_sString.c_str());
+		}
+		unsigned int toUInt()
+		{
+			return (unsigned int)atoi(m_sString.c_str());
 		}
 		float toFloat()
 		{

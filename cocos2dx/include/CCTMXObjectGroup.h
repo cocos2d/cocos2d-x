@@ -23,48 +23,42 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCTMX_OBJECT_GROUP_H__
 #define __CCTMX_OBJECT_GROUP_H__
-#include <string>
-#include <vector>
-#include <map>
 #include "Cocos2dDefine.h"
 #include "CGGeometry.h"
 #include "NSString.h"
+#include "NSMutableArray.h"
+#include "NSMutableDictionary.h"
 
 namespace cocos2d {
-
-	typedef std::map<std::string, std::string> StringToStringDictionary;
-	typedef std::pair<std::string, std::string> StringToStringPair;
-	/** only used in StringToStringDictionary, return "" if not found*/
-	CCX_DLL const char * valueForKey(const char* key, StringToStringDictionary *dict);
 
 	/** CCTMXObjectGroup represents the TMX object group.
 	@since v0.99.0
 	*/
 	class CCX_DLL CCTMXObjectGroup : public NSObject
 	{
-		/** name of the group */
-	protected:	
-		std::string m_sGroupName;
-	public:	
-		inline const char* getGroupName(){ return m_sGroupName.c_str(); }
-		inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
 		/** offset position of child objects */
 		CCX_SYNTHESIZE(CGPoint, m_tPositionOffset, PositionOffset);
-		/** array of the objects */
-		CCX_SYNTHESIZE(std::vector<StringToStringDictionary*>*, m_pObjects, Objects);
 		/** list of properties stored in a dictionary */
-		CCX_SYNTHESIZE(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
+		/** array of the objects */
+		CCX_PROPERTY(NSArray<StringToStringDictionary*>*, m_pObjects, Objects);
 	public:
 		CCTMXObjectGroup();
 		virtual ~CCTMXObjectGroup();
 
+		inline const char* getGroupName(){ return m_sGroupName.c_str(); }
+		inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
+
 		/** return the value for the specific property name */
-		const char *propertyNamed(const char* propertyName);
+		NSString *propertyNamed(const char* propertyName);
 
 		/** return the dictionary for the specific object name.
 		It will return the 1st object found on the array for the given name.
 		*/
 		StringToStringDictionary *objectNamed(const char *objectName);
+	protected:	
+		/** name of the group */
+		std::string m_sGroupName;
 	};
 
 }// namespace cocos2d

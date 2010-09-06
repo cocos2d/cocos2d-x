@@ -60,12 +60,6 @@ namespace cocos2d {
 	*/
 	class CCX_DLL CCTMXLayer : public CCSpriteSheet
 	{
-		/** name of the layer */
-	protected:
-		std::string m_sLayerName;
-	public:
-		inline const char* getLayerName(){ return m_sLayerName.c_str(); }
-		inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
 		/** size of the layer in tiles */
 		CCX_SYNTHESIZE(CGSize, m_tLayerSize, LayerSize);
 		/** size of the map's tile (could be differnt from the tile's size) */
@@ -77,7 +71,7 @@ namespace cocos2d {
 		/** Layer orientation, which is the same as the map orientation */
 		CCX_SYNTHESIZE(int, m_nLayerOrientation, LayerOrientation);
 		/** properties from the layer. They can be added using Tiled */
-		CCX_SYNTHESIZE(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXLayer();
 		virtual ~CCTMXLayer();
@@ -120,7 +114,7 @@ namespace cocos2d {
 		CGPoint positionAt(CGPoint tileCoordinate);
 
 		/** return the value for the specific property name */
-		const char *propertyNamed(const char *propertyName);
+		NSString *propertyNamed(const char *propertyName);
 
 		/** Creates the tiles */
 		void setupTiles();
@@ -132,6 +126,9 @@ namespace cocos2d {
 		// super method
 		void removeChild(CCNode* child, bool cleanup);
 		void draw();
+
+		inline const char* getLayerName(){ return m_sLayerName.c_str(); }
+		inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
 	private:
 		CGPoint positionForIsoAt(CGPoint pos);
 		CGPoint positionForOrthoAt(CGPoint pos);
@@ -152,6 +149,9 @@ namespace cocos2d {
 		unsigned int atlasIndexForExistantZ(unsigned int z);
 		unsigned int atlasIndexForNewZ(int z);
 	protected:
+		/** name of the layer */
+		std::string m_sLayerName;
+
 		unsigned char		m_cOpacity; // TMX Layer supports opacity
 
 		unsigned int		m_uMinGID;

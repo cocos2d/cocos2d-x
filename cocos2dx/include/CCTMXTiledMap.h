@@ -108,7 +108,7 @@ namespace cocos2d {
 		/** object groups */
 		CCX_PROPERTY(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/** properties */
-		CCX_SYNTHESIZE(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXTiledMap();
 		virtual ~CCTMXTiledMap();
@@ -131,10 +131,10 @@ namespace cocos2d {
 		CCTMXObjectGroup* groupNamed(const char *groupName);
 
 		/** return the value for the specific property name */
-		const char *propertyNamed(const char *propertyName);
+		NSString *propertyNamed(const char *propertyName);
 
 		/** return properties dictionary for tile GID */
-		StringToStringDictionary *propertiesForGID(int GID);
+		NSDictionary<std::string, NSString*> *propertiesForGID(int GID);
 
 	private:
  		CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
@@ -142,7 +142,7 @@ namespace cocos2d {
 
 	protected:
 		// tile properties
-		std::map<int, StringToStringDictionary*> *m_pTileProperties;
+		NSDictionary<int, StringToStringDictionary*> *m_pTileProperties;
 
 	};
 
