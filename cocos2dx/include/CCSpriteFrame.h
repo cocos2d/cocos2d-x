@@ -112,7 +112,7 @@ protected:
 class CCX_DLL CCAnimation : public NSObject
 {
 protected:
-	char *m_pszName;
+	std::string m_nameStr;
 	float m_fDelay;
 	NSMutableArray<CCSpriteFrame*> *m_pobFrames;
 
@@ -120,18 +120,8 @@ public:
 	// attributes
 
 	// name of the animation
-	inline char* getName(void) { return m_pszName; }
-	inline void setName(const char *pszName)
-	{
-		if (m_pszName)
-		{
-			delete m_pszName;
-		}
-
-		m_pszName = new char[strlen(pszName) + 1];
-		memcpy(m_pszName, pszName, strlen(pszName));
-		m_pszName[strlen(pszName)] = '\0';
-	}
+	inline const char* getName(void) { return m_nameStr.c_str(); }
+	inline void setName(const char *pszName){ m_nameStr = pszName; }
 
 	// delay between frames in seconds
 	inline float getDelay(void) { return m_fDelay; }
