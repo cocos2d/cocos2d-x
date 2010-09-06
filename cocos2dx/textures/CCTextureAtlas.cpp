@@ -75,6 +75,7 @@ CCTexture2D* CCTextureAtlas::getTexture()
 
 void CCTextureAtlas::setTexture(CCTexture2D * var)
 {
+	CCX_SAFE_RELEASE(m_pTexture);
 	m_pTexture = var;
 	CCX_SAFE_RETAIN(m_pTexture);
 }
@@ -130,6 +131,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 	m_uTotalQuads = 0;
 
 	// retained in property
+	CCX_SAFE_RELEASE(m_pTexture);
 	this->m_pTexture = texture;
 	CCX_SAFE_RETAIN(m_pTexture);
 
