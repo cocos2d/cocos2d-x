@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <map>
 #include "Cocos2dDefine.h"
 #include "CGGeometry.h"
-#include "NSObject.h"
+#include "NSString.h"
 
 namespace cocos2d {
 

@@ -545,6 +545,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\NSString.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\NSZone.h"
 				>
 			</File>
