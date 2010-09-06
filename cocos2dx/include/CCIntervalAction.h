@@ -583,7 +583,7 @@ public:
 	inline void setAnimation(CCAnimation *pAnimation) 
 	{
 		m_pAnimation = pAnimation;
-		pAnimation->retain();
+		CCX_SAFE_RETAIN(m_pAnimation);
 	}
 
 	/** initializes the action with an Animation and will restore the original frame when the animtion is over */

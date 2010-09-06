@@ -86,7 +86,7 @@ namespace cocos2d {
 		m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
 		m_pTexture = CCTextureCache::sharedTextureCache()->addImage(path);
-		m_pTexture->retain();
+		CCX_SAFE_RETAIN(m_pTexture);
 
 		/* default texture parameter */
 		ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
@@ -283,7 +283,7 @@ namespace cocos2d {
 	// Ribbon - CocosNodeTexture protocol
 	void CCRibbon::setTexture(CCTexture2D* var)
 	{
-		m_pTexture->release();
+		CCX_SAFE_RELEASE(m_pTexture);
 		m_pTexture = var;
 		CCX_SAFE_RETAIN(m_pTexture);
 		this->setContentSize(m_pTexture->getContentSize());

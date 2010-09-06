@@ -1801,8 +1801,8 @@ bool CCAnimate::initWithAnimation(cocos2d::CCAnimation *pAnimation, bool bRestor
 	if (CCIntervalAction::initWithDuration(pAnimation->getFrames()->count() * pAnimation->getDelay()))
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
-        m_pAnimation = pAnimation;
-		m_pAnimation->retain();
+       m_pAnimation = pAnimation;
+		CCX_SAFE_RETAIN(m_pAnimation);
 		m_pOrigFrame = NULL;
 
 		return true;
@@ -1828,7 +1828,7 @@ bool CCAnimate::initWithDuration(cocos2d::ccTime duration, cocos2d::CCAnimation 
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
 		m_pAnimation = pAnimation;
-		m_pAnimation->retain();
+		CCX_SAFE_RETAIN(m_pAnimation);
 		m_pOrigFrame = NULL;
 
 		return true;

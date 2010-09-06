@@ -123,7 +123,7 @@ namespace cocos2d
 			CCX_SAFE_RELEASE(m_pSprite);
 
 			m_pSprite = pSprite;
-			pSprite->retain();
+			CCX_SAFE_RETAIN(m_pSprite);
 
 			//	Everytime we set a new sprite, we free the current vertex data
 			if (m_pVertexData)
