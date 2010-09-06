@@ -70,11 +70,9 @@ public:
 	inline CCTexture2D* getTexture(void) { return m_pobTexture; }
 	inline void setTexture(CCTexture2D* pobTexture)
 	{
+		CCX_SAFE_RELEASE(m_pobTexture);
 		m_pobTexture = pobTexture;
-		if (pobTexture)
-		{
-			pobTexture->retain();
-		}
+		CCX_SAFE_RETAIN(m_pobTexture);
 	}
 
 public:
