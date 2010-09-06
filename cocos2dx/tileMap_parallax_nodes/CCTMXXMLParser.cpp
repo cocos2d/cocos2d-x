@@ -163,6 +163,7 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setLayers(NSMutableArray<CCTMXLayerInfo*>* var)
 	{
+		CCX_SAFE_RELEASE(m_pLayers);
 		m_pLayers = var;
 		CCX_SAFE_RETAIN(m_pLayers);
 	}
@@ -172,6 +173,7 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setTilesets(NSMutableArray<CCTMXTilesetInfo*>* var)
 	{
+		CCX_SAFE_RELEASE(m_pTilesets);
 		m_pTilesets = var;
 		CCX_SAFE_RETAIN(m_pTilesets);
 	}
@@ -181,6 +183,7 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setObjectGroups(NSMutableArray<CCTMXObjectGroup*>* var)
 	{
+		CCX_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 		CCX_SAFE_RETAIN(m_pObjectGroups);
 	}
