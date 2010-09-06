@@ -83,7 +83,6 @@ CCTextureCache::~CCTextureCache()
 	CCX_SAFE_RELEASE(m_pTextures);
 	CCX_SAFE_DELETE(m_pDictLock);
 	CCX_SAFE_DELETE(m_pContextLock);
-	CCX_SAFE_RELEASE(g_sharedTextureCache);
 /// @todo release
 // 	[auxEAGLcontext release];
 // 	auxEAGLcontext = nil;
@@ -91,7 +90,7 @@ CCTextureCache::~CCTextureCache()
 
 void CCTextureCache::purgeSharedTextureCache()
 {
-	CCX_SAFE_RELEASE(g_sharedTextureCache);
+	CCX_SAFE_RELEASE_NULL(g_sharedTextureCache);
 }
 
 
