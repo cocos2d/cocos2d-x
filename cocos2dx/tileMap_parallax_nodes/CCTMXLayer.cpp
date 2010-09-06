@@ -137,6 +137,7 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::setTileSet(CCTMXTilesetInfo* var)
 	{
+        CCX_SAFE_RELEASE(m_pTileSet);
 		m_pTileSet = var;
 		CCX_SAFE_RETAIN(m_pTileSet);
 	}
