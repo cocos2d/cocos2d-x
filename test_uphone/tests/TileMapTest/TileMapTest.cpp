@@ -816,6 +816,12 @@ TMXIsoZorder::~TMXIsoZorder()
 	m_tamara->release();
 }
 
+void TMXIsoZorder::onExit()
+{
+    unschedule(schedule_selector(TMXIsoZorder::repositionSprite));
+	TileDemo::onExit();
+}
+
 void TMXIsoZorder::repositionSprite(ccTime dt)
 {
 	CGPoint p = m_tamara->getPosition();
@@ -1237,6 +1243,7 @@ void TileDemo::restartCallback(NSObject* pSender)
 	s->addChild(restartTileMapAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+	s->release();
 }
 
 void TileDemo::nextCallback(NSObject* pSender)
@@ -1244,6 +1251,7 @@ void TileDemo::nextCallback(NSObject* pSender)
 	CCScene* s = new TileMapTestScene();
 	s->addChild( nextTileMapAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+	s->release();
 }
 
 void TileDemo::backCallback(NSObject* pSender)
@@ -1251,6 +1259,7 @@ void TileDemo::backCallback(NSObject* pSender)
 	CCScene* s = new TileMapTestScene();
 	s->addChild( backTileMapAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+	s->release();
 } 
 
 void TileDemo::registerWithTouchDispatcher()

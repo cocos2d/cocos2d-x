@@ -11,7 +11,7 @@ protected:
 
 public:
 	TileDemo(void);
-	~TileDemo(void);
+	virtual ~TileDemo(void);
 
 	virtual std::string title();
 	virtual std::string subtitle();
@@ -170,6 +170,7 @@ public:
 	TMXIsoZorder(void);
 	virtual std::string title();
 	virtual std::string subtitle();
+	virtual void onExit(void);
 
 	~TMXIsoZorder();
 	void repositionSprite(ccTime dt);
