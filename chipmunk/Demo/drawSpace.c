@@ -430,10 +430,14 @@ static void
 drawCollisions(void *ptr, void *data)
 {
 	cpArbiter *arb = (cpArbiter *)ptr;
+	CGPoint *aPoints = new CGPoint[arb->numContacts];
+
 	for(int i=0; i<arb->numContacts; i++){
-		cpVect v = arb->contacts[i].p;
-		ccDrawPoint( ccp(v.x, v.y) );
+		aPoints[i] = CGPoint(arb->contacts[i].p.x, arb->contacts[i].p.y);
 	}
+
+	ccDrawPoints( aPoints, arb->numContacts );
+	delete aPoints;
 }
 
 // copied from cpSpaceHash.c
@@ -502,10 +506,17 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 
 		glPointSize(options->bodyPointSize);
 		glColor4f(LINE_COLOR);
+
+		CGPoint *aPoints = new CGPoint[bodies->num];
+
 		for(int i=0, count = bodies->num; i<count; i++){
 			cpBody *body = (cpBody *)bodies->arr[i];
-			ccDrawPoint( ccp(body->p.x, body->p.y) );
+
+			aPoints[i] = CGPoint(body->p.x, body->p.y);
 		}
+
+		ccDrawPoints( aPoints, bodies->num );
+		delete aPoints;
 	}
 
 	if(options->collisionPointSize){

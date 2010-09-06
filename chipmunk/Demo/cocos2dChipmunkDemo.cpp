@@ -402,7 +402,6 @@ glutStuff(int argc, const char *argv[])
 //	printf("Time(%c) = %ldms\n", index + 'a', millisecs);
 //}
 
-#if 1
 void ChipmunkTestScene::runThisTest()
 {
     // create layer
@@ -428,7 +427,7 @@ void ChipmunkTestLayer::init()
     runDemo(demos[firstDemoIndex]);
 
     label = CCLabel::labelWithString(demos[firstDemoIndex]->name, "Arial", 32);
-    label->setPosition( CGPointMake(0, -300) );
+    label->setPosition( ccp(0, -300) );
     label->setColor(ccBLACK);
     addChild(label);
 
@@ -485,144 +484,3 @@ void ChipmunkTestLayer::ccTouchesEnded(NSSet* touches, UIEvent *event)
     label->setString( demos[demoIndex]->name );
 }
 
-#else
-#pragma mark -
-#pragma mark MainLayer
-
-@implementation MainLayer
--(id) init
-{
-	if( (self=[super init]) ) {
-		self.isTouchEnabled = YES;
-		cpInitChipmunk();	
-		mouseBody = cpBodyNew(INFINITY, INFINITY);
-
-		runDemo(demos[firstDemoIndex]);
-		
-		label = [CCLabel labelWithString:[NSString stringWithUTF8String:demos[firstDemoIndex]->name ] fontName:@"Marker Felt" fontSize:32];
-		label.position = ccp(0,-300);
-		label.color = ccBLACK;
-		[self addChild:label];
-		
-		[self schedule: @selector(step:)];
-	}
-	
-	return self;
-}
-
--(void) onEnter
-{
-	[super onEnter];
-	
-	glClearColor(1,1,1,1);
-	float factor = 1.0f;
-	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
-	glPointSize(3.0f);
-    glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
-    glLineWidth(1.5f);
-}
-
--(void) step: (ccTime) dt
-{
-	display();
-}
-
--(void) draw
-{
-	drawSpace(space, currDemo->drawOptions ? currDemo->drawOptions : &options);
-}
-
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	
-	demoIndex++;
-	if( demoIndex >= maxDemos )
-		demoIndex = 0;
-	
-	runDemo(demos[demoIndex]);
-	
-	[label setString: [NSString stringWithUTF8String:demos[demoIndex]->name ] ];	
-}
-@end
-
-#pragma mark -
-#pragma mark AppController
-
-@implementation AppController
-- (void) applicationDidFinishLaunching:(UIApplication*)application
-{
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. Attaches to the main window
-	// 3. Creates Display Link Director
-	// 3a. If it fails, it will use an NSTimer director
-	// 4. It will try to run at 60 FPS
-	// 4. Display FPS: NO
-	// 5. Device orientation: Portrait
-	// 6. Connect the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
-	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Turn on display FPS
-	[director setDisplayFPS:YES];
-	
-	CCScene *scene = [CCScene node];
-	
-	MainLayer * mainLayer =[MainLayer node];
-	
-	[scene addChild: mainLayer];
-		
-	[director runWithScene: scene];
-}
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window release];
-	[super dealloc];
-}
-
-
-@end
-
-
-int main(int argc, char *argv[]) {
-	
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	UIApplicationMain(argc, argv, nil, @"AppController");
-	[pool release];
-	return 0;
-}
-#endif
