@@ -125,6 +125,7 @@ namespace cocos2d{
 	}
 	void CCTMXTiledMap::setObjectGroups(NSMutableArray<CCTMXObjectGroup*>* var)
 	{
+		CCX_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 		CCX_SAFE_RETAIN(m_pObjectGroups);
 	}
