@@ -40,9 +40,10 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 CCTextureAtlas::CCTextureAtlas()
-{
-
-}
+	:m_pTexture(NULL)
+	,m_pIndices(NULL)
+	,m_pQuads(NULL)
+{}
 
 CCTextureAtlas::~CCTextureAtlas()
 {
