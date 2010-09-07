@@ -172,7 +172,7 @@ void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsy
 // 	[asyncObject release];
 }
 
-CCTexture2D * CCTextureCache::addImage(const char * path)
+CCTexture2D * CCTextureCache::addImage(const char * path, const char *key)
 {
 	NSAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
@@ -184,7 +184,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	
 	m_pDictLock->lock();
 
-	texture = m_pTextures->objectForKey(temp);
+	texture = m_pTextures->objectForKey(!key ? key : temp);
 
 	if( ! texture ) 
 	{
@@ -217,7 +217,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			CCX_SAFE_DELETE(image);// image->release();
 
 			if( texture )
-				m_pTextures->setObject(texture, path);
+				m_pTextures->setObject(texture, !key ? key : path);
 			else
 				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
 

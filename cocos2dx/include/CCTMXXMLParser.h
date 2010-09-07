@@ -160,12 +160,12 @@ namespace cocos2d {
 
 		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
-		inline const char* getFileName(){ return m_sFileName.c_str(); }
-		inline void setFileName(const char *fileName){ m_sFileName = fileName; }
+		inline const char* getTMXFileName(){ return m_sTMXFileName.c_str(); }
+		inline void setTMXFileName(const char *fileName){ m_sTMXFileName = fileName; }
 
 	protected:
 		// tmx filename
-		std::string m_sFileName;
+		std::string m_sTMXFileName;
 		// current string
 		std::string m_sCurrentString;
 		// tile properties

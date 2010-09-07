@@ -190,7 +190,7 @@ namespace cocos2d{
 		index2 = line.find('"', index);
 		value = line.substr(index, index2-index);
 
-		m_sAtlasName = CCFileUtils::fullPathFromRelativePath(value.c_str());
+		m_sAtlasName = CCFileUtils::fullPathFromRelativeFile(value.c_str(), fntFile);
 	}
 	void CCBitmapFontConfiguration::parseInfoArguments(std::string line)
 	{

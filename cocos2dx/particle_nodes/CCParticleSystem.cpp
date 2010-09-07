@@ -54,7 +54,8 @@ namespace cocos2d {
 	//
 
 	CCParticleSystem::CCParticleSystem()
-		:m_fElapsed(0)
+		:m_sPlistFile("")
+		,m_fElapsed(0)
 		,m_pParticles(NULL)
 		,m_fEmitCounter(0)
 		,m_nParticleIdx(0)
@@ -226,7 +227,8 @@ namespace cocos2d {
 				// texture		
 				// Try to get the texture from the cache
 				char *textureName = (char *)valueForKey("textureFileName", dictionary);
-				this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(textureName);
+				std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
+				this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str(), textureName);
 
 				// if it fails, try to get it from the base64-gzipped data			
 				if ( ! m_pTexture )
