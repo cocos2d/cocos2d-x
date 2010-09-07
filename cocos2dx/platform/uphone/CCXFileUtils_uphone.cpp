@@ -190,12 +190,29 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
  		}
  	}
 }
+
+// record the resource path
+static char s_pszResourcePath[MAX_PATH] = {0};
+
+void CCFileUtils::setResourcePath(const char *pszResourcePath)
+{
+    NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
+    NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
+
+    strcpy(s_pszResourcePath, pszResourcePath);
+}
+
 char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     // get the user data path and append relativepath to it
-    const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
-    char *pszUserPath = new char[TUString::StrLen(pszTmp) + 1];
-    TUString::StrUnicodeToStrUtf8((Char*)pszUserPath, pszTmp);
+    if (strlen(s_pszResourcePath) == 0)
+    {
+        const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
+        TUString::StrUnicodeToStrUtf8((Char*) s_pszResourcePath, pszTmp);
+    }
+//     const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
+//     char *pszUserPath = new char[TUString::StrLen(pszTmp) + 1];
+//     TUString::StrUnicodeToStrUtf8((Char*)pszUserPath, pszTmp);
     char *pszRet;
 
 #ifndef _TRANZDA_VM_
@@ -222,11 +239,11 @@ char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     }
     else
     {
-        nLen = strlen(pszRelativePath) + strlen(pszDriver) + strlen(pszUserPath) + 1;
+        nLen = strlen(pszRelativePath) + strlen(pszDriver) + strlen(s_pszResourcePath) + 1;
         pszRet = new char[nLen];
         memset(pszRet, 0, nLen);
         strncat(pszRet, pszDriver, strlen(pszDriver));
-        strncat(pszRet, pszUserPath, strlen(pszUserPath));
+        strncat(pszRet, s_pszResourcePath, strlen(s_pszResourcePath));
         strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
     }
 
