@@ -659,6 +659,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="AtlasTest"
+				>
+				<File
+					RelativePath=".\tests\AtlasTest\AtlasTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\AtlasTest\AtlasTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

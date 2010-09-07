@@ -33,6 +33,7 @@ static const char s_MenuItem[]            = "/NEWPLUS/TDA_DATA/Data/cocos2d_test
 static const char s_SendScore[]           = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/SendScoreButton.png";
 static const char s_PressSendScore[]      = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/SendScoreButtonPressed.png";
 static const char s_Power[]               = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/powered.png";
+static const char s_AtlasTest[]           = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/atlastest.png";
 
 // tilemaps resource
 static const char s_TilesPng[]                      = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/TileMaps/tiles.png";

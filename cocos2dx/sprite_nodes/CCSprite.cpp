@@ -755,11 +755,16 @@ void CCSprite::setIsVisible(bool bVisible)
 			m_bDirty = m_bRecursiveDirty = true;
 			CCNode *pChild;
 			NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
-			for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
-			{
-				pChild = *iter;
-				pChild->setIsVisible(bVisible);
-			}
+            if (m_pChildren && m_pChildren->count() != 0)
+            {
+                for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
+                {
+                    pChild = *iter;
+
+                    CCX_BREAK_IF(! pChild);
+                    pChild->setIsVisible(bVisible);
+                }
+            }
 		}
 	}
 }
