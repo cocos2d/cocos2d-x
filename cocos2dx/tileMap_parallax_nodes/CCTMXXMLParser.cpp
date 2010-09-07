@@ -56,7 +56,7 @@ namespace cocos2d {
 		,m_pTiles(NULL)
 		,m_tOffset(CGPointZero)
 	{
-		m_pProperties= new StringToStringDictionary();;
+		m_pProperties= new CCXStringToStringDictionary();;
 	}
 	CCTMXLayerInfo::~CCTMXLayerInfo()
 	{
@@ -67,6 +67,16 @@ namespace cocos2d {
 			delete [] m_pTiles;
 			m_pTiles = NULL;
 		}
+	}
+	CCXStringToStringDictionary * CCTMXLayerInfo::getProperties()
+	{
+		return m_pProperties;
+	}
+	void CCTMXLayerInfo::setProperties(CCXStringToStringDictionary* var)
+	{
+		CCX_SAFE_RELEASE(m_pProperties);
+		m_pProperties = var;
+		CCX_SAFE_RETAIN(m_pProperties);
 	}
 
 	// implementation CCTMXTilesetInfo
@@ -113,8 +123,8 @@ namespace cocos2d {
 		m_pLayers = new NSMutableArray<CCTMXLayerInfo*>();
 		m_sFileName = CCFileUtils::fullPathFromRelativePath(tmxFile);
 		m_pObjectGroups = new NSMutableArray<CCTMXObjectGroup*>();
-		m_pProperties = new StringToStringDictionary();
-		m_pTileProperties = new NSDictionary<int, StringToStringDictionary*>();
+		m_pProperties = new CCXStringToStringDictionary();
+		m_pTileProperties = new NSDictionary<int, CCXStringToStringDictionary*>();
 
 		// tmp vars
 		m_sCurrentString = "";
@@ -131,6 +141,9 @@ namespace cocos2d {
 		,m_tTileSize(CGSizeZero)
 		,m_pLayers(NULL)
 		,m_pTilesets(NULL)
+		,m_pObjectGroups(NULL)
+		,m_pProperties(NULL)
+		,m_pTileProperties(NULL)
 	{
 	}
 	CCTMXMapInfo::~CCTMXMapInfo()
@@ -172,21 +185,21 @@ namespace cocos2d {
 		m_pObjectGroups = var;
 		CCX_SAFE_RETAIN(m_pObjectGroups);
 	}
-	StringToStringDictionary * CCTMXMapInfo::getProperties()
+	CCXStringToStringDictionary * CCTMXMapInfo::getProperties()
 	{
 		return m_pProperties;
 	}
-	void CCTMXMapInfo::setProperties(StringToStringDictionary* var)
+	void CCTMXMapInfo::setProperties(CCXStringToStringDictionary* var)
 	{
 		CCX_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 		CCX_SAFE_RETAIN(m_pProperties);
 	}
-	NSDictionary<int, StringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
+	NSDictionary<int, CCXStringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
 	{
 		return m_pTileProperties;
 	}
-	void CCTMXMapInfo::setTileProperties(NSDictionary<int, StringToStringDictionary*> * tileProperties)
+	void CCTMXMapInfo::setTileProperties(NSDictionary<int, CCXStringToStringDictionary*> * tileProperties)
 	{
 		CCX_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = tileProperties;
@@ -310,7 +323,7 @@ namespace cocos2d {
 		else if(elementName == "tile")
 		{
 			CCTMXTilesetInfo* info = pTMXMapInfo->getTilesets()->getLastObject();
-			StringToStringDictionary *dict = new StringToStringDictionary();
+			CCXStringToStringDictionary *dict = new CCXStringToStringDictionary();
 			pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
 			pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
 			
@@ -404,7 +417,7 @@ namespace cocos2d {
 
 			// The value for "type" was blank or not a valid class name
 			// Create an instance of TMXObjectInfo to store the object and its properties
-			StringToStringDictionary *dict = new StringToStringDictionary();
+			CCXStringToStringDictionary *dict = new CCXStringToStringDictionary();
 
 			// Set the name of the object to the value for "name"
 			std::string key = "name";
@@ -475,7 +488,7 @@ namespace cocos2d {
 				NSString *value = new NSString(valueForKey("value", attributeDict));
 				std::string key = valueForKey("name", attributeDict);
 				// Add the property to the layer
-				layer->m_pProperties->setObject(value, key);
+				layer->getProperties()->setObject(value, key);
 				value->release();
 
 			} 
@@ -493,7 +506,7 @@ namespace cocos2d {
 			{
 				// The parent element is the last object
 				CCTMXObjectGroup *objectGroup = pTMXMapInfo->getObjectGroups()->getLastObject();
-				StringToStringDictionary *dict = objectGroup->getObjects()->getLastObject();
+				CCXStringToStringDictionary *dict = objectGroup->getObjects()->getLastObject();
 
 				std::string propertyName = valueForKey("name", attributeDict);
 				NSString *propertyValue = new NSString(valueForKey("value", attributeDict));
@@ -502,7 +515,7 @@ namespace cocos2d {
 			} 
 			else if ( pTMXMapInfo->getParentElement() == TMXPropertyTile ) 
 			{
-				StringToStringDictionary *dict;
+				CCXStringToStringDictionary *dict;
 				dict = pTMXMapInfo->getTileProperties()->objectForKey(pTMXMapInfo->getParentGID());
 
 				std::string propertyName = valueForKey("name", attributeDict);

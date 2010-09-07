@@ -39,9 +39,9 @@ namespace cocos2d {
 		/** offset position of child objects */
 		CCX_SYNTHESIZE(CGPoint, m_tPositionOffset, PositionOffset);
 		/** list of properties stored in a dictionary */
-		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 		/** array of the objects */
-		CCX_PROPERTY(NSArray<StringToStringDictionary*>*, m_pObjects, Objects);
+		CCX_PROPERTY(NSArray<CCXStringToStringDictionary*>*, m_pObjects, Objects);
 	public:
 		CCTMXObjectGroup();
 		virtual ~CCTMXObjectGroup();
@@ -55,7 +55,7 @@ namespace cocos2d {
 		/** return the dictionary for the specific object name.
 		It will return the 1st object found on the array for the given name.
 		*/
-		StringToStringDictionary *objectNamed(const char *objectName);
+		CCXStringToStringDictionary *objectNamed(const char *objectName);
 	protected:	
 		/** name of the group */
 		std::string m_sGroupName;

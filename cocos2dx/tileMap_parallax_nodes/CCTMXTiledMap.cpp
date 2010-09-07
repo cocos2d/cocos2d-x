@@ -53,10 +53,11 @@ namespace cocos2d{
 		m_tMapSize = mapInfo->getMapSize();
 		m_tTileSize = mapInfo->getTileSize();
 		m_nMapOrientation = mapInfo->getOrientation();
-		m_pObjectGroups = mapInfo->getObjectGroups();
-		CCX_SAFE_RETAIN(m_pObjectGroups);
-		m_pProperties = mapInfo->getProperties();
+		setObjectGroups(mapInfo->getObjectGroups());
+		setProperties(mapInfo->getProperties());
+		CCX_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = mapInfo->getTileProperties();
+		CCX_SAFE_RETAIN(m_pTileProperties);
 
 		int idx = 0;
 
@@ -110,15 +111,15 @@ namespace cocos2d{
 		m_pObjectGroups = var;
 		CCX_SAFE_RETAIN(m_pObjectGroups);
 	}
-	StringToStringDictionary * CCTMXTiledMap::getProperties()
+	CCXStringToStringDictionary * CCTMXTiledMap::getProperties()
 	{
 		return m_pProperties;
 	}
-	void CCTMXTiledMap::setProperties(StringToStringDictionary* var)
+	void CCTMXTiledMap::setProperties(CCXStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(m_pProperties);
-		m_pProperties = var;
 		CCX_SAFE_RELEASE(m_pProperties);
+		m_pProperties = var;
+		CCX_SAFE_RETAIN(m_pProperties);
 	}
 	// private
 	CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)

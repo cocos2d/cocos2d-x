@@ -108,7 +108,7 @@ namespace cocos2d {
 		/** object groups */
 		CCX_PROPERTY(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/** properties */
-		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXTiledMap();
 		virtual ~CCTMXTiledMap();
@@ -142,7 +142,7 @@ namespace cocos2d {
 
 	protected:
 		// tile properties
-		NSDictionary<int, StringToStringDictionary*> *m_pTileProperties;
+		NSDictionary<int, CCXStringToStringDictionary*> *m_pTileProperties;
 
 	};
 

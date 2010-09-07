@@ -27,8 +27,6 @@ THE SOFTWARE.
 #include "NSMutableDictionary.h"
 #include "CGGeometry.h"
 #include "Cocos2dDefine.h"
-
-#include <string>
 namespace cocos2d {
 
 	/*
@@ -65,6 +63,7 @@ namespace cocos2d {
 	*/
 	class CCX_DLL CCTMXLayerInfo : public NSObject
 	{
+		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		std::string			m_sName;
 		CGSize				m_tLayerSize;
@@ -74,7 +73,6 @@ namespace cocos2d {
 		bool				m_bOwnTiles;
 		unsigned int		m_uMinGID;
 		unsigned int		m_uMaxGID;
-		StringToStringDictionary *m_pProperties;
 		CGPoint				m_tOffset;
 	public:
 		CCTMXLayerInfo();
@@ -146,7 +144,7 @@ namespace cocos2d {
 		// is stroing characters?
 		CCX_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
 		// properties
-		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:	
 		CCTMXMapInfo();
 		virtual ~CCTMXMapInfo();
@@ -157,8 +155,8 @@ namespace cocos2d {
 		/* initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
 	
-		NSDictionary<int, StringToStringDictionary*> * getTileProperties();
-		void setTileProperties(NSDictionary<int, StringToStringDictionary*> * tileProperties);
+		NSDictionary<int, CCXStringToStringDictionary*> * getTileProperties();
+		void setTileProperties(NSDictionary<int, CCXStringToStringDictionary*> * tileProperties);
 
 		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
@@ -171,7 +169,7 @@ namespace cocos2d {
 		// current string
 		std::string m_sCurrentString;
 		// tile properties
-		NSDictionary<int, StringToStringDictionary*>* m_pTileProperties;
+		NSDictionary<int, CCXStringToStringDictionary*>* m_pTileProperties;
 	};
 
 }// namespace cocos2d

@@ -65,7 +65,7 @@ namespace cocos2d {
 			m_uMinGID = layerInfo->m_uMinGID;
 			m_uMaxGID = layerInfo->m_uMaxGID;
 			m_cOpacity = layerInfo->m_cOpacity;
-			m_pProperties = StringToStringDictionary::dictionaryWithDictionary(layerInfo->m_pProperties);
+			m_pProperties = CCXStringToStringDictionary::dictionaryWithDictionary(layerInfo->getProperties());
 
 			// tilesetInfo
 			m_pTileSet = tilesetInfo;
@@ -623,11 +623,11 @@ namespace cocos2d {
 		}
 	}
 
-	StringToStringDictionary * CCTMXLayer::getProperties()
+	CCXStringToStringDictionary * CCTMXLayer::getProperties()
 	{
 		return m_pProperties;
 	}
-	void CCTMXLayer::setProperties(StringToStringDictionary* var)
+	void CCTMXLayer::setProperties(CCXStringToStringDictionary* var)
 	{
 		CCX_SAFE_RETAIN(m_pProperties);
 		m_pProperties = var;
