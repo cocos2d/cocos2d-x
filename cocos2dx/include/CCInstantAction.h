@@ -198,7 +198,9 @@ namespace cocos2d {
 		CCCallFuncN(){}
 		virtual ~CCCallFuncN(){}
 		static CCCallFuncN * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
+		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
 		// super method
+		virtual NSObject* copyWithZone(NSZone *pZone);
 		virtual void execute();
 	};
 
