@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "CCXApplication.h"
 #include "CCBitmapFontAtlas.h"
 #include "CCActionManager.h"
-#include "CCLabelAtlas.h"
+#include "CCLabel.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -178,7 +178,7 @@ void CCDirector::setGLDefaultValues(void)
 	{
 		CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
 		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-		m_pFPSLabel = CCLabelAtlas::labelAtlasWithString("00.0", "fps_images.png", 16, 24, '.');
+        m_pFPSLabel = CCLabel::labelWithString("00.0", "XXX", 24);
 		m_pFPSLabel->retain();
 		CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);
 	}

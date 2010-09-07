@@ -172,7 +172,7 @@ typedef enum {
 	CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
 } ccDeviceOrientation;
 
-class CCLabelAtlas;
+class CCLabel;
 class CCScene;
 class cocos2d::CCXEGLView;
 
@@ -479,7 +479,7 @@ protected:
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
 #if	CC_DIRECTOR_FAST_FPS
-	CCLabelAtlas *m_pFPSLabel;
+	CCLabel *m_pFPSLabel;
 #endif
 	
 	/* is the running scene paused */

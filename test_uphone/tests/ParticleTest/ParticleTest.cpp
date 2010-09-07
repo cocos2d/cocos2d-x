@@ -372,6 +372,7 @@ void DemoSmoke::onEnter()
 
 	m_emitter = CCParticleSmoke::node();
 	m_background->addChild(m_emitter, 10);
+    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
 	CGPoint p = m_emitter->getPosition();
 	m_emitter->setPosition( CGPointMake( p.x, 100) );
@@ -590,12 +591,14 @@ void ParallaxParticle::onEnter()
 	p->addChild(p2, 2, CGPointMake(1.5f,1), CGPointMake(0,50) );
 
 	m_emitter = CCParticleFlower::node();
+    m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 
 	p1->addChild(m_emitter, 10);
 	m_emitter->setPosition( CGPointMake(250,200) );
 	
 	CCParticleSun* par = CCParticleSun::node();
 	p2->addChild(par, 10);
+    par->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
 	CCIntervalAction* move_back = move->reverse();
