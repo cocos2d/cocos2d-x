@@ -71,7 +71,7 @@ namespace cocos2d {
 		/** Layer orientation, which is the same as the map orientation */
 		CCX_SYNTHESIZE(int, m_nLayerOrientation, LayerOrientation);
 		/** properties from the layer. They can be added using Tiled */
-		CCX_PROPERTY(StringToStringDictionary*, m_pProperties, Properties);
+		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXLayer();
 		virtual ~CCTMXLayer();
