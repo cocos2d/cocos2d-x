@@ -186,7 +186,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
-	char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
+	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
 	map<string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
 
 	return addSpriteFramesWithDictionary(dict, pobTexture);
@@ -194,7 +194,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
-	char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
+	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
 	map<string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
 	
 	string texturePath = string(pszPlist);

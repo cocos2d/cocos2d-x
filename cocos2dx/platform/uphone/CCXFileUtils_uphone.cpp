@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
 #include <tg3.h>
+#include "NSString.h"
 
 #include "CCXFileUtils_uphone.h"
 #include "Cocos2dDefine.h"
@@ -202,7 +203,7 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
     strcpy(s_pszResourcePath, pszResourcePath);
 }
 
-char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
     // get the user data path and append relativepath to it
     if (strlen(s_pszResourcePath) == 0)
@@ -210,10 +211,6 @@ char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
         TUString::StrUnicodeToStrUtf8((Char*) s_pszResourcePath, pszTmp);
     }
-//     const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
-//     char *pszUserPath = new char[TUString::StrLen(pszTmp) + 1];
-//     TUString::StrUnicodeToStrUtf8((Char*)pszUserPath, pszTmp);
-    char *pszRet;
 
 #ifndef _TRANZDA_VM_
     char *pszDriver = "";
@@ -221,33 +218,24 @@ char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     char *pszDriver = "D:/Work7";
 #endif
 
-    int nLen = 0;
+    NSString * pRet = new NSString();
+    pRet->autorelease();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
     {
-        nLen = strlen(pszRelativePath) + 1;
-        pszRet = new char[nLen];
-        memset(pszRet, 0, nLen);
-        strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
+        pRet->m_sString = pszRelativePath;
     }
     else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
     {
-        nLen = strlen(pszRelativePath) + strlen(pszDriver) + 1;
-        pszRet = new char[nLen];
-        memset(pszRet, 0, nLen);
-        strncat(pszRet, pszDriver, strlen(pszDriver));
-        strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
+        pRet->m_sString = pszDriver;
+        pRet->m_sString += pszRelativePath;
     }
     else
     {
-        nLen = strlen(pszRelativePath) + strlen(pszDriver) + strlen(s_pszResourcePath) + 1;
-        pszRet = new char[nLen];
-        memset(pszRet, 0, nLen);
-        strncat(pszRet, pszDriver, strlen(pszDriver));
-        strncat(pszRet, s_pszResourcePath, strlen(s_pszResourcePath));
-        strncat(pszRet, pszRelativePath, strlen(pszRelativePath));
+        pRet->m_sString = pszDriver;
+        pRet->m_sString += s_pszResourcePath;
+        pRet->m_sString += pszRelativePath;
     }
-
-	return pszRet;
+	return pRet->m_sString.c_str();
 }
 
 std::map<std::string, void*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
