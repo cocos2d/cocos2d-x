@@ -610,8 +610,14 @@ void CCSpawn::stop(void)
 
 void CCSpawn::update(cocos2d::ccTime time)
 {
-	m_pOne->update(time);
-	m_pTwo->update(time);
+	if (m_pOne)
+	{
+		m_pOne->update(time);
+	}
+	if (m_pTwo)
+	{
+		m_pTwo->update(time);
+	}
 }
 
 CCIntervalAction* CCSpawn::reverse(void)
@@ -695,7 +701,10 @@ void CCRotateTo::startWithTarget(CCNode *pTarget)
 
 void CCRotateTo::update(cocos2d::ccTime time)
 {
-	m_pTarget->setRotation(m_fStartAngle + m_fDiffAngle * time);
+	if (m_pTarget)
+	{
+		m_pTarget->setRotation(m_fStartAngle + m_fDiffAngle * time);
+	}
 }
 
 //
@@ -753,7 +762,10 @@ void CCRotateBy::startWithTarget(CCNode *pTarget)
 void CCRotateBy::update(cocos2d::ccTime time)
 {
 	// XXX: shall I add % 360
-	m_pTarget->setRotation(m_fStartAngle + m_fAngle * time);
+	if (m_pTarget)
+	{
+		m_pTarget->setRotation(m_fStartAngle + m_fAngle * time);
+	}
 }
 
 CCIntervalAction* CCRotateBy::reverse(void)
@@ -816,8 +828,11 @@ void CCMoveTo::startWithTarget(CCNode *pTarget)
 
 void CCMoveTo::update(cocos2d::ccTime time)
 {
-	m_pTarget->setPosition(ccp(m_startPosition.x + m_delta.x * time,
-		m_startPosition.y + m_delta.y * time));
+	if (m_pTarget)
+	{
+		m_pTarget->setPosition(ccp(m_startPosition.x + m_delta.x * time,
+			m_startPosition.y + m_delta.y * time));
+	}
 }
 
 //
@@ -936,11 +951,14 @@ void CCJumpBy::startWithTarget(CCNode *pTarget)
 void CCJumpBy::update(cocos2d::ccTime time)
 {
 	// parabolic jump (since v0.8.2)
-	ccTime frac = fmodf(time * m_nJumps, 1.0f);
-	ccTime y = m_height * 4 * frac * (1 - frac);
-	y += m_delta.y * time;
-	ccTime x = m_delta.x * time;
-	m_pTarget->setPosition(ccp(m_startPosition.x + x, m_startPosition.y + y));
+	if (m_pTarget)
+	{
+		ccTime frac = fmodf(time * m_nJumps, 1.0f);
+		ccTime y = m_height * 4 * frac * (1 - frac);
+		y += m_delta.y * time;
+		ccTime x = m_delta.x * time;
+		m_pTarget->setPosition(ccp(m_startPosition.x + x, m_startPosition.y + y));
+	}
 }
 
 CCIntervalAction* CCJumpBy::reverse(void)
@@ -1056,19 +1074,22 @@ NSObject* CCBezierBy::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCBezierBy::update(cocos2d::ccTime time)
 {
-	float xa = 0;
-	float xb = m_sConfig.controlPoint_1.x;
-	float xc = m_sConfig.controlPoint_2.x;
-	float xd = m_sConfig.endPosition.x;
+	if (m_pTarget)
+	{
+		float xa = 0;
+		float xb = m_sConfig.controlPoint_1.x;
+		float xc = m_sConfig.controlPoint_2.x;
+		float xd = m_sConfig.endPosition.x;
 
-	float ya = 0;
-	float yb = m_sConfig.controlPoint_1.y;
-	float yc = m_sConfig.controlPoint_2.y;
-	float yd = m_sConfig.endPosition.y;
+		float ya = 0;
+		float yb = m_sConfig.controlPoint_1.y;
+		float yc = m_sConfig.controlPoint_2.y;
+		float yd = m_sConfig.endPosition.y;
 
-	float x = bezierat(xa, xb, xc, xd, time);
-	float y = bezierat(ya, yb, yc, yd, time);
-	m_pTarget->setPosition(ccpAdd(m_startPosition, ccp(x, y)));
+		float x = bezierat(xa, xb, xc, xd, time);
+		float y = bezierat(ya, yb, yc, yd, time);
+		m_pTarget->setPosition(ccpAdd(m_startPosition, ccp(x, y)));
+	}
 }
 
 CCIntervalAction* CCBezierBy::reverse(void)
@@ -1208,8 +1229,11 @@ void CCScaleTo::startWithTarget(CCNode *pTarget)
 
 void CCScaleTo::update(cocos2d::ccTime time)
 {
-	m_pTarget->setScaleX(m_fStartScaleX + m_fDeltaX * time);
-	m_pTarget->setScaleY(m_fStartScaleY + m_fDeltaY * time);
+	if (m_pTarget)
+	{
+		m_pTarget->setScaleX(m_fStartScaleX + m_fDeltaX * time);
+		m_pTarget->setScaleY(m_fStartScaleY + m_fDeltaY * time);
+	}
 }
 
 //
@@ -1318,9 +1342,12 @@ NSObject* CCBlink::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCBlink::update(cocos2d::ccTime time)
 {
-	ccTime slice = 1.0f / m_nTimes;
-	ccTime m = fmodf(time, slice);
-	m_pTarget->setIsVisible(m > slice / 2 ? true : false);
+	if (m_pTarget)
+	{
+		ccTime slice = 1.0f / m_nTimes;
+		ccTime m = fmodf(time, slice);
+		m_pTarget->setIsVisible(m > slice / 2 ? true : false);
+	}
 }
 
 CCIntervalAction* CCBlink::reverse(void)
@@ -1758,7 +1785,10 @@ void CCReverseTime::stop(void)
 
 void CCReverseTime::update(cocos2d::ccTime time)
 {
-	m_pOther->update(1 - time);
+	if (m_pOther)
+	{
+		m_pOther->update(1 - time);
+	}
 }
 
 CCIntervalAction* CCReverseTime::reverse(void)
