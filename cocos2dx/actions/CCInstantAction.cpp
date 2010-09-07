@@ -315,12 +315,39 @@ namespace cocos2d {
 	CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
 	{
 		CCCallFuncN *pRet = new CCCallFuncN();
-		pRet->autorelease();
-		pRet->initWithTarget(pSelectorTarget);
-		pRet->m_pCallFuncN = selector;
+		if(pRet->initWithTarget(pSelectorTarget, selector))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CCX_SAFE_DELETE(pRet);
+		return NULL;
+	}
+	bool CCCallFuncN::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
+	{
+		if( CCCallFunc::initWithTarget(pSelectorTarget) ) 
+		{
+			m_pCallFuncN = selector;
+			return true;
+		}
+		return false;
+	}
+	NSObject * CCCallFuncN::copyWithZone(NSZone* zone)
+	{
+		NSZone* pNewZone = NULL;
+		CCCallFuncN* pRet = NULL;
+		if(zone && zone->m_pCopyObject) //in case of being called at sub class
+			pRet = (CCCallFuncN*)(zone->m_pCopyObject);
+		else
+		{
+			pRet = new CCCallFuncN();
+			zone = pNewZone = new NSZone(pRet);
+		}
+		CCCallFunc::copyWithZone(zone);
+		pRet->initWithTarget(m_pSelectorTarget, m_pCallFuncN);
+		CCX_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
-
 	//
 	// CallFuncND
 	//
