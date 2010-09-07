@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include "NSMutableArray.h"
 
+#include <string>
+
 using namespace std;
 namespace   cocos2d {
 

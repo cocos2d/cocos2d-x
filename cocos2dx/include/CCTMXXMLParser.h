@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "NSMutableDictionary.h"
 #include "CGGeometry.h"
 #include "Cocos2dDefine.h"
+
+#include <string>
 namespace cocos2d {
 
 	/*
