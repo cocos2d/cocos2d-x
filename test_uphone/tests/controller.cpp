@@ -56,6 +56,8 @@ static TestScene* CreateTestScene(int nIdx)
     case TESTS_CHIPMUNK:
 		CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationPortrait);
         pScene = new ChipmunkTestScene(); break;
+    case TEST_ATLAS:
+        pScene = new AtlasTestScene(); break;
     default:
         break;
     }
