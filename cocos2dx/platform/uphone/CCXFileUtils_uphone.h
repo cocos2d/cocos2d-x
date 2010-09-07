@@ -35,9 +35,10 @@ namespace   cocos2d {
 class CCX_DLL CCFileUtils
 {
 public:
-	static const char* fullPathFromRelativePath(const char *pszRealPath);
+	static const char* fullPathFromRelativePath(const char *pszRelativePath);
+	static const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
 	static std::map<std::string, void*> *dictionaryWithContentsOfFile(const char *pFileName);
-    static void setResourcePath(const char *pszResourcePath);
+	static void setResourcePath(const char *pszResourcePath);
 };
 }//namespace   cocos2d 
 

@@ -162,6 +162,7 @@ namespace cocos2d {
 	class CCX_DLL CCParticleSystem : public CCNode, public CCTextureProtocol
 	{	
 	protected:
+		std::string m_sPlistFile;
 		// time elapsed since the start of the system (in seconds)
 		float m_fElapsed;
 

@@ -121,7 +121,7 @@ namespace cocos2d {
 	{
 		m_pTilesets = new NSMutableArray<CCTMXTilesetInfo*>();
 		m_pLayers = new NSMutableArray<CCTMXLayerInfo*>();
-		m_sFileName = CCFileUtils::fullPathFromRelativePath(tmxFile);
+		m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFile);
 		m_pObjectGroups = new NSMutableArray<CCTMXObjectGroup*>();
 		m_pProperties = new CCXStringToStringDictionary();
 		m_pTileProperties = new NSDictionary<int, CCXStringToStringDictionary*>();
@@ -132,7 +132,7 @@ namespace cocos2d {
 		m_nLayerAttribs = TMXLayerAttribNone;
 		m_nParentElement = TMXPropertyNone;
 
-		return parseXMLFile(m_sFileName.c_str());
+		return parseXMLFile(m_sTMXFileName.c_str());
 	}
 	CCTMXMapInfo::CCTMXMapInfo()
 		:m_bStoringCharacters(false)
@@ -301,7 +301,7 @@ namespace cocos2d {
 			std::string externalTilesetFilename = valueForKey("source", attributeDict);
 			if (externalTilesetFilename != "")
 			{
-				externalTilesetFilename = CCFileUtils::fullPathFromRelativePath(externalTilesetFilename.c_str());
+				externalTilesetFilename = CCFileUtils::fullPathFromRelativeFile(externalTilesetFilename.c_str(), pTMXMapInfo->getTMXFileName());
 				pTMXMapInfo->parseXMLFile(externalTilesetFilename.c_str());
 			}
 			else
@@ -386,7 +386,7 @@ namespace cocos2d {
 
 			// build full path
 			std::string imagename = valueForKey("source", attributeDict);		
-			tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativePath(imagename.c_str());
+			tileset->m_sSourceImage = CCFileUtils::fullPathFromRelativeFile(imagename.c_str(), pTMXMapInfo->getTMXFileName());
 
 		} 
 		else if(elementName == "data")

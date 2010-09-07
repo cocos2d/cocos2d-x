@@ -237,7 +237,15 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     }
 	return pRet->m_sString.c_str();
 }
-
+const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+{
+	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+	NSString *pRet = new NSString();
+	pRet->autorelease();
+	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
+	pRet->m_sString += pszFilename;
+	return pRet->m_sString.c_str();
+}
 std::map<std::string, void*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
 	CCDictMaker tMaker;
