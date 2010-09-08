@@ -109,7 +109,7 @@ std::string AtlasDemo::subtitle()
 
 void AtlasDemo::onEnter()
 {
-	__super::onEnter();
+	CCLayer::onEnter();
 
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
