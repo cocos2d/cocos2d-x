@@ -55,4 +55,5 @@ INCLUDEFILE=
 ;只能对.c、.cpp文件进行排除
 ;如果要排除本目录的文件也要加入"./"
 ;可以使用多个EXCLUDEFILE串，也可以使用EXCLUDEFILE1、EXCLUDEFILE2等方式，MakeFile中依据出现顺序(不是数字大小)排列
-EXCLUDEFILE= ./textures/CCPVRTexture.cpp
+EXCLUDEFILE= ./textures/CCPVRTexture.cpp 
+EXCLUDEFILE= ./platform/uphone/NewDeleteOp.cpp
