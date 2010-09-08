@@ -23,9 +23,9 @@ IntervalLayer::IntervalLayer()
 	this->addChild(sun);
 
 	// timers
-	m_label1 = CCBitmapFontAtlas::bitmapFontAtlasWithString("0", "bitmapFontTest4.fnt");
-	m_label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("0", "bitmapFontTest4.fnt");
-	m_label3 = CCBitmapFontAtlas::bitmapFontAtlasWithString("0", "bitmapFontTest4.fnt");
+	m_label1 = CCBitmapFontAtlas::bitmapFontAtlasWithString("0", "fonts/bitmapFontTest4.fnt");
+	m_label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("0", "fonts/bitmapFontTest4.fnt");
+	m_label3 = CCBitmapFontAtlas::bitmapFontAtlasWithString("0", "fonts/bitmapFontTest4.fnt");
 	
 	schedule(schedule_selector(IntervalLayer::step1), 0.5f);
 	schedule(schedule_selector(IntervalLayer::step2), 1.0f);

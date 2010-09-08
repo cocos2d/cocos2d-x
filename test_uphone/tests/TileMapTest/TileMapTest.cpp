@@ -111,7 +111,7 @@ TMXOrthoTest::TMXOrthoTest()
 	//CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
 	//addChild(color, -1);
 
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test2.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test2.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -160,7 +160,7 @@ std::string TMXOrthoTest::title()
 //------------------------------------------------------------------
 TMXOrthoTest2::TMXOrthoTest2()
 {
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test1.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test1.tmx");
 	addChild(map, 0, kTagTileMap);
 
 	CGSize s = map->getContentSize();
@@ -194,7 +194,7 @@ std::string TMXOrthoTest2::title()
 //------------------------------------------------------------------
 TMXOrthoTest3::TMXOrthoTest3()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test3.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test3.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -229,7 +229,7 @@ std::string TMXOrthoTest3::title()
 //------------------------------------------------------------------
 TMXOrthoTest4::TMXOrthoTest4()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test4.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test4.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s1 = map->getContentSize();
@@ -300,7 +300,7 @@ TMXReadWriteTest::TMXReadWriteTest()
 {
 	m_gid = 0;
 	
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test2.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test2.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -431,7 +431,7 @@ TMXHexTest::TMXHexTest()
 	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("hexa-test.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/hexa-test.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -453,7 +453,7 @@ TMXIsoTest::TMXIsoTest()
 	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test.tmx");
 	addChild(map, 0, kTagTileMap);		
 	
 	// move map to the center of the screen
@@ -477,7 +477,7 @@ TMXIsoTest1::TMXIsoTest1()
 	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test1.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test1.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -501,7 +501,7 @@ TMXIsoTest2::TMXIsoTest2()
 	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test2.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2.tmx");
 	addChild(map, 0, kTagTileMap);	
 	
 	CGSize s = map->getContentSize();
@@ -528,7 +528,7 @@ TMXUncompressedTest::TMXUncompressedTest()
 	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test2-uncompressed.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2-uncompressed.tmx");
 	addChild(map, 0, kTagTileMap);	
 	
 	CGSize s = map->getContentSize();
@@ -567,7 +567,7 @@ std::string TMXUncompressedTest::title()
 //------------------------------------------------------------------
 TMXTilesetTest::TMXTilesetTest()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test5.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test5.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -596,7 +596,7 @@ std::string TMXTilesetTest::title()
 //------------------------------------------------------------------
 TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("ortho-objects.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/ortho-objects.tmx");
 	addChild(map, -1, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -677,7 +677,7 @@ std::string TMXOrthoObjectsTest::subtitle()
 
 TMXIsoObjectsTest::TMXIsoObjectsTest()
 {
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test-objectgroup.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-objectgroup.tmx");
 	addChild(map, -1, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -757,7 +757,7 @@ std::string TMXIsoObjectsTest::subtitle()
 
 TMXResizeTest::TMXResizeTest()
 {
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test5.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test5.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -794,7 +794,7 @@ std::string TMXResizeTest::subtitle()
 //------------------------------------------------------------------
 TMXIsoZorder::TMXIsoZorder()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test-zorder.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-zorder.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	map->setPosition(ccp(-700,-50));
@@ -862,7 +862,7 @@ std::string TMXIsoZorder::subtitle()
 //------------------------------------------------------------------
 TMXOrthoZorder::TMXOrthoZorder()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test-zorder.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test-zorder.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -922,7 +922,7 @@ std::string TMXOrthoZorder::subtitle()
 //------------------------------------------------------------------
 TMXIsoVertexZ::TMXIsoVertexZ()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test-vertexz.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-vertexz.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	map->setPosition( ccp(-700,-50) );
@@ -990,7 +990,7 @@ std::string TMXIsoVertexZ::subtitle()
 //------------------------------------------------------------------
 TMXOrthoVertexZ::TMXOrthoVertexZ()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test-vertexz.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test-vertexz.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	CGSize s = map->getContentSize();
@@ -1057,7 +1057,7 @@ std::string TMXOrthoVertexZ::subtitle()
 //------------------------------------------------------------------
 TMXIsoMoveLayer::TMXIsoMoveLayer()
 {
-	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("iso-test-movelayer.tmx");
+	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-movelayer.tmx");
 	addChild(map, 0, kTagTileMap);
 	
 	map->setPosition(ccp(-700,-50));
@@ -1084,7 +1084,7 @@ std::string TMXIsoMoveLayer::subtitle()
 //------------------------------------------------------------------
 TMXOrthoMoveLayer::TMXOrthoMoveLayer()
 {
-	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("orthogonal-test-movelayer.tmx");
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test-movelayer.tmx");
 	addChild(map, 0, kTagTileMap);
 
 	CGSize s = map->getContentSize();

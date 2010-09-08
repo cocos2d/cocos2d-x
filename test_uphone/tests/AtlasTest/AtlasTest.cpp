@@ -351,7 +351,7 @@ Atlas3::Atlas3()
 	CCColorLayer* col = CCColorLayer::layerWithColor( ccc4(128,128,128,255) );
 	addChild(col, -10);
 	
-	CCBitmapFontAtlas* label1 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test",  "bitmapFontTest2.fnt");
+	CCBitmapFontAtlas* label1 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test",  "fonts/bitmapFontTest2.fnt");
 	
 	// testing anchors
 	label1->setAnchorPoint( ccp(0,0) );
@@ -367,14 +367,14 @@ Atlas3::Atlas3()
 	// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
 	// If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
 	// Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-	CCBitmapFontAtlas *label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test", "bitmapFontTest2.fnt");
+	CCBitmapFontAtlas *label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
 	// testing anchors
 	label2->setAnchorPoint( ccp(0.5f, 0.5f) );
 	label2->setColor( ccRED );
 	addChild(label2, 0, kTagBitmapAtlas2);
 	label2->runAction( (CCAction*)(repeat->copy()->autorelease()) );
 	
-	CCBitmapFontAtlas* label3 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test", "bitmapFontTest2.fnt");
+	CCBitmapFontAtlas* label3 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
 	// testing anchors
 	label3->setAnchorPoint( ccp(1,1) );
 	addChild(label3, 0, kTagBitmapAtlas3);
@@ -427,7 +427,7 @@ Atlas4::Atlas4()
 	m_time = 0;
 
 	// Upper Label
-	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Bitmap Font Atlas", "bitmapFontTest.fnt");
+	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
 	addChild(label);
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
@@ -464,7 +464,7 @@ Atlas4::Atlas4()
 	
 	
 	// Bottom Label
-	CCBitmapFontAtlas *label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("00.0", "bitmapFontTest.fnt");
+	CCBitmapFontAtlas *label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("00.0", "fonts/bitmapFontTest.fnt");
 	addChild(label2, 0, kTagBitmapAtlas2);
 	label2->setPosition( ccp(s.width/2.0f, 80) );
 	
@@ -511,7 +511,7 @@ std::string Atlas4::subtitle()
 
 Atlas5::Atlas5()
 {
-	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("abcdefg", "bitmapFontTest4.fnt");
+	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("abcdefg", "fonts/bitmapFontTest4.fnt");
 	addChild(label);
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
@@ -540,17 +540,17 @@ Atlas6::Atlas6()
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
 	CCBitmapFontAtlas* label = NULL;
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("FaFeFiFoFu", "bitmapFontTest5.fnt");
+	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2+50) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) ) ;
 	
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("fafefifofu", "bitmapFontTest5.fnt");
+	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("fafefifofu", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("aeiou", "bitmapFontTest5.fnt");
+	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("aeiou", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2-50) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) ); 
@@ -584,19 +584,19 @@ AtlasBitmapColor::AtlasBitmapColor()
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	
 	CCBitmapFontAtlas* label = NULL;
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Blue", "bitmapFontTest5.fnt");
+	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Blue", "fonts/bitmapFontTest5.fnt");
 	label->setColor( ccBLUE );
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Red", "bitmapFontTest5.fnt");
+	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Red", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, 2*s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 	label->setColor( ccRED );
 
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("G", "bitmapFontTest5.fnt");
+	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("G", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, 3*s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -627,7 +627,7 @@ AtlasFastBitmap::AtlasFastBitmap()
 		{
             char str[6] = {0};
             sprintf(str, "-%d-", i);
-			CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString(str, "bitmapFontTest.fnt");
+			CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString(str, "fonts/bitmapFontTest.fnt");
 			addChild(label);
 			
 			CGSize s = CCDirector::getSharedDirector()->getWinSize();
