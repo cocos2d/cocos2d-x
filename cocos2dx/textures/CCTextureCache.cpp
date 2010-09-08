@@ -216,16 +216,17 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			CCX_SAFE_DELETE(image);// image->release();
 
 			if( texture )
+			{
 				m_pTextures->setObject(texture, fullpath);
+				texture->autorelease();
+			}
 			else
+			{
 				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
-
-			texture->release();
+			}
 		}
 	}
-
 	m_pDictLock->unlock();
-
 	return texture;
 }
 
@@ -250,13 +251,16 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	texture = new CCTexture2D();
 	texture->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width);
 	if( texture )
+	{
 		m_pTextures->setObject(texture, temp);
+		texture->autorelease();
+	}
 	else
+	{
 		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
-
+	}
 	CCX_SAFE_DELETE(data);
 
-	texture->autorelease();
 	return texture;
 }
 
@@ -274,11 +278,15 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 	texture = new CCTexture2D();
 	texture = texture->initWithPVRTCFile(fileimage);
 	if( texture )
+	{
 		m_pTextures-> setObject( texture, key);
+		texture->autorelease();
+	}
 	else
-		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",fileimage);	
+	{
+		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",fileimage);
+	}
 
-	texture->autorelease();
 	return texture;
 }
 #endif
@@ -326,12 +334,12 @@ CCTexture2D* CCTextureCache::addUIImage(UIImage *image, const char *key)
 	if(texture)
 	{
 		m_pTextures->setObject(texture, forKey);
+		texture->autorelease();
 	}
 	else
 	{
 		CCLOG("cocos2d: Couldn't add UIImage in CCTextureCache");
 	}
-	texture->autorelease();
 	return texture;
 }
 
