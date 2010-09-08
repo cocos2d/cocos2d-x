@@ -19,7 +19,7 @@
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
 #include "TileMapTest/TileMapTest.h"
-#include "cocos2dChipmunkDemo.h"
+/*#include "cocos2dChipmunkDemo.h"*/
 #include "IntervalTest/IntervalTest.h"
 #include "AtlasTest/AtlasTest.h"
 
