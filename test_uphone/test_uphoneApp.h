@@ -6,8 +6,9 @@
 
 #ifndef  __test_uphone_App_H__
 #define  __test_uphone_App_H__
-#include "CCXApplication.h"
-#include "CCXEGLView.h"
+// #include "CCXApplication.h"
+// #include "CCXEGLView.h"
+#include "cocos2d.h"
 
 class  Ttest_uphoneApp  :  public  cocos2d::CCXApplication
 {
