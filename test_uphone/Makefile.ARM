@@ -7,7 +7,7 @@
 #############################################################################
 
 TO_PROJECT_ROOT = ../../PRJ_TG3
-OUTPUT_FILENAME = libHelloWorld.so
+OUTPUT_FILENAME = libTestUphone.so
 
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
