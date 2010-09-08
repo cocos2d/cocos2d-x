@@ -228,7 +228,7 @@ namespace cocos2d {
 				// Try to get the texture from the cache
 				char *textureName = (char *)valueForKey("textureFileName", dictionary);
 				std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
-				this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str(), textureName);
+				this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
 
 				// if it fails, try to get it from the base64-gzipped data			
 				if ( ! m_pTexture )
@@ -250,7 +250,7 @@ namespace cocos2d {
 						NSAssert(isOK, "CCParticleSystem: error init image with Data");
 						CCX_BREAK_IF(!isOK);
 						
-						m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, textureName);
+						m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str());
 					}
 				}
 				NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");

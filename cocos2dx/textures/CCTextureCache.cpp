@@ -172,11 +172,13 @@ void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsy
 // 	[asyncObject release];
 }
 
-CCTexture2D * CCTextureCache::addImage(const char * path, const char *key)
+CCTexture2D * CCTextureCache::addImage(const char * path)
 {
 	NSAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
 	CCTexture2D * texture = NULL;
+	// Split up directory and filename
+	std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
 	std::string temp(path);
 
 	// MUTEX:
@@ -184,13 +186,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path, const char *key)
 	
 	m_pDictLock->lock();
 
-	texture = m_pTextures->objectForKey(!key ? key : temp);
+	texture = m_pTextures->objectForKey(fullpath);
 
 	if( ! texture ) 
 	{
-		// Split up directory and filename
-		std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
-
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
 		for (unsigned int i = 0; i < temp.length(); ++i)
@@ -217,7 +216,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path, const char *key)
 			CCX_SAFE_DELETE(image);// image->release();
 
 			if( texture )
-				m_pTextures->setObject(texture, !key ? key : path);
+				m_pTextures->setObject(texture, fullpath);
 			else
 				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
 
@@ -310,12 +309,12 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 }*/
 CCTexture2D* CCTextureCache::addUIImage(UIImage *image, const char *key)
 {
-	NSAssert(image != NULL, "TextureCache: image MUST not be nill");
+	NSAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
 
 	CCTexture2D * texture = NULL;
-
+	std::string forKey = key;
 	// If key is nil, then create a new texture each time
-	if( key && (texture = m_pTextures->objectForKey(key)) )
+	if(texture = m_pTextures->objectForKey(forKey))
 	{
 		return texture;
 	}
@@ -324,9 +323,9 @@ CCTexture2D* CCTextureCache::addUIImage(UIImage *image, const char *key)
 	texture = new CCTexture2D();
 	texture->initWithImage(image);
 
-	if(texture && key)
+	if(texture)
 	{
-		m_pTextures->setObject(texture, key);
+		m_pTextures->setObject(texture, forKey);
 	}
 	else
 	{
