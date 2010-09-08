@@ -13,7 +13,7 @@
 TO_PROJECT_ROOT=../../PRJ_TG3
 
 ;输出目标的名字，不支持多个串，如果有多个，以最后一个为准
-OUTPUT_FILENAME=libHelloWorld.so
+OUTPUT_FILENAME=libTestUphone.so
 
 ;包含的其他的TMK3文件，此文件和本文件一起构成MakeFile的内容
 ;此项可以出现在TMK3文件内的任意地方，与已经存在的项依次组合
