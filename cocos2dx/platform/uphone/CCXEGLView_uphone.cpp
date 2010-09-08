@@ -341,7 +341,21 @@ public:
 
 	void resizeSurface()
 	{
-		// do nothing on uPhone device, because of TWindow can't change size
+// 		if (! m_eglWnd || EGL_NO_DISPLAY == m_eglDisplay)
+// 		{
+// 			return;
+// 		}
+// 
+// 		// release old surface
+// 		if (EGL_NO_SURFACE != m_eglSurface)
+// 		{
+// 			eglDestroySurface(m_eglDisplay, m_eglSurface);
+// 			m_eglSurface = EGL_NO_SURFACE;
+// 		}
+// 
+// 		// create new surface and make current
+// 		m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglWnd, NULL);
+// 		eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext);
 	}
 
 	void swapBuffers()
@@ -404,15 +418,16 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinRotationChanged:
+#ifdef _TRANZDA_VM_
+        if (m_pEGL)
         {
-            if (m_pEGL)
-            {
-                m_pEGL->resizeSurface();
-                UpdateWindow(0);
-            }
+            m_pEGL->resizeSurface();
+            UpdateWindow(0);
         }
-//         CCX_SAFE_DELETE(m_pEGL);
-//         m_pEGL = CCXEGL::create(this);
+#else	// _TRANZDA_VM_
+        CCX_SAFE_DELETE(m_pEGL);
+        m_pEGL = CCXEGL::create(this);
+#endif  // _TRANZDA_VM_
         bHandled = TRUE;
         break;
 
