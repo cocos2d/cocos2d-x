@@ -37,8 +37,11 @@ bool Ttest_uphoneApp::initCocos2d()
     pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
     pDirector->setDisplayFPS(true);
 
+    // set the resource path
+    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
+
     // load background image texture and get window size
-    CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage("/NEWPLUS/TDA_DATA/UserData/HelloWorld.png");
+    CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage("Images/HelloWorld.png");
     CGSize size = CCDirector::getSharedDirector()->getWinSize();
 
     // create sprite instance
