@@ -326,6 +326,7 @@ namespace cocos2d {
 			CCXStringToStringDictionary *dict = new CCXStringToStringDictionary();
 			pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
 			pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
+			CCX_SAFE_RELEASE(dict);
 			
 			pTMXMapInfo->setParentElement(TMXPropertyTile);
 
