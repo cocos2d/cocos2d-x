@@ -16,7 +16,7 @@ DEFINES += -DCCX_UNDER_UPHONE
 INCLUDE_PATH += -I. -I./Res \
                -I../cocos2dx \
                -I../cocos2dx/include
-LIBS += -lcocos2d
+LIBS += -lcocos2d -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
