@@ -24,6 +24,7 @@ THE SOFTWARE.
 #ifndef __NSSTRING_H__
 #define __NSSTRING_H__
 #include <string>
+#include <stdlib.h>
 #include "NSObject.h"
 namespace cocos2d {
 
