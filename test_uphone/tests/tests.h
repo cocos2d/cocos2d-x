@@ -23,6 +23,7 @@
 #include "IntervalTest/IntervalTest.h"
 #include "AtlasTest/AtlasTest.h"
 #include "SpriteTest/SpriteTest.h"
+#include "SchedulerTest/SchedulerTest.h"
 
 enum
 {
@@ -48,6 +49,7 @@ enum
     TESTS_CHIPMUNK,
     TEST_ATLAS,
     TEST_SPRITE,
+    TEST_SCHEDULER,
     TESTS_COUNT,
 };
 
@@ -74,6 +76,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ChipmunkTest",
     "AtlasTest",
     "SpriteTest",
+    "SchdulerTest",
 };
 
 #endif

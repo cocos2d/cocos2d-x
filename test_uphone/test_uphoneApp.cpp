@@ -35,7 +35,7 @@ bool Ttest_uphoneApp::initCocos2d()
     // init director
     CCDirector * pDirector = CCDirector::getSharedDirector();
     pDirector->setOpenGLView(m_pMainWnd);
-    /*pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);*/
+    pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
     pDirector->setDisplayFPS(true);
 
     // set the resource path

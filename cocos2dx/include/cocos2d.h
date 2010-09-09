@@ -79,6 +79,7 @@ THE SOFTWARE.
 #include "CCProgressTimerActions.h"
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
+#include "CCScheduler.h"
 
 //
 // cocoa includes
