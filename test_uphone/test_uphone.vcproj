@@ -671,6 +671,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="SpriteTest"
+				>
+				<File
+					RelativePath=".\tests\SpriteTest\SpriteTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\SpriteTest\SpriteTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

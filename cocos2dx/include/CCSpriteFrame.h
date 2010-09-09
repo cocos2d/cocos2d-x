@@ -49,7 +49,7 @@ class NSZone;
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:offset];
 	[sprite setDisplayFrame:frame];
  */
-class CCSpriteFrame : public NSObject
+class CCX_DLL CCSpriteFrame : public NSObject
 {
 public:
 	// attributes

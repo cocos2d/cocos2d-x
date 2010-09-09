@@ -301,6 +301,11 @@ bool CCSprite::initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect)
 	return bRet;
 }
 
+CCSprite::CCSprite()
+{
+    init();
+}
+
 CCSprite::~CCSprite(void)
 {
 	CCX_SAFE_RELEASE(m_pobTexture);

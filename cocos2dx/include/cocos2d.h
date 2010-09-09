@@ -53,6 +53,7 @@ THE SOFTWARE.
 #include "CCParticleExamples.h"
 #include "CCScene.h"
 #include "CCSprite.h"
+#include "CCSpriteFrameCache.h"
 #include "CCTextureCache.h"
 #include "CCTransition.h"
 #include "CCTextureAtlas.h"

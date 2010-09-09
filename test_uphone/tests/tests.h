@@ -22,6 +22,7 @@
 /*#include "cocos2dChipmunkDemo.h"*/
 #include "IntervalTest/IntervalTest.h"
 #include "AtlasTest/AtlasTest.h"
+#include "SpriteTest/SpriteTest.h"
 
 enum
 {
@@ -46,6 +47,7 @@ enum
     TEST_INTERVAL,
     TESTS_CHIPMUNK,
     TEST_ATLAS,
+    TEST_SPRITE,
     TESTS_COUNT,
 };
 
@@ -71,6 +73,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "IntervalTest",
     "ChipmunkTest",
     "AtlasTest",
+    "SpriteTest",
 };
 
 #endif

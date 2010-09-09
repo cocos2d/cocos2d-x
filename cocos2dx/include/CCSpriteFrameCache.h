@@ -45,7 +45,7 @@ class CCSprite;
  It saves in a cache the sprite frames.
  @since v0.9
  */
-class CCSpriteFrameCache : public NSObject
+class CCX_DLL CCSpriteFrameCache : public NSObject
 {
 public:
 	bool init(void);
