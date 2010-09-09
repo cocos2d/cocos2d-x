@@ -58,6 +58,8 @@ static TestScene* CreateTestScene(int nIdx)
 //         pScene = new ChipmunkTestScene(); break;
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
+    case TEST_SPRITE:
+        pScene = new SpriteTestScene(); break;
     default:
         break;
     }

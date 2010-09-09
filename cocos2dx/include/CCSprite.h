@@ -199,7 +199,7 @@ public:
 public:
 	bool init(void);
 	virtual ~CCSprite(void);
-	CCSprite() {}
+	CCSprite();
 
 	virtual void removeChild(CCNode* pChild, bool bCleanup);
 	virtual void removeAllChildrenWithCleanup(bool bCleanup);
