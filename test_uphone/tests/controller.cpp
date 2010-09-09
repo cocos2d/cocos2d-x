@@ -60,6 +60,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new AtlasTestScene(); break;
     case TEST_SPRITE:
         pScene = new SpriteTestScene(); break;
+    case TEST_SCHEDULER:
+        pScene = new SchedulerTestScene(); break;
     default:
         break;
     }

@@ -87,7 +87,7 @@ struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
 
-class CCScheduler : public NSObject
+class CCX_DLL CCScheduler : public NSObject
 {
 public:
     ~CCScheduler(void);

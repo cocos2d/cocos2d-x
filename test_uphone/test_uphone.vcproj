@@ -683,6 +683,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="SchedulerTest"
+				>
+				<File
+					RelativePath=".\tests\SchedulerTest\SchedulerTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\SchedulerTest\SchedulerTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
