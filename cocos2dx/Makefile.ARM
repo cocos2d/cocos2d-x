@@ -13,7 +13,7 @@ include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DCCX_UNDER_UPHONE \
-          -D__TG3_PURE_DLL__ -D_ENABLE_CHECK_POINT_
+          -D__TG3_PURE_DLL__
 INCLUDE_PATH += -I. -I./Res \
                -I./ -I./Res -I./include -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2 \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv \
@@ -36,7 +36,6 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCDrawingPrimitives.o \
 	$(OBJECTS_DIR)/CCScheduler.o \
 	$(OBJECTS_DIR)/cocos2d.o \
-	$(OBJECTS_DIR)/profile.o \
 	$(OBJECTS_DIR)/CCAction.o \
 	$(OBJECTS_DIR)/CCActionManager.o \
 	$(OBJECTS_DIR)/CCCameraAction.o \
@@ -83,7 +82,6 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCXEGLView_uphone.o \
 	$(OBJECTS_DIR)/CCXFileUtils_uphone.o \
 	$(OBJECTS_DIR)/CCXUIImage_uphone.o \
-	$(OBJECTS_DIR)/NewDeleteOp.o \
 	$(OBJECTS_DIR)/NSLock.o \
 	$(OBJECTS_DIR)/ZipUtils.o \
 	$(OBJECTS_DIR)/CCSprite.o \
@@ -142,9 +140,6 @@ $(OBJECTS_DIR)/CCScheduler.o : ./CCScheduler.cpp
 
 $(OBJECTS_DIR)/cocos2d.o : ./cocos2d.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cocos2d.o ./cocos2d.cpp
-
-$(OBJECTS_DIR)/profile.o : ./profile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/profile.o ./profile.cpp
 
 $(OBJECTS_DIR)/CCAction.o : ./actions/CCAction.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAction.o ./actions/CCAction.cpp
@@ -283,9 +278,6 @@ $(OBJECTS_DIR)/CCXFileUtils_uphone.o : ./platform/uphone/CCXFileUtils_uphone.cpp
 
 $(OBJECTS_DIR)/CCXUIImage_uphone.o : ./platform/uphone/CCXUIImage_uphone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXUIImage_uphone.o ./platform/uphone/CCXUIImage_uphone.cpp
-
-$(OBJECTS_DIR)/NewDeleteOp.o : ./platform/uphone/NewDeleteOp.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NewDeleteOp.o ./platform/uphone/NewDeleteOp.cpp
 
 $(OBJECTS_DIR)/NSLock.o : ./platform/uphone/NSLock.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSLock.o ./platform/uphone/NSLock.cpp

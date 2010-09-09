@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "TG3.h"
 #include "ccTypes.h"
 #include "Cocos2dDefine.h"
-#include "ImageToolKit/IT_Image.h"
+#include "CCXUIImage.h"
 
 namespace cocos2d{
 	class CCX_DLL CCXBitmapDC
@@ -48,8 +48,9 @@ namespace cocos2d{
 			}
 		}
 
+		TBitmap* getBitmap(void);
+		CGSize getSize(void);
 		void* getBuffer(void);
-		CGSize getSize();
 	protected:
 		TBitmap *m_pBitmap;
 		CGSize m_tSize;

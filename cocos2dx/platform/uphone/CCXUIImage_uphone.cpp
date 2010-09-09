@@ -60,6 +60,10 @@ UIImage::UIImage(void)
 {
 	m_pBitmap = NULL;
 }
+UIImage::UIImage(TBitmap *bitmap)
+{
+	m_pBitmap = bitmap->Clone();
+}
 
 UIImage::UIImage(int nX, int nY, void *buffer)
 {
@@ -218,7 +222,7 @@ unsigned char* UIImage::getRGBA8888Data(void)
 	unsigned char *pBufferRet = NULL;
 
 	do {
-		TBitmap *pBitmap;
+		/*TBitmap *pBitmap;*/
 		int nW;
 		int nH;
 		unsigned char uR;
@@ -230,20 +234,21 @@ unsigned char* UIImage::getRGBA8888Data(void)
         }
 
         // convert to RGBA8888 format
-		pBitmap = m_pBitmap->DupBitmapTo32();
-		if (pBitmap == NULL)
-		{
-			break;
-		}
+// 		pBitmap = m_pBitmap->DupBitmapTo32();
+// 		if (pBitmap == NULL)
+// 		{
+// 			break;
+// 		}
 
 		// compute width and height
-		nW = pBitmap->GetWidth();
-		nH = pBitmap->GetHeight();
+		nW = m_pBitmap->GetWidth();
+		nH = m_pBitmap->GetHeight();
 
 		// alloc memory and store the bitmap data
 		pBufferRet = new unsigned char[nW * nH * 4];
-		memcpy(pBufferRet, pBitmap->GetDataPtr(), nW * nH * 4);
+		memcpy(pBufferRet, m_pBitmap->GetDataPtr(), nW * nH * 4);		
 
+/*#ifdef _TRANZDA_VM_*/
 		// translate BGRA to RGBA
         for (int i = 0; i < nW; ++i)
 		{
@@ -258,8 +263,9 @@ unsigned char* UIImage::getRGBA8888Data(void)
 				pBufferRet[baseAddr + 2] = uB;
 			}
 		}
+/*#endif // _TRANZDA_VM_*/
 
-		pBitmap->Destroy();
+		/*pBitmap->Destroy();*/
 	} while(0);
 	
 	return pBufferRet;
@@ -358,7 +364,7 @@ bool UIImage::loadPng(const char* strFileName)
     }
 
     // Alpha data
-    pBmpData = reinterpret_cast< UInt32* >( m_pBitmap->GetDataPtr() );
+    pBmpData = (UInt32* )( m_pBitmap->GetDataPtr() );
 
     if( info_ptr->color_type & PNG_COLOR_MASK_ALPHA )    {
         for(unsigned int i = 0; i < height; i++)

@@ -375,12 +375,12 @@ bool CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlig
 {
 	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
 
-	void* pBitData = pBitmapDC->getBuffer();
-	CGSize size = pBitmapDC->getSize();
+	UIImage *pImage = new UIImage(pBitmapDC->getBitmap());
 
-	initWithData(pBitData, kCCTexture2DPixelFormat_RGBA8888, (UINT)size.width, (UINT)size.height, size);
+	initWithImage(pImage);
 
 	delete pBitmapDC;
+	delete pImage;
 	return true;
 }
 

@@ -58,10 +58,11 @@ namespace cocos2d {
 		TWindow *pWindow = new TWindow(CCXApplication::getSharedApplication());
 		pWindow->CreateMemWindow(width, height, screenAlphaTransparentFormat);
 		// create DC
-   		TDC dc(pWindow);
+		TDC dc(pWindow);
 		// set DC styles
-		UInt32 styles = GUI_API_STYLE_ROP_MODE_TRANSPARENT | GUI_API_STYLE_SPECIFY_FORE_COLOR |  
-			GUI_API_STYLE_ALIGNMENT_MIDDLE | GUI_API_STYLE_SPECIFY_FONT;
+		UInt32 styles = GUI_API_STYLE_ROP_MODE_TRANSPARENT | GUI_API_STYLE_SPECIFY_FORE_COLOR |  GUI_API_STYLE_ROP_MODE_ALPHA |
+			 GUI_API_STYLE_ALIGNMENT_MIDDLE | GUI_API_STYLE_SPECIFY_FONT;
+		/*UInt32 styles = GUI_API_STYLE_ROP_MODE_TRANSPARENT;*/
 		switch (alignment)
 		{
 		case UITextAlignmentLeft:
@@ -79,9 +80,24 @@ namespace cocos2d {
 		}
 		TRectangle rect;
 		pWindow->GetWindowFrameRect(&rect);
-		// draw in memory window
- 		dc.DrawTextInRectangleEx(pText, 0, RGBA(255,255,255,255), RGBA(0,0,0,0), font, &rect, styles);
- 		m_pBitmap = pWindow->GetBitmap()->DupBitmapTo32();
+
+		m_pBitmap = TBitmap::Create(rect.Width(), rect.Height(), 32);
+		m_pBitmap->Fill32(RGBA(0,0,0,0));
+		dc.SetBackColor(RGBA(0,0,0,0));
+		dc.DrawBitmap(m_pBitmap, 0, 0);
+		
+
+		dc.DrawTextInRectangleEx(pText, 0, RGBA(255,255,255,255), RGBA(0,0,0,0), font, &rect, styles);
+
+		dc.ReadBitmap(m_pBitmap, rect.X(), rect.Y());
+
+		/*m_pBitmap = pWindow->GetBitmap()->DupBitmapTo32();*/
+		/*m_pBitmap = pWindow->GetMemWindowTBitmapPtr()->DupBitmapTo32();*/
+
+// 		TUChar pszFile[100] = { 0 };
+// 		TUString::StrUtf8ToStrUnicode(pszFile, (Char *)"/NEWPLUS/TDA_DATA/tmp.bmp");
+// 		m_pBitmap->SaveToFile(pszFile);
+
 		// close window
 		pWindow->CloseWindowNow();
 		delete [] pText;
@@ -93,5 +109,10 @@ namespace cocos2d {
 	CGSize CCXBitmapDC::getSize()
 	{
 		return m_tSize;
+	}
+
+	TBitmap* CCXBitmapDC::getBitmap()
+	{
+		return m_pBitmap;
 	}
 }
