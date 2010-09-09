@@ -151,19 +151,19 @@ namespace cocos2d {
 	/* get buffer as UIImage */
 	UIImage * CCRenderTexture::getUIImageFromBuffer()
 	{
-		int tx = (int)m_pTexture->getContentSize().width;
-		int ty = (int)m_pTexture->getContentSize().height;
-
-		CCXBitmapDC *pBitmap = new CCXBitmapDC(tx, ty);
-		void *pBuffer = pBitmap->getBuffer();
-
-		this->begin();
-		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
-		this->end();
-
-		UIImage *pRet = new UIImage();
-		pRet->initWithBuffer(tx, ty, (unsigned char*)pBuffer);
-		return pRet;
+ 		int tx = (int)m_pTexture->getContentSize().width;
+ 		int ty = (int)m_pTexture->getContentSize().height;
+ 
+ 		CCXBitmapDC *pBitmap = new CCXBitmapDC(tx, ty);
+ 		void *pBuffer = pBitmap->getBuffer();
+ 
+ 		this->begin();
+ 		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
+ 		this->end();
+ 
+ 		UIImage *pRet = new UIImage();
+ 		pRet->initWithBuffer(tx, ty, (unsigned char*)pBuffer);
+ 		return pRet;
 	}
 
 } // namespace cocos2d

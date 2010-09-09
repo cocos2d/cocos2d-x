@@ -35,6 +35,8 @@ class CCX_DLL UIImage
 {
 public:
 	UIImage(void);
+	UIImage(TBitmap *bitmap);
+	
 	UIImage(int nX, int nY, void *buffer);
 	~UIImage(void);
 
