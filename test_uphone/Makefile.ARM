@@ -16,7 +16,7 @@ DEFINES += -DCCX_UNDER_UPHONE
 INCLUDE_PATH += -I. -I./Res \
                -I../cocos2dx \
                -I../cocos2dx/include
-LIBS += -lcocos2d -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
+LIBS += -lcocos2d	-lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -51,6 +51,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/ProgressActionsTest.o \
 	$(OBJECTS_DIR)/RotateWorldTest.o \
 	$(OBJECTS_DIR)/SceneTest.o \
+	$(OBJECTS_DIR)/SpriteTest.o \
 	$(OBJECTS_DIR)/TileMapTest.o \
 	$(OBJECTS_DIR)/Ball.o \
 	$(OBJECTS_DIR)/Paddle.o \
@@ -142,6 +143,9 @@ $(OBJECTS_DIR)/RotateWorldTest.o : ./tests/RotateWorldTest/RotateWorldTest.cpp
 
 $(OBJECTS_DIR)/SceneTest.o : ./tests/SceneTest/SceneTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SceneTest.o ./tests/SceneTest/SceneTest.cpp
+
+$(OBJECTS_DIR)/SpriteTest.o : ./tests/SpriteTest/SpriteTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SpriteTest.o ./tests/SpriteTest/SpriteTest.cpp
 
 $(OBJECTS_DIR)/TileMapTest.o : ./tests/TileMapTest/TileMapTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TileMapTest.o ./tests/TileMapTest/TileMapTest.cpp
