@@ -382,6 +382,7 @@ void StressTest1::shouldNotCrash(ccTime dt)
 
 	// if the node has timers, it crashes
 	CCNode* explosion = CCParticleSun::node();
+	((CCParticleSun*)explosion)->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 	
 	// if it doesn't, it works Ok.
 //	CocosNode *explosion = [Sprite spriteWithFile:@"grossinis_sister2.png");
@@ -421,6 +422,7 @@ StressTest2::StressTest2()
 	CCLayer* sublayer = CCLayer::node();
 	
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
+	sp1->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 	sp1->setPosition( CGPointMake(80, s.height/2) );
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
@@ -431,6 +433,7 @@ StressTest2::StressTest2()
 	sublayer->addChild(sp1, 1);
 
 	CCParticleFire* fire = CCParticleFire::node();
+	fire->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 	fire->setPosition( CGPointMake(80, s.height/2-50) );
 	
 	CCIntervalAction* copy_seq3 = (CCIntervalAction*)(seq3->copy()->autorelease());
