@@ -26,13 +26,13 @@ THE SOFTWARE.
 
 #include <map>
 #include <vector>
+#include <string>
 #include "NSObject.h"
 #include "NSMutableArray.h"
 
-#include <string>
-
 using namespace std;
 namespace   cocos2d {
+class NSString;
 
 template<class _T, class _ValueT = NSObject*>
 class NSMutableDictionary : public NSObject

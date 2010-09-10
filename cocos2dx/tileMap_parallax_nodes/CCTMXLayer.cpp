@@ -193,7 +193,7 @@ namespace cocos2d {
 	// CCTMXLayer - Properties
 	NSString *CCTMXLayer::propertyNamed(const char *propertyName)
 	{
-		return m_pProperties->objectForKey(propertyName);
+		return m_pProperties->objectForKey(std::string(propertyName));
 	}
 	void CCTMXLayer::parseInternalProperties()
 	{

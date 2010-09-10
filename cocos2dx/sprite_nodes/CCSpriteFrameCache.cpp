@@ -28,10 +28,9 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 #include "CCSprite.h"
 #include "support/TransformUtils.h"
-//#include "platform/platform.h"
 #include "CCXFileUtils.h"
+#include "NSString.h"
 
-using namespace std;
 namespace   cocos2d {
 
 static CCSpriteFrameCache *pSharedSpriteFrameCache = NULL;
@@ -54,17 +53,17 @@ void CCSpriteFrameCache::purgeSharedSpriteFrameCache(void)
 
 bool CCSpriteFrameCache::init(void)
 {
-	m_pSpriteFramesMap = new map<string, CCSpriteFrame*>();
+	m_pSpriteFrames= new NSDictionary<std::string, CCSpriteFrame*>();
 	return true;
 }
 
 CCSpriteFrameCache::~CCSpriteFrameCache(void)
 {
 	pSharedSpriteFrameCache->release();
-	delete m_pSpriteFramesMap;
+	m_pSpriteFrames->release();
 }
 
-void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDictionary, CCTexture2D *pobTexture)
+void CCSpriteFrameCache::addSpriteFramesWithDictionary(NSDictionary<std::string, NSObject*> *dictionary, CCTexture2D *pobTexture)
 {
 	/*
 	Supported Zwoptex Formats:
@@ -74,120 +73,75 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(map<string, void*> *pobDi
 		};
 	*/
 
-	map<string, void*>::iterator metadataIter = pobDictionary->find("metadata");
-	map<string, string*> *pMetadataMap = NULL;
-	if (metadataIter != pobDictionary->end())
-	{
-		pMetadataMap = (map<string, string*>*)(metadataIter->second);
-	}
-
-	map<string, void*>::iterator framesIter = pobDictionary->find("frames");
-	map<string ,void*> *pFramesMap = NULL;
-	if (framesIter != pobDictionary->end())
-	{
-		pFramesMap = (map<string, void*>*)(framesIter->second);
-	}
+	NSDictionary<std::string, NSObject*> *metadataDict = (NSDictionary<std::string, NSObject*>*)dictionary->objectForKey(std::string("metadata"));
+	NSDictionary<std::string, NSObject*> *framesDict = (NSDictionary<std::string, NSObject*>*)dictionary->objectForKey(std::string("frames"));
 	int format = 0;
 
 	// get the format
-	if (pMetadataMap)
+	if(metadataDict != NULL) 
 	{
-		map<string, string*>::iterator formatIter = pMetadataMap->find("format");
-		if (formatIter != pMetadataMap->end())
-		{
-			format = atoi(formatIter->second->c_str());
-		}
+		format = atoi(valueForKey("format", metadataDict));
 	}
 
 	// check the format
-	if (format < 0 || format > 1)
+	if(format < 0 || format > 1) 
 	{
-		// format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture
-		assert(0);
+		NSAssert(0, "cocos2d: WARNING: format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture:");
 		return;
 	}
 
-	
-	map<string, void*>::iterator frameIter;
-	map<string, string*> *pFrame;
-	string key;
-	for (frameIter = pFramesMap->begin(); frameIter != pFramesMap->end(); ++frameIter)
+	framesDict->begin();
+	std::string key = "";
+	NSDictionary<std::string, NSObject*> *frameDict = NULL;
+	while( frameDict = (NSDictionary<std::string, NSObject*>*)framesDict->next(&key) )
 	{
-		// skip registered frames
-		key = frameIter->first;
-		CCSpriteFrame *pOldFrame = m_pSpriteFramesMap->find(key)->second;
-		if (pOldFrame)
+		CCSpriteFrame *spriteFrame = m_pSpriteFrames->objectForKey(key);
+		if (spriteFrame)
 		{
 			continue;
 		}
-
-		CCSpriteFrame *pSpriteFrame;
-		pFrame = (map<string, string*>*)(frameIter->second);
-		if (format == 0)
+		
+		if(format == 0) 
 		{
-			/*
-			float x = (float)atof(pFrameDict->objectForKey("x").c_str());
-			float y = (float)atof(pFrameDict->objectForKey("y").c_str());
-			float w = (float)atof(pFrameDict->objectForKey("width").c_str());
-			float h = (float)atof(pFrameDict->objectForKey("height").c_str());
-			float ox = (float)atof(pFrameDict->objectForKey("offsetX").c_str());
-			float oy = (float)atof(pFrameDict->objectForKey("offsetY").c_str());
-			int ow = (int)atof(pFrameDict->objectForKey("originalWidth").c_str());
-			int oh = (int)atof(pFrameDict->objectForKey("originalHeight").c_str());
-			*/
-
-			float x = (float)atof(pFrame->find("x")->second->c_str());
-			float y = (float)atof(pFrame->find("y")->second->c_str());
-			float w = (float)atof(pFrame->find("width")->second->c_str());
-			float h = (float)atof(pFrame->find("height")->second->c_str());
-			float ox = (float)atof(pFrame->find("offsetX")->second->c_str());
-			float oy = (float)atof(pFrame->find("offsetY")->second->c_str());
-			int ow = (int)atof(pFrame->find("originalWidth")->second->c_str());
-			int oh = (int)atof(pFrame->find("originalHeight")->second->c_str());
-
-
-
+			float x = (float)atof(valueForKey("x", frameDict));
+			float y = (float)atof(valueForKey("y", frameDict));
+			float w = (float)atof(valueForKey("width", frameDict));
+			float h = (float)atof(valueForKey("height", frameDict));
+			float ox = (float)atof(valueForKey("offsetX", frameDict));
+			float oy = (float)atof(valueForKey("offsetY", frameDict));
+			int ow = atoi(valueForKey("originalWidth", frameDict));
+			int oh = atoi(valueForKey("originalHeight", frameDict));
 			// check ow/oh
-			if ((! ow) || (! oh))
+			if(!ow || !oh)
 			{
 				CCLOG("cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
 			}
-
 			// abs ow/oh
 			ow = abs(ow);
 			oh = abs(oh);
-
 			// create frame
-			pSpriteFrame = CCSpriteFrame::frameWithTexture(pobTexture, 
-				CGRectMake(x, y, w, h), CGPointMake(ox, oy), CGSizeMake((float)ow, (float)oh));
-		} else
-		if (format == 1)
+			spriteFrame = CCSpriteFrame::frameWithTexture(pobTexture, CGRectMake(x, y, w, h), CGPointMake(ox, oy), CGSizeMake((float)ow, (float)oh));
+		} 
+		else if(format == 1) 
 		{
-			///@todo how to implement??
-			/*
+			/** @todo
 			CGRect frame = CGRectFromString([frameDict objectForKey:@"frame"]);
 			CGPoint offset = CGPointFromString([frameDict objectForKey:@"offset"]);
 			CGSize sourceSize = CGSizeFromString([frameDict objectForKey:@"sourceSize"]);
-			
-			CGRect sourceColorRect = CGRectFromString([frameDict objectForKey:@"sourceColorRect"]);
-			int leftTrim = sourceColorRect.origin.x;
-			int topTrim = sourceColorRect.origin.y;
-			int rightTrim = sourceColorRect.size.width + leftTrim;
-			int bottomTrim = sourceColorRect.size.height + topTrim;
 			
 			// create frame
 			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame offset:offset originalSize:sourceSize];
 			*/
 		}
-
-		(*m_pSpriteFramesMap)[key] = pSpriteFrame;
+		// add sprite frame
+		m_pSpriteFrames->setObject(spriteFrame, key);
 	}
 }
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture)
 {
 	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-	map<string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
+	NSDictionary<std::string, NSObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
 
 	return addSpriteFramesWithDictionary(dict, pobTexture);
 }
@@ -195,7 +149,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
 	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
-	map<string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
+	NSDictionary<std::string, NSObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
 	
 	string texturePath = string(pszPlist);
 
@@ -213,62 +167,58 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 
 void CCSpriteFrameCache::addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName)
 {
-	(*m_pSpriteFramesMap)[pszFrameName] = pobFrame;
+	m_pSpriteFrames->setObject(pobFrame, std::string(pszFrameName));
 }
 
 void CCSpriteFrameCache::removeSpriteFrames(void)
 {
-	m_pSpriteFramesMap->clear();
+	m_pSpriteFrames->removeAllObjects();
 }
 
 void CCSpriteFrameCache::removeUnusedSpriteFrames(void)
 {
-	map<string, CCSpriteFrame*>::iterator iter;
-	for (iter = m_pSpriteFramesMap->begin(); iter != m_pSpriteFramesMap->end();)
+	m_pSpriteFrames->begin();
+	std::string key = "";
+	CCSpriteFrame *spriteFrame = NULL;
+	while( spriteFrame = m_pSpriteFrames->next(&key) )
 	{
-		CCSpriteFrame *pFrame = iter->second;
-		if (pFrame->retainCount() == 1)
+		if( spriteFrame->retainCount() == 1 ) 
 		{
-			CCLOG("cocos2d: CCSpriteFrameCache: removing unused frame %s", *iter);
-			m_pSpriteFramesMap->erase(iter);
-		}
-		else
-		{
-			++iter;
+			CCLOG("cocos2d: CCSpriteFrameCache: removing unused frame: %s", key.c_str());
+			m_pSpriteFrames->removeObjectForKey(key);
 		}
 	}
+	m_pSpriteFrames->end();
 }
 
 
 void CCSpriteFrameCache::removeSpriteFrameByName(const char *pszName)
 {
-	map<string, CCSpriteFrame*>::iterator iter = m_pSpriteFramesMap->find(pszName);
-	m_pSpriteFramesMap->erase(iter);
+	m_pSpriteFrames->removeObjectForKey(std::string(pszName));
 }
 
 CCSpriteFrame* CCSpriteFrameCache::spriteFrameByName(const char *pszName)
 {
-	CCSpriteFrame *pFrame = NULL;
-	map<string, CCSpriteFrame*>::iterator iter = m_pSpriteFramesMap->find(pszName);
-
-	if (iter != m_pSpriteFramesMap->end())
+	CCSpriteFrame *frame = m_pSpriteFrames->objectForKey(std::string(pszName));
+	if( ! frame )
 	{
-		pFrame = iter->second;
+		CCLOG("cocos2d: CCSpriteFrameCache: Frame '%s' not found", pszName);
 	}
-
-	if (! pFrame)
-	{
-		CCLOG("cocos2d: CCSpriteFrameCache: Frame %s, not found", pszName);
-	}
-
-	return pFrame;
+	return frame;
 }
 
 CCSprite* CCSpriteFrameCache::createSpriteWithFrameName(const char *pszName)
 {
-	map<string, CCSpriteFrame*>::iterator iter = m_pSpriteFramesMap->find(pszName);
-	CCSpriteFrame *pFrame = iter->second;
-
-	return CCSprite::spriteWithSpriteFrame(pFrame);
+	CCSpriteFrame *frame = m_pSpriteFrames->objectForKey(std::string(pszName));
+	return CCSprite::spriteWithSpriteFrame(frame);
+}
+const char * CCSpriteFrameCache::valueForKey(const char *key, NSDictionary<std::string, NSObject*> *dict)
+{
+	if (dict)
+	{
+		NSString *pString = (NSString*)dict->objectForKey(std::string(key));
+		return pString ? pString->m_sString.c_str() : "";
+	}
+	return "";
 }
 }//namespace   cocos2d 

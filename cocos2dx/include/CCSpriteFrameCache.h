@@ -30,13 +30,11 @@ THE SOFTWARE.
  * http://zwoptex.zwopple.com/
  */
 
+#include <string>
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
 #include "NSObject.h"
 #include "NSMutableDictionary.h"
-
-#include <string>
-#include <map>
 
 namespace   cocos2d {
 class CCSprite;
@@ -60,7 +58,7 @@ public:
 													   "y"  -> "12"
 													   ...
 	 */
-	void addSpriteFramesWithDictionary(std::map<std::string, void*> *pobDictionary, CCTexture2D *pobTexture);
+	void addSpriteFramesWithDictionary(NSDictionary<std::string, NSObject*> *pobDictionary, CCTexture2D *pobTexture);
 
 	/** Adds multiple Sprite Frames from a plist file.
 	 * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -115,9 +113,10 @@ public:
 
 private:
 	CCSpriteFrameCache(void) {}
-
+	const char * valueForKey(const char *key, NSDictionary<std::string, NSObject*> *dict);
+	
 protected:
-	std::map<std::string, CCSpriteFrame*> *m_pSpriteFramesMap;
+	NSDictionary<std::string, CCSpriteFrame*> *m_pSpriteFrames;
 };
 }//namespace   cocos2d 
 

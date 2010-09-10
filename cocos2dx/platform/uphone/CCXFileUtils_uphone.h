@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __PLATFORM_UPHONE_CCFILE_UTILS_H__
 
 #include <string>
-#include <map>
 #include <ssFile.h>
 #include "ccxCommon.h"
+#include "NSMutableDictionary.h"
 namespace   cocos2d {
 
 // Helper class to handle file operations
@@ -37,7 +37,7 @@ class CCX_DLL CCFileUtils
 public:
 	static const char* fullPathFromRelativePath(const char *pszRelativePath);
 	static const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
-	static std::map<std::string, void*> *dictionaryWithContentsOfFile(const char *pFileName);
+	static NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 	static void setResourcePath(const char *pszResourcePath);
 };
 }//namespace   cocos2d 

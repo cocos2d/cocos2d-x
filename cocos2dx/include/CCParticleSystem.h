@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 #include "CCProtocols.h"
 #include "CCNode.h"
-
-#include <map>
+#include "NSMutableDictionary.h"
+#include "NSString.h"
 
 namespace cocos2d {
 
@@ -361,7 +361,7 @@ namespace cocos2d {
 		/** initializes a CCQuadParticleSystem from a NSDictionary.
 		@since v0.99.3
 		*/
-		bool initWithDictionary(std::map<std::string, void*> *dictionary);
+		bool initWithDictionary(NSDictionary<std::string, NSObject*> *dictionary);
 
 		//! Initializes a system with a fixed number of particles
 		virtual bool initWithTotalParticles(int numberOfParticles);
@@ -383,10 +383,14 @@ namespace cocos2d {
 
 		virtual void update(ccTime dt);
 	private:
-		inline const char * valueForKey(const char *key, std::map<std::string, void*> *dict)
+		inline const char * valueForKey(const char *key, NSDictionary<std::string, NSObject*> *dict)
 		{
-			std::map<std::string, void*>::iterator it = dict->find(key);
-			return it!=dict->end() ? ((std::string*)(it->second))->c_str() : "";
+			if (dict)
+			{
+				NSString *pString = (NSString*)dict->objectForKey(std::string(key));
+				return pString ? pString->m_sString.c_str() : "";
+			}
+			return "";
 		}
 };
 
