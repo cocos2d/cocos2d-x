@@ -248,22 +248,22 @@ unsigned char* UIImage::getRGBA8888Data(void)
 		pBufferRet = new unsigned char[nW * nH * 4];
 		memcpy(pBufferRet, m_pBitmap->GetDataPtr(), nW * nH * 4);		
 
-#ifdef _TRANZDA_VM_
+/*#ifdef _TRANZDA_VM_*/
 		// translate BGRA to RGBA
-        for (int i = 0; i < nW; ++i)
-		{
-			for (int j = 0; j < nH; ++j)
-			{
-				int baseAddr = (j * nW + i) * 4;
-
-				uB = pBufferRet[baseAddr];
-				uR = pBufferRet[baseAddr + 2];
-
-				pBufferRet[baseAddr] = uR;
-				pBufferRet[baseAddr + 2] = uB;
-			}
-		}
-#endif // _TRANZDA_VM_
+         for (int i = 0; i < nW; ++i)
+ 		{
+ 			for (int j = 0; j < nH; ++j)
+ 			{
+ 				int baseAddr = (j * nW + i) * 4;
+ 
+ 				uB = pBufferRet[baseAddr];
+ 				uR = pBufferRet[baseAddr + 2];
+ 
+ 				pBufferRet[baseAddr] = uR;
+ 				pBufferRet[baseAddr + 2] = uB;
+ 			}
+ 		}
+/*#endif // _TRANZDA_VM_*/
 
 		/*pBitmap->Destroy();*/
 	} while(0);

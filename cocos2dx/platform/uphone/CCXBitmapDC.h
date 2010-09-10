@@ -39,14 +39,7 @@ namespace cocos2d{
 					UITextAlignment alignment = UITextAlignmentCenter,
 					const char *fontName = NULL,
 					float fontSize = 0);
-		virtual ~CCXBitmapDC(void)
-		{
-			if (m_pBitmap)
-			{
-				m_pBitmap->Destroy();
-				m_pBitmap = NULL;
-			}
-		}
+		~CCXBitmapDC(void);
 
 		TBitmap* getBitmap(void);
 		CGSize getSize(void);
@@ -54,6 +47,7 @@ namespace cocos2d{
 	protected:
 		TBitmap *m_pBitmap;
 		CGSize m_tSize;
+		TWindow *m_pWindow;
 	};
 }
 
