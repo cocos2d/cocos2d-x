@@ -29,17 +29,15 @@ THE SOFTWARE.
 #include <libxml/xmlmemory.h>
 #include <tg3.h>
 #include "NSString.h"
-
 #include "CCXFileUtils_uphone.h"
 #include "Cocos2dDefine.h"
 
-namespace   cocos2d {
+namespace cocos2d {
 
 void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
 void plist_endElement(void *ctx, const xmlChar *name);
 void plist_characters(void *ctx, const xmlChar *ch, int len);
 
-typedef std::pair<std::string, void*> Pair;
 typedef enum 
 {
 	SAX_NONE = 0,
@@ -53,9 +51,9 @@ typedef enum
 class CCDictMaker
 {
 public:
-	std::map<std::string, void*> *m_pRootDict;
-	std::map<std::string, void*> *m_pCurDict;
-	std::stack<std::map<std::string, void*>*> m_tDictStack;
+	NSDictionary<std::string, NSObject*> *m_pRootDict;
+	NSDictionary<std::string, NSObject*> *m_pCurDict;
+	std::stack<NSDictionary<std::string, NSObject*>*> m_tDictStack;
 	std::string m_sCurKey;///< parsed key
 	CCSAXState m_tState;
 public:
@@ -68,7 +66,7 @@ public:
 	~CCDictMaker()
 	{
 	}
-	std::map<std::string, void*> *dictionaryWithContentsOfFile(const char *pFileName)
+	NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName)
 	{
 		FILE *fp = NULL;
 		if( !(fp = fopen(pFileName, "r")) )
@@ -118,15 +116,17 @@ void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 	std::string sName((char*)name);
 	if( sName == "dict" )
 	{
-		std::map<std::string, void*> *pNewDict = new std::map<std::string, void*>();
+		NSDictionary<std::string, NSObject*> *pNewDict = new NSDictionary<std::string, NSObject*>();
 		if(! pMaker->m_pRootDict)
 		{
 			pMaker->m_pRootDict = pNewDict;
+			pNewDict->autorelease();
 		}
 		else
 		{
 			NSAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
-			pMaker->m_pCurDict->insert( Pair(pMaker->m_sCurKey, pNewDict) );
+			pMaker->m_pCurDict->setObject(pNewDict, pMaker->m_sCurKey);
+			pNewDict->release();
 			pMaker->m_sCurKey.clear();
 		}
 		pMaker->m_pCurDict = pNewDict;
@@ -163,7 +163,7 @@ void plist_endElement(void *ctx, const xmlChar *name)
 		pMaker->m_tDictStack.pop();
 		if ( !pMaker->m_tDictStack.empty() )
 		{
-			pMaker->m_pCurDict = (std::map<std::string, void*>*)(pMaker->m_tDictStack.top());
+			pMaker->m_pCurDict = (NSDictionary<std::string, NSObject*>*)(pMaker->m_tDictStack.top());
 		}
 	}
 	pMaker->m_tState = SAX_NONE;
@@ -175,21 +175,24 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
 	{
 		return;
 	}
- 	std::string *pText = new std::string((char*)ch,0,len);
+ 	NSString *pText = new NSString();
+	pText->m_sString = std::string((char*)ch,0,len);
+
  	switch(pMaker->m_tState)
  	{
  	case SAX_KEY:
- 		pMaker->m_sCurKey = *pText;
+ 		pMaker->m_sCurKey = pText->m_sString;
  		break;
  	case SAX_INT:
  	case SAX_REAL:
  	case SAX_STRING:
  		{
  			NSAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
- 			pMaker->m_pCurDict->insert( Pair(pMaker->m_sCurKey, pText) );
+ 			pMaker->m_pCurDict->setObject(pText, pMaker->m_sCurKey);
  			break;
  		}
  	}
+	pText->release();
 }
 
 // record the resource path
@@ -246,7 +249,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 	pRet->m_sString += pszFilename;
 	return pRet->m_sString.c_str();
 }
-std::map<std::string, void*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+NSDictionary<std::string, NSObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);

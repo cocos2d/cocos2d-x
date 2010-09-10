@@ -232,7 +232,7 @@ namespace cocos2d{
 	}
 	NSString * CCTMXTiledMap::propertyNamed(const char *propertyName)
 	{
-		return m_pProperties->objectForKey(propertyName);
+		return m_pProperties->objectForKey(std::string(propertyName));
 	}
 	NSDictionary<std::string, NSString*> * CCTMXTiledMap::propertiesForGID(int GID)
 	{

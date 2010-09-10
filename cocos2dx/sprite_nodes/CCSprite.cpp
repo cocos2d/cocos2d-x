@@ -917,7 +917,7 @@ void CCSprite::setDisplayFrame(const char *pszAnimationName, Int32 nFrameIndex)
 		initAnimationDictionary();
 	}
 
-	CCAnimation *pAnimation = m_pAnimations->objectForKey(pszAnimationName);
+	CCAnimation *pAnimation = m_pAnimations->objectForKey(std::string(pszAnimationName));
 	CCSpriteFrame *pFrame = pAnimation->getFrames()->getObjectAtIndex(nFrameIndex);
 
 	assert(pFrame);
@@ -954,7 +954,7 @@ CCAnimation* CCSprite::animationByName(const char *pszAnimationName)
 {
 	assert(pszAnimationName != NULL);
 
-	return m_pAnimations->objectForKey(pszAnimationName);
+	return m_pAnimations->objectForKey(std::string(pszAnimationName));
 }
 
 // Texture protocol

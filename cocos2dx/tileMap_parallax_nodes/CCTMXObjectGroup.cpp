@@ -47,7 +47,7 @@ namespace cocos2d {
 			NSArray<CCXStringToStringDictionary*>::NSMutableArrayIterator it;
 			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
 			{
-				NSString *name = (*it)->objectForKey("name");
+				NSString *name = (*it)->objectForKey(std::string("name"));
 				if (name && name->m_sString == objectName)
 				{
 					return *it;
@@ -59,7 +59,7 @@ namespace cocos2d {
 	}
 	NSString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
 	{
-		return m_pProperties->objectForKey(propertyName);
+		return m_pProperties->objectForKey(std::string(propertyName));
 	}
 
 	CCXStringToStringDictionary * CCTMXObjectGroup::getProperties()

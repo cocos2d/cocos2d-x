@@ -118,13 +118,13 @@ namespace cocos2d {
 	bool CCParticleSystem::initWithFile(const char *plistFile)
 	{
 		m_sPlistFile = CCFileUtils::fullPathFromRelativePath(plistFile);
-		std::map<std::string, void*> *dict = CCFileUtils::dictionaryWithContentsOfFile(m_sPlistFile.c_str());
+		NSDictionary<std::string, NSObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(m_sPlistFile.c_str());
 
 		NSAssert( dict != NULL, "Particles: file not found");
 		return this->initWithDictionary(dict);
 	}
 
-	bool CCParticleSystem::initWithDictionary(std::map<std::string, void*> *dictionary)
+	bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *dictionary)
 	{
 		bool bRet = false;
 		unsigned char *buffer = NULL;
