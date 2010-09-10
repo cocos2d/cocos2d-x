@@ -507,6 +507,7 @@ void SchedulerTest::onEnter()
 	m_kathia->runAction( CCSpeed::actionWithAction((CCIntervalAction*)action3, 1.0f) );
 	
 	CCParticleSystem* emitter = CCParticleFireworks::node();
+    emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 	addChild(emitter);
 	
 	//sliderCtl = [self sliderCtl];
@@ -676,6 +677,7 @@ void EaseSpriteDemo::restartCallback(NSObject* pSender)
 	s->addChild(restartEaseAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void EaseSpriteDemo::nextCallback(NSObject* pSender)
@@ -683,6 +685,7 @@ void EaseSpriteDemo::nextCallback(NSObject* pSender)
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild( nextEaseAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void EaseSpriteDemo::backCallback(NSObject* pSender)
@@ -690,6 +693,7 @@ void EaseSpriteDemo::backCallback(NSObject* pSender)
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild( backEaseAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void EaseActionsTestScene::runThisTest()
