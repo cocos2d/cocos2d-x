@@ -72,7 +72,7 @@ void IntervalLayer::step1(ccTime dt)
 {
 	m_time1 +=1;
 
-    char str[5] = {0};
+    char str[10] = {0};
     sprintf(str, "%2.1f", m_time1);
 	m_label1->setString( str );
 }
@@ -81,7 +81,7 @@ void IntervalLayer::step2(ccTime dt)
 {
 	m_time2 +=1;
 
-    char str[5] = {0};
+    char str[10] = {0};
     sprintf(str, "%2.1f", m_time2);
     m_label2->setString( str ); 
 }
@@ -90,7 +90,7 @@ void IntervalLayer::step3(ccTime dt)
 {
 	m_time3 +=1;
 
-    char str[5] = {0};
+    char str[10] = {0};
     sprintf(str, "%2.1f", m_time3);
     m_label3->setString( str ); 
 }
