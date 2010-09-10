@@ -695,6 +695,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="RenderTextureTest"
+				>
+				<File
+					RelativePath=".\tests\RenderTextureTest\RenderTextureTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\RenderTextureTest\RenderTextureTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"

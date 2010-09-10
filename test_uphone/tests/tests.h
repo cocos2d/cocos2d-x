@@ -24,6 +24,7 @@
 #include "AtlasTest/AtlasTest.h"
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
+#include "RenderTextureTest/RenderTextureTest.h"
 
 enum
 {
@@ -46,10 +47,12 @@ enum
     TEST_PARALLAX,
     TEST_TILE_MAP,
     TEST_INTERVAL,
-    TESTS_CHIPMUNK,
+    TEST_CHIPMUNK,
     TEST_ATLAS,
     TEST_SPRITE,
     TEST_SCHEDULER,
+    TEST_RENDERTEXTURE,
+
     TESTS_COUNT,
 };
 
@@ -77,6 +80,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "AtlasTest",
     "SpriteTest",
     "SchdulerTest",
+    "RenderTextureTest",
 };
 
 #endif
