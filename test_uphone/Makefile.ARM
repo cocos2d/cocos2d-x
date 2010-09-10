@@ -51,6 +51,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/ProgressActionsTest.o \
 	$(OBJECTS_DIR)/RotateWorldTest.o \
 	$(OBJECTS_DIR)/SceneTest.o \
+	$(OBJECTS_DIR)/SchedulerTest.o \
 	$(OBJECTS_DIR)/SpriteTest.o \
 	$(OBJECTS_DIR)/TileMapTest.o \
 	$(OBJECTS_DIR)/Ball.o \
@@ -143,6 +144,9 @@ $(OBJECTS_DIR)/RotateWorldTest.o : ./tests/RotateWorldTest/RotateWorldTest.cpp
 
 $(OBJECTS_DIR)/SceneTest.o : ./tests/SceneTest/SceneTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SceneTest.o ./tests/SceneTest/SceneTest.cpp
+
+$(OBJECTS_DIR)/SchedulerTest.o : ./tests/SchedulerTest/SchedulerTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SchedulerTest.o ./tests/SchedulerTest/SchedulerTest.cpp
 
 $(OBJECTS_DIR)/SpriteTest.o : ./tests/SpriteTest/SpriteTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SpriteTest.o ./tests/SpriteTest/SpriteTest.cpp
