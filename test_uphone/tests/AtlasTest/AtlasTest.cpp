@@ -246,12 +246,12 @@ LabelAtlasTest::LabelAtlasTest()
 {
 	m_time = 0;
 
-	CCLabelAtlas* label1 = CCLabelAtlas::labelAtlasWithString("123 Test", "tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas* label1 = CCLabelAtlas::labelAtlasWithString("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label1, 0, kTagSprite1);
 	label1->setPosition( ccp(10,100) );
 	label1->setOpacity( 200 );
 
-	CCLabelAtlas *label2 = CCLabelAtlas::labelAtlasWithString("0123456789", "tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas *label2 = CCLabelAtlas::labelAtlasWithString("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label2, 0, kTagSprite2);
 	label2->setPosition( ccp(10,200) );
 	label2->setOpacity( 32 );
@@ -293,12 +293,12 @@ std::string LabelAtlasTest::subtitle()
 //------------------------------------------------------------------
 LabelAtlasColorTest::LabelAtlasColorTest()
 {
-	CCLabelAtlas* label1 = CCLabelAtlas::labelAtlasWithString("123 Test", "tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas* label1 = CCLabelAtlas::labelAtlasWithString("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label1, 0, kTagSprite1);
 	label1->setPosition( ccp(10,100) );
 	label1->setOpacity( 200 );
 	
-	CCLabelAtlas* label2 = CCLabelAtlas::labelAtlasWithString("0123456789", "tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas* label2 = CCLabelAtlas::labelAtlasWithString("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label2, 0, kTagSprite2);
 	label2->setPosition( ccp(10,200) );
 	label2->setColor( ccRED );
