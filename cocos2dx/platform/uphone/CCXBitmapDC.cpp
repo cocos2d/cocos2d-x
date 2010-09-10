@@ -32,16 +32,19 @@ namespace cocos2d {
 	CCXBitmapDC::CCXBitmapDC(int width, int height)
 	{
 		m_pBitmap->Create(width, height, 32);
+		m_pWindow = NULL;
 	}
 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
 		// create font
 		TFont font;
 		font.Create(0, (Int32)fontSize);
+
 		// text
 		Int32 len = strlen(text) + 1;
 		TUChar *pText = new TUChar[len];
 		TUString::StrUtf8ToStrUnicode(pText, (Char*)text);
+
 		// calculate text size
 		if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
 		{
@@ -54,15 +57,17 @@ namespace cocos2d {
 
 		Int16 width = (Int16)m_tSize.width;
 		Int16 height = (Int16)m_tSize.height;
+
 		// create memory window
-		TWindow *pWindow = new TWindow(CCXApplication::getSharedApplication());
-		pWindow->CreateMemWindow(width, height, screenAlphaTransparentFormat);
+		m_pWindow = new TWindow(CCXApplication::getSharedApplication());
+		m_pWindow->CreateMemWindow(width, height,screenTransparentFormat);
+
 		// create DC
-		TDC dc(pWindow);
+		TDC dc(m_pWindow);
 		// set DC styles
-		UInt32 styles = GUI_API_STYLE_ROP_MODE_TRANSPARENT | GUI_API_STYLE_SPECIFY_FORE_COLOR |  GUI_API_STYLE_ROP_MODE_ALPHA |
-			 GUI_API_STYLE_ALIGNMENT_MIDDLE | GUI_API_STYLE_SPECIFY_FONT;
-		/*UInt32 styles = GUI_API_STYLE_ROP_MODE_TRANSPARENT;*/
+ 		UInt32 styles = GUI_API_STYLE_SPECIFY_FORE_COLOR |  GUI_API_STYLE_ROP_MODE_TRANSPARENT |
+ 			 GUI_API_STYLE_SPECIFY_BACK_COLOR | GUI_API_STYLE_ALIGNMENT_MIDDLE | GUI_API_STYLE_SPECIFY_FONT;
+
 		switch (alignment)
 		{
 		case UITextAlignmentLeft:
@@ -79,33 +84,30 @@ namespace cocos2d {
 			break;
 		}
 		TRectangle rect;
-		pWindow->GetWindowFrameRect(&rect);
+		m_pWindow->GetWindowFrameRect(&rect);
 
-		m_pBitmap = TBitmap::Create(rect.Width(), rect.Height(), 32);
-		m_pBitmap->Fill32(RGBA(0,0,0,0));
-		dc.SetBackColor(RGBA(0,0,0,0));
-		dc.DrawBitmap(m_pBitmap, 0, 0);
+		m_pBitmap = m_pWindow->GetMemWindowTBitmapPtr();
+ 		m_pBitmap->Fill32(RGBA(0, 0, 0, 0));
 		
+ 		dc.DrawTextInRectangleEx(pText, 0, RGBA(255,255,255,255), RGBA(0,0,0,255), font, &rect, styles);
 
-		dc.DrawTextInRectangleEx(pText, 0, RGBA(255,255,255,255), RGBA(0,0,0,0), font, &rect, styles);
-
-		dc.ReadBitmap(m_pBitmap, rect.X(), rect.Y());
-
-		/*m_pBitmap = pWindow->GetBitmap()->DupBitmapTo32();*/
-		/*m_pBitmap = pWindow->GetMemWindowTBitmapPtr()->DupBitmapTo32();*/
-
-// 		TUChar pszFile[100] = { 0 };
-// 		TUString::StrUtf8ToStrUnicode(pszFile, (Char *)"/NEWPLUS/TDA_DATA/tmp.bmp");
-// 		m_pBitmap->SaveToFile(pszFile);
-
-		// close window
-		pWindow->CloseWindowNow();
 		delete [] pText;
 	}
+
+	CCXBitmapDC::~CCXBitmapDC(void)
+	{
+		if (m_pWindow)
+		{
+			m_pWindow->CloseWindowNow();
+			m_pWindow = NULL;
+		}
+	}
+
 	void *CCXBitmapDC::getBuffer()
 	{
 		return m_pBitmap->GetDataPtr();
 	}
+
 	CGSize CCXBitmapDC::getSize()
 	{
 		return m_tSize;
