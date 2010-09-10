@@ -18,11 +18,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new TransitionsTestScene(); break;
     case TEST_PROGRESS_ACTIONS:
         pScene = new ProgressActionsTestScene(); break;
-/**
-@todo 
     case TEST_EFFECTS:
         pScene = new EffectTestScene(); break;
-*/
     case TEST_CLICK_AND_MOVE:
         pScene = new ClickAndMoveTestScene(); break;
     case TEST_ROTATE_WORLD:
@@ -53,7 +50,7 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new TileMapTestScene(); break;
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
-//     case TESTS_CHIPMUNK:
+//     case TEST_CHIPMUNK:
 // 		CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationPortrait);
 //         pScene = new ChipmunkTestScene(); break;
     case TEST_ATLAS:
@@ -62,6 +59,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new SpriteTestScene(); break;
     case TEST_SCHEDULER:
         pScene = new SchedulerTestScene(); break;
+    case TEST_RENDERTEXTURE:
+        pScene = new RenderTextureScene(); break;
     default:
         break;
     }
@@ -143,7 +142,7 @@ void TestController::menuCallback(NSObject * pSender)
     if (pScene)
     {
         pScene->runThisTest();
-        pScene->autorelease();
+        pScene->release();
     }
 }
 

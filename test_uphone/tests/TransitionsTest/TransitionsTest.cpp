@@ -139,7 +139,7 @@ public:
     }
 };
 
-#define MAX_LAYER	25          //37
+#define MAX_LAYER	37
 
 static std::string transitions[MAX_LAYER] = {
     "JumpZoomTransition",
@@ -168,18 +168,18 @@ static std::string transitions[MAX_LAYER] = {
     "SlideInTTransition",
     "SlideInBTransition",
 
-//     "CCCrossFadeTransition",
-//     "CCRadialCCWTransition",
-//     "CCRadialCWTransition",
-//     "PageTransitionForward",
-//     "PageTransitionBackward",
-//     "FadeTRTransition",
-//     "FadeBLTransition",
-//     "FadeUpTransition",
-//     "FadeDownTransition",
-//     "TurnOffTilesTransition",
-//     "SplitRowsTransition",
-//     "SplitColsTransition",
+    "CCCrossFadeTransition",
+    "CCRadialCCWTransition",
+    "CCRadialCWTransition",
+    "PageTransitionForward",
+    "PageTransitionBackward",
+    "FadeTRTransition",
+    "FadeBLTransition",
+    "FadeUpTransition",
+    "FadeDownTransition",
+    "TurnOffTilesTransition",
+    "SplitRowsTransition",
+    "SplitColsTransition",
 };
 static int s_nSceneIdx = 0;
 
@@ -213,18 +213,18 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     case 23: return CCSlideInTTransition::transitionWithDuration(t, s);
     case 24: return CCSlideInBTransition::transitionWithDuration(t, s);
 
-//     case 25: return CCCrossFadeTransition::transitionWithDuration(t,s);
-//     case 26: return CCRadialCCWTransition::transitionWithDuration(t,s);
-//     case 27: return CCRadialCWTransition::transitionWithDuration(t,s);
-//     case 28: return PageTransitionForward::transitionWithDuration(t, s);
-//     case 29: return PageTransitionBackward::transitionWithDuration(t, s);
-//     case 30: return CCFadeTRTransition::transitionWithDuration(t, s);
-//     case 31: return CCFadeBLTransition::transitionWithDuration(t, s);
-//     case 32: return CCFadeUpTransition::transitionWithDuration(t, s);
-//     case 33: return CCFadeDownTransition::transitionWithDuration(t, s);
-//     case 34: return CCTurnOffTilesTransition::transitionWithDuration(t, s);
-//     case 35: return CCSplitRowsTransition::transitionWithDuration(t, s);
-//     case 36: return CCSplitColsTransition::transitionWithDuration(t, s);
+    case 25: return CCCrossFadeTransition::transitionWithDuration(t,s);
+    case 26: return CCRadialCCWTransition::transitionWithDuration(t,s);
+    case 27: return CCRadialCWTransition::transitionWithDuration(t,s);
+    case 28: return PageTransitionForward::transitionWithDuration(t, s);
+    case 29: return PageTransitionBackward::transitionWithDuration(t, s);
+    case 30: return CCFadeTRTransition::transitionWithDuration(t, s);
+    case 31: return CCFadeBLTransition::transitionWithDuration(t, s);
+    case 32: return CCFadeUpTransition::transitionWithDuration(t, s);
+    case 33: return CCFadeDownTransition::transitionWithDuration(t, s);
+    case 34: return CCTurnOffTilesTransition::transitionWithDuration(t, s);
+    case 35: return CCSplitRowsTransition::transitionWithDuration(t, s);
+    case 36: return CCSplitColsTransition::transitionWithDuration(t, s);
     default: break;
     }
 
