@@ -16,6 +16,7 @@ IntervalLayer::IntervalLayer()
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	// sun
 	CCParticleSystem* sun = CCParticleSun::node();
+    sun->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 	sun->setPosition( CGPointMake(s.width-32,s.height-32) );
 
 	sun->setTotalParticles(130);
