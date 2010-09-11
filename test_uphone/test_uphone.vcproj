@@ -570,7 +570,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\chipmunk\Demo\drawSpace.c"
+						RelativePath="..\chipmunk\Demo\drawSpace.cpp"
 						>
 					</File>
 					<File

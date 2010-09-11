@@ -49,11 +49,12 @@ bool Ttest_uphoneApp::initCocos2d()
     CCSprite * pSprite = new CCSprite();
 	pSprite->initWithTexture(pTexture); 
     pSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
-    pSprite->autorelease()->retain();
+    pSprite->autorelease();
 
     // create layer instance
     CCLayer * pLayer = new CCLayer();
-    pLayer->addChild(pSprite)->autorelease();
+    pLayer->addChild(pSprite);
+    pLayer->autorelease();
 
     // add layer to scene
     CCScene * pScene = CCScene::node();
