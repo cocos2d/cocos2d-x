@@ -510,6 +510,7 @@ bool CCXEGLView::isOpenGLReady()
 
 void CCXEGLView::release()
 {
+    CCX_SAFE_DELETE(m_pDelegate);
     CCX_SAFE_DELETE(m_pEGL);
     CloseWindow();
 }
