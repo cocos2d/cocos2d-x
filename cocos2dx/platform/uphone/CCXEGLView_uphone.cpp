@@ -400,6 +400,7 @@ CCXEGLView::~CCXEGLView()
     delete m_pEGL;
     delete m_pSet;
     delete m_pTouch;
+    CCX_SAFE_DELETE(m_pDelegate);
 }
 
 Boolean CCXEGLView::AfterCreate(void)
@@ -477,7 +478,6 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     case EVENT_WinClose:
         // Stop the application since the main form has been closed
-        CCX_SAFE_DELETE(m_pDelegate);
         pApp->SendStopEvent();
         break;
 
