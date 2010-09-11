@@ -67,6 +67,8 @@ public:
 	virtual void touchesMoved(NSSet* touches, UIEvent* pEvent) = 0;
 	virtual void touchesEnded(NSSet* touches, UIEvent* pEvent) = 0;
 	virtual void touchesCancelled(NSSet* touches, UIEvent* pEvent) = 0;
+
+    virtual ~EGLTouchDelegate() {}
 };
 
 /** CCTouchDispatcher.
