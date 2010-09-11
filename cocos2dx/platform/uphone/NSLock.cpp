@@ -33,6 +33,12 @@ NSLock::NSLock(void)
 NSLock::~NSLock(void)
 {
 	CriticalSectionDestroy(m_pLock);
+
+    if (m_pLock)
+    {
+        delete m_pLock;
+        m_pLock = NULL;
+    }
 }
 
 void NSLock::lock(void)

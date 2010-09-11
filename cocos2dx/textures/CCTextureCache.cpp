@@ -71,7 +71,6 @@ CCTextureCache::CCTextureCache()
 	NSAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
 	
 	m_pTextures = new NSMutableDictionary<std::string, CCTexture2D*>();
-	m_pTextures->retain();
 	m_pDictLock = new NSLock();
 	m_pContextLock = new NSLock();
 }
