@@ -120,8 +120,6 @@ void NSPoolManager::finalize()
 				break;
 
 			(*it)->clear();
-
-			delete (*it);
 		}
 	}
 }

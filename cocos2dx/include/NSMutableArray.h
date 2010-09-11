@@ -260,7 +260,7 @@ public:
 
 	void removeObjectAtIndex(unsigned int uIndex, bool bDeleteObject = true)
 	{
-		if (m_array.empty() || uIndex == 0)
+		if (m_array.empty())
 		{
 			return;
 		}
