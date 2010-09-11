@@ -477,6 +477,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     case EVENT_WinClose:
         // Stop the application since the main form has been closed
+        CCX_SAFE_DELETE(m_pDelegate);
         pApp->SendStopEvent();
         break;
 
@@ -510,7 +511,6 @@ bool CCXEGLView::isOpenGLReady()
 
 void CCXEGLView::release()
 {
-    CCX_SAFE_DELETE(m_pDelegate);
     CCX_SAFE_DELETE(m_pEGL);
     CloseWindow();
 }
