@@ -22,6 +22,7 @@ void DemoFirework::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFireworks::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
@@ -45,6 +46,7 @@ void DemoFire::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFire::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );//.pvr"];
@@ -69,6 +71,7 @@ void DemoSun::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSun::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
@@ -91,6 +94,7 @@ void DemoGalaxy::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleGalaxy::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
@@ -113,6 +117,7 @@ void DemoFlower::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFlower::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
 	
@@ -138,7 +143,7 @@ void DemoBigFlower::onEnter()
 	//m_emitter->autorelease();
 
 	m_background->addChild(m_emitter, 10);
-	m_emitter->release();	// win32 :  use this line or remove this line and use autorelease()
+	////m_emitter->release();	// win32 :  use this line or remove this line and use autorelease()
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
 
 	m_emitter->setDuration(-1);
@@ -222,7 +227,7 @@ void DemoRotFlower::onEnter()
 	//m_emitter->autorelease();
 
 	m_background->addChild(m_emitter, 10);
-	m_emitter->release();	// win32 : Remove this line
+	////m_emitter->release();	// win32 : Remove this line
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars2) );
 	
 	// duration
@@ -303,6 +308,7 @@ void DemoMeteor::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleMeteor::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
@@ -325,6 +331,7 @@ void DemoSpiral::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSpiral::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
@@ -347,6 +354,7 @@ void DemoExplosion::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleExplosion::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_stars1) );
@@ -371,6 +379,7 @@ void DemoSmoke::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSmoke::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
@@ -395,6 +404,7 @@ void DemoSnow::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleSnow::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
 	CGPoint p = m_emitter->getPosition();
@@ -442,6 +452,7 @@ void DemoRain::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleRain::node();
+    m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
 	CGPoint p = m_emitter->getPosition();
@@ -472,7 +483,7 @@ void DemoModernArt::onEnter()
 	//m_emitter->autorelease();
 
 	m_background->addChild(m_emitter, 10);
-	m_emitter->release();
+	////m_emitter->release();
 	
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 	
@@ -552,6 +563,7 @@ void DemoRing::onEnter()
 	ParticleDemo::onEnter();
 
 	m_emitter = CCParticleFlower::node();
+    m_emitter->retain();
 
 	m_background->addChild(m_emitter, 10);
 
@@ -591,6 +603,7 @@ void ParallaxParticle::onEnter()
 	p->addChild(p2, 2, CGPointMake(1.5f,1), CGPointMake(0,50) );
 
 	m_emitter = CCParticleFlower::node();
+    m_emitter->retain();
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 
 	p1->addChild(m_emitter, 10);
@@ -766,7 +779,7 @@ ParticleDemo::ParticleDemo(void)
 
 ParticleDemo::~ParticleDemo(void)
 {
-	//m_emitter->release(); 
+	m_emitter->release(); 
 }
 
 void ParticleDemo::onEnter(void)
