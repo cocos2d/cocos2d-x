@@ -674,7 +674,7 @@ SpriteSheetReorder::SpriteSheetReorder()
 	prev = -1;
     NSMutableArray<CCSprite*>::NSMutableArrayIterator itChild;
 	NSMutableArray<CCSprite*>* sChildren = asmtest->getDescendants();
-	for(itChild = sChildren->begin(); itChild != sChildren->end(); it++)
+	for(itChild = sChildren->begin(); itChild != sChildren->end(); itChild++)
 	{
 		child = (CCSprite*)(*itChild);
 		if(! child )
@@ -1483,7 +1483,6 @@ SpriteFrameTest::SpriteFrameTest()
 	
 	sprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
 
-    animFrames->removeAllObjects();////----
 	animFrames->release();
 	moreFrames->release(); 
 
