@@ -296,11 +296,91 @@
 			Name="tests"
 			>
 			<File
+				RelativePath=".\tests\ChipmunkTest\Bounce.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\ChipmunkDemo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\cocos2dChipmunkDemo.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\cocos2dChipmunkDemo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\tests\controller.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\tests\controller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\drawSpace.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\drawSpace.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Joints.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\LogoSmash.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\MagnetsElectric.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\OneWay.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Planet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Player.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Plink.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Pump.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\PyramidStack.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\PyramidTopple.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Query.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Sensors.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Simple.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Springies.cpp"
 				>
 			</File>
 			<File
@@ -317,6 +397,18 @@
 			</File>
 			<File
 				RelativePath=".\tests\tests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\TheoJansen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\Tumble.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\ChipmunkTest\UnsafeOps.cpp"
 				>
 			</File>
 			<Filter
@@ -550,102 +642,6 @@
 					RelativePath=".\tests\TileMapTest\TileMapTest.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="ChipmunkTest"
-				>
-				<File
-					RelativePath="..\chipmunk\Demo\cocos2dChipmunkDemo.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\chipmunk\Demo\cocos2dChipmunkDemo.h"
-					>
-				</File>
-				<Filter
-					Name="TestCases"
-					>
-					<File
-						RelativePath="..\chipmunk\Demo\Bounce.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\drawSpace.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\drawSpace.h"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Joints.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\LogoSmash.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\MagnetsElectric.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\OneWay.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Planet.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Player.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Plink.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Pump.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\PyramidStack.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\PyramidTopple.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Query.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Sensors.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Simple.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Springies.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\TheoJansen.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\Tumble.c"
-						>
-					</File>
-					<File
-						RelativePath="..\chipmunk\Demo\UnsafeOps.c"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="IntervalTest"
