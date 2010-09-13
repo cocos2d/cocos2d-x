@@ -129,6 +129,7 @@ void TestCocosNodeDemo::restartCallback(NSObject* pSender)
 	s->addChild(restartCocosNodeAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void TestCocosNodeDemo::nextCallback(NSObject* pSender)
@@ -136,6 +137,7 @@ void TestCocosNodeDemo::nextCallback(NSObject* pSender)
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild( nextCocosNodeAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void TestCocosNodeDemo::backCallback(NSObject* pSender)
@@ -143,6 +145,7 @@ void TestCocosNodeDemo::backCallback(NSObject* pSender)
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild( backCocosNodeAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 
@@ -422,7 +425,6 @@ StressTest2::StressTest2()
 	CCLayer* sublayer = CCLayer::node();
 	
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
-	sp1->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 	sp1->setPosition( CGPointMake(80, s.height/2) );
 	
 	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
@@ -687,12 +689,13 @@ CameraCenterTest::CameraCenterTest()
 	// LEFT-TOP
 	sprite = new CCSprite();//::node();
     sprite->init();
-	addChild( sprite, 0);	
+	addChild( sprite, 0);
 	sprite->setPosition(CGPointMake(s.width/5*1, s.height/5*1));
 	sprite->setColor(ccRED);
 	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
+    sprite->release();
 //		[sprite setAnchorPoint: CGPointMake(0,1));
 
 	
@@ -706,7 +709,8 @@ CameraCenterTest::CameraCenterTest()
 	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
-//		[sprite setAnchorPoint: CGPointMake(0,0));
+    sprite->release();
+    //		[sprite setAnchorPoint: CGPointMake(0,0));
 
 
 	// RIGHT-TOP
@@ -718,6 +722,7 @@ CameraCenterTest::CameraCenterTest()
 	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit) );
+    sprite->release();
 //		[sprite setAnchorPoint: CGPointMake(1,1));
 
 	
@@ -730,6 +735,7 @@ CameraCenterTest::CameraCenterTest()
 	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
+    sprite->release();
 //		[sprite setAnchorPoint: CGPointMake(1,0));
 
 	// CENTER
@@ -741,6 +747,7 @@ CameraCenterTest::CameraCenterTest()
 	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ) );
+    sprite->release();
 //		[sprite setAnchorPoint: CGPointMake(0.5f, 0.5f));
 }
 

@@ -82,6 +82,7 @@ void DrawPrimitivesTestScene::runThisTest()
 {
     CCLayer* pLayer = new DrawPrimitivesTest();
     addChild(pLayer);
+    pLayer->release();
 
     CCDirector::getSharedDirector()->replaceScene(this);
 }

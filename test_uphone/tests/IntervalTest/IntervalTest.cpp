@@ -99,6 +99,7 @@ void IntervalTestScene::runThisTest()
 {
     CCLayer* pLayer = new IntervalLayer();
     addChild(pLayer);
+    pLayer->release();
 
     CCDirector::getSharedDirector()->replaceScene(this);
 }
