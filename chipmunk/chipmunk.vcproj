@@ -408,30 +408,6 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="uphonefw"
-			>
-			<File
-				RelativePath=".\uphonefw\chipmunkUnicodeScript.h"
-				>
-			</File>
-			<File
-				RelativePath=".\uphonefw\chipmunkUnicodeScript_str.h"
-				>
-			</File>
-			<File
-				RelativePath=".\uphonefw\NewDeleteOp.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\uphonefw\TG3AppDllEntry.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\uphonefw\TG3AppDllEntry.h"
-				>
-			</File>
-		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
