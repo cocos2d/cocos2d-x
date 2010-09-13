@@ -54,6 +54,8 @@ void SceneTestLayer1::onPushScene(NSObject* pSender)
     CCLayer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
 	CCDirector::getSharedDirector()->pushScene( scene );
+    scene->release();
+    pLayer->release();
 }
 
 void SceneTestLayer1::onPushSceneTran(NSObject* pSender)
@@ -63,6 +65,8 @@ void SceneTestLayer1::onPushSceneTran(NSObject* pSender)
     scene->addChild( pLayer, 0 );
 
 	CCDirector::getSharedDirector()->pushScene( CCSlideInTTransition::transitionWithDuration(1, scene) );
+    scene->release();
+    pLayer->release();
 }
 
 
@@ -125,6 +129,8 @@ void SceneTestLayer2::onReplaceScene(NSObject* pSender)
     CCLayer* pLayer = new SceneTestLayer3();
     pScene->addChild( pLayer, 0 );
 	CCDirector::getSharedDirector()->replaceScene( pScene );
+    pScene->release();
+    pLayer->release();
 }
 
 
@@ -134,6 +140,8 @@ void SceneTestLayer2::onReplaceSceneTran(NSObject* pSender)
     CCLayer* pLayer = new SceneTestLayer3();
 	pScene->addChild( pLayer, 0 );
 	CCDirector::getSharedDirector()->replaceScene( CCFlipXTransition::transitionWithDuration(2, pScene) );
+    pScene->release();
+    pLayer->release();
 }
 
 //------------------------------------------------------------------
@@ -176,6 +184,7 @@ void SceneTestScene::runThisTest()
 {
     CCLayer* pLayer = new SceneTestLayer1();
     addChild(pLayer);
+    pLayer->release();
 
     CCDirector::getSharedDirector()->replaceScene(this);
 }
