@@ -28,7 +28,7 @@ enum
 	IDC_RESTART
 };
 
-static int sceneIdx = 25; 
+static int sceneIdx = -1; 
 
 #define MAX_LAYER	36
 
