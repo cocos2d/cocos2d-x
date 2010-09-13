@@ -334,7 +334,7 @@ bool UIImage::loadPng(const char* strFileName)
     png_set_sig_bytes(png_ptr, 8);
 
     // read the data of the file
-    png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND, 0);
+    png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_GRAY_TO_RGB, 0);
 
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bitDepth, &colorType,
         &interlaceType, NULL, NULL);
@@ -454,7 +454,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
 
 	// read the data of the file
-	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND, 0);
+	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_GRAY_TO_RGB, 0);
 
 	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bitDepth, &colorType,
 		&interlaceType, NULL, NULL);
