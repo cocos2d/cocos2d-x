@@ -52,6 +52,7 @@ protected:
     CCSprite*	m_tamara;
     CCSprite*	m_kathia;public:
     virtual void onEnter();
+    virtual void onExit();
 
     void centerSprites(unsigned int numberOfSprites);
     void alignSpritesLeft(unsigned int numberOfSprites);

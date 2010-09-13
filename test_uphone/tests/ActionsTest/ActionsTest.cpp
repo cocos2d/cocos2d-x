@@ -179,11 +179,19 @@ void ActionsDemo::onEnter()
     addChild(menu, 1);
 }
 
+void ActionsDemo::onExit()
+{
+    m_grossini->release();
+    m_tamara->release();
+    m_kathia->release();
+}
+
 void ActionsDemo::restartCallback(NSObject* pSender)
 {
     CCScene* s = new ActionsTestScene();
     s->addChild( RestartAction() );
     CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ActionsDemo::nextCallback(NSObject* pSender)
@@ -191,6 +199,7 @@ void ActionsDemo::nextCallback(NSObject* pSender)
     CCScene* s = new ActionsTestScene();
     s->addChild( NextAction() );
     CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ActionsDemo::backCallback(NSObject* pSender)
@@ -198,6 +207,7 @@ void ActionsDemo::backCallback(NSObject* pSender)
     CCScene* s = new ActionsTestScene();
     s->addChild( BackAction() );
     CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ActionsDemo::centerSprites(unsigned int numberOfSprites)
