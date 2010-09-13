@@ -28,7 +28,7 @@ enum
 	IDC_RESTART
 };
 
-static int sceneIdx = -1; 
+static int sceneIdx = 25; 
 
 #define MAX_LAYER	36
 
@@ -168,24 +168,27 @@ void SpriteTestDemo::onEnter()
 
 void SpriteTestDemo::restartCallback(NSObject* pSender)
 {
-	CCScene* s = CCScene::node();
+	CCScene* s = new SpriteTestScene();
 	s->addChild(restartSpriteTestAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void SpriteTestDemo::nextCallback(NSObject* pSender)
 {
-	CCScene* s = CCScene::node();
+	CCScene* s = new SpriteTestScene();
 	s->addChild( nextSpriteTestAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void SpriteTestDemo::backCallback(NSObject* pSender)
 {
-	CCScene* s = CCScene::node();
+	CCScene* s = new SpriteTestScene();
 	s->addChild( backSpriteTestAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 
