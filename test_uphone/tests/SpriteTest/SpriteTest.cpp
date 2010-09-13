@@ -974,7 +974,7 @@ SpriteSheetAnchorPoint::SpriteSheetAnchorPoint()
 		CCAction* copy = (CCAction*)(action->copy()->autorelease());
 		sprite->runAction(copy);
 		sheet->addChild(sprite, i);
-	}		
+	}
 }
 
 std::string SpriteSheetAnchorPoint::title()
@@ -1419,74 +1419,75 @@ std::string SpriteSheetNewTexture::title()
 
 SpriteFrameTest::SpriteFrameTest()
 {
-		CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::getSharedDirector()->getWinSize();
 
-		// IMPORTANT:
-		// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-		//     CCSpriteFrameCache::sharedSpriteFrameCache()->removeUnusedSpriteFrames);
-        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_gray.plist");
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_blue.plist");
+	// IMPORTANT:
+	// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
+	//     CCSpriteFrameCache::sharedSpriteFrameCache()->removeUnusedSpriteFrames);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_gray.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_blue.plist");
 
-		//
-		// Animation using Sprite Sheet
-		//
-		CCSprite* sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite->setPosition( ccp( s.width/2-80, s.height/2) );
-		
-		CCSpriteSheet* spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
-		spritesheet->addChild(sprite);
-		addChild(spritesheet);
+	//
+	// Animation using Sprite Sheet
+	//
+	CCSprite* sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+	sprite->setPosition( ccp( s.width/2-80, s.height/2) );
+	
+	CCSpriteSheet* spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
+	spritesheet->addChild(sprite);
+	addChild(spritesheet);
 
-		NSMutableArray<CCSpriteFrame*>* animFrames = new NSMutableArray<CCSpriteFrame*>(15);
+	NSMutableArray<CCSpriteFrame*>* animFrames = new NSMutableArray<CCSpriteFrame*>(15);
 
-        char str[100] = {0};
-		for(int i = 1; i < 15; i++) 
-		{
-            sprintf(str, "grossini_dance_%02d.png", i);
-			CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName( str );
-			animFrames->addObject(frame);
-		}
+    char str[100] = {0};
+	for(int i = 1; i < 15; i++) 
+	{
+        sprintf(str, "grossini_dance_%02d.png", i);
+		CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName( str );
+		animFrames->addObject(frame);
+	}
 
-		CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f, animFrames);
-		sprite->runAction( CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
+	CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f, animFrames);
+	sprite->runAction( CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
 
-		// to test issue #732, uncomment the following line
+	// to test issue #732, uncomment the following line
 //		sprite.flipX = true;
-		//
-		// Animation using standard Sprite
-		//
-		CCSprite* sprite2 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-		sprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
-		addChild(sprite2);
-		
+	//
+	// Animation using standard Sprite
+	//
+	CCSprite* sprite2 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+	sprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
+	addChild(sprite2);
+	
 
-		NSMutableArray<CCSpriteFrame*>* moreFrames = new NSMutableArray<CCSpriteFrame*>(20);
-		for(int i = 1; i < 15; i++) 
-		{
-            sprintf(str, "grossini_dance_gray_%02d.png",i);
-			CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str);
-			moreFrames->addObject(frame);
-		}
- 
+	NSMutableArray<CCSpriteFrame*>* moreFrames = new NSMutableArray<CCSpriteFrame*>(20);
+	for(int i = 1; i < 15; i++) 
+	{
+        sprintf(str, "grossini_dance_gray_%02d.png",i);
+		CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str);
+		moreFrames->addObject(frame);
+	}
 
-		for( int i = 1; i < 5; i++) {
-            sprintf(str, "grossini_blue_%02d.png",i);
-			CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str);
-			moreFrames->addObject(frame);
-		}
-		
-		// append frames from another sheet
-		moreFrames->addObjectsFromArray(animFrames);
-		CCAnimation *animMixed = CCAnimation::animationWithName("dance", 0.2f, moreFrames);
 
-		
-		sprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
+	for( int i = 1; i < 5; i++) {
+        sprintf(str, "grossini_blue_%02d.png",i);
+		CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str);
+		moreFrames->addObject(frame);
+	}
+	
+	// append frames from another sheet
+	moreFrames->addObjectsFromArray(animFrames);
+	CCAnimation *animMixed = CCAnimation::animationWithName("dance", 0.2f, moreFrames);
 
-		animFrames->release();
-		moreFrames->release(); 
+	
+	sprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
 
-		// to test issue #732, uncomment the following line
+    animFrames->removeAllObjects();////----
+	animFrames->release();
+	moreFrames->release(); 
+
+	// to test issue #732, uncomment the following line
 //		sprite2.flipX = true;
 
 }
@@ -1515,23 +1516,22 @@ std::string SpriteFrameTest::title()
 SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
 {
 	CGSize s = CCDirector::getSharedDirector()->getWinSize();		
-	
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_gray.plist");
+
 	for(int i=0;i<3;i++) 
 	{
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_gray.plist");
-		
-		//
-		// Animation using Sprite Sheet
-		//
-		CCSprite* sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+        //
+	    // Animation using Sprite Sheet
+	    //
+	    CCSprite* sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
 		sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
-		
-		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
-		point->setScale( 0.25f );
-		point->setPosition( sprite->getPosition() );
-		addChild(point, 1);
-		
+
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+        point->setScale( 0.25f );
+        point->setPosition( sprite->getPosition() );
+        addChild(point, 1);
+
 		switch(i) 
 		{
 			case 0:

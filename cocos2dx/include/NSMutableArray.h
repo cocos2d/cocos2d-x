@@ -183,6 +183,7 @@ public:
 			{
 				if (*iter)
 				{
+                    (*iter)->retain();
 					m_array.push_back(*iter);
 				}
 			}
