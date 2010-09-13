@@ -108,6 +108,7 @@ void ActionManagerTest::restartCallback(NSObject* pSender)
 	s->addChild(restartActionManagerAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ActionManagerTest::nextCallback(NSObject* pSender)
@@ -115,6 +116,7 @@ void ActionManagerTest::nextCallback(NSObject* pSender)
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild( nextActionManagerAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ActionManagerTest::backCallback(NSObject* pSender)
@@ -122,6 +124,7 @@ void ActionManagerTest::backCallback(NSObject* pSender)
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild( backActionManagerAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 //------------------------------------------------------------------
