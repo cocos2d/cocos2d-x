@@ -663,6 +663,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 		{
 			pChild = (CCSprite*)(*iter);
+            CCX_BREAK_IF(! pChild);
 			m_pobSpriteSheet->removeSpriteFromAtlas(pChild);
 		}
 	}
@@ -688,6 +689,7 @@ void CCSprite::setDirtyRecursively(bool bValue)
 		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 		{
 			pChild = (CCSprite*)(*iter);
+            CCX_BREAK_IF(! pChild);
 			pChild->setDirtyRecursively(true);
 		}
 	}

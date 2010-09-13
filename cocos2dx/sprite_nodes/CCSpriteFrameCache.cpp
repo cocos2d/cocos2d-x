@@ -59,7 +59,6 @@ bool CCSpriteFrameCache::init(void)
 
 CCSpriteFrameCache::~CCSpriteFrameCache(void)
 {
-	pSharedSpriteFrameCache->release();
 	m_pSpriteFrames->release();
 }
 
