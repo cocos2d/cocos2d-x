@@ -15,8 +15,9 @@ include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 DEFINES += -DCCX_UNDER_UPHONE
 INCLUDE_PATH += -I. -I./Res \
                -I../cocos2dx \
-               -I../cocos2dx/include
-LIBS += -lcocos2d	-lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
+               -I../cocos2dx/include \
+               -I../chipmunk/include -I../chipmunk/include/chipmunk
+LIBS += -lcocos2d -lchipmunk	-lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -37,6 +38,26 @@ OBJECTS = \
 	$(OBJECTS_DIR)/ActionManagerTest.o \
 	$(OBJECTS_DIR)/ActionsTest.o \
 	$(OBJECTS_DIR)/AtlasTest.o \
+	$(OBJECTS_DIR)/Bounce.o \
+	$(OBJECTS_DIR)/cocos2dChipmunkDemo.o \
+	$(OBJECTS_DIR)/drawSpace.o \
+	$(OBJECTS_DIR)/Joints.o \
+	$(OBJECTS_DIR)/LogoSmash.o \
+	$(OBJECTS_DIR)/MagnetsElectric.o \
+	$(OBJECTS_DIR)/OneWay.o \
+	$(OBJECTS_DIR)/Planet.o \
+	$(OBJECTS_DIR)/Player.o \
+	$(OBJECTS_DIR)/Plink.o \
+	$(OBJECTS_DIR)/Pump.o \
+	$(OBJECTS_DIR)/PyramidStack.o \
+	$(OBJECTS_DIR)/PyramidTopple.o \
+	$(OBJECTS_DIR)/Query.o \
+	$(OBJECTS_DIR)/Sensors.o \
+	$(OBJECTS_DIR)/Simple.o \
+	$(OBJECTS_DIR)/Springies.o \
+	$(OBJECTS_DIR)/TheoJansen.o \
+	$(OBJECTS_DIR)/Tumble.o \
+	$(OBJECTS_DIR)/UnsafeOps.o \
 	$(OBJECTS_DIR)/ClickAndMoveTest.o \
 	$(OBJECTS_DIR)/CocosNodeTest.o \
 	$(OBJECTS_DIR)/DrawPrimitivesTest.o \
@@ -102,6 +123,66 @@ $(OBJECTS_DIR)/ActionsTest.o : ./tests/ActionsTest/ActionsTest.cpp
 
 $(OBJECTS_DIR)/AtlasTest.o : ./tests/AtlasTest/AtlasTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/AtlasTest.o ./tests/AtlasTest/AtlasTest.cpp
+
+$(OBJECTS_DIR)/Bounce.o : ./tests/ChipmunkTest/Bounce.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bounce.o ./tests/ChipmunkTest/Bounce.cpp
+
+$(OBJECTS_DIR)/cocos2dChipmunkDemo.o : ./tests/ChipmunkTest/cocos2dChipmunkDemo.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cocos2dChipmunkDemo.o ./tests/ChipmunkTest/cocos2dChipmunkDemo.cpp
+
+$(OBJECTS_DIR)/drawSpace.o : ./tests/ChipmunkTest/drawSpace.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/drawSpace.o ./tests/ChipmunkTest/drawSpace.cpp
+
+$(OBJECTS_DIR)/Joints.o : ./tests/ChipmunkTest/Joints.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Joints.o ./tests/ChipmunkTest/Joints.cpp
+
+$(OBJECTS_DIR)/LogoSmash.o : ./tests/ChipmunkTest/LogoSmash.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/LogoSmash.o ./tests/ChipmunkTest/LogoSmash.cpp
+
+$(OBJECTS_DIR)/MagnetsElectric.o : ./tests/ChipmunkTest/MagnetsElectric.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/MagnetsElectric.o ./tests/ChipmunkTest/MagnetsElectric.cpp
+
+$(OBJECTS_DIR)/OneWay.o : ./tests/ChipmunkTest/OneWay.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/OneWay.o ./tests/ChipmunkTest/OneWay.cpp
+
+$(OBJECTS_DIR)/Planet.o : ./tests/ChipmunkTest/Planet.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Planet.o ./tests/ChipmunkTest/Planet.cpp
+
+$(OBJECTS_DIR)/Player.o : ./tests/ChipmunkTest/Player.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Player.o ./tests/ChipmunkTest/Player.cpp
+
+$(OBJECTS_DIR)/Plink.o : ./tests/ChipmunkTest/Plink.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Plink.o ./tests/ChipmunkTest/Plink.cpp
+
+$(OBJECTS_DIR)/Pump.o : ./tests/ChipmunkTest/Pump.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Pump.o ./tests/ChipmunkTest/Pump.cpp
+
+$(OBJECTS_DIR)/PyramidStack.o : ./tests/ChipmunkTest/PyramidStack.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PyramidStack.o ./tests/ChipmunkTest/PyramidStack.cpp
+
+$(OBJECTS_DIR)/PyramidTopple.o : ./tests/ChipmunkTest/PyramidTopple.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PyramidTopple.o ./tests/ChipmunkTest/PyramidTopple.cpp
+
+$(OBJECTS_DIR)/Query.o : ./tests/ChipmunkTest/Query.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Query.o ./tests/ChipmunkTest/Query.cpp
+
+$(OBJECTS_DIR)/Sensors.o : ./tests/ChipmunkTest/Sensors.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Sensors.o ./tests/ChipmunkTest/Sensors.cpp
+
+$(OBJECTS_DIR)/Simple.o : ./tests/ChipmunkTest/Simple.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Simple.o ./tests/ChipmunkTest/Simple.cpp
+
+$(OBJECTS_DIR)/Springies.o : ./tests/ChipmunkTest/Springies.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Springies.o ./tests/ChipmunkTest/Springies.cpp
+
+$(OBJECTS_DIR)/TheoJansen.o : ./tests/ChipmunkTest/TheoJansen.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TheoJansen.o ./tests/ChipmunkTest/TheoJansen.cpp
+
+$(OBJECTS_DIR)/Tumble.o : ./tests/ChipmunkTest/Tumble.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Tumble.o ./tests/ChipmunkTest/Tumble.cpp
+
+$(OBJECTS_DIR)/UnsafeOps.o : ./tests/ChipmunkTest/UnsafeOps.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/UnsafeOps.o ./tests/ChipmunkTest/UnsafeOps.cpp
 
 $(OBJECTS_DIR)/ClickAndMoveTest.o : ./tests/ClickAndMoveTest/ClickAndMoveTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ClickAndMoveTest.o ./tests/ClickAndMoveTest/ClickAndMoveTest.cpp
