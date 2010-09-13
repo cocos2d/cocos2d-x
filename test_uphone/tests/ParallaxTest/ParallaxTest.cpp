@@ -263,6 +263,7 @@ void ParallaxDemo::restartCallback(NSObject* pSender)
 	s->addChild(restartParallaxAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ParallaxDemo::nextCallback(NSObject* pSender)
@@ -270,6 +271,7 @@ void ParallaxDemo::nextCallback(NSObject* pSender)
 	CCScene* s = new ParallaxTestScene();
 	s->addChild( nextParallaxAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ParallaxDemo::backCallback(NSObject* pSender)
@@ -277,6 +279,7 @@ void ParallaxDemo::backCallback(NSObject* pSender)
 	CCScene* s = new ParallaxTestScene();
 	s->addChild( backParallaxAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 void ParallaxTestScene::runThisTest()

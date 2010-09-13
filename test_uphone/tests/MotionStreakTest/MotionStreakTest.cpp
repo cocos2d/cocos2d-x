@@ -188,6 +188,7 @@ void MotionStreakTest::restartCallback(NSObject* pSender)
 	s->addChild(restartMotionAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void MotionStreakTest::nextCallback(NSObject* pSender)
@@ -195,6 +196,7 @@ void MotionStreakTest::nextCallback(NSObject* pSender)
 	CCScene* s = new MotionStreakTestScene();//CCScene::node();
 	s->addChild( nextMotionAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void MotionStreakTest::backCallback(NSObject* pSender)
@@ -202,6 +204,7 @@ void MotionStreakTest::backCallback(NSObject* pSender)
 	CCScene* s = new MotionStreakTestScene;//CCScene::node();
 	s->addChild( backMotionAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 void MotionStreakTestScene::runThisTest()

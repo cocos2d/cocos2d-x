@@ -118,6 +118,7 @@ void SpriteDemo::restartCallback(NSObject* pSender)
 	s->addChild(restartAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void SpriteDemo::nextCallback(NSObject* pSender)
@@ -125,6 +126,7 @@ void SpriteDemo::nextCallback(NSObject* pSender)
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild( nextAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void SpriteDemo::backCallback(NSObject* pSender)
@@ -132,6 +134,7 @@ void SpriteDemo::backCallback(NSObject* pSender)
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild( backAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 //------------------------------------------------------------------
