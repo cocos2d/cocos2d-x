@@ -43,7 +43,6 @@ namespace cocos2d{
 		if( configurations == NULL )
 		{
 			configurations = new NSMutableDictionary<std::string, CCBitmapFontConfiguration*>();
-			configurations->retain();
 		}
 		std::string key(fntFile);
 		pRet = configurations->objectForKey(key);
@@ -61,6 +60,7 @@ namespace cocos2d{
 		if (configurations)
 		{
 			configurations->removeAllObjects();
+            CCX_SAFE_RELEASE_NULL(configurations);
 		}
 	}
 	//
