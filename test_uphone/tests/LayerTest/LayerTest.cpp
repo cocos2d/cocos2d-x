@@ -6,7 +6,7 @@ enum
 	kTagLayer = 1,
 };
 
-static int sceneIdx = 1;////---- -1; 
+static int sceneIdx = -1; 
 
 #define MAX_LAYER	3
 
@@ -103,6 +103,7 @@ void LayerTest::restartCallback(NSObject* pSender)
 	s->addChild(restartTestAction()); 
 
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void LayerTest::nextCallback(NSObject* pSender)
@@ -110,6 +111,7 @@ void LayerTest::nextCallback(NSObject* pSender)
 	CCScene* s = new LayerTestScene();
 	s->addChild( nextTestAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void LayerTest::backCallback(NSObject* pSender)
@@ -117,6 +119,7 @@ void LayerTest::backCallback(NSObject* pSender)
 	CCScene* s = new LayerTestScene();
 	s->addChild( backTestAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 //------------------------------------------------------------------
