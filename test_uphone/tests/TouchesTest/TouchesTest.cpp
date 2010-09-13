@@ -7,7 +7,7 @@ enum tagPlayer
 {
 	kHighPlayer,
 	kLowPlayer
-} Player;	
+} PlayerTouches;	
 
 #define kStatusBarHeight 20.0f
 //#define k1UpperLimit (480.0f - kStatusBarHeight)
