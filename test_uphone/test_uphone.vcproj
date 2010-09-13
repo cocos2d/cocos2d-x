@@ -295,6 +295,30 @@
 		<Filter
 			Name="tests"
 			>
+			<File
+				RelativePath=".\tests\controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\controller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\testBasic.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\testBasic.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\testResource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tests\tests.h"
+				>
+			</File>
 			<Filter
 				Name="ActionsTest"
 				>
