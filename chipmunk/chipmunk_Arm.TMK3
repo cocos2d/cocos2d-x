@@ -29,15 +29,19 @@ INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP_Arm.TMK3		;TOPS±ê×¼Ó¦ÓÃ£¬°üÀ
 ;PRE_DEFINE=USE_MTAPI=1			;Ê¹ÓÃ MTAPI ¿â£¬´ËÊ±Éú³ÉµÄ Makefile »á×Ô¶¯Á¬½ÓÓÐ¹ØµÄLIB
 
 ;C¡¢C++Ô¤¶¨Òåºê£¬¿ÉÒÔÊ¹ÓÃ¶à¸öDEFINES´®£¬Ò²¿ÉÒÔÊ¹ÓÃDEFINES1¡¢DEFINES2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
-DEFINES=-D_MY_MARCO_					;ÕâÀïÌîÈëÓ¦ÓÃµÄ×Ô¶¨Òåºê¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¶¨Òå»á×Ô¶¯°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄ¶¨Òå¼´¿É
+DEFINES=-DCCX_UNDER_UPHONE		;ÕâÀïÌîÈëÓ¦ÓÃµÄ×Ô¶¨Òåºê¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¶¨Òå»á×Ô¶¯°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄ¶¨Òå¼´¿É
 ;DEFINES=-D__TG3_PURE_DLL__		;Éú³ÉµÄÊÇ´¿¶¯Ì¬¿â£¨ÒâË¼ÊÇ£º²»ÊÇTOPSÓ¦ÓÃ£¬µ«¿ÉÒÔÊÇTCOM×é¼þ£©
 ;DEFINES=-D__TCOM_SUPPORT__		;Éú³ÉµÄÊÇTCOM×é¼þ£¨×¢Òâ£ºTOPSÓ¦ÓÃÒ²¿ÉÒÔÍ¬Ê±ÊÇTCOM×é¼þ£©
 
 ;°üº¬Â·¾¶£¬¿ÉÒÔÊ¹ÓÃ¶à¸öINCLUDE_PATH´®£¬Ò²¿ÉÒÔÊ¹ÓÃINCLUDE_PATH1¡¢INCLUDE_PATH2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
-INCLUDE_PATH=			;Ó¦ÓÃ¶îÍâµÄ°üº¬Â·¾¶¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÓÐÂ·¾¶¶¼»á×Ô¶¯°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄÂ·¾¶¼´¿É
+INCLUDE_PATH=-I../cocos2dx	-I../cocos2dx/include			
+INCLUDE_PATH=-I./include -I./include/chipmunk -I./include/chipmunk/contains
+INCLUDE_PATH=-I../test_uphone/tests
 
 ;Á¬½ÓµÄ¿âÎÄ¼þ£¬¿ÉÒÔÊ¹ÓÃ¶à¸öLIBS´®£¬Ò²¿ÉÒÔÊ¹ÓÃLIBS1¡¢LIBS2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
-LIBS=-lMyLib		;Ó¦ÓÃ¶îÍâµÄÁ¬½Ó¿â¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¿â×Ô¶¯°üº¬£¬¶øÇÒ¿â°üº¬Â·¾¶Ò²ÒÑ¾­°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄ¿âµÄÃû×Ö¼´¿É
+LIBS=-lcocos2d	;Ó¦ÓÃ¶îÍâµÄÁ¬½Ó¿â¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¿â×Ô¶¯°üº¬£¬¶øÇÒ¿â°üº¬Â·¾¶Ò²ÒÑ¾­°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄ¿âµÄÃû×Ö¼´¿É
+
+CC_FLAGS= -std=c99
 
 ;Ç¿ÖÆ°üº¬ÎÄ¼þµÄÃû×Ö£¬²»ÄÜÊ¹ÓÃÍ¨Åä·û£¬Ò»¶¨ÒªÊ¹ÓÃÏà¶Ô»òÕß¾ø¶ÔÂ·¾¶
 ;¼«Á¦ÒªÇóÊ¹ÓÃÏà¶ÔÂ·¾¶£¬¶à¸öÎÄ¼þÖ®¼äÊ¹ÓÃ¡°|¡±·Ö¸ô
@@ -50,4 +54,3 @@ INCLUDEFILE=
 ;Ö»ÄÜ¶Ô.c¡¢.cppÎÄ¼þ½øÐÐÅÅ³ý
 ;Èç¹ûÒªÅÅ³ý±¾Ä¿Â¼µÄÎÄ¼þÒ²Òª¼ÓÈë"./"
 ;¿ÉÒÔÊ¹ÓÃ¶à¸öEXCLUDEFILE´®£¬Ò²¿ÉÒÔÊ¹ÓÃEXCLUDEFILE1¡¢EXCLUDEFILE2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
-EXCLUDEFILE=
