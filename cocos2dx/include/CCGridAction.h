@@ -42,7 +42,7 @@ namespace cocos2d
 		/** initializes the action with size and duration */
 		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
 		/** returns the grid */
-		virtual CCGridBase* grid(void);
+		virtual CCGridBase* getGrid(void);
 
 	public:
 		/** creates the action with size and duration */
@@ -58,7 +58,7 @@ namespace cocos2d
 	class CCX_DLL CCGrid3DAction : public CCGridAction
 	{
 	public:
-		virtual CCGridBase* grid(void);
+		virtual CCGridBase* getGrid(void);
 		ccVertex3F vertex(ccGridSize pos);
 		ccVertex3F originalVertex(ccGridSize pos);
 		void setVertex(ccGridSize pos, ccVertex3F vertex);
@@ -75,7 +75,7 @@ namespace cocos2d
 		ccQuad3 originalTile(ccGridSize pos);
 		void setTile(ccGridSize pos, ccQuad3 coords);
 
-		virtual CCGridBase* grid(void);
+		virtual CCGridBase* getGrid(void);
 
 	public:
         static CCTiledGrid3DAction* actionWithSize(ccGridSize gridSize, ccTime duration);

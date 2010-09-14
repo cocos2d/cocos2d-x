@@ -37,6 +37,7 @@ namespace cocos2d
 	{
 	public:
 		CCGrabber(void);
+		~CCGrabber(void);
 
 		void grab(CCTexture2D *pTexture);
 		void beforeRender(CCTexture2D *pTexture);

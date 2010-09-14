@@ -33,6 +33,44 @@ namespace cocos2d
 {
 	// implementation of CCGridBase
 
+	CCGridBase* CCGridBase::gridWithSize(cocos2d::ccGridSize gridSize)
+	{
+        CCGridBase *pGridBase = new CCGridBase();
+
+		if (pGridBase)
+		{
+            if (pGridBase->initWithSize(gridSize))
+			{
+				pGridBase->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE_NULL(pGridBase);
+			}
+		}
+
+		return pGridBase;
+	}
+
+	CCGridBase* CCGridBase::gridWithSize(ccGridSize gridSize, CCTexture2D *texture, bool flipped)
+	{
+		CCGridBase *pGridBase = new CCGridBase();
+
+		if (pGridBase)
+		{
+			if (pGridBase->initWithSize(gridSize, texture, flipped))
+			{
+				pGridBase->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE_NULL(pGridBase);
+			}
+		}
+
+		return pGridBase;
+	}
+
 	bool CCGridBase::initWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped)
 	{
 		bool bRet = true;
@@ -146,9 +184,9 @@ namespace cocos2d
 		switch (orientation)
 		{
 		case CCDeviceOrientationLandscapeLeft:
-			glTranslatef(w,h,0);
-			glRotatef(-90,0,0,1);
-			glTranslatef(-h,-w,0);
+ 			glTranslatef(w,h,0);
+ 			glRotatef(-90,0,0,1);
+ 			glTranslatef(-h,-w,0);
             break;
 		case CCDeviceOrientationLandscapeRight:
 			glTranslatef(w,h,0);
@@ -292,7 +330,7 @@ namespace cocos2d
 
 	void CCGrid3D::blit(void)
 	{
-		int n = m_sGridSize.x + m_sGridSize.y;
+		int n = m_sGridSize.x * m_sGridSize.y;
 
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -347,8 +385,8 @@ namespace cocos2d
 				int l1[4] = {a*3, b*3, c*3, d*3};
 				ccVertex3F e = {x1, y1, 0};
 				ccVertex3F f = {x2, y1, 0};
-				ccVertex3F g = {x2, y1, 0};
-				ccVertex3F h = {x1, y1, 0};
+				ccVertex3F g = {x2, y2, 0};
+				ccVertex3F h = {x1, y2, 0};
 
 				ccVertex3F l2[4] = {e, f, g, h};
 
@@ -379,7 +417,7 @@ namespace cocos2d
 
 	ccVertex3F CCGrid3D::vertex(ccGridSize pos)
 	{
-		int index = pos.x * ((m_sGridSize.y+1) + pos.y) * 3;
+		int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pVertices;
 
 		ccVertex3F vert = {vertArray[index], vertArray[index+1], vertArray[index+2]};
@@ -389,7 +427,7 @@ namespace cocos2d
 
 	ccVertex3F CCGrid3D::originalVertex(cocos2d::ccGridSize pos)
 	{
-		int index = pos.x * ((m_sGridSize.y+1) + pos.y) * 3;
+		int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pOriginalVertices;
 
 		ccVertex3F vert = {vertArray[index], vertArray[index+1], vertArray[index+2]};
@@ -399,7 +437,7 @@ namespace cocos2d
 
 	void CCGrid3D::setVertex(ccGridSize pos, ccVertex3F vertex)
 	{
-		int index = pos.x * ((m_sGridSize.y + 1) + pos.y) * 3;
+		int index = (pos.x * (m_sGridSize.y + 1) + pos.y) * 3;
 		float *vertArray = (float*)m_pVertices;
 		vertArray[index] = vertex.x;
 		vertArray[index+1] = vertex.y;
@@ -484,8 +522,8 @@ namespace cocos2d
 
 	void CCTiledGrid3D::calculateVertexPoints(void)
 	{
-		float width = (float)m_pTexture->getPixelsWide();
-		float height = (float)m_pTexture->getPixelsHigh();
+ 		float width = (float)m_pTexture->getPixelsWide();
+ 		float height = (float)m_pTexture->getPixelsHigh();
 		float imageH = m_pTexture->getContentSize().height;
 		
 		int numQuads = m_sGridSize.x * m_sGridSize.y;

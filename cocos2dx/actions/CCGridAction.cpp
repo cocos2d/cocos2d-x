@@ -63,9 +63,9 @@ namespace cocos2d
 	{
 		CCIntervalAction::startWithTarget(pTarget);
 
-		CCGridBase *newgrid = grid();
+		CCGridBase *newgrid = this->getGrid();
 
-		CCNode *t = pTarget;
+		CCNode *t = m_pTarget;
 		CCGridBase *targetGrid = t->getGrid();
 
 		if (targetGrid && targetGrid->getReuseGrid() > 0)
@@ -92,7 +92,7 @@ namespace cocos2d
 		}
 	}
 
-	CCGridBase* CCGridAction::grid(void)
+	CCGridBase* CCGridAction::getGrid(void)
 	{
 		// Abstract class needs implementation
 		assert(0);
@@ -130,7 +130,7 @@ namespace cocos2d
 
 	// implementation of Grid3DAction
 
-	CCGridBase* CCGrid3DAction::grid(void)
+	CCGridBase* CCGrid3DAction::getGrid(void)
 	{
 		return CCGrid3D::gridWithSize(m_sGridSize);
 	}
@@ -155,7 +155,7 @@ namespace cocos2d
 
 	// implementation of TiledGrid3DAction
 
-	CCGridBase* CCTiledGrid3DAction::grid(void)
+	CCGridBase* CCTiledGrid3DAction::getGrid(void)
 	{
 		return CCTiledGrid3D::gridWithSize(m_sGridSize);
 	}
