@@ -63,6 +63,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new RenderTextureScene(); break;
     case TEST_BOX2D:
         pScene = new Box2DTestScene(); break;
+    case TEST_BOX2DBED:
+        pScene = new Box2dTestBedScene(); break;
     default:
         break;
     }
