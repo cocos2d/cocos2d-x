@@ -405,7 +405,7 @@ CCXEGLView::~CCXEGLView()
 
 Boolean CCXEGLView::AfterCreate(void)
 {
-	TApplication pApp = TApplication::GetCurrentApplication();
+	TApplication *pApp = TApplication::GetCurrentApplication();
 	TRectangle rcHotArea(pApp->GetSystemStatusBarPosX(), 
 		pApp->GetSystemStatusBarPosY(), 
 		pApp->GetSystemStatusBarWidth(),
