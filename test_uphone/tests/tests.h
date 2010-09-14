@@ -26,6 +26,7 @@
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
 #include "Box2DTest/Box2dTest.h"
+#include "Box2DTestBed/Box2dView.h"
 
 enum
 {
@@ -54,6 +55,7 @@ enum
     TEST_SCHEDULER,
     TEST_RENDERTEXTURE,
     TEST_BOX2D,
+    TEST_BOX2DBED,
 
     TESTS_COUNT,
 };
@@ -84,6 +86,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "SchdulerTest",
     "RenderTextureTest",
     "Box2dTest",
+    "Box2dTestBed",
 };
 
 #endif
