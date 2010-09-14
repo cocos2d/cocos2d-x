@@ -143,8 +143,7 @@ void CCSpriteSheet::visit(void)
 // xxx deprecated
 CCSprite* CCSpriteSheet::createSpriteWithRect(CGRect rect)
 {
-	CCSprite *pSprite = new CCSprite();
-	pSprite->spriteWithTexture(m_pobTextureAtlas->getTexture(), rect);
+    CCSprite *pSprite = CCSprite::spriteWithTexture(m_pobTextureAtlas->getTexture(), rect);
 	pSprite->useSpriteSheetRender(this);
 
 	return pSprite;
