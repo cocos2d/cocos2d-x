@@ -430,6 +430,7 @@ public :
 	virtual void onEnter();
 	virtual void onExit();
 
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCCrossFadeTransition);
 };
 
@@ -444,7 +445,8 @@ public :
 
 	virtual void onEnter();
 	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
-	
+
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCTurnOffTilesTransition);
 protected:
 	virtual void sceneOrder();
@@ -463,6 +465,7 @@ public:
 	virtual void onEnter();
 	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
 
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCSplitColsTransition);
 };
 
@@ -477,6 +480,7 @@ public:
 
 	virtual CCIntervalAction* action(void);
 
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCSplitRowsTransition)
 };
 
@@ -492,6 +496,7 @@ public:
 	virtual void onEnter();
 	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
 
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeTRTransition)
 protected:
 	virtual void sceneOrder();
@@ -508,6 +513,7 @@ public:
 	virtual ~CCFadeBLTransition();
 	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeBLTransition)
 };
 
@@ -521,6 +527,7 @@ public:
 	virtual ~CCFadeUpTransition();
 	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeUpTransition)
 };
 
@@ -534,6 +541,7 @@ public:
 	virtual ~CCFadeDownTransition();
 	virtual CCIntervalAction* actionWithSize(ccGridSize size);
 
+public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeDownTransition)
 };
 }//namespace   cocos2d 

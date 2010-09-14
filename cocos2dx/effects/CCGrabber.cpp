@@ -71,14 +71,20 @@ namespace cocos2d
 
 		// BUG #631: To fix #631, uncomment the lines with #631
 		// Warning: But it CCGrabber won't work with 2 effects at the same time
-		//	glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
+		glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//	glColorMask(TRUE, TRUE, TRUE, FALSE);	// #631
+		glColorMask(true, true, true, false);	// #631
 	}
 
 	void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
+	{
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_oldFBO);
+		glColorMask(true, true, true, true);	// #631
+	}
+
+	CCGrabber::~CCGrabber()
 	{
 		CCLOGINFO("cocos2d: deallocing %p", this);
 		glDeleteFramebuffersOES(1, &m_fbo);

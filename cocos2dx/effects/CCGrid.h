@@ -80,6 +80,10 @@ namespace cocos2d
 		virtual void reuse(void);
 		virtual void calculateVertexPoints(void);
 
+	public:
+		static CCGridBase* gridWithSize(ccGridSize gridSize, CCTexture2D *texture, bool flipped);
+		static CCGridBase* gridWithSize(ccGridSize gridSize);
+
 	protected:
 		void applyLandscape(void);
 		void set2DProjection(void);
