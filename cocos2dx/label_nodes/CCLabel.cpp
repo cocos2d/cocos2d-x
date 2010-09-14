@@ -79,6 +79,11 @@ namespace cocos2d{
 	}
 	void CCLabel::setString(const char *label)
 	{
+        if (strlen(label)==0)
+        {
+            return;
+        }
+        
 		CCTexture2D *texture;
 		if( CGSize::CGSizeEqualToSize( m_tDimensions, CGSizeZero ) )
 		{
