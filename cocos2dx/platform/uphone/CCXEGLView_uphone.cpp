@@ -405,6 +405,13 @@ CCXEGLView::~CCXEGLView()
 
 Boolean CCXEGLView::AfterCreate(void)
 {
+	TApplication pApp = TApplication::GetCurrentApplication();
+	TRectangle rcHotArea(pApp->GetSystemStatusBarPosX(), 
+		pApp->GetSystemStatusBarPosY(), 
+		pApp->GetSystemStatusBarWidth(),
+		pApp->GetSystemStatusBarHeight());
+	RegisterHotArea(&rcHotArea);
+
     return (m_pEGL = CCXEGL::create(this)) ? TRUE : FALSE;
 }
 
