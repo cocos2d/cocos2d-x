@@ -61,6 +61,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new SchedulerTestScene(); break;
     case TEST_RENDERTEXTURE:
         pScene = new RenderTextureScene(); break;
+    case TEST_BOX2D:
+        pScene = new Box2DTestScene(); break;
     default:
         break;
     }
