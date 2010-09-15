@@ -448,7 +448,7 @@ void TextLayer::newScene()
 
 void TextLayer::restartCallback(NSObject* pSender)
 {
-	newOrientation();
+	/*newOrientation();*/
 	newScene();
 }
 
@@ -458,7 +458,7 @@ void TextLayer::nextCallback(NSObject* pSender)
     actionIdx++;
     actionIdx = actionIdx % MAX_LAYER;
 
-	newOrientation();
+	/*newOrientation();*/
 	newScene();
 }
 
@@ -470,6 +470,6 @@ void TextLayer::backCallback(NSObject* pSender)
     if( actionIdx < 0 )
         actionIdx += total;	
 
-	newOrientation();
+	/*newOrientation();*/
 	newScene();
 } 
