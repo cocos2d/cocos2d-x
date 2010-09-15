@@ -202,7 +202,9 @@ void CCActionManager::addAction(cocos2d::CCAction *pAction, CCNode *pTarget, boo
 	assert(pTarget != NULL);
 
 	tHashElement *pElement = NULL;
-	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
+	// we should convert it to NSObject*, because we save it as NSObject*
+	NSObject *tmp = pTarget;
+	HASH_FIND_INT(m_pTargets, &tmp, pElement);
 	if (! pElement)
 	{
 		pElement = (tHashElement*)calloc(sizeof(*pElement), 1);
@@ -212,12 +214,12 @@ void CCActionManager::addAction(cocos2d::CCAction *pAction, CCNode *pTarget, boo
 		HASH_ADD_INT(m_pTargets, target, pElement);
 	}
 
-	actionAllocWithHashElement(pElement);
-
-	assert(! ccArrayContainsObject(pElement->actions, pAction));
-	ccArrayAppendObject(pElement->actions, pAction);
-
-	pAction->startWithTarget(pTarget);
+ 	actionAllocWithHashElement(pElement);
+ 
+ 	assert(! ccArrayContainsObject(pElement->actions, pAction));
+ 	ccArrayAppendObject(pElement->actions, pAction);
+ 
+ 	pAction->startWithTarget(pTarget);
 }
 
 // remove
