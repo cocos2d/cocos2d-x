@@ -86,8 +86,6 @@ namespace cocos2d
 
 	protected:
 		void applyLandscape(void);
-		void set2DProjection(void);
-		void set3DProjection(void);
 		
 	protected:
 		bool m_bActive;
