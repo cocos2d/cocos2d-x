@@ -102,6 +102,7 @@ void CCPageTurnTransition::onEnter()
 		(
 			CCSequence::actions
 			(
+			    CCShow::action(),
 				action,
 				CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
 				CCStopGrid::action(),

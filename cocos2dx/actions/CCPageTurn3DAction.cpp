@@ -55,7 +55,7 @@ namespace cocos2d
 		float ay = -100 - deltaAy;
 		
 		float deltaTheta = - (float) M_PI_2 * sqrtf( time) ;
-		float theta = /*0.01f + */ (float) M_PI_2 +deltaTheta;
+		float theta = /*0.01f */ + (float) M_PI_2 +deltaTheta;
 		
 		float sinTheta = sinf(theta);
 		float cosTheta = cosf(theta);
