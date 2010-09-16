@@ -315,24 +315,24 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 	{
 		m_eDeviceOrientation = kDeviceOrientation;
 
-		switch (m_eDeviceOrientation)
-		{
-		case CCDeviceOrientationPortrait:
-			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortrait);
-			break;
-        case CCDeviceOrientationPortraitUpsideDown:
-			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortraitUpsideDown);
-			break;
-        case CCDeviceOrientationLandscapeLeft:
-			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
-			break;
-        case CCDeviceOrientationLandscapeRight:
-			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
-			break;
-		default:
-			CCLOG("Director: Unknown device orientation");
-			break;
-		}
+// 		switch (m_eDeviceOrientation)
+// 		{
+// 		case CCDeviceOrientationPortrait:
+// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortrait);
+// 			break;
+//         case CCDeviceOrientationPortraitUpsideDown:
+// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortraitUpsideDown);
+// 			break;
+//         case CCDeviceOrientationLandscapeLeft:
+// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+// 			break;
+//         case CCDeviceOrientationLandscapeRight:
+// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
+// 			break;
+// 		default:
+// 			CCLOG("Director: Unknown device orientation");
+// 			break;
+// 		}
 	}
 }
 
@@ -383,7 +383,7 @@ void CCDirector::purgeCachedData(void)
 
 float CCDirector::getZEye(void)
 {
-	return (m_obSurfaceSize.height / 1.1566f);
+    return (m_obSurfaceSize.height / 1.1566f);	
 }
 
 void CCDirector::setAlphaBlending(bool bOn)

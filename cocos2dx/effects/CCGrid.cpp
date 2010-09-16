@@ -203,11 +203,39 @@ namespace cocos2d
 		}
 	}
 
+	void CCGridBase::set2DProjection()
+	{
+		CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+
+		glLoadIdentity();
+		glViewport(0, 0, winSize.width, winSize.height);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrthof(0, winSize.width, 0, winSize.height, -100, 100);
+		glMatrixMode(GL_MODELVIEW);
+	}
+
+	// This routine can be merged with Director
+	void CCGridBase::set3DProjection()
+	{
+		CGSize	winSize = CCDirector::getSharedDirector()->getDisplaySize();
+
+		glViewport(0, 0, winSize.width, winSize.height);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+
+		glMatrixMode(GL_MODELVIEW);	
+		glLoadIdentity();
+		gluLookAt( winSize.width/2, winSize.height/2, CCDirector::getSharedDirector()->getZEye(),
+			winSize.width/2, winSize.height/2, 0,
+			0.0f, 1.0f, 0.0f
+			);
+	}
+
 	void CCGridBase::beforeDraw(void)
 	{
-		/*set2DProjection();*/
-		/*set3DProjection();*/
-		CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
+		set2DProjection();
 		m_pGrabber->beforeRender(m_pTexture);
 	}
 
@@ -215,8 +243,7 @@ namespace cocos2d
 	{
 		m_pGrabber->afterRender(m_pTexture);
 
-		/*set3DProjection();*/
-		CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection3D);
+		set3DProjection();
 		applyLandscape();
 
 		if (pTarget->getCamera()->getDirty())
