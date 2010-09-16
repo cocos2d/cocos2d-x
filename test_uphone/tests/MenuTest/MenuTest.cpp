@@ -426,5 +426,10 @@ void MenuTestScene::runThisTest()
     CCMultiplexLayer* layer = CCMultiplexLayer::layerWithLayers(pLayer1, pLayer2, pLayer3, pLayer4, NULL);
     addChild(layer, 0); 
 
+    pLayer1->release();
+    pLayer2->release();
+    pLayer3->release();
+    pLayer4->release();
+
     CCDirector::getSharedDirector()->replaceScene(this);
 }
