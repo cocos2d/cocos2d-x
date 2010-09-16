@@ -27,6 +27,7 @@
 #include "RenderTextureTest/RenderTextureTest.h"
 #include "Box2DTest/Box2dTest.h"
 #include "Box2DTestBed/Box2dView.h"
+#include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 
 enum
 {
@@ -56,6 +57,7 @@ enum
     TEST_RENDERTEXTURE,
     TEST_BOX2D,
     TEST_BOX2DBED,
+    TEST_EFFECT_ADVANCE,
 
     TESTS_COUNT,
 };
@@ -87,6 +89,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "RenderTextureTest",
     "Box2dTest",
     "Box2dTestBed",
+    "EffectAdvancedTest",
 };
 
 #endif

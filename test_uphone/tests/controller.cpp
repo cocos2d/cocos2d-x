@@ -65,6 +65,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new Box2DTestScene(); break;
     case TEST_BOX2DBED:
         pScene = new Box2dTestBedScene(); break;
+    case TEST_EFFECT_ADVANCE:
+        pScene = new EffectAdvanceScene(); break;
     default:
         break;
     }
