@@ -462,6 +462,11 @@ void ChipmunkTestLayer::onEnter()
     glLineWidth(1.5f);
 }
 
+void ChipmunkTestLayer::onExit()
+{
+    CCDirector::getSharedDirector()->setGLDefaultValues();
+}
+
 void ChipmunkTestLayer::step(ccTime dt)
 {
     // call chipmunk demo c function
