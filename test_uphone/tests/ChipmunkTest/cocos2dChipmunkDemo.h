@@ -69,6 +69,7 @@ public:
     void init();
 	// virtual std::string title();
 	virtual void onEnter();
+    virtual void onExit();
     void step(ccTime dt);
     void draw();
     void ccTouchesEnded(NSSet* touches, UIEvent *event);
