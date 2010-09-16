@@ -374,7 +374,7 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 {
 	m_pLayers = new NSMutableArray<CCLayer*>(5);
-	m_pLayers->retain();
+	//m_pLayers->retain();
 
 	m_pLayers->addObject(layer);
 
