@@ -83,6 +83,8 @@ namespace cocos2d
 	public:
 		static CCGridBase* gridWithSize(ccGridSize gridSize, CCTexture2D *texture, bool flipped);
 		static CCGridBase* gridWithSize(ccGridSize gridSize);
+		void set2DProjection(void);
+		void set3DProjection(void);
 
 	protected:
 		void applyLandscape(void);
