@@ -848,6 +848,7 @@ void ParticleDemo::nextCallback(NSObject* pSender)
 	CCScene* s = new ParticleTestScene();
 	s->addChild( nextParticleAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void ParticleDemo::backCallback(NSObject* pSender)
@@ -855,6 +856,7 @@ void ParticleDemo::backCallback(NSObject* pSender)
 	CCScene* s = new ParticleTestScene();
 	s->addChild( backParticleAction() );
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 } 
 
 void ParticleDemo::setEmitterPosition()

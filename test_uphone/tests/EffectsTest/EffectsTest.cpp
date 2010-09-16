@@ -444,6 +444,7 @@ void TextLayer::newScene()
 	CCNode* child = TextLayer::node();
 	s->addChild(child);
 	CCDirector::getSharedDirector()->replaceScene(s);
+    s->release();
 }
 
 void TextLayer::restartCallback(NSObject* pSender)
