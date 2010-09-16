@@ -35,6 +35,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
+        CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationPortrait);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -50,9 +51,9 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new TileMapTestScene(); break;
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
-     case TEST_CHIPMUNK:
+    case TEST_CHIPMUNK:
  		CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationPortrait);
-         pScene = new ChipmunkTestScene(); break;
+        pScene = new ChipmunkTestScene(); break;
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
     case TEST_SPRITE:
@@ -76,6 +77,8 @@ static TestScene* CreateTestScene(int nIdx)
 
 TestController::TestController()
 {
+    CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);

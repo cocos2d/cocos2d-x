@@ -236,6 +236,7 @@ void TransitionsTestScene::runThisTest()
 {
     CCLayer * pLayer = new TestLayer1();
     addChild(pLayer);
+    pLayer->release();
 
     CCDirector::getSharedDirector()->replaceScene(this);
 }
@@ -292,6 +293,8 @@ void TestLayer1::restartCallback(NSObject* pSender)
     s->addChild(pLayer);
 
     CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    s->release();
+    pLayer->release();
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -309,6 +312,8 @@ void TestLayer1::nextCallback(NSObject* pSender)
     s->addChild(pLayer);
 
     CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    s->release();
+    pLayer->release();
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -328,6 +333,8 @@ void TestLayer1::backCallback(NSObject* pSender)
     s->addChild(pLayer);
 
     CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    s->release();
+    pLayer->release();
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -391,6 +398,8 @@ void TestLayer2::restartCallback(NSObject* pSender)
     s->addChild(pLayer);
 
     CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    s->release();
+    pLayer->release();
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -408,6 +417,8 @@ void TestLayer2::nextCallback(NSObject* pSender)
     s->addChild(pLayer);
 
     CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    s->release();
+    pLayer->release();
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);
@@ -427,6 +438,8 @@ void TestLayer2::backCallback(NSObject* pSender)
     s->addChild(pLayer);
 
     CCScene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    s->release();
+    pLayer->release();
     if (pScene)
     {
         CCDirector::getSharedDirector()->replaceScene(pScene);

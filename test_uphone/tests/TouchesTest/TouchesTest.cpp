@@ -27,6 +27,7 @@ PongScene::PongScene()
 {
 	PongLayer *pongLayer = new PongLayer();//PongLayer::node();
 	addChild(pongLayer);
+    pongLayer->release();
 }
 
 void PongScene::onExit()
