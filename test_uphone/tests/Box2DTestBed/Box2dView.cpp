@@ -65,9 +65,9 @@ bool MenuLayer::initWithEntryID(int entryId)
 	addChild(label, 1);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 
-	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("images/b1.png", "images/b2.png", this, menu_selector(MenuLayer::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("images/r1.png","images/r2.png", this, menu_selector(MenuLayer::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("images/f1.png", "images/f2.png", this, menu_selector(MenuLayer::nextCallback) );
+	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(MenuLayer::backCallback) );
+	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(MenuLayer::restartCallback) );
+	CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(MenuLayer::nextCallback) );
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 

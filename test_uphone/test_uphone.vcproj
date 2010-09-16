@@ -903,6 +903,18 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="EffectsAdvancedTest"
+				>
+				<File
+					RelativePath=".\tests\EffectsAdvancedTest\EffectsAdvancedTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\tests\EffectsAdvancedTest\EffectsAdvancedTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\test_uphoneUnicodeScript.h"
