@@ -156,7 +156,6 @@ void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPri
 	else
 	{
 		m_pHandlersToAdd->addObject(pHandler);
-		pHandler->retain();
 		m_bToAdd = true;
 	}
 }
