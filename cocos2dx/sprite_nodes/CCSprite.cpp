@@ -160,7 +160,6 @@ bool CCSprite::init(void)
 	m_sBlendFunc.dst = CC_BLEND_DST;
 
 	// update texture (calls updateBlendFunc)
-    m_pobTexture = NULL;
 	setTexture(NULL);
 
 	// clean the Quad
@@ -302,6 +301,7 @@ bool CCSprite::initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect)
 }
 
 CCSprite::CCSprite()
+: m_pobTexture(NULL)
 {
     init();
 }
