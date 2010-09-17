@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 #ifdef _TRANZDA_VM_
 
-// #define USE_EMU_TG3_EGL_LIB
+/* #define USE_EMU_TG3_EGL_LIB*/
 
 #ifndef USE_EMU_TG3_EGL_LIB
-// #define _EGL_SHOW_
+/* #define _EGL_SHOW_*/
 #include <windows.h>
 #endif
 #include "CCXEGLView_uphone.h"
@@ -135,7 +135,7 @@ public:
                 EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,
                 EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,
                 EGL_NATIVE_RENDERABLE,	EGL_FALSE,
-                EGL_DEPTH_SIZE,			EGL_DONT_CARE,
+                EGL_DEPTH_SIZE,			16,
                 EGL_NONE,
             };
             EGLint iConfigs;
@@ -306,7 +306,7 @@ public:
 				EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,
 				EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,
 				EGL_NATIVE_RENDERABLE,	EGL_FALSE,
-				EGL_DEPTH_SIZE,			EGL_DONT_CARE,
+				EGL_DEPTH_SIZE,			16,
 				EGL_NONE,
 			};
 			EGLint iConfigs;
