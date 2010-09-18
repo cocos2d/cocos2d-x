@@ -81,6 +81,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCXBitmapDC.o \
 	$(OBJECTS_DIR)/CCXEGLView_uphone.o \
 	$(OBJECTS_DIR)/CCXFileUtils_uphone.o \
+	$(OBJECTS_DIR)/CCXRGBATransform_uphone.o \
 	$(OBJECTS_DIR)/CCXUIImage_uphone.o \
 	$(OBJECTS_DIR)/NSLock.o \
 	$(OBJECTS_DIR)/ZipUtils.o \
@@ -275,6 +276,9 @@ $(OBJECTS_DIR)/CCXEGLView_uphone.o : ./platform/uphone/CCXEGLView_uphone.cpp
 
 $(OBJECTS_DIR)/CCXFileUtils_uphone.o : ./platform/uphone/CCXFileUtils_uphone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXFileUtils_uphone.o ./platform/uphone/CCXFileUtils_uphone.cpp
+
+$(OBJECTS_DIR)/CCXRGBATransform_uphone.o : ./platform/uphone/CCXRGBATransform_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXRGBATransform_uphone.o ./platform/uphone/CCXRGBATransform_uphone.cpp
 
 $(OBJECTS_DIR)/CCXUIImage_uphone.o : ./platform/uphone/CCXUIImage_uphone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXUIImage_uphone.o ./platform/uphone/CCXUIImage_uphone.cpp
