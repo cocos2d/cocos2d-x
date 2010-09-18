@@ -187,7 +187,7 @@ bool UIImage::isAlphaPixelFormat(void)
 // so, we only return true
 bool UIImage::isPremultipliedAlpha(void)
 {
-	return true;
+	return m_imageInfo.isPremultipliedAlpha;
 }
 
 // compute how many bits every color component 
@@ -337,7 +337,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	m_imageInfo.height = height;
 	m_imageInfo.width = width;
 	m_imageInfo.hasAlpha = info_ptr->color_type & PNG_COLOR_MASK_ALPHA;
-	m_imageInfo.isPremultipliedAlpha = true;
+	m_imageInfo.isPremultipliedAlpha = false;
 	copyImageData(m_imageInfo, rowPointers);
 	// we use CCX_RGA or CCX_RGB to save data
 	// so the bitsPerComponet is 32, and it also
