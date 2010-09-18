@@ -505,6 +505,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCXRGBATransform.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCXUIImage.h"
 				>
 			</File>
@@ -861,6 +865,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\platform\CCXRGBATransform_platform.h"
+				>
+			</File>
+			<File
 				RelativePath=".\platform\CCXUIImage_platform.h"
 				>
 			</File>
@@ -913,6 +921,14 @@
 				</File>
 				<File
 					RelativePath=".\platform\uphone\CCXFileUtils_uphone.h"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXRGBATransform_uphone.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\platform\uphone\CCXRGBATransform_uphone.h"
 					>
 				</File>
 				<File

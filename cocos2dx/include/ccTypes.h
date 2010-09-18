@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCTYPES_H__
 
 #include "CGGeometry.h"
+#include "CCXRGBATransform.h"
 #include <GLES/gl.h>
 namespace   cocos2d {
 
@@ -43,28 +44,28 @@ typedef struct _ccColor3B
 static inline ccColor3B
 ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 {
-	ccColor3B c = {r, g, b};
+	ccColor3B c = CCXRGBATransform::transformRGBA(r, g, b);
 	return c;
 }
 //ccColor3B predefined colors
 //! White color (255,255,255)
-static const ccColor3B ccWHITE={255,255,255};
+static const ccColor3B ccWHITE=ccc3(255,255,255);
 //! Yellow color (255,255,0)
-static const ccColor3B ccYELLOW={255,255,0};
+static const ccColor3B ccYELLOW=ccc3(255,255,0);
 //! Blue color (0,0,255)
-static const ccColor3B ccBLUE={0,0,255};
+static const ccColor3B ccBLUE=ccc3(0,0,255);
 //! Green Color (0,255,0)
-static const ccColor3B ccGREEN={0,255,0};
+static const ccColor3B ccGREEN=ccc3(0,255,0);
 //! Red Color (255,0,0,)
-static const ccColor3B ccRED={255,0,0};
+static const ccColor3B ccRED=ccc3(255,0,0);
 //! Magenta Color (255,0,255)
-static const ccColor3B ccMAGENTA={255,0,255};
+static const ccColor3B ccMAGENTA=ccc3(255,0,255);
 //! Black Color (0,0,0)
-static const ccColor3B ccBLACK={0,0,0};
+static const ccColor3B ccBLACK=ccc3(0,0,0);
 //! Orange Color (255,127,0)
-static const ccColor3B ccORANGE={255,127,0};
+static const ccColor3B ccORANGE=ccc3(255,127,0);
 //! Gray Color (166,166,166)
-static const ccColor3B ccGRAY={166,166,166};
+static const ccColor3B ccGRAY=ccc3(166,166,166);
 
 /** RGBA color composed of 4 bytes
 @since v0.8
@@ -80,7 +81,7 @@ typedef struct _ccColor4B
 static inline ccColor4B
 ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 {
-	ccColor4B c = {r, g, b, o};
+	ccColor4B c = CCXRGBATransform::transformRGBA(r, g, b, o);
 	return c;
 }
 
