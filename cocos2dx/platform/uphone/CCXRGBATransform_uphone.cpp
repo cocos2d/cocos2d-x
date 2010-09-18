@@ -39,7 +39,7 @@ ccColor4B CCXRGBATransform::transformRGBA(const GLubyte r, const GLubyte g, cons
 	return c4;
 }
 
-ccColor3B CCXRGBATransform::transformRGBA(const GLubyte r, const GLubyte g, const GLubyte b)
+ccColor3B CCXRGBATransform::transformRGB(const GLubyte r, const GLubyte g, const GLubyte b)
 {
 #ifdef _TRANZDA_VM_
 	ccColor3B c3 = {r, g, b};
