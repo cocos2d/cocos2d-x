@@ -143,7 +143,7 @@ void LayerTest1::onEnter()
 
 void LayerTest1::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 void LayerTest1::updateSize(CCTouch*touch)
