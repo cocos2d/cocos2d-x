@@ -35,7 +35,7 @@ class CCX_DLL CCXRGBATransform
 {
 public:
 	static struct _ccColor4B transformRGBA(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte a);
-	static struct _ccColor3B transformRGBA(const GLubyte r, const GLubyte g, const GLubyte b);
+	static struct _ccColor3B transformRGB(const GLubyte r, const GLubyte g, const GLubyte b);
 };
 
 } // end of namespace cocos2d

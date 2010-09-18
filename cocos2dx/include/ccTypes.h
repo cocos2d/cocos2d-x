@@ -44,7 +44,7 @@ typedef struct _ccColor3B
 static inline ccColor3B
 ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 {
-	ccColor3B c = CCXRGBATransform::transformRGBA(r, g, b);
+	ccColor3B c = CCXRGBATransform::transformRGB(r, g, b);
 	return c;
 }
 //ccColor3B predefined colors
