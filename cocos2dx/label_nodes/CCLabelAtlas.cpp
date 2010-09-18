@@ -120,7 +120,7 @@ namespace cocos2d{
 
 		bool newBlend = false;
 		if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) {
-			newBlend = false;
+			newBlend = true;
 			glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 		}
 
