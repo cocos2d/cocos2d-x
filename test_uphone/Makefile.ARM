@@ -17,7 +17,7 @@ INCLUDE_PATH += -I. -I./Res \
                -I../cocos2dx \
                -I../cocos2dx/include \
                -I../chipmunk/include -I../chipmunk/include/chipmunk
-LIBS += -lcocos2d -lchipmunk	-lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
+LIBS += -lcocos2d	-lTG3_EGL -lchipmunk -lbox2d -lTG3_GLESv1_CM -lTG3_GLESv2
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -38,6 +38,11 @@ OBJECTS = \
 	$(OBJECTS_DIR)/ActionManagerTest.o \
 	$(OBJECTS_DIR)/ActionsTest.o \
 	$(OBJECTS_DIR)/AtlasTest.o \
+	$(OBJECTS_DIR)/Box2dTest.o \
+	$(OBJECTS_DIR)/Box2dView.o \
+	$(OBJECTS_DIR)/GLES-Render.o \
+	$(OBJECTS_DIR)/Test.o \
+	$(OBJECTS_DIR)/TestEntries.o \
 	$(OBJECTS_DIR)/Bounce.o \
 	$(OBJECTS_DIR)/cocos2dChipmunkDemo.o \
 	$(OBJECTS_DIR)/drawSpace.o \
@@ -62,6 +67,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CocosNodeTest.o \
 	$(OBJECTS_DIR)/DrawPrimitivesTest.o \
 	$(OBJECTS_DIR)/EaseActionsTest.o \
+	$(OBJECTS_DIR)/EffectsAdvancedTest.o \
 	$(OBJECTS_DIR)/EffectsTest.o \
 	$(OBJECTS_DIR)/IntervalTest.o \
 	$(OBJECTS_DIR)/LayerTest.o \
@@ -70,6 +76,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/ParallaxTest.o \
 	$(OBJECTS_DIR)/ParticleTest.o \
 	$(OBJECTS_DIR)/ProgressActionsTest.o \
+	$(OBJECTS_DIR)/RenderTextureTest.o \
 	$(OBJECTS_DIR)/RotateWorldTest.o \
 	$(OBJECTS_DIR)/SceneTest.o \
 	$(OBJECTS_DIR)/SchedulerTest.o \
@@ -123,6 +130,21 @@ $(OBJECTS_DIR)/ActionsTest.o : ./tests/ActionsTest/ActionsTest.cpp
 
 $(OBJECTS_DIR)/AtlasTest.o : ./tests/AtlasTest/AtlasTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/AtlasTest.o ./tests/AtlasTest/AtlasTest.cpp
+
+$(OBJECTS_DIR)/Box2dTest.o : ./tests/Box2DTest/Box2dTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Box2dTest.o ./tests/Box2DTest/Box2dTest.cpp
+
+$(OBJECTS_DIR)/Box2dView.o : ./tests/Box2DTestBed/Box2dView.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Box2dView.o ./tests/Box2DTestBed/Box2dView.cpp
+
+$(OBJECTS_DIR)/GLES-Render.o : ./tests/Box2DTestBed/GLES-Render.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/GLES-Render.o ./tests/Box2DTestBed/GLES-Render.cpp
+
+$(OBJECTS_DIR)/Test.o : ./tests/Box2DTestBed/Test.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Test.o ./tests/Box2DTestBed/Test.cpp
+
+$(OBJECTS_DIR)/TestEntries.o : ./tests/Box2DTestBed/TestEntries.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TestEntries.o ./tests/Box2DTestBed/TestEntries.cpp
 
 $(OBJECTS_DIR)/Bounce.o : ./tests/ChipmunkTest/Bounce.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bounce.o ./tests/ChipmunkTest/Bounce.cpp
@@ -196,6 +218,9 @@ $(OBJECTS_DIR)/DrawPrimitivesTest.o : ./tests/DrawPrimitivesTest/DrawPrimitivesT
 $(OBJECTS_DIR)/EaseActionsTest.o : ./tests/EaseActionsTest/EaseActionsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/EaseActionsTest.o ./tests/EaseActionsTest/EaseActionsTest.cpp
 
+$(OBJECTS_DIR)/EffectsAdvancedTest.o : ./tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/EffectsAdvancedTest.o ./tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp
+
 $(OBJECTS_DIR)/EffectsTest.o : ./tests/EffectsTest/EffectsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/EffectsTest.o ./tests/EffectsTest/EffectsTest.cpp
 
@@ -219,6 +244,9 @@ $(OBJECTS_DIR)/ParticleTest.o : ./tests/ParticleTest/ParticleTest.cpp
 
 $(OBJECTS_DIR)/ProgressActionsTest.o : ./tests/ProgressActionsTest/ProgressActionsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ProgressActionsTest.o ./tests/ProgressActionsTest/ProgressActionsTest.cpp
+
+$(OBJECTS_DIR)/RenderTextureTest.o : ./tests/RenderTextureTest/RenderTextureTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/RenderTextureTest.o ./tests/RenderTextureTest/RenderTextureTest.cpp
 
 $(OBJECTS_DIR)/RotateWorldTest.o : ./tests/RotateWorldTest/RotateWorldTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/RotateWorldTest.o ./tests/RotateWorldTest/RotateWorldTest.cpp
