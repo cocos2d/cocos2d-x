@@ -31,6 +31,16 @@ THE SOFTWARE.
 class TBitmap;
 namespace   cocos2d {
 
+typedef struct  
+{
+	unsigned int	height;
+	unsigned int	width;
+	int				bitsPerComponent;
+	bool            hasAlpha;
+	bool			isPremultipliedAlpha;
+	unsigned char   *data;
+} tImageInfo;
+
 class CCX_DLL UIImage
 {
 public:
@@ -65,6 +75,7 @@ private:
 
 private:
 	TBitmap *m_pBitmap;
+	tImageInfo m_imageInfo;
 };
 }//namespace   cocos2d 
 

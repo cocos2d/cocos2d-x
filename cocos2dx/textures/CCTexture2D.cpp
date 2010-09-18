@@ -283,7 +283,8 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 			NSAssert(tempData != NULL, "NULL image data.");
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{
-				data = tempData;
+				data = new UINT8[POTHigh * POTWide * 4];
+				memcpy(data, tempData, POTHigh * POTWide * 4);
 			}
 			else
 			{
@@ -297,7 +298,6 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 				{
 					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
 				}
-				delete []tempData;
 			}
 			break;                    
 		default:
@@ -317,8 +317,10 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 		tempData = new UINT8[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
+
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
+
 		delete [] data;
 		data = tempData;
 	}
@@ -327,6 +329,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 		tempData = new UINT8[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
+
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
@@ -342,6 +345,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 		tempData = new UINT8[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
+
 		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
