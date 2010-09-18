@@ -2,7 +2,7 @@
 #include "controller.h"
 #include "testResource.h"
 
-#define LINE_SPACE          30
+#define LINE_SPACE          40
 
 static int s_nPageIndex = 0;
 
@@ -90,7 +90,7 @@ TestController::TestController()
     // add menu items for tests
     for (int i = 0; i < ITEM_EVERYPAGE; ++i)
     {
-        CCLabel* label = CCLabel::labelWithString("For Test", "Arial", 22);
+        CCLabel* label = CCLabel::labelWithString("For Test", "Arial", 32);
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
         pMenu->addChild(pMenuItem, i + 2);
         pMenuItem->setPosition( CGPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));

@@ -5,7 +5,7 @@
 
 using namespace cocos2d;
 
-#define ITEM_EVERYPAGE              9
+#define ITEM_EVERYPAGE              7
 
 class TestController : public CCLayer
 {
