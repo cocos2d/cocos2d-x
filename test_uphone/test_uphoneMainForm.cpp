@@ -6,8 +6,6 @@
 
  
 #include  "test_uphoneMainForm.h"
-
-#include  "test_uphone_res_def.h"
 #include "TG3.h"
 #include "ssMsgQueue.h"
 #include "CCTouchDelegateProtocol.h"
