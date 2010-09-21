@@ -392,15 +392,7 @@
 			Name="Makefiles"
 			>
 			<File
-				RelativePath=".\chipmunk.TMK3"
-				>
-			</File>
-			<File
 				RelativePath=".\chipmunk_Arm.TMK3"
-				>
-			</File>
-			<File
-				RelativePath=".\Makefile"
 				>
 			</File>
 			<File
