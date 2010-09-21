@@ -220,15 +220,7 @@
 			Name="Makefiles"
 			>
 			<File
-				RelativePath=".\Makefile"
-				>
-			</File>
-			<File
 				RelativePath=".\Makefile.ARM"
-				>
-			</File>
-			<File
-				RelativePath=".\test_uphone.TMK3"
 				>
 			</File>
 			<File
