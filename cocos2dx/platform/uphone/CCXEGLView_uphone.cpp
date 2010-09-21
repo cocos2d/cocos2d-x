@@ -196,20 +196,6 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         bHandled = TRUE;
         break;
 
-    case EVENT_WinRotationChanged:
-#ifdef _TRANZDA_VM_
-        if (m_pEGL)
-        {
-            m_pEGL->resizeSurface();
-            UpdateWindow(0);
-        }
-#else	// _TRANZDA_VM_
-        CCX_SAFE_DELETE(m_pEGL);
-        m_pEGL = CCXEGL::create(this);
-#endif  // _TRANZDA_VM_
-        bHandled = TRUE;
-        break;
-
     case EVENT_WinPaint:
         CCDirector::getSharedDirector()->preMainLoop();
         bHandled = TRUE;
