@@ -5,20 +5,8 @@
  
 
  
-#include  "test_uphoneEntry.h"
-#include  "test_uphoneApp.h"
-#include  "test_uphone_res_c.h"
-
-const  ResourceRegisterEntry		ResRegList_test_uphone[]  =
-{
-	TG_RESOURCE_DEFINE
-};
-
-const  AppResourceEntry		test_uphoneResourceEntry  =
-{
-	(ResourceRegisterEntry*)ResRegList_test_uphone,                    //  res  list  in  this  app
-		sizeof(ResRegList_test_uphone) /  sizeof(ResourceRegisterEntry),    //number  of  item  in  res
-};
+#include "TG3.h"
+#include "test_uphoneApp.h"
 
 Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
@@ -28,7 +16,6 @@ Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 		{
 			// UI应用程序例子：
 			Ttest_uphoneApp  *  pApp= new  Ttest_uphoneApp();
-			pApp->WM_SetResourceEntry(&test_uphoneResourceEntry);
 			pApp->Run();
 
 			delete pApp;

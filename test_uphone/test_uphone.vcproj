@@ -191,10 +191,6 @@
 				RelativePath=".\test_uphoneEntry.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\test_uphoneEntry.h"
-				>
-			</File>
 			<Filter
 				Name="app"
 				>
@@ -219,42 +215,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="Res"
-			>
-			<File
-				RelativePath=".\Res\test_uphone_Res.ENU.tr3"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\test_uphone_Res.ENU.tr3.tts"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\test_uphone_Res.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\test_uphone_Res.TR3"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\test_uphone_Res.TRG"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\test_uphone_res_c.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\test_uphone_res_def.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\test_uphone_res_h.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Makefiles"
@@ -916,24 +876,6 @@
 				</File>
 			</Filter>
 		</Filter>
-		<File
-			RelativePath=".\test_uphoneUnicodeScript.h"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="..\..\PRJ_TG3\Common\StrConv\TzdStrConv_V1.exe $(InputPath) $(InputDir)$(InputName)_str.h&#x0D;&#x0A;"
-					AdditionalDependencies="..\..\PRJ_TG3\Common\StrConv\TzdStrConv_V1.exe"
-					Outputs="$(InputDir)$(InputName)_str.h"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath=".\test_uphoneUnicodeScript_str.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
