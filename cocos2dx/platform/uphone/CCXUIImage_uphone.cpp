@@ -32,24 +32,6 @@ THE SOFTWARE.
 using namespace std;
 namespace   cocos2d {
 
-#ifdef _TRANZDA_VM_
-#define CCX_RGB(vr,vg,vb) \
-	    (ColorRefType)(((UInt32)(UInt8)(vb) << 16) | ((UInt32)(UInt8)(vg) << 8) | (UInt32)(UInt8)(vr) | ((UInt32)0xffL << 24))
-
-#define CCX_RGB_APLHA(vr, vg, vb, va) \
-	(ColorRefType)(((UInt32)((UInt8)(vr) * ((UInt8)(va) + 1)) >> 8) | \
-	((UInt32)((UInt8)(vg) * ((UInt8)(va) + 1) >> 8) << 8) | \
-	((UInt32)((UInt8)(vb) * ((UInt8)(va) + 1) >> 8) << 16) | \
-	((UInt32)(UInt8)(va) << 24))
-
-#define CCX_RGBA(vr,vg,vb,va) \
-	(((va) == 0xff)?CCX_RGB((vr), (vg), (vb)):CCX_RGB_APLHA((vr), (vg), (vb), (va)))
-
-#else
-    #define CCX_RGB RGB
-    #define CCX_RGBA RGBA
-#endif //_TRANZDA_VM_
-
 typedef struct 
 {
 	unsigned char* data;
@@ -71,43 +53,6 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 	else
 	{
 		png_error(png_ptr, "pngReaderCallback failed");
-	}
-}
-
-static 	void copyImageData(tImageInfo &imageInfo, png_bytep* rowPointers)
-{
-    // allocate memory
-	imageInfo.data = new unsigned char[imageInfo.height * imageInfo.width * 4];
-	if (! imageInfo.data)
-	{
-		return;
-	}
-
-	// copy data
-	if(imageInfo.hasAlpha)	{
-		unsigned int bytesPerRow = imageInfo.width * 4;
-		unsigned int *tmp = (unsigned int *)imageInfo.data;
-		for(unsigned int i = 0; i < imageInfo.height; i++)
-		{
-			for(unsigned int j = 0; j < bytesPerRow; j += 4)
-			{
-				*tmp++ = CCX_RGBA( rowPointers[i][j], rowPointers[i][j + 1], 
-					rowPointers[i][j + 2], rowPointers[i][j + 3] );
-			}
-		}
-	}
-	else
-	{
-		unsigned int bytesPerRow = imageInfo.width * 3;
-		unsigned int *tmp = (unsigned int *)imageInfo.data;
-		for(unsigned int i = 0; i < imageInfo.height; i++)
-		{
-			for(unsigned int j = 0; j < bytesPerRow; j += 3)
-			{
-				*tmp++ = CCX_RGB( rowPointers[i][j], rowPointers[i][j + 1], 
-					rowPointers[i][j + 2] );
-			}
-		}
 	}
 }
 
@@ -267,12 +212,8 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	png_structp         png_ptr;
 	png_infop           info_ptr;
 	Int32               pos;
-	Int32               bitDepth;
-	png_uint_32         width;
-	png_uint_32         height;
 	Int32               interlaceType;
 	png_bytep           * rowPointers;
-	Int32               colorType;
 	tImageSource        imageSource;
 
 	pos = 0;
@@ -316,34 +257,66 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	imageSource.offset = 0;
 	png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
 
-	
-	// read the data of the file
-	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_GRAY_TO_RGB, 0);
-
-	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bitDepth, &colorType,
-		&interlaceType, NULL, NULL);
-
-	if (setjmp(png_jmpbuf(png_ptr)))
-	{     
-		png_destroy_read_struct(&png_ptr, NULL, NULL);
-		png_destroy_info_struct(png_ptr, &info_ptr);
-		return false;
-	}
-
-	// get the image file data
-	rowPointers = png_get_rows(png_ptr, info_ptr);
+	// read png info
+	png_read_info(png_ptr, info_ptr);
 
 	// init image info
-	m_imageInfo.height = height;
-	m_imageInfo.width = width;
-	m_imageInfo.hasAlpha = info_ptr->color_type & PNG_COLOR_MASK_ALPHA;
+	m_imageInfo.height = info_ptr->height;
+	m_imageInfo.width = info_ptr->width;
 	m_imageInfo.isPremultipliedAlpha = false;
-	copyImageData(m_imageInfo, rowPointers);
 	// we use CCX_RGA or CCX_RGB to save data
 	// so the bitsPerComponet is 32, and it also
 	// has the alpha data
 	m_imageInfo.bitsPerComponent = 32;
 	m_imageInfo.hasAlpha = true;
+
+	// convert to appropriate format, we now only support RGBA8888
+	if (info_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
+	{
+		png_set_packing(png_ptr);
+		png_set_palette_to_rgb(png_ptr);
+	}
+	if (info_ptr->color_type == PNG_COLOR_TYPE_GRAY && info_ptr->bit_depth < 8)
+	{
+		png_set_expand_gray_1_2_4_to_8(png_ptr);
+	}
+	if (info_ptr->color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+	{
+		png_set_gray_to_rgb(png_ptr);
+	}
+	if (info_ptr->bit_depth == 16)
+	{
+		png_set_strip_16(png_ptr);
+	}
+
+	// expand paletted or RGB images with transparency to full alpha channels so the data will be
+	// available as RGBA quatets
+	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
+	{
+		png_set_tRNS_to_alpha(png_ptr);
+	}
+
+	// add the alpha channel if it has not
+	if (info_ptr->color_type == PNG_COLOR_TYPE_RGB || info_ptr->color_type == PNG_COLOR_TYPE_GRAY)
+	{
+		png_set_add_alpha(png_ptr, 255, PNG_FILLER_AFTER);
+	}
+
+	// allocate memory and read data
+	m_imageInfo.data = new unsigned char[m_imageInfo.height * m_imageInfo.width * 4];
+	rowPointers = (png_bytep*)png_mem_alloc(sizeof(png_bytep) * m_imageInfo.height);
+	for (int i = 0; i < m_imageInfo.height; ++i)
+	{
+		rowPointers[i] = (png_bytep)png_mem_alloc(m_imageInfo.width * 4);
+	}
+	png_read_image(png_ptr, rowPointers);
+
+	// copy data to image info
+	int bytesPerRow = m_imageInfo.width * 4;
+	for (int j = 0; j < m_imageInfo.height; ++j)
+	{
+		memcpy(m_imageInfo.data + j * bytesPerRow, rowPointers[j], bytesPerRow);
+	}
 
 	// release
 	png_destroy_read_struct(&png_ptr, NULL, NULL);
