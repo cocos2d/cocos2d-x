@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "support/data_support/utlist.h"
-#include "support/data_support/ccArray.h"
+#include "support/data_support/ccCArray.h"
 #include "NSMutableArray.h"
 #include "Cocos2dDefine.h"
 
@@ -231,10 +231,26 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 		ccArrayDoubleCapacity(pElement->timers);
 	}
 
-	CCTimer *pTimer = new CCTimer();
-	pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
-	ccArrayAppendObject(pElement->timers, pTimer);
-	pTimer->release();
+	bool found = false;
+    for (unsigned int i = 0; i < pElement->timers->num; ++i)
+	{
+		CCTimer *timer = (CCTimer*)pElement->timers->arr[i];
+		if (pfnSelector == timer->m_pfnSelector)
+		{
+			CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
+			timer->m_fInterval = fInterval;
+			found = true;
+		}
+	}
+
+
+	if (! found)
+	{
+		CCTimer *pTimer = new CCTimer();
+		pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
+		ccArrayAppendObject(pElement->timers, pTimer);
+		pTimer->release();
+	}	
 }
 
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget)

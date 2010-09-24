@@ -132,6 +132,10 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(NSDictionary<std::string,
 			spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:frame offset:offset originalSize:sourceSize];
 			*/
 		}
+		else
+		{
+			CCLOG("cocos2d: Unsupported Zwoptex version. Update cocos2d.");
+		}
 		// add sprite frame
 		m_pSpriteFrames->setObject(spriteFrame, key);
 	}

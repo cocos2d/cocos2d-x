@@ -135,7 +135,6 @@ public:
 	 @since v0.99.0
 	 */
 	inline CGPoint getOffsetPosition(void) { return m_obOffsetPosition; }
-	inline void setSffsetPosition(CGPoint obOffsetPosition) { m_obOffsetPosition = obOffsetPosition; }
 
 	// conforms to CCTextureProtocol protocol
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
@@ -347,7 +346,7 @@ protected:
 	// Data used when the sprite is rendered using a CCSpriteSheet
 	//
 	CCTextureAtlas			*m_pobTextureAtlas;		// Sprite Sheet texture atlas (weak reference)
-	unsigned int					m_uAtlasIndex;			// Absolute (real) Index on the SpriteSheet
+	unsigned int			m_uAtlasIndex;			// Absolute (real) Index on the SpriteSheet
 	CCSpriteSheet			*m_pobSpriteSheet;		// Used spritesheet (weak reference)
 	ccHonorParentTransform	m_eHonorParentTransform;// whether or not to transform according to its parent transformations
 	bool					m_bDirty;				// Sprite needs to be updated
@@ -371,7 +370,8 @@ protected:
 	CGRect m_obRect;
 
 	// Offset Position (used by Zwoptex)
-	CGPoint m_obOffsetPosition;
+	CGPoint m_obOffsetPosition; // absolute
+	CGPoint m_obUnflippedOffsetPositionFromCenter;
 
 	// vertex coords, texture coords and color info
 	ccV3F_C4B_T2F_Quad m_sQuad;

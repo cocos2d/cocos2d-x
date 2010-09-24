@@ -45,6 +45,10 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+	// Easy integration	
+#define CCARRAYDATA_FOREACH(__array__, __object__)															\
+	__object__=__array__->arr[0]; for(int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
+
 typedef struct _ccArray 
 {
 	unsigned int num, max;

@@ -61,10 +61,10 @@ public:
 
 public:
 	SEL_SCHEDULE m_pfnSelector;
+	ccTime m_fInterval;
 
 protected:
 	SelectorProtocol *m_pTarget;	
-	ccTime m_fInterval;
 	ccTime m_fElapsed;
 };
 
@@ -110,10 +110,11 @@ public:
 	/** The scheduled method will be called every 'interval' seconds.
 	 If paused is YES, then it won't be called until it is resumed.
 	 If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+	 If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
 
 	 @since v0.99.3
 	 */
-	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused);
+	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
 
 	/** Schedules the 'update' selector for a given target with a given priority.
 	 The 'update' selector will be called every frame.

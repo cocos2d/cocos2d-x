@@ -354,6 +354,21 @@ void CCSprite::setTextureRect(CGRect rect, CGSize size)
 	setContentSize(size);
 	updateTextureCoords(rect);
 
+	CGPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
+
+	// issue #732
+	if (m_bFlipX)
+	{
+		relativeOffset.x = -relativeOffset.x;
+	}
+	if (m_bFlipY)
+	{
+		relativeOffset.y = -relativeOffset.y;
+	}
+
+	m_obOffsetPosition.x = relativeOffset.x + (m_tContentSize.width - m_obRect.size.width) / 2;
+	m_obOffsetPosition.y = relativeOffset.y + (m_tContentSize.height - m_obRect.size.height) / 2;
+
 	// rendering using SpriteSheet
 	if (m_bUsesSpriteSheet)
 	{
@@ -894,12 +909,7 @@ bool CCSprite::getIsOpacityModifyRGB(void)
 
 void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
-	m_obOffsetPosition = pNewFrame->getOffset();
-
-	CGRect rect = pNewFrame->getRect();
-	CGSize origSize = pNewFrame->getOriginalSize();
-	m_obOffsetPosition.x += (origSize.width - rect.size.width) / 2;
-	m_obOffsetPosition.y += (origSize.height - rect.size.height) / 2;
+	m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 
 	CCTexture2D *pNewTexture = pNewFrame->getTexture();
 	// update texture before updating texture rect

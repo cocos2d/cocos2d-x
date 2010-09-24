@@ -212,7 +212,6 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	png_structp         png_ptr;
 	png_infop           info_ptr;
 	Int32               pos;
-	Int32               interlaceType;
 	png_bytep           * rowPointers;
 	tImageSource        imageSource;
 
@@ -305,7 +304,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	// allocate memory and read data
 	m_imageInfo.data = new unsigned char[m_imageInfo.height * m_imageInfo.width * 4];
 	rowPointers = (png_bytep*)png_mem_alloc(sizeof(png_bytep) * m_imageInfo.height);
-	for (int i = 0; i < m_imageInfo.height; ++i)
+	for (unsigned int i = 0; i < m_imageInfo.height; ++i)
 	{
 		rowPointers[i] = (png_bytep)png_mem_alloc(m_imageInfo.width * 4);
 	}
@@ -313,7 +312,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 
 	// copy data to image info
 	int bytesPerRow = m_imageInfo.width * 4;
-	for (int j = 0; j < m_imageInfo.height; ++j)
+	for (unsigned int j = 0; j < m_imageInfo.height; ++j)
 	{
 		memcpy(m_imageInfo.data + j * bytesPerRow, rowPointers[j], bytesPerRow);
 	}

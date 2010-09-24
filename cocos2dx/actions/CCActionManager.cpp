@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCActionManager.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "support/data_support/ccArray.h"
+#include "support/data_support/ccCArray.h"
 #include "Cocos2dDefine.h"
 #include "support/data_support/uthash.h"
 

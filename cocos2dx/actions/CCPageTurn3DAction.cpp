@@ -94,9 +94,10 @@ namespace cocos2d
 				}
 				
 				//	Stop z coord from dropping beneath underlying page in a transition
-				if( p.z<0.001f )
+				// issue #751
+				if( p.z < 0.9f )
 				{
-					p.z = 0.001f;
+					p.z = 0.9f;
 				}
 				
 				// Set new coords

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCTextureCache.h"
 #include "CGPointExtension.h"
-#include "support/data_support/ccArray.h"
+#include "support/data_support/ccCArray.h"
 
 namespace cocos2d {
 

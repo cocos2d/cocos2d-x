@@ -89,12 +89,12 @@ simple macro that swaps 2 variables
 /** @def CC_DEGREES_TO_RADIANS
  converts degrees to radians
  */
-#define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0f * (float)M_PI)
+#define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) * 0.01745329252f) // PI / 180
 
 /** @def CC_RADIANS_TO_DEGREES
  converts radians to degrees
  */
-#define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) / (float)M_PI * 180.0f)
+#define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
