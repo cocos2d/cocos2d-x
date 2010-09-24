@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir D:\Work7\PRJ_TG3\Include\Box2D&#x0D;&#x0A;mkdir D:\Work7\PRJ_TG3\Include\Box2D\Collision&#x0D;&#x0A;mkdir D:\Work7\PRJ_TG3\Include\Box2D\Collision\Shapes&#x0D;&#x0A;mkdir D:\Work7\PRJ_TG3\Include\Box2D\Common&#x0D;&#x0A;mkdir D:\Work7\PRJ_TG3\Include\Box2D\Dynamics&#x0D;&#x0A;mkdir D:\Work7\PRJ_TG3\Include\Box2D\Dynamics\Contacts&#x0D;&#x0A;mkdir D:\Work7\PRJ_TG3\Include\Box2D\Dynamics\Joints&#x0D;&#x0A;copy .\*.h				D:\Work7\PRJ_TG3\Include\Box2D&#x0D;&#x0A;copy .\Collision\*.h			D:\Work7\PRJ_TG3\Include\Box2D\Collision&#x0D;&#x0A;copy .\Collision\Shapes\*.h		D:\Work7\PRJ_TG3\Include\Box2D\Collision\Shapes&#x0D;&#x0A;copy .\Common\*.h			D:\Work7\PRJ_TG3\Include\Box2D\Common&#x0D;&#x0A;copy .\Dynamics\*.h			D:\Work7\PRJ_TG3\Include\Box2D\Dynamics&#x0D;&#x0A;copy .\Dynamics\Contacts\*.h		D:\Work7\PRJ_TG3\Include\Box2D\Dynamics\Contacts&#x0D;&#x0A;copy .\Dynamics\Joints\*.h		D:\Work7\PRJ_TG3\Include\Box2D\Dynamics\Joints"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
