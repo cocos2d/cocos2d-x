@@ -421,6 +421,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\CCSpriteBatchNode.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\CCSpriteFrame.h"
 				>
 			</File>
