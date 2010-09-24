@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "NSSet.h"
 #include "CCTouch.h"
 #include "CCTexture2D.h"
-#include "support/data_support/ccArray.h"
+#include "support/data_support/ccCArray.h"
 
 #include <assert.h>
 namespace   cocos2d {

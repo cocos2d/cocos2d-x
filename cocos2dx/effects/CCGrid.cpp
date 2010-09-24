@@ -208,7 +208,7 @@ namespace cocos2d
 		CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
 
 		glLoadIdentity();
-		glViewport(0, 0, winSize.width, winSize.height);
+		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glOrthof(0, winSize.width, 0, winSize.height, -100, 100);
@@ -220,7 +220,7 @@ namespace cocos2d
 	{
 		CGSize	winSize = CCDirector::getSharedDirector()->getDisplaySize();
 
-		glViewport(0, 0, winSize.width, winSize.height);
+		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);

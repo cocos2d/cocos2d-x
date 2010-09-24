@@ -618,6 +618,7 @@ void CCNode::reorderChild(CCNode *child, int zOrder)
 
 void CCNode::visit()
 {
+	// quick return if not visible
 	if (!m_bIsVisible)
 	{
 		return;
@@ -637,6 +638,7 @@ void CCNode::visit()
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
+		// draw children zOrder < 0
 		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
 		{
 			pNode = (*it);
@@ -652,8 +654,10 @@ void CCNode::visit()
 		}
     }
 
+	// self draw
 	this->draw();
 
+	// draw children zOrder >= 0
     if (m_pChildren && m_pChildren->count() > 0)
     {
 		for ( ; it!=m_pChildren->end(); it++ )

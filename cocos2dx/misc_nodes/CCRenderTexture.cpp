@@ -101,9 +101,9 @@ namespace cocos2d {
 		CGSize textureSize = m_pTexture->getContentSize();
 
 		// Calculate the adjustment ratios based on the old and new projections
-		CGRect frame = CCDirector::getSharedDirector()->getOpenGLView()->getFrame();
-		float widthRatio = frame.size.width / textureSize.width;
-		float heightRatio = frame.size.height / textureSize.height;
+		CGSize size = CCDirector::getSharedDirector()->getDisplaySize();
+		float widthRatio = size.width / textureSize.width;
+		float heightRatio = size.height / textureSize.height;
 
 		// Adjust the orthographic propjection and viewport
 		glOrthof((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
@@ -119,8 +119,8 @@ namespace cocos2d {
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_nOldFBO);
 		// Restore the original matrix and viewport
 		glPopMatrix();
-		CGRect frame = CCDirector::getSharedDirector()->getOpenGLView()->getFrame();
-		glViewport(0, 0, (GLsizei)frame.size.width, (GLsizei)frame.size.height);
+		CGSize size = CCDirector::getSharedDirector()->getDisplaySize();
+		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 
 		glColorMask(TRUE, TRUE, TRUE, TRUE);
 	}

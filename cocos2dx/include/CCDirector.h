@@ -287,31 +287,6 @@ public:
 	/** detach the cocos2d view from the view/window */
 	bool detach(void);
 
-	/** attach in UIWindow using the full frame.
-	 It will create a CCXEGLView.
-	 
-	 @deprecated set setOpenGLView instead. Will be removed in v1.0
-	 */
-	// bool attachInWindow(UIWindow *pWindow);
-
-	/** attach in UIView using the full frame.
-	 It will create a CCXEGLView.
-	 
-	 @deprecated set setOpenGLView instead. Will be removed in v1.0
-	 */
-	// bool attachInView(UIView *pView);
-
-	/** attach in UIView using the given frame.
-	 It will create a CCXEGLView and use it.
-	 
-	 @deprecated set setOpenGLView instead. Will be removed in v1.0
-	 */
-	// bool attchInViewWithFrame(UIView *pView, CGRect frame);
-
-    
-// 	// set the view where opengl to draw in
-// 	bool attachWindow(UIWindow *pVindow);
-
 	// Landspace
 
 	// returns the size of the OpenGL view in pixels, according to the landspace
@@ -330,8 +305,8 @@ public:
 	 */
 	CGPoint convertToUI(CGPoint obPoint);
 
-	// rotates the screen if Landscape mode is activated
-	void applyLandspace(void);
+	// rotates the screen if an orientation differnent than Portrait is used
+	void applyOrientation(void);
 
 	// XXX: missing description
 	float getZEye(void);
@@ -391,6 +366,11 @@ public:
 	 */
 	virtual void startAnimation(void);
 
+	/** Draw the scene.
+	This method is called every frame. Don't call it manually.
+	*/
+	void drawScene(void);
+
 	// Memory Helper
 
 	/** Removes cached all cocos2d cached data.
@@ -417,17 +397,17 @@ public:
 	static CCDirector* getSharedDirector(void);
 
 	/** There are 4 types of Director.
-	 - CCDirectorTypeNSTimer (default)
-	 - CCDirectorTypeMainLoop
-	 - CCDirectorTypeThreadMainLoop
-	 - CCDirectorTypeDisplayLink
+	 - kCCDirectorTypeNSTimer (default)
+	 - kCCDirectorTypeMainLoop
+	 - kCCDirectorTypeThreadMainLoop
+	 - kCCDirectorTypeDisplayLink
 	 
 	 Each Director has it's own benefits, limitations.
 	 If you are using SDK 3.1 or newer it is recommed to use the DisplayLink director
 	 
 	 This method should be called before any other call to the director.
 
-	 It will return NO if the director type is CCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
+	 It will return NO if the director type is kCCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
 	 
 	 @since v0.8.2
 	 */
@@ -438,7 +418,7 @@ protected:
 	bool isOpenGLAttached(void);
 	// bool initOpenGLViewWithViewWithFrame(UIView *pView, CGRect obRect);
 
-	void mainLoop(void);
+	void updateContentScaleFactor(void);
 	void setNextScene(void);
 
 	// shows the FPS in the screen
@@ -454,6 +434,11 @@ protected:
 #if CC_ENABLE_PROFILERS
 	void showProfilers(void);
 #endif // CC_ENABLE_PROFILERS
+
+	/** recalculate the projection view and projection size based on the EAGLVIEW
+	@since v0.99.4
+	*/
+	void recalculateProjectionAndEAGLViewSize();
 
 protected:
     cocos2d::CCXEGLView	*m_pobOpenGLView;
@@ -518,6 +503,9 @@ protected:
 	
 	/* content scale factor */
 	CGFloat	m_fContentScaleFactor;
+
+	/* contentScaleFactor could be simulated */
+	bool m_bIsContentScaleSupported;
 	
 #if CC_ENABLE_PROFILERS
 	ccTime m_fAccumDtForProfiler;

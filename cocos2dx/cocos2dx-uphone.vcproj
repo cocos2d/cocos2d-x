@@ -421,10 +421,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\CCSpriteBatchNode.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\CCSpriteFrame.h"
 				>
 			</File>
@@ -712,7 +708,7 @@
 				Name="data_support"
 				>
 				<File
-					RelativePath=".\support\data_support\ccArray.h"
+					RelativePath=".\support\data_support\ccCArray.h"
 					>
 				</File>
 				<File

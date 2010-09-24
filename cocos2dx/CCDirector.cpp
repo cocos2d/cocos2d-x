@@ -133,6 +133,7 @@ bool CCDirector::init(void)
 
     m_fContentScaleFactor = 1;
 	m_obScreenSize = m_obSurfaceSize = CGSizeZero;
+	m_bIsContentScaleSupported =false;
 
 	m_pLastUpdate = new struct cc_timeval();
 
@@ -189,8 +190,8 @@ void CCDirector::setGLDefaultValues(void)
 #endif
 }
 
-// main loop
-void CCDirector::mainLoop(void)
+// Draw the SCene
+void CCDirector::drawScene(void)
 {
 	// calculate "global" dt
 	calculateDeltaTime();
@@ -212,7 +213,7 @@ void CCDirector::mainLoop(void)
 
 	glPushMatrix();
 
-	applyLandspace();
+	applyOrientation();
 
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
 	CC_ENABLE_DEFAULT_GL_STATES();
@@ -295,12 +296,32 @@ void CCDirector::setOpenGLView(CCXEGLView *pobOpenGLView)
 		m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * m_fContentScaleFactor,
 			m_obScreenSize.height * m_fContentScaleFactor);
 
+		if (m_fContentScaleFactor != 1)
+		{
+			updateContentScaleFactor();
+		}
+
  		CCTouchDispatcher *pTouchDispatcher = CCTouchDispatcher::getSharedDispatcher();
  		m_pobOpenGLView->setTouchDelegate(pTouchDispatcher);
         pTouchDispatcher->setDispatchEvents(true);
 
 		setGLDefaultValues();
 	}
+}
+
+void CCDirector::updateContentScaleFactor()
+{
+	// Do we support the scale factor
+	// now we don't support
+	m_bIsContentScaleSupported = false;
+}
+
+void CCDirector::recalculateProjectionAndEAGLViewSize()
+{
+	m_obScreenSize = m_pobOpenGLView->getSize();
+	m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * m_fContentScaleFactor,
+		                         m_obScreenSize.height * m_fContentScaleFactor);
+	setProjection(m_eProjection);
 }
 
 void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
@@ -342,9 +363,10 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 	switch (kProjection)
 	{
 	case kCCDirectorProjection2D:
+		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)size.width, (GLsizei)size.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrthof(0, size.width, 0, size.height, -1000, 1000);
+		glOrthof(0, size.width, 0, size.height, -1024, 1000);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		break;
@@ -377,7 +399,8 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 void CCDirector::purgeCachedData(void)
 {
     CCBitmapFontAtlas::purgeCachedData();
-	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+	// removed in 0.99.4 release
+	/*CCSpriteFrameCache::purgeSharedSpriteFrameCache();*/
 	CCTextureCache::purgeSharedTextureCache();
 }
 
@@ -435,7 +458,7 @@ CGPoint CCDirector::convertToGL(CGPoint obPoint)
 	float newY = s.height - obPoint.y;
 	float newX = s.width - obPoint.x;
 
-	CGPoint ret;
+	CGPoint ret = CGPointZero;
 	switch (m_eDeviceOrientation)
 	{
 	case CCDeviceOrientationPortrait:
@@ -454,7 +477,11 @@ CGPoint CCDirector::convertToGL(CGPoint obPoint)
 		break;
 	}
 
-	ret = ccpMult(ret, m_fContentScaleFactor);
+	if (m_fContentScaleFactor != 1 && m_bIsContentScaleSupported)
+	{
+        ret = ccpMult(ret, m_fContentScaleFactor);
+	}
+	
 	return ret;
 }
 
@@ -463,21 +490,22 @@ CGPoint CCDirector::convertToUI(CGPoint obPoint)
 	CGSize winSize = m_obSurfaceSize;
 	float oppositeX = winSize.width - obPoint.x;
 	float oppositeY = winSize.height - obPoint.y;
-	CGPoint uiPoint;
+	CGPoint uiPoint = CGPointZero;
 
 	switch (m_eDeviceOrientation)
 	{
 	case CCDeviceOrientationPortrait:
-		uiPoint = ccp(obPoint.x, obPoint.y);
+		uiPoint = ccp(obPoint.x, oppositeY);
 		break;
 	case CCDeviceOrientationPortraitUpsideDown:
-		uiPoint = ccp(oppositeX, oppositeY);
+		uiPoint = ccp(oppositeX, obPoint.y);
 		break;
 	case CCDeviceOrientationLandscapeLeft:
-		uiPoint = ccp(obPoint.y, oppositeX);
+		uiPoint = ccp(obPoint.y, obPoint.x);
 		break;
 	case CCDeviceOrientationLandscapeRight:
-		uiPoint = ccp(oppositeY, obPoint.x);
+		// Can't use oppositeX/Y because x/y are flipped
+		uiPoint = ccp(winSize.width - obPoint.y, winSize.height - obPoint.x);
 		break;
 	}
 
@@ -507,7 +535,7 @@ CGSize CCDirector::getDisplaySize(void)
 	return m_obSurfaceSize;
 }
 
-void CCDirector::applyLandspace(void)
+void CCDirector::applyOrientation(void)
 {
 	CGSize s = m_obSurfaceSize;
 	float w = s.width / 2;
@@ -548,9 +576,6 @@ void CCDirector::runWithScene(CCScene *pScene)
 
 	pushScene(pScene);
 	startAnimation();
-
-	// render the 1st frame to avoid flicker (issue #350)
-	//mainLoop();
 }
 
 void CCDirector::replaceScene(CCScene *pScene)
@@ -789,7 +814,7 @@ void CCDisplayLinkDirector::preMainLoop(void)
 {
  	if (! m_bInvalid)
  	{
- 		mainLoop();
+ 		drawScene();
  
  		// release the objects
  		NSPoolManager::getInstance()->pop();
