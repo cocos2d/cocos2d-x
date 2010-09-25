@@ -36,7 +36,7 @@ namespace cocos2d {
 	/** CCTMXLayer represents the TMX layer.
 
 	It is a subclass of CCSpriteSheet. By default the tiles are rendered using a CCTextureAtlas.
-	If you mofify a tile on runtime, then, that tile will become a CCSprite.
+	If you modify a tile on runtime, then, that tile will become a CCSprite, otherwise no CCSprite objects are created.
 	The benefits of using CCSprite objects as tiles are:
 	- tiles (CCSprite) can be rotated/scaled/moved with a nice API
 
