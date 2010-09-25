@@ -167,4 +167,38 @@ public:
     }
 };
 
+class RadiusMode1 : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+class RadiusMode2 : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+};
+
+class Issue704 : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class Issue870 : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void updateQuads(ccTime dt);
+
+private:
+    int m_nIndex;
+};
+
 #endif

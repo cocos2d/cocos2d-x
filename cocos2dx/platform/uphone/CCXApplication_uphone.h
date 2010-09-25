@@ -59,6 +59,18 @@ public:
     CGRect statusBarFrame();
 
     /**
+    @brief  The function be called when the application enter background
+    @param  the pointer of the application
+    */
+    virtual void applicationDidEnterBackground(TApplication* pApp) {}
+
+    /**
+    @brief  The function be called when the application enter foreground
+    @param  the pointer of the application
+    */
+    virtual void applicationWillEnterForeground(TApplication* pApp) {}
+
+    /**
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
