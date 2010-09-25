@@ -178,8 +178,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	CCTexture2D * texture = NULL;
 	// Split up directory and filename
 	std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
-	std::string temp(path);
-
 	// MUTEX:
 	// Needed since addImageAsync calls this method from a different thread
 	
@@ -189,20 +187,44 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 	if( ! texture ) 
 	{
+		std::string lowerCase(path);
+		for (unsigned int i = 0; i < lowerCase.length(); ++i)
+		{
+			lowerCase[i] = tolower(lowerCase[i]);
+		}
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
-		for (unsigned int i = 0; i < temp.length(); ++i)
-		{
-			temp[i] = tolower(temp[i]);
-		}
-		if (std::string::npos != temp.find(".pvr"))
+
+		if (std::string::npos != lowerCase.find(".pvr"))
 		{
 #ifdef _POWERVR_SUPPORT_
 			texture = this->addPVRTCImage(fullpath.c_str());
 #endif
 		}
+		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
+// 		else if ( lowerCase.find(".jpg") || lowerCase(".jpeg") )
+// 		{
+// 			// convert jpg to png before loading the texture
+// 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
+// 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
+// 			tex = [ [CCTexture2D alloc] initWithImage: png ];
+// 			[png release];
+// 			[jpg release];
+// 
+// 			if( tex )
+// 				[textures setObject: tex forKey:path];
+// 			else
+// 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+// 
+// 			[tex release];
+// 		}
 		else
 		{
+			//# work around for issue #910
+#if 0
+			UIImage *image = [UIImage imageNamed:path];
+			tex = [ [CCTexture2D alloc] initWithImage: image ];
+#else
 			// prevents overloading the autorelease pool
 			UIImage * image = new UIImage();
 			if(! image->initWithContentsOfFile(fullpath))
@@ -213,6 +235,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			texture = new CCTexture2D();
 			texture->initWithImage(image);
 			CCX_SAFE_DELETE(image);// image->release();
+#endif //
 
 			if( texture )
 			{
