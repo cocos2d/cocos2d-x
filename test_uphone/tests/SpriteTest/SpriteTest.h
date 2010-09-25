@@ -202,6 +202,14 @@ public:
 	~SpriteFrameTest();
 	virtual void onExit();
 	virtual std::string title();
+    virtual std::string subtitle();
+
+    void startIn05Secs(ccTime dt);
+    void flipSprites(ccTime dt);
+private:
+    CCSprite *m_pSprite1;
+    CCSprite *m_pSprite2;
+    int      m_nCounter;
 };
 
 class SpriteOffsetAnchorRotation: public SpriteTestDemo

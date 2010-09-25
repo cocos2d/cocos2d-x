@@ -1434,11 +1434,11 @@ SpriteFrameTest::SpriteFrameTest()
 	//
 	// Animation using Sprite Sheet
 	//
-	CCSprite* sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-	sprite->setPosition( ccp( s.width/2-80, s.height/2) );
+	m_pSprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+	m_pSprite1->setPosition( ccp( s.width/2-80, s.height/2) );
 	
 	CCSpriteSheet* spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
-	spritesheet->addChild(sprite);
+	spritesheet->addChild(m_pSprite1);
 	addChild(spritesheet);
 
 	NSMutableArray<CCSpriteFrame*>* animFrames = new NSMutableArray<CCSpriteFrame*>(15);
@@ -1452,16 +1452,18 @@ SpriteFrameTest::SpriteFrameTest()
 	}
 
 	CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f, animFrames);
-	sprite->runAction( CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
+	m_pSprite1->runAction( CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
 
 	// to test issue #732, uncomment the following line
-//		sprite.flipX = true;
+	m_pSprite1->setFlipX(false);
+    m_pSprite1->setFlipY(false);
+
 	//
 	// Animation using standard Sprite
 	//
-	CCSprite* sprite2 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
-	sprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
-	addChild(sprite2);
+	m_pSprite2 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+	m_pSprite2->setPosition( ccp( s.width/2 + 80, s.height/2) );
+	addChild(m_pSprite2);
 	
 
 	NSMutableArray<CCSpriteFrame*>* moreFrames = new NSMutableArray<CCSpriteFrame*>(20);
@@ -1484,14 +1486,17 @@ SpriteFrameTest::SpriteFrameTest()
 	CCAnimation *animMixed = CCAnimation::animationWithName("dance", 0.2f, moreFrames);
 
 	
-	sprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
+	m_pSprite2->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animMixed, false) ) );
 
 	animFrames->release();
 	moreFrames->release(); 
 
 	// to test issue #732, uncomment the following line
-//		sprite2.flipX = true;
+    m_pSprite2->setFlipX(false);
+    m_pSprite2->setFlipY(false);
 
+    schedule(schedule_selector(SpriteFrameTest::startIn05Secs), 0.5f);
+    m_nCounter = 0;
 }
 
 void SpriteFrameTest::onExit()
@@ -1508,6 +1513,51 @@ SpriteFrameTest::~SpriteFrameTest()
 std::string SpriteFrameTest::title()
 {
 	return "Sprite vs. SpriteSheet animation";
+}
+
+std::string SpriteFrameTest::subtitle()
+{
+    return "Testing issue #792";
+}
+
+void SpriteFrameTest::startIn05Secs(ccTime dt)
+{
+    unschedule(schedule_selector(SpriteFrameTest::startIn05Secs));
+    schedule(schedule_selector(SpriteFrameTest::flipSprites), 1.0f);
+}
+
+void SpriteFrameTest::flipSprites(ccTime dt)
+{
+    m_nCounter++;
+
+    bool fx = false;
+    bool fy = false;
+    int  i  = m_nCounter % 4;
+
+    switch ( i ) {
+        case 0:
+            fx = false;
+            fy = false;
+            break;
+        case 1:
+            fx = true;
+            fy = false;
+            break;
+        case 2:
+            fx = false;
+            fy = true;
+            break;
+        case 3:
+            fx = true;
+            fy = true;
+            break;
+    }
+
+    m_pSprite1->setFlipX(fx);
+    m_pSprite1->setFlipY(fy);
+    m_pSprite2->setFlipX(fx);
+    m_pSprite2->setFlipY(fy);
+    //NSLog(@"flipX:%d, flipY:%d", fx, fy);
 }
 
 //------------------------------------------------------------------
