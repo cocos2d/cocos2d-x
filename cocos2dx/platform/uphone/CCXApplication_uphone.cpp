@@ -52,6 +52,16 @@ namespace   cocos2d {
         case EVENT_AppStopNotify:
 
             break;
+        case EVENT_AppActiveNotify:
+            if (pEvent->sParam1 == 0)
+            {
+                applicationDidEnterBackground(this);
+            }
+            else if (pEvent->sParam1 > 0)
+            {
+                applicationWillEnterForeground(this);
+            }
+            break;
         }
 
         if (! bHandled)

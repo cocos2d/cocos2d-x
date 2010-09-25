@@ -619,20 +619,326 @@ void ParallaxParticle::onEnter()
 	p->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));	
 }
 
+std::string ParallaxParticle::title()
+{
+	return "Parallax + Particles";
+}
+
+//------------------------------------------------------------------
+//
+// RadiusMode1
+//
+//------------------------------------------------------------------
+void RadiusMode1::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    setColor(ccBLACK);
+    removeChild(m_background, true);
+    m_background = NULL;
+
+    m_emitter = new CCQuadParticleSystem();
+    m_emitter->initWithTotalParticles(200);
+    addChild(m_emitter, 10);
+    m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
+
+    // duration
+    m_emitter->setDuration(kCCParticleDurationInfinity);
+
+    // radius mode
+    m_emitter->setEmitterMode(kCCParticleModeRadius);
+
+    // radius mode: start and end radius in pixels
+    m_emitter->setStartRadius(0);
+    m_emitter->setStartRadiusVar(0);
+    m_emitter->setEndRadius(160);
+    m_emitter->setEndRadiusVar(0);
+
+    // radius mode: degrees per second
+    m_emitter->setRotatePerSecond(180);
+    m_emitter->setRotatePerSecondVar(0);
+
+
+    // angle
+    m_emitter->setAngle(90);
+    m_emitter->setAngleVar(0);
+
+    // emitter position
+    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    m_emitter->setPosition(ccp(size.width/2, size.height/2));
+    m_emitter->setPosVar(CGPointZero);
+
+    // life of particles
+    m_emitter->setLife(5);
+    m_emitter->setLifeVar(0);
+
+    // spin of particles
+    m_emitter->setStartSpin(0);
+    m_emitter->setStartSpinVar(0);
+    m_emitter->setEndSpin(0);
+    m_emitter->setEndSpinVar(0);
+
+    // color of particles
+    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    m_emitter->setStartColor(startColor);
+
+    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    m_emitter->setStartColorVar(startColorVar);
+
+    ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    m_emitter->setEndColor(endColor);
+
+    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+    m_emitter->setEndColorVar(endColorVar);
+
+    // size, in pixels
+    m_emitter->setStartSize(32);
+    m_emitter->setStartSizeVar(0);
+    m_emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
+
+    // emits per second
+    m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
+
+    // additive
+    m_emitter->setIsBlendAdditive(false);
+}
+
+std::string RadiusMode1::title()
+{
+    return "Radius Mode: Spiral";
+}
+
+//------------------------------------------------------------------
+//
+// RadiusMode2
+//
+//------------------------------------------------------------------
+void RadiusMode2::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    setColor(ccBLACK);
+    removeChild(m_background, true);
+    m_background = NULL;
+
+    m_emitter = new CCQuadParticleSystem();
+    m_emitter->initWithTotalParticles(200);
+    addChild(m_emitter, 10);
+    m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
+
+    // duration
+    m_emitter->setDuration(kCCParticleDurationInfinity);
+
+    // radius mode
+    m_emitter->setEmitterMode(kCCParticleModeRadius);
+
+    // radius mode: start and end radius in pixels
+    m_emitter->setStartRadius(100);
+    m_emitter->setStartRadiusVar(0);
+    m_emitter->setEndRadius(kCCParticleStartRadiusEqualToEndRadius);
+    m_emitter->setEndRadiusVar(0);
+
+    // radius mode: degrees per second
+    m_emitter->setRotatePerSecond(45);
+    m_emitter->setRotatePerSecondVar(0);
+
+
+    // angle
+    m_emitter->setAngle(90);
+    m_emitter->setAngleVar(0);
+
+    // emitter position
+    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    m_emitter->setPosition(ccp(size.width/2, size.height/2));
+    m_emitter->setPosVar(CGPointZero);
+
+    // life of particles
+    m_emitter->setLife(4);
+    m_emitter->setLifeVar(0);
+
+    // spin of particles
+    m_emitter->setStartSpin(0);
+    m_emitter->setStartSpinVar(0);
+    m_emitter->setEndSpin(0);
+    m_emitter->setEndSpinVar(0);
+
+    // color of particles
+    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    m_emitter->setStartColor(startColor);
+
+    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    m_emitter->setStartColorVar(startColorVar);
+
+        ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    m_emitter->setEndColor(endColor);
+
+    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+    m_emitter->setEndColorVar(endColorVar);
+
+    // size, in pixels
+    m_emitter->setStartSize(32);
+    m_emitter->setStartSizeVar(0);
+    m_emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
+
+    // emits per second
+    m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
+
+    // additive
+    m_emitter->setIsBlendAdditive(false);
+}
+
+std::string RadiusMode2::title()
+{
+    return "Radius Mode: Semi Circle";
+}
+
+//------------------------------------------------------------------
+//
+// Issue704
+//
+//------------------------------------------------------------------
+void Issue704::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    setColor(ccBLACK);
+    removeChild(m_background, true);
+    m_background = NULL;
+
+    m_emitter = new CCQuadParticleSystem();
+    m_emitter->initWithTotalParticles(100);
+    addChild(m_emitter, 10);
+    m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
+
+    // duration
+    m_emitter->setDuration(kCCParticleDurationInfinity);
+
+    // radius mode
+    m_emitter->setEmitterMode(kCCParticleModeRadius);
+
+    // radius mode: start and end radius in pixels
+    m_emitter->setStartRadius(50);
+    m_emitter->setStartRadiusVar(0);
+    m_emitter->setEndRadius(kCCParticleStartRadiusEqualToEndRadius);
+    m_emitter->setEndRadiusVar(0);
+
+    // radius mode: degrees per second
+    m_emitter->setRotatePerSecond(0);
+    m_emitter->setRotatePerSecondVar(0);
+
+
+    // angle
+    m_emitter->setAngle(90);
+    m_emitter->setAngleVar(0);
+
+    // emitter position
+    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    m_emitter->setPosition(ccp(size.width/2, size.height/2));
+    m_emitter->setPosVar(CGPointZero);
+
+    // life of particles
+    m_emitter->setLife(5);
+    m_emitter->setLifeVar(0);
+
+    // spin of particles
+    m_emitter->setStartSpin(0);
+    m_emitter->setStartSpinVar(0);
+    m_emitter->setEndSpin(0);
+    m_emitter->setEndSpinVar(0);
+
+    // color of particles
+    ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+    m_emitter->setStartColor(startColor);
+
+    ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+    m_emitter->setStartColorVar(startColorVar);
+
+        ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+    m_emitter->setEndColor(endColor);
+
+    ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};	
+    m_emitter->setEndColorVar(endColorVar);
+
+    // size, in pixels
+    m_emitter->setStartSize(16);
+    m_emitter->setStartSizeVar(0);
+    m_emitter->setEndSize(kCCParticleStartSizeEqualToEndSize);
+
+    // emits per second
+    m_emitter->setEmissionRate(m_emitter->getTotalParticles() / m_emitter->getLife());
+
+    // additive
+    m_emitter->setIsBlendAdditive(false);
+
+    CCRotateBy* rot = CCRotateBy::actionWithDuration(16, 360);
+    m_emitter->runAction(CCRepeatForever::actionWithAction(rot));
+}
+
+std::string Issue704::title()
+{
+    return "Issue 704. Free + Rot";
+}
+
+std::string Issue704::subtitle()
+{
+    return "Emitted particles should not rotate";
+}
+
+//------------------------------------------------------------------
+//
+// Issue870
+//
+//------------------------------------------------------------------
+void Issue870::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    setColor(ccBLACK);
+    removeChild(m_background, true);
+    m_background = NULL;
+
+    CCQuadParticleSystem *system = new CCQuadParticleSystem();
+    system->initWithFile("Images/SpinningPeas.plist");
+    system->setTextureWithRect(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"), CGRectMake(0,0,32,32));
+    addChild(system, 10);
+    m_emitter = system;
+
+    m_nIndex = 0;
+    schedule(schedule_selector(Issue870::updateQuads), 2.0f);
+}
+
+void Issue870::updateQuads(ccTime dt)
+{
+    m_nIndex = (m_nIndex + 1) % 4;
+    CGRect rect = CGRectMake(m_nIndex * 32, 0, 32, 32);
+    CCQuadParticleSystem* system = (CCQuadParticleSystem*)m_emitter;
+    system->setTextureWithRect(m_emitter->getTexture(), rect);
+}
+
+std::string Issue870::title()
+{
+    return "Issue 870. SubRect";
+}
+
+std::string Issue870::subtitle()
+{
+    return "Every 2 seconds the particle should change";
+}
+
+//------------------------------------------------------------------
+//
+// DemoParticleFromFile
+//
+//------------------------------------------------------------------
 void DemoParticleFromFile::onEnter()
 {
     ParticleDemo::onEnter();
     m_emitter = new CCQuadParticleSystem();
-    std::string filename = "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/" + m_title + ".plist";
+    std::string filename = "Images/" + m_title + ".plist";
     m_emitter->initWithFile(filename.c_str());
     m_background->addChild(m_emitter, 10);
 
     setEmitterPosition();
-}
-
-std::string ParallaxParticle::title()
-{
-	return "Parallax + Particles";
 }
 
 //------------------------------------------------------------------
@@ -651,7 +957,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	25
+#define MAX_LAYER	32
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -682,6 +988,13 @@ CCLayer* createParticleLayer(int nIndex)
         case 22: return new DemoParticleFromFile("SpinningPeas");
         case 23: return new DemoParticleFromFile("SpookyPeas");
         case 24: return new DemoParticleFromFile("Upsidedown");
+        case 25: return new DemoParticleFromFile("Flower");
+        case 26: return new DemoParticleFromFile("Spiral");
+        case 27: return new DemoParticleFromFile("Galaxy");
+        case 28: return new RadiusMode1();
+        case 29: return new RadiusMode2();
+        case 30: return new Issue704();
+        case 31: return new Issue870();
 	}
 
 	return NULL;
@@ -761,7 +1074,7 @@ ParticleDemo::ParticleDemo(void)
 	
     CCLabelAtlas* labelAtlas = CCLabelAtlas::labelAtlasWithString("0000", "fonts/fps_images.png", 16, 24, '.');
     addChild(labelAtlas, 100, kTagLabelAtlas);
-	labelAtlas->setPosition( CGPointMake(254,50) );
+	labelAtlas->setPosition( CGPointMake(s.width-66,50) );
 	
 	// moving background
 	m_background = CCSprite::spriteWithFile(s_back3);
@@ -814,8 +1127,12 @@ void ParticleDemo::ccTouchEnded(CCTouch* touch, UIEvent* event)
 {
 	CGPoint location = touch->locationInView( touch->view() );
 	CGPoint convertedLocation = CCDirector::getSharedDirector()->convertToGL(location);
-	
-	CGPoint	pos = m_background->convertToWorldSpace(CGPointZero);
+
+    CGPoint pos = CGPointZero;
+    if (m_background)
+    {
+	    pos = m_background->convertToWorldSpace(CGPointZero);
+    }
 	m_emitter->setPosition( ccpSub(convertedLocation, pos) );	
 }
 

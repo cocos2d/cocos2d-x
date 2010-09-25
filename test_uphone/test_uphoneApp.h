@@ -21,6 +21,9 @@ public:
 public:
 	virtual Boolean EventHandler(EventType * pEvent);
 
+    virtual void applicationDidEnterBackground(TApplication* pApp);
+    virtual void applicationWillEnterForeground(TApplication* pApp);
+
 protected:
     cocos2d::CCXEGLView * m_pMainWnd;
 

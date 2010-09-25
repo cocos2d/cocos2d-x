@@ -105,6 +105,16 @@ Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
 	return bHandled;
 }
 
+void Ttest_uphoneApp::applicationDidEnterBackground(TApplication* pApp)
+{
+    CCDirector::getSharedDirector()->stopAnimation();
+}
+
+void Ttest_uphoneApp::applicationWillEnterForeground(TApplication* pApp)
+{
+    CCDirector::getSharedDirector()->startAnimation();
+}
+
 static void TimerCallback1(Int32 nTimerId, UInt32 uUserData)
 {
     CCScene * pScene = CCScene::node();
