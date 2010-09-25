@@ -141,6 +141,19 @@ private:
     NSString* m_pstring;
 };
 
+class RescheduleSelector : public SchedulerTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void schedUpdate(ccTime dt);
+private:
+    float m_fInterval;
+    int   m_nTicks;
+};
+
 class SchedulerTestScene : public TestScene
 {
 public:

@@ -553,6 +553,43 @@ std::string SchedulerUpdateFromCustom::subtitle()
 
 //------------------------------------------------------------------
 //
+// RescheduleSelector
+//
+//------------------------------------------------------------------
+void RescheduleSelector::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    m_fInterval = 1.0f;
+    m_nTicks    = 0;
+    schedule(schedule_selector(RescheduleSelector::schedUpdate), m_fInterval);
+}
+
+std::string RescheduleSelector::title()
+{
+    return "Reschedule Selector";
+}
+
+std::string RescheduleSelector::subtitle()
+{
+    return "Interval is 1 second, then 2, then 3...";
+}
+
+void RescheduleSelector::schedUpdate(ccTime dt)
+{
+    m_nTicks++;
+
+    //CCLOG(@"schedUpdate: %.2f", dt);
+    if ( m_nTicks > 3 )
+    {
+        m_fInterval += 1.0f;
+        schedule(schedule_selector(RescheduleSelector::schedUpdate), m_fInterval);
+        m_nTicks = 0;
+    }
+}
+
+//------------------------------------------------------------------
+//
 // SchedulerTestScene
 //
 //------------------------------------------------------------------
