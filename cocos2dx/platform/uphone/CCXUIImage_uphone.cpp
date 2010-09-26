@@ -275,7 +275,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	m_imageInfo.width = info_ptr->width;
 	m_imageInfo.isPremultipliedAlpha = false;
 	m_imageInfo.bitsPerComponent = info_ptr->bit_depth;
-	m_imageInfo.hasAlpha = true;
+	m_imageInfo.hasAlpha = info_ptr->color_type & PNG_COLOR_MASK_ALPHA;
 
 	// convert to appropriate format, we now only support RGBA8888
 	if (info_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
@@ -296,30 +296,38 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 		png_set_strip_16(png_ptr);
 	}
 
-	// expand paletted or RGB images with transparency to full alpha channels so the data will be
-	// available as RGBA quatets
+	// adds a full alpha channel if there is transparency information
+	// in a tRNS chunk
 	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
 	{
 		png_set_tRNS_to_alpha(png_ptr);
+		m_imageInfo.hasAlpha = true;
 	}
 
 	// add the alpha channel if it has not
 	if (info_ptr->color_type == PNG_COLOR_TYPE_RGB || info_ptr->color_type == PNG_COLOR_TYPE_GRAY)
 	{
 		png_set_add_alpha(png_ptr, 255, PNG_FILLER_AFTER);
+		m_imageInfo.hasAlpha = true;
 	}
 
 	// allocate memory and read data
-	m_imageInfo.data = new unsigned char[m_imageInfo.height * m_imageInfo.width * 4];
+	int bytesPerComponent = 3;
+    if (m_imageInfo.hasAlpha)
+	{
+		bytesPerComponent = 4;
+	}
+
+	m_imageInfo.data = new unsigned char[m_imageInfo.height * m_imageInfo.width * bytesPerComponent];
 	rowPointers = (png_bytep*)png_mem_alloc(sizeof(png_bytep) * m_imageInfo.height);
 	for (unsigned int i = 0; i < m_imageInfo.height; ++i)
 	{
-		rowPointers[i] = (png_bytep)png_mem_alloc(m_imageInfo.width * 4);
+		rowPointers[i] = (png_bytep)png_mem_alloc(m_imageInfo.width * bytesPerComponent);
 	}
 	png_read_image(png_ptr, rowPointers);
 
 	// copy data to image info
-	int bytesPerRow = m_imageInfo.width * 4;
+	int bytesPerRow = m_imageInfo.width * bytesPerComponent;
 	for (unsigned int j = 0; j < m_imageInfo.height; ++j)
 	{
 		memcpy(m_imageInfo.data + j * bytesPerRow, rowPointers[j], bytesPerRow);
