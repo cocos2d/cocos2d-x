@@ -38,11 +38,12 @@ DEFINES=-D__TG3_PURE_DLL__		;生成的是纯动态库（意思是：不是TOPS应用，但可以是TCO
 INCLUDE_PATH=-I./ -I./Res -I./include -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2
 INCLUDE_PATH=-I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv
 INCLUDE_PATH=-I$(TO_PROJECT_ROOT)/Include/ThirdParty/libpng
+INCLUDE_PATH=-I$(TO_PROJECT_ROOT)/Include/ThirdParty/libjpeg
 			
 
 ;连接的库文件，可以使用多个LIBS串，也可以使用LIBS1、LIBS2等方式，MakeFile中依据出现顺序(不是数字大小)排列
 ;应用额外的连接库。注意：ITOPS自己的所需库自动包含，而且库包含路径也已经包含，故此这里仅仅包含应用自己特有的库的名字即可
-LIBS= -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2 -lz -lxml2 -lpng14 -lImageToolKit
+LIBS= -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2 -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
 
 ;强制包含文件的名字，不能使用通配符，一定要使用相对或者绝对路径
 ;极力要求使用相对路径，多个文件之间使用“|”分隔
