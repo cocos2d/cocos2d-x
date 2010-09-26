@@ -17,8 +17,9 @@ DEFINES += -DCCX_UNDER_UPHONE \
 INCLUDE_PATH += -I. -I./Res \
                -I./ -I./Res -I./include -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2 \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv \
-               -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libpng
-LIBS +=  -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2 -lz -lxml2 -lpng14 -lImageToolKit
+               -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libpng \
+               -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libjpeg
+LIBS +=  -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2 -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)

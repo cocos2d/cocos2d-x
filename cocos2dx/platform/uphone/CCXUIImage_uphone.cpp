@@ -24,10 +24,15 @@ THE SOFTWARE.
 
 #include "CCXUIImage_uphone.h"
 
-//#include <ImageToolKit/IT_ImageLoader.h> 
 #include <TG3.h>
+
 #include "png.h"
+
+// in order to compile correct in andLinux, because ssTypes(uphone)
+// and jmorecfg.h all typedef xxx INT32
+#define  QGLOBAL_H
 #include "jpeglib.h"
+#undef   QGLOBAL_H
 
 //using namespace ImageToolKit;
 using namespace std;
