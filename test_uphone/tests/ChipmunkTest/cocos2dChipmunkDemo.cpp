@@ -465,6 +465,8 @@ void ChipmunkTestLayer::onEnter()
 void ChipmunkTestLayer::onExit()
 {
     CCDirector::getSharedDirector()->setGLDefaultValues();
+
+    CCLayer::onExit();
 }
 
 void ChipmunkTestLayer::step(ccTime dt)
