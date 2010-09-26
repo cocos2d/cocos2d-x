@@ -222,11 +222,9 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	char                header[8]; 
 	png_structp         png_ptr;
 	png_infop           info_ptr;
-	Int32               pos;
 	png_bytep           * rowPointers;
 	tImageSource        imageSource;
-
-	pos = 0;
+	int					color_type;
 
 	// read 8 bytes from the beginning of stream
 	unsigned char *tmp = data;
@@ -267,49 +265,19 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	imageSource.offset = 0;
 	png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
 
-	// read png info
-	png_read_info(png_ptr, info_ptr);
+	// read png
+	// PNG_TRANSFORM_EXPAND: perform set_expand()
+	// PNG_TRANSFORM_PACKING: expand 1, 2 and 4-bit samples to bytes
+	// PNG_TRANSFORM_STRIP_16: strip 16-bit samples to 8 bits
+	// PNG_TRANSFORM_GRAY_TO_RGB: expand grayscale samples to RGB (or GA to RGBA)
+	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_PACKING | PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_GRAY_TO_RGB, NULL);
+
+	png_get_IHDR(png_ptr, info_ptr, &m_imageInfo.width, &m_imageInfo.height, &m_imageInfo.bitsPerComponent, &color_type,
+		NULL, NULL, NULL);
 
 	// init image info
-	m_imageInfo.height = info_ptr->height;
-	m_imageInfo.width = info_ptr->width;
 	m_imageInfo.isPremultipliedAlpha = false;
-	m_imageInfo.bitsPerComponent = info_ptr->bit_depth;
 	m_imageInfo.hasAlpha = info_ptr->color_type & PNG_COLOR_MASK_ALPHA;
-
-	// convert to appropriate format, we now only support RGBA8888
-	if (info_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
-	{
-		png_set_packing(png_ptr);
-		png_set_palette_to_rgb(png_ptr);
-	}
-	if (info_ptr->color_type == PNG_COLOR_TYPE_GRAY && info_ptr->bit_depth < 8)
-	{
-		png_set_expand_gray_1_2_4_to_8(png_ptr);
-	}
-	if (info_ptr->color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
-	{
-		png_set_gray_to_rgb(png_ptr);
-	}
-	if (info_ptr->bit_depth == 16)
-	{
-		png_set_strip_16(png_ptr);
-	}
-
-	// adds a full alpha channel if there is transparency information
-	// in a tRNS chunk
-	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
-	{
-		png_set_tRNS_to_alpha(png_ptr);
-		m_imageInfo.hasAlpha = true;
-	}
-
-	// add the alpha channel if it has not
-	if (info_ptr->color_type == PNG_COLOR_TYPE_RGB || info_ptr->color_type == PNG_COLOR_TYPE_GRAY)
-	{
-		png_set_add_alpha(png_ptr, 255, PNG_FILLER_AFTER);
-		m_imageInfo.hasAlpha = true;
-	}
 
 	// allocate memory and read data
 	int bytesPerComponent = 3;
@@ -317,14 +285,8 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	{
 		bytesPerComponent = 4;
 	}
-
 	m_imageInfo.data = new unsigned char[m_imageInfo.height * m_imageInfo.width * bytesPerComponent];
-	rowPointers = (png_bytep*)png_mem_alloc(sizeof(png_bytep) * m_imageInfo.height);
-	for (unsigned int i = 0; i < m_imageInfo.height; ++i)
-	{
-		rowPointers[i] = (png_bytep)png_mem_alloc(m_imageInfo.width * bytesPerComponent);
-	}
-	png_read_image(png_ptr, rowPointers);
+	rowPointers = png_get_rows(png_ptr, info_ptr);
 
 	// copy data to image info
 	int bytesPerRow = m_imageInfo.width * bytesPerComponent;
@@ -356,7 +318,6 @@ bool UIImage::loadJpg(const char *strFileName)
 	{
 		return false;
 	}
-	/*jpeg_stdio_src(&cinfo, infile);*/
 
 	/* here we set up the standard libjpeg error handler */
 	cinfo.err = jpeg_std_error( &jerr );
@@ -395,7 +356,6 @@ bool UIImage::loadJpg(const char *strFileName)
 	m_imageInfo.data = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
 
 	/* now actually read the jpeg into the raw buffer */
-	/*row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*cinfo.num_components );*/
 	row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
 
 	/* read one scan line at a time */
