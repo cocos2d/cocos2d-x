@@ -69,6 +69,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/EaseActionsTest.o \
 	$(OBJECTS_DIR)/EffectsAdvancedTest.o \
 	$(OBJECTS_DIR)/EffectsTest.o \
+	$(OBJECTS_DIR)/HiResTest.o \
 	$(OBJECTS_DIR)/IntervalTest.o \
 	$(OBJECTS_DIR)/LayerTest.o \
 	$(OBJECTS_DIR)/MenuTest.o \
@@ -223,6 +224,9 @@ $(OBJECTS_DIR)/EffectsAdvancedTest.o : ./tests/EffectsAdvancedTest/EffectsAdvanc
 
 $(OBJECTS_DIR)/EffectsTest.o : ./tests/EffectsTest/EffectsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/EffectsTest.o ./tests/EffectsTest/EffectsTest.cpp
+
+$(OBJECTS_DIR)/HiResTest.o : ./tests/HiResTest/HiResTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HiResTest.o ./tests/HiResTest/HiResTest.cpp
 
 $(OBJECTS_DIR)/IntervalTest.o : ./tests/IntervalTest/IntervalTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/IntervalTest.o ./tests/IntervalTest/IntervalTest.cpp
