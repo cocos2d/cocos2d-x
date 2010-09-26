@@ -202,22 +202,19 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #endif
 		}
 		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
-// 		else if ( lowerCase.find(".jpg") || lowerCase(".jpeg") )
-// 		{
-// 			// convert jpg to png before loading the texture
-// 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
-// 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-// 			tex = [ [CCTexture2D alloc] initWithImage: png ];
-// 			[png release];
-// 			[jpg release];
-// 
-// 			if( tex )
-// 				[textures setObject: tex forKey:path];
-// 			else
-// 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
-// 
-// 			[tex release];
-// 		}
+		else 
+		if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
+		{
+			UIImage * image = new UIImage();
+			if(! image->initWithContentsOfFile(fullpath, kImageFormatJPG))
+			{
+				delete image;
+				return NULL;
+			}
+			texture = new CCTexture2D();
+			texture->initWithImage(image);
+			CCX_SAFE_DELETE(image);// image->release();
+		}
 		else
 		{
 			//# work around for issue #910
@@ -227,7 +224,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #else
 			// prevents overloading the autorelease pool
 			UIImage * image = new UIImage();
-			if(! image->initWithContentsOfFile(fullpath))
+			if(! image->initWithContentsOfFile(fullpath, kImageFormatPNG))
 			{
 				delete image;
 				return NULL;

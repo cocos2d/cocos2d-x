@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCSprite.h"
 
 namespace cocos2d {
-	enum  
+	enum tImageFormat
 	{
 		kImageFormatJPG = 0,
 		kImageFormatPNG = 1
