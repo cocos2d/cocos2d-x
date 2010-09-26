@@ -184,6 +184,8 @@ void ActionsDemo::onExit()
     m_grossini->release();
     m_tamara->release();
     m_kathia->release();
+
+    CCLayer::onExit();
 }
 
 void ActionsDemo::restartCallback(NSObject* pSender)
