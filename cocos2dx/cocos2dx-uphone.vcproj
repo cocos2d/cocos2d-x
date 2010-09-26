@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\PRJ_TG3\Include\ThirdParty\iconv;..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\PRJ_TG3\Include\ThirdParty\libxml2;.\include;.\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\OpenGL;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;.\"
+				AdditionalIncludeDirectories="..\..\PRJ_TG3\Include\ThirdParty\iconv;..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\PRJ_TG3\Include\ThirdParty\libjpeg;..\..\PRJ_TG3\Include\ThirdParty\libxml2;.\include;.\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\OpenGL;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;__TG3_PURE_DLL__;_USE_MATH_DEFINES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libTG3_EGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib ImageToolKit_d.lib"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libTG3_EGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib ImageToolKit_d.lib libjpeg.lib"
 				OutputFile="$(OutDir)/libcocos2d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport"

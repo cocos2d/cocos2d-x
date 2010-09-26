@@ -144,6 +144,9 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 	case kCCTexture2DPixelFormat_RGBA8888:
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixelsWide, pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		break;
+	case kCCTexture2DPixelFormat_RGB888:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixelsWide, pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		break;
 	case kCCTexture2DPixelFormat_RGBA4444:
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixelsWide, pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 		break;
@@ -238,12 +241,21 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 
 	if(colorSpace)
 	{
-		if(hasAlpha || bpp >= 8)
+		if(hasAlpha)
+		{
 			pixelFormat = defaultAlphaPixelFormat();
+		}
 		else
 		{
-			CCLOG("cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
-			pixelFormat = kCCTexture2DPixelFormat_RGB565;
+			if (bpp >= 8)
+			{
+				pixelFormat = kCCTexture2DPixelFormat_RGB888;
+			}
+			else
+			{
+				CCLOG("cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
+				pixelFormat = kCCTexture2DPixelFormat_RGB565;
+			}
 		}
 	}
 	else
@@ -279,7 +291,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 
-			tempData = (void*)(image->getRGBA8888Data());
+			tempData = (void*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{
@@ -299,7 +311,29 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
 				}
 			}
-			break;                    
+			break;    
+		case kCCTexture2DPixelFormat_RGB888:
+			tempData = (void*)(image->getData());
+			NSAssert(tempData != NULL, "NULL image data.");
+			if(image->width() == POTWide && image->height() == POTHigh)
+			{
+				data = new UINT8[POTHigh * POTWide * 3];
+				memcpy(data, tempData, POTHigh * POTWide * 3);
+			}
+			else
+			{
+				data = new UINT8[POTHigh * POTWide * 3];
+				memset(data, 0, POTHigh * POTWide * 3);
+
+				UINT8* pPixelData = (UINT8*) tempData;
+				UINT8* pTargetData = (UINT8*) data;
+
+				for(unsigned int y=0; y<image->height(); ++y)
+				{
+					memcpy(pTargetData+POTWide*3*y, pPixelData+(image->width())*3*y, (image->width())*3);
+				}
+			}
+			break;   
 		default:
 			NSAssert(0, "Invalid pixel format");
 			//[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];

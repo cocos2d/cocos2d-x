@@ -27,11 +27,17 @@ THE SOFTWARE.
 
 #include <string>
 #include "ccxCommon.h"
+#include "CCRenderTexture.h"
 
 class TBitmap;
 namespace   cocos2d {
 
-typedef struct  
+// typedef enum {
+// 	kImageTypePNG = 0,
+// 	kImageTypeJPG = 1,
+// } CCXImageType;
+
+typedef struct
 {
 	unsigned int	height;
 	unsigned int	width;
@@ -50,7 +56,7 @@ public:
 	UIImage(int nX, int nY, void *buffer);
 	~UIImage(void);
 
-	bool initWithContentsOfFile(const std::string &strPath);
+	bool initWithContentsOfFile(const std::string &strPath, tImageFormat imageType = kImageFormatPNG);
 	bool initWithData(unsigned char *pBuffer, int nLength);
 	bool initWithBuffer(int tx, int ty, unsigned char *pBuffer);
 //	bool initWithCGImage(CGImageRef pCGImage);
@@ -67,11 +73,12 @@ public:
 	int CGImageGetColorSpace(void);
 
 	// convert the bitmap to 256 pixel format, and every component is 8 bits
-	unsigned char* getRGBA8888Data(void);
+	unsigned char* getData(void);
 
 private:
     bool loadPng(const char* strFileName);
 	bool loadPngFromStream(unsigned char *data, int nLength);
+	bool loadJpg(const char *strFileName);
 
 private:
 	TBitmap *m_pBitmap;

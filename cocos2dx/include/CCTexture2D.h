@@ -45,6 +45,8 @@ typedef enum {
 	kCCTexture2DPixelFormat_Automatic = 0,
 	//! 32-bit texture: RGBA8888
 	kCCTexture2DPixelFormat_RGBA8888,
+	//! 24-bit texture: RGBA888
+	kCCTexture2DPixelFormat_RGB888,
 	//! 16-bit texture: used with images that have alpha pre-multiplied
 	kCCTexture2DPixelFormat_RGB565,
 	//! 8-bit textures used as masks
@@ -60,6 +62,7 @@ typedef enum {
 	// backward compatibility stuff
 	kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
 	kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
+	kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
 	kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
 	kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
 	kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
