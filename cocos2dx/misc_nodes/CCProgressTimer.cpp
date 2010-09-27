@@ -120,10 +120,9 @@ namespace cocos2d
 	{
 		if (m_pSprite != pSprite)
 		{
+			CCX_SAFE_RETAIN(pSprite);
 			CCX_SAFE_RELEASE(m_pSprite);
-
 			m_pSprite = pSprite;
-			CCX_SAFE_RETAIN(m_pSprite);
 
 			//	Everytime we set a new sprite, we free the current vertex data
 			if (m_pVertexData)

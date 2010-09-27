@@ -113,9 +113,9 @@ namespace cocos2d{
 	}
 	void CCMenuItemLabel::setLabel(CCNode* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pLabel);
 		m_pLabel = var;
-		CCX_SAFE_RETAIN(m_pLabel);
 		this->setContentSize(m_pLabel->getContentSize());
 	}
 	CCMenuItemLabel * CCMenuItemLabel::itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MunuHandler selector)
@@ -300,9 +300,9 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setNormalImage(CCNode* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pNormalImage);
 		m_pNormalImage = var;
-		CCX_SAFE_RETAIN(m_pNormalImage);
 	}
 	CCNode * CCMenuItemSprite::getSelectedImage()
 	{
@@ -310,9 +310,9 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setSelectedImage(CCNode* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pSelectedImage);
 		m_pSelectedImage = var;
-		CCX_SAFE_RETAIN(m_pSelectedImage);
 	}
 	CCNode * CCMenuItemSprite::getDisabledImage()
 	{
@@ -320,9 +320,9 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setDisabledImage(CCNode* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pDisabledImage);
 		m_pDisabledImage = var;
-		CCX_SAFE_RETAIN(m_pDisabledImage);
 	}
 	CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite)
 	{
@@ -459,9 +459,9 @@ namespace cocos2d{
 	//
 	void CCMenuItemToggle::setSubItems(NSMutableArray<CCMenuItem*>* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pSubItems);
 		m_pSubItems = var;
-		CCX_SAFE_RETAIN(m_pSubItems);
 	}
 	NSMutableArray<CCMenuItem*> *CCMenuItemToggle::getSubItems()
 	{

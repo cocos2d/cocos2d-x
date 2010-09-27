@@ -283,9 +283,9 @@ namespace cocos2d {
 	// Ribbon - CocosNodeTexture protocol
 	void CCRibbon::setTexture(CCTexture2D* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pTexture);
 		m_pTexture = var;
-		CCX_SAFE_RETAIN(m_pTexture);
 		this->setContentSize(m_pTexture->getContentSize());
 		/* XXX Don't update blending function in Ribbons */
 	}

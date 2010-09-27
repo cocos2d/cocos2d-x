@@ -70,9 +70,9 @@ public:
 	inline CCTexture2D* getTexture(void) { return m_pobTexture; }
 	inline void setTexture(CCTexture2D* pobTexture)
 	{
+		CCX_SAFE_RETAIN(pobTexture);
 		CCX_SAFE_RELEASE(m_pobTexture);
 		m_pobTexture = pobTexture;
-		CCX_SAFE_RETAIN(m_pobTexture);
 	}
 
 public:
@@ -129,9 +129,9 @@ public:
 	inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
 	inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
 	{
+		CCX_SAFE_RETAIN(pFrames);
 		CCX_SAFE_RELEASE(m_pobFrames);
 		m_pobFrames = pFrames;
-		CCX_SAFE_RETAIN(m_pobFrames);
 	}
 
 public:

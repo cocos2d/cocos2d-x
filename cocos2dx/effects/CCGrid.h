@@ -62,9 +62,9 @@ namespace cocos2d
 // 		inline CCTexture2D* getTexture(void) { return m_pTexture; }
 // 		inline void setTexture(CCTexture2D *pTexture)
 // 		{
+// 			CCX_SAFE_RETAIN(pTexture);
 // 			CCX_SAFE_RELEASE(m_pTexture);
 // 			m_pTexture = pTexture;
-// 			CCX_SAFE_RETAIN(m_pTexture);
 // 		}
 
 		/** is texture flipped */

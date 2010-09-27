@@ -68,9 +68,9 @@ namespace cocos2d {
 	}
 	void CCTMXObjectGroup::setProperties(CCXStringToStringDictionary * properties)
 	{
+		CCX_SAFE_RETAIN(properties);
 		CCX_SAFE_RELEASE(m_pProperties);
 		m_pProperties = properties;
-		CCX_SAFE_RETAIN(m_pProperties);
 	}
 	NSArray<CCXStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
 	{
@@ -78,9 +78,9 @@ namespace cocos2d {
 	}
 	void CCTMXObjectGroup::setObjects(NSArray<CCXStringToStringDictionary*> * objects)
 	{
+		CCX_SAFE_RETAIN(objects);
 		CCX_SAFE_RELEASE(m_pObjects);
 		m_pObjects = objects;
-		CCX_SAFE_RETAIN(m_pObjects);
 	}
 
 }// namespace cocos2d

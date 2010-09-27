@@ -76,9 +76,9 @@ CCTexture2D* CCTextureAtlas::getTexture()
 
 void CCTextureAtlas::setTexture(CCTexture2D * var)
 {
+	CCX_SAFE_RETAIN(var);
 	CCX_SAFE_RELEASE(m_pTexture);
 	m_pTexture = var;
-	CCX_SAFE_RETAIN(m_pTexture);
 }
 
 ccV3F_C4B_T2F_Quad* CCTextureAtlas::getQuads()

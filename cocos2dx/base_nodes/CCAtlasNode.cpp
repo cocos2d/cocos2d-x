@@ -223,9 +223,9 @@ CCTexture2D * CCAtlasNode::getTexture()
 
 void CCAtlasNode::setTextureAtlas(CCTextureAtlas* var)
 {
+	CCX_SAFE_RETAIN(var);
 	CCX_SAFE_RELEASE(m_pTextureAtlas);
 	m_pTextureAtlas = var;
-	CCX_SAFE_RETAIN(m_pTextureAtlas);
 }
 CCTextureAtlas * CCAtlasNode::getTextureAtlas()
 {

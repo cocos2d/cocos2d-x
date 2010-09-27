@@ -618,9 +618,9 @@ namespace cocos2d {
 	// ParticleSystem - CCTexture protocol
 	void CCParticleSystem::setTexture(CCTexture2D* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pTexture)
 		m_pTexture = var;
-		CCX_SAFE_RETAIN(m_pTexture);
 
 		// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
 		if( m_pTexture && ! m_pTexture->getHasPremultipliedAlpha() &&		
