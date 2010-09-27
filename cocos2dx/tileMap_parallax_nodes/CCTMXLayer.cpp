@@ -124,9 +124,9 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::setTileSet(CCTMXTilesetInfo* var)
 	{
-        CCX_SAFE_RELEASE(m_pTileSet);
+		CCX_SAFE_RETAIN(var);
+		CCX_SAFE_RELEASE(m_pTileSet);
 		m_pTileSet = var;
-		CCX_SAFE_RETAIN(m_pTileSet);
 	}
 	void CCTMXLayer::releaseMap()
 	{
@@ -629,9 +629,9 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::setProperties(CCXStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(m_pProperties);
-		m_pProperties = var;
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pProperties);
+		m_pProperties = var;
 	}
 
 }// namespace cocos2d

@@ -74,9 +74,9 @@ namespace cocos2d {
 	}
 	void CCTMXLayerInfo::setProperties(CCXStringToStringDictionary* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
-		CCX_SAFE_RETAIN(m_pProperties);
 	}
 
 	// implementation CCTMXTilesetInfo
@@ -161,9 +161,9 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setLayers(NSMutableArray<CCTMXLayerInfo*>* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pLayers);
 		m_pLayers = var;
-		CCX_SAFE_RETAIN(m_pLayers);
 	}
 	NSMutableArray<CCTMXTilesetInfo*> * CCTMXMapInfo::getTilesets()
 	{
@@ -171,9 +171,9 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setTilesets(NSMutableArray<CCTMXTilesetInfo*>* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pTilesets);
 		m_pTilesets = var;
-		CCX_SAFE_RETAIN(m_pTilesets);
 	}
 	NSMutableArray<CCTMXObjectGroup*> * CCTMXMapInfo::getObjectGroups()
 	{
@@ -181,9 +181,9 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setObjectGroups(NSMutableArray<CCTMXObjectGroup*>* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
-		CCX_SAFE_RETAIN(m_pObjectGroups);
 	}
 	CCXStringToStringDictionary * CCTMXMapInfo::getProperties()
 	{
@@ -191,9 +191,9 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setProperties(CCXStringToStringDictionary* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
-		CCX_SAFE_RETAIN(m_pProperties);
 	}
 	NSDictionary<int, CCXStringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
 	{
@@ -201,9 +201,9 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setTileProperties(NSDictionary<int, CCXStringToStringDictionary*> * tileProperties)
 	{
+		CCX_SAFE_RETAIN(tileProperties);
 		CCX_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = tileProperties;
-		CCX_SAFE_RETAIN(m_pTileProperties);
 	}
 
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)

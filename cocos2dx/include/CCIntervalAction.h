@@ -582,9 +582,9 @@ public:
 	inline CCAnimation* getAnimation(void) { return m_pAnimation; }
 	inline void setAnimation(CCAnimation *pAnimation) 
 	{
+		CCX_SAFE_RETAIN(pAnimation);
 		CCX_SAFE_RELEASE(m_pAnimation);
 		m_pAnimation = pAnimation;
-		CCX_SAFE_RETAIN(m_pAnimation);
 	}
 
 	/** initializes the action with an Animation and will restore the original frame when the animtion is over */

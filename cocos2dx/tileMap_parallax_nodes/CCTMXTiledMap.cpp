@@ -108,9 +108,9 @@ namespace cocos2d{
 	}
 	void CCTMXTiledMap::setObjectGroups(NSMutableArray<CCTMXObjectGroup*>* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
-		CCX_SAFE_RETAIN(m_pObjectGroups);
 	}
 	CCXStringToStringDictionary * CCTMXTiledMap::getProperties()
 	{
@@ -118,9 +118,9 @@ namespace cocos2d{
 	}
 	void CCTMXTiledMap::setProperties(CCXStringToStringDictionary* var)
 	{
+		CCX_SAFE_RETAIN(var);
 		CCX_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
-		CCX_SAFE_RETAIN(m_pProperties);
 	}
 	// private
 	CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
