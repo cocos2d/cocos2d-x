@@ -933,10 +933,15 @@ std::string Issue870::subtitle()
 void DemoParticleFromFile::onEnter()
 {
     ParticleDemo::onEnter();
+
+	setColor(ccBLACK);
+	removeChild(m_background, true);
+	m_background = NULL;
+
     m_emitter = new CCQuadParticleSystem();
     std::string filename = "Images/" + m_title + ".plist";
     m_emitter->initWithFile(filename.c_str());
-    m_background->addChild(m_emitter, 10);
+    addChild(m_emitter, 10);
 
     setEmitterPosition();
 }
