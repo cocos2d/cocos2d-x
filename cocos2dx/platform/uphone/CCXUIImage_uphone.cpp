@@ -38,6 +38,12 @@ THE SOFTWARE.
 using namespace std;
 namespace   cocos2d {
 
+#define CCX_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
+	(ColorRefType)(((UInt32)((UInt8)(vr) * ((UInt8)(va) + 1)) >> 8) | \
+	((UInt32)((UInt8)(vg) * ((UInt8)(va) + 1) >> 8) << 8) | \
+	((UInt32)((UInt8)(vb) * ((UInt8)(va) + 1) >> 8) << 16) | \
+	((UInt32)(UInt8)(va) << 24))
+
 typedef struct 
 {
 	unsigned char* data;
@@ -281,7 +287,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 		NULL, NULL, NULL);
 
 	// init image info
-	m_imageInfo.isPremultipliedAlpha = false;
+	m_imageInfo.isPremultipliedAlpha = true;
 	m_imageInfo.hasAlpha = info_ptr->color_type & PNG_COLOR_MASK_ALPHA;
 
 	// allocate memory and read data
@@ -295,9 +301,23 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 
 	// copy data to image info
 	int bytesPerRow = m_imageInfo.width * bytesPerComponent;
-	for (unsigned int j = 0; j < m_imageInfo.height; ++j)
+	if(m_imageInfo.hasAlpha)	{
+		unsigned int *tmp = (unsigned int *)m_imageInfo.data;
+		for(unsigned int i = 0; i < m_imageInfo.height; i++)
+		{
+			for(unsigned int j = 0; j < bytesPerRow; j += 4)
+			{
+				*tmp++ = CCX_RGB_PREMULTIPLY_APLHA( rowPointers[i][j], rowPointers[i][j + 1], 
+					rowPointers[i][j + 2], rowPointers[i][j + 3] );
+			}
+		}
+	}
+	else
 	{
-		memcpy(m_imageInfo.data + j * bytesPerRow, rowPointers[j], bytesPerRow);
+		for (unsigned int j = 0; j < m_imageInfo.height; ++j)
+		{
+			memcpy(m_imageInfo.data + j * bytesPerRow, rowPointers[j], bytesPerRow);
+		}
 	}
 
 	// release
