@@ -214,6 +214,16 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			texture = new CCTexture2D();
 			texture->initWithImage(image);
 			CCX_SAFE_DELETE(image);// image->release();
+
+			if( texture )
+			{
+				m_pTextures->setObject(texture, fullpath);
+				texture->release();
+			}
+			else
+			{
+				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
+			}
 		}
 		else
 		{
@@ -237,7 +247,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			if( texture )
 			{
 				m_pTextures->setObject(texture, fullpath);
-				texture->autorelease();
+				texture->release();
 			}
 			else
 			{
