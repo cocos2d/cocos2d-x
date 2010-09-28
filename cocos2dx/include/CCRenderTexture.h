@@ -56,7 +56,7 @@ namespace cocos2d {
 		bool initWithWidthAndHeight(int width, int height);
 		void begin();
 		void end();
-		/* get buffer as UIImage */
+		/** get buffer as UIImage */
 		UIImage *getUIImageFromBuffer();
 		/** saves the texture into a file */
 		bool saveBuffer(const char *name);

@@ -78,9 +78,9 @@ namespace cocos2d {
 		void updateAtlasValues();
 
 	protected:
-		/// x,y to altas dicctionary
+		// x,y to altas dicctionary
 		StringToIntegerDictionary *m_pPosToAtlasIndex;
-		/// numbers of tiles to render
+		// numbers of tiles to render
 		int				m_nItemsToRender;
 	};
 

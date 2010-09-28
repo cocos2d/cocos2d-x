@@ -35,7 +35,7 @@ namespace   cocos2d {
 * This uses a 3DAction so it's strongly recommended that depth buffering
 * is turned on in CCDirector using:
 *
-* 	[[CCDirector sharedDirector] setDepthBufferFormat:kDepthBuffer16]; 
+* 	CCDirector::getSharedDirector()->setDepthBufferFormat(kDepthBuffer16);
 *
 * @since v0.8.2
 */
@@ -43,7 +43,7 @@ class CCX_DLL CCPageTurnTransition : public CCTransitionScene
 {
 protected:
 	bool	m_bBack;
-
+	
 public:
 	CCPageTurnTransition();
 	virtual ~CCPageTurnTransition();

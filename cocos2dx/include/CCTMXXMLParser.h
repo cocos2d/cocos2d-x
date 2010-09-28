@@ -37,7 +37,6 @@ namespace cocos2d {
 	*
 	*/
 
-
 	enum {
 		TMXLayerAttribNone = 1 << 0,
 		TMXLayerAttribBase64 = 1 << 1,
@@ -123,27 +122,27 @@ namespace cocos2d {
 	class CCX_DLL CCTMXMapInfo : public NSObject
 	{	
 	public:	
-		// map orientation
+		/// map orientation
 		CCX_SYNTHESIZE(int,	m_nOrientation, Orientation);
-		// map width & height
+		/// map width & height
 		CCX_SYNTHESIZE(CGSize, m_tMapSize, MapSize);
-		// tiles width & height
+		/// tiles width & height
 		CCX_SYNTHESIZE(CGSize, m_tTileSize, TileSize);
-		// Layers
+		/// Layers
 		CCX_PROPERTY(NSMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
-		// tilesets
+		/// tilesets
 		CCX_PROPERTY(NSMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
-		// ObjectGroups
+		/// ObjectGroups
 		CCX_PROPERTY(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
-		// parent element
+		/// parent element
 		CCX_SYNTHESIZE(int, m_nParentElement, ParentElement);
-		// parent GID
+		/// parent GID
 		CCX_SYNTHESIZE(unsigned int, m_uParentGID, ParentGID);
-		// layer attribs
+		/// layer attribs
 		CCX_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
-		// is stroing characters?
+		/// is stroing characters?
 		CCX_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
-		// properties
+		/// properties
 		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:	
 		CCTMXMapInfo();
@@ -152,7 +151,7 @@ namespace cocos2d {
 		static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
 		/** initializes a TMX format witha  tmx file */
 		bool initWithTMXFile(const char *tmxFile);
-		/* initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
+		/** initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
 	
 		NSDictionary<int, CCXStringToStringDictionary*> * getTileProperties();
