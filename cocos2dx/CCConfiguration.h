@@ -31,7 +31,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 /**
- CCConfiguration contains some openGL variables
+ @brief CCConfiguration contains some openGL variables
  @since v0.99.0
  */
 class CCConfiguration : public NSObject

@@ -36,7 +36,7 @@ namespace   cocos2d {
 class CCSprite;
 class CGRect;
 
-/** CCSpriteSheet is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
+/** @brief CCSpriteSheet is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
  * (often known as "batch draw").
  *
  * A CCSpriteSheet can reference one and only one texture (one image file, one texture atlas).

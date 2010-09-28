@@ -36,7 +36,8 @@ enum {
 	kCCActionTagInvalid = -1,
 };
 
-/** Base class for CCAction objects.
+/** 
+@brief Base class for CCAction objects.
  */
 class CCX_DLL CCAction : public NSObject 
 {
@@ -99,11 +100,14 @@ protected:
 	int 		m_nTag;
 };
 
-/** Base class actions that do have a finite time duration.
+/** 
+@brief 
+ Base class actions that do have a finite time duration.
  Possible actions:
    - An action with a duration of 0 seconds
    - An action with a duration of 35.5 seconds
- Infitite time actions are valid
+
+ Infinite time actions are valid
  */
 class CCX_DLL CCFiniteTimeAction : public CCAction
 {
@@ -124,7 +128,8 @@ protected:
 class CCIntervalAction;
 class CCRepeatForever;
 
-/** Changes the speed of an action, making it take longer (speed>1)
+/** 
+ @brief Changes the speed of an action, making it take longer (speed>1)
  or less (speed<1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
  @warning This action can't be Sequenceable because it is not an IntervalAction
@@ -158,18 +163,19 @@ protected:
 	CCIntervalAction *m_pOther;
 };
 
-/** CCFollow is an action that "follows" a node.
- 
- Eg:
-	layer->runAction(CCFollow::actionWithTarget(hero));
- 
- Instead of using CCCamera as a "follower", use this action instead.
- @since v0.99.2
- */
+
 class CCNode;
 class CGPoint;
 class CGRect;
+/** 
+@brief CCFollow is an action that "follows" a node.
 
+Eg:
+layer->runAction(CCFollow::actionWithTarget(hero));
+
+Instead of using CCCamera as a "follower", use this action instead.
+@since v0.99.2
+*/
 class CCX_DLL CCFollow : public CCAction
 {
 public:

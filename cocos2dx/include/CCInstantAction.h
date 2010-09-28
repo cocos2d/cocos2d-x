@@ -30,7 +30,8 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	/** Instant actions are immediate actions. They don't have a duration like
+	/** 
+	@brief Instant actions are immediate actions. They don't have a duration like
 	the CCIntervalAction actions.
 	*/ 
 	class CCX_DLL CCInstantAction : public CCFiniteTimeAction //<NSCopying>
@@ -62,7 +63,8 @@ namespace cocos2d {
 		static CCShow * action();
 	};
 
-	/** Hide the node
+	/** 
+	@brief Hide the node
 	*/
 	class CCX_DLL CCHide : public CCInstantAction
 	{
@@ -77,7 +79,7 @@ namespace cocos2d {
 		static CCHide * action();
 	};
 
-	/** Toggles the visibility of a node
+	/** @brief Toggles the visibility of a node
 	*/
 	class CCX_DLL CCToggleVisibility : public CCInstantAction
 	{
@@ -91,7 +93,8 @@ namespace cocos2d {
 		static CCToggleVisibility * action();
 	};
 
-	/** Flips the sprite horizontally
+	/** 
+	@brief Flips the sprite horizontally
 	@since v0.99.0
 	*/
 	class CCX_DLL CCFlipX : public CCInstantAction
@@ -111,7 +114,8 @@ namespace cocos2d {
 		bool	m_bFlipX;
 	};
 
-	/** Flips the sprite vertically
+	/** 
+	@brief Flips the sprite vertically
 	@since v0.99.0
 	*/
 	class CCX_DLL CCFlipY : public CCInstantAction
@@ -131,7 +135,7 @@ namespace cocos2d {
 		bool	m_bFlipY;
 	};
 
-	/** Places the node in a certain position
+	/** @brief Places the node in a certain position
 	*/
 	class CCX_DLL CCPlace : public CCInstantAction //<NSCopying>
 	{
@@ -149,7 +153,7 @@ namespace cocos2d {
 		CGPoint m_tPosition;
 	};
 
-	/** Calls a 'callback'
+	/** @brief Calls a 'callback'
 	*/
 	class CCX_DLL CCCallFunc : public CCInstantAction //<NSCopying>
 	{
@@ -182,7 +186,8 @@ namespace cocos2d {
 		};
 	};
 
-	/** Calls a 'callback' with the node as the first argument
+	/** 
+	@brief Calls a 'callback' with the node as the first argument
 	N means Node
 	*/
 	class CCX_DLL CCCallFuncN : public CCCallFunc
@@ -198,7 +203,8 @@ namespace cocos2d {
 	};
 
 
-	/** Calls a 'callback' with the node as the first argument and the 2nd argument is data
+	/** 
+	@brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
 	* ND means: Node and Data. Data is void *, so it could be anything.
 	*/
 	class CCX_DLL CCCallFuncND : public CCCallFuncN

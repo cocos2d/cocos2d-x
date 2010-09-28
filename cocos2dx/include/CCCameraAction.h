@@ -29,7 +29,8 @@ THE SOFTWARE.
 namespace cocos2d {
 	class CCCamera;
 
-	/** Base class for CCCamera actions
+	/** 
+	@brief Base class for CCCamera actions
 	*/
 	class CCX_DLL CCCameraAction : public CCIntervalAction //<NSCopying> 
 	{
@@ -63,7 +64,8 @@ namespace cocos2d {
 		float m_fUpZOrig;
 	};
 
-	/** CCOrbitCamera action
+	/** 
+	@brief CCOrbitCamera action
 	Orbits the camera around the center of the screen using spherical coordinates
 	*/
 	class CCX_DLL CCOrbitCamera : public CCCameraAction //<NSCopying> 

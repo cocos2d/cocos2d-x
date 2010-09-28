@@ -173,7 +173,8 @@ class CCLabel;
 class CCScene;
 class cocos2d::CCXEGLView;
 
-/**Class that creates and handle the main Window and manages how
+/**
+@brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
  
  The CCDirector is also responsible for:
@@ -502,16 +503,17 @@ protected:
 #endif
 };
 
-/** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
- *
- * Features and Limitations:
- * - Only available on 3.1+
- * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
- * - Only supports animation intervals of 1/60 1/30 & 1/15
- *
- * It is the recommended Director if the SDK is 3.1 or newer
- *
- * @since v0.8.2
+/** 
+ @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
+ 
+ Features and Limitations:
+  - Only available on 3.1+
+  - Scheduled timers & drawing are synchronizes with the refresh rate of the display
+  - Only supports animation intervals of 1/60 1/30 & 1/15
+ 
+ It is the recommended Director if the SDK is 3.1 or newer
+ 
+ @since v0.8.2
  */
 class CCDisplayLinkDirector : public CCDirector
 {

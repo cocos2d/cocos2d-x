@@ -39,7 +39,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 class CCSprite;
 
-/** Singleton that handles the loading of the sprite frames.
+/** @brief Singleton that handles the loading of the sprite frames.
  It saves in a cache the sprite frames.
  @since v0.9
  */

@@ -33,7 +33,7 @@ namespace   cocos2d {
 //
 // CCTimer
 //
-/** Light weight timer */
+/** @brief Light weight timer */
 class CCTimer : public NSObject
 {
 public:
@@ -72,22 +72,21 @@ protected:
 //
 // CCScheduler
 //
-/** Scheduler is responsible of triggering the scheduled callbacks.
- You should not use NSTimer. Instead use this class.
- 
- There are 2 different types of callbacks (selectors):
-
-	- update selector: the 'update' selector will be called every frame. You can customize the priority.
-	- custom selector: A custom selector will be called every frame, or with a custom interval of time
- 
- The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
-
-*/
-
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
 
+/** @brief Scheduler is responsible of triggering the scheduled callbacks.
+You should not use NSTimer. Instead use this class.
+
+There are 2 different types of callbacks (selectors):
+
+- update selector: the 'update' selector will be called every frame. You can customize the priority.
+- custom selector: A custom selector will be called every frame, or with a custom interval of time
+
+The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
+
+*/
 class CCX_DLL CCScheduler : public NSObject
 {
 public:

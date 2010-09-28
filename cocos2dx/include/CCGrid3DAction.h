@@ -28,7 +28,9 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-	/** CCWaves3D action */
+	/** 
+	CCWaves3D action 
+	*/
 	class CCX_DLL CCWaves3D : public CCGrid3DAction
 	{
 	public:

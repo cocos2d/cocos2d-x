@@ -33,7 +33,8 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-/** CCActionManager is a singleton that manages all the actions.
+/** 
+ @brief CCActionManager is a singleton that manages all the actions.
  Normally you won't need to use this singleton directly. 99% of the cases you will use the CCNode interface,
  which uses this singleton.
  But there are some cases where you might need to use this singleton.

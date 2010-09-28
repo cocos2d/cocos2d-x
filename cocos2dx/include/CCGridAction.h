@@ -31,7 +31,7 @@ namespace cocos2d
 {
 	class CCGridBase;
 
-	/** Base class for Grid actions */
+	/** @brief Base class for Grid actions */
 	class CCX_DLL CCGridAction : public CCIntervalAction
 	{
 	public:
@@ -52,7 +52,8 @@ namespace cocos2d
 		ccGridSize m_sGridSize;
 	};
 
-	/** Base class for CCGrid3D actions.
+	/** 
+	 @brief Base class for CCGrid3D actions.
 	 Grid3D actions can modify a non-tiled grid.
 	 */
 	class CCX_DLL CCGrid3DAction : public CCGridAction
@@ -72,7 +73,7 @@ namespace cocos2d
         static CCGrid3DAction* actionWithSize(ccGridSize gridSize, ccTime duration);
 	};
 
-	/** Base class for CCTiledGrid3D actions */
+	/** @brief Base class for CCTiledGrid3D actions */
 	class CCX_DLL CCTiledGrid3DAction : public CCGridAction
 	{
 	public:
@@ -167,7 +168,7 @@ namespace cocos2d
 	};
 
 	/** CCStopGrid action.
-	 Don't call this action if another grid action is active.
+	 @warning Don't call this action if another grid action is active.
 	 Call if you want to remove the the grid effect. Example:
 	 CCSequence::actions(Lens::action(...), CCStopGrid::action(...), NULL);
 	 */
