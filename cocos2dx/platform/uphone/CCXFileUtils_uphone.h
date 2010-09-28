@@ -47,8 +47,8 @@ public:
 	static const char* fullPathFromRelativePath(const char *pszRelativePath);
 
     /**
-    @brief   Generate the absolute path of file,the filename of the result is from param:pszFilename,
-             and the path is from param:pszRelativeFile
+    @brief   Generate the absolute path of file.The result filename is from param:pszFilename,
+             and the result path is from param:pszRelativeFile
     @param   pszFilename        The file name of result.
     @param   pszRelativeFile    We get the result path from this param
     @return  The absolute path of the file who named pszFilename
