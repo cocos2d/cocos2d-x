@@ -46,14 +46,9 @@ public:
     */
 	static const char* fullPathFromRelativePath(const char *pszRelativePath);
 
-    /**
-    @brief   Generate the absolute path of file.The result filename is from param:pszFilename,
-             and the result path is from param:pszRelativeFile
-    @param   pszFilename        The file name of result.
-    @param   pszRelativeFile    We get the result path from this param
-    @return  The absolute path of the file who named pszFilename
-    */
+    /// @cond
 	static const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+	/// @endcond
 
     /**
     @brief   Generate a NSDictionary pointer by file

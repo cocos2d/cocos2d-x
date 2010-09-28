@@ -47,6 +47,9 @@ typedef struct
 	unsigned char   *data;
 } tImageInfo;
 
+/**
+@brief image toolkits
+*/
 class CCX_DLL UIImage
 {
 public:
