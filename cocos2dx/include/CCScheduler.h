@@ -39,24 +39,25 @@ class CCTimer : public NSObject
 public:
 	CCTimer(void) {}
 
-	// interval in seconds
+	/** get interval in seconds */
 	inline ccTime getInterval(void) { return m_fInterval; }
+	/** set interval in seconds */
 	inline void setInterval(ccTime fInterval){ m_fInterval = fInterval; }
 
-    // Initializes a timer with a target and a selector.
+    /** Initializes a timer with a target and a selector. */
 	bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
-	// Initializes a timer with a target, a selector and an interval in seconds.
+	/** Initializes a timer with a target, a selector and an interval in seconds. */
     bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
-	// triggers the timer
+	/** triggers the timer */
 	void update(ccTime dt);
 
 public:
-	// Allocates a timer with a target and a selector.
+	/** Allocates a timer with a target and a selector. */
 	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
-	// Allocates a timer with a target, a selector and an interval in seconds.
+	/** Allocates a timer with a target, a selector and an interval in seconds. */
 	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
 public:
@@ -91,15 +92,15 @@ class CCX_DLL CCScheduler : public NSObject
 {
 public:
     ~CCScheduler(void);
-
-	/** Modifies the time of all scheduled callbacks.
-	 You can use this property to create a 'slow motion' or 'fast fordward' effect.
-	 Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
-	 To create a 'fast fordward' effect, use values higher than 1.0.
-	 @since v0.8
-	 @warning It will affect EVERY scheduled selector / action.
-	 */
+	
 	inline ccTime getTimeScale(void) { return m_fTimeScale; }
+	/** Modifies the time of all scheduled callbacks.
+	You can use this property to create a 'slow motion' or 'fast forward' effect.
+	Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
+	To create a 'fast forward' effect, use values higher than 1.0.
+	@since v0.8
+	@warning It will affect EVERY scheduled selector / action.
+	*/
 	inline void setTimeScale(ccTime fTimeScale) { m_fTimeScale = fTimeScale; }
 
 	/** 'tick' the scheduler.
@@ -123,7 +124,7 @@ public:
 	 */
 	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
 
-	/** Unshedules a selector for a given target.
+	/** Unschedule a selector for a given target.
 	 If you want to unschedule the "update", use unscheudleUpdateForTarget.
 	 @since v0.99.3
 	 */
@@ -183,7 +184,7 @@ public:
 	void unscheduleAllTimers(void);
 
 public:
-    // returns a shared instance of the Scheduler
+    /** returns a shared instance of the Scheduler */
 	static CCScheduler* getSharedScheduler(void);
 
 	/** purges the shared scheduler. It releases the retained instance.

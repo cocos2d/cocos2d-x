@@ -54,20 +54,24 @@ class CCX_DLL CCSpriteFrame : public NSObject
 public:
 	// attributes
 
-	// rect of the frame
+	/** get rect of the frame */
 	inline CGRect getRect(void) { return m_obRect; }
+	/** set rect of the frame */
 	inline void setRect(CGRect rect) { m_obRect = rect; }
 
-	// offset of the frame
+	/** get offset of the frame */
 	inline CGPoint getOffset(void) { return m_obOffset; }
+	/** set offset of the frame */
 	inline void setOffset(CGPoint offset) { m_obOffset = offset; }
 
-	// original size of the trimed image
+	/** get original size of the trimmed image */
 	inline CGSize getOriginalSize(void) { return m_obOriginalSize; }
+	/** set original size of the trimmed image */
 	inline void setOriginalSize(CGSize size) { m_obOriginalSize = size; }
 
-	// texture of the frame, retain
+	/** get texture of the frame */
 	inline CCTexture2D* getTexture(void) { return m_pobTexture; }
+	/** set texture of the frame, the texture is retained */
 	inline void setTexture(CCTexture2D* pobTexture)
 	{
 		CCX_SAFE_RETAIN(pobTexture);
@@ -117,16 +121,19 @@ protected:
 public:
 	// attributes
 
-	// name of the animation
+	/** get name of the animation */
 	inline const char* getName(void) { return m_nameStr.c_str(); }
+	/** set name of the animation */
 	inline void setName(const char *pszName){ m_nameStr = pszName; }
 
-	// delay between frames in seconds
+	/** get delay between frames in seconds */
 	inline float getDelay(void) { return m_fDelay; }
+	/** set delay between frames in seconds */
 	inline void setDelay(float fDelay) { m_fDelay = fDelay; }
 
-	// array of frames, retain
+	/** get array of frames */
 	inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
+	/** set array of frames, the Frames is retained */
 	inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
 	{
 		CCX_SAFE_RETAIN(pFrames);
@@ -147,13 +154,13 @@ public:
 	 */
     bool initWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
 
-	// Initializes a CCAnimation with a name and delay between frames.
+	/** Initializes a CCAnimation with a name and delay between frames. */
     bool initWithName(const char *pszName, float fDelay);
 
-	// Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
+	/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames. */
 	bool initWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
 
-	// adds a frame to a CCAnimation
+	/** adds a frame to a CCAnimation */
 	void addFrame(CCSpriteFrame *pFrame);
 
 	/** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
@@ -177,10 +184,10 @@ public:
 	 */
 	static CCAnimation* animationWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
 
-	// Creates a CCAnimation with a name and delay between frames.
+	/** Creates a CCAnimation with a name and delay between frames. */
 	static CCAnimation* animationWithName(const char *pszName, float fDelay);
 
-	// Creates a CCAnimation with a name, delay and an array of CCSpriteFrames.
+	/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
 	static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
 };
 }//namespace   cocos2d 

@@ -32,11 +32,13 @@ namespace cocos2d
 	class CCX_DLL CCWaves3D : public CCGrid3DAction
 	{
 	public:
-		/** amplitude of the wave */
+		/** get amplitude of the wave */
 		inline float getAmplitude(void) { return m_fAmplitude; }
+		/** set amplitude of the wave */
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
-		/** amplitude rate of the wave */
+		/** get amplitude rate of the wave */
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
+		/** set amplitude rate of the wave */
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
@@ -57,12 +59,14 @@ namespace cocos2d
 	class CCX_DLL CCFlipX3D : public CCGrid3DAction
 	{
 	public:
+		/** initializes the action with duration */
 		bool initWithDuration(ccTime duration);
 		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with duration */
 		static CCFlipX3D* actionWithDuration(ccTime duration);
 	};
 
@@ -74,6 +78,7 @@ namespace cocos2d
 		virtual NSObject* copyWithZone(NSZone* pZone);
 
 	public:
+		/** creates the action with duration */
 		static CCFlipY3D* actionWithDuration(ccTime duration);
 	};
 
@@ -88,11 +93,13 @@ namespace cocos2d
 		inline CGPoint getPosition(void) { return m_position; }
 		inline void setPosition(CGPoint position) { m_position = position; }
 
+		/** initializes the action with center position, radius, a grid size and duration */
 		bool initWithPosition(CGPoint pos, float r, ccGridSize gridSize, ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with center position, radius, a grid size and duration */
         static CCLens3D* actionWithPosition(CGPoint pos, float r, ccGridSize gridSize, ccTime duration);
 	protected:
 		CGPoint m_position;
@@ -115,12 +122,14 @@ namespace cocos2d
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
+		/** initializes the action with radius, number of waves, amplitude, a grid size and duration */
 		bool initWithPosition(CGPoint pos, float r, int wav, float amp, 
 			ccGridSize gridSize, ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with radius, number of waves, amplitude, a grid size and duration */
 		static CCRipple3D* actionWithPosition(CGPoint pos, float r, int wav, float amp, 
 			ccGridSize gridSize, ccTime duration);
 	protected:
@@ -135,11 +144,13 @@ namespace cocos2d
 	class CCX_DLL CCShaky3D : public CCGrid3DAction
 	{
 	public:
+		/** initializes the action with a range, shake Z vertices, a grid and duration */
 		bool initWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with a range, shake Z vertices, a grid and duration */
         static CCShaky3D* actionWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
 
 	protected:
@@ -158,11 +169,13 @@ namespace cocos2d
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
+		/** initializes the action with amplitude, a grid and duration */
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with amplitude, a grid and duration */
 		static CCLiquid* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
 	protected:
@@ -182,12 +195,14 @@ namespace cocos2d
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
+		/** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
 		bool initWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,
 			ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
         static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,
 			ccTime duration);
 	protected:
@@ -212,12 +227,14 @@ namespace cocos2d
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
+		/** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
 		bool initWithPosition(CGPoint pos, int t, float amp, ccGridSize gridSize,
 			ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with center position, number of twirls, amplitude, a grid size and duration */
 		static CCTwirl* actionWithPosition(CGPoint pos, int t, float amp, ccGridSize gridSize,
 			ccTime duration);
 	protected:

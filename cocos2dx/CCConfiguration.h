@@ -47,13 +47,13 @@ protected:
 public:
 	CCConfiguration(void);
 	
-	// OpenGL Max texture size.
+	/** OpenGL Max texture size. */
 	inline int getMaxTextureSize(void)
 	{
 		return m_nMaxTextureSize;
 	}
 
-	// OpenGL Max Modelview Stack Depth
+	/** OpenGL Max Modelview Stack Depth */
 	inline int getMaxModelviewStackDepth(void)
 	{
 		return m_nMaxModelviewStackDepth;
@@ -71,7 +71,7 @@ public:
 		return m_bSupportsNPOT;
 	}
 
-	// Whether or not PVR Texture Compressed is supported
+	/** Whether or not PVR Texture Compressed is supported */
 	inline bool isSupportsPVRTC(void)
 	{
 		return m_bSupportsPVRTC;
@@ -93,13 +93,13 @@ public:
 		return m_bSupportsDiscardFramebuffer;
 	}
 
-	// returns whether or not an OpenGL is supported
+	/** returns whether or not an OpenGL is supported */
 	bool checkForGLExtension(const std::string &searchName);
 
 	bool init(void);
 
 public:
-	// returns a shared instance of the CCConfiguration
+	/** returns a shared instance of the CCConfiguration */
 	static CCConfiguration* sharedConfiguration(void);
 };
 }//namespace   cocos2d 

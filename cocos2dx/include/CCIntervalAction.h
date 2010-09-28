@@ -30,8 +30,6 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCSpriteFrame.h"
 
-// #include <sys/time.h>
-
 /** An interval action is an action that takes place within a certain period of time.
 It has an start time, and a finish time. The finish time is the parameter
 duration plus the start time.
@@ -45,8 +43,8 @@ For example, you can simulate a Ping Pong effect running the action normally and
 then running it again in Reverse mode.
 
 Example:
- 
-	CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
+
+	CCAction *pingPongAction = CCSequence::actions(action, action->reverse(), NULL);
 */
 
 namespace cocos2d {
@@ -60,12 +58,13 @@ public:
 	/** initializes the action */
 	bool initWithDuration(ccTime d);
 
-	/** returns YES if the action has finished */
+	/** returns true if the action has finished */
 	virtual bool isDone(void);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void step(ccTime dt);
 	virtual void startWithTarget(CCNode *pTarget);
+	/** returns a reversed action */
 	virtual CCIntervalAction* reverse(void);
 
 public:
@@ -148,6 +147,7 @@ public:
 	CCRepeatForever(){}
 	virtual ~CCRepeatForever();
 
+	/** initializes the action */
 	bool initWithAction(CCIntervalAction *pAction);
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
@@ -156,6 +156,7 @@ public:
 	virtual CCIntervalAction* reverse(void);
 
 public:
+	/** creates the action */
 	static CCRepeatForever* actionWithAction(CCIntervalAction *pAction);
 
 protected:
@@ -214,7 +215,7 @@ protected:
 	float m_fDiffAngle;
 };
 
-/** Rotates a CCNode object clockwise a number of degrees by modiying it's rotation attribute.
+/** Rotates a CCNode object clockwise a number of degrees by modifying it's rotation attribute.
 */
 class CCX_DLL CCRotateBy : public CCIntervalAction
 {
@@ -310,6 +311,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCJumpTo* actionWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
 };
 
@@ -356,6 +358,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action with a duration and a bezier configuration */
     static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
 };
 
@@ -414,7 +417,7 @@ public:
 class CCX_DLL CCBlink : public CCIntervalAction
 {
 public:
-	/** initilizes the action */
+	/** initializes the action */
 	bool initWithDuration(ccTime duration, unsigned int uBlinks);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
@@ -439,6 +442,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCFadeIn* actionWithDuration(ccTime d);
 };
 
@@ -453,6 +457,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCFadeOut* actionWithDuration(ccTime d);
 };
 
@@ -470,7 +475,7 @@ public:
 	virtual void update(ccTime time);
 
 public:
-	/** creates an action with duration and opactiy */
+	/** creates an action with duration and opacity */
 	static CCFadeTo* actionWithDuration(ccTime duration, GLubyte opacity);
 
 protected:
@@ -539,6 +544,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCDelayTime* actionWithDuration(ccTime d);
 };
 
@@ -615,8 +621,7 @@ public:
 	/** creates an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
 	 The 'delay' parameter of the animation will be overrided by the duration parameter.
 	 @since v0.99.0
-	 */
-	
+	 */	
      static CCAnimate* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 protected:
 	CCAnimation *m_pAnimation;

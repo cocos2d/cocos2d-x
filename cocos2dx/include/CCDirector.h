@@ -38,9 +38,6 @@ THE SOFTWARE.
 #include <assert.h>
 namespace   cocos2d {
 
-// OpenGL related
-// #include "support/CCXEGLView.h"
-
 /** @typedef tPixelFormat
  Possible Pixel Formats for the CCXEGLView
  */
@@ -179,7 +176,7 @@ class cocos2d::CCXEGLView;
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
  
- The CCDirector is also resposible for:
+ The CCDirector is also responsible for:
   - initializing the OpenGL ES context
   - setting the OpenGL ES pixel format (default on is RGB565)
   - setting the OpenGL ES buffer depth (default one is 0-bit)
@@ -187,7 +184,7 @@ and when to execute the Scenes.
   - setting the orientation (default one is Protrait)
  
  Since the CCDirector is a singleton, the standard way to use it is by calling:
-  - [[CCDirector sharedDirector] xxxx];
+  _ CCDirector::getSharedDirector()->xxx();
  
  The CCDirector also sets the default OpenGL ES context:
   - GL_TEXTURE_2D is enabled
@@ -204,30 +201,30 @@ public:
 
 	// attribute
 
-	// The current running Scene. Director can only run one Scene at the time 
+	/** The current running Scene. Director can only run one Scene at the time */
 	inline CCScene* getRunningScene(void) { return m_pRunningScene; }
 
-	// The FPS value
+	/** The FPS value */
 	inline double getAnimationInterval(void) { return m_dAnimationInterval; }
 	virtual void setAnimationInterval(double dValue);
 
-	// Whether or not to display the FPS on the bottom-left corner
+	/** Whether or not to display the FPS on the bottom-left corner */
 	inline bool isDisplayFPS(void) { return m_bDisplayFPS; }
 	inline void setDisplayFPS(bool bDisplayFPS) { m_bDisplayFPS = bDisplayFPS; }
 
-	// The CCXEGLView, where everything is rendered
+	/** The CCXEGLView, where everything is rendered */
 	inline cocos2d::CCXEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
 	void setOpenGLView(cocos2d::CCXEGLView *pobOpenGLView);
 
-	// whether or not the next delta time will be zero
+	/** whether or not the next delta time will be zero */
 	inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
 	void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
 
-	// The device orientattion
+	/** The device orientation */
 	inline ccDeviceOrientation getDeviceOrientation(void) { return m_eDeviceOrientation; }
 	void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
 
-	// Whether or not the Director is paused
+	/** Whether or not the Director is paused */
 	inline bool isPaused(void) { return m_bPaused; }
 
 	/** Sets an OpenGL projection
@@ -268,7 +265,7 @@ public:
 		assert(! isOpenGLAttached());
 	    m_ePixelFormat = kPixelFormat;
 	}
-	// Pixel format used to create the context
+	/** Pixel format used to create the context */
 	inline tPixelFormat getPiexFormat(void) { return m_ePixelFormat; }
 
 	/** Change depth buffer format of the render buffer.
@@ -289,14 +286,14 @@ public:
 
 	// Landspace
 
-	// returns the size of the OpenGL view in pixels, according to the landspace
+	/** returns the size of the OpenGL view in pixels, according to the landspace */
 	CGSize getWinSize(void);
 
-	// returns the display size of the OpenGL view in pixels
+	/** returns the display size of the OpenGL view in pixels */
 	CGSize getDisplaySize(void);
 
 	/** converts a UIKit coordinate to an OpenGL coordinate
-	 Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
+	 Useful to convert (multi) touches coordinates to the current layout (portrait or landscape)
 	 */
 	CGPoint convertToGL(CGPoint obPoint);
 
@@ -305,10 +302,10 @@ public:
 	 */
 	CGPoint convertToUI(CGPoint obPoint);
 
-	// rotates the screen if an orientation differnent than Portrait is used
+	/** rotates the screen if an orientation different than Portrait is used */
 	void applyOrientation(void);
 
-	// XXX: missing description
+	/// XXX: missing description 
 	float getZEye(void);
 
 	// Scene Management
@@ -381,19 +378,19 @@ public:
 
 	// OpenGL Helper
 
-	// sets the OpenGL default values
+	/** sets the OpenGL default values */
 	void setGLDefaultValues(void);
 
-	// enables/disables OpenGL alpha blending
+	/** enables/disables OpenGL alpha blending */
 	void setAlphaBlending(bool bOn);
 
-	// enables/disables OpenGL depth test
+	/** enables/disables OpenGL depth test */
 	void setDepthTest(bool bOn);
 
 	virtual void preMainLoop(void);
 
 public:
-	// returns a shared instance of the director
+	/** returns a shared instance of the director */
 	static CCDirector* getSharedDirector(void);
 
 	/** There are 4 types of Director.
@@ -403,32 +400,28 @@ public:
 	 - kCCDirectorTypeDisplayLink
 	 
 	 Each Director has it's own benefits, limitations.
-	 If you are using SDK 3.1 or newer it is recommed to use the DisplayLink director
+	 Now we only support DisplayLink director, so it has not effect 
 	 
 	 This method should be called before any other call to the director.
-
-	 It will return NO if the director type is kCCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
 	 
 	 @since v0.8.2
 	 */
-	// should we support four types???
 	static bool setDierectorType(ccDirectorType obDirectorType);
 
 protected:
 	bool isOpenGLAttached(void);
-	// bool initOpenGLViewWithViewWithFrame(UIView *pView, CGRect obRect);
 
 	void updateContentScaleFactor(void);
 	void setNextScene(void);
-
-	// shows the FPS in the screen
+	
 #if CC_DIRECTOR_FAST_FPS
+	/** shows the FPS in the screen */
 	void showFPS(void);
 #else
 	void showFPS(void) {}
 #endif // CC_DIRECTOR_FAST_FPS
 
-	// calculates delta time since last time it was called
+	/** calculates delta time since last time it was called */
 	void calculateDeltaTime(void);
 
 #if CC_ENABLE_PROFILERS
@@ -443,9 +436,6 @@ protected:
 protected:
     cocos2d::CCXEGLView	*m_pobOpenGLView;
 
-	//NSTimeInterval animationInterval;
-	//NSTimeInterval oldAnimationInterval;
-	// NSTimeInterval -> double
 	double m_dAnimationInterval;
 	double m_dOldAnimationInterval;
 
@@ -512,57 +502,6 @@ protected:
 #endif
 };
 
-
-/** FastDirector is a Director that triggers the main loop as fast as possible.
- *
- * Features and Limitations:
- *  - Faster than "normal" director
- *  - Consumes more battery than the "normal" director
- *  - It has some issues while using UIKit objects
- */
-/*
-class CCFastDirector : public CCDirector
-{
-public:
-	static CCFastDirector* getSharedDirector(void);
-
-protected:
-	virtual void preMainLoop(void);
-
-private:
-	CCFastDirector(void) {}
-
-protected:
-	bool isRunning;
-	NSAutoreleasePool *pAutoreleasePool;
-};
-*/
-
-/** ThreadedFastDirector is a Director that triggers the main loop from a thread.
- *
- * Features and Limitations:
- *  - Faster than "normal" director
- *  - Consumes more battery than the "normal" director
- *  - It can be used with UIKit objects
- *
- * @since v0.8.2
- */
-/*
-class CCThreadedFastDirector : public CCDirector
-{
-public:
-	static CCThreadedFastDirector* getSharedDirector(void);
-protected:
-	virtual void preMainLoop(void);
-
-private:
-	CCThreadedFastDirector(void){}
-
-protected:
-	bool isRunning;
-};
-*/
-
 /** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  *
  * Features and Limitations:
@@ -589,31 +528,6 @@ protected:
 	bool m_bInvalid;
 };
 
-/** TimerDirector is a Director that calls the main loop from an NSTimer object
- *
- * Features and Limitations:
- * - Integrates OK with UIKit objects
- * - It the slowest director
- * - The invertal update is customizable from 1 to 60
- *
- * It is the default Director.
- */
-/*
-class CCTimerDirector : public CCDirector
-{
-public:
-    static CCTimerDirector* getSharedDirector(void);
-
-protected:
-	virtual void preMain(void);
-
-private:
-	CCTimerDirector(void) {}
-
-protected:
-	NSTimer *pAnimationTimer;
-};
-*/
 }//namespace   cocos2d 
 
 #endif // __CCDIRECTOR_H__

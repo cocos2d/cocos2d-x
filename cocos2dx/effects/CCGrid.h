@@ -58,15 +58,6 @@ namespace cocos2d
 		inline CGPoint getStep(void) { return m_obStep; }
 		inline void setStep(CGPoint step) { m_obStep = step; }
 
-		/** texture used, retain */
-// 		inline CCTexture2D* getTexture(void) { return m_pTexture; }
-// 		inline void setTexture(CCTexture2D *pTexture)
-// 		{
-// 			CCX_SAFE_RETAIN(pTexture);
-// 			CCX_SAFE_RELEASE(m_pTexture);
-// 			m_pTexture = pTexture;
-// 		}
-
 		/** is texture flipped */
 		inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
 		void setIsTextureFlipped(bool bFlipped);

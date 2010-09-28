@@ -32,6 +32,7 @@ namespace cocos2d
 	class CCX_DLL CCShakyTiles3D : public CCTiledGrid3DAction
 	{
 	public:
+		/** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
 		bool initWithRange(int nRange, bool bShakeZ, ccGridSize gridSize,
 			ccTime duration);
 
@@ -39,6 +40,7 @@ namespace cocos2d
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration */
 		static CCShakyTiles3D* actionWithRange(int nRange, bool bShakeZ, ccGridSize gridSize,
 			ccTime duration);
 
@@ -51,6 +53,7 @@ namespace cocos2d
 	class CCX_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
 	{
 	public:
+		/** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
         bool initWithRange(int nRange, bool bShatterZ, ccGridSize gridSize,
 			ccTime duration);
 
@@ -58,6 +61,7 @@ namespace cocos2d
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration */
 		static CCShatteredTiles3D* actionWithRange(int nRange, bool bShatterZ, ccGridSize gridSize,
 			ccTime duration);
 
@@ -75,6 +79,7 @@ namespace cocos2d
 	{
 	public:
 		~CCShuffleTiles(void);
+		/** initializes the action with a random seed, the grid size and the duration */
 		bool initWithSeed(int s, ccGridSize gridSize, ccTime duration);
 		void shuffle(int *pArray, int nLen);
 		ccGridSize getDelta(ccGridSize pos);
@@ -85,6 +90,7 @@ namespace cocos2d
 		virtual NSObject* copyWithZone(NSZone* pZone);
 
 	public:
+		/** creates the action with a random seed, the grid size and the duration */
 		static CCShuffleTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
 
 	protected:
@@ -107,6 +113,7 @@ namespace cocos2d
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with the grid size and the duration */
 		static CCFadeOutTRTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
@@ -119,6 +126,7 @@ namespace cocos2d
 		virtual float testFunc(ccGridSize pos, ccTime time);
 
 	public:
+		/** creates the action with the grid size and the duration */
         static CCFadeOutBLTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
@@ -132,6 +140,7 @@ namespace cocos2d
 		virtual void transformTile(ccGridSize pos, float distance);
 
 	public:
+		/** creates the action with the grid size and the duration */
         static CCFadeOutUpTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
@@ -144,6 +153,7 @@ namespace cocos2d
 		virtual float testFunc(ccGridSize pos, ccTime time);
 
 	public:
+		/** creates the action with the grid size and the duration */
         static CCFadeOutDownTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
@@ -154,6 +164,7 @@ namespace cocos2d
 	{
 	public:
 		~CCTurnOffTiles(void);
+		/** initializes the action with a random seed, the grid size and the duration */
 		bool initWithSeed(int s, ccGridSize gridSize, ccTime duration);
 		void shuffle(int *pArray, int nLen);
 		void turnOnTile(ccGridSize pos);
@@ -164,7 +175,9 @@ namespace cocos2d
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with the grid size and the duration */
 		static CCTurnOffTiles* actionWithSize(ccGridSize size, ccTime d);
+		/** creates the action with a random seed, the grid size and the duration */
 		static CCTurnOffTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
 
 	protected:
@@ -177,18 +190,22 @@ namespace cocos2d
 	class CCX_DLL CCWavesTiles3D : public CCTiledGrid3DAction
 	{
 	public:
+		/** waves amplitude */
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
 
+		/** waves amplitude rate */
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
+		/** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
 		static CCWavesTiles3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
 	protected:
@@ -203,17 +220,21 @@ namespace cocos2d
 	class CCX_DLL CCJumpTiles3D : public CCTiledGrid3DAction
 	{
 	public:
+		/** amplitude of the sin*/
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
 
+		/** amplitude rate */
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
+		/** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
 		bool initWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
         static CCJumpTiles3D* actionWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
 
 	protected:
@@ -226,6 +247,7 @@ namespace cocos2d
 	class CCX_DLL CCSplitRows : public CCTiledGrid3DAction
 	{
 	public :
+		/** initializes the action with the number of rows to split and the duration */
 		bool initWithRows(int nRows, ccTime duration);
 
 		virtual NSObject* copyWithZone(NSZone* pZone);
@@ -233,6 +255,7 @@ namespace cocos2d
 		virtual void startWithTarget(CCNode *pTarget);
 
 	public:
+		/** creates the action with the number of rows to split and the duration */
 		static CCSplitRows* actionWithRows(int nRows, ccTime duration);
 
 	protected:
@@ -244,6 +267,7 @@ namespace cocos2d
 	class CCX_DLL CCSplitCols : public CCTiledGrid3DAction
 	{
 	public:
+		/** initializes the action with the number of columns to split and the duration */
 		bool initWithCols(int nCols, ccTime duration);
 
 		virtual NSObject* copyWithZone(NSZone* pZone);
@@ -251,6 +275,7 @@ namespace cocos2d
 		virtual void startWithTarget(CCNode *pTarget);
 
 	public:
+		/** creates the action with the number of columns to split and the duration */
 		static CCSplitCols* actionWithCols(int nCols, ccTime duration);
 
 	protected:

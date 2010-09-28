@@ -45,7 +45,6 @@ namespace cocos2d {
 		virtual void update(ccTime time);
 		//CCFiniteTimeAction method
 		virtual CCFiniteTimeAction * reverse(void);
-
 	};
 
 	/** Show the node
@@ -163,8 +162,11 @@ namespace cocos2d {
 		virtual ~CCCallFunc()
 		{
 		}
+		/** creates the action with the callback */
 		static CCCallFunc * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFunc selector);
+		/** initializes the action with the callback */
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget);
+		/** exeuctes the callback */
 		virtual void execute();
 		//super method
 		virtual void startWithTarget(CCNode *pTarget);
@@ -178,15 +180,6 @@ namespace cocos2d {
 			SEL_CallFuncN	m_pCallFuncN;
 			SEL_CallFuncND	m_pCallFuncND;
 		};
-// 		id targetCallback;
-// 		SEL selector;
-// 	
-// 		/** creates the action with the callback */
-// 		+(id) actionWithTarget: (id) t selector:(SEL) s;
-// 		/** initializes the action with the callback */
-// 		-(id) initWithTarget: (id) t selector:(SEL) s;
-// 		/** exeuctes the callback */
-// 		-(void) execute;
 	};
 
 	/** Calls a 'callback' with the node as the first argument
@@ -205,15 +198,12 @@ namespace cocos2d {
 	};
 
 
-	//typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 	/** Calls a 'callback' with the node as the first argument and the 2nd argument is data
 	* ND means: Node and Data. Data is void *, so it could be anything.
 	*/
 	class CCX_DLL CCCallFuncND : public CCCallFuncN
 	{
 	public:
-		/** Invocation object that has the target#selector and the parameters */
-		//@property (nonatomic,readwrite) CC_CALLBACK_ND callbackMethod;
 
 		/** creates the action with the callback and the data to pass as an argument */
 		static CCCallFuncND * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
@@ -225,7 +215,6 @@ namespace cocos2d {
 
 	protected:
 		void			*m_pData;
-		//CC_CALLBACK_ND	m_pfnCallbackMethod;
 	};
 
 // Blocks Support

@@ -56,23 +56,33 @@ public:
 	UIImage(int nX, int nY, void *buffer);
 	~UIImage(void);
 
+	/** load the image from the specified path 
+	    @imageType: the type of image, now only support tow types
+		            kImageFormatPNG -> png
+					kImageFormatJPG -> jpeg
+	 */
 	bool initWithContentsOfFile(const std::string &strPath, tImageFormat imageType = kImageFormatPNG);
 	bool initWithData(unsigned char *pBuffer, int nLength);
 	bool initWithBuffer(int tx, int ty, unsigned char *pBuffer);
-//	bool initWithCGImage(CGImageRef pCGImage);
 
 	bool save(const std::string &strFileName, int nFormat);
 
+	/** get the image width */
 	unsigned int width(void);
+	/** get the image height */
 	unsigned int height(void);
 
+	/** whether or not the image has alpha channel */
 	bool isAlphaPixelFormat(void);
+	/** whether or not the r, g, b channels are premultiplied by alpha channel */
 	bool isPremultipliedAlpha(void);
 
+	/** get the bit depth of each color channel */
 	int CGImageGetBitsPerComponent(void);
+	/** the source color space for the image, or 0 if the image is an image mask */
 	int CGImageGetColorSpace(void);
 
-	// convert the bitmap to 256 pixel format, and every component is 8 bits
+	/** get the image data */
 	unsigned char* getData(void);
 
 private:

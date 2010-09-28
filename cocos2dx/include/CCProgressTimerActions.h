@@ -52,6 +52,10 @@ protected:
 	float m_fFrom;
 };
 
+/**
+Progress from a percentage to another percentage
+@since v0.99.1
+*/
 class CCX_DLL CCProgressFromTo : public CCIntervalAction
 {
 public:

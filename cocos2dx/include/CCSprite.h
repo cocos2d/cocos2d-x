@@ -97,29 +97,29 @@ public:
 public:
 	// attributes
 
-	// whether or not the Sprite needs to be updated in the Atlas
+	/** whether or not the Sprite needs to be updated in the Atlas */
 	inline bool isDirty(void) { return m_bDirty; }
 	inline void setDirty(bool bDirty) { m_bDirty = bDirty; }
 
-	// the quad (tex coords, vertex coords and color) information
+	/** the quad (tex coords, vertex coords and color) information */
 	inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
-	// The index used on the TextureATlas. Don't modify this value unless you know what you are doing
+	/** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
 	inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
 	inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
 
-	// returns the rect of the CCSprite
+	/** returns the rect of the CCSprite */
 	inline CGRect getTextureRect(void) { return m_obRect; }
 
-	// whether or not the Sprite is rendered using a CCSpriteSheet
+	/** whether or not the Sprite is rendered using a CCSpriteSheet */
 	inline bool isUsesSpriteSheet(void) { return m_bUsesSpriteSheet; }
 	inline void setUsesSpriteSheet(bool bUsesSpriteSheet) { m_bUsesSpriteSheet = bUsesSpriteSheet; }
 
-	// weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteSheet 
+	/** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteSheet */
 	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
 	inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { m_pobTextureAtlas = pobTextureAtlas; }
 
-	// weak reference to the CCSpriteSheet that renders the CCSprite
+	/** weak reference to the CCSpriteSheet that renders the CCSprite */
 	inline CCSpriteSheet* getSpriteSheet(void) { return m_pobSpriteSheet; }
 	inline void setSpriteSheet(CCSpriteSheet *pobSpriteSheet) { m_pobSpriteSheet = pobSpriteSheet; }
 
@@ -136,8 +136,9 @@ public:
 	 */
 	inline CGPoint getOffsetPosition(void) { return m_obOffsetPosition; }
 
-	// conforms to CCTextureProtocol protocol
+	/** conforms to CCTextureProtocol protocol */
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
+	/** conforms to CCTextureProtocol protocol */
 	inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
 
 public:
@@ -152,10 +153,10 @@ public:
 	 */
 	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CGRect rect);
 
-	// Creates an sprite with a texture, a rect and offset.
+	/** Creates an sprite with a texture, a rect and offset. */
     static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CGRect rect, CGPoint offset);
 
-	// Creates an sprite with an sprite frame.
+	/** Creates an sprite with an sprite frame. */
 	static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
 
 	/** Creates an sprite with an sprite frame name.
@@ -176,23 +177,10 @@ public:
 	 */
 	static CCSprite* spriteWithFile(const char *pszFileName, CGRect rect);
 
-	/** Creates an sprite with a CGImageRef.
-	 @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
-	 */
-//	static CCSprite* spriteWithCGImage(CGImageRef pImage);
-
-	/** Creates an sprite with a CGImageRef and a key.
-	 The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
-	 For example, a valid key is: @"sprite_frame_01".
-	 If key is nil, then a new texture will be created each time by the CCTextureCache. 
-	 @since v0.99.0
-	 */
-//    static CCSprite* spriteWithCGImage(CGImageRef pImage, const char *pszKey);
-
-	// Creates an sprite with an CCSpriteSheet and a rect
+	/** Creates an sprite with an CCSpriteSheet and a rect */
     static CCSprite* spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
 
-	// Creates an sprite with a texture, a rect and offset.
+	/** Creates an sprite with a texture, a rect and offset. */
 	static CCSprite* spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect, CGPoint offset);
 
 public:
@@ -219,13 +207,29 @@ public:
 	virtual void setIsVisible(bool bVisible);
 	void setFlipX(bool bFlipX);
 	void setFlipY(bool bFlipY);
+	/** whether or not the sprite is flipped horizontally. 
+	It only flips the texture of the sprite, and not the texture of the sprite's children.
+	Also, flipping the texture doesn't alter the anchorPoint.
+	If you want to flip the anchorPoint too, and/or to flip the children too use:
+
+	sprite->setScaleX(sprite->getScaleX() * -1);
+	*/
 	bool isFlipX(void);
+	/** whether or not the sprite is flipped vertically.
+	It only flips the texture of the sprite, and not the texture of the sprite's children.
+	Also, flipping the texture doesn't alter the anchorPoint.
+	If you want to flip the anchorPoint too, and/or to flip the children too use:
+
+	sprite->setScaleY(sprite->getScaleY() * -1);
+	*/
 	bool isFlipY(void);
 
 	void updateColor(void);
 	// RGBAProtocol
+	/** opacity: conforms to CCRGBAProtocol protocol */
 	virtual GLubyte getOpacity(void);
 	virtual void setOpacity(GLubyte opacity);
+	/** RGB colors: conforms to CCRGBAProtocol protocol */
 	virtual ccColor3B getColor(void);
 	virtual void setColor(ccColor3B color3);
 	virtual void setIsOpacityModifyRGB(bool bValue);
@@ -269,25 +273,12 @@ public:
 	 */
     bool initWithFile(const char *pszFilename, CGRect rect);
 
-	/** Initializes an sprite with a CGImageRef
-	 @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
-	 */
-//	CCSprite* initWithCGImage(CGImageRef pImage);
-
-	/** Initializes an sprite with a CGImageRef and a key
-	 The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
-	 For example, a valid key is: @"sprite_frame_01".
-	 If key is nil, then a new texture will be created each time by the CCTextureCache. 
-	 @since v0.99.0
-	 */
-//    CCSprite* initWithCGImage(CGImageRef pImage, const char *pszKey);
-
-	// Initializes an sprite with an CCSpriteSheet and a rect
+	/** Initializes an sprite with an CCSpriteSheet and a rect */
     bool initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
 
 	// sprite sheet methods
 
-	// updates the quad according the the rotation, position, scale values.
+	/** updates the quad according the the rotation, position, scale values. */
 	void updateTransform(void);
 
 	/** tell the sprite to use self-render.
@@ -295,7 +286,7 @@ public:
 	 */
 	void useSelfRender(void);
 
-	// updates the texture rect of the CCSprite.
+	/** updates the texture rect of the CCSprite. */
      void setTextureRect(CGRect rect);
 
 	/** tell the sprite to use sprite sheet render.
@@ -305,36 +296,27 @@ public:
 
 	// Frames
 
-	// sets a new display frame to the CCSprite.
+	/** sets a new display frame to the CCSprite. */
 	void setDisplayFrame(CCSpriteFrame *pNewFrame);
 
-	// returns whether or not a CCSpriteFrame is being displayed
+	/** returns whether or not a CCSpriteFrame is being displayed */
 	bool isFrameDisplayed(CCSpriteFrame *pFrame);
 
-	// returns the current displayed frame.
+	/** returns the current displayed frame. */
 	CCSpriteFrame* displayedFrame(void);
 
-	// adds an Animation to the Sprite.
+	/** adds an Animation to the Sprite. */
 	void addAnimation(CCAnimation *pAnimation);
 
-    // returns an Animation given it's name.
+    /** returns an Animation given it's name. */
 	CCAnimation* animationByName(const char *pszAnimationName);
 
 	// Animation
 
-	// changes the display frame based on an animation and an index.
+	/** changes the display frame based on an animation and an index. */
 	void setDisplayFrame(const char *pszAnimationName, int nFrameIndex);
 
 protected:
-    /*
-	@interface CCSprite (Private)
-	-(void)updateTextureCoords:(CGRect)rect;
-	-(void)updateBlendFunc;
-	-(void) initAnimationDictionary;
-	-(void) setTextureRect:(CGRect)rect untrimmedSize:(CGSize)size;
-	-(struct transformValues_) getTransformValues;	// optimization
-	@end
-	 */
 	void updateTextureCoords(CGRect rect);
 	void updateBlendFunc(void);
 	void initAnimationDictionary(void);
