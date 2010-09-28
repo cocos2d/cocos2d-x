@@ -33,7 +33,8 @@ namespace cocos2d {
 class NSObject;
 class NSZone;
 
-/** Base class for Easing actions
+/** 
+ @brief Base class for Easing actions
  */
 class CCX_DLL CCEaseAction : public CCIntervalAction
 {
@@ -57,7 +58,8 @@ protected:
 	CCIntervalAction *m_pOther;
 };
 
-/** Base class for Easing actions with rate parameters
+/** 
+ @brief Base class for Easing actions with rate parameters
  */
 class CCX_DLL CCEaseRateAction : public CCEaseAction
 {
@@ -83,7 +85,8 @@ protected:
 	float m_fRate;
 };
 
-/** CCEaseIn action with a rate
+/** 
+ @brief CCEaseIn action with a rate
  */
 class CCX_DLL CCEaseIn : public CCEaseRateAction
 {
@@ -95,7 +98,8 @@ public:
 	static CCEaseIn* actionWithAction(CCIntervalAction* pAction, float fRate);
 };
 
-/** CCEaseOut action with a rate
+/** 
+ @brief CCEaseOut action with a rate
  */
 class CCX_DLL CCEaseOut : public CCEaseRateAction
 {
@@ -108,7 +112,8 @@ public:
     static CCEaseOut* actionWithAction(CCIntervalAction* pAction, float fRate);
 };
 
-/** CCEaseInOut action with a rate
+/** 
+ @brief CCEaseInOut action with a rate
  */
 class CCX_DLL CCEaseInOut : public CCEaseRateAction
 {
@@ -122,7 +127,8 @@ public:
 	static CCEaseInOut* actionWithAction(CCIntervalAction* pAction, float fRate);
 };
 
-/** CCEase Exponential In
+/** 
+ @brief CCEase Exponential In
  */
 class CCX_DLL CCEaseExponentialIn : public CCEaseAction
 {
@@ -136,7 +142,8 @@ public:
 	static CCEaseExponentialIn* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** Ease Exponential Out
+/** 
+ @brief Ease Exponential Out
  */
 class CCX_DLL CCEaseExponentialOut : public CCEaseAction
 {
@@ -151,7 +158,8 @@ public:
 
 };
 
-/** Ease Exponential InOut
+/** 
+ @brief Ease Exponential InOut
  */
 class CCX_DLL CCEaseExponentialInOut : public CCEaseAction
 {
@@ -165,7 +173,8 @@ public:
 
 };
 
-/** Ease Sine In
+/** 
+ @brief Ease Sine In
  */
 class CCX_DLL CCEaseSineIn : public CCEaseAction
 {
@@ -179,7 +188,8 @@ public:
 	static CCEaseSineIn* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** Ease Sine Out
+/** 
+ @brief Ease Sine Out
  */
 class CCX_DLL CCEaseSineOut : public CCEaseAction
 {
@@ -193,7 +203,8 @@ public:
 	static CCEaseSineOut* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** Ease Sine InOut
+/** 
+ @brief Ease Sine InOut
  */
 class CCX_DLL CCEaseSineInOut : public CCEaseAction
 {
@@ -206,7 +217,8 @@ public:
 	static CCEaseSineInOut* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** Ease Elastic abstract class
+/** 
+ @brief Ease Elastic abstract class
  @since v0.8.2
  */
 class CCX_DLL CCEaseElastic : public CCEaseAction
@@ -235,7 +247,8 @@ protected:
 	float m_fPeriod;
 };
 
-/** Ease Elastic In action.
+/** 
+ @brief Ease Elastic In action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
@@ -253,7 +266,8 @@ public:
 	static CCEaseElasticIn* actionWithAction(CCIntervalAction *pAction, float fPeriod);
 };
 
-/** Ease Elastic Out action.
+/** 
+ @brief Ease Elastic Out action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
@@ -271,7 +285,8 @@ public:
 	static CCEaseElasticOut* actionWithAction(CCIntervalAction *pAction, float fPeriod);
 };
 
-/** Ease Elastic InOut action.
+/** 
+ @brief Ease Elastic InOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
@@ -289,7 +304,8 @@ public:
 	static CCEaseElasticInOut* actionWithAction(CCIntervalAction *pAction, float fPeriod);
 };
 
-/** CCEaseBounce abstract class.
+/** 
+ @brief CCEaseBounce abstract class.
  @since v0.8.2
 */
 class CCX_DLL CCEaseBounce : public CCEaseAction
@@ -303,8 +319,9 @@ public:
 	static CCEaseBounce* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** CCEaseBounceIn action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+/** 
+ @brief CCEaseBounceIn action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
 */
 class CCX_DLL CCEaseBounceIn : public CCEaseBounce
@@ -319,7 +336,8 @@ public:
 	static CCEaseBounceIn* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** EaseBounceOut action.
+/** 
+ @brief EaseBounceOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
@@ -335,7 +353,8 @@ public:
 	static CCEaseBounceOut* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** CCEaseBounceInOut action.
+/** 
+ @brief CCEaseBounceInOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
@@ -350,7 +369,8 @@ public:
 	static CCEaseBounceInOut* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** CCEaseBackIn action.
+/** 
+ @brief CCEaseBackIn action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
@@ -366,7 +386,8 @@ public:
 	static CCEaseBackIn* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** CCEaseBackOut action.
+/** 
+ @brief CCEaseBackOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
@@ -382,7 +403,8 @@ public:
 	static CCEaseBackOut* actionWithAction(CCIntervalAction* pAction);
 };
 
-/** CCEaseBackInOut action.
+/** 
+ @brief CCEaseBackInOut action.
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */

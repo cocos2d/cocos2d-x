@@ -71,7 +71,9 @@ public:
     virtual ~EGLTouchDelegate() {}
 };
 
-/** CCTouchDispatcher.
+class CCTouchHandler;
+struct _ccCArray;
+/** @brief CCTouchDispatcher.
  Singleton that handles all the touch events.
  The dispatcher dispatches events to the registered TouchHandlers.
  There are 2 different type of touch handlers:
@@ -87,8 +89,6 @@ public:
 
  @since v0.8.0
  */
-class CCTouchHandler;
-struct _ccCArray;
 class CCX_DLL CCTouchDispatcher : public NSObject, public EGLTouchDelegate
 {
 public:

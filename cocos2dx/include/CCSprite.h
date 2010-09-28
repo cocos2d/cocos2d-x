@@ -68,7 +68,7 @@ typedef enum {
 
 } ccHonorParentTransform;
 
-/** CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
+/** @brief CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
  *
  * CCSprite can be created with an image, or with a sub-rectangle of an image.
  *

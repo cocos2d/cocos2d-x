@@ -30,7 +30,8 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCSpriteFrame.h"
 
-/** An interval action is an action that takes place within a certain period of time.
+/** 
+@brief An interval action is an action that takes place within a certain period of time.
 It has an start time, and a finish time. The finish time is the parameter
 duration plus the start time.
 
@@ -81,7 +82,7 @@ protected:
 	bool   m_bFirstTick;
 };
 
-/** Runs actions sequentially, one after another
+/** @brief Runs actions sequentially, one after another
  */
 class CCX_DLL CCSequence : public CCIntervalAction
 {
@@ -109,7 +110,7 @@ protected:
 	int m_last;
 };
 
-/** Repeats an action a number of times.
+/** @brief Repeats an action a number of times.
  * To repeat an action forever use the CCRepeatForever action.
  */
 class CCX_DLL CCRepeat : public CCIntervalAction
@@ -137,7 +138,7 @@ protected:
 	CCFiniteTimeAction *m_pOther;
 };
 
-/** Repeats an action for ever.
+/** @brief Repeats an action for ever.
 To repeat the an action for a limited number of times use the Repeat action.
 @warning This action can't be Sequenceable because it is not an IntervalAction
 */
@@ -163,7 +164,7 @@ protected:
 	CCIntervalAction *m_pOther;
 };
 
-/** Spawn a new action immediately
+/** @brief Spawn a new action immediately
  */
 class CCX_DLL CCSpawn : public CCIntervalAction
 {
@@ -191,7 +192,7 @@ protected:
 	CCFiniteTimeAction *m_pTwo;
 };
 
-/**  Rotates a CCNode object to a certain angle by modifying it's
+/** @brief Rotates a CCNode object to a certain angle by modifying it's
  rotation attribute.
  The direction will be decided by the shortest angle.
 */ 
@@ -215,7 +216,7 @@ protected:
 	float m_fDiffAngle;
 };
 
-/** Rotates a CCNode object clockwise a number of degrees by modifying it's rotation attribute.
+/** @brief Rotates a CCNode object clockwise a number of degrees by modifying it's rotation attribute.
 */
 class CCX_DLL CCRotateBy : public CCIntervalAction
 {
@@ -237,7 +238,7 @@ protected:
 	float m_fStartAngle;
 };
 
-/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+/** @brief Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
 */
 class CCX_DLL CCMoveTo : public CCIntervalAction
 {
@@ -259,7 +260,7 @@ protected:
 	CGPoint m_delta;
 };
 
-/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+/** @brief Moves a CCNode object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
  Duration is is seconds.
 */ 
@@ -278,7 +279,7 @@ public:
 	static CCMoveBy* actionWithDuration(ccTime duration, CGPoint position);
 };
 
-/** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
+/** @brief Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
 class CCX_DLL CCJumpBy : public CCIntervalAction
 {
@@ -302,7 +303,7 @@ protected:
 	int     m_nJumps;
 };
 
-/** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
+/** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
 */ 
 class CCX_DLL CCJumpTo : public CCJumpBy
 {
@@ -326,7 +327,7 @@ typedef struct _ccBezierConfig {
 	CGPoint controlPoint_2;
 } ccBezierConfig;
 
-/** An action that moves the target with a cubic Bezier curve by a certain distance.
+/** @brief An action that moves the target with a cubic Bezier curve by a certain distance.
  */
 class CCX_DLL CCBezierBy : public CCIntervalAction
 {
@@ -348,7 +349,7 @@ protected:
 	CGPoint m_startPosition;
 };
 
-/** An action that moves the target with a cubic Bezier curve to a destination point.
+/** @brief An action that moves the target with a cubic Bezier curve to a destination point.
  @since v0.8.2
  */
 class CCX_DLL CCBezierTo : public CCBezierBy
@@ -362,7 +363,7 @@ public:
     static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
 };
 
-/** Scales a CCNode object to a zoom factor by modifying it's scale attribute.
+/** @brief Scales a CCNode object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
  */
 class CCX_DLL CCScaleTo : public CCIntervalAction
@@ -395,7 +396,7 @@ protected:
 	float m_fDeltaY;
 };
 
-/** Scales a CCNode object a zoom factor by modifying it's scale attribute.
+/** @brief Scales a CCNode object a zoom factor by modifying it's scale attribute.
 */
 class CCX_DLL CCScaleBy : public CCScaleTo
 {
@@ -412,7 +413,7 @@ public:
 	static CCScaleBy* actionWithDuration(ccTime duration, float sx, float sy);
 };
 
-/** Blinks a CCNode object by modifying it's visible attribute
+/** @brief Blinks a CCNode object by modifying it's visible attribute
 */
 class CCX_DLL CCBlink : public CCIntervalAction
 {
@@ -431,7 +432,7 @@ protected:
 	int m_nTimes;
 };
 
-/** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
+/** @brief Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
  */
 class CCX_DLL CCFadeIn : public CCIntervalAction
@@ -446,7 +447,7 @@ public:
 	static CCFadeIn* actionWithDuration(ccTime d);
 };
 
-/** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
+/** @brief Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
 */
 class CCX_DLL CCFadeOut : public CCIntervalAction
@@ -461,7 +462,7 @@ public:
 	static CCFadeOut* actionWithDuration(ccTime d);
 };
 
-/** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
+/** @brief Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  @warning This action doesn't support "reverse"
  */
 class CCX_DLL CCFadeTo : public CCIntervalAction
@@ -483,7 +484,7 @@ protected:
 	GLubyte m_fromOpacity;
 };
 
-/** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
+/** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @warning This action doesn't support "reverse"
  @since v0.7.2
 */
@@ -506,7 +507,7 @@ protected:
 	ccColor3B m_from;
 };
 
-/** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
+/** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @since v0.7.2
  */
 class CCX_DLL CCTintBy : public CCIntervalAction
@@ -534,7 +535,7 @@ protected:
 	GLshort m_fromB;
 };
 
-/** Delays the action a certain amount of seconds
+/** @brief Delays the action a certain amount of seconds
 */
 class CCX_DLL CCDelayTime : public CCIntervalAction
 {
@@ -548,7 +549,7 @@ public:
 	static CCDelayTime* actionWithDuration(ccTime d);
 };
 
-/** Executes an action in reverse order, from time=duration to time=0
+/** @brief Executes an action in reverse order, from time=duration to time=0
  
  @warning Use this action carefully. This action is not
  sequenceable. Use it as the default "reversed" method
@@ -578,7 +579,7 @@ protected:
 };
 
 class CCTexture2D;
-/** Animates a sprite given the name of an Animation */
+/** @brief Animates a sprite given the name of an Animation */
 class CCX_DLL CCAnimate : public CCIntervalAction
 {
 public:

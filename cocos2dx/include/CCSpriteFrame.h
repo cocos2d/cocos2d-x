@@ -39,7 +39,7 @@ class CGSize;
 class CCTexture2D;
 class NSZone;
 
-/** A CCSpriteFrame has:
+/** @brief A CCSpriteFrame has:
 	- texture: A CCTexture2D that will be used by the CCSprite
 	- rectangle: A rectangle of the texture
 
