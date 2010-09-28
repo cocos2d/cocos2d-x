@@ -35,9 +35,37 @@ namespace   cocos2d {
 class CCX_DLL CCFileUtils
 {
 public:
+
+    /**
+    @brief   Generate the absolute path of the file.
+    @param   pszRelativePath     The relative path of the file.
+    @return  The absolute path of the file.
+    @warning We only add the ResourcePath before the relative path of the file.
+             If you have not set the ResourcePath,the function add "/NEWPLUS/TDA_DATA/UserData/" as default.
+             You can set ResourcePath by function void setResourcePath(const char *pszResourcePath);
+    */
 	static const char* fullPathFromRelativePath(const char *pszRelativePath);
+
+    /**
+    @brief   Generate the absolute path of file,the filename of the result is from param:pszFilename,
+             and the path is from param:pszRelativeFile
+    @param   pszFilename        The file name of result.
+    @param   pszRelativeFile    We get the result path from this param
+    @return  The absolute path of the file who named pszFilename
+    */
 	static const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+
+    /**
+    @brief   Generate a NSDictionary pointer by file
+    @param   pFileName  The file name
+    @return  The NSDictionary pointer generated from the file
+    */
 	static NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName);
+
+    /**
+    @brief  Set the ResourcePath,we will find resource in this path
+    @param pszResourcePath  The absolute resource path
+    */
 	static void setResourcePath(const char *pszResourcePath);
 };
 }//namespace   cocos2d 
