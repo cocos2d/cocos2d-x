@@ -64,6 +64,11 @@ class CCX_DLL CCEaseRateAction : public CCEaseAction
 public:
 	virtual ~CCEaseRateAction(void);
 
+	/** set rate value for the actions */
+	inline void setRate(float rate) { m_fRate = rate; }
+	/** get rate value for the actions */
+	inline float getRate(void) { return m_fRate; }
+
 	/** Initializes the action with the inner action and the rate parameter */
 	bool initWithAction(CCIntervalAction *pAction, float fRate);
 
@@ -86,6 +91,7 @@ public:
 	virtual void update(ccTime time);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 public:
+	/** Creates the action with the inner action and the rate parameter */
 	static CCEaseIn* actionWithAction(CCIntervalAction* pAction, float fRate);
 };
 
@@ -98,6 +104,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** Creates the action with the inner action and the rate parameter */
     static CCEaseOut* actionWithAction(CCIntervalAction* pAction, float fRate);
 };
 
@@ -111,6 +118,7 @@ public:
 	virtual CCIntervalAction* reverse(void);
 
 public:
+	/** Creates the action with the inner action and the rate parameter */
 	static CCEaseInOut* actionWithAction(CCIntervalAction* pAction, float fRate);
 };
 
@@ -124,6 +132,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseExponentialIn* actionWithAction(CCIntervalAction* pAction);
 };
 
@@ -137,6 +146,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseExponentialOut* actionWithAction(CCIntervalAction* pAction);
 
 };
@@ -150,6 +160,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseExponentialInOut* actionWithAction(CCIntervalAction* pAction);
 
 };
@@ -164,8 +175,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseSineIn* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** Ease Sine Out
@@ -178,8 +189,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseSineOut* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** Ease Sine InOut
@@ -191,8 +202,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseSineInOut* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** Ease Elastic abstract class
@@ -201,20 +212,23 @@ public:
 class CCX_DLL CCEaseElastic : public CCEaseAction
 {
 public:
-	/** period of the wave in radians. default is 0.3 */
+	/** get period of the wave in radians. default is 0.3 */
 	inline float getPeriod(void) { return m_fPeriod; }
+	/** set period of the wave in radians. */
 	inline void setPeriod(float fPeriod) { m_fPeriod = fPeriod; }
 
 	/** Initializes the action with the inner action and the period in radians (default is 0.3) */
 	bool initWithAction(CCIntervalAction *pAction, float fPeriod);
+	/** initializes the action */
 	bool initWithAction(CCIntervalAction *pAction);
 
 	virtual CCIntervalAction* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
-	/** Creates the action with the inner action and the period in radians (default is 0.3) */
+	/** creates the action */
 	static CCEaseElastic* actionWithAction(CCIntervalAction *pAction);
+	/** Creates the action with the inner action and the period in radians (default is 0.3) */
 	static CCEaseElastic* actionWithAction(CCIntervalAction *pAction, float fPeriod);
 
 protected:
@@ -233,10 +247,10 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
-	/** Creates the action with the inner action and the period in radians (default is 0.3) */
+	/** creates the action */
 	static CCEaseElasticIn* actionWithAction(CCIntervalAction *pAction);
+	/** Creates the action with the inner action and the period in radians (default is 0.3) */
 	static CCEaseElasticIn* actionWithAction(CCIntervalAction *pAction, float fPeriod);
-
 };
 
 /** Ease Elastic Out action.
@@ -251,10 +265,10 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
-	/** Creates the action with the inner action and the period in radians (default is 0.3) */
+	/** creates the action */
 	static CCEaseElasticOut* actionWithAction(CCIntervalAction *pAction);
+	/** Creates the action with the inner action and the period in radians (default is 0.3) */
 	static CCEaseElasticOut* actionWithAction(CCIntervalAction *pAction, float fPeriod);
-
 };
 
 /** Ease Elastic InOut action.
@@ -269,10 +283,10 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
-	/** Creates the action with the inner action and the period in radians (default is 0.3) */
+	/** creates the action */
 	static CCEaseElasticInOut* actionWithAction(CCIntervalAction *pAction);
+	/** Creates the action with the inner action and the period in radians (default is 0.3) */
 	static CCEaseElasticInOut* actionWithAction(CCIntervalAction *pAction, float fPeriod);
-
 };
 
 /** CCEaseBounce abstract class.
@@ -285,6 +299,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseBounce* actionWithAction(CCIntervalAction* pAction);
 };
 
@@ -300,8 +315,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseBounceIn* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** EaseBounceOut action.
@@ -316,8 +331,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseBounceOut* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** CCEaseBounceInOut action.
@@ -331,8 +346,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseBounceInOut* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** CCEaseBackIn action.
@@ -347,8 +362,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseBackIn* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** CCEaseBackOut action.
@@ -363,8 +378,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseBackOut* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 /** CCEaseBackInOut action.
@@ -378,8 +393,8 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
+	/** creates the action */
 	static CCEaseBackInOut* actionWithAction(CCIntervalAction* pAction);
-
 };
 
 #endif // __ACTION_CCEASE_ACTION_H__

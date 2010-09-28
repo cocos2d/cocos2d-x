@@ -54,30 +54,30 @@ public:
 
 	char * description(void);
 
-	// sets the dirty value
+	/** sets the dirty value */
 	inline void setDirty(bool bValue) { m_bDirty = bValue; }
-	// get the dirty value
+	/** get the dirty value */
 	inline bool getDirty(void) { return m_bDirty; }
 
-	// sets the camera in the defaul position
+	/** sets the camera in the default position */
 	void restore(void);
-	// Sets the camera using gluLookAt using its eye, center and up_vector
+	/** Sets the camera using gluLookAt using its eye, center and up_vector */
 	void locate(void);
-    // sets the eye values
+    /** sets the eye values */
 	void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
-	// sets the center values
+	/** sets the center values */
 	void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
-	// sets the up values
+	/** sets the up values */
 	void setUpXYZ(float fUpX, float fUpY, float fUpZ);
 
-	// get the eye vector values
+	/** get the eye vector values */
 	void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
-	// get the center vector values
+	/** get the center vector values */
 	void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
-	// get the up vector values
+	/** get the up vector values */
 	void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
 public:
-	// returns the Z eye
+	/** returns the Z eye */
 	static float getZEye();
 
 private:

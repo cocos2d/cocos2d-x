@@ -91,12 +91,7 @@ public:
 	/** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
 	 @warning Removing a child from a CCSpriteSheet is very slow
 	 */
-	void removeChildAtIndex(unsigned int uIndex, bool bDoCleanup);
-
-	/** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
-	 @warning Removing a child from a CCSpriteSheet is very slow
-	 */
-//	void removeChild(CCSprite *pobSprite, bool bDoCleanup);
+	void removeChildAtIndex(unsigned int uIndex, bool bDoCleanup);	
 
 	void insertChild(CCSprite *pobSprite, unsigned int uIndex);
 	void removeSpriteFromAtlas(CCSprite *pobSprite);
@@ -117,6 +112,9 @@ public:
 	virtual CCNode * addChild(CCNode * child, int zOrder);
 	virtual CCNode * addChild(CCNode * child, int zOrder, int tag);
 	virtual void reorderChild(CCNode * child, int zOrder);
+	/** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
+	@warning Removing a child from a CCSpriteSheet is very slow
+	*/
 	virtual void removeChild(CCNode* child, bool cleanup);
 	virtual void removeAllChildrenWithCleanup(bool cleanup);
 	virtual void draw(void);

@@ -43,6 +43,7 @@ namespace cocos2d
 		virtual void update(ccTime time);
 
 	public:
+		/** create the action */
 		static CCPageTurn3D* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 }

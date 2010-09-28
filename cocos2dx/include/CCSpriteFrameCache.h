@@ -50,13 +50,6 @@ public:
 	~CCSpriteFrameCache(void);
 
 	/*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
-	  the pobDictionary look like:
-	  "metadata" -> NSMutableDictionary<string, string*>
-	  "frames"   -> NSMutableDictionary<string, NSMutableDictionary<string, string*>*>
-													|
-													|__"x"  -> "123"
-													   "y"  -> "12"
-													   ...
 	 */
 	void addSpriteFramesWithDictionary(NSDictionary<std::string, NSObject*> *pobDictionary, CCTexture2D *pobTexture);
 
@@ -66,7 +59,7 @@ public:
 	 */
 	void addSpriteFramesWithFile(const char *pszPlist);
 
-	// Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
+	/** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. */
 	void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
 
 	/** Adds an sprite frame with a given name.
@@ -88,7 +81,7 @@ public:
 	 */
 	void removeUnusedSpriteFrames(void);
 
-	// Deletes an sprite frame from the sprite frame cache.
+	/** Deletes an sprite frame from the sprite frame cache. */
 	void removeSpriteFrameByName(const char *pszName);
 
 	/** Returns an Sprite Frame that was previously added.
@@ -105,10 +98,10 @@ public:
 	CCSprite* createSpriteWithFrameName(const char *pszName);
 
 public:
-	// Retruns ths shared instance of the Sprite Frame cache
+	/** Returns the shared instance of the Sprite Frame cache */
 	static CCSpriteFrameCache* sharedSpriteFrameCache(void);
 
-	// Purges the cache. It releases all the Sprite Frames and the retained instance.
+	/** Purges the cache. It releases all the Sprite Frames and the retained instance. */
 	static void purgeSharedSpriteFrameCache(void);
 
 private:

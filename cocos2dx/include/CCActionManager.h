@@ -117,7 +117,7 @@ public:
 	virtual void selectorProtocolRelease(void);
  
 public:
-	// returns a shared instance of the CCActionManager 
+	/** returns a shared instance of the CCActionManager */
 	static CCActionManager* getSharedManager(void);
 
 protected:

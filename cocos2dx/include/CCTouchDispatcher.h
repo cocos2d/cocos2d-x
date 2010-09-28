@@ -97,7 +97,7 @@ public:
 	CCTouchDispatcher() {}
 
 public:
-	// Whether or not the events are going to be dispatched. Default: YES
+	/** Whether or not the events are going to be dispatched. Default: true */
     bool isDispatchEvents(void);
 	void setDispatchEvents(bool bDispatchEvents);
 
@@ -118,7 +118,7 @@ public:
 	 */
 	void removeDelegate(CCTouchDelegate *pDelegate);
 
-	// Removes all touch delegates, releasing all the delegates
+	/** Removes all touch delegates, releasing all the delegates */
 	void removeAllDelegates(void);
 
 	/** Changes the priority of a previously added delegate. The lower the number,
@@ -133,7 +133,7 @@ public:
 	virtual void touchesCancelled(NSSet* touches, UIEvent* pEvent);
 
 public:
-	// singleton of the CCTouchDispatcher
+	/** singleton of the CCTouchDispatcher */
 	static CCTouchDispatcher* getSharedDispatcher();
 
 protected:
@@ -144,18 +144,13 @@ protected:
 protected:
  	NSMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
  	NSMutableArray<CCTouchHandler*> *m_pStandardHandlers;
-// 	struct _ccCArray *m_pTargetedHandlers;
-// 	struct _ccCArray *m_pStandardHandlers;
 
 	bool m_bLocked;
 	bool m_bToAdd;
 	bool m_bToRemove;
  	NSMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
-// 	NSMutableArray<CCTouchDelegate*> *m_pHandlersToRemove;
-	/*struct _ccCArray *m_pHandlersToAdd;*/
 	struct _ccCArray *m_pHandlersToRemove;
 	bool m_bToQuit;
-
 	bool m_bDispatchEvents;
 
 	// 4, 1 for each type of event

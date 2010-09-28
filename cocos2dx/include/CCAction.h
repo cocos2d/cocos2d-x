@@ -67,26 +67,30 @@ public:
 	//! * 0.5 means that the action is in the middle
 	//! * 1 means that the action is over
 	virtual void update(ccTime time);
-
+	
+	inline CCNode* getTarget(void) { return m_pTarget; }
 	/** The "target". The action will modify the target properties.
-	 The target will be set with the 'startWithTarget' method.
-	 When the 'stop' method is called, target will be set to nil.
-	 The target is 'assigned', it is not 'retained'.
-	 */
-	CCNode* getTarget(void) { return m_pTarget; }
-
-	/** The original target, since target can be nil.
-	 Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
-	 @since v0.8.2
+	The target will be set with the 'startWithTarget' method.
+	When the 'stop' method is called, target will be set to nil.
+	The target is 'assigned', it is not 'retained'.
 	*/
-	CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
+	inline void setTarget(CCNode *pTarget) { m_pTarget = pTarget; }
+	
+	inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
+	/** The original target, since target can be nil.
+	Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
+	The target is 'assigned', it is not 'retained'.
+	@since v0.8.2
+	*/
+	inline void setOriginalTarget(CCNode *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
 
-	 // The action tag. An identifier of the action
-	int getTag(void) { return m_nTag; }
-	void setTag(int nTag) { m_nTag = nTag; }
+	 /** The action tag. An identifier of the action */
+	inline int getTag(void) { return m_nTag; }
+	//! The tag is 'assigned', it is not 'retained'.
+	inline void setTag(int nTag) { m_nTag = nTag; }
 
 public:
-	// Allocates and initializes the action
+	/** Allocates and initializes the action */
 	static CCAction* action();
 
 protected:
@@ -107,10 +111,10 @@ public:
 	CCFiniteTimeAction(){}
 	virtual ~CCFiniteTimeAction(){}
     //! duration in seconds of the action
-	ccTime getDuration(void) { return m_fDuration; }
-	void setDuration(ccTime duration) { m_fDuration = duration; }
+	inline ccTime getDuration(void) { return m_fDuration; }
+	inline void setDuration(ccTime duration) { m_fDuration = duration; }
 
-	// returns a reversed action
+	/** returns a reversed action */
 	virtual CCFiniteTimeAction* reverse(void);
 protected:
 	//! duration in seconds
@@ -131,13 +135,12 @@ public:
 	CCSpeed(){}
 	virtual ~CCSpeed(void);
 
-	// alter the speed of the inner function in runtime
-	float getSpeed(void) { return m_fSpeed; }
-	void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
+	inline float getSpeed(void) { return m_fSpeed; }
+	/** alter the speed of the inner function in runtime */
+	inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 
-	// initializes the action
+	/** initializes the action */
 	bool initWithAction(CCIntervalAction *pAction, float fRate);
-/*	CCSpeed* initWithAction(CCRepeatForever *pAction, float fRate);*/
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
@@ -147,20 +150,18 @@ public:
 	virtual CCIntervalAction* reverse(void);
 
 public:
-	// creates the action
+	/** creates the action */
 	static CCSpeed* actionWithAction(CCIntervalAction *pAction, float fRate);
-	/*static CCSpeed* actionWithAction(CCRepeatForever *pAction, float fRate);*/
     
 protected:
 	float m_fSpeed;
 	CCIntervalAction *m_pOther;
-	/*CCRepeatForever *m_pRepeat;*/
 };
 
 /** CCFollow is an action that "follows" a node.
  
  Eg:
-	[layer runAction: [CCFollow actionWithTarget:hero]];
+	layer->runAction(CCFollow::actionWithTarget(hero));
  
  Instead of using CCCamera as a "follower", use this action instead.
  @since v0.99.2
@@ -174,15 +175,15 @@ class CCX_DLL CCFollow : public CCAction
 public:
 	CCFollow(){}
 	virtual ~CCFollow(void);
+	
+	inline bool isBoundarySet(void) { return m_bBoundarySet; }
+	/** alter behavior - turn on/off boundary */
+	inline void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
 
-	// alter behavior - turn on/off boundary
-	bool isBoundarySet(void) { return m_bBoundarySet; }
-	void setBoudarySet(bool bValue) { m_bBoundarySet = bValue; }
-
-	// initializes the action
+	/** initializes the action */
 	bool initWithTarget(CCNode *pFollowedNode);
 
-	// initializes the action with a set boundary
+	/** initializes the action with a set boundary */
 	bool initWithTarget(CCNode *pFollowedNode, CGRect rect);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
@@ -191,10 +192,10 @@ public:
 	virtual void stop(void);
 
 public:
-	// creates the action with no boundary set
+	/** creates the action with no boundary set */
 	static CCFollow* actionWithTarget(CCNode *pFollowedNode);
 
-	// creates the action with a set boundary
+	/** creates the action with a set boundary */
 	static CCFollow* actionWithTarget(CCNode *pFollowedNode, CGRect rect);
 
 protected:
