@@ -188,6 +188,7 @@ public:
 	/** sets the default pixel format for UIImages that contains alpha channel.
 	If the UIImage contains alpha channel, then the options are:
 	- generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
+	- generate 24-bit textures: kCCTexture2DPixelFormat_RGB888
 	- generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
 	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
 	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
@@ -195,7 +196,7 @@ public:
 
 	How does it work ?
 	- If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-	- If the image is an RGB (without Alpha) then an RGB565 texture will be used (16-bit texture)
+	- If the image is an RGB (without Alpha) then an RGB565 or RGB888 texture will be used (16-bit texture)
 
 	@since v0.8
 	*/

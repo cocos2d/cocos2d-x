@@ -124,8 +124,11 @@ class CCX_DLL CCNode : public SelectorProtocol, public NSObject
 	/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 	CCX_PROPERTY(float, m_fRotation, Rotation)
 
-	/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
+	/** Get the scale factor of the node.
+	@warning: Assert when m_fScaleX != m_fScaleY.
+	*/
 	float getScale();
+	/** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 	void setScale(float scale);
 
 	/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */

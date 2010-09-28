@@ -331,7 +331,7 @@ namespace cocos2d {
 		*/
 		CCX_PROPERTY(tCCPositionType, m_ePositionType, PositionType)
 		/** whether or not the node will be auto-removed when it has no particles left.
-		By default it is NO.
+		By default it is false.
 		@since v0.8
 		*/
 		CCX_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
@@ -383,6 +383,9 @@ namespace cocos2d {
 
 		virtual void update(ccTime dt);
 	private:
+		/** Private method, return the string found by key in dict.
+		@return "" if not found; return the string if found.
+		*/
 		inline const char * valueForKey(const char *key, NSDictionary<std::string, NSObject*> *dict)
 		{
 			if (dict)

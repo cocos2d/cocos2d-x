@@ -70,7 +70,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! A sun particle system
+	//! A sun particle system
 	class CCX_DLL CCParticleSun : public CCQuadParticleSystem
 	{
 	public:
@@ -91,7 +91,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! A galaxy particle system
+	//! A galaxy particle system
 	class CCX_DLL CCParticleGalaxy : public CCQuadParticleSystem
 	{
 	public:
@@ -112,7 +112,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! A flower particle system
+	//! A flower particle system
 	class CCX_DLL CCParticleFlower : public CCQuadParticleSystem
 	{
 	public:
@@ -133,7 +133,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! A meteor particle system
+	//! A meteor particle system
 	class CCX_DLL CCParticleMeteor : public CCQuadParticleSystem
 	{
 	public:
@@ -154,7 +154,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! An spiral particle system
+	//! An spiral particle system
 	class CCX_DLL CCParticleSpiral : public CCQuadParticleSystem
 	{
 	public:
@@ -175,7 +175,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! An explosion particle system
+	//! An explosion particle system
 	class CCX_DLL CCParticleExplosion : public CCQuadParticleSystem
 	{
 	public:
@@ -196,7 +196,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! An smoke particle system
+	//! An smoke particle system
 	class CCX_DLL CCParticleSmoke : public CCQuadParticleSystem
 	{
 	public:
@@ -217,7 +217,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! An snow particle system
+	//! An snow particle system
 	class CCX_DLL CCParticleSnow : public CCQuadParticleSystem
 	{
 	public:
@@ -238,7 +238,7 @@ namespace cocos2d {
 		}
 	};
 
-		//! A rain particle system
+	//! A rain particle system
 	class CCX_DLL CCParticleRain : public CCQuadParticleSystem
 	{
 	public:

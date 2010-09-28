@@ -82,7 +82,7 @@ namespace cocos2d {
 
 		/** dealloc the map that contains the tile position from memory.
 		Unless you want to know at runtime the tiles positions, you can safely call this method.
-		If you are going to call [layer tileGIDAt:] then, don't release the map
+		If you are going to call layer->tileGIDAt() then, don't release the map
 		*/
 		void releaseMap();
 
@@ -90,14 +90,14 @@ namespace cocos2d {
 		The returned CCSprite will be already added to the CCTMXLayer. Don't add it again.
 		The CCSprite can be treated like any other CCSprite: rotated, scaled, translated, opacity, color, etc.
 		You can remove either by calling:
-		- [layer removeChild:sprite cleanup:cleanup];
-		- or [layer removeTileAt:ccp(x,y)];
+		- layer->removeChild(sprite, cleanup);
+		- or layer->removeTileAt(ccp(x,y));
 		*/
 		CCSprite* tileAt(CGPoint tileCoordinate);
 
 		/** returns the tile gid at a given tile coordinate.
 		if it returns 0, it means that the tile is empty.
-		This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+		This method requires the the tile map has not been previously released (eg. don't call layer->releaseMap())
 		*/
 		unsigned int  tileGIDAt(CGPoint tileCoordinate);
 
@@ -120,7 +120,7 @@ namespace cocos2d {
 		void setupTiles();
 
 		/** CCTMXLayer doesn't support adding a CCSprite manually.
-		@warning addchild:z:tag: is not supported on CCTMXLayer. Instead of setTileGID:at:/tileAt:
+		@warning addchild(z, tag); is not supported on CCTMXLayer. Instead of setTileGID.
 		*/
 		CCNode * addChild(CCNode * child, int zOrder, int tag);
 		// super method
@@ -149,10 +149,10 @@ namespace cocos2d {
 		unsigned int atlasIndexForExistantZ(unsigned int z);
 		unsigned int atlasIndexForNewZ(int z);
 	protected:
-		/** name of the layer */
+		// name of the layer
 		std::string m_sLayerName;
-
-		unsigned char		m_cOpacity; // TMX Layer supports opacity
+		// TMX Layer supports opacity
+		unsigned char		m_cOpacity;
 
 		unsigned int		m_uMinGID;
 		unsigned int		m_uMaxGID;

@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "CCXFileUtils.h"
 #include "CCXUIImage.h"
 
-/// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
+// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
 namespace   cocos2d {
 
 class CCAsyncObject : NSObject
@@ -82,7 +82,7 @@ CCTextureCache::~CCTextureCache()
 	CCX_SAFE_RELEASE(m_pTextures);
 	CCX_SAFE_DELETE(m_pDictLock);
 	CCX_SAFE_DELETE(m_pContextLock);
-/// @todo release
+// @todo release
 // 	[auxEAGLcontext release];
 // 	auxEAGLcontext = nil;
 }
@@ -102,9 +102,10 @@ char * CCTextureCache::description()
 
 
 // TextureCache - Add Images
+/* @todo EAGLContext
 void CCTextureCache::addImageWithAsyncObject(CCAsyncObject* async)
 {
-	/** @todo EAGLContext
+	
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 
 	// textures will be created on the main OpenGL context
@@ -134,42 +135,42 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 	}
 	[contextLock unlock];
 
-	[autoreleasepool release];*/
-}
+	[autoreleasepool release];
+}*/
 
-/** @todo selector, NSThread*/
+/* @todo selector, NSThread
 void CCTextureCache::addImageAsync(const char* filename, NSObject *target, fpAsyncCallback func)
 {
 	NSAssert(filename != NULL , "TextureCache: fileimage MUST not be nill");
 
 	// optimization
 
-//	CCTexture2D * tex;
-// 
-// 	if ( (tex = m_pTextures->objectForKey(filename)) )
+	CCTexture2D * tex;
+ 
+ 	if ( (tex = m_pTextures->objectForKey(filename)) )
 
-// 	{
+ 	{
 
-// 		target->
+ 		target->
 
-// 	}
+ 	}
 
-// 	
-// 	if( (tex=[textures objectForKey: filename] ) ) {
-// 		[target performSelector:selector withObject:tex];
-// 		return;
-// 	}
-// 
-// 	// schedule the load
-// 
-// 	CCAsyncObject *asyncObject = [[CCAsyncObject alloc] init];
-// 	asyncObject.selector = selector;
-// 	asyncObject.target = target;
-// 	asyncObject.data = filename;
-// 
-// 	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
-// 	[asyncObject release];
-}
+ 	
+ 	if( (tex=[textures objectForKey: filename] ) ) {
+ 		[target performSelector:selector withObject:tex];
+ 		return;
+ 	}
+ 
+ 	// schedule the load
+ 
+ 	CCAsyncObject *asyncObject = [[CCAsyncObject alloc] init];
+ 	asyncObject.selector = selector;
+ 	asyncObject.target = target;
+ 	asyncObject.data = filename;
+ 
+ 	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
+ 	[asyncObject release];
+}*/
 
 CCTexture2D * CCTextureCache::addImage(const char * path)
 {
@@ -320,7 +321,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 }
 #endif
 
-/** @todo CGImageRef
+/* @todo CGImageRef
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key
 {
 	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");

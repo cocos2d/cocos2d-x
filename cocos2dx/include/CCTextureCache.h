@@ -49,7 +49,7 @@ protected:
 	NSLock				*m_pContextLock;
 
 private:
-	void addImageWithAsyncObject(CCAsyncObject* async);
+	// @todo void addImageWithAsyncObject(CCAsyncObject* async);
 
 public:
 
@@ -74,15 +74,15 @@ public:
 	*/
 	CCTexture2D* addImage(const char* fileimage);
 
-	/** Returns a Texture2D object given a file image
+	/* Returns a Texture2D object given a file image
 	* If the file image was not previously loaded, it will create a new CCTexture2D object and it will return it.
 	* Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
 	* The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
-	* Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
+	* Supported image extensions: .png, .jpg
 	* @since v0.8
 	*/
-	/// @todo selector
-	void addImageAsync(const char* filename, NSObject*target, fpAsyncCallback func);
+	
+	// @todo void addImageAsync(const char* filename, NSObject*target, fpAsyncCallback func);
 
 #if _POWERVR_SUPPORT_
 	/** Returns a Texture2D object given an PVRTC RAW filename
@@ -102,14 +102,14 @@ public:
 	CCTexture2D* addPVRTCImage(const char* fileimage);
 #endif
 
-	/** Returns a Texture2D object given an CGImageRef image
+	/* Returns a Texture2D object given an CGImageRef image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
 	* Otherwise it will return a reference of a previously loaded image
 	* The "key" parameter will be used as the "key" for the cache.
 	* If "key" is nil, then a new texture will be created each time.
 	* @since v0.8
 	*/
-	/// @todo CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
+	// @todo CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
 	/** Returns a Texture2D object given an UIImage image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
 	* Otherwise it will return a reference of a previously loaded image

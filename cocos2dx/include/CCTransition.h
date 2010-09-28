@@ -42,10 +42,10 @@ class CCNode;
 */
 class CCX_DLL CCTransitionEaseScene// : public NSObject
 {
+public:
 	/** returns the Ease action that will be performed on a linear action.
 	@since v0.8.2
 	*/
-public:
 	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action) = 0;
 };
 
@@ -404,7 +404,7 @@ public:
 	virtual ~CCFadeTransition();
 
 	/** creates the transition with a duration and with an RGB color
-	* Example: [FadeTransition transitionWithDuration:2 scene:s withColor:ccc3(255,0,0)]; // red color
+	* Example: FadeTransition::transitionWithDuration(2, scene, ccc3(255,0,0); // red color
 	*/
 	static CCFadeTransition* transitionWithDuration(ccTime duration,CCScene* scene, ccColor3B color = ccBLACK);
 	/** initializes the transition with a duration and with an RGB color */

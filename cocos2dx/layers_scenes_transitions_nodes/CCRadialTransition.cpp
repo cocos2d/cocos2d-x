@@ -42,13 +42,6 @@ enum {
 	kSceneRadial = 0xc001,
 };
 
-CCRadialCCWTransition::CCRadialCCWTransition()
-{
-}
-CCRadialCCWTransition::~CCRadialCCWTransition()
-{
-}
-
 void CCRadialCCWTransition::sceneOrder()
 {
 	m_bIsInSceneOnTop = false;

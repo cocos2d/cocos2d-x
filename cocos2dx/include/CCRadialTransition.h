@@ -35,8 +35,8 @@ namespace   cocos2d {
 class CCX_DLL CCRadialCCWTransition : public CCTransitionScene
 {
 public:
-	CCRadialCCWTransition();
-	virtual ~CCRadialCCWTransition();
+	CCRadialCCWTransition(){}
+	virtual ~CCRadialCCWTransition(){}
 
 	virtual void onEnter();
 	virtual void onExit();
@@ -54,8 +54,8 @@ protected:
 class CCX_DLL CCRadialCWTransition : public CCRadialCCWTransition
 {
 public:
-// 	CCRadialCWTransition();
-// 	virtual ~CCRadialCWTransition();
+	CCRadialCWTransition(){}
+	virtual ~CCRadialCWTransition(){}
     static CCRadialCWTransition* transitionWithDuration(ccTime t, CCScene* scene);
 
 protected:
