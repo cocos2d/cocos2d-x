@@ -65,8 +65,21 @@ public:
  	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
  	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
 };
+/**
+ @brief
+ Using this type of delegate results in two benefits:
+ - 1. You don't need to deal with NSSets, the dispatcher does the job of splitting
+ them. You get exactly one UITouch per call.
+ - 2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
+ touches are sent only to the delegate(s) that claimed them. So if you get a move/
+ ended/cancelled update you're sure it's your touch. This frees you from doing a
+ lot of checks when doing multi-touch. 
 
-class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
+ (The name TargetedTouchDelegate relates to updates "targeting" their specific
+ handler, without bothering the other handlers.)
+ @since v0.8
+ */
+ class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  {
  public:
  	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
@@ -81,10 +94,10 @@ class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
  };
  
-  /** @brief CCStandardTouchDelegate.
-   This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
-   @since v0.8
-   */
+/** @brief
+ This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
+ @since v0.8
+ */
  class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
  {
  public:

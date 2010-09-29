@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "Cocos2dDefine.h"
 namespace cocos2d {
 
-	/*
+	class CCTMXObjectGroup;
+
+	/** @file
 	* Internal TMX parser
 	*
 	* IMPORTANT: These classed should not be documented using doxygen strings
@@ -52,7 +54,7 @@ namespace cocos2d {
 		TMXPropertyTile
 	};
 
-	/* @brief CCTMXLayerInfo contains the information about the layers like:
+	/** @brief CCTMXLayerInfo contains the information about the layers like:
 	- Layer name
 	- Layer size
 	- Layer opacity at creation time (it can be modified at runtime)
@@ -78,7 +80,7 @@ namespace cocos2d {
 		virtual ~CCTMXLayerInfo();
 	};
 
-	/* @brief CCTMXTilesetInfo contains the information about the tilesets like:
+	/** @brief CCTMXTilesetInfo contains the information about the tilesets like:
 	- Tileset name
 	- Tilset spacing
 	- Tileset margin
@@ -105,7 +107,8 @@ namespace cocos2d {
 		virtual ~CCTMXTilesetInfo();
 		CGRect rectForGID(unsigned int gid);
 	};
-	/* @brief CCTMXMapInfo contains the information about the map like:
+
+	/** @brief CCTMXMapInfo contains the information about the map like:
 	- Map orientation (hexagonal, isometric or orthogonal)
 	- Tile size
 	- Map size
@@ -118,7 +121,6 @@ namespace cocos2d {
 	This information is obtained from the TMX file.
 
 	*/
-	class CCTMXObjectGroup;
 	class CCX_DLL CCTMXMapInfo : public NSObject
 	{	
 	public:	

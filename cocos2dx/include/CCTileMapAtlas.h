@@ -30,6 +30,7 @@ namespace cocos2d {
 
 	typedef std::map<std::string, int> StringToIntegerDictionary;
 	typedef std::pair<std::string, int> StringToIntegerPair;
+	struct sImageTGA;
 	/** @brief CCTileMapAtlas is a subclass of CCAtlasNode.
 
 	It knows how to render a map based of tiles.
@@ -45,7 +46,6 @@ namespace cocos2d {
 	You SHOULD not use this class.
 	Instead, use the newer TMX file format: CCTMXTiledMap
 	*/
-	struct sImageTGA;
 	class CCX_DLL CCTileMapAtlas : public CCAtlasNode 
 	{
 		/** TileMap info */

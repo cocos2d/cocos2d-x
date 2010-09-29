@@ -98,7 +98,6 @@ namespace cocos2d {
 
 	@since v0.8.1
 	*/
-
 	class CCX_DLL CCTMXTiledMap : public CCNode
 	{
 		/** the map's size property measured in tiles */

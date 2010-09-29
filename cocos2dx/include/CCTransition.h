@@ -415,11 +415,11 @@ public:
 	virtual void onExit();
 };
 
+class CCRenderTexture;
 /**
 @brief CCCrossFadeTransition:
 Cross fades two scenes using the CCRenderTexture object.
 */
-class CCRenderTexture;
 class CCX_DLL CCCrossFadeTransition : public CCTransitionScene
 {
 public :
