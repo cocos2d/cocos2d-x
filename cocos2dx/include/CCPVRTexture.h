@@ -48,9 +48,9 @@ public:
 	virtual ~CCPVRTexture();
 
 	CCPVRTexture * initWithContentsOfFile(const char* path);
-/// @todo	CCPVRTexture * initWithContentsOfURL(NSURL *url);
+// @todo	CCPVRTexture * initWithContentsOfURL(NSURL *url);
 	static CCPVRTexture * pvrTextureWithContentsOfFile(const char* path);
-/// @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
+// @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
 
 	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
 	CCX_PROPERTY_READONLY(unsigned int, m_uWidth, Width)

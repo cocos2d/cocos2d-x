@@ -95,14 +95,14 @@ namespace cocos2d {
 
 		ccTime		timeToLive;
 
-		// Mode A: gravity, direction, radial accel, tangential accel
+		//! Mode A: gravity, direction, radial accel, tangential accel
 		struct {
 			CGPoint		dir;
 			float		radialAccel;
 			float		tangentialAccel;
 		} modeA;
 
-		// Mode B: radius mode
+		//! Mode B: radius mode
 		struct {
 			float		angle;
 			float		degreesPerSecond;
@@ -163,54 +163,54 @@ namespace cocos2d {
 	{	
 	protected:
 		std::string m_sPlistFile;
-		// time elapsed since the start of the system (in seconds)
+		//! time elapsed since the start of the system (in seconds)
 		float m_fElapsed;
 
 		// Different modes
-		// Mode A:Gravity + Tangential Accel + Radial Accel
+		//! Mode A:Gravity + Tangential Accel + Radial Accel
 		struct {
-			// gravity of the particles
+			/** Gravity value. Only available in 'Gravity' mode. */
 			CGPoint gravity;
-			// The speed the particles will have.
+			/** speed of each particle. Only available in 'Gravity' mode.  */
 			float speed;
-			// The speed variance
+			/** speed variance of each particle. Only available in 'Gravity' mode. */
 			float speedVar;
-			// Tangential acceleration
+			/** tangential acceleration of each particle. Only available in 'Gravity' mode. */
 			float tangentialAccel;
-			// Tangential acceleration variance
+			/** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
 			float tangentialAccelVar;
-			// Radial acceleration
+			/** radial acceleration of each particle. Only available in 'Gravity' mode. */
 			float radialAccel;
-			// Radial acceleration variance
+			/** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
 			float radialAccelVar;
 		} modeA;
 
-		// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+		//! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
 		struct {
-			// The starting radius of the particles
+			/** The starting radius of the particles. Only available in 'Radius' mode. */
 			float startRadius;
-			// The starting radius variance of the particles
+			/** The starting radius variance of the particles. Only available in 'Radius' mode. */
 			float startRadiusVar;
-			// The ending radius of the particles
+			/** The ending radius of the particles. Only available in 'Radius' mode. */
 			float endRadius;
-			// The ending radius variance of the particles
+			/** The ending radius variance of the particles. Only available in 'Radius' mode. */
 			float endRadiusVar;			
-			// Number of degress to rotate a particle around the source pos per second
+			/** Number of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
 			float rotatePerSecond;
-			// Variance in degrees for rotatePerSecond
+			/** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
 			float rotatePerSecondVar;
 		} modeB;
 
-		// Array of particles
+		//! Array of particles
 		tCCParticle *m_pParticles;
 
 		// color modulate
 		//	BOOL colorModulate;
 
-		// How many particles can be emitted per second
+		//! How many particles can be emitted per second
 		float m_fEmitCounter;
 
-		//  particle idx
+		//!  particle idx
 		int m_nParticleIdx;
 
 		// Optimization
@@ -244,44 +244,31 @@ namespace cocos2d {
 	//////////////////////////////////////////////////////////////////////////
 	public:
 		// mode A
-		/** Gravity value. Only available in 'Gravity' mode. */
 		virtual CGPoint getGravity();
 		virtual void setGravity(CGPoint g);
-		/** speed of each particle. Only available in 'Gravity' mode.  */
 		virtual float getSpeed();
 		virtual void setSpeed(float speed);
-		/** speed variance of each particle. Only available in 'Gravity' mode. */
 		virtual float getSpeedVar();
 		virtual void setSpeedVar(float speed);
-		/** tangential acceleration of each particle. Only available in 'Gravity' mode. */
 		virtual float getTangentialAccel();
 		virtual void setTangentialAccel(float t);
-		/** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
 		virtual float getTangentialAccelVar();
 		virtual void setTangentialAccelVar(float t);
-		/** radial acceleration of each particle. Only available in 'Gravity' mode. */
 		virtual float getRadialAccel();
 		virtual void setRadialAccel(float t);
-		/** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
 		virtual float getRadialAccelVar();
 		virtual void setRadialAccelVar(float t);
 		// mode B
-		/** The starting radius of the particles. Only available in 'Radius' mode. */
 		virtual float getStartRadius();
 		virtual void setStartRadius(float startRadius);
-		/** The starting radius variance of the particles. Only available in 'Radius' mode. */
 		virtual float getStartRadiusVar();
 		virtual void setStartRadiusVar(float startRadiusVar);
-		/** The ending radius of the particles. Only available in 'Radius' mode. */
 		virtual float getEndRadius();
 		virtual void setEndRadius(float endRadius);
-		/** The ending radius variance of the particles. Only available in 'Radius' mode. */
 		virtual float getEndRadiusVar();
 		virtual void setEndRadiusVar(float endRadiusVar);
-		/** Number of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
 		virtual float getRotatePerSecond();
 		virtual void setRotatePerSecond(float degrees);
-		/** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
 		virtual float getRotatePerSecondVar();
 		virtual void setRotatePerSecondVar(float degrees);
 	//////////////////////////////////////////////////////////////////////////

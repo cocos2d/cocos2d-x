@@ -47,9 +47,9 @@ protected:
 
 public:
 	inline ccTouchDelegateFlag getTouchDelegateType(void) { return m_eTouchDelegateType; }
-	// call the release() in child(layer or menu)
+	//! call the release() in child(layer or menu)
 	virtual void destroy(void) {}
-	// call the retain() in child (layer or menu)
+	//! call the retain() in child (layer or menu)
 	virtual void keep(void) {}
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
@@ -70,8 +70,9 @@ class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  {
  public:
  	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
- 	// Return YES to claim the touch.
- 	// @since v0
+ 	/** Return YES to claim the touch.
+ 	 @since v0
+	 */
  	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
  
  	// optional
@@ -80,9 +81,10 @@ class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
  };
  
-  // @brief CCStandardTouchDelegate.
-  // This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
-  // @since v0.8
+  /** @brief CCStandardTouchDelegate.
+   This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
+   @since v0.8
+   */
  class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
  {
  public:

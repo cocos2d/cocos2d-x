@@ -78,7 +78,7 @@ void* NSData::bytes(void)
 	return m_pData;
 }
 
-///@todo implement
+//@todo implement
 NSData* NSData::dataWithBytes(unsigned char *pBytes, int size)
 {
 	return NULL;
