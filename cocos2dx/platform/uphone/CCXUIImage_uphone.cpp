@@ -98,11 +98,6 @@ UIImage::UIImage(TBitmap *bitmap)
 	}
 }
 
-UIImage::UIImage(int nX, int nY, void *buffer)
-{
-
-}
-
 UIImage::~UIImage(void)
 {
 	if (m_pBitmap)

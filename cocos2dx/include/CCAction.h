@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "NSObject.h"
 #include "NSZone.h"
 #include "CCNode.h"
+
 namespace   cocos2d {
 
 enum {
@@ -55,39 +56,38 @@ public:
 	//! called before the action start. It will also set the target.
 	virtual void startWithTarget(CCNode *pTarget);
 
-	//! called after the action has finished. It will set the 'target' to nil.
-    //! IMPORTANT: You should never call "[action stop]" manually. Instead, use: "[target stopAction:action];"
+	/** 
+	called after the action has finished. It will set the 'target' to nil.
+    IMPORTANT: You should never call "[action stop]" manually. Instead, use: "target->stopAction(action);"
+	*/
     virtual void stop(void);
 
 	//! called every frame with it's delta time. DON'T override unless you know what you are doing.
 	virtual void step(ccTime dt);
 
-	//! called once per frame. time a value between 0 and 1
-	//! For example: 
-	//! * 0 means that the action just started
-	//! * 0.5 means that the action is in the middle
-	//! * 1 means that the action is over
+	/** 
+	called once per frame. time a value between 0 and 1
+
+	For example: 
+	- 0 means that the action just started
+	- 0.5 means that the action is in the middle
+	- 1 means that the action is over
+	*/
 	virtual void update(ccTime time);
 	
 	inline CCNode* getTarget(void) { return m_pTarget; }
-	/** The "target". The action will modify the target properties.
-	The target will be set with the 'startWithTarget' method.
-	When the 'stop' method is called, target will be set to nil.
-	The target is 'assigned', it is not 'retained'.
-	*/
+	/** The action will modify the target properties. */
 	inline void setTarget(CCNode *pTarget) { m_pTarget = pTarget; }
 	
 	inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
-	/** The original target, since target can be nil.
+	/** Set the original target, since target can be nil.
 	Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
 	The target is 'assigned', it is not 'retained'.
 	@since v0.8.2
 	*/
 	inline void setOriginalTarget(CCNode *pOriginalTarget) { m_pOriginalTarget = pOriginalTarget; }
 
-	 /** The action tag. An identifier of the action */
 	inline int getTag(void) { return m_nTag; }
-	//! The tag is 'assigned', it is not 'retained'.
 	inline void setTag(int nTag) { m_nTag = nTag; }
 
 public:
@@ -96,7 +96,13 @@ public:
 
 protected:
 	CCNode	*m_pOriginalTarget;
+	/** The "target".
+	The target will be set with the 'startWithTarget' method.
+	When the 'stop' method is called, target will be set to nil.
+	The target is 'assigned', it is not 'retained'.
+	*/
 	CCNode	*m_pTarget;
+	/** The action tag. An identifier of the action */
 	int 		m_nTag;
 };
 
@@ -114,8 +120,9 @@ class CCX_DLL CCFiniteTimeAction : public CCAction
 public:
 	CCFiniteTimeAction(){}
 	virtual ~CCFiniteTimeAction(){}
-    //! duration in seconds of the action
+    //! get duration in seconds of the action
 	inline ccTime getDuration(void) { return m_fDuration; }
+	//! set duration in seconds of the action
 	inline void setDuration(ccTime duration) { m_fDuration = duration; }
 
 	/** returns a reversed action */
@@ -211,7 +218,7 @@ protected:
 	// whether camera should be limited to certain area
 	bool m_bBoundarySet;
 
-	// if screensize is bigger than the boundary - update not needed
+	// if screen size is bigger than the boundary - update not needed
 	bool m_bBoundaryFullyCovered;
 
 	// fast access to the screen dimensions

@@ -116,7 +116,7 @@ namespace cocos2d {
 
 	class CCTexture2D;
 
-	/** @brief Particle System base class
+	/** @brief Particle System base class.
 	Attributes of a Particle System:
 	- emmision rate of the particles
 	- Gravity Mode (Mode A):

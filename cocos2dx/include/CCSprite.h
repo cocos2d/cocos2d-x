@@ -68,7 +68,7 @@ typedef enum {
 
 } ccHonorParentTransform;
 
-/** @brief CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
+/** @brief CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) ).
  *
  * CCSprite can be created with an image, or with a sub-rectangle of an image.
  *
@@ -99,13 +99,17 @@ public:
 
 	/** whether or not the Sprite needs to be updated in the Atlas */
 	inline bool isDirty(void) { return m_bDirty; }
+	/** make the Sprite to be updated in the Atlas. */
 	inline void setDirty(bool bDirty) { m_bDirty = bDirty; }
 
-	/** the quad (tex coords, vertex coords and color) information */
+	/** get the quad (tex coords, vertex coords and color) information */
 	inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
-
-	/** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
+	
+	/** Set the index used on the TextureAtlas. */
 	inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
+	/** Set the index used on the TextureAtlas.
+	@warning Don't modify this value unless you know what you are doing 
+	*/
 	inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
 
 	/** returns the rect of the CCSprite */
@@ -113,25 +117,29 @@ public:
 
 	/** whether or not the Sprite is rendered using a CCSpriteSheet */
 	inline bool isUsesSpriteSheet(void) { return m_bUsesSpriteSheet; }
+	/** make the Sprite been rendered using a CCSpriteSheet */
 	inline void setUsesSpriteSheet(bool bUsesSpriteSheet) { m_bUsesSpriteSheet = bUsesSpriteSheet; }
 
-	/** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteSheet */
 	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
 	inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { m_pobTextureAtlas = pobTextureAtlas; }
 
-	/** weak reference to the CCSpriteSheet that renders the CCSprite */
 	inline CCSpriteSheet* getSpriteSheet(void) { return m_pobSpriteSheet; }
 	inline void setSpriteSheet(CCSpriteSheet *pobSpriteSheet) { m_pobSpriteSheet = pobSpriteSheet; }
 
-	/** whether or not to transform according to its parent transfomrations.
+	/** whether or not to transform according to its parent transformations.
 	 Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
 	 IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
 	 @since v0.99.0
 	 */
 	inline ccHonorParentTransform getHornorParentTransform(void) { return m_eHonorParentTransform; }
+	/** whether or not to transform according to its parent transformations.
+	Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
+	IMPORTANT: Only valid if it is rendered using an CCSpriteSheet.
+	@since v0.99.0
+	*/
 	inline void setHornorParentTransform(ccHonorParentTransform eHonorParentTransform) { m_eHonorParentTransform = eHonorParentTransform; }
 
-	/** offset position of the sprite. Calculated automatically by editors like Zwoptex.
+	/** Get offset position of the sprite. Calculated automatically by editors like Zwoptex.
 	 @since v0.99.0
 	 */
 	inline CGPoint getOffsetPosition(void) { return m_obOffsetPosition; }

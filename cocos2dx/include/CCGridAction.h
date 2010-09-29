@@ -104,8 +104,9 @@ namespace cocos2d
 		virtual void update(ccTime time);
         virtual CCIntervalAction* reverse(void);
 
-		/** amplitude rate */
+		/** get amplitude rate */
 		inline float getRate(void) { return m_fRate; }
+		/** set amplitude rate */
 		inline void setRate(float fRate) { m_fRate = fRate; }
 
 	public:
@@ -125,8 +126,9 @@ namespace cocos2d
 		/** initializes the action with an inner action that has the amplitude property, and a duration time */
 		bool initWithAction(CCAction *pAction, ccTime duration);
 
-		/** amplitude rate */
+		/** get amplitude rate */
 		inline float getRate(void) { return m_fRate; }
+		/** set amplitude rate */
 		inline void setRate(float fRate) { m_fRate = fRate; }
 
 		virtual void startWithTarget(CCNode *pTarget);
@@ -150,8 +152,9 @@ namespace cocos2d
 		/** initializes the action with an inner action that has the amplitude property, and a duration time */
 		bool initWithAction(CCAction *pAction, ccTime duration);
 
-		/** amplitude rate */
+		/** get amplitude rate */
 		inline float getRate(void) { return m_fRate; }
+		/** set amplitude rate */
 		inline void setRate(float fRate) { m_fRate = fRate; }
 
 		virtual void startWithTarget(CCNode *pTarget);

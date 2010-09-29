@@ -105,7 +105,7 @@ typedef enum {
 	 * Features and Limitations:
 	 * - Integrates OK with UIKit objects
 	 * - It the slowest director
-	 * - The invertal update is customizable from 1 to 60
+	 * - The interval update is customizable from 1 to 60
 	 */
 	kCCDirectorTypeNSTimer,
 	
@@ -113,7 +113,7 @@ typedef enum {
 	 *
 	 * Features and Limitations:
 	 * - Faster than NSTimer Director
-	 * - It doesn't integrate well with UIKit objecgts
+	 * - It doesn't integrate well with UIKit objects
 	 * - The interval update can't be customizable
 	 */
 	kCCDirectorTypeMainLoop,
@@ -122,7 +122,7 @@ typedef enum {
 	 *
 	 * Features and Limitations:
 	 * - Faster than NSTimer Director
-	 * - It doesn't integrate well with UIKit objecgts
+	 * - It doesn't integrate well with UIKit objects
 	 * - The interval update can't be customizable
 	 */
 	kCCDirectorTypeThreadMainLoop,
@@ -202,26 +202,26 @@ public:
 
 	// attribute
 
-	/** The current running Scene. Director can only run one Scene at the time */
+	/** Get current running Scene. Director can only run one Scene at the time */
 	inline CCScene* getRunningScene(void) { return m_pRunningScene; }
 
-	/** The FPS value */
+	/** Get the FPS value */
 	inline double getAnimationInterval(void) { return m_dAnimationInterval; }
+	/** Set the FPS value. Now it has not effect. */
 	virtual void setAnimationInterval(double dValue);
 
 	/** Whether or not to display the FPS on the bottom-left corner */
 	inline bool isDisplayFPS(void) { return m_bDisplayFPS; }
+	/** Display the FPS on the bottom-left corner */
 	inline void setDisplayFPS(bool bDisplayFPS) { m_bDisplayFPS = bDisplayFPS; }
 
-	/** The CCXEGLView, where everything is rendered */
+	/** Get the CCXEGLView, where everything is rendered */
 	inline cocos2d::CCXEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
 	void setOpenGLView(cocos2d::CCXEGLView *pobOpenGLView);
 
-	/** whether or not the next delta time will be zero */
 	inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
 	void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
 
-	/** The device orientation */
 	inline ccDeviceOrientation getDeviceOrientation(void) { return m_eDeviceOrientation; }
 	void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
 
@@ -435,6 +435,7 @@ protected:
 	void recalculateProjectionAndEAGLViewSize();
 
 protected:
+	/* The CCXEGLView, where everything is rendered */
     cocos2d::CCXEGLView	*m_pobOpenGLView;
 
 	double m_dAnimationInterval;
@@ -446,11 +447,10 @@ protected:
 	/* landscape mode ? */
 	bool m_bLandscape;
 	
-	/* orientation */
+	/* The device orientation */
 	ccDeviceOrientation	m_eDeviceOrientation;
 	
-	/* display FPS ? */
-	bool   m_bDisplayFPS;
+	bool m_bDisplayFPS;
 	int  m_nFrames;
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;

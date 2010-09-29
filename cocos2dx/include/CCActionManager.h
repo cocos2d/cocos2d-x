@@ -54,14 +54,14 @@ public:
 
     // actions
     
-	/** Adds an action with a target.
+	/** Adds an action with a target. 
 	 If the target is already present, then the action will be added to the existing target.
-	 If the target is not present, a new instance of this target will be created either paused or paused, and the action will be added to the newly created target.
+	 If the target is not present, a new instance of this target will be created either paused or not, and the action will be added to the newly created target.
 	 When the target is paused, the queued actions won't be 'ticked'.
 	 */
 	void addAction(CCAction *pAction, CCNode *pTarget, bool paused);
 
-    /** Removes all actions from all the targers.
+    /** Removes all actions from all the targets.
     */
 	void removeAllActions(void);
 
@@ -82,10 +82,10 @@ public:
 	 */
 	CCAction* getActionByTag(int tag, NSObject *pTarget);
 
-    /** Returns the numbers of actions that are running in a certain target
+    /** Returns the numbers of actions that are running in a certain target. 
 	 * Composable actions are counted as 1 action. Example:
-	 *    If you are running 1 Sequence of 7 actions, it will return 1.
-	 *    If you are running 7 Sequences of 2 actions, it will return 7.
+	 * - If you are running 1 Sequence of 7 actions, it will return 1.
+	 * - If you are running 7 Sequences of 2 actions, it will return 7.
 	 */
 	int numberOfRunningActionsInTarget(NSObject *pTarget);
 

@@ -31,22 +31,23 @@ THE SOFTWARE.
 #include "CCSpriteFrame.h"
 
 namespace cocos2d {
+
 /** 
 @brief An interval action is an action that takes place within a certain period of time.
 It has an start time, and a finish time. The finish time is the parameter
 duration plus the start time.
 
 These CCIntervalAction actions have some interesting properties, like:
- - They can run normally (default)
- - They can run reversed with the reverse method
- - They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
+- They can run normally (default)
+- They can run reversed with the reverse method
+- They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
 
 For example, you can simulate a Ping Pong effect running the action normally and
 then running it again in Reverse mode.
 
 Example:
 
-	CCAction *pingPongAction = CCSequence::actions(action, action->reverse(), NULL);
+CCAction *pingPongAction = CCSequence::actions(action, action->reverse(), NULL);
 */
 class CCX_DLL CCIntervalAction : public CCFiniteTimeAction
 {
@@ -71,7 +72,7 @@ public:
 	static CCIntervalAction* actionWithDuration(ccTime d);
 
 public:
-    //extention, refer to CCGridAction 
+    //extension in CCGridAction 
 	void setAmplitudeRate(CGFloat amp);
 	CGFloat getAmplitudeRate(void);
 
@@ -97,7 +98,7 @@ public:
 	virtual CCIntervalAction* reverse(void);
 
 public:
-	/** helper contructor to create an array of sequenceable actions */
+	/** helper constructor to create an array of sequenceable actions */
 	static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
 
 	/** creates the action */
@@ -314,7 +315,7 @@ public:
 	static CCJumpTo* actionWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
 };
 
-/** bezier configuration structure
+/** @typedef bezier configuration structure
  */
 typedef struct _ccBezierConfig {
 	//! end position of the bezier
@@ -583,8 +584,9 @@ class CCX_DLL CCAnimate : public CCIntervalAction
 public:
 	~CCAnimate(void);
 
-	/** animation used for the animage, retain */
+	/** Get animation used for the animate */
 	inline CCAnimation* getAnimation(void) { return m_pAnimation; }
+	/** Set animation used for the animate, the object is retained */
 	inline void setAnimation(CCAnimation *pAnimation) 
 	{
 		CCX_SAFE_RETAIN(pAnimation);
@@ -592,14 +594,14 @@ public:
 		m_pAnimation = pAnimation;
 	}
 
-	/** initializes the action with an Animation and will restore the original frame when the animtion is over */
+	/** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(CCAnimation *pAnimation);
 
 	/** initializes the action with an Animation */
 	bool initWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 
 	/** initializes an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
-	 The 'delay' parameter of the animation will be overrided by the duration parameter.
+	 The 'delay' parameter of the animation will be overridden by the duration parameter.
 	 @since v0.99.0
 	 */
 	bool initWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
@@ -618,7 +620,7 @@ public:
 	static CCAnimate* actionWithAnimation(CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 
 	/** creates an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
-	 The 'delay' parameter of the animation will be overrided by the duration parameter.
+	 The 'delay' parameter of the animation will be overridden by the duration parameter.
 	 @since v0.99.0
 	 */	
      static CCAnimate* actionWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);

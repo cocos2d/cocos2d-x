@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace cocos2d
 {
 	/**
-	 @brief This action simulates a page turn from the bottom right hand corner of the screen
+	 @brief This action simulates a page turn from the bottom right hand corner of the screen.
 	 It's not much use by itself but is used by the PageTurnTransition.
 	 
 	 Based on an original paper by L Hong et al.

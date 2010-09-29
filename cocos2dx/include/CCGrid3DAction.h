@@ -34,21 +34,20 @@ namespace cocos2d
 	class CCX_DLL CCWaves3D : public CCGrid3DAction
 	{
 	public:
-		/** get amplitude of the wave */
 		inline float getAmplitude(void) { return m_fAmplitude; }
-		/** set amplitude of the wave */
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
-		/** get amplitude rate of the wave */
+
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
-		/** set amplitude rate of the wave */
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
+		/** init the action */
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
+		/** create the action */
 		static CCWaves3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
 	protected:
@@ -88,10 +87,11 @@ namespace cocos2d
 	class CCX_DLL CCLens3D : public CCGrid3DAction
 	{
 	public:
-		/** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
+		/** Get lens center position */
 		inline float getLensEffect(void) { return m_fLensEffect; }
+		/** Set lens center position */
 		inline void setLensEffect(float fLensEffect) { m_fLensEffect = fLensEffect; }
-		/** lens center position */
+		
 		inline CGPoint getPosition(void) { return m_position; }
 		inline void setPosition(CGPoint position) { m_position = position; }
 
@@ -104,8 +104,10 @@ namespace cocos2d
 		/** creates the action with center position, radius, a grid size and duration */
         static CCLens3D* actionWithPosition(CGPoint pos, float r, ccGridSize gridSize, ccTime duration);
 	protected:
+		/* lens center position */
 		CGPoint m_position;
 		float m_fRadius;
+		/** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
 		float m_fLensEffect;
 		CGPoint m_lastPosition;
 	};
@@ -114,13 +116,14 @@ namespace cocos2d
 	class CCX_DLL CCRipple3D : public CCGrid3DAction
 	{
 	public:
-		/** center position */
+		/** get center position */
 		inline CGPoint getPosition(void) { return m_position; }
+		/** set center position */
 		inline void setPosition(CGPoint position) { m_position = position; }
-		/** amplitude */
+
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
-		/** amplitude rate */
+
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
@@ -135,6 +138,7 @@ namespace cocos2d
 		static CCRipple3D* actionWithPosition(CGPoint pos, float r, int wav, float amp, 
 			ccGridSize gridSize, ccTime duration);
 	protected:
+		/* center position */
 		CGPoint m_position;
 		float m_fRadius;
 		int m_nWaves;
@@ -164,10 +168,9 @@ namespace cocos2d
 	class CCX_DLL CCLiquid : public CCGrid3DAction
 	{
 	public:
-		/** amplitude */
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
-		/** amplitude rate */
+
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
@@ -190,10 +193,9 @@ namespace cocos2d
 	class CCX_DLL CCWaves : public CCGrid3DAction
 	{
 	public:
-		/** amplitude */
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
-		/** amplitude rate */
+
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
@@ -219,13 +221,14 @@ namespace cocos2d
 	class CCX_DLL CCTwirl : public CCGrid3DAction
 	{
 	public:
-		/** twirl center */
+		/** get twirl center */
 		inline CGPoint getPosition(void) { return m_position; }
+		/** set twirl center */
 		inline void setPosition(CGPoint position) { m_position = position; }
-		/** amplitude */
+
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
-		/** amplitude rate */
+
 		inline float getAmplitudeRate(void) { return m_fAmplitudeRate; }
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
@@ -240,6 +243,7 @@ namespace cocos2d
 		static CCTwirl* actionWithPosition(CGPoint pos, int t, float amp, ccGridSize gridSize,
 			ccTime duration);
 	protected:
+		/* twirl center */
 		CGPoint m_position;
 		int m_nTwirls;
 		float m_fAmplitude;

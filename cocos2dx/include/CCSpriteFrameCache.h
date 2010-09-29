@@ -77,7 +77,7 @@ public:
 
 	/** Removes unused sprite frames.
 	 * Sprite Frames that have a retain count of 1 will be deleted.
-	 * It is convinient to call this method after when starting a new Scene.
+	 * It is convenient to call this method after when starting a new Scene.
 	 */
 	void removeUnusedSpriteFrames(void);
 
@@ -93,7 +93,7 @@ public:
 	/** Creates an sprite with the name of an sprite frame.
 	 The created sprite will contain the texture, rect and offset of the sprite frame.
 	 It returns an autorelease object.
-	 @deprecated use [CCSprite spriteWithSpriteFrameName:name]. This method will be removed on final v0.9
+	 @deprecated use CCSprite::spriteWithSpriteFrameName(name). This method will be removed on final v0.9
 	 */
 	CCSprite* createSpriteWithFrameName(const char *pszName);
 

@@ -30,13 +30,8 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 
 class TBitmap;
-namespace   cocos2d {
-
-// typedef enum {
-// 	kImageTypePNG = 0,
-// 	kImageTypeJPG = 1,
-// } CCXImageType;
-
+namespace   cocos2d {
+/// @cond
 typedef struct
 {
 	unsigned int	height;
@@ -46,6 +41,7 @@ typedef struct
 	bool			isPremultipliedAlpha;
 	unsigned char   *data;
 } tImageInfo;
+/// @endcond
 
 /**
 @brief image toolkits
@@ -56,19 +52,29 @@ public:
 	UIImage(void);
 	UIImage(TBitmap *bitmap);
 	
-	UIImage(int nX, int nY, void *buffer);
 	~UIImage(void);
 
-	/** load the image from the specified path 
-	    @imageType: the type of image, now only support tow types
-		            kImageFormatPNG -> png
-					kImageFormatJPG -> jpeg
+	/** 
+	Load the image from the specified path. 
+	@param strPath   the absolute file path
+	@param imageType the type of image, now only support tow types:
+		              - kImageFormatPNG -> png
+					  - kImageFormatJPG -> jpeg
+    @return  true if load correctly
 	 */
 	bool initWithContentsOfFile(const std::string &strPath, tImageFormat imageType = kImageFormatPNG);
+	/**
+	Load image from stream buffer.
+	@param pBuffer  stream buffer that hold the image data
+	@param nLength  the length of data(managed in byte)
+	@return true if load correctly
+	*/
 	bool initWithData(unsigned char *pBuffer, int nLength);
-	bool initWithBuffer(int tx, int ty, unsigned char *pBuffer);
 
+	/// @cond
+	bool initWithBuffer(int tx, int ty, unsigned char *pBuffer);
 	bool save(const std::string &strFileName, int nFormat);
+	/// @endcond
 
 	/** get the image width */
 	unsigned int width(void);

@@ -72,19 +72,19 @@ public:
 	/** creates an sprite with a rect in the CCSpriteSheet.
 	 It's the same as:
 	   - create an standard CCSsprite
-	   - set the usingSpriteSheet = YES
+	   - set the usingSpriteSheet = true
 	   - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
-	 @deprecated Use [CCSprite spriteWithSpriteSheet:rect] instead;
+	 @deprecated Use CCSprite::spriteWithSpriteSheet(rect) instead;
 	 */
 	CCSprite* createSpriteWithRect(CGRect rect);
 
 	/** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteSheet.
 	 It's the same as:
 	 - initialize an standard CCSsprite
-	 - set the usingSpriteSheet = YES
+	 - set the usingSpriteSheet = true
 	 - set the textureAtlas to the same texture Atlas as the CCSpriteSheet
 	 @since v0.99.0
-	 @deprecated Use [CCSprite initWithSpriteSheet:rect] instead;
+	 @deprecated Use CCSprite::spriteWithSpriteSheet(rect) instead;
 	*/ 
 	void initSprite(CCSprite* pobSprite, CGRect rect);
 
@@ -165,7 +165,7 @@ protected:
 	CCTextureAtlas *m_pobTextureAtlas;
 	ccBlendFunc m_blendFunc;
 
-	// all descendants: chlidren, gran children, etc...
+	// all descendants: children, gran children, etc...
 	NSArray<CCSprite*> *m_pobDescendants;
 protected:
 	/* IMPORTANT XXX IMPORTNAT:
@@ -174,7 +174,7 @@ protected:
 	
 	/* Adds a quad into the texture atlas but it won't be added into the children array.
 	This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
-	For example: a tile map (CCTMXMap) or a label with lots of characgers (BitmapFontAtlas)
+	For example: a tile map (CCTMXMap) or a label with lots of characters (BitmapFontAtlas)
 	*/
 	void addQuadFromSprite(CCSprite *sprite, unsigned int index);
 	/* This is the opposite of "addQuadFromSprite.
