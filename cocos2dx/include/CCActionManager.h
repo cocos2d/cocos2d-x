@@ -33,6 +33,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+struct _hashElement;
 /** 
  @brief CCActionManager is a singleton that manages all the actions.
  Normally you won't need to use this singleton directly. 99% of the cases you will use the CCNode interface,
@@ -44,7 +45,6 @@ namespace cocos2d {
  
  @since v0.8
  */
-struct _hashElement;
 class CCX_DLL CCActionManager : public NSObject, public SelectorProtocol
 {
 public:
