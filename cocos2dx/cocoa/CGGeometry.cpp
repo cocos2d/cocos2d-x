@@ -39,7 +39,7 @@ CGPoint::CGPoint(float x, float y)
 	this->y = y;
 }
 
-bool CGPoint::CGPointEqualToPoint(CGPoint point1, CGPoint point2)
+bool CGPoint::CGPointEqualToPoint(const CGPoint& point1, const CGPoint& point2)
 {
 	return ((point1.x == point2.x) && (point1.y == point2.y));
 }
@@ -58,7 +58,7 @@ CGSize::CGSize(float width, float height)
 	this->height = height;
 }
 
-bool CGSize::CGSizeEqualToSize(CGSize size1, CGSize size2)
+bool CGSize::CGSizeEqualToSize(const CGSize& size1, const CGSize& size2)
 {
 	return ((size1.width == size2.width) && (size1.height == size2.height));
 }
@@ -83,43 +83,43 @@ CGRect::CGRect(float x, float y, float width, float height)
 	size.height = height;
 }
 
-bool CGRect::CGRectEqualToRect(CGRect rect1, CGRect rect2)
+bool CGRect::CGRectEqualToRect(const CGRect& rect1, const CGRect& rect2)
 {
 	return (CGPoint::CGPointEqualToPoint(rect1.origin, rect2.origin)
 		&& CGSize::CGSizeEqualToSize(rect1.size, rect2.size));
 }
 
-CGFloat CGRect::CGRectGetMaxX(CGRect rect)
+CGFloat CGRect::CGRectGetMaxX(const CGRect& rect)
 {
 	return rect.origin.x + rect.size.width;
 }
 
-CGFloat CGRect::CGRectGetMidX(CGRect rect)
+CGFloat CGRect::CGRectGetMidX(const CGRect& rect)
 {
 	return (float)(rect.origin.x + rect.size.width / 2.0);
 }
 
-CGFloat CGRect::CGRectGetMinX(CGRect rect)
+CGFloat CGRect::CGRectGetMinX(const CGRect& rect)
 {
 	return rect.origin.x;
 }
 
-CGFloat CGRect::CGRectGetMaxY(CGRect rect)
+CGFloat CGRect::CGRectGetMaxY(const CGRect& rect)
 {
 	return rect.origin.y + rect.size.height;
 }
 
-CGFloat CGRect::CGRectGetMidY(CGRect rect)
+CGFloat CGRect::CGRectGetMidY(const CGRect& rect)
 {
 	return (float)(rect.origin.y + rect.size.height / 2.0);
 }
 
-CGFloat CGRect::CGRectGetMinY(CGRect rect)
+CGFloat CGRect::CGRectGetMinY(const CGRect& rect)
 {
 	return rect.origin.y;
 }
 
-bool CGRect::CGRectContainsPoint(CGRect rect, CGPoint point)
+bool CGRect::CGRectContainsPoint(const CGRect& rect, const CGPoint& point)
 {
     bool bRet = false;
 
@@ -131,4 +131,12 @@ bool CGRect::CGRectContainsPoint(CGRect rect, CGPoint point)
 
 	return bRet;
 }
+
+bool CGRect::CGRectIntersectsRect(const CGRect& rectA, const CGRect& rectB)
+{
+	return (CGRectContainsPoint(rectA, rectB.origin) 
+		|| rectA.CGRectContainsPoint(rectA, CGPoint(CGRectGetMaxX(rectB), CGRectGetMaxY(rectB)))) 
+		? true : false;
+}
+
 }//namespace   cocos2d {
