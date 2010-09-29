@@ -33,7 +33,7 @@ namespace cocos2d {
 	class CCTMXTilesetInfo;
 	struct _ccCArray;
 
-	/** CCTMXLayer represents the TMX layer.
+	/** @brief CCTMXLayer represents the TMX layer.
 
 	It is a subclass of CCSpriteSheet. By default the tiles are rendered using a CCTextureAtlas.
 	If you modify a tile on runtime, then, that tile will become a CCSprite, otherwise no CCSprite objects are created.

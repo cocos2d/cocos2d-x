@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	//! A fire particle system
+	//! @brief A fire particle system
 	class CCX_DLL CCParticleFire : public CCQuadParticleSystem
 	{
 	public:
@@ -49,7 +49,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! A fireworks particle system
+	//! @brief A fireworks particle system
 	class CCX_DLL CCParticleFireworks : public CCQuadParticleSystem
 	{
 	public:
@@ -70,7 +70,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! A sun particle system
+	//! @brief A sun particle system
 	class CCX_DLL CCParticleSun : public CCQuadParticleSystem
 	{
 	public:
@@ -91,7 +91,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! A galaxy particle system
+	//! @brief A galaxy particle system
 	class CCX_DLL CCParticleGalaxy : public CCQuadParticleSystem
 	{
 	public:
@@ -112,7 +112,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! A flower particle system
+	//! @brief A flower particle system
 	class CCX_DLL CCParticleFlower : public CCQuadParticleSystem
 	{
 	public:
@@ -133,7 +133,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! A meteor particle system
+	//! @brief A meteor particle system
 	class CCX_DLL CCParticleMeteor : public CCQuadParticleSystem
 	{
 	public:
@@ -154,7 +154,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! An spiral particle system
+	//! @brief An spiral particle system
 	class CCX_DLL CCParticleSpiral : public CCQuadParticleSystem
 	{
 	public:
@@ -175,7 +175,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! An explosion particle system
+	//! @brief An explosion particle system
 	class CCX_DLL CCParticleExplosion : public CCQuadParticleSystem
 	{
 	public:
@@ -196,7 +196,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! An smoke particle system
+	//! @brief An smoke particle system
 	class CCX_DLL CCParticleSmoke : public CCQuadParticleSystem
 	{
 	public:
@@ -217,7 +217,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! An snow particle system
+	//! @brief An snow particle system
 	class CCX_DLL CCParticleSnow : public CCQuadParticleSystem
 	{
 	public:
@@ -238,7 +238,7 @@ namespace cocos2d {
 		}
 	};
 
-	//! A rain particle system
+	//! @brief A rain particle system
 	class CCX_DLL CCParticleRain : public CCQuadParticleSystem
 	{
 	public:

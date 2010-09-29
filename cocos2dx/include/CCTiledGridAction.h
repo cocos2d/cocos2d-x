@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 namespace cocos2d 
 {
-	/** CCShakyTiles3D action */
+	/** @brief CCShakyTiles3D action */
 	class CCX_DLL CCShakyTiles3D : public CCTiledGrid3DAction
 	{
 	public:
@@ -49,7 +49,7 @@ namespace cocos2d
 		bool m_bShakeZ;
 	};
 
-	/** CCShatteredTiles3D action */
+	/** @brief CCShatteredTiles3D action */
 	class CCX_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
 	{
 	public:
@@ -72,7 +72,7 @@ namespace cocos2d
 	};
 
 	struct Tile;
-	/** CCShuffleTiles action
+	/** @brief CCShuffleTiles action
 	 Shuffle the tiles in random order
 	 */
 	class CCX_DLL CCShuffleTiles : public CCTiledGrid3DAction
@@ -100,7 +100,7 @@ namespace cocos2d
 		void *m_pTiles;
 	};
 
-	/** CCFadeOutTRTiles action
+	/** @brief CCFadeOutTRTiles action
 	 Fades out the tiles in a Top-Right direction
 	 */
 	class CCX_DLL CCFadeOutTRTiles : public CCTiledGrid3DAction
@@ -117,7 +117,7 @@ namespace cocos2d
 		static CCFadeOutTRTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
-	/** CCFadeOutBLTiles action.
+	/** @brief CCFadeOutBLTiles action.
 	 Fades out the tiles in a Bottom-Left direction
 	 */
 	class CCX_DLL CCFadeOutBLTiles : public CCFadeOutTRTiles
@@ -130,7 +130,7 @@ namespace cocos2d
         static CCFadeOutBLTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
-	/** CCFadeOutUpTiles action.
+	/** @brief CCFadeOutUpTiles action.
 	 Fades out the tiles in upwards direction
 	 */
 	class CCX_DLL CCFadeOutUpTiles : public CCFadeOutTRTiles
@@ -144,7 +144,7 @@ namespace cocos2d
         static CCFadeOutUpTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
-	/** CCFadeOutDownTiles action.
+	/** @brief CCFadeOutDownTiles action.
 	 Fades out the tiles in downwards direction
 	 */
 	class CCX_DLL CCFadeOutDownTiles : public CCFadeOutUpTiles
@@ -157,7 +157,7 @@ namespace cocos2d
         static CCFadeOutDownTiles* actionWithSize(ccGridSize gridSize, ccTime time);
 	};
 
-	/** CCTurnOffTiles action.
+	/** @brief CCTurnOffTiles action.
 	 Turn off the files in random order
 	 */
 	class CCX_DLL CCTurnOffTiles : public CCTiledGrid3DAction
@@ -186,7 +186,7 @@ namespace cocos2d
 		int *m_pTilesOrder;
 	};
 
-	/** CCWavesTiles3D action. */
+	/** @brief CCWavesTiles3D action. */
 	class CCX_DLL CCWavesTiles3D : public CCTiledGrid3DAction
 	{
 	public:
@@ -214,7 +214,7 @@ namespace cocos2d
 		float m_fAmplitudeRate;
 	};
 
-	/** CCJumpTiles3D action.
+	/** @brief CCJumpTiles3D action.
 	 A sin function is executed to move the tiles across the Z axis
 	 */
 	class CCX_DLL CCJumpTiles3D : public CCTiledGrid3DAction
@@ -243,7 +243,7 @@ namespace cocos2d
 		float m_fAmplitudeRate;
 	};
 
-	/** CCSplitRows action */
+	/** @brief CCSplitRows action */
 	class CCX_DLL CCSplitRows : public CCTiledGrid3DAction
 	{
 	public :
@@ -263,7 +263,7 @@ namespace cocos2d
 		CGSize m_winSize;
 	};
 
-	/** CCSplitCols action */
+	/** @brief CCSplitCols action */
 	class CCX_DLL CCSplitCols : public CCTiledGrid3DAction
 	{
 	public:

@@ -35,13 +35,13 @@ namespace   cocos2d {
 //
 // CCLayer
 //
-/** CCLayer is a subclass of CCNode that implements the TouchEventsDelegate protocol.
+/** @brief CCLayer is a subclass of CCNode that implements the TouchEventsDelegate protocol.
 
 All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-/// @todo public UIAccelerometerDelegate
+// @todo public UIAccelerometerDelegate
 class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate//, public UIAccelerometerDelegate
 {
 public:
@@ -84,7 +84,7 @@ public:
 //
 // CCColorLayer
 //
-/** CCColorLayer is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+/** @brief CCColorLayer is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
 
 All features from CCLayer are valid, plus the following new features:
 - opacity
@@ -136,7 +136,7 @@ private :
 	void updateColor();
 };
 
-/** CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
+/** @brief CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
 Features:
 - It supports one or more children
 - Only one children will be active a time

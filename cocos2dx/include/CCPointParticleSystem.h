@@ -30,7 +30,7 @@ namespace cocos2d {
 
 #define CC_MAX_PARTICLE_SIZE 64
 
-	/** CCPointParticleSystem is a subclass of CCParticleSystem
+	/** @brief CCPointParticleSystem is a subclass of CCParticleSystem
 	Attributes of a Particle System:
 	* All the attributes of Particle System
 

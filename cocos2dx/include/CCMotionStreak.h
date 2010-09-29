@@ -28,7 +28,7 @@ THE SOFTWARE.
 namespace cocos2d {
 	class CCRibbon;
 	/**
-	* CCMotionStreak manages a Ribbon based on it's motion in absolute space.
+	* @brief CCMotionStreak manages a Ribbon based on it's motion in absolute space.
 	* You construct it with a fadeTime, minimum segment size, texture path, texture
 	* length and color. The fadeTime controls how long it takes each vertex in
 	* the streak to fade out, the minimum segment size it how many pixels the

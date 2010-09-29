@@ -37,7 +37,7 @@ class UIImage;
 
 typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 
-/** Singleton that handles the loading of textures
+/** @brief Singleton that handles the loading of textures
 * Once the texture is loaded, the next time it will return
 * a reference of the previously loaded texture reducing GPU & CPU memory
 */

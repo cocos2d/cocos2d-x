@@ -35,7 +35,7 @@ namespace cocos2d{
 		kMenuStateTrackingTouch
 	} MenuState;
 
-	/** A CCMenu
+	/** @brief A CCMenu
 	* 
 	* Features and Limitation:
 	*  - You can add MenuItem objects in runtime using addChild:

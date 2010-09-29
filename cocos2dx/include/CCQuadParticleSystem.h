@@ -29,7 +29,7 @@ namespace cocos2d {
 
 	class CCSpriteFrame;
 
-	/** CCQuadParticleSystem is a subclass of CCParticleSystem
+	/** @brief CCQuadParticleSystem is a subclass of CCParticleSystem
 
 	It includes all the features of ParticleSystem.
 

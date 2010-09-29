@@ -32,7 +32,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 class CCTextureAtlas;
 
-/** CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
+/** @brief CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
 CCTextureProtocol protocol
 
 It knows how to render a TextureAtlas object.

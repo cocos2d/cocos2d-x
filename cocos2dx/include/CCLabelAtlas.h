@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCAtlasNode.h"
 namespace cocos2d{
 
-	/** CCLabelAtlas is a subclass of CCAtlasNode.
+	/** @brief CCLabelAtlas is a subclass of CCAtlasNode.
 
 	It can be as a replacement of CCLabel since it is MUCH faster.
 

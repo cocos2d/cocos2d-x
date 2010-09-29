@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace cocos2d {
 	class CCRibbonSegment;
 	/**
-	* A CCRibbon is a dynamically generated list of polygons drawn as a single or series
+	* @brief A CCRibbon is a dynamically generated list of polygons drawn as a single or series
 	* of triangle strips. The primary use of CCRibbon is as the drawing class of Motion Streak,
 	* but it is quite useful on it's own. When manually drawing a ribbon, you can call addPointAt
 	* and pass in the parameters for the next location in the ribbon. The system will automatically
@@ -88,7 +88,7 @@ namespace cocos2d {
 		bool	m_bPastFirstPoint;
 	};
 
-	/** object to hold ribbon segment data */
+	/** @brief object to hold ribbon segment data */
 	class CCX_DLL CCRibbonSegment : public NSObject
 	{
 	public:

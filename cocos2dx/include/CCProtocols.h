@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <string>
 namespace   cocos2d {
 
-// CC RGBA protocol
+//! @brief  CC RGBA protocol
 class CCX_DLL CCRGBAProtocol
 {
 public:
@@ -72,7 +72,7 @@ public:
 };
 
 /**
- You can specify the blending fuction.
+ @brief You can specify the blending fuction.
  @since v0.99.0
  */
 class CCX_DLL CCBlendProtocol
@@ -85,7 +85,7 @@ public:
 	virtual ccBlendFunc getBlendFunc(void) = 0;
 };
 
-/** CCNode objects that uses a Texture2D to render the images.
+/** @brief CCNode objects that uses a Texture2D to render the images.
  The texture can have a blending function.
  If the texture has alpha premultiplied the default blending function is:
     src=GL_ONE dst= GL_ONE_MINUS_SRC_ALPHA
@@ -104,7 +104,7 @@ public:
 	virtual void setTexture(CCTexture2D *texture) {}
 };
 
-// Common interface for Labels
+//! @brief Common interface for Labels
 class CCX_DLL CCLabelProtocol
 {
 public:

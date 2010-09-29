@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 namespace cocos2d{
 
-	/** CCLabel is a subclass of CCTextureNode that knows how to render text labels
+	/** @brief CCLabel is a subclass of CCTextureNode that knows how to render text labels
 	*
 	* All features from CCTextureNode are valid in CCLabel
 	*

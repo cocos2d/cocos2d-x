@@ -33,7 +33,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 class CCTexture2D;
 
-/** A class that implements a Texture Atlas.
+/** @brief A class that implements a Texture Atlas.
 Supported features:
 * The atlas file can be a PVRTC, PNG or any other fomrat supported by Texture2D
 * Quads can be udpated in runtime

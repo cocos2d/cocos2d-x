@@ -47,7 +47,7 @@ namespace cocos2d {
 		CCTMXOrientationIso,
 	};
 
-	/** CCTMXTiledMap knows how to parse and render a TMX map.
+	/** @brief CCTMXTiledMap knows how to parse and render a TMX map.
 
 	It adds support for the TMX tiled map format used by http://www.mapeditor.org
 	It supports isometric, hexagonal and orthogonal tiles.

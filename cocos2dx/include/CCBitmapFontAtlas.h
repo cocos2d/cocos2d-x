@@ -64,7 +64,7 @@ namespace cocos2d{
 		kCCBitmapFontAtlasMaxChars = 2048, //256,
 	};
 
-	/** CCBitmapFontConfiguration has parsed configuration of the the .fnt file
+	/** @brief CCBitmapFontConfiguration has parsed configuration of the the .fnt file
 	@since v0.8
 	*/
 	class CCX_DLL CCBitmapFontConfiguration : public NSObject
@@ -102,7 +102,7 @@ namespace cocos2d{
 		void purgeKerningDictionary();
 	};
 
-	/** CCBitmapFontAtlas is a subclass of CCSpriteSheet.
+	/** @brief CCBitmapFontAtlas is a subclass of CCSpriteSheet.
 
 	Features:
 	- Treats each character like a CCSprite. This means that each individual character can be:

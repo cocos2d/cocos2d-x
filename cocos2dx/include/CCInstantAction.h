@@ -48,7 +48,7 @@ namespace cocos2d {
 		virtual CCFiniteTimeAction * reverse(void);
 	};
 
-	/** Show the node
+	/** @brief Show the node
 	*/
 	class CCX_DLL CCShow : public CCInstantAction
 	{

@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace cocos2d
 {
 	/** 
-	CCWaves3D action 
+	@brief CCWaves3D action 
 	*/
 	class CCX_DLL CCWaves3D : public CCGrid3DAction
 	{
@@ -57,7 +57,7 @@ namespace cocos2d
 		float m_fAmplitudeRate;
 	};
 
-	/** CCFlipX3D action */
+	/** @brief CCFlipX3D action */
 	class CCX_DLL CCFlipX3D : public CCGrid3DAction
 	{
 	public:
@@ -72,7 +72,7 @@ namespace cocos2d
 		static CCFlipX3D* actionWithDuration(ccTime duration);
 	};
 
-	/** CCFlipY3D action */
+	/** @brief CCFlipY3D action */
 	class CCX_DLL CCFlipY3D : public CCFlipX3D
 	{
 	public:
@@ -84,7 +84,7 @@ namespace cocos2d
 		static CCFlipY3D* actionWithDuration(ccTime duration);
 	};
 
-	/** CCLens3D action */
+	/** @brief CCLens3D action */
 	class CCX_DLL CCLens3D : public CCGrid3DAction
 	{
 	public:
@@ -110,7 +110,7 @@ namespace cocos2d
 		CGPoint m_lastPosition;
 	};
 
-	/** CCRipple3D action */
+	/** @brief CCRipple3D action */
 	class CCX_DLL CCRipple3D : public CCGrid3DAction
 	{
 	public:
@@ -142,7 +142,7 @@ namespace cocos2d
 		float m_fAmplitudeRate;
 	};
 
-	/** CCShaky3D action */
+	/** @brief CCShaky3D action */
 	class CCX_DLL CCShaky3D : public CCGrid3DAction
 	{
 	public:
@@ -160,7 +160,7 @@ namespace cocos2d
 		bool m_bShakeZ;
 	};
 
-	/** CCLiquid action */
+	/** @brief CCLiquid action */
 	class CCX_DLL CCLiquid : public CCGrid3DAction
 	{
 	public:
@@ -186,7 +186,7 @@ namespace cocos2d
 		float m_fAmplitudeRate;
 	};
 
-	/** CCWaves action */
+	/** @brief CCWaves action */
 	class CCX_DLL CCWaves : public CCGrid3DAction
 	{
 	public:
@@ -215,7 +215,7 @@ namespace cocos2d
 		bool m_bHorizontal;
 	};
 
-	/** CCTwirl action */
+	/** @brief CCTwirl action */
 	class CCX_DLL CCTwirl : public CCGrid3DAction
 	{
 	public:
