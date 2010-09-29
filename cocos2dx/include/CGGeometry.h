@@ -42,7 +42,7 @@ public:
 	CGPoint(float x, float y);
 
 public:
-	static bool CGPointEqualToPoint(CGPoint point1, CGPoint point2);
+	static bool CGPointEqualToPoint(const CGPoint& point1, const CGPoint& point2);
 };
 
 class CCX_DLL CGSize
@@ -56,7 +56,7 @@ public:
 	CGSize(float width, float height);
 
 public:
-	static bool CGSizeEqualToSize(CGSize size1, CGSize size2);
+	static bool CGSizeEqualToSize(const CGSize& size1, const CGSize& size2);
 };
 
 class CCX_DLL CGRect
@@ -71,27 +71,30 @@ public:
 
 public:
 	// return the leftmost x-value of 'rect'
-	static CGFloat CGRectGetMinX(CGRect rect);
+	static CGFloat CGRectGetMinX(const CGRect& rect);
 
 	// return the rightmost x-value of 'rect'
-	static CGFloat CGRectGetMaxX(CGRect rect);
+	static CGFloat CGRectGetMaxX(const CGRect& rect);
 
 	// return the midpoint x-value of 'rect'
-	static CGFloat CGRectGetMidX(CGRect rect);
+	static CGFloat CGRectGetMidX(const CGRect& rect);
 
 	// Return the bottommost y-value of `rect'
-	static CGFloat CGRectGetMinY(CGRect rect);
+	static CGFloat CGRectGetMinY(const CGRect& rect);
 
 	// Return the topmost y-value of `rect'
-	static CGFloat CGRectGetMaxY(CGRect rect);
+	static CGFloat CGRectGetMaxY(const CGRect& rect);
 
 	// Return the midpoint y-value of `rect'
-	static CGFloat CGRectGetMidY(CGRect rect);
+	static CGFloat CGRectGetMidY(const CGRect& rect);
 
-	static bool CGRectEqualToRect(CGRect rect1, CGRect rect2);
+	static bool CGRectEqualToRect(const CGRect& rect1, const CGRect& rect2);
 
-    static bool CGRectContainsPoint(CGRect rect, CGPoint point);
+    static bool CGRectContainsPoint(const CGRect& rect, const CGPoint& point);
+
+	static bool CGRectIntersectsRect(const CGRect& rectA, const CGRect& rectB);
 };
+
 
 #define CGPointMake(x, y) CGPoint((x), (y))
 #define CGSizeMake(width, height) CGSize((width), (height))
