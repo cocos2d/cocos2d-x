@@ -55,10 +55,10 @@ namespace cocos2d {
 			,m_pIndices(NULL)
 		{}
 		virtual ~CCQuadParticleSystem();
-		// initialices the indices for the vertices
+		/** initialices the indices for the vertices*/
 		void initIndices();
 
-		// initilizes the text coords
+		/** initilizes the text coords*/
 		void initTexCoordsWithRect(CGRect rect);
 
 		/** Sets a new CCSpriteFrame as particle.

@@ -149,20 +149,20 @@ namespace cocos2d {
 		unsigned int atlasIndexForExistantZ(unsigned int z);
 		unsigned int atlasIndexForNewZ(int z);
 	protected:
-		// name of the layer
+		//! name of the layer
 		std::string m_sLayerName;
-		// TMX Layer supports opacity
+		//! TMX Layer supports opacity
 		unsigned char		m_cOpacity;
 
 		unsigned int		m_uMinGID;
 		unsigned int		m_uMaxGID;
 
-		// Only used when vertexZ is used
+		//! Only used when vertexZ is used
 		int					m_nVertexZvalue;
 		bool				m_bUseAutomaticVertexZ;
 		float				m_fAlphaFuncValue;
 
-		// used for optimization
+		//! used for optimization
 		CCSprite			*m_pReusedTile;
 		_ccCArray			*m_pAtlasIndexArray;
 	};

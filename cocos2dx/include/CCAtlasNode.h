@@ -45,19 +45,19 @@ class CCX_DLL CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextu
 {
 protected:
 
-	// chars per row
+	//! chars per row
 	int m_nItemsPerRow;
-	// chars per column
+	//! chars per column
 	int m_nItemsPerColumn;
 
-	// texture coordinate x increment
+	//! texture coordinate x increment
 	float m_fTexStepX;
-	// texture coordinate y increment
+	//! texture coordinate y increment
 	float m_fTexStepY;
 
-	// width of each char
+	//! width of each char
 	int	m_nItemWidth;
-	// height of each char
+	//! height of each char
 	int	m_nItemHeight;
 
 	ccColor3B	m_tColorUnmodified;
@@ -91,10 +91,10 @@ public:
 
 	// CC Texture protocol
 
-	// returns the used texture
+	/** returns the used texture*/
 	virtual CCTexture2D* getTexture(void);
 
-	// sets a new texture. it will be retained
+	/** sets a new texture. it will be retained*/
 	virtual void setTexture(CCTexture2D *texture);
 
 private :

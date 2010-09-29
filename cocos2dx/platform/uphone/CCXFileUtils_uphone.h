@@ -52,7 +52,7 @@ public:
 
     /**
     @brief   Generate a NSDictionary pointer by file
-    @param   pFileName  The file name
+    @param   pFileName  The file name of *.plist file
     @return  The NSDictionary pointer generated from the file
     */
 	static NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName);

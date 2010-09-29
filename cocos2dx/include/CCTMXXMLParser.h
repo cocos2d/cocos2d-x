@@ -96,9 +96,9 @@ namespace cocos2d {
 		CGSize			m_tTileSize;
 		unsigned int	m_uSpacing;
 		unsigned int	m_uMargin;
-		// filename containing the tiles (should be spritesheet / texture atlas)
+		//! filename containing the tiles (should be spritesheet / texture atlas)
 		std::string		m_sSourceImage;
-		// size in pixels of the image
+		//! size in pixels of the image
 		CGSize			m_tImageSize;
 	public:
 		CCTMXTilesetInfo();
@@ -163,11 +163,11 @@ namespace cocos2d {
 		inline void setTMXFileName(const char *fileName){ m_sTMXFileName = fileName; }
 
 	protected:
-		// tmx filename
+		//! tmx filename
 		std::string m_sTMXFileName;
-		// current string
+		//! current string
 		std::string m_sCurrentString;
-		// tile properties
+		//! tile properties
 		NSDictionary<int, CCXStringToStringDictionary*>* m_pTileProperties;
 	};
 

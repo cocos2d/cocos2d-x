@@ -209,13 +209,13 @@ protected:
     
 private:
 
-	// lazy allocs
+	//! lazy allocs
 	void childrenAlloc(void);
 
-	// helper that reorder a child
+	//! helper that reorder a child
 	void insertChild(CCNode* child, int z);
 
-	// used internally to alter the zOrder variable. DON'T call this method manually
+	//! used internally to alter the zOrder variable. DON'T call this method manually
 	void setZOrder(int z);
 
 	void detachChild(CCNode *child, bool doCleanup);

@@ -71,15 +71,15 @@ namespace cocos2d{
 	{
 		// XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 	public://@public
-		// The characters building up the font
+		//! The characters building up the font
 		ccBitmapFontDef	m_pBitmapFontArray[kCCBitmapFontAtlasMaxChars];
-		// FNTConfig: Common Height
+		//! FNTConfig: Common Height
 		unsigned int m_uCommonHeight;
-		// Padding
+		//! Padding
 		ccBitmapFontPadding	m_tPadding;
-		// atlas name
+		//! atlas name
 		std::string m_sAtlasName;
-		// values for kerning
+		//! values for kerning
 		struct _KerningHashElement	*m_pKerningDictionary;
 	public:
 		CCBitmapFontConfiguration()

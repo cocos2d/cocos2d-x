@@ -143,7 +143,7 @@ namespace cocos2d {
  		CCTMXTilesetInfo * tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
 
 	protected:
-		// tile properties
+		//! tile properties
 		NSDictionary<int, CCXStringToStringDictionary*> *m_pTileProperties;
 
 	};

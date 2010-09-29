@@ -61,9 +61,9 @@ namespace cocos2d {
 		virtual void setStartSize(float var);
 		virtual void setEndSize(float var);
 	protected:
-		// Array of (x,y,size) 
+		//! Array of (x,y,size) 
 		ccPointSprite *m_pVertices;
-		// vertices buffer id
+		//! vertices buffer id
 		GLuint	m_uVerticesID;	
 	};
 
