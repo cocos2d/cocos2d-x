@@ -46,8 +46,8 @@ class NSZone;
 
  You can modify the frame of a CCSprite by doing:
  
-	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:offset];
-	[sprite setDisplayFrame:frame];
+	CCSpriteFrame *frame = CCSpriteFrame::frameWithTexture(texture, rect, offset);
+	sprite->setDisplayFrame(frame);
  */
 class CCX_DLL CCSpriteFrame : public NSObject
 {

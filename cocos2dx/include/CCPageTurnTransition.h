@@ -30,10 +30,11 @@ namespace   cocos2d {
 
 /**
 @brief A transition which peels back the bottom right hand corner of a scene
-to transition to the scene beneath it simulating a page turn
+to transition to the scene beneath it simulating a page turn.
 
 This uses a 3DAction so it's strongly recommended that depth buffering
 is turned on in CCDirector using:
+
  CCDirector::getSharedDirector()->setDepthBufferFormat(kDepthBuffer16);
 
  @since v0.8.2
@@ -48,16 +49,16 @@ public:
 	virtual ~CCPageTurnTransition();
 
 	/**
-	* creates a base transition with duration and incoming scene
-	* if back is TRUE then the effect is reversed to appear as if the incoming 
-	* scene is being turned from left over the outgoing scene
+	* Creates a base transition with duration and incoming scene.
+	* If back is true then the effect is reversed to appear as if the incoming 
+	* scene is being turned from left over the outgoing scene.
 	*/
 	static CCPageTurnTransition* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
 
 	/**
-	* creates a base transition with duration and incoming scene
-	* if back is TRUE then the effect is reversed to appear as if the incoming 
-	* scene is being turned from left over the outgoing scene
+	* Creates a base transition with duration and incoming scene.
+	* If back is true then the effect is reversed to appear as if the incoming 
+	* scene is being turned from left over the outgoing scene.
 	*/
 	virtual bool initWithDuration(ccTime t,CCScene* scene,bool backwards);
 

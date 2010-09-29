@@ -70,22 +70,22 @@ public:
 	CGRect(float x, float y, float width, float height);
 
 public:
-	// return the leftmost x-value of 'rect'
+	//! return the leftmost x-value of 'rect'
 	static CGFloat CGRectGetMinX(const CGRect& rect);
 
-	// return the rightmost x-value of 'rect'
+	//! return the rightmost x-value of 'rect'
 	static CGFloat CGRectGetMaxX(const CGRect& rect);
 
-	// return the midpoint x-value of 'rect'
+	//! return the midpoint x-value of 'rect'
 	static CGFloat CGRectGetMidX(const CGRect& rect);
 
-	// Return the bottommost y-value of `rect'
+	//! Return the bottommost y-value of `rect'
 	static CGFloat CGRectGetMinY(const CGRect& rect);
 
-	// Return the topmost y-value of `rect'
+	//! Return the topmost y-value of `rect'
 	static CGFloat CGRectGetMaxY(const CGRect& rect);
 
-	// Return the midpoint y-value of `rect'
+	//! Return the midpoint y-value of `rect'
 	static CGFloat CGRectGetMidY(const CGRect& rect);
 
 	static bool CGRectEqualToRect(const CGRect& rect1, const CGRect& rect2);

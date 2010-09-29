@@ -60,6 +60,7 @@ namespace cocos2d {
 		virtual CCFiniteTimeAction * reverse(void);
 	public:
 		//override static method
+		/** Allocates and initializes the action */
 		static CCShow * action();
 	};
 
@@ -76,6 +77,7 @@ namespace cocos2d {
 		virtual CCFiniteTimeAction * reverse(void);
 	public:
 		//override static method
+		/** Allocates and initializes the action */
 		static CCHide * action();
 	};
 
@@ -90,6 +92,7 @@ namespace cocos2d {
 		virtual void startWithTarget(CCNode *pTarget);
 	public:
 		//override static method
+		/** Allocates and initializes the action */
 		static CCToggleVisibility * action();
 	};
 
@@ -103,7 +106,9 @@ namespace cocos2d {
 		CCFlipX(){}
 		virtual ~CCFlipX(){}
 
+		/** create the action */
 		static CCFlipX * actionWithFlipX(bool x);
+		/** init the action */
 		bool initWithFlipX(bool x);
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
@@ -123,8 +128,10 @@ namespace cocos2d {
 	public:
 		CCFlipY(){}
 		virtual ~CCFlipY(){}
-			
+		
+		/** create the action */
 		static CCFlipY * actionWithFlipY(bool y);
+		/** init the action */
 		bool initWithFlipY(bool y);
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
@@ -166,11 +173,17 @@ namespace cocos2d {
 		virtual ~CCCallFunc()
 		{
 		}
-		/** creates the action with the callback */
+		/** creates the action with the callback 
+
+		typedef void (SelectorProtocol::*SEL_CallFunc)();
+		*/
 		static CCCallFunc * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFunc selector);
-		/** initializes the action with the callback */
+		/** initializes the action with the callback 
+		
+		typedef void (SelectorProtocol::*SEL_CallFunc)();
+		*/
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget);
-		/** exeuctes the callback */
+		/** executes the callback */
 		virtual void execute();
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
@@ -195,7 +208,15 @@ namespace cocos2d {
 	public:
 		CCCallFuncN(){}
 		virtual ~CCCallFuncN(){}
+		/** creates the action with the callback 
+
+		typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
+		*/
 		static CCCallFuncN * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
+		/** initializes the action with the callback 
+
+		typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
+		*/
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
 		// super methods
 		virtual NSObject* copyWithZone(NSZone *pZone);
