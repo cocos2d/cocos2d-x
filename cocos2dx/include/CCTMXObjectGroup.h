@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	/** CCTMXObjectGroup represents the TMX object group.
+	/** @brief CCTMXObjectGroup represents the TMX object group.
 	@since v0.99.0
 	*/
 	class CCX_DLL CCTMXObjectGroup : public NSObject

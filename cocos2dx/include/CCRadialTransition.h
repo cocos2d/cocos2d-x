@@ -30,7 +30,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 ///
-//	A counter colock-wise radial transition to the next scene
+//	@brief A counter colock-wise radial transition to the next scene
 ///
 class CCX_DLL CCRadialCCWTransition : public CCTransitionScene
 {
@@ -49,7 +49,7 @@ protected:
 };
 
 ///
-//	A counter colock-wise radial transition to the next scene
+//	@brief A counter colock-wise radial transition to the next scene
 ///
 class CCX_DLL CCRadialCWTransition : public CCRadialCCWTransition
 {

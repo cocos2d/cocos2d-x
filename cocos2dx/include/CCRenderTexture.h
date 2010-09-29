@@ -34,7 +34,7 @@ namespace cocos2d {
 		kImageFormatPNG = 1
 	};
 	/**
-	RenderTexture is a generic rendering target. To render things into it,
+	@brief RenderTexture is a generic rendering target. To render things into it,
 	simply construct a render target, call begin on it, call visit on any cocos
 	scenes or objects to render them, and call end. For convienience, render texture
 	adds a sprite as it's display child with the results, so you can simply add

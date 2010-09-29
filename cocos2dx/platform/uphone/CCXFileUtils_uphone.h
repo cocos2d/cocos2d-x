@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "NSMutableDictionary.h"
 namespace   cocos2d {
 
-// Helper class to handle file operations
+//! @brief  Helper class to handle file operations
 class CCX_DLL CCFileUtils
 {
 public:

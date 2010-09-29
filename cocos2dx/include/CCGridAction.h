@@ -92,7 +92,7 @@ namespace cocos2d
         static CCTiledGrid3DAction* actionWithSize(ccGridSize gridSize, ccTime duration);
 	};
 
-	/** CCAccelDeccelAmplitude action */
+	/** @brief CCAccelDeccelAmplitude action */
 	class CCX_DLL CCAccelDeccelAmplitude : public CCIntervalAction
 	{
 	public:
@@ -117,7 +117,7 @@ namespace cocos2d
 		CCIntervalAction *m_pOther;
 	};
 
-	/** CCAccelAmplitude action */
+	/** @brief CCAccelAmplitude action */
 	class CCX_DLL CCAccelAmplitude : public CCIntervalAction
 	{
 	public:
@@ -142,7 +142,7 @@ namespace cocos2d
 		CCIntervalAction *m_pOther;
 	};
 
-	/** CCDeccelAmplitude action */
+	/** @brief CCDeccelAmplitude action */
 	class CCX_DLL CCDeccelAmplitude : public CCIntervalAction
 	{
 	public:
@@ -167,7 +167,7 @@ namespace cocos2d
 		CCIntervalAction *m_pOther;
 	};
 
-	/** CCStopGrid action.
+	/** @brief CCStopGrid action.
 	 @warning Don't call this action if another grid action is active.
 	 Call if you want to remove the the grid effect. Example:
 	 CCSequence::actions(Lens::action(...), CCStopGrid::action(...), NULL);
@@ -182,7 +182,7 @@ namespace cocos2d
 		static CCStopGrid* action(void);
 	};
 
-	/** CCReuseGrid action */
+	/** @brief CCReuseGrid action */
 	class CCX_DLL CCReuseGrid : public CCInstantAction
 	{
 	public:

@@ -37,7 +37,7 @@ namespace cocos2d{
 
 #define kItemSize 32
 
-	/** CCMenuItem base class
+	/** @brief CCMenuItem base class
 	*
 	*  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
 	*/
@@ -70,7 +70,7 @@ namespace cocos2d{
 		SEL_MunuHandler		m_pfnSelector;
 	};
 
-	/** An abstract class for "label" CCMenuItemLabel items 
+	/** @brief An abstract class for "label" CCMenuItemLabel items 
 	Any CCNode that supports the CCLabelProtocol protocol can be added.
 	Supported nodes:
 	- CCBitmapFontAtlas
@@ -114,7 +114,7 @@ namespace cocos2d{
 		float		m_fOriginalScale;
 	};
 
-	/** A CCMenuItemAtlasFont
+	/** @brief A CCMenuItemAtlasFont
 	Helper class that creates a MenuItemLabel class with a LabelAtlas
 	*/
 	class CCX_DLL CCMenuItemAtlasFont : public CCMenuItemLabel
@@ -130,7 +130,7 @@ namespace cocos2d{
 		bool initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MunuHandler selector);
 	};
 
-	/** A CCMenuItemFont
+	/** @brief A CCMenuItemFont
 	Helper class that creates a CCMenuItemLabel class with a Label
 	*/
 	class CCX_DLL CCMenuItemFont : public CCMenuItemLabel
@@ -154,7 +154,7 @@ namespace cocos2d{
 		bool initFromString(const char *value, SelectorProtocol* target, SEL_MunuHandler selector);
 	};
 
-	/** CCMenuItemSprite accepts CCNode<CCRGBAProtocol> objects as items.
+	/** @brief CCMenuItemSprite accepts CCNode<CCRGBAProtocol> objects as items.
 	The images has 3 different states:
 	- unselected image
 	- selected image
@@ -195,7 +195,7 @@ namespace cocos2d{
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 	};
 
-	/** CCMenuItemImage accepts images as items.
+	/** @brief CCMenuItemImage accepts images as items.
 	The images has 3 different states:
 	- unselected image
 	- selected image
@@ -225,7 +225,7 @@ namespace cocos2d{
 		virtual GLubyte getOpacity();
 	};
 
-	/** A CCMenuItemToggle
+	/** @brief A CCMenuItemToggle
 	A simple container class that "toggles" it's inner items
 	The inner itmes can be any MenuItem
 	*/

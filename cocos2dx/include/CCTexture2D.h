@@ -83,7 +83,7 @@ typedef struct _ccTexParams {
 
 //CLASS INTERFACES:
 
-/** CCTexture2D class.
+/** @brief CCTexture2D class.
 * This class allows to easily create OpenGL 2D textures from images, text or raw data.
 * The created CCTexture2D object will always have power-of-two dimensions. 
 * Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).

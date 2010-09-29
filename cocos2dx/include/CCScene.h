@@ -29,7 +29,13 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 namespace   cocos2d {
 
-/** CCScene is a subclass of CCNode that is used only as an abstract concept.
+typedef enum
+{
+	ccNormalScene     = 1 << 0,
+	ccTransitionScene = 1 << 1,
+} ccSceneFlag;
+
+/** @brief CCScene is a subclass of CCNode that is used only as an abstract concept.
 
 CCScene an CCNode are almost identical with the difference that CCScene has it's
 anchor point (by default) at the center of the screen.
@@ -39,13 +45,6 @@ additional logic.
 
 It is a good practice to use and CCScene as the parent of all your nodes.
 */
-
-typedef enum
-{
-	ccNormalScene     = 1 << 0,
-	ccTransitionScene = 1 << 1,
-} ccSceneFlag;
-
 class CCX_DLL CCScene : public CCNode
 {
 public:

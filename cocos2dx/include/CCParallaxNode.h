@@ -30,7 +30,7 @@ THE SOFTWARE.
 namespace cocos2d {
 	struct _ccArray;
 
-	/** CCParallaxNode: A node that simulates a parallax scroller
+	/** @brief CCParallaxNode: A node that simulates a parallax scroller
 
 	The children will be moved faster / slower than the parent according the the parallax ratio.
 

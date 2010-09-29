@@ -110,7 +110,7 @@ protected:
 	CCTexture2D *m_pobTexture;
 };
 
-// an Animation object used within Sprites to perform animations 
+//! @brief an Animation object used within Sprites to perform animations 
 class CCX_DLL CCAnimation : public NSObject
 {
 protected:

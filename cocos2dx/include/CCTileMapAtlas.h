@@ -30,7 +30,7 @@ namespace cocos2d {
 
 	typedef std::map<std::string, int> StringToIntegerDictionary;
 	typedef std::pair<std::string, int> StringToIntegerPair;
-	/** CCTileMapAtlas is a subclass of CCAtlasNode.
+	/** @brief CCTileMapAtlas is a subclass of CCAtlasNode.
 
 	It knows how to render a map based of tiles.
 	The tiles must be in a .PNG format while the map must be a .TGA file.

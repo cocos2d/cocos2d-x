@@ -80,7 +80,7 @@ class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
  };
  
-  // CCStandardTouchDelegate.
+  // @brief CCStandardTouchDelegate.
   // This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
   // @since v0.8
  class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate

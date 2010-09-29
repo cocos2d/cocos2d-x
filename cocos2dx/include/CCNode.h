@@ -48,7 +48,7 @@ enum {
 	kCCNodeTagInvalid = -1,
 };
 
-/** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
+/** @brief CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
 The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
 
 The main features of a CCNode are:
