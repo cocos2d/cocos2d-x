@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCSpriteFrame.h"
 
+namespace cocos2d {
 /** 
 @brief An interval action is an action that takes place within a certain period of time.
 It has an start time, and a finish time. The finish time is the parameter
@@ -47,9 +48,6 @@ Example:
 
 	CCAction *pingPongAction = CCSequence::actions(action, action->reverse(), NULL);
 */
-
-namespace cocos2d {
-
 class CCX_DLL CCIntervalAction : public CCFiniteTimeAction
 {
 public:
