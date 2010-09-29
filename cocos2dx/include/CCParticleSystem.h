@@ -77,7 +77,7 @@ namespace cocos2d {
 		kPositionTypeGrouped = kCCPositionTypeGrouped,
 	}; 
 
-	/** @struct tCCParticle
+	/**
 	Structure that contains the values of each particle
 	*/
 	typedef struct sCCParticle {

@@ -28,7 +28,7 @@ namespace cocos2d{
 
 	struct _KerningHashElement;
 
-	/** @struct ccBitmapFontDef
+	/**
 	bitmap font definition
 	*/
 	typedef struct _bitmapFontDef {
@@ -44,7 +44,7 @@ namespace cocos2d{
 		int xAdvance;
 	} ccBitmapFontDef;
 
-	/** @struct ccBitmapFontPadding
+	/**
 	bitmap font padding
 	@since v0.8.2
 	*/

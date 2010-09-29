@@ -134,9 +134,10 @@ bool CGRect::CGRectContainsPoint(const CGRect& rect, const CGPoint& point)
 
 bool CGRect::CGRectIntersectsRect(const CGRect& rectA, const CGRect& rectB)
 {
-	return (CGRectContainsPoint(rectA, rectB.origin) 
-		|| rectA.CGRectContainsPoint(rectA, CGPoint(CGRectGetMaxX(rectB), CGRectGetMaxY(rectB)))) 
-		? true : false;
+	return !(rectA.CGRectGetMaxX() < rectB.CGRectGetMinX()||
+			rectB.CGRectGetMaxX() < rectA.CGRectGetMinX()||
+			rectA.CGRectGetMaxY() < rectB.CGRectGetMinY()||
+			rectB.CGRectGetMaxY() < rectA.CGRectGetMinY());
 }
 
 }//namespace   cocos2d {
