@@ -92,7 +92,7 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
 
     case TESTAU_ID_Form1002_LoadEffect:
         // load effect1
-        m_nEffect1ID = pAudioEngine->preloadEffect(/*s_Effect1File*/s_BackgroundFile);
+        m_nEffect1ID = pAudioEngine->preloadEffect(s_Effect1File);
         assert(m_nEffect1ID > 0);
         bHandled = TRUE;
         break;
