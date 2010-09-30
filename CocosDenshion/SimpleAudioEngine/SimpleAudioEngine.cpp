@@ -205,6 +205,7 @@ void SimpleAudioEngine::unloadEffect(int nSoundId)
 
         delete [] (pElement->pDataBuffer);
         HASH_DEL(m_pEffects, pElement);
+        free(pElement);
     } while (0);
 }
 
@@ -235,6 +236,9 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
             {
                 pPlayer = new SoundPlayer();
                 m_EffectPlayers.push_back(pPlayer);
+
+                // set the player volume
+                pPlayer->SetVolumeValue(m_nEffectsVolume);
             }
         }
 
@@ -248,9 +252,9 @@ void SimpleAudioEngine::removeAllEffects()
 {
     for (tHashElement *pElement = m_pEffects; pElement != NULL; )
     {
-        unsigned char* pData = pElement->pDataBuffer;
-        delete [] pData;
+        int nSoundID = pElement->nSoundID;
         pElement = (tHashElement*)pElement->hh.next;
+        unloadEffect(nSoundID);
     }
 }
 
