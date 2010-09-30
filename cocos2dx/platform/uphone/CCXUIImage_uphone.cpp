@@ -283,7 +283,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 
 	// init image info
 	m_imageInfo.isPremultipliedAlpha = true;
-	m_imageInfo.hasAlpha = info_ptr->color_type & PNG_COLOR_MASK_ALPHA;
+	m_imageInfo.hasAlpha = bool ( info_ptr->color_type & PNG_COLOR_MASK_ALPHA );
 
 	// allocate memory and read data
 	int bytesPerComponent = 3;
@@ -300,7 +300,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 		unsigned int *tmp = (unsigned int *)m_imageInfo.data;
 		for(unsigned int i = 0; i < m_imageInfo.height; i++)
 		{
-			for(unsigned int j = 0; j < bytesPerRow; j += 4)
+			for(int j = 0; j < bytesPerRow; j += 4)
 			{
 				*tmp++ = CCX_RGB_PREMULTIPLY_APLHA( rowPointers[i][j], rowPointers[i][j + 1], 
 					rowPointers[i][j + 2], rowPointers[i][j + 3] );
@@ -332,7 +332,7 @@ bool UIImage::loadJpg(const char *strFileName)
 
 	FILE *infile = fopen( strFileName, "rb" );
 	unsigned long location = 0;
-	int i = 0;
+	unsigned int i = 0;
 
 	if ( !infile )
 	{
