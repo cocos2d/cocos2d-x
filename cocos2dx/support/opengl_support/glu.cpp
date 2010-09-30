@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include <GLES/gl.h>
 
-#define _USE_MATH_DEFINES
 #include <math.h>
 namespace   cocos2d {
 
