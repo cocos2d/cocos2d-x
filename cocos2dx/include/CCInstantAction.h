@@ -172,6 +172,10 @@ namespace cocos2d {
 		}
 		virtual ~CCCallFunc()
 		{
+			if (m_pSelectorTarget)
+			{
+				m_pSelectorTarget->selectorProtocolRelease();
+			}
 		}
 		/** creates the action with the callback 
 
