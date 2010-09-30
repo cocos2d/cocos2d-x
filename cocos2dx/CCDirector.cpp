@@ -125,6 +125,10 @@ bool CCDirector::init(void)
 	// FPS
 	m_bDisplayFPS = false;
 	m_nFrames = 0;
+	m_pszFPS = new char[10];
+	m_fExpectedFrameRate = 1 / m_dAnimationInterval;
+
+
 
 	// paused ?
 	m_bPaused = false;
@@ -136,6 +140,7 @@ bool CCDirector::init(void)
 	m_bIsContentScaleSupported =false;
 
 	m_pLastUpdate = new struct cc_timeval();
+	m_pLastComputeTime = new struct cc_timeval();
 
 	// create autorelease pool
 	NSPoolManager::getInstance()->push();
@@ -162,8 +167,13 @@ CCDirector::~CCDirector(void)
 	NSPoolManager::getInstance()->pop();
 
 	// delete m_pLastUpdate
-	delete m_pLastUpdate;
-	m_pLastUpdate = NULL;
+	CCX_SAFE_DELETE(m_pLastUpdate);
+
+	// delete last compute time
+	CCX_SAFE_DELETE(m_pLastComputeTime);
+
+	// delete fps string
+	delete []m_pszFPS;
 }
 
 void CCDirector::setGLDefaultValues(void)
@@ -181,11 +191,8 @@ void CCDirector::setGLDefaultValues(void)
 #if CC_DIRECTOR_FAST_FPS
 	if (! m_pFPSLabel)
 	{
-// 		CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
-// 		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
         m_pFPSLabel = CCLabel::labelWithString("00.0", "XXX", 24);
 		m_pFPSLabel->retain();
-		/*CCTexture2D::setDefaultAlphaPixelFormat(currentFormat);*/
 	}
 #endif
 }
@@ -261,7 +268,7 @@ void CCDirector::calculateDeltaTime(void)
 		m_fDeltaTime = 0;
 		m_bNextDeltaTimeZero = false;
 	}
-	else 
+	else
 	{
 		m_fDeltaTime = (now.tv_sec - m_pLastUpdate->tv_sec) + (now.tv_usec - m_pLastUpdate->tv_usec) / 1000000.0f;
 		m_fDeltaTime = MAX(0, m_fDeltaTime);
@@ -656,8 +663,6 @@ void CCDirector::end(void)
 
 void CCDirector::setNextScene(void)
 {
-// 	bool runningIsTransition = dynamic_cast<CCTransitionScene *>(m_pRunningScene) != NULL;
-// 	bool newIsTransition = dynamic_cast<CCTransitionScene *>(m_pNextScene) != NULL;
 	ccSceneFlag runningSceneType = ccNormalScene;
 	ccSceneFlag newSceneType = m_pNextScene->getSceneType();
 
@@ -691,7 +696,6 @@ void CCDirector::setNextScene(void)
 	m_pNextScene->retain();
 	m_pNextScene = NULL;
 
-	/*if (! runningIsTransition && m_pRunningScene)*/
 	if (! (runningSceneType & ccTransitionScene) && m_pRunningScene)
 	{
 		m_pRunningScene->onEnter();
@@ -754,24 +758,28 @@ void CCDirector::preMainLoop(void)
 // updates the FPS every frame
 void CCDirector::showFPS(void)
 {
-	++m_nFrames;
-	m_fAccumDt += m_fDeltaTime;
-
-	if (m_fAccumDt > CC_DIRECTOR_FPS_INTERVAL)
-	{
-		m_fFrameRate = m_nFrames / m_fAccumDt;
-		m_nFrames = 0;
-		m_fAccumDt = 0;
-        
-		char *str = new char[10];
-		sprintf(str, "%.1f", m_fFrameRate);
-		m_pFPSLabel->setString(str);
-		delete [] str;
-	}
+	sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+	m_pFPSLabel->setString(m_pszFPS);
 
     m_pFPSLabel->draw();
 }
 #endif // CC_DIRECTOR_FAST_FPS
+
+void CCDirector::computeFrameRate()
+{
+	static bool bFirstTime = true;
+	struct cc_timeval now;
+
+	CCTime::gettimeofdayCocos2d(&now, NULL);
+	if (! bFirstTime)
+	{		
+		m_fAccumDt += ((now.tv_sec - m_pLastComputeTime->tv_sec) + (now.tv_usec - m_pLastComputeTime->tv_usec) / 1000000.0f);
+		m_fFrameRate = m_nFrames / m_fAccumDt;
+	}
+
+	bFirstTime = false;
+	*m_pLastComputeTime = now;
+}
 
 #if CC_ENABLE_PROFILERS
 void CCDirector::showProfilers()
@@ -798,26 +806,23 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
-
-	// approximate frame rate
-	// assumes device refreshes at 60 fps
-	//int frameInterval	= (int) floor(animationInterval * 60.0f);
-	
-	//CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
-
-	//displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(preMainLoop:)];
-	//[displayLink setFrameInterval:frameInterval];
-	//[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 void CCDisplayLinkDirector::preMainLoop(void)
 {
  	if (! m_bInvalid)
  	{
- 		drawScene();
- 
- 		// release the objects
- 		NSPoolManager::getInstance()->pop();
+		// compute frame rate
+		computeFrameRate();
+
+		if (m_fFrameRate < m_fExpectedFrameRate)
+		{
+ 			drawScene();
+			++m_nFrames;
+	 
+ 			// release the objects
+ 			NSPoolManager::getInstance()->pop();
+		}		
  	}
 }
 
@@ -829,6 +834,7 @@ void CCDisplayLinkDirector::stopAnimation(void)
 void CCDisplayLinkDirector::setAnimationInterval(double dValue)
 {
 	m_dAnimationInterval = dValue;
+	m_fExpectedFrameRate = 1 / m_dAnimationInterval;
 	if (! m_bInvalid)
 	{
 		stopAnimation();
