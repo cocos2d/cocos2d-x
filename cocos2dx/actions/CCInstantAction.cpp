@@ -269,6 +269,14 @@ namespace cocos2d {
 	}
 	bool CCCallFunc::initWithTarget(SelectorProtocol* pSelectorTarget)
 	{
+		if (pSelectorTarget)
+		{
+			pSelectorTarget->selectorProtocolRetain();
+		}
+		if (m_pSelectorTarget)
+		{
+			m_pSelectorTarget->selectorProtocolRelease();
+		}
 		m_pSelectorTarget = pSelectorTarget;
 		return true;
 	}
