@@ -1,0 +1,4 @@
+version 0.99.4.01  Sep.28,2010
+ . [NEW] completely port from cocos2d-iphone 0.99.4 to cpp language on uphone
+
+
