@@ -207,7 +207,7 @@ public:
 
 	/** Get the FPS value */
 	inline double getAnimationInterval(void) { return m_dAnimationInterval; }
-	/** Set the FPS value. Now it has not effect. */
+	/** Set the FPS value. */
 	virtual void setAnimationInterval(double dValue);
 
 	/** Whether or not to display the FPS on the bottom-left corner */
@@ -343,7 +343,7 @@ public:
 
 	/** Pauses the running scene.
 	 The running scene will be _drawed_ but all scheduled timers will be paused
-	 While paused, the draw rate will be 4 FPS to reduce CPU consuption
+	 While paused, the draw rate will be 4 FPS to reduce CPU consumption
 	 */
 	void pause(void);
 
@@ -354,13 +354,13 @@ public:
 	void resume(void);
 
 	/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
-	 If you wan't to pause your animation call [pause] instead.
+	 If you don't want to pause your animation call [pause] instead.
 	 */
 	virtual void stopAnimation(void);
 
 	/** The main loop is triggered again.
 	 Call this function only if [stopAnimation] was called earlier
-	 @warning Dont' call this function to start the main loop. To run the main loop call runWithScene
+	 @warning Don't call this function to start the main loop. To run the main loop call runWithScene
 	 */
 	virtual void startAnimation(void);
 
@@ -401,7 +401,7 @@ public:
 	 - kCCDirectorTypeDisplayLink
 	 
 	 Each Director has it's own benefits, limitations.
-	 Now we only support DisplayLink director, so it has not effect 
+	 Now we only support DisplayLink director, so it has not effect. 
 	 
 	 This method should be called before any other call to the director.
 	 
@@ -435,6 +435,9 @@ protected:
 	void recalculateProjectionAndEAGLViewSize();
 
 protected:
+    void computeFrameRate(void);
+
+protected:
 	/* The CCXEGLView, where everything is rendered */
     cocos2d::CCXEGLView	*m_pobOpenGLView;
 
@@ -454,6 +457,7 @@ protected:
 	int  m_nFrames;
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
+	ccTime m_fExpectedFrameRate;
 #if	CC_DIRECTOR_FAST_FPS
 	CCLabel *m_pFPSLabel;
 #endif
@@ -477,6 +481,9 @@ protected:
 	/* last time the main loop was updated */
 	struct cc_timeval *m_pLastUpdate;
 
+	/* last time the frame fate is computed */
+	struct cc_timeval *m_pLastComputeTime;
+
 	/* delta time since last tick to main loop */
 	ccTime m_fDeltaTime;
 
@@ -497,6 +504,9 @@ protected:
 
 	/* contentScaleFactor could be simulated */
 	bool m_bIsContentScaleSupported;
+
+	/* store the fps string */
+	char *m_pszFPS;
 	
 #if CC_ENABLE_PROFILERS
 	ccTime m_fAccumDtForProfiler;
@@ -507,11 +517,8 @@ protected:
  @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  
  Features and Limitations:
-  - Only available on 3.1+
   - Scheduled timers & drawing are synchronizes with the refresh rate of the display
   - Only supports animation intervals of 1/60 1/30 & 1/15
- 
- It is the recommended Director if the SDK is 3.1 or newer
  
  @since v0.8.2
  */
@@ -520,7 +527,6 @@ class CCDisplayLinkDirector : public CCDirector
 public:
 	CCDisplayLinkDirector(void) {}
 
-   //static CCDisplayLinkDirector* getSharedDirector(void);
 	virtual void preMainLoop(void);
 	virtual void setAnimationInterval(double dValue);
 	virtual void startAnimation(void);
