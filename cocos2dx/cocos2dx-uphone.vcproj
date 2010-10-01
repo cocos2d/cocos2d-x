@@ -50,7 +50,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4996;4251"
+				DisableSpecificWarnings="4996"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
