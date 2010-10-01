@@ -65,8 +65,11 @@ CCLayer *CCLayer::node()
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
-	return NULL;
+    else
+    {
+	    CCX_SAFE_DELETE(pRet)
+	    return NULL;
+    }
 }
 
 /// Touch and Accelerometer related
