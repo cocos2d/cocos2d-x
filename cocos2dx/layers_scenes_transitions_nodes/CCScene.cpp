@@ -61,7 +61,10 @@ CCScene *CCScene::node()
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
-	return NULL;
+    else
+    {
+	    CCX_SAFE_DELETE(pRet)
+	    return NULL;
+    }
 }
 }//namespace   cocos2d 
