@@ -47,6 +47,7 @@ public:
 	bool containsObject(NSObject *pObject);
 	NSSetIterator begin();
 	NSSetIterator end();
+    NSObject* anyObject();
 
 private:
     std::set<NSObject *> *m_pSet;

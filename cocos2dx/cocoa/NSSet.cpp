@@ -88,4 +88,25 @@ NSSetIterator NSSet::end(void)
 {
 	return m_pSet->end();
 }
+
+NSObject* NSSet::anyObject()
+{
+    if (!m_pSet || m_pSet->empty())
+    {
+        return NULL;
+    }
+    
+    NSSetIterator it;
+
+    for( it = m_pSet->begin(); it != m_pSet->end(); it++)
+    {
+        if (*it)
+        {
+            return (*it);
+        }
+    }
+
+    return NULL;
+}
+
 }//namespace   cocos2d 
