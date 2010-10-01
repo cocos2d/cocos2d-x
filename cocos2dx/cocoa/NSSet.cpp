@@ -30,14 +30,21 @@ namespace   cocos2d {
 
 NSSet::NSSet(void)
 {
+    m_pSet = new set<NSObject *>;
 }
 
-NSSet::NSSet(const NSSet &rSetObject) : m_set(rSetObject.m_set)
+NSSet::NSSet(const NSSet &rSetObject)
 {
+    m_pSet = new set<NSObject *>(*rSetObject.m_pSet);
 }
 
 NSSet::~NSSet(void)
 {
+    if (m_pSet)
+    {
+        delete m_pSet;
+        m_pSet = NULL;
+    }
 }
 
 NSSet* NSSet::copy(void)
@@ -54,31 +61,31 @@ NSSet* NSSet::mutableCopy(void)
 
 int NSSet::count(void)
 {
-	return (int)m_set.size();
+	return (int)m_pSet->size();
 }
 
 void NSSet::addObject(NSObject *pObject)
 {
-	m_set.insert(pObject);
+	m_pSet->insert(pObject);
 }
 
 void NSSet::removeObject(NSObject *pObject)
 {
-	m_set.erase(pObject);
+	m_pSet->erase(pObject);
 }
 
 bool NSSet::containsObject(NSObject *pObject)
 {
-	return m_set.find(pObject) != m_set.end();
+	return m_pSet->find(pObject) != m_pSet->end();
 }
 
 NSSetIterator NSSet::begin(void)
 {
-	return m_set.begin();
+	return m_pSet->begin();
 }
 
 NSSetIterator NSSet::end(void)
 {
-	return m_set.end();
+	return m_pSet->end();
 }
 }//namespace   cocos2d 
