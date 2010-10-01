@@ -6,11 +6,33 @@
 
 #include "cocos2d.h"
 
-#include "AppDelegate.h"
+#include "Cocos2dSimpleGameAppDelegate.h"
+#include "cocos2d.h"
 #include "HelloWorldScene.h"
 
 using namespace cocos2d;
 
+// the works are the same as NSObject<UIApplicationDelegate>::applicationDidFinishLaunching of cocos2d-iphone
+bool AppDelegate::initCocos2d()
+{
+	// init director
+	CCDirector *pDirector = CCDirector::getSharedDirector();
+	pDirector->setOpenGLView(m_pMainWnd);
+
+	// sets landscape mode
+	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+
+	// turn on display FPS
+	pDirector->setDisplayFPS(true);
+
+	// create a scene. it's an autorelease object
+	CCScene *pScene = HelloWorld::scene();
+
+	// run
+	CCDirector::getSharedDirector()->runWithScene(pScene);
+
+	return true;
+}
 
 AppDelegate::AppDelegate()
 :m_rcWnd(0, 0, GetScreenWidth(), GetScreenHeight())
@@ -56,26 +78,4 @@ Boolean  AppDelegate::EventHandler(EventType*  pEvent)
 	}
 
 	return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
-}
-
-// the works are the same as NSObject<UIApplicationDelegate>::applicationDidFinishLaunching of cocos2d-iphone
-bool AppDelegate::initCocos2d()
-{
-	// init director
-	CCDirector *pDirector = CCDirector::getSharedDirector();
-	pDirector->setOpenGLView(m_pMainWnd);
-
-	// sets landscape mode
-	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-
-	// turn on display FPS
-	pDirector->setDisplayFPS(true);
-
-	// create a scene. it's an autorelease object
-	CCScene *pScene = HelloWorld::scene();
-
-	// run
-	CCDirector::getSharedDirector()->runWithScene(pScene);
-
-	return true;
 }

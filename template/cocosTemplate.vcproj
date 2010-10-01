@@ -2,8 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="cocosTemplate"
+	Name="Cocos2dSimpleGame"
 	ProjectGUID="{A2338E7B-155B-4A3B-AB4B-518ECDD26564}"
+	RootNamespace="Cocos2dSimpleGame"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -64,7 +65,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="WS2_32.Lib ..\..\PRJ_TG3\Common\SoftSupport\EosConfig.lib ..\..\PRJ_TG3\Common\SoftSupport\SoftSupport.lib ..\..\PRJ_TG3\Common\SoftSupport\TG3_DLL.lib"
-				OutputFile="$(OutDir)/cocosTemplate.dll"
+				OutputFile="$(OutDir)/Cocos2dSimpleGame.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport"
 				GenerateDebugInformation="true"
@@ -184,27 +185,27 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\AppDelegate.cpp"
+				RelativePath=".\Cocos2dSimpleGameAppDelegate.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\AppDelegate.h"
+				RelativePath=".\Cocos2dSimpleGameAppDelegate.h"
 				>
 			</File>
 			<File
-				RelativePath=".\FirstLayer.cpp"
+				RelativePath=".\GameOverScene.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\FirstLayer.h"
+				RelativePath=".\GameOverScene.h"
 				>
 			</File>
 			<File
-				RelativePath=".\HelloWorld.cpp"
+				RelativePath=".\HelloWorldScene.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\HelloWorld.h"
+				RelativePath=".\HelloWorldScene.h"
 				>
 			</File>
 			<File
