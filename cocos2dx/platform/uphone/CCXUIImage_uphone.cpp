@@ -283,7 +283,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 
 	// init image info
 	m_imageInfo.isPremultipliedAlpha = true;
-	m_imageInfo.hasAlpha = bool ( info_ptr->color_type & PNG_COLOR_MASK_ALPHA );
+	m_imageInfo.hasAlpha = ( info_ptr->color_type & PNG_COLOR_MASK_ALPHA ) ? true : false;
 
 	// allocate memory and read data
 	int bytesPerComponent = 3;

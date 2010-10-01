@@ -49,7 +49,7 @@ public:
 	NSSetIterator end();
 
 private:
-    std::set<NSObject *> m_set;
+    std::set<NSObject *> *m_pSet;
 };
 
 typedef NSSet NSMutableSet;
