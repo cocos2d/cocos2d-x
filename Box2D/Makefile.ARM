@@ -13,7 +13,7 @@ include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DCCX_UNDER_UPHONE
-INCLUDE_PATH += -I. -I./Res
+INCLUDE_PATH += -I. -I./Res -I../
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
