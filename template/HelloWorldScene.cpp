@@ -9,21 +9,17 @@ CCScene* HelloWorld::scene()
 {
 	bool bRet = false;
 
-	// 'pScene' is an autorelease object
-	CCScene *pScene = CCScene::node();
+	// 'scene' is an autorelease object
+	CCScene *scene = CCScene::node();
 	
-	// 'pLayer' is an autorelease object
-	HelloWorld *pLayer = new HelloWorld;
-	pLayer->init();
+	// 'layer' is an autorelease object
+	HelloWorld *layer = HelloWorld::node();
 
 	// add layer as a child to scene
-	pScene->addChild(pLayer);
-
-	// release layer, it's "new" by us.
-	pLayer->release();
+	scene->addChild(layer);
 
 	// return the scene
-	return pScene;
+	return scene;
 }
 
 // on "init" you need to initialize your instance
