@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
-#include <tg3.h>
+#include <TG3.h>
 #include "NSString.h"
 #include "CCXFileUtils_uphone.h"
 #include "Cocos2dDefine.h"

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCTransition.h"
 #include "CCCamera.h"
-#include "cgpointextension.h"
+#include "CGPointextEnsion.h"
 #include "CCDirector.h"
 #include "CCTouchDispatcher.h"
 #include "CCIntervalAction.h"

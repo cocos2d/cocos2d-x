@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "CGGeometry.h"
 #include "CCTexture2D.h"
 #include "CGAffineTransform.h"
-#include "sstsd.h"
+#include "ssTsd.h"
 #include <string.h>
 
 using namespace std;
