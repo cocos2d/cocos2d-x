@@ -26,8 +26,10 @@ THE SOFTWARE.
 
 #include "config_platform.h"
 
-#ifdef CCX_PLATFORM_UPHONE
-#include "uphone/CCXUIImage_uphone.h"
+#if defined(CCX_PLATFORM_UPHONE)
+    #include "uphone/CCXUIImage_uphone.h"
+#elif defined(CCX_PLATFORM_WIN32)
+    #include "win32/CCXUIImage_win32.h"
 #else
 #error
 #endif // __CCX_UIIMAGE_PLATFORM_H__

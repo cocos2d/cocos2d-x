@@ -22,17 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+#ifndef __PLATFORM_UPHONE_CCTIME_H__
+#define __PLATFORM_UPHONE_CCTIME_H__
+namespace   cocos2d {
 
-#include "config_platform.h"
+struct cc_timeval
+{
+ 	long	tv_sec;		// seconds
+ 	long	tv_usec;    // microSeconds
+};
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
-#endif
+class CCTime 
+{
+public:
+	static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
+	static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
+};
+}//namespace   cocos2d 
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+#endif // __PLATFORM_UPHONE_NSTIME_H__

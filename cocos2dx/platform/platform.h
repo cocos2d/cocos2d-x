@@ -27,13 +27,19 @@ THE SOFTWARE.
 
 #include "config_platform.h"
 
-#ifdef CCX_PLATFORM_UPHONE
+#if defined(CCX_PLATFORM_UPHONE)
 	#include "uphone/CCTime.h"
 	#include "uphone/NSLock.h"
 	#include "uphone/Cocos2dTypes.h"
 	// #include "uphone/CCXGLExtFunc.h"
 	#include "uphone/CCXBitmapDC.h"
     #include "uphone/ZipUtils.h"
+#elif defined(CCX_PLATFORM_WIN32)
+    #include "win32/CCTime.h"
+    #include "win32/NSLock.h"
+    #include "win32/Cocos2dTypes.h"
+    #include "win32/CCXBitmapDC.h"
+    #include "win32/ZipUtils.h"
 #else 
     #error
 #endif

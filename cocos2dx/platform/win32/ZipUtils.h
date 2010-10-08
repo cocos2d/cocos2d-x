@@ -21,18 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __PLATFORM_WIN32_ZIPUTILS_H__
+#define __PLATFORM_WIN32_ZIPUTILS_H__
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+namespace cocos2d
+{
+    class ZipUtils
+	{
+	public:
+		/** 
+		* Inflates either zlib or gzip deflated memory. The inflated memory is
+		* expected to be freed by the caller.
+		*
+		* @returns the length of the deflated buffer
+		*
+		@since v0.8.1
+		*/
+		static int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
 
-#include "config_platform.h"
+	private:
+		static int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLengh);
+	};
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
-#endif
+} // end of namespace cocos2d
+#endif // __PLATFORM_WIN32_ZIPUTILS_H__
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__

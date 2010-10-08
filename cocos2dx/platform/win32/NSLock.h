@@ -22,17 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+#ifndef __PLATFORM_WIN32_PLATFORM_NSLOCK_H__
+#define __PLATFORM_WIN32_PLATFORM_NSLOCK_H__
 
-#include "config_platform.h"
+#include <windows.h>
+namespace   cocos2d {
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
-#endif
+class NSLock
+{
+public:
+	NSLock(void);
+	~NSLock(void);
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+	void lock(void);
+	void unlock(void);
+
+private:
+	CRITICAL_SECTION m_cs;
+};
+}//namespace   cocos2d 
+
+#endif // __PLATFORM_WIN32_PLATFORM_NSLOCK_H__

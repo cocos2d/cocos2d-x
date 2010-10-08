@@ -22,14 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCBitmapFontAtlas.h"
+
+#include "platform/platform.h"
 #include "NSMutableDictionary.h"
 #include "CCConfiguration.h"
 #include "CCDrawingPrimitives.h"
 #include "CCSprite.h"
 #include "CGPointExtension.h"
-//#include "platform/platform.h"
+
 #include "CCXFileUtils.h"
 #include "support/data_support/uthash.h"
+
 namespace cocos2d{
 	
 	//

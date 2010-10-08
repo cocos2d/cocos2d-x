@@ -28,6 +28,11 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 
 #include <math.h>
+
+#ifndef M_PI
+#define M_PI       3.14159265358979323846
+#endif
+
 namespace   cocos2d {
 
 void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
