@@ -7,8 +7,6 @@ using namespace cocos2d;
 
 CCScene* HelloWorld::scene()
 {
-	bool bRet = false;
-
 	// 'scene' is an autorelease object
 	CCScene *scene = CCScene::node();
 	
@@ -65,7 +63,6 @@ bool HelloWorld::init()
 	// add the label as a child to this layer
 	this->addChild(pLabel);
 	
-
 	return true;
 }
 
