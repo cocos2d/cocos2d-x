@@ -15,6 +15,9 @@ public:
 	
 	// a selector callback
 	virtual void menuCloseCallback(NSObject* pSender);
+
+	// implement the "static node()" method manually
+	LAYER_NODE_FUNC(HelloWorld);
 };
 
 #endif // _HELLOWORLD_SCENE_H_
