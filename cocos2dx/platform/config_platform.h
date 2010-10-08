@@ -25,19 +25,33 @@ THE SOFTWARE.
 // pre configure
 #ifdef _TRANZDA_VM_     // under uphone emulator
     #define CCX_PLATFORM_UPHONE
-#else
-//     #error  "no platform macro defined!"
+#elif   defined (WIN32) && defined (_WINDOWS)   // under win32pc
+    #define CCX_PLATFORM_WIN32
 #endif
 
 // user configure
 
-#if ! defined(CCX_PLATFORM_UPHONE) && defined(CCX_UNDER_UPHONE)
-	#define CCX_PLATFORM_UPHONE	// under uphone
-#endif
+// use these macros to set compiling environment if needed
 
+// #define CCX_PLATFORM_UPHONE
+// #define CCX_PLATFORM_WIN32
 
 // post configure
 
-#if ! defined(CCX_PLATFORM_UPHONE)
-#error "no platform macro defined!"
+// check user set platform
+#if defined(CCX_UNDER_UPHONE) || defined(CCX_UNDER_WIN32)
+    #undef CCX_PLATFORM_UPHONE
+    #undef CCX_PLATFORM_WIN32
+
+    #if defined(CCX_UNDER_UPHONE)
+        #define CCX_PLATFORM_UPHONE	// under uphone
+    #elif defined(CCX_UNDER_WIN32)
+        #define CCX_PLATFORM_WIN32
+    #endif
+
+#endif
+
+// check compiling platform
+#if ! defined(CCX_PLATFORM_UPHONE) && ! defined(CCX_PLATFORM_WIN32)
+    #error "no platform macro defined!"
 #endif

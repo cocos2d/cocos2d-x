@@ -24,9 +24,14 @@ THE SOFTWARE.
 
 #include "CCDrawingPrimitives.h"
 
-#include <math.h>
 #include <string.h>
 #include <GLES/gl.h>
+#include <cmath>
+
+#ifndef M_PI
+	#define M_PI       3.14159265358979323846
+#endif
+
 namespace   cocos2d {
 
 void ccDrawPoint(CGPoint point)
@@ -122,7 +127,7 @@ void ccDrawCircle(CGPoint center, float r, float a, int segs, bool drawLineToCen
 		++additionalSegment;
 	}
 
-	const float coef = 2.0f * (float)M_PI/segs;
+	const float coef = 2.0f * (float) (M_PI) /segs;
 
 	float *vertices = new float[2*(segs+2)]; //	float *vertices = (float *)malloc( sizeof(float)*2*(segs+2));
 	if( ! vertices )

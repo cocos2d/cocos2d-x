@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "CGGeometry.h"
 #include "CCTexture2D.h"
 #include "CGAffineTransform.h"
-#include "ssTsd.h"
+
 #include <string.h>
 
 using namespace std;
@@ -922,7 +922,7 @@ void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 	setTextureRect(pNewFrame->getRect(), pNewFrame->getOriginalSize());
 }
 
-void CCSprite::setDisplayFrame(const char *pszAnimationName, Int32 nFrameIndex)
+void CCSprite::setDisplayFrame(const char *pszAnimationName, int nFrameIndex)
 {
 	if (! m_pAnimations)
 	{

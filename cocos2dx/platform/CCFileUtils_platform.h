@@ -26,10 +26,12 @@ THE SOFTWARE.
 
 #include "config_platform.h"
 
-#ifdef CCX_PLATFORM_UPHONE
-#include "uphone/CCXFileUtils_uphone.h"
+#if defined(CCX_PLATFORM_UPHONE)
+    #include "uphone/CCXFileUtils_uphone.h"
+#elif defined(CCX_PLATFORM_WIN32)
+    #include "win32/CCXFileUtils_win32.h"
 #else
-#error
+    #error
 #endif // __CCX_FILEUTILS_PLATFORM_H__
 
 #endif	// end of __CCX_EGLVIEW_PLATFORM_H__

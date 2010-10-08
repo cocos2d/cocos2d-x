@@ -22,17 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+#ifndef __CCX_COMMON_WIN32__
+#define __CCX_COMMON_WIN32__
 
-#include "config_platform.h"
-
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
+#if defined(_USRDLL)
+#define CCX_DLL     __declspec(dllexport)
+#else 		/* use a DLL library */
+#define CCX_DLL     __declspec(dllimport)
 #endif
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+#endif	// end of __CCX_COMMON_WIN32__

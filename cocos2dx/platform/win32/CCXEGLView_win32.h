@@ -22,17 +22,53 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+#ifndef __CCX_EGLVIEW_WIN32_H__
+#define __CCX_EGLVIEW_WIN32_H__
 
-#include "config_platform.h"
+#include <Windows.h>
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
-#endif
+#include "Cocos2dDefine.h"
+#include "CGGeometry.h"
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+namespace   cocos2d {
+class NSSet;
+class CCTouch;
+class EGLTouchDelegate;
+
+class CCXEGL;
+
+class CCX_DLL CCXEGLView
+{
+public:
+
+    CCXEGLView();
+    virtual ~CCXEGLView();
+
+	CGRect  getFrame();
+    CGSize  getSize();
+    bool    isOpenGLReady();
+    void    release();
+    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
+    void    swapBuffers();
+
+
+	virtual bool Create(LPCTSTR pTitle, int w, int h);
+	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+
+	HWND    getHWnd();
+
+private:
+
+    bool                m_bCaptured;
+    NSSet *             m_pSet;
+    CCTouch *           m_pTouch;
+    EGLTouchDelegate *  m_pDelegate;
+
+    CCXEGL *            m_pEGL;
+
+	HWND				m_hWnd;
+};
+
+}   // end of namespace   cocos2d
+
+#endif	// end of __CCX_EGLVIEW_WIN32_H__

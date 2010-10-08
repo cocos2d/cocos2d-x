@@ -22,17 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+#ifndef __SUPPORT_COCOS2D_TYPES_H__
+#define __SUPPORT_COCOS2D_TYPES_H__
+namespace   cocos2d {
 
-#include "config_platform.h"
+typedef signed char         INT8;	
+typedef unsigned char       UINT8;
+typedef signed short        INT16;
+typedef unsigned short      UINT16;
+typedef signed int          INT32;
+typedef unsigned int        UINT32;
+typedef long long           INT64;
+typedef unsigned long long  UINT64;	
+}//namespace   cocos2d 
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
-#endif
-
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+#endif // __SUPPORT_COCOS2D_TYPES_H__

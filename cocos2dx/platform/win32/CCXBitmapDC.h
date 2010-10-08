@@ -21,18 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __CCXBITMAP_DC_H__
+#define __CCXBITMAP_DC_H__
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+#include <Windows.h>
+#include "ccTypes.h"
+#include "Cocos2dDefine.h"
+#include "CCXUIImage.h"
 
-#include "config_platform.h"
+namespace cocos2d{
+	class CCX_DLL CCXBitmapDC
+	{
+	public:
+		CCXBitmapDC(int width, int height);
+		CCXBitmapDC(const char *text, 
+					CGSize dimensions = CGSizeZero,
+					UITextAlignment alignment = UITextAlignmentCenter,
+					const char *fontName = NULL,
+					float fontSize = 0);
+		~CCXBitmapDC(void);
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
-#endif
+		HBITMAP getBitmap(void);
+		void * getBuffer(){ return NULL; }
+	protected:
+        HDC     m_hMemDC;
+        HBITMAP m_hBmp;
+        HGDIOBJ m_hOld;
+	};
+}
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+#endif //__CCXBITMAP_DC_H__

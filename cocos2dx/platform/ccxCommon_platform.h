@@ -27,8 +27,10 @@ THE SOFTWARE.
 
 #include "config_platform.h"
 
-#ifdef CCX_PLATFORM_UPHONE
+#if defined(CCX_PLATFORM_UPHONE)
     #include "uphone/ccxCommon_uphone.h"
+#elif defined(CCX_PLATFORM_WIN32)
+    #include "win32/ccxCommon_win32.h"
 #else
     #error
 #endif

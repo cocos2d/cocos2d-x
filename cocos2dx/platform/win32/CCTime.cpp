@@ -22,17 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_PLATFORM_H__
-#define __CCX_EGLVIEW_PLATFORM_H__
+#include "CCTime.h"
 
-#include "config_platform.h"
+#include <Windows.h>
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXEGLView_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXEGLView_win32.h"
-#else
-    #error
-#endif
+namespace   cocos2d {
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+// although it is not the same as gettimeofday as unix
+// but we only use the diffrences of tow values
+int CCTime::gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp)
+{
+	unsigned int ms = GetTickCount();
+	tp->tv_sec = ms / 1000;
+	tp->tv_usec = (ms % 1000) * 1000;
+	return 0;
+}
+
+void CCTime::timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end)
+{
+	out->tv_sec = end->tv_sec - start->tv_sec;
+	out->tv_usec = end->tv_usec - start->tv_usec;
+}
+
+}//namespace   cocos2d 
