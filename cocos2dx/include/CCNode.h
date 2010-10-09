@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 #include "selector_protocol.h"
 
-#include <gles/gl.h>
+#include <GLES/gl.h>
 
 namespace   cocos2d {
 class CCCamera;
