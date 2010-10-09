@@ -22,7 +22,7 @@ public:
 
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
-	
+
 	void addTarget();
 
 	void ccTouchesEnded(cocos2d::NSSet* touches, cocos2d::UIEvent* event);
@@ -33,12 +33,14 @@ public:
 	// scehdule selector, timer
 	void gameLogic(cocos2d::ccTime dt);
 
-	// a selector callback
-	void menuCloseCallback(cocos2d::NSObject* pSender);
-
 	// update
 	void update(cocos2d::ccTime dt);
 
+	// a selector callback
+	void menuCloseCallback(cocos2d::NSObject* pSender);
+
+    LAYER_NODE_FUNC(HelloWorld);
+    
 	static cocos2d::CCScene* HelloWorld::scene();
 };
 

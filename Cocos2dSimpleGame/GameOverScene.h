@@ -16,21 +16,7 @@ class GameOverLayer : public cocos2d::CCColorLayer
 public:
 	virtual ~GameOverLayer();
 
-	// LAYER_NODE_FUNC(GameOverLayer);
-	static GameOverLayer* node()
-	{
-		GameOverLayer *pRet = new GameOverLayer();
-		if (pRet && pRet->init())
-		{
-			pRet->autorelease();
-			return pRet;
-		}
-		else
-		{
-			CCX_SAFE_DELETE(pRet)
-			return NULL;
-		}
-	};
+	LAYER_NODE_FUNC(GameOverLayer);
 
 	bool init();
 	void gameOverDone();
@@ -46,21 +32,8 @@ class GameOverScene : public cocos2d::CCScene
 public:
 	virtual ~GameOverScene();
 	bool init();
-	// SCENE_NODE_FUNC(GameOverScene);
-	static GameOverScene* node()
-	{
-		GameOverScene *pRet = new GameOverScene();
-		if (pRet && pRet->init())
-		{
-			pRet->autorelease();
-			return pRet;
-		}
-		else
-		{
-			CCX_SAFE_DELETE(pRet)
-			return NULL;
-		}
-	};
+	
+	SCENE_NODE_FUNC(GameOverScene);
 
 public:
 	inline GameOverLayer* getLayer() {return _layer; };
