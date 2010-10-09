@@ -42,7 +42,8 @@ namespace cocos2d{
 		~CCXBitmapDC(void);
 
 		HBITMAP getBitmap(void);
-		void * getBuffer(){ return NULL; }
+		HDC		getDC(void);
+
 	protected:
         HDC     m_hMemDC;
         HBITMAP m_hBmp;

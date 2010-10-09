@@ -33,6 +33,8 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
+class CCXBitmapDC;
+
 /// @cond
 typedef struct
 {
@@ -52,7 +54,7 @@ class CCX_DLL UIImage
 {
 public:
 	UIImage(void);
- 	UIImage(HBITMAP hBitmap);
+ 	UIImage(CCXBitmapDC * pBmpDC);
 	
 	~UIImage(void);
 

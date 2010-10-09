@@ -32,41 +32,83 @@ namespace cocos2d {
 		m_hBmp   = CreateBitmap(width, height, 1, 32, NULL);
         m_hOld   = SelectObject(m_hMemDC, m_hBmp);
 	}
-// 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
-// 	{
-// 		// create font
-// 		HFONT hFont = NULL;
-// // 		font.Create(0, (Int32)fontSize);
-// 
-// 		// text
-// 		int len = strlen(text);
-// 		WCHAR *pText = new WCHAR[len + 1];
-//         MultiByteToWideChar(CP_ACP, 0, text, len, pText, len + 1);
-// 
-//         DWORD dwStyle = 0;
-// 
-// 		switch (alignment)
-// 		{
-// 		case UITextAlignmentLeft:
-// 			dwStyle |= GUI_API_STYLE_ALIGNMENT_LEFT;
-// 			break;
-// 		case UITextAlignmentCenter:
-// 			dwStyle |= GUI_API_STYLE_ALIGNMENT_CENTER;
-// 			break;
-// 		case UITextAlignmentRight:
-// 			dwStyle |= GUI_API_STYLE_ALIGNMENT_RIGHT;
-// 			break;
-// 		default:
-// 			dwStyle |= GUI_API_STYLE_ALIGNMENT_CENTER;
-// 			break;
-// 		}
-// 
-//         FillRect(m_hMemDC, NULL, )
-// 		
-//  		dc.DrawTextInRectangleEx(pText, 0, RGBA(255,255,255,255), RGBA(0,0,0,255), font, &rect, styles);
-// 
-// 		delete [] pText;
-// 	}
+ 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+ 	{
+		HWND hWnd  = CCDirector::getSharedDirector()->getOpenGLView()->getHWnd();
+		HDC hWndDC = GetDC(hWnd);
+		m_hMemDC = CreateCompatibleDC(hWndDC);
+		ReleaseDC(hWnd, hWndDC);
+
+		// create font
+		HFONT hFont = NULL;
+		HFONT hNewFont = NULL;
+		LOGFONT lFont = {0};
+		lFont.lfHeight = -MulDiv((int)fontSize, GetDeviceCaps(m_hMemDC, LOGPIXELSY), 72);
+		MultiByteToWideChar(CP_ACP, 0, fontName, -1, lFont.lfFaceName, LF_FACESIZE);
+		hFont = CreateFontIndirect(&lFont);
+		if (hFont)
+		{
+			hNewFont = hFont;
+		}
+		else
+		{
+			hNewFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+		}
+		HGDIOBJ hOldFont = SelectObject(m_hMemDC, hNewFont);
+
+		// text
+		int len = strlen(text) + 1;
+		WCHAR *pText = new WCHAR[len];
+        MultiByteToWideChar(CP_ACP, 0, text, len, pText, len);
+
+		// calculate text size
+		SIZE extent;
+		if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
+		{
+			GetTextExtentPoint(m_hMemDC, pText, len, &extent);
+		}
+		else
+		{
+			extent.cx = (int)dimensions.width;
+			extent.cy = (int)dimensions.height;
+		}
+
+		// create hbitmap
+		m_hBmp = CreateBitmap(extent.cx, extent.cy, 1, 32, NULL);
+		m_hOld = SelectObject(m_hMemDC, m_hBmp);
+
+		// set style
+        DWORD dwStyle = DT_SINGLELINE | DT_VCENTER;
+
+		switch (alignment)
+		{
+		case UITextAlignmentLeft:
+			dwStyle |= DT_LEFT;
+			break;
+		case UITextAlignmentCenter:
+			dwStyle |= DT_CENTER;
+			break;
+		case UITextAlignmentRight:
+			dwStyle |= DT_RIGHT;
+			break;
+		default:
+			dwStyle |= DT_CENTER;
+			break;
+		}
+
+		// draw text
+		RECT rc = {0, 0, extent.cx, extent.cy};
+		SetBkMode(m_hMemDC, TRANSPARENT);
+		DrawText(m_hMemDC, pText, len, &rc, dwStyle);
+
+		// free resource
+ 		delete [] pText;
+		SelectObject(m_hMemDC, hOldFont);
+		if (hFont)
+		{
+			DeleteObject(hFont);
+		}
+ 	}
 
 	CCXBitmapDC::~CCXBitmapDC(void)
 	{
@@ -78,5 +120,10 @@ namespace cocos2d {
 	HBITMAP CCXBitmapDC::getBitmap()
 	{
 		return m_hBmp;
+	}
+
+	HDC CCXBitmapDC::getDC()
+	{
+		return m_hMemDC;
 	}
 }

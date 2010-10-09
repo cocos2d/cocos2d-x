@@ -154,8 +154,7 @@ namespace cocos2d {
  		int tx = (int)m_pTexture->getContentSize().width;
  		int ty = (int)m_pTexture->getContentSize().height;
  
- 		CCXBitmapDC *pBitmap = new CCXBitmapDC(tx, ty);
- 		void *pBuffer = pBitmap->getBuffer();
+ 		void * pBuffer = new char[tx * ty * 4];
  
  		this->begin();
  		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
@@ -163,6 +162,7 @@ namespace cocos2d {
  
  		UIImage *pRet = new UIImage();
  		pRet->initWithBuffer(tx, ty, (unsigned char*)pBuffer);
+		delete[] pBuffer;
  		return pRet;
 	}
 

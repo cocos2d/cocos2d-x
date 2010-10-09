@@ -204,9 +204,18 @@ void _CheckPath()
 	if (! s_pszResourcePath[0])
 	{
 		WCHAR  wszPath[MAX_PATH];
-		WideCharToMultiByte(CP_ACP, 0, wszPath, 
+		int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
 			GetModuleFileName(NULL, wszPath, MAX_PATH), 
 			s_pszResourcePath, MAX_PATH, NULL, NULL);
+
+		for (int i = nNum; i >= 0; --i)
+		{
+			if (L'\\' == s_pszResourcePath[i])
+			{
+				s_pszResourcePath[i + 1] = 0;
+				break;
+			}
+		}
 	}
 }
 

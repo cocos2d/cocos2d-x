@@ -26,6 +26,8 @@ THE SOFTWARE.
 
 #include "png.h"
 
+#include "CCXBitmapDC.h"
+
 // in order to compile correct in andLinux, because ssTypes(uphone)
 // and jmorecfg.h all typedef xxx INT32
 #define  QGLOBAL_H
@@ -79,38 +81,36 @@ UIImage::UIImage(void)
 	m_imageInfo.bitsPerComponent = 0;
 }
 
-UIImage::UIImage(HBITMAP hBitmap)
+UIImage::UIImage(CCXBitmapDC * pBmpDC)
 {
-// 	if (bitmap)
-// 	{
-// 		m_pBitmap = bitmap->DupBitmapTo32();
-// 
-// 		// init imageinfo
-//  		m_imageInfo.data = m_pBitmap->GetDataPtr();
-//  		m_imageInfo.height = m_pBitmap->GetHeight();
-//  		m_imageInfo.width = m_pBitmap->GetWidth();
-//  		m_imageInfo.hasAlpha = true;//m_pBitmap->HasAlphaData();
-//  		// uphone only support predefined
-//  		m_imageInfo.isPremultipliedAlpha = true;
-//  		m_imageInfo.bitsPerComponent = m_pBitmap->GetDepth() / 4;
-// 	}
+	UIImage();
+	if (! pBmpDC)
+	{
+		return;
+	}
+
+	struct
+	{
+		BITMAPINFOHEADER bmiHeader;
+		int mask[4];
+	} bi = {0};
+	bi.bmiHeader.biSize = sizeof(bi.bmiHeader);
+	GetDIBits(pBmpDC->getDC(), pBmpDC->getBitmap(), 0, 0, NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
+
+	// init imageinfo
+ 	m_imageInfo.height	= bi.bmiHeader.biHeight;
+ 	m_imageInfo.width	= bi.bmiHeader.biWidth;
+ 	m_imageInfo.bitsPerComponent = bi.bmiHeader.biBitCount / 4;
+ 	m_imageInfo.hasAlpha = true;
+ 	m_imageInfo.isPremultipliedAlpha = false;
+ 	m_imageInfo.data = new BYTE[m_imageInfo.height * m_imageInfo.width * m_imageInfo.bitsPerComponent];
+	GetDIBits(pBmpDC->getDC(), pBmpDC->getBitmap(), 0, m_imageInfo.height, m_imageInfo.data, 
+		(LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 }
 
 UIImage::~UIImage(void)
 {
-// 	if (m_pBitmap)
-// 	{
-// 		// the m_imageInfo's data points to m_pBitmap,
-// 		// so we don't release m_imageInfo's data
-// 		m_pBitmap->Destroy();
-// 	}
-//	else
-	{
-		if (m_imageInfo.data)
-		{
-			delete []m_imageInfo.data;
-		}
-	}
+	delete []m_imageInfo.data;
 }
 
 bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageType)
@@ -406,7 +406,7 @@ bool UIImage::initWithData(unsigned char *pBuffer, int nLength)
 
 bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 {
-	/// @todo
+	/// @todo need copy pBuffer data
 	return false;
 }
 

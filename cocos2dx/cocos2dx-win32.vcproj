@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -65,6 +65,8 @@
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Imagination Technologies\POWERVR SDK\OGLES-1.1_WINDOWS_PCEMULATION_2.06.26.0649\Builds\OGLES\WindowsPC\Lib&quot;;d:/Work7/PRJ_TG3/LIB/Win32Lib;D:\Work7\PRJ_TG3\Common\SoftSupport"
+				IgnoreAllDefaultLibraries="false"
+				IgnoreDefaultLibraryNames="MSVCRT.lib;LIBCMTD.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -93,8 +95,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			>
 			<Tool
@@ -114,12 +116,14 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;"
+				AdditionalIncludeDirectories="d:\Work7\PRJ_TG3\Include\ThirdParty\iconv;d:\Work7\PRJ_TG3\Include\ThirdParty\zlib;d:\Work7\PRJ_TG3\Include\ThirdParty\libpng;d:\Work7\PRJ_TG3\Include\ThirdParty\libjpeg;d:\Work7\PRJ_TG3\Include\ThirdParty\libxml2;&quot;C:\Imagination Technologies\POWERVR SDK\OGLES-1.1_WINDOWS_PCEMULATION_2.06.26.0649\Builds\OGLES\Include&quot;;.\include;.\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4996;4267"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -132,7 +136,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;C:\Imagination Technologies\POWERVR SDK\OGLES-1.1_WINDOWS_PCEMULATION_2.06.26.0649\Builds\OGLES\WindowsPC\Lib&quot;;d:/Work7/PRJ_TG3/LIB/Win32Lib;D:\Work7\PRJ_TG3\Common\SoftSupport"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

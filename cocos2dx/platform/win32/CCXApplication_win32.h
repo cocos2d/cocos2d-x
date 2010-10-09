@@ -73,12 +73,12 @@ public:
     */
     static CCXApplication * getSharedApplication();
 
-	virtual BOOL InitInstance();
-	virtual int ExitInstance(); // return app exit code
+	virtual bool InitInstance();
 	virtual int Run();
 
-private:
+protected:
     HINSTANCE m_hInstance;
+	HACCEL    m_hAccelTable;
 };
 
 }       // end of namespace   cocos2d
