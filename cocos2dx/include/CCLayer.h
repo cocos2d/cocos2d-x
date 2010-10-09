@@ -166,5 +166,23 @@ public:
 };
 }//namespace   cocos2d 
 
+// for the subclass of CCLayer, each has to implement the static "node" method 
+#define LAYER_NODE_FUNC(layer) \
+static layer* node() \
+{ \
+	layer *pRet = new layer(); \
+	if (pRet && pRet->init()) \
+	{ \
+		pRet->autorelease(); \
+		return pRet; \
+	} \
+	else \
+	{ \
+		delete pRet; \
+		pRet = NULL; \
+		return NULL; \
+	} \
+}; 
+
 #endif // __CCLAYER_H__
 
