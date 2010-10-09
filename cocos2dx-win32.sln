@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocos2dx-win32", "cocos2dx\cocos2dx-win32.vcproj", "{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Helloworld-win32", "Helloworld-win32\Helloworld-win32.vcproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +18,10 @@ Global
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Debug|Win32.Build.0 = Debug|Win32
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|Win32.ActiveCfg = Release|Win32
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|Win32.Build.0 = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.Build.0 = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.ActiveCfg = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

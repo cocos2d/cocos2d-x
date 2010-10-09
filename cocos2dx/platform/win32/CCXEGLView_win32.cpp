@@ -267,6 +267,8 @@ bool CCXEGLView::Create(LPCTSTR pTitle, int w, int h)
 
 LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	PAINTSTRUCT ps;
+
 	switch (message)
 	{
 	case WM_MBUTTONDOWN:
@@ -298,10 +300,8 @@ LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_PAINT:
-		if (m_pEGL)
-		{
-			m_pEGL->swapBuffers();
-		}
+		BeginPaint(m_hWnd, &ps);
+		EndPaint(m_hWnd, &ps);
 		break;
 
 	case WM_DESTROY:

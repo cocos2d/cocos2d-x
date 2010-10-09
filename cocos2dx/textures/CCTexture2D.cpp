@@ -413,7 +413,7 @@ bool CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlig
 {
 	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
 
-	UIImage *pImage = new UIImage(pBitmapDC->getBitmap());
+	UIImage *pImage = new UIImage(pBitmapDC);
 
 	initWithImage(pImage);
 
