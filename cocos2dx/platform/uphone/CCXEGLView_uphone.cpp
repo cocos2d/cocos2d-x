@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "TG3.h"
 
 #include "EGL/egl.h"
-#include "gles/gl.h"
+#include "GLES/gl.h"
 
 #include "Cocos2dDefine.h"
 #include "NSSet.h"
