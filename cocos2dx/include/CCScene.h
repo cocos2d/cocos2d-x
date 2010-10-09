@@ -59,4 +59,22 @@ protected:
 };
 }//namespace   cocos2d 
 
+// for the subclass of CCScene, each has to implement the static "node" method 
+#define SCENE_NODE_FUNC(scene) \
+static scene* node() \
+{ \
+	scene *pRet = new scene(); \
+	if (pRet && pRet->init()) \
+	{ \
+		pRet->autorelease(); \
+		return pRet; \
+	} \
+	else \
+	{ \
+		delete pRet; \
+		pRet = NULL; \
+		return NULL; \
+	} \
+}; 
+
 #endif // __CCSCENE_H__
