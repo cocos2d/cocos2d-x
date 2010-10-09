@@ -1,8 +1,9 @@
 
+#include "SimpleAudioEngine/SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
-// #include "SimpleAudioEngine.h"
 #include "GameOverScene.h"
 #include <math.h>
+
 using namespace cocos2d;
 
 #define PATH_CLOSE_NORMAL		"/NEWPLUS/TDA_DATA/UserData/CloseNormal.png"
@@ -11,25 +12,22 @@ using namespace cocos2d;
 #define IMG_PROJECTILE			"/NEWPLUS/TDA_DATA/UserData/projectile.png"
 #define IMG_TARGET				"/NEWPLUS/TDA_DATA/UserData/target.png"
 
+#define SOUND_BACKGROUND		"/NEWPLUS/TDA_DATA/UserData/background-music-aac.mp3"
+#define SOUND_EFFECT			"/NEWPLUS/TDA_DATA/UserData/pew-pew-lei.wav"
+
 CCScene* HelloWorld::scene()
 {
-	bool bRet = false;
-
-	// 'pScene' is an autorelease object
-	CCScene *pScene = CCScene::node();
+	// 'scene' is an autorelease object
+	CCScene *scene = CCScene::node();
 	
-	// 'pLayer' is an autorelease object
-	HelloWorld *pLayer = new HelloWorld;
-	pLayer->init();
+	// 'layer' is an autorelease object
+	HelloWorld *layer = HelloWorld::node();
 
 	// add layer as a child to scene
-	pScene->addChild(pLayer);
-
-	// release layer, it's "new" by us.
-	pLayer->release();
+	scene->addChild(layer);
 
 	// return the scene
-	return pScene;
+	return scene;
 }
 
 void HelloWorld::spriteMoveFinished(CCNode* sender)
@@ -51,9 +49,9 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 	}
 }
 
-
 void HelloWorld::addTarget()
 {
+
 	TagSprite *target = (TagSprite*)CCSprite::spriteWithFile(IMG_TARGET, CGRectMake(0,0,27,40));
 
 	// Determine where to spawn the target along the Y axis
@@ -85,7 +83,6 @@ void HelloWorld::addTarget()
 	// Add to targets array
 	target->setTag(1);
 	_targets->addObject(target);
-
 }
 
 void HelloWorld::gameLogic(ccTime dt)
@@ -93,14 +90,13 @@ void HelloWorld::gameLogic(ccTime dt)
 	this->addTarget();
 }
 
-
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
 	// always call "super" init
 	if ( !CCColorLayer::initWithColor( ccc4(255,255,255,255) ) )
-	{
-		return false;
+    {
+ 		return false;
 	}
 
 	// cocos2d-uphone: add a menu item with "X" image, which is clicked to quit the program
@@ -142,11 +138,10 @@ bool HelloWorld::init()
 	this->schedule( schedule_selector(HelloWorld::update) );
 
 	// Start up the background music
-	// SimpleAudioEngine->getSharedEngine()->playBackgroundMusic("background-music-aac.caf");
+	SimpleAudioEngine::getSharedSimpleAudioEngine()->playBackgroundMusic(SOUND_BACKGROUND, true);
 
-	return true;
+ 	return true;
 }
-
 
 void HelloWorld::update(ccTime dt)
 {
@@ -213,9 +208,9 @@ void HelloWorld::update(ccTime dt)
 	projectilesToDelete->release();
 }
 
-
 void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 {
+
 	// Choose one of the touches to work with
 	CCTouch* touch = (CCTouch*)( touches->anyObject() );
 	CGPoint location = touch->locationInView(touch->view());
@@ -237,7 +232,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 	this->addChild(projectile);
 
 	// Play a sound!
-	// SimpleAudioEngine->getSharedEngine()->playEffect("pew-pew-lei.caf");
+	SimpleAudioEngine::getSharedSimpleAudioEngine()->playEffect(SOUND_EFFECT);
 
 	// Determine where we wish to shoot the projectile to
 	float realX = winSize.width + (projectile->getContentSize().width / 2);
@@ -284,6 +279,8 @@ HelloWorld::~HelloWorld()
 		_projectiles->release();
 		_projectiles = NULL;
 	}
+
+	printf("HelloWorld, Layer destructor\n");
 }
 
 void HelloWorld::menuCloseCallback(NSObject* pSender)

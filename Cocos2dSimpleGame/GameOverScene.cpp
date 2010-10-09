@@ -28,8 +28,8 @@ bool GameOverScene::init()
 
 GameOverScene::~GameOverScene()
 {
-	_layer->release();
-	_layer = NULL;
+	// _layer->release();
+	// _layer = NULL;
 }
 
 //////////////////////////////
@@ -63,6 +63,6 @@ void GameOverLayer::gameOverDone()
 
 GameOverLayer::~GameOverLayer()
 {
-	_label->release();
-	_label = NULL;
+	// _label->release();
+	// _label = NULL;
 }
