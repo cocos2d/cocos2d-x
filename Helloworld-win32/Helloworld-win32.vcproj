@@ -164,6 +164,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy /Y $(ProjectDir)HelloWorld.png $(OutDir)"
 			/>
 		</Configuration>
 	</Configurations>
