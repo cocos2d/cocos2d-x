@@ -271,7 +271,7 @@ LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
-	case WM_MBUTTONDOWN:
+	case WM_LBUTTONDOWN:
 		if (m_pDelegate && m_pTouch && MK_LBUTTON == wParam)
 		{
 			m_bCaptured = true;
@@ -289,7 +289,7 @@ LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
-	case WM_MBUTTONUP:
+	case WM_LBUTTONUP:
 		if (MK_LBUTTON == wParam && m_bCaptured)
 		{
 			m_pTouch->SetTouchInfo(0, (float)LOWORD(lParam), (float)HIWORD(lParam));

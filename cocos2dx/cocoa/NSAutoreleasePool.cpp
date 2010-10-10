@@ -136,9 +136,12 @@ void NSPoolManager::push()
 
 void NSPoolManager::pop()
 {
- 	int nCount = m_pReleasePoolStack->count();
+    if (! m_pCurReleasePool)
+    {
+        return;
+    }
 
-	assert(m_pCurReleasePool);
+ 	int nCount = m_pReleasePoolStack->count();
 
 	m_pCurReleasePool->clear();
  

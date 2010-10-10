@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\cocos2dx\include;..\cocos2dx;&quot;C:\Imagination Technologies\POWERVR SDK\OGLES-1.1_WINDOWS_PCEMULATION_2.06.26.0649\Builds\OGLES\Include&quot;"
+				AdditionalIncludeDirectories="..\cocos2dx\include;..\cocos2dx;..\cocos2dx\platform\win32\third_party\OGLES\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="C:\Imagination Technologies\POWERVR SDK\OGLES-1.1_WINDOWS_PCEMULATION_2.06.26.0649\Builds\OGLES\WindowsPC\Lib"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -117,6 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="..\cocos2dx\include;..\cocos2dx;..\cocos2dx\platform\win32\third_party\OGLES\Include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -136,7 +137,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="C:\Imagination Technologies\POWERVR SDK\OGLES-1.1_WINDOWS_PCEMULATION_2.06.26.0649\Builds\OGLES\WindowsPC\Lib"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
