@@ -44,7 +44,6 @@ bool HelloWorldApplication::initCocos2d()
 {
 	// init director
 	CCDirector::getSharedDirector()->setOpenGLView(&m_MainForm);
-	CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	// load background image texture and get window size
 	CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
@@ -73,9 +72,7 @@ bool HelloWorldApplication::initCocos2d()
 
 bool HelloWorldApplication::InitInstance()
 {
-	m_MainForm.Create(L"HelloWorld", 320, 480);
-// 	ShowWindow(m_MainForm.getHWnd(), SW_HIDE);
-	return true;
+	return m_MainForm.Create(L"HelloWorld", 480, 320);
 }
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
