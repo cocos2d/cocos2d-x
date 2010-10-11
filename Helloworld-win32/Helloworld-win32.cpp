@@ -9,7 +9,7 @@ using namespace cocos2d;
 
 #define IMG_PATH        "HelloWorld.png"
 
-static HINSTANCE g_hInstance;
+static HINSTANCE s_hInstance;
 
 //////////////////////////////////////////////////////////////////////////
 // implement MyLayer
@@ -83,12 +83,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	g_hInstance = hInstance;
+	s_hInstance = hInstance;
 
+	int nRet = 0;
 	HelloWorldApplication app;
 	if (app.InitInstance() && app.initCocos2d())
 	{
-		app.Run();
+		nRet = app.Run();
 	}
-	return 0;
+	return nRet;
 }
