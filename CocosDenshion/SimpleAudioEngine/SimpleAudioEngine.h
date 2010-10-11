@@ -102,7 +102,7 @@ protected:
     bool    m_bWillPlayBackgroundMusic;
 
     SoundPlayer m_obBackPlayer;
-    PlayerArray m_EffectPlayers;
+    PlayerArray* m_pEffectPlayers;
 
     // use hash map to save the effects loaded
     typedef struct _hashElement
