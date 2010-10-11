@@ -1,9 +1,7 @@
 
 #include "HelloWorldScene.h"
+#include "Resource.h"
 using namespace cocos2d;
-
-#define PATH_CLOSE_NORMAL		"/NEWPLUS/TDA_DATA/UserData/CloseNormal.png"
-#define PATH_CLOSE_SELECTED		"/NEWPLUS/TDA_DATA/UserData/CloseSelected.png"
 
 CCScene* HelloWorld::scene()
 {
@@ -36,8 +34,8 @@ bool HelloWorld::init()
 
 	// add a "close" icon to exit the progress. it's an autorelease object
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
-										PATH_CLOSE_NORMAL, 
-										PATH_CLOSE_SELECTED, 
+										(ResourceNames[0]).c_str(),
+										(ResourceNames[1]).c_str(),
 										this,
 										menu_selector(HelloWorld::menuCloseCallback) );
 	pCloseItem->setPosition( ccp(CCDirector::getSharedDirector()->getWinSize().width - 20, 20) );

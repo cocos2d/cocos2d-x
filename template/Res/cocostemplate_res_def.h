@@ -18,4 +18,6 @@
 
 #define COCOST_ID_Form1002  1073742826 /*"Main"*/
 
+#define COCOST_ID_BITMAP_CloseNormal  1073742827 
+#define COCOST_ID_BITMAP_CloseSelected  1073742828 
 #endif

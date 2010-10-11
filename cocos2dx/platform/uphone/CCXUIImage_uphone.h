@@ -25,9 +25,14 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_UIIMAGE_H__
 #define __PLATFORM_UPHONE_UIIMAGE_H__
 
+#include <map>
 #include <string>
 #include "ccxCommon.h"
 #include "CCRenderTexture.h"
+
+class TBitmap;
+class TResourceLib;
+struct AppResourceEntry;
 
 namespace   cocos2d {
 class CCXBitmapDC;
@@ -42,6 +47,22 @@ typedef struct
 	bool			isPremultipliedAlpha;
 	unsigned char   *data;
 } tImageInfo;
+
+typedef std::map<std::string, int> ResourceImageMap;
+
+class ResourceHandle
+{
+public:
+    ResourceHandle();
+    ~ResourceHandle();
+
+    void setResourceEntry(const AppResourceEntry* pResEntry);
+    void release();
+    const TBitmap* LoadConstBitmap(int nResID);
+
+private:
+    TResourceLib* m_pResLib;
+};
 /// @endcond
 
 /**
@@ -73,6 +94,7 @@ public:
 	bool initWithData(unsigned char *pBuffer, int nLength);
 
 	/// @cond
+    bool initWithBitmap(const TBitmap* pBmp);
 	bool initWithBuffer(int tx, int ty, unsigned char *pBuffer);
 	bool save(const std::string &strFileName, int nFormat);
 	/// @endcond
@@ -94,6 +116,12 @@ public:
 
 	/** get the image data */
 	unsigned char* getData(void);
+
+    /** set the Resource Entry */
+    static void setResourceEntry(const AppResourceEntry* pResEntry);
+
+    /** set the map between UIImage key and ResID */
+    static void setImageMap(const std::string keys[], const int values[], int nCount);
 
 private:
     bool loadPng(const char* strFileName);

@@ -12,7 +12,7 @@ const  ResourceRegisterEntry		ResRegList_cocosTemplate[]  =
 	TG_RESOURCE_DEFINE
 };
 
-const  AppResourceEntry		cocosTemplateResourceEntry  =
+extern const  AppResourceEntry		cocosTemplateResourceEntry  =
 {
 	(ResourceRegisterEntry*)ResRegList_cocosTemplate,                    //  res  list  in  this  app
 		sizeof(ResRegList_cocosTemplate) /  sizeof(ResourceRegisterEntry),    //number  of  item  in  res
@@ -23,7 +23,7 @@ const  AppResourceEntry		cocosTemplateResourceEntry  =
 Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
 	AppDelegate app;
-	// app.WM_SetResourceEntry(&cocosTemplateResourceEntry);
+	app.WM_SetResourceEntry(&cocosTemplateResourceEntry);
 	app.Run();
 
 	return 1;

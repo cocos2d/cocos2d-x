@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCXUIImage_uphone.h"
-
-#include <TG3.h>
+#include "CCXFileUtils.h"
+#include "TG3.h"
 #include "png.h"
 
 #include "CCXBitmapDC.h"
@@ -52,6 +52,8 @@ typedef struct
 	int offset;
 }tImageSource;
 
+static ResourceImageMap s_ImgMap;
+static ResourceHandle   s_HRes;
 
 // because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
 // the function as a static function
@@ -133,7 +135,26 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 		bRet = false;
 		break;
 	}
-    
+
+    if (!bRet)
+    {
+        // attempt load image from the ResourceImageMap when can't find the image file.
+        ResourceImageMap::iterator iter;
+        iter = s_ImgMap.find(strPath);
+
+        do
+        {
+            CCX_BREAK_IF(iter == s_ImgMap.end());
+
+            const TBitmap* pBmp = s_HRes.LoadConstBitmap(iter->second);
+
+            CCX_BREAK_IF(!pBmp);
+
+            initWithBitmap(pBmp);
+            bRet = true;
+        } while (0);
+    }
+
 	return bRet;
 }
 
@@ -150,6 +171,32 @@ unsigned int UIImage::height(void)
 bool UIImage::isAlphaPixelFormat(void)
 {
 	return m_imageInfo.hasAlpha;
+}
+
+void UIImage::setResourceEntry(const AppResourceEntry* pResEntry)
+{
+    if (pResEntry)
+    {
+        s_HRes.setResourceEntry(pResEntry);
+    }
+}
+
+void UIImage::setImageMap(const std::string keys[], const int values[], int nCount)
+{
+    // first, clear the map before
+    if (!s_ImgMap.empty())
+    {
+        s_ImgMap.clear();
+    }
+
+    // second, insert the pairs
+    for (int i = 0; i < nCount; ++i)
+    {
+        std::string key = CCFileUtils::fullPathFromRelativePath((keys[i]).c_str());
+        Int32 nResID    = values[i];
+
+        s_ImgMap.insert(ResourceImageMap::value_type(key, nResID));
+    }
 }
 
 // now, uphone only support premultiplied data
@@ -409,6 +456,82 @@ bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 {
 	/// @todo
 	return false;
+}
+
+bool UIImage::initWithBitmap(const TBitmap* pBmp)
+{
+    bool bRet = false;
+
+    do 
+    {
+        CCX_BREAK_IF(! pBmp);
+
+//         TBitmap* pBitmap = pBmp->DupBitmapTo32();
+
+        // init imageinfo
+        INT32 nWidth	= pBmp->GetWidth();
+        INT32 nHeight	= pBmp->GetHeight();
+        CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+
+        INT32 nLen = pBmp->GetRowBytes() * nHeight;
+        m_imageInfo.data = new unsigned char [nLen];
+        CCX_BREAK_IF(! m_imageInfo.data);
+        memcpy(m_imageInfo.data, pBmp->GetDataPtr(), nLen);
+
+        m_imageInfo.height		= nHeight;
+        m_imageInfo.width		= nWidth;
+        m_imageInfo.hasAlpha	= true;
+        // uphone only support isPremultipliedAlpha
+        m_imageInfo.isPremultipliedAlpha = true;
+        m_imageInfo.bitsPerComponent = pBmp->GetDepth() / 4;
+
+        bRet = true;
+    } while (0);
+
+    return bRet;
+}
+
+//////////////////////////////////////////////////
+//
+// ResourceHandle
+//
+//////////////////////////////////////////////////
+ResourceHandle::ResourceHandle()
+:m_pResLib(NULL)
+{
+}
+
+ResourceHandle::~ResourceHandle()
+{
+    release();
+}
+
+void ResourceHandle::release()
+{
+    if (m_pResLib)
+    {
+        delete m_pResLib;
+        m_pResLib = NULL;
+    }
+}
+
+void ResourceHandle::setResourceEntry(const AppResourceEntry* pResEntry)
+{
+    release();
+
+    m_pResLib = new TResourceLib(pResEntry);
+}
+
+const TBitmap* ResourceHandle::LoadConstBitmap(Int32 nResID)
+{
+    const TBitmap* pResult = NULL;
+
+    if (m_pResLib)
+    {
+        pResult = m_pResLib->LoadConstBitmap(nResID);
+    }
+
+    return pResult;
 }
 
 }//namespace   cocos2d 
