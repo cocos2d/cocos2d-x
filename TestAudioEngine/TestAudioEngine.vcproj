@@ -50,7 +50,6 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4251"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
@@ -97,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir d:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;mkdir d:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\background.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\Effect1.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\Effect2.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData"
+				CommandLine="mkdir d:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;mkdir d:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\background.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\Effect1.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\Effect2.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration

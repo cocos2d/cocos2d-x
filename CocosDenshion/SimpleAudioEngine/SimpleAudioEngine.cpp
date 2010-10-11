@@ -23,7 +23,8 @@ SimpleAudioEngine::SimpleAudioEngine()
 , m_bWillPlayBackgroundMusic(false)
 , m_pEffects(NULL)
 {
-    m_EffectPlayers.resize(0);
+    //m_pEffectPlayers->resize(0);
+    m_pEffectPlayers = new PlayerArray();
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
@@ -100,7 +101,7 @@ void SimpleAudioEngine::SetEffectsVolume(int volume)
 {
     PlayerArrayIterator iter;
 
-    for (iter = m_EffectPlayers.begin(); iter != m_EffectPlayers.end(); ++iter)
+    for (iter = m_pEffectPlayers->begin(); iter != m_pEffectPlayers->end(); ++iter)
     {
         if (*iter)
         {
@@ -220,9 +221,9 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
         SoundPlayer* pPlayer = pElement->pPlayer;
         if (!pPlayer)
         {
-            // find the not playing player in m_EffectPlayers
+            // find the not playing player in m_pEffectPlayers
             PlayerArrayIterator iter;
-            for (iter = m_EffectPlayers.begin(); iter != m_EffectPlayers.end(); ++iter)
+            for (iter = m_pEffectPlayers->begin(); iter != m_pEffectPlayers->end(); ++iter)
             {
                 if ((*iter) && !(*iter)->IsPlaying())
                 {
@@ -235,7 +236,7 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
             if (!pPlayer)
             {
                 pPlayer = new SoundPlayer();
-                m_EffectPlayers.push_back(pPlayer);
+                m_pEffectPlayers->push_back(pPlayer);
 
                 // set the player volume
                 pPlayer->SetVolumeValue(m_nEffectsVolume);
@@ -262,7 +263,7 @@ void SimpleAudioEngine::removeAllEffectPlayers()
 {
     PlayerArrayIterator iter;
 
-    for (iter = m_EffectPlayers.begin(); iter != m_EffectPlayers.end(); ++iter)
+    for (iter = m_pEffectPlayers->begin(); iter != m_pEffectPlayers->end(); ++iter)
     {
         if (*iter)
         {
@@ -270,5 +271,6 @@ void SimpleAudioEngine::removeAllEffectPlayers()
         }
     }
 
-    m_EffectPlayers.clear();
+    m_pEffectPlayers->clear();
+    delete m_pEffectPlayers;
 }
