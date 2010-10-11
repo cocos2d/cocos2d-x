@@ -210,6 +210,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			if(! image->initWithContentsOfFile(fullpath, kImageFormatJPG))
 			{
 				delete image;
+				m_pDictLock->unlock();
 				return NULL;
 			}
 			texture = new CCTexture2D();
@@ -238,6 +239,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			if(! image->initWithContentsOfFile(fullpath, kImageFormatPNG))
 			{
 				delete image;
+				m_pDictLock->unlock();
 				return NULL;
 			}
 			texture = new CCTexture2D();
