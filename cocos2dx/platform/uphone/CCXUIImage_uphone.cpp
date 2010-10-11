@@ -25,8 +25,9 @@ THE SOFTWARE.
 #include "CCXUIImage_uphone.h"
 
 #include <TG3.h>
-
 #include "png.h"
+
+#include "CCXBitmapDC.h"
 
 // in order to compile correct in andLinux, because ssTypes(uphone)
 // and jmorecfg.h all typedef xxx INT32
@@ -71,8 +72,6 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 
 UIImage::UIImage(void)
 {
-	m_pBitmap = NULL;
-
 	m_imageInfo.hasAlpha = false;
 	m_imageInfo.isPremultipliedAlpha = false;
 	m_imageInfo.height = 0;
@@ -81,37 +80,38 @@ UIImage::UIImage(void)
 	m_imageInfo.bitsPerComponent = 0;
 }
 
-UIImage::UIImage(TBitmap *bitmap)
+UIImage::UIImage(CCXBitmapDC * pBmpDC)
 {
-	if (bitmap)
+	do 
 	{
-		m_pBitmap = bitmap->DupBitmapTo32();
-
+		CCX_BREAK_IF(! pBmpDC);
+		TBitmap * pBitmap = pBmpDC->getBitmap();
+		CCX_BREAK_IF(! pBitmap);
+		
 		// init imageinfo
- 		m_imageInfo.data = m_pBitmap->GetDataPtr();
- 		m_imageInfo.height = m_pBitmap->GetHeight();
- 		m_imageInfo.width = m_pBitmap->GetWidth();
- 		m_imageInfo.hasAlpha = true;//m_pBitmap->HasAlphaData();
- 		// uphone only support predefined
- 		m_imageInfo.isPremultipliedAlpha = true;
- 		m_imageInfo.bitsPerComponent = m_pBitmap->GetDepth() / 4;
-	}
+		INT32 nWidth	= pBitmap->GetWidth();
+		INT32 nHeight	= pBitmap->GetHeight();
+		CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+
+		INT32 nLen = pBitmap->GetRowBytes() * nHeight;
+		m_imageInfo.data = new unsigned char [nLen];
+		CCX_BREAK_IF(! m_imageInfo.data);
+		memcpy(m_imageInfo.data, pBitmap->GetDataPtr(), nLen);
+
+		m_imageInfo.height		= nHeight;
+		m_imageInfo.width		= nWidth;
+		m_imageInfo.hasAlpha	= true;
+		// uphone only support isPremultipliedAlpha
+		m_imageInfo.isPremultipliedAlpha = true;
+		m_imageInfo.bitsPerComponent = pBitmap->GetDepth() / 4;
+	} while (0);
 }
 
 UIImage::~UIImage(void)
 {
-	if (m_pBitmap)
+	if (m_imageInfo.data)
 	{
-		// the m_imageInfo's data points to m_pBitmap,
-		// so we don't release m_imageInfo's data
-		m_pBitmap->Destroy();
-	}
-	else
-	{
-		if (m_imageInfo.data)
-		{
-			delete []m_imageInfo.data;
-		}
+		delete []m_imageInfo.data;
 	}
 }
 

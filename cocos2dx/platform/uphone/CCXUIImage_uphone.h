@@ -29,8 +29,9 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 #include "CCRenderTexture.h"
 
-class TBitmap;
 namespace   cocos2d {
+class CCXBitmapDC;
+
 /// @cond
 typedef struct
 {
@@ -50,7 +51,7 @@ class CCX_DLL UIImage
 {
 public:
 	UIImage(void);
-	UIImage(TBitmap *bitmap);
+	UIImage(CCXBitmapDC * pBmpDC);
 	
 	~UIImage(void);
 
@@ -100,7 +101,6 @@ private:
 	bool loadJpg(const char *strFileName);
 
 private:
-	TBitmap *m_pBitmap;
 	tImageInfo m_imageInfo;
 };
 }//namespace   cocos2d 
