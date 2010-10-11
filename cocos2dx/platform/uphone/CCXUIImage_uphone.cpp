@@ -52,6 +52,7 @@ typedef struct
 	int offset;
 }tImageSource;
 
+typedef map<std::string, int> ResourceImageMap;
 static ResourceImageMap s_ImgMap;
 static ResourceHandle   s_HRes;
 
@@ -193,7 +194,7 @@ void UIImage::setImageMap(const std::string keys[], const int values[], int nCou
     for (int i = 0; i < nCount; ++i)
     {
         std::string key = CCFileUtils::fullPathFromRelativePath((keys[i]).c_str());
-        Int32 nResID    = values[i];
+        int nResID    = values[i];
 
         s_ImgMap.insert(ResourceImageMap::value_type(key, nResID));
     }
@@ -466,8 +467,6 @@ bool UIImage::initWithBitmap(const TBitmap* pBmp)
     {
         CCX_BREAK_IF(! pBmp);
 
-//         TBitmap* pBitmap = pBmp->DupBitmapTo32();
-
         // init imageinfo
         INT32 nWidth	= pBmp->GetWidth();
         INT32 nHeight	= pBmp->GetHeight();
@@ -522,7 +521,7 @@ void ResourceHandle::setResourceEntry(const AppResourceEntry* pResEntry)
     m_pResLib = new TResourceLib(pResEntry);
 }
 
-const TBitmap* ResourceHandle::LoadConstBitmap(Int32 nResID)
+const TBitmap* ResourceHandle::LoadConstBitmap(int nResID)
 {
     const TBitmap* pResult = NULL;
 

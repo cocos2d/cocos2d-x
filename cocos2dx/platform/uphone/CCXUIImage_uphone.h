@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_UIIMAGE_H__
 #define __PLATFORM_UPHONE_UIIMAGE_H__
 
-#include <map>
 #include <string>
 #include "ccxCommon.h"
 #include "CCRenderTexture.h"
@@ -47,8 +46,6 @@ typedef struct
 	bool			isPremultipliedAlpha;
 	unsigned char   *data;
 } tImageInfo;
-
-typedef std::map<std::string, int> ResourceImageMap;
 
 class ResourceHandle
 {
