@@ -8,8 +8,11 @@
 
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "Resource.h"
 
 using namespace cocos2d;
+
+extern const AppResourceEntry cocosTemplateResourceEntry;
 
 // the works are the same as NSObject<UIApplicationDelegate>::applicationDidFinishLaunching of cocos2d-iphone
 bool AppDelegate::initCocos2d()
@@ -23,6 +26,12 @@ bool AppDelegate::initCocos2d()
 
 	// turn on display FPS
 	pDirector->setDisplayFPS(true);
+
+    // set the ResourceEntry
+    UIImage::setResourceEntry(&cocosTemplateResourceEntry);
+
+    // set the map between names and ResIDs
+    UIImage::setImageMap(ResourceNames, nResIDs, sizeof(nResIDs) / sizeof(Int32));
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();

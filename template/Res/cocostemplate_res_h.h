@@ -19,5 +19,9 @@
 #include "ResTypes.h"
 
 #include "cocostemplate_res_def.h"
+//----------------资源声明(外部可直接使用)-------------
+extern const BitmapType  COCOST_Bitmap_CloseNormal;
+extern const BitmapType  COCOST_Bitmap_CloseSelected;
+
 
 #endif
