@@ -79,6 +79,18 @@ public:
     */
     Int32 GetFileBufferSize(const char* pszFilePath);
 
+    /**
+    @brief 设置当前播放的音效 ID
+    @param nSoundID 需要播放的音效ID
+    */
+    void SetCurrentSoundID(Int32 nSoundID);
+
+    /**
+    @brief 获取当前播放的音效 ID
+    @return 当前播放的音效ID
+    */
+    Int32 GetCurrentSoundID();
+
 private:
     Boolean OpenAudioFile(const char* pszFilePath);
 
@@ -91,6 +103,7 @@ private:
     TCOM_MethodEmun m_MethodEmun; // 查找方法
 
     TUChar m_fileName[MAX_PATH];
+    Int32  m_nCurrentSoundID;
 };
 
 #endif

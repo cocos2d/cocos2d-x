@@ -5,7 +5,7 @@
  
 
 #include  "Cocos2dSimpleGameAppDelegate.h"
-#include  "Framework\cocos2dsimplegame_res_c.h"
+#include  "cocos2dsimplegame_res_c.h"
 
 const  ResourceRegisterEntry		ResRegList_Cocos2dSimpleGame[]  =
 {

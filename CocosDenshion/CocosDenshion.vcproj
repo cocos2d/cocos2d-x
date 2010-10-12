@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOSDENSHION_EXPORTS;_TRANZDA_VM_;_EXPORT_DLL_"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOSDENSHION_EXPORTS;_TRANZDA_VM_;_EXPORT_DLL_;_ENABLE_PROFILE_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

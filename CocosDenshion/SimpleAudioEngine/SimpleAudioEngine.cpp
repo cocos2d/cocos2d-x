@@ -23,7 +23,6 @@ SimpleAudioEngine::SimpleAudioEngine()
 , m_bWillPlayBackgroundMusic(false)
 , m_pEffects(NULL)
 {
-    //m_pEffectPlayers->resize(0);
     m_pEffectPlayers = new PlayerArray();
 }
 
@@ -219,7 +218,12 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
         BREAK_IF(!pElement);
 
         SoundPlayer* pPlayer = pElement->pPlayer;
-        if (!pPlayer)
+        if (pPlayer && !pPlayer->IsPlaying())
+        {
+            // there has a player loaded the effect
+            pPlayer->Rewind();
+        }
+        else
         {
             // find the not playing player in m_pEffectPlayers
             PlayerArrayIterator iter;
@@ -228,6 +232,19 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
                 if ((*iter) && !(*iter)->IsPlaying())
                 {
                     pPlayer = (*iter);
+
+                    // Detach from the SoundID before
+                    int nCurrentID = pPlayer->GetCurrentSoundID();
+                    if (nCurrentID)
+                    {
+                        tHashElement* pTempElement = NULL;
+                        HASH_FIND_INT(m_pEffects, &nCurrentID, pTempElement);
+
+                        if (pTempElement)
+                        {
+                            pTempElement->pPlayer = NULL;
+                        }
+                    }
                     break;
                 }
             }
@@ -241,11 +258,12 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
                 // set the player volume
                 pPlayer->SetVolumeValue(m_nEffectsVolume);
             }
-        }
 
-        // play the sound and record the player
-        pPlayer->PlaySoundFromMem(pElement->pDataBuffer, pElement->nDataSize);
-        pElement->pPlayer = pPlayer;
+            // play the sound and record the player
+            pPlayer->PlaySoundFromMem(pElement->pDataBuffer, pElement->nDataSize);
+            pElement->pPlayer = pPlayer;
+            pPlayer->SetCurrentSoundID(nSoundId);
+        }
     } while (0);
 }
 
