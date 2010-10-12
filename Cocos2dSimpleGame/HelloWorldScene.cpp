@@ -3,14 +3,9 @@
 #include "HelloWorldScene.h"
 #include "GameOverScene.h"
 #include <math.h>
+#include "Resource.h"
 
 using namespace cocos2d;
-
-#define PATH_CLOSE_NORMAL		"CloseNormal.png"
-#define PATH_CLOSE_SELECTED		"CloseSelected.png"
-#define IMG_PLAYER				"Player.png"
-#define IMG_PROJECTILE			"Projectile.png"
-#define IMG_TARGET				"Target.png"
 
 #define SOUND_BACKGROUND		"background-music-aac.mp3"
 #define SOUND_EFFECT			"pew-pew-lei.wav"
@@ -52,7 +47,7 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 void HelloWorld::addTarget()
 {
 
-	CCSprite *target = CCSprite::spriteWithFile(IMG_TARGET, CGRectMake(0,0,27,40));
+	CCSprite *target = CCSprite::spriteWithFile(ResInfo[4].ImgName.c_str(), CGRectMake(0,0,27,40));
 
 	// Determine where to spawn the target along the Y axis
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
@@ -102,8 +97,8 @@ bool HelloWorld::init()
 	// cocos2d-uphone: add a menu item with "X" image, which is clicked to quit the program
 	// add a "close" icon, it's an autorelease object
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
-										PATH_CLOSE_NORMAL, 
-										PATH_CLOSE_SELECTED, 
+										ResInfo[0].ImgName.c_str(), 
+										ResInfo[1].ImgName.c_str(), 
 										this,
 										menu_selector(HelloWorld::menuCloseCallback) );
 	pCloseItem->setPosition( ccp( CCDirector::getSharedDirector()->getWinSize().width - 20, 20) );
@@ -129,7 +124,7 @@ bool HelloWorld::init()
 	// and as close to the left side edge as we can get
 	// Remember that position is based on the anchor point, and by default the anchor
 	// point is the middle of the object.
-	CCSprite *player = CCSprite::spriteWithFile(IMG_PLAYER, CGRectMake(0, 0, 27, 40) );
+	CCSprite *player = CCSprite::spriteWithFile(ResInfo[2].ImgName.c_str(), CGRectMake(0, 0, 27, 40) );
 	player->setPosition( ccp(player->getContentSize().width / 2, winSize.height/2) );
 	this->addChild(player);
 
@@ -218,7 +213,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 
 	// Set up initial location of projectile
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
-	CCSprite *projectile = CCSprite::spriteWithFile(IMG_PROJECTILE, CGRectMake(0, 0, 20, 20));
+	CCSprite *projectile = CCSprite::spriteWithFile(ResInfo[3].ImgName.c_str(), CGRectMake(0, 0, 20, 20));
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
 	// Determinie offset of location to projectile
