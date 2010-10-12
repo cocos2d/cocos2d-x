@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//                      cocosTemplate_Res_h.h
+//                      Cocos2dSimpleGame_Res_h.h
 //              资源编译器转换文件数据结构声明文件
 //
 //
@@ -13,11 +13,11 @@
 // 警告：未经允许，任何人不准擅自修改此文件!!!否则后果自负!
 //
 //------------------------------------------------------------------------------
-#ifndef __COCOSTEMPLATE_RES_H_H__
-#define __COCOSTEMPLATE_RES_H_H__
+#ifndef __COCOS2DSIMPLEGAME_RES_H_H__
+#define __COCOS2DSIMPLEGAME_RES_H_H__
 
 #include "ResTypes.h"
 
-#include "cocostemplate_res_def.h"
+#include "cocos2dsimplegame_res_def.h"
 
 #endif

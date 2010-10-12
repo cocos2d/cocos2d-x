@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="Cocos2dSimpleGame"
-	ProjectGUID="{A2338E7B-155B-4A3B-AB4B-518ECDD26564}"
-	RootNamespace="Cocos2dSimpleGame"
+	ProjectGUID="{ADD7B173-FF61-45DA-BDE0-3E41600D21B0}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -41,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;..\cocos2dx\include;..\cocos2dx;..\..\PRJ_TG3\Include\OpenGL;..\CocosDenshion"
+				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;..\cocos2dx\include;..\cocos2dx\;..\..\PRJ_TG3\Include\OpenGL;..\cocosDenshion\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -143,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/cocosTemplate.dll"
+				OutputFile="$(OutDir)/Cocos2dSimpleGame.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -217,35 +216,35 @@
 			Name="Res"
 			>
 			<File
-				RelativePath=".\Res\cocosTemplate_Res.ENU.tr3"
+				RelativePath=".\Res\Cocos2dSimpleGame_Res.ENU.tr3"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\cocosTemplate_Res.ENU.tr3.tts"
+				RelativePath=".\Res\Cocos2dSimpleGame_Res.ENU.tr3.tts"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\cocosTemplate_Res.h"
+				RelativePath=".\Res\Cocos2dSimpleGame_Res.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\cocosTemplate_Res.TR3"
+				RelativePath=".\Res\Cocos2dSimpleGame_Res.TR3"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\cocosTemplate_Res.TRG"
+				RelativePath=".\Res\Cocos2dSimpleGame_Res.TRG"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\cocostemplate_res_c.h"
+				RelativePath=".\Res\cocos2dsimplegame_res_c.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\cocostemplate_res_def.h"
+				RelativePath=".\Res\cocos2dsimplegame_res_def.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\cocostemplate_res_h.h"
+				RelativePath=".\Res\cocos2dsimplegame_res_h.h"
 				>
 			</File>
 		</Filter>
@@ -253,11 +252,11 @@
 			Name="Makefiles"
 			>
 			<File
-				RelativePath=".\cocosTemplate.TMK3"
+				RelativePath=".\Cocos2dSimpleGame.TMK3"
 				>
 			</File>
 			<File
-				RelativePath=".\cocosTemplate_Arm.TMK3"
+				RelativePath=".\Cocos2dSimpleGame_Arm.TMK3"
 				>
 			</File>
 			<File
@@ -273,36 +272,26 @@
 			Name="Framework"
 			>
 			<File
-				RelativePath=".\NewDeleteOp.cpp"
+				RelativePath=".\Framework\Cocos2dSimpleGameUnicodeScript.h"
 				>
 			</File>
 			<File
-				RelativePath=".\TG3AppDllEntry.cpp"
+				RelativePath=".\Framework\Cocos2dSimpleGameUnicodeScript_str.h"
 				>
 			</File>
 			<File
-				RelativePath=".\TG3AppDllEntry.h"
+				RelativePath=".\Framework\NewDeleteOp.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Framework\TG3AppDllEntry.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Framework\TG3AppDllEntry.h"
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\cocosTemplateUnicodeScript.h"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					CommandLine="..\..\PRJ_TG3\Common\StrConv\TzdStrConv_V1.exe $(InputPath) $(InputDir)$(InputName)_str.h&#x0D;&#x0A;"
-					AdditionalDependencies="..\..\PRJ_TG3\Common\StrConv\TzdStrConv_V1.exe"
-					Outputs="$(InputDir)$(InputName)_str.h"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath=".\cocosTemplateUnicodeScript_str.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

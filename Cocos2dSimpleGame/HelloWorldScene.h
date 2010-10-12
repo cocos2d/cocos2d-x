@@ -4,16 +4,12 @@
 
 #include "cocos2d.h"
 
-class TagSprite : public cocos2d::CCSprite
-{
-	CCX_SYNTHESIZE(int, tag, Tag);
-};
 
 class HelloWorld : public cocos2d::CCColorLayer
 {
 protected:
-	cocos2d::NSMutableArray<TagSprite*> *_targets;
-	cocos2d::NSMutableArray<TagSprite*> *_projectiles;
+	cocos2d::NSMutableArray<cocos2d::CCSprite*> *_targets;
+	cocos2d::NSMutableArray<cocos2d::CCSprite*> *_projectiles;
 	int _projectilesDestroyed;
 
 public:
