@@ -3525,8 +3525,8 @@ const ResourceLangRegisterEntry COCOS2_CHS_Resource[] =
   ,{kTBitmapRscType,COCOS2_ID_BITMAP_Player,(void*)&COCOS2_TBitmapStruct_Player,sizeof(COCOS2_TBitmapStruct_Player)}   
   ,{kTBitmapRscType,COCOS2_ID_BITMAP_Projectile,(void*)&COCOS2_TBitmapStruct_Projectile,sizeof(COCOS2_TBitmapStruct_Projectile)}   
   ,{kTBitmapRscType,COCOS2_ID_BITMAP_Target,(void*)&COCOS2_TBitmapStruct_Target,sizeof(COCOS2_TBitmapStruct_Target)}   
-  ,{kTRawDataRscType,COCOS2_ID_RAWDATA_pew_pew_lei,(void*)&COCOS2_rawdata_pew_pew_lei,49452}   
-  ,{kTRawDataRscType,COCOS2_ID_RAWDATA_background_music_aac,(void*)&COCOS2_rawdata_background_music_aac,149629}   
+  ,{kRawDataRscType,COCOS2_ID_RAWDATA_pew_pew_lei,(void*)&COCOS2_rawdata_pew_pew_lei,49452}   
+  ,{kRawDataRscType,COCOS2_ID_RAWDATA_background_music_aac,(void*)&COCOS2_rawdata_background_music_aac,149629}   
 };
 
 const ResourceLangRegisterEntry2  COCOS2_CHS_ResourceEntry = 
@@ -3641,8 +3641,8 @@ const ResourceLangRegisterEntry COCOS2_ENU_Resource[] =
   ,{kTBitmapRscType,COCOS2_ID_BITMAP_Player,(void*)&COCOS2_TBitmapStruct_Player,sizeof(COCOS2_TBitmapStruct_Player)}   
   ,{kTBitmapRscType,COCOS2_ID_BITMAP_Projectile,(void*)&COCOS2_TBitmapStruct_Projectile,sizeof(COCOS2_TBitmapStruct_Projectile)}   
   ,{kTBitmapRscType,COCOS2_ID_BITMAP_Target,(void*)&COCOS2_TBitmapStruct_Target,sizeof(COCOS2_TBitmapStruct_Target)}   
-  ,{kTRawDataRscType,COCOS2_ID_RAWDATA_pew_pew_lei,(void*)&COCOS2_rawdata_pew_pew_lei,49452}   
-  ,{kTRawDataRscType,COCOS2_ID_RAWDATA_background_music_aac,(void*)&COCOS2_rawdata_background_music_aac,149629}   
+  ,{kRawDataRscType,COCOS2_ID_RAWDATA_pew_pew_lei,(void*)&COCOS2_rawdata_pew_pew_lei,49452}   
+  ,{kRawDataRscType,COCOS2_ID_RAWDATA_background_music_aac,(void*)&COCOS2_rawdata_background_music_aac,149629}   
 };
 
 const ResourceLangRegisterEntry2  COCOS2_ENU_ResourceEntry = 

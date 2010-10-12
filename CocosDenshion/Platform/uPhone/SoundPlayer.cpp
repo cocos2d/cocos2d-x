@@ -7,6 +7,7 @@ SoundPlayer::SoundPlayer()
 , m_pMediaFile(NULL)
 , m_bPaused(FALSE)
 , m_MethodEmun(NULL)
+, m_nCurrentSoundID(0)
 {
     // TCOM初始化，使用TCOM组件前必须先初始化
     TCoInitialize(NULL);           
@@ -196,4 +197,14 @@ Int32 SoundPlayer::DecodeFile(void* buffer, Int32 bufferLen, const char* pszFile
     }
 
     return nRet;
+}
+
+void SoundPlayer::SetCurrentSoundID(Int32 nSoundID)
+{
+    m_nCurrentSoundID = nSoundID;
+}
+
+Int32 SoundPlayer::GetCurrentSoundID()
+{
+    return m_nCurrentSoundID;
 }
