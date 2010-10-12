@@ -12,7 +12,7 @@ const  ResourceRegisterEntry		ResRegList_Cocos2dSimpleGame[]  =
 	TG_RESOURCE_DEFINE
 };
 
-const  AppResourceEntry		Cocos2dSimpleGameResourceEntry  =
+extern const  AppResourceEntry		Cocos2dSimpleGameResourceEntry  =
 {
 	(ResourceRegisterEntry*)ResRegList_Cocos2dSimpleGame,                    //  res  list  in  this  app
 		sizeof(ResRegList_Cocos2dSimpleGame) /  sizeof(ResourceRegisterEntry),    //number  of  item  in  res

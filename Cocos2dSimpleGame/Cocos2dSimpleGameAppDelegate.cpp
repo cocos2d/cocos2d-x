@@ -9,8 +9,10 @@
 #include "Cocos2dSimpleGameAppDelegate.h"
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
+#include "Resource.h"
 
 using namespace cocos2d;
+extern const AppResourceEntry Cocos2dSimpleGameResourceEntry;
 
 // the works are the same as NSObject<UIApplicationDelegate>::applicationDidFinishLaunching of cocos2d-iphone
 bool AppDelegate::initCocos2d()
@@ -24,6 +26,12 @@ bool AppDelegate::initCocos2d()
 
 	// turn on display FPS
 	pDirector->setDisplayFPS(true);
+
+    // set the ResourceEntry
+    UIImage::setResourceEntry(&Cocos2dSimpleGameResourceEntry);
+
+    // set the Images ResInfo (name and ResID)
+    UIImage::setImageResInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ImageResInfo));
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();

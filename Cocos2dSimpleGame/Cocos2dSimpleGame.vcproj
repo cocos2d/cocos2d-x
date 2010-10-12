@@ -211,6 +211,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Resource.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource"
