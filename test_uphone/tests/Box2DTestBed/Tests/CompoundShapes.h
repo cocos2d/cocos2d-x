@@ -101,7 +101,7 @@ public:
 			vertices[2] = b2Mul(xf2, b2Vec2(0.0f, 0.5f));
 			triangle2.Set(vertices, 3);
 
-			for (int32 i = 0; i < 10; ++i)
+			for (int i = 0; i < 10; ++i)
 			{
 				float32 x = RandomFloat(-0.1f, 0.1f);
 				b2BodyDef bd;

@@ -48,11 +48,11 @@ public:
 			b2Vec2 deltaX(0.5625f, 1.25f);
 			b2Vec2 deltaY(1.125f, 0.0f);
 
-			for (int32 i = 0; i < e_count; ++i)
+			for (int i = 0; i < e_count; ++i)
 			{
 				y = x;
 
-				for (int32 j = i; j < e_count; ++j)
+				for (int j = i; j < e_count; ++j)
 				{
 					b2BodyDef bd;
 					bd.type = b2_dynamicBody;
@@ -71,8 +71,8 @@ public:
 	//void Step(Settings* settings)
 	//{
 	//	// We need higher accuracy for the pyramid.
-	//	int32 velocityIterations = settings->velocityIterations;
-	//	int32 positionIterations = settings->positionIterations;
+	//	int velocityIterations = settings->velocityIterations;
+	//	int positionIterations = settings->positionIterations;
 	//	settings->velocityIterations = b2Max(8, velocityIterations);
 	//	settings->positionIterations = b2Max(1, positionIterations);
 	//	Test::Step(settings);

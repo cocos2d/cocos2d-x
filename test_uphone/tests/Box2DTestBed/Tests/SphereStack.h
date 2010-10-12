@@ -43,7 +43,7 @@ public:
 			b2CircleShape shape;
 			shape.m_radius = 1.0f;
 
-			for (int32 i = 0; i < e_count; ++i)
+			for (int i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -62,12 +62,12 @@ public:
 	{
 		Test::Step(settings);
 
-		//for (int32 i = 0; i < e_count; ++i)
+		//for (int i = 0; i < e_count; ++i)
 		//{
 		//	printf("%g ", m_bodies[i]->GetWorldCenter().y);
 		//}
 
-		//for (int32 i = 0; i < e_count; ++i)
+		//for (int i = 0; i < e_count; ++i)
 		//{
 		//	printf("%g ", m_bodies[i]->GetLinearVelocity().y);
 		//}

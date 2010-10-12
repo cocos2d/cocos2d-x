@@ -60,7 +60,7 @@ public:
 
 			float32 x1 = -20.0f;
 			float32 y1 = 2.0f * cosf(x1 / 10.0f * b2_pi);
-			for (int32 i = 0; i < 80; ++i)
+			for (int i = 0; i < 80; ++i)
 			{
 				float32 x2 = x1 + 0.5f;
 				float32 y2 = 2.0f * cosf(x2 / 10.0f * b2_pi);
@@ -122,7 +122,7 @@ public:
 		m_angle = 0.0f;
 	}
 
-	void Create(int32 index)
+	void Create(int index)
 	{
 		if (m_bodies[m_bodyIndex] != NULL)
 		{
@@ -167,7 +167,7 @@ public:
 
 	void DestroyBody()
 	{
-		for (int32 i = 0; i < e_maxBodies; ++i)
+		for (int i = 0; i < e_maxBodies; ++i)
 		{
 			if (m_bodies[i] != NULL)
 			{
@@ -233,7 +233,7 @@ public:
 		return new EdgeShapes;
 	}
 
-	int32 m_bodyIndex;
+	int m_bodyIndex;
 	b2Body* m_bodies[e_maxBodies];
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;

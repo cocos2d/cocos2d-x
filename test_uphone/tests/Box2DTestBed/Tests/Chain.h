@@ -48,7 +48,7 @@ public:
 
 			const float32 y = 25.0f;
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < 30; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;

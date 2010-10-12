@@ -82,22 +82,22 @@ struct Settings
 	{}
 	
 	float32 hz;
-	int32 velocityIterations;
-	int32 positionIterations;
-	int32 drawShapes;
-	int32 drawJoints;
-	int32 drawAABBs;
-	int32 drawPairs;
-	int32 drawContactPoints;
-	int32 drawContactNormals;
-	int32 drawContactForces;
-	int32 drawFrictionForces;
-	int32 drawCOMs;
-	int32 drawStats;
-	int32 enableWarmStarting;
-	int32 enableContinuous;
-	int32 pause;
-	int32 singleStep;
+	int velocityIterations;
+	int positionIterations;
+	int drawShapes;
+	int drawJoints;
+	int drawAABBs;
+	int drawPairs;
+	int drawContactPoints;
+	int drawContactNormals;
+	int drawContactForces;
+	int drawFrictionForces;
+	int drawCOMs;
+	int drawStats;
+	int enableWarmStarting;
+	int enableContinuous;
+	int pause;
+	int singleStep;
 };
 
 struct TestEntry
@@ -120,7 +120,7 @@ class DestructionListener : public b2DestructionListener
 		Test* test;
 	};
 
-const int32 k_maxContactPoints = 2048;
+const int k_maxContactPoints = 2048;
 
 struct ContactPoint
 {
@@ -139,7 +139,7 @@ class Test : public b2ContactListener
 		virtual ~Test();
 		
 		void SetGravity(float x,float y);
-		void SetTextLine(int32 line) { m_textLine = line; }
+		void SetTextLine(int line) { m_textLine = line; }
 		void DrawTitle(int x, int y, const char *string);
 		virtual void Step(Settings* settings);
 		virtual void Keyboard(unsigned char key) { B2_NOT_USED(key); }
@@ -176,16 +176,16 @@ class Test : public b2ContactListener
 		b2Body* m_groundBody;
 		b2AABB m_worldAABB;
 		ContactPoint m_points[k_maxContactPoints];
-		int32 m_pointCount;
+		int m_pointCount;
 		DestructionListener m_destructionListener;
 		GLESDebugDraw m_debugDraw;
-		int32 m_textLine;
+		int m_textLine;
 		b2Body* m_bomb;
 		b2MouseJoint* m_mouseJoint;
 		b2Vec2 m_bombSpawnPoint;
 		bool m_bombSpawning;
 		b2Vec2 m_mouseWorld;
-		int32 m_stepCount;
+		int m_stepCount;
 	};
 
 #endif

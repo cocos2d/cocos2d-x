@@ -20,9 +20,9 @@ public:
 
 	GLESDebugDraw( float32 ratio );
 
-	virtual void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
+	virtual void DrawPolygon(const b2Vec2* vertices, int vertexCount, const b2Color& color);
 
-	virtual void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
+	virtual void DrawSolidPolygon(const b2Vec2* vertices, int vertexCount, const b2Color& color);
 
 	virtual void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color);
 

@@ -195,7 +195,7 @@ public:
 			b2CircleShape shape;
 			shape.m_radius = radius;
 
-			for (int32 i = 0; i < 4; ++i)
+			for (int i = 0; i < 4; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;

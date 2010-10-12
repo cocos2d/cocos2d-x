@@ -64,7 +64,7 @@ public:
 		fd.density = 1.0f;
 		fd.friction = 0.1f;
 
-		for (int32 j = 0; j < e_columnCount; ++j)
+		for (int j = 0; j < e_columnCount; ++j)
 		{
 			for (int i = 0; i < e_rowCount; ++i)
 			{
@@ -112,7 +112,7 @@ public:
 
 	void Step(Settings* settings)
 	{
-		int32 flag = settings->enableContinuous;
+		int flag = settings->enableContinuous;
 		settings->enableContinuous = 0;
 		Test::Step(settings);
 		m_debugDraw.DrawString(5, m_textLine, "Press 'c' to create a circle.");

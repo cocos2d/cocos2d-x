@@ -51,7 +51,7 @@ public:
 			b2WeldJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < e_count; ++i)
+			for (int i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -78,7 +78,7 @@ public:
 			b2WeldJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < e_count; ++i)
+			for (int i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -106,7 +106,7 @@ public:
 			b2WeldJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < e_count; ++i)
+			for (int i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -136,7 +136,7 @@ public:
 			b2WeldJointDef jd;
 
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < e_count; ++i)
+			for (int i = 0; i < e_count; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -156,7 +156,7 @@ public:
 			}
 		}
 
-		for (int32 i = 0; i < 2; ++i)
+		for (int i = 0; i < 2; ++i)
 		{
 			b2Vec2 vertices[3];
 			vertices[0].Set(-0.5f, 0.0f);
@@ -177,7 +177,7 @@ public:
 			body->CreateFixture(&fd);
 		}
 
-		for (int32 i = 0; i < 2; ++i)
+		for (int i = 0; i < 2; ++i)
 		{
 			b2CircleShape shape;
 			shape.m_radius = 0.5f;
