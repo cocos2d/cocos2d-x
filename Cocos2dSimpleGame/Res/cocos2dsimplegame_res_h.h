@@ -19,5 +19,12 @@
 #include "ResTypes.h"
 
 #include "cocos2dsimplegame_res_def.h"
+//----------------资源声明(外部可直接使用)-------------
+extern const BitmapType  COCOS2_Bitmap_CloseNormal;
+extern const BitmapType  COCOS2_Bitmap_CloseSelected;
+extern const BitmapType  COCOS2_Bitmap_Player;
+extern const BitmapType  COCOS2_Bitmap_Projectile;
+extern const BitmapType  COCOS2_Bitmap_Target;
+
 
 #endif

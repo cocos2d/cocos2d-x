@@ -213,8 +213,20 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Res"
+			Name="Resource"
 			>
+			<File
+				RelativePath=".\Res\background-music-aac.mp3"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\CloseNormal.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\CloseSelected.png"
+				>
+			</File>
 			<File
 				RelativePath=".\Res\Cocos2dSimpleGame_Res.ENU.tr3"
 				>
@@ -245,6 +257,22 @@
 			</File>
 			<File
 				RelativePath=".\Res\cocos2dsimplegame_res_h.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\pew-pew-lei.wav"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Player.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Projectile.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Target.png"
 				>
 			</File>
 		</Filter>
