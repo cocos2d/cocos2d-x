@@ -126,7 +126,7 @@ bool CCDirector::init(void)
 	m_bDisplayFPS = false;
 	m_nFrames = 0;
 	m_pszFPS = new char[10];
-	m_fExpectedFrameRate = 1 / m_dAnimationInterval;
+	m_fExpectedFrameRate = (ccTime)(1 / m_dAnimationInterval);
 
 
 
