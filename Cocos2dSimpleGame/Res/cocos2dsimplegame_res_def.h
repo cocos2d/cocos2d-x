@@ -18,4 +18,11 @@
 
 #define COCOS2_ID_Form1002  1073742826 /*"Main"*/
 
+#define COCOS2_ID_BITMAP_CloseNormal  1073742827 
+#define COCOS2_ID_BITMAP_CloseSelected  1073742828 
+#define COCOS2_ID_BITMAP_Player  1073742829 
+#define COCOS2_ID_BITMAP_Projectile  1073742830 
+#define COCOS2_ID_BITMAP_Target  1073742831 
+#define COCOS2_ID_RAWDATA_pew_pew_lei  1073742832 
+#define COCOS2_ID_RAWDATA_background_music_aac  1073742833 
 #endif
