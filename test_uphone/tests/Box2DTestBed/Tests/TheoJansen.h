@@ -140,7 +140,7 @@ public:
 		}
 
 		// Balls
-		for (int32 i = 0; i < 40; ++i)
+		for (int i = 0; i < 40; ++i)
 		{
 			b2CircleShape shape;
 			shape.m_radius = 0.25f;

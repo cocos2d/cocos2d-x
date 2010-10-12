@@ -151,7 +151,7 @@ public:
 		switch (key)
 		{
 		case 'b':
-			for (int32 i = 0; i < 4; ++i)
+			for (int i = 0; i < 4; ++i)
 			{
 				if (m_bodies[i])
 				{
@@ -163,7 +163,7 @@ public:
 			break;
 
 		case 'j':
-			for (int32 i = 0; i < 8; ++i)
+			for (int i = 0; i < 8; ++i)
 			{
 				if (m_joints[i])
 				{
@@ -187,7 +187,7 @@ public:
 
 	void JointDestroyed(b2Joint* joint)
 	{
-		for (int32 i = 0; i < 8; ++i)
+		for (int i = 0; i < 8; ++i)
 		{
 			if (m_joints[i] == joint)
 			{

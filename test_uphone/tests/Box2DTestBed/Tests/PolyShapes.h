@@ -22,7 +22,7 @@
 /// This tests stacking. It also shows how to use b2World::Query
 /// and b2TestOverlap.
 
-const int32 k_maxBodies = 256;
+const int k_maxBodies = 256;
 
 /// This callback is called by b2World::QueryAABB. We find all the fixtures
 /// that overlap an AABB. Of those, we use b2TestOverlap to determine which fixtures
@@ -62,11 +62,11 @@ public:
 		case b2Shape::e_polygon:
 			{
 				b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
-				int32 vertexCount = poly->m_vertexCount;
+				int vertexCount = poly->m_vertexCount;
 				b2Assert(vertexCount <= b2_maxPolygonVertices);
 				b2Vec2 vertices[b2_maxPolygonVertices];
 
-				for (int32 i = 0; i < vertexCount; ++i)
+				for (int i = 0; i < vertexCount; ++i)
 				{
 					vertices[i] = b2Mul(xf, poly->m_vertices[i]);
 				}
@@ -103,7 +103,7 @@ public:
 	b2CircleShape m_circle;
 	b2Transform m_transform;
 	b2DebugDraw* m_debugDraw;
-	int32 m_count;
+	int m_count;
 };
 
 class PolyShapes : public Test
@@ -167,7 +167,7 @@ public:
 		memset(m_bodies, 0, sizeof(m_bodies));
 	}
 
-	void Create(int32 index)
+	void Create(int index)
 	{
 		if (m_bodies[m_bodyIndex] != NULL)
 		{
@@ -212,7 +212,7 @@ public:
 
 	void DestroyBody()
 	{
-		for (int32 i = 0; i < k_maxBodies; ++i)
+		for (int i = 0; i < k_maxBodies; ++i)
 		{
 			if (m_bodies[i] != NULL)
 			{
@@ -236,7 +236,7 @@ public:
 			break;
 
 		case 'a':
-			for (int32 i = 0; i < k_maxBodies; i += 2)
+			for (int i = 0; i < k_maxBodies; i += 2)
 			{
 				if (m_bodies[i])
 				{
@@ -283,7 +283,7 @@ public:
 		return new PolyShapes;
 	}
 
-	int32 m_bodyIndex;
+	int m_bodyIndex;
 	b2Body* m_bodies[k_maxBodies];
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;

@@ -36,7 +36,7 @@ Box2DTestLayer::Box2DTestLayer()
 	m_debugDraw = new GLESDebugDraw( PTM_RATIO );
 	world->SetDebugDraw(m_debugDraw);
 	
-	uint32 flags = 0;
+	uint flags = 0;
 	flags += b2DebugDraw::e_shapeBit;
 	flags += b2DebugDraw::e_jointBit;
 	flags += b2DebugDraw::e_aabbBit;
@@ -156,8 +156,8 @@ void Box2DTestLayer::tick(ccTime dt)
 	//You need to make an informed choice, the following URL is useful
 	//http://gafferongames.com/game-physics/fix-your-timestep/
 	
-	int32 velocityIterations = 8;
-	int32 positionIterations = 1;
+	int velocityIterations = 8;
+	int positionIterations = 1;
 
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed.

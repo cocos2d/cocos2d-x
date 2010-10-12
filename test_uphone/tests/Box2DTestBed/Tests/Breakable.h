@@ -69,10 +69,10 @@ public:
 		}
 
 		// Should the body break?
-		int32 count = contact->GetManifold()->pointCount;
+		int count = contact->GetManifold()->pointCount;
 
 		float32 maxImpulse = 0.0f;
-		for (int32 i = 0; i < count; ++i)
+		for (int i = 0; i < count; ++i)
 		{
 			maxImpulse = b2Max(maxImpulse, impulse->normalImpulses[i]);
 		}

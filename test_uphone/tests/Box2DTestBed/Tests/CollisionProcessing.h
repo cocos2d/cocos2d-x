@@ -126,13 +126,13 @@ public:
 		// We are going to destroy some bodies according to contact
 		// points. We must buffer the bodies that should be destroyed
 		// because they may belong to multiple contact points.
-		const int32 k_maxNuke = 6;
+		const int k_maxNuke = 6;
 		b2Body* nuke[k_maxNuke];
-		int32 nukeCount = 0;
+		int nukeCount = 0;
 
 		// Traverse the contact results. Destroy bodies that
 		// are touching heavier bodies.
-		for (int32 i = 0; i < m_pointCount; ++i)
+		for (int i = 0; i < m_pointCount; ++i)
 		{
 			ContactPoint* point = m_points + i;
 
@@ -163,7 +163,7 @@ public:
 		std::sort(nuke, nuke + nukeCount);
 
 		// Destroy the bodies, skipping duplicates.
-		int32 i = 0;
+		int i = 0;
 		while (i < nukeCount)
 		{
 			b2Body* b = nuke[i++];

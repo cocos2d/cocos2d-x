@@ -58,20 +58,20 @@ public:
 		{
 			b2Color color(0.9f, 0.9f, 0.9f);
 			b2Vec2 v[b2_maxPolygonVertices];
-			for (int32 i = 0; i < m_polygonA.m_vertexCount; ++i)
+			for (int i = 0; i < m_polygonA.m_vertexCount; ++i)
 			{
 				v[i] = b2Mul(m_transformA, m_polygonA.m_vertices[i]);
 			}
 			m_debugDraw.DrawPolygon(v, m_polygonA.m_vertexCount, color);
 
-			for (int32 i = 0; i < m_polygonB.m_vertexCount; ++i)
+			for (int i = 0; i < m_polygonB.m_vertexCount; ++i)
 			{
 				v[i] = b2Mul(m_transformB, m_polygonB.m_vertices[i]);
 			}
 			m_debugDraw.DrawPolygon(v, m_polygonB.m_vertexCount, color);
 		}
 
-		for (int32 i = 0; i < manifold.pointCount; ++i)
+		for (int i = 0; i < manifold.pointCount; ++i)
 		{
 			m_debugDraw.DrawPoint(worldManifold.points[i], 4.0f, b2Color(0.9f, 0.3f, 0.3f));
 		}

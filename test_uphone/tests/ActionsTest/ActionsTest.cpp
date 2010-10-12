@@ -1,9 +1,9 @@
 #include "ActionsTest.h"
 #include "../testResource.h"
 
-static Int32 s_nActionIdx = -1;
+static int s_nActionIdx = -1;
 
-CCLayer* CreateLayer(Int32 nIndex)
+CCLayer* CreateLayer(int nIndex)
 {
     CCLayer * pLayer = NULL;
 

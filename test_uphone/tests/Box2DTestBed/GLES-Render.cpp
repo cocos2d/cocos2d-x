@@ -17,7 +17,7 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 }
 
 
-void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
+void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, const b2Color& color)
 {
 	b2Vec2* vertices = new b2Vec2[vertexCount];
 	for( int i=0;i<vertexCount;i++) 
@@ -33,7 +33,7 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, c
 	delete[] vertices;
 }
 
-void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
+void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount, const b2Color& color)
 {
 	b2Vec2* vertices = new b2Vec2[vertexCount];
 	for( int i=0;i<vertexCount;i++) {
@@ -61,7 +61,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 	float32 theta = 0.0f;
 	
 	GLfloat*	glVertices = new GLfloat[vertexCount*2];
-	for (int32 i = 0; i < k_segments; ++i)
+	for (int i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
 		glVertices[i*2]=v.x * mRatio;
@@ -86,7 +86,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 	float32 theta = 0.0f;
 	
 	GLfloat*	glVertices = new GLfloat[vertexCount*2];
-	for (int32 i = 0; i < k_segments; ++i)
+	for (int i = 0; i < k_segments; ++i)
 	{
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
 		glVertices[i*2]=v.x * mRatio;

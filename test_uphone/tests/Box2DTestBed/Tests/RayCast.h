@@ -37,7 +37,7 @@ public:
 		void* userData = body->GetUserData();
 		if (userData)
 		{
-			int32 index = *(int32*)userData;
+			int index = *(int*)userData;
 			if (index == 0)
 			{
 				// filter
@@ -72,7 +72,7 @@ public:
 		void* userData = body->GetUserData();
 		if (userData)
 		{
-			int32 index = *(int32*)userData;
+			int index = *(int*)userData;
 			if (index == 0)
 			{
 				// filter
@@ -109,11 +109,11 @@ public:
 		const b2Vec2& normal, float32 fraction)
 	{
 		b2Body* body = fixture->GetBody();
-		int32 index = 0;
+		int index = 0;
 		void* userData = body->GetUserData();
 		if (userData)
 		{
-			int32 index = *(int32*)userData;
+			int index = *(int*)userData;
 			if (index == 0)
 			{
 				// filter
@@ -137,7 +137,7 @@ public:
 
 	b2Vec2 m_points[e_maxCount];
 	b2Vec2 m_normals[e_maxCount];
-	int32 m_count;
+	int m_count;
 };
 
 
@@ -219,7 +219,7 @@ public:
 		m_mode = e_closest;
 	}
 
-	void Create(int32 index)
+	void Create(int index)
 	{
 		if (m_bodies[m_bodyIndex] != NULL)
 		{
@@ -265,7 +265,7 @@ public:
 
 	void DestroyBody()
 	{
-		for (int32 i = 0; i < e_maxBodies; ++i)
+		for (int i = 0; i < e_maxBodies; ++i)
 		{
 			if (m_bodies[i] != NULL)
 			{
@@ -361,7 +361,7 @@ public:
 			m_world->RayCast(&callback, point1, point2);
 			m_debugDraw.DrawSegment(point1, point2, b2Color(0.8f, 0.8f, 0.8f));
 
-			for (int32 i = 0; i < callback.m_count; ++i)
+			for (int i = 0; i < callback.m_count; ++i)
 			{
 				b2Vec2 p = callback.m_points[i];
 				b2Vec2 n = callback.m_normals[i];
@@ -380,9 +380,9 @@ public:
 		return new RayCast;
 	}
 
-	int32 m_bodyIndex;
+	int m_bodyIndex;
 	b2Body* m_bodies[e_maxBodies];
-	int32 m_userData[e_maxBodies];
+	int m_userData[e_maxBodies];
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;
 

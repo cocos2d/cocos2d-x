@@ -74,7 +74,7 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	b2WorldManifold worldManifold;
 	contact->GetWorldManifold(&worldManifold);
 	
-	for (int32 i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
+	for (int i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
 	{
 		ContactPoint* cp = m_points + m_pointCount;
 		cp->fixtureA = fixtureA;
@@ -277,7 +277,7 @@ void Test::Step(Settings* settings)
 		m_textLine += 15;
 	}
 
-	uint32 flags = 0;
+	unsigned int flags = 0;
 	flags += settings->drawShapes			* b2DebugDraw::e_shapeBit;
 	flags += settings->drawJoints			* b2DebugDraw::e_jointBit;
 	flags += settings->drawAABBs			* b2DebugDraw::e_aabbBit;
@@ -347,7 +347,7 @@ void Test::Step(Settings* settings)
 		//const float32 k_impulseScale = 0.1f;
 		const float32 k_axisScale = 0.3f;
 		
-		for (int32 i = 0; i < m_pointCount; ++i)
+		for (int i = 0; i < m_pointCount; ++i)
 		{
 			ContactPoint* point = m_points + i;
 			

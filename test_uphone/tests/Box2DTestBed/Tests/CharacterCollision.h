@@ -117,7 +117,7 @@ public:
 			float32 angle = 0.0f;
 			float32 delta = b2_pi / 3.0f;
 			b2Vec2 vertices[6];
-			for (int32 i = 0; i < 6; ++i)
+			for (int i = 0; i < 6; ++i)
 			{
 				vertices[i].Set(0.5f * cosf(angle), 0.5f * sinf(angle));
 				angle += delta;
