@@ -64,12 +64,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
+				OutputFile="$(OutDir)\libcocos2d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=".\platform\win32\third_party\OGLES\WindowsPC\Lib;d:/Work7/PRJ_TG3/LIB/Win32Lib;D:\Work7\PRJ_TG3\Common\SoftSupport"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="MSVCRT.lib;LIBCMTD.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				ImportLibrary="$(TargetDir)libcocos2d.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -140,12 +142,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
+				OutputFile="$(OutDir)\libcocos2d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=".\platform\win32\third_party\OGLES\WindowsPC\Lib;d:/Work7/PRJ_TG3/LIB/Win32Lib;D:\Work7\PRJ_TG3\Common\SoftSupport"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				ImportLibrary="$(TargetDir)libcocos2d.lib"
 				TargetMachine="1"
 			/>
 			<Tool
