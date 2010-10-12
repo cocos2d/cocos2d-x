@@ -195,68 +195,67 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 		}
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
-
-		if (std::string::npos != lowerCase.find(".pvr"))
+		do 
 		{
+			if (std::string::npos != lowerCase.find(".pvr"))
+			{
 #ifdef _POWERVR_SUPPORT_
-			texture = this->addPVRTCImage(fullpath.c_str());
+				texture = this->addPVRTCImage(fullpath.c_str());
 #endif
-		}
-		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
-		else 
-		if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
-		{
-			UIImage * image = new UIImage();
-			if(! image->initWithContentsOfFile(fullpath, kImageFormatJPG))
-			{
-				delete image;
-				m_pDictLock->unlock();
-				return NULL;
 			}
-			texture = new CCTexture2D();
-			texture->initWithImage(image);
-			CCX_SAFE_DELETE(image);// image->release();
-
-			if( texture )
+			// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
+			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
-				m_pTextures->setObject(texture, fullpath);
-				texture->release();
+				UIImage * image = new UIImage();
+				if(! image->initWithContentsOfFile(fullpath, kImageFormatJPG))
+				{
+					delete image;
+					break;
+				}
+				texture = new CCTexture2D();
+				texture->initWithImage(image);
+				CCX_SAFE_DELETE(image);// image->release();
+
+				if( texture )
+				{
+					m_pTextures->setObject(texture, fullpath);
+					texture->release();
+				}
+				else
+				{
+					CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
+				}
 			}
 			else
 			{
-				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
-			}
-		}
-		else
-		{
-			//# work around for issue #910
+				//# work around for issue #910
 #if 0
-			UIImage *image = [UIImage imageNamed:path];
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
+				UIImage *image = [UIImage imageNamed:path];
+				tex = [ [CCTexture2D alloc] initWithImage: image ];
 #else
-			// prevents overloading the autorelease pool
-			UIImage * image = new UIImage();
-			if(! image->initWithContentsOfFile(fullpath, kImageFormatPNG))
-			{
-				delete image;
-				m_pDictLock->unlock();
-				return NULL;
+				// prevents overloading the autorelease pool
+				UIImage * image = new UIImage();
+				if(! image->initWithContentsOfFile(fullpath, kImageFormatPNG))
+				{
+					delete image;
+					break;
+				}
+				texture = new CCTexture2D();
+				texture->initWithImage(image);
+				CCX_SAFE_DELETE(image);// image->release();
+#endif
+				if( texture )
+				{
+					m_pTextures->setObject(texture, fullpath);
+					texture->release();
+				}
+				else
+				{
+					CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
+				}
 			}
-			texture = new CCTexture2D();
-			texture->initWithImage(image);
-			CCX_SAFE_DELETE(image);// image->release();
-#endif //
 
-			if( texture )
-			{
-				m_pTextures->setObject(texture, fullpath);
-				texture->release();
-			}
-			else
-			{
-				CCLOG("cocos2d: Couldn't add image:%s in CCTextureCache", path);
-			}
-		}
+		} while (0);
 	}
 	m_pDictLock->unlock();
 	return texture;
@@ -353,25 +352,35 @@ CCTexture2D* CCTextureCache::addUIImage(UIImage *image, const char *key)
 
 	CCTexture2D * texture = NULL;
 	std::string forKey = key;
-	// If key is nil, then create a new texture each time
-	if(texture = m_pTextures->objectForKey(forKey))
-	{
-		return texture;
-	}
 
-	// prevents overloading the autorelease pool
-	texture = new CCTexture2D();
-	texture->initWithImage(image);
+	m_pDictLock->lock();
 
-	if(texture)
+	do 
 	{
-		m_pTextures->setObject(texture, forKey);
-		texture->autorelease();
-	}
-	else
-	{
-		CCLOG("cocos2d: Couldn't add UIImage in CCTextureCache");
-	}
+		// If key is nil, then create a new texture each time
+		if(texture = m_pTextures->objectForKey(forKey))
+		{
+			break;
+		}
+
+		// prevents overloading the autorelease pool
+		texture = new CCTexture2D();
+		texture->initWithImage(image);
+
+		if(texture)
+		{
+			m_pTextures->setObject(texture, forKey);
+			texture->autorelease();
+		}
+		else
+		{
+			CCLOG("cocos2d: Couldn't add UIImage in CCTextureCache");
+		}
+
+	} while (0);
+	
+	m_pDictLock->unlock();
+
 	return texture;
 }
 
