@@ -159,10 +159,6 @@ CCDirector::~CCDirector(void)
 	CCX_SAFE_RELEASE(m_pRunningScene);
 	CCX_SAFE_RELEASE(m_pobScenesStack);
 
-    // delete configuration pointer
-    CCConfiguration *conf = CCConfiguration::sharedConfiguration();
-    CCX_SAFE_RELEASE(conf);
-
 	// pop the autorelease pool
 	NSPoolManager::getInstance()->pop();
 

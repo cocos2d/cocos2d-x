@@ -30,7 +30,8 @@ using namespace std;
 namespace   cocos2d {
 
 // singleton stuff
-static CCConfiguration *g_pSharedConfiguration;
+static bool g_bInited;
+static CCConfiguration g_SharedConfiguration;
 static char *g_pGlExtensions;
 
 CCConfiguration::CCConfiguration(void)
@@ -79,13 +80,12 @@ bool CCConfiguration::init(void)
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
 {
-	if (! g_pSharedConfiguration)
+	if (! g_bInited)
 	{
-		g_pSharedConfiguration = new CCConfiguration();
-		g_pSharedConfiguration->init();
+		g_SharedConfiguration.init();
 	}
 
-	return g_pSharedConfiguration;
+	return &g_SharedConfiguration;
 }
 
 bool CCConfiguration::checkForGLExtension(const string &searchName)

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "CCXApplication.h"
-#include "CCXEGLView.h"
+#include "cocos2d.h"
 
 class HelloWorldApplication : public cocos2d::CCXApplication
 {

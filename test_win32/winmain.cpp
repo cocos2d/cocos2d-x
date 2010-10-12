@@ -1,4 +1,5 @@
 #include "winmain.h"
+#include "TestApplication.h"
 
 HINSTANCE g_hInstance;
 
@@ -13,10 +14,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	g_hInstance = hInstance;
 
 	int nRet = 0;
-// 	HelloWorldApplication app;
-// 	if (app.InitInstance() && app.initCocos2d())
-// 	{
-// 		nRet = app.Run();
-// 	}
+	TestApplication app;
+	if (app.InitInstance() && app.initCocos2d())
+	{
+		nRet = app.Run();
+	}
 	return nRet;
 }

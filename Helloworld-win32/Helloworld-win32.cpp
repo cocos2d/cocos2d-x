@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "Helloworld-win32.h"
 
-#include "cocos2d.h"
 using namespace cocos2d;
 
 #define IMG_PATH        "HelloWorld.png"

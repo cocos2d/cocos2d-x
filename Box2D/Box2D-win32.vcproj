@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="Box2D-win32"
 	ProjectGUID="{929480E7-23C0-4DF6-8456-096D71547116}"
+	RootNamespace="Box2D-win32"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="0"
 	>
@@ -61,6 +62,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\libBox2D.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -121,6 +123,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\libBox2D.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
