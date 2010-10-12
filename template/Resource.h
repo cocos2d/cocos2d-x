@@ -2,17 +2,14 @@
 #define _RESOURCE_H_
 
 #include "cocostemplate_res_def.h"
+#include "cocos2d.h"
 
-const std::string ResourceNames[] =
-{
-    "CloseNormal",
-    "CloseSelected",
-};
+using namespace cocos2d;
 
-const Int32 nResIDs[] =
+const T_ImageResInfo ResInfo[] =
 {
-    COCOST_ID_BITMAP_CloseNormal,
-    COCOST_ID_BITMAP_CloseSelected,
+    { "CloseNormal",    COCOST_ID_BITMAP_CloseNormal },
+    { "CloseSelected",  COCOST_ID_BITMAP_CloseSelected },
 };
 
 #endif

@@ -47,6 +47,12 @@ typedef struct
 	unsigned char   *data;
 } tImageInfo;
 
+typedef struct
+{
+    std::string ImgName;
+    int         nResID;
+} T_ImageResInfo;
+
 class ResourceHandle
 {
 public:
@@ -117,8 +123,8 @@ public:
     /** set the Resource Entry */
     static void setResourceEntry(const AppResourceEntry* pResEntry);
 
-    /** set the map between UIImage key and ResID */
-    static void setImageMap(const std::string keys[], const int values[], int nCount);
+    /** set the images ResInfo(name and ResID) */
+    static void setImageResInfo(const T_ImageResInfo ResInfo[], int nCount);
 
 private:
     bool loadPng(const char* strFileName);

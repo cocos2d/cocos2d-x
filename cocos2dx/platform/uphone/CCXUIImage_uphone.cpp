@@ -182,7 +182,7 @@ void UIImage::setResourceEntry(const AppResourceEntry* pResEntry)
     }
 }
 
-void UIImage::setImageMap(const std::string keys[], const int values[], int nCount)
+void UIImage::setImageResInfo(const T_ImageResInfo ResInfo[], int nCount)
 {
     // first, clear the map before
     if (!s_ImgMap.empty())
@@ -193,8 +193,9 @@ void UIImage::setImageMap(const std::string keys[], const int values[], int nCou
     // second, insert the pairs
     for (int i = 0; i < nCount; ++i)
     {
-        std::string key = CCFileUtils::fullPathFromRelativePath((keys[i]).c_str());
-        int nResID    = values[i];
+        std::string name = (ResInfo[i]).ImgName;
+        std::string key  = CCFileUtils::fullPathFromRelativePath(name.c_str());
+        int nResID       = (ResInfo[i]).nResID;
 
         s_ImgMap.insert(ResourceImageMap::value_type(key, nResID));
     }

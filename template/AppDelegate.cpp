@@ -30,8 +30,8 @@ bool AppDelegate::initCocos2d()
     // set the ResourceEntry
     UIImage::setResourceEntry(&cocosTemplateResourceEntry);
 
-    // set the map between names and ResIDs
-    UIImage::setImageMap(ResourceNames, nResIDs, sizeof(nResIDs) / sizeof(Int32));
+    // set the Images ResInfo (name and ResID)
+    UIImage::setImageResInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ImageResInfo));
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();
