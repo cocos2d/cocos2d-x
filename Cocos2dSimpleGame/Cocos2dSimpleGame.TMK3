@@ -13,12 +13,12 @@
 TO_PROJECT_ROOT=../../PRJ_TG3
 
 ;输出目标的名字，不支持多个串，如果有多个，以最后一个为准
-OUTPUT_FILENAME=libcocosTemplate.so
+OUTPUT_FILENAME=libCocos2dSimpleGame.so
 
 ;包含的其他的TMK3文件，此文件和本文件一起构成MakeFile的内容
 ;此项可以出现在TMK3文件内的任意地方，与已经存在的项依次组合
 ;注意：此项不支持绝对路径，但是可以使用$(TO_PROJECT_ROOT)构成文件名
-INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP_Arm.TMK3		;TOPS标准应用，包括动态库等
+INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP.TMK3		;TOPS标准应用，包括动态库等
 
 ;预定义串，生成MakeFile的时候直接放在MakeFile的前面
 ;格式：PRE_DEFINE=STRING，生成MakeFile的时候，"PRE_DEFINE="后面的所有非注释非续行字符都会放在MakeFile前面

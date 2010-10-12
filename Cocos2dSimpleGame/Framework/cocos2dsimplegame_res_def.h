@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//                      cocosTemplate_Res_def.h
+//                      Cocos2dSimpleGame_Res_def.h
 //              资源编译器转换文件ID宏声明文件
 //
 //
@@ -13,9 +13,9 @@
 // 警告：未经允许，任何人不准擅自修改此文件!!!否则后果自负!
 //
 //------------------------------------------------------------------------------
-#ifndef __COCOSTEMPLATE_RES_DEF_H__
-#define __COCOSTEMPLATE_RES_DEF_H__
+#ifndef __COCOS2DSIMPLEGAME_RES_DEF_H__
+#define __COCOS2DSIMPLEGAME_RES_DEF_H__
 
-#define COCOST_ID_Form1002  1073742826 /*"Main"*/
+#define COCOS2_ID_Form1002  1073742826 /*"Main"*/
 
 #endif

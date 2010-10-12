@@ -6,14 +6,14 @@
 
 using namespace cocos2d;
 
-#define PATH_CLOSE_NORMAL		"/NEWPLUS/TDA_DATA/UserData/CloseNormal.png"
-#define PATH_CLOSE_SELECTED		"/NEWPLUS/TDA_DATA/UserData/CloseSelected.png"
-#define IMG_PLAYER				"/NEWPLUS/TDA_DATA/UserData/player.png"
-#define IMG_PROJECTILE			"/NEWPLUS/TDA_DATA/UserData/projectile.png"
-#define IMG_TARGET				"/NEWPLUS/TDA_DATA/UserData/target.png"
+#define PATH_CLOSE_NORMAL		"CloseNormal.png"
+#define PATH_CLOSE_SELECTED		"CloseSelected.png"
+#define IMG_PLAYER				"Player.png"
+#define IMG_PROJECTILE			"Projectile.png"
+#define IMG_TARGET				"Target.png"
 
-#define SOUND_BACKGROUND		"/NEWPLUS/TDA_DATA/UserData/background-music-aac.mp3"
-#define SOUND_EFFECT			"/NEWPLUS/TDA_DATA/UserData/pew-pew-lei.wav"
+#define SOUND_BACKGROUND		"background-music-aac.mp3"
+#define SOUND_EFFECT			"pew-pew-lei.wav"
 
 CCScene* HelloWorld::scene()
 {
@@ -32,7 +32,7 @@ CCScene* HelloWorld::scene()
 
 void HelloWorld::spriteMoveFinished(CCNode* sender)
 {
-	TagSprite *sprite = (TagSprite *)sender;
+	CCSprite *sprite = (CCSprite *)sender;
 	this->removeChild(sprite, true);
 
 	if (sprite->getTag() == 1)  // target
@@ -52,7 +52,7 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 void HelloWorld::addTarget()
 {
 
-	TagSprite *target = (TagSprite*)CCSprite::spriteWithFile(IMG_TARGET, CGRectMake(0,0,27,40));
+	CCSprite *target = CCSprite::spriteWithFile(IMG_TARGET, CGRectMake(0,0,27,40));
 
 	// Determine where to spawn the target along the Y axis
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
@@ -119,8 +119,8 @@ bool HelloWorld::init()
 	this->setIsTouchEnabled(true);
 
 	// Initialize arrays
-	_targets = new NSMutableArray<TagSprite*>;
-	_projectiles = new NSMutableArray<TagSprite*>;
+	_targets = new NSMutableArray<CCSprite*>;
+	_projectiles = new NSMutableArray<CCSprite*>;
 
 	// Get the dimensions of the window for calculation purposes
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
@@ -138,30 +138,30 @@ bool HelloWorld::init()
 	this->schedule( schedule_selector(HelloWorld::update) );
 
 	// Start up the background music
-	SimpleAudioEngine::getSharedSimpleAudioEngine()->playBackgroundMusic(SOUND_BACKGROUND, true);
+	// SimpleAudioEngine::getSharedSimpleAudioEngine()->playBackgroundMusic(SOUND_BACKGROUND, true);
 
  	return true;
 }
 
 void HelloWorld::update(ccTime dt)
 {
-	NSMutableArray<TagSprite*> *projectilesToDelete = new NSMutableArray<TagSprite*>;
-	NSMutableArray<TagSprite*>::NSMutableArrayIterator it, jt;
+	NSMutableArray<CCSprite*> *projectilesToDelete = new NSMutableArray<CCSprite*>;
+	NSMutableArray<CCSprite*>::NSMutableArrayIterator it, jt;
 
 	for (it = _projectiles->begin(); it != _projectiles->end(); it++)
 	{
-		TagSprite *projectile = *it;
+		CCSprite *projectile = *it;
 
 		CGRect projectileRect = CGRectMake(projectile->getPosition().x - (projectile->getContentSize().width/2),
 						projectile->getPosition().y - (projectile->getContentSize().height/2),
 						projectile->getContentSize().width,
 						projectile->getContentSize().height);
 
-		NSMutableArray<TagSprite*> *targetsToDelete = new NSMutableArray<TagSprite*>;
+		NSMutableArray<CCSprite*> *targetsToDelete = new NSMutableArray<CCSprite*>;
 
 		for (jt = _targets->begin(); jt != _targets->end(); jt++)
 		{
-			TagSprite *target = *jt;
+			CCSprite *target = *jt;
 
 			CGRect targetRect = CGRectMake(target->getPosition().x - (target->getContentSize().width/2),
 							target->getPosition().y - (target->getContentSize().height/2),
@@ -177,7 +177,7 @@ void HelloWorld::update(ccTime dt)
 
 		for (jt = targetsToDelete->begin(); jt != targetsToDelete->end(); jt++)
 		{
-			TagSprite *target = *jt;
+			CCSprite *target = *jt;
 
 			_targets->removeObject(target);
 			this->removeChild(target, true);
@@ -200,7 +200,7 @@ void HelloWorld::update(ccTime dt)
 
 	for (it = projectilesToDelete->begin(); it != projectilesToDelete->end(); it++)
 	{
-		TagSprite* projectile = *it;
+		CCSprite* projectile = *it;
 
 		_projectiles->removeObject(projectile);
 		this->removeChild(projectile, true);
@@ -218,7 +218,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 
 	// Set up initial location of projectile
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
-	TagSprite *projectile = (TagSprite*)CCSprite::spriteWithFile(IMG_PROJECTILE, CGRectMake(0, 0, 20, 20));
+	CCSprite *projectile = CCSprite::spriteWithFile(IMG_PROJECTILE, CGRectMake(0, 0, 20, 20));
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
 	// Determinie offset of location to projectile
@@ -232,7 +232,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 	this->addChild(projectile);
 
 	// Play a sound!
-	SimpleAudioEngine::getSharedSimpleAudioEngine()->playEffect(SOUND_EFFECT);
+	// SimpleAudioEngine::getSharedSimpleAudioEngine()->playEffect(SOUND_EFFECT);
 
 	// Determine where we wish to shoot the projectile to
 	float realX = winSize.width + (projectile->getContentSize().width / 2);
@@ -279,8 +279,6 @@ HelloWorld::~HelloWorld()
 		_projectiles->release();
 		_projectiles = NULL;
 	}
-
-	printf("HelloWorld, Layer destructor\n");
 }
 
 void HelloWorld::menuCloseCallback(NSObject* pSender)
