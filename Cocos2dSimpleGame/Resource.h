@@ -1,7 +1,7 @@
 #ifndef _RESOURCE_H_
 #define _RESOURCE_H_
 
-#include "SimpleAudioEngine/SimpleAudioEngine.h"
+#include "SimpleAudioEngine.h"
 #include "cocos2dsimplegame_res_def.h"
 #include "cocos2d.h"
 
