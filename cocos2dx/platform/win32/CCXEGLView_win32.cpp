@@ -208,7 +208,7 @@ bool CCXEGLView::Create(LPCTSTR pTitle, int w, int h)
 		WNDCLASS  wc;		// Windows Class Structure
 
 		// Redraw On Size, And Own DC For Window.
-		wc.style          = CS_NOCLOSE | CS_HREDRAW | CS_VREDRAW | CS_OWNDC;  
+		wc.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;  
 		wc.lpfnWndProc    = _WindowProc;					// WndProc Handles Messages
 		wc.cbClsExtra     = 0;                              // No Extra Window Data
 		wc.cbWndExtra     = 0;								// No Extra Window Data
