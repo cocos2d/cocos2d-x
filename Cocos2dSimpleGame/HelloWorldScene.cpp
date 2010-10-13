@@ -7,9 +7,6 @@
 
 using namespace cocos2d;
 
-#define SOUND_BACKGROUND		"background-music-aac.mp3"
-#define SOUND_EFFECT			"pew-pew-lei.wav"
-
 CCScene* HelloWorld::scene()
 {
 	// 'scene' is an autorelease object
@@ -133,7 +130,7 @@ bool HelloWorld::init()
 	this->schedule( schedule_selector(HelloWorld::update) );
 
 	// Start up the background music
-	// SimpleAudioEngine::getSharedSimpleAudioEngine()->playBackgroundMusic(SOUND_BACKGROUND, true);
+	SimpleAudioEngine::getSharedSimpleAudioEngine()->playBackgroundMusic(SoundResInfo[0].FileName.c_str(), true);
 
  	return true;
 }
@@ -227,7 +224,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 	this->addChild(projectile);
 
 	// Play a sound!
-	// SimpleAudioEngine::getSharedSimpleAudioEngine()->playEffect(SOUND_EFFECT);
+	SimpleAudioEngine::getSharedSimpleAudioEngine()->playEffect(SoundResInfo[1].FileName.c_str());
 
 	// Determine where we wish to shoot the projectile to
 	float realX = winSize.width + (projectile->getContentSize().width / 2);
@@ -257,6 +254,7 @@ HelloWorld::HelloWorld()
 :_targets(NULL)
 ,_projectiles(NULL)
 {
+    SimpleAudioEngine::getSharedSimpleAudioEngine()->preloadEffect(SoundResInfo[1].FileName.c_str());
 }
 
 // on "dealloc" you need to release all your retained objects

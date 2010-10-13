@@ -1,5 +1,5 @@
-#ifndef __SUPPORT_DATA_SUPPORT_UTHASH_H__
-#define __SUPPORT_DATA_SUPPORT_UTHASH_H__
+#ifndef __AUDIOENGINE_UTHASH_H__
+#define __AUDIOENGINE_UTHASH_H__
 
 #include <string.h>   /* memcmp,strlen */
 #include <stddef.h>   /* ptrdiff_t */

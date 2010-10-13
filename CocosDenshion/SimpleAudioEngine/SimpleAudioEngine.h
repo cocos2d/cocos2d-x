@@ -30,6 +30,29 @@ THE SOFTWARE.
 #include <vector>
 #include "../Export.h"
 
+typedef struct
+{
+    std::string FileName;
+    int         nResID;
+} T_SoundResInfo;
+
+struct AppResourceEntry;
+class  TResourceLib;
+
+class SoundResHandle
+{
+public:
+    SoundResHandle();
+    ~SoundResHandle();
+
+    void setResourceEntry(const AppResourceEntry* pResEntry);
+    void release();
+    const void* LoadConstRawData(int nResID, unsigned int* nLen);
+
+private:
+    TResourceLib* m_pResLib;
+};
+
 /*!***************************************************************************
 @class          SimpleAudioEngine
 @brief  		offer a VERY simple interface to play background music & sound effect
@@ -46,6 +69,12 @@ public:
 
     // get the Engine object
     static SimpleAudioEngine* getSharedSimpleAudioEngine();
+
+    // set the sound ResInfo
+    static void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);
+
+    // set the resource entry
+    static void setResourceEntry(const AppResourceEntry* pResEntry);
 
     // for background music
     void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
@@ -96,6 +125,10 @@ public:
     void removeAllEffectPlayers();
     void removeAllEffects();
 
+private:
+    int  loadFromResourceInfo(const char* pFileKey);
+    int  loadFromFile(const char* pFilePath);
+
 protected:
     int     m_nBackgroundMusicVolume;
     int     m_nEffectsVolume;
@@ -108,8 +141,8 @@ protected:
     typedef struct _hashElement
     {
         int                 nSoundID;
-        SoundPlayer*        pPlayer;
         unsigned char*      pDataBuffer;
+        std::string         FileName;
         int                 nDataSize;
         UT_hash_handle		hh;
     } tHashElement;

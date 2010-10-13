@@ -2,10 +2,11 @@
 #include "TCOM_MediaPlayer_IIDs.h"
 #include "TCOM_Generic_DataType_IIDs.h"
 
+#define BREAK_IF(cond)      if (cond) break;
+
 SoundPlayer::SoundPlayer()
 : m_pPlayer(NULL)
 , m_pMediaFile(NULL)
-, m_bPaused(FALSE)
 , m_MethodEmun(NULL)
 , m_nCurrentSoundID(0)
 {
@@ -43,16 +44,18 @@ Boolean SoundPlayer::OpenAudioFile(const char* pszFilePath)
 {
     Boolean bRet = FALSE;
 
-    if (m_pMediaFile)
+    do 
     {
+        BREAK_IF(!m_pMediaFile);
+
         TUString::StrGBToUnicode(m_fileName, (const Char*)pszFilePath);
+        BREAK_IF(!EOS_IsFileExist(m_fileName));
 
         m_pMediaFile->SetName(m_fileName);
-        if (m_pPlayer->Open())
-        {
-            bRet = TRUE;
-        }
-    }
+        BREAK_IF(! m_pPlayer->Open());
+
+        bRet = TRUE;
+    } while (0);
 
     return bRet;
 }
@@ -66,15 +69,26 @@ void SoundPlayer::PlaySoundFile(const char* pFileName, Int32 nTimes)
     }
 }
 
-void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, Int32 nTimes)
+void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, std::string FileName, Int32 nTimes)
 {
     if (m_pMediaFile)
     {
         Int32 nRet = m_pMediaFile->SetContent(pData, nSize);
-        const TUChar ExtendName[] = {'.', 'w', 'a', 'v', 0};
-        const TUChar format[]     = { '%', 'd', 0};
-        TUString::StrPrintF(m_fileName, format, nSize);
-        TUString::StrCat(m_fileName, ExtendName);
+
+        if (FileName.empty())
+        {
+            // 没有指定文件名，按照 .wav 格式解析
+            const TUChar ExtendName[] = {'.', 'w', 'a', 'v', 0};
+            const TUChar format[]     = { '%', 'd', 0};
+            TUString::StrPrintF(m_fileName, format, nSize);
+            TUString::StrCat(m_fileName, ExtendName);
+        }
+        else
+        {
+            // 使用指定的文件名
+            TUString::StrGBToUnicode(m_fileName, (const Char*)(FileName.c_str()));
+        }
+
         m_pMediaFile->SetName(m_fileName);
         m_pMediaFile->SetMode(SYS_FILE_MEMORY_FILE_TYPE);
 
@@ -113,20 +127,12 @@ void SoundPlayer::Release()
 
 void SoundPlayer::Pause()
 {
-    if (! m_bPaused && m_pPlayer)
-    {
-        m_pPlayer->Pause();
-        m_bPaused = TRUE;
-    }
+    m_pPlayer->Pause();
 }
 
 void SoundPlayer::Resume()
 {
-    if (m_bPaused && m_pPlayer)
-    {
-        m_pPlayer->Pause();
-        m_bPaused = FALSE;
-    }
+    m_pPlayer->Resume();
 }
 
 void SoundPlayer::Stop()
@@ -156,7 +162,9 @@ void SoundPlayer::Mute(bool bMute)
 
 bool SoundPlayer::IsPlaying()
 {
-    return false;////----
+    TMediaPlayerStatus status = m_pPlayer->GetCurrentStatus();
+
+    return (status == PLAYER_STATUS_PLAYING || status == PLAYER_STATUS_PAUSED);
 }
 
 Int32 SoundPlayer::GetFileBufferSize(const char* pszFilePath)
@@ -165,18 +173,7 @@ Int32 SoundPlayer::GetFileBufferSize(const char* pszFilePath)
 
     if (OpenAudioFile(pszFilePath))
     {
-        const TMM_AudioInfo* pAudioInfo = m_pPlayer->GetAudioInfo();
-        Int32  samplesPerSec = pAudioInfo->samplesPerSec;
-        Int32  bitsPerSample = pAudioInfo->bitsPerSample;
-        Int32  channelNum    = pAudioInfo->channelNum;
-        UInt32 durationInSec = pAudioInfo->durationInSec;
-
-        if (durationInSec == 0)
-        {
-            durationInSec = 1;
-        }
-        nRet = samplesPerSec * bitsPerSample * channelNum / 8 * durationInSec;
-
+        nRet = m_pPlayer->GetDecodedAudioSize();
         m_pPlayer->Close();
     }
 
