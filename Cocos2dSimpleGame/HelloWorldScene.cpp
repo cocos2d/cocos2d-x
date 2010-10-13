@@ -224,7 +224,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 	this->addChild(projectile);
 
 	// Play a sound!
-	SimpleAudioEngine::getSharedEngine()->playEffect(SoundResInfo[1].FileName.c_str());
+	// SimpleAudioEngine::getSharedEngine()->playEffect(SoundResInfo[1].FileName.c_str());
 
 	// Determine where we wish to shoot the projectile to
 	float realX = winSize.width + (projectile->getContentSize().width / 2);
