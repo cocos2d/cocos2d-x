@@ -71,8 +71,6 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 
 UIImage::UIImage(void)
 {
-	m_pBitmap = NULL;
-
 	m_imageInfo.hasAlpha = false;
 	m_imageInfo.isPremultipliedAlpha = false;
 	m_imageInfo.height = 0;
@@ -98,14 +96,32 @@ UIImage::UIImage(CCXBitmapDC * pBmpDC)
 	GetDIBits(pBmpDC->getDC(), pBmpDC->getBitmap(), 0, 0, NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
 	// init imageinfo
- 	m_imageInfo.height	= bi.bmiHeader.biHeight;
+	m_imageInfo.height	= (bi.bmiHeader.biHeight < 0) ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
  	m_imageInfo.width	= bi.bmiHeader.biWidth;
  	m_imageInfo.bitsPerComponent = bi.bmiHeader.biBitCount / 4;
  	m_imageInfo.hasAlpha = true;
  	m_imageInfo.isPremultipliedAlpha = false;
- 	m_imageInfo.data = new BYTE[m_imageInfo.height * m_imageInfo.width * m_imageInfo.bitsPerComponent];
+ 	m_imageInfo.data = new BYTE[m_imageInfo.height * m_imageInfo.width * 4];
+
+	bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0) ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
 	GetDIBits(pBmpDC->getDC(), pBmpDC->getBitmap(), 0, m_imageInfo.height, m_imageInfo.data, 
 		(LPBITMAPINFO)&bi, DIB_RGB_COLORS);
+
+	// change pixel's alpha value to 255, when it's RGB != 0
+	COLORREF * pPixel = NULL;
+	for (int y = 0; y < m_imageInfo.height; ++y)
+	{
+		pPixel = (COLORREF *)m_imageInfo.data + y * m_imageInfo.width;
+		for (int x = 0; x < m_imageInfo.width; ++x)
+		{
+			COLORREF& clr = *pPixel;
+			if (GetRValue(clr) || GetGValue(clr) || GetBValue(clr))
+			{
+				clr |= 0xff000000;
+			}
+			++pPixel;
+		}
+	}
 }
 
 UIImage::~UIImage(void)

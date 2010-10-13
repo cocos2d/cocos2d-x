@@ -104,7 +104,6 @@ private:
 	bool loadJpg(const char *strFileName);
 
 private:
-	HBITMAP *m_pBitmap;
 	tImageInfo m_imageInfo;
 };
 }//namespace   cocos2d 

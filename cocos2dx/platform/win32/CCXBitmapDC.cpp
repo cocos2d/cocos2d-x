@@ -43,7 +43,7 @@ namespace cocos2d {
 		HFONT hFont = NULL;
 		HFONT hNewFont = NULL;
 		LOGFONT lFont = {0};
-		lFont.lfHeight = -MulDiv((int)fontSize, GetDeviceCaps(m_hMemDC, LOGPIXELSY), 72);
+		lFont.lfHeight = -(LONG)fontSize;
 		MultiByteToWideChar(CP_ACP, 0, fontName, -1, lFont.lfFaceName, LF_FACESIZE);
 		hFont = CreateFontIndirect(&lFont);
 		if (hFont)
@@ -57,9 +57,9 @@ namespace cocos2d {
 		HGDIOBJ hOldFont = SelectObject(m_hMemDC, hNewFont);
 
 		// text
-		int len = strlen(text) + 1;
-		WCHAR *pText = new WCHAR[len];
-        MultiByteToWideChar(CP_ACP, 0, text, len, pText, len);
+		int len = strlen(text);
+		WCHAR *pText = new WCHAR[len + 1];
+        MultiByteToWideChar(CP_ACP, 0, text, len + 1, pText, len);
 
 		// calculate text size
 		SIZE extent;
@@ -99,6 +99,7 @@ namespace cocos2d {
 		// draw text
 		RECT rc = {0, 0, extent.cx, extent.cy};
 		SetBkMode(m_hMemDC, TRANSPARENT);
+		SetTextColor(m_hMemDC, RGB(255, 255, 255)); // white color
 		DrawText(m_hMemDC, pText, len, &rc, dwStyle);
 
 		// free resource
