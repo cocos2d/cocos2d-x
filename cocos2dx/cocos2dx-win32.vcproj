@@ -94,7 +94,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)"
+				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y .\platform\win32\third_party\libraries\*.lib $(OutDir)"
 			/>
 		</Configuration>
 		<Configuration
@@ -172,7 +172,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y .\platform\win32\third_party\OGLES\WindowsPC\Lib\*.dll $(OutDir)"
+				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y .\platform\win32\third_party\libraries\*.lib $(OutDir)"
 			/>
 		</Configuration>
 	</Configurations>
