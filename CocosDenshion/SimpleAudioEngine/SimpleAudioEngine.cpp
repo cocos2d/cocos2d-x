@@ -39,7 +39,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
     removeAllEffectPlayers();
 }
 
-SimpleAudioEngine* SimpleAudioEngine::getSharedSimpleAudioEngine()
+SimpleAudioEngine* SimpleAudioEngine::getSharedEngine()
 {
     return &s_SharedAudioEngie;
 }

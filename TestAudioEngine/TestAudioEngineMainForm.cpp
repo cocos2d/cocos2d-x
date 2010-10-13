@@ -73,7 +73,7 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
 {
     Boolean bHandled = FALSE;
-    SimpleAudioEngine* pAudioEngine = SimpleAudioEngine::getSharedSimpleAudioEngine();
+    SimpleAudioEngine* pAudioEngine = SimpleAudioEngine::getSharedEngine();
 
     switch (pEvent->sParam1)
     {
