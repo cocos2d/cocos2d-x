@@ -5,6 +5,7 @@
 #include "TCOM_MediaPlayer_Method.h"
 #include "TCOM_Generic_DataType.h"
 #include "../../Export.h"
+#include <string>
 
 class EXPORT_DLL SoundPlayer
 {
@@ -23,9 +24,14 @@ public:
 
     /**
     @brief 播放内存中的声音数据
-    @param 
+    @param pData  声音数据指针
+    @param nSize  声音数据的大小
+    @param nTimes 循环的次数（默认只播放一次）
+    @param pFileName 播放的文件名，该文件名可以为任意字符串，但是必须包含数据的扩展名。
+    @warning pFileName 中的文件扩展名影响数据的播放，如果扩展名与数据的原始类型不匹配则无法播放。
+             默认 pFileName 为 NULL，此时会按照 .wav 的格式对数据进行解析
     */
-    void PlaySoundFromMem(UInt8* pData, Int32 nSize, Int32 nTimes = 1);
+    void PlaySoundFromMem(UInt8* pData, Int32 nSize, std::string pFileName = "", Int32 nTimes = 1);
 
     /**
     @brief 设置播放器的音量
@@ -99,7 +105,6 @@ private:
     TCOM_MediaPlayer_Method_Play *m_pPlayer;
     TCOM_DataType_SysFile *m_pMediaFile;
 
-    Boolean m_bPaused;
     TCOM_MethodEmun m_MethodEmun; // 查找方法
 
     TUChar m_fileName[MAX_PATH];

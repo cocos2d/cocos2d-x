@@ -195,6 +195,10 @@
 				Name="uPhone"
 				>
 				<File
+					RelativePath=".\Platform\uPhone\FileUtils.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Platform\uPhone\SoundPlayer.cpp"
 					>
 				</File>
