@@ -14,31 +14,25 @@
 class GameOverLayer : public cocos2d::CCColorLayer
 {
 public:
+	GameOverLayer():_label(NULL) {};
 	virtual ~GameOverLayer();
-
+	bool init();
 	LAYER_NODE_FUNC(GameOverLayer);
 
-	bool init();
 	void gameOverDone();
 
-	inline cocos2d::CCLabel* getLabel() { return _label; };
-protected:
-	cocos2d::CCLabel *_label;
+	CCX_SYNTHESIZE_READONLY(cocos2d::CCLabel*, _label, Label);
 };
-
 
 class GameOverScene : public cocos2d::CCScene
 {
 public:
-	virtual ~GameOverScene();
+	GameOverScene():_layer(NULL) {};
+	~GameOverScene();
 	bool init();
-	
 	SCENE_NODE_FUNC(GameOverScene);
 
-public:
-	inline GameOverLayer* getLayer() {return _layer; };
-protected:
-	GameOverLayer *_layer;
+	CCX_SYNTHESIZE_READONLY(GameOverLayer*, _layer, Layer);
 };
 
 #endif // _GAME_OVER_SCENE_H_
