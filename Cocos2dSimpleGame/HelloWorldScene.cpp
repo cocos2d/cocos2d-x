@@ -1,5 +1,5 @@
 
-#include "SimpleAudioEngine/SimpleAudioEngine.h"
+#include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
 #include "GameOverScene.h"
 #include <math.h>
