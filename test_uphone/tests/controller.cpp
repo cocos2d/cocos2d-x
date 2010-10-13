@@ -77,9 +77,9 @@ static TestScene* CreateTestScene(int nIdx)
     return pScene;
 }
 
-TestController::TestController()
+TestController::TestController(cocos2d::ccDeviceOrientation nOrientation)
 {
-    CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    CCDirector::getSharedDirector()->setDeviceOrientation(nOrientation);
 
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
