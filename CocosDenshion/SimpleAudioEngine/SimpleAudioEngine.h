@@ -68,7 +68,7 @@ public:
     ~SimpleAudioEngine();
 
     // get the Engine object
-    static SimpleAudioEngine* getSharedSimpleAudioEngine();
+    static SimpleAudioEngine* getSharedEngine();
 
     // set the sound ResInfo
     static void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);

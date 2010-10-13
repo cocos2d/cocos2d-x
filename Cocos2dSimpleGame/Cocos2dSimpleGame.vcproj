@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib ..\..\PRJ_TG3\Common\SoftSupport\EosConfig.lib ..\..\PRJ_TG3\Common\SoftSupport\SoftSupport.lib ..\..\PRJ_TG3\Common\SoftSupport\TG3_DLL.lib libcocos2d.lib libCocosDenishion.lib"
+				AdditionalDependencies="WS2_32.Lib ..\..\PRJ_TG3\Common\SoftSupport\EosConfig.lib ..\..\PRJ_TG3\Common\SoftSupport\SoftSupport.lib ..\..\PRJ_TG3\Common\SoftSupport\TG3_DLL.lib"
 				OutputFile="$(OutDir)/Cocos2dSimpleGame.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport"
