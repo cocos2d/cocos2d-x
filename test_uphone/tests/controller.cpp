@@ -5,6 +5,12 @@
 #define LINE_SPACE          40
 
 static int s_nPageIndex = 0;
+static cocos2d::ccDeviceOrientation s_eDefaultOrientation = kCCDeviceOrientationLandscapeLeft;
+
+void TestController::setDefaultDeviceOrientation(cocos2d::ccDeviceOrientation eOrientation)
+{
+	s_eDefaultOrientation = eOrientation;
+}
 
 static TestScene* CreateTestScene(int nIdx)
 {
@@ -77,9 +83,9 @@ static TestScene* CreateTestScene(int nIdx)
     return pScene;
 }
 
-TestController::TestController(cocos2d::ccDeviceOrientation nOrientation)
+TestController::TestController()
 {
-    CCDirector::getSharedDirector()->setDeviceOrientation(nOrientation);
+    CCDirector::getSharedDirector()->setDeviceOrientation(s_eDefaultOrientation);
 
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );

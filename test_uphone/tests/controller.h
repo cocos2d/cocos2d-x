@@ -10,7 +10,7 @@ using namespace cocos2d;
 class TestController : public CCLayer
 {
 public:
-    TestController(cocos2d::ccDeviceOrientation nOrientation = kCCDeviceOrientationLandscapeLeft);
+    TestController();
     ~TestController();
 
     void menuCallback(NSObject * pSender);
@@ -20,6 +20,8 @@ public:
     void prePageCallback(NSObject * pSender);
 
     void updateItemsText();
+
+	static void setDefaultDeviceOrientation(cocos2d::ccDeviceOrientation eOrientation);
 
 private:
     CCMenuItemLabel *	m_pMenuItems[ITEM_EVERYPAGE];
