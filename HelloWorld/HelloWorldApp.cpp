@@ -10,31 +10,32 @@ using namespace cocos2d;
 
 #define IMG_PATH        "/NEWPLUS/TDA_DATA/UserData/HelloWorld.png"
 
-//------------------------------------------------------------------
-//
-// MyLayer
-//
-//------------------------------------------------------------------
+// Layer
+
 class MyLayer : public CCLayer
 {
 public:
-    virtual void onEnter()
-    {
-        CCLayer::onEnter();
-        setIsTouchEnabled(true);
-    }
+	bool init()
+	{
+		if( !CCLayer::init())
+		{
+			return false;
+		}
 
-    virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
+		this->setIsTouchEnabled(true);
+
+		return true;
+	};
+
+	void ccTouchesEnded(NSSet* pTouches, UIEvent* pEvent)
     {
         CCDirector::getSharedDirector()->end();
-        return true;
-    }
+    };
 
-    virtual void registerWithTouchDispatcher(void)
-    {
-        CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this,0,true);
-    }
+	LAYER_NODE_FUNC(MyLayer);
 };
+
+// AppDelegate
 
 THelloWorldApp::THelloWorldApp() 
 : m_rcWnd(0, 0, GetScreenWidth(), GetScreenHeight())
@@ -47,20 +48,20 @@ bool THelloWorldApp::initCocos2d()
 {
     // init director
     CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
+	// set to landscape mode
     CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
-    // load background image texture and get window size
-    CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	// load background image texture and get window size
+	CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
+	CGSize size = CCDirector::getSharedDirector()->getWinSize();
 
-    // create sprite instance
-    CCSprite * pSprite = new CCSprite(); 
-	pSprite->initWithTexture(pTexture);
-    pSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
+	// create sprite instance
+	CCSprite * pSprite = CCSprite::spriteWithTexture(pTexture); 
+	pSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
 
     // create layer instance
-    CCLayer * pLayer = new MyLayer();
-    pLayer->addChild(pSprite);
+	CCLayer * pLayer = MyLayer::node();
+	pLayer->addChild(pSprite);
 
     // add layer to scene
     CCScene * pScene = CCScene::node();
@@ -69,8 +70,6 @@ bool THelloWorldApp::initCocos2d()
     // add scene to director
     CCDirector::getSharedDirector()->runWithScene(pScene);
 
-    pSprite->release();
-    pLayer->release();
     return true;
 }
 
