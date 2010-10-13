@@ -107,6 +107,7 @@ private:
 
     TCOM_MethodEmun m_MethodEmun; // ≤È’“∑Ω∑®
 
+    Boolean m_bPaused;
     TUChar m_fileName[MAX_PATH];
     Int32  m_nCurrentSoundID;
 };

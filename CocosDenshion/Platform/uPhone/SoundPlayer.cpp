@@ -9,6 +9,7 @@ SoundPlayer::SoundPlayer()
 , m_pMediaFile(NULL)
 , m_MethodEmun(NULL)
 , m_nCurrentSoundID(0)
+, m_bPaused(FALSE)
 {
     // TCOM初始化，使用TCOM组件前必须先初始化
     TCoInitialize(NULL);           
@@ -127,12 +128,20 @@ void SoundPlayer::Release()
 
 void SoundPlayer::Pause()
 {
-    m_pPlayer->Pause();
+    if (! m_bPaused)
+    {
+        m_pPlayer->Pause();
+        m_bPaused = TRUE;
+    }
 }
 
 void SoundPlayer::Resume()
 {
-    m_pPlayer->Resume();
+    if (m_bPaused)
+    {
+        m_pPlayer->Pause();
+        m_bPaused = FALSE;
+    }
 }
 
 void SoundPlayer::Stop()
@@ -162,9 +171,10 @@ void SoundPlayer::Mute(bool bMute)
 
 bool SoundPlayer::IsPlaying()
 {
-    TMediaPlayerStatus status = m_pPlayer->GetCurrentStatus();
-
-    return (status == PLAYER_STATUS_PLAYING || status == PLAYER_STATUS_PAUSED);
+//     TMediaPlayerStatus status = m_pPlayer->GetCurrentStatus();
+// 
+//     return (status == PLAYER_STATUS_PLAYING || status == PLAYER_STATUS_PAUSED);
+    return false;
 }
 
 Int32 SoundPlayer::GetFileBufferSize(const char* pszFilePath)
@@ -173,7 +183,20 @@ Int32 SoundPlayer::GetFileBufferSize(const char* pszFilePath)
 
     if (OpenAudioFile(pszFilePath))
     {
-        nRet = m_pPlayer->GetDecodedAudioSize();
+        const TMM_AudioInfo* pAudioInfo = m_pPlayer->GetAudioInfo();
+        Int32  samplesPerSec = pAudioInfo->samplesPerSec;
+        Int32  bitsPerSample = pAudioInfo->bitsPerSample;
+        Int32  channelNum    = pAudioInfo->channelNum;
+        UInt32 durationInSec = pAudioInfo->durationInSec;
+
+        if (durationInSec == 0)
+        {
+            durationInSec = 1;
+        }
+        nRet = samplesPerSec * bitsPerSample * channelNum / 8 * durationInSec;
+
+//        nRet = m_pPlayer->GetDecodedAudioSize();
+
         m_pPlayer->Close();
     }
 
