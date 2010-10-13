@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="d:\Work7\PRJ_TG3\Include\ThirdParty\iconv;d:\Work7\PRJ_TG3\Include\ThirdParty\zlib;d:\Work7\PRJ_TG3\Include\ThirdParty\libpng;d:\Work7\PRJ_TG3\Include\ThirdParty\libjpeg;d:\Work7\PRJ_TG3\Include\ThirdParty\libxml2;.\platform\win32\third_party\OGLES\Include;.\include;.\"
+				AdditionalIncludeDirectories=".\platform\win32\third_party\iconv;.\platform\win32\third_party\zlib;.\platform\win32\third_party\libpng;.\platform\win32\third_party\libjpeg;.\platform\win32\third_party\libxml2;.\platform\win32\third_party\OGLES;.\include;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -66,7 +66,7 @@
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
 				OutputFile="$(OutDir)\libcocos2d.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=".\platform\win32\third_party\OGLES\WindowsPC\Lib;d:/Work7/PRJ_TG3/LIB/Win32Lib;D:\Work7\PRJ_TG3\Common\SoftSupport"
+				AdditionalLibraryDirectories=".\platform\win32\third_party\libraries"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="MSVCRT.lib;LIBCMTD.lib"
 				GenerateDebugInformation="true"
@@ -94,7 +94,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y .\platform\win32\third_party\OGLES\WindowsPC\Lib\*.dll $(OutDir)"
+				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)"
 			/>
 		</Configuration>
 		<Configuration
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="d:\Work7\PRJ_TG3\Include\ThirdParty\iconv;d:\Work7\PRJ_TG3\Include\ThirdParty\zlib;d:\Work7\PRJ_TG3\Include\ThirdParty\libpng;d:\Work7\PRJ_TG3\Include\ThirdParty\libjpeg;d:\Work7\PRJ_TG3\Include\ThirdParty\libxml2;.\platform\win32\third_party\OGLES\Include;.\include;.\"
+				AdditionalIncludeDirectories=".\platform\win32\third_party\iconv;.\platform\win32\third_party\zlib;.\platform\win32\third_party\libpng;.\platform\win32\third_party\libjpeg;.\platform\win32\third_party\libxml2;.\platform\win32\third_party\OGLES;.\include;.\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -144,7 +144,7 @@
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
 				OutputFile="$(OutDir)\libcocos2d.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=".\platform\win32\third_party\OGLES\WindowsPC\Lib;d:/Work7/PRJ_TG3/LIB/Win32Lib;D:\Work7\PRJ_TG3\Common\SoftSupport"
+				AdditionalLibraryDirectories=".\platform\win32\third_party\libraries"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

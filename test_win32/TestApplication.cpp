@@ -17,12 +17,14 @@ bool TestApplication::initCocos2d()
 {
 	// init director
 	CCDirector * pDirector = CCDirector::getSharedDirector();
+	TestController::setDefaultDeviceOrientation(kCCDeviceOrientationPortrait);
+
 	pDirector->setOpenGLView(&m_MainForm);
 
 	pDirector->setDisplayFPS(true);
 
 	CCScene * pScene = CCScene::node();
-	CCLayer * pLayer = new TestController(kCCDeviceOrientationPortrait);
+	CCLayer * pLayer = new TestController();
 	pLayer->autorelease();
 
 	pScene->addChild(pLayer);

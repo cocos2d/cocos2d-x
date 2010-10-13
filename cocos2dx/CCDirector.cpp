@@ -830,7 +830,7 @@ void CCDisplayLinkDirector::stopAnimation(void)
 void CCDisplayLinkDirector::setAnimationInterval(double dValue)
 {
 	m_dAnimationInterval = dValue;
-	m_fExpectedFrameRate = 1 / m_dAnimationInterval;
+	m_fExpectedFrameRate = (ccTime)(1 / m_dAnimationInterval);
 	if (! m_bInvalid)
 	{
 		stopAnimation();
