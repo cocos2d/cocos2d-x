@@ -16,6 +16,7 @@ bool GameOverScene::init()
 	if( CCScene::init() )
 	{
 		this->_layer = GameOverLayer::node();
+		_layer->retain(); // notice! in objc it's a property with "retain"
 		this->addChild(_layer);
 
 		return true;
@@ -28,8 +29,11 @@ bool GameOverScene::init()
 
 GameOverScene::~GameOverScene()
 {
-	// _layer->release();
-	// _layer = NULL;
+	if (_layer)
+	{
+		_layer->release();
+		_layer = NULL;
+	}
 }
 
 //////////////////////////////
@@ -39,6 +43,7 @@ bool GameOverLayer::init()
 	{
 		CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
 		this->_label = CCLabel::labelWithString("", "Artial", 32);
+		_label->retain();  // notice! in objc it's a property with "retain"
 		_label->setColor( ccc3(0, 0, 0) );
 		_label->setPosition( ccp(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
@@ -63,6 +68,9 @@ void GameOverLayer::gameOverDone()
 
 GameOverLayer::~GameOverLayer()
 {
-	// _label->release();
-	// _label = NULL;
+	if (_label)
+	{
+		_label->release();
+		_label = NULL;
+	}
 }
