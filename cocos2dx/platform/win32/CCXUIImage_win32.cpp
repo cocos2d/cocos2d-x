@@ -103,16 +103,17 @@ UIImage::UIImage(CCXBitmapDC * pBmpDC)
  	m_imageInfo.isPremultipliedAlpha = false;
  	m_imageInfo.data = new BYTE[m_imageInfo.height * m_imageInfo.width * 4];
 
+	// copy pixed data
 	bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0) ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
 	GetDIBits(pBmpDC->getDC(), pBmpDC->getBitmap(), 0, m_imageInfo.height, m_imageInfo.data, 
 		(LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
 	// change pixel's alpha value to 255, when it's RGB != 0
 	COLORREF * pPixel = NULL;
-	for (int y = 0; y < m_imageInfo.height; ++y)
+	for (unsigned int y = 0; y < m_imageInfo.height; ++y)
 	{
 		pPixel = (COLORREF *)m_imageInfo.data + y * m_imageInfo.width;
-		for (int x = 0; x < m_imageInfo.width; ++x)
+		for (unsigned int x = 0; x < m_imageInfo.width; ++x)
 		{
 			COLORREF& clr = *pPixel;
 			if (GetRValue(clr) || GetGValue(clr) || GetBValue(clr))

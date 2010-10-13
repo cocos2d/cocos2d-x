@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\cocos2dx;..\cocos2dx\include;..\;..\chipmunk\include\chipmunk;.\tests;..\cocos2dx\platform\win32\third_party\OGLES\Include"
+				AdditionalIncludeDirectories="..\cocos2dx;..\cocos2dx\include;..\;..\chipmunk\include\chipmunk;.\tests;..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\cocos2dx;..\cocos2dx\include;..\;..\chipmunk\include\chipmunk;.\tests;..\cocos2dx\platform\win32\third_party\OGLES\Include"
+				AdditionalIncludeDirectories="..\cocos2dx;..\cocos2dx\include;..\;..\chipmunk\include\chipmunk;.\tests;..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
