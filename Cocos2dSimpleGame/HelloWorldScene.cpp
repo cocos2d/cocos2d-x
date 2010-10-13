@@ -253,6 +253,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 HelloWorld::HelloWorld()
 :_targets(NULL)
 ,_projectiles(NULL)
+,_projectilesDestroyed(0)
 {
     SimpleAudioEngine::getSharedSimpleAudioEngine()->preloadEffect(SoundResInfo[1].FileName.c_str());
 }
