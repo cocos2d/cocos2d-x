@@ -227,16 +227,14 @@ bool CCXEGLView::Create(LPCTSTR pTitle, int w, int h)
 		RECT rect = {(rcDesktop.right + rcDesktop.left - w) / 2, (rcDesktop.bottom + rcDesktop.top - h) / 2, 0, 0};
 		rect.right = rect.left + w;
 		rect.bottom = rect.top + h;
-		AdjustWindowRectEx(&rect, WS_POPUPWINDOW, false, WS_EX_TOPMOST | WS_EX_APPWINDOW | WS_EX_WINDOWEDGE);
+		AdjustWindowRectEx(&rect, WS_CAPTION | WS_POPUPWINDOW, false, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE);
 
 		// create window
 		m_hWnd = CreateWindowEx(
-			WS_EX_TOPMOST | WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,	// Extended Style For The Window
+			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,	// Extended Style For The Window
 			kWindowClassName,									// Class Name
 			pTitle,												// Window Title
-			WS_POPUPWINDOW/*WS_OVERLAPPEDWINDOW*/               // Defined Window Style
-			| WS_CLIPSIBLINGS									// Required Window Style
-			| WS_CLIPCHILDREN,									// Required Window Style
+			WS_CAPTION | WS_POPUPWINDOW,	// Defined Window Style
 			rect.left, rect.top,								// Window Position
 			rect.right - rect.left,                             // Window Width
 			rect.bottom - rect.top,                             // Window Height
@@ -290,7 +288,7 @@ LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_LBUTTONUP:
-		if (MK_LBUTTON == wParam && m_bCaptured)
+		if (m_bCaptured)
 		{
 			m_pTouch->SetTouchInfo(0, (float)LOWORD(lParam), (float)HIWORD(lParam));
 			m_pDelegate->touchesEnded(m_pSet, NULL);
@@ -302,6 +300,10 @@ LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		BeginPaint(m_hWnd, &ps);
 		EndPaint(m_hWnd, &ps);
+		break;
+
+	case WM_CLOSE:
+		CCDirector::getSharedDirector()->end();
 		break;
 
 	case WM_DESTROY:

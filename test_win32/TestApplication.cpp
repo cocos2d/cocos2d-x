@@ -22,11 +22,11 @@ bool TestApplication::initCocos2d()
 	pDirector->setDisplayFPS(true);
 
 	CCScene * pScene = CCScene::node();
-	CCLayer * pLayer = new TestController();
+	CCLayer * pLayer = new TestController(kCCDeviceOrientationPortrait);
 	pLayer->autorelease();
 
 	pScene->addChild(pLayer);
-	pDirector->replaceScene(pScene);
+	pDirector->runWithScene(pScene);
 
 	return true;
 }
