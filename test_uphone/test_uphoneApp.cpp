@@ -105,12 +105,12 @@ Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
 	return bHandled;
 }
 
-void Ttest_uphoneApp::applicationDidEnterBackground(TApplication* pApp)
+void Ttest_uphoneApp::applicationDidEnterBackground()
 {
     CCDirector::getSharedDirector()->stopAnimation();
 }
 
-void Ttest_uphoneApp::applicationWillEnterForeground(TApplication* pApp)
+void Ttest_uphoneApp::applicationWillEnterForeground()
 {
     CCDirector::getSharedDirector()->startAnimation();
 }
