@@ -10,7 +10,7 @@ using namespace cocos2d;
 class TestController : public CCLayer
 {
 public:
-    TestController();
+    TestController(cocos2d::ccDeviceOrientation nOrientation = kCCDeviceOrientationLandscapeLeft);
     ~TestController();
 
     void menuCallback(NSObject * pSender);
@@ -22,9 +22,8 @@ public:
     void updateItemsText();
 
 private:
-    CCMenuItemLabel * m_pMenuItems[ITEM_EVERYPAGE];
-
-    unsigned int m_nUIDs[ITEM_EVERYPAGE];
+    CCMenuItemLabel *	m_pMenuItems[ITEM_EVERYPAGE];
+    unsigned int		m_nUIDs[ITEM_EVERYPAGE];
 };
 
 #endif
