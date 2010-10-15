@@ -71,33 +71,9 @@ namespace   cocos2d {
         return bHandled;
     }
 
-    void CCXApplication::setDeviceOrientation(int nOritation)
+	ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
     {
-        TWindow * pWnd = TApplication::GetCurrentWindow();
-        if (! pWnd)
-        {
-            return;
-        }
-        switch (nOritation)
-        {
-        /// Device oriented vertically, home button on the bottom
-        case kCCDeviceOrientationPortrait:
-            pWnd->RotateWindow(WM_WINDOW_ROTATE_MODE_NORMAL);
-            break;
-        /// Device oriented vertically, home button on the top
-        case kCCDeviceOrientationPortraitUpsideDown:
-            pWnd->RotateWindow(WM_WINDOW_ROTATE_MODE_UD);
-            break;
-
-        /// Device oriented horizontally, home button on the right
-        case kCCDeviceOrientationLandscapeLeft:
-            pWnd->RotateWindow(WM_WINDOW_ROTATE_MODE_CW);
-            break;
-        /// Device oriented horizontally, home button on the left
-        case kCCDeviceOrientationLandscapeRight:
-            pWnd->RotateWindow(WM_WINDOW_ROTATE_MODE_CCW);
-            break;
-        }
+		return eOritation;
     }
 
     CGRect CCXApplication::statusBarFrame()

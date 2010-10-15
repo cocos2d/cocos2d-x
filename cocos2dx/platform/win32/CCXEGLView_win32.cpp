@@ -119,21 +119,21 @@ public:
 
 	void resizeSurface()
 	{
-		// 		if (! m_eglWnd || EGL_NO_DISPLAY == m_eglDisplay)
-		// 		{
-		// 			return;
-		// 		}
-		// 
-		// 		// release old surface
-		// 		if (EGL_NO_SURFACE != m_eglSurface)
-		// 		{
-		// 			eglDestroySurface(m_eglDisplay, m_eglSurface);
-		// 			m_eglSurface = EGL_NO_SURFACE;
-		// 		}
-		// 
-		// 		// create new surface and make current
-		// 		m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglWnd, NULL);
-		// 		eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext);
+//  		if (! m_eglNativeWindow || EGL_NO_DISPLAY == m_eglDisplay)
+//  		{
+//  			return;
+//  		}
+//  
+//  		// release old surface
+//  		if (EGL_NO_SURFACE != m_eglSurface)
+//  		{
+//  			eglDestroySurface(m_eglDisplay, m_eglSurface);
+//  			m_eglSurface = EGL_NO_SURFACE;
+//  		}
+//  
+//  		// create new surface and make current
+//  		m_eglSurface = eglCreateWindowSurface(m_eglDisplay, m_eglConfig, m_eglNativeWindow, NULL);
+//  		eglMakeCurrent(m_eglDisplay, m_eglSurface, m_eglSurface, m_eglContext);
 	}
 
 	void swapBuffers()
@@ -181,12 +181,16 @@ static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 CCXEGLView::CCXEGLView()
 : m_bCaptured(false)
+, m_bOrientationReverted(false)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
 , m_hWnd(NULL)
 {
     m_pTouch    = new CCTouch;
     m_pSet      = new NSSet;
+	m_eInitOrientation = CCDirector::getSharedDirector()->getDeviceOrientation();
+	m_bOrientationInitVertical = (CCDeviceOrientationPortrait == m_eInitOrientation
+		|| kCCDeviceOrientationPortraitUpsideDown == m_eInitOrientation) ? true : false;
 }
 
 CCXEGLView::~CCXEGLView()
@@ -363,6 +367,40 @@ void CCXEGLView::swapBuffers()
 HWND CCXEGLView::getHWnd()
 {
 	return m_hWnd;
+}
+
+int CCXEGLView::setDeviceOrientation(int eOritation)
+{
+	do 
+	{
+		bool bVertical = (CCDeviceOrientationPortrait == eOritation
+			|| kCCDeviceOrientationPortraitUpsideDown == eOritation) ? true : false;
+
+		CCX_BREAK_IF(m_bOrientationReverted && bVertical != m_bOrientationInitVertical);
+		CCX_BREAK_IF(! m_bOrientationReverted && bVertical == m_bOrientationInitVertical);
+
+		RECT rc;
+		GetClientRect(m_hWnd, &rc);
+
+		// swap width and height
+		LONG nTmp = rc.right;
+		rc.right = rc.bottom;
+		rc.bottom = nTmp;
+
+		// calc new window size
+		AdjustWindowRectEx(&rc, GetWindowLong(m_hWnd, GWL_STYLE), false, GetWindowLong(m_hWnd, GWL_EXSTYLE));
+
+		// change width and height
+		SetWindowPos(m_hWnd, 0, 0, 0, rc.right - rc.left, rc.bottom - rc.top, 
+			SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+		if (m_pEGL)
+		{
+			m_pEGL->resizeSurface();
+		}
+		m_bOrientationReverted = (bVertical == m_bOrientationInitVertical) ? false : true;
+	} while (0);
+
+	return m_eInitOrientation;
 }
 
 }       // end of namespace cocos2d

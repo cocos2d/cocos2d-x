@@ -25,8 +25,9 @@ THE SOFTWARE.
 #ifndef __CCX_APPLICATION_WIN32_H__
 #define __CCX_APPLICATION_WIN32_H__
 
-#include "CGGeometry.h"
 #include <Windows.h>
+#include "CGGeometry.h"
+#include "CCDirector.h"
 
 namespace   cocos2d {
 
@@ -48,7 +49,7 @@ public:
     @param  nOritation device orientation enum value.
     @see    ccDeviceOrientation
     */
-    void setDeviceOrientation(int nOritation);
+    ccDeviceOrientation setDeviceOrientation(ccDeviceOrientation eOritation);
 
     /**
     @brief	Get status bar rectangle in EGLView window.

@@ -56,10 +56,13 @@ public:
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
 	HWND    getHWnd();
+	int setDeviceOrientation(int eOritation);
 
 private:
 
     bool                m_bCaptured;
+	bool				m_bOrientationReverted;
+	bool				m_bOrientationInitVertical;
     NSSet *             m_pSet;
     CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
@@ -67,6 +70,8 @@ private:
     CCXEGL *            m_pEGL;
 
 	HWND				m_hWnd;
+
+	int					m_eInitOrientation;
 };
 
 }   // end of namespace   cocos2d

@@ -335,9 +335,21 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 // m_eDeviceOrientation
 void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 {
-	if (m_eDeviceOrientation != kDeviceOrientation)
+	ccDeviceOrientation eNewOrientation;
+	eNewOrientation = CCXApplication::getSharedApplication()->setDeviceOrientation(kDeviceOrientation);
+	if (m_eDeviceOrientation != eNewOrientation)
 	{
 		m_eDeviceOrientation = kDeviceOrientation;
+	}
+	else
+	{
+		recalculateProjectionAndEAGLViewSize();
+// 		m_obScreenSize = m_pobOpenGLView->getSize();
+// 		m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * m_fContentScaleFactor,
+// 			m_obScreenSize.height * m_fContentScaleFactor);
+	}
+// 	if (m_eDeviceOrientation != kDeviceOrientation)
+// 	{
 
 // 		switch (m_eDeviceOrientation)
 // 		{
@@ -357,7 +369,7 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 // 			CCLOG("Director: Unknown device orientation");
 // 			break;
 // 		}
-	}
+// 	}
 }
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)

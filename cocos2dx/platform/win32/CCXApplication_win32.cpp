@@ -18,9 +18,15 @@ CCXApplication::~CCXApplication()
     s_pApplication = NULL;
 }
 
-void CCXApplication::setDeviceOrientation(int nOritation)
+ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
 {
-
+	// swap width and height
+ 	CCXEGLView * pView = CCDirector::getSharedDirector()->getOpenGLView();
+	if (pView)
+	{
+		return (ccDeviceOrientation)pView->setDeviceOrientation(eOritation);
+	}
+	return CCDirector::getSharedDirector()->getDeviceOrientation();
 }
 
 CGRect CCXApplication::statusBarFrame()
