@@ -21,11 +21,10 @@ public:
 
     void updateItemsText();
 
-	static void setDefaultDeviceOrientation(cocos2d::ccDeviceOrientation eOrientation);
-
 private:
-    CCMenuItemLabel *	m_pMenuItems[ITEM_EVERYPAGE];
-    unsigned int		m_nUIDs[ITEM_EVERYPAGE];
+    CCMenuItemLabel * m_pMenuItems[ITEM_EVERYPAGE];
+
+    unsigned int m_nUIDs[ITEM_EVERYPAGE];
 };
 
 #endif
