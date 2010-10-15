@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 #include "TG3.h"
 
+#include "CCDirector.h"
+
 namespace   cocos2d {
 
 class CCX_DLL CCXApplication : public TApplication
@@ -51,7 +53,7 @@ public:
     @param  nOritation device orientation enum value.
     @see    ccDeviceOrientation
     */
-    void setDeviceOrientation(int nOritation);
+	ccDeviceOrientation setDeviceOrientation(ccDeviceOrientation eOritation);
 
     /**
     @brief	Get status bar rectangle in EGLView window.

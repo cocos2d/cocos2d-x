@@ -15,9 +15,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	int nRet = 0;
 	TestApplication app;
-	if (app.InitInstance() && app.initCocos2d())
+	do 
 	{
+		if (! app.InitInstance())
+		{
+			break;
+		}
+		if (! app.initCocos2d())
+		{
+			break;
+		}
 		nRet = app.Run();
-	}
+	} while (0);
 	return nRet;
 }

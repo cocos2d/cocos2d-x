@@ -10,16 +10,15 @@ using namespace cocos2d;
 
 bool TestApplication::InitInstance()
 {
-	return m_MainForm.Create(L"Cocos2dx-Win32", 480, 320);
+	return m_MainForm.Create(L"Cocos2dx-Win32", 320, 480);
 }
 
 bool TestApplication::initCocos2d()
 {
 	// init director
 	CCDirector * pDirector = CCDirector::getSharedDirector();
-	TestController::setDefaultDeviceOrientation(kCCDeviceOrientationPortrait);
-
 	pDirector->setOpenGLView(&m_MainForm);
+	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	pDirector->setDisplayFPS(true);
 
