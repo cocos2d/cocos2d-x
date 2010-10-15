@@ -789,6 +789,23 @@ void CCDirector::showProfilers()
 }
 #endif
 
+void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
+{
+	if (scaleFactor != m_fContentScaleFactor)
+	{
+		m_fContentScaleFactor = scaleFactor;
+		m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * scaleFactor, m_obScreenSize.height * scaleFactor);
+
+		if (m_pobOpenGLView)
+		{
+			updateContentScaleFactor();
+		}
+
+		// update projection
+		setProjection(m_eProjection);
+	}
+}
+
 // should we afford 4 types of director ??
 // I think DisplayLinkDirector is enough
 // so we now only support DisplayLinkDirector
