@@ -246,11 +246,8 @@ public:
 	 Only available when compiled using SDK >= 4.0.
 	 @since v0.99.4
 	 */
-	inline void setContentScaleFactor(CGFloat obCGFloatValue)
-	{
-		assert(! isOpenGLAttached());
-	    m_fContentScaleFactor = obCGFloatValue;
-	}
+	void setContentScaleFactor(CGFloat scaleFactor);
+	
 	inline CGFloat getContentScaleFactor(void) { return m_fContentScaleFactor; }
 
     // UI dependent
