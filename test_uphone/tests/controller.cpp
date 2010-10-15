@@ -5,12 +5,6 @@
 #define LINE_SPACE          40
 
 static int s_nPageIndex = 0;
-static cocos2d::ccDeviceOrientation s_eDefaultOrientation = kCCDeviceOrientationLandscapeLeft;
-
-void TestController::setDefaultDeviceOrientation(cocos2d::ccDeviceOrientation eOrientation)
-{
-	s_eDefaultOrientation = eOrientation;
-}
 
 static TestScene* CreateTestScene(int nIdx)
 {
@@ -41,7 +35,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
-        CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationPortrait);
+        CCDirector::getSharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -58,7 +52,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
- 		CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationPortrait);
+		CCDirector::getSharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         pScene = new ChipmunkTestScene(); break;
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
@@ -85,7 +79,7 @@ static TestScene* CreateTestScene(int nIdx)
 
 TestController::TestController()
 {
-    CCDirector::getSharedDirector()->setDeviceOrientation(s_eDefaultOrientation);
+    CCDirector::getSharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
