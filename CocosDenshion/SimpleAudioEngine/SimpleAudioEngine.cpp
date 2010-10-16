@@ -31,12 +31,19 @@ SimpleAudioEngine::SimpleAudioEngine()
 , m_pEffects(NULL)
 {
     m_pEffectPlayers = new PlayerArray();
+    m_pBackPlayer    = new SoundPlayer();
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
     removeAllEffects();
     removeAllEffectPlayers();
+
+    if (m_pBackPlayer)
+    {
+        delete m_pBackPlayer;
+        m_pBackPlayer = NULL;
+    }
 }
 
 SimpleAudioEngine* SimpleAudioEngine::getSharedEngine()
@@ -54,7 +61,10 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 
     if (FileUtils::isFileExisted(pszFilePath))
     {
-        m_obBackPlayer.PlaySoundFile(pszFilePath, nTimes);
+        if (m_pBackPlayer)
+        {
+            m_pBackPlayer->PlaySoundFile(pszFilePath, nTimes);
+        }
     }
     else
     {
@@ -68,29 +78,44 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
             const void* pData = s_HSoundRes.LoadConstRawData(iter->second, &nSize);
             BREAK_IF(!pData);
 
-            m_obBackPlayer.PlaySoundFromMem((unsigned char*)pData, nSize, pszFilePath, nTimes);
+            if (m_pBackPlayer)
+            {
+                m_pBackPlayer->PlaySoundFromMem((unsigned char*)pData, nSize, pszFilePath, nTimes);
+            }
         } while (0);
     }
 }
 
 void SimpleAudioEngine::stopBackgroundMusic()
 {
-    m_obBackPlayer.Stop();
+    if (m_pBackPlayer)
+    {
+        m_pBackPlayer->Stop();
+    }
 }
 
 void SimpleAudioEngine::pauseBackgroundMusic()
 {
-    m_obBackPlayer.Pause();
+    if (m_pBackPlayer)
+    {
+        m_pBackPlayer->Pause();
+    }
 }
 
 void SimpleAudioEngine::resumeBackgroundMusic()
 {
-    m_obBackPlayer.Resume();
+    if (m_pBackPlayer)
+    {
+        m_pBackPlayer->Resume();
+    }
 }
 
 void SimpleAudioEngine::rewindBackgroundMusic()
 {
-    m_obBackPlayer.Rewind();
+    if (m_pBackPlayer)
+    {
+        m_pBackPlayer->Rewind();
+    }
 }
 
 bool SimpleAudioEngine::willPlayBackgroundMusic()
@@ -100,7 +125,14 @@ bool SimpleAudioEngine::willPlayBackgroundMusic()
 
 bool SimpleAudioEngine::isBackgroundMusicPlaying()
 {
-    return m_obBackPlayer.IsPlaying();
+    bool bRet = false;
+
+    if (m_pBackPlayer)
+    {
+        bRet = m_pBackPlayer->IsPlaying();
+    }
+
+    return bRet;
 }
 
 // properties
@@ -111,7 +143,11 @@ int SimpleAudioEngine::GetBackgroundMusicVolume()
 
 void SimpleAudioEngine::SetBackgroundMusicVolume(int volume)
 {
-    m_obBackPlayer.SetVolumeValue(volume);
+    if (m_pBackPlayer)
+    {
+        m_pBackPlayer->SetVolumeValue(volume);
+    }
+
     m_nBackgroundMusicVolume = volume;
 }
 
