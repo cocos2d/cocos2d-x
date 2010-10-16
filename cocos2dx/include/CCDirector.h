@@ -420,7 +420,7 @@ protected:
 #endif // CC_DIRECTOR_FAST_FPS
 
 	/** calculates delta time since last time it was called */
-	void calculateDeltaTime(void);
+	void calculateDeltaTime();
 
 #if CC_ENABLE_PROFILERS
 	void showProfilers(void);
@@ -432,7 +432,10 @@ protected:
 	void recalculateProjectionAndEAGLViewSize();
 
 protected:
+	// compute frame rate
     void computeFrameRate(void);
+	// compute delta time between computing frame rate
+	void calculateFramerateDeltaTime(void);
 
 protected:
 	/* The CCXEGLView, where everything is rendered */
@@ -478,11 +481,13 @@ protected:
 	/* last time the main loop was updated */
 	struct cc_timeval *m_pLastUpdate;
 
-	/* last time the frame fate is computed */
-	struct cc_timeval *m_pLastComputeTime;
-
 	/* delta time since last tick to main loop */
 	ccTime m_fDeltaTime;
+
+	/* last time the director compute frame rate */
+	struct cc_timeval *m_pLastComputeFrameRate;
+	/* delta time since last computing frame rate */
+	ccTime m_fComputeFrameRateDeltaTime;
 
 	/* whether or not the next delta time will be zero */
 	bool m_bNextDeltaTimeZero;
