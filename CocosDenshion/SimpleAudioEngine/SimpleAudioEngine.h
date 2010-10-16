@@ -134,7 +134,7 @@ protected:
     int     m_nEffectsVolume;
     bool    m_bWillPlayBackgroundMusic;
 
-    SoundPlayer m_obBackPlayer;
+    SoundPlayer* m_pBackPlayer;
     PlayerArray* m_pEffectPlayers;
 
     // use hash map to save the effects loaded
