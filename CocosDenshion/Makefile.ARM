@@ -12,7 +12,7 @@ OUTPUT_FILENAME = libCocosDenshion.so
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
-DEFINES += -DUNDER_UPHONE \
+DEFINES += -DCCX_UNDER_UPHONE \
           -D__TG3_PURE_DLL__
 INCLUDE_PATH += -I. -I./Res
 
