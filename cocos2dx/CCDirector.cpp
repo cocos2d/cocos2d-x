@@ -127,8 +127,8 @@ bool CCDirector::init(void)
 	m_nFrames = 0;
 	m_pszFPS = new char[10];
 	m_fExpectedFrameRate = (ccTime)(1 / m_dAnimationInterval);
-
-
+	m_fComputeFrameRateDeltaTime = 0;
+	m_pLastComputeFrameRate = new struct cc_timeval();
 
 	// paused ?
 	m_bPaused = false;
@@ -140,7 +140,6 @@ bool CCDirector::init(void)
 	m_bIsContentScaleSupported =false;
 
 	m_pLastUpdate = new struct cc_timeval();
-	m_pLastComputeTime = new struct cc_timeval();
 
 	// create autorelease pool
 	NSPoolManager::getInstance()->push();
@@ -166,7 +165,7 @@ CCDirector::~CCDirector(void)
 	CCX_SAFE_DELETE(m_pLastUpdate);
 
 	// delete last compute time
-	CCX_SAFE_DELETE(m_pLastComputeTime);
+	CCX_SAFE_DELETE(m_pLastComputeFrameRate);
 
 	// delete fps string
 	delete []m_pszFPS;
@@ -773,20 +772,53 @@ void CCDirector::showFPS(void)
 }
 #endif // CC_DIRECTOR_FAST_FPS
 
-void CCDirector::computeFrameRate()
+void CCDirector::calculateFramerateDeltaTime(void)
 {
-	static bool bFirstTime = true;
 	struct cc_timeval now;
 
-	CCTime::gettimeofdayCocos2d(&now, NULL);
-	if (! bFirstTime)
-	{		
-		m_fAccumDt += ((now.tv_sec - m_pLastComputeTime->tv_sec) + (now.tv_usec - m_pLastComputeTime->tv_usec) / 1000000.0f);
-		m_fFrameRate = m_nFrames / m_fAccumDt;
+	if (CCTime::gettimeofdayCocos2d(&now, NULL) != 0)
+	{
+		CCLOG("error in gettimeofday");
+		m_fComputeFrameRateDeltaTime = 0;
+		return;
 	}
 
-	bFirstTime = false;
-	*m_pLastComputeTime = now;
+	m_fComputeFrameRateDeltaTime = (now.tv_sec - m_pLastComputeFrameRate->tv_sec) + (now.tv_usec - m_pLastComputeFrameRate->tv_usec) / 1000000.0f;
+	m_fComputeFrameRateDeltaTime = MAX(0, m_fComputeFrameRateDeltaTime);
+
+	*m_pLastComputeFrameRate = now;
+}
+
+void CCDirector::computeFrameRate()
+{
+	static bool bInvoked = true;
+
+	// compute delta time
+	calculateFramerateDeltaTime();
+
+	// only add frames if the director really draw the scene
+	if (bInvoked)
+	{
+		m_nFrames++;
+	}
+
+	m_fAccumDt += m_fComputeFrameRateDeltaTime;
+
+	if (m_fAccumDt > CC_DIRECTOR_FPS_INTERVAL)
+	{
+		m_fFrameRate = m_nFrames / m_fAccumDt;
+
+		if (m_fFrameRate > m_fExpectedFrameRate)
+		{
+			bInvoked = false;
+		}
+		else
+		{
+			m_nFrames = 0;
+			m_fAccumDt = 0;
+			bInvoked = true;
+		}
+	}
 }
 
 #if CC_ENABLE_PROFILERS
@@ -840,10 +872,10 @@ void CCDisplayLinkDirector::preMainLoop(void)
 		// compute frame rate
 		computeFrameRate();
 
-		if (m_fFrameRate < m_fExpectedFrameRate)
+		// control frame rate
+		if (m_fFrameRate <= m_fExpectedFrameRate)
 		{
  			drawScene();
-			++m_nFrames;
 	 
  			// release the objects
  			NSPoolManager::getInstance()->pop();
