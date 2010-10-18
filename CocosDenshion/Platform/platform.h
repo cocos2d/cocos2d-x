@@ -8,6 +8,7 @@
 #ifdef _PLATFORM_UPHONE
     #include "uPhone/SoundPlayer.h"
     #include "uPhone/FileUtils.h"
+    #include "uPhone/ResourceHandle.h"
 #endif
 
 #endif

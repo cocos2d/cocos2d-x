@@ -1,0 +1,52 @@
+#ifndef _SOUND_DATA_MANAGER_H_
+#define _SOUND_DATA_MANAGER_H_
+
+#include "../Platform/platform.h"
+#include <map>
+#include "../Support/uthash.h"
+
+typedef struct
+{
+    std::string FileName;
+    int         nResID;
+} T_SoundResInfo;
+
+typedef struct _hashElement
+{
+    int                 nSoundID;
+    unsigned char*      pDataBuffer;
+    std::string         FileName;
+    int                 nDataSize;
+    UT_hash_handle		hh;
+} tEffectElement;
+
+class SoundDataManager
+{
+public:
+    SoundDataManager();
+    ~SoundDataManager();
+
+    void setResEntry(const void* pResEntry);
+    void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);
+
+    int  loadSoundData(const char* pszFilePath);
+    tEffectElement* getSoundData(int nSoundID);
+
+    void unloadEffect(int nSoundID);
+    void removeAllEffects();
+
+private:
+    int  loadFromResourceInfo(const char* pFileKey);
+    int  loadFromFile(const char* pFilePath);
+
+private:
+    ResourceHandle* m_pHRes;
+
+    // use hash map to save the effects loaded
+    struct _hashElement	*   m_pEffects;
+
+    typedef std::map<std::string, int> SoundInfoMap;
+    SoundInfoMap* m_pSoundMap;
+};
+
+#endif
