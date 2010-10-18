@@ -46,11 +46,11 @@ INCLUDE_PATH=			;应用额外的包含路径。注意：ITOPS自己的所有路径都会自动包含，故此
 ;可以使用多个INCLUDEFILE串，也可以使用INCLUDEFILE1、INCLUDEFILE2等方式，MakeFile中依据出现顺序(不是数字大小)排列
 INCLUDE_PATH=-I../cocos2dx			
 INCLUDE_PATH=-I../cocos2dx/include
-INCLUDE_PATH=-I../cocosDenshion/SimpleAudioEngine	
+INCLUDE_PATH=-I../cocosDenshion/include	
 
 CCFLAGS = -std=c99
 
-LIBS= -lcocos2d -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
+LIBS= -lcocos2d -lCocosDenshion -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
 
 ;强制排除文件，不能使用通配符，一定要使用相对路径
 ;多个文件之间使用“|”分隔，路径必须以"./"，"../"开始

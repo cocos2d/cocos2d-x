@@ -16,8 +16,8 @@ DEFINES += -DCCX_UNDER_UPHONE
 INCLUDE_PATH += -I. -I./Res \
                -I../cocos2dx \
                -I../cocos2dx/include \
-               -I../cocosDenshion/SimpleAudioEngine
-LIBS += -lcocos2d	-lCocosDenshion -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
+               -I../cocosDenshion/include
+LIBS +=  -lcocos2d -lCocosDenshion -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -33,6 +33,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/GameOverScene.o \
 	$(OBJECTS_DIR)/HelloWorldScene.o \
 	$(OBJECTS_DIR)/main.o \
+	$(OBJECTS_DIR)/NewDeleteOp.o \
 	$(OBJECTS_DIR)/TG3AppDllEntry.o
 
 ADD_OBJECTS += 
@@ -69,3 +70,4 @@ $(OBJECTS_DIR)/NewDeleteOp.o : ./Framework/NewDeleteOp.cpp
 
 $(OBJECTS_DIR)/TG3AppDllEntry.o : ./Framework/TG3AppDllEntry.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TG3AppDllEntry.o ./Framework/TG3AppDllEntry.cpp
+
