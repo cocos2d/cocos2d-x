@@ -17,7 +17,7 @@ INCLUDE_PATH += -I. -I./Res \
                -I../cocos2dx	-I../cocos2dx/include \
                -I./include -I./include/chipmunk -I./include/chipmunk/contains \
 
-CC_FLAGS +=  -std=c99
+CC_FLAGS +=  -std=c99 -fvisibility=default
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
