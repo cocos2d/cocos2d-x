@@ -538,7 +538,7 @@ void ActionAnimate::onEnter()
     char frameName[100] = {0};
     for( int i=1;i<15;i++)
     {
-        sprintf(frameName, "/NEWPLUS/TDA_DATA/Data/cocos2d_tests/Images/grossini_dance_%02d.png", i);
+        sprintf(frameName, "Images/grossini_dance_%02d.png", i);
         animation->addFrameWithFileName(frameName);
     }
 
