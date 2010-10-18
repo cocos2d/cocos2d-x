@@ -15,6 +15,8 @@ include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 DEFINES += -DCCX_UNDER_UPHONE
 INCLUDE_PATH += -I. -I./Res -I../
 
+CXX_FLAGS += -fvisibility=default
+
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
 TARGET = $(DESTDIR)/$(OUTPUT_FILENAME)
