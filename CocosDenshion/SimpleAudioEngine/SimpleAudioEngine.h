@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "uthash.h"
 #include <vector>
 #include "../Export.h"
+#include <map>
+#include <string>
 
 typedef struct
 {
@@ -147,6 +149,10 @@ protected:
         UT_hash_handle		hh;
     } tHashElement;
     struct _hashElement	*   m_pEffects;
+
+    SoundResHandle    *m_hSoundRes;
+    typedef std::map<std::string, int> SoundInfoMap;
+    SoundInfoMap  *m_pSoundMap;
 };
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_
