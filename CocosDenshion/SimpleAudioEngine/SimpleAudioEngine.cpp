@@ -1,7 +1,6 @@
 #include "SimpleAudioEngine.h"
 #include "TG3.h"
-#include <map>
-#include <string>
+
 
 #define BREAK_IF(cond)  if (cond) break;
 
@@ -18,20 +17,20 @@ unsigned int BKDRHash(const char *str)
     return (hash & 0x7FFFFFFF);
 }
 
-static SimpleAudioEngine s_SharedAudioEngie;
-static SoundResHandle    s_HSoundRes;
-
-typedef std::map<std::string, int> SoundInfoMap;
-static SoundInfoMap s_SoundMap;
+static SimpleAudioEngine *s_pSharedAudioEngie = NULL;
 
 SimpleAudioEngine::SimpleAudioEngine()
 : m_nBackgroundMusicVolume(100)
 , m_nEffectsVolume(100)
 , m_bWillPlayBackgroundMusic(false)
 , m_pEffects(NULL)
+, m_pSoundMap(NULL)
+, m_hSoundRes(NULL)
 {
     m_pEffectPlayers = new PlayerArray();
     m_pBackPlayer    = new SoundPlayer();
+    m_pSoundMap      = new SoundInfoMap();
+    m_hSoundRes      = new SoundResHandle();
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
@@ -44,11 +43,28 @@ SimpleAudioEngine::~SimpleAudioEngine()
         delete m_pBackPlayer;
         m_pBackPlayer = NULL;
     }
+
+    if (m_pSoundMap)
+    {
+        delete m_pSoundMap;
+        m_pSoundMap = NULL;
+    }
+
+    if (m_hSoundRes)
+    {
+        delete m_hSoundRes;
+        m_hSoundRes;
+    }
 }
 
 SimpleAudioEngine* SimpleAudioEngine::getSharedEngine()
 {
-    return &s_SharedAudioEngie;
+    if (s_pSharedAudioEngie == NULL)
+    {
+        s_pSharedAudioEngie = new SimpleAudioEngine;
+    }
+    
+    return s_pSharedAudioEngie;
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
@@ -71,11 +87,11 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         do 
         {
             SoundInfoMap::iterator iter;
-            iter = s_SoundMap.find(pszFilePath);
-            BREAK_IF(iter == s_SoundMap.end());
+            iter = m_pSoundMap->find(pszFilePath);
+            BREAK_IF(iter == m_pSoundMap->end());
 
             unsigned int nSize = 0;
-            const void* pData = s_HSoundRes.LoadConstRawData(iter->second, &nSize);
+            const void* pData = m_hSoundRes->LoadConstRawData(iter->second, &nSize);
             BREAK_IF(!pData);
 
             if (m_pBackPlayer)
@@ -310,12 +326,12 @@ void SimpleAudioEngine::removeAllEffectPlayers()
 int  SimpleAudioEngine::loadFromResourceInfo(const char* pFileKey)
 {
     SoundInfoMap::iterator iter;
-    iter = s_SoundMap.find(pFileKey);
+    iter = m_pSoundMap->find(pFileKey);
     int nSoundID = 0;
 
     do 
     {
-        BREAK_IF(iter == s_SoundMap.end());
+        BREAK_IF(iter == m_pSoundMap->end());
 
         // if we have loaded the file before,break
         tHashElement *pElement = NULL;
@@ -327,7 +343,7 @@ int  SimpleAudioEngine::loadFromResourceInfo(const char* pFileKey)
         }
 
         unsigned int nSize = 0;
-        const void* pData = s_HSoundRes.LoadConstRawData(iter->second, &nSize);
+        const void* pData = m_hSoundRes->LoadConstRawData(iter->second, &nSize);
         BREAK_IF(!pData);
 
          // copy the data
@@ -397,9 +413,9 @@ int  SimpleAudioEngine::loadFromFile(const char* pFilePath)
 void SimpleAudioEngine::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount)
 {
     // first, clear the map before
-    if (!s_SoundMap.empty())
+	if (! SimpleAudioEngine::getSharedEngine()->m_pSoundMap->empty())
     {
-        s_SoundMap.clear();
+        SimpleAudioEngine::getSharedEngine()->m_pSoundMap->clear();
     }
 
     // second, insert the pairs
@@ -408,7 +424,7 @@ void SimpleAudioEngine::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCou
         std::string name = (ResInfo[i]).FileName;
         int nResID       = (ResInfo[i]).nResID;
 
-        s_SoundMap.insert(SoundInfoMap::value_type(name, nResID));
+        SimpleAudioEngine::getSharedEngine()->m_pSoundMap->insert(SoundInfoMap::value_type(name, nResID));
     }
 }
 
@@ -416,7 +432,7 @@ void SimpleAudioEngine::setResourceEntry(const AppResourceEntry* pResEntry)
 {
     if (pResEntry)
     {
-        s_HSoundRes.setResourceEntry(pResEntry);
+        SimpleAudioEngine::getSharedEngine()->m_hSoundRes->setResourceEntry(pResEntry);
     }
 }
 
