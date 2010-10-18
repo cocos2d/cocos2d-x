@@ -28,8 +28,8 @@ bool AppDelegate::initCocos2d()
     UIImage::setImageResInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ImageResInfo));
 
     // set the ResourceEntry and sound ResInfo (filename and ResID)
-    SimpleAudioEngine::setResourceEntry(&Cocos2dSimpleGameResourceEntry);
-    SimpleAudioEngine::setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
+    SimpleAudioEngine::getSharedEngine()->setResourceEntry(&Cocos2dSimpleGameResourceEntry);
+    SimpleAudioEngine::getSharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();

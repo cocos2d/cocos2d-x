@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include"
+				AdditionalIncludeDirectories="..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;.\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOSDENSHION_EXPORTS;_TRANZDA_VM_;_EXPORT_DLL_;_ENABLE_PROFILE_"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -175,14 +175,6 @@
 				RelativePath=".\SimpleAudioEngine\SimpleAudioEngine.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\SimpleAudioEngine\SimpleAudioEngine.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SimpleAudioEngine\uthash.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Platform"
@@ -199,6 +191,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Platform\uPhone\ResourceHandle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Platform\uPhone\ResourceHandle.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Platform\uPhone\SoundPlayer.cpp"
 					>
 				</File>
@@ -207,6 +207,30 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="include"
+			>
+			<File
+				RelativePath=".\include\SimpleAudioEngine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\SoundDataManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\SoundDataManager.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Support"
+			>
+			<File
+				RelativePath=".\Support\uthash.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\Export.h"
