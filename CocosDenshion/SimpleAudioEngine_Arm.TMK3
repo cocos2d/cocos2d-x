@@ -13,12 +13,12 @@
 TO_PROJECT_ROOT=../../PRJ_TG3
 
 ;输出目标的名字，不支持多个串，如果有多个，以最后一个为准
-OUTPUT_FILENAME=libCocosDenshion.so
+OUTPUT_FILENAME=libCocosDenshion.a
 
 ;包含的其他的TMK3文件，此文件和本文件一起构成MakeFile的内容
 ;此项可以出现在TMK3文件内的任意地方，与已经存在的项依次组合
 ;注意：此项不支持绝对路径，但是可以使用$(TO_PROJECT_ROOT)构成文件名
-INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP_Arm.TMK3		;TOPS标准应用，包括动态库等
+INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_LIB_Arm.TMK3		;TOPS标准应用，包括动态库等
 
 ;预定义串，生成MakeFile的时候直接放在MakeFile的前面
 ;格式：PRE_DEFINE=STRING，生成MakeFile的时候，"PRE_DEFINE="后面的所有非注释非续行字符都会放在MakeFile前面
@@ -33,7 +33,7 @@ DEFINES=-DCCX_UNDER_UPHONE				;是uphone环境下的makefile
 DEFINES=-D__TG3_PURE_DLL__		;生成的是纯动态库（意思是：不是TOPS应用，但可以是TCOM组件）
 
 ;包含路径，可以使用多个INCLUDE_PATH串，也可以使用INCLUDE_PATH1、INCLUDE_PATH2等方式，MakeFile中依据出现顺序(不是数字大小)排列
-INCLUDE_PATH=			;应用额外的包含路径。注意：ITOPS自己的所有路径都会自动包含，故此这里仅仅包含应用自己特有的路径即可
+INCLUDE_PATH=-I./include			;应用额外的包含路径。注意：ITOPS自己的所有路径都会自动包含，故此这里仅仅包含应用自己特有的路径即可
 
 ;连接的库文件，可以使用多个LIBS串，也可以使用LIBS1、LIBS2等方式，MakeFile中依据出现顺序(不是数字大小)排列
 ;LIBS=-lMyLib		;应用额外的连接库。注意：ITOPS自己的所需库自动包含，而且库包含路径也已经包含，故此这里仅仅包含应用自己特有的库的名字即可
