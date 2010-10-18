@@ -32,6 +32,7 @@ INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP_Arm.TMK3		;TOPS±ê×¼Ó¦ÓÃ£¬°üÀ
 ;DEFINES=-D_MY_MARCO_					;ÕâÀïÌîÈëÓ¦ÓÃµÄ×Ô¶¨Òåºê¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¶¨Òå»á×Ô¶¯°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄ¶¨Òå¼´¿É
 ;DEFINES=-D__TG3_PURE_DLL__		;Éú³ÉµÄÊÇ´¿¶¯Ì¬¿â£¨ÒâË¼ÊÇ£º²»ÊÇTOPSÓ¦ÓÃ£¬µ«¿ÉÒÔÊÇTCOM×é¼þ£©
 ;DEFINES=-D__TCOM_SUPPORT__		;Éú³ÉµÄÊÇTCOM×é¼þ£¨×¢Òâ£ºTOPSÓ¦ÓÃÒ²¿ÉÒÔÍ¬Ê±ÊÇTCOM×é¼þ£©
+DEFINES=-DCCX_UNDER_UPHONE
 
 ;°üº¬Â·¾¶£¬¿ÉÒÔÊ¹ÓÃ¶à¸öINCLUDE_PATH´®£¬Ò²¿ÉÒÔÊ¹ÓÃINCLUDE_PATH1¡¢INCLUDE_PATH2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
 INCLUDE_PATH=			;Ó¦ÓÃ¶îÍâµÄ°üº¬Â·¾¶¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÓÐÂ·¾¶¶¼»á×Ô¶¯°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄÂ·¾¶¼´¿É
@@ -43,7 +44,13 @@ INCLUDE_PATH=			;Ó¦ÓÃ¶îÍâµÄ°üº¬Â·¾¶¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÓÐÂ·¾¶¶¼»á×Ô¶¯°üº¬£¬¹Ê´Ë
 ;¼«Á¦ÒªÇóÊ¹ÓÃÏà¶ÔÂ·¾¶£¬¶à¸öÎÄ¼þÖ®¼äÊ¹ÓÃ¡°|¡±·Ö¸ô
 ;Ç¿ÖÆ°üº¬ÎÄ¼þÖ¸µÄÊÇ²»ÔÚ±¾ÎÄ¼þ¼Ð¼°Æä×ÓÎÄ¼þ¼ÐÏÂµÄ.c¡¢.cpp¡¢.oÎÄ¼þ
 ;¿ÉÒÔÊ¹ÓÃ¶à¸öINCLUDEFILE´®£¬Ò²¿ÉÒÔÊ¹ÓÃINCLUDEFILE1¡¢INCLUDEFILE2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
-INCLUDEFILE=
+INCLUDE_PATH=-I../cocos2dx			
+INCLUDE_PATH=-I../cocos2dx/include
+INCLUDE_PATH=-I../cocosDenshion/SimpleAudioEngine	
+
+CCFLAGS = -std=c99
+
+LIBS= -lcocos2d -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2
 
 ;Ç¿ÖÆÅÅ³ýÎÄ¼þ£¬²»ÄÜÊ¹ÓÃÍ¨Åä·û£¬Ò»¶¨ÒªÊ¹ÓÃÏà¶ÔÂ·¾¶
 ;¶à¸öÎÄ¼þÖ®¼äÊ¹ÓÃ¡°|¡±·Ö¸ô£¬Â·¾¶±ØÐëÒÔ"./"£¬"../"¿ªÊ¼
