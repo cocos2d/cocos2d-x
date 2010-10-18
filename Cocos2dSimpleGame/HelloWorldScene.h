@@ -37,7 +37,7 @@ public:
 
     LAYER_NODE_FUNC(HelloWorld);
     
-	static cocos2d::CCScene* HelloWorld::scene();
+	static cocos2d::CCScene* scene();
 };
 
 #endif // _HELLOWORLD_SCENE_H_
