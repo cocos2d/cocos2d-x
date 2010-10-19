@@ -52,9 +52,6 @@ typedef struct
 	int offset;
 }tImageSource;
 
-typedef map<std::string, int> ResourceImageMap;
-static ResourceImageMap s_ImgMap;
-static ResourceHandle   s_HRes;
 
 // because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
 // the function as a static function
@@ -139,21 +136,13 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 
     if (!bRet)
     {
-        // attempt load image from the ResourceImageMap when can't find the image file.
-        ResourceImageMap::iterator iter;
-        iter = s_ImgMap.find(strPath);
-
-        do
+        // attempt load image from the ResourceMap when can't find the image file.
+        const TBitmap* pBmp = CCFileUtils::getBitmapByResName(strPath.c_str());
+        if (pBmp)
         {
-            CCX_BREAK_IF(iter == s_ImgMap.end());
-
-            const TBitmap* pBmp = s_HRes.LoadConstBitmap(iter->second);
-
-            CCX_BREAK_IF(!pBmp);
-
             initWithBitmap(pBmp);
             bRet = true;
-        } while (0);
+        }
     }
 
 	return bRet;
@@ -172,33 +161,6 @@ unsigned int UIImage::height(void)
 bool UIImage::isAlphaPixelFormat(void)
 {
 	return m_imageInfo.hasAlpha;
-}
-
-void UIImage::setResourceEntry(const AppResourceEntry* pResEntry)
-{
-    if (pResEntry)
-    {
-        s_HRes.setResourceEntry(pResEntry);
-    }
-}
-
-void UIImage::setImageResInfo(const T_ImageResInfo ResInfo[], int nCount)
-{
-    // first, clear the map before
-    if (!s_ImgMap.empty())
-    {
-        s_ImgMap.clear();
-    }
-
-    // second, insert the pairs
-    for (int i = 0; i < nCount; ++i)
-    {
-        std::string name = (ResInfo[i]).ImgName;
-        std::string key  = CCFileUtils::fullPathFromRelativePath(name.c_str());
-        int nResID       = (ResInfo[i]).nResID;
-
-        s_ImgMap.insert(ResourceImageMap::value_type(key, nResID));
-    }
 }
 
 // now, uphone only support premultiplied data
@@ -490,48 +452,4 @@ bool UIImage::initWithBitmap(const TBitmap* pBmp)
 
     return bRet;
 }
-
-//////////////////////////////////////////////////
-//
-// ResourceHandle
-//
-//////////////////////////////////////////////////
-ResourceHandle::ResourceHandle()
-:m_pResLib(NULL)
-{
-}
-
-ResourceHandle::~ResourceHandle()
-{
-    release();
-}
-
-void ResourceHandle::release()
-{
-    if (m_pResLib)
-    {
-        delete m_pResLib;
-        m_pResLib = NULL;
-    }
-}
-
-void ResourceHandle::setResourceEntry(const AppResourceEntry* pResEntry)
-{
-    release();
-
-    m_pResLib = new TResourceLib(pResEntry);
-}
-
-const TBitmap* ResourceHandle::LoadConstBitmap(int nResID)
-{
-    const TBitmap* pResult = NULL;
-
-    if (m_pResLib)
-    {
-        pResult = m_pResLib->LoadConstBitmap(nResID);
-    }
-
-    return pResult;
-}
-
 }//namespace   cocos2d 

@@ -44,7 +44,7 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 void HelloWorld::addTarget()
 {
 
-	CCSprite *target = CCSprite::spriteWithFile(ResInfo[4].ImgName.c_str(), CGRectMake(0,0,27,40));
+	CCSprite *target = CCSprite::spriteWithFile(ResInfo[4].ResName.c_str());
 
 	// Determine where to spawn the target along the Y axis
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
@@ -94,11 +94,11 @@ bool HelloWorld::init()
 	// cocos2d-uphone: add a menu item with "X" image, which is clicked to quit the program
 	// add a "close" icon, it's an autorelease object
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
-										ResInfo[0].ImgName.c_str(), 
-										ResInfo[1].ImgName.c_str(), 
+										ResInfo[0].ResName.c_str(), 
+										ResInfo[1].ResName.c_str(), 
 										this,
 										menu_selector(HelloWorld::menuCloseCallback) );
-	pCloseItem->setPosition( ccp( CCDirector::getSharedDirector()->getWinSize().width - 20, 20) );
+	pCloseItem->setPosition( ccp( CCDirector::getSharedDirector()->getWinSize().width - 30, 30) );
 	CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL); 	// create menu, it's an autorelease object
 	pMenu->setPosition( CGPointZero );
 	this->addChild(pMenu);
@@ -121,7 +121,7 @@ bool HelloWorld::init()
 	// and as close to the left side edge as we can get
 	// Remember that position is based on the anchor point, and by default the anchor
 	// point is the middle of the object.
-	CCSprite *player = CCSprite::spriteWithFile(ResInfo[2].ImgName.c_str(), CGRectMake(0, 0, 27, 40) );
+	CCSprite *player = CCSprite::spriteWithFile(ResInfo[2].ResName.c_str());
 	player->setPosition( ccp(player->getContentSize().width / 2, winSize.height/2) );
 	this->addChild(player);
 
@@ -211,7 +211,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 
 	// Set up initial location of projectile
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
-	CCSprite *projectile = CCSprite::spriteWithFile(ResInfo[3].ImgName.c_str(), CGRectMake(0, 0, 20, 20));
+	CCSprite *projectile = CCSprite::spriteWithFile(ResInfo[3].ResName.c_str());
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
 	// Determinie offset of location to projectile

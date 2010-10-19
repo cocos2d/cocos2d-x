@@ -25,6 +25,11 @@ extern const BitmapType  COCOS2_Bitmap_CloseSelected;
 extern const BitmapType  COCOS2_Bitmap_Player;
 extern const BitmapType  COCOS2_Bitmap_Projectile;
 extern const BitmapType  COCOS2_Bitmap_Target;
+extern const BitmapType  COCOS2_Bitmap_CloseNormal_WVGA;
+extern const BitmapType  COCOS2_Bitmap_CloseSelected_WVGA;
+extern const BitmapType  COCOS2_Bitmap_Player_WVGA;
+extern const BitmapType  COCOS2_Bitmap_Projectile_WVGA;
+extern const BitmapType  COCOS2_Bitmap_Target_WVGA;
 
 
 #endif

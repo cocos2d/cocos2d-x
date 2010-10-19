@@ -48,6 +48,10 @@ typedef enum
 	SAX_STRING
 }CCSAXState;
 
+typedef map<std::string, int> ResourceMap;
+static ResourceMap      s_ResMap;
+static ResourceHandle   s_HRes;
+
 class CCDictMaker
 {
 public:
@@ -238,7 +242,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         pRet->m_sString += s_pszResourcePath;
         pRet->m_sString += pszRelativePath;
     }
-	return pRet->m_sString.c_str();
+    return CCFileUtils::getDiffResolutionPath(pRet->m_sString.c_str());
 }
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
@@ -247,11 +251,176 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 	pRet->autorelease();
 	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
 	pRet->m_sString += pszFilename;
-	return pRet->m_sString.c_str();
+	return CCFileUtils::getDiffResolutionPath(pRet->m_sString.c_str());
 }
 NSDictionary<std::string, NSObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);
+}
+
+const char* CCFileUtils::getDiffResolutionPath(const char *pszPath)
+{
+    NSString *pRet = new NSString(pszPath);
+    pRet->autorelease();
+
+    do 
+    {
+        TApplication* pApp = TApplication::GetCurrentApplication();
+        CCX_BREAK_IF(!pApp);
+
+        // get the Resolution
+        int nScreenWidth  = pApp->GetScreenWidth();
+        int nScreenHeight = pApp->GetScreenHeight();
+
+        // it's default resolution, do nothing
+        CCX_BREAK_IF(nScreenWidth == 320 && nScreenHeight == 480);
+
+        if (nScreenWidth == 480 && nScreenHeight == 800)
+        {
+            // it's WVGA
+            CCX_BREAK_IF(pRet->m_sString.find("@WVGA") != -1);
+
+            std::string filePathWithoutExtension = pszPath;
+            std::string extension = "";
+            std::string filePath = pszPath;
+            int nExPos = filePath.find_last_of(".");
+
+            if (nExPos != -1)
+            {
+                filePathWithoutExtension = filePath.substr(0, nExPos);
+                extension = filePath.substr(nExPos);
+            }
+
+            // new path, add "@WVGA" before the extension
+            pRet->m_sString = filePathWithoutExtension + "@WVGA" + extension;
+
+            // not find the resource of new path,use the original path
+            if (! CCFileUtils::isResourceExist(pRet->m_sString.c_str()))
+            {
+                pRet->m_sString = filePath;
+            }
+        }
+        else
+        {
+            // not support resolution
+            NSAssert(0, "it's not supportted resolution.");
+        }
+    } while (0);
+
+    return pRet->m_sString.c_str();
+}
+
+void CCFileUtils::setResourceEntry(const AppResourceEntry* pResEntry)
+{
+    if (pResEntry)
+    {
+        s_HRes.setResourceEntry(pResEntry);
+    }
+}
+
+void CCFileUtils::setResourceInfo(const T_ResourceInfo ResInfo[], int nCount)
+{
+    // first, clear the map before
+    if (!s_ResMap.empty())
+    {
+        s_ResMap.clear();
+    }
+
+    // second, insert the pairs
+    for (int i = 0; i < nCount; ++i)
+    {
+        std::string name = (ResInfo[i]).ResName;
+        std::string key  = CCFileUtils::fullPathFromRelativePath(name.c_str());
+        int nResID       = (ResInfo[i]).nResID;
+
+        s_ResMap.insert(ResourceMap::value_type(key, nResID));
+    }
+}
+
+bool CCFileUtils::isResourceExist(const char* pszResName)
+{
+    bool nRet = false;
+
+    TUChar FilePath[MAX_PATH] = {0};
+    TUString::StrGBToUnicode(FilePath, (const Char *) pszResName);
+
+    if (EOS_IsFileExist(FilePath))
+    {
+        // find in the hardware
+        nRet = true;
+    }
+    else
+    {
+        // find in the resource map
+        ResourceMap::iterator iter;
+        iter = s_ResMap.find(pszResName);
+
+        if (iter != s_ResMap.end())
+        {
+            nRet = true;
+        }
+    }
+
+    return nRet;
+}
+
+const TBitmap* CCFileUtils::getBitmapByResName(const char* pszBmpName)
+{
+    const TBitmap* pBmp = NULL;
+
+    do 
+    {
+        ResourceMap::iterator iter;
+        iter = s_ResMap.find(pszBmpName);
+        CCX_BREAK_IF(iter == s_ResMap.end());
+
+        pBmp = s_HRes.LoadConstBitmap(iter->second);
+    } while (0);
+
+    return pBmp;
+}
+
+//////////////////////////////////////////////////
+//
+// ResourceHandle
+//
+//////////////////////////////////////////////////
+ResourceHandle::ResourceHandle()
+:m_pResLib(NULL)
+{
+}
+
+ResourceHandle::~ResourceHandle()
+{
+    release();
+}
+
+void ResourceHandle::release()
+{
+    if (m_pResLib)
+    {
+        delete m_pResLib;
+        m_pResLib = NULL;
+    }
+}
+
+void ResourceHandle::setResourceEntry(const AppResourceEntry* pResEntry)
+{
+    release();
+
+    m_pResLib = new TResourceLib(pResEntry);
+}
+
+const TBitmap* ResourceHandle::LoadConstBitmap(int nResID)
+{
+    const TBitmap* pResult = NULL;
+
+    if (m_pResLib)
+    {
+        pResult = m_pResLib->LoadConstBitmap(nResID);
+    }
+
+    return pResult;
 }
 }//namespace   cocos2d 
