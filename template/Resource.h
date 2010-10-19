@@ -6,7 +6,7 @@
 
 using namespace cocos2d;
 
-const T_ImageResInfo ResInfo[] =
+const T_ResourceInfo ResInfo[] =
 {
     { "CloseNormal",    COCOST_ID_BITMAP_CloseNormal },
     { "CloseSelected",  COCOST_ID_BITMAP_CloseSelected },
