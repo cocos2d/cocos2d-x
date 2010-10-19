@@ -29,7 +29,32 @@ THE SOFTWARE.
 #include <ssFile.h>
 #include "ccxCommon.h"
 #include "NSMutableDictionary.h"
+
+class TBitmap;
+class TResourceLib;
+struct AppResourceEntry;
+
 namespace   cocos2d {
+
+typedef struct
+{
+    std::string ResName;
+    int         nResID;
+} T_ResourceInfo;
+
+class ResourceHandle
+{
+public:
+    ResourceHandle();
+    ~ResourceHandle();
+
+    void setResourceEntry(const AppResourceEntry* pResEntry);
+    void release();
+    const TBitmap* LoadConstBitmap(int nResID);
+
+private:
+    TResourceLib* m_pResLib;
+};
 
 //! @brief  Helper class to handle file operations
 class CCX_DLL CCFileUtils
@@ -48,6 +73,8 @@ public:
 
     /// @cond
 	static const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+
+    static const char* getDiffResolutionPath(const char *pszPath);
 	/// @endcond
 
     /**
@@ -62,6 +89,33 @@ public:
     @param pszResourcePath  The absolute resource path
     */
 	static void setResourcePath(const char *pszResourcePath);
+
+    /**
+    @brief Set the Resource Entry
+    @param pResEntry The pointer of the Application's ResourceEntry
+    */
+    static void setResourceEntry(const AppResourceEntry* pResEntry);
+
+    /**
+    @brief Set the Resource Info(ResourceName and ResID)
+    @param ResInfo Array of T_ResourceInfo,contain all resource names and ids.
+    @param nCount  The count of the array elements.
+    */
+    static void setResourceInfo(const T_ResourceInfo ResInfo[], int nCount);
+
+    /**
+    @brief Whether the resource is exist or not.The function find the resource in hardware,if not find,it will find in resource map.
+    @param pszResName The name of resource
+    @return The return value is true if exist,otherwise return false.
+    */
+    static bool isResourceExist(const char* pszResName);
+
+    /**
+    @brief Get bitmap data from resource map
+    @param pszBmpName The name of the bitmap
+    @return If can find the name in resource map, return the pointer of the bitmap.Otherwise return NULL
+    */
+    static const TBitmap* getBitmapByResName(const char* pszBmpName);
 };
 }//namespace   cocos2d 
 

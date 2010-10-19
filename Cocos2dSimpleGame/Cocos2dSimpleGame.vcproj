@@ -224,14 +224,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\CloseNormal.png"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\CloseSelected.png"
-				>
-			</File>
-			<File
 				RelativePath=".\Res\Cocos2dSimpleGame_Res.ENU.tr3"
 				>
 			</File>
@@ -267,18 +259,54 @@
 				RelativePath=".\Res\pew-pew-lei.wav"
 				>
 			</File>
-			<File
-				RelativePath=".\Res\Player.png"
+			<Filter
+				Name="HVGARes"
 				>
-			</File>
-			<File
-				RelativePath=".\Res\Projectile.png"
+				<File
+					RelativePath=".\Res\HVGARes\CloseNormal.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\HVGARes\CloseSelected.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\HVGARes\Player.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\HVGARes\Projectile.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\HVGARes\Target.png"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="WVGARes"
 				>
-			</File>
-			<File
-				RelativePath=".\Res\Target.png"
-				>
-			</File>
+				<File
+					RelativePath=".\Res\WVGARes\CloseNormal@WVGA.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\WVGARes\CloseSelected@WVGA.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\WVGARes\Player@WVGA.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\WVGARes\Projectile@WVGA.png"
+					>
+				</File>
+				<File
+					RelativePath=".\Res\WVGARes\Target@WVGA.png"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Makefiles"

@@ -24,8 +24,8 @@ bool AppDelegate::initCocos2d()
 	pDirector->setDisplayFPS(true);
 
     // set the ResourceEntry and Images ResInfo (name and ResID)
-    UIImage::setResourceEntry(&Cocos2dSimpleGameResourceEntry);
-    UIImage::setImageResInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ImageResInfo));
+    CCFileUtils::setResourceEntry(&Cocos2dSimpleGameResourceEntry);
+    CCFileUtils::setResourceInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ResourceInfo));
 
     // set the ResourceEntry and sound ResInfo (filename and ResID)
     SimpleAudioEngine::getSharedEngine()->setResourceEntry(&Cocos2dSimpleGameResourceEntry);

@@ -30,9 +30,6 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 
 class TBitmap;
-class TResourceLib;
-struct AppResourceEntry;
-
 namespace   cocos2d {
 class CCXBitmapDC;
 
@@ -46,26 +43,6 @@ typedef struct
 	bool			isPremultipliedAlpha;
 	unsigned char   *data;
 } tImageInfo;
-
-typedef struct
-{
-    std::string ImgName;
-    int         nResID;
-} T_ImageResInfo;
-
-class ResourceHandle
-{
-public:
-    ResourceHandle();
-    ~ResourceHandle();
-
-    void setResourceEntry(const AppResourceEntry* pResEntry);
-    void release();
-    const TBitmap* LoadConstBitmap(int nResID);
-
-private:
-    TResourceLib* m_pResLib;
-};
 /// @endcond
 
 /**
@@ -119,12 +96,6 @@ public:
 
 	/** get the image data */
 	unsigned char* getData(void);
-
-    /** set the Resource Entry */
-    static void setResourceEntry(const AppResourceEntry* pResEntry);
-
-    /** set the images ResInfo(name and ResID) */
-    static void setImageResInfo(const T_ImageResInfo ResInfo[], int nCount);
 
 private:
     bool loadPng(const char* strFileName);
