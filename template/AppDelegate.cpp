@@ -28,10 +28,10 @@ bool AppDelegate::initCocos2d()
 	pDirector->setDisplayFPS(true);
 
     // set the ResourceEntry
-    UIImage::setResourceEntry(&cocosTemplateResourceEntry);
+    CCFileUtils::setResourceEntry(&cocosTemplateResourceEntry);
 
     // set the Images ResInfo (name and ResID)
-    UIImage::setImageResInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ImageResInfo));
+    CCFileUtils::setResourceInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ResourceInfo));
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();
