@@ -1,21 +1,16 @@
 #ifndef _SOUND_DATA_MANAGER_H_
 #define _SOUND_DATA_MANAGER_H_
 
-#include "../Platform/platform.h"
+#include "ResourceHandle.h"
 #include <map>
-#include "../Support/uthash.h"
-
-typedef struct
-{
-    std::string FileName;
-    int         nResID;
-} T_SoundResInfo;
+#include "uthash.h"
+#include "SimpleAudioEngine.h"
 
 typedef struct _hashElement
 {
     int                 nSoundID;
     unsigned char*      pDataBuffer;
-    std::string         FileName;
+    const char*         FileName;
     int                 nDataSize;
     UT_hash_handle		hh;
 } tEffectElement;

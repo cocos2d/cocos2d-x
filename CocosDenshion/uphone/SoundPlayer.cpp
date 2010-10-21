@@ -70,13 +70,13 @@ void SoundPlayer::PlaySoundFile(const char* pFileName, Int32 nTimes)
     }
 }
 
-void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, std::string FileName, Int32 nTimes)
+void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, const char* FileName, Int32 nTimes)
 {
     if (m_pMediaFile)
     {
         Int32 nRet = m_pMediaFile->SetContent(pData, nSize);
 
-        if (FileName.empty())
+        if (! strlen(FileName))
         {
             // 没有指定文件名，按照 .wav 格式解析
             const TUChar ExtendName[] = {'.', 'w', 'a', 'v', 0};
@@ -87,7 +87,7 @@ void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, std::string FileNa
         else
         {
             // 使用指定的文件名
-            TUString::StrGBToUnicode(m_fileName, (const Char*)(FileName.c_str()));
+            TUString::StrGBToUnicode(m_fileName, (const Char*)(FileName));
         }
 
         m_pMediaFile->SetName(m_fileName);
