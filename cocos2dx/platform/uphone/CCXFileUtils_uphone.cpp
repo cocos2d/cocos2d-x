@@ -330,6 +330,10 @@ void CCFileUtils::setResourceInfo(const T_ResourceInfo ResInfo[], int nCount)
     // second, insert the pairs
     for (int i = 0; i < nCount; ++i)
     {
+        /**
+        @brief Here we call fullPathFromRelativePath because when the UIImage find the ResName in s_ResMap,
+               the UIImage only have the ResName with fullpath.So we must save the ResName with fullpath.
+        */
         std::string key  = CCFileUtils::fullPathFromRelativePath((ResInfo[i]).ResName);
         int nResID       = (ResInfo[i]).nResID;
 
