@@ -63,9 +63,15 @@ public:
     bool isBackgroundMusicPlaying();
 
     // properties
+    /**
+    @brief The volume of the background music max value is 100,the min value is 0
+    */
     int GetBackgroundMusicVolume();
     void SetBackgroundMusicVolume(int volume);
 
+    /**
+    @brief The volume of the effects max value is 100,the min value is 0
+    */
     int GetEffectsVolume();
     void SetEffectsVolume(int volume);
 
@@ -96,11 +102,6 @@ public:
     @param[in]		nSoundId		the sound id returned from preloadEffect
     *****************************************************************************/
     void playPreloadedEffect(int nSoundId);
-
-protected:
-    int     m_nBackgroundMusicVolume;
-    int     m_nEffectsVolume;
-    bool    m_bWillPlayBackgroundMusic;
 };
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_

@@ -5,6 +5,7 @@
 #include <map>
 #include "uthash.h"
 #include "SimpleAudioEngine.h"
+#include <string>
 
 typedef struct _hashElement
 {
