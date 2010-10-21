@@ -38,7 +38,7 @@ namespace   cocos2d {
 
 typedef struct
 {
-    std::string ResName;
+    const char* ResName;
     int         nResID;
 } T_ResourceInfo;
 
