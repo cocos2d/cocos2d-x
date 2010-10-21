@@ -44,7 +44,7 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 void HelloWorld::addTarget()
 {
 
-	CCSprite *target = CCSprite::spriteWithFile(ResInfo[4].ResName.c_str());
+	CCSprite *target = CCSprite::spriteWithFile(ResInfo[4].ResName);
 
 	// Determine where to spawn the target along the Y axis
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
@@ -94,8 +94,8 @@ bool HelloWorld::init()
 	// cocos2d-uphone: add a menu item with "X" image, which is clicked to quit the program
 	// add a "close" icon, it's an autorelease object
 	CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
-										ResInfo[0].ResName.c_str(), 
-										ResInfo[1].ResName.c_str(), 
+										ResInfo[0].ResName, 
+										ResInfo[1].ResName, 
 										this,
 										menu_selector(HelloWorld::menuCloseCallback) );
 	pCloseItem->setPosition( ccp( CCDirector::getSharedDirector()->getWinSize().width - 30, 30) );
@@ -121,7 +121,7 @@ bool HelloWorld::init()
 	// and as close to the left side edge as we can get
 	// Remember that position is based on the anchor point, and by default the anchor
 	// point is the middle of the object.
-	CCSprite *player = CCSprite::spriteWithFile(ResInfo[2].ResName.c_str());
+	CCSprite *player = CCSprite::spriteWithFile(ResInfo[2].ResName);
 	player->setPosition( ccp(player->getContentSize().width / 2, winSize.height/2) );
 	this->addChild(player);
 
@@ -211,7 +211,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 
 	// Set up initial location of projectile
 	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
-	CCSprite *projectile = CCSprite::spriteWithFile(ResInfo[3].ResName.c_str());
+	CCSprite *projectile = CCSprite::spriteWithFile(ResInfo[3].ResName);
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
 	// Determinie offset of location to projectile
