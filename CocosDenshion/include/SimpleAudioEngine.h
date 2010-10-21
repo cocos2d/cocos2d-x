@@ -25,10 +25,13 @@ THE SOFTWARE.
 #ifndef _SIMPLE_AUDIO_ENGINE_H_
 #define _SIMPLE_AUDIO_ENGINE_H_
 
-#include "../Platform/platform.h"
-#include "SoundDataManager.h"
-#include <vector>
 #include "../Export.h"
+
+typedef struct _tResourceInfo
+{
+    const char* FileName;
+    int         nResID;
+} T_SoundResInfo;
 
 /*!***************************************************************************
 @class          SimpleAudioEngine
@@ -36,10 +39,6 @@ THE SOFTWARE.
 *****************************************************************************/
 class EXPORT_DLL SimpleAudioEngine
 {
-public:
-    typedef std::vector<SoundPlayer*> PlayerArray;
-    typedef PlayerArray::iterator     PlayerArrayIterator;
-
 public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
@@ -70,7 +69,6 @@ public:
     int GetEffectsVolume();
     void SetEffectsVolume(int volume);
 
-
     // for sound effects
     int playEffect(const char* pszFilePath);
     void stopEffect(int nSoundId);
@@ -99,17 +97,10 @@ public:
     *****************************************************************************/
     void playPreloadedEffect(int nSoundId);
 
-    void removeAllEffectPlayers();
-
 protected:
     int     m_nBackgroundMusicVolume;
     int     m_nEffectsVolume;
     bool    m_bWillPlayBackgroundMusic;
-
-    SoundDataManager* m_pDataManager;
-
-    SoundPlayer* m_pBackPlayer;
-    PlayerArray* m_pEffectPlayers;
 };
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_

@@ -19,8 +19,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk", "chipmunk\chipmu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "Box2D\Box2D.vcproj", "{83C75293-906B-432E-80B9-A0041043E380}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion", "CocosDenshion\CocosDenshion.vcproj", "{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAudioEngine", "TestAudioEngine\TestAudioEngine.vcproj", "{93D51450-73EC-48FA-9CFB-2095757678B1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0} = {AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}
@@ -36,6 +34,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cocos2dSimpleGame", "Cocos2
 		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
 		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0} = {AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion_uphone", "CocosDenshion\CocosDenshion-uphone.vcproj", "{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,10 +63,6 @@ Global
 		{83C75293-906B-432E-80B9-A0041043E380}.Debug|Win32.Build.0 = Debug|Win32
 		{83C75293-906B-432E-80B9-A0041043E380}.Release|Win32.ActiveCfg = Release|Win32
 		{83C75293-906B-432E-80B9-A0041043E380}.Release|Win32.Build.0 = Release|Win32
-		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Debug|Win32.Build.0 = Debug|Win32
-		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Release|Win32.ActiveCfg = Release|Win32
-		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Release|Win32.Build.0 = Release|Win32
 		{93D51450-73EC-48FA-9CFB-2095757678B1}.Debug|Win32.ActiveCfg = Debug|Win32
 		{93D51450-73EC-48FA-9CFB-2095757678B1}.Debug|Win32.Build.0 = Debug|Win32
 		{93D51450-73EC-48FA-9CFB-2095757678B1}.Release|Win32.ActiveCfg = Release|Win32
@@ -79,6 +75,10 @@ Global
 		{ADD7B173-FF61-45DA-BDE0-3E41600D21B0}.Debug|Win32.Build.0 = Debug|Win32
 		{ADD7B173-FF61-45DA-BDE0-3E41600D21B0}.Release|Win32.ActiveCfg = Release|Win32
 		{ADD7B173-FF61-45DA-BDE0-3E41600D21B0}.Release|Win32.Build.0 = Release|Win32
+		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Debug|Win32.Build.0 = Debug|Win32
+		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Release|Win32.ActiveCfg = Release|Win32
+		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

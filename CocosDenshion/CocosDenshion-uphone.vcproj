@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="CocosDenshion"
+	Name="CocosDenshion_uphone"
 	ProjectGUID="{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}"
 	RootNamespace="CocosDenshion"
 	Keyword="Win32Proj"
@@ -169,66 +169,50 @@
 	</References>
 	<Files>
 		<Filter
-			Name="SimpleAudioEngine"
-			>
-			<File
-				RelativePath=".\SimpleAudioEngine\SimpleAudioEngine.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Platform"
-			>
-			<File
-				RelativePath=".\Platform\platform.h"
-				>
-			</File>
-			<Filter
-				Name="uPhone"
-				>
-				<File
-					RelativePath=".\Platform\uPhone\FileUtils.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Platform\uPhone\ResourceHandle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Platform\uPhone\ResourceHandle.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Platform\uPhone\SoundPlayer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Platform\uPhone\SoundPlayer.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
 			Name="include"
 			>
 			<File
 				RelativePath=".\include\SimpleAudioEngine.h"
 				>
 			</File>
-			<File
-				RelativePath=".\include\SoundDataManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\include\SoundDataManager.h"
-				>
-			</File>
 		</Filter>
 		<Filter
-			Name="Support"
+			Name="source"
 			>
 			<File
-				RelativePath=".\Support\uthash.h"
+				RelativePath=".\uphone\FileUtils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\ResourceHandle.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\ResourceHandle.h"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\SimpleAudioEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\SoundDataManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\SoundDataManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\SoundPlayer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\SoundPlayer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\uphone\uthash.h"
 				>
 			</File>
 		</Filter>

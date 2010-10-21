@@ -1,4 +1,6 @@
 #include "SoundDataManager.h"
+#include "FileUtils.h"
+#include "SoundPlayer.h"
 
 #define BREAK_IF(cond)      if (cond) break;
 

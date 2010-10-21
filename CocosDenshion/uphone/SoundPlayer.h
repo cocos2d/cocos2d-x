@@ -4,10 +4,9 @@
 #include "TG3.h"
 #include "TCOM_MediaPlayer_Method.h"
 #include "TCOM_Generic_DataType.h"
-#include "../../Export.h"
 #include <string>
 
-class EXPORT_DLL SoundPlayer
+class SoundPlayer
 {
 public:
     SoundPlayer();
@@ -31,7 +30,7 @@ public:
     @warning pFileName 中的文件扩展名影响数据的播放，如果扩展名与数据的原始类型不匹配则无法播放。
              默认 pFileName 为 NULL，此时会按照 .wav 的格式对数据进行解析
     */
-    void PlaySoundFromMem(UInt8* pData, Int32 nSize, std::string pFileName = "", Int32 nTimes = 1);
+    void PlaySoundFromMem(UInt8* pData, Int32 nSize, const char* pFileName = "", Int32 nTimes = 1);
 
     /**
     @brief 设置播放器的音量
