@@ -13,6 +13,11 @@ static PlayerArray       *s_pEffectPlayers    = NULL;
 static SoundDataManager  *s_pDataManager      = NULL;
 static SoundPlayer       *s_pBackPlayer       = NULL;
 
+
+static int     s_nBackgroundMusicVolume = 100;
+static int     s_nEffectsVolume = 100;
+static bool    s_bWillPlayBackgroundMusic = false;
+
 void removeAllEffectPlayers()
 {
     PlayerArrayIterator iter;
@@ -30,21 +35,20 @@ void removeAllEffectPlayers()
 }
 
 SimpleAudioEngine::SimpleAudioEngine()
-: m_nBackgroundMusicVolume(100)
-, m_nEffectsVolume(100)
-, m_bWillPlayBackgroundMusic(false)
 {
     if (s_pEffectPlayers)
     {
         removeAllEffectPlayers();
     }
     s_pEffectPlayers = new PlayerArray();
+    SetEffectsVolume(s_nEffectsVolume);
 
     if (s_pBackPlayer)
     {
         delete s_pBackPlayer;
     }
     s_pBackPlayer    = new SoundPlayer();
+    SetBackgroundMusicVolume(s_nBackgroundMusicVolume);
 
     if (s_pDataManager)
     {
@@ -131,7 +135,7 @@ void SimpleAudioEngine::rewindBackgroundMusic()
 
 bool SimpleAudioEngine::willPlayBackgroundMusic()
 {
-    return m_bWillPlayBackgroundMusic;
+    return s_bWillPlayBackgroundMusic;
 }
 
 bool SimpleAudioEngine::isBackgroundMusicPlaying()
@@ -149,26 +153,44 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 // properties
 int SimpleAudioEngine::GetBackgroundMusicVolume()
 {
-    return m_nBackgroundMusicVolume;
+    return s_nBackgroundMusicVolume;
 }
 
 void SimpleAudioEngine::SetBackgroundMusicVolume(int volume)
 {
+    if (volume > 100)
+    {
+        volume = 100;
+    }
+    else if (volume < 0)
+    {
+        volume = 0;
+    }
+
     if (s_pBackPlayer)
     {
         s_pBackPlayer->SetVolumeValue(volume);
     }
 
-    m_nBackgroundMusicVolume = volume;
+    s_nBackgroundMusicVolume = volume;
 }
 
 int SimpleAudioEngine::GetEffectsVolume()
 {
-    return m_nEffectsVolume;
+    return s_nEffectsVolume;
 }
 
 void SimpleAudioEngine::SetEffectsVolume(int volume)
 {
+    if (volume > 100)
+    {
+        volume = 100;
+    }
+    else if (volume < 0)
+    {
+        volume = 0;
+    }
+
     PlayerArrayIterator iter;
 
     for (iter = s_pEffectPlayers->begin(); iter != s_pEffectPlayers->end(); ++iter)
@@ -179,7 +201,7 @@ void SimpleAudioEngine::SetEffectsVolume(int volume)
         }
     }
 
-    m_nEffectsVolume = volume;
+    s_nEffectsVolume = volume;
 }
 
 
@@ -253,7 +275,7 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
             s_pEffectPlayers->push_back(pPlayer);
 
             // set the player volume
-            pPlayer->SetVolumeValue(m_nEffectsVolume);
+            pPlayer->SetVolumeValue(s_nEffectsVolume);
         }
 
         // play the sound and record the player
