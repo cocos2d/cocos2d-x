@@ -330,8 +330,7 @@ void CCFileUtils::setResourceInfo(const T_ResourceInfo ResInfo[], int nCount)
     // second, insert the pairs
     for (int i = 0; i < nCount; ++i)
     {
-        std::string name = (ResInfo[i]).ResName;
-        std::string key  = CCFileUtils::fullPathFromRelativePath(name.c_str());
+        std::string key  = CCFileUtils::fullPathFromRelativePath((ResInfo[i]).ResName);
         int nResID       = (ResInfo[i]).nResID;
 
         s_ResMap.insert(ResourceMap::value_type(key, nResID));
