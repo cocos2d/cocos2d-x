@@ -119,30 +119,31 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 {
 	bool bRet = false;
 
-	switch (imageType)
-	{
-	case kImageFormatPNG:
-		// use libpng load image
-		bRet =  loadPng(strPath.c_str());
-		break;
-	case kImageFormatJPG:
-		bRet = loadJpg(strPath.c_str());
-		break;
-	default:
-		// unsupported image type
-		bRet = false;
-		break;
-	}
+    // attempt load image from the ResourceMap.
+    const TBitmap* pBmp = CCFileUtils::getBitmapByResName(strPath.c_str());
+    if (pBmp)
+    {
+        initWithBitmap(pBmp);
+        bRet = true;
+    }
 
     if (!bRet)
     {
-        // attempt load image from the ResourceMap when can't find the image file.
-        const TBitmap* pBmp = CCFileUtils::getBitmapByResName(strPath.c_str());
-        if (pBmp)
-        {
-            initWithBitmap(pBmp);
-            bRet = true;
-        }
+        // can't find in the ResourceMap,find in hardware
+	    switch (imageType)
+	    {
+	    case kImageFormatPNG:
+		    // use libpng load image
+		    bRet =  loadPng(strPath.c_str());
+		    break;
+	    case kImageFormatJPG:
+		    bRet = loadJpg(strPath.c_str());
+		    break;
+	    default:
+		    // unsupported image type
+		    bRet = false;
+		    break;
+	    }
     }
 
 	return bRet;
