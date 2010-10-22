@@ -5,8 +5,6 @@
 #include "cocos2dsimplegame_res_def.h"
 #include "cocos2d.h"
 
-using namespace cocos2d;
-
 const T_ResourceInfo ResInfo[] =
 {
     { "CloseNormal",    COCOS2_ID_BITMAP_CloseNormal },
