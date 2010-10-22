@@ -97,6 +97,12 @@ public:
     void unloadEffect(int nSoundId);
 
 
+	/*!***************************************************************************
+	@brief          unload all preloaded effect from internal buffer
+	*****************************************************************************/
+	void unloadEffectAll();
+
+
     /*!***************************************************************************
     @brief          play the preloaded effect
     @param[in]		nSoundId		the sound id returned from preloadEffect
