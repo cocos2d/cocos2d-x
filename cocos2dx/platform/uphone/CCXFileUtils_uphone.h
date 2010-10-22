@@ -34,13 +34,13 @@ class TBitmap;
 class TResourceLib;
 struct AppResourceEntry;
 
-namespace   cocos2d {
-
 typedef struct
 {
     const char* ResName;
     int         nResID;
 } T_ResourceInfo;
+
+namespace   cocos2d {
 
 class ResourceHandle
 {
