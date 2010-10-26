@@ -7,9 +7,9 @@
 #############################################################################
 
 TO_PROJECT_ROOT = ../../PRJ_TG3
-OUTPUT_FILENAME =  libcocos2d.a
+OUTPUT_FILENAME =  libcocos2d.so
 
-include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DCCX_UNDER_UPHONE \
@@ -19,6 +19,7 @@ INCLUDE_PATH += -I. -I./Res \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libpng \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libjpeg
+LIBS +=  -lTG3_EGL -lTG3_GLESv1_CM -lTG3_GLESv2 -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)

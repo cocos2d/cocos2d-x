@@ -7,9 +7,9 @@
 #############################################################################
 
 TO_PROJECT_ROOT = ../../PRJ_TG3
-OUTPUT_FILENAME = libbox2d.a
+OUTPUT_FILENAME = libbox2d.so
 
-include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DCCX_UNDER_UPHONE
