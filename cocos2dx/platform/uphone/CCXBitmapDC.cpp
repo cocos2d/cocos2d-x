@@ -43,7 +43,7 @@ namespace cocos2d {
 		// text
 		Int32 len = strlen(text) + 1;
 		TUChar *pText = new TUChar[len];
-		TUString::StrUtf8ToStrUnicode(pText, (Char*)text);
+		TUString::StrGBToUnicode(pText, (Char*)text);
 
 		// calculate text size
 		if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
