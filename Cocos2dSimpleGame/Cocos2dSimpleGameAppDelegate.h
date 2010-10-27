@@ -18,6 +18,8 @@ public:
 
 	virtual bool    initCocos2d();
 	virtual Boolean EventHandler(EventType * pEvent);
+    virtual void    applicationDidEnterBackground();
+    virtual void    applicationWillEnterForeground();
 
 protected:
     TRectangle              m_rcWnd;

@@ -85,3 +85,17 @@ Boolean  AppDelegate::EventHandler(EventType*  pEvent)
 
 	return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
 }
+
+void AppDelegate::applicationDidEnterBackground()
+{
+    CCDirector::getSharedDirector()->stopAnimation();
+
+    SimpleAudioEngine::getSharedEngine()->pauseBackgroundMusic();
+}
+
+void AppDelegate::applicationWillEnterForeground()
+{
+    CCDirector::getSharedDirector()->startAnimation();
+
+    SimpleAudioEngine::getSharedEngine()->resumeBackgroundMusic();
+}
