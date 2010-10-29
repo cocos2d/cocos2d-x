@@ -65,13 +65,26 @@ public:
 		{
 			CCX_BREAK_IF(! pEGL);
 
+			TUChar szError[] = {'E','R','R','O','R',0};
+			TUChar szEglInitFailed[] = {'e','g','l','I','n','i','t','i','a','l','i','z','e',' ','f','a','i','l','e','d',0};
+			TUChar szCreateContextFailed[] = {'e','g','l','C','r','e','a','t','e','C','o','n','t','e','x','t',' ','f','a','i','l','e','d',0};
+			TUChar szEglCreateWindowSurfaceFailed[] = {'e','g','l','C','r','e','a','t','e','W','i','n','d','o','w','S','u','r','f','a','c','e',' ','f','a','i','l','e','d',0};
+			TUChar szEglMakeCurrentFailed[] = {'e','g','l','M','a','k','e','C','u','r','r','e','n','t',' ','f','a','i','l','e','d',0};
+
 			pEGL->m_eglNativeWindow = pWindow;
 
 			EGLDisplay eglDisplay;
 			CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
 
 			EGLint nMajor, nMinor;
-			CCX_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
+			EGLBoolean bEglRet;
+			
+			bEglRet = eglInitialize(eglDisplay, &nMajor, &nMinor);
+			if ( EGL_FALSE == bEglRet || 1 != nMajor )
+			{
+				TApplication::GetCurrentApplication()->MessageBox(szEglInitFailed, szError, WMB_OK);
+				break;
+			}
 
 			const EGLint aConfigAttribs[] =
 			{
@@ -84,18 +97,30 @@ public:
 			};
 			EGLint iConfigs;
 			EGLConfig eglConfig;
-			CCX_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
-				|| (iConfigs != 1));
+			CCX_BREAK_IF( EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) ||
+						  (iConfigs != 1) );
 
-			EGLContext eglContext;
-			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
-			CCX_BREAK_IF(EGL_NO_CONTEXT == eglContext);
+			EGLContext eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
+			if (EGL_NO_CONTEXT == eglContext)
+			{
+				TApplication::GetCurrentApplication()->MessageBox(szCreateContextFailed, szError, WMB_OK);
+				break;
+			}
 
 			EGLSurface eglSurface;
 			eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, pEGL->m_eglNativeWindow, NULL);
-			CCX_BREAK_IF(EGL_NO_SURFACE == eglSurface);
+			if (EGL_NO_SURFACE == eglSurface)
+			{
+				TApplication::GetCurrentApplication()->MessageBox(szEglCreateWindowSurfaceFailed, szError, WMB_OK);
+				break;
+			}
 
-			CCX_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
+			bEglRet = eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
+			if (EGL_FALSE == bEglRet)
+			{
+				TApplication::GetCurrentApplication()->MessageBox(szEglMakeCurrentFailed, szError, WMB_OK);
+				break;
+			}
 
 			pEGL->m_eglDisplay = eglDisplay;
 			pEGL->m_eglConfig  = eglConfig;
