@@ -89,14 +89,19 @@ Boolean  AppDelegate::EventHandler(EventType*  pEvent)
 	return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
 }
 
-// This function be called when the app unactived,(if coming a call,it's be called too)
+// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::getSharedDirector()->stopAnimation();
+
+	// if you use SimpleAudioEngine, it must be pause
+	// SimpleAudioEngine::getSharedEngine()->pauseBackgroundMusic();
 }
 
-// This function be called when the app actived again
+// this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::getSharedDirector()->startAnimation();
+	
+	// SimpleAudioEngine::getSharedEngine()->resumeBackgroundMusic();
 }

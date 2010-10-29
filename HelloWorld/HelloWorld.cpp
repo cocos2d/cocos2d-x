@@ -92,6 +92,18 @@ Boolean HelloWorldAppDelegate::EventHandler(EventType*  pEvent)
     return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
 }
 
+// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+void HelloWorldAppDelegate::applicationDidEnterBackground()
+{
+    CCDirector::getSharedDirector()->stopAnimation();
+}
+
+// this function will be called when the app is active again
+void HelloWorldAppDelegate::applicationWillEnterForeground()
+{
+    CCDirector::getSharedDirector()->startAnimation();
+}
+
 // application main entry
 Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
