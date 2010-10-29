@@ -63,7 +63,11 @@ Boolean  AppDelegate::EventHandler(EventType*  pEvent)
 			// it's important to use CCXEGLView, or you may inherit it to add your implement
 			if (! (m_pMainWnd = new CCXEGLView(this)) || ! m_pMainWnd->Create(&m_rcWnd))
 			{
-        		// create window failed, quit application
+        		// create window failed, clear the heap
+				delete m_pMainWnd;
+				CCScheduler::purgeSharedScheduler();
+
+				// quit application
 				SendStopEvent();
 				bHandled = TRUE;
 				break;

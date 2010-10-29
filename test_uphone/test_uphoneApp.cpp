@@ -84,8 +84,9 @@ Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
 				SetActiveWindow(m_pMainWnd);
 			}
 			else
-			{	// 窗口创建失败，退出应用。
-				SendStopEvent();
+			{
+				// quit THE application
+				SendStopEvent();		
 			}
 		}
 		break;
