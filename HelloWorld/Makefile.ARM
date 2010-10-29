@@ -28,7 +28,8 @@ MKDIR = mkdir -p
 first: all
 
 OBJECTS = \
-	$(OBJECTS_DIR)/HelloWorldApp.o \
+	$(OBJECTS_DIR)/HelloWorld.o \
+	$(OBJECTS_DIR)/HelloWorldApp_android.o \
 	$(OBJECTS_DIR)/TG3AppDllEntry.o
 
 ADD_OBJECTS += 
@@ -48,8 +49,11 @@ clean :
 	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) $(TARGET)
 
-$(OBJECTS_DIR)/HelloWorldApp.o : ./HelloWorldApp.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HelloWorldApp.o ./HelloWorldApp.cpp
+$(OBJECTS_DIR)/HelloWorld.o : ./HelloWorld.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HelloWorld.o ./HelloWorld.cpp
+
+$(OBJECTS_DIR)/HelloWorldApp_android.o : ./HelloWorldApp_android.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HelloWorldApp_android.o ./HelloWorldApp_android.cpp
 
 $(OBJECTS_DIR)/TG3AppDllEntry.o : ./TG3AppDllEntry.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TG3AppDllEntry.o ./TG3AppDllEntry.cpp
