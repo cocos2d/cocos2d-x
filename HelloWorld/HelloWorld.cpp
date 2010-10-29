@@ -80,10 +80,14 @@ Boolean HelloWorldAppDelegate::EventHandler(EventType*  pEvent)
 	case EVENT_AppLoad:
         if (! (m_pMainWnd = new CCXEGLView(this)) || ! m_pMainWnd->Create(&m_rcWnd))
         {
-        	// create window failed, quit application
-            SendStopEvent();
-            bHandled = TRUE;
-            break;
+     		// create window failed, clear the heap
+			delete m_pMainWnd;
+			CCScheduler::purgeSharedScheduler();
+
+			// quit application
+			SendStopEvent();
+			bHandled = TRUE;
+			break;
         }
         SetActiveWindow(m_pMainWnd);
         // do not return bHandle equal TRUE, CCXApplication::EventHandler need do some thing.
