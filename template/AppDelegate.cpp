@@ -89,13 +89,13 @@ Boolean  AppDelegate::EventHandler(EventType*  pEvent)
 	return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
 }
 
-// 应用转入后台时的处理（有来电时此函数也会被调用）
+// This function be called when the app unactived,(if coming a call,it's be called too)
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::getSharedDirector()->stopAnimation();
 }
 
-// 应用重新被激活的处理
+// This function be called when the app actived again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::getSharedDirector()->startAnimation();
