@@ -77,7 +77,9 @@ CCTexture2D::~CCTexture2D()
 {
 	CCLOGINFO("cocos2d: deallocing CCTexture2D %u.", m_uName);
 	if(m_uName)
+	{
 		glDeleteTextures(1, &m_uName);
+	}
 }
 
 CCTexture2DPixelFormat CCTexture2D::getPixelFormat()

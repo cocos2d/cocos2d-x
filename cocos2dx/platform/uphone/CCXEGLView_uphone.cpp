@@ -193,10 +193,10 @@ CCXEGLView::CCXEGLView(TApplication * pApp)
 
 CCXEGLView::~CCXEGLView()
 {
-    delete m_pEGL;
-    delete m_pSet;
-    delete m_pTouch;
+    CCX_SAFE_DELETE(m_pSet);
+    CCX_SAFE_DELETE(m_pTouch);
     CCX_SAFE_DELETE(m_pDelegate);
+    CCX_SAFE_DELETE(m_pEGL);
 }
 
 Boolean CCXEGLView::AfterCreate(void)
@@ -293,7 +293,6 @@ bool CCXEGLView::isOpenGLReady()
 
 void CCXEGLView::release()
 {
-    CCX_SAFE_DELETE(m_pEGL);
     CloseWindow();
 }
 
