@@ -84,6 +84,4 @@ protected:
 
 }       // end of namespace   cocos2d
 
-extern JNIEnv *env;
-
 #endif	// end of __CCX_APPLICATION_WIN32_H__
