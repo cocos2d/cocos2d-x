@@ -122,14 +122,14 @@ namespace cocos2d {
 		CGSize size = CCDirector::getSharedDirector()->getDisplaySize();
 		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 
-		glColorMask(TRUE, TRUE, TRUE, TRUE);
+		glColorMask(true, true, true, true);
 	}
 	void CCRenderTexture::clear(float r, float g, float b, float a)
 	{
 		this->begin();
 		glClearColor(r, g, b, a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glColorMask(TRUE, TRUE, TRUE, FALSE);
+		glColorMask(true, true, true, false);
 		this->end();
 	}
 	bool CCRenderTexture::saveBuffer(const char *name)

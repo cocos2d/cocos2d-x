@@ -24,6 +24,8 @@ THE SOFTWARE.
 #include "CCGrid3DAction.h"
 #include "CGPointExtension.h"
 
+#include <stdlib.h>
+
 namespace cocos2d
 {
 	// implementation of CCWaves3D

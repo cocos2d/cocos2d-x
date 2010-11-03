@@ -31,6 +31,8 @@ THE SOFTWARE.
     #include "uphone/ccxCommon_uphone.h"
 #elif defined(CCX_PLATFORM_WIN32)
     #include "win32/ccxCommon_win32.h"
+#elif defined(CCX_PLATFORM_ANDROID)
+    #include "android/ccxCommon_android.h"
 #else
     #error
 #endif

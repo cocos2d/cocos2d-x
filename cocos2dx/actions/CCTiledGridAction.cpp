@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "CGPointExtension.h"
 #include "effects/CCGrid.h"
 
+#include <stdlib.h>
+
 namespace cocos2d
 {
 	struct Tile

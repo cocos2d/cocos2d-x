@@ -40,6 +40,12 @@ THE SOFTWARE.
     #include "win32/Cocos2dTypes.h"
     #include "win32/CCXBitmapDC.h"
     #include "win32/ZipUtils.h"
+#elif defined(CCX_PLATFORM_ANDROID)
+    #include "android/CCTime.h"
+    #include "android/NSLock.h"
+    #include "android/Cocos2dTypes.h"
+    #include "android/CCXBitmapDC.h"
+    #include "android/ZipUtils.h"
 #else 
     #error
 #endif
