@@ -30,6 +30,8 @@ THE SOFTWARE.
     #include "uphone/CCXUIImage_uphone.h"
 #elif defined(CCX_PLATFORM_WIN32)
     #include "win32/CCXUIImage_win32.h"
+#elif defined(CCX_PLATFORM_ANDROID)
+	#include "android/CCXUIImage_android.h"
 #else
 #error
 #endif // __CCX_UIIMAGE_PLATFORM_H__

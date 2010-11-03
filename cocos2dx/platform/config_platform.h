@@ -27,6 +27,8 @@ THE SOFTWARE.
     #define CCX_PLATFORM_UPHONE
 #elif   defined (WIN32) && defined (_WINDOWS)   // under win32pc
     #define CCX_PLATFORM_WIN32
+#elif   defined (_ANDROID)
+    #define CCX_PLATFORM_ANDROID
 #endif
 
 // user configure
@@ -52,6 +54,6 @@ THE SOFTWARE.
 #endif
 
 // check compiling platform
-#if ! defined(CCX_PLATFORM_UPHONE) && ! defined(CCX_PLATFORM_WIN32)
+#if ! defined(CCX_PLATFORM_UPHONE) && ! defined(CCX_PLATFORM_WIN32) && ! defined(CCX_PLATFORM_ANDROID)
     #error "no platform macro defined!"
 #endif

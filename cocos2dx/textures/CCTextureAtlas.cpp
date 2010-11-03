@@ -26,12 +26,12 @@ THE SOFTWARE.
 // cocos2d
 #include "CCTextureAtlas.h"
 #include "CCTextureCache.h"
-#include "ccMacros.h"
+// #include "ccMacros.h"
 
 // support
 #include "CCTexture2D.h"
 
-#include <math.h>
+#include <stdlib.h>
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -47,7 +47,7 @@ CCTextureAtlas::CCTextureAtlas()
 
 CCTextureAtlas::~CCTextureAtlas()
 {
-	CCLOGINFO("cocos2d: deallocing CCTextureAtlas.");
+//	CCLOGINFO("cocos2d: deallocing CCTextureAtlas.");
 
 	CCX_SAFE_FREE(m_pQuads)
 	CCX_SAFE_FREE(m_pIndices)
@@ -139,7 +139,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
 
 	if( ! ( m_pQuads && m_pIndices) ) {
-		CCLOG("cocos2d: CCTextureAtlas: not enough memory");
+		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
 		CCX_SAFE_FREE(m_pQuads)
 		CCX_SAFE_FREE(m_pIndices)
 		return false;
@@ -237,7 +237,7 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 	if( oldIndex == newIndex )
 		return;
 
-	unsigned int howMany = std::abs( oldIndex - newIndex);
+	unsigned int howMany = abs( oldIndex - newIndex);
 	int dst = oldIndex;
 	int src = oldIndex + 1;
 	if( oldIndex > newIndex) {
@@ -288,7 +288,7 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 	void * tmpIndices = realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
 
 	if( ! ( tmpQuads && tmpIndices) ) {
-		CCLOG("cocos2d: CCTextureAtlas: not enough memory");
+		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
 		if( tmpQuads )
 			free(tmpQuads);
 		else

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCRIBBON_H__
 #define __CCRIBBON_H__
-#include <GLES/egl.h>
+/*#include <GLES/egl.h>*/
 #include "CCNode.h"
 #include "CCProtocols.h"
 namespace cocos2d {

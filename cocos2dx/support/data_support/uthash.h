@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include <string.h>   /* memcmp,strlen */
 #include <stddef.h>   /* ptrdiff_t */
+#include <stdlib.h>   /* exit() */
+
 namespace   cocos2d {
 
 /* These macros use decltype or the earlier __typeof GNU extension.

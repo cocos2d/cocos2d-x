@@ -30,6 +30,8 @@ THE SOFTWARE.
     #include "uphone/CCXFileUtils_uphone.h"
 #elif defined(CCX_PLATFORM_WIN32)
     #include "win32/CCXFileUtils_win32.h"
+#elif defined(CCX_PLATFORM_ANDROID)
+    #include "android/CCXFileUtils_android.h"
 #else
     #error
 #endif // __CCX_FILEUTILS_PLATFORM_H__
