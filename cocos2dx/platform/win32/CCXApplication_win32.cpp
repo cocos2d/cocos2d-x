@@ -7,7 +7,7 @@ namespace   cocos2d {
 static CCXApplication * s_pApplication;
 
 CCXApplication::CCXApplication()
-: m_hAccelTable(NULL)
+	: m_hAccelTable(NULL)
 {
 	m_hInstance	= GetModuleHandle(NULL);
 	s_pApplication = this;
@@ -15,13 +15,13 @@ CCXApplication::CCXApplication()
 
 CCXApplication::~CCXApplication()
 {
-    s_pApplication = NULL;
+	s_pApplication = NULL;
 }
 
 ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
 {
 	// swap width and height
- 	CCXEGLView * pView = CCDirector::getSharedDirector()->getOpenGLView();
+	CCXEGLView * pView = CCDirector::getSharedDirector()->getOpenGLView();
 	if (pView)
 	{
 		return (ccDeviceOrientation)pView->setDeviceOrientation(eOritation);
@@ -31,8 +31,8 @@ ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOr
 
 CGRect CCXApplication::statusBarFrame()
 {
-    CGRect rc;
-    return rc;
+	CGRect rc;
+	return rc;
 }
 
 bool CCXApplication::InitInstance()
@@ -44,11 +44,23 @@ int CCXApplication::Run()
 {
 	// Main message loop:
 	MSG msg;
-	 while (1)
+	DWORD dwTickLast = 0;
+	DWORD dwTickNow = 0;
+
+	while (1)
 	{
 		if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			CCDirector::getSharedDirector()->preMainLoop();
+			dwTickNow = GetTickCount();
+			if (dwTickNow - dwTickLast > 0)
+			{
+				CCDirector::getSharedDirector()->preMainLoop();
+			}
+			else
+			{
+				Sleep(0);
+			}
+			dwTickLast = dwTickNow;
 			continue;
 		}
 
@@ -71,7 +83,7 @@ int CCXApplication::Run()
 //////////////////////////////////////////////////////////////////////////
 CCXApplication * CCXApplication::getSharedApplication()
 {
-    return s_pApplication;
+	return s_pApplication;
 }
 
 }

@@ -48,7 +48,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4996;4267"
 			/>
@@ -94,7 +94,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y .\platform\win32\third_party\libraries\*.lib $(OutDir)"
+				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y .\platform\win32\third_party\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -126,7 +126,7 @@
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4996;4267"
 			/>
@@ -172,7 +172,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y .\platform\win32\third_party\libraries\*.lib $(OutDir)"
+				CommandLine="copy /Y .\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y .\platform\win32\third_party\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
