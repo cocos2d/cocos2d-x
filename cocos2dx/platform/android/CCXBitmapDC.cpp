@@ -86,7 +86,7 @@ namespace cocos2d {
 		
 		//__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "get env");
 		
-		jclass mClass = env->FindClass("org/cocos2dx/Cocos2dJNI");
+		jclass mClass = env->FindClass("org/cocos2dx/lib/Cocos2dxJNI");
 		if (! mClass)
 		{
 			__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "can not find org.cocos2dx.Cocos2dJNI");
@@ -119,15 +119,30 @@ namespace cocos2d {
         data = new unsigned char[info.width * info.height * 4];
         if (! data)
         {
-        	AndroidBitmap_unlockPixels(evn, bitmap);
+        	AndroidBitmap_unlockPixels(env, bitmap);
         	__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "failed to allocate memory");
         	return;
         }
         
         memcpy(data, pixels, info.width * info.height * 4);
+        AndroidBitmap_unlockPixels(env, bitmap);
+        
+        // swap data
+        unsigned int *tempPtr = (unsigned int*)data;
+        unsigned int tempdata = 0;
+        for (int i = 0; i < info.height; ++i)
+        {
+        	for (int j = 0; j < info.width; ++j)
+        	{
+        		tempdata = *tempPtr;
+        		*tempPtr++ = swapAlpha(tempdata);
+        	}
+        }
         
         m_nWidth = info.width;
         m_nHeight =info.height;
+        
+        //__android_log_print(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "width: %d, height:%d", m_nWidth, m_nHeight);
 	}
 	
 	unsigned int CCXBitmapDC::swapAlpha(unsigned int value)

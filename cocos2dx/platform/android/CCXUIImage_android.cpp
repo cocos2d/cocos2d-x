@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include <android/log.h>
 
-/*#include "jpeglib.h"*/
+#include "jpeglib.h"
 
 //using namespace ImageToolKit;
 using namespace std;
@@ -287,73 +287,73 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 
 bool UIImage::loadJpg(const char *strFileName)
 {
-// 	/* these are standard libjpeg structures for reading(decompression) */
-// 	struct jpeg_decompress_struct cinfo;
-// 	struct jpeg_error_mgr jerr;
-// 	/* libjpeg data structure for storing one row, that is, scanline of an image */
-// 	JSAMPROW row_pointer[1];
-// 
-// 	FILE *infile = fopen( strFileName, "rb" );
-// 	unsigned long location = 0;
-// 	unsigned int i = 0;
-// 
-// 	if ( !infile )
-// 	{
-// 		return false;
-// 	}
-// 
-// 	/* here we set up the standard libjpeg error handler */
-// 	cinfo.err = jpeg_std_error( &jerr );
-// 
-// 	/* setup decompression process and source, then read JPEG header */
-// 	jpeg_create_decompress( &cinfo );
-// 
-// 	/* this makes the library read from infile */
-// 	jpeg_stdio_src( &cinfo, infile );
-// 
-// 	/* reading the image header which contains image information */
-// 	jpeg_read_header( &cinfo, true );
-// 
-// 	// we only support RGB or grayscale
-// 	if (cinfo.jpeg_color_space != JCS_RGB)
-// 	{
-// 		if (cinfo.jpeg_color_space == JCS_GRAYSCALE || cinfo.jpeg_color_space == JCS_YCbCr)
-// 		{
-//             cinfo.out_color_space = JCS_RGB;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		return false;
-// 	}
-// 
-// 	/* Start decompression jpeg here */
-// 	jpeg_start_decompress( &cinfo );
-// 
-// 	/* init image info */
-// 	m_imageInfo.width = cinfo.image_width;
-// 	m_imageInfo.height = cinfo.image_height;
-// 	m_imageInfo.hasAlpha = false;
-// 	m_imageInfo.isPremultipliedAlpha = false;
-// 	m_imageInfo.bitsPerComponent = 8;
-// 	m_imageInfo.data = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
-// 
-// 	/* now actually read the jpeg into the raw buffer */
-// 	row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
-// 
-// 	/* read one scan line at a time */
-// 	while( cinfo.output_scanline < cinfo.image_height )
-// 	{
-// 		jpeg_read_scanlines( &cinfo, row_pointer, 1 );
-// 		for( i=0; i<cinfo.image_width*cinfo.num_components;i++) 
-// 			m_imageInfo.data[location++] = row_pointer[0][i];
-// 	}
-// 
-// 	/* wrap up decompression, destroy objects, free pointers and close open files */
-// 	jpeg_finish_decompress( &cinfo );
-// 	jpeg_destroy_decompress( &cinfo );
-// 	delete row_pointer[0];
-// 	fclose( infile );
+ 	/* these are standard libjpeg structures for reading(decompression) */
+ 	struct jpeg_decompress_struct cinfo;
+ 	struct jpeg_error_mgr jerr;
+ 	/* libjpeg data structure for storing one row, that is, scanline of an image */
+ 	JSAMPROW row_pointer[1];
+ 
+ 	FILE *infile = fopen( strFileName, "rb" );
+ 	unsigned long location = 0;
+ 	unsigned int i = 0;
+ 
+ 	if ( !infile )
+ 	{
+ 		return false;
+ 	}
+ 
+ 	/* here we set up the standard libjpeg error handler */
+ 	cinfo.err = jpeg_std_error( &jerr );
+ 
+ 	/* setup decompression process and source, then read JPEG header */
+ 	jpeg_create_decompress( &cinfo );
+ 
+ 	/* this makes the library read from infile */
+ 	jpeg_stdio_src( &cinfo, infile );
+ 
+ 	/* reading the image header which contains image information */
+ 	jpeg_read_header( &cinfo, true );
+ 
+ 	// we only support RGB or grayscale
+ 	if (cinfo.jpeg_color_space != JCS_RGB)
+ 	{
+ 		if (cinfo.jpeg_color_space == JCS_GRAYSCALE || cinfo.jpeg_color_space == JCS_YCbCr)
+ 		{
+             cinfo.out_color_space = JCS_RGB;
+ 		}
+ 	}
+ 	else
+ 	{
+ 		return false;
+ 	}
+ 
+ 	/* Start decompression jpeg here */
+ 	jpeg_start_decompress( &cinfo );
+ 
+ 	/* init image info */
+ 	m_imageInfo.width = cinfo.image_width;
+ 	m_imageInfo.height = cinfo.image_height;
+ 	m_imageInfo.hasAlpha = false;
+ 	m_imageInfo.isPremultipliedAlpha = false;
+ 	m_imageInfo.bitsPerComponent = 8;
+ 	m_imageInfo.data = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
+ 
+ 	/* now actually read the jpeg into the raw buffer */
+ 	row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
+ 
+ 	/* read one scan line at a time */
+ 	while( cinfo.output_scanline < cinfo.image_height )
+ 	{
+ 		jpeg_read_scanlines( &cinfo, row_pointer, 1 );
+ 		for( i=0; i<cinfo.image_width*cinfo.num_components;i++) 
+ 			m_imageInfo.data[location++] = row_pointer[0][i];
+ 	}
+ 
+ 	/* wrap up decompression, destroy objects, free pointers and close open files */
+ 	jpeg_finish_decompress( &cinfo );
+ 	jpeg_destroy_decompress( &cinfo );
+ 	delete row_pointer[0];
+ 	fclose( infile );
 
 	return true;
 }
