@@ -50,7 +50,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
 	return JNI_VERSION_1_4;
 }
 
-void Java_org_cocos2dx_DemoRenderer_nativeRender(JNIEnv* env)
+void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env)
 {
 	cocos2d::CCDirector::getSharedDirector()->preMainLoop();
 }

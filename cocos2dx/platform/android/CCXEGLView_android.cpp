@@ -30,6 +30,39 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 
+#include <stdlib.h>
+#include <jni.h>
+
+extern "C"
+{
+	static cocos2d::EGLTouchDelegate *s_pDelegate;
+	static cocos2d::CCTouch s_touch;
+	static cocos2d::NSSet s_set;
+	
+	
+	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesBegin(jfloat x, jfloat y)
+	{
+		s_touch.SetTouchInfo(0, x, y);
+		s_set.addObject(&s_touch);
+		s_pDelegate->touchesBegan(&s_set, NULL);
+	}
+	
+	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesEnd(jfloat x, jfloat y)
+	{
+		s_touch.SetTouchInfo(0, x, y);
+		s_pDelegate->touchesEnded(&s_set, NULL);
+		s_set.removeObject(&s_touch);
+	}
+	
+	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesMove(jfloat x, jfloat y)
+	{
+	}
+	
+	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesCancel(jfloat x, jfloat y)
+	{
+	}
+}
+
 namespace cocos2d {
 
 
@@ -47,6 +80,7 @@ void CCXEGLView::setFrameWitdAndHeight(int width, int height)
 
 CCXEGLView::~CCXEGLView()
 {
+	CCX_SAFE_DELETE(s_pDelegate);
 }
 
 CGSize  CCXEGLView::getSize()
@@ -62,10 +96,12 @@ bool CCXEGLView::isOpenGLReady()
 
 void CCXEGLView::release()
 {
+	exit(0);
 }
 
 void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
+	s_pDelegate = pDelegate;
 }
 
 void CCXEGLView::swapBuffers()
@@ -73,3 +109,4 @@ void CCXEGLView::swapBuffers()
 }
 
 }       // end of namespace cocos2d
+
