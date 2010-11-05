@@ -14,6 +14,8 @@ include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DCCX_UNDER_UPHONE
 INCLUDE_PATH += -I. -I./Res \
+               -I. \
+               -I./logic \
                -I../cocos2dx \
                -I../cocos2dx/include \
                -I../cocosDenshion/include
@@ -30,11 +32,11 @@ first: all
 
 OBJECTS = \
 	$(OBJECTS_DIR)/Cocos2dSimpleGameAppDelegate.o \
-	$(OBJECTS_DIR)/GameOverScene.o \
-	$(OBJECTS_DIR)/HelloWorldScene.o \
 	$(OBJECTS_DIR)/main.o \
 	$(OBJECTS_DIR)/NewDeleteOp.o \
-	$(OBJECTS_DIR)/TG3AppDllEntry.o
+	$(OBJECTS_DIR)/TG3AppDllEntry.o \
+	$(OBJECTS_DIR)/GameOverScene.o \
+	$(OBJECTS_DIR)/HelloWorldScene.o
 
 ADD_OBJECTS += 
 
@@ -56,12 +58,6 @@ clean :
 $(OBJECTS_DIR)/Cocos2dSimpleGameAppDelegate.o : ./Cocos2dSimpleGameAppDelegate.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Cocos2dSimpleGameAppDelegate.o ./Cocos2dSimpleGameAppDelegate.cpp
 
-$(OBJECTS_DIR)/GameOverScene.o : ./GameOverScene.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/GameOverScene.o ./GameOverScene.cpp
-
-$(OBJECTS_DIR)/HelloWorldScene.o : ./HelloWorldScene.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HelloWorldScene.o ./HelloWorldScene.cpp
-
 $(OBJECTS_DIR)/main.o : ./main.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/main.o ./main.cpp
 
@@ -70,4 +66,10 @@ $(OBJECTS_DIR)/NewDeleteOp.o : ./Framework/NewDeleteOp.cpp
 
 $(OBJECTS_DIR)/TG3AppDllEntry.o : ./Framework/TG3AppDllEntry.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TG3AppDllEntry.o ./Framework/TG3AppDllEntry.cpp
+
+$(OBJECTS_DIR)/GameOverScene.o : ./logic/GameOverScene.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/GameOverScene.o ./logic/GameOverScene.cpp
+
+$(OBJECTS_DIR)/HelloWorldScene.o : ./logic/HelloWorldScene.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HelloWorldScene.o ./logic/HelloWorldScene.cpp
 
