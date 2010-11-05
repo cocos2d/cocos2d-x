@@ -26,5 +26,12 @@ public class ApplicationDemo extends Cocos2dxActivity{
 	     super.onResume();
 	     mGLView.onResume();
 	 }
-	private GLSurfaceView mGLView;
+	 
+	 
+	 private GLSurfaceView mGLView;
+	
+     static {
+    	 System.loadLibrary("cocos2d");
+         System.loadLibrary("helloworld");
+     }
 }
