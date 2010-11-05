@@ -36,15 +36,16 @@ CCTouchDelegate* CCTouchHandler::getDelegate(void)
 
 void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
 {
-	if (m_pDelegate)
+	if (pDelegate)
 	{
 		pDelegate->keep();
-	}
+    }
+
+    if (m_pDelegate)
+    {
+        m_pDelegate->destroy();
+    }
 	m_pDelegate = pDelegate;
-	if (m_pDelegate)
-	{
-		m_pDelegate->destroy();
-	}
 }
 
 int CCTouchHandler::getPriority(void)
