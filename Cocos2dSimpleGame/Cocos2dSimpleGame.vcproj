@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;..\cocos2dx\include;..\cocos2dx\;..\..\PRJ_TG3\Include\OpenGL;..\cocosDenshion\include"
+				AdditionalIncludeDirectories=".;.\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;.\logic;..\cocos2dx\include;..\cocos2dx\;..\..\PRJ_TG3\Include\OpenGL;..\cocosDenshion\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -192,22 +192,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GameOverScene.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\GameOverScene.h"
-				>
-			</File>
-			<File
-				RelativePath=".\HelloWorldScene.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\HelloWorldScene.h"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -215,6 +199,26 @@
 				RelativePath=".\Resource.h"
 				>
 			</File>
+			<Filter
+				Name="logic"
+				>
+				<File
+					RelativePath=".\logic\GameOverScene.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\logic\GameOverScene.h"
+					>
+				</File>
+				<File
+					RelativePath=".\logic\HelloWorldScene.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\logic\HelloWorldScene.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource"
@@ -312,15 +316,7 @@
 			Name="Makefiles"
 			>
 			<File
-				RelativePath=".\Cocos2dSimpleGame.TMK3"
-				>
-			</File>
-			<File
 				RelativePath=".\Cocos2dSimpleGame_Arm.TMK3"
-				>
-			</File>
-			<File
-				RelativePath=".\Makefile"
 				>
 			</File>
 			<File
