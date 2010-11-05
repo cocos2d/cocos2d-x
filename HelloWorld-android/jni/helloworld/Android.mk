@@ -1,6 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
-LOCAL_MODULE := cocos2dapplication
+LOCAL_MODULE := helloworld
 
 LOCAL_SRC_FILES := HelloWorld.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../cocos2dx \

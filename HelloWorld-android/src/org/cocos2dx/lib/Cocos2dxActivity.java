@@ -61,9 +61,4 @@ public class Cocos2dxActivity extends Activity{
     
     public static int screenWidth;
     public static int screenHeight;
-
-    static {
-    	System.loadLibrary("cocos2d");
-        System.loadLibrary("cocos2dapplication");
-    }
 }
