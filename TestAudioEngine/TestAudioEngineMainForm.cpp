@@ -8,7 +8,7 @@
 #include  "TestAudioEngineMainForm.h"
 #include  "testaudioengine_res_def.h"
 #include  "TestAudioEngineUnicodeScript_str.h"
-#include  "SimpleAudioEngine/SimpleAudioEngine.h"
+#include  "SimpleAudioEngine.h"
 #include  <cassert>
 
 const static char s_BackgroundFile[] = "/NEWPLUS/TDA_DATA/UserData/background.mp3";
