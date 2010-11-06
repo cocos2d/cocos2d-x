@@ -2,9 +2,6 @@
 #include "GLES-Render.h"
 #include "Test.h"
 
-//#pragma comment(lib, "libgles_cm.lib")
-//#pragma comment(lib, "libEGL.lib")
-
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10
 

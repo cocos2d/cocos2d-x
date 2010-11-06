@@ -1,8 +1,5 @@
 #include "Box2dTest.h"
 #include "../testResource.h"
-// 
-// #pragma comment(lib, "libgles_cm.lib")
-// //#pragma comment(lib, "libEGL.lib")
 
 #define PTM_RATIO 32
 enum 
