@@ -1,4 +1,4 @@
-#include "winmain.h"
+#include "main.h"
 #include "TestApplication.h"
 
 HINSTANCE g_hInstance;

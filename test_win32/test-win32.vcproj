@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libEGL.lib libgles_cm.lib libBox2d.lib"
+				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib"
 				OutputFile="$(OutDir)\test.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libEGL.lib libgles_cm.lib libBox2d.lib"
+				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib"
 				OutputFile="$(OutDir)\test.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -181,23 +181,23 @@
 			Name="include"
 			>
 			<File
-				RelativePath=".\TestApplication.h"
+				RelativePath=".\main.h"
 				>
 			</File>
 			<File
-				RelativePath=".\winmain.h"
+				RelativePath=".\TestApplication.h"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="src"
+			Name="source"
 			>
 			<File
-				RelativePath=".\TestApplication.cpp"
+				RelativePath=".\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\winmain.cpp"
+				RelativePath=".\TestApplication.cpp"
 				>
 			</File>
 		</Filter>

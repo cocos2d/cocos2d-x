@@ -1,5 +1,5 @@
 #include "TestApplication.h"
-#include "winmain.h"
+#include "main.h"
 #include "tests/controller.h"
 
 using namespace cocos2d;
