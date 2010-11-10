@@ -102,6 +102,7 @@ THE SOFTWARE.
 #include "CCXEGLView.h"
 #include "CCXUIImage.h"
 #include "CCXFileUtils.h"
+#include "CCXUIAccelerometer.h"
  
 //
 // cocos2d macros

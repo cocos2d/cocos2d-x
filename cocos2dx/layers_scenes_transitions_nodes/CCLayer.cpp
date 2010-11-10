@@ -124,23 +124,28 @@ bool CCLayer::getIsAccelerometerEnabled()
 /// isAccelerometerEnabled setter
 void CCLayer::setIsAccelerometerEnabled(bool enabled)
 {
-	/** @todo UIAccelerometer
-	if( enabled != isAccelerometerEnabled ) {
-		isAccelerometerEnabled = enabled;
-		if( isRunning_ ) {
-			if( enabled )
-				[[UIAccelerometer sharedAccelerometer] setDelegate:self];
-			else
-				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
-		}
-	}*/
+    if (enabled != m_bIsAccelerometerEnabled)
+    {
+        m_bIsAccelerometerEnabled = enabled;
+
+        if (m_bIsRunning)
+        {
+            if (enabled)
+            {
+                UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+            }
+            else
+            {
+                UIAccelerometer::sharedAccelerometer()->removeDelegate(this);
+            }
+        }
+    }
 }
 
 
 /// Callbacks
 void CCLayer::onEnter()
 {
-	
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
 	if (m_bIsTouchEnabled)
@@ -150,9 +155,12 @@ void CCLayer::onEnter()
 
 	// then iterate over all the children
 	CCNode::onEnter();
-/** @todo UIAccelerometer
-	if( isAccelerometerEnabled )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:self];*/
+
+    // add this layer to concern the Accelerometer Sensor
+    if (m_bIsAccelerometerEnabled)
+    {
+        UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+    }
 }
 
 void CCLayer::onExit()
@@ -161,10 +169,13 @@ void CCLayer::onExit()
 	{
 		CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
 	}
-/**
-	if( isAccelerometerEnabled )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
-*/
+
+    // remove this layer from the delegates who concern Accelerometer Sensor
+    if (m_bIsAccelerometerEnabled)
+    {
+        UIAccelerometer::sharedAccelerometer()->removeDelegate(this);
+    }
+
 	CCNode::onExit();
 }
 
