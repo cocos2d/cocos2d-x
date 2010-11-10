@@ -37,6 +37,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/TG3AppDllEntry.o \
 	$(OBJECTS_DIR)/controller.o \
 	$(OBJECTS_DIR)/testBasic.o \
+	$(OBJECTS_DIR)/AccelerometerTest.o \
 	$(OBJECTS_DIR)/ActionManagerTest.o \
 	$(OBJECTS_DIR)/ActionsTest.o \
 	$(OBJECTS_DIR)/AtlasTest.o \
@@ -124,6 +125,9 @@ $(OBJECTS_DIR)/controller.o : ./tests/controller.cpp
 
 $(OBJECTS_DIR)/testBasic.o : ./tests/testBasic.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/testBasic.o ./tests/testBasic.cpp
+
+$(OBJECTS_DIR)/AccelerometerTest.o : ./tests/AccelerometerTest/AccelerometerTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/AccelerometerTest.o ./tests/AccelerometerTest/AccelerometerTest.cpp
 
 $(OBJECTS_DIR)/ActionManagerTest.o : ./tests/ActionManagerTest/ActionManagerTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ActionManagerTest.o ./tests/ActionManagerTest/ActionManagerTest.cpp
