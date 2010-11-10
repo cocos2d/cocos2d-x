@@ -33,6 +33,9 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 
+#include "TCOM_Sensors_Interface.h"
+#include "CCXUIAccelerometer.h"
+
 namespace cocos2d {
 
 class CCXEGL
@@ -255,6 +258,27 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             m_pDelegate->touchesEnded(m_pSet, NULL);
 			 m_pSet->removeObject(m_pTouch);
             m_bCaptured = false;
+        }
+        break;
+
+    case MESSAGE_SENSORS_DATA:
+        {
+            TG3SensorsDataType	data;
+
+            if (Sys_GetMessageBody((MESSAGE_t *)pEvent, &data, sizeof(TG3SensorsDataType)) == sizeof(TG3SensorsDataType) &&
+                TG3_SENSOR_TYPE_ACCELEROMETER == data.sensorMask)
+            {
+                // convert the data to iphone format
+                UIAcceleration AccValue;
+                AccValue.x = -(data.acceleration.x / TG3_GRAVITY_EARTH);
+                AccValue.y = -(data.acceleration.y / TG3_GRAVITY_EARTH);
+                AccValue.z = -(data.acceleration.z / TG3_GRAVITY_EARTH);
+                AccValue.timestamp = (double) TimGetTicks() / 100;
+
+                // call delegates' didAccelerate function
+                UIAccelerometer::sharedAccelerometer()->didAccelerate(&AccValue);
+                bHandled = TRUE;
+            }
         }
         break;
 

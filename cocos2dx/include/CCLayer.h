@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTouchDelegateProtocol.h"
 #include "ccxCommon.h"
+#include "CCXUIAccelerometer.h"
 namespace   cocos2d {
 
 //
@@ -42,7 +43,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive Accelerometer input
 */
 // @todo public UIAccelerometerDelegate
-class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate//, public UIAccelerometerDelegate
+class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate
 {
 public:
 	CCLayer();
@@ -56,6 +57,8 @@ public:
 	virtual void destroy(void);
 	virtual void keep(void);
 	
+    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
+
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
 	( Default: CCTouchDispatcher::getSharedDispatcher()->addStandardDelegate(this,0); )
