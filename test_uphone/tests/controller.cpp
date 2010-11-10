@@ -70,6 +70,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
         pScene = new HiResTestScene(); break;
+    case TEST_ACCELEROMRTER:
+        pScene = new AccelerometerTestScene(); break;
     default:
         break;
     }

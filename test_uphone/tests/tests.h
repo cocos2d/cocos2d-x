@@ -29,6 +29,7 @@
 #include "Box2DTestBed/Box2dView.h"
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "HiResTest/HiResTest.h"
+#include "AccelerometerTest/AccelerometerTest.h"
 
 enum
 {
@@ -60,6 +61,7 @@ enum
     TEST_BOX2DBED,
     TEST_EFFECT_ADVANCE,
     TEST_HIRES,
+    TEST_ACCELEROMRTER,
 
     TESTS_COUNT,
 };
@@ -93,6 +95,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "Box2dTestBed",
     "EffectAdvancedTest",
     "HiResTest",
+    "Accelerometer",
 };
 
 #endif
