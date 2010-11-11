@@ -25,7 +25,7 @@ public:
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
 	{
-		CCDirector::getSharedDirector()->end();
+		CCDirector::sharedDirector()->end();
 		return true;
 	}
 
@@ -42,11 +42,11 @@ public:
 bool HelloWorldApplication::initCocos2d()
 {
 	// init director
-	CCDirector::getSharedDirector()->setOpenGLView(&m_MainForm);
+	CCDirector::sharedDirector()->setOpenGLView(&m_MainForm);
 
 	// load background image texture and get window size
 	CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
-	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	CGSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// create sprite instance
 	CCSprite * pSprite = new CCSprite(); 
@@ -62,7 +62,7 @@ bool HelloWorldApplication::initCocos2d()
 	pScene->addChild(pLayer);
 
 	// add scene to director
-	CCDirector::getSharedDirector()->runWithScene(pScene);
+	CCDirector::sharedDirector()->runWithScene(pScene);
 
 	pSprite->release();
 	pLayer->release();

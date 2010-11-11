@@ -188,7 +188,7 @@ CCXEGLView::CCXEGLView()
 {
     m_pTouch    = new CCTouch;
     m_pSet      = new NSSet;
-	m_eInitOrientation = CCDirector::getSharedDirector()->getDeviceOrientation();
+	m_eInitOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
 	m_bOrientationInitVertical = (CCDeviceOrientationPortrait == m_eInitOrientation
 		|| kCCDeviceOrientationPortraitUpsideDown == m_eInitOrientation) ? true : false;
 }
@@ -308,7 +308,7 @@ LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_CLOSE:
-		CCDirector::getSharedDirector()->end();
+		CCDirector::sharedDirector()->end();
 		break;
 
 	case WM_DESTROY:
