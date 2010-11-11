@@ -34,7 +34,7 @@ void AccelerometerTest::onEnter()
 
     setIsAccelerometerEnabled(true);
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
@@ -58,7 +58,7 @@ void AccelerometerTest::didAccelerate(UIAcceleration* pAccelerationValue)
 // 
 //     m_fLastTime = fNow;
 
-    CCDirector* pDir = CCDirector::getSharedDirector();
+    CCDirector* pDir = CCDirector::sharedDirector();
     CGSize winSize   = pDir->getWinSize();
     CGSize ballSize  = m_pBall->getContentSize();
 
@@ -85,5 +85,5 @@ void AccelerometerTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

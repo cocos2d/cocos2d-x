@@ -13,6 +13,7 @@ typedef struct _hashElement
     unsigned char*      pDataBuffer;
     const char*         FileName;
     int                 nDataSize;
+    int                 nPlayerSoundID;
     UT_hash_handle		hh;
 } tEffectElement;
 

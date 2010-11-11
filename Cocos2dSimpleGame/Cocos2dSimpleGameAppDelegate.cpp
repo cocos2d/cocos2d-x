@@ -14,7 +14,7 @@ extern const AppResourceEntry Cocos2dSimpleGameResourceEntry;
 bool AppDelegate::initCocos2d()
 {
 	// init director
-	CCDirector *pDirector = CCDirector::getSharedDirector();
+	CCDirector *pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(m_pMainWnd);
 
 	// sets landscape mode
@@ -35,7 +35,7 @@ bool AppDelegate::initCocos2d()
 	CCScene *pScene = HelloWorld::scene();
 
 	// run
-	CCDirector::getSharedDirector()->runWithScene(pScene);
+	CCDirector::sharedDirector()->runWithScene(pScene);
 
 	return true;
 }
@@ -92,14 +92,14 @@ Boolean  AppDelegate::EventHandler(EventType*  pEvent)
 
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::getSharedDirector()->stopAnimation();
+    CCDirector::sharedDirector()->stopAnimation();
 
     SimpleAudioEngine::getSharedEngine()->pauseBackgroundMusic();
 }
 
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::getSharedDirector()->startAnimation();
+    CCDirector::sharedDirector()->startAnimation();
 
     SimpleAudioEngine::getSharedEngine()->resumeBackgroundMusic();
 }

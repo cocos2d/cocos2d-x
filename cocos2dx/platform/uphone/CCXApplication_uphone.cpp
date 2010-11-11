@@ -1,6 +1,7 @@
 #include "CCXApplication_uphone.h"
 
 #include "CCDirector.h"
+#include "CCScheduler.h"
 
 // #include "CCXGLExtFunc.h"
 #include <GLES/glext.h>
@@ -11,8 +12,8 @@ namespace   cocos2d {
 
     static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
     {
-        //CCDirector::getSharedDirector()->preMainLoop();
-        CCXEGLView * pView = CCDirector::getSharedDirector()->getOpenGLView();
+        //CCDirector::sharedDirector()->preMainLoop();
+        CCXEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
         if (pView)
         {
             pView->UpdateWindow(0);
@@ -41,8 +42,9 @@ namespace   cocos2d {
         switch (pEvent->eType)
         {
         case EVENT_AppLoad:
-            if (! initCocos2d())
+            if (! applicationDidFinishLaunching())
             {
+                CCScheduler::purgeSharedScheduler();
                 SendStopEvent();
             }
             bHandled = Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &m_tMsg);

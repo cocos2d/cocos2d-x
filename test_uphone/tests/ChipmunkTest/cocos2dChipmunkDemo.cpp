@@ -411,7 +411,7 @@ void ChipmunkTestScene::runThisTest()
 
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
 
 void ChipmunkTestLayer::init()
@@ -464,7 +464,7 @@ void ChipmunkTestLayer::onEnter()
 
 void ChipmunkTestLayer::onExit()
 {
-    CCDirector::getSharedDirector()->setGLDefaultValues();
+    CCDirector::sharedDirector()->setGLDefaultValues();
 
     CCLayer::onExit();
 }

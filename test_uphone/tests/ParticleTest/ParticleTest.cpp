@@ -485,7 +485,7 @@ void DemoModernArt::onEnter()
 	m_background->addChild(m_emitter, 10);
 	////m_emitter->release();
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// duration
 	m_emitter->setDuration(-1);
@@ -664,7 +664,7 @@ void RadiusMode1::onEnter()
     m_emitter->setAngleVar(0);
 
     // emitter position
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
     m_emitter->setPosition(ccp(size.width/2, size.height/2));
     m_emitter->setPosVar(CGPointZero);
 
@@ -748,7 +748,7 @@ void RadiusMode2::onEnter()
     m_emitter->setAngleVar(0);
 
     // emitter position
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
     m_emitter->setPosition(ccp(size.width/2, size.height/2));
     m_emitter->setPosVar(CGPointZero);
 
@@ -832,7 +832,7 @@ void Issue704::onEnter()
     m_emitter->setAngleVar(0);
 
     // emitter position
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
     m_emitter->setPosition(ccp(size.width/2, size.height/2));
     m_emitter->setPosVar(CGPointZero);
 
@@ -1047,7 +1047,7 @@ ParticleDemo::ParticleDemo(void)
 
 	setIsTouchEnabled( true );
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 100, 1000);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
@@ -1131,7 +1131,7 @@ void ParticleDemo::ccTouchMoved(CCTouch* touch, UIEvent* event)
 void ParticleDemo::ccTouchEnded(CCTouch* touch, UIEvent* event)
 {
 	CGPoint location = touch->locationInView( touch->view() );
-	CGPoint convertedLocation = CCDirector::getSharedDirector()->convertToGL(location);
+	CGPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
 
     CGPoint pos = CGPointZero;
     if (m_background)
@@ -1169,7 +1169,7 @@ void ParticleDemo::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new ParticleTestScene();
 	s->addChild( nextParticleAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -1177,13 +1177,13 @@ void ParticleDemo::backCallback(NSObject* pSender)
 {
 	CCScene* s = new ParticleTestScene();
 	s->addChild( backParticleAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
 void ParticleDemo::setEmitterPosition()
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	m_emitter->setPosition( CGPointMake(s.width / 2, s.height / 2) );
 }
@@ -1192,5 +1192,5 @@ void ParticleTestScene::runThisTest()
 {
     addChild(nextParticleAction());
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

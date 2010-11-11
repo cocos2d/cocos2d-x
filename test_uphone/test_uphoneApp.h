@@ -15,11 +15,7 @@ public:
 	Ttest_uphoneApp();
 	~Ttest_uphoneApp();
 
-    virtual bool initCocos2d();
-
-public:
-	virtual Boolean EventHandler(EventType * pEvent);
-
+    virtual bool applicationDidFinishLaunching();
     virtual void applicationDidEnterBackground();
     virtual void applicationWillEnterForeground();
 

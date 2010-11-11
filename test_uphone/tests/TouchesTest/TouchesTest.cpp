@@ -128,5 +128,5 @@ void PongLayer::doStep(ccTime delta)
 
 void PongScene::runThisTest()
 {
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

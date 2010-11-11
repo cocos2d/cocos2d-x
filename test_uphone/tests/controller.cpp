@@ -35,7 +35,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
-        CCDirector::getSharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -52,7 +52,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
-		CCDirector::getSharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         pScene = new ChipmunkTestScene(); break;
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
@@ -81,13 +81,13 @@ static TestScene* CreateTestScene(int nIdx)
 
 TestController::TestController()
 {
-    CCDirector::getSharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     pMenu->setPosition( CGPointZero );
     pCloseItem->setPosition(CGPointMake( s.width - 30, s.height - 30));
 
@@ -161,7 +161,7 @@ void TestController::menuCallback(NSObject * pSender)
 
 void TestController::closeCallback(NSObject * pSender)
 {
-    CCDirector::getSharedDirector()->end();
+    CCDirector::sharedDirector()->end();
 }
 
 void TestController::nextPageCallback(NSObject * pSender)

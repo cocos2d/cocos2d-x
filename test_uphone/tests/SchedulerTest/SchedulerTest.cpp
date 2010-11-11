@@ -70,7 +70,7 @@ void SchedulerTestLayer::onEnter()
 {
     CCLayer::onEnter();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
     addChild(label);
@@ -103,7 +103,7 @@ void SchedulerTestLayer::backCallback(NSObject* pSender)
     CCLayer* pLayer = backSchedulerTest();
 
     pScene->addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(pScene);
+    CCDirector::sharedDirector()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -113,7 +113,7 @@ void SchedulerTestLayer::nextCallback(NSObject* pSender)
     CCLayer* pLayer = nextSchedulerTest();
 
     pScene->addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(pScene);
+    CCDirector::sharedDirector()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -123,7 +123,7 @@ void SchedulerTestLayer::restartCallback(NSObject* pSender)
     CCLayer* pLayer = restartSchedulerTest();
 
     pScene->addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(pScene);
+    CCDirector::sharedDirector()->replaceScene(pScene);
     pScene->release();
 }
 
@@ -598,5 +598,5 @@ void SchedulerTestScene::runThisTest()
     CCLayer* pLayer = nextSchedulerTest();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

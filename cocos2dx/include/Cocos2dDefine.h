@@ -110,5 +110,10 @@ THE SOFTWARE.
 #define MIN(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
+#define self	this
+#define YES		true
+#define NO		false
+#define nil     NULL
+
 #endif // __COCOS2D_DEFINE_H__
 

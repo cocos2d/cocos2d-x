@@ -77,7 +77,7 @@ void LayerTest::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
@@ -102,7 +102,7 @@ void LayerTest::restartCallback(NSObject* pSender)
 	CCScene* s = new LayerTestScene();
 	s->addChild(restartTestAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -110,7 +110,7 @@ void LayerTest::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new LayerTestScene();
 	s->addChild( nextTestAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -118,7 +118,7 @@ void LayerTest::backCallback(NSObject* pSender)
 {
 	CCScene* s = new LayerTestScene();
 	s->addChild( backTestAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -133,7 +133,7 @@ void LayerTest1::onEnter()
 
 	setIsTouchEnabled(true);
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	CCColorLayer* layer = CCColorLayer::layerWithColorWidthHeight( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
 	
 	layer->setIsRelativeAnchorPoint(true);
@@ -149,9 +149,9 @@ void LayerTest1::registerWithTouchDispatcher()
 void LayerTest1::updateSize(CCTouch*touch)
 {
 	CGPoint touchLocation = touch->locationInView(touch->view());
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CGSize newSize = CGSizeMake( abs( touchLocation.x - s.width/2)*2, abs(touchLocation.y - s.height/2)*2);
 	
@@ -191,7 +191,7 @@ void LayerTest2::onEnter()
 {
 	LayerTest::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	CCColorLayer* layer1 = CCColorLayer::layerWithColorWidthHeight( ccc4(255, 255, 0, 80), 100, 300);
 	layer1->setPosition(CGPointMake(s.width/3, s.height/2));
 	layer1->setIsRelativeAnchorPoint(true);
@@ -226,7 +226,7 @@ std::string LayerTest2::title()
 
 LayerTestBlend::LayerTestBlend()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	CCColorLayer* layer1 = CCColorLayer::layerWithColor( ccc4(255, 255, 255, 80) );
 	
 	CCSprite* sister1 = CCSprite::spriteWithFile(s_pPathSister1);
@@ -275,5 +275,5 @@ void LayerTestScene::runThisTest()
     CCLayer* pLayer = nextTestAction();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

@@ -68,7 +68,7 @@ void CCPageTurnTransition::sceneOrder()
 void CCPageTurnTransition::onEnter()
 {
 	CCTransitionScene::onEnter();
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	int x,y;
 	if( s.width > s.height)
 	{

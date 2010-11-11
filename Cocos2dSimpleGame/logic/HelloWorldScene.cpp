@@ -33,7 +33,7 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 
 		GameOverScene *gameOverScene = GameOverScene::node();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
-		CCDirector::getSharedDirector()->replaceScene(gameOverScene);
+		CCDirector::sharedDirector()->replaceScene(gameOverScene);
 	}
 	else if (sprite->getTag() == 2) // projectile
 	{
@@ -47,7 +47,7 @@ void HelloWorld::addTarget()
 	CCSprite *target = CCSprite::spriteWithFile(ResInfo[4].ResName);
 
 	// Determine where to spawn the target along the Y axis
-	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 	int minY = (int)( target->getContentSize().height / 2 );
 	int maxY = (int)( winSize.height -  target->getContentSize().height / 2 );
 	int rangeY = maxY - minY;
@@ -98,7 +98,7 @@ bool HelloWorld::init()
 										ResInfo[1].ResName, 
 										this,
 										menu_selector(HelloWorld::menuCloseCallback) );
-	pCloseItem->setPosition( ccp( CCDirector::getSharedDirector()->getWinSize().width - 30, 30) );
+	pCloseItem->setPosition( ccp( CCDirector::sharedDirector()->getWinSize().width - 30, 30) );
 	CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL); 	// create menu, it's an autorelease object
 	pMenu->setPosition( CGPointZero );
 	this->addChild(pMenu);
@@ -115,7 +115,7 @@ bool HelloWorld::init()
 	_projectiles = new NSMutableArray<CCSprite*>;
 
 	// Get the dimensions of the window for calculation purposes
-	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 	// Add the player to the middle of the screen along the y-axis, 
 	// and as close to the left side edge as we can get
@@ -180,7 +180,7 @@ void HelloWorld::update(ccTime dt)
 			{
 				GameOverScene *gameOverScene = GameOverScene::node();
 				gameOverScene->getLayer()->getLabel()->setString("You Win!");
-				CCDirector::getSharedDirector()->replaceScene(gameOverScene);
+				CCDirector::sharedDirector()->replaceScene(gameOverScene);
 			}
 		}
 
@@ -207,10 +207,10 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 	// Choose one of the touches to work with
 	CCTouch* touch = (CCTouch*)( touches->anyObject() );
 	CGPoint location = touch->locationInView(touch->view());
-	location = CCDirector::getSharedDirector()->convertToGL(location);
+	location = CCDirector::sharedDirector()->convertToGL(location);
 
 	// Set up initial location of projectile
-	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 	CCSprite *projectile = CCSprite::spriteWithFile(ResInfo[3].ResName);
 	projectile->setPosition( ccp(20, winSize.height/2) );
 
@@ -279,5 +279,5 @@ HelloWorld::~HelloWorld()
 
 void HelloWorld::menuCloseCallback(NSObject* pSender)
 {
-	CCDirector::getSharedDirector()->end();
+	CCDirector::sharedDirector()->end();
 }

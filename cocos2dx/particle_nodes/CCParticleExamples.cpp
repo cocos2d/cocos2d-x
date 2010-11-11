@@ -55,7 +55,7 @@ namespace cocos2d {
 			m_fAngleVar = 10;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			this->m_tPosition = ccp(winSize.width/2, 60);
 			this->m_tPosVar = ccp(40, 20);
 
@@ -121,7 +121,7 @@ namespace cocos2d {
 			this->modeA.speedVar = 50;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height/2);
 
 			// angle
@@ -197,7 +197,7 @@ namespace cocos2d {
 			m_fAngleVar = 360;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height/2);
 			m_tPosVar = CGPointZero;
 
@@ -269,7 +269,7 @@ namespace cocos2d {
 			m_fAngleVar = 360;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height/2);
 			m_tPosVar = CGPointZero;
 
@@ -343,7 +343,7 @@ namespace cocos2d {
 			m_fAngleVar = 360;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height/2);
 			m_tPosVar = CGPointZero;
 
@@ -416,7 +416,7 @@ namespace cocos2d {
 			m_fAngleVar = 360;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height/2);
 			m_tPosVar = CGPointZero;
 
@@ -490,7 +490,7 @@ namespace cocos2d {
 			m_fAngleVar = 0;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height/2);
 			m_tPosVar = CGPointZero;
 
@@ -563,7 +563,7 @@ namespace cocos2d {
 			m_fAngleVar = 360;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height/2);
 			m_tPosVar = CGPointZero;
 
@@ -633,7 +633,7 @@ namespace cocos2d {
 			m_fAngleVar = 5;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, 0);
 			m_tPosVar = ccp(20, 0);
 
@@ -702,7 +702,7 @@ namespace cocos2d {
 			modeA.tangentialAccelVar = 1;
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height + 10);
 			m_tPosVar = ccp( winSize.width/2, 0 );
 
@@ -779,7 +779,7 @@ namespace cocos2d {
 
 
 			// emitter position
-			CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+			CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 			m_tPosition = ccp(winSize.width/2, winSize.height);
 			m_tPosVar = ccp( winSize.width/2, 0 );
 

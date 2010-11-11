@@ -71,7 +71,7 @@ MenuLayer1::MenuLayer1()
 	
 	
 	// elastic effect
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	int i=0;
 	CCNode* child;
@@ -273,7 +273,7 @@ MenuLayer3::MenuLayer3()
 	CCMenu *menu = CCMenu::menuWithItems( item1, item2, item3, NULL);	
 	menu->setPosition( CGPointMake(0,0) );
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	item1->setPosition( CGPointMake(s.width/2 - 150, s.height/2) );
 	item2->setPosition( CGPointMake(s.width/2 - 200, s.height/2) );
@@ -431,5 +431,5 @@ void MenuTestScene::runThisTest()
     pLayer3->release();
     pLayer4->release();
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

@@ -185,7 +185,7 @@ and when to execute the Scenes.
   - setting the orientation (default one is Protrait)
  
  Since the CCDirector is a singleton, the standard way to use it is by calling:
-  _ CCDirector::getSharedDirector()->xxx();
+  _ CCDirector::sharedDirector()->xxx();
  
  The CCDirector also sets the default OpenGL ES context:
   - GL_TEXTURE_2D is enabled
@@ -260,7 +260,7 @@ public:
 	 */
 	inline void setPixelFormat(tPixelFormat kPixelFormat)
 	{
-		assert(! isOpenGLAttached());
+		// assert(! isOpenGLAttached());
 	    m_ePixelFormat = kPixelFormat;
 	}
 	/** Pixel format used to create the context */
@@ -389,7 +389,7 @@ public:
 
 public:
 	/** returns a shared instance of the director */
-	static CCDirector* getSharedDirector(void);
+	static CCDirector* sharedDirector(void);
 
 	/** There are 4 types of Director.
 	 - kCCDirectorTypeNSTimer (default)
@@ -404,7 +404,7 @@ public:
 	 
 	 @since v0.8.2
 	 */
-	static bool setDierectorType(ccDirectorType obDirectorType);
+	static bool setDirectorType(ccDirectorType obDirectorType);
 
 protected:
 	bool isOpenGLAttached(void);

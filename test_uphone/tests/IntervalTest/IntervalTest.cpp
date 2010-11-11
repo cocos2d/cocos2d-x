@@ -13,7 +13,7 @@ IntervalLayer::IntervalLayer()
 {
 	m_time0 = m_time1 = m_time2 = m_time3 = m_time4 = 0.0f;
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	// sun
 	CCParticleSystem* sun = CCParticleSun::node();
     sun->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
@@ -77,10 +77,10 @@ void IntervalLayer::update(ccTime dt)
 
 void IntervalLayer::onPause(NSObject* pSender)
 {
-	if(CCDirector::getSharedDirector()->isPaused())
-		CCDirector::getSharedDirector()->resume(); 
+	if(CCDirector::sharedDirector()->isPaused())
+		CCDirector::sharedDirector()->resume(); 
 	else
-		CCDirector::getSharedDirector()->pause(); 
+		CCDirector::sharedDirector()->pause(); 
 
 }
 
@@ -126,5 +126,5 @@ void IntervalTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

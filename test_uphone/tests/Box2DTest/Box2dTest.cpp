@@ -14,7 +14,7 @@ Box2DTestLayer::Box2DTestLayer()
 	setIsTouchEnabled( true );
 	setIsAccelerometerEnabled( true );
 
-	CGSize screenSize = CCDirector::getSharedDirector()->getWinSize();
+	CGSize screenSize = CCDirector::sharedDirector()->getWinSize();
 	//UXLOG(L"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
 
 	// Define the gravity vector.
@@ -187,7 +187,7 @@ void Box2DTestLayer::ccTouchesEnded(NSSet* touches, UIEvent* event)
 
 		CGPoint location = touch->locationInView(touch->view());
 		
-		location = CCDirector::getSharedDirector()->convertToGL(location);
+		location = CCDirector::sharedDirector()->convertToGL(location);
 	
 		addNewSpriteWithCoords( location );
 	}
@@ -221,6 +221,6 @@ void Box2DTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
  

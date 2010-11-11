@@ -27,7 +27,7 @@ void Effect1::onEnter()
 	//     Lens3D is Grid3D and it's size is (15,10)
 	//     Waves3D is Grid3D and it's size is (15,10)
 	
-	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	CGSize size = CCDirector::sharedDirector()->getWinSize();
 	CCIntervalAction* lens = CCLens3D::actionWithPosition(ccp(size.width/2,size.height/2), 240, ccg(15,10), 0.0f);
 	CCIntervalAction* waves = CCWaves3D::actionWithWaves(18, 15, ccg(15,10), 10);
 
@@ -155,7 +155,7 @@ void Effect5::onEnter()
 {
 	EffectAdvanceTextLayer::onEnter();
 
-	//CCDirector::getSharedDirector()->setProjection(CCDirectorProjection2D);
+	//CCDirector::sharedDirector()->setProjection(CCDirectorProjection2D);
 	
 	CCIntervalAction* effect = CCLiquid::actionWithWaves(1, 20, ccg(32,24), 2);	
 
@@ -180,7 +180,7 @@ void Effect5::onExit()
 {
 	EffectAdvanceTextLayer::onExit();
 
-	CCDirector::getSharedDirector()->setProjection(CCDirectorProjection3D);
+	CCDirector::sharedDirector()->setProjection(CCDirectorProjection3D);
 }
 
 //------------------------------------------------------------------
@@ -297,7 +297,7 @@ void EffectAdvanceTextLayer::onEnter(void)
 	CCLayer::onEnter();
 	float x,y;
 	
-	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	CGSize size = CCDirector::sharedDirector()->getWinSize();
 	x = size.width;
 	y = size.height;
 	
@@ -366,7 +366,7 @@ void EffectAdvanceTextLayer::restartCallback(NSObject* pSender)
 	CCScene* s = new EffectAdvanceScene();
 	s->addChild(restartEffectAdvanceAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -374,7 +374,7 @@ void EffectAdvanceTextLayer::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new EffectAdvanceScene();
 	s->addChild( nextEffectAdvanceAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
 
     s->release();
 }
@@ -383,7 +383,7 @@ void EffectAdvanceTextLayer::backCallback(NSObject* pSender)
 {
 	CCScene* s = new EffectAdvanceScene();
 	s->addChild( backEffectAdvanceAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -392,5 +392,5 @@ void EffectAdvanceScene::runThisTest()
     CCLayer* pLayer = nextEffectAdvanceAction();
 
     addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

@@ -647,7 +647,7 @@ void EaseSpriteDemo::onEnter()
 	addChild( m_kathia, 2);
 	addChild( m_tamara, 1);
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	m_grossini->setPosition( CGPointMake(60, 50) );
 	m_kathia->setPosition( CGPointMake(60, 150) );
@@ -676,7 +676,7 @@ void EaseSpriteDemo::restartCallback(NSObject* pSender)
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild(restartEaseAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -684,7 +684,7 @@ void EaseSpriteDemo::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild( nextEaseAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -692,7 +692,7 @@ void EaseSpriteDemo::backCallback(NSObject* pSender)
 {
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild( backEaseAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -701,5 +701,5 @@ void EaseActionsTestScene::runThisTest()
     CCLayer* pLayer = nextEaseAction();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

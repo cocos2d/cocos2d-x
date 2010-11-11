@@ -105,7 +105,7 @@ namespace cocos2d
 
 	bool CCGridBase::initWithSize(ccGridSize gridSize)
 	{
-    	CCDirector *pDirector = CCDirector::getSharedDirector();
+    	CCDirector *pDirector = CCDirector::sharedDirector();
 		CGSize s = pDirector->getWinSize();
 		int textureSize = 8;
 		while (textureSize < s.width || textureSize < s.height)
@@ -155,7 +155,7 @@ namespace cocos2d
 		m_bActive = bActive;
 		if (! bActive)
 		{
-			CCDirector *pDirector = CCDirector::getSharedDirector();
+			CCDirector *pDirector = CCDirector::sharedDirector();
 			ccDirectorProjection proj = pDirector->getProjection();
 			pDirector->setProjection(proj);
 		}
@@ -173,7 +173,7 @@ namespace cocos2d
 	// This routine can be merged with Director
 	void CCGridBase::applyLandscape(void)
 	{
-		CCDirector *pDirector = CCDirector::getSharedDirector();
+		CCDirector *pDirector = CCDirector::sharedDirector();
 
 		CGSize winSize = pDirector->getDisplaySize();
 		float w = winSize.width / 2;
@@ -205,7 +205,7 @@ namespace cocos2d
 
 	void CCGridBase::set2DProjection()
 	{
-		CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 		glLoadIdentity();
 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
@@ -218,7 +218,7 @@ namespace cocos2d
 	// This routine can be merged with Director
 	void CCGridBase::set3DProjection()
 	{
-		CGSize	winSize = CCDirector::getSharedDirector()->getDisplaySize();
+		CGSize	winSize = CCDirector::sharedDirector()->getDisplaySize();
 
 		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
@@ -227,7 +227,7 @@ namespace cocos2d
 
 		glMatrixMode(GL_MODELVIEW);	
 		glLoadIdentity();
-		gluLookAt( winSize.width/2, winSize.height/2, CCDirector::getSharedDirector()->getZEye(),
+		gluLookAt( winSize.width/2, winSize.height/2, CCDirector::sharedDirector()->getZEye(),
 			winSize.width/2, winSize.height/2, 0,
 			0.0f, 1.0f, 0.0f
 			);

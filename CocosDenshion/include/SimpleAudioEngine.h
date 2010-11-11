@@ -45,6 +45,7 @@ public:
 
     // get the Engine object
     static SimpleAudioEngine* getSharedEngine();
+	static void release();
 
     // set the sound ResInfo
     void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);

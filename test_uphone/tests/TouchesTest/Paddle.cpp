@@ -71,7 +71,7 @@ void Paddle::ccTouchMoved(CCTouch* touch, UIEvent* event)
 	NSAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");	
 	
 	CGPoint touchPoint = touch->locationInView( touch->view() );
-    touchPoint = CCDirector::getSharedDirector()->convertToGL( touchPoint );
+    touchPoint = CCDirector::sharedDirector()->convertToGL( touchPoint );
 	
 	setPosition( CGPointMake(touchPoint.x, getPosition().y) );
 }

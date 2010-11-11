@@ -46,7 +46,7 @@ MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 
 bool MenuLayer::initWithEntryID(int entryId)
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	m_entryID = entryId;
 	
@@ -83,7 +83,7 @@ void MenuLayer::restartCallback(NSObject* sender)
 	CCScene* s = new Box2dTestBedScene();
 	MenuLayer* box = MenuLayer::menuWithEntryID(m_entryID);
 	s->addChild( box );
-	CCDirector::getSharedDirector()->replaceScene( s );
+	CCDirector::sharedDirector()->replaceScene( s );
     s->release();
 }
 
@@ -95,7 +95,7 @@ void MenuLayer::nextCallback(NSObject* sender)
 		next = 0;
 	MenuLayer* box = MenuLayer::menuWithEntryID(next);
 	s->addChild( box );
-	CCDirector::getSharedDirector()->replaceScene( s );
+	CCDirector::sharedDirector()->replaceScene( s );
     s->release();
 }
 
@@ -110,7 +110,7 @@ void MenuLayer::backCallback(NSObject* sender)
 	MenuLayer* box = MenuLayer::menuWithEntryID(next);
 
 	s->addChild( box );
-	CCDirector::getSharedDirector()->replaceScene( s );
+	CCDirector::sharedDirector()->replaceScene( s );
     s->release();
 }
 
@@ -137,8 +137,8 @@ void MenuLayer::ccTouchMoved(CCTouch* touch, UIEvent* event)
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
 	CGPoint prevLocation = touch->previousLocationInView( touch->view() );	
 	
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
-	prevLocation = CCDirector::getSharedDirector()->convertToGL( prevLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
 	
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
@@ -221,7 +221,7 @@ void Box2DView::registerWithTouchDispatcher()
 bool Box2DView::ccTouchBegan(CCTouch* touch, UIEvent* event)
 {
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 
 	CGPoint nodePosition = convertToNodeSpace( touchLocation );
 //	NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
@@ -232,7 +232,7 @@ bool Box2DView::ccTouchBegan(CCTouch* touch, UIEvent* event)
 void Box2DView::ccTouchMoved(CCTouch* touch, UIEvent* event)
 {
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	CGPoint nodePosition = convertToNodeSpace( touchLocation );
 	
 	m_test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));		
@@ -241,7 +241,7 @@ void Box2DView::ccTouchMoved(CCTouch* touch, UIEvent* event)
 void Box2DView::ccTouchEnded(CCTouch* touch, UIEvent* event)
 {
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	CGPoint nodePosition = convertToNodeSpace( touchLocation );
 	
 	m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
@@ -261,5 +261,5 @@ void Box2dTestBedScene::runThisTest()
 {
     addChild(MenuLayer::menuWithEntryID(0));
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

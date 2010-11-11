@@ -95,7 +95,7 @@ void TestCocosNodeDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
@@ -128,7 +128,7 @@ void TestCocosNodeDemo::restartCallback(NSObject* pSender)
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild(restartCocosNodeAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -136,7 +136,7 @@ void TestCocosNodeDemo::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild( nextCocosNodeAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -144,7 +144,7 @@ void TestCocosNodeDemo::backCallback(NSObject* pSender)
 {
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild( backCocosNodeAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -158,7 +158,7 @@ void Test2::onEnter()
 {
 	TestCocosNodeDemo::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
 	CCSprite *sp2 = CCSprite::spriteWithFile(s_pPathSister2);
@@ -367,7 +367,7 @@ std::string Test6::title()
 //------------------------------------------------------------------
 StressTest1::StressTest1()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
 	addChild(sp1, 0, kTagSprite1);
@@ -381,7 +381,7 @@ void StressTest1::shouldNotCrash(ccTime dt)
 {
 	unschedule(schedule_selector(StressTest1::shouldNotCrash));
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	// if the node has timers, it crashes
 	CCNode* explosion = CCParticleSun::node();
@@ -420,7 +420,7 @@ std::string StressTest1::title()
 //------------------------------------------------------------------
 StressTest2::StressTest2()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCLayer* sublayer = CCLayer::node();
 	
@@ -538,18 +538,18 @@ std::string NodeToWorld::title()
 void CameraOrbitTest::onEnter()
 {
 	TestCocosNodeDemo::onEnter();
-	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection3D);
+	CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
+	CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
 	TestCocosNodeDemo::onExit();
 }
 
 CameraOrbitTest::CameraOrbitTest()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCSprite *p = CCSprite::spriteWithFile(s_back3);
 	addChild( p, 0);
@@ -611,18 +611,18 @@ void CameraZoomTest::onEnter()
 {
 	TestCocosNodeDemo::onEnter();
 	
-	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection3D);
+	CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void CameraZoomTest::onExit()
 {
-	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
+	CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
 	TestCocosNodeDemo::onExit();
 }
 
 CameraZoomTest::CameraZoomTest()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCSprite *sprite;
 	CCCamera *cam;
@@ -681,7 +681,7 @@ std::string CameraZoomTest::title()
 //------------------------------------------------------------------
 CameraCenterTest::CameraCenterTest()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 			
 	CCSprite *sprite;
 	CCOrbitCamera *orbit;
@@ -766,5 +766,5 @@ void CocosNodeTestScene::runThisTest()
     CCLayer* pLayer = nextCocosNodeAction();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

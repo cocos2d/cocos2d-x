@@ -218,7 +218,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinPaint:
-        CCDirector::getSharedDirector()->preMainLoop();
+        CCDirector::sharedDirector()->preMainLoop();
         bHandled = TRUE;
         break;
 

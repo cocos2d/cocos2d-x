@@ -151,8 +151,8 @@ void Parallax2::ccTouchMoved(CCTouch* touch, UIEvent* event)
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
 	CGPoint prevLocation = touch->previousLocationInView( touch->view() );	
 
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
-	prevLocation = CCDirector::getSharedDirector()->convertToGL( prevLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
 
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
@@ -237,7 +237,7 @@ void ParallaxDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
@@ -262,7 +262,7 @@ void ParallaxDemo::restartCallback(NSObject* pSender)
 	CCScene* s = new ParallaxTestScene();
 	s->addChild(restartParallaxAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -270,7 +270,7 @@ void ParallaxDemo::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new ParallaxTestScene();
 	s->addChild( nextParallaxAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -278,7 +278,7 @@ void ParallaxDemo::backCallback(NSObject* pSender)
 {
 	CCScene* s = new ParallaxTestScene();
 	s->addChild( backParallaxAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -287,5 +287,5 @@ void ParallaxTestScene::runThisTest()
     CCLayer* pLayer = nextParallaxAction();
 
     addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

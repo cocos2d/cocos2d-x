@@ -61,7 +61,7 @@ static bool s_bFirstRun = true;
 #define kDefaultFPS		60  // 60 frames per second
 extern string cocos2dVersion(void);
 
-CCDirector* CCDirector::getSharedDirector(void)
+CCDirector* CCDirector::sharedDirector(void)
 {
 	if (s_bFirstRun)
 	{
@@ -72,22 +72,22 @@ CCDirector* CCDirector::getSharedDirector(void)
 	return &s_sharedDirector;
 }
 
-bool CCDirector::setDierectorType(ccDirectorType obDirectorType)
+bool CCDirector::setDirectorType(ccDirectorType obDirectorType)
 {
 	/*
 	switch (obDirectorType)
 	{
 	case CCDirectorTypeNSTimer:
-		CCTimerDirector::getSharedDirector();
+		CCTimerDirector::sharedDirector();
 		break;
 	case CCDirectorTypeMainLoop:
-		CCFastDirector::getSharedDirector();
+		CCFastDirector::sharedDirector();
 		break;
 	case CCDirectorTypeThreadMainLoop:
-		CCThreadedFastDirector::getSharedDirector();
+		CCThreadedFastDirector::sharedDirector();
 		break;
 	case CCDirectorTypeDiaplayLink:
-		CCDisplayLinkDirector::getSharedDirector();
+		CCDisplayLinkDirector::sharedDirector();
 		break;
 	default:
         assert(false);
@@ -96,7 +96,7 @@ bool CCDirector::setDierectorType(ccDirectorType obDirectorType)
 	*/
 
     // we only support CCDisplayLinkDirector
-	CCDirector::getSharedDirector();
+	CCDirector::sharedDirector();
 
 	return true;
 }
