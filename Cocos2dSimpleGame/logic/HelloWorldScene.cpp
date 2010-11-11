@@ -130,7 +130,7 @@ bool HelloWorld::init()
 	this->schedule( schedule_selector(HelloWorld::update) );
 
 	// Start up the background music
-    SimpleAudioEngine::getSharedEngine()->SetBackgroundMusicVolume(40);
+    SimpleAudioEngine::getSharedEngine()->SetBackgroundMusicVolume(80);
 	SimpleAudioEngine::getSharedEngine()->playBackgroundMusic(SoundResInfo[0].FileName, true);
 
  	return true;
@@ -225,8 +225,8 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 	this->addChild(projectile);
 
 	// Play a sound!
-    // SimpleAudioEngine::getSharedEngine()->SetEffectsVolume(30);
-    // SimpleAudioEngine::getSharedEngine()->playEffect(SoundResInfo[1].FileName);
+    SimpleAudioEngine::getSharedEngine()->SetEffectsVolume(100);
+    SimpleAudioEngine::getSharedEngine()->playEffect(SoundResInfo[1].FileName);
 
 	// Determine where we wish to shoot the projectile to
 	float realX = winSize.width + (projectile->getContentSize().width / 2);
