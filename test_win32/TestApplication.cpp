@@ -16,7 +16,7 @@ bool TestApplication::InitInstance()
 bool TestApplication::initCocos2d()
 {
 	// init director
-	CCDirector * pDirector = CCDirector::getSharedDirector();
+	CCDirector * pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(&m_MainForm);
 	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
@@ -34,10 +34,10 @@ bool TestApplication::initCocos2d()
 
 void TestApplication::applicationDidEnterBackground()
 {
-	CCDirector::getSharedDirector()->stopAnimation();
+	CCDirector::sharedDirector()->stopAnimation();
 }
 
 void TestApplication::applicationWillEnterForeground()
 {
-	CCDirector::getSharedDirector()->startAnimation();
+	CCDirector::sharedDirector()->startAnimation();
 }

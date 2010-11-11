@@ -34,7 +34,7 @@ namespace cocos2d {
 	}
  	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
  	{
-		HWND hWnd  = CCDirector::getSharedDirector()->getOpenGLView()->getHWnd();
+		HWND hWnd  = CCDirector::sharedDirector()->getOpenGLView()->getHWnd();
 		HDC hWndDC = GetDC(hWnd);
 		m_hMemDC = CreateCompatibleDC(hWndDC);
 		ReleaseDC(hWnd, hWndDC);

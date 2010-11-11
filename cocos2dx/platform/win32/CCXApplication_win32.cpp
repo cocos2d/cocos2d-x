@@ -21,12 +21,12 @@ CCXApplication::~CCXApplication()
 ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
 {
 	// swap width and height
-	CCXEGLView * pView = CCDirector::getSharedDirector()->getOpenGLView();
+	CCXEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
 	if (pView)
 	{
 		return (ccDeviceOrientation)pView->setDeviceOrientation(eOritation);
 	}
-	return CCDirector::getSharedDirector()->getDeviceOrientation();
+	return CCDirector::sharedDirector()->getDeviceOrientation();
 }
 
 CGRect CCXApplication::statusBarFrame()
@@ -54,7 +54,7 @@ int CCXApplication::Run()
 			dwTickNow = GetTickCount();
 			if (dwTickNow - dwTickLast > 0)
 			{
-				CCDirector::getSharedDirector()->preMainLoop();
+				CCDirector::sharedDirector()->preMainLoop();
 			}
 			else
 			{
