@@ -16,8 +16,7 @@ public:
 	AppDelegate();
 	~AppDelegate();
 
-	virtual bool    initCocos2d();
-	virtual Boolean EventHandler(EventType * pEvent);
+	virtual bool    applicationDidFinishLaunching();
     virtual void    applicationDidEnterBackground();
     virtual void    applicationWillEnterForeground();
 

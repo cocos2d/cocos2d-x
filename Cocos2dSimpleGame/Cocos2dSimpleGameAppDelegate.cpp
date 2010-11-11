@@ -11,8 +11,14 @@ using namespace cocos2d;
 extern const AppResourceEntry Cocos2dSimpleGameResourceEntry;
 
 // the works are the same as NSObject<UIApplicationDelegate>::applicationDidFinishLaunching of cocos2d-iphone
-bool AppDelegate::initCocos2d()
+bool AppDelegate::applicationDidFinishLaunching()
 {
+	// init the window
+	if (! (m_pMainWnd = new CCXEGLView(this)) || ! m_pMainWnd->Create(&m_rcWnd))
+	{
+		return false;
+	}
+
 	// init director
 	CCDirector *pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(m_pMainWnd);
@@ -49,45 +55,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-
-}
-
-Boolean  AppDelegate::EventHandler(EventType*  pEvent)
-{
-	Boolean bHandled = FALSE;
-
-	switch(pEvent->eType)
-	{
-	case EVENT_AppLoad:
-		{
-			// it's important to use CCXEGLView, or you may inherit it to add your implement
-			if (! (m_pMainWnd = new CCXEGLView(this)) || ! m_pMainWnd->Create(&m_rcWnd))
-			{
-        		// create window failed, clear the heap
-				delete m_pMainWnd;
-				CCScheduler::purgeSharedScheduler();
-
-				// quit application
-				SendStopEvent();
-				bHandled = TRUE;
-				break;
-			}
-			SetActiveWindow(m_pMainWnd);
-			// do not return bHandle equal TRUE, CCXApplication::EventHandler need do some thing.
-			break;
-		}
-		bHandled = TRUE;
-		break;
-
-	case EVENT_AppStopNotify:
-		{
-			
-		}
-		bHandled = FALSE;
-		break;
-	}
-
-	return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
+	SimpleAudioEngine::release();
 }
 
 void AppDelegate::applicationDidEnterBackground()
