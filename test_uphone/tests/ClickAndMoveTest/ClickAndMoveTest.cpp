@@ -12,7 +12,7 @@ void ClickAndMoveTestScene::runThisTest()
     pLayer->autorelease();
 
     addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
 
 MainLayer::MainLayer()
@@ -43,7 +43,7 @@ void MainLayer::ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent)
 	CCTouch* touch = (CCTouch*)(*it);
 	
 	CGPoint location = touch->locationInView( touch->view() );
-	CGPoint convertedLocation = CCDirector::getSharedDirector()->convertToGL(location);
+	CGPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
 
 	CCNode* s = getChildByTag(kTagSprite);
 	s->stopAllActions();

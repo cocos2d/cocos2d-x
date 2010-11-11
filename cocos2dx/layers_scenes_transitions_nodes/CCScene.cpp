@@ -45,7 +45,7 @@ bool CCScene::init()
  	do 
  	{
  		CCDirector * pDirector;
- 		CCX_BREAK_IF( ! (pDirector = CCDirector::getSharedDirector()) );
+ 		CCX_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
  		this->setContentSize(pDirector->getWinSize());
  		// success
  		bRet = true;

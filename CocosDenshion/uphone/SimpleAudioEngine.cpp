@@ -1,47 +1,27 @@
 #include "SimpleAudioEngine.h"
 #include "SoundPlayer.h"
 #include "SoundDataManager.h"
-#include <vector>
-
-typedef std::vector<SoundPlayer*> PlayerArray;
-typedef PlayerArray::iterator     PlayerArrayIterator;
+#include "TSoundPlayer.h"
 
 #define BREAK_IF(cond)  if (cond) break;
 
-static SimpleAudioEngine *s_pSharedAudioEngie = NULL;
-static PlayerArray       *s_pEffectPlayers    = NULL;
+static SimpleAudioEngine *s_pSharedAudioEngine = NULL;
 static SoundDataManager  *s_pDataManager      = NULL;
 static SoundPlayer       *s_pBackPlayer       = NULL;
+static TSoundPlayer      *s_pEffectPlayer     = NULL;
 
 
 static int     s_nBackgroundMusicVolume = 100;
 static int     s_nEffectsVolume = 100;
 static bool    s_bWillPlayBackgroundMusic = false;
 
-void removeAllEffectPlayers()
-{
-    PlayerArrayIterator iter;
-
-    for (iter = s_pEffectPlayers->begin(); iter != s_pEffectPlayers->end(); ++iter)
-    {
-        if (*iter)
-        {
-            delete *iter;
-        }
-    }
-
-    s_pEffectPlayers->clear();
-    delete s_pEffectPlayers;
-}
-
 SimpleAudioEngine::SimpleAudioEngine()
 {
-    if (s_pEffectPlayers)
+    if (s_pEffectPlayer)
     {
-        removeAllEffectPlayers();
+        delete s_pEffectPlayer;
     }
-    s_pEffectPlayers = new PlayerArray();
-    SetEffectsVolume(s_nEffectsVolume);
+    s_pEffectPlayer = new TSoundPlayer();
 
     if (s_pBackPlayer)
     {
@@ -59,7 +39,11 @@ SimpleAudioEngine::SimpleAudioEngine()
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
-    removeAllEffectPlayers();
+    if (s_pEffectPlayer)
+    {
+        delete s_pEffectPlayer;
+        s_pEffectPlayer = NULL;
+    }
 
     if (s_pBackPlayer)
     {
@@ -76,12 +60,21 @@ SimpleAudioEngine::~SimpleAudioEngine()
 
 SimpleAudioEngine* SimpleAudioEngine::getSharedEngine()
 {
-    if (s_pSharedAudioEngie == NULL)
+    if (s_pSharedAudioEngine == NULL)
     {
-        s_pSharedAudioEngie = new SimpleAudioEngine;
+        s_pSharedAudioEngine = new SimpleAudioEngine;
     }
     
-    return s_pSharedAudioEngie;
+    return s_pSharedAudioEngine;
+}
+
+void SimpleAudioEngine::release()
+{
+	if (s_pSharedAudioEngine)
+	{
+		delete s_pSharedAudioEngine;
+		s_pSharedAudioEngine = NULL;
+	}
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
@@ -191,16 +184,6 @@ void SimpleAudioEngine::SetEffectsVolume(int volume)
         volume = 0;
     }
 
-    PlayerArrayIterator iter;
-
-    for (iter = s_pEffectPlayers->begin(); iter != s_pEffectPlayers->end(); ++iter)
-    {
-        if (*iter)
-        {
-            (*iter)->SetVolumeValue(volume);
-        }
-    }
-
     s_nEffectsVolume = volume;
 }
 
@@ -220,17 +203,19 @@ int SimpleAudioEngine::playEffect(const char* pszFilePath)
 
 void SimpleAudioEngine::stopEffect(int nSoundId)
 {
-    SoundPlayer* pPlayer = NULL;
-
-    // find the players are playing the effect
-    PlayerArrayIterator iter;
-    for (iter = s_pEffectPlayers->begin(); iter != s_pEffectPlayers->end(); ++iter)
+    do 
     {
-        if ((*iter) && pPlayer->GetCurrentSoundID() == nSoundId)
+        tEffectElement* pElement = s_pDataManager->getSoundData(nSoundId);
+        BREAK_IF(! pElement);
+
+        Int32 nID = pElement->nPlayerSoundID;
+
+        if (nID >= 0)
         {
-            pPlayer->Stop();
+            s_pEffectPlayer->Stop(nID);
+            pElement->nPlayerSoundID = -1;
         }
-    }
+    } while (0);    
 }
 
 int SimpleAudioEngine::preloadEffect(const char* pszFilePath)
@@ -250,43 +235,17 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
         tEffectElement* pElement = s_pDataManager->getSoundData(nSoundId);
         BREAK_IF(! pElement);
 
-        SoundPlayer* pPlayer = NULL;
-        bool bLoaded = false;
+        TSoundPlayParameter soundParam;
+        soundParam.pSoundData = pElement->pDataBuffer;
+        soundParam.dataLen    = pElement->nDataSize;
+        soundParam.dataType   = SOUND_TYPE_WAVE;
+        soundParam.volume     = (int) (0xFFFF * ((float) s_nEffectsVolume / 100));
 
-        // find the not playing player in s_pEffectPlayers
-        PlayerArrayIterator iter;
-        for (iter = s_pEffectPlayers->begin(); iter != s_pEffectPlayers->end(); ++iter)
-        {
-            if ((*iter) && !(*iter)->IsPlaying())
-            {
-                pPlayer = (*iter);
-                if (pPlayer->GetCurrentSoundID() == nSoundId)
-                {
-                    bLoaded = true;
-                    break;
-                }
-            }
-        }
+        Int32 nID = s_pEffectPlayer->Play(soundParam);
 
-        // not find player,new one player
-        if (!pPlayer)
+        if (nID >= 0)
         {
-            pPlayer = new SoundPlayer();
-            s_pEffectPlayers->push_back(pPlayer);
-
-            // set the player volume
-            pPlayer->SetVolumeValue(s_nEffectsVolume);
-        }
-
-        // play the sound and record the player
-        if (bLoaded)
-        {
-            pPlayer->Rewind();
-        }
-        else
-        {
-            pPlayer->PlaySoundFromMem(pElement->pDataBuffer, pElement->nDataSize, pElement->FileName);
-            pPlayer->SetCurrentSoundID(nSoundId);
+            pElement->nPlayerSoundID = nID;
         }
     } while (0);
 }
@@ -299,4 +258,9 @@ void SimpleAudioEngine::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCou
 void SimpleAudioEngine::setResourceEntry(const void* pResEntry)
 {
     s_pDataManager->setResEntry(pResEntry);
+}
+
+void SimpleAudioEngine::unloadEffectAll()
+{
+    s_pDataManager->removeAllEffects();
 }

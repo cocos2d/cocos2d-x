@@ -28,7 +28,7 @@ public:
 
 	void ccTouchesEnded(NSSet* pTouches, UIEvent* pEvent)
     {
-        CCDirector::getSharedDirector()->end();
+        CCDirector::sharedDirector()->end();
     };
 
 	LAYER_NODE_FUNC(MyLayer);
@@ -43,16 +43,24 @@ HelloWorldAppDelegate::HelloWorldAppDelegate()
 
 }
 
-bool HelloWorldAppDelegate::initCocos2d()
+bool HelloWorldAppDelegate::applicationDidFinishLaunching()
 {
+	// init the window
+	if ( ! (m_pMainWnd = new CCXEGLView(this)) || 
+		!m_pMainWnd->Create(&m_rcWnd))
+	{
+		delete m_pMainWnd;
+		return false;
+	}
+
     // init director
-    CCDirector::getSharedDirector()->setOpenGLView(m_pMainWnd);
+    CCDirector::sharedDirector()->setOpenGLView(m_pMainWnd);
 	// set to landscape mode
-    CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	// load background image texture and get window size
 	CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
-	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	CGSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// create sprite instance
 	CCSprite * pSprite = CCSprite::spriteWithTexture(pTexture); 
@@ -67,45 +75,21 @@ bool HelloWorldAppDelegate::initCocos2d()
     pScene->addChild(pLayer);
 
     // add scene to director
-    CCDirector::getSharedDirector()->runWithScene(pScene);
+    CCDirector::sharedDirector()->runWithScene(pScene);
 
     return true;
-}
-
-Boolean HelloWorldAppDelegate::EventHandler(EventType*  pEvent)
-{
-	Boolean     bHandled = FALSE;
-	switch(pEvent->eType)
-	{
-	case EVENT_AppLoad:
-        if (! (m_pMainWnd = new CCXEGLView(this)) || ! m_pMainWnd->Create(&m_rcWnd))
-        {
-     		// create window failed, clear the heap
-			delete m_pMainWnd;
-			CCScheduler::purgeSharedScheduler();
-
-			// quit application
-			SendStopEvent();
-			bHandled = TRUE;
-			break;
-        }
-        SetActiveWindow(m_pMainWnd);
-        // do not return bHandle equal TRUE, CCXApplication::EventHandler need do some thing.
-		break;
-	}
-    return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void HelloWorldAppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::getSharedDirector()->stopAnimation();
+    CCDirector::sharedDirector()->stopAnimation();
 }
 
 // this function will be called when the app is active again
 void HelloWorldAppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::getSharedDirector()->startAnimation();
+    CCDirector::sharedDirector()->startAnimation();
 }
 
 // application main entry

@@ -101,7 +101,7 @@ void ActionsTestScene::runThisTest()
     s_nActionIdx = -1;
     addChild(NextAction());
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
 
 
@@ -143,7 +143,7 @@ void ActionsDemo::onEnter()
     addChild(m_tamara, 2);
     addChild(m_kathia, 3);
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     m_grossini->setPosition( CGPointMake(s.width/2, s.height/3));
     m_tamara->setPosition( CGPointMake(s.width/2, 2*s.height/3));
@@ -192,7 +192,7 @@ void ActionsDemo::restartCallback(NSObject* pSender)
 {
     CCScene* s = new ActionsTestScene();
     s->addChild( RestartAction() );
-    CCDirector::getSharedDirector()->replaceScene(s);
+    CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -200,7 +200,7 @@ void ActionsDemo::nextCallback(NSObject* pSender)
 {
     CCScene* s = new ActionsTestScene();
     s->addChild( NextAction() );
-    CCDirector::getSharedDirector()->replaceScene(s);
+    CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -208,13 +208,13 @@ void ActionsDemo::backCallback(NSObject* pSender)
 {
     CCScene* s = new ActionsTestScene();
     s->addChild( BackAction() );
-    CCDirector::getSharedDirector()->replaceScene(s);
+    CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
 void ActionsDemo::centerSprites(unsigned int numberOfSprites)
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     if( numberOfSprites == 1 ) 
     {
@@ -238,7 +238,7 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
 
 void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     if( numberOfSprites == 1 ) 
     {
@@ -269,7 +269,7 @@ void ActionManual::onEnter()
 {
     ActionsDemo::onEnter();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     m_tamara->setScaleX( 2.5f);
     m_tamara->setScaleY( -1.0f);
@@ -300,7 +300,7 @@ void ActionMove::onEnter()
 
     centerSprites(3);
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCIntervalAction*  actionTo = CCMoveTo::actionWithDuration(2, CGPointMake(s.width-40, s.height-40));
     CCIntervalAction*  actionBy = CCMoveBy::actionWithDuration(2, CGPointMake(80,80));
@@ -404,7 +404,7 @@ void ActionBezier::onEnter()
 {
     ActionsDemo::onEnter();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     //
     // startPosition can be any coordinate, but since the movement
@@ -604,7 +604,7 @@ void ActionSequence2::onEnter()
 
 void ActionSequence2::callback1()
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 1 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*1,s.height/2));
 
@@ -613,7 +613,7 @@ void ActionSequence2::callback1()
 
 void ActionSequence2::callback2(CCNode* sender)
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 2 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*2,s.height/2));
 
@@ -622,7 +622,7 @@ void ActionSequence2::callback2(CCNode* sender)
 
 void ActionSequence2::callback3(CCNode* sender, void* data)
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 3 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*3,s.height/2));
 
@@ -670,7 +670,7 @@ void ActionCallFunc::onEnter()
 
 void ActionCallFunc::callback1()
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 1 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*1,s.height/2));
 
@@ -679,7 +679,7 @@ void ActionCallFunc::callback1()
 
 void ActionCallFunc::callback2(CCNode* pSender)
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 2 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*2,s.height/2));
 
@@ -688,7 +688,7 @@ void ActionCallFunc::callback2(CCNode* pSender)
 
 void ActionCallFunc::callback3(CCNode* pTarget, void* data)
 {
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     CCLabel *label = CCLabel::labelWithString("callback 3 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*3,s.height/2));
     addChild(label);
@@ -1013,7 +1013,7 @@ void ActionFollow::onEnter()
     ActionsDemo::onEnter();
 
     centerSprites(1);
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     m_grossini->setPosition(CGPointMake(-200, s.height / 2));
     CCIntervalAction* move      = CCMoveBy::actionWithDuration(2, CGPointMake(s.width * 3, 0));

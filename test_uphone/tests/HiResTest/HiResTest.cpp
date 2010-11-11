@@ -53,7 +53,7 @@ void HiResDemo::onEnter()
 {
     CCLayer::onEnter();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     /**
     @todo CCLabelTTF
@@ -102,7 +102,7 @@ void HiResDemo::restartCallback(NSObject* pSender)
         CCScene* pScene = new HiResTestScene();
         pScene->addChild(pLayer);
 
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
         pScene->release();
     }
 }
@@ -117,7 +117,7 @@ void HiResDemo::nextCallback(NSObject* pSender)
         CCScene* pScene = new HiResTestScene();
         pScene->addChild(pLayer);
 
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
         pScene->release();
     }
 }
@@ -132,7 +132,7 @@ void HiResDemo::backCallback(NSObject* pSender)
         CCScene* pScene = new HiResTestScene();
         pScene->addChild(pLayer);
 
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
         pScene->release();
     }
 }
@@ -146,7 +146,7 @@ void HiResTest1::onEnter()
 {
     HiResDemo::onEnter();
 
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
 
     CCSprite *sprite = CCSprite::spriteWithFile("Images/grossini.png");
     addChild(sprite);
@@ -167,7 +167,7 @@ void HiResTest2::onEnter()
 {
     HiResDemo::onEnter();
 
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
 
     CCSprite *sprite = CCSprite::spriteWithFile("Images/bugs/picture.png");
     addChild(sprite);
@@ -195,5 +195,5 @@ void HiResTestScene::runThisTest()
     addChild(pLayer);
 
     pLayer->release();
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

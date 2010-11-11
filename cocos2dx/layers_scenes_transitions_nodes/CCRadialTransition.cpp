@@ -57,7 +57,7 @@ void CCRadialCCWTransition::onEnter()
 	CCTransitionScene::onEnter();
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
-	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	CGSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// create the second render texture for outScene
 	CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);

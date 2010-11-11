@@ -139,12 +139,12 @@ void TMXOrthoTest::onEnter()
 {
 	TileDemo::onEnter();
 
-	CCDirector::getSharedDirector()->setProjection(CCDirectorProjection3D);
+	CCDirector::sharedDirector()->setProjection(CCDirectorProjection3D);
 }
 
 void TMXOrthoTest::onExit()
 {
-	CCDirector::getSharedDirector()->setProjection(CCDirectorProjection2D);
+	CCDirector::sharedDirector()->setProjection(CCDirectorProjection2D);
 	TileDemo::onExit();
 }
 
@@ -962,13 +962,13 @@ void TMXIsoVertexZ::onEnter()
 	TileDemo::onEnter();
 	
 	// TIP: 2d projection should be used
-	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
+	CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
 }
 
 void TMXIsoVertexZ::onExit()
 {
 	// At exit use any other projection. 
-	//	CCDirector::getSharedDirector()->setProjection:kCCDirectorProjection3D);
+	//	CCDirector::sharedDirector()->setProjection:kCCDirectorProjection3D);
 	TileDemo::onExit();
 }
 
@@ -1029,13 +1029,13 @@ void TMXOrthoVertexZ::onEnter()
 	TileDemo::onEnter();
 	
 	// TIP: 2d projection should be used
-	CCDirector::getSharedDirector()->setProjection(kCCDirectorProjection2D);
+	CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
 }
 
 void TMXOrthoVertexZ::onExit()
 {
 	// At exit use any other projection. 
-	//	CCDirector::getSharedDirector()->setProjection:kCCDirectorProjection3D);
+	//	CCDirector::sharedDirector()->setProjection:kCCDirectorProjection3D);
 	TileDemo::onExit();
 }
 
@@ -1187,7 +1187,7 @@ TileDemo::TileDemo(void)
 {
 	setIsTouchEnabled( true );
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	m_label = CCLabel::labelWithString("", "Arial", 28);
 	addChild(m_label, 1);
@@ -1248,7 +1248,7 @@ void TileDemo::restartCallback(NSObject* pSender)
 	CCScene* s = new TileMapTestScene();
 	s->addChild(restartTileMapAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
 	s->release();
 }
 
@@ -1256,7 +1256,7 @@ void TileDemo::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new TileMapTestScene();
 	s->addChild( nextTileMapAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
 	s->release();
 }
 
@@ -1264,7 +1264,7 @@ void TileDemo::backCallback(NSObject* pSender)
 {
 	CCScene* s = new TileMapTestScene();
 	s->addChild( backTileMapAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
 	s->release();
 } 
 
@@ -1291,8 +1291,8 @@ void TileDemo::ccTouchMoved(CCTouch* touch, UIEvent* event)
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
 	CGPoint prevLocation = touch->previousLocationInView( touch->view() );	
 	
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
-	prevLocation = CCDirector::getSharedDirector()->convertToGL( prevLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
 	
 	CGPoint diff = ccpSub(touchLocation, prevLocation);
 	
@@ -1306,5 +1306,5 @@ void TileMapTestScene::runThisTest()
     CCLayer* pLayer = nextTileMapAction();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

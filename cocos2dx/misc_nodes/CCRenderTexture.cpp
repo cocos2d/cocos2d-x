@@ -101,7 +101,7 @@ namespace cocos2d {
 		CGSize textureSize = m_pTexture->getContentSize();
 
 		// Calculate the adjustment ratios based on the old and new projections
-		CGSize size = CCDirector::getSharedDirector()->getDisplaySize();
+		CGSize size = CCDirector::sharedDirector()->getDisplaySize();
 		float widthRatio = size.width / textureSize.width;
 		float heightRatio = size.height / textureSize.height;
 
@@ -119,7 +119,7 @@ namespace cocos2d {
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_nOldFBO);
 		// Restore the original matrix and viewport
 		glPopMatrix();
-		CGSize size = CCDirector::getSharedDirector()->getDisplaySize();
+		CGSize size = CCDirector::sharedDirector()->getDisplaySize();
 		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 
 		glColorMask(true, true, true, true);

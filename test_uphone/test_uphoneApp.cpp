@@ -30,10 +30,16 @@ Ttest_uphoneApp::~Ttest_uphoneApp()
 
 }
 
-bool Ttest_uphoneApp::initCocos2d()
+bool Ttest_uphoneApp::applicationDidFinishLaunching()
 {
+	// init the window
+	if (! (m_pMainWnd = new TMainForm(this)) )
+	{
+		return false;
+	}
+
     // init director
-    CCDirector * pDirector = CCDirector::getSharedDirector();
+    CCDirector * pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(m_pMainWnd);
     pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 	/*pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);*/
@@ -44,7 +50,7 @@ bool Ttest_uphoneApp::initCocos2d()
 
     // load background image texture and get window size
     CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage("Images/HelloWorld.png");
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
 
     // create sprite instance
     CCSprite * pSprite = new CCSprite();
@@ -62,7 +68,7 @@ bool Ttest_uphoneApp::initCocos2d()
     pScene->addChild(pLayer);
 
     // add scene to director
-    CCDirector::getSharedDirector()->runWithScene(pScene);
+    CCDirector::sharedDirector()->runWithScene(pScene);
 
     m_nTimer = TIMER_Create(3000, TIMER_MODE_NORMAL, TimerCallback1, 0, 0);
     TIMER_Start(m_nTimer, 0);
@@ -70,50 +76,14 @@ bool Ttest_uphoneApp::initCocos2d()
     return true;
 }
 
-Boolean  Ttest_uphoneApp::EventHandler(EventType*  pEvent)
-{
-	Boolean     bHandled = FALSE;
-
-	switch(pEvent->eType)
-	{
-	case EVENT_AppLoad:
-		{
-			m_pMainWnd = new TMainForm(this);
-			if (m_pMainWnd)
-			{
-				SetActiveWindow(m_pMainWnd);
-			}
-			else
-			{
-				// quit THE application
-				SendStopEvent();		
-			}
-		}
-		break;
-
-	case EVENT_AppStopNotify:
-		{
-			
-		}
-		bHandled = FALSE;
-		break;
-	}
-	if (FALSE == bHandled) 
-	{
-		return CCXApplication::EventHandler(pEvent);
-	}
-
-	return bHandled;
-}
-
 void Ttest_uphoneApp::applicationDidEnterBackground()
 {
-    CCDirector::getSharedDirector()->stopAnimation();
+    CCDirector::sharedDirector()->stopAnimation();
 }
 
 void Ttest_uphoneApp::applicationWillEnterForeground()
 {
-    CCDirector::getSharedDirector()->startAnimation();
+    CCDirector::sharedDirector()->startAnimation();
 }
 
 static void TimerCallback1(Int32 nTimerId, UInt32 uUserData)
@@ -123,5 +93,5 @@ static void TimerCallback1(Int32 nTimerId, UInt32 uUserData)
     pLayer->autorelease();
 
     pScene->addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(pScene);
+    CCDirector::sharedDirector()->replaceScene(pScene);
 }

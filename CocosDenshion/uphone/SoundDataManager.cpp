@@ -153,6 +153,7 @@ int SoundDataManager::loadFromResourceInfo(const char* pFileKey)
         pElement->pDataBuffer = pSoundData;
         pElement->nDataSize   = nSize;
         pElement->FileName    = pFileKey;
+        pElement->nPlayerSoundID = -1;
         HASH_ADD_INT(m_pEffects, nSoundID, pElement);
     } while (0);
 
@@ -198,6 +199,7 @@ int SoundDataManager::loadFromFile(const char* pFilePath)
         pElement->pDataBuffer = buffer;
         pElement->nDataSize   = nBufferSize;
         pElement->FileName    = "";
+        pElement->nPlayerSoundID = -1;
         HASH_ADD_INT(m_pEffects, nSoundID, pElement);
     } while (0);
 

@@ -27,7 +27,7 @@ SceneTestLayer1::SceneTestLayer1()
 	
 	addChild( menu );
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
@@ -53,7 +53,7 @@ void SceneTestLayer1::onPushScene(NSObject* pSender)
 	CCScene* scene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
-	CCDirector::getSharedDirector()->pushScene( scene );
+	CCDirector::sharedDirector()->pushScene( scene );
     scene->release();
     pLayer->release();
 }
@@ -64,7 +64,7 @@ void SceneTestLayer1::onPushSceneTran(NSObject* pSender)
     CCLayer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
 
-	CCDirector::getSharedDirector()->pushScene( CCSlideInTTransition::transitionWithDuration(1, scene) );
+	CCDirector::sharedDirector()->pushScene( CCSlideInTTransition::transitionWithDuration(1, scene) );
     scene->release();
     pLayer->release();
 }
@@ -73,7 +73,7 @@ void SceneTestLayer1::onPushSceneTran(NSObject* pSender)
 void SceneTestLayer1::onQuit(NSObject* pSender)
 {
 	//getCocosApp()->exit();
-	//CCDirector::getSharedDirector()->popScene();
+	//CCDirector::sharedDirector()->popScene();
 
 	//// HA HA... no more terminate on sdk v3.0
 	//// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
@@ -100,7 +100,7 @@ SceneTestLayer2::SceneTestLayer2()
 	
 	addChild( menu );
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
@@ -120,7 +120,7 @@ void SceneTestLayer2::testDealloc(ccTime dt)
 
 void SceneTestLayer2::onGoBack(NSObject* pSender)
 {
-	CCDirector::getSharedDirector()->popScene();
+	CCDirector::sharedDirector()->popScene();
 }
 
 void SceneTestLayer2::onReplaceScene(NSObject* pSender)
@@ -128,7 +128,7 @@ void SceneTestLayer2::onReplaceScene(NSObject* pSender)
 	CCScene* pScene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer3();
     pScene->addChild( pLayer, 0 );
-	CCDirector::getSharedDirector()->replaceScene( pScene );
+	CCDirector::sharedDirector()->replaceScene( pScene );
     pScene->release();
     pLayer->release();
 }
@@ -139,7 +139,7 @@ void SceneTestLayer2::onReplaceSceneTran(NSObject* pSender)
 	CCScene* pScene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer3();
 	pScene->addChild( pLayer, 0 );
-	CCDirector::getSharedDirector()->replaceScene( CCFlipXTransition::transitionWithDuration(2, pScene) );
+	CCDirector::sharedDirector()->replaceScene( CCFlipXTransition::transitionWithDuration(2, pScene) );
     pScene->release();
     pLayer->release();
 }
@@ -155,7 +155,7 @@ SceneTestLayer3::SceneTestLayer3()
 	setIsTouchEnabled( true );
 	CCLabel* label = CCLabel::labelWithString("Touch to popScene", "Marker Felt", 28);
 	addChild(label);
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	label->setPosition( CGPointMake(s.width/2, s.height/2) );
 	
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
@@ -177,7 +177,7 @@ void SceneTestLayer3::ccTouchesEnded(NSSet* touches, UIEvent* event)
 {
 	static int i = 0;
 	//UXLOG("SceneTestLayer3::ccTouchesEnded(%d)", ++i);
-	CCDirector::getSharedDirector()->popScene();
+	CCDirector::sharedDirector()->popScene();
 }
 
 void SceneTestScene::runThisTest()
@@ -186,5 +186,5 @@ void SceneTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

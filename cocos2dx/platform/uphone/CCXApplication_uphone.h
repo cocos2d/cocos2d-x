@@ -46,7 +46,7 @@ public:
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
-    virtual bool initCocos2d() = 0;
+    virtual bool applicationDidFinishLaunching() = 0;
 
     /**
     @brief	rotate main window by device orientation.

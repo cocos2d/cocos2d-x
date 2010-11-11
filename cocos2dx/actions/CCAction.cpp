@@ -228,7 +228,7 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode)
 	m_bBoundarySet = false;
 	m_bBoundaryFullyCovered = false;
 
-	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 	m_obFullScreenSize = CGPointMake(winSize.width, winSize.height);
 	m_obHalfScreenSize = ccpMult(m_obFullScreenSize, 0.5f);
 	return true;
@@ -242,7 +242,7 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, CGRect rect)
 	m_bBoundarySet = true;
 	m_bBoundaryFullyCovered = false;
 
-	CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 	m_obFullScreenSize = CGPointMake(winSize.width, winSize.height);
 	m_obHalfScreenSize = ccpMult(m_obFullScreenSize, 0.5f);
 

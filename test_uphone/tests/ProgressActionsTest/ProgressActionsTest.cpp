@@ -53,7 +53,7 @@ CCLayer* restartAction()
 void ProgressActionsTestScene::runThisTest()
 {
     addChild(nextAction());
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
 
 
@@ -84,7 +84,7 @@ void SpriteDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 18);
 	addChild(label, 1);
@@ -117,7 +117,7 @@ void SpriteDemo::restartCallback(NSObject* pSender)
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild(restartAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -125,7 +125,7 @@ void SpriteDemo::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild( nextAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -133,7 +133,7 @@ void SpriteDemo::backCallback(NSObject* pSender)
 {
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild( backAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -146,7 +146,7 @@ void SpriteProgressToRadial::onEnter()
 {
 	SpriteDemo::onEnter();
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
 	CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
@@ -179,7 +179,7 @@ void SpriteProgressToHorizontal::onEnter()
 {
 	SpriteDemo::onEnter();
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
 	CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
@@ -211,7 +211,7 @@ void SpriteProgressToVertical::onEnter()
 {
 	SpriteDemo::onEnter();
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
 	CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);

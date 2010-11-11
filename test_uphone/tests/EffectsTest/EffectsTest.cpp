@@ -85,7 +85,7 @@ class Lens3DDemo : public CCLens3D
 public:
 	static CCIntervalAction* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::getSharedDirector()->getWinSize();
+		CGSize size = CCDirector::sharedDirector()->getWinSize();
 		return CCLens3D::actionWithPosition(CGPointMake(size.width/2,size.height/2), 240, ccg(15,10), t); 
 	}
 };
@@ -96,7 +96,7 @@ class Ripple3DDemo : public CCRipple3D
 public:
 	static CCIntervalAction* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::getSharedDirector()->getWinSize();
+		CGSize size = CCDirector::sharedDirector()->getWinSize();
 		return CCRipple3D::actionWithPosition(CGPointMake(size.width/2,size.height/2), 240, 4, 160, ccg(32,24), t);
 	}
 };
@@ -127,7 +127,7 @@ class TwirlDemo : public CCTwirl
 public:
 	static CCIntervalAction* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::getSharedDirector()->getWinSize();
+		CGSize size = CCDirector::sharedDirector()->getWinSize();
 		return CCTwirl::actionWithPosition(CGPointMake(size.width/2, size.height/2), 1, 2.5f, ccg(12,8), t); 
 	}
 };
@@ -248,7 +248,7 @@ class JumpTiles3DDemo : public CCJumpTiles3D
 public:
 	static CCIntervalAction* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::getSharedDirector()->getWinSize();
+		CGSize size = CCDirector::sharedDirector()->getWinSize();
 		return CCJumpTiles3D::actionWithJumps(2, 30, ccg(15,10), t); 
 	}
 };
@@ -330,7 +330,7 @@ void EffectTestScene::runThisTest()
 {
     addChild(TextLayer::node());
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
 
 #define SID_RESTART		1
@@ -341,7 +341,7 @@ TextLayer::TextLayer(void)
 		
 	float x,y;
 	
-	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	CGSize size = CCDirector::sharedDirector()->getWinSize();
 	x = size.width;
 	y = size.height;
 	
@@ -418,7 +418,7 @@ void TextLayer::onEnter()
 
 void TextLayer::newOrientation()
 {
-	ccDeviceOrientation orientation = CCDirector::getSharedDirector()->getDeviceOrientation();
+	ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
 	switch (orientation) 
 	{
 		case CCDeviceOrientationLandscapeLeft:
@@ -435,7 +435,7 @@ void TextLayer::newOrientation()
 			break;
 	}
 
-	CCDirector::getSharedDirector()->setDeviceOrientation(orientation);
+	CCDirector::sharedDirector()->setDeviceOrientation(orientation);
 }
 
 void TextLayer::newScene()
@@ -443,7 +443,7 @@ void TextLayer::newScene()
 	CCScene* s = new EffectTestScene();
 	CCNode* child = TextLayer::node();
 	s->addChild(child);
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 

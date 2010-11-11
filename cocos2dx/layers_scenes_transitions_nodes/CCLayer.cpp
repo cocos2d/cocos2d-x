@@ -49,7 +49,7 @@ bool CCLayer::init()
 	do 
 	{
 		CCDirector * pDirector;
-		CCX_BREAK_IF( ! (pDirector = CCDirector::getSharedDirector()) );
+		CCX_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
 		this->setContentSize(pDirector->getWinSize());
 		// success
 		bRet = true;
@@ -280,7 +280,7 @@ bool CCColorLayer::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfl
 
 bool CCColorLayer::initWithColor(ccColor4B color)
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	this->initWithColorWidthHeight(color, s.width, s.height);
 	return true;
 }

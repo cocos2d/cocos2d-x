@@ -86,7 +86,7 @@ bool CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
 		// retain
 		m_pInScene = scene;
 		m_pInScene->retain();
-		m_pOutScene = CCDirector::getSharedDirector()->getRunningScene();
+		m_pOutScene = CCDirector::sharedDirector()->getRunningScene();
 		m_pOutScene->retain();
 		m_eSceneType = ccTransitionScene;
 
@@ -146,7 +146,7 @@ void CCTransitionScene::setNewScene(ccTime dt)
 	// "_cmd" is a local variable automatically defined in a method 
 	// that contains the selector for the method
 	this->unschedule(schedule_selector(CCTransitionScene::setNewScene));
-	CCDirector *director = CCDirector::getSharedDirector();
+	CCDirector *director = CCDirector::sharedDirector();
 	// Before replacing, save the "send cleanup to scene"
 	m_bIsSendCleanupToScene = director->isSendCleanupToScene();
 	director->replaceScene(m_pInScene);
@@ -278,7 +278,7 @@ CCJumpZoomTransition::~CCJumpZoomTransition()
 void CCJumpZoomTransition::onEnter()
 {
 	CCTransitionScene::onEnter();
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	m_pInScene->setScale(0.5f);
 	m_pInScene->setPosition(ccp(s.width, 0));
@@ -350,7 +350,7 @@ CCIntervalAction* CCMoveInLTransition::easeActionWithAction(CCIntervalAction* ac
 
 void CCMoveInLTransition::initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(-s.width,0) );
 }
 
@@ -368,7 +368,7 @@ CCMoveInRTransition::~CCMoveInRTransition()
 
 void CCMoveInRTransition::initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(s.width,0) );
 }
 
@@ -386,7 +386,7 @@ CCMoveInTTransition::~CCMoveInTTransition()
 
 void CCMoveInTTransition::initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,s.height) );
 }
 
@@ -404,7 +404,7 @@ CCMoveInBTransition::~CCMoveInBTransition()
 
 void CCMoveInBTransition::initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,-s.height) );
 }
 
@@ -453,13 +453,13 @@ void CCSlideInLTransition::sceneOrder()
 
 void CCSlideInLTransition:: initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(-(s.width-ADJUST_FACTOR),0) );
 }
 
 CCIntervalAction* CCSlideInLTransition::action()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(s.width-ADJUST_FACTOR,0));
 }
 
@@ -489,14 +489,14 @@ void CCSlideInRTransition::sceneOrder()
 
 void CCSlideInRTransition::initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(s.width-ADJUST_FACTOR,0) );
 }
 
 
 CCIntervalAction* CCSlideInRTransition:: action()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(-(s.width-ADJUST_FACTOR),0));
 }
 
@@ -520,14 +520,14 @@ void CCSlideInTTransition::sceneOrder()
 
 void CCSlideInTTransition::initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,s.height-ADJUST_FACTOR) );
 }
 
 
 CCIntervalAction* CCSlideInTTransition::action()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,-(s.height-ADJUST_FACTOR)));
 }
 
@@ -550,14 +550,14 @@ void CCSlideInBTransition::sceneOrder()
 
 void CCSlideInBTransition:: initScenes()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,-(s.height-ADJUST_FACTOR)) );
 }
 
 
 CCIntervalAction* CCSlideInBTransition:: action()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,s.height-ADJUST_FACTOR));
 }
 
@@ -1107,7 +1107,7 @@ void CCCrossFadeTransition::onEnter()
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
 	ccColor4B  color = {0,0,0,0};
-	CGSize size = CCDirector::getSharedDirector()->getWinSize();
+	CGSize size = CCDirector::sharedDirector()->getWinSize();
 	CCColorLayer* layer = CCColorLayer::layerWithColor(color);
 
 	// create the first render texture for inScene
@@ -1203,7 +1203,7 @@ void CCTurnOffTilesTransition::sceneOrder()
 void CCTurnOffTilesTransition::onEnter()
 {
 	CCTransitionScene::onEnter();
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	float aspect = s.width / s.height;
 	int x = (int)(12 * aspect);
 	int y = 12;
@@ -1320,7 +1320,7 @@ void CCFadeTRTransition::onEnter()
 {
 	CCTransitionScene::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	float aspect = s.width / s.height;
 	int x = (int)(12 * aspect);
 	int y = 12;

@@ -11,7 +11,7 @@ void MotionStreakTest1::onEnter()
 {
 	MotionStreakTest::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
   
 	// the root object just rotates around
 	m_root = CCSprite::spriteWithFile(s_pPathR1);
@@ -59,7 +59,7 @@ void MotionStreakTest2::onEnter()
 
 	setIsTouchEnabled(true);
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 		
 	// create the streak object and add it to the scene
 	m_streak = CCMotionStreak::streakWithFade(3, 3, s_streak, 64, 32, ccc4(255,255,255,255) );
@@ -74,7 +74,7 @@ void MotionStreakTest2::ccTouchesMoved(NSSet* touches, UIEvent* event)
     CCTouch* touch = (CCTouch*)(*it);
 
 	CGPoint touchLocation = touch->locationInView( touch->view() );	
-	touchLocation = CCDirector::getSharedDirector()->convertToGL( touchLocation );
+	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	
 	m_streak->setPosition( touchLocation );
 }
@@ -162,7 +162,7 @@ void MotionStreakTest::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
@@ -187,7 +187,7 @@ void MotionStreakTest::restartCallback(NSObject* pSender)
 	CCScene* s = new MotionStreakTestScene();//CCScene::node();
 	s->addChild(restartMotionAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -195,7 +195,7 @@ void MotionStreakTest::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new MotionStreakTestScene();//CCScene::node();
 	s->addChild( nextMotionAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -203,7 +203,7 @@ void MotionStreakTest::backCallback(NSObject* pSender)
 {
 	CCScene* s = new MotionStreakTestScene;//CCScene::node();
 	s->addChild( backMotionAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -212,5 +212,5 @@ void MotionStreakTestScene::runThisTest()
     CCLayer* pLayer = nextMotionAction();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

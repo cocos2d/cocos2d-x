@@ -14,11 +14,18 @@ using namespace cocos2d;
 
 extern const AppResourceEntry cocosTemplateResourceEntry;
 
-// the works are the same as NSObject<UIApplicationDelegate>::applicationDidFinishLaunching of cocos2d-iphone
-bool AppDelegate::initCocos2d()
+bool AppDelegate::applicationDidFinishLaunching()
 {
+	// init the window
+	if ( ! (m_pMainWnd = new CCXEGLView(this)) || 
+		!m_pMainWnd->Create(&m_rcWnd))
+	{
+		delete m_pMainWnd;
+		return false;
+	}
+
 	// init director
-	CCDirector *pDirector = CCDirector::getSharedDirector();
+	CCDirector *pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(m_pMainWnd);
 
 	// sets landscape mode
@@ -37,7 +44,7 @@ bool AppDelegate::initCocos2d()
 	CCScene *pScene = HelloWorld::scene();
 
 	// run
-	CCDirector::getSharedDirector()->runWithScene(pScene);
+	CCDirector::sharedDirector()->runWithScene(pScene);
 
 	return true;
 }
@@ -50,53 +57,10 @@ AppDelegate::AppDelegate()
 
 }
 
-AppDelegate::~AppDelegate()
-{
-
-}
-
-Boolean  AppDelegate::EventHandler(EventType*  pEvent)
-{
-	Boolean bHandled = FALSE;
-
-	switch(pEvent->eType)
-	{
-	case EVENT_AppLoad:
-		{
-			// it's important to use CCXEGLView, or you may inherit it to add your implement
-			if (! (m_pMainWnd = new CCXEGLView(this)) || ! m_pMainWnd->Create(&m_rcWnd))
-			{
-        		// create window failed, clear the heap
-				delete m_pMainWnd;
-				CCScheduler::purgeSharedScheduler();
-
-				// quit application
-				SendStopEvent();
-				bHandled = TRUE;
-				break;
-			}
-			SetActiveWindow(m_pMainWnd);
-			// do not return bHandle equal TRUE, CCXApplication::EventHandler need do some thing.
-			break;
-		}
-		bHandled = TRUE;
-		break;
-
-	case EVENT_AppStopNotify:
-		{
-			
-		}
-		bHandled = FALSE;
-		break;
-	}
-
-	return (bHandled) ? TRUE : CCXApplication::EventHandler(pEvent);
-}
-
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::getSharedDirector()->stopAnimation();
+    CCDirector::sharedDirector()->stopAnimation();
 
 	// if you use SimpleAudioEngine, it must be pause
 	// SimpleAudioEngine::getSharedEngine()->pauseBackgroundMusic();
@@ -105,7 +69,8 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::getSharedDirector()->startAnimation();
+    CCDirector::sharedDirector()->startAnimation();
 	
+	// if you use SimpleAudioEngine, it must resume here
 	// SimpleAudioEngine::getSharedEngine()->resumeBackgroundMusic();
 }

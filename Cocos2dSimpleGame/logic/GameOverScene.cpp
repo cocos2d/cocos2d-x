@@ -41,7 +41,7 @@ bool GameOverLayer::init()
 {
 	if ( CCColorLayer::initWithColor( ccc4(255,255,255,255) ) )
 	{
-		CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 		this->_label = CCLabel::labelWithString("", "Artial", 32);
 		_label->retain();  // notice! in objc it's a property with "retain"
 		_label->setColor( ccc3(0, 0, 0) );
@@ -63,7 +63,7 @@ bool GameOverLayer::init()
 
 void GameOverLayer::gameOverDone()
 {
-	CCDirector::getSharedDirector()->replaceScene( HelloWorld::scene() );
+	CCDirector::sharedDirector()->replaceScene( HelloWorld::scene() );
 }
 
 GameOverLayer::~GameOverLayer()

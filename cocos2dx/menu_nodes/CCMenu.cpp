@@ -66,7 +66,7 @@ namespace cocos2d{
 			this->m_bIsTouchEnabled = true;
 
 			// menu in the center of the screen
-			CGSize s = CCDirector::getSharedDirector()->getWinSize();
+			CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 			this->m_bIsRelativeAnchorPoint = false;
 			m_tAnchorPoint = ccp(0.5f, 0.5f);
@@ -75,7 +75,7 @@ namespace cocos2d{
 			// XXX: in v0.7, winSize should return the visible size
 			// XXX: so the bar calculation should be done there
 			CGRect r = CCXApplication::getSharedApplication()->statusBarFrame();
-			ccDeviceOrientation orientation = CCDirector::getSharedDirector()->getDeviceOrientation();
+			ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
 			if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
 			{
 				s.height -= r.size.width;
@@ -335,7 +335,7 @@ namespace cocos2d{
 		// check if too many rows/columns for available menu items
 		assert(! columnsOccupied);
 
-		CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 		row = 0;
 		rowHeight = 0;
@@ -453,7 +453,7 @@ namespace cocos2d{
 		// check if too many rows/columns for available menu items.
 		assert(! rowsOccupied);
 
-		CGSize winSize = CCDirector::getSharedDirector()->getWinSize();
+		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 		column = 0;
 		columnWidth = 0;
@@ -561,7 +561,7 @@ namespace cocos2d{
 	CCMenuItem* CCMenu::itemForTouch(cocos2d::CCTouch *touch)
 	{
 		CGPoint touchLocation = touch->locationInView(touch->view());
-		touchLocation = CCDirector::getSharedDirector()->convertToGL(touchLocation);
+		touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{

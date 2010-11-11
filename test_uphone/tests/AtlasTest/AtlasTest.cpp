@@ -111,7 +111,7 @@ void AtlasDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
@@ -144,7 +144,7 @@ void AtlasDemo::restartCallback(NSObject* pSender)
 	CCScene* s = new AtlasTestScene();
 	s->addChild(restartAtlasAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -152,7 +152,7 @@ void AtlasDemo::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new AtlasTestScene();
 	s->addChild( nextAtlasAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -160,7 +160,7 @@ void AtlasDemo::backCallback(NSObject* pSender)
 {
 	CCScene* s = new AtlasTestScene();
 	s->addChild( backAtlasAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -174,7 +174,7 @@ Atlas1::Atlas1()
 {
 	m_textureAtlas = CCTextureAtlas::textureAtlasWithFile(s_AtlasTest, 3); m_textureAtlas->retain();
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	//
 	// Notice: u,v tex coordinates are inverted
@@ -380,7 +380,7 @@ Atlas3::Atlas3()
 	addChild(label3, 0, kTagBitmapAtlas3);
 	
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();	
+	CGSize s = CCDirector::sharedDirector()->getWinSize();	
 	label1->setPosition( ccp( 0,0) );
 	label2->setPosition( ccp( s.width/2, s.height/2) );
 	label3->setPosition( ccp( s.width, s.height) );
@@ -430,7 +430,7 @@ Atlas4::Atlas4()
 	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
 	addChild(label);
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	label->setPosition( ccp(s.width/2, s.height/2) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -476,7 +476,7 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	ccDrawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
 	ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
 }
@@ -514,7 +514,7 @@ Atlas5::Atlas5()
 	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("abcdefg", "fonts/bitmapFontTest4.fnt");
 	addChild(label);
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	label->setPosition( ccp(s.width/2, s.height/2) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -537,7 +537,7 @@ std::string Atlas5::subtitle()
 
 Atlas6::Atlas6()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCBitmapFontAtlas* label = NULL;
 	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
@@ -581,7 +581,7 @@ std::string Atlas6::subtitle()
 
 AtlasBitmapColor::AtlasBitmapColor()
 {
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCBitmapFontAtlas* label = NULL;
 	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Blue", "fonts/bitmapFontTest5.fnt");
@@ -630,7 +630,7 @@ AtlasFastBitmap::AtlasFastBitmap()
 			CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString(str, "fonts/bitmapFontTest.fnt");
 			addChild(label);
 			
-			CGSize s = CCDirector::getSharedDirector()->getWinSize();
+			CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 			CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 			label->setPosition( p );
@@ -653,5 +653,5 @@ void AtlasTestScene::runThisTest()
     CCLayer* pLayer = nextAtlasAction();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

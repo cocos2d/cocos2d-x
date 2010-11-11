@@ -8,7 +8,7 @@ BackToMainMenuLayer::BackToMainMenuLayer()
     CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(BackToMainMenuLayer::MainMenuCallback));
 
     CCMenu* pMenu =CCMenu::menuWithItems(pMenuItem, NULL);
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
     pMenu->setPosition( CGPointZero );
     pMenuItem->setPosition( CGPointMake( s.width - 50, 25) );
 
@@ -22,7 +22,7 @@ void BackToMainMenuLayer::MainMenuCallback(NSObject* pSender)
     pLayer->autorelease();
 
     pScene->addChild(pLayer);
-    CCDirector::getSharedDirector()->replaceScene(pScene);
+    CCDirector::sharedDirector()->replaceScene(pScene);
 }
 
 TestScene::TestScene()

@@ -82,7 +82,7 @@ void ActionManagerTest::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
@@ -107,7 +107,7 @@ void ActionManagerTest::restartCallback(NSObject* pSender)
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild(restartActionManagerAction()); 
 
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -115,7 +115,7 @@ void ActionManagerTest::nextCallback(NSObject* pSender)
 {
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild( nextActionManagerAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 }
 
@@ -123,7 +123,7 @@ void ActionManagerTest::backCallback(NSObject* pSender)
 {
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild( backActionManagerAction() );
-	CCDirector::getSharedDirector()->replaceScene(s);
+	CCDirector::sharedDirector()->replaceScene(s);
     s->release();
 } 
 
@@ -214,7 +214,7 @@ void PauseTest::onEnter()
 	//
 	ActionManagerTest::onEnter();
 	
-	CGSize s = CCDirector::getSharedDirector()->getWinSize();
+	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabel* l = CCLabel::labelWithString("After 5 seconds grossini should move", "Thonburi", 16);
 	addChild(l);
@@ -256,7 +256,7 @@ void RemoveTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabel* l = CCLabel::labelWithString("Should not crash", "Thonburi", 16);
     addChild(l);
@@ -299,7 +299,7 @@ void ResumeTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabel* l = CCLabel::labelWithString("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
     addChild(l);
@@ -335,5 +335,5 @@ void ActionManagerTestScene::runThisTest()
     CCLayer* pLayer = nextActionManagerAction();
     addChild(pLayer);
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

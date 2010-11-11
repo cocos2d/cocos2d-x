@@ -183,20 +183,7 @@ Int32 SoundPlayer::GetFileBufferSize(const char* pszFilePath)
 
     if (OpenAudioFile(pszFilePath))
     {
-        const TMM_AudioInfo* pAudioInfo = m_pPlayer->GetAudioInfo();
-        Int32  samplesPerSec = pAudioInfo->samplesPerSec;
-        Int32  bitsPerSample = pAudioInfo->bitsPerSample;
-        Int32  channelNum    = pAudioInfo->channelNum;
-        UInt32 durationInSec = pAudioInfo->durationInSec;
-
-        if (durationInSec == 0)
-        {
-            durationInSec = 1;
-        }
-        nRet = samplesPerSec * bitsPerSample * channelNum / 8 * durationInSec;
-
-//        nRet = m_pPlayer->GetDecodedAudioSize();
-
+        nRet = m_pPlayer->GetDecodedAudioSize();
         m_pPlayer->Close();
     }
 

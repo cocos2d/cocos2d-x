@@ -8,7 +8,7 @@ void DrawPrimitivesTest::draw()
 {
 	CCLayer::draw();
 
-    CGSize s = CCDirector::getSharedDirector()->getWinSize();
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// draw a simple line
 	// The default state is:
@@ -84,5 +84,5 @@ void DrawPrimitivesTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }

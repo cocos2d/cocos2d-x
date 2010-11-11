@@ -35,7 +35,7 @@ to transition to the scene beneath it simulating a page turn.
 This uses a 3DAction so it's strongly recommended that depth buffering
 is turned on in CCDirector using:
 
- CCDirector::getSharedDirector()->setDepthBufferFormat(kDepthBuffer16);
+ CCDirector::sharedDirector()->setDepthBufferFormat(kDepthBuffer16);
 
  @since v0.8.2
 */

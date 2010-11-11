@@ -238,14 +238,14 @@ void TransitionsTestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
 
-    CCDirector::getSharedDirector()->replaceScene(this);
+    CCDirector::sharedDirector()->replaceScene(this);
 }
 
 TestLayer1::TestLayer1(void)
 {
     float x,y;
 
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
     x = size.width;
     y = size.height;
 
@@ -297,7 +297,7 @@ void TestLayer1::restartCallback(NSObject* pSender)
     pLayer->release();
     if (pScene)
     {
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
     }    
 }
 
@@ -316,7 +316,7 @@ void TestLayer1::nextCallback(NSObject* pSender)
     pLayer->release();
     if (pScene)
     {
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
     }
 }
 
@@ -337,7 +337,7 @@ void TestLayer1::backCallback(NSObject* pSender)
     pLayer->release();
     if (pScene)
     {
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
     }
 }
 
@@ -350,7 +350,7 @@ TestLayer2::TestLayer2()
 {
     float x,y;
 
-    CGSize size = CCDirector::getSharedDirector()->getWinSize();
+    CGSize size = CCDirector::sharedDirector()->getWinSize();
     x = size.width;
     y = size.height;
 
@@ -402,7 +402,7 @@ void TestLayer2::restartCallback(NSObject* pSender)
     pLayer->release();
     if (pScene)
     {
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
     }
 }
 
@@ -421,7 +421,7 @@ void TestLayer2::nextCallback(NSObject* pSender)
     pLayer->release();
     if (pScene)
     {
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
     }
 }
 
@@ -442,7 +442,7 @@ void TestLayer2::backCallback(NSObject* pSender)
     pLayer->release();
     if (pScene)
     {
-        CCDirector::getSharedDirector()->replaceScene(pScene);
+        CCDirector::sharedDirector()->replaceScene(pScene);
     }
 }
 
