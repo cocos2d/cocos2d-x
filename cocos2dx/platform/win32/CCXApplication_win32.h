@@ -38,11 +38,23 @@ public:
     virtual ~CCXApplication();
 
     /**
-    @brief	Implement CCDirector and sense init code here.
+    @brief	Implement Window create, CCDirector and CCScene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
-    virtual bool initCocos2d() = 0;
+    virtual bool applicationDidFinishLaunching() = 0;
+    
+    /**
+    @brief  The function be called when the application enter background
+    @param  the pointer of the application
+    */
+    virtual void applicationDidEnterBackground() {}
+    
+    /**
+    @brief  The function be called when the application enter foreground
+    @param  the pointer of the application
+    */
+    virtual void applicationWillEnterForeground() {}
 
     /**
     @brief	rotate main window by device orientation.
@@ -57,24 +69,12 @@ public:
     CGRect statusBarFrame();
 
     /**
-    @brief  The function be called when the application enter background
-    @param  the pointer of the application
-    */
-    virtual void applicationDidEnterBackground() {}
-
-    /**
-    @brief  The function be called when the application enter foreground
-    @param  the pointer of the application
-    */
-    virtual void applicationWillEnterForeground() {}
-
-    /**
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
     static CCXApplication * getSharedApplication();
 
-	virtual bool InitInstance();
+
 	virtual int Run();
 
 protected:

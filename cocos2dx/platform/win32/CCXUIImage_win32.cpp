@@ -149,6 +149,17 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 		break;
 	}
     
+	if (!bRet)
+	{
+		// notify the loading error
+		std::string strErr = "Load ";
+		strErr += strPath;
+		strErr += " failed!";
+		std::wstring wsErr(strErr.length(), L'');
+		std::copy(strErr.begin(), strErr.end(), wsErr.begin());
+		MessageBox(NULL, wsErr.c_str(), L"cocos2d-x error", MB_OK);
+	}
+
 	return bRet;
 }
 
