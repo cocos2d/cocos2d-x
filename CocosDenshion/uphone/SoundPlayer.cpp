@@ -9,7 +9,7 @@ SoundPlayer::SoundPlayer()
 , m_pMediaFile(NULL)
 , m_MethodEmun(NULL)
 , m_nCurrentSoundID(0)
-, m_bPaused(FALSE)
+//, m_bPaused(FALSE)
 {
     // TCOM初始化，使用TCOM组件前必须先初始化
     TCoInitialize(NULL);           
@@ -53,7 +53,7 @@ Boolean SoundPlayer::OpenAudioFile(const char* pszFilePath)
         BREAK_IF(!EOS_IsFileExist(m_fileName));
 
         m_pMediaFile->SetName(m_fileName);
-        BREAK_IF(! m_pPlayer->Open());
+        BREAK_IF(! m_pPlayer || ! m_pPlayer->Open());
 
         bRet = TRUE;
     } while (0);
@@ -128,19 +128,17 @@ void SoundPlayer::Release()
 
 void SoundPlayer::Pause()
 {
-    if (! m_bPaused)
+    if (m_pPlayer)
     {
         m_pPlayer->Pause();
-        m_bPaused = TRUE;
     }
 }
 
 void SoundPlayer::Resume()
 {
-    if (m_bPaused)
+    if (m_pPlayer)
     {
         m_pPlayer->Pause();
-        m_bPaused = FALSE;
     }
 }
 
@@ -171,10 +169,9 @@ void SoundPlayer::Mute(bool bMute)
 
 bool SoundPlayer::IsPlaying()
 {
-//     TMediaPlayerStatus status = m_pPlayer->GetCurrentStatus();
-// 
-//     return (status == PLAYER_STATUS_PLAYING || status == PLAYER_STATUS_PAUSED);
-    return false;
+    TMediaPlayerStatus status = m_pPlayer->GetCurrentStatus();
+
+    return (status == PLAYER_STATUS_PLAYING || status == PLAYER_STATUS_PAUSED);
 }
 
 Int32 SoundPlayer::GetFileBufferSize(const char* pszFilePath)
