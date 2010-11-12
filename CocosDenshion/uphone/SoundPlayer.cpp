@@ -9,7 +9,6 @@ SoundPlayer::SoundPlayer()
 , m_pMediaFile(NULL)
 , m_MethodEmun(NULL)
 , m_nCurrentSoundID(0)
-//, m_bPaused(FALSE)
 {
     // TCOM初始化，使用TCOM组件前必须先初始化
     TCoInitialize(NULL);           
