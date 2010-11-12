@@ -27,7 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion_uphone", "Coc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocosTemplate", "template\cocosTemplate.vcproj", "{A2338E7B-155B-4A3B-AB4B-518ECDD26564}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_uphone", "test_uphone\proj.uphone\test_uphone.vcproj", "{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_uphone", "tests\proj.uphone\test_uphone.vcproj", "{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
 		{83C75293-906B-432E-80B9-A0041043E380} = {83C75293-906B-432E-80B9-A0041043E380}
