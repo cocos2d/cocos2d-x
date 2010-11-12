@@ -26,7 +26,12 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
-#include <GLES/glext.h>
+
+#ifdef IPHONE
+    #include <OpenGLES/ES1/glext.h>
+#else
+    #include <GLES/glext.h>
+#endif
 
 namespace cocos2d { 
 
