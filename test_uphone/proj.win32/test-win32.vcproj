@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\cocos2dx;..\cocos2dx\include;..\;..\chipmunk\include\chipmunk;.\tests;..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;...\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\cocos2dx;..\cocos2dx\include;..\;..\chipmunk\include\chipmunk;.\tests;..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;...\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -178,14 +178,14 @@
 	</References>
 	<Files>
 		<Filter
-			Name="include"
+			Name="framework"
 			>
 			<File
-				RelativePath=".\AppDelegate.h"
+				RelativePath="..\framework.win32\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\main.h"
+				RelativePath="..\framework.win32\main.h"
 				>
 			</File>
 		</Filter>
@@ -193,11 +193,11 @@
 			Name="source"
 			>
 			<File
-				RelativePath=".\AppDelegate.cpp"
+				RelativePath="..\AppDelegate.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath="..\AppDelegate.h"
 				>
 			</File>
 		</Filter>
@@ -205,38 +205,38 @@
 			Name="tests"
 			>
 			<File
-				RelativePath=".\tests\controller.cpp"
+				RelativePath="..\tests\controller.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\tests\controller.h"
+				RelativePath="..\tests\controller.h"
 				>
 			</File>
 			<File
-				RelativePath=".\tests\testBasic.cpp"
+				RelativePath="..\tests\testBasic.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\tests\testBasic.h"
+				RelativePath="..\tests\testBasic.h"
 				>
 			</File>
 			<File
-				RelativePath=".\tests\testResource.h"
+				RelativePath="..\tests\testResource.h"
 				>
 			</File>
 			<File
-				RelativePath=".\tests\tests.h"
+				RelativePath="..\tests\tests.h"
 				>
 			</File>
 			<Filter
 				Name="ActionsTest"
 				>
 				<File
-					RelativePath=".\tests\ActionsTest\ActionsTest.cpp"
+					RelativePath="..\tests\ActionsTest\ActionsTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ActionsTest\ActionsTest.h"
+					RelativePath="..\tests\ActionsTest\ActionsTest.h"
 					>
 				</File>
 			</Filter>
@@ -244,11 +244,11 @@
 				Name="TransitionsTest"
 				>
 				<File
-					RelativePath=".\tests\TransitionsTest\TransitionsTest.cpp"
+					RelativePath="..\tests\TransitionsTest\TransitionsTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\TransitionsTest\TransitionsTest.h"
+					RelativePath="..\tests\TransitionsTest\TransitionsTest.h"
 					>
 				</File>
 			</Filter>
@@ -256,11 +256,11 @@
 				Name="ProgressActionsTest"
 				>
 				<File
-					RelativePath=".\tests\ProgressActionsTest\ProgressActionsTest.cpp"
+					RelativePath="..\tests\ProgressActionsTest\ProgressActionsTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ProgressActionsTest\ProgressActionsTest.h"
+					RelativePath="..\tests\ProgressActionsTest\ProgressActionsTest.h"
 					>
 				</File>
 			</Filter>
@@ -268,11 +268,11 @@
 				Name="EffectsTest"
 				>
 				<File
-					RelativePath=".\tests\EffectsTest\EffectsTest.cpp"
+					RelativePath="..\tests\EffectsTest\EffectsTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\EffectsTest\EffectsTest.h"
+					RelativePath="..\tests\EffectsTest\EffectsTest.h"
 					>
 				</File>
 			</Filter>
@@ -280,11 +280,11 @@
 				Name="ClickAndMoveTest"
 				>
 				<File
-					RelativePath=".\tests\ClickAndMoveTest\ClickAndMoveTest.cpp"
+					RelativePath="..\tests\ClickAndMoveTest\ClickAndMoveTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ClickAndMoveTest\ClickAndMoveTest.h"
+					RelativePath="..\tests\ClickAndMoveTest\ClickAndMoveTest.h"
 					>
 				</File>
 			</Filter>
@@ -292,11 +292,11 @@
 				Name="RotateWorldTest"
 				>
 				<File
-					RelativePath=".\tests\RotateWorldTest\RotateWorldTest.cpp"
+					RelativePath="..\tests\RotateWorldTest\RotateWorldTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\RotateWorldTest\RotateWorldTest.h"
+					RelativePath="..\tests\RotateWorldTest\RotateWorldTest.h"
 					>
 				</File>
 			</Filter>
@@ -304,11 +304,11 @@
 				Name="ParticleTest"
 				>
 				<File
-					RelativePath=".\tests\ParticleTest\ParticleTest.cpp"
+					RelativePath="..\tests\ParticleTest\ParticleTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ParticleTest\ParticleTest.h"
+					RelativePath="..\tests\ParticleTest\ParticleTest.h"
 					>
 				</File>
 			</Filter>
@@ -316,11 +316,11 @@
 				Name="EaseActionsTest"
 				>
 				<File
-					RelativePath=".\tests\EaseActionsTest\EaseActionsTest.cpp"
+					RelativePath="..\tests\EaseActionsTest\EaseActionsTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\EaseActionsTest\EaseActionsTest.h"
+					RelativePath="..\tests\EaseActionsTest\EaseActionsTest.h"
 					>
 				</File>
 			</Filter>
@@ -328,11 +328,11 @@
 				Name="MotionStreakTest"
 				>
 				<File
-					RelativePath=".\tests\MotionStreakTest\MotionStreakTest.cpp"
+					RelativePath="..\tests\MotionStreakTest\MotionStreakTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\MotionStreakTest\MotionStreakTest.h"
+					RelativePath="..\tests\MotionStreakTest\MotionStreakTest.h"
 					>
 				</File>
 			</Filter>
@@ -340,11 +340,11 @@
 				Name="DrawPrimitivesTest"
 				>
 				<File
-					RelativePath=".\tests\DrawPrimitivesTest\DrawPrimitivesTest.cpp"
+					RelativePath="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\DrawPrimitivesTest\DrawPrimitivesTest.h"
+					RelativePath="..\tests\DrawPrimitivesTest\DrawPrimitivesTest.h"
 					>
 				</File>
 			</Filter>
@@ -352,11 +352,11 @@
 				Name="CocosNodeTest"
 				>
 				<File
-					RelativePath=".\tests\CocosNodeTest\CocosNodeTest.cpp"
+					RelativePath="..\tests\CocosNodeTest\CocosNodeTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\CocosNodeTest\CocosNodeTest.h"
+					RelativePath="..\tests\CocosNodeTest\CocosNodeTest.h"
 					>
 				</File>
 			</Filter>
@@ -364,27 +364,27 @@
 				Name="TouchesTest"
 				>
 				<File
-					RelativePath=".\tests\TouchesTest\Ball.cpp"
+					RelativePath="..\tests\TouchesTest\Ball.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\TouchesTest\Ball.h"
+					RelativePath="..\tests\TouchesTest\Ball.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\TouchesTest\Paddle.cpp"
+					RelativePath="..\tests\TouchesTest\Paddle.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\TouchesTest\Paddle.h"
+					RelativePath="..\tests\TouchesTest\Paddle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\TouchesTest\TouchesTest.cpp"
+					RelativePath="..\tests\TouchesTest\TouchesTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\TouchesTest\TouchesTest.h"
+					RelativePath="..\tests\TouchesTest\TouchesTest.h"
 					>
 				</File>
 			</Filter>
@@ -392,11 +392,11 @@
 				Name="MenuTest"
 				>
 				<File
-					RelativePath=".\tests\MenuTest\MenuTest.cpp"
+					RelativePath="..\tests\MenuTest\MenuTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\MenuTest\MenuTest.h"
+					RelativePath="..\tests\MenuTest\MenuTest.h"
 					>
 				</File>
 			</Filter>
@@ -404,11 +404,11 @@
 				Name="ActionManagerTest"
 				>
 				<File
-					RelativePath=".\tests\ActionManagerTest\ActionManagerTest.cpp"
+					RelativePath="..\tests\ActionManagerTest\ActionManagerTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ActionManagerTest\ActionManagerTest.h"
+					RelativePath="..\tests\ActionManagerTest\ActionManagerTest.h"
 					>
 				</File>
 			</Filter>
@@ -416,11 +416,11 @@
 				Name="LayerTest"
 				>
 				<File
-					RelativePath=".\tests\LayerTest\LayerTest.cpp"
+					RelativePath="..\tests\LayerTest\LayerTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\LayerTest\LayerTest.h"
+					RelativePath="..\tests\LayerTest\LayerTest.h"
 					>
 				</File>
 			</Filter>
@@ -428,11 +428,11 @@
 				Name="SceneTest"
 				>
 				<File
-					RelativePath=".\tests\SceneTest\SceneTest.cpp"
+					RelativePath="..\tests\SceneTest\SceneTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\SceneTest\SceneTest.h"
+					RelativePath="..\tests\SceneTest\SceneTest.h"
 					>
 				</File>
 			</Filter>
@@ -440,11 +440,11 @@
 				Name="ParallaxTest"
 				>
 				<File
-					RelativePath=".\tests\ParallaxTest\ParallaxTest.cpp"
+					RelativePath="..\tests\ParallaxTest\ParallaxTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ParallaxTest\ParallaxTest.h"
+					RelativePath="..\tests\ParallaxTest\ParallaxTest.h"
 					>
 				</File>
 			</Filter>
@@ -452,11 +452,11 @@
 				Name="TileMapTest"
 				>
 				<File
-					RelativePath=".\tests\TileMapTest\TileMapTest.cpp"
+					RelativePath="..\tests\TileMapTest\TileMapTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\TileMapTest\TileMapTest.h"
+					RelativePath="..\tests\TileMapTest\TileMapTest.h"
 					>
 				</File>
 			</Filter>
@@ -464,11 +464,11 @@
 				Name="IntervalTest"
 				>
 				<File
-					RelativePath=".\tests\IntervalTest\IntervalTest.cpp"
+					RelativePath="..\tests\IntervalTest\IntervalTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\IntervalTest\IntervalTest.h"
+					RelativePath="..\tests\IntervalTest\IntervalTest.h"
 					>
 				</File>
 			</Filter>
@@ -476,11 +476,11 @@
 				Name="AtlasTest"
 				>
 				<File
-					RelativePath=".\tests\AtlasTest\AtlasTest.cpp"
+					RelativePath="..\tests\AtlasTest\AtlasTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\AtlasTest\AtlasTest.h"
+					RelativePath="..\tests\AtlasTest\AtlasTest.h"
 					>
 				</File>
 			</Filter>
@@ -488,11 +488,11 @@
 				Name="SpriteTest"
 				>
 				<File
-					RelativePath=".\tests\SpriteTest\SpriteTest.cpp"
+					RelativePath="..\tests\SpriteTest\SpriteTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\SpriteTest\SpriteTest.h"
+					RelativePath="..\tests\SpriteTest\SpriteTest.h"
 					>
 				</File>
 			</Filter>
@@ -500,11 +500,11 @@
 				Name="SchedulerTest"
 				>
 				<File
-					RelativePath=".\tests\SchedulerTest\SchedulerTest.cpp"
+					RelativePath="..\tests\SchedulerTest\SchedulerTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\SchedulerTest\SchedulerTest.h"
+					RelativePath="..\tests\SchedulerTest\SchedulerTest.h"
 					>
 				</File>
 			</Filter>
@@ -512,11 +512,11 @@
 				Name="RenderTextureTest"
 				>
 				<File
-					RelativePath=".\tests\RenderTextureTest\RenderTextureTest.cpp"
+					RelativePath="..\tests\RenderTextureTest\RenderTextureTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\RenderTextureTest\RenderTextureTest.h"
+					RelativePath="..\tests\RenderTextureTest\RenderTextureTest.h"
 					>
 				</File>
 			</Filter>
@@ -524,95 +524,95 @@
 				Name="ChipmunkTest"
 				>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Bounce.cpp"
+					RelativePath="..\tests\ChipmunkTest\Bounce.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\ChipmunkDemo.h"
+					RelativePath="..\tests\ChipmunkTest\ChipmunkDemo.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\cocos2dChipmunkDemo.cpp"
+					RelativePath="..\tests\ChipmunkTest\cocos2dChipmunkDemo.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\cocos2dChipmunkDemo.h"
+					RelativePath="..\tests\ChipmunkTest\cocos2dChipmunkDemo.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\drawSpace.cpp"
+					RelativePath="..\tests\ChipmunkTest\drawSpace.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\drawSpace.h"
+					RelativePath="..\tests\ChipmunkTest\drawSpace.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Joints.cpp"
+					RelativePath="..\tests\ChipmunkTest\Joints.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\LogoSmash.cpp"
+					RelativePath="..\tests\ChipmunkTest\LogoSmash.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\MagnetsElectric.cpp"
+					RelativePath="..\tests\ChipmunkTest\MagnetsElectric.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\OneWay.cpp"
+					RelativePath="..\tests\ChipmunkTest\OneWay.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Planet.cpp"
+					RelativePath="..\tests\ChipmunkTest\Planet.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Player.cpp"
+					RelativePath="..\tests\ChipmunkTest\Player.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Plink.cpp"
+					RelativePath="..\tests\ChipmunkTest\Plink.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Pump.cpp"
+					RelativePath="..\tests\ChipmunkTest\Pump.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\PyramidStack.cpp"
+					RelativePath="..\tests\ChipmunkTest\PyramidStack.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\PyramidTopple.cpp"
+					RelativePath="..\tests\ChipmunkTest\PyramidTopple.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Query.cpp"
+					RelativePath="..\tests\ChipmunkTest\Query.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Sensors.cpp"
+					RelativePath="..\tests\ChipmunkTest\Sensors.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Simple.cpp"
+					RelativePath="..\tests\ChipmunkTest\Simple.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Springies.cpp"
+					RelativePath="..\tests\ChipmunkTest\Springies.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\TheoJansen.cpp"
+					RelativePath="..\tests\ChipmunkTest\TheoJansen.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\Tumble.cpp"
+					RelativePath="..\tests\ChipmunkTest\Tumble.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\ChipmunkTest\UnsafeOps.cpp"
+					RelativePath="..\tests\ChipmunkTest\UnsafeOps.cpp"
 					>
 				</File>
 			</Filter>
@@ -620,11 +620,11 @@
 				Name="Box2dTest"
 				>
 				<File
-					RelativePath=".\tests\Box2DTest\Box2dTest.cpp"
+					RelativePath="..\tests\Box2DTest\Box2dTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\Box2DTest\Box2dTest.h"
+					RelativePath="..\tests\Box2DTest\Box2dTest.h"
 					>
 				</File>
 			</Filter>
@@ -632,182 +632,182 @@
 				Name="Box2DTestBed"
 				>
 				<File
-					RelativePath=".\tests\Box2DTestBed\Box2dView.cpp"
+					RelativePath="..\tests\Box2DTestBed\Box2dView.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\Box2DTestBed\Box2dView.h"
+					RelativePath="..\tests\Box2DTestBed\Box2dView.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\Box2DTestBed\GLES-Render.cpp"
+					RelativePath="..\tests\Box2DTestBed\GLES-Render.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\Box2DTestBed\GLES-Render.h"
+					RelativePath="..\tests\Box2DTestBed\GLES-Render.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\Box2DTestBed\Test.cpp"
+					RelativePath="..\tests\Box2DTestBed\Test.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\Box2DTestBed\Test.h"
+					RelativePath="..\tests\Box2DTestBed\Test.h"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\Box2DTestBed\TestEntries.cpp"
+					RelativePath="..\tests\Box2DTestBed\TestEntries.cpp"
 					>
 				</File>
 				<Filter
 					Name="Tests"
 					>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\ApplyForce.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\ApplyForce.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\BodyTypes.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\BodyTypes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Breakable.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Breakable.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Bridge.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Bridge.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Cantilever.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Cantilever.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Chain.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Chain.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\CharacterCollision.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\CharacterCollision.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\CollisionFiltering.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\CollisionFiltering.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\CollisionProcessing.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\CollisionProcessing.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\CompoundShapes.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\CompoundShapes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Confined.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Confined.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\ContinuousTest.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\ContinuousTest.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\DistanceTest.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\DistanceTest.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Dominos.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Dominos.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\DynamicTreeTest.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\DynamicTreeTest.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\EdgeShapes.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\EdgeShapes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\ElasticBody.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\ElasticBody.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Gears.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Gears.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\LineJoint.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\LineJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\OneSidedPlatform.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\OneSidedPlatform.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\PolyCollision.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\PolyCollision.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\PolyShapes.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\PolyShapes.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Prismatic.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Prismatic.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Pulleys.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Pulleys.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Pyramid.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Pyramid.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\RayCast.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\RayCast.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Revolute.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Revolute.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\SensorTest.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\SensorTest.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\ShapeEditing.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\ShapeEditing.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\SliderCrank.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\SliderCrank.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\SphereStack.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\SphereStack.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\TheoJansen.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\TheoJansen.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\TimeOfImpact.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\TimeOfImpact.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\VaryingFriction.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\VaryingFriction.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\VaryingRestitution.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\VaryingRestitution.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\VerticalStack.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\VerticalStack.h"
 						>
 					</File>
 					<File
-						RelativePath=".\tests\Box2DTestBed\Tests\Web.h"
+						RelativePath="..\tests\Box2DTestBed\Tests\Web.h"
 						>
 					</File>
 				</Filter>
@@ -816,11 +816,11 @@
 				Name="EffectsAdvancedTest"
 				>
 				<File
-					RelativePath=".\tests\EffectsAdvancedTest\EffectsAdvancedTest.cpp"
+					RelativePath="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\EffectsAdvancedTest\EffectsAdvancedTest.h"
+					RelativePath="..\tests\EffectsAdvancedTest\EffectsAdvancedTest.h"
 					>
 				</File>
 			</Filter>
@@ -828,11 +828,11 @@
 				Name="HiResTest"
 				>
 				<File
-					RelativePath=".\tests\HiResTest\HiResTest.cpp"
+					RelativePath="..\tests\HiResTest\HiResTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\tests\HiResTest\HiResTest.h"
+					RelativePath="..\tests\HiResTest\HiResTest.h"
 					>
 				</File>
 			</Filter>

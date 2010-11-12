@@ -17,8 +17,8 @@ extern const AppResourceEntry cocosTemplateResourceEntry;
 bool AppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
-	if ( ! (m_pMainWnd = new CCXEGLView(this)) || 
-		!m_pMainWnd->Create(&m_rcWnd))
+	if (!(m_pMainWnd = new CCXEGLView(this)) || 
+		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
 	{
 		delete m_pMainWnd;
 		return false;
@@ -51,8 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
 AppDelegate::AppDelegate()
-:m_rcWnd(0, 0, GetScreenWidth(), GetScreenHeight())
-,m_pMainWnd(NULL)
+:m_pMainWnd(NULL)
 {
 
 }

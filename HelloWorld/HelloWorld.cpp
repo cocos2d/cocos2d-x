@@ -37,7 +37,6 @@ public:
 // AppDelegate
 
 HelloWorldAppDelegate::HelloWorldAppDelegate() 
-: m_rcWnd(0, 0, GetScreenWidth(), GetScreenHeight())
 , m_pMainWnd(NULL)
 {
 
@@ -46,8 +45,8 @@ HelloWorldAppDelegate::HelloWorldAppDelegate()
 bool HelloWorldAppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
-	if ( ! (m_pMainWnd = new CCXEGLView(this)) || 
-		!m_pMainWnd->Create(&m_rcWnd))
+	if (!(m_pMainWnd = new CCXEGLView(this)) || 
+		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
 	{
 		delete m_pMainWnd;
 		return false;

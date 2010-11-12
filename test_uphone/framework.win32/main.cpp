@@ -1,5 +1,5 @@
 #include "main.h"
-#include "AppDelegate.h"
+#include "../AppDelegate.h"
 
 HINSTANCE g_hInstance;
 
