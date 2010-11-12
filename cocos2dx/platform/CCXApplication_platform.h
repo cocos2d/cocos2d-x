@@ -33,6 +33,8 @@ THE SOFTWARE.
     #include "win32/CCXApplication_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
     #include "android/CCXApplication_android.h"
+#elif defined(CCX_PLATFORM_IPHONE)
+    #include "iphone/CCXApplication_iphone.h"
 #else
     #error
 #endif

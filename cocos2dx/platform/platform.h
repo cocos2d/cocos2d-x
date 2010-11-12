@@ -46,6 +46,12 @@ THE SOFTWARE.
     #include "android/Cocos2dTypes.h"
     #include "android/CCXBitmapDC.h"
     #include "android/ZipUtils.h"
+#elif defined(CCX_PLATFORM_IPHONE)
+    #include "iphone/CCTime.h"
+    #include "iphone/NSLock.h"
+    #include "iphone/Cocos2dTypes.h"
+    #include "iphone/CCXBitmapDC.h"
+    #include "iphone/ZipUtils.h"
 #else 
     #error
 #endif

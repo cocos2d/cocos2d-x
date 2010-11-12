@@ -33,6 +33,8 @@ THE SOFTWARE.
     #include "win32/CCXEGLView_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
     #include "android/CCXEGLView_android.h"
+#elif defined(CCX_PLATFORM_IPHONE)
+    #include "iphone/CCXEGLView_iphone.h"
 #else
     #error
 #endif
