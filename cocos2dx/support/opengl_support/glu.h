@@ -25,7 +25,12 @@ THE SOFTWARE.
 #ifndef __SUPPORT_OPGL_SUPPORT_GLU_H__
 #define __SUPPORT_OPGL_SUPPORT_GLU_H__
 
-#include <GLES/gl.h>
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+#else
+    #include <GLES/gl.h>
+#endif
+
 namespace   cocos2d {
 
 /**

@@ -26,7 +26,11 @@ THE SOFTWARE.
 
 #include "NSObject.h"
 
-#include <GLES/gl.h>
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+#else
+    #include <GLES/gl.h>
+#endif
 
 namespace cocos2d 
 {

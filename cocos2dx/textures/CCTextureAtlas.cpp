@@ -237,7 +237,9 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 	if( oldIndex == newIndex )
 		return;
 
-	unsigned int howMany = abs( oldIndex - newIndex);
+	// because it is ambigious in iphone, so we implement abs ourself
+	// unsigned int howMany = abs( oldIndex - newIndex);
+	unsigned int howMany = (oldIndex - newIndex) >= 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
 	int dst = oldIndex;
 	int src = oldIndex + 1;
 	if( oldIndex > newIndex) {

@@ -25,8 +25,13 @@ THE SOFTWARE.
 #include "CCDrawingPrimitives.h"
 
 #include <string.h>
-#include <GLES/gl.h>
 #include <cmath>
+
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+#else
+    #include <GLES/gl.h>
+#endif
 
 #ifndef M_PI
 	#define M_PI       3.14159265358979323846

@@ -26,8 +26,14 @@ THE SOFTWARE.
 #define __CCCONFIGURATION_H__
 
 #include "NSObject.h"
-#include <GLES/gl.h>
 #include <string>
+
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+#else
+    #include <GLES/gl.h>
+#endif
+
 namespace   cocos2d {
 
 /**

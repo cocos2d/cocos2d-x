@@ -26,7 +26,12 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "support/opengl_support/OpenGL_Internal.h"
 #include "platform/platform.h"
-#include <GLES/glext.h>
+
+#ifdef IPHONE
+    #include <OpenGLES/ES1/glext.h>
+#else
+    #include <GLES/glext.h>
+#endif
 
 namespace cocos2d
 {

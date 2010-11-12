@@ -26,7 +26,13 @@ THE SOFTWARE.
 #define __CCTYPES_H__
 
 #include "CGGeometry.h"
-#include <GLES/gl.h>
+
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+#else
+    #include <GLES/gl.h>
+#endif
+
 namespace   cocos2d {
 
 /** RGB color composed of bytes 3 bytes

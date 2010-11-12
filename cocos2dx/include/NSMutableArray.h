@@ -76,7 +76,7 @@ public:
 			return 0;
 		}
 
-		NSMutableArray<T>::NSMutableArrayIterator iter;
+		NSMutableArrayIterator iter;
 		unsigned int uRet = 0;
 		int i;
 		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
@@ -99,7 +99,7 @@ public:
 		}
 
 		bool bRet = false;
-		NSMutableArray<T>::NSMutableArrayIterator iter;
+		NSMutableArrayIterator iter;
 		for (iter = m_array.begin(); iter != m_array.end(); ++iter)
 		{
 			if (*iter == pObject)
@@ -178,7 +178,7 @@ public:
 	{
 		if (pArray && pArray->count() > 0)
 		{
-			NSMutableArray<T>::NSMutableArrayIterator iter;
+			NSMutableArrayIterator iter;
 			for (iter = pArray->begin(); iter != pArray->end(); ++iter)
 			{
 				if (*iter)
@@ -229,7 +229,7 @@ public:
 			return;
 		}
 
-		NSMutableArray<T>::NSMutableArrayIterator iter;
+		NSMutableArrayIterator iter;
 		int i;
 		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
 		{
@@ -282,7 +282,7 @@ public:
 	{
 		if (bDeleteObject)
 		{
-			NSMutableArray<T>::NSMutableArrayIterator iter;
+			NSMutableArrayIterator iter;
 			for (iter = m_array.begin(); iter != m_array.end(); ++iter)
 			{
 				if (*iter)
