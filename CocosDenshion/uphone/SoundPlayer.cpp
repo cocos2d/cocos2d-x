@@ -8,25 +8,18 @@ SoundPlayer::SoundPlayer()
 : m_pPlayer(NULL)
 , m_pMediaFile(NULL)
 , m_MethodEmun(NULL)
-, m_nCurrentSoundID(0)
 {
-    // TCOM初始化，使用TCOM组件前必须先初始化
     TCoInitialize(NULL);           
-    // 创建播放器组件实例
-    if(m_MethodEmun.EnumMethod(TIID_DataType_SysFile, 0,  TIID_MediaPlayer_Method_Play )>0) //<=0表示没找到方法
-    {           
-        //获得数据类型接口
+    if(m_MethodEmun.EnumMethod(TIID_DataType_SysFile, 0,  TIID_MediaPlayer_Method_Play )>0)
+    {
         if(m_MethodEmun.GetDataTypeInterface(0,TCOM_CLSCTX_INPROC_SERVER,(LPVOID *)&m_pMediaFile)>= 0) 
         {
-            //查询方法接口
             HRESULT hr = m_pMediaFile->QueryInterface( TIID_MediaPlayer_Method_Play ,(LPVOID*)&m_pPlayer);
             if(TCOM_S_FAIL(hr))
             {
-                // 错误处理
             }
             else
             {
-                // 设置默认的音量
                 m_pPlayer->SetVolume(100);
             }
         }
@@ -77,7 +70,6 @@ void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, const char* FileNa
 
         if (! strlen(FileName))
         {
-            // 没有指定文件名，按照 .wav 格式解析
             const TUChar ExtendName[] = {'.', 'w', 'a', 'v', 0};
             const TUChar format[]     = { '%', 'd', 0};
             TUString::StrPrintF(m_fileName, format, nSize);
@@ -85,7 +77,6 @@ void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, const char* FileNa
         }
         else
         {
-            // 使用指定的文件名
             TUString::StrGBToUnicode(m_fileName, (const Char*)(FileName));
         }
 
@@ -110,7 +101,6 @@ void SoundPlayer::SetVolumeValue(Int32 nValue)
 
 void SoundPlayer::Release()
 {
-    // 释放播放器组件指针
     if (m_pPlayer)
     {
         m_pPlayer->Release();
@@ -122,7 +112,7 @@ void SoundPlayer::Release()
         m_pMediaFile = NULL;
     }
 
-    TCoUninitialize(); // TCOM反初始化，释放TCOM资源
+    TCoUninitialize();
 }
 
 void SoundPlayer::Pause()
@@ -170,7 +160,7 @@ bool SoundPlayer::IsPlaying()
 {
     TMediaPlayerStatus status = m_pPlayer->GetCurrentStatus();
 
-    return (status == PLAYER_STATUS_PLAYING || status == PLAYER_STATUS_PAUSED);
+    return (status == PLAYER_STATUS_PLAYING);
 }
 
 Int32 SoundPlayer::GetFileBufferSize(const char* pszFilePath)
@@ -200,14 +190,4 @@ Int32 SoundPlayer::DecodeFile(void* buffer, Int32 bufferLen, const char* pszFile
     }
 
     return nRet;
-}
-
-void SoundPlayer::SetCurrentSoundID(Int32 nSoundID)
-{
-    m_nCurrentSoundID = nSoundID;
-}
-
-Int32 SoundPlayer::GetCurrentSoundID()
-{
-    return m_nCurrentSoundID;
 }

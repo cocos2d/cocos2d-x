@@ -27,6 +27,10 @@ THE SOFTWARE.
 
 #include "../Export.h"
 
+/**
+@struct T_SoundResInfo
+@brief  The data type of resource name and resource ID
+*/
 typedef struct _tResourceInfo
 {
     const char* FileName;
@@ -43,24 +47,59 @@ public:
     SimpleAudioEngine();
     ~SimpleAudioEngine();
 
-    // get the Engine object
+    /**
+    @brief Get the shared Engine object,it will new one when first time be called
+    */
     static SimpleAudioEngine* getSharedEngine();
+
+    /**
+    @brief Release the shared Engine object
+    */
 	static void release();
 
-    // set the sound ResInfo
+    /**
+    @brief set the sound ResInfo,it's only used on platform-uphone now
+    */
     void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);
 
-    // set the resource entry
+    /**
+    @brief Set the resource entry,it's only used on platform-uphone now
+    */
     void setResourceEntry(const void* pResEntry);
 
-    // for background music
+    /**
+    @brief Play background music
+    @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
+    @param bLoop Whether the background music loop or not
+    */
     void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
+
+    /**
+    @brief Stop playing background music
+    */
     void stopBackgroundMusic();
+
+    /**
+    @brief Pause playing background music
+    */
     void pauseBackgroundMusic();
+
+    /**
+    @brief Resume playing background music
+    */
     void resumeBackgroundMusic();
+
+    /**
+    @brief Rewind playing background music
+    */
     void rewindBackgroundMusic();
 
     bool willPlayBackgroundMusic();
+
+    /**
+    @brief Whether the background music is playing
+    @return If is playing return true,or return false
+    */
     bool isBackgroundMusicPlaying();
 
     // properties
@@ -77,7 +116,17 @@ public:
     void SetEffectsVolume(int volume);
 
     // for sound effects
+    /**
+    @brief Play sound effect
+    @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
+    @return If play succeed return the effect sound ID,or return 0
+    */
     int playEffect(const char* pszFilePath);
+
+    /**
+    @brief Stop playing sound effect
+    @param nSoundId The return value of function playEffect or preloadEffect
+    */
     void stopEffect(int nSoundId);
 
     /*!***************************************************************************
