@@ -26,7 +26,12 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
-#include <GLES/gl.h>
+
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+#else
+    #include <GLES/gl.h>
+#endif
 
 #include "Cocos2dDefine.h"
 #include "NSObject.h"

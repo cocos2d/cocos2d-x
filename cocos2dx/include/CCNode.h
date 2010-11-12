@@ -33,7 +33,11 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 #include "selector_protocol.h"
 
-#include <GLES/gl.h>
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+#else
+    #include <GLES/gl.h>
+#endif
 
 namespace   cocos2d {
 class CCCamera;

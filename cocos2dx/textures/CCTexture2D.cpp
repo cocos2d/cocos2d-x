@@ -30,7 +30,6 @@ THE SOFTWARE.
 */
 
 #include "CCTexture2D.h"
-#include <GLES/glext.h>
 
 #include "ccConfig.h"
 #include "ccMacros.h"
@@ -38,6 +37,12 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
+
+#ifdef IPHONE
+    #include <OpenGLES/ES1/glext.h>
+#else
+    #include <GLES/glext.h>
+#endif
 
 #ifdef _POWERVR_SUPPORT_
     #include "CCPVRTexture.h"
@@ -292,9 +297,13 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 //			data = malloc(POTHigh * POTWide);
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
-
+#ifdef IPHONE
 			tempData = (void*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
+			
+			data = new UINT8[POTHigh * POTWide * 4];
+			memcpy(data, tempData, POTHigh * POTWide * 4);
+#else
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{
 				data = new UINT8[POTHigh * POTWide * 4];
@@ -313,6 +322,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
 				}
 			}
+#endif // IPHONE
 			break;    
 		case kCCTexture2DPixelFormat_RGB888:
 			tempData = (void*)(image->getData());

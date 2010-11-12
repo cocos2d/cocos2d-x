@@ -27,9 +27,14 @@ THE SOFTWARE.
 
 #include <string>
 
-//#import <UIKit/UIKit.h>
-#include <GLES/gl.h>
-#include <GLES/glext.h>
+#ifdef IPHONE
+    #include <OpenGLES/ES1/gl.h>
+    #include <OpenGLES/ES1/glext.h>
+#else
+    #include <GLES/gl.h>
+    #include <GLES/glext.h>
+#endif
+
 #include "Cocos2dDefine.h"
 #include "NSObject.h"
 #include "NSMutableArray.h"
