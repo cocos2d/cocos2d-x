@@ -35,11 +35,6 @@ CGRect CCXApplication::statusBarFrame()
 	return rc;
 }
 
-bool CCXApplication::InitInstance()
-{
-	return initCocos2d();
-}
-
 int CCXApplication::Run()
 {
 	// Main message loop:
@@ -47,6 +42,11 @@ int CCXApplication::Run()
 	DWORD dwTickLast = 0;
 	DWORD dwTickNow = 0;
 
+    if ( !applicationDidFinishLaunching() )
+    {
+        return 0;
+    }
+    
 	while (1)
 	{
 		if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
