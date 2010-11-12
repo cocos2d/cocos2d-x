@@ -41,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
 
-#if defined(CCX_PLPATFORM_UPHONE)
+#if defined(CCX_PLATFORM_UPHONE)
     // set the resource path
     CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
 #endif
