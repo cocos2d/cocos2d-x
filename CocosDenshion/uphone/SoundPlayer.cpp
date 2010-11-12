@@ -32,7 +32,7 @@ SoundPlayer::SoundPlayer()
         }
     }
 
-    MemSet(m_fileName, 0, sizeof(m_fileName));
+    MemSet(m_fileName, 0, sizeof(TUChar) * MAX_PATH);
 }
 
 SoundPlayer::~SoundPlayer()
