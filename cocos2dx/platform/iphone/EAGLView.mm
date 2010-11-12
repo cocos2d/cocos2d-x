@@ -69,6 +69,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "NSSet.h"
 #import "CCTouch.h"
 
+#ifdef self
+#undef self
+#endif
+
 //CLASS IMPLEMENTATIONS:
 
 static EAGLView *view;
@@ -241,7 +245,7 @@ static EAGLView *view;
 		pCocosTouch->release();
 	}
 	
-	cocos2d::CCDirector::getSharedDirector()->getOpenGLView()->touchesBegan(&set);
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -257,7 +261,7 @@ static EAGLView *view;
 		pCocosTouch->release();
 	}
 	
-	cocos2d::CCDirector::getSharedDirector()->getOpenGLView()->touchesMoved(&set);
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesMoved(&set);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -273,7 +277,7 @@ static EAGLView *view;
 		pCocosTouch->release();
 	}
 	
-	cocos2d::CCDirector::getSharedDirector()->getOpenGLView()->touchesEnded(&set);
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesEnded(&set);
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -288,7 +292,7 @@ static EAGLView *view;
 		pCocosTouch->release();
 	}
 	
-	cocos2d::CCDirector::getSharedDirector()->getOpenGLView()->touchesCancelled(&set);
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);
 }
 
 @end

@@ -9,6 +9,10 @@
 #import "CCDirectorCaller.h"
 #import "CCDirector.h"
 
+#ifdef self
+#undef self
+#endif
+
 static id s_sharedDirectorCaller;
 
 @interface NSObject(CADisplayLink)
@@ -51,7 +55,7 @@ static id s_sharedDirectorCaller;
 					  
 -(void) doCaller: (id) sender
 {
-	cocos2d::CCDirector::getSharedDirector()->preMainLoop();
+	cocos2d::CCDirector::sharedDirector()->preMainLoop();
 }
 
 @end

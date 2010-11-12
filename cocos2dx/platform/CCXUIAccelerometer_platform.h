@@ -32,6 +32,8 @@ THE SOFTWARE.
     #include "win32/CCXUIAccelerometer_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
     #include "android/CCXUIAccelerometer_android.h"
+#elif defined(CCX_PLATFORM_IPHONE)
+    #include "iphone/CCXUIAccelerometer_iphone.h"
 #else
     #error
 #endif
