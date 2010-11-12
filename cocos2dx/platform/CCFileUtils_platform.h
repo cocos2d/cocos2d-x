@@ -32,6 +32,8 @@ THE SOFTWARE.
     #include "win32/CCXFileUtils_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
     #include "android/CCXFileUtils_android.h"
+#elif defined(CCX_PLATFORM_IPHONE)
+    #include "iphone/CCXFileUtils_iphone.h"
 #else
     #error
 #endif // __CCX_FILEUTILS_PLATFORM_H__

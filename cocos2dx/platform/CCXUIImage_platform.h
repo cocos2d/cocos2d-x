@@ -31,9 +31,11 @@ THE SOFTWARE.
 #elif defined(CCX_PLATFORM_WIN32)
     #include "win32/CCXUIImage_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
-	#include "android/CCXUIImage_android.h"
+    #include "android/CCXUIImage_android.h"
+#elif defined(CCX_PLATFORM_IPHONE)
+    #include "iphone/CCXUIImage_iphone.h"
 #else
-#error
+    #error
 #endif // __CCX_UIIMAGE_PLATFORM_H__
 
 #endif	// end of __CCX_EGLVIEW_PLATFORM_H__
