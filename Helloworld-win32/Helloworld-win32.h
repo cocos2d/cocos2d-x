@@ -5,8 +5,7 @@
 class HelloWorldApplication : public cocos2d::CCXApplication
 {
 public:
-	virtual bool initCocos2d();
-	virtual bool InitInstance();
+	virtual bool applicationDidFinishLaunching();
 
 protected:
 	cocos2d::CCXEGLView m_MainForm;

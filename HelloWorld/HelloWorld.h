@@ -19,7 +19,6 @@ public:
     virtual void    applicationWillEnterForeground();
 
 protected:
-    TRectangle              m_rcWnd;
     cocos2d::CCXEGLView *   m_pMainWnd;
 };
  

@@ -39,8 +39,15 @@ public:
 // implement HelloWorldApplication
 //////////////////////////////////////////////////////////////////////////
 
-bool HelloWorldApplication::initCocos2d()
+bool HelloWorldApplication::applicationDidFinishLaunching()
 {
+    // init the window
+    if (!m_MainForm.Create(L"HelloWorld", 480, 320) )
+	{
+		return false;
+	}
+
+    
 	// init director
 	CCDirector::sharedDirector()->setOpenGLView(&m_MainForm);
 
@@ -66,12 +73,8 @@ bool HelloWorldApplication::initCocos2d()
 
 	pSprite->release();
 	pLayer->release();
-	return true;
-}
 
-bool HelloWorldApplication::InitInstance()
-{
-	return m_MainForm.Create(L"HelloWorld", 480, 320);
+	return true;
 }
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -86,9 +89,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	int nRet = 0;
 	HelloWorldApplication app;
-	if (app.InitInstance() && app.initCocos2d())
-	{
-		nRet = app.Run();
-	}
+	nRet = app.Run();
 	return nRet;
 }
