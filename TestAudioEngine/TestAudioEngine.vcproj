@@ -96,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir d:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;mkdir d:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\background.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\Effect1.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;copy .\Res\sounds\Effect2.mp3 D:\Work7\NEWPLUS\TDA_DATA\UserData&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -220,6 +220,18 @@
 		<Filter
 			Name="Res"
 			>
+			<File
+				RelativePath=".\Res\sounds\background.mp3"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\sounds\Effect1.wav"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\sounds\Effect2.wav"
+				>
+			</File>
 			<File
 				RelativePath=".\Res\TestAudioEngine_Res.ENU.tr3"
 				>

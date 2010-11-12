@@ -14,8 +14,8 @@ include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DUNDER_UPHONE
 INCLUDE_PATH += -I. -I./Res \
-               -I../CocosDenshion
-LIBS += -lCocosDenshion
+               -I../CocosDenshion/include
+LIBS += -lCocosDenshion -lTSoundPlayer
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)

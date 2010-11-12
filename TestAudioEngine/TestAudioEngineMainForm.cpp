@@ -11,9 +11,18 @@
 #include  "SimpleAudioEngine.h"
 #include  <cassert>
 
-const static char s_BackgroundFile[] = "/NEWPLUS/TDA_DATA/UserData/background.mp3";
-const static char s_Effect1File[]    = "/NEWPLUS/TDA_DATA/UserData/Effect1.mp3";
-const static char s_Effect2File[]    = "/NEWPLUS/TDA_DATA/UserData/Effect2.mp3";
+extern const  AppResourceEntry TestAudioEngineResourceEntry;
+
+/**
+@warning 在声音数据信息的结构体中，FileName必须包含文件的扩展名，并且需要与原始文件的扩展名一致
+否则无法播。另：音效文件只支持 wav 格式。
+*/
+const T_SoundResInfo SoundResInfo[] =
+{
+    { "background.mp3",     TESTAU_ID_RAWDATA_background },
+    { "Effect1.wav",        TESTAU_ID_RAWDATA_Effect1 },
+    { "Effect2.wav",        TESTAU_ID_RAWDATA_Effect2 },
+};
 
 TMainForm::TMainForm(TApplication * pApp):TWindow(pApp)
 , m_nEffect1ID(0)
@@ -35,6 +44,8 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 	{
 	case EVENT_WinInit:
 		{
+            SimpleAudioEngine::getSharedEngine()->setResourceEntry(&TestAudioEngineResourceEntry);
+            SimpleAudioEngine::getSharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
 			bHandled = TRUE;
 		}
 		break;
@@ -79,8 +90,8 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
     {
     case TESTAU_ID_Form1002_PlayBack:
         // play background music
-        pAudioEngine->playBackgroundMusic(s_BackgroundFile, true);
         pAudioEngine->SetBackgroundMusicVolume(30);
+        pAudioEngine->playBackgroundMusic(SoundResInfo[0].FileName, true);
         bHandled = TRUE;
         break;
 
@@ -92,7 +103,7 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
 
     case TESTAU_ID_Form1002_LoadEffect:
         // load effect1
-        m_nEffect1ID = pAudioEngine->preloadEffect(s_Effect1File);
+        m_nEffect1ID = pAudioEngine->preloadEffect(SoundResInfo[1].FileName);
         assert(m_nEffect1ID > 0);
         bHandled = TRUE;
         break;
@@ -112,17 +123,16 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
         }
         else
         {
-            pAudioEngine->playPreloadedEffect(m_nEffect1ID);
             pAudioEngine->SetEffectsVolume(30);
+            pAudioEngine->playPreloadedEffect(m_nEffect1ID);
         }
         bHandled = TRUE;
         break;
     case TESTAU_ID_Form1002_PlayEffect:
         // play effect2
-        m_nEffect2ID = pAudioEngine->playEffect(s_Effect2File);
-        assert(m_nEffect2ID > 0);
-
         pAudioEngine->SetEffectsVolume(30);
+        m_nEffect2ID = pAudioEngine->playEffect(SoundResInfo[2].FileName);
+        assert(m_nEffect2ID > 0);
         bHandled = TRUE;
         break;
     default:

@@ -7,7 +7,7 @@
 //
 //---┤编译器信息├---
 //   编译器名称: TR3C.exe 
-//   编译器版本: TG3 资源编译器 版本V1.5  Build 91
+//   编译器版本: TG3 资源编译器 版本V1.5  Build 92
 //
 //---┤注意├---
 // 警告：未经允许，任何人不准擅自修改此文件!!!否则后果自负!
@@ -30,4 +30,7 @@
 
 #define TESTAU_ID_Form1002_UnLoadBtn  1073742832/*"UnLoadEffect"*/
 
+#define TESTAU_ID_RAWDATA_background  1073742833 
+#define TESTAU_ID_RAWDATA_Effect1  1073742834 
+#define TESTAU_ID_RAWDATA_Effect2  1073742835 
 #endif
