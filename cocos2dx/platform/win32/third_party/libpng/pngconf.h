@@ -1,7 +1,7 @@
 
 /* pngconf.h - machine configurable file for libpng
  *
- * libpng version 1.4.2 - May 6, 2010
+ * libpng version 1.4.5beta04 - November 8, 2010
  * For conditions of distribution and use, see copyright notice in png.h
  * Copyright (c) 1998-2010 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
@@ -44,14 +44,14 @@
  * includes the resource compiler for Windows DLL configurations.
  */
 #ifdef PNG_USER_CONFIG
+#  include "pngusr.h"
 #  ifndef PNG_USER_PRIVATEBUILD
 #    define PNG_USER_PRIVATEBUILD
 #  endif
-#  include "pngusr.h"
 #endif
 
 /*
- * If you create a private DLL you need to define in "pngusr.h" the followings:
+ * If you create a private DLL you should define in "pngusr.h" the following:
  * #define PNG_USER_PRIVATEBUILD <Describes by whom and why this version of
  *        the DLL was built>
  *  e.g. #define PNG_USER_PRIVATEBUILD "Build by MyCompany for xyz reasons."
@@ -59,7 +59,7 @@
  *        distinguish your DLL from those of the official release. These
  *        correspond to the trailing letters that come after the version
  *        number and must match your private DLL name>
- *  e.g. // private DLL "libpng13gx.dll"
+ *  e.g. // private DLL "libpng14gx.dll"
  *       #define PNG_USER_DLLFNAME_POSTFIX "gx"
  *
  * The following macros are also at your disposal if you want to complete the
@@ -269,10 +269,18 @@
  * #define PNG_NO_STDIO
  */
 
+#ifdef _WIN32_WCE
+#  define PNG_NO_CONSOLE_IO
+#  define PNG_NO_STDIO
+#  define PNG_NO_TIME_RFC1123
+#  ifdef PNG_DEBUG
+#    undef PNG_DEBUG
+#  endif
+#endif
+
 #if !defined(PNG_NO_STDIO) && !defined(PNG_STDIO_SUPPORTED)
 #  define PNG_STDIO_SUPPORTED
 #endif
-
 
 #ifdef PNG_BUILD_DLL
 #  if !defined(PNG_CONSOLE_IO_SUPPORTED) && !defined(PNG_NO_CONSOLE_IO)
@@ -439,7 +447,7 @@
 
 /* The following uses const char * instead of char * for error
  * and warning message functions, so some compilers won't complain.
- * If you do not want to use const, define PNG_NO_CONST here.
+ * If you do not want to use const, define PNG_NO_CONST.
  */
 
 #ifndef PNG_CONST
@@ -454,8 +462,10 @@
  * library that you will not be using.  I wish I could figure out how to
  * automate this, but I can't do that without making it seriously hard
  * on the users.  So if you are not using an ability, change the #define
- * to and #undef, and that part of the library will not be compiled.  If
- * your linker can't find a function, you may want to make sure the
+ * to an #undef, or pass in PNG_NO_feature and that part of the library
+ * will not be compiled.
+
+ * If your linker can't find a function, you may want to make sure the
  * ability is defined here.  Some of these depend upon some others being
  * defined.  I haven't figured out all the interactions here, so you may
  * have to experiment awhile to get everything to compile.  If you are
@@ -1114,7 +1124,7 @@ typedef unsigned char png_byte;
 #else
    typedef size_t png_size_t;
 #endif
-#define png_sizeof(x) sizeof(x)
+#define png_sizeof(x) (sizeof (x))
 
 /* The following is needed for medium model support.  It cannot be in the
  * pngpriv.h header.  Needs modification for other compilers besides
@@ -1236,6 +1246,13 @@ typedef char            FAR * FAR * FAR * png_charppp;
 #  define PNG_DLL
 #endif
 
+/* If you define PNGAPI, e.g., with compiler option "-DPNGAPI=__stdcall",
+ * you may get warnings regarding the linkage of png_zalloc and png_zfree.
+ * Don't ignore those warnings; you must also reset the default calling
+ * convention in your compiler to match your PNGAPI, and you must build
+ * zlib and your applications the same way you build libpng.
+ */
+
 #ifdef __CYGWIN__
 #  undef PNGAPI
 #  define PNGAPI __cdecl
@@ -1243,14 +1260,11 @@ typedef char            FAR * FAR * FAR * png_charppp;
 #  define PNG_IMPEXP
 #endif
 
-#define PNG_USE_LOCAL_ARRAYS /* Not used in libpng, defined for legacy apps */
-
-/* If you define PNGAPI, e.g., with compiler option "-DPNGAPI=__stdcall",
- * you may get warnings regarding the linkage of png_zalloc and png_zfree.
- * Don't ignore those warnings; you must also reset the default calling
- * convention in your compiler to match your PNGAPI, and you must build
- * zlib and your applications the same way you build libpng.
- */
+#ifdef __WATCOMC__
+#  ifndef PNGAPI
+#    define PNGAPI
+#  endif
+#endif
 
 #if defined(__MINGW32__) && !defined(PNG_MODULEDEF)
 #  ifndef PNG_NO_MODULEDEF
@@ -1335,6 +1349,8 @@ typedef char            FAR * FAR * FAR * png_charppp;
 #  define PNG_EXPORT(type,symbol) PNG_IMPEXP type PNGAPI symbol
 #endif
 
+#define PNG_USE_LOCAL_ARRAYS /* Not used in libpng, defined for legacy apps */
+
 /* Support for compiler specific function attributes.  These are used
  * so that where compiler support is available incorrect use of API
  * functions in png.h will generate compiler warnings.
@@ -1412,7 +1428,7 @@ typedef char            FAR * FAR * FAR * png_charppp;
 
 /* memory model/platform independent fns */
 #ifndef PNG_ABORT
-#  ifdef _WINDOWS_
+#  if (defined(_Windows) || defined(_WINDOWS) || defined(_WINDOWS_))
 #     define PNG_ABORT() ExitProcess(0)
 #  else
 #     define PNG_ABORT() abort()
@@ -1433,7 +1449,8 @@ typedef char            FAR * FAR * FAR * png_charppp;
 #  define png_memset  _fmemset
 #  define png_sprintf sprintf
 #else
-#  ifdef _WINDOWS_  /* Favor Windows over C runtime fns */
+#  if (defined(_Windows) || defined(_WINDOWS) || defined(_WINDOWS_))
+#    /* Favor Windows over C runtime fns */
 #    define CVT_PTR(ptr)         (ptr)
 #    define CVT_PTR_NOCHECK(ptr) (ptr)
 #    define png_strcpy  lstrcpyA
@@ -1453,29 +1470,30 @@ typedef char            FAR * FAR * FAR * png_charppp;
 #    define png_memcpy  memcpy
 #    define png_memset  memset
 #    define png_sprintf sprintf
-#    ifndef PNG_NO_SNPRINTF
-#      ifdef _MSC_VER
-#        define png_snprintf _snprintf   /* Added to v 1.2.19 */
-#        define png_snprintf2 _snprintf
-#        define png_snprintf6 _snprintf
-#      else
-#        define png_snprintf snprintf   /* Added to v 1.2.19 */
-#        define png_snprintf2 snprintf
-#        define png_snprintf6 snprintf
-#      endif
-#    else
-       /* You don't have or don't want to use snprintf().  Caution: Using
-        * sprintf instead of snprintf exposes your application to accidental
-        * or malevolent buffer overflows.  If you don't have snprintf()
-        * as a general rule you should provide one (you can get one from
-        * Portable OpenSSH).
-        */
-#      define png_snprintf(s1,n,fmt,x1) sprintf(s1,fmt,x1)
-#      define png_snprintf2(s1,n,fmt,x1,x2) sprintf(s1,fmt,x1,x2)
-#      define png_snprintf6(s1,n,fmt,x1,x2,x3,x4,x5,x6) \
-          sprintf(s1,fmt,x1,x2,x3,x4,x5,x6)
-#    endif
 #  endif
+#endif
+
+#ifndef PNG_NO_SNPRINTF
+#  ifdef _MSC_VER
+#    define png_snprintf _snprintf   /* Added to v 1.2.19 */
+#    define png_snprintf2 _snprintf
+#    define png_snprintf6 _snprintf
+#  else
+#    define png_snprintf snprintf   /* Added to v 1.2.19 */
+#    define png_snprintf2 snprintf
+#    define png_snprintf6 snprintf
+#  endif
+#else
+   /* You don't have or don't want to use snprintf().  Caution: Using
+    * sprintf instead of snprintf exposes your application to accidental
+    * or malevolent buffer overflows.  If you don't have snprintf()
+    * as a general rule you should provide one (you can get one from
+    * Portable OpenSSH).
+    */
+#  define png_snprintf(s1,n,fmt,x1) png_sprintf(s1,fmt,x1)
+#  define png_snprintf2(s1,n,fmt,x1,x2) png_sprintf(s1,fmt,x1,x2)
+#  define png_snprintf6(s1,n,fmt,x1,x2,x3,x4,x5,x6) \
+      png_sprintf(s1,fmt,x1,x2,x3,x4,x5,x6)
 #endif
 
 /* png_alloc_size_t is guaranteed to be no smaller than png_size_t,
@@ -1488,22 +1506,19 @@ typedef char            FAR * FAR * FAR * png_charppp;
  * to encounter practical situations that require such conversions.
  */
 #if defined(__TURBOC__) && !defined(__FLAT__)
-#  define  png_mem_alloc farmalloc
-#  define  png_mem_free  farfree
    typedef unsigned long png_alloc_size_t;
 #else
 #  if defined(_MSC_VER) && defined(MAXSEG_64K)
-#    define  png_mem_alloc(s) halloc(s, 1)
-#    define  png_mem_free     hfree
      typedef unsigned long    png_alloc_size_t;
 #  else
-#    if defined(_WINDOWS_) && (!defined(INT_MAX) || INT_MAX <= 0x7ffffffeL)
-#      define  png_mem_alloc(s) HeapAlloc(GetProcessHeap(), 0, s)
-#      define  png_mem_free(p)  HeapFree(GetProcessHeap(), 0, p)
-       typedef DWORD            png_alloc_size_t;
+     /* This is an attempt to detect an old Windows system where (int) is
+      * actually 16 bits, in that case png_malloc must have an argument with a
+      * bigger size to accomodate the requirements of the library.
+      */
+#    if (defined(_Windows) || defined(_WINDOWS) || defined(_WINDOWS_)) && \
+        (!defined(INT_MAX) || INT_MAX <= 0x7ffffffeL)
+       typedef DWORD         png_alloc_size_t;
 #    else
-#      define  png_mem_alloc malloc
-#      define  png_mem_free  free
        typedef png_size_t    png_alloc_size_t;
 #    endif
 #  endif

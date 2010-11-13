@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
 				OutputFile="$(OutDir)\libcocos2d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=".\platform\win32\third_party\libraries"
@@ -141,7 +141,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib libjpeg.lib"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
 				OutputFile="$(OutDir)\libcocos2d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=".\platform\win32\third_party\libraries"

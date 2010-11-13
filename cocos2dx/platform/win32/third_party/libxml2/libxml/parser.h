@@ -302,6 +302,12 @@ struct _xmlParserCtxt {
     xmlParserMode     parseMode;    /* the parser mode */
     unsigned long    nbentities;    /* number of entities references */
     unsigned long  sizeentities;    /* size of parsed entities */
+
+    /* for use by HTML non-recursive parser */
+    xmlParserNodeInfo *nodeInfo;      /* Current NodeInfo */
+    int                nodeInfoNr;    /* Depth of the parsing stack */
+    int                nodeInfoMax;   /* Max depth of the parsing stack */
+    xmlParserNodeInfo *nodeInfoTab;   /* array of nodeInfos */
 };
 
 /**
