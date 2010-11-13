@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
 #include "NSString.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 
 namespace cocos2d {
 
