@@ -26,5 +26,7 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string></string>
+	<key>NSMainNibFile~ipad</key>
+	<string>-iPad</string>
 </dict>
 </plist>

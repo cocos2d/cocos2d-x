@@ -10,7 +10,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		BF137342128A7C4200D9F789 /* HelloWorldAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF13733F128A7C4200D9F789 /* HelloWorldAppDelegate.mm */; };
 		BF1373D3128A849B00D9F789 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4927C41289199700A09262 /* libcocos2d.a */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -259,10 +258,11 @@
 		BF163EA0128E35F90010DC04 /* CCXCocos2dDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = BF163E9F128E35F90010DC04 /* CCXCocos2dDefine.h */; };
 		BF163EA2128E36F60010DC04 /* CCXCocos2dDefine_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = BF163EA1128E36F60010DC04 /* CCXCocos2dDefine_platform.h */; };
 		BF163EA4128E378A0010DC04 /* CCXCocos2dDefine_iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = BF163EA3128E378A0010DC04 /* CCXCocos2dDefine_iphone.h */; };
+		BF163FE8128E82A80010DC04 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF163FE5128E82A80010DC04 /* AppController.mm */; };
+		BF163FE9128E82A80010DC04 /* HelloWorldAppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF163FE6128E82A80010DC04 /* HelloWorldAppDelegate.cpp */; };
 		BF1B034B128BCCE300373CD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		BF1B034C128BCCF800373CD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		BF1B034D128BCD0800373CD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		BF298833128CCF7900434B31 /* HelloWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF298832128CCF7900434B31 /* HelloWorld.cpp */; };
 		BF492B6A12891AC600A09262 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
 		BF492C22128924A800A09262 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BF492D4C1289302400A09262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
@@ -283,8 +283,6 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		BF13733E128A7C4200D9F789 /* HelloWorldAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldAppDelegate.h; sourceTree = "<group>"; };
-		BF13733F128A7C4200D9F789 /* HelloWorldAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldAppDelegate.mm; sourceTree = "<group>"; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF1374BD128A9A4C00D9F789 /* helloworld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helloworld.png; sourceTree = "<group>"; };
 		BF163A2F128E248E0010DC04 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
@@ -528,8 +526,10 @@
 		BF163E9F128E35F90010DC04 /* CCXCocos2dDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCXCocos2dDefine.h; sourceTree = "<group>"; };
 		BF163EA1128E36F60010DC04 /* CCXCocos2dDefine_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCXCocos2dDefine_platform.h; sourceTree = "<group>"; };
 		BF163EA3128E378A0010DC04 /* CCXCocos2dDefine_iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCXCocos2dDefine_iphone.h; sourceTree = "<group>"; };
-		BF298831128CCF7900434B31 /* HelloWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorld.h; sourceTree = "<group>"; };
-		BF298832128CCF7900434B31 /* HelloWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorld.cpp; sourceTree = "<group>"; };
+		BF163FE4128E82A80010DC04 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		BF163FE5128E82A80010DC04 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		BF163FE6128E82A80010DC04 /* HelloWorldAppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldAppDelegate.cpp; sourceTree = "<group>"; };
+		BF163FE7128E82A80010DC04 /* HelloWorldAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldAppDelegate.h; sourceTree = "<group>"; };
 		BF4927C41289199700A09262 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF492B6912891AC600A09262 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF492C21128924A800A09262 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -581,9 +581,13 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				BF163FE4128E82A80010DC04 /* AppController.h */,
+				BF163FE5128E82A80010DC04 /* AppController.mm */,
+				BF163FE6128E82A80010DC04 /* HelloWorldAppDelegate.cpp */,
+				BF163FE7128E82A80010DC04 /* HelloWorldAppDelegate.h */,
 				BF163A2D128E248D0010DC04 /* cocos2dx */,
 				BF1374AF128A998C00D9F789 /* Resources */,
-				BF492D591289321A00A09262 /* sample */,
+				BF163FB9128E671C0010DC04 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				BF492B6912891AC600A09262 /* libz.dylib */,
@@ -1045,15 +1049,11 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
-		BF492D591289321A00A09262 /* sample */ = {
+		BF163FB9128E671C0010DC04 /* Resources-iPad */ = {
 			isa = PBXGroup;
 			children = (
-				BF13733E128A7C4200D9F789 /* HelloWorldAppDelegate.h */,
-				BF13733F128A7C4200D9F789 /* HelloWorldAppDelegate.mm */,
-				BF298831128CCF7900434B31 /* HelloWorld.h */,
-				BF298832128CCF7900434B31 /* HelloWorld.cpp */,
 			);
-			name = sample;
+			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1308,8 +1308,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF137342128A7C4200D9F789 /* HelloWorldAppDelegate.mm in Sources */,
-				BF298833128CCF7900434B31 /* HelloWorld.cpp in Sources */,
+				BF163FE8128E82A80010DC04 /* AppController.mm in Sources */,
+				BF163FE9128E82A80010DC04 /* HelloWorldAppDelegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1413,6 +1413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1426,6 +1427,8 @@
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
+				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1433,11 +1436,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HelloWorld_Prefix.pch;
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
+				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1501,7 +1507,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Debug;
 		};

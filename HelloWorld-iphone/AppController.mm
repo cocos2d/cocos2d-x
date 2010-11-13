@@ -22,10 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 #import <UIKit/UIKit.h>
-#import "HelloWorldAppDelegate.h"
+#import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
-#import "HelloWorld.h"
+#import "HelloWorldAppDelegate.h"
 
 @implementation AppController
 

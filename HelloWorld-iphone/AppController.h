@@ -21,18 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __HELLOWORLD_H__
-#define __HELLOWORLD_H__
 
-#include "cocos2d.h"
+@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate> {
+    UIWindow *window;
+}
 
-class HelloWorld : public cocos2d::CCXApplication {
-public:
-    HelloWorld();
-	
-    virtual bool initCocos2d();
-	
-};
-
-#endif // __HELLOWORLD_H__
+@end
 
