@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "EGL/egl.h"
 #include "GLES/gl.h"
 
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "NSSet.h"
 #include "CCDirector.h"
 #include "CCTouch.h"

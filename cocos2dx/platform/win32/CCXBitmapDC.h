@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include <Windows.h>
 #include "ccTypes.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "CCXUIImage.h"
 
 namespace cocos2d{

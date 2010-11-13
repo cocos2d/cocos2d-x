@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <libxml/xmlmemory.h>
 #include "NSString.h"
 #include "CCXFileUtils_android.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 
 #define MAX_PATH 260
 
