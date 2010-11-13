@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HelloWorld.h"
+#include "HelloWorldAppDelegate.h"
 
 using namespace cocos2d;
 
