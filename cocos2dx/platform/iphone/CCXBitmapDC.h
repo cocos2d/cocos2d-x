@@ -25,7 +25,7 @@ THE SOFTWARE.
 #define __CCXBITMAP_DC_H__
 
 #include "ccTypes.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "CCXUIImage.h"
 
 namespace cocos2d{

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "NSMutableArray.h"
 #include "NSMutableDictionary.h"
 #include "CGGeometry.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 namespace cocos2d {
 
 	class CCTMXObjectGroup;

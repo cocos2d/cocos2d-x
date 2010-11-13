@@ -69,10 +69,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "NSSet.h"
 #import "CCTouch.h"
 
-#ifdef self
-#undef self
-#endif
-
 //CLASS IMPLEMENTATIONS:
 
 static EAGLView *view;

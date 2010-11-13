@@ -29,7 +29,7 @@ THE SOFTWARE.
     #define CCX_PLATFORM_WIN32
 #elif   defined (_ANDROID)
     #define CCX_PLATFORM_ANDROID
-#elif defined(IPHONE)
+#else if (defined(__IPHONE_2_0) ||  defined(__IPHONE_2_1) || defined(__IPHONE_2_2) || defined(__IPHONE_3_0) || defined(__IPHONE_3_1) || defined(__IPHONE_3_2) || defined(__IPHONE_4_0))
     #define CCX_PLATFORM_IPHONE
 #endif
 

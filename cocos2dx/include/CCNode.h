@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
 
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 #include "CGAffineTransform.h"
 #include "NSMutableArray.h"
@@ -33,11 +33,7 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 #include "selector_protocol.h"
 
-#ifdef IPHONE
-    #include <OpenGLES/ES1/gl.h>
-#else
-    #include <GLES/gl.h>
-#endif
+#include <GLES/gl.h>
 
 namespace   cocos2d {
 class CCCamera;

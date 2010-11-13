@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCLAYER_H__
 #define __CCLAYER_H__
 
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCTouchDelegateProtocol.h"

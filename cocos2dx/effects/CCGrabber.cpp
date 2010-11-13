@@ -27,11 +27,7 @@ THE SOFTWARE.
 #include "support/opengl_support/OpenGL_Internal.h"
 #include "platform/platform.h"
 
-#ifdef IPHONE
-    #include <OpenGLES/ES1/glext.h>
-#else
-    #include <GLES/glext.h>
-#endif
+#include <GLES/glext.h>
 
 namespace cocos2d
 {

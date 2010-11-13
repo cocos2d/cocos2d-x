@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCInstantAction.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "CCNode.h"
 #include "CCSprite.h"
 namespace cocos2d {

@@ -27,11 +27,7 @@ THE SOFTWARE.
 
 #include "CGGeometry.h"
 
-#ifdef IPHONE
-    #include <OpenGLES/ES1/gl.h>
-#else
-    #include <GLES/gl.h>
-#endif
+#include <GLES/gl.h>
 
 namespace   cocos2d {
 

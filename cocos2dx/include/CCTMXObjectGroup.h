@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCTMX_OBJECT_GROUP_H__
 #define __CCTMX_OBJECT_GROUP_H__
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "CGGeometry.h"
 #include "NSString.h"
 #include "NSMutableArray.h"

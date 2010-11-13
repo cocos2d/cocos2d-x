@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccConfig.h"
 #include "ccTypes.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "NSObject.h"
 #include "CGGeometry.h"
 #include "NSMutableArray.h"

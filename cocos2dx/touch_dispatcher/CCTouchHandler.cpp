@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCTouchHandler.h"
 #include "ccMacros.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 
 #include <assert.h>
 namespace   cocos2d {

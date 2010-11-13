@@ -22,51 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCPVRTEXTURE_H__
-#define __CCPVRTEXTURE_H__
-
-#include <string>
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-
-#include "CCXCocos2dDefine.h"
-#include "NSObject.h"
-#include "NSMutableArray.h"
-
+#ifndef __SUPPORT_COCOS2D_TYPES_H__
+#define __SUPPORT_COCOS2D_TYPES_H__
 namespace   cocos2d {
-class NSData;
 
-class CCPVRTexture : public NSObject
-{
-protected:
-	NSMutableArray<NSData*> * m_pImageData;
-
-public:
-
-	CCPVRTexture();
-	virtual ~CCPVRTexture();
-
-	CCPVRTexture * initWithContentsOfFile(const char* path);
-// @todo	CCPVRTexture * initWithContentsOfURL(NSURL *url);
-	static CCPVRTexture * pvrTextureWithContentsOfFile(const char* path);
-// @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
-
-	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
-	CCX_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
-	CCX_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
-	CCX_PROPERTY_READONLY(GLenum, m_uInternalFormat, InternalFormat)
-	CCX_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
-
-	// cocos2d integration
-	CCX_PROPERTY(bool, m_bRetainName, RetainName);
-
-private:
-	bool unpackPVRData(NSData *data);
-	bool createGLTexture();
-};
+typedef signed char         INT8;	
+typedef unsigned char       UINT8;
+typedef signed short        INT16;
+typedef unsigned short      UINT16;
+typedef signed int          INT32;
+typedef unsigned int        UINT32;
+typedef long long           INT64;
+typedef unsigned long long  UINT64;	
 }//namespace   cocos2d 
 
-
-#endif //__CCPVRTEXTURE_H__
-
-
+#endif // __SUPPORT_COCOS2D_TYPES_H__
