@@ -38,11 +38,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCXUIImage.h"
 
-#ifdef IPHONE
-    #include <OpenGLES/ES1/glext.h>
-#else
-    #include <GLES/glext.h>
-#endif
+#include <GLES/glext.h>
 
 #ifdef _POWERVR_SUPPORT_
     #include "CCPVRTexture.h"
@@ -297,7 +293,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 //			data = malloc(POTHigh * POTWide);
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
-#ifdef IPHONE
+#ifdef CCX_PLATFORM_IPHONE
 			tempData = (void*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
 			

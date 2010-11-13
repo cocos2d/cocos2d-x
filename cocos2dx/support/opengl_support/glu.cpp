@@ -25,12 +25,7 @@ THE SOFTWARE.
 #include "glu.h"
 #include "OpenGL_Internal.h"
 
-#ifdef IPHONE
-    #include <OpenGLES/ES1/gl.h>
-#else
-    #include <GLES/gl.h>
-#endif
-
+#include <GLES/gl.h>
 #include <math.h>
 
 #ifndef M_PI

@@ -26,12 +26,7 @@ THE SOFTWARE.
 
 #include <string.h>
 #include <cmath>
-
-#ifdef IPHONE
-    #include <OpenGLES/ES1/gl.h>
-#else
-    #include <GLES/gl.h>
-#endif
+#include <GLES/gl.h>
 
 #ifndef M_PI
 	#define M_PI       3.14159265358979323846

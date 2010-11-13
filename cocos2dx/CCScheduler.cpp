@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
 #include "NSMutableArray.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 
 #include <assert.h>
 namespace   cocos2d {

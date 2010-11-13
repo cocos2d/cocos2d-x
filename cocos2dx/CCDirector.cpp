@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "NSMutableArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 #include "CCTouchDispatcher.h"
 #include "support/opengl_support/glu.h"
 #include "CGPointExtension.h"

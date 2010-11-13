@@ -21,13 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#import <Foundation/Foundation.h>
+#ifndef __CCX_COCOS2D_DEFINE_H__
+#define __CCX_COCOS2D_DEFINE_H__
 
-@interface CCDirectorCaller : NSObject {
-	id displayLink;
-}
--(void) startMainLoop;
--(void) doCaller: (id) sender;
-+(id) sharedDirectorCaller;
-+(void) destroy;
-@end
+#include "platform/CCXCocos2dDefine_platform.h"
+
+#endif // __CCX_COCOS2D_DEFINE_H__

@@ -21,13 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#import <Foundation/Foundation.h>
+#ifndef __CCX_COCOS2D_DEFINE_PLATFORM_H__
+#define __CCX_COCOS2D_DEFINE_PLATFORM_H__
 
-@interface CCDirectorCaller : NSObject {
-	id displayLink;
-}
--(void) startMainLoop;
--(void) doCaller: (id) sender;
-+(id) sharedDirectorCaller;
-+(void) destroy;
-@end
+#include "config_platform.h"
+
+#if defined(CCX_PLATFORM_UPHONE)
+    #include "uphone/CCXCocos2dDefine_uphone.h"
+#elif defined(CCX_PLATFORM_WIN32)
+    #include "win32/CCXCocos2dDefine_win32.h"
+#elif defined(CCX_PLATFORM_ANDROID)
+    #include "android/CCXCocos2dDefine_android.h"
+#elif defined(CCX_PLATFORM_IPHONE)
+    #include "iphone/CCXCocos2dDefine_iphone.h"
+#else
+    #error
+#endif 
+
+#endif	// end of __CCX_COCOS2D_DEFINE_PLATFORM_H__

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "Cocos2dDefine.h"
+#include "CCXCocos2dDefine.h"
 // cocos2d
 #include "CCTextureAtlas.h"
 #include "CCTextureCache.h"
