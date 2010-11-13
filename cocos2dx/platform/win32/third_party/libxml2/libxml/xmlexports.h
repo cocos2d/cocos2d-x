@@ -113,7 +113,7 @@
    * _imp__xmlFree listed as missing. Try to workaround the problem
    * by also making that declaration when compiling client code.
    */
-  #if !defined(LIBXML_STATIC)
+  #if defined(IN_LIBXML) && !defined(LIBXML_STATIC)
     #define XMLPUBFUN __declspec(dllexport)
     #define XMLPUBVAR __declspec(dllexport)
   #else
