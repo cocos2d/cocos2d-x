@@ -34,9 +34,12 @@ DEFINES=-DCCX_UNDER_UPHONE		;这里填入应用的自定义宏。注意：ITOPS自己的所需定义会
 ;DEFINES=-D__TCOM_SUPPORT__		;生成的是TCOM组件（注意：TOPS应用也可以同时是TCOM组件）
 
 ;包含路径，可以使用多个INCLUDE_PATH串，也可以使用INCLUDE_PATH1、INCLUDE_PATH2等方式，MakeFile中依据出现顺序(不是数字大小)排列
-INCLUDE_PATH=-I../cocos2dx			
-INCLUDE_PATH=-I../cocos2dx/include	
-INCLUDE_PATH=-I../chipmunk/include -I../chipmunk/include/chipmunk
+INCLUDE_PATH =-I../ -I../Res \
+INCLUDE_PATH=-I../../cocos2dx \
+INCLUDE_PATH=-I../../cocos2dx/include \
+INCLUDE_PATH=-I../../chipmunk/include/chipmunk \
+INCLUDE_PATH=-I../../ \
+INCLUDE_PATH=-I../tests
 
 CCFLAGS = -std=c99
 
@@ -54,4 +57,5 @@ INCLUDEFILE=
 ;只能对.c、.cpp文件进行排除
 ;如果要排除本目录的文件也要加入"./"
 ;可以使用多个EXCLUDEFILE串，也可以使用EXCLUDEFILE1、EXCLUDEFILE2等方式，MakeFile中依据出现顺序(不是数字大小)排列
-EXCLUDEFILE=
+EXCLUDEFILE=./framework.win32/main.cpp
+EXCLUDEFILE=./framework.win32/main.h
