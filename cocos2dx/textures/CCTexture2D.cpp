@@ -293,10 +293,10 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 //			data = malloc(POTHigh * POTWide);
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
-#ifdef CCX_PLATFORM_IPHONE
+
 			tempData = (void*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
-			
+#ifdef CCX_PLATFORM_IPHONE			
 			data = new UINT8[POTHigh * POTWide * 4];
 			memcpy(data, tempData, POTHigh * POTWide * 4);
 #else
