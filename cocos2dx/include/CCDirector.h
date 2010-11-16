@@ -405,6 +405,11 @@ public:
 	 @since v0.8.2
 	 */
 	static bool setDirectorType(ccDirectorType obDirectorType);
+    
+         /** recalculate the projection view and projection size based on the EAGLVIEW
+        @since v0.99.4
+        */
+	void recalculateProjectionAndEAGLViewSize();
 
 protected:
 	bool isOpenGLAttached(void);
@@ -426,14 +431,9 @@ protected:
 	void showProfilers(void);
 #endif // CC_ENABLE_PROFILERS
 
-	/** recalculate the projection view and projection size based on the EAGLVIEW
-	@since v0.99.4
-	*/
-	void recalculateProjectionAndEAGLViewSize();
-
 protected:
 	// compute frame rate
-    void computeFrameRate(void);
+        void computeFrameRate(void);
 	// compute delta time between computing frame rate
 	void calculateFramerateDeltaTime(void);
 

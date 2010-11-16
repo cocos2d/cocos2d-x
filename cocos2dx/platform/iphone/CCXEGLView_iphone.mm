@@ -42,13 +42,13 @@ CCXEGLView::~CCXEGLView()
 
 cocos2d::CGSize  CCXEGLView::getSize()
 {
-	cocos2d::CGSize size([[EAGLView getGlobalView] getWidth], [[EAGLView getGlobalView] getHeight]);
+	cocos2d::CGSize size([[EAGLView sharedEGLView] getWidth], [[EAGLView sharedEGLView] getHeight]);
 	return size;
 }
 
 bool CCXEGLView::isOpenGLReady()
 {
-    return [EAGLView getGlobalView] != NULL;
+    return [EAGLView sharedEGLView] != NULL;
 }
 
 void CCXEGLView::release()
@@ -56,7 +56,7 @@ void CCXEGLView::release()
 	[CCDirectorCaller destroy];
 	
 	// destroy EAGLView
-	[[EAGLView getGlobalView] removeFromSuperview];
+	[[EAGLView sharedEGLView] removeFromSuperview];
 }
 
 void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
@@ -66,7 +66,7 @@ void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 
 void CCXEGLView::swapBuffers()
 {
-	[[EAGLView getGlobalView] swapBuffers];
+	[[EAGLView sharedEGLView] swapBuffers];
 }
 	
 void CCXEGLView::touchesBegan(NSSet *set)

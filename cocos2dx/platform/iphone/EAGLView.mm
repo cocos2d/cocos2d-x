@@ -103,7 +103,7 @@ static EAGLView *view;
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained] autorelease];
 }
 
-+ (id) getGlobalView
++ (id) sharedEGLView
 {
 	return view;
 }
@@ -199,6 +199,8 @@ static EAGLView *view;
 {
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
     size_ = [renderer_ backingSize];
+    
+    cocos2d::CCDirector::sharedDirector()->recalculateProjectionAndEAGLViewSize();
 }
 
 - (void) swapBuffers
@@ -224,6 +226,30 @@ static EAGLView *view;
 }
 
 #pragma mark EAGLView - Point conversion
+
+- (CGPoint) convertPointFromViewToSurface:(CGPoint)point
+{
+	CGRect bounds = [self bounds];
+        
+        CGPoint ret;
+        ret.x = (point.x - bounds.origin.x) / bounds.size.width * size_.width;
+        ret.y =  (point.y - bounds.origin.y) / bounds.size.height * size_.height;
+    
+        return ret;
+}
+
+- (CGRect) convertRectFromViewToSurface:(CGRect)rect
+{
+	CGRect bounds = [self bounds];
+    
+        CGRect ret;
+        ret.origin.x = (rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width;
+        ret.origin.y = (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height;
+        ret.size.width = rect.size.width / bounds.size.width * size_.width;
+        ret.size.height = rect.size.height / bounds.size.height * size_.height;
+    
+        return ret;
+}
 
 // Pass the touches to the superview
 #pragma mark EAGLView - Touch Delegate
