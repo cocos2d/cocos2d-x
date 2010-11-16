@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #import "CCDirectorCaller.h"
+#import <UIKit/UIKit.h>
 
 #include "CCXApplication_iphone.h"
 #include "CCXUIImage_iphone.h"
@@ -46,6 +47,28 @@ namespace   cocos2d {
 
 	ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
     {
+        ccDeviceOrientation oldOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
+        
+        if (eOritation != oldOrientation)
+        {
+            switch (eOritation) {
+                case CCDeviceOrientationPortrait:
+                    [[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated: NO];
+                    break;
+                case CCDeviceOrientationPortraitUpsideDown:
+                    [[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortraitUpsideDown animated: NO];
+                    break;
+                case CCDeviceOrientationLandscapeLeft:
+                    [[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated: NO];
+                    break;
+               case CCDeviceOrientationLandscapeRight:
+                    [[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated: NO];
+                   break;
+                default:
+                    break;
+            }
+        }
+        
         return eOritation;
     }
 

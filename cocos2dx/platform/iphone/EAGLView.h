@@ -95,7 +95,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** creates an initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
 // get the view object
-+(id) getGlobalView;
++(id) sharedEGLView;
 
 /** Initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
@@ -117,6 +117,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
+
+- (CGRect) convertRectFromViewToSurface:(CGRect)rect;
+- (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
 
 -(int) getWidth;
 -(int) getHeight;
