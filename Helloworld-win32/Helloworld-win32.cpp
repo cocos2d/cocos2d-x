@@ -31,7 +31,7 @@ public:
 
 	virtual void registerWithTouchDispatcher(void)
 	{
-		CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this,0,true);
+		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
 	}
 };
 
