@@ -59,7 +59,7 @@ namespace cocos2d {
 		Int16 height = (Int16)m_tSize.height;
 
 		// create memory window
-		m_pWindow = new TWindow(CCXApplication::getSharedApplication());
+		m_pWindow = new TWindow(CCXApplication::sharedApplication());
 		m_pWindow->CreateMemWindow(width, height,screenTransparentFormat);
 
 		// create DC

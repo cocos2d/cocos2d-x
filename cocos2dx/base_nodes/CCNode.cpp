@@ -785,35 +785,35 @@ void CCNode::onExit()
 CCAction * CCNode::runAction(CCAction* action)
 {
 	NSAssert( action != NULL, "Argument must be non-nil");
-	CCActionManager::getSharedManager()->addAction(action, this, !m_bIsRunning);
+	CCActionManager::sharedManager()->addAction(action, this, !m_bIsRunning);
 	return action;
 }
 
 void CCNode::stopAllActions()
 {
-	CCActionManager::getSharedManager()->removeAllActionsFromTarget(this);
+	CCActionManager::sharedManager()->removeAllActionsFromTarget(this);
 }
 
 void CCNode::stopAction(CCAction* action)
 {
-	CCActionManager::getSharedManager()->removeAction(action);
+	CCActionManager::sharedManager()->removeAction(action);
 }
 
 void CCNode::stopActionByTag(int tag)
 {
 	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
-	CCActionManager::getSharedManager()->removeActionByTag(tag, this);
+	CCActionManager::sharedManager()->removeActionByTag(tag, this);
 }
 
 CCAction * CCNode::getActionByTag(int tag)
 {
 	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
-	return CCActionManager::getSharedManager()->getActionByTag(tag, this);
+	return CCActionManager::sharedManager()->getActionByTag(tag, this);
 }
 
 int CCNode::numberOfRunningActions()
 {
-	return CCActionManager::getSharedManager()->numberOfRunningActionsInTarget(this);
+	return CCActionManager::sharedManager()->numberOfRunningActionsInTarget(this);
 }
 
 // CCNode - Callbacks
@@ -825,12 +825,12 @@ void CCNode::scheduleUpdate()
 
 void CCNode::scheduleUpdateWithPriority(int priority)
 {
-	CCScheduler::getSharedScheduler()->scheduleUpdateForTarget(this, priority, !m_bIsRunning);
+	CCScheduler::sharedScheduler()->scheduleUpdateForTarget(this, priority, !m_bIsRunning);
 }
 
 void CCNode::unscheduleUpdate()
 {
-	CCScheduler::getSharedScheduler()->unscheduleUpdateForTarget(this);
+	CCScheduler::sharedScheduler()->unscheduleUpdateForTarget(this);
 }
 
 void CCNode::schedule(SEL_SCHEDULE selector)
@@ -843,7 +843,7 @@ void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 	NSAssert( selector != NULL, "Argument must be non-nil");
 	NSAssert( interval >=0, "Argument must be positive");
 
-	CCScheduler::getSharedScheduler()->scheduleSelector(selector, this, interval, !m_bIsRunning);
+	CCScheduler::sharedScheduler()->scheduleSelector(selector, this, interval, !m_bIsRunning);
 }
 
 void CCNode::unschedule(SEL_SCHEDULE selector)
@@ -852,24 +852,24 @@ void CCNode::unschedule(SEL_SCHEDULE selector)
 	if (selector == NULL)
 		return;
 
-	CCScheduler::getSharedScheduler()->unscheduleSelector(selector, this);
+	CCScheduler::sharedScheduler()->unscheduleSelector(selector, this);
 }
 
 void CCNode::unscheduleAllSelectors()
 {
-	CCScheduler::getSharedScheduler()->unscheduleAllSelectorsForTarget(this);
+	CCScheduler::sharedScheduler()->unscheduleAllSelectorsForTarget(this);
 }
 
 void CCNode::resumeSchedulerAndActions()
 {
-	CCScheduler::getSharedScheduler()->resumeTarget(this);
-	CCActionManager::getSharedManager()->resumeTarget(this);
+	CCScheduler::sharedScheduler()->resumeTarget(this);
+	CCActionManager::sharedManager()->resumeTarget(this);
 }
 
 void CCNode::pauseSchedulerAndActions()
 {
-	CCScheduler::getSharedScheduler()->pauseTarget(this);
-	CCActionManager::getSharedManager()->pauseTarget(this);
+	CCScheduler::sharedScheduler()->pauseTarget(this);
+	CCActionManager::sharedManager()->pauseTarget(this);
 }
 
 void CCNode::selectorProtocolRetain(void)

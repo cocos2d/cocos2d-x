@@ -61,11 +61,11 @@ public:
 
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
-	( Default: CCTouchDispatcher::getSharedDispatcher()->addStandardDelegate(this,0); )
+	( Default: CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
 	Example:
 	void CCLayer::registerWithTouchDispatcher()
 	{
-	CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
+	CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
 	}
 	@since v0.8.0
 	*/

@@ -204,7 +204,7 @@ void SchedulerPauseResume::tick2(ccTime dt)
 
 void SchedulerPauseResume::pause(ccTime dt)
 {
-    CCScheduler::getSharedScheduler()->pauseTarget(this);
+    CCScheduler::sharedScheduler()->pauseTarget(this);
 }
 
 std::string SchedulerPauseResume::title()
@@ -306,7 +306,7 @@ void SchedulerUnscheduleAllHard::tick4(ccTime dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(ccTime dt)
 {
-    CCScheduler::getSharedScheduler()->unscheduleAllSelectors();
+    CCScheduler::sharedScheduler()->unscheduleAllSelectors();
 }
 
 std::string SchedulerUnscheduleAllHard::title()

@@ -45,7 +45,7 @@ void CCTouchDispatcher::setDispatchEvents(bool bDispatchEvents)
 
 static CCTouchDispatcher *pSharedDispatcher = NULL;
 
-CCTouchDispatcher* CCTouchDispatcher::getSharedDispatcher(void)
+CCTouchDispatcher* CCTouchDispatcher::sharedDispatcher(void)
 {
 	// synchronized ??
 	if (pSharedDispatcher == NULL)

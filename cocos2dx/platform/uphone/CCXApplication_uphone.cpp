@@ -87,7 +87,7 @@ namespace   cocos2d {
     //////////////////////////////////////////////////////////////////////////
     /// Implement static class member
     //////////////////////////////////////////////////////////////////////////
-    CCXApplication * CCXApplication::getSharedApplication()
+    CCXApplication * CCXApplication::sharedApplication()
     {
         return (CCXApplication *)TApplication::GetCurrentApplication();
     }

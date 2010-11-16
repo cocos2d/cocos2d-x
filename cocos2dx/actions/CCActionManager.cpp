@@ -46,7 +46,7 @@ typedef struct _hashElement
 	UT_hash_handle		hh;
 } tHashElement;
 
-CCActionManager* CCActionManager::getSharedManager(void)
+CCActionManager* CCActionManager::sharedManager(void)
 {
 	CCActionManager *pRet = gSharedManager;
 
@@ -68,7 +68,7 @@ CCActionManager* CCActionManager::getSharedManager(void)
 
 void CCActionManager::purgeSharedManager(void)
 {
-	CCScheduler::getSharedScheduler()->unscheduleUpdateForTarget(this);
+	CCScheduler::sharedScheduler()->unscheduleUpdateForTarget(this);
 	CCX_SAFE_RELEASE(gSharedManager);
 }
 
@@ -99,7 +99,7 @@ CCActionManager::~CCActionManager(void)
 
 bool CCActionManager::init(void)
 {
-	CCScheduler::getSharedScheduler()->scheduleUpdateForTarget(this, 0, false);
+	CCScheduler::sharedScheduler()->scheduleUpdateForTarget(this, 0, false);
 	m_pTargets = NULL;
 
 	return true;

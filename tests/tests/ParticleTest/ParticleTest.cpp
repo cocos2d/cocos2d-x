@@ -1115,7 +1115,7 @@ std::string ParticleDemo::title()
 
 void ParticleDemo::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, 0, false);
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
 bool ParticleDemo::ccTouchBegan(CCTouch* touch, UIEvent* event)

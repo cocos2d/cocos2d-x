@@ -33,7 +33,7 @@ TMainForm::TMainForm(TApplication * pApp):TWindow(pApp)
 
 TMainForm::~TMainForm()
 {
-	SimpleAudioEngine::getSharedEngine()->release();
+	SimpleAudioEngine::sharedEngine()->release();
 }
 
 Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
@@ -44,8 +44,8 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 	{
 	case EVENT_WinInit:
 		{
-            SimpleAudioEngine::getSharedEngine()->setResourceEntry(&TestAudioEngineResourceEntry);
-            SimpleAudioEngine::getSharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
+            SimpleAudioEngine::sharedEngine()->setResourceEntry(&TestAudioEngineResourceEntry);
+            SimpleAudioEngine::sharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
 			bHandled = TRUE;
 		}
 		break;
@@ -84,7 +84,7 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
 {
     Boolean bHandled = FALSE;
-    SimpleAudioEngine* pAudioEngine = SimpleAudioEngine::getSharedEngine();
+    SimpleAudioEngine* pAudioEngine = SimpleAudioEngine::sharedEngine();
 
     switch (pEvent->sParam1)
     {

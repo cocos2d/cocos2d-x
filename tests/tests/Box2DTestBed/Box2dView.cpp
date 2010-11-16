@@ -116,7 +116,7 @@ void MenuLayer::backCallback(NSObject* sender)
 
 void MenuLayer::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, 0, true);
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 bool MenuLayer::ccTouchBegan(CCTouch* touch, UIEvent* event)
@@ -215,7 +215,7 @@ Box2DView::~Box2DView()
 void Box2DView::registerWithTouchDispatcher()
 {
 	// higher priority than dragging
-    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, -10, true);
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, -10, true);
 }
 
 bool Box2DView::ccTouchBegan(CCTouch* touch, UIEvent* event)
