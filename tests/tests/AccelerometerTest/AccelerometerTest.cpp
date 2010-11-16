@@ -65,8 +65,8 @@ void AccelerometerTest::didAccelerate(UIAcceleration* pAccelerationValue)
     CGPoint ptNow  = m_pBall->getPosition();
     CGPoint ptTemp = pDir->convertToUI(ptNow);
 
-    ptTemp.x += pAccelerationValue->x * TG3_GRAVITY_EARTH;
-    ptTemp.y -= pAccelerationValue->y * TG3_GRAVITY_EARTH;
+    ptTemp.x += pAccelerationValue->x * 9.81f;
+    ptTemp.y -= pAccelerationValue->y * 9.81f;
 
     CGPoint ptNext = pDir->convertToGL(ptTemp);
     FIX_POS(ptNext.x, (ballSize.width / 2.0), (winSize.width - ballSize.width / 2.0));
