@@ -59,22 +59,6 @@
 			Name="Template Files"
 			Filter="txt"
 			>
-			<File
-				RelativePath=".\Templates\1033\AppDelegate.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Templates\1033\AppDelegate.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Templates\1033\HelloWorldScene.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Templates\1033\HelloWorldScene.h"
-				>
-			</File>
 			<Filter
 				Name="win32"
 				>
@@ -102,6 +86,26 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Classes"
+				>
+				<File
+					RelativePath=".\Templates\1033\Classes\AppDelegate.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\Classes\AppDelegate.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\Classes\HelloWorldScene.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\Classes\HelloWorldScene.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
