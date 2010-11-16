@@ -74,7 +74,12 @@ namespace   cocos2d {
 
     CGRect CCXApplication::statusBarFrame()
     {
-        CGRect rc;
+        float originX = [[UIApplication sharedApplication] statusBarFrame].origin.x;
+        float originY = [[UIApplication sharedApplication] statusBarFrame].origin.y;
+        float width = [[UIApplication sharedApplication] statusBarFrame].size.width;
+        float height = [[UIApplication sharedApplication] statusBarFrame].size.height;
+        CGRect rc(originX, originY, width, height);
+        
         return rc;
     }
 	
