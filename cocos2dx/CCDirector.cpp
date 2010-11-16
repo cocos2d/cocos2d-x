@@ -201,7 +201,7 @@ void CCDirector::drawScene(void)
 	//tick before glClear: issue #533
 	if (! m_bPaused)
 	{
-		CCScheduler::getSharedScheduler()->tick(m_fDeltaTime);
+		CCScheduler::sharedScheduler()->tick(m_fDeltaTime);
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -303,7 +303,7 @@ void CCDirector::setOpenGLView(CCXEGLView *pobOpenGLView)
 			updateContentScaleFactor();
 		}
 
- 		CCTouchDispatcher *pTouchDispatcher = CCTouchDispatcher::getSharedDispatcher();
+ 		CCTouchDispatcher *pTouchDispatcher = CCTouchDispatcher::sharedDispatcher();
  		m_pobOpenGLView->setTouchDelegate(pTouchDispatcher);
         pTouchDispatcher->setDispatchEvents(true);
 
@@ -335,7 +335,7 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 {
 	ccDeviceOrientation eNewOrientation;
-	eNewOrientation = CCXApplication::getSharedApplication()->setDeviceOrientation(kDeviceOrientation);
+	eNewOrientation = CCXApplication::sharedApplication()->setDeviceOrientation(kDeviceOrientation);
 	if (m_eDeviceOrientation != eNewOrientation)
 	{
 		m_eDeviceOrientation = kDeviceOrientation;
@@ -353,16 +353,16 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 // 		switch (m_eDeviceOrientation)
 // 		{
 // 		case CCDeviceOrientationPortrait:
-// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortrait);
+// 			CCXApplication::sharedApplication()->setDeviceOrientation(CCDeviceOrientationPortrait);
 // 			break;
 //         case CCDeviceOrientationPortraitUpsideDown:
-// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationPortraitUpsideDown);
+// 			CCXApplication::sharedApplication()->setDeviceOrientation(CCDeviceOrientationPortraitUpsideDown);
 // 			break;
 //         case CCDeviceOrientationLandscapeLeft:
-// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+// 			CCXApplication::sharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 // 			break;
 //         case CCDeviceOrientationLandscapeRight:
-// 			CCXApplication::getSharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
+// 			CCXApplication::sharedApplication()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
 // 			break;
 // 		default:
 // 			CCLOG("Director: Unknown device orientation");
@@ -646,7 +646,7 @@ void CCDirector::end(void)
 
 	// don't release the event handlers
 	// They are needed in case the director is run again
-	CCTouchDispatcher::getSharedDispatcher()->removeAllDelegates();
+	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
 
 	stopAnimation();
 
@@ -659,7 +659,7 @@ void CCDirector::end(void)
 
 	// purge all managers
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
-	CCActionManager::getSharedManager()->purgeSharedManager();
+	CCActionManager::sharedManager()->purgeSharedManager();
 	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
 
@@ -828,7 +828,7 @@ void CCDirector::showProfilers()
 	if (m_fAccumDtForProfiler > 1.0f)
 	{
 		m_fAccumDtForProfiler = 0;
-		CCProfiler::getSharedProfiler()->displayTimers();
+		CCProfiler::sharedProfiler()->displayTimers();
 	}
 }
 #endif

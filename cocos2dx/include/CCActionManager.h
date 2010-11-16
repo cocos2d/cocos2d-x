@@ -119,7 +119,7 @@ public:
  
 public:
 	/** returns a shared instance of the CCActionManager */
-	static CCActionManager* getSharedManager(void);
+	static CCActionManager* sharedManager(void);
 
 protected:
 	// declared in CCActionManager.m

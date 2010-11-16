@@ -76,7 +76,7 @@ CCLayer *CCLayer::node()
 
 void CCLayer::registerWithTouchDispatcher()
 {
-	CCTouchDispatcher::getSharedDispatcher()->addStandardDelegate(this,0);
+	CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0);
 }
 
 void CCLayer::destroy(void)
@@ -110,7 +110,7 @@ void CCLayer::setIsTouchEnabled(bool enabled)
 			else
 			{
 				// have problems?
-				CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
+				CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
 			}
 		}
 	}
@@ -167,7 +167,7 @@ void CCLayer::onExit()
 {
 	if( m_bIsTouchEnabled )
 	{
-		CCTouchDispatcher::getSharedDispatcher()->removeDelegate(this);
+		CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
 	}
 
     // remove this layer from the delegates who concern Accelerometer Sensor

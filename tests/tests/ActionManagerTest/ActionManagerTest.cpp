@@ -230,7 +230,7 @@ void PauseTest::onEnter()
 	
 	CCAction* action = CCMoveBy::actionWithDuration(1, CGPointMake(150,0));
 
-	CCActionManager::getSharedManager()->addAction(action, grossini, true);
+	CCActionManager::sharedManager()->addAction(action, grossini, true);
 
 	schedule( schedule_selector(PauseTest::unpause), 3); 
 }
@@ -239,7 +239,7 @@ void PauseTest::unpause(ccTime dt)
 {
 	unschedule( schedule_selector(PauseTest::unpause) );
 	CCNode* node = getChildByTag( kTagGrossini );
-	CCActionManager::getSharedManager()->resumeAllActionsForTarget(node);
+	CCActionManager::sharedManager()->resumeAllActionsForTarget(node);
 }
 
 std::string PauseTest::title()
@@ -311,7 +311,7 @@ void ResumeTest::onEnter()
 
     pGrossini->runAction(CCScaleBy::actionWithDuration(2, 2));
 
-    CCActionManager::getSharedManager()->pauseTarget(pGrossini);
+    CCActionManager::sharedManager()->pauseTarget(pGrossini);
     pGrossini->runAction(CCRotateBy::actionWithDuration(2, 360));
 
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
@@ -322,7 +322,7 @@ void ResumeTest::resumeGrossini(ccTime time)
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 
     CCNode* pGrossini = getChildByTag(kTagGrossini);
-    CCActionManager::getSharedManager()->resumeTarget(pGrossini);
+    CCActionManager::sharedManager()->resumeTarget(pGrossini);
 }
 
 //------------------------------------------------------------------

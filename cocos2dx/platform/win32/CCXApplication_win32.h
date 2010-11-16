@@ -72,7 +72,7 @@ public:
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCXApplication * getSharedApplication();
+    static CCXApplication * sharedApplication();
 
 
 	virtual int Run();

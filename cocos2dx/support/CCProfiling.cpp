@@ -33,7 +33,7 @@ namespace cocos2d
 	using namespace std;
 	static CCProfiler *g_sSharedProfiler;
 
-	CCProfiler* CCProfiler::getSharedProfiler(void)
+	CCProfiler* CCProfiler::sharedProfiler(void)
 	{
         if (! g_sSharedProfiler)
 		{
@@ -46,7 +46,7 @@ namespace cocos2d
 
 	CCProfilingTimer* CCProfiler::timerWithName(const char *pszTimerName, NSObject *pInstance)
 	{
-		CCProfiler *p = CCProfiler::getSharedProfiler();
+		CCProfiler *p = CCProfiler::sharedProfiler();
 		CCProfilingTimer *t = new CCProfilingTimer();
 		t->initWithName(pszTimerName, pInstance);
 		p->m_pActiveTimers->addObject(t);
@@ -57,7 +57,7 @@ namespace cocos2d
 
 	void CCProfiler::releaseTimer(CCProfilingTimer *pTimer)
 	{
-		CCProfiler *p = CCProfiler::getSharedProfiler();
+		CCProfiler *p = CCProfiler::sharedProfiler();
 		p->m_pActiveTimers->removeObject(pTimer);
 	}
 

@@ -76,7 +76,7 @@ public:
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCXApplication * getSharedApplication();
+    static CCXApplication * sharedApplication();
 
 private:
     MESSAGE_t m_tMsg;

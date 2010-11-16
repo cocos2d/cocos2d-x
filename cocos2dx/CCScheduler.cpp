@@ -139,7 +139,7 @@ CCScheduler::~CCScheduler(void)
 	pSharedScheduler = NULL;
 }
 
-CCScheduler* CCScheduler::getSharedScheduler(void)
+CCScheduler* CCScheduler::sharedScheduler(void)
 {
 	if (! pSharedScheduler)
 	{

@@ -74,7 +74,7 @@ namespace cocos2d{
 
 			// XXX: in v0.7, winSize should return the visible size
 			// XXX: so the bar calculation should be done there
-			CGRect r = CCXApplication::getSharedApplication()->statusBarFrame();
+			CGRect r = CCXApplication::sharedApplication()->statusBarFrame();
 			ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
 			if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
 			{
@@ -127,7 +127,7 @@ namespace cocos2d{
 	//Menu - Events
 	void CCMenu::registerWithTouchDispatcher()
 	{
-		CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
 	}
 
 	bool CCMenu::ccTouchBegan(CCTouch* touch, UIEvent* event)

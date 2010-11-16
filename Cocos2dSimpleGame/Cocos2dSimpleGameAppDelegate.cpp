@@ -34,8 +34,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCFileUtils::setResourceInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ResourceInfo));
 
     // set the ResourceEntry and sound ResInfo (filename and ResID)
-    SimpleAudioEngine::getSharedEngine()->setResourceEntry(&Cocos2dSimpleGameResourceEntry);
-    SimpleAudioEngine::getSharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
+    SimpleAudioEngine::sharedEngine()->setResourceEntry(&Cocos2dSimpleGameResourceEntry);
+    SimpleAudioEngine::sharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();
@@ -62,12 +62,12 @@ void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->stopAnimation();
 
-    SimpleAudioEngine::getSharedEngine()->pauseBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->startAnimation();
 
-    SimpleAudioEngine::getSharedEngine()->resumeBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

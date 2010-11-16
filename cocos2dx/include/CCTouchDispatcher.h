@@ -134,7 +134,7 @@ public:
 
 public:
 	/** singleton of the CCTouchDispatcher */
-	static CCTouchDispatcher* getSharedDispatcher();
+	static CCTouchDispatcher* sharedDispatcher();
 
 protected:
 	void forceRemoveDelegate(CCTouchDelegate *pDelegate);

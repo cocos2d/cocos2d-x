@@ -58,7 +58,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
     }
 }
 
-SimpleAudioEngine* SimpleAudioEngine::getSharedEngine()
+SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 {
     if (s_pSharedAudioEngine == NULL)
     {

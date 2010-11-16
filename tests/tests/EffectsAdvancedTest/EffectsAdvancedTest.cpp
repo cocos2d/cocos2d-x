@@ -136,7 +136,7 @@ void Effect4::onEnter()
 // 	CCIntervalAction* move = CCJumpBy::actionWithDuration(5, ccp(380,0), 100, 4);
 // 	CCIntervalAction* move_back = move->reverse();
 // 	CCIntervalAction* seq = (CCIntervalAction *)(CCSequence::actions( move, move_back, NULL));
-//  CCActionManager::getSharedManager()->addAction(seq, lens, false);
+//  CCActionManager::sharedManager()->addAction(seq, lens, false);
 
 	runAction( lens );
 }

@@ -1270,7 +1270,7 @@ void TileDemo::backCallback(NSObject* pSender)
 
 void TileDemo::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::getSharedDispatcher()->addTargetedDelegate(this, 0, true);
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 bool TileDemo::ccTouchBegan(CCTouch* touch, UIEvent* event)
