@@ -160,7 +160,7 @@ function AddConfigurations(proj, strProjectName)
 			var CLTool = config.Tools('VCCLCompilerTool');
 
             // Additional Inlcude Directories
-			var strAddIncludeDir = '.;.\\win32;..\\cocos2dx;..\\cocos2dx\\include;..\\cocos2dx\\platform\\win32\\third_party\\OGLES';
+			var strAddIncludeDir = '.;.\\win32;.\\Classes;..\\cocos2dx;..\\cocos2dx\\include;..\\cocos2dx\\platform\\win32\\third_party\\OGLES';
 			if (wizard.FindSymbol('CCX_USE_BOX2D')) 
 			{
 			    strAddIncludeDir += ';..\\;..\\Box2D';

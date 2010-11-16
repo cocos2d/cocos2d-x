@@ -47,10 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
     CCScene * pScene = HelloWorld::scene();
-	CCLayer * pLayer = CCLayer::node();
-    pLayer->autorelease();
 
-    pScene->addChild(pLayer);
 	pDirector->runWithScene(pScene);
 
     return true;
