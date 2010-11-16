@@ -161,7 +161,7 @@ void UIAccelerometer::addDelegate(UIAccelerometerDelegate* pDelegate)
             if (m_pSensor)
             {
                 m_pSensor->StartUp();
-                m_pSensor->SetDelay(TG3_SENSOR_DELAY_GAME);
+                m_pSensor->SetDelay(TG3_SENSOR_DELAY_FASTEST);
 
                 TApplication* pApp = TApplication::GetCurrentApplication();
                 TWindow* pWnd = pApp->GetActiveWindow();
