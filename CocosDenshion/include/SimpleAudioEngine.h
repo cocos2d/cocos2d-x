@@ -50,7 +50,7 @@ public:
     /**
     @brief Get the shared Engine object,it will new one when first time be called
     */
-    static SimpleAudioEngine* getSharedEngine();
+    static SimpleAudioEngine* sharedEngine();
 
     /**
     @brief Release the shared Engine object
