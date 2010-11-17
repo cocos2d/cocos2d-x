@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
 			UseOfMFC="2"
@@ -100,7 +100,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
 			UseOfMFC="2"
@@ -221,6 +221,10 @@
 				RelativePath=".\TestAudioEngine-win32Dlg.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\TestAudioEngine.win32.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -247,6 +251,10 @@
 				RelativePath=".\TestAudioEngine-win32Dlg.h"
 				>
 			</File>
+			<File
+				RelativePath=".\TestAudioEngine.win32.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -259,6 +267,10 @@
 			</File>
 			<File
 				RelativePath=".\TestAudioEngine-win32.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\TestAudioEngine.win32.rc"
 				>
 			</File>
 			<File
