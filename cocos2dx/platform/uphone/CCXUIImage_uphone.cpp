@@ -146,6 +146,16 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 	    }
     }
 
+	if (!bRet)
+	{
+		std::string strErr = "Load ";
+		strErr += strPath;
+		strErr += " failed!";
+		TUChar szText[256] = { 0 };
+		TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
+		TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
+	}
+
 	return bRet;
 }
 
