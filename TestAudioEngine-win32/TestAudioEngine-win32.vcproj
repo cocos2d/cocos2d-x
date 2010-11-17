@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="TestAudioEngine-win32"
+	Name="TestAudioEngine"
 	ProjectGUID="{3A08EAB1-1042-4085-BACA-03A5BDD0F214}"
 	RootNamespace="TestAudioEnginewin32"
 	Keyword="MFCProj"
@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="1"
@@ -101,7 +101,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="1"
