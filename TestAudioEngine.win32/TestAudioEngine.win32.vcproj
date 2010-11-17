@@ -214,15 +214,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\TestAudioEngine-win32.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TestAudioEngine-win32Dlg.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\TestAudioEngine.win32.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TestAudioEngine.win32Dlg.cpp"
 				>
 			</File>
 		</Filter>
@@ -244,15 +240,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\TestAudioEngine-win32.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TestAudioEngine-win32Dlg.h"
-				>
-			</File>
-			<File
 				RelativePath=".\TestAudioEngine.win32.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TestAudioEngine.win32Dlg.h"
 				>
 			</File>
 		</Filter>
@@ -263,10 +255,6 @@
 			>
 			<File
 				RelativePath=".\res\TestAudioEngine-win32.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\TestAudioEngine-win32.rc"
 				>
 			</File>
 			<File
