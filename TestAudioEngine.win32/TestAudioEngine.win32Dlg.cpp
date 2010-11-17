@@ -3,8 +3,8 @@
 //
 
 #include "stdafx.h"
-#include "TestAudioEngine-win32.h"
-#include "TestAudioEngine-win32Dlg.h"
+#include "TestAudioEngine.win32.h"
+#include "TestAudioEngine.win32Dlg.h"
 
 #include  "SimpleAudioEngine.h"
 

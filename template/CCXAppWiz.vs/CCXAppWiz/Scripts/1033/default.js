@@ -153,7 +153,7 @@ function AddConfigurations(proj, strProjectName)
 // 			else
 //				config.CharacterSet = charSetMBCS;
 
-            config.OutputDirectory = '$(SolutionDir)$(ConfigurationName)'
+            config.OutputDirectory = '$(SolutionDir)$(ConfigurationName).win32'
             config.IntermediateDirectory = '$(ConfigurationName).win32';
 
 			// Compiler settings
