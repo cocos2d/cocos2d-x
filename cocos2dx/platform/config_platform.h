@@ -23,13 +23,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 // pre configure
-#ifdef _TRANZDA_VM_     // under uphone emulator
+#ifdef _TRANZDA_VM_                             // under uphone
     #define CCX_PLATFORM_UPHONE
 #elif   defined (WIN32) && defined (_WINDOWS)   // under win32pc
     #define CCX_PLATFORM_WIN32
 #elif   defined (_ANDROID)
     #define CCX_PLATFORM_ANDROID
-#else if (defined(__IPHONE_2_0) ||  defined(__IPHONE_2_1) || defined(__IPHONE_2_2) || defined(__IPHONE_3_0) || defined(__IPHONE_3_1) || defined(__IPHONE_3_2) || defined(__IPHONE_4_0))
+#elif (defined(__IPHONE_2_0) ||  defined(__IPHONE_2_1) || defined(__IPHONE_2_2) || defined(__IPHONE_3_0) || defined(__IPHONE_3_1) || defined(__IPHONE_3_2) || defined(__IPHONE_4_0))
     #define CCX_PLATFORM_IPHONE
 #endif
 
@@ -43,14 +43,20 @@ THE SOFTWARE.
 // post configure
 
 // check user set platform
-#if defined(CCX_UNDER_UPHONE) || defined(CCX_UNDER_WIN32)
+#if defined(CCX_UNDER_UPHONE) || defined(CCX_UNDER_WIN32) || defined(CCX_UNDER_ANDROID) || defined(CCX_UNDER_IPHONE)
     #undef CCX_PLATFORM_UPHONE
     #undef CCX_PLATFORM_WIN32
+    #undef CCX_PLATFORM_ANDROID
+    #undef CCX_PLATFORM_IPHONE
 
     #if defined(CCX_UNDER_UPHONE)
         #define CCX_PLATFORM_UPHONE	// under uphone
     #elif defined(CCX_UNDER_WIN32)
         #define CCX_PLATFORM_WIN32
+    #elif defined(CCX_UNDER_ANDROID)
+        #define CCX_PLATFORM_ANDROID
+    #elif defined(CCX_UNDER_IPHONE)
+        #define CCX_PLATFORM_IPHONE
     #endif
 
 #endif
