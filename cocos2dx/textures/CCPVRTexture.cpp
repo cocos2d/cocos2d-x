@@ -198,7 +198,7 @@ bool CCPVRTexture::createGLTexture()
 {
 	int width = m_uWidth;
 	int height = m_uHeight;
-	NSData *data;
+/// @todo	NSData *data;
 	GLenum err;
 
 	if (m_pImageData->count() > 0)
