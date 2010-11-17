@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="cocos2dx-win32"
+	Name="libcocos2d"
 	ProjectGUID="{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
 	RootNamespace="cocos2dx-win32"
 	Keyword="Win32Proj"
@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -64,14 +64,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
-				OutputFile="$(OutDir)\libcocos2d.dll"
+				OutputFile="$(OutDir)\$(TargetName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=".\platform\win32\third_party\libraries"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="MSVCRT.lib;LIBCMTD.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				ImportLibrary="$(TargetDir)libcocos2d.lib"
+				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -100,7 +100,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -142,14 +142,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
-				OutputFile="$(OutDir)\libcocos2d.dll"
+				OutputFile="$(OutDir)\$(TargetName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=".\platform\win32\third_party\libraries"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(TargetDir)libcocos2d.lib"
+				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool

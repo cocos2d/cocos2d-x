@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Box2D-win32"
+	Name="libBox2D"
 	ProjectGUID="{929480E7-23C0-4DF6-8456-096D71547116}"
 	RootNamespace="Box2D-win32"
 	Keyword="Win32Proj"
@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\libBox2D.lib"
+				OutputFile="$(OutDir)\$(TargetName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -83,7 +83,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>
@@ -123,7 +123,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\libBox2D.lib"
+				OutputFile="$(OutDir)\$(TargetName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
