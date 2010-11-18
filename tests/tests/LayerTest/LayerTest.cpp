@@ -153,7 +153,7 @@ void LayerTest1::updateSize(CCTouch*touch)
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
-	CGSize newSize = CGSizeMake( abs( touchLocation.x - s.width/2)*2, abs(touchLocation.y - s.height/2)*2);
+	CGSize newSize = CGSizeMake( std::abs( (int)(touchLocation.x - s.width/2)*2), abs((int)(touchLocation.y - s.height/2)*2));
 	
 	CCColorLayer* l = (CCColorLayer*) getChildByTag(kTagLayer);
 

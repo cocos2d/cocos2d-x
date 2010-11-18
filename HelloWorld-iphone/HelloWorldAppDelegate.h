@@ -28,10 +28,8 @@
 
 class HelloWorld : public cocos2d::CCXApplication {
 public:
-    HelloWorld();
-	
-    virtual bool initCocos2d();
-	
+    HelloWorld();	
+    virtual bool applicationDidFinishLaunching();
 };
 
 #endif // __HELLOWORLD_H__

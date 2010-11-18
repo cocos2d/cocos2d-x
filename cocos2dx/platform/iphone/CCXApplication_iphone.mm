@@ -85,14 +85,14 @@ namespace   cocos2d {
 	
     void CCXApplication::run()
     {
-        initCocos2d();
+        applicationDidFinishLaunching();
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
     }
 
 	//////////////////////////////////////////////////////////////////////////
 	/// Implement static class member
 	//////////////////////////////////////////////////////////////////////////
-	CCXApplication * CCXApplication::getSharedApplication()
+	CCXApplication * CCXApplication::sharedApplication()
 	{
 		return s_pApplication;
 	}

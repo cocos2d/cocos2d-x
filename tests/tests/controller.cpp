@@ -51,9 +51,9 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new TileMapTestScene(); break;
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
-    case TEST_CHIPMUNK:
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
-        pScene = new ChipmunkTestScene(); break;
+//    case TEST_CHIPMUNK:
+//		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+//        pScene = new ChipmunkTestScene(); break;
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
     case TEST_SPRITE:
@@ -96,7 +96,7 @@ TestController::TestController()
     // add menu items for tests
     for (int i = 0; i < ITEM_EVERYPAGE; ++i)
     {
-        CCLabel* label = CCLabel::labelWithString("For Test", "Arial", 32);
+        CCLabel* label = CCLabel::labelWithString("For Test", "Arial", 24);
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
         pMenu->addChild(pMenuItem, i + 2);
         pMenuItem->setPosition( CGPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));

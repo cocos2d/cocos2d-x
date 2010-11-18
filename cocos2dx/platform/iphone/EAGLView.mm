@@ -72,6 +72,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASS IMPLEMENTATIONS:
 
 static EAGLView *view;
+static cocos2d::CCTouch *s_pTouches[4];
 
 @interface EAGLView (Private)
 -(BOOL) setupSurface;
@@ -82,6 +83,7 @@ static EAGLView *view;
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize context=context_;
+@synthesize touchesIntergerDict;
 
 + (Class) layerClass
 {
@@ -100,12 +102,18 @@ static EAGLView *view;
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained] autorelease];
+	return [[[[self alloc] init]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained] autorelease];
 }
 
 + (id) sharedEGLView
 {
 	return view;
+}
+
+- (id) init
+{
+    touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
+    return self;
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -191,6 +199,7 @@ static EAGLView *view;
 
 - (void) dealloc
 {
+        CFRelease(touchesIntergerDict);
 	[renderer_ release];
 	[super dealloc];
 }
@@ -257,14 +266,18 @@ static EAGLView *view;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	cocos2d::NSSet set;
+        int i = 0;
 	for (UITouch *touch in touches) {
-		cocos2d::CCTouch *pCocosTouch = new cocos2d::CCTouch();
+		s_pTouches[i] = new cocos2d::CCTouch();
+        
 		float x = [touch locationInView: [touch view]].x;
 		float y = [touch locationInView: [touch view]].y;
-		pCocosTouch->SetTouchInfo(0, x, y);
+		s_pTouches[i] ->SetTouchInfo(0, x, y);
+        
+                CFDictionaryAddValue(touchesIntergerDict, touch, [NSNumber numberWithInt:i]);
 		
-		set.addObject(pCocosTouch);
-		pCocosTouch->release();
+		set.addObject(s_pTouches[i]);
+                ++i;
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
@@ -274,13 +287,23 @@ static EAGLView *view;
 {
 	cocos2d::NSSet set;
 	for (UITouch *touch in touches) {
-		cocos2d::CCTouch *pCocosTouch = new cocos2d::CCTouch();
+		NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+                if (! index) {
+                    // if the index doesn't exist, it is an error
+                    return;
+                }
+                
+                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
+                if (! pTouch) {
+                    // if the pTouch is null, it is an error
+                    return;
+                }
+        
 		float x = [touch locationInView: [touch view]].x;
 		float y = [touch locationInView: [touch view]].y;
-		pCocosTouch->SetTouchInfo(0, x, y);
+		pTouch->SetTouchInfo(0, x, y);
 		
-		set.addObject(pCocosTouch);
-		pCocosTouch->release();
+		set.addObject(pTouch);
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesMoved(&set);
@@ -290,13 +313,25 @@ static EAGLView *view;
 {
 	cocos2d::NSSet set;
 	for (UITouch *touch in touches) {
-		cocos2d::CCTouch *pCocosTouch = new cocos2d::CCTouch();
+            NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+            if (! index) {
+                // if the index doesn't exist, it is an error
+                return;
+            }
+        
+                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
+                if (! pTouch) {
+                    // if the pTouch is null, it is an error
+                    return;
+                }
+        
 		float x = [touch locationInView: [touch view]].x;
 		float y = [touch locationInView: [touch view]].y;
-		pCocosTouch->SetTouchInfo(0, x, y);
+		pTouch->SetTouchInfo(0, x, y);
 		
-		set.addObject(pCocosTouch);
-		pCocosTouch->release();
+		set.addObject(pTouch);
+                CFDictionaryRemoveValue(touchesIntergerDict, touch);
+                pTouch->release();
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesEnded(&set);
@@ -305,13 +340,25 @@ static EAGLView *view;
 {
 	cocos2d::NSSet set;
 	for (UITouch *touch in touches) {
-		cocos2d::CCTouch *pCocosTouch = new cocos2d::CCTouch();
+            NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+            if (! index) {
+                // if the index doesn't exist, it is an error
+                return;
+            }
+        
+                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
+                if (! pTouch) {
+                    // if the pTouch is null, it is an error
+                    return;
+                }
+        
 		float x = [touch locationInView: [touch view]].x;
 		float y = [touch locationInView: [touch view]].y;
-		pCocosTouch->SetTouchInfo(0, x, y);
+		pTouch->SetTouchInfo(0, x, y);
 		
-		set.addObject(pCocosTouch);
-		pCocosTouch->release();
+		set.addObject(pTouch);
+                CFDictionaryRemoveValue(touchesIntergerDict, touch);
+                pTouch->release();
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);

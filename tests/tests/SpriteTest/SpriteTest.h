@@ -170,7 +170,7 @@ public:
 
 class SpriteNewTexture : public SpriteTestDemo
 {
-	BOOL			m_usingTexture1;
+	bool                        m_usingTexture1;
 	CCTexture2D*	m_texture1;
 	CCTexture2D*	m_texture2; 
 
@@ -254,7 +254,7 @@ public:
 
 class SpriteHybrid: public SpriteTestDemo
 {
-	BOOL	m_usingSpriteSheet; 
+	bool 	m_usingSpriteSheet; 
 public:
 	SpriteHybrid();
 	void reparentSprite(ccTime dt);

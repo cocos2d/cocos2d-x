@@ -296,10 +296,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 
 			tempData = (void*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
-#ifdef CCX_PLATFORM_IPHONE			
-			data = new UINT8[POTHigh * POTWide * 4];
-			memcpy(data, tempData, POTHigh * POTWide * 4);
-#else
+
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{
 				data = new UINT8[POTHigh * POTWide * 4];
@@ -318,7 +315,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
 				}
 			}
-#endif // IPHONE
+
 			break;    
 		case kCCTexture2DPixelFormat_RGB888:
 			tempData = (void*)(image->getData());
