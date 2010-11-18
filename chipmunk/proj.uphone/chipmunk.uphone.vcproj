@@ -16,7 +16,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../PRJ_TG3/LIB/Win32Lib"
+			OutputDirectory="../../../PRJ_TG3/LIB/Win32Lib"
 			IntermediateDirectory="Debug"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include;.\include\chipmunk"
+				AdditionalIncludeDirectories="..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\include\chipmunk"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;__TG3_PURE_DLL__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -84,7 +84,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../PRJ_TG3/LIB/Win32Lib"
+			OutputDirectory="../../../PRJ_TG3/LIB/Win32Lib"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -107,7 +107,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include"
+				AdditionalIncludeDirectories="..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;__TG3_PURE_DLL__"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -168,102 +168,102 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\chipmunk.c"
+				RelativePath="..\src\chipmunk.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpArbiter.c"
+				RelativePath="..\src\cpArbiter.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpArray.c"
+				RelativePath="..\src\cpArray.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpBB.c"
+				RelativePath="..\src\cpBB.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpBody.c"
+				RelativePath="..\src\cpBody.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpCollision.c"
+				RelativePath="..\src\cpCollision.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpHashSet.c"
+				RelativePath="..\src\cpHashSet.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpPolyShape.c"
+				RelativePath="..\src\cpPolyShape.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpShape.c"
+				RelativePath="..\src\cpShape.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpSpace.c"
+				RelativePath="..\src\cpSpace.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpSpaceHash.c"
+				RelativePath="..\src\cpSpaceHash.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\cpVect.c"
+				RelativePath="..\src\cpVect.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\prime.h"
+				RelativePath="..\src\prime.h"
 				>
 			</File>
 			<Filter
 				Name="constraints"
 				>
 				<File
-					RelativePath=".\src\constraints\cpConstraint.c"
+					RelativePath="..\src\constraints\cpConstraint.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpDampedRotarySpring.c"
+					RelativePath="..\src\constraints\cpDampedRotarySpring.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpDampedSpring.c"
+					RelativePath="..\src\constraints\cpDampedSpring.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpGearJoint.c"
+					RelativePath="..\src\constraints\cpGearJoint.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpGrooveJoint.c"
+					RelativePath="..\src\constraints\cpGrooveJoint.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpPinJoint.c"
+					RelativePath="..\src\constraints\cpPinJoint.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpPivotJoint.c"
+					RelativePath="..\src\constraints\cpPivotJoint.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpRatchetJoint.c"
+					RelativePath="..\src\constraints\cpRatchetJoint.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpRotaryLimitJoint.c"
+					RelativePath="..\src\constraints\cpRotaryLimitJoint.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpSimpleMotor.c"
+					RelativePath="..\src\constraints\cpSimpleMotor.c"
 					>
 				</File>
 				<File
-					RelativePath=".\src\constraints\cpSlideJoint.c"
+					RelativePath="..\src\constraints\cpSlideJoint.c"
 					>
 				</File>
 			</Filter>
@@ -275,114 +275,114 @@
 				Name="chipmunk"
 				>
 				<File
-					RelativePath=".\include\chipmunk\chipmunk.h"
+					RelativePath="..\include\chipmunk\chipmunk.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\chipmunk_ffi.h"
+					RelativePath="..\include\chipmunk\chipmunk_ffi.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\chipmunk_types.h"
+					RelativePath="..\include\chipmunk\chipmunk_types.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\chipmunk_unsafe.h"
+					RelativePath="..\include\chipmunk\chipmunk_unsafe.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpArbiter.h"
+					RelativePath="..\include\chipmunk\cpArbiter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpArray.h"
+					RelativePath="..\include\chipmunk\cpArray.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpBB.h"
+					RelativePath="..\include\chipmunk\cpBB.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpBody.h"
+					RelativePath="..\include\chipmunk\cpBody.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpCollision.h"
+					RelativePath="..\include\chipmunk\cpCollision.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpHashSet.h"
+					RelativePath="..\include\chipmunk\cpHashSet.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpPolyShape.h"
+					RelativePath="..\include\chipmunk\cpPolyShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpShape.h"
+					RelativePath="..\include\chipmunk\cpShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpSpace.h"
+					RelativePath="..\include\chipmunk\cpSpace.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpSpaceHash.h"
+					RelativePath="..\include\chipmunk\cpSpaceHash.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\chipmunk\cpVect.h"
+					RelativePath="..\include\chipmunk\cpVect.h"
 					>
 				</File>
 				<Filter
 					Name="constraints"
 					>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpConstraint.h"
+						RelativePath="..\include\chipmunk\constraints\cpConstraint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpDampedRotarySpring.h"
+						RelativePath="..\include\chipmunk\constraints\cpDampedRotarySpring.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpDampedSpring.h"
+						RelativePath="..\include\chipmunk\constraints\cpDampedSpring.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpGearJoint.h"
+						RelativePath="..\include\chipmunk\constraints\cpGearJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpGrooveJoint.h"
+						RelativePath="..\include\chipmunk\constraints\cpGrooveJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpPinJoint.h"
+						RelativePath="..\include\chipmunk\constraints\cpPinJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpPivotJoint.h"
+						RelativePath="..\include\chipmunk\constraints\cpPivotJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpRatchetJoint.h"
+						RelativePath="..\include\chipmunk\constraints\cpRatchetJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpRotaryLimitJoint.h"
+						RelativePath="..\include\chipmunk\constraints\cpRotaryLimitJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpSimpleMotor.h"
+						RelativePath="..\include\chipmunk\constraints\cpSimpleMotor.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\cpSlideJoint.h"
+						RelativePath="..\include\chipmunk\constraints\cpSlideJoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\include\chipmunk\constraints\util.h"
+						RelativePath="..\include\chipmunk\constraints\util.h"
 						>
 					</File>
 				</Filter>
@@ -392,7 +392,7 @@
 			Name="Makefiles"
 			>
 			<File
-				RelativePath=".\chipmunk_Arm.TMK3"
+				RelativePath=".\chipmunk.TMK3"
 				>
 			</File>
 			<File
