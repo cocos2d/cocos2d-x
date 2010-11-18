@@ -25,40 +25,13 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_UIACCELEROMETER_H__
 #define __PLATFORM_UPHONE_UIACCELEROMETER_H__
 
+#include "CCUIAccelerometerDelegate.h"
 #include "TG3.h"
 #include "NSMutableArray.h"
 #include "ccxCommon.h"
 #include "TCOM_Sensors_Interface.h"
 
 namespace   cocos2d {
-
-/**
-@brief The device accelerometer reports values for each axis in units of g-force 
-*/
-typedef struct 
-{
-    double x;
-    double y;
-    double z;
-
-    double timestamp;
-} UIAcceleration;
-
-/**
-@brief 
-The UIAccelerometerDelegate defines a single method for
-receiving acceleration-related data from the system.
-*/
-class CCX_DLL UIAccelerometerDelegate
-{
-public:
-    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
-
-    //! call the release() in child layer
-    virtual void destroy(void) {}
-    //! call the retain() in child layer
-    virtual void keep(void) {}
-};
 
 /**
 @brief
