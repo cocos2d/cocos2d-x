@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="WS2_32.Lib ..\..\PRJ_TG3\Common\SoftSupport\EosConfig.lib ..\..\PRJ_TG3\Common\SoftSupport\SoftSupport.lib ..\..\PRJ_TG3\Common\SoftSupport\TG3_DLL.lib ..\..\PRJ_TG3\LIB\Win32Lib\TSoundPlayer.lib"
-				OutputFile="$(OutDir)\libCocosDenishion.dll"
+				OutputFile="$(OutDir)\libCocosDenshion.dll"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"

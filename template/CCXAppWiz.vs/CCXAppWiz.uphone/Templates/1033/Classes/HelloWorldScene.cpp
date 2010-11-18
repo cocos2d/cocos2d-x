@@ -29,6 +29,7 @@ bool HelloWorld::init()
 		return false;
 	}
 
+[! if CCX_USE_UI_RESOURCE]
 	/////////////////////////////
 	// 2. add a menu item with "X" image, which is clicked to quit the program
 	//    you may modify it.
@@ -48,7 +49,10 @@ bool HelloWorld::init()
 
 	/////////////////////////////
 	// 3. add your codes below...
-	
+[! else]
+    /////////////////////////////
+    // 2. add your codes below...
+[! endif]
 	// add a label shows "Hello World"
 	// create and initialize a label
 	CCLabel* pLabel = CCLabel::labelWithString("HelloWorld", "Thonburi", 64);
@@ -64,8 +68,10 @@ bool HelloWorld::init()
 	
 	return true;
 }
+[! if CCX_USE_UI_RESOURCE]
 
 void HelloWorld::menuCloseCallback(NSObject* pSender)
 {
 	CCDirector::sharedDirector()->end();
 }
+[! endif]
