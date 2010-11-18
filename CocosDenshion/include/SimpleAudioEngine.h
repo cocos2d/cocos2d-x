@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef _SIMPLE_AUDIO_ENGINE_H_
 #define _SIMPLE_AUDIO_ENGINE_H_
 
-#include "../Export.h"
+#include "Export.h"
 
 /**
 @struct T_SoundResInfo

@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="libBox2D"
+	Name="box2d"
 	ProjectGUID="{929480E7-23C0-4DF6-8456-096D71547116}"
 	RootNamespace="Box2D-win32"
 	Keyword="Win32Proj"
@@ -151,151 +151,151 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\common\b2BlockAllocator.h"
+				RelativePath="..\common\b2BlockAllocator.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2Body.h"
+				RelativePath="..\dynamics\b2Body.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2BroadPhase.h"
+				RelativePath="..\collision\b2BroadPhase.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2CircleContact.h"
+				RelativePath="..\dynamics\contacts\b2CircleContact.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\shapes\b2CircleShape.h"
+				RelativePath="..\collision\shapes\b2CircleShape.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2Collision.h"
+				RelativePath="..\collision\b2Collision.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2Contact.h"
+				RelativePath="..\dynamics\contacts\b2Contact.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2ContactManager.h"
+				RelativePath="..\dynamics\b2ContactManager.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2ContactSolver.h"
+				RelativePath="..\dynamics\contacts\b2ContactSolver.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2Distance.h"
+				RelativePath="..\collision\b2Distance.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2DistanceJoint.h"
+				RelativePath="..\dynamics\joints\b2DistanceJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2DynamicTree.h"
+				RelativePath="..\collision\b2DynamicTree.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2Fixture.h"
+				RelativePath="..\dynamics\b2Fixture.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2FrictionJoint.h"
+				RelativePath="..\dynamics\joints\b2FrictionJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2GearJoint.h"
+				RelativePath="..\dynamics\joints\b2GearJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2Island.h"
+				RelativePath="..\dynamics\b2Island.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2Joint.h"
+				RelativePath="..\dynamics\joints\b2Joint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2LineJoint.h"
+				RelativePath="..\dynamics\joints\b2LineJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\common\b2Math.h"
+				RelativePath="..\common\b2Math.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2MouseJoint.h"
+				RelativePath="..\dynamics\joints\b2MouseJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2NullContact.h"
+				RelativePath="..\dynamics\contacts\b2NullContact.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2PolygonAndCircleContact.h"
+				RelativePath="..\dynamics\contacts\b2PolygonAndCircleContact.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2PolygonContact.h"
+				RelativePath="..\dynamics\contacts\b2PolygonContact.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\shapes\b2PolygonShape.h"
+				RelativePath="..\collision\shapes\b2PolygonShape.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2PrismaticJoint.h"
+				RelativePath="..\dynamics\joints\b2PrismaticJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2PulleyJoint.h"
+				RelativePath="..\dynamics\joints\b2PulleyJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2RevoluteJoint.h"
+				RelativePath="..\dynamics\joints\b2RevoluteJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\common\b2Settings.h"
+				RelativePath="..\common\b2Settings.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\shapes\b2Shape.h"
+				RelativePath="..\collision\shapes\b2Shape.h"
 				>
 			</File>
 			<File
-				RelativePath=".\common\b2StackAllocator.h"
+				RelativePath="..\common\b2StackAllocator.h"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2TimeOfImpact.h"
+				RelativePath="..\collision\b2TimeOfImpact.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2TimeStep.h"
+				RelativePath="..\dynamics\b2TimeStep.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2TOISolver.h"
+				RelativePath="..\dynamics\contacts\b2TOISolver.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2WeldJoint.h"
+				RelativePath="..\dynamics\joints\b2WeldJoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2World.h"
+				RelativePath="..\dynamics\b2World.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2WorldCallbacks.h"
+				RelativePath="..\dynamics\b2WorldCallbacks.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Box2D.h"
+				RelativePath="..\Box2D.h"
 				>
 			</File>
 		</Filter>
@@ -311,143 +311,143 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\common\b2BlockAllocator.cpp"
+				RelativePath="..\common\b2BlockAllocator.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2Body.cpp"
+				RelativePath="..\dynamics\b2Body.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2BroadPhase.cpp"
+				RelativePath="..\collision\b2BroadPhase.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2CircleContact.cpp"
+				RelativePath="..\dynamics\contacts\b2CircleContact.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\shapes\b2CircleShape.cpp"
+				RelativePath="..\collision\shapes\b2CircleShape.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2CollideCircle.cpp"
+				RelativePath="..\collision\b2CollideCircle.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2CollidePolygon.cpp"
+				RelativePath="..\collision\b2CollidePolygon.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2Collision.cpp"
+				RelativePath="..\collision\b2Collision.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2Contact.cpp"
+				RelativePath="..\dynamics\contacts\b2Contact.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2ContactManager.cpp"
+				RelativePath="..\dynamics\b2ContactManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2ContactSolver.cpp"
+				RelativePath="..\dynamics\contacts\b2ContactSolver.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2Distance.cpp"
+				RelativePath="..\collision\b2Distance.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2DistanceJoint.cpp"
+				RelativePath="..\dynamics\joints\b2DistanceJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2DynamicTree.cpp"
+				RelativePath="..\collision\b2DynamicTree.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2Fixture.cpp"
+				RelativePath="..\dynamics\b2Fixture.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2FrictionJoint.cpp"
+				RelativePath="..\dynamics\joints\b2FrictionJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2GearJoint.cpp"
+				RelativePath="..\dynamics\joints\b2GearJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2Island.cpp"
+				RelativePath="..\dynamics\b2Island.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2Joint.cpp"
+				RelativePath="..\dynamics\joints\b2Joint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2LineJoint.cpp"
+				RelativePath="..\dynamics\joints\b2LineJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\common\b2Math.cpp"
+				RelativePath="..\common\b2Math.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2MouseJoint.cpp"
+				RelativePath="..\dynamics\joints\b2MouseJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2PolygonAndCircleContact.cpp"
+				RelativePath="..\dynamics\contacts\b2PolygonAndCircleContact.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2PolygonContact.cpp"
+				RelativePath="..\dynamics\contacts\b2PolygonContact.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\shapes\b2PolygonShape.cpp"
+				RelativePath="..\collision\shapes\b2PolygonShape.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2PrismaticJoint.cpp"
+				RelativePath="..\dynamics\joints\b2PrismaticJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2PulleyJoint.cpp"
+				RelativePath="..\dynamics\joints\b2PulleyJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2RevoluteJoint.cpp"
+				RelativePath="..\dynamics\joints\b2RevoluteJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\common\b2Settings.cpp"
+				RelativePath="..\common\b2Settings.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\common\b2StackAllocator.cpp"
+				RelativePath="..\common\b2StackAllocator.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\collision\b2TimeOfImpact.cpp"
+				RelativePath="..\collision\b2TimeOfImpact.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\contacts\b2TOISolver.cpp"
+				RelativePath="..\dynamics\contacts\b2TOISolver.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\joints\b2WeldJoint.cpp"
+				RelativePath="..\dynamics\joints\b2WeldJoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2World.cpp"
+				RelativePath="..\dynamics\b2World.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\dynamics\b2WorldCallbacks.cpp"
+				RelativePath="..\dynamics\b2WorldCallbacks.cpp"
 				>
 			</File>
 		</Filter>

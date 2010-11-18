@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../PRJ_TG3/LIB/Win32Lib"
+			OutputDirectory="../../../PRJ_TG3/LIB/Win32Lib"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../"
+				AdditionalIncludeDirectories="../../"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -150,74 +150,74 @@
 			Name="Collision"
 			>
 			<File
-				RelativePath=".\Collision\b2BroadPhase.cpp"
+				RelativePath="..\Collision\b2BroadPhase.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2BroadPhase.h"
+				RelativePath="..\Collision\b2BroadPhase.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2CollideCircle.cpp"
+				RelativePath="..\Collision\b2CollideCircle.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2CollidePolygon.cpp"
+				RelativePath="..\Collision\b2CollidePolygon.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2Collision.cpp"
+				RelativePath="..\Collision\b2Collision.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2Collision.h"
+				RelativePath="..\Collision\b2Collision.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2Distance.cpp"
+				RelativePath="..\Collision\b2Distance.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2Distance.h"
+				RelativePath="..\Collision\b2Distance.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2DynamicTree.cpp"
+				RelativePath="..\Collision\b2DynamicTree.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2DynamicTree.h"
+				RelativePath="..\Collision\b2DynamicTree.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2TimeOfImpact.cpp"
+				RelativePath="..\Collision\b2TimeOfImpact.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Collision\b2TimeOfImpact.h"
+				RelativePath="..\Collision\b2TimeOfImpact.h"
 				>
 			</File>
 			<Filter
 				Name="Shapes"
 				>
 				<File
-					RelativePath=".\Collision\Shapes\b2CircleShape.cpp"
+					RelativePath="..\Collision\Shapes\b2CircleShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Collision\Shapes\b2CircleShape.h"
+					RelativePath="..\Collision\Shapes\b2CircleShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Collision\Shapes\b2PolygonShape.cpp"
+					RelativePath="..\Collision\Shapes\b2PolygonShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Collision\Shapes\b2PolygonShape.h"
+					RelativePath="..\Collision\Shapes\b2PolygonShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Collision\Shapes\b2Shape.h"
+					RelativePath="..\Collision\Shapes\b2Shape.h"
 					>
 				</File>
 			</Filter>
@@ -226,35 +226,35 @@
 			Name="Common"
 			>
 			<File
-				RelativePath=".\Common\b2BlockAllocator.cpp"
+				RelativePath="..\Common\b2BlockAllocator.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Common\b2BlockAllocator.h"
+				RelativePath="..\Common\b2BlockAllocator.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Common\b2Math.cpp"
+				RelativePath="..\Common\b2Math.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Common\b2Math.h"
+				RelativePath="..\Common\b2Math.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Common\b2Settings.cpp"
+				RelativePath="..\Common\b2Settings.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Common\b2Settings.h"
+				RelativePath="..\Common\b2Settings.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Common\b2StackAllocator.cpp"
+				RelativePath="..\Common\b2StackAllocator.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Common\b2StackAllocator.h"
+				RelativePath="..\Common\b2StackAllocator.h"
 				>
 			</File>
 		</Filter>
@@ -262,110 +262,110 @@
 			Name="Dynamics"
 			>
 			<File
-				RelativePath=".\Dynamics\b2Body.cpp"
+				RelativePath="..\Dynamics\b2Body.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2Body.h"
+				RelativePath="..\Dynamics\b2Body.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2ContactManager.cpp"
+				RelativePath="..\Dynamics\b2ContactManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2ContactManager.h"
+				RelativePath="..\Dynamics\b2ContactManager.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2Fixture.cpp"
+				RelativePath="..\Dynamics\b2Fixture.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2Fixture.h"
+				RelativePath="..\Dynamics\b2Fixture.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2Island.cpp"
+				RelativePath="..\Dynamics\b2Island.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2Island.h"
+				RelativePath="..\Dynamics\b2Island.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2TimeStep.h"
+				RelativePath="..\Dynamics\b2TimeStep.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2World.cpp"
+				RelativePath="..\Dynamics\b2World.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2World.h"
+				RelativePath="..\Dynamics\b2World.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2WorldCallbacks.cpp"
+				RelativePath="..\Dynamics\b2WorldCallbacks.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Dynamics\b2WorldCallbacks.h"
+				RelativePath="..\Dynamics\b2WorldCallbacks.h"
 				>
 			</File>
 			<Filter
 				Name="Contacts"
 				>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2CircleContact.cpp"
+					RelativePath="..\Dynamics\Contacts\b2CircleContact.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2CircleContact.h"
+					RelativePath="..\Dynamics\Contacts\b2CircleContact.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2Contact.cpp"
+					RelativePath="..\Dynamics\Contacts\b2Contact.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2Contact.h"
+					RelativePath="..\Dynamics\Contacts\b2Contact.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2ContactSolver.cpp"
+					RelativePath="..\Dynamics\Contacts\b2ContactSolver.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2ContactSolver.h"
+					RelativePath="..\Dynamics\Contacts\b2ContactSolver.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2NullContact.h"
+					RelativePath="..\Dynamics\Contacts\b2NullContact.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2PolygonAndCircleContact.cpp"
+					RelativePath="..\Dynamics\Contacts\b2PolygonAndCircleContact.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2PolygonAndCircleContact.h"
+					RelativePath="..\Dynamics\Contacts\b2PolygonAndCircleContact.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2PolygonContact.cpp"
+					RelativePath="..\Dynamics\Contacts\b2PolygonContact.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2PolygonContact.h"
+					RelativePath="..\Dynamics\Contacts\b2PolygonContact.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2TOISolver.cpp"
+					RelativePath="..\Dynamics\Contacts\b2TOISolver.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Contacts\b2TOISolver.h"
+					RelativePath="..\Dynamics\Contacts\b2TOISolver.h"
 					>
 				</File>
 			</Filter>
@@ -373,89 +373,89 @@
 				Name="Joints"
 				>
 				<File
-					RelativePath=".\Dynamics\Joints\b2DistanceJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2DistanceJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2DistanceJoint.h"
+					RelativePath="..\Dynamics\Joints\b2DistanceJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2FrictionJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2FrictionJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2FrictionJoint.h"
+					RelativePath="..\Dynamics\Joints\b2FrictionJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2GearJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2GearJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2GearJoint.h"
+					RelativePath="..\Dynamics\Joints\b2GearJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2Joint.cpp"
+					RelativePath="..\Dynamics\Joints\b2Joint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2Joint.h"
+					RelativePath="..\Dynamics\Joints\b2Joint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2LineJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2LineJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2LineJoint.h"
+					RelativePath="..\Dynamics\Joints\b2LineJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2MouseJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2MouseJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2MouseJoint.h"
+					RelativePath="..\Dynamics\Joints\b2MouseJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2PrismaticJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2PrismaticJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2PrismaticJoint.h"
+					RelativePath="..\Dynamics\Joints\b2PrismaticJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2PulleyJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2PulleyJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2PulleyJoint.h"
+					RelativePath="..\Dynamics\Joints\b2PulleyJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2RevoluteJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2RevoluteJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2RevoluteJoint.h"
+					RelativePath="..\Dynamics\Joints\b2RevoluteJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2WeldJoint.cpp"
+					RelativePath="..\Dynamics\Joints\b2WeldJoint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Dynamics\Joints\b2WeldJoint.h"
+					RelativePath="..\Dynamics\Joints\b2WeldJoint.h"
 					>
 				</File>
 			</Filter>
 		</Filter>
 		<File
-			RelativePath=".\Box2D.h"
+			RelativePath="..\Box2D.h"
 			>
 		</File>
 	</Files>
