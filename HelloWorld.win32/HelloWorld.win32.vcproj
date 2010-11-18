@@ -4,7 +4,7 @@
 	Version="9.00"
 	Name="Helloworld"
 	ProjectGUID="{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
-	RootNamespace="Helloworldwin32"
+	RootNamespace="HelloWorldwin32"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -211,7 +211,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Helloworld.win32.h"
+				RelativePath=".\HelloWorld.win32.h"
 				>
 			</File>
 			<File
