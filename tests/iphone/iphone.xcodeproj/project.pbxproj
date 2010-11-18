@@ -431,6 +431,26 @@
 		BF1B19DA1294FE6D00E99D96 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = BF1B19571294FE6C00E99D96 /* fonts */; };
 		BF1B19DB1294FE6D00E99D96 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = BF1B196D1294FE6D00E99D96 /* Images */; };
 		BF1B19DC1294FE6D00E99D96 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = BF1B19B91294FE6D00E99D96 /* TileMaps */; };
+		BF1B1A1312950B7900E99D96 /* Bounce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B19FC12950B7900E99D96 /* Bounce.cpp */; };
+		BF1B1A1412950B7900E99D96 /* cocos2dChipmunkDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B19FE12950B7900E99D96 /* cocos2dChipmunkDemo.cpp */; };
+		BF1B1A1512950B7900E99D96 /* drawSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0012950B7900E99D96 /* drawSpace.cpp */; };
+		BF1B1A1612950B7900E99D96 /* Joints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0212950B7900E99D96 /* Joints.cpp */; };
+		BF1B1A1712950B7900E99D96 /* LogoSmash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0312950B7900E99D96 /* LogoSmash.cpp */; };
+		BF1B1A1812950B7900E99D96 /* MagnetsElectric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0412950B7900E99D96 /* MagnetsElectric.cpp */; };
+		BF1B1A1912950B7900E99D96 /* OneWay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0512950B7900E99D96 /* OneWay.cpp */; };
+		BF1B1A1A12950B7900E99D96 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0612950B7900E99D96 /* Planet.cpp */; };
+		BF1B1A1B12950B7900E99D96 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0712950B7900E99D96 /* Player.cpp */; };
+		BF1B1A1C12950B7900E99D96 /* Plink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0812950B7900E99D96 /* Plink.cpp */; };
+		BF1B1A1D12950B7900E99D96 /* Pump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0912950B7900E99D96 /* Pump.cpp */; };
+		BF1B1A1E12950B7900E99D96 /* PyramidStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0A12950B7900E99D96 /* PyramidStack.cpp */; };
+		BF1B1A1F12950B7900E99D96 /* PyramidTopple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0B12950B7900E99D96 /* PyramidTopple.cpp */; };
+		BF1B1A2012950B7900E99D96 /* Query.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0C12950B7900E99D96 /* Query.cpp */; };
+		BF1B1A2112950B7900E99D96 /* Sensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0D12950B7900E99D96 /* Sensors.cpp */; };
+		BF1B1A2212950B7900E99D96 /* Simple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0E12950B7900E99D96 /* Simple.cpp */; };
+		BF1B1A2312950B7900E99D96 /* Springies.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0F12950B7900E99D96 /* Springies.cpp */; };
+		BF1B1A2412950B7900E99D96 /* TheoJansen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A1012950B7900E99D96 /* TheoJansen.cpp */; };
+		BF1B1A2512950B7900E99D96 /* Tumble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A1112950B7900E99D96 /* Tumble.cpp */; };
+		BF1B1A2612950B7900E99D96 /* UnsafeOps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A1212950B7900E99D96 /* UnsafeOps.cpp */; };
 		BF1C47EB1293683800B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
@@ -958,6 +978,29 @@
 		BF1B19571294FE6C00E99D96 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../Res/fonts; sourceTree = SOURCE_ROOT; };
 		BF1B196D1294FE6D00E99D96 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../Res/Images; sourceTree = SOURCE_ROOT; };
 		BF1B19B91294FE6D00E99D96 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Res/TileMaps; sourceTree = SOURCE_ROOT; };
+		BF1B19FC12950B7900E99D96 /* Bounce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bounce.cpp; sourceTree = "<group>"; };
+		BF1B19FD12950B7900E99D96 /* ChipmunkDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkDemo.h; sourceTree = "<group>"; };
+		BF1B19FE12950B7900E99D96 /* cocos2dChipmunkDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2dChipmunkDemo.cpp; sourceTree = "<group>"; };
+		BF1B19FF12950B7900E99D96 /* cocos2dChipmunkDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dChipmunkDemo.h; sourceTree = "<group>"; };
+		BF1B1A0012950B7900E99D96 /* drawSpace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawSpace.cpp; sourceTree = "<group>"; };
+		BF1B1A0112950B7900E99D96 /* drawSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawSpace.h; sourceTree = "<group>"; };
+		BF1B1A0212950B7900E99D96 /* Joints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Joints.cpp; sourceTree = "<group>"; };
+		BF1B1A0312950B7900E99D96 /* LogoSmash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogoSmash.cpp; sourceTree = "<group>"; };
+		BF1B1A0412950B7900E99D96 /* MagnetsElectric.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MagnetsElectric.cpp; sourceTree = "<group>"; };
+		BF1B1A0512950B7900E99D96 /* OneWay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OneWay.cpp; sourceTree = "<group>"; };
+		BF1B1A0612950B7900E99D96 /* Planet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Planet.cpp; sourceTree = "<group>"; };
+		BF1B1A0712950B7900E99D96 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		BF1B1A0812950B7900E99D96 /* Plink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plink.cpp; sourceTree = "<group>"; };
+		BF1B1A0912950B7900E99D96 /* Pump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pump.cpp; sourceTree = "<group>"; };
+		BF1B1A0A12950B7900E99D96 /* PyramidStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PyramidStack.cpp; sourceTree = "<group>"; };
+		BF1B1A0B12950B7900E99D96 /* PyramidTopple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PyramidTopple.cpp; sourceTree = "<group>"; };
+		BF1B1A0C12950B7900E99D96 /* Query.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Query.cpp; sourceTree = "<group>"; };
+		BF1B1A0D12950B7900E99D96 /* Sensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sensors.cpp; sourceTree = "<group>"; };
+		BF1B1A0E12950B7900E99D96 /* Simple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simple.cpp; sourceTree = "<group>"; };
+		BF1B1A0F12950B7900E99D96 /* Springies.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Springies.cpp; sourceTree = "<group>"; };
+		BF1B1A1012950B7900E99D96 /* TheoJansen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TheoJansen.cpp; sourceTree = "<group>"; };
+		BF1B1A1112950B7900E99D96 /* Tumble.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tumble.cpp; sourceTree = "<group>"; };
+		BF1B1A1212950B7900E99D96 /* UnsafeOps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnsafeOps.cpp; sourceTree = "<group>"; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -1080,6 +1123,7 @@
 		BF170C4B129286C000B8313A /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF1B19FB12950B7900E99D96 /* ChipmunkTest */,
 				BF170C4C129286C000B8313A /* AccelerometerTest */,
 				BF170C4F129286C000B8313A /* ActionManagerTest */,
 				BF170C52129286C000B8313A /* ActionsTest */,
@@ -2107,6 +2151,36 @@
 			path = constraints;
 			sourceTree = "<group>";
 		};
+		BF1B19FB12950B7900E99D96 /* ChipmunkTest */ = {
+			isa = PBXGroup;
+			children = (
+				BF1B19FC12950B7900E99D96 /* Bounce.cpp */,
+				BF1B19FD12950B7900E99D96 /* ChipmunkDemo.h */,
+				BF1B19FE12950B7900E99D96 /* cocos2dChipmunkDemo.cpp */,
+				BF1B19FF12950B7900E99D96 /* cocos2dChipmunkDemo.h */,
+				BF1B1A0012950B7900E99D96 /* drawSpace.cpp */,
+				BF1B1A0112950B7900E99D96 /* drawSpace.h */,
+				BF1B1A0212950B7900E99D96 /* Joints.cpp */,
+				BF1B1A0312950B7900E99D96 /* LogoSmash.cpp */,
+				BF1B1A0412950B7900E99D96 /* MagnetsElectric.cpp */,
+				BF1B1A0512950B7900E99D96 /* OneWay.cpp */,
+				BF1B1A0612950B7900E99D96 /* Planet.cpp */,
+				BF1B1A0712950B7900E99D96 /* Player.cpp */,
+				BF1B1A0812950B7900E99D96 /* Plink.cpp */,
+				BF1B1A0912950B7900E99D96 /* Pump.cpp */,
+				BF1B1A0A12950B7900E99D96 /* PyramidStack.cpp */,
+				BF1B1A0B12950B7900E99D96 /* PyramidTopple.cpp */,
+				BF1B1A0C12950B7900E99D96 /* Query.cpp */,
+				BF1B1A0D12950B7900E99D96 /* Sensors.cpp */,
+				BF1B1A0E12950B7900E99D96 /* Simple.cpp */,
+				BF1B1A0F12950B7900E99D96 /* Springies.cpp */,
+				BF1B1A1012950B7900E99D96 /* TheoJansen.cpp */,
+				BF1B1A1112950B7900E99D96 /* Tumble.cpp */,
+				BF1B1A1212950B7900E99D96 /* UnsafeOps.cpp */,
+			);
+			path = ChipmunkTest;
+			sourceTree = "<group>";
+		};
 		BF1C4AF4129394F000B63C5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -2533,6 +2607,26 @@
 				BF170D22129286C000B8313A /* Paddle.cpp in Sources */,
 				BF170D23129286C000B8313A /* TouchesTest.cpp in Sources */,
 				BF170D24129286C000B8313A /* TransitionsTest.cpp in Sources */,
+				BF1B1A1312950B7900E99D96 /* Bounce.cpp in Sources */,
+				BF1B1A1412950B7900E99D96 /* cocos2dChipmunkDemo.cpp in Sources */,
+				BF1B1A1512950B7900E99D96 /* drawSpace.cpp in Sources */,
+				BF1B1A1612950B7900E99D96 /* Joints.cpp in Sources */,
+				BF1B1A1712950B7900E99D96 /* LogoSmash.cpp in Sources */,
+				BF1B1A1812950B7900E99D96 /* MagnetsElectric.cpp in Sources */,
+				BF1B1A1912950B7900E99D96 /* OneWay.cpp in Sources */,
+				BF1B1A1A12950B7900E99D96 /* Planet.cpp in Sources */,
+				BF1B1A1B12950B7900E99D96 /* Player.cpp in Sources */,
+				BF1B1A1C12950B7900E99D96 /* Plink.cpp in Sources */,
+				BF1B1A1D12950B7900E99D96 /* Pump.cpp in Sources */,
+				BF1B1A1E12950B7900E99D96 /* PyramidStack.cpp in Sources */,
+				BF1B1A1F12950B7900E99D96 /* PyramidTopple.cpp in Sources */,
+				BF1B1A2012950B7900E99D96 /* Query.cpp in Sources */,
+				BF1B1A2112950B7900E99D96 /* Sensors.cpp in Sources */,
+				BF1B1A2212950B7900E99D96 /* Simple.cpp in Sources */,
+				BF1B1A2312950B7900E99D96 /* Springies.cpp in Sources */,
+				BF1B1A2412950B7900E99D96 /* TheoJansen.cpp in Sources */,
+				BF1B1A2512950B7900E99D96 /* Tumble.cpp in Sources */,
+				BF1B1A2612950B7900E99D96 /* UnsafeOps.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2734,7 +2828,7 @@
 					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/libxml2\"",
 				);
 				INFOPLIST_FILE = "iphone-Info.plist";
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = iphone;
 			};
 			name = Debug;
