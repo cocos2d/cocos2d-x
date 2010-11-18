@@ -51,9 +51,9 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new TileMapTestScene(); break;
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
-//    case TEST_CHIPMUNK:
-//		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
-//        pScene = new ChipmunkTestScene(); break;
+    case TEST_CHIPMUNK:
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+        pScene = new ChipmunkTestScene(); break;
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
     case TEST_SPRITE:
