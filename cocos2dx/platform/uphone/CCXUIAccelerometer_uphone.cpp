@@ -47,19 +47,19 @@ UIAccelerometerDelegate* UIAccelerometerHandler::getDelegate()
 
 UIAccelerometerHandler::~UIAccelerometerHandler()
 {
-    m_pDelegate->destroy();
+    m_pDelegate->AccelerometerDestroy();
 }
 
 void UIAccelerometerHandler::setDelegate(UIAccelerometerDelegate *pDelegate)
 {
     if (pDelegate)
     {
-        pDelegate->keep();
+        pDelegate->AccelerometerKeep();
     }
 
     if (m_pDelegate)
     {
-        m_pDelegate->destroy();
+        m_pDelegate->AccelerometerDestroy();
     }
     m_pDelegate = pDelegate;
 }
@@ -69,7 +69,7 @@ bool UIAccelerometerHandler::initWithDelegate(UIAccelerometerDelegate *pDelegate
     assert(pDelegate != NULL);
 
     m_pDelegate = pDelegate;
-    pDelegate->keep();
+    pDelegate->AccelerometerKeep();
 
     return true;
 }

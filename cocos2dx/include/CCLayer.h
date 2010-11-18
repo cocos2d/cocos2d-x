@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCTouchDelegateProtocol.h"
+#include "CCUIAccelerometerDelegate.h"
 #include "ccxCommon.h"
 #include "CCXUIAccelerometer.h"
 namespace   cocos2d {
@@ -58,6 +59,8 @@ public:
 	virtual void keep(void);
 	
     virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
+    virtual void AccelerometerDestroy(void);
+    virtual void AccelerometerKeep(void);
 
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.

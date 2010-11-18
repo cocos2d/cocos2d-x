@@ -89,6 +89,16 @@ void CCLayer::keep(void)
 	this->retain();
 }
 
+void CCLayer::AccelerometerDestroy(void)
+{
+    this->release();
+}
+
+void CCLayer::AccelerometerKeep(void)
+{
+    this->retain();
+}
+
 
 /// isTouchEnabled getter
 bool CCLayer::getIsTouchEnabled()
