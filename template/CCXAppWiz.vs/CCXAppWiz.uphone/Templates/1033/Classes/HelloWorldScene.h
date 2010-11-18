@@ -12,9 +12,10 @@ public:
 	// there's no 'id' in cpp, so we recommand to return the exactly class pointer
 	static cocos2d::CCScene* scene();
 	
+[! if CCX_USE_UI_RESOURCE]
 	// a selector callback
 	virtual void menuCloseCallback(NSObject* pSender);
-
+[! endif]
 	// implement the "static node()" method manually
 	LAYER_NODE_FUNC(HelloWorld);
 };

@@ -55,7 +55,7 @@ function OnFinish(selProj, selObj)
 	{
 		if (e.description.length != 0)
 			SetErrorInfo(e);
-		return e.number
+		return e.number;
 	}
 }
 
@@ -358,8 +358,6 @@ function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile)
 {
 	try
 	{
-		var projItems = proj.ProjectItems
-
 		var strTemplatePath = wizard.FindSymbol('TEMPLATES_PATH');
 
 		var strTpl = '';
