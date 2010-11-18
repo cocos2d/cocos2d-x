@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="CCXAppWiz.win32"
-	ProjectGUID="{104F4414-0DA5-4982-A413-766DD1698469}"
-	RootNamespace="CCXAppWiz.win32"
+	Name="CCXAppWiz.uphone"
+	ProjectGUID="{64CF0B7A-FC68-41D7-B3DC-2908D74BDAE9}"
+	RootNamespace="CCXAppWiz.uphone"
 	Keyword="CustomAppWizProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -18,8 +18,6 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="10"
 			>
 			<Tool
@@ -60,34 +58,14 @@
 			Name="Template Files"
 			Filter="txt"
 			>
-			<Filter
-				Name="win32"
+			<File
+				RelativePath=".\Templates\1033\Makefile.ARM"
 				>
-				<File
-					RelativePath=".\Templates\1033\win32\main.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Templates\1033\win32\main.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Templates\1033\win32\resource.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Templates\1033\win32\root.rc"
-					>
-				</File>
-				<Filter
-					Name="res"
-					>
-					<File
-						RelativePath=".\Templates\1033\win32\res\root.ico"
-						>
-					</File>
-				</Filter>
-			</Filter>
+			</File>
+			<File
+				RelativePath=".\Templates\1033\root_Arm.TMK3"
+				>
+			</File>
 			<Filter
 				Name="Classes"
 				>
@@ -105,6 +83,38 @@
 				</File>
 				<File
 					RelativePath=".\Templates\1033\Classes\HelloWorldScene.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="uphone"
+				>
+				<File
+					RelativePath=".\Templates\1033\uphone\main.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\uphone\NewDeleteOp.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\uphone\Resource.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\uphone\rootUnicodeScript.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\uphone\rootUnicodeScript_str.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\uphone\TG3AppDllEntry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Templates\1033\uphone\TG3AppDllEntry.h"
 					>
 				</File>
 			</Filter>
@@ -143,15 +153,15 @@
 			Filter="vsz;vsdir;ico;vcproj;csproj;css;inf"
 			>
 			<File
-				RelativePath=".\CCXAppWiz.ico"
+				RelativePath=".\CCXAppWiz.uphone.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\CCXAppWiz.vsdir"
+				RelativePath=".\CCXAppWiz.uphone.vsdir"
 				>
 			</File>
 			<File
-				RelativePath=".\CCXAppWiz.vsz"
+				RelativePath=".\CCXAppWiz.uphone.vsz"
 				>
 			</File>
 			<File
