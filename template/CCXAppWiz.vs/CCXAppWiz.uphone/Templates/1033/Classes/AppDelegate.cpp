@@ -1,8 +1,15 @@
 #include "AppDelegate.h"
 
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+#include "SimpleAudioEngine.h"
+
+[! endif]
 #include "HelloWorldScene.h"
+[! if CCX_USE_UI_RESOURCE]
+
 #include "Resource.h"
 extern const AppResourceEntry [!output PROJECT_NAME]ResourceEntry;
+[! endif]
 
 using namespace cocos2d;
 
@@ -35,10 +42,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setDisplayFPS(true);
 
     // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
+    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/[!output PROJECT_NAME]/");
+[! if CCX_USE_UI_RESOURCE]
 
+    // set the ResourceEntry
+    CCFileUtils::setResourceEntry(&cocosTemplateResourceEntry);
     // set the Images ResInfo (name and ResID)
-    // CCFileUtils::setResourceInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ResourceInfo));
+    CCFileUtils::setResourceInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ResourceInfo));
+[! endif]
 
     CCScene * pScene = HelloWorld::scene();
 
@@ -53,8 +64,9 @@ void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->stopAnimation();
 
-	// if you use SimpleAudioEngine, it must be pause
-	// SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+	SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+[! endif]
 }
 
 // this function will be called when the app is active again
@@ -62,6 +74,7 @@ void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->startAnimation();
 	
-	// if you use SimpleAudioEngine, it must resume here
-	// SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+	SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+[! endif]
 }

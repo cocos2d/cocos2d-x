@@ -16,3 +16,6 @@ Classes/AppDelegate.cpp
 
 Classes/HelloWorldScene.h
 Classes/HelloWorldScene.cpp
+
+Resource/CloseNormal.png
+Resource/CloseSelected.png
