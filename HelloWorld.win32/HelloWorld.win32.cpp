@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "Helloworld.win32.h"
+#include "HelloWorld.win32.h"
 
 using namespace cocos2d;
 
