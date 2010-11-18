@@ -13,9 +13,8 @@ extern const  AppResourceEntry		[!output PROJECT_NAME]ResourceEntry  =
 	(ResourceRegisterEntry*)ResRegList_[!output PROJECT_NAME],                    //  res  list  in  this  app
 		sizeof(ResRegList_[!output PROJECT_NAME]) /  sizeof(ResourceRegisterEntry),    //number  of  item  in  res
 };
+
 [! endif]
-
-
 Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
 	AppDelegate app;
@@ -26,5 +25,3 @@ Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 
 	return 1;
 }
-
-

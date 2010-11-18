@@ -1,7 +1,7 @@
 
 function OnFinish(selProj, selObj) {
     try {
-        // 		var WizardVersion = wizard.FindSymbol('WIZARD_VERSION');
+        // var WizardVersion = wizard.FindSymbol('WIZARD_VERSION');
 
         // Create symbols based on the project name
         var strProjectPath = wizard.FindSymbol('PROJECT_PATH');
@@ -9,16 +9,6 @@ function OnFinish(selProj, selObj) {
 
         wizard.AddSymbol('PROJECT_NAME_LOWER', strProjectName.toLowerCase(), false);
         wizard.AddSymbol('PROJECT_NAME_UPPER', strProjectName.toUpperCase(), false);
-
-//         if (strProjectName.length >= 6) {
-//             wizard.AddSymbol('PRO_NAME_PREFIX', strProjectName.substr(0, 6).toUpperCase(), false);
-//         }
-//         else {
-//             var strRes = '_RES';
-//             var strNewFormId = strProjectName + strRes.substr(0, (6 - strProjectName.length));
-// 
-//             wizard.AddSymbol('PRO_NAME_PREFIX', strNewFormId.toUpperCase(), false);
-//         }
 
         // Set current year symbol
         var d = new Date();
@@ -129,23 +119,30 @@ function AddFilters(proj) {
     }
 }
 
+// Configurations data
+var nNumConfigs = 2;
+
+var astrConfigName = new Array();
+astrConfigName[0] = "Debug";
+astrConfigName[1] = "Release";
+
 function AddConfig(proj, strProjectName) {
     try {
-        var config = proj.Object.Configurations('Debug');
-        var strSolutionName = "";
-
+        proj.Object.Keyword = "uPhoneProj";
+        wizard.AddSymbol('PROJECT_PRJ_TG3_DIR', strPrjTG3Dir, false);
+        
+        // header files and libraries directories
         var strPrjTG3Dir = '../../PRJ_TG3';
-
         var strOutputDir = '../../PRJ_TG3/LIB/Win32Lib';
         var strCurIncludeDir = '..\\..\\PRJ_TG3\\Include;..\\..\\PRJ_TG3\\Include\\MTAPI;..\\..\\PRJ_TG3\\Include\\ThirdParty;..\\..\\PRJ_TG3\\Include\\TCOM;..\\..\\PRJ_TG3\\Include\\OpenGL';
         strCurIncludeDir += ';.;.\\Classes;.\\uphone;.\\uphone\\Res;..\\cocos2dx;..\\cocos2dx\\include';
 
-        var strDefinitions = 'WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL';
+        var strDefinitions = 'WIN32;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL';
         var strDependLibs = 'WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib';
         var strCurLibsDir = '../../PRJ_TG3/Common/ICU/lib;../../PRJ_TG3/Mtapi/Win32/lib;../../PRJ_TG3/LIB/Win32Lib;../../PRJ_TG3/Common/SoftSupport';
         var strImportLib = '$(OutDir)/' + wizard.FindSymbol("PROJECT_NAME") + '.lib';
         var strOutputFile = '$(OutDir)/' + wizard.FindSymbol("PROJECT_NAME") + '.dll';
-
+        
         if (wizard.FindSymbol('CCX_USE_BOX2D')) {
             strCurIncludeDir += ';..\\;..\\Box2D';
             strDependLibs += ' libBox2d.lib';
@@ -163,77 +160,77 @@ function AddConfig(proj, strProjectName) {
             strDefinitions = strDefinitions + ';__TCOM_SUPPORT__';
         }
 
-        wizard.AddSymbol('PROJECT_PRJ_TG3_DIR', strPrjTG3Dir, false);
+        // create configure
+        var nCntr;
+		for (nCntr = 0; nCntr < nNumConfigs; nCntr++) {
 
-        config.IntermediateDirectory = 'Debug';
-        config.OutputDirectory = strOutputDir;
-        config.ConfigurationType = '2';
-        config.InheritedPropertySheets = '$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops';
-        //         config.DebugSettings.Command = 'TG3_RunDll.exe';
-        //         config.DebugSettings.CommandArguments = '$(TargetPath)';
+		    // Check if it's Debug configuration
+		    var bDebug = false;
+		    if (astrConfigName[nCntr].search("Debug") != -1)
+		        bDebug = true;
 
-        proj.Object.Keyword = "uPhoneProj";
+		    var config = proj.Object.Configurations(astrConfigName[nCntr]);
 
+    	    if (bDebug) {
+		        strDefinitions = '_DEBUG;' + strDefinitions;
+		    } 
+		    else {
+		        strDefinitions = 'NDEBUG;' + strDefinitions;
+		    }
 
-        var CLTool = config.Tools('VCCLCompilerTool');
-        CLTool.Optimization = "0";
-        CLTool.AdditionalIncludeDirectories = strCurIncludeDir;
-        CLTool.PreprocessorDefinitions = strDefinitions;
-        CLTool.MinimalRebuild = 'true';
-        CLTool.BasicRuntimeChecks = '3';
-        CLTool.RuntimeLibrary = '3';
-        CLTool.StructMemberAlignment = '3';
-        CLTool.TreatWChar_tAsBuiltInType = 'false';
-        CLTool.UsePrecompiledHeader = '0';
-        CLTool.WarningLevel = '3';
-        CLTool.DebugInformationFormat = '4';
-        CLTool.ForcedIncludeFiles = '';
+		    config.InheritedPropertySheets = '$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops';
+		    config.OutputDirectory = strOutputDir;
+		    config.IntermediateDirectory = '$(ConfigurationName).uphone';
+		    config.ConfigurationType = '2';
 
-        var LinkTool = config.Tools('VCLinkerTool');
-        LinkTool.AdditionalDependencies = strDependLibs;
-        LinkTool.OutputFile = strOutputFile;
-        LinkTool.LinkIncremental = '2';
-        LinkTool.AdditionalLibraryDirectories = strCurLibsDir;
-        LinkTool.GenerateDebugInformation = 'true';
-        LinkTool.GenerateMapFile = 'true';
-        LinkTool.MapExports = 'true';
-        LinkTool.SubSystem = '1';
-        LinkTool.RandomizedBaseAddress = '1';
-        LinkTool.DataExecutionPrevention = '0';
-        LinkTool.ImportLibrary = strImportLib;
-        LinkTool.TargetMachine = '1';
+		    var CLTool = config.Tools('VCCLCompilerTool');
+		    if (bDebug) {
+		        CLTool.RuntimeLibrary = rtMultiThreadedDebug;
+		        CLTool.MinimalRebuild = true;
+		        CLTool.DebugInformationFormat = debugEditAndContinue;
+		        CLTool.BasicRuntimeChecks = runtimeBasicCheckAll;
+		        CLTool.Optimization = optimizeDisabled;
+		    }
+		    else {
+		        CLTool.RuntimeLibrary = rtMultiThreaded;
+		        CLTool.ExceptionHandling = false;
+		        CLTool.DebugInformationFormat = debugDisabled;
+		    }
+		    CLTool.AdditionalIncludeDirectories = strCurIncludeDir;
+		    CLTool.PreprocessorDefinitions = strDefinitions;
+		    CLTool.RuntimeLibrary = '3';
+		    CLTool.StructMemberAlignment = '3';
+		    CLTool.TreatWChar_tAsBuiltInType = 'false';
+		    CLTool.UsePrecompiledHeader = '0';
+		    CLTool.WarningLevel = '3';
+		    CLTool.ForcedIncludeFiles = '';
 
-        config = proj.Object.Configurations('Release');
-        config.IntermediateDirectory = '$(ConfigurationName)';
-        config.OutputDirectory = '$(ConfigurationName)';
+		    var LinkTool = config.Tools('VCLinkerTool');
+		    if (bDebug) {
+		        LinkTool.LinkIncremental = linkIncrementalYes;
+		        LinkTool.GenerateDebugInformation = true;
+		        LinkTool.GenerateMapFile = 'true';
+		        LinkTool.MapExports = 'true';
+		    }
+		    else {
+		        LinkTool.LinkIncremental = linkIncrementalNo;
+		    }
+		    LinkTool.AdditionalDependencies = strDependLibs;
+		    LinkTool.OutputFile = strOutputFile;
+		    LinkTool.AdditionalLibraryDirectories = strCurLibsDir;
+		    LinkTool.SubSystem = '1';
+		    LinkTool.RandomizedBaseAddress = '1';
+		    LinkTool.DataExecutionPrevention = '0';
+		    LinkTool.ImportLibrary = strImportLib;
+		    LinkTool.TargetMachine = '1';
 
-        var CLTool = config.Tools('VCCLCompilerTool');
-        CLTool.Optimization = "0";
-        CLTool.AdditionalIncludeDirectories = strCurIncludeDir;
-        CLTool.PreprocessorDefinitions = strDefinitions;
-        CLTool.MinimalRebuild = 'true';
-        CLTool.BasicRuntimeChecks = '3';
-        CLTool.RuntimeLibrary = '3';
-        CLTool.StructMemberAlignment = '3';
-        CLTool.TreatWChar_tAsBuiltInType = 'false';
-        CLTool.UsePrecompiledHeader = '0';
-        CLTool.WarningLevel = '3';
-        CLTool.DebugInformationFormat = '4';
-        CLTool.ForcedIncludeFiles = '';
-
-        var LinkTool = config.Tools('VCLinkerTool');
-        LinkTool.AdditionalDependencies = strDependLibs;
-        LinkTool.OutputFile = strOutputFile;
-        LinkTool.LinkIncremental = '2';
-        LinkTool.AdditionalLibraryDirectories = strCurLibsDir;
-        LinkTool.GenerateDebugInformation = 'true';
-        LinkTool.GenerateMapFile = 'true';
-        LinkTool.MapExports = 'true';
-        LinkTool.SubSystem = '1';
-        LinkTool.RandomizedBaseAddress = '1';
-        LinkTool.DataExecutionPrevention = '0';
-        LinkTool.ImportLibrary = strImportLib;
-        LinkTool.TargetMachine = '1';
+		    var PostBuildTool = config.Tools("VCPostBuildEventTool");
+		    PostBuildTool.Description = "Performing registration...";
+		    var strResDir = "..\\..\\NEWPLUS\\TDA_DATA\\Data\\" + strProjectName + "\\";
+		    var strPostCmd = "mkdir " + strResDir;
+		    strPostCmd += "\r\nxcopy /E /Y .\\Resource\\*.* " + strResDir;
+		    PostBuildTool.CommandLine = strPostCmd;
+		}
     }
     catch (e) {
         throw e;
