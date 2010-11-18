@@ -427,10 +427,6 @@
 		BF1712DC1292933300B8313A /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = BF1712A81292933300B8313A /* cpVect.c */; };
 		BF1712DD1292933300B8313A /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1712A91292933300B8313A /* prime.h */; };
 		BF1712E9129293C200B8313A /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1712631292931F00B8313A /* libchipmunk.a */; };
-		BF1B19D91294FE6D00E99D96 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = BF1B19481294FE6C00E99D96 /* animations */; };
-		BF1B19DA1294FE6D00E99D96 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = BF1B19571294FE6C00E99D96 /* fonts */; };
-		BF1B19DB1294FE6D00E99D96 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = BF1B196D1294FE6D00E99D96 /* Images */; };
-		BF1B19DC1294FE6D00E99D96 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = BF1B19B91294FE6D00E99D96 /* TileMaps */; };
 		BF1B1A1312950B7900E99D96 /* Bounce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B19FC12950B7900E99D96 /* Bounce.cpp */; };
 		BF1B1A1412950B7900E99D96 /* cocos2dChipmunkDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B19FE12950B7900E99D96 /* cocos2dChipmunkDemo.cpp */; };
 		BF1B1A1512950B7900E99D96 /* drawSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A0012950B7900E99D96 /* drawSpace.cpp */; };
@@ -451,6 +447,10 @@
 		BF1B1A2412950B7900E99D96 /* TheoJansen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A1012950B7900E99D96 /* TheoJansen.cpp */; };
 		BF1B1A2512950B7900E99D96 /* Tumble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A1112950B7900E99D96 /* Tumble.cpp */; };
 		BF1B1A2612950B7900E99D96 /* UnsafeOps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B1A1212950B7900E99D96 /* UnsafeOps.cpp */; };
+		BF1B1A7A12951B7600E99D96 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7612951B7600E99D96 /* animations */; };
+		BF1B1A7B12951B7600E99D96 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7712951B7600E99D96 /* fonts */; };
+		BF1B1A7C12951B7600E99D96 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7812951B7600E99D96 /* Images */; };
+		BF1B1A7D12951B7600E99D96 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7912951B7600E99D96 /* TileMaps */; };
 		BF1C47EB1293683800B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
@@ -974,10 +974,6 @@
 		BF1712A71292933300B8313A /* cpSpaceHash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceHash.c; sourceTree = "<group>"; };
 		BF1712A81292933300B8313A /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		BF1712A91292933300B8313A /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
-		BF1B19481294FE6C00E99D96 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../Res/animations; sourceTree = SOURCE_ROOT; };
-		BF1B19571294FE6C00E99D96 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../Res/fonts; sourceTree = SOURCE_ROOT; };
-		BF1B196D1294FE6D00E99D96 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../Res/Images; sourceTree = SOURCE_ROOT; };
-		BF1B19B91294FE6D00E99D96 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Res/TileMaps; sourceTree = SOURCE_ROOT; };
 		BF1B19FC12950B7900E99D96 /* Bounce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bounce.cpp; sourceTree = "<group>"; };
 		BF1B19FD12950B7900E99D96 /* ChipmunkDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkDemo.h; sourceTree = "<group>"; };
 		BF1B19FE12950B7900E99D96 /* cocos2dChipmunkDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2dChipmunkDemo.cpp; sourceTree = "<group>"; };
@@ -1001,6 +997,10 @@
 		BF1B1A1012950B7900E99D96 /* TheoJansen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TheoJansen.cpp; sourceTree = "<group>"; };
 		BF1B1A1112950B7900E99D96 /* Tumble.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tumble.cpp; sourceTree = "<group>"; };
 		BF1B1A1212950B7900E99D96 /* UnsafeOps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnsafeOps.cpp; sourceTree = "<group>"; };
+		BF1B1A7612951B7600E99D96 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../Res/animations; sourceTree = SOURCE_ROOT; };
+		BF1B1A7712951B7600E99D96 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../Res/fonts; sourceTree = SOURCE_ROOT; };
+		BF1B1A7812951B7600E99D96 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../Res/Images; sourceTree = SOURCE_ROOT; };
+		BF1B1A7912951B7600E99D96 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Res/TileMaps; sourceTree = SOURCE_ROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -1074,7 +1074,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				BF1C4AF4129394F000B63C5D /* Resources */,
+				BF1B1A7512951B5800E99D96 /* Resources */,
 				BF1712661292933300B8313A /* chipmunk */,
 				BF17118B12928FCB00B8313A /* Box2D */,
 				BF170DB812928E6200B8313A /* cocos2dx */,
@@ -2181,15 +2181,15 @@
 			path = ChipmunkTest;
 			sourceTree = "<group>";
 		};
-		BF1C4AF4129394F000B63C5D /* Resources */ = {
+		BF1B1A7512951B5800E99D96 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BF1B19481294FE6C00E99D96 /* animations */,
-				BF1B19571294FE6C00E99D96 /* fonts */,
-				BF1B196D1294FE6D00E99D96 /* Images */,
-				BF1B19B91294FE6D00E99D96 /* TileMaps */,
+				BF1B1A7612951B7600E99D96 /* animations */,
+				BF1B1A7712951B7600E99D96 /* fonts */,
+				BF1B1A7812951B7600E99D96 /* Images */,
+				BF1B1A7912951B7600E99D96 /* TileMaps */,
 			);
-			path = Resources;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2452,9 +2452,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* iphone */ = {
+		1D6058900D05DD3D006BFB54 /* test.iphone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "iphone" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "test.iphone" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -2467,7 +2467,7 @@
 				BF1712311292902D00B8313A /* PBXTargetDependency */,
 				BF1712E8129293BD00B8313A /* PBXTargetDependency */,
 			);
-			name = iphone;
+			name = test.iphone;
 			productName = iphone;
 			productReference = 1D6058910D05DD3D006BFB54 /* iphone.app */;
 			productType = "com.apple.product-type.application";
@@ -2528,7 +2528,7 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iphone" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "test.iphone" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -2542,7 +2542,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* iphone */,
+				1D6058900D05DD3D006BFB54 /* test.iphone */,
 				BF170DAA12928DAA00B8313A /* cocos2d */,
 				BF17118612928FA700B8313A /* box2d */,
 				BF1712621292931F00B8313A /* chipmunk */,
@@ -2555,10 +2555,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF1B19D91294FE6D00E99D96 /* animations in Resources */,
-				BF1B19DA1294FE6D00E99D96 /* fonts in Resources */,
-				BF1B19DB1294FE6D00E99D96 /* Images in Resources */,
-				BF1B19DC1294FE6D00E99D96 /* TileMaps in Resources */,
+				BF1B1A7A12951B7600E99D96 /* animations in Resources */,
+				BF1B1A7B12951B7600E99D96 /* fonts in Resources */,
+				BF1B1A7C12951B7600E99D96 /* Images in Resources */,
+				BF1B1A7D12951B7600E99D96 /* TileMaps in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2972,7 +2972,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "iphone" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "test.iphone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -3008,7 +3008,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iphone" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "test.iphone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
