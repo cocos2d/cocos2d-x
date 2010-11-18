@@ -39,14 +39,14 @@
 	#define cpfceil ceilf
 #endif
 
-#if TARGET_OS_IPHONE
+//#if TARGET_OS_IPHONE
 	// CGPoints are structurally the same, and allow
 	// easy interoperability with other iPhone libraries
-	#import <CoreGraphics/CGGeometry.h>
-	typedef CGPoint cpVect;
-#else
+	//#import <CoreGraphics/CGGeometry.h>
+	//typedef CGPoint cpVect;
+//#else
 	typedef struct cpVect{cpFloat x,y;} cpVect;
-#endif
+//#endif
 
 typedef unsigned int cpHashValue;
 

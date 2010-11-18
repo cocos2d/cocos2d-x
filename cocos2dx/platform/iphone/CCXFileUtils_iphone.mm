@@ -54,7 +54,7 @@ static const char* static_fullPathFromRelativePath(const char *pszRelativePath)
 															inDirectory:imageDirectory];
 	if (fullpath == nil)
 		fullpath = relPath;
-	
+	const char *temp = [fullpath UTF8String];
 	return [fullpath UTF8String];	
 }
 

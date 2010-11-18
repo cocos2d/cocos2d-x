@@ -75,7 +75,7 @@ bool MenuLayer::initWithEntryID(int entryId)
 	
 	addChild(menu, 1);	
 
-	return TRUE;
+	return true;
 }
 
 void MenuLayer::restartCallback(NSObject* sender)
@@ -175,7 +175,7 @@ bool Box2DView::initWithEntryID(int entryId)
 	m_entry = g_testEntries + entryId;
 	m_test = m_entry->createFcn();		
 		
-    return TRUE;
+    return true;
 }
 
 std::string Box2DView::title()

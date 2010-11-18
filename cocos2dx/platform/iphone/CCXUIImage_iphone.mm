@@ -217,19 +217,9 @@ static bool static_initWithImage(const char* path)
 	
 	//CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 	cocos2d::CCConfiguration *conf = cocos2d::CCConfiguration::sharedConfiguration();
-	
-#if CC_TEXTURE_NPOT_SUPPORT
-	//if( [conf supportsNPOT] ) {
-	if (conf->supportsNPOT()) {
-		POTWide = CGImageGetWidth(CGImage);
-		POTHigh = CGImageGetHeight(CGImage);
-		
-	} else 
-#endif
-	{
-		POTWide = nextPOT(CGImageGetWidth(CGImage));
-		POTHigh = nextPOT(CGImageGetHeight(CGImage));
-	}
+    
+        POTWide = CGImageGetWidth(CGImage);
+        POTHigh = CGImageGetHeight(CGImage);
 	
 	unsigned maxTextureSize = conf->getMaxTextureSize();
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {

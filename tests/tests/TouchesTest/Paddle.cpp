@@ -30,7 +30,7 @@ bool Paddle::initWithTexture(CCTexture2D* aTexture)
 		m_state = kPaddleStateUngrabbed;
 	}
 	
-	return TRUE;
+	return true;
 }
 
 void Paddle::onEnter()

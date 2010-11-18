@@ -767,9 +767,9 @@ TMXResizeTest::TMXResizeTest()
 	layer = map->layerNamed("Layer 0");
 
 	CGSize ls = layer->getLayerSize();
-	for (UINT y = 0; y < ls.height; y++) 
+	for (unsigned int y = 0; y < ls.height; y++) 
 	{
-		for (UINT x = 0; x < ls.width; x++) 
+		for (unsigned int x = 0; x < ls.width; x++) 
 		{
 			layer->setTileGID(1, ccp( x, y ) );
 		}

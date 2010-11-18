@@ -52,14 +52,14 @@ HelloWorld::HelloWorld()
 {
 }
 
-bool HelloWorld::initCocos2d()
+bool HelloWorld::applicationDidFinishLaunching()
 {
     // init director
     CCDirector::sharedDirector()->setOpenGLView(new CCXEGLView());
     CCDirector::sharedDirector()->setDisplayFPS(true);
 	
     // load image texture and get window size
-    CCTexture2D *pTextrue = CCTextureCache::sharedTextureCache()->addImage("helloworld.png");
+    CCTexture2D *pTextrue = CCTextureCache::sharedTextureCache()->addImage("images/helloworld.png");
     CGSize size = CCDirector::sharedDirector()->getWinSize();
 	
     // create sprite instance

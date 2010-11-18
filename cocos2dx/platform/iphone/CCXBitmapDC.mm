@@ -38,9 +38,7 @@ static unsigned char *s_pStrData;
 
 static void initWithString(const char *content, const char *fontName, float size)
 {
-	NSUInteger				width,
-                                                        height,
-                                                        i;
+	NSUInteger				width, height;
 	CGContextRef			context;
 	unsigned char*			data;
 	CGColorSpaceRef		colorSpace;
@@ -51,34 +49,19 @@ static void initWithString(const char *content, const char *fontName, float size
         NSString                                *name;
     
         alignment = UITextAlignmentCenter;
-        string = [NSString stringWithUTF8String:content];
-        //name = [NSString stringWithUTF8String:fontName];
-        name = @"Arial";
+        string = [[NSString alloc]initWithCString:content];
+        name = @"Thonburi";
         dimensions = [string sizeWithFont:[UIFont fontWithName:name size:size]];
     
 	width = dimensions.width;
-	if((width != 1) && (width & (width - 1))) {
-		i = 1;
-		while(i < width)
-			i *= 2;
-            width = i;
-            }
-	height = dimensions.height;
-	if((height != 1) && (height & (height - 1))) {
-		i = 1;
-		while(i < height)
-			i *= 2;
-            height = i;
-            }
-	
+        height = dimensions.height;
+
 	colorSpace = CGColorSpaceCreateDeviceRGB();
-	//data = calloc(height, width); 
         data = new unsigned char[height * width * 4];
         memset(data, 0, height * width * 4);
 	context = CGBitmapContextCreate(data, width, height, 8, width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
 	CGColorSpaceRelease(colorSpace);
 		
-	//CGContextSetGrayFillColor(context, 1.0f, 1.0f);
         CGContextSetRGBFillColor(context, 1, 1, 1, 1);
 	CGContextTranslateCTM(context, 0.0f, height);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
@@ -97,8 +80,8 @@ static void initWithString(const char *content, const char *fontName, float size
 	CGContextRelease(context);
     
 	s_pStrData = data;
-        s_nWidth = width;
-        s_nHeight = height;
+        s_nWidth = dimensions.width;
+        s_nHeight = dimensions.height;
 }
 
 namespace cocos2d {

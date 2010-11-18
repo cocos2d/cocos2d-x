@@ -417,7 +417,7 @@ void ChipmunkTestScene::runThisTest()
 void ChipmunkTestLayer::init()
 {
     CCLayer::init();
-    CCLayer::setIsTouchEnabled(TRUE);
+    CCLayer::setIsTouchEnabled(true);
 	
 	demoIndex = 0;
 

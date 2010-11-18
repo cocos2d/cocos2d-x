@@ -263,6 +263,7 @@
 		BF1B034B128BCCE300373CD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		BF1B034C128BCCF800373CD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		BF1B034D128BCD0800373CD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		BF1C4C6C1293985000B63C5D /* helloworld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C4C6B1293985000B63C5D /* helloworld.png */; };
 		BF492B6A12891AC600A09262 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
 		BF492C22128924A800A09262 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BF492D4C1289302400A09262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
@@ -530,6 +531,7 @@
 		BF163FE5128E82A80010DC04 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF163FE6128E82A80010DC04 /* HelloWorldAppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldAppDelegate.cpp; sourceTree = "<group>"; };
 		BF163FE7128E82A80010DC04 /* HelloWorldAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldAppDelegate.h; sourceTree = "<group>"; };
+		BF1C4C6B1293985000B63C5D /* helloworld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helloworld.png; sourceTree = "<group>"; };
 		BF4927C41289199700A09262 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF492B6912891AC600A09262 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF492C21128924A800A09262 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -611,6 +613,7 @@
 		BF1374AF128A998C00D9F789 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BF1C4C6A1293985000B63C5D /* images */,
 				BF1374BD128A9A4C00D9F789 /* helloworld.png */,
 			);
 			path = Resources;
@@ -1056,6 +1059,14 @@
 			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
+		BF1C4C6A1293985000B63C5D /* images */ = {
+			isa = PBXGroup;
+			children = (
+				BF1C4C6B1293985000B63C5D /* helloworld.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1298,6 +1309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF1374BE128A9A4C00D9F789 /* helloworld.png in Resources */,
+				BF1C4C6C1293985000B63C5D /* helloworld.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1419,7 +1431,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HelloWorld_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../cocos2dx/platform/iphone/third_party/opengles\"",
 					"\"$(SRCROOT)/../cocos2dx\"",
@@ -1457,7 +1469,10 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = GL_GLEXT_PROTOTYPES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TARGET_OS_IPHONE,
+					GL_GLEXT_PROTOTYPES,
+				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../cocos2dx/platform/iphone/third_party/libxml2\"",

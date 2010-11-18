@@ -26,6 +26,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 #elif defined(CCX_PLATFORM_WIN32)
 	if (!(m_pMainWnd = new CCXEGLView()) ||
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
+#elif defined(CCX_PLATFORM_IPHONE)
+        if (!(m_pMainWnd = new CCXEGLView()))
 #else
     #error
 #endif
@@ -39,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(m_pMainWnd);
     pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
-    pDirector->setDisplayFPS(true);
+//    pDirector->setDisplayFPS(true);
 
 #if defined(CCX_PLATFORM_UPHONE)
     // set the resource path
@@ -50,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// SHOW SPLASH SCREEN
 
     // load background image texture and get window size
-    CCTexture2D * pSplashTexture = CCTextureCache::sharedTextureCache()->addImage("Images/HelloWorld.png");
+    CCTexture2D * pSplashTexture = CCTextureCache::sharedTextureCache()->addImage("b1.png");
     CGSize size = CCDirector::sharedDirector()->getWinSize();
 
     // splash sprite

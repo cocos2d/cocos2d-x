@@ -28,7 +28,7 @@ class MenuLayer2 : public CCLayer
 {
 protected:
 	CGPoint		m_centeredMenu;
-	BOOL		m_alignedH; 
+	bool                m_alignedH; 
 
 	void alignMenusH();
 	void alignMenusV();

@@ -48,7 +48,7 @@ public:
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
-    virtual bool initCocos2d() = 0;
+    virtual bool applicationDidFinishLaunching() = 0;
 
     /**
     @brief	Get status bar rectangle in EGLView window.
@@ -61,7 +61,7 @@ public:
      @brief	Get current applicaiton instance.
      @return Current application instance pointer.
      */
-    static CCXApplication * getSharedApplication();
+    static CCXApplication * sharedApplication();
 };
 
 }       // end of namespace   cocos2d

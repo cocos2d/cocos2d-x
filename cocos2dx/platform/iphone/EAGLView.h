@@ -66,6 +66,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/EAGLDrawable.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+#import <CoreFoundation/CoreFoundation.h>
 
 #import "ESRenderer.h"
 
@@ -86,6 +87,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
+@private
+        CFMutableDictionaryRef    touchesIntergerDict;
 }
 
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
@@ -115,11 +118,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** OpenGL context */
 @property(nonatomic,readonly) EAGLContext *context;
 
+@property(readonly) CFMutableDictionaryRef touchesIntergerDict;
+
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
+- (id) init;
 
 -(int) getWidth;
 -(int) getHeight;
