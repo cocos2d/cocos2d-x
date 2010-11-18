@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="cocos2d-x"
+	Name="cocos2d-win32"
 	ProjectGUID="{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
 	RootNamespace="cocos2d-x.win32"
 	Keyword="Win32Proj"

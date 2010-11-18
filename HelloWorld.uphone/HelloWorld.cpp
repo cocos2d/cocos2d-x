@@ -37,7 +37,7 @@ public:
 // AppDelegate
 
 HelloWorldAppDelegate::HelloWorldAppDelegate() 
-, m_pMainWnd(NULL)
+:m_pMainWnd(NULL)
 {
 
 }

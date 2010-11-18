@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="CocosDenshion_uphone"
+	Name="CocosDenshion"
 	ProjectGUID="{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}"
 	RootNamespace="CocosDenshion"
 	Keyword="Win32Proj"

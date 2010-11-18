@@ -25,6 +25,37 @@ THE SOFTWARE.
 #ifndef __UIACCELEROMETER_DELEGATE_H__
 #define __UIACCELEROMETER_DELEGATE_H__
 
-#include "../platform/CCXUIAccelerometer_platform.h"
+#include "ccxCommon.h"
+
+namespace   cocos2d {
+/**
+@brief The device accelerometer reports values for each axis in units of g-force 
+*/
+typedef struct 
+{
+    double x;
+    double y;
+    double z;
+
+    double timestamp;
+} UIAcceleration;
+
+/**
+@brief 
+The UIAccelerometerDelegate defines a single method for
+receiving acceleration-related data from the system.
+*/
+class CCX_DLL UIAccelerometerDelegate
+{
+public:
+    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
+
+    //! call the release() in child layer
+    virtual void AccelerometerDestroy(void) {}
+    //! call the retain() in child layer
+    virtual void AccelerometerKeep(void) {}
+};
+
+} //namespace   cocos2d 
 
 #endif
