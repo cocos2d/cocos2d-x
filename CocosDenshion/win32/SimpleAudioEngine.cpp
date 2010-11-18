@@ -31,11 +31,15 @@ SimpleAudioEngine::~SimpleAudioEngine()
 {
 }
 
-SimpleAudioEngine* SimpleAudioEngine::getSharedEngine()
+SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 {
     return &s_SharedEngine;
 }
 
+void SimpleAudioEngine::release()
+{
+	return;
+}
 //////////////////////////////////////////////////////////////////////////
 // BackgroundMusic
 //////////////////////////////////////////////////////////////////////////
