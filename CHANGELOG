@@ -1,4 +1,9 @@
-version 0.99.4.01  Sep.28,2010
- . [NEW] completely port from cocos2d-iphone 0.99.4 to cpp language on uphone
+cocos2d-0.99.4-x-0.7.0
+	http://www.cocos2d-x.org/versions/show/4
+
+cocos2d-0.99.4-uphone-win32-stable-rc1
+	http://www.cocos2d-x.org/versions/show/1
+	http://www.cocos2d-x.org/versions/show/2
+	http://www.cocos2d-x.org/versions/show/3
 
 
