@@ -26,8 +26,7 @@ public class ApplicationDemo extends Cocos2dxActivity{
 	     super.onResume();
 	     mGLView.onResume();
 	 }
-	 
-	 
+	  
 	 private GLSurfaceView mGLView;
 	
      static {
