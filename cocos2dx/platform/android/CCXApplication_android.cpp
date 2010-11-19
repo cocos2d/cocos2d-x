@@ -30,11 +30,16 @@ namespace   cocos2d {
         CGRect rc;
         return rc;
     }
+    
+    void CCXApplication::Run()
+    {
+    	applicationDidFinishLaunching();
+    }
 
 	//////////////////////////////////////////////////////////////////////////
 	/// Implement static class member
 	//////////////////////////////////////////////////////////////////////////
-	CCXApplication * CCXApplication::getSharedApplication()
+	CCXApplication * CCXApplication::sharedApplication()
 	{
 		return s_pApplication;
 	}
@@ -52,7 +57,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env)
 {
-	cocos2d::CCDirector::getSharedDirector()->preMainLoop();
+	cocos2d::CCDirector::sharedDirector()->preMainLoop();
 }
 
 }
