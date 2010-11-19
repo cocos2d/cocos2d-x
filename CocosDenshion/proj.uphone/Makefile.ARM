@@ -6,7 +6,7 @@
 #
 #############################################################################
 
-TO_PROJECT_ROOT = ../../PRJ_TG3
+TO_PROJECT_ROOT = ../../../PRJ_TG3
 OUTPUT_FILENAME = libCocosDenshion.a
 
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
