@@ -20,7 +20,7 @@ INCLUDE_PATH += -I../ -I../Res \
                 -I../../ \
                 -I../tests
 
-LIBS += -lcocos2d	-lTG3_EGL -lchipmunk -lbox2d -lTG3_GLESv1_CM -lTG3_GLESv2
+LIBS += -lcocos2d	-lchipmunk -lbox2d -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
