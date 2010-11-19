@@ -27,21 +27,6 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-typedef struct 
-{
-    double x;
-    double y;
-    double z;
-
-    double timestamp;
-} UIAcceleration;
-
-class CCX_DLL UIAccelerometerDelegate
-{
-public:
-    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
-};
-
 class CCX_DLL UIAccelerometer
 {
 public:
