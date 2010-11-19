@@ -172,75 +172,75 @@ function AddConfig(proj, strProjectName) {
 
         // create configure
         var nCntr;
-		for (nCntr = 0; nCntr < nNumConfigs; nCntr++) {
+        for (nCntr = 0; nCntr < nNumConfigs; nCntr++) {
 
-		    // Check if it's Debug configuration
-		    var bDebug = false;
-		    if (astrConfigName[nCntr].search("Debug") != -1)
-		        bDebug = true;
+            // Check if it's Debug configuration
+            var bDebug = false;
+            if (astrConfigName[nCntr].search("Debug") != -1)
+                bDebug = true;
 
-		    var config = proj.Object.Configurations(astrConfigName[nCntr]);
+            var config = proj.Object.Configurations(astrConfigName[nCntr]);
 
-    	    if (bDebug) {
-		        strDefinitions = '_DEBUG;' + strDefinitions;
-		    } 
-		    else {
-		        strDefinitions = 'NDEBUG;' + strDefinitions;
-		    }
+            if (bDebug) {
+                strDefinitions = '_DEBUG;' + strDefinitions;
+            } 
+            else {
+                strDefinitions = 'NDEBUG;' + strDefinitions;
+            }
 
-		    config.InheritedPropertySheets = '$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops';
-		    config.OutputDirectory = strOutputDir;
-		    config.IntermediateDirectory = '$(ConfigurationName).uphone';
-		    config.ConfigurationType = '2';
+            config.InheritedPropertySheets = '$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops';
+            config.OutputDirectory = strOutputDir;
+            config.IntermediateDirectory = '$(ConfigurationName).uphone';
+            config.ConfigurationType = '2';
 
-		    var CLTool = config.Tools('VCCLCompilerTool');
-		    if (bDebug) {
-		        CLTool.RuntimeLibrary = rtMultiThreadedDebug;
-		        CLTool.MinimalRebuild = true;
-		        CLTool.DebugInformationFormat = debugEditAndContinue;
-		        CLTool.BasicRuntimeChecks = runtimeBasicCheckAll;
-		        CLTool.Optimization = optimizeDisabled;
-		    }
-		    else {
-		        CLTool.RuntimeLibrary = rtMultiThreaded;
-		        CLTool.ExceptionHandling = false;
-		        CLTool.DebugInformationFormat = debugDisabled;
-		    }
-		    CLTool.AdditionalIncludeDirectories = strCurIncludeDir;
-		    CLTool.PreprocessorDefinitions = strDefinitions;
-		    CLTool.RuntimeLibrary = '3';
-		    CLTool.StructMemberAlignment = '3';
-		    CLTool.TreatWChar_tAsBuiltInType = 'false';
-		    CLTool.UsePrecompiledHeader = '0';
-		    CLTool.WarningLevel = '3';
-		    CLTool.ForcedIncludeFiles = '';
+            var CLTool = config.Tools('VCCLCompilerTool');
+            if (bDebug) {
+                CLTool.RuntimeLibrary = rtMultiThreadedDebug;
+                CLTool.MinimalRebuild = true;
+                CLTool.DebugInformationFormat = debugEditAndContinue;
+                CLTool.BasicRuntimeChecks = runtimeBasicCheckAll;
+                CLTool.Optimization = optimizeDisabled;
+            }
+            else {
+                CLTool.RuntimeLibrary = rtMultiThreaded;
+                CLTool.ExceptionHandling = false;
+                CLTool.DebugInformationFormat = debugDisabled;
+            }
+            CLTool.AdditionalIncludeDirectories = strCurIncludeDir;
+            CLTool.PreprocessorDefinitions = strDefinitions;
+            CLTool.RuntimeLibrary = '3';
+            CLTool.StructMemberAlignment = '3';
+            CLTool.TreatWChar_tAsBuiltInType = 'false';
+            CLTool.UsePrecompiledHeader = '0';
+            CLTool.WarningLevel = '3';
+            CLTool.ForcedIncludeFiles = '';
 
-		    var LinkTool = config.Tools('VCLinkerTool');
-		    if (bDebug) {
-		        LinkTool.LinkIncremental = linkIncrementalYes;
-		        LinkTool.GenerateDebugInformation = true;
-		        LinkTool.GenerateMapFile = 'true';
-		        LinkTool.MapExports = 'true';
-		    }
-		    else {
-		        LinkTool.LinkIncremental = linkIncrementalNo;
-		    }
-		    LinkTool.AdditionalDependencies = strDependLibs;
-		    LinkTool.OutputFile = strOutputFile;
-		    LinkTool.AdditionalLibraryDirectories = strCurLibsDir;
-		    LinkTool.SubSystem = '1';
-		    LinkTool.RandomizedBaseAddress = '1';
-		    LinkTool.DataExecutionPrevention = '0';
-		    LinkTool.ImportLibrary = strImportLib;
-		    LinkTool.TargetMachine = '1';
+            var LinkTool = config.Tools('VCLinkerTool');
+            if (bDebug) {
+                LinkTool.LinkIncremental = linkIncrementalYes;
+                LinkTool.GenerateDebugInformation = true;
+                LinkTool.GenerateMapFile = 'true';
+                LinkTool.MapExports = 'true';
+            }
+            else {
+                LinkTool.LinkIncremental = linkIncrementalNo;
+            }
+            LinkTool.AdditionalDependencies = strDependLibs;
+            LinkTool.OutputFile = strOutputFile;
+            LinkTool.AdditionalLibraryDirectories = strCurLibsDir;
+            LinkTool.SubSystem = '1';
+            LinkTool.RandomizedBaseAddress = '1';
+            LinkTool.DataExecutionPrevention = '0';
+            LinkTool.ImportLibrary = strImportLib;
+            LinkTool.TargetMachine = '1';
 
-		    var PostBuildTool = config.Tools("VCPostBuildEventTool");
-		    PostBuildTool.Description = "Performing registration...";
-		    var strResDir = "..\\..\\NEWPLUS\\TDA_DATA\\Data\\" + strProjectName + "\\";
-		    var strPostCmd = "mkdir " + strResDir;
-		    strPostCmd += "\r\nxcopy /E /Y .\\Resource\\*.* " + strResDir;
-		    PostBuildTool.CommandLine = strPostCmd;
-		}
+            var PostBuildTool = config.Tools("VCPostBuildEventTool");
+            PostBuildTool.Description = "Performing registration...";
+            var strResDir = "..\\..\\NEWPLUS\\TDA_DATA\\Data\\" + strProjectName + "\\";
+            var strPostCmd = "mkdir " + strResDir;
+            strPostCmd += "\r\nxcopy /E /Y .\\Resource\\*.* " + strResDir;
+            PostBuildTool.CommandLine = strPostCmd;
+        }
     }
     catch (e) {
         throw e;
@@ -308,54 +308,54 @@ function GetTargetName(strName, strProjectName) {
 }
 
 function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile) {
-    var FileSys = new ActiveXObject('Scripting.FileSystemObject');
-    var log = FileSys.OpenTextFile("log.txt", 2, true);
+//     var FileSys = new ActiveXObject('Scripting.FileSystemObject');
+//     var log = FileSys.OpenTextFile("log.txt", 2, true);
     
     try {
-		var strTemplatePath = wizard.FindSymbol('TEMPLATES_PATH');
+        var strTemplatePath = wizard.FindSymbol('TEMPLATES_PATH');
 
-		var strName = '';
+        var strName = '';
 
-		var strTextStream = InfFile.OpenAsTextStream(1, -2);
-		while (!strTextStream.AtEndOfStream)
-		{
-		    strName = strTextStream.ReadLine();
+        var strTextStream = InfFile.OpenAsTextStream(1, -2);
+        while (!strTextStream.AtEndOfStream)
+        {
+            strName = strTextStream.ReadLine();
 
-		    if (!strName.length || strName == '') {
-		        continue;
-		    }
-		    log.WriteLine(strName);
-  			var strTarget = GetTargetName(strName, strProjectName);
-  			var strTemplate = strTemplatePath + '\\' + strName;
- 			var strFile = strProjectPath + '\\' + strTarget;
+            if (!strName.length || strName == '') {
+                continue;
+            }
+//             log.WriteLine(strName);
+            var strTarget = GetTargetName(strName, strProjectName);
+            var strTemplate = strTemplatePath + '\\' + strName;
+            var strFile = strProjectPath + '\\' + strTarget;
 
-			var bCopyOnly = false;  
-			var strExt = strName.substr(strName.lastIndexOf("."));
-			if (strExt == ".jpg" || strExt == ".png" || strExt == ".bmp" || strExt == ".ico" || strExt == ".gif" || strExt == ".rtf" || strExt == ".css") {
-			    bCopyOnly = true;
-			}
-			wizard.RenderTemplate(strTemplate, strFile, bCopyOnly);
+            var bCopyOnly = false;  
+            var strExt = strName.substr(strName.lastIndexOf("."));
+            if (strExt == ".jpg" || strExt == ".png" || strExt == ".bmp" || strExt == ".ico" || strExt == ".gif" || strExt == ".rtf" || strExt == ".css") {
+                bCopyOnly = true;
+            }
+            wizard.RenderTemplate(strTemplate, strFile, bCopyOnly);
 
             if (strExt == ".h") {
                 if (strName.indexOf("UnicodeScript") >= 0) {
                     unFile = proj.Object.AddFile(strFile);
-			        var strPrjTG3DirWin = '..\\..\\PRJ_TG3\\';
-			        var unFileCfg = unFile.FileConfigurations('Debug');
-			        var strCommandLine = strPrjTG3DirWin + 'Common\\StrConv\\TzdStrConv_V1.exe $(InputPath) $(InputDir)$(InputName)_str.h';
-			        var strAddDepend = strPrjTG3DirWin + 'Common\\StrConv\\TzdStrConv_V1.exe';
-			        unFileCfg.Tool.CommandLine = strCommandLine;
-			        unFileCfg.Tool.AdditionalDependencies = strAddDepend;
-			        unFileCfg.Tool.Outputs = '$(InputDir)$(InputName)_str.h';
-			        continue;
-			    }
-				
-			}
-			proj.Object.AddFile(strFile);
+                    var strPrjTG3DirWin = '..\\..\\PRJ_TG3\\';
+                    var unFileCfg = unFile.FileConfigurations('Debug');
+                    var strCommandLine = strPrjTG3DirWin + 'Common\\StrConv\\TzdStrConv_V1.exe $(InputPath) $(InputDir)$(InputName)_str.h';
+                    var strAddDepend = strPrjTG3DirWin + 'Common\\StrConv\\TzdStrConv_V1.exe';
+                    unFileCfg.Tool.CommandLine = strCommandLine;
+                    unFileCfg.Tool.AdditionalDependencies = strAddDepend;
+                    unFileCfg.Tool.Outputs = '$(InputDir)$(InputName)_str.h';
+                    continue;
+                }
+                
+            }
+            proj.Object.AddFile(strFile);
         }
         strTextStream.Close();
-	}
-	catch (e) {
-	    throw e;
-	}
-	log.Close();
+    }
+    catch (e) {
+        throw e;
+    }
+//     log.Close();
 }

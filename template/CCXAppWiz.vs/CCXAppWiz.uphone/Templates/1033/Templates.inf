@@ -22,6 +22,10 @@ uphone/Res/root_res_def.h
 uphone/Res/root_res_h.h
 [! endif]
 
+[! if CCX_USE_TCOM_SUPPORT]
+uphone/TCOM/root_TcomRegist.cpp
+[! endif]
+
 Classes/AppDelegate.h
 Classes/AppDelegate.cpp
 
