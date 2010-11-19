@@ -103,28 +103,28 @@ HCURSOR CTestAudioEnginewin32Dlg::OnQueryDragIcon()
 
 void CTestAudioEnginewin32Dlg::OnBnClickedMusic()
 {
-	SimpleAudioEngine::getSharedEngine()->playBackgroundMusic(kszMusic, true);
+	SimpleAudioEngine::sharedEngine()->playBackgroundMusic(kszMusic, true);
 }
 
 void CTestAudioEnginewin32Dlg::OnBnClickedMusicStop()
 {
-	SimpleAudioEngine::getSharedEngine()->stopBackgroundMusic();
+	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 }
 
 void CTestAudioEnginewin32Dlg::OnBnClickedEffect1()
 {
-	s_nEffect1 = SimpleAudioEngine::getSharedEngine()->playEffect(kszEffect1);
+	s_nEffect1 = SimpleAudioEngine::sharedEngine()->playEffect(kszEffect1);
 }
 
 void CTestAudioEnginewin32Dlg::OnBnClickedEffect2()
 {
-	s_nEffect2 = SimpleAudioEngine::getSharedEngine()->playEffect(kszEffect2);
+	s_nEffect2 = SimpleAudioEngine::sharedEngine()->playEffect(kszEffect2);
 }
 
 void CTestAudioEnginewin32Dlg::OnDestroy()
 {
 	CDialog::OnDestroy();
 
-	SimpleAudioEngine::getSharedEngine()->stopBackgroundMusic();
-	SimpleAudioEngine::getSharedEngine()->unloadEffectAll();
+	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+	SimpleAudioEngine::sharedEngine()->unloadEffectAll();
 }

@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\cocos2d-x\include&quot;;&quot;..\cocos2d-x&quot;;&quot;..\cocos2d-x\platform\win32\third_party\OGLES\&quot;"
+				AdditionalIncludeDirectories="..\cocos2dx\include;..\cocos2dx;..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="libcocos2d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
@@ -118,7 +119,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\cocos2d-x\include&quot;;&quot;..\cocos2d-x&quot;;&quot;..\cocos2d-x\platform\win32\third_party\OGLES\&quot;"
+				AdditionalIncludeDirectories="..\cocos2dx\include;..\cocos2dx;..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -137,6 +138,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="libcocos2d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
