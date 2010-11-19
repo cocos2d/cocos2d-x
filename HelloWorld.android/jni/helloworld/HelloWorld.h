@@ -29,7 +29,7 @@ THE SOFTWARE.
 class HelloWorld : public cocos2d::CCXApplication
 {
 public:
-	virtual bool initCocos2d();
+	virtual bool applicationDidFinishLaunching();
 	
 private:
 };

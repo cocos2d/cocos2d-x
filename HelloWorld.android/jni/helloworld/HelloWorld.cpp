@@ -25,24 +25,24 @@ public:
 
 	void ccTouchesEnded(NSSet* pTouches, UIEvent* pEvent)
     {
-        CCDirector::getSharedDirector()->end();
+        CCDirector::sharedDirector()->end();
     };
 
 	LAYER_NODE_FUNC(MyLayer);
 };
 
-bool HelloWorld::initCocos2d()
+bool HelloWorld::applicationDidFinishLaunching()
 {
 	 // the view is freeed in CCDirector
-	 CCDirector::getSharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-	 CCDirector::getSharedDirector()->setDisplayFPS(true);
+	 CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+	 CCDirector::sharedDirector()->setDisplayFPS(true);
 	 	
 	 // set resource path
 	 CCFileUtils::setResourcePath(RESOURCE_PATH);
  		
      // load background image texture and get window size
      CCTexture2D * pTexture = CCTextureCache::sharedTextureCache()->addImage(IMG_PATH);
-     CGSize size = CCDirector::getSharedDirector()->getWinSize();
+     CGSize size = CCDirector::sharedDirector()->getWinSize();
  
      // create sprite instance
      CCSprite * pSprite = new CCSprite(); 
@@ -58,7 +58,7 @@ bool HelloWorld::initCocos2d()
      pScene->addChild(pLayer);
  
      // add scene to director
-     CCDirector::getSharedDirector()->runWithScene(pScene);
+     CCDirector::sharedDirector()->runWithScene(pScene);
  
      pSprite->release();
      
@@ -72,14 +72,14 @@ extern "C"
 void initProgram()
 {
 	s_pApp = new HelloWorld();
- 	s_pApp->initCocos2d();
+ 	s_pApp->Run();
 }
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
 {
 	cocos2d::CCXEGLView *view = new cocos2d::CCXEGLView();
  	view->setFrameWitdAndHeight(w, h);
- 	cocos2d::CCDirector::getSharedDirector()->setOpenGLView(view);
+ 	cocos2d::CCDirector::sharedDirector()->setOpenGLView(view);
  		
  	initProgram();
 }
