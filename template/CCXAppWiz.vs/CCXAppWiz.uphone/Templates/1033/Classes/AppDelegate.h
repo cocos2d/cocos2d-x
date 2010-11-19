@@ -6,8 +6,8 @@
 class  AppDelegate  :  public  cocos2d::CCXApplication
 {
 public:
-	AppDelegate();
-	~AppDelegate();
+    AppDelegate();
+    ~AppDelegate();
 
     virtual bool applicationDidFinishLaunching();
     virtual void applicationDidEnterBackground();
@@ -17,6 +17,4 @@ protected:
     cocos2d::CCXEGLView *m_pMainWnd;
 };
  
-
-#endif	// __APP_DELEGATE_H__
-
+#endif  // __APP_DELEGATE_H__

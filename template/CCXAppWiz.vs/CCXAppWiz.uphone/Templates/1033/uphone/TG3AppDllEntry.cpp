@@ -13,18 +13,18 @@
 extern "C" {
 #endif
 
-    //ÊµÏÖTCOMËùĞèÒªµÄDLLº¯Êı
+    //å®ç°TCOMæ‰€éœ€è¦çš„DLLå‡½æ•°
 
-    //DLLÌá¹©µÄ»ñÈ¡Ö¸¶¨CLSIDµÄÖ¸¶¨½Ó¿Ú
+    //DLLæä¾›çš„è·å–æŒ‡å®šCLSIDçš„æŒ‡å®šæ¥å£
     SS_EXPORT HRESULT TDllGetClassObject(TREFCLSID rclsid, TREFIID riid, LPVOID * ppv);
 
-    //DLLÌá¹©µÄ²éÑ¯DLLÄÜ·ñ±»Unload
+    //DLLæä¾›çš„æŸ¥è¯¢DLLèƒ½å¦è¢«Unload
     SS_EXPORT HRESULT TDllCanUnloadNow(void);
 
-    //DLLÌá¹©µÄ°ÑDLLµÄTCOMĞÅÏ¢¼ÓÈëµ½×¢²á±í
+    //DLLæä¾›çš„æŠŠDLLçš„TCOMä¿¡æ¯åŠ å…¥åˆ°æ³¨å†Œè¡¨
     SS_EXPORT HRESULT TDllRegisterServer(void);
 
-    //DLLÌá¹©µÄ°ÑDLLµÄTCOMĞÅÏ¢´Ó×¢²á±íÖĞÉ¾³ı
+    //DLLæä¾›çš„æŠŠDLLçš„TCOMä¿¡æ¯ä»æ³¨å†Œè¡¨ä¸­åˆ é™¤
     SS_EXPORT HRESULT TDllUnregisterServer(void);
 
 #ifdef __cplusplus
@@ -35,15 +35,15 @@ extern "C" {
 #include <stdio.h>
 #endif
 
-//TCOMÊµÏÖÖĞĞèÒªÓÃµ½µÄº¯ÊıºÍÊı¾İ
+//TCOMå®ç°ä¸­éœ€è¦ç”¨åˆ°çš„å‡½æ•°å’Œæ•°æ®
 
-//ÊµÀı¶ÔÏó±»ÒıÓÃµÄ´ÎÊı
+//å®ä¾‹å¯¹è±¡è¢«å¼•ç”¨çš„æ¬¡æ•°
 static Int32 __TCOM_ClsidInstanceRefCount;
 
-//ClassFactory±»LockedµÄ´ÎÊı
+//ClassFactoryè¢«Lockedçš„æ¬¡æ•°
 static Int32 __TCOM_CalssFactoryLockedCount;
 
-//×ö±ØÒªµÄ³õÊ¼»¯
+//åšå¿…è¦çš„åˆå§‹åŒ–
 static Int32 __TCOM_Init()
 {
     __TCOM_ClsidInstanceRefCount = 0;
@@ -51,13 +51,13 @@ static Int32 __TCOM_Init()
     return 0;
 }
 
-//×ö±ØÒªµÄÇå³ı¹¤×÷
+//åšå¿…è¦çš„æ¸…é™¤å·¥ä½œ
 static Int32 __TCOM_DeInit()
 {
     return 0;
 }
 
-//DLLÈ«¾ÖÊ¹ÓÃ£ºÔö¼Ó¶ÔÏóÊµÀı±»ÒıÓÃ´ÎÊı
+//DLLå…¨å±€ä½¿ç”¨ï¼šå¢åŠ å¯¹è±¡å®ä¾‹è¢«å¼•ç”¨æ¬¡æ•°
 Int32 TCOM_AddClsidInstanceRefCount()
 {
     __TCOM_ClsidInstanceRefCount++;
@@ -72,7 +72,7 @@ Int32 TCOM_AddClsidInstanceRefCount()
     return __TCOM_ClsidInstanceRefCount;
 }
 
-//DLLÈ«¾ÖÊ¹ÓÃ£º¼õÉÙ¶ÔÏóÊµÀı±»ÒıÓÃ´ÎÊı
+//DLLå…¨å±€ä½¿ç”¨ï¼šå‡å°‘å¯¹è±¡å®ä¾‹è¢«å¼•ç”¨æ¬¡æ•°
 Int32 TCOM_DecClsidInstanceRefCount()
 {
     __TCOM_ClsidInstanceRefCount--;
@@ -87,7 +87,7 @@ Int32 TCOM_DecClsidInstanceRefCount()
     return __TCOM_ClsidInstanceRefCount;
 }
 
-//DLLÈ«¾ÖÊ¹ÓÃ£ºÔö¼ÓClassFactory±»LockedµÄ´ÎÊı
+//DLLå…¨å±€ä½¿ç”¨ï¼šå¢åŠ ClassFactoryè¢«Lockedçš„æ¬¡æ•°
 Int32 TCOM_AddCalssFactoryLockedCount()
 {
     __TCOM_CalssFactoryLockedCount++;
@@ -102,7 +102,7 @@ Int32 TCOM_AddCalssFactoryLockedCount()
     return __TCOM_CalssFactoryLockedCount;
 }
 
-//DLLÈ«¾ÖÊ¹ÓÃ£º¼õÉÙClassFactory±»LockedµÄ´ÎÊı
+//DLLå…¨å±€ä½¿ç”¨ï¼šå‡å°‘ClassFactoryè¢«Lockedçš„æ¬¡æ•°
 Int32 TCOM_DecCalssFactoryLockedCount()
 {
     __TCOM_CalssFactoryLockedCount--;
@@ -117,15 +117,15 @@ Int32 TCOM_DecCalssFactoryLockedCount()
     return __TCOM_CalssFactoryLockedCount;
 }
 
-//ÊµÏÖTCOMËùĞèÒªµÄDLLº¯Êı
+//å®ç°TCOMæ‰€éœ€è¦çš„DLLå‡½æ•°
 
-//DLLÌá¹©µÄ»ñÈ¡Ö¸¶¨CLSIDµÄÖ¸¶¨½Ó¿Ú
+//DLLæä¾›çš„è·å–æŒ‡å®šCLSIDçš„æŒ‡å®šæ¥å£
 SS_EXPORT HRESULT TDllGetClassObject(TREFCLSID rclsid, TREFIID riid, LPVOID * ppv)
 {
     return TCOM_Srv_GetClassObject(rclsid, riid, ppv);
 }
 
-//DLLÌá¹©µÄ²éÑ¯DLLÄÜ·ñ±»Unload
+//DLLæä¾›çš„æŸ¥è¯¢DLLèƒ½å¦è¢«Unload
 SS_EXPORT HRESULT TDllCanUnloadNow(void)
 {
 #ifdef __TCOM_OUTPUT_DEBUG_INFO__
@@ -138,13 +138,13 @@ SS_EXPORT HRESULT TDllCanUnloadNow(void)
     return TCOM_S_FALSE;
 }
 
-//DLLÌá¹©µÄ°ÑDLLµÄTCOMĞÅÏ¢¼ÓÈëµ½×¢²á±í
+//DLLæä¾›çš„æŠŠDLLçš„TCOMä¿¡æ¯åŠ å…¥åˆ°æ³¨å†Œè¡¨
 SS_EXPORT HRESULT TDllRegisterServer(void)
 {
     return TCOM_Srv_RegisterServer();
 }
 
-//DLLÌá¹©µÄ°ÑDLLµÄTCOMĞÅÏ¢´Ó×¢²á±íÖĞÉ¾³ı
+//DLLæä¾›çš„æŠŠDLLçš„TCOMä¿¡æ¯ä»æ³¨å†Œè¡¨ä¸­åˆ é™¤
 SS_EXPORT HRESULT TDllUnregisterServer(void)
 {
     return  TCOM_Srv_UnregisterServer();
@@ -163,19 +163,19 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserv
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		//½ø³Ì¼ÓÔØ¶¯Ì¬¿â½øĞĞµÄ²Ù×÷
+		//è¿›ç¨‹åŠ è½½åŠ¨æ€åº“è¿›è¡Œçš„æ“ä½œ
 #ifdef __TCOM_SUPPORT__
         __TCOM_Init();
 #endif
 		break;
 	case DLL_THREAD_ATTACH:
-		//Ïß³Ì¼ÓÔØ¶¯Ì¬¿â½øĞĞµÄ²Ù×÷
+		//çº¿ç¨‹åŠ è½½åŠ¨æ€åº“è¿›è¡Œçš„æ“ä½œ
 		break;
 	case DLL_THREAD_DETACH:
-		//Ïß³ÌĞ¶ÔØ¶¯Ì¬¿â½øĞĞµÄ²Ù×÷
+		//çº¿ç¨‹å¸è½½åŠ¨æ€åº“è¿›è¡Œçš„æ“ä½œ
 		break;
 	case DLL_PROCESS_DETACH:
-		//½ø³ÌĞ¶ÔØ¶¯Ì¬¿â½øĞĞµÄ²Ù×÷
+		//è¿›ç¨‹å¸è½½åŠ¨æ€åº“è¿›è¡Œçš„æ“ä½œ
 #ifdef __TCOM_SUPPORT__
         __TCOM_DeInit();
 #endif
@@ -191,7 +191,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserv
 
 void __attribute((constructor)) TG3_Dll_Attach()
 {
-    //½ø³Ì¼ÓÔØ¶¯Ì¬¿â½øĞĞµÄ²Ù×÷
+    //è¿›ç¨‹åŠ è½½åŠ¨æ€åº“è¿›è¡Œçš„æ“ä½œ
 #ifdef __TCOM_SUPPORT__
     __TCOM_Init();
 #endif
@@ -199,7 +199,7 @@ void __attribute((constructor)) TG3_Dll_Attach()
 
 void __attribute((destructor)) TG3_Dll_Detach()
 {
-    //½ø³ÌĞ¶ÔØ¶¯Ì¬¿â½øĞĞµÄ²Ù×÷
+    //è¿›ç¨‹å¸è½½åŠ¨æ€åº“è¿›è¡Œçš„æ“ä½œ
 #ifdef __TCOM_SUPPORT__
     __TCOM_DeInit();
 #endif
@@ -207,20 +207,20 @@ void __attribute((destructor)) TG3_Dll_Detach()
 
 #endif
 
-//Èç¹û²»ÊÇ×÷ÎªTG3µÄ¶¯Ì¬¿âÓ¦ÓÃ£¬ÇëÔÚVCÏîÄ¿ÖĞºÍTMK3ÎÄ¼şÖĞ¶¨Òå  __TG3_PURE_DLL__ ºê
+//å¦‚æœä¸æ˜¯ä½œä¸ºTG3çš„åŠ¨æ€åº“åº”ç”¨ï¼Œè¯·åœ¨VCé¡¹ç›®ä¸­å’ŒTMK3æ–‡ä»¶ä¸­å®šä¹‰  __TG3_PURE_DLL__ å®
 #ifndef __TG3_PURE_DLL__
 
-//¶¯Ì¬¿âÓ¦ÓÃÊ¹ÓÃµÄÍ³Ò»µ¼³öÃû×ÖµÄÈë¿Úº¯Êı
+//åŠ¨æ€åº“åº”ç”¨ä½¿ç”¨çš„ç»Ÿä¸€å¯¼å‡ºåå­—çš„å…¥å£å‡½æ•°
 SS_EXPORT Int32 TDllTG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
 	Int32 retValue;
 
-	//³õÊ¼»¯TCOM
+	//åˆå§‹åŒ–TCOM
 	TCoInitialize(NULL);
 
 	retValue = TG3AppMain(pAppID, nCmd, pCmdParam);
 
-	//ÊÍ·ÅTCOM
+	//é‡Šæ”¾TCOM
 	TCoUninitialize();
 
 	return retValue;

@@ -1,25 +1,25 @@
 
 /*!
 *  @file		NewDeleteOp.cpp
-*  @author È«ÖÇ´ï
+*  @author å…¨æ™ºè¾¾
 *  @brief 
 * 
 *  @section Copyright
 * =======================================================================<br>
 * <br>
 * Copyright (c) 2005-2010 Tranzda Technologies Co.,Ltd. <br>
-*      ÉîÛÚÊĞÈ«ÖÇ´ï¿Æ¼¼ÓĞÏŞ¹«Ë¾ °æÈ¨ËùÓĞ2005-2010<br>
+*      æ·±åœ³å¸‚å…¨æ™ºè¾¾ç§‘æŠ€æœ‰é™å…¬å¸ ç‰ˆæƒæ‰€æœ‰2005-2010<br>
 * <br>
 * PROPRIETARY RIGHTS of Tranzda Technologies Co.,Ltd. are involved in <br>
 * the subject matter of this material. All manufacturing, reproduction, <br>
 * use, and sales rights pertaining to this subject matter are governed <br>
 * by the license agreement.  The recipient of this software implicitly <br>
 * accepts the terms of the license. <br>
-* ±¾Èí¼şÎÄµµ×ÊÁÏÊÇÉîÛÚÊĞÈ«ÖÇ´ï¿Æ¼¼ÓĞÏŞ¹«Ë¾µÄºÏ·¨×Ê²ú£¬ÈÎºÎÈËÊ¿ÔÄ¶ÁºÍÊ¹<br>
-* ÓÃ±¾×ÊÁÏ±ØĞë»ñµÃÏàÓ¦µÄÊéÃæÊÚÈ¨,³Ğµ£±£ÃÜÔğÈÎºÍ½ÓÊÜÏàÓ¦µÄ·¨ÂÉÔ¼Êø¡£<br>
+* æœ¬è½¯ä»¶æ–‡æ¡£èµ„æ–™æ˜¯æ·±åœ³å¸‚å…¨æ™ºè¾¾ç§‘æŠ€æœ‰é™å…¬å¸çš„åˆæ³•èµ„äº§ï¼Œä»»ä½•äººå£«é˜…è¯»å’Œä½¿<br>
+* ç”¨æœ¬èµ„æ–™å¿…é¡»è·å¾—ç›¸åº”çš„ä¹¦é¢æˆæƒ,æ‰¿æ‹…ä¿å¯†è´£ä»»å’Œæ¥å—ç›¸åº”çš„æ³•å¾‹çº¦æŸã€‚<br>
 * <br>
-* ¹«Ë¾ÍøÖ·£º<a href="http://www.tranzda.com"> http://www.tranzda.com </a> <br>
-*  ¹«Ë¾ÓÊÏä£º<a  mailto="support@tranzda.com">support@tranzda.com</a> <br>
+* å…¬å¸ç½‘å€ï¼š<a href="http://www.tranzda.com"> http://www.tranzda.com </a> <br>
+*  å…¬å¸é‚®ç®±ï¼š<a  mailto="support@tranzda.com">support@tranzda.com</a> <br>
 * =======================================================================<br>
 */
 
