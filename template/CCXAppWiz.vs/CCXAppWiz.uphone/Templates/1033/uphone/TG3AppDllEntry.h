@@ -14,35 +14,35 @@
 
 #include "TCOM.h"
 
-//�ṩ��DLLʵ���ߵ��õĺ�����������ȫ�ּ�¼ʵ����ClassFactory�����õĴ�����
-//����������Ӱ��DLL�Ƿ���ܱ����ڴ���ж�أ�������ʵ�����ڲ�ʵ�ּ�����ͬʱ����ȫ�ּ�����
-//����DLL���п��ܻ���ʵ�������ڵ�ʱ��ϵͳ�Զ�ǿ��ж��
+//提供给DLL实现者调用的函数，用于在全局记录实例和ClassFactory被引用的次数，
+//这两个计数影响DLL是否可能被从内存中卸载，请大家在实例中内部实现计数的同时更新全局计数，
+//否则DLL很有可能会在实例还存在的时候被系统自动强制卸载
 
-//DLLȫ��ʹ�ã����Ӷ���ʵ�������ô���
+//DLL全局使用：增加对象实例被引用次数
 Int32 TCOM_AddClsidInstanceRefCount();
 
-//DLLȫ��ʹ�ã����ٶ���ʵ�������ô���
+//DLL全局使用：减少对象实例被引用次数
 Int32 TCOM_DecClsidInstanceRefCount();
 
-//DLLȫ��ʹ�ã�����ClassFactory��Locked�Ĵ���
+//DLL全局使用：增加ClassFactory被Locked的次数
 Int32 TCOM_AddCalssFactoryLockedCount();
 
-//DLLȫ��ʹ�ã�����ClassFactory��Locked�Ĵ���
+//DLL全局使用：减少ClassFactory被Locked的次数
 Int32 TCOM_DecCalssFactoryLockedCount();
 
 
-//Ӧ��DLL��֧��TCOM��ʱ���ṩ����������ʹ�õĺ���
+//应用DLL在支持TCOM的时候提供给导出函数使用的函数
 
-//Ӧ�ø��ݸ�����CLSID��ClassFactory�ӿ�IID����ClassFactory�Ľӿ�
-//����ֵ���ο�TCOM_S_ϵ�к궨��
+//应用根据给出的CLSID和ClassFactory接口IID返回ClassFactory的接口
+//返回值：参考TCOM_S_系列宏定义
 HRESULT TCOM_Srv_GetClassObject(TREFCLSID rclsid, TREFIID riid, LPVOID * ppv);
 
-//Ӧ���ṩ�İ�TCOM��Ϣ���뵽ע���
-//����ֵ���ο�TCOM_S_ϵ�к궨��
+//应用提供的把TCOM信息加入到注册表
+//返回值：参考TCOM_S_系列宏定义
 HRESULT TCOM_Srv_RegisterServer(void);
 
-//Ӧ���ṩ�İ�TCOM��Ϣ��ע�����ɾ��
-//����ֵ���ο�TCOM_S_ϵ�к궨��
+//应用提供的把TCOM信息从注册表中删除
+//返回值：参考TCOM_S_系列宏定义
 HRESULT TCOM_Srv_UnregisterServer(void);
 
 #endif  //__TCOM_SUPPORT__

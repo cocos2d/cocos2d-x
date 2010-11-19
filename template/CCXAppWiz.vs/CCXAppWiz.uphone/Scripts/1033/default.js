@@ -10,6 +10,16 @@ function OnFinish(selProj, selObj) {
         wizard.AddSymbol('PROJECT_NAME_LOWER', strProjectName.toLowerCase(), false);
         wizard.AddSymbol('PROJECT_NAME_UPPER', strProjectName.toUpperCase(), false);
 
+        if (strProjectName.length >= 6) {
+            wizard.AddSymbol('PRO_NAME_PREFIX', strProjectName.substr(0, 6).toUpperCase(), false);
+        }
+        else {
+            var strRes = '_RES';
+            var strNewFormId = strProjectName + strRes.substr(0, (6 - strProjectName.length));
+
+            wizard.AddSymbol('PRO_NAME_PREFIX', strNewFormId.toUpperCase(), false);
+        }
+
         // Set current year symbol
         var d = new Date();
         var nYear = 0;
@@ -282,7 +292,11 @@ function GetTargetName(strName, strProjectName) {
         var nIndex = strName.indexOf("root");
 
         if (nIndex >= 0) {
-            strTarget = strName.substring(0, nIndex) + strProjectName + strName.substring(nIndex + 4, strName.length);
+            var strMid = strProjectName;
+            if (strName.indexOf("_res_") >= 0) {
+                strMid = wizard.FindSymbol('PROJECT_NAME_LOWER');
+            }
+            strTarget = strName.substring(0, nIndex) + strMid + strName.substring(nIndex + 4, strName.length);
         }
 
         return strTarget;
@@ -294,6 +308,9 @@ function GetTargetName(strName, strProjectName) {
 }
 
 function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile) {
+    var FileSys = new ActiveXObject('Scripting.FileSystemObject');
+    var log = FileSys.OpenTextFile("log.txt", 2, true);
+    
     try {
 		var strTemplatePath = wizard.FindSymbol('TEMPLATES_PATH');
 
@@ -307,7 +324,7 @@ function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile) {
 		    if (!strName.length || strName == '') {
 		        continue;
 		    }
-		    
+		    log.WriteLine(strName);
   			var strTarget = GetTargetName(strName, strProjectName);
   			var strTemplate = strTemplatePath + '\\' + strName;
  			var strFile = strProjectPath + '\\' + strTarget;
@@ -340,4 +357,5 @@ function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile) {
 	catch (e) {
 	    throw e;
 	}
+	log.Close();
 }

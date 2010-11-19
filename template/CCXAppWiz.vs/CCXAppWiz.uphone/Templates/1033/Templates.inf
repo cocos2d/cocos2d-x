@@ -5,11 +5,22 @@ uphone/NewDeleteOp.cpp
 uphone/TG3AppDllEntry.cpp
 uphone/TG3AppDllEntry.h
 
+uphone/main.cpp
+
 uphone/resource.h
 uphone/rootUnicodeScript.h
 uphone/rootUnicodeScript_str.h
 
-uphone/main.cpp
+[! if CCX_USE_UI_RESOURCE]
+uphone/Res/root_Res.ENU.tr3
+uphone/Res/root_Res.ENU.tr3.tts
+uphone/Res/root_Res.h
+uphone/Res/root_Res.TR3
+uphone/Res/root_Res.TRG
+uphone/Res/root_res_c.h
+uphone/Res/root_res_def.h
+uphone/Res/root_res_h.h
+[! endif]
 
 Classes/AppDelegate.h
 Classes/AppDelegate.cpp
