@@ -41,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(m_pMainWnd);
     pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
-//    pDirector->setDisplayFPS(true);
+    pDirector->setDisplayFPS(true);
 
 #if defined(CCX_PLATFORM_UPHONE)
     // set the resource path
