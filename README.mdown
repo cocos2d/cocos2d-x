@@ -1,0 +1,33 @@
+cocos2d-x multiplatform
+==================
+
+[cocos2d-x][1] is a multi-platform 2D game engine in C++, based on [cocos2d-iphone][2] and licensed under MIT.
+Now this engine has been ported to UPhone, iOS 4.1, Android 2.1 and higher, WindowsXP & Windows7. 
+
+Multi Platform
+-------------
+   * [cocos2d-iphone-cpp][3]:  only tested on iPhone 4.1 simulator
+   * [cocos2d-android-ndk][4]: run through HelloWorld on Android 2.1/2.2 emulator & device, test cases will be ported in next 2 weeks
+   * [cocos2d-uphone][5]: well tested on UPhone of ChinaUnicom, both emulator & device.
+   * [cocos2d-win32][6]: well tested on WindowsXP & Windows7. It runs on PowerVR OpenGL ES 1.1 libraries for win32 system
+
+
+
+Document
+------------------
+	* Website: www.cocos2d-x.org
+	* Wiki Entry: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Wiki
+	* doxygen document of APIs: coming soon!
+	
+Contact us
+------------------
+	* Forum: http://www.cocos2d-x.org/projects/cocos2d-x/boards/6
+	* Twitter: http://www.twitter.com/cocos2dx/
+
+[1]: http://www.cocos2d-x.org "cocos2d-x"
+[2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
+[3]: http://www.cocos2d-x.org/projects/cocos2d-iphone-cpp/wiki/Cocos2d-iphone-cpp "cocos2d-iphone-cpp"
+[4]: http://www.cocos2d-x.org/projects/cocos2d-android-ndk/wiki/Cocos2d-android-ndk "cocos2d-android-ndk"
+[5]: http://www.cocos2d-x.org/projects/cocos2d-uphone/wiki/Cocos2d-uphone "cocos2d-uphone"
+[6]: http://www.cocos2d-x.org/projects/cocos2d-win32/wiki/Cocos2d-win32 "cocos2d-win32"
+
