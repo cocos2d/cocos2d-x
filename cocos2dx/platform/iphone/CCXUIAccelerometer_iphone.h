@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __PLATFORM_IPHONE_UIACCELEROMETER_H__
 #define __PLATFORM_IPHONE_UIACCELEROMETER_H__
 
+                                                                                                                                                                                                                                             #include "CCUIAccelerometerDelegate.h"
+
 namespace   cocos2d {
 
 class CCX_DLL UIAccelerometer
@@ -33,10 +35,13 @@ public:
     UIAccelerometer();
     ~UIAccelerometer();
 
-    static UIAccelerometer* sharedAccelerometer() { return NULL; }
+    static UIAccelerometer* sharedAccelerometer();
 
-    void removeDelegate(UIAccelerometerDelegate* pDelegate) {}
-    void addDelegate(UIAccelerometerDelegate* pDelegate) {}
+    void removeDelegate(UIAccelerometerDelegate* pDelegate);
+    void addDelegate(UIAccelerometerDelegate* pDelegate);
+    
+private:
+    static UIAccelerometer* m_spUIAccelerometer;
 };
 
 }//namespace   cocos2d 

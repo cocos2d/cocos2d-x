@@ -453,6 +453,10 @@
 		BF1B1A7D12951B7600E99D96 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7912951B7600E99D96 /* TileMaps */; };
 		BF1C47EB1293683800B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		BF6A8FAB12966AEE00EDEB28 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF6A8FA912966AEE00EDEB28 /* AccelerometerDelegateWrapper.h */; };
+		BF6A8FAC12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF6A8FAA12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm */; };
+		BF8DE46B1297A00D00DD1681 /* CCUIAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */; };
+		BF8DE4A01297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8DE49F1297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1002,6 +1006,10 @@
 		BF1B1A7812951B7600E99D96 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../Res/Images; sourceTree = SOURCE_ROOT; };
 		BF1B1A7912951B7600E99D96 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Res/TileMaps; sourceTree = SOURCE_ROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BF6A8FA912966AEE00EDEB28 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
+		BF6A8FAA12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
+		BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUIAccelerometerDelegate.h; sourceTree = "<group>"; };
+		BF8DE49F1297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCXUIAccelerometer_iphone.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1555,6 +1563,7 @@
 		BF170DE012928E6200B8313A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */,
 				BF170DE112928E6200B8313A /* CCAction.h */,
 				BF170DE212928E6200B8313A /* CCActionManager.h */,
 				BF170DE312928E6200B8313A /* CCAtlasNode.h */,
@@ -1738,6 +1747,9 @@
 				BF170EC512928E6300B8313A /* third_party */,
 				BF170EFD12928E6300B8313A /* ZipUtils.cpp */,
 				BF170EFE12928E6300B8313A /* ZipUtils.h */,
+				BF6A8FA912966AEE00EDEB28 /* AccelerometerDelegateWrapper.h */,
+				BF6A8FAA12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm */,
+				BF8DE49F1297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -2366,6 +2378,8 @@
 				BF17115812928E6300B8313A /* OpenGL_Internal.h in Headers */,
 				BF17115A12928E6300B8313A /* TransformUtils.h in Headers */,
 				BF17116712928E6300B8313A /* CCTouchHandler.h in Headers */,
+				BF6A8FAB12966AEE00EDEB28 /* AccelerometerDelegateWrapper.h in Headers */,
+				BF8DE46B1297A00D00DD1681 /* CCUIAccelerometerDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2712,6 +2726,8 @@
 				BF17116412928E6300B8313A /* CCTMXXMLParser.cpp in Sources */,
 				BF17116512928E6300B8313A /* CCTouchDispatcher.cpp in Sources */,
 				BF17116612928E6300B8313A /* CCTouchHandler.cpp in Sources */,
+				BF6A8FAC12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm in Sources */,
+				BF8DE4A01297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2812,6 +2828,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2830,6 +2847,7 @@
 				INFOPLIST_FILE = "iphone-Info.plist";
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = iphone;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Debug;
 		};
