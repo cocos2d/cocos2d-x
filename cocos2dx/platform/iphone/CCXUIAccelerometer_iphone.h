@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __PLATFORM_IPHONE_UIACCELEROMETER_H__
 #define __PLATFORM_IPHONE_UIACCELEROMETER_H__
 
-                                                                                                                                                                                                                                             #include "CCUIAccelerometerDelegate.h"
+#include "CCUIAccelerometerDelegate.h"
 
 namespace   cocos2d {
 
