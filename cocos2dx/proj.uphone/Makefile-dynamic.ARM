@@ -80,6 +80,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCTime.o \
 	$(OBJECTS_DIR)/CCXApplication_uphone.o \
 	$(OBJECTS_DIR)/CCXBitmapDC.o \
+	$(OBJECTS_DIR)/CCXCommon_uphone.o \
 	$(OBJECTS_DIR)/CCXEGLView_uphone.o \
 	$(OBJECTS_DIR)/CCXFileUtils_uphone.o \
 	$(OBJECTS_DIR)/CCXUIAccelerometer_uphone.o \
@@ -271,6 +272,9 @@ $(OBJECTS_DIR)/CCXApplication_uphone.o : ../platform/uphone/CCXApplication_uphon
 
 $(OBJECTS_DIR)/CCXBitmapDC.o : ../platform/uphone/CCXBitmapDC.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXBitmapDC.o ../platform/uphone/CCXBitmapDC.cpp
+
+$(OBJECTS_DIR)/CCXCommon_uphone.o : ../platform/uphone/CCXCommon_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXCommon_uphone.o ../platform/uphone/CCXCommon_uphone.cpp
 
 $(OBJECTS_DIR)/CCXEGLView_uphone.o : ../platform/uphone/CCXEGLView_uphone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXEGLView_uphone.o ../platform/uphone/CCXEGLView_uphone.cpp

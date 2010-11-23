@@ -41,6 +41,7 @@ void CCXLog(const char * pszFormat, ...)
     vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
     va_end(ap);
     OutputDebugStringA(szBuf);
+    OutputDebugStringA("\n");
 }
 
 }//namespace   cocos2d 
