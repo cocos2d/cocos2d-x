@@ -22,22 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_WIN32__
-#define __CCX_COMMON_WIN32__
+#include "ccxCommon_win32.h"
 
-#if defined(_USRDLL)
-#define CCX_DLL     __declspec(dllexport)
-#else 		/* use a DLL library */
-#define CCX_DLL     __declspec(dllimport)
-#endif
+#include <Windows.h>
+#include <stdio.h>
+#include <stdarg.h>
 
-namespace cocos2d{
+#define MAX_LEN         256
 
-    /**
-    @brief	Output Debug message to VS Output window.
-    */
-    void CCX_DLL CCXLog(const char * pszFormat, ...);
+namespace   cocos2d {
+
+void CCXLog(const char * pszFormat, ...)
+{
+    char szBuf[MAX_LEN];
+
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
+    va_end(ap);
+    OutputDebugStringA(szBuf);
+}
 
 }//namespace   cocos2d 
-
-#endif	// end of __CCX_COMMON_WIN32__
