@@ -93,6 +93,5 @@ LOCAL_LDLIBS := -lGLESv1_CM -llog -lz -ljnigraphics\
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -lpng \
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -lxml2 \
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -ljpeg 
-                    
-LOCAL_CPPFLAGS := -D_ANDROID              
+                                 
 include $(BUILD_SHARED_LIBRARY)
