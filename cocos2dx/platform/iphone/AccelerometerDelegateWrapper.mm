@@ -42,12 +42,14 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
 - (id) init
 {
     self.delegateWrappers = [NSMutableArray arrayWithCapacity:4];
+    [[UIAccelerometer sharedAccelerometer] setDelegate: self];
     
     return self;
 }
 
 - (void) dealloc
 {
+    [[UIAccelerometer sharedAccelerometer] setDelegate: nil];
     [delegateWrappers release];
     [super dealloc];
 }
