@@ -770,6 +770,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\platform\win32\CCXCommon_win32.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\platform\win32\ccxCommon_win32.h"
 					>
 				</File>

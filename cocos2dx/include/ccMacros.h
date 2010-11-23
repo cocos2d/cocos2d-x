@@ -52,19 +52,21 @@ THE SOFTWARE.
  */
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define CCLOG(...) do {} while (0)
-#define CCLOGINFO(...) do {} while (0)
-#define CCLOGERROR(...) do {} while (0)
+#define CCLOG(...)              do {} while (0)
+#define CCLOGINFO(...)          do {} while (0)
+#define CCLOGERROR(...)         do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
-#define CCLOG(...) std::printf(__VA_ARGS__)
-#define CCLOGERROR(...) std::printf(__VA_ARGS__)
-#define CCLOGINFO(...) do {} while (0)
+#include "ccxCommon.h"
+#define CCLOG(format, ...)      cocos2d::CCXLog(format, __VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, __VA_ARGS__)
+#define CCLOGINFO(format,...)   do {} while (0)
 
 #elif COCOS2D_DEBUG > 1
-#define CCLOG(...) std::printf(__VA_ARGS__)
-#define CCLOGERROR(...) std::printf(__VA_ARGS__)
-#define CCLOGINFO(...) std::printf(__VA_ARGS__)
+#include "ccxCommon.h"
+#define CCLOG(format, ...)      cocos2d::CCXLog(format, __VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, __VA_ARGS__)
+#define CCLOGINFO(format,...)   cocos2d::CCXLog(format, __VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
 /** @def CC_SWAP
