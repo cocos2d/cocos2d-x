@@ -58,15 +58,15 @@ THE SOFTWARE.
 
 #elif COCOS2D_DEBUG == 1
 #include "ccxCommon.h"
-#define CCLOG(format, ...)      cocos2d::CCXLog(format, __VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, __VA_ARGS__)
+#define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   do {} while (0)
 
 #elif COCOS2D_DEBUG > 1
 #include "ccxCommon.h"
-#define CCLOG(format, ...)      cocos2d::CCXLog(format, __VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, __VA_ARGS__)
-#define CCLOGINFO(format,...)   cocos2d::CCXLog(format, __VA_ARGS__)
+#define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
+#define CCLOGINFO(format,...)   cocos2d::CCXLog(format, ##__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
 /** @def CC_SWAP

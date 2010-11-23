@@ -7,7 +7,7 @@
 #############################################################################
 
 TO_PROJECT_ROOT = ../../../PRJ_TG3
-OUTPUT_FILENAME = libchipmunk.a
+OUTPUT_FILENAME = libChipmunkStatic.a
 
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
