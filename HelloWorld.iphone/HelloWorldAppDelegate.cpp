@@ -59,7 +59,7 @@ bool HelloWorld::applicationDidFinishLaunching()
     CCDirector::sharedDirector()->setDisplayFPS(true);
 	
     // load image texture and get window size
-    CCTexture2D *pTextrue = CCTextureCache::sharedTextureCache()->addImage("images/helloworld.png");
+    CCTexture2D *pTextrue = CCTextureCache::sharedTextureCache()->addImage("helloworld.png");
     CGSize size = CCDirector::sharedDirector()->getWinSize();
 	
     // create sprite instance
