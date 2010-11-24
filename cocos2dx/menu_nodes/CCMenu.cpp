@@ -305,13 +305,13 @@ namespace cocos2d{
 			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
-				assert(row < rows.size());
-
 				// if it has no value, break
 				if (! *it)
 				{
 					break;
 				}
+
+                assert(row < rows.size());
 
 				rowColumns = rows[row];
 				// can not have zero columns on a row
