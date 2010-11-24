@@ -22,34 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_UPHONE__
-#define __CCX_COMMON_UPHONE__
+#include "ccxCommon_win32.h"
 
-#if defined(_WIN32)
-    #if defined(SS_MAKEDLL)
-    #define CCX_DLL     __declspec(dllexport)
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else 		/* use a DLL library */
-    #define CCX_DLL     __declspec(dllimport)
-    #endif
-#else
-    #if defined(SS_SHARED)
-    #define CCX_DLL     __attribute__((visibility("default")))
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else
-    #define CCX_DLL
-    #endif
-#endif 
+#include <Windows.h>
+#include <stdio.h>
+#include <stdarg.h>
 
-namespace cocos2d{
+#define MAX_LEN         256
 
-    /**
-    @brief	Output Debug message to Application console.
-    */
-    void CCX_DLL CCXLog(const char * pszFormat, ...);
+namespace   cocos2d {
+
+void CCXLog(const char * pszFormat, ...)
+{
+    char szBuf[MAX_LEN];
+
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
+    va_end(ap);
+    OutputDebugStringA(szBuf);
+    OutputDebugStringA("\n");
+}
 
 }//namespace   cocos2d 
-
-#endif	// end of __CCX_COMMON_UPHONE__
