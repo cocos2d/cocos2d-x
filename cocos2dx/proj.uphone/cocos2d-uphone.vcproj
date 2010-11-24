@@ -908,6 +908,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\platform\uphone\CCXCommon_uphone.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\platform\uphone\CCXEGLView_uphone.cpp"
 					>
 				</File>

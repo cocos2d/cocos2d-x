@@ -139,10 +139,10 @@ astrConfigName[1] = "Release";
 function AddConfig(proj, strProjectName) {
     try {
         proj.Object.Keyword = "uPhoneProj";
+        var strPrjTG3Dir = '../../PRJ_TG3';
         wizard.AddSymbol('PROJECT_PRJ_TG3_DIR', strPrjTG3Dir, false);
         
         // header files and libraries directories
-        var strPrjTG3Dir = '../../PRJ_TG3';
         var strOutputDir = '../../PRJ_TG3/LIB/Win32Lib';
         var strCurIncludeDir = '..\\..\\PRJ_TG3\\Include;..\\..\\PRJ_TG3\\Include\\MTAPI;..\\..\\PRJ_TG3\\Include\\ThirdParty;..\\..\\PRJ_TG3\\Include\\TCOM;..\\..\\PRJ_TG3\\Include\\OpenGL';
         strCurIncludeDir += ';.;.\\Classes;.\\uphone;.\\uphone\\Res;..\\cocos2dx;..\\cocos2dx\\include';
@@ -159,7 +159,7 @@ function AddConfig(proj, strProjectName) {
         }
         if (wizard.FindSymbol('CCX_USE_CHIPMUNK')) {
             strCurIncludeDir += ';..\\chipmunk\\include\\chipmunk';
-            strDependLibs += ' libchipmunk.lib';
+            strDependLibs += ' chipmunk.lib';
         }
         if (wizard.FindSymbol('CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE')) {
             strCurIncludeDir += ';..\\CocosDenshion\\Include';
@@ -331,7 +331,14 @@ function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile) {
 
             var bCopyOnly = false;  
             var strExt = strName.substr(strName.lastIndexOf("."));
-            if (strExt == ".jpg" || strExt == ".png" || strExt == ".bmp" || strExt == ".ico" || strExt == ".gif" || strExt == ".rtf" || strExt == ".css") {
+            if (strExt == ".ARM"
+            || strExt == ".jpg"
+            || strExt == ".png"
+            || strExt == ".bmp"
+            || strExt == ".ico"
+            || strExt == ".gif"
+            || strExt == ".rtf" 
+            || strExt == ".css") {
                 bCopyOnly = true;
             }
             wizard.RenderTemplate(strTemplate, strFile, bCopyOnly);

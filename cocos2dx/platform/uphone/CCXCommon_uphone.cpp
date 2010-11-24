@@ -22,34 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_UPHONE__
-#define __CCX_COMMON_UPHONE__
+#include "ccxCommon_uphone.h"
 
-#if defined(_WIN32)
-    #if defined(SS_MAKEDLL)
-    #define CCX_DLL     __declspec(dllexport)
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else 		/* use a DLL library */
-    #define CCX_DLL     __declspec(dllimport)
-    #endif
+#include "TG3.h"
+
+#define MAX_LEN         256
+#define LOG_FILE_PATH   "/NEWPLUS/TDA_DATA/UserData/Cocos2dLog.txt"
+
+namespace   cocos2d {
+
+void CCXLog(const char * pszFormat, ...)
+{
+    SS_printf("Cocos2d: ");
+    char szBuf[MAX_LEN];
+
+    va_list ap;
+    va_start(ap, pszFormat);
+#ifdef _TRANZDA_VM_
+    vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
 #else
-    #if defined(SS_SHARED)
-    #define CCX_DLL     __attribute__((visibility("default")))
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else
-    #define CCX_DLL
-    #endif
-#endif 
+    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
+#endif
+    va_end(ap);
+    
+    SS_printf("%s", szBuf);
+#ifdef _TRANZDA_VM_
+    SS_printf("\n");
+#else
+    SS_printf("\r\n");
+    FILE * pf = fopen(LOG_FILE_PATH, "a+");
+    if (! pf)
+    {
+        return;
+    }
 
-namespace cocos2d{
-
-    /**
-    @brief	Output Debug message to Application console.
-    */
-    void CCX_DLL CCXLog(const char * pszFormat, ...);
+    fwrite(szBuf, 1, strlen(szBuf), pf);
+    fwrite("\r\n", 1, strlen("\r\n"), pf);
+    fflush(pf);
+    fclose(pf);
+#endif
+}
 
 }//namespace   cocos2d 
-
-#endif	// end of __CCX_COMMON_UPHONE__
