@@ -27,6 +27,7 @@
                                      pixelFormat: kEAGLColorFormatRGBA8
                                      depthFormat: 0
                               preserveBackbuffer: NO];
+    [__glView setMultipleTouchEnabled:YES];
     [window addSubview: __glView];
     [window makeKeyAndVisible];
     
