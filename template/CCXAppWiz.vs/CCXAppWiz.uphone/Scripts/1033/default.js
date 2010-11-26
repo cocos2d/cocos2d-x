@@ -27,21 +27,6 @@ function OnFinish(selProj, selObj) {
         wizard.AddSymbol("CCX_CURRENT_YEAR", nYear);
         wizard.AddSymbol("CCX_CURRENT_DATE", d.toString());
 
-        var FileSys = new ActiveXObject("Scripting.FileSystemObject");
-        var strUserTarget = strProjectName + ".uphone.vcproj.user";
-        var strUserPath = FileSys.BuildPath(strProjectPath, strUserTarget);
-
-        if (!FileSys.FolderExists(strProjectPath))
-            FileSys.CreateFolder(strProjectPath);
-
-        var file = FileSys.OpenTextFile(strUserPath, 2, true);
-        if (file == null) {
-            return;
-        }
-        var strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?><VisualStudioUserFile ProjectType=\"Visual C++\" Version=\"9.00\" ShowAllFiles=\"true\"><Configurations><Configuration Name=\"Debug|Win32\"><DebugSettings Command=\"TG3_RunDLL.exe\" CommandArguments=\"$(TargetPath)\"/></Configuration></VisualStudioUserFile>";
-        file.WriteLine(strUserValue);
-        file.Close();
-
         selProj = CreateCustomProject(strProjectName, strProjectPath);
         AddConfig(selProj, strProjectName);
         AddFilters(selProj);
@@ -76,6 +61,35 @@ function CreateCustomProject(strProjectName, strProjectPath) {
                 Solution.Create(strSolutionPath, strSolutionName);
             }
         }
+
+        // Create vcproj.user file
+        var FileSys = new ActiveXObject("Scripting.FileSystemObject");
+        var strUserTarget = strProjectName + ".uphone.vcproj.user";
+        var strUserPath = FileSys.BuildPath(strProjectPath, strUserTarget);
+
+        var astrParentPath = new Array();
+        astrParentPath[0] = strProjectPath;
+        while (astrParentPath.length) {
+            var strPath = astrParentPath.pop();
+            var strParentPath = FileSys.GetParentFolderName(strPath);
+
+            if (!FileSys.FolderExists(strParentPath)) {
+                astrParentPath.push(strPath);
+                astrParentPath.push(strParentPath);
+                continue;
+            }
+            else {
+                FileSys.CreateFolder(strPath);
+            }
+        }
+
+        var file = FileSys.OpenTextFile(strUserPath, 2, true);
+        if (file == null) {
+            return;
+        }
+        var strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?><VisualStudioUserFile ProjectType=\"Visual C++\" Version=\"9.00\" ShowAllFiles=\"true\"><Configurations><Configuration Name=\"Debug|Win32\"><DebugSettings Command=\"TG3_RunDLL.exe\" CommandArguments=\"$(TargetPath)\"/></Configuration></VisualStudioUserFile>";
+        file.WriteLine(strUserValue);
+        file.Close();
 
         var strProjectNameWithExt = '';
         strProjectNameWithExt = strProjectName + '.uphone.vcproj';
