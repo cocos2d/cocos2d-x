@@ -10,6 +10,10 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		BF0C2CDC129A19580042FB97 /* CCUIAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF0C2CDB129A19580042FB97 /* CCUIAccelerometerDelegate.h */; };
+		BF0C2CE5129A19D20042FB97 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF0C2CE2129A19D20042FB97 /* AccelerometerDelegateWrapper.h */; };
+		BF0C2CE6129A19D20042FB97 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF0C2CE3129A19D20042FB97 /* AccelerometerDelegateWrapper.mm */; };
+		BF0C2CE7129A19D20042FB97 /* CCXUIAccelerometer_iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF0C2CE4129A19D20042FB97 /* CCXUIAccelerometer_iphone.mm */; };
 		BF1373D3128A849B00D9F789 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4927C41289199700A09262 /* libcocos2d.a */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -263,7 +267,6 @@
 		BF1B034B128BCCE300373CD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		BF1B034C128BCCF800373CD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		BF1B034D128BCD0800373CD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		BF1C4C6C1293985000B63C5D /* helloworld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C4C6B1293985000B63C5D /* helloworld.png */; };
 		BF492B6A12891AC600A09262 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
 		BF492C22128924A800A09262 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BF492D4C1289302400A09262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
@@ -284,6 +287,10 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BF0C2CDB129A19580042FB97 /* CCUIAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUIAccelerometerDelegate.h; sourceTree = "<group>"; };
+		BF0C2CE2129A19D20042FB97 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
+		BF0C2CE3129A19D20042FB97 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
+		BF0C2CE4129A19D20042FB97 /* CCXUIAccelerometer_iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCXUIAccelerometer_iphone.mm; sourceTree = "<group>"; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF1374BD128A9A4C00D9F789 /* helloworld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helloworld.png; sourceTree = "<group>"; };
 		BF163A2F128E248E0010DC04 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
@@ -531,7 +538,6 @@
 		BF163FE5128E82A80010DC04 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF163FE6128E82A80010DC04 /* HelloWorldAppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldAppDelegate.cpp; sourceTree = "<group>"; };
 		BF163FE7128E82A80010DC04 /* HelloWorldAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldAppDelegate.h; sourceTree = "<group>"; };
-		BF1C4C6B1293985000B63C5D /* helloworld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helloworld.png; sourceTree = "<group>"; };
 		BF4927C41289199700A09262 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF492B6912891AC600A09262 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF492C21128924A800A09262 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -613,7 +619,6 @@
 		BF1374AF128A998C00D9F789 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BF1C4C6A1293985000B63C5D /* images */,
 				BF1374BD128A9A4C00D9F789 /* helloworld.png */,
 			);
 			path = Resources;
@@ -705,6 +710,7 @@
 		BF163A55128E248E0010DC04 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF0C2CDB129A19580042FB97 /* CCUIAccelerometerDelegate.h */,
 				BF163A56128E248E0010DC04 /* CCAction.h */,
 				BF163A57128E248E0010DC04 /* CCActionManager.h */,
 				BF163A58128E248E0010DC04 /* CCAtlasNode.h */,
@@ -859,6 +865,9 @@
 		BF163B1D128E248E0010DC04 /* iphone */ = {
 			isa = PBXGroup;
 			children = (
+				BF0C2CE2129A19D20042FB97 /* AccelerometerDelegateWrapper.h */,
+				BF0C2CE3129A19D20042FB97 /* AccelerometerDelegateWrapper.mm */,
+				BF0C2CE4129A19D20042FB97 /* CCXUIAccelerometer_iphone.mm */,
 				BF163DE8128E25E60010DC04 /* Cocos2dTypes.h */,
 				BF163B1E128E248E0010DC04 /* CCDirectorCaller.h */,
 				BF163B1F128E248E0010DC04 /* CCDirectorCaller.mm */,
@@ -1059,14 +1068,6 @@
 			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
-		BF1C4C6A1293985000B63C5D /* images */ = {
-			isa = PBXGroup;
-			children = (
-				BF1C4C6B1293985000B63C5D /* helloworld.png */,
-			);
-			path = images;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1237,6 +1238,8 @@
 				BF163EA0128E35F90010DC04 /* CCXCocos2dDefine.h in Headers */,
 				BF163EA2128E36F60010DC04 /* CCXCocos2dDefine_platform.h in Headers */,
 				BF163EA4128E378A0010DC04 /* CCXCocos2dDefine_iphone.h in Headers */,
+				BF0C2CDC129A19580042FB97 /* CCUIAccelerometerDelegate.h in Headers */,
+				BF0C2CE5129A19D20042FB97 /* AccelerometerDelegateWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1309,7 +1312,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF1374BE128A9A4C00D9F789 /* helloworld.png in Resources */,
-				BF1C4C6C1293985000B63C5D /* helloworld.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1407,6 +1409,8 @@
 				BF163DC7128E248E0010DC04 /* CCTMXXMLParser.cpp in Sources */,
 				BF163DC8128E248E0010DC04 /* CCTouchDispatcher.cpp in Sources */,
 				BF163DC9128E248E0010DC04 /* CCTouchHandler.cpp in Sources */,
+				BF0C2CE6129A19D20042FB97 /* AccelerometerDelegateWrapper.mm in Sources */,
+				BF0C2CE7129A19D20042FB97 /* CCXUIAccelerometer_iphone.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

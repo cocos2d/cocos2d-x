@@ -395,7 +395,7 @@ void CCTextureCache::removeUnusedTextures()
 {
 	std::vector<std::string> keys = m_pTextures->allKeys();
 	std::vector<std::string>::iterator it;
-	for (it = keys.begin(); it <= keys.end(); it++)
+	for (it = keys.begin(); it != keys.end(); it++)
 	{
 		CCTexture2D *value = m_pTextures->objectForKey(*it);
 		if (value->retainCount() == 1)
