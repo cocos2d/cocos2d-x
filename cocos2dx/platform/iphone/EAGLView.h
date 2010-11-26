@@ -89,6 +89,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	BOOL					discardFramebufferSupported_;
 @private
         CFMutableDictionaryRef    touchesIntergerDict;
+        unsigned int                           indexBitsUsed;
 }
 
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
@@ -119,6 +120,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) EAGLContext *context;
 
 @property(readonly) CFMutableDictionaryRef touchesIntergerDict;
+@property(readwrite) unsigned int indexBitsUsed;
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
@@ -129,4 +131,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(int) getWidth;
 -(int) getHeight;
+-(int) getUnUsedIndex;
+-(void) removeUsedIndexBit:(int) index;
 @end
