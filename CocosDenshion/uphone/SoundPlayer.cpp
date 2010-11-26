@@ -119,7 +119,7 @@ void SoundPlayer::Pause()
 {
     if (m_pPlayer)
     {
-        m_pPlayer->Pause();
+        m_pPlayer->Resume();
     }
 }
 
