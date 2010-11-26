@@ -27,7 +27,7 @@ THE SOFTWARE.
     #define CCX_PLATFORM_UPHONE
 #elif   defined (WIN32) && defined (_WINDOWS)   // under win32pc
     #define CCX_PLATFORM_WIN32
-#elif   defined (_ANDROID)
+#elif   defined (ANDROID)
     #define CCX_PLATFORM_ANDROID
 #elif defined (TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR)
     #define CCX_PLATFORM_IPHONE
