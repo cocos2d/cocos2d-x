@@ -71,8 +71,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
+#define MAX_TOUCHES     11
+
 static EAGLView *view;
-static cocos2d::CCTouch *s_pTouches[4];
+static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 @interface EAGLView (Private)
 -(BOOL) setupSurface;
@@ -84,6 +86,7 @@ static cocos2d::CCTouch *s_pTouches[4];
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize context=context_;
 @synthesize touchesIntergerDict;
+@synthesize indexBitsUsed;
 
 + (Class) layerClass
 {
@@ -113,6 +116,7 @@ static cocos2d::CCTouch *s_pTouches[4];
 - (id) init
 {
     touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
+    indexBitsUsed = 0x00000000;
     return self;
 }
 
@@ -173,6 +177,35 @@ static cocos2d::CCTouch *s_pTouches[4];
 {
 	CGSize bound = [self bounds].size;
 	return bound.height;
+}
+
+-(int) getUnUsedIndex
+{
+    int i;
+    int temp = indexBitsUsed;
+    
+    for (i = 0; i < MAX_TOUCHES; i++) {
+        if (! (temp & 0x00000001)) {
+            indexBitsUsed |= (1 <<  i);
+            return i;
+        }
+        
+        temp >>= 1;
+    }
+    
+    // all bits are used
+    return -1;
+}
+
+-(void) removeUsedIndexBit:(int) index
+{
+   if (index < 0 || index >= MAX_TOUCHES) {
+       return;
+   }
+    
+    unsigned int temp = 1 << index;
+    temp = ~temp;
+    indexBitsUsed &= temp;
 }
 
 -(BOOL) setupSurface
@@ -266,18 +299,31 @@ static cocos2d::CCTouch *s_pTouches[4];
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	cocos2d::NSSet set;
-        int i = 0;
+        cocos2d::CCTouch *pTouch;
+    
 	for (UITouch *touch in touches) {
-		s_pTouches[i] = new cocos2d::CCTouch();
+                NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+                int unUsedIndex = 0;
         
+                // it is a new touch
+                if (! index) {
+                    unUsedIndex = [self getUnUsedIndex];
+                    
+                    // The touches is more than MAX_TOUCHES ?
+                    if (unUsedIndex == -1) {
+                        return;
+                    }
+                    
+                    pTouch = s_pTouches[unUsedIndex] = new cocos2d::CCTouch();
+                }
+
 		float x = [touch locationInView: [touch view]].x;
 		float y = [touch locationInView: [touch view]].y;
-		s_pTouches[i] ->SetTouchInfo(0, x, y);
+		pTouch->SetTouchInfo(0, x, y);
         
-                CFDictionaryAddValue(touchesIntergerDict, touch, [NSNumber numberWithInt:i]);
+                CFDictionaryAddValue(touchesIntergerDict, touch, [NSNumber numberWithInt:unUsedIndex]);
 		
-		set.addObject(s_pTouches[i]);
-                ++i;
+		set.addObject(pTouch);
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
@@ -332,10 +378,13 @@ static cocos2d::CCTouch *s_pTouches[4];
 		set.addObject(pTouch);
                 CFDictionaryRemoveValue(touchesIntergerDict, touch);
                 pTouch->release();
+                s_pTouches[[index intValue]] = NULL;
+                [self removeUsedIndexBit:[index intValue]];
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesEnded(&set);
 }
+
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	cocos2d::NSSet set;
@@ -359,6 +408,8 @@ static cocos2d::CCTouch *s_pTouches[4];
 		set.addObject(pTouch);
                 CFDictionaryRemoveValue(touchesIntergerDict, touch);
                 pTouch->release();
+                s_pTouches[[index intValue]] = NULL;
+                [self removeUsedIndexBit:[index intValue]];
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);
