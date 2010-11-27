@@ -8,3 +8,4 @@ copy ..\Res\Images\bugs\*.*				D:\Work7\NEWPLUS\TDA_DATA\Data\cocos2d_tests\Imag
 copy ..\Res\TileMaps\*.*		            	D:\Work7\NEWPLUS\TDA_DATA\Data\cocos2d_tests\TileMaps
 copy ..\Res\fonts\*.*					D:\Work7\NEWPLUS\TDA_DATA\Data\cocos2d_tests\fonts
 copy ..\Res\animations\*.*				D:\Work7\NEWPLUS\TDA_DATA\Data\cocos2d_tests\animations
+copy cocos2d_tests.zip				D:\Work7\NEWPLUS\TDA_DATA\Data\cocos2d_tests
