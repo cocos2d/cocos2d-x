@@ -922,6 +922,38 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="file_support"
+				>
+				<File
+					RelativePath="..\support\file_support\FileUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\support\file_support\FileUtils.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="zip_support"
+				>
+				<File
+					RelativePath="..\support\zip_support\ioapi.c"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\ioapi.h"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\unzip.c"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\unzip.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="textures"
