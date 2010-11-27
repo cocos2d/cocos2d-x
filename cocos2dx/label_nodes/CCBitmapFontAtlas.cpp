@@ -124,19 +124,42 @@ namespace cocos2d{
 	{	
 		std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
 
-		FILE *fp;
-		if(!(fp = fopen(fullpath.c_str(), "r")))
-		{
-			NSAssert(0, "CCBitmapFontConfiguration::parseConfigFile | Open file error.");
-			return;
-		}
-		char buffer[1024];
-		// Loop through all the lines in the lines array processing each one
-		while (!feof(fp))
-		{
-			fgets(buffer, 1024, fp);
-			std::string line = buffer;
-			// parse spacing / padding
+        unsigned long nBufSize = 0;
+        char* Buffer = (char*) CCFileUtils::getFileData(fullpath.c_str(), "r", &nBufSize);
+
+        NSAssert(Buffer, "CCBitmapFontConfiguration::parseConfigFile | Open file error.");
+        char LineMax[1024] = {0};
+        size_t step = 0;
+        size_t leftSize = nBufSize - step;
+
+        while (leftSize > 0)
+        {
+            // clean temp data
+            memset(LineMax, 0, sizeof(char) * 1024);
+
+            // read some data into LineMax[1024]
+            if (leftSize < 1024)
+            {
+                memcpy(LineMax, Buffer + step, sizeof(char) * leftSize);
+            }
+            else
+            {
+                memcpy(LineMax, Buffer + step, sizeof(char) * 1024);
+            }
+
+            // find the '\n'
+            char* pos = strchr(LineMax, '\n');
+            size_t lineSize = strlen(LineMax) * sizeof(char);
+            if (pos)
+            {
+                lineSize = (pos - LineMax + 1) * sizeof(char);
+                memset(LineMax + lineSize, 0, sizeof(char) * 1024 - lineSize);
+            }
+            step += lineSize;
+            leftSize = nBufSize - step;
+
+            // parse spacing / padding
+            std::string line = LineMax;
 			if(line.substr(0,strlen("info face")) == "info face") 
 			{
 				// XXX: info parsing is incomplete
@@ -174,7 +197,8 @@ namespace cocos2d{
 				this->parseKerningEntry(line);
 			}
 		}
-		fclose(fp);
+        
+        delete [] Buffer;
 	}
 	void CCBitmapFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
 	{

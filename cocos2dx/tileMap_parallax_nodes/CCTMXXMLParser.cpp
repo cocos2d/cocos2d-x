@@ -208,17 +208,9 @@ namespace cocos2d {
 
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 	{
-		FILE *fp = NULL;
-		if( !(fp = fopen(xmlFilename, "r")) )
-		{
-			return NULL;
-		}
-		fseek(fp,0,SEEK_END);
-		int size = ftell(fp);
-		fseek(fp,0,SEEK_SET);
-		char *buffer = new char[size+1];
-		fread(buffer,sizeof(char),size,fp);
-		fclose(fp);
+        unsigned long size = 0;
+        char *buffer = (char*) CCFileUtils::getFileData(xmlFilename, "r", &size);
+
 		/*
 		* this initialize the library and check potential ABI mismatches
 		* between the version it was compiled for and the actual shared

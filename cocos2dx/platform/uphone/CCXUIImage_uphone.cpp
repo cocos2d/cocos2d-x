@@ -127,23 +127,27 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
         bRet = true;
     }
 
-    if (!bRet)
+    // attempt load image from file
+    unsigned long nSize  = 0;
+    unsigned char* buffer = CCFileUtils::getFileData(strPath.c_str(), "rb", &nSize);
+    if (buffer)
     {
-        // can't find in the ResourceMap,find in hardware
 	    switch (imageType)
 	    {
 	    case kImageFormatPNG:
 		    // use libpng load image
-		    bRet =  loadPng(strPath.c_str());
+            bRet = loadPngFromStream(buffer, nSize);
 		    break;
 	    case kImageFormatJPG:
-		    bRet = loadJpg(strPath.c_str());
+            bRet = loadJpgFromStream(buffer, nSize);
 		    break;
 	    default:
 		    // unsupported image type
 		    bRet = false;
 		    break;
 	    }
+
+        delete [] buffer;
     }
 
 	if (!bRet)
@@ -197,52 +201,6 @@ int UIImage::CGImageGetColorSpace(void)
 unsigned char* UIImage::getData(void)
 {
 	return m_imageInfo.data;
-}
-
-bool UIImage::loadPng(const char* strFileName)
-{
-    FILE *fp;
-	unsigned char *buffer = NULL;
-    bool bRet = true;
- 
-    fp = NULL;
-
-	do 
-	{
-		// open file
-		fp = fopen(strFileName, "rb");
-		if (!fp)
-		{
-			bRet = false;
-			break;
-		}
-
-		// compute the length of file
-		fseek(fp,0,SEEK_END);
-		int size = ftell(fp);
-		fseek(fp,0,SEEK_SET);
-
-		// allocate enough memory to save the data of file
-		buffer = new unsigned char[size];
-		if (! buffer)
-		{
-			bRet = false;
-			break;
-		}
-
-		// read data
-		fread(buffer, sizeof(unsigned char), size, fp);
-
-		bRet = loadPngFromStream(buffer, size);
-		delete[] buffer;
-	} while (0);
-    
-	if (fp)
-	{
-		fclose(fp);
-	}
-
-    return bRet;
 }
 
 bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
@@ -344,7 +302,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	return true;
 }
 
-bool UIImage::loadJpg(const char *strFileName)
+bool UIImage::loadJpgFromStream(unsigned char *data, unsigned long nSize)
 {
 	/* these are standard libjpeg structures for reading(decompression) */
 	struct jpeg_decompress_struct cinfo;
@@ -352,14 +310,9 @@ bool UIImage::loadJpg(const char *strFileName)
 	/* libjpeg data structure for storing one row, that is, scanline of an image */
 	JSAMPROW row_pointer[1];
 
-	FILE *infile = fopen( strFileName, "rb" );
 	unsigned long location = 0;
 	unsigned int i = 0;
 
-	if ( !infile )
-	{
-		return false;
-	}
 
 	/* here we set up the standard libjpeg error handler */
 	cinfo.err = jpeg_std_error( &jerr );
@@ -368,7 +321,7 @@ bool UIImage::loadJpg(const char *strFileName)
 	jpeg_create_decompress( &cinfo );
 
 	/* this makes the library read from infile */
-	jpeg_stdio_src( &cinfo, infile );
+    jpeg_mem_src( &cinfo, data, nSize );
 
 	/* reading the image header which contains image information */
 	jpeg_read_header( &cinfo, true );
@@ -412,7 +365,6 @@ bool UIImage::loadJpg(const char *strFileName)
 	jpeg_finish_decompress( &cinfo );
 	jpeg_destroy_decompress( &cinfo );
 	delete row_pointer[0];
-	fclose( infile );
 
 	return true;
 }

@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 
 #include "NSData.h"
+#include "CCXFileUtils.h"
 
 #include <stdio.h>
 
@@ -45,30 +46,19 @@ NSData::~NSData(void)
 
 NSData* NSData::dataWithContentsOfFile(const string &strPath)
 {
-	FILE *pFile;
-	if(!(pFile = fopen(strPath.c_str(), "rb")))
-	{
-		return NULL;
-	}
+    unsigned long  nSize = 0;
+    unsigned char* Buffer = CCFileUtils::getFileData(strPath.c_str(), "rb", &nSize);
 
-	if (! pFile)
-	{
-		return false;
-	}
+    if (! Buffer)
+    {
+        return NULL;
+    }
 
 	NSData *pRet = new NSData();
+    pRet->m_pData = new char[nSize];
+    memcpy(pRet->m_pData, Buffer, nSize);
 
-	fseek(pFile, 0, SEEK_END);
-
-	int nSize = ftell(pFile);
-
-	fseek(pFile, 0, SEEK_SET);
-
-	pRet->m_pData = new char[nSize];
-
-	fread(pRet->m_pData, sizeof(char), nSize, pFile);
-
-	fclose(pFile);
+    delete [] Buffer;
 
 	return pRet;
 }

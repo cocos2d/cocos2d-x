@@ -32,6 +32,8 @@ THE SOFTWARE.
 #include "CCXFileUtils_uphone.h"
 #include "CCXCocos2dDefine.h"
 
+#include "support/zip_support/unzip.h"
+
 namespace cocos2d {
 
 void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
@@ -72,17 +74,9 @@ public:
 	}
 	NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName)
 	{
-		FILE *fp = NULL;
-		if( !(fp = fopen(pFileName, "r")) )
-		{
-			return NULL;
-		}
-		fseek(fp,0,SEEK_END);
-		int size = ftell(fp);
-		fseek(fp,0,SEEK_SET);
-		char *buffer = new char[size+1];
-		fread(buffer,sizeof(char),size,fp);
-		fclose(fp);
+        char *buffer = NULL;
+        unsigned long size = 0;
+        buffer = (char *) CCFileUtils::getFileData(pFileName, "r", &size);
 		/*
 		* this initialize the library and check potential ABI mismatches
 		* between the version it was compiled for and the actual shared
@@ -201,6 +195,7 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
 
 // record the resource path
 static char s_pszResourcePath[MAX_PATH] = {0};
+static char s_pszZipFilePath[MAX_PATH]  = {0};
 
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
@@ -210,9 +205,46 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
     strcpy(s_pszResourcePath, pszResourcePath);
 }
 
+void CCFileUtils::setResourceZipFile(const char* pszZipPath)
+{
+    NSAssert(pszZipPath != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
+
+    // if the zip file not exist,use message box to warn developer
+    TUChar pszTmp[MAX_PATH] = {0};
+    TUString::StrGBToUnicode(pszTmp, (const Char*) pszZipPath);
+    Boolean bExist = EOS_IsFileExist(pszTmp);
+    if (!bExist)
+    {
+        std::string strErr = "zip file ";
+        strErr += pszZipPath;
+        strErr += " not exist!";
+        TUChar szText[MAX_PATH] = { 0 };
+        TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
+        TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
+        return;
+    }
+
+#ifndef _TRANZDA_VM_
+    char *pszDriver = "";
+#else
+    char *pszDriver = "D:/Work7";
+#endif
+    NSAssert((strlen(pszDriver) + strlen(pszZipPath)) <= MAX_PATH, "[FileUtils setResourceZipFile] -- zip file path too long");
+
+    // record the zip file path
+    strcpy(s_pszZipFilePath, pszDriver);
+    strcat(s_pszZipFilePath, pszZipPath);
+}
+
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    // get the user data path and append relativepath to it
+    // if have set the zip file path,return the relative path of zip file
+    if (strlen(s_pszZipFilePath) != 0)
+    {
+        return CCFileUtils::getDiffResolutionPath(pszRelativePath);
+    }
+
+    // get the user data path and append relative path to it
     if (strlen(s_pszResourcePath) == 0)
     {
         const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
@@ -343,29 +375,107 @@ void CCFileUtils::setResourceInfo(const T_ResourceInfo ResInfo[], int nCount)
 
 bool CCFileUtils::isResourceExist(const char* pszResName)
 {
-    bool nRet = false;
+    bool bRet = false;
 
     TUChar FilePath[MAX_PATH] = {0};
     TUString::StrGBToUnicode(FilePath, (const Char *) pszResName);
 
-    if (EOS_IsFileExist(FilePath))
+    if (strlen(s_pszZipFilePath) != 0)
     {
-        // find in the hardware
-        nRet = true;
+        // if have set the zip file path,find the resource in the zip file
+        unzFile pZipFile = unzOpen(s_pszZipFilePath);
+        do 
+        {
+            CCX_BREAK_IF(!pZipFile);
+
+            Int32 nPos = unzLocateFile(pZipFile, pszResName, 1);
+            CCX_BREAK_IF(nPos != UNZ_OK);
+
+            bRet = true;
+            unzClose(pZipFile);
+        } while (0);
     }
     else
     {
-        // find in the resource map
+        // find in the resource map and find in the hardware
         ResourceMap::iterator iter;
         iter = s_ResMap.find(pszResName);
 
-        if (iter != s_ResMap.end())
+        if (iter != s_ResMap.end() || EOS_IsFileExist(FilePath))
         {
-            nRet = true;
+            bRet = true;
         }
     }
 
-    return nRet;
+    return bRet;
+}
+
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+{
+    unsigned char * Buffer = NULL;
+
+    do 
+    {
+        if (strlen(s_pszZipFilePath) != 0)
+        {
+            // if specify the zip file,load from it first
+            Buffer = getFileDataFromZip(pszFileName, pSize);
+            CCX_BREAK_IF(Buffer);
+        }
+
+        // read the file from hardware
+        FILE *fp = fopen(pszFileName, pszMode);
+        CCX_BREAK_IF(!fp);
+
+        fseek(fp,0,SEEK_END);
+        *pSize = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+        Buffer = new unsigned char[*pSize];
+        fread(Buffer,sizeof(unsigned char), *pSize,fp);
+        fclose(fp);
+    } while (0);
+
+    return Buffer;
+}
+
+unsigned char* CCFileUtils::getFileDataFromZip(const char* pszFileName, unsigned long * pSize)
+{
+    unsigned char * Buffer = NULL;
+    unzFile pFile = NULL;
+    *pSize = 0;
+
+    do 
+    {
+        CCX_BREAK_IF(strlen(s_pszZipFilePath) == 0);
+
+        pFile = unzOpen(s_pszZipFilePath);
+        CCX_BREAK_IF(!pFile);
+
+        Int32 nRet = unzLocateFile(pFile, pszFileName, 1);
+        CCX_BREAK_IF(UNZ_OK != nRet);
+
+        char szFilePathA[MAX_PATH];
+        unz_file_info FileInfo;
+        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
+        CCX_BREAK_IF(UNZ_OK != nRet);
+
+        nRet = unzOpenCurrentFile(pFile);
+        CCX_BREAK_IF(UNZ_OK != nRet);
+
+        Buffer = new BYTE[FileInfo.uncompressed_size];
+        Int32 nSize = unzReadCurrentFile(pFile, Buffer, FileInfo.uncompressed_size);
+        assert(nSize == 0 || nSize == FileInfo.uncompressed_size);
+
+        *pSize = FileInfo.uncompressed_size;
+        unzCloseCurrentFile(pFile);
+    } while (0);
+
+    if (pFile)
+    {
+        unzClose(pFile);
+    }
+
+    return Buffer;
 }
 
 const TBitmap* CCFileUtils::getBitmapByResName(const char* pszBmpName)
@@ -374,6 +484,7 @@ const TBitmap* CCFileUtils::getBitmapByResName(const char* pszBmpName)
 
     do 
     {
+        // load bitmap from TResource
         ResourceMap::iterator iter;
         iter = s_ResMap.find(pszBmpName);
         CCX_BREAK_IF(iter == s_ResMap.end());
