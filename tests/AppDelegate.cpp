@@ -7,14 +7,15 @@ using namespace cocos2d;
 // static void TimerCallback1(Int32 nTimerId, UInt32 uUserData);
 AppDelegate::AppDelegate()
 :m_pMainWnd(NULL)
-// ,m_nTimer(0)
 {
 
 }
 
 AppDelegate::~AppDelegate()
 {
-
+#if defined(CCX_PLATFORM_WIN32)
+    CCX_SAFE_DELETE(m_pMainWnd);
+#endif
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -27,7 +28,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	if (!(m_pMainWnd = new CCXEGLView()) ||
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
 #elif defined(CCX_PLATFORM_IPHONE)
-        if (!(m_pMainWnd = new CCXEGLView()))
+    if (!(m_pMainWnd = new CCXEGLView()))
 #else
     #error
 #endif
