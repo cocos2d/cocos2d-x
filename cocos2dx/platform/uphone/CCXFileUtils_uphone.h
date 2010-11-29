@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <ssFile.h>
 #include "ccxCommon.h"
 #include "NSMutableDictionary.h"
+#include "support/file_support/FileUtils.h"
 
 class TBitmap;
 class TResourceLib;
@@ -57,7 +58,7 @@ private:
 };
 
 //! @brief  Helper class to handle file operations
-class CCX_DLL CCFileUtils
+class CCX_DLL CCFileUtils : public FileUtils
 {
 public:
 
@@ -116,6 +117,31 @@ public:
     @return If can find the name in resource map, return the pointer of the bitmap.Otherwise return NULL
     */
     static const TBitmap* getBitmapByResName(const char* pszBmpName);
+
+    /**
+    @brief Set the absolute path of the .zip file which contains all resource files
+    @param pszZipPath The absolute path of the .zip file
+    */
+    static void setResourceZipFile(const char* pszZipPath);
+
+    /**
+    @brief Get resource file data
+    @param[in]  pszFileName The resource file name which contain the path
+    @param[in]  pszMode The read mode of the file
+    @param[out] pSize If get the file data succeed the it will be the data size,or it will be 0
+    @return if success,the pointer of data will be returned,or NULL is returned
+    @warning If you get the file data succeed,you must delete it after used.
+    */
+    static unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+
+    /**
+    @brief Get resource file data from zip file
+    @param[in]  pszFileName The resource file name which contain the relative path of zip file
+    @param[out] pSize If get the file data succeed the it will be the data size,or it will be 0
+    @return if success,the pointer of data will be returned,or NULL is returned
+    @warning If you get the file data succeed,you must delete it after used.
+    */
+    static unsigned char* getFileDataFromZip(const char* pszFileName, unsigned long * pSize);
 };
 }//namespace   cocos2d 
 
