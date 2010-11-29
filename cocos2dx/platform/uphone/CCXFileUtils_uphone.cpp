@@ -78,6 +78,12 @@ public:
         FileData data;
         unsigned long size = 0;
         char *pBuffer = (char *) data.getFileData(pFileName, "r", &size);
+
+        if (!pBuffer)
+        {
+            return NULL;
+        }
+
 		/*
 		* this initialize the library and check potential ABI mismatches
 		* between the version it was compiled for and the actual shared
@@ -413,15 +419,15 @@ bool CCFileUtils::isResourceExist(const char* pszResName)
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
-    unsigned char * Buffer = NULL;
+    unsigned char * pBuffer = NULL;
 
     do 
     {
         if (strlen(s_pszZipFilePath) != 0)
         {
             // if specify the zip file,load from it first
-            Buffer = getFileDataFromZip(pszFileName, pSize);
-            CCX_BREAK_IF(Buffer);
+            pBuffer = FileUtils::getFileDataFromZip(s_pszZipFilePath, pszFileName, pSize);
+            CCX_BREAK_IF(pBuffer);
         }
 
         // read the file from hardware
@@ -431,52 +437,12 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         fseek(fp,0,SEEK_END);
         *pSize = ftell(fp);
         fseek(fp,0,SEEK_SET);
-        Buffer = new unsigned char[*pSize];
-        fread(Buffer,sizeof(unsigned char), *pSize,fp);
+        pBuffer = new unsigned char[*pSize];
+        fread(pBuffer,sizeof(unsigned char), *pSize,fp);
         fclose(fp);
     } while (0);
 
-    return Buffer;
-}
-
-unsigned char* CCFileUtils::getFileDataFromZip(const char* pszFileName, unsigned long * pSize)
-{
-    unsigned char * Buffer = NULL;
-    unzFile pFile = NULL;
-    *pSize = 0;
-
-    do 
-    {
-        CCX_BREAK_IF(strlen(s_pszZipFilePath) == 0);
-
-        pFile = unzOpen(s_pszZipFilePath);
-        CCX_BREAK_IF(!pFile);
-
-        Int32 nRet = unzLocateFile(pFile, pszFileName, 1);
-        CCX_BREAK_IF(UNZ_OK != nRet);
-
-        char szFilePathA[MAX_PATH];
-        unz_file_info FileInfo;
-        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
-        CCX_BREAK_IF(UNZ_OK != nRet);
-
-        nRet = unzOpenCurrentFile(pFile);
-        CCX_BREAK_IF(UNZ_OK != nRet);
-
-        Buffer = new BYTE[FileInfo.uncompressed_size];
-        Int32 nSize = unzReadCurrentFile(pFile, Buffer, FileInfo.uncompressed_size);
-        assert(nSize == 0 || nSize == FileInfo.uncompressed_size);
-
-        *pSize = FileInfo.uncompressed_size;
-        unzCloseCurrentFile(pFile);
-    } while (0);
-
-    if (pFile)
-    {
-        unzClose(pFile);
-    }
-
-    return Buffer;
+    return pBuffer;
 }
 
 const TBitmap* CCFileUtils::getBitmapByResName(const char* pszBmpName)

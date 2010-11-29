@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include "FileUtils.h"
 #include <stdio.h>
 #include "CCXCocos2dDefine.h"
+#include "support/zip_support/unzip.h"
+#include <string>
 
 namespace cocos2d {
 
@@ -47,6 +49,48 @@ unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMo
     } while (0);
 
     return Buffer;
+}
+
+
+unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
+{
+    unsigned char * pBuffer = NULL;
+    unzFile pFile = NULL;
+    *pSize = 0;
+
+    do 
+    {
+        CCX_BREAK_IF(!pszZipFilePath || !pszFileName);
+        CCX_BREAK_IF(strlen(pszZipFilePath) == 0);
+
+        pFile = unzOpen(pszZipFilePath);
+        CCX_BREAK_IF(!pFile);
+
+        int nRet = unzLocateFile(pFile, pszFileName, 1);
+        CCX_BREAK_IF(UNZ_OK != nRet);
+
+        char szFilePathA[260];
+        unz_file_info FileInfo;
+        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
+        CCX_BREAK_IF(UNZ_OK != nRet);
+
+        nRet = unzOpenCurrentFile(pFile);
+        CCX_BREAK_IF(UNZ_OK != nRet);
+
+        pBuffer = new unsigned char[FileInfo.uncompressed_size];
+        int nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
+        assert(nSize == 0 || nSize == FileInfo.uncompressed_size);
+
+        *pSize = FileInfo.uncompressed_size;
+        unzCloseCurrentFile(pFile);
+    } while (0);
+
+    if (pFile)
+    {
+        unzClose(pFile);
+    }
+
+    return pBuffer;
 }
 
 } //namespace   cocos2d 

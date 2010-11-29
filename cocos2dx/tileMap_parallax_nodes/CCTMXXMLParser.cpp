@@ -212,6 +212,11 @@ namespace cocos2d {
         unsigned long size = 0;
         char *pBuffer = (char*) data.getFileData(xmlFilename, "r", &size);
 
+        if (!pBuffer)
+        {
+            return false;
+        }
+
 		/*
 		* this initialize the library and check potential ABI mismatches
 		* between the version it was compiled for and the actual shared
