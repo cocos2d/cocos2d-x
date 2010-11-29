@@ -7,14 +7,15 @@ using namespace cocos2d;
 // static void TimerCallback1(Int32 nTimerId, UInt32 uUserData);
 AppDelegate::AppDelegate()
 :m_pMainWnd(NULL)
-// ,m_nTimer(0)
 {
 
 }
 
 AppDelegate::~AppDelegate()
 {
-
+#if defined(CCX_PLATFORM_WIN32)
+    CCX_SAFE_DELETE(m_pMainWnd);
+#endif
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -27,9 +28,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	if (!(m_pMainWnd = new CCXEGLView()) ||
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
 #elif defined(CCX_PLATFORM_IPHONE)
-        if (!(m_pMainWnd = new CCXEGLView()))
+    if (!(m_pMainWnd = new CCXEGLView()))
 #elif defined(CCX_PLATFORM_ANDROID)
-        if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
+    if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
 #else
     #error
 #endif
@@ -46,9 +47,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setDisplayFPS(true);
 
 #if defined(CCX_PLATFORM_UPHONE)
+
+#if 1
     // set the resource path
     CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
-#elif defined(CCX_PALTFORM_ANDROID)
+#else
+    // set the resource zip file
+    CCFileUtils::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/cocos2d_tests.zip");
+#endif
+
+#elif defined(CCX_PLATFORM_ANDROID)
     CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests-1.apk");
 #endif
 

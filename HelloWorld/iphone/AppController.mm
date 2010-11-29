@@ -25,7 +25,7 @@
 #import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
-#import "HelloWorldAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation AppController
 
@@ -44,8 +44,10 @@
 								 preserveBackbuffer: NO];
     [window addSubview: __glView];
     [window makeKeyAndVisible];
-	
-    HelloWorld app;    
+
+    [[UIApplication sharedApplication] setStatusBarHidden: YES];
+    
+    AppDelegate app;    
     app.run();
     return YES;
 }

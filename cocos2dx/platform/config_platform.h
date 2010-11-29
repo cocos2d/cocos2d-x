@@ -37,8 +37,10 @@ THE SOFTWARE.
 
 // use these macros to set compiling environment if needed
 
-// #define CCX_PLATFORM_UPHONE
-// #define CCX_PLATFORM_WIN32
+// #define CCX_UNDER_UPHONE
+// #define CCX_UNDER_WIN32
+// #define CCX_UNDER_ANDROID
+// #define CCX_UNDER_IPHONE
 
 // post configure
 

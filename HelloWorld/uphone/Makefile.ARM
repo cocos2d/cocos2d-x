@@ -1,22 +1,24 @@
 
 ############################################################################
 #
-#   Makefile for building : HelloWorld_Arm.TMK3
+#   Makefile for building : cocosTemplate_Arm.TMK3
 #   Created by TMK3_V2.3, please do not modify.
 #
 #############################################################################
 
-TO_PROJECT_ROOT = ../../PRJ_TG3
+TO_PROJECT_ROOT = ../../../PRJ_TG3
 OUTPUT_FILENAME = libHelloWorld.so
 
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DCCX_UNDER_UPHONE
-INCLUDE_PATH += -I. -I./Res \
-               -I../cocos2dx \
-               -I../cocos2dx/include
-LIBS += -lcocos2d
+INCLUDE_PATH += -I./Res  \
+								-I../    \
+								-I../uphone \
+                -I../../cocos2dx \
+                -I../../cocos2dx/include
+LIBS += -lCocos2dStatic -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -28,7 +30,9 @@ MKDIR = mkdir -p
 first: all
 
 OBJECTS = \
-	$(OBJECTS_DIR)/HelloWorld.o \
+	$(OBJECTS_DIR)/AppDelegate.o \
+	$(OBJECTS_DIR)/HelloWorldScene.o \
+	$(OBJECTS_DIR)/main.o \
 	$(OBJECTS_DIR)/TG3AppDllEntry.o
 
 ADD_OBJECTS += 
@@ -48,8 +52,14 @@ clean :
 	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) $(TARGET)
 
-$(OBJECTS_DIR)/HelloWorld.o : ./HelloWorld.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HelloWorld.o ./HelloWorld.cpp
+$(OBJECTS_DIR)/AppDelegate.o : ../AppDelegate.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/AppDelegate.o ../AppDelegate.cpp
+
+$(OBJECTS_DIR)/HelloWorldScene.o : ../HelloWorldScene.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/HelloWorldScene.o ../HelloWorldScene.cpp
+
+$(OBJECTS_DIR)/main.o : ./main.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/main.o ./main.cpp
 
 $(OBJECTS_DIR)/TG3AppDllEntry.o : ./TG3AppDllEntry.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TG3AppDllEntry.o ./TG3AppDllEntry.cpp

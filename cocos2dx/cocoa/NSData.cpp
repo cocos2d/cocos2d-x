@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 
 #include "NSData.h"
+#include "support/file_support/FileData.h"
 
 #include <stdio.h>
 
@@ -45,30 +46,18 @@ NSData::~NSData(void)
 
 NSData* NSData::dataWithContentsOfFile(const string &strPath)
 {
-	FILE *pFile;
-	if(!(pFile = fopen(strPath.c_str(), "rb")))
-	{
-		return NULL;
-	}
+    FileData data;
+    unsigned long  nSize = 0;
+    unsigned char* pBuffer = data.getFileData(strPath.c_str(), "rb", &nSize);
 
-	if (! pFile)
-	{
-		return false;
-	}
+    if (! pBuffer)
+    {
+        return NULL;
+    }
 
 	NSData *pRet = new NSData();
-
-	fseek(pFile, 0, SEEK_END);
-
-	int nSize = ftell(pFile);
-
-	fseek(pFile, 0, SEEK_SET);
-
-	pRet->m_pData = new char[nSize];
-
-	fread(pRet->m_pData, sizeof(char), nSize, pFile);
-
-	fclose(pFile);
+    pRet->m_pData = new char[nSize];
+    memcpy(pRet->m_pData, pBuffer, nSize);
 
 	return pRet;
 }
