@@ -28,6 +28,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
 #elif defined(CCX_PLATFORM_IPHONE)
         if (!(m_pMainWnd = new CCXEGLView()))
+#elif defined(CCX_PLATFORM_ANDROID)
+        if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
 #else
     #error
 #endif
@@ -46,6 +48,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if defined(CCX_PLATFORM_UPHONE)
     // set the resource path
     CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
+#elif defined(CCX_PALTFORM_ANDROID)
+    CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests-1.apk");
 #endif
 
 #if 0

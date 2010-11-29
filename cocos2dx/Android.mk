@@ -56,6 +56,7 @@ platform/android/CCXApplication_android.cpp \
 platform/android/CCXBitmapDC.cpp \
 platform/android/CCXEGLView_android.cpp \
 platform/android/CCXFileUtils_android.cpp \
+platform/android/CCXUIAccelerometer_android.cpp \
 platform/android/CCXUIImage_android.cpp \
 platform/android/NSLock.cpp \
 platform/android/UncompressFile.cpp \
