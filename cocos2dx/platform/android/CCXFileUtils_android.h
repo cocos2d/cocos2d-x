@@ -28,10 +28,11 @@ THE SOFTWARE.
 #include <string>
 #include "ccxCommon.h"
 #include "NSMutableDictionary.h"
+#include "support/file_support/FileUtils.h"
 namespace   cocos2d {
 
 //! @brief  Helper class to handle file operations
-class CCX_DLL CCFileUtils
+class CCX_DLL CCFileUtils : public FileUtils
 {
 public:
 

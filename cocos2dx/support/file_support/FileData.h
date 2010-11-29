@@ -21,55 +21,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __SUPPORT_DATA_SUPPORT_FILEDATA_H__
+#define __SUPPORT_DATA_SUPPORT_FILEDATA_H__
 
+#include "CCXFileUtils.h"
 
-#include "NSData.h"
-#include "support/file_support/FileData.h"
-
-#include <stdio.h>
-
-using namespace std;
-namespace   cocos2d {
-
-NSData::NSData(void)
+namespace cocos2d
 {
-	m_pData = NULL;
-}
 
-NSData::~NSData(void)
+class FileData
 {
-	if (m_pData)
-	{
-		delete[] m_pData;
-	}
-}
-
-NSData* NSData::dataWithContentsOfFile(const string &strPath)
-{
-    FileData data;
-    unsigned long  nSize = 0;
-    unsigned char* pBuffer = data.getFileData(strPath.c_str(), "rb", &nSize);
-
-    if (! pBuffer)
+public:
+    FileData() : m_pBuffer(NULL) {}
+    ~FileData()
     {
-        return NULL;
+        if (m_pBuffer)
+        {
+            delete [] m_pBuffer;
+            m_pBuffer = NULL;
+        }
     }
 
-	NSData *pRet = new NSData();
-    pRet->m_pData = new char[nSize];
-    memcpy(pRet->m_pData, pBuffer, nSize);
+    unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+    {
+        if (m_pBuffer)
+        {
+            delete [] m_pBuffer;
+            m_pBuffer = NULL;
+        }
 
-	return pRet;
-}
+        m_pBuffer = CCFileUtils::getFileData(pszFileName, pszMode, pSize);
+        return m_pBuffer;
+    }
 
-void* NSData::bytes(void)
-{
-	return m_pData;
-}
+protected:
+    unsigned char* m_pBuffer;
+};
 
-//@todo implement
-NSData* NSData::dataWithBytes(unsigned char *pBytes, int size)
-{
-	return NULL;
-}
-}//namespace   cocos2d 
+} // namespace cocos2d
+
+#endif // __SUPPORT_DATA_SUPPORT_FILEDATA_H__
