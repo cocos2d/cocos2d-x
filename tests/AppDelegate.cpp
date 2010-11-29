@@ -45,8 +45,15 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setDisplayFPS(true);
 
 #if defined(CCX_PLATFORM_UPHONE)
+
+#if 1
     // set the resource path
     CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
+#else
+    // set the resource zip file
+    CCFileUtils::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/cocos2d_tests.zip");
+#endif
+
 #endif
 
 #if 0
