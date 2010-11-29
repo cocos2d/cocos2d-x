@@ -133,15 +133,6 @@ public:
     @warning If you get the file data succeed,you must delete it after used.
     */
     static unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
-
-    /**
-    @brief Get resource file data from zip file
-    @param[in]  pszFileName The resource file name which contain the relative path of zip file
-    @param[out] pSize If get the file data succeed the it will be the data size,or it will be 0
-    @return if success,the pointer of data will be returned,or NULL is returned
-    @warning If you get the file data succeed,you must delete it after used.
-    */
-    static unsigned char* getFileDataFromZip(const char* pszFileName, unsigned long * pSize);
 };
 }//namespace   cocos2d 
 

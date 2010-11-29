@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include "support/file_support/FileData.h"
 #include "support/data_support/uthash.h"
 
+#define LINE_MAX_CHAR_NUM       1024
+
 namespace cocos2d{
 	
 	//
@@ -135,23 +137,24 @@ namespace cocos2d{
             return;
         }
         
-        char LineMax[1024] = {0};
+        char LineMax[LINE_MAX_CHAR_NUM] = {0};
         size_t step = 0;
         size_t leftSize = nBufSize - step;
 
         while (leftSize > 0)
         {
             // clean temp data
-            memset(LineMax, 0, sizeof(char) * 1024);
+            memset(LineMax, 0, sizeof(char) * LINE_MAX_CHAR_NUM);
 
-            // read some data into LineMax[1024]
-            if (leftSize < 1024)
+            // read some data into LineMax[LINE_MAX_CHAR_NUM]
+            if (leftSize < LINE_MAX_CHAR_NUM)
             {
                 memcpy(LineMax, pBuffer + step, sizeof(char) * leftSize);
             }
             else
             {
-                memcpy(LineMax, pBuffer + step, sizeof(char) * 1024);
+                // only read LINE_MAX_CHAR_NUM - 1 char from buffer,to make sure the LineMax is end with '\0'
+                memcpy(LineMax, pBuffer + step, sizeof(char) * (LINE_MAX_CHAR_NUM - 1));
             }
 
             // find the '\n'
@@ -160,7 +163,7 @@ namespace cocos2d{
             if (pos)
             {
                 lineSize = (pos - LineMax + 1) * sizeof(char);
-                memset(LineMax + lineSize, 0, sizeof(char) * 1024 - lineSize);
+                memset(LineMax + lineSize, 0, sizeof(char) * LINE_MAX_CHAR_NUM - lineSize);
             }
             step += lineSize;
             leftSize = nBufSize - step;
