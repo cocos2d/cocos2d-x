@@ -56,6 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCFileUtils::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/cocos2d_tests.zip");
 #endif
 
+
 #elif defined(CCX_PLATFORM_ANDROID)
     CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests-1.apk");
 #endif
