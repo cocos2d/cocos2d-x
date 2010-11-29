@@ -4,8 +4,11 @@
 #include "TG3AppDllEntry.h"
 
 // 提供IID的具体定义，在整个项目中只能包含一次
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+[! else]
 #include "TCOM_Generic_DataType_IIDs.h"
 #include "TCOM_Generic_Method_IIDs.h"
+[! endif]
 #include "TCOM_IIDs.h"
 
 // 定义类工厂例子代码:

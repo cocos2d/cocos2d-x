@@ -20,7 +20,9 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+    SimpleAudioEngine::release();
+[! endif]
 }
 
 bool AppDelegate::applicationDidFinishLaunching()

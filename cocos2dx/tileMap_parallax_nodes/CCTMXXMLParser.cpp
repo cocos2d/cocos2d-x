@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
-#include "CCXFileUtils.h"
+#include "support/file_support/FileData.h"
 #include "CGPointExtension.h"
 #include "support/base64.h"
 #include "platform/platform.h"
@@ -208,17 +208,15 @@ namespace cocos2d {
 
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 	{
-		FILE *fp = NULL;
-		if( !(fp = fopen(xmlFilename, "r")) )
-		{
-			return NULL;
-		}
-		fseek(fp,0,SEEK_END);
-		int size = ftell(fp);
-		fseek(fp,0,SEEK_SET);
-		char *buffer = new char[size+1];
-		fread(buffer,sizeof(char),size,fp);
-		fclose(fp);
+        FileData data;
+        unsigned long size = 0;
+        char *pBuffer = (char*) data.getFileData(xmlFilename, "r", &size);
+
+        if (!pBuffer)
+        {
+            return false;
+        }
+
 		/*
 		* this initialize the library and check potential ABI mismatches
 		* between the version it was compiled for and the actual shared
@@ -233,7 +231,7 @@ namespace cocos2d {
 		saxHandler.endElement = &tmx_endElement;
 		saxHandler.characters = &tmx_characters;
 		
-		int result = xmlSAXUserParseMemory( &saxHandler, this, buffer, size );
+		int result = xmlSAXUserParseMemory( &saxHandler, this, pBuffer, size );
 		if ( result != 0 )
 		{
 			return false;
@@ -246,7 +244,7 @@ namespace cocos2d {
 		* this is to debug memory for regression tests
 		*/
 		xmlMemoryDump();
-		delete []buffer;
+
 		return true;
 	}
 

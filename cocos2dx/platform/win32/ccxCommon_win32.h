@@ -31,4 +31,13 @@ THE SOFTWARE.
 #define CCX_DLL     __declspec(dllimport)
 #endif
 
+namespace cocos2d{
+
+    /**
+    @brief	Output Debug message to VS Output window.
+    */
+    void CCX_DLL CCXLog(const char * pszFormat, ...);
+
+}//namespace   cocos2d 
+
 #endif	// end of __CCX_COMMON_WIN32__
