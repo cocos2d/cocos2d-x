@@ -1,5 +1,10 @@
 cocos2d-0.99.4-x-0.7.0
-	http://www.cocos2d-x.org/versions/show/4
+* cocos2d-iphone-cpp port ready! include accelerometer & multi-touch
+* refactor the directory structure of HelloWorld & tests
+* cocos2d-uphone supports accelerometer
+* add cocos2d-x wizard for cocos2d-win32 & cocos2d-uphone for VisualStudio2008
+* jump out a message box when load texture failed (win32 & uphone)
+* more details: 	http://www.cocos2d-x.org/versions/show/4
 
 cocos2d-0.99.4-uphone-win32-stable-rc1
 	http://www.cocos2d-x.org/versions/show/1
