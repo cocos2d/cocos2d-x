@@ -37,10 +37,10 @@ typedef struct _tResourceInfo
     int         nResID;
 } T_SoundResInfo;
 
-/*!***************************************************************************
+/**
 @class          SimpleAudioEngine
 @brief  		offer a VERY simple interface to play background music & sound effect
-*****************************************************************************/
+*/
 class EXPORT_DLL SimpleAudioEngine
 {
 public:
@@ -54,6 +54,7 @@ public:
 
     /**
     @brief Release the shared Engine object
+    @warning It must be called before the application exit, or a memroy leak will be casued.
     */
 	static void release();
 
@@ -107,12 +108,22 @@ public:
     @brief The volume of the background music max value is 100,the min value is 0
     */
     int GetBackgroundMusicVolume();
+
+    /**
+    @brief set the volume of background music
+    @param volume must be in 0~100
+    */
     void SetBackgroundMusicVolume(int volume);
 
     /**
     @brief The volume of the effects max value is 100,the min value is 0
     */
     int GetEffectsVolume();
+
+    /**
+    @brief set the volume of sound effecs
+    @param volume must be in 0~100
+    */
     void SetEffectsVolume(int volume);
 
     // for sound effects
@@ -129,34 +140,31 @@ public:
     */
     void stopEffect(int nSoundId);
 
-    /*!***************************************************************************
+    /**
     @brief  		preload a compressed audio file
     @details	    the compressed audio will be decode to wave, then write into an 
     internal buffer in SimpleaudioEngine
     @param[in]		pszFilePath		the relative path to currently executing program
     @return         >0              preload success, return the SoundId
     @return         ==0             can't read the file, or unsupported audio format
-    *****************************************************************************/
+    */
     int preloadEffect(const char* pszFilePath);
 
-
-    /*!***************************************************************************
+    /**
     @brief  		unload the preloaded effect from internal buffer
     @param[in]		nSoundId		the sound id returned from preloadEffect
-    *****************************************************************************/
+    */
     void unloadEffect(int nSoundId);
 
-
-	/*!***************************************************************************
+	/**
 	@brief          unload all preloaded effect from internal buffer
-	*****************************************************************************/
+	*/
 	void unloadEffectAll();
 
-
-    /*!***************************************************************************
+    /**
     @brief          play the preloaded effect
     @param[in]		nSoundId		the sound id returned from preloadEffect
-    *****************************************************************************/
+    */
     void playPreloadedEffect(int nSoundId);
 };
 
