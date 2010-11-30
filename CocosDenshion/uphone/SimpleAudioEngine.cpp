@@ -10,7 +10,7 @@ static SoundDataManager  *s_pDataManager      = NULL;
 static SoundPlayer       *s_pBackPlayer       = NULL;
 static TSoundPlayer      *s_pEffectPlayer     = NULL;
 
-
+static int     s_nBackMusicID = 0;
 static int     s_nBackgroundMusicVolume = 100;
 static int     s_nEffectsVolume = 100;
 static bool    s_bWillPlayBackgroundMusic = false;
@@ -85,8 +85,8 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         nTimes = -1;
     }
 
-    int nSoundID = s_pDataManager->loadSoundData(pszFilePath);
-    tEffectElement* pElement = s_pDataManager->getSoundData(nSoundID);
+    s_nBackMusicID = s_pDataManager->loadSoundData(pszFilePath);
+    tEffectElement* pElement = s_pDataManager->getSoundData(s_nBackMusicID);
 
     if (pElement)
     {
@@ -94,11 +94,17 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
     }
 }
 
-void SimpleAudioEngine::stopBackgroundMusic()
+void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
     if (s_pBackPlayer)
     {
         s_pBackPlayer->Stop();
+    }
+
+    if (bReleaseData && s_nBackMusicID)
+    {
+        s_pDataManager->unloadEffect(s_nBackMusicID);
+        s_nBackMusicID = 0;
     }
 }
 
