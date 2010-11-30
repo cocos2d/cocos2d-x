@@ -70,8 +70,10 @@ void SoundDataManager::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCoun
 int SoundDataManager::loadSoundData(const char* pszFilePath)
 {
     int nSoundID = 0;
+    SoundInfoMap::iterator iter;
+    iter = m_pSoundMap->find(pszFilePath);
 
-    if (! FileUtils::isFileExisted(pszFilePath))
+    if (iter != m_pSoundMap->end())
     {
         // if the file is not existed, find in the ResourceInfo
         nSoundID = loadFromResourceInfo(pszFilePath);
@@ -166,6 +168,7 @@ int SoundDataManager::loadFromFile(const char* pFilePath)
 
     do
     {
+        BREAK_IF(! FileUtils::isFileExisted(pFilePath));
         int nID = BKDRHash(pFilePath);
 
         // if we have loaded the file before,break
