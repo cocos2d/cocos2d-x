@@ -78,8 +78,14 @@ public:
     */
     static CCXApplication * sharedApplication();
 
+    void StartMainLoop();
+    void StopMainLoop();
 private:
-    MESSAGE_t m_tMsg;
+    static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData);
+
+    MESSAGE_t   m_tMsg;
+    bool        m_bRunning;
+    bool        m_bNeedStop;
 };
 
 }       // end of namespace   cocos2d

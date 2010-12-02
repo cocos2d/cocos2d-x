@@ -58,12 +58,13 @@ public:
 
 private:
 
+    MESSAGE_t m_tMsg;
+    CCXEGL *            m_pEGL;
+
     bool                m_bCaptured;
     NSSet *             m_pSet;
     CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
-
-    CCXEGL *            m_pEGL;
 
     int                 m_nPenEventNum;
 };
