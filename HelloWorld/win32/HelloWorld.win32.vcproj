@@ -41,12 +41,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\cocos2dx\include;..\cocos2dx;..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="..\..\cocos2dx\include;..\..\cocos2dx;..\..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -89,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y $(ProjectDir)HelloWorld.png $(OutDir)"
+				CommandLine="copy /Y $(ProjectDir)..\Resource\*.* $(OutDir)"
 			/>
 		</Configuration>
 		<Configuration
@@ -119,11 +119,11 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\cocos2dx\include;..\cocos2dx;..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="..\..\cocos2dx\include;..\..\cocos2dx;..\..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -176,50 +176,38 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
+			Name="Classes"
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Helloworld.win32.cpp"
+				RelativePath="..\AppDelegate.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\stdafx.cpp"
+				RelativePath="..\AppDelegate.h"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\HelloWorldScene.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\HelloWorldScene.h"
+				>
 			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
+			Name="Framework"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\HelloWorld.win32.h"
+				RelativePath=".\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\targetver.h"
+				RelativePath=".\main.h"
 				>
 			</File>
 		</Filter>
