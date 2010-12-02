@@ -30,8 +30,10 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CGPointExtension.h"
 
-#include "CCXFileUtils.h"
+#include "support/file_support/FileData.h"
 #include "support/data_support/uthash.h"
+
+#define LINE_MAX_CHAR_NUM       1024
 
 namespace cocos2d{
 	
@@ -124,57 +126,87 @@ namespace cocos2d{
 	{	
 		std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
 
-		FILE *fp;
-		if(!(fp = fopen(fullpath.c_str(), "r")))
-		{
-			NSAssert(0, "CCBitmapFontConfiguration::parseConfigFile | Open file error.");
-			return;
-		}
-		char buffer[1024];
-		// Loop through all the lines in the lines array processing each one
-		while (!feof(fp))
-		{
-			fgets(buffer, 1024, fp);
-			std::string line = buffer;
-			// parse spacing / padding
-			if(line.substr(0,strlen("info face")) == "info face") 
-			{
-				// XXX: info parsing is incomplete
-				// Not needed for the Hiero editors, but needed for the AngelCode editor
-				//			[self parseInfoArguments:line];
-			}
-			// Check to see if the start of the line is something we are interested in
-			else if(line.substr(0,strlen("common lineHeight")) == "common lineHeight")
-			{
-				this->parseCommonArguments(line);
-			}
-			else if(line.substr(0,strlen("page id")) == "page id")
-			{
-				this->parseImageFileName(line, controlFile);
-			}
-			else if(line.substr(0,strlen("chars c")) == "chars c")
-			{
-				// Ignore this line
-			}
-			else if(line.substr(0,strlen("char")) == "char")
-			{
-				// Parse the current line and create a new CharDef
-				ccBitmapFontDef characterDefinition;
-				this->parseCharacterDefinition(line, &characterDefinition);
+        FileData data;
+        unsigned long nBufSize = 0;
+        char* pBuffer = (char*) data.getFileData(fullpath.c_str(), "r", &nBufSize);
 
-				// Add the CharDef returned to the charArray
-				m_pBitmapFontArray[ characterDefinition.charID ] = characterDefinition;
-			}
-			else if(line.substr(0,strlen("kernings count")) == "kernings count")
-			{
-				this->parseKerningCapacity(line);
-			}
-			else if(line.substr(0,strlen("kerning first")) == "kerning first")
-			{
-				this->parseKerningEntry(line);
-			}
-		}
-		fclose(fp);
+        NSAssert(pBuffer, "CCBitmapFontConfiguration::parseConfigFile | Open file error.");
+
+        if (!pBuffer)
+        {
+            return;
+        }
+        
+        char LineMax[LINE_MAX_CHAR_NUM] = {0};
+        size_t step = 0;
+        size_t leftSize = nBufSize - step;
+
+        while (leftSize > 0)
+        {
+            // clean temp data
+            memset(LineMax, 0, sizeof(char) * LINE_MAX_CHAR_NUM);
+
+            // read some data into LineMax[LINE_MAX_CHAR_NUM]
+            if (leftSize < LINE_MAX_CHAR_NUM)
+            {
+                memcpy(LineMax, pBuffer + step, sizeof(char) * leftSize);
+            }
+            else
+            {
+                // only read LINE_MAX_CHAR_NUM - 1 char from buffer,to make sure the LineMax is end with '\0'
+                memcpy(LineMax, pBuffer + step, sizeof(char) * (LINE_MAX_CHAR_NUM - 1));
+            }
+
+            // find the '\n'
+            char* pos = strchr(LineMax, '\n');
+            size_t lineSize = strlen(LineMax) * sizeof(char);
+            if (pos)
+            {
+                lineSize = (pos - LineMax + 1) * sizeof(char);
+                memset(LineMax + lineSize, 0, sizeof(char) * LINE_MAX_CHAR_NUM - lineSize);
+            }
+            step += lineSize;
+            leftSize = nBufSize - step;
+
+            // parse spacing / padding
+            std::string line = LineMax;
+            if(line.substr(0,strlen("info face")) == "info face") 
+            {
+                // XXX: info parsing is incomplete
+                // Not needed for the Hiero editors, but needed for the AngelCode editor
+                //			[self parseInfoArguments:line];
+            }
+            // Check to see if the start of the line is something we are interested in
+            else if(line.substr(0,strlen("common lineHeight")) == "common lineHeight")
+            {
+                this->parseCommonArguments(line);
+            }
+            else if(line.substr(0,strlen("page id")) == "page id")
+            {
+                this->parseImageFileName(line, controlFile);
+            }
+            else if(line.substr(0,strlen("chars c")) == "chars c")
+            {
+                // Ignore this line
+            }
+            else if(line.substr(0,strlen("char")) == "char")
+            {
+                // Parse the current line and create a new CharDef
+                ccBitmapFontDef characterDefinition;
+                this->parseCharacterDefinition(line, &characterDefinition);
+
+                // Add the CharDef returned to the charArray
+                m_pBitmapFontArray[ characterDefinition.charID ] = characterDefinition;
+            }
+            else if(line.substr(0,strlen("kernings count")) == "kernings count")
+            {
+                this->parseKerningCapacity(line);
+            }
+            else if(line.substr(0,strlen("kerning first")) == "kerning first")
+            {
+                this->parseKerningEntry(line);
+            }
+        }
 	}
 	void CCBitmapFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
 	{
