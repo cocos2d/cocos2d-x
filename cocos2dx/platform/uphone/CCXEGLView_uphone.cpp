@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TG3.h"
+#include "ssBackLightControl.h"
 
 #include "EGL/egl.h"
 #include "GLES/gl.h"
@@ -35,6 +36,8 @@ THE SOFTWARE.
 
 #include "TCOM_Sensors_Interface.h"
 #include "CCXUIAccelerometer.h"
+
+#include "CCXApplication.h"
 
 namespace cocos2d {
 
@@ -214,6 +217,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     switch(pEvent->eType)
     {
     case EVENT_WinInit:
+//         CfgRegisterScreenSwitchNotify(GetWindowHwndId(), 0);
         bHandled = TRUE;
         break;
 
@@ -287,6 +291,16 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         pApp->SendStopEvent();
         break;
 
+    case EVENT_ScreenSwitchNotify:
+        if (! pEvent->sParam1)  // turn off screen
+        {
+//             CCXApplication::sharedApplication()->StopMainLoop();
+        }
+        else
+        {
+//             CCXApplication::sharedApplication()->StartMainLoop();
+        }
+        break;
     }
 
     if (! bHandled)

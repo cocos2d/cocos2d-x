@@ -95,12 +95,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    CCDirector::sharedDirector()->pause();
 }
 
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    CCDirector::sharedDirector()->resume();
 }
 
 /*
