@@ -1,6 +1,9 @@
 #include "AppDelegate.h"
 #include "cocos2d.h"
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+#include "SimpleAudioEngine.h"
 
+[! endif]
 #include "HelloWorldScene.h"
 
 using namespace cocos2d;
@@ -21,15 +24,8 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
-#if defined(CCX_PLATFORM_UPHONE)
-	if (!(m_pMainWnd = new CCXEGLView(this)) || 
-		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
-#elif defined(CCX_PLATFORM_WIN32)
 	if (!(m_pMainWnd = new CCXEGLView()) ||
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
-#else
-    #error
-#endif
 	{
         CCX_SAFE_DELETE(m_pMainWnd);
 		return false;
@@ -42,11 +38,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
 
-#if defined(CCX_PLATFORM_UPHONE)
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
-#endif
-
 
     CCScene * pScene = HelloWorld::scene();
 
@@ -57,10 +48,18 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
+    CCDirector::sharedDirector()->pause();
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+
+    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+[! endif]
 }
 
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
+    CCDirector::sharedDirector()->resume();
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+[! endif]
 }

@@ -187,6 +187,10 @@ private:
 	EGLContext              m_eglContext;
 };
 
+//////////////////////////////////////////////////////////////////////////
+// impliment CCXEGLView
+//////////////////////////////////////////////////////////////////////////
+
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_bCaptured(false)
@@ -222,6 +226,10 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinPaint:
+        // prevent back light turn off
+        CfgRefreshScreenAutoOffDelaySeconds();
+
+        // draw 
         CCDirector::sharedDirector()->preMainLoop();
         bHandled = TRUE;
         break;
