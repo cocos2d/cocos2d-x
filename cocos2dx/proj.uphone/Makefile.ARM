@@ -13,7 +13,8 @@ include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
 DEFINES += -DCCX_UNDER_UPHONE \
-          -D__TG3_PURE_DLL__
+          -D__TG3_PURE_DLL__ \
+          -DUSE_FILE32API
 INCLUDE_PATH += -I../ \
                -I../include -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2 \
                -I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv \
@@ -94,8 +95,11 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCProfiling.o \
 	$(OBJECTS_DIR)/CGPointExtension.o \
 	$(OBJECTS_DIR)/TransformUtils.o \
+	$(OBJECTS_DIR)/FileUtils.o \
 	$(OBJECTS_DIR)/TGAlib.o \
 	$(OBJECTS_DIR)/glu.o \
+	$(OBJECTS_DIR)/ioapi.o \
+	$(OBJECTS_DIR)/unzip.o \
 	$(OBJECTS_DIR)/CCTexture2D.o \
 	$(OBJECTS_DIR)/CCTextureAtlas.o \
 	$(OBJECTS_DIR)/CCTextureCache.o \
@@ -317,11 +321,20 @@ $(OBJECTS_DIR)/CGPointExtension.o : ../support/CGPointExtension.cpp
 $(OBJECTS_DIR)/TransformUtils.o : ../support/TransformUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TransformUtils.o ../support/TransformUtils.cpp
 
+$(OBJECTS_DIR)/FileUtils.o : ../support/file_support/FileUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/FileUtils.o ../support/file_support/FileUtils.cpp
+
 $(OBJECTS_DIR)/TGAlib.o : ../support/image_support/TGAlib.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TGAlib.o ../support/image_support/TGAlib.cpp
 
 $(OBJECTS_DIR)/glu.o : ../support/opengl_support/glu.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/glu.o ../support/opengl_support/glu.cpp
+
+$(OBJECTS_DIR)/ioapi.o : ../support/zip_support/ioapi.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../support/zip_support/ioapi.c
+
+$(OBJECTS_DIR)/unzip.o : ../support/zip_support/unzip.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../support/zip_support/unzip.c
 
 $(OBJECTS_DIR)/CCTexture2D.o : ../textures/CCTexture2D.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTexture2D.o ../textures/CCTexture2D.cpp
