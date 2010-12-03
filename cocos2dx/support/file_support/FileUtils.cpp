@@ -79,7 +79,7 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
 
         pBuffer = new unsigned char[FileInfo.uncompressed_size];
         int nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
-        assert(nSize == 0 || nSize == FileInfo.uncompressed_size);
+        NSAssert(nSize == 0 || nSize == FileInfo.uncompressed_size, "the file size is wrong");
 
         *pSize = FileInfo.uncompressed_size;
         unzCloseCurrentFile(pFile);
