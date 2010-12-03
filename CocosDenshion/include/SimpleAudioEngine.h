@@ -77,8 +77,9 @@ public:
 
     /**
     @brief Stop playing background music
+    @param bReleaseData If release the background music data or not.As default value is false
     */
-    void stopBackgroundMusic();
+    void stopBackgroundMusic(bool bReleaseData = false);
 
     /**
     @brief Pause playing background music

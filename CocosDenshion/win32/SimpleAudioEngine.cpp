@@ -55,7 +55,7 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	s_Music.Play((bLoop) ? -1 : 1);
 }
 
-void SimpleAudioEngine::stopBackgroundMusic()
+void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
 	s_Music.Stop();
 }
