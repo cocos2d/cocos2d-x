@@ -278,6 +278,13 @@
 		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
 		BF755FB112A1015E00450234 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAE12A1015E00450234 /* CloseSelected.png */; };
 		BF755FB212A1015E00450234 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAF12A1015E00450234 /* HelloWorld.png */; };
+		BF8265B512A8BD5000C9FC48 /* FileData.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265B212A8BD5000C9FC48 /* FileData.h */; };
+		BF8265B612A8BD5000C9FC48 /* FileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8265B312A8BD5000C9FC48 /* FileUtils.cpp */; };
+		BF8265B712A8BD5000C9FC48 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265B412A8BD5000C9FC48 /* FileUtils.h */; };
+		BF8265BD12A8BD7300C9FC48 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = BF8265B912A8BD7300C9FC48 /* ioapi.c */; };
+		BF8265BE12A8BD7300C9FC48 /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265BA12A8BD7300C9FC48 /* ioapi.h */; };
+		BF8265BF12A8BD7300C9FC48 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = BF8265BB12A8BD7300C9FC48 /* unzip.c */; };
+		BF8265C012A8BD7300C9FC48 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265BC12A8BD7300C9FC48 /* unzip.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -559,6 +566,13 @@
 		BF755FAD12A1015E00450234 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		BF755FAE12A1015E00450234 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		BF755FAF12A1015E00450234 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		BF8265B212A8BD5000C9FC48 /* FileData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileData.h; path = file_support/FileData.h; sourceTree = "<group>"; };
+		BF8265B312A8BD5000C9FC48 /* FileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtils.cpp; path = file_support/FileUtils.cpp; sourceTree = "<group>"; };
+		BF8265B412A8BD5000C9FC48 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileUtils.h; path = file_support/FileUtils.h; sourceTree = "<group>"; };
+		BF8265B912A8BD7300C9FC48 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = zip_support/ioapi.c; sourceTree = "<group>"; };
+		BF8265BA12A8BD7300C9FC48 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = zip_support/ioapi.h; sourceTree = "<group>"; };
+		BF8265BB12A8BD7300C9FC48 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = zip_support/unzip.c; sourceTree = "<group>"; };
+		BF8265BC12A8BD7300C9FC48 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = zip_support/unzip.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1020,6 +1034,8 @@
 		BF755DC212A1011B00450234 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF8265B812A8BD6300C9FC48 /* zip_support */,
+				BF8265B112A8BD3F00C9FC48 /* file_support */,
 				BF755DC312A1011B00450234 /* base64.cpp */,
 				BF755DC412A1011B00450234 /* base64.h */,
 				BF755DC512A1011B00450234 /* CCProfiling.cpp */,
@@ -1118,6 +1134,27 @@
 			name = Resource;
 			path = ../Resource;
 			sourceTree = SOURCE_ROOT;
+		};
+		BF8265B112A8BD3F00C9FC48 /* file_support */ = {
+			isa = PBXGroup;
+			children = (
+				BF8265B212A8BD5000C9FC48 /* FileData.h */,
+				BF8265B312A8BD5000C9FC48 /* FileUtils.cpp */,
+				BF8265B412A8BD5000C9FC48 /* FileUtils.h */,
+			);
+			name = file_support;
+			sourceTree = "<group>";
+		};
+		BF8265B812A8BD6300C9FC48 /* zip_support */ = {
+			isa = PBXGroup;
+			children = (
+				BF8265B912A8BD7300C9FC48 /* ioapi.c */,
+				BF8265BA12A8BD7300C9FC48 /* ioapi.h */,
+				BF8265BB12A8BD7300C9FC48 /* unzip.c */,
+				BF8265BC12A8BD7300C9FC48 /* unzip.h */,
+			);
+			name = zip_support;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -1295,6 +1332,10 @@
 				BF755F9512A1011B00450234 /* OpenGL_Internal.h in Headers */,
 				BF755F9712A1011B00450234 /* TransformUtils.h in Headers */,
 				BF755FA412A1011B00450234 /* CCTouchHandler.h in Headers */,
+				BF8265B512A8BD5000C9FC48 /* FileData.h in Headers */,
+				BF8265B712A8BD5000C9FC48 /* FileUtils.h in Headers */,
+				BF8265BE12A8BD7300C9FC48 /* ioapi.h in Headers */,
+				BF8265C012A8BD7300C9FC48 /* unzip.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1470,6 +1511,9 @@
 				BF755FA112A1011B00450234 /* CCTMXXMLParser.cpp in Sources */,
 				BF755FA212A1011B00450234 /* CCTouchDispatcher.cpp in Sources */,
 				BF755FA312A1011B00450234 /* CCTouchHandler.cpp in Sources */,
+				BF8265B612A8BD5000C9FC48 /* FileUtils.cpp in Sources */,
+				BF8265BD12A8BD7300C9FC48 /* ioapi.c in Sources */,
+				BF8265BF12A8BD7300C9FC48 /* unzip.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1515,6 +1559,12 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HelloWorld_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles\"",
+					"\"$(SRCROOT)/../../cocos2dx\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone\"",
+				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
 				SDKROOT = iphoneos4.0;
@@ -1533,23 +1583,18 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					TARGET_OS_IPHONE,
+					USE_FILE32API,
 					GL_GLEXT_PROTOTYPES,
+					TARGET_OS_IPHONE,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/libxml2\"",
-					"\"$(SRCROOT)/../../cocos2dx\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/libxml2/\"",
+					"\"$(SRCROOT)/../../cocos2dx/\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles/",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include /usr/local/include/libxml2";
@@ -1565,6 +1610,16 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					GL_GLEXT_PROTOTYPES,
+					TARGET_OS_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/libxml2/\"",
+					"\"$(SRCROOT)/../../cocos2dx/\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles/",
+				);
 				INSTALL_PATH = /usr/local/lib;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1577,6 +1632,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
+				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include /usr/local/include/libxml2";
 				ZERO_LINK = NO;
 			};
 			name = Release;
