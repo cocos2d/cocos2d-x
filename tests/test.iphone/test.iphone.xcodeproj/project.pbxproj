@@ -455,6 +455,13 @@
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF6A8FAB12966AEE00EDEB28 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF6A8FA912966AEE00EDEB28 /* AccelerometerDelegateWrapper.h */; };
 		BF6A8FAC12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF6A8FAA12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm */; };
+		BF82668712A8C1E300C9FC48 /* FileData.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668412A8C1E300C9FC48 /* FileData.h */; };
+		BF82668812A8C1E300C9FC48 /* FileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82668512A8C1E300C9FC48 /* FileUtils.cpp */; };
+		BF82668912A8C1E300C9FC48 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668612A8C1E300C9FC48 /* FileUtils.h */; };
+		BF82668F12A8C1F600C9FC48 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82668B12A8C1F600C9FC48 /* ioapi.c */; };
+		BF82669012A8C1F600C9FC48 /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668C12A8C1F600C9FC48 /* ioapi.h */; };
+		BF82669112A8C1F600C9FC48 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82668D12A8C1F600C9FC48 /* unzip.c */; };
+		BF82669212A8C1F600C9FC48 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668E12A8C1F600C9FC48 /* unzip.h */; };
 		BF8DE46B1297A00D00DD1681 /* CCUIAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */; };
 		BF8DE4A01297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8DE49F1297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm */; };
 /* End PBXBuildFile section */
@@ -1008,6 +1015,13 @@
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF6A8FA912966AEE00EDEB28 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
 		BF6A8FAA12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
+		BF82668412A8C1E300C9FC48 /* FileData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileData.h; path = file_support/FileData.h; sourceTree = "<group>"; };
+		BF82668512A8C1E300C9FC48 /* FileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtils.cpp; path = file_support/FileUtils.cpp; sourceTree = "<group>"; };
+		BF82668612A8C1E300C9FC48 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileUtils.h; path = file_support/FileUtils.h; sourceTree = "<group>"; };
+		BF82668B12A8C1F600C9FC48 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = zip_support/ioapi.c; sourceTree = "<group>"; };
+		BF82668C12A8C1F600C9FC48 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = zip_support/ioapi.h; sourceTree = "<group>"; };
+		BF82668D12A8C1F600C9FC48 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = zip_support/unzip.c; sourceTree = "<group>"; };
+		BF82668E12A8C1F600C9FC48 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = zip_support/unzip.h; sourceTree = "<group>"; };
 		BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUIAccelerometerDelegate.h; sourceTree = "<group>"; };
 		BF8DE49F1297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCXUIAccelerometer_iphone.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1864,8 +1878,10 @@
 				BF170F8F12928E6300B8313A /* CCProfiling.h */,
 				BF170F9012928E6300B8313A /* CGPointExtension.cpp */,
 				BF170F9112928E6300B8313A /* data_support */,
+				BF82668312A8C1CD00C9FC48 /* file_support */,
 				BF170F9512928E6300B8313A /* image_support */,
 				BF170F9812928E6300B8313A /* opengl_support */,
+				BF82668A12A8C1E700C9FC48 /* zip_support */,
 				BF170F9C12928E6300B8313A /* TransformUtils.cpp */,
 				BF170F9D12928E6300B8313A /* TransformUtils.h */,
 			);
@@ -2204,6 +2220,27 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		BF82668312A8C1CD00C9FC48 /* file_support */ = {
+			isa = PBXGroup;
+			children = (
+				BF82668412A8C1E300C9FC48 /* FileData.h */,
+				BF82668512A8C1E300C9FC48 /* FileUtils.cpp */,
+				BF82668612A8C1E300C9FC48 /* FileUtils.h */,
+			);
+			name = file_support;
+			sourceTree = "<group>";
+		};
+		BF82668A12A8C1E700C9FC48 /* zip_support */ = {
+			isa = PBXGroup;
+			children = (
+				BF82668B12A8C1F600C9FC48 /* ioapi.c */,
+				BF82668C12A8C1F600C9FC48 /* ioapi.h */,
+				BF82668D12A8C1F600C9FC48 /* unzip.c */,
+				BF82668E12A8C1F600C9FC48 /* unzip.h */,
+			);
+			name = zip_support;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2380,6 +2417,10 @@
 				BF17116712928E6300B8313A /* CCTouchHandler.h in Headers */,
 				BF6A8FAB12966AEE00EDEB28 /* AccelerometerDelegateWrapper.h in Headers */,
 				BF8DE46B1297A00D00DD1681 /* CCUIAccelerometerDelegate.h in Headers */,
+				BF82668712A8C1E300C9FC48 /* FileData.h in Headers */,
+				BF82668912A8C1E300C9FC48 /* FileUtils.h in Headers */,
+				BF82669012A8C1F600C9FC48 /* ioapi.h in Headers */,
+				BF82669212A8C1F600C9FC48 /* unzip.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2728,6 +2769,9 @@
 				BF17116612928E6300B8313A /* CCTouchHandler.cpp in Sources */,
 				BF6A8FAC12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm in Sources */,
 				BF8DE4A01297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm in Sources */,
+				BF82668812A8C1E300C9FC48 /* FileUtils.cpp in Sources */,
+				BF82668F12A8C1F600C9FC48 /* ioapi.c in Sources */,
+				BF82669112A8C1F600C9FC48 /* unzip.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2834,7 +2878,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iphone_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
+				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../chipmunk/include/constraints\"",
 					"\"$(SRCROOT)/../../chipmunk/include/chipmunk\"",
@@ -2858,6 +2905,19 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iphone_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../chipmunk/include/constraints\"",
+					"\"$(SRCROOT)/../../chipmunk/include/chipmunk\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles\"",
+					"\"$(SRCROOT)/../..\"",
+					"\"$(SRCROOT)/../../cocos2dx\"",
+					"\"$(SRCROOT)/../../cocos2dx/include\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/libxml2\"",
+				);
 				INFOPLIST_FILE = "iphone-Info.plist";
 				PRODUCT_NAME = iphone;
 				VALIDATE_PRODUCT = YES;
@@ -2871,17 +2931,16 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
+				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles\"",
 					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/libxml2\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 			};
@@ -2894,11 +2953,16 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_FILE32API,
+					TARGET_OS_IPHONE,
 				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles\"",
+					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/libxml2\"",
+					"\"$(SRCROOT)/../../cocos2dx\"",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				ZERO_LINK = NO;
@@ -2925,6 +2989,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../..\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
 				ZERO_LINK = NO;
@@ -2939,8 +3004,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../chipmunk/include/chipmunk\"",
-					"\"$(SRCROOT)/../../chipmunk/include/chipmunk/constraints\"",
+					"\"$(SRCROOT)/../../chipmunk/include/chipmunk/constraints/\"",
+					"\"$(SRCROOT)/../../chipmunk/include/chipmunk/\"",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = chipmunk;
@@ -2954,6 +3019,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../chipmunk/include/chipmunk/constraints/\"",
+					"\"$(SRCROOT)/../../chipmunk/include/chipmunk/\"",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = chipmunk;
 				ZERO_LINK = NO;

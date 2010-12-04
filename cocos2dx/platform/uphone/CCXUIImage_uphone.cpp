@@ -129,24 +129,27 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
     }
 
     // attempt load image from file
-    FileData data;
-    unsigned long nSize  = 0;
-    unsigned char* pBuffer = data.getFileData(strPath.c_str(), "rb", &nSize);
-    if (pBuffer)
+    if (!bRet)
     {
-        switch (imageType)
+        FileData data;
+        unsigned long nSize  = 0;
+        unsigned char* pBuffer = data.getFileData(strPath.c_str(), "rb", &nSize);
+        if (pBuffer)
         {
-        case kImageFormatPNG:
-            // use libpng load image
-            bRet = loadPngFromStream(pBuffer, nSize);
-            break;
-        case kImageFormatJPG:
-            bRet = loadJpgFromStream(pBuffer, nSize);
-            break;
-        default:
-            // unsupported image type
-            bRet = false;
-            break;
+            switch (imageType)
+            {
+            case kImageFormatPNG:
+                // use libpng load image
+                bRet = loadPngFromStream(pBuffer, nSize);
+                break;
+            case kImageFormatJPG:
+                bRet = loadJpgFromStream(pBuffer, nSize);
+                break;
+            default:
+                // unsupported image type
+                bRet = false;
+                break;
+            }
         }
     }
 
