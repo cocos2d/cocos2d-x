@@ -1,5 +1,8 @@
 #include "CCXApplication_uphone.h"
 
+#include "ssBackLightControl.h"
+#include "ssKeyLockControl.h"
+
 #include "CCDirector.h"
 #include "CCScheduler.h"
 
@@ -37,10 +40,6 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
             CCScheduler::purgeSharedScheduler();
             SendStopEvent();
         }
-        else 
-        {
-            StartMainLoop();
-        }
         bHandled = TRUE;
         break;
 
@@ -55,11 +54,20 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
             {
                StopMainLoop();
             }
+//             CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_LONG);
+            EnableKeyLock();
         }
         else if (pEvent->sParam1 > 0)
         {
+//             CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_ALWAYS);
             applicationWillEnterForeground();
             StartMainLoop();
+            
+            // if KeyLock disactived, disable it.
+            if (! CfgKeyLock_GetActive())
+            {
+                DisableKeyLock();
+            }
         }
         break;
     }
