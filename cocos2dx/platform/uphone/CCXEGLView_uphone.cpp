@@ -38,6 +38,9 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+#define MAX_TOUCHES         4
+static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
+
 class CCXEGL
 {
 public:
@@ -186,18 +189,13 @@ private:
 
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
-, m_bCaptured(false)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
 {
-    m_pTouch    = new CCTouch;
-    m_pSet      = new NSSet;
 }
 
 CCXEGLView::~CCXEGLView()
 {
-    CCX_SAFE_DELETE(m_pSet);
-    CCX_SAFE_DELETE(m_pTouch);
     CCX_SAFE_DELETE(m_pDelegate);
     CCX_SAFE_DELETE(m_pEGL);
 }
@@ -223,42 +221,23 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_PenDown:
-        if (m_bCaptured)
-        {
-            bHandled = TRUE;
-        }
-        else if (m_pDelegate && m_pTouch && m_pSet 
-            && ! PointInControl(pEvent->sParam1, pEvent->sParam2, NULL) 
-            && SetCaptureEx(-1, TRUE))
-        {
-            m_bCaptured = true;
-            m_nPenEventNum = pEvent->lParam5;
-//            SS_printf("PenDown: %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
-            m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
-            m_pSet->addObject(m_pTouch);
-            m_pDelegate->touchesBegan(m_pSet, NULL);
-        }
+        bHandled = OnPenDown(pEvent, 0);
         break;
 
     case EVENT_PenMove:
-        if (m_pDelegate && m_pTouch && m_pSet && m_bCaptured && pEvent->lParam5 == m_nPenEventNum)
-        {
-//                SS_printf("PenMove: %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
-            m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
-            m_pDelegate->touchesMoved(m_pSet, NULL);
-        }
+        bHandled = OnPenMove(pEvent);
         break;
 
     case EVENT_PenUp:
-        if (m_pDelegate && m_pTouch && m_pSet && m_bCaptured && pEvent->lParam5 == m_nPenEventNum)
-        {
-            ReleaseCapture();
-//            SS_printf("PenUp:   %4d,    %4d\n", pEvent->sParam1, pEvent->sParam2);
-            m_pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
-            m_pDelegate->touchesEnded(m_pSet, NULL);
-			 m_pSet->removeObject(m_pTouch);
-            m_bCaptured = false;
-        }
+        bHandled = OnPenUp(pEvent, 0);
+        break;
+
+    case EVENT_MultiTouchDown:
+        bHandled = OnPenDown(pEvent, pEvent->lParam3);
+        break;
+
+    case EVENT_MultiTouchUp:
+        bHandled = OnPenUp(pEvent, pEvent->lParam3);
         break;
 
     case MESSAGE_SENSORS_DATA:
@@ -294,6 +273,83 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         return TWindow::EventHandler(pApp, pEvent);
     }
     return bHandled;
+}
+
+Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
+{
+    if (m_pDelegate && nIndex < MAX_TOUCHES)
+    {
+        CCTouch* pTouch = s_pTouches[nIndex];
+        if (!pTouch)
+        {
+            pTouch = new CCTouch;
+        }
+
+        pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+        s_pTouches[nIndex] = pTouch;
+        NSSet set;
+        set.addObject(pTouch);
+        m_pDelegate->touchesBegan(&set, NULL);
+    }
+
+    return FALSE;
+}
+
+Boolean CCXEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
+{
+    if (m_pDelegate && nIndex < MAX_TOUCHES)
+    {
+        CCTouch* pTouch = s_pTouches[nIndex];
+        if (pTouch)
+        {
+            NSSet set;
+            pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+            set.addObject(pTouch);
+            m_pDelegate->touchesEnded(&set, NULL);
+
+            pTouch->release();
+            for (Int32 i = nIndex; i < MAX_TOUCHES; ++i)
+            {
+                if (i != (MAX_TOUCHES - 1))
+                {
+                    s_pTouches[i] = s_pTouches[i + 1];
+                }
+                else
+                {
+                    s_pTouches[i] = NULL;
+                }
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+Boolean CCXEGLView::OnPenMove(EventType* pEvent)
+{
+    do 
+    {
+        CCX_BREAK_IF(!m_pDelegate);
+
+        Int32 nCount = EvtGetPenMultiPointCount(pEvent);
+        CCX_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
+
+        NSSet set;
+        Int32 nPosX, nPosY;
+        for (Int32 i = 0; i < nCount; ++i)
+        {
+            CCTouch* pTouch = s_pTouches[i];
+            CCX_BREAK_IF(!pTouch);
+
+            EvtGetPenMultiPointXY(pEvent, i, &nPosX, &nPosY);
+            pTouch->SetTouchInfo(0, (float) nPosX, (float) nPosY);
+            set.addObject(pTouch);
+        }
+
+        m_pDelegate->touchesMoved(&set, NULL);
+    } while (0);
+
+    return FALSE;
 }
 
 CGSize CCXEGLView::getSize()
