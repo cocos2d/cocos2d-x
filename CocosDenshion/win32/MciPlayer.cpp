@@ -104,6 +104,7 @@ void MciPlayer::Play(UINT uTimes /* = 1 */)
 	if (! s_mciError)
 	{
 		m_bPlaying = true;
+        m_uTimes = uTimes;
 	}
 }
 
