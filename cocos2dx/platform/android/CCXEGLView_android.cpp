@@ -29,9 +29,11 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
+#include "ccMacros.h"
 
 #include <stdlib.h>
 #include <jni.h>
+#include <android/log.h>
 
 extern "C"
 {
@@ -40,26 +42,31 @@ extern "C"
 	static cocos2d::NSSet s_set;
 	
 	
-	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesBegin(jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
 		s_touch.SetTouchInfo(0, x, y);
 		s_set.addObject(&s_touch);
 		s_pDelegate->touchesBegan(&s_set, NULL);
 	}
 	
-	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesEnd(jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
 		s_touch.SetTouchInfo(0, x, y);
 		s_pDelegate->touchesEnded(&s_set, NULL);
 		s_set.removeObject(&s_touch);
 	}
 	
-	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesMove(jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
+		s_touch.SetTouchInfo(0, x, y);
+		s_pDelegate->touchesMoved(&s_set, NULL);
 	}
 	
-	void Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_nativeTouchesCancel(jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
+		s_touch.SetTouchInfo(0, x, y);
+		s_pDelegate->touchesCancelled(&s_set, NULL);
+		s_set.removeObject(&s_touch);
 	}
 }
 

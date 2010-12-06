@@ -52,6 +52,7 @@ particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCPointParticleSystem.cpp \
 particle_nodes/CCQuadParticleSystem.cpp \
 platform/android/CCTime.cpp \
+platform/android/ccx_Common_android.cpp \
 platform/android/CCXApplication_android.cpp \
 platform/android/CCXBitmapDC.cpp \
 platform/android/CCXEGLView_android.cpp \
@@ -59,7 +60,6 @@ platform/android/CCXFileUtils_android.cpp \
 platform/android/CCXUIAccelerometer_android.cpp \
 platform/android/CCXUIImage_android.cpp \
 platform/android/NSLock.cpp \
-platform/android/UncompressFile.cpp \
 platform/android/ZipUtils.cpp \
 sprite_nodes/CCSprite.cpp \
 sprite_nodes/CCSpriteFrame.cpp \
@@ -69,8 +69,11 @@ support/CCProfiling.cpp \
 support/CGPointExtension.cpp \
 support/TransformUtils.cpp \
 support/base64.cpp \
+support/file_support/FileUtils.cpp \
 support/image_support/TGAlib.cpp \
 support/opengl_support/glu.cpp \
+support/zip_support/ioapi.c \
+support/zip_support/unzip.c \
 textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
@@ -90,9 +93,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/android/third_party/libxml2 \
                     $(LOCAL_PATH)/platform/android/third_party/libjpeg 
 
-LOCAL_LDLIBS := -lGLESv1_CM -llog -lz -ljnigraphics\
+LOCAL_LDLIBS := -lGLESv1_CM -llog -lz -ljnigraphics \
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -lpng \
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -lxml2 \
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -ljpeg 
+
+# define the macro to compile through support/zip_support/ioapi.c                
+LOCAL_CFLAGS := -DUSE_FILE32API
                                  
 include $(BUILD_SHARED_LIBRARY)

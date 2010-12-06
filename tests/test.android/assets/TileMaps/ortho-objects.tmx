@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" spacing="2" margin="2">
+  <image source="fixed-ortho-test2.png"/>
+ </tileset>
+ <layer name="Layer 0" width="32" height="32">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3DsQkAIAwAsAriY/7/k6NQXBx00AQSAQAA8Iea3tZTprb4mrLxhAFhdCAKABAAAA==
+  </data>
+ </layer>
+ <objectgroup color="#ffffff" name="Object Group 1" width="0" height="0">
+  <object name="Object" x="0" y="992" width="352" height="32"/>
+  <object name="Object" x="224" y="928" width="160" height="32"/>
+  <object name="platform" type="platform" x="2" y="833" width="125" height="60">
+   <properties>
+    <property name="friction" value="1.0"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
