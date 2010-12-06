@@ -21,35 +21,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "CCXUIAccelerometer_android.h"
+#include <stdio.h>
 
-#ifndef __CCX_COMMON_UPHONE__
-#define __CCX_COMMON_UPHONE__
+namespace cocos2d
+{
+	UIAccelerometer* UIAccelerometer::m_spUIAccelerometer = NULL;
+		
+	UIAccelerometer::UIAccelerometer()
+	{
+	}
+	
+    UIAccelerometer::~UIAccelerometer()
+    {
+    }
 
-#if defined(_WIN32)
-    #if defined(SS_MAKEDLL)
-    #define CCX_DLL     __declspec(dllexport)
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else 		/* use a DLL library */
-    #define CCX_DLL     __declspec(dllimport)
-    #endif
-#else
-    #if defined(SS_SHARED)
-    #define CCX_DLL     __attribute__((visibility("default")))
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else
-    #define CCX_DLL
-    #endif
-#endif 
+    UIAccelerometer* UIAccelerometer::sharedAccelerometer()
+    {
+    	if (m_spUIAccelerometer == NULL)
+    	{
+    		m_spUIAccelerometer = new UIAccelerometer();
+    	}
+    	
+    	return m_spUIAccelerometer;
+    }
 
-namespace cocos2d{
+    void UIAccelerometer::removeDelegate(UIAccelerometerDelegate* pDelegate)
+    {
+    	
+    }
+    
+    void UIAccelerometer::addDelegate(UIAccelerometerDelegate* pDelegate)
+    {
+    	
+    }
+    
+} // end of namespace cococs2d
 
-    /**
-    @brief	Output Debug message to Application console.
-    */
-    void CCX_DLL CCXLog(const char * pszFormat, ...);
-
-}//namespace   cocos2d 
-
-#endif	// end of __CCX_COMMON_UPHONE__

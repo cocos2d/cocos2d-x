@@ -21,35 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __HELLO_WORLD__
+#define __HELLO_WORLD__
 
-#ifndef __CCX_COMMON_UPHONE__
-#define __CCX_COMMON_UPHONE__
+#include "cocos2d.h"
 
-#if defined(_WIN32)
-    #if defined(SS_MAKEDLL)
-    #define CCX_DLL     __declspec(dllexport)
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else 		/* use a DLL library */
-    #define CCX_DLL     __declspec(dllimport)
-    #endif
-#else
-    #if defined(SS_SHARED)
-    #define CCX_DLL     __attribute__((visibility("default")))
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else
-    #define CCX_DLL
-    #endif
-#endif 
+class HelloWorld : public cocos2d::CCXApplication
+{
+public:
+	virtual bool applicationDidFinishLaunching();
+	
+private:
+};
 
-namespace cocos2d{
-
-    /**
-    @brief	Output Debug message to Application console.
-    */
-    void CCX_DLL CCXLog(const char * pszFormat, ...);
-
-}//namespace   cocos2d 
-
-#endif	// end of __CCX_COMMON_UPHONE__
+#endif // __HELLO_WORLD__

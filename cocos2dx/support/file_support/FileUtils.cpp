@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCXCocos2dDefine.h"
 #include "support/zip_support/unzip.h"
 #include <string>
+#include <assert.h>
 
 namespace cocos2d {
 

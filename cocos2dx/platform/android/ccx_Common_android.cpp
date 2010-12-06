@@ -21,35 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "ccxCommon_android.h"
+#include <android/log.h>
+#include <stdio.h>
 
-#ifndef __CCX_COMMON_UPHONE__
-#define __CCX_COMMON_UPHONE__
-
-#if defined(_WIN32)
-    #if defined(SS_MAKEDLL)
-    #define CCX_DLL     __declspec(dllexport)
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else 		/* use a DLL library */
-    #define CCX_DLL     __declspec(dllimport)
-    #endif
-#else
-    #if defined(SS_SHARED)
-    #define CCX_DLL     __attribute__((visibility("default")))
-    #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
-    #else
-    #define CCX_DLL
-    #endif
-#endif 
+#define MAX_LEN		256
 
 namespace cocos2d{
 
-    /**
-    @brief	Output Debug message to Application console.
-    */
-    void CCX_DLL CCXLog(const char * pszFormat, ...);
+    void CCX_DLL CCXLog(const char * pszFormat, ...)
+    {
+    	va_list args;
+    	va_start(args, pszFormat);
+    	
+    	char buf[MAX_LEN];
+    	
+    	snprintf(buf, MAX_LEN, pszFormat, args);
+    	
+    	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+    }
 
 }//namespace   cocos2d 
-
-#endif	// end of __CCX_COMMON_UPHONE__
