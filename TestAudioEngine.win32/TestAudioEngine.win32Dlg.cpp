@@ -125,6 +125,6 @@ void CTestAudioEnginewin32Dlg::OnDestroy()
 {
 	CDialog::OnDestroy();
 
-	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic(true);
 	SimpleAudioEngine::sharedEngine()->unloadEffectAll();
 }

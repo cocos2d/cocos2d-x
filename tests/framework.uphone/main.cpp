@@ -14,5 +14,3 @@ Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 	}
 	return 1;
 }
-
-

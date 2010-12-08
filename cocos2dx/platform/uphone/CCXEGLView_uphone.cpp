@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TG3.h"
+#include "ssBackLightControl.h"
 
 #include "EGL/egl.h"
 #include "GLES/gl.h"
@@ -35,6 +36,8 @@ THE SOFTWARE.
 
 #include "TCOM_Sensors_Interface.h"
 #include "CCXUIAccelerometer.h"
+
+#include "CCXApplication.h"
 
 namespace cocos2d {
 
@@ -184,6 +187,10 @@ private:
 	EGLContext              m_eglContext;
 };
 
+//////////////////////////////////////////////////////////////////////////
+// impliment CCXEGLView
+//////////////////////////////////////////////////////////////////////////
+
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_bCaptured(false)
@@ -214,11 +221,16 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     switch(pEvent->eType)
     {
     case EVENT_WinInit:
+        CfgRegisterScreenSwitchNotify(GetWindowHwndId(), 0);
         bHandled = TRUE;
         break;
 
     case EVENT_WinPaint:
-        CCDirector::sharedDirector()->preMainLoop();
+        if (CfgGetScreenStatus())
+        {
+            // draw 
+            CCDirector::sharedDirector()->preMainLoop();
+        }
         bHandled = TRUE;
         break;
 
@@ -283,11 +295,57 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinClose:
+        CfgUnRegisterScreenSwitchNotify(GetWindowHwndId(), 0);
         // Stop the application since the main form has been closed
         pApp->SendStopEvent();
         break;
 
+    case EVENT_ScreenSwitchNotify:
+        if (! pEvent->sParam1)  // turn off screen
+        {
+            CCDirector::sharedDirector()->pause();
+            CCXApplication::sharedApplication()->StopMainLoop();
+        }
+        else
+        {
+            CCDirector::sharedDirector()->resume();
+            CCXApplication::sharedApplication()->StartMainLoop();
+        }
+        break;
+
     }
+//     {
+//         char szType[32];
+//         sprintf(szType, "%d", pEvent->eType);
+//         const char * pszType = szType;
+//         switch (pEvent->eType)
+//         {
+//         case EVENT_ScreenSwitchNotify:
+//             pszType = "EVENT_ScreenSwitchNotify";
+//             break;
+// 
+//         case EVENT_GlesUpdateNotify:
+//             pszType = "EVENT_GlesUpdateNotify";
+//             break;
+// 
+//         case EVENT_WinPaint:
+//             pszType = "EVENT_GlesUpdateNotify";
+//             break;
+//         }
+//         if (pszType)
+//         {
+//             char szMsg[256];
+//             sprintf(szMsg, "%d: %s: %d \r\n", TimGetTicks(), pszType, pEvent->sParam1);
+// #if defined (_TRANZDA_VM_)
+// #define LOG_FILE_NAME "d:/Work7/NEWPLUS/TDA_DATA/UserData/mesagelog.txt"
+// #else
+// #define LOG_FILE_NAME "/NEWPLUS/TDA_DATA/UserData/mesagelog.txt"
+// #endif
+//             FILE * pf = fopen(LOG_FILE_NAME, "a+");
+//             fwrite(szMsg, 1, strlen(szMsg), pf);
+//             fclose(pf);
+//         }
+//     }
 
     if (! bHandled)
     {
