@@ -358,7 +358,7 @@ function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile) {
             wizard.RenderTemplate(strTemplate, strFile, bCopyOnly);
 
             if (strExt == ".h") {
-                if (strName.indexOf("UnicodeScript") >= 0) {
+                if (strName.indexOf("UnicodeScript.h") >= 0) {
                     unFile = proj.Object.AddFile(strFile);
                     var strPrjTG3DirWin = '..\\..\\PRJ_TG3\\';
                     var unFileCfg = unFile.FileConfigurations('Debug');
