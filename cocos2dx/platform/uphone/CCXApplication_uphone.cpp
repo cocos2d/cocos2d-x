@@ -54,15 +54,15 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
             {
                StopMainLoop();
             }
-//             CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_LONG);
+            CfgTurnOnBackLight();
             EnableKeyLock();
         }
         else if (pEvent->sParam1 > 0)
         {
-//             CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_ALWAYS);
             applicationWillEnterForeground();
             StartMainLoop();
             
+            CfgTurnOnBackLightDelay(0x7fffffff);
             // if KeyLock disactived, disable it.
             if (! CfgKeyLock_GetActive())
             {
