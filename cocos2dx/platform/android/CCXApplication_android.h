@@ -68,10 +68,4 @@ public:
 
 }       // end of namespace   cocos2d
 
-extern "C"
-{
-	
-extern JavaVM *gJavaVM;
-}
-
 #endif	// end of __CCX_APPLICATION_UPHONE_H__
