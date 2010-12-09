@@ -59,6 +59,7 @@ platform/android/CCXEGLView_android.cpp \
 platform/android/CCXFileUtils_android.cpp \
 platform/android/CCXUIAccelerometer_android.cpp \
 platform/android/CCXUIImage_android.cpp \
+platform/android/Cocos2dJni.cpp \
 platform/android/NSLock.cpp \
 platform/android/ZipUtils.cpp \
 sprite_nodes/CCSprite.cpp \
@@ -91,12 +92,25 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/android/third_party/iconv \
                     $(LOCAL_PATH)/platform/android/third_party/libpng \
                     $(LOCAL_PATH)/platform/android/third_party/libxml2 \
-                    $(LOCAL_PATH)/platform/android/third_party/libjpeg 
+                    $(LOCAL_PATH)/platform/android/third_party/libjpeg \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/core \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/animator \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/config \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/effects \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/images \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/pdf \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/ports \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/svg \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/text \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/utils \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/views \
+                    $(LOCAL_PATH)/platform/android/third_party/skia/ xml
 
-LOCAL_LDLIBS := -lGLESv1_CM -llog -lz -ljnigraphics \
+LOCAL_LDLIBS := -lGLESv1_CM -llog -lz \
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -lpng \
                 -L$(LOCAL_PATH)/platform/android/third_party/libs -lxml2 \
-                -L$(LOCAL_PATH)/platform/android/third_party/libs -ljpeg 
+                -L$(LOCAL_PATH)/platform/android/third_party/libs -ljpeg \
+                -L$(LOCAL_PATH)/platform/android/third_party/libs -lskia
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API

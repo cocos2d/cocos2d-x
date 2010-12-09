@@ -27,56 +27,17 @@ THE SOFTWARE.
 #include "CCXCocos2dDefine.h"
 #include "NSSet.h"
 #include "CCDirector.h"
-#include "CCTouch.h"
-#include "CCTouchDispatcher.h"
 #include "ccMacros.h"
 
 #include <stdlib.h>
-#include <jni.h>
-#include <android/log.h>
-
-extern "C"
-{
-	static cocos2d::EGLTouchDelegate *s_pDelegate;
-	static cocos2d::CCTouch s_touch;
-	static cocos2d::NSSet s_set;
-	
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
-	{
-		s_touch.SetTouchInfo(0, x, y);
-		s_set.addObject(&s_touch);
-		s_pDelegate->touchesBegan(&s_set, NULL);
-	}
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
-	{
-		s_touch.SetTouchInfo(0, x, y);
-		s_pDelegate->touchesEnded(&s_set, NULL);
-		s_set.removeObject(&s_touch);
-	}
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
-	{
-		s_touch.SetTouchInfo(0, x, y);
-		s_pDelegate->touchesMoved(&s_set, NULL);
-	}
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
-	{
-		s_touch.SetTouchInfo(0, x, y);
-		s_pDelegate->touchesCancelled(&s_set, NULL);
-		s_set.removeObject(&s_touch);
-	}
-}
 
 namespace cocos2d {
-
 
 CCXEGLView::CCXEGLView()
 {
 	m_nWidth = 0;
 	m_nHeight = 0;
+	m_pDelegate = NULL;
 }
 
 void CCXEGLView::setFrameWitdAndHeight(int width, int height)
@@ -87,7 +48,7 @@ void CCXEGLView::setFrameWitdAndHeight(int width, int height)
 
 CCXEGLView::~CCXEGLView()
 {
-	CCX_SAFE_DELETE(s_pDelegate);
+	CCX_SAFE_DELETE(m_pDelegate);
 }
 
 CGSize  CCXEGLView::getSize()
@@ -108,7 +69,12 @@ void CCXEGLView::release()
 
 void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
-	s_pDelegate = pDelegate;
+	m_pDelegate = pDelegate;
+}
+
+EGLTouchDelegate* CCXEGLView::getDelegate(void)
+{
+	return m_pDelegate;
 }
 
 void CCXEGLView::swapBuffers()

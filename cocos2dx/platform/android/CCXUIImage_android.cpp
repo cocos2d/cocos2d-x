@@ -97,7 +97,7 @@ UIImage::UIImage(CCXBitmapDC * pBmpDC)
 		m_imageInfo.hasAlpha	= true;
 
 		m_imageInfo.isPremultipliedAlpha = true;
-		m_imageInfo.bitsPerComponent = 4;
+		m_imageInfo.bitsPerComponent = 8;
 	} while (0);
 }
 
