@@ -23,14 +23,23 @@ THE SOFTWARE.
 ****************************************************************************/
 #include <cstring>
 #include "CCXBitmapDC.h"
-#include "CCXApplication_android.h"
+#include "Cocos2dJni.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
 
 #include <android/log.h>
-#include <android/bitmap.h>
 #include <string.h>
-#include <jni.h>
+#include <math.h>
+
+// undefine ANDROID to include skia headers
+#ifdef ANDROID
+#undef ANDROID
+#endif
+
+#include "SkBitmap.h"
+#include "SkPaint.h"
+#include "SkScalar.h"
+#include "SkCanvas.h"
 
 namespace cocos2d {
 
@@ -38,23 +47,23 @@ namespace cocos2d {
 	{
 		m_nWidth = 0;
 		m_nHeight = 0;
-		data = NULL;
+		m_pData = NULL;
 	}
 	
 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
 		m_nWidth = 0;
 		m_nHeight = 0;
-		data = NULL;
+		m_pData = NULL;
 		
-		getBitmapFromJava(text, fontSize);
+		drawText(text, fontSize);
 	}
 	
 	CCXBitmapDC::~CCXBitmapDC()
 	{
-		if (data)
+		if (m_pData)
 		{
-			delete[] data;
+			delete[] m_pData;
 		}
 	}
 	
@@ -70,83 +79,69 @@ namespace cocos2d {
     
     unsigned char* CCXBitmapDC::getData()
     {
-    	return data;
+    	return m_pData;
     }
 	
-	void CCXBitmapDC::getBitmapFromJava(const char *text, float fontSize)
+	void CCXBitmapDC::drawText(const char *text, float fontSize)
 	{
-		JNIEnv *env;
-		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) <0 )
+		// init paint
+		SkPaint *paint = new SkPaint();
+		paint->setColor(SK_ColorWHITE);
+		paint->setTextSize(fontSize);
+
+        // get text width and height
+        SkPaint::FontMetrics font;
+		paint->getFontMetrics(&font);
+		int h = (int)ceil((font.fDescent - font.fAscent));
+		int w = (int)ceil((paint->measureText(text, strlen(text))));
+
+        // create and init bitmap
+        SkBitmap *bitmap = new SkBitmap();
+		bitmap->setConfig(SkBitmap::kARGB_8888_Config, w, h);
+        if (! bitmap->allocPixels())
 		{
-			if (gJavaVM->AttachCurrentThread(&env, NULL) < 0)
-			{
-				return;
-			}
-		}
-		
-		//__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "get env");
-		
-		jclass mClass = env->FindClass("org/cocos2dx/lib/Cocos2dxJNI");
-		if (! mClass)
-		{
-			__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "can not find org.cocos2dx.Cocos2dJNI");
+			CCLOG("alloc pixels error");
 			return;
 		}
 		
-		jmethodID mid = env->GetStaticMethodID(mClass, "createTextBitmap", "(Ljava/lang/String;I)Landroid/graphics/Bitmap;");
-	    if (! mid)
-	    {
-	    	__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "can not find method createTextBitmap");
-	    	return;
-	    }
-	    
-	    jobject bitmap = env->CallStaticObjectMethod(mClass, mid, env->NewStringUTF(text), (int)fontSize);
-	    
-	    AndroidBitmapInfo  info;
-	    if (AndroidBitmap_getInfo(env, bitmap, &info) < 0) 
-	    {
-            __android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "failed to get bitmapinfo");
-            return;
-        }
-                
-        void *pixels;
-        if (AndroidBitmap_lockPixels(env, bitmap, &pixels) < 0) 
-        {
-            __android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "AndroidBitmap_lockPixels() failed !");
-        }
+		// start with black/transparent pixels
+		bitmap->eraseColor(0);
+
+        // create canvas and draw text
+		SkCanvas canvas(*bitmap);
+	    canvas.drawText(text, strlen(text), 0.0, -font.fAscent, *paint);
+		
+		// get data
+        m_pData = new unsigned char[w * h * 4];        
+        memcpy(m_pData, bitmap->getPixels(), w * h * 4);
         
-        // get data
-        data = new unsigned char[info.width * info.height * 4];
-        if (! data)
-        {
-        	AndroidBitmap_unlockPixels(env, bitmap);
-        	__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "failed to allocate memory");
-        	return;
-        }
-        
-        memcpy(data, pixels, info.width * info.height * 4);
-        AndroidBitmap_unlockPixels(env, bitmap);
-        
-        // swap data
-        unsigned int *tempPtr = (unsigned int*)data;
-        unsigned int tempdata = 0;
-        for (int i = 0; i < info.height; ++i)
-        {
-        	for (int j = 0; j < info.width; ++j)
-        	{
-        		tempdata = *tempPtr;
-        		*tempPtr++ = swapAlpha(tempdata);
-        	}
-        }
-        
-        m_nWidth = info.width;
-        m_nHeight =info.height;
-        
-        //__android_log_print(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "width: %d, height:%d", m_nWidth, m_nHeight);
-	}
-	
-	unsigned int CCXBitmapDC::swapAlpha(unsigned int value)
-	{
-		return ((value << 8 & 0xffffff00) | (value >> 24 & 0x000000ff));
+        // destrcut objects          
+        // delete canvas;
+        delete bitmap;
+        delete paint; 
+		
+		m_nWidth = w;
+		m_nHeight = h;
+		
+
+// 		JNIEnv *env;
+// 		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) <0 )
+// 		{
+// 			if (gJavaVM->AttachCurrentThread(&env, NULL) < 0)
+// 			{
+// 				return;
+// 			}
+// 		}
+// 		
+// 		//__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "get env");
+// 		
+// 		jclass mClass = env->FindClass("org/cocos2dx/lib/Cocos2dxJNI");
+// 		if (! mClass)
+// 		{
+// 			__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "can not find org.cocos2dx.Cocos2dJNI");
+// 			return;
+// 		}
+// 		
+// 		jmethodID mid = env->GetStaticMethodID(mClass, "createTextBitmap", "(Ljava/lang/String;I)Landroid/graphics/Bitmap;");
 	}
 }

@@ -105,7 +105,7 @@ bool CCDirector::init(void)
 {
 	CCLOG("cocos2d: %s", cocos2dVersion());
 
-	CCLOG("cocos2d: Using Director Type: %d", CCDirectorTypeDiaplayLink);
+	CCLOG("cocos2d: Using Director Type: %d", kCCDirectorTypeDisplayLink);
 
 	// default values
     m_ePixelFormat = kCCPixelFormatDefault;

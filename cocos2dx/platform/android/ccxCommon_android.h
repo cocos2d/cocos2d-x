@@ -43,4 +43,13 @@ THE SOFTWARE.
     #endif
 #endif 
 
+namespace cocos2d{
+
+    /**
+    @brief	Output Debug message to Application console.
+    */
+    void CCX_DLL CCXLog(const char * pszFormat, ...);
+
+}//namespace   cocos2d 
+
 #endif	// end of __CCX_COMMON_UPHONE__
