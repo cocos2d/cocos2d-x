@@ -59,6 +59,18 @@ public:
 	static void release();
 
     /**
+    @brief  Set the ResourcePath,we will find resource in this path
+    @param pszResourcePath  The absolute resource path
+    */
+    static void setResourcePath(const char *pszResourcePath);
+
+    /**
+    @brief Set the absolute path of the .zip file which contains all resource files
+    @param pszZipPath The absolute path of the .zip file
+    */
+    static void setResourceZipFile(const char* pszZipPath);
+
+    /**
     @brief set the sound ResInfo,it's only used on platform-uphone now
     */
     void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);

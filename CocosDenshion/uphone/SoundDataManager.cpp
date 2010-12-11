@@ -180,18 +180,10 @@ int SoundDataManager::loadFromFile(const char* pFilePath)
             break;
         }
 
-        // calculate the buffer size we needed
-        SoundPlayer TempPlayer;
-        int nBufferSize = TempPlayer.GetFileBufferSize(pFilePath);
-        // can not calculate the size,load failed
-        BREAK_IF(nBufferSize < 0);
-
         // load the file data
-        unsigned char* buffer = NULL;
-        buffer = new unsigned char[nBufferSize];
-        BREAK_IF(!buffer);
-        int nSize = TempPlayer.DecodeFile(buffer, nBufferSize, pFilePath);
-        BREAK_IF(nSize < 0);
+        unsigned long nBufferSize = 0;
+        unsigned char* buffer = FileUtils::getFileData(pFilePath, "rb", &nBufferSize);
+        BREAK_IF(!buffer || nBufferSize <= 0);
 
         // record the id
         nSoundID = nID;
@@ -201,7 +193,7 @@ int SoundDataManager::loadFromFile(const char* pFilePath)
         pElement->nSoundID    = nSoundID;
         pElement->pDataBuffer = buffer;
         pElement->nDataSize   = nBufferSize;
-        pElement->FileName    = "";
+        pElement->FileName    = pFilePath;
         pElement->nPlayerSoundID = -1;
         HASH_ADD_INT(m_pEffects, nSoundID, pElement);
     } while (0);
