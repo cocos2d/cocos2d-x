@@ -164,6 +164,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 		}
     }
 	
+	view = self;
     return self;
 }
 
