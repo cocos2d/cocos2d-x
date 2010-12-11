@@ -30,9 +30,14 @@
 
 #include "chipmunk_unsafe.h"
 
-extern cpSpace *space;
-extern cpBody *staticBody;
-extern cpVect mousePoint;
+// extern cpSpace *space;
+// extern cpBody *staticBody;
+// extern cpVect mousePoint;
+
+static cpSpace *space;
+static cpBody *staticBody;
+static cpVect mousePoint;
+
 
 cpShape *querySeg = NULL;
 

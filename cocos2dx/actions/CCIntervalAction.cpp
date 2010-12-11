@@ -1912,7 +1912,7 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
 
 void CCAnimate::stop(void)
 {
-	if (m_bRestoreOriginalFrame)
+	if (m_bRestoreOriginalFrame && m_pTarget)
 	{
 		((CCSprite*)(m_pTarget))->setDisplayFrame(m_pOrigFrame);
 	}

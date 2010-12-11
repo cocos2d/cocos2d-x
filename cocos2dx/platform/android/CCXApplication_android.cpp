@@ -3,9 +3,7 @@
 #include "CCXEGLView_android.h"
 #include "CCDirector.h"
 
-// #include "CCXGLExtFunc.h"
 #include <GLES/glext.h>
-#include <android/log.h>
 
 namespace   cocos2d {
 	static CCXApplication *s_pApplication;
@@ -43,21 +41,4 @@ namespace   cocos2d {
 	{
 		return s_pApplication;
 	}
-}
-
-extern "C"
-{
-JavaVM *gJavaVM = NULL;
-
-jint JNI_OnLoad(JavaVM *vm, void *reserved)
-{
-	gJavaVM = vm;
-	return JNI_VERSION_1_4;
-}
-
-void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env)
-{
-	cocos2d::CCDirector::sharedDirector()->preMainLoop();
-}
-
 }
