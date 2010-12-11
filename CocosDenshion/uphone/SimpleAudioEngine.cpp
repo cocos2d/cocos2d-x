@@ -2,6 +2,7 @@
 #include "SoundPlayer.h"
 #include "SoundDataManager.h"
 #include "TSoundPlayer.h"
+#include "FileUtils.h"
 
 #define BREAK_IF(cond)  if (cond) break;
 
@@ -75,6 +76,16 @@ void SimpleAudioEngine::release()
 		delete s_pSharedAudioEngine;
 		s_pSharedAudioEngine = NULL;
 	}
+}
+
+void SimpleAudioEngine::setResourcePath(const char *pszResourcePath)
+{
+    FileUtils::setResourcePath(pszResourcePath);
+}
+
+void SimpleAudioEngine::setResourceZipFile(const char* pszZipPath)
+{
+    FileUtils::setResourceZipFile(pszZipPath);
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)

@@ -40,6 +40,15 @@ void SimpleAudioEngine::release()
 {
 	return;
 }
+
+void SimpleAudioEngine::setResourcePath(const char *pszResourcePath)
+{
+}
+
+void SimpleAudioEngine::setResourceZipFile(const char* pszZipPath)
+{
+}
+
 //////////////////////////////////////////////////////////////////////////
 // BackgroundMusic
 //////////////////////////////////////////////////////////////////////////
