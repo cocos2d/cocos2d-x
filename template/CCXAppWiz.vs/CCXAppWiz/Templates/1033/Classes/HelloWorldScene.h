@@ -4,6 +4,16 @@
 
 #include "cocos2d.h"
 
+[! if CCX_USE_BOX2D]
+#include "Box2D.h"
+[! endif]
+[! if CCX_USE_CHIPMUNK]
+#include "chipmunk.h"
+[! endif]
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+#include "SimpleAudioEngine.h"
+[! endif]
+
 class HelloWorld : public cocos2d::CCLayer
 {
 public:
