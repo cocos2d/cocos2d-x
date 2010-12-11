@@ -27,11 +27,10 @@ THE SOFTWARE.
 #include "png.h"
 
 #include "CCXBitmapDC.h"
-#include "UnCompressFile.h"
+#include "support/file_support/FileData.h"
+#include "jpeglib.h"
 
 #include <android/log.h>
-
-#include "jpeglib.h"
 
 //using namespace ImageToolKit;
 using namespace std;
@@ -98,7 +97,7 @@ UIImage::UIImage(CCXBitmapDC * pBmpDC)
 		m_imageInfo.hasAlpha	= true;
 
 		m_imageInfo.isPremultipliedAlpha = true;
-		m_imageInfo.bitsPerComponent = 4;
+		m_imageInfo.bitsPerComponent = 8;
 	} while (0);
 }
 
@@ -113,21 +112,28 @@ UIImage::~UIImage(void)
 bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageType)
 {
 	bool bRet = false;
+	
+	FileData data;
+    unsigned long nSize  = 0;
+    unsigned char* pBuffer = data.getFileData(strPath.c_str(), "rb", &nSize);
 
-	switch (imageType)
-	{
-	case kImageFormatPNG:
-		// use libpng load image
-		bRet =  loadPng(strPath.c_str());
-		break;
-	case kImageFormatJPG:
-		bRet = loadJpg(strPath.c_str());
-		break;
-	default:
-		// unsupported image type
-		bRet = false;
-		break;
-	}
+    if (pBuffer)
+    {
+	    switch (imageType)
+	    {
+	    case kImageFormatPNG:
+		    // use libpng load image
+		    bRet = loadPngFromStream(pBuffer, nSize);
+		    break;
+	    case kImageFormatJPG:
+		    bRet = loadJpgFromStream(pBuffer, nSize);
+		    break;
+	    default:
+		    // unsupported image type
+		    bRet = false;
+		    break;
+	    }
+    }
 
 	return bRet;
 }
@@ -170,20 +176,6 @@ int UIImage::CGImageGetColorSpace(void)
 unsigned char* UIImage::getData(void)
 {
 	return m_imageInfo.data;
-}
-
-bool UIImage::loadPng(const char* strFileName)
-{
-	bool bRet = false;
-	
-//	__android_log_print(ANDROID_LOG_DEBUG, "cocos2dx", "png file name %s", strFileName);
-	
-    UncompressFile *uncompress = new UncompressFile();
-    uncompress->decompressFile(strFileName);
-    bRet = loadPngFromStream(uncompress->getFileData(), uncompress->getFileLength());
-    delete uncompress;
-
-    return bRet;
 }
 
 bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
@@ -285,77 +277,10 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	return true;
 }
 
-bool UIImage::loadJpg(const char *strFileName)
+bool UIImage::loadJpgFromStream(unsigned char *data, unsigned long nSize)
 {
- 	/* these are standard libjpeg structures for reading(decompression) */
- 	struct jpeg_decompress_struct cinfo;
- 	struct jpeg_error_mgr jerr;
- 	/* libjpeg data structure for storing one row, that is, scanline of an image */
- 	JSAMPROW row_pointer[1];
- 
- 	FILE *infile = fopen( strFileName, "rb" );
- 	unsigned long location = 0;
- 	unsigned int i = 0;
- 
- 	if ( !infile )
- 	{
- 		return false;
- 	}
- 
- 	/* here we set up the standard libjpeg error handler */
- 	cinfo.err = jpeg_std_error( &jerr );
- 
- 	/* setup decompression process and source, then read JPEG header */
- 	jpeg_create_decompress( &cinfo );
- 
- 	/* this makes the library read from infile */
- 	jpeg_stdio_src( &cinfo, infile );
- 
- 	/* reading the image header which contains image information */
- 	jpeg_read_header( &cinfo, true );
- 
- 	// we only support RGB or grayscale
- 	if (cinfo.jpeg_color_space != JCS_RGB)
- 	{
- 		if (cinfo.jpeg_color_space == JCS_GRAYSCALE || cinfo.jpeg_color_space == JCS_YCbCr)
- 		{
-             cinfo.out_color_space = JCS_RGB;
- 		}
- 	}
- 	else
- 	{
- 		return false;
- 	}
- 
- 	/* Start decompression jpeg here */
- 	jpeg_start_decompress( &cinfo );
- 
- 	/* init image info */
- 	m_imageInfo.width = cinfo.image_width;
- 	m_imageInfo.height = cinfo.image_height;
- 	m_imageInfo.hasAlpha = false;
- 	m_imageInfo.isPremultipliedAlpha = false;
- 	m_imageInfo.bitsPerComponent = 8;
- 	m_imageInfo.data = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
- 
- 	/* now actually read the jpeg into the raw buffer */
- 	row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
- 
- 	/* read one scan line at a time */
- 	while( cinfo.output_scanline < cinfo.image_height )
- 	{
- 		jpeg_read_scanlines( &cinfo, row_pointer, 1 );
- 		for( i=0; i<cinfo.image_width*cinfo.num_components;i++) 
- 			m_imageInfo.data[location++] = row_pointer[0][i];
- 	}
- 
- 	/* wrap up decompression, destroy objects, free pointers and close open files */
- 	jpeg_finish_decompress( &cinfo );
- 	jpeg_destroy_decompress( &cinfo );
- 	delete row_pointer[0];
- 	fclose( infile );
-
-	return true;
+	/// @todo: libjpeg of android not support  jpeg_mem_src()
+	return false;
 }
 
 bool UIImage::save(const std::string &strFileName, int nFormat)
