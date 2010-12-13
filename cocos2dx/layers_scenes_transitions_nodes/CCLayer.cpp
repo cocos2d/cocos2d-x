@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include "CCLayer.h"
 #include "CCTouchDispatcher.h"
+#include "CCKeypadDispatcher.h"
 #include "CCDirector.h"
 #include "CGPointExtension.h"
 namespace   cocos2d {
@@ -33,6 +34,7 @@ namespace   cocos2d {
 CCLayer::CCLayer()
 :m_bIsTouchEnabled(false)
 ,m_bIsAccelerometerEnabled(false)
+,m_bIsKeypadEnabled(false)
 {
 	m_eTouchDelegateType = ccTouchDeletateAllBit;
 	m_tAnchorPoint = ccp(0.5f, 0.5f);
@@ -99,6 +101,16 @@ void CCLayer::AccelerometerKeep(void)
     this->retain();
 }
 
+void CCLayer::KeypadDestroy()
+{
+    this->release();
+}
+
+void CCLayer::KeypadKeep()
+{
+    this->retain();
+}
+
 
 /// isTouchEnabled getter
 bool CCLayer::getIsTouchEnabled()
@@ -152,6 +164,32 @@ void CCLayer::setIsAccelerometerEnabled(bool enabled)
     }
 }
 
+/// isKeypadEnabled getter
+bool CCLayer::getIsKeypadEnabled()
+{
+    return m_bIsKeypadEnabled;
+}
+/// isKeypadEnabled setter
+void CCLayer::setIsKeypadEnabled(bool enabled)
+{
+    if (enabled != m_bIsKeypadEnabled)
+    {
+        m_bIsKeypadEnabled = enabled;
+
+        if (m_bIsRunning)
+        {
+            if (enabled)
+            {
+                CCKeypadDispatcher::sharedDispatcher()->addDelegate(this);
+            }
+            else
+            {
+                CCKeypadDispatcher::sharedDispatcher()->removeDelegate(this);
+            }
+        }
+    }
+}
+
 
 /// Callbacks
 void CCLayer::onEnter()
@@ -171,6 +209,12 @@ void CCLayer::onEnter()
     {
         UIAccelerometer::sharedAccelerometer()->addDelegate(this);
     }
+
+    // add this layer to concern the kaypad msg
+    if (m_bIsKeypadEnabled)
+    {
+        CCKeypadDispatcher::sharedDispatcher()->addDelegate(this);
+    }
 }
 
 void CCLayer::onExit()
@@ -184,6 +228,12 @@ void CCLayer::onExit()
     if (m_bIsAccelerometerEnabled)
     {
         UIAccelerometer::sharedAccelerometer()->removeDelegate(this);
+    }
+
+    // remove this layer from the delegates who concern the kaypad msg
+    if (m_bIsKeypadEnabled)
+    {
+        CCKeypadDispatcher::sharedDispatcher()->removeDelegate(this);
     }
 
 	CCNode::onExit();
