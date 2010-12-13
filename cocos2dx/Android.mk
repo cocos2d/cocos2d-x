@@ -80,7 +80,9 @@ tileMap_parallax_nodes/CCTMXTiledMap.cpp \
 tileMap_parallax_nodes/CCTMXXMLParser.cpp \
 tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp
+touch_dispatcher/CCTouchHandler.cpp \
+keypad_dispatcher/CCKeypadDispatcher.cpp \
+keypad_dispatcher/CCKeypadDelegate.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \

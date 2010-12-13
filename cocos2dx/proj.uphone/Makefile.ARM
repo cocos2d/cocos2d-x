@@ -59,6 +59,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/NSZone.o \
 	$(OBJECTS_DIR)/CCGrabber.o \
 	$(OBJECTS_DIR)/CCGrid.o \
+	$(OBJECTS_DIR)/CCKeypadDelegate.o \
+	$(OBJECTS_DIR)/CCKeypadDispatcher.o \
 	$(OBJECTS_DIR)/CCBitmapFontAtlas.o \
 	$(OBJECTS_DIR)/CCLabel.o \
 	$(OBJECTS_DIR)/CCLabelAtlas.o \
@@ -212,6 +214,12 @@ $(OBJECTS_DIR)/CCGrabber.o : ../effects/CCGrabber.cpp
 
 $(OBJECTS_DIR)/CCGrid.o : ../effects/CCGrid.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrid.o ../effects/CCGrid.cpp
+
+$(OBJECTS_DIR)/CCKeypadDelegate.o : ../keypad_dispatcher/CCKeypadDelegate.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDelegate.o ../keypad_dispatcher/CCKeypadDelegate.cpp
+
+$(OBJECTS_DIR)/CCKeypadDispatcher.o : ../keypad_dispatcher/CCKeypadDispatcher.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDispatcher.o ../keypad_dispatcher/CCKeypadDispatcher.cpp
 
 $(OBJECTS_DIR)/CCBitmapFontAtlas.o : ../label_nodes/CCBitmapFontAtlas.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCBitmapFontAtlas.o ../label_nodes/CCBitmapFontAtlas.cpp

@@ -59,6 +59,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/NSZone.o \
 	$(OBJECTS_DIR)/CCGrabber.o \
 	$(OBJECTS_DIR)/CCGrid.o \
+	$(OBJECTS_DIR)/CCKeypadDelegate.o \
+	$(OBJECTS_DIR)/CCKeypadDispatcher.o \
 	$(OBJECTS_DIR)/CCBitmapFontAtlas.o \
 	$(OBJECTS_DIR)/CCLabel.o \
 	$(OBJECTS_DIR)/CCLabelAtlas.o \
@@ -210,6 +212,12 @@ $(OBJECTS_DIR)/CCGrabber.o : ../effects/CCGrabber.cpp
 $(OBJECTS_DIR)/CCGrid.o : ../effects/CCGrid.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrid.o ../effects/CCGrid.cpp
 
+$(OBJECTS_DIR)/CCKeypadDelegate.o : ../keypad_dispatcher/CCKeypadDelegate.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDelegate.o ../keypad_dispatcher/CCKeypadDelegate.cpp
+
+$(OBJECTS_DIR)/CCKeypadDispatcher.o : ../keypad_dispatcher/CCKeypadDispatcher.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDispatcher.o ../keypad_dispatcher/CCKeypadDispatcher.cpp
+
 $(OBJECTS_DIR)/CCBitmapFontAtlas.o : ../label_nodes/CCBitmapFontAtlas.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCBitmapFontAtlas.o ../label_nodes/CCBitmapFontAtlas.cpp
 
@@ -318,11 +326,20 @@ $(OBJECTS_DIR)/CGPointExtension.o : ../support/CGPointExtension.cpp
 $(OBJECTS_DIR)/TransformUtils.o : ../support/TransformUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TransformUtils.o ../support/TransformUtils.cpp
 
+$(OBJECTS_DIR)/FileUtils.o : ../support/file_support/FileUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/FileUtils.o ../support/file_support/FileUtils.cpp
+
 $(OBJECTS_DIR)/TGAlib.o : ../support/image_support/TGAlib.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TGAlib.o ../support/image_support/TGAlib.cpp
 
 $(OBJECTS_DIR)/glu.o : ../support/opengl_support/glu.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/glu.o ../support/opengl_support/glu.cpp
+
+$(OBJECTS_DIR)/ioapi.o : ../support/zip_support/ioapi.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../support/zip_support/ioapi.c
+
+$(OBJECTS_DIR)/unzip.o : ../support/zip_support/unzip.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../support/zip_support/unzip.c
 
 $(OBJECTS_DIR)/CCTexture2D.o : ../textures/CCTexture2D.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTexture2D.o ../textures/CCTexture2D.cpp

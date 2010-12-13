@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCUIAccelerometerDelegate.h"
 #include "ccxCommon.h"
 #include "CCXUIAccelerometer.h"
+#include "CCKeypadDelegate.h"
 namespace   cocos2d {
 
 //
@@ -43,7 +44,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate
+class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate, public CCKeypadDelegate
 {
 public:
 	CCLayer();
@@ -60,6 +61,9 @@ public:
     virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
     virtual void AccelerometerDestroy(void);
     virtual void AccelerometerKeep(void);
+
+    virtual void KeypadDestroy();
+    virtual void KeypadKeep();
 
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
@@ -84,6 +88,11 @@ public:
 	@since v0.8.1
 	*/
 	CCX_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+    /** whether or not it will receive keypad events
+    You can enable / disable accelerometer events with this property.
+    it's new in cocos2d-x
+    */
+    CCX_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
 };
 
 //
