@@ -41,6 +41,7 @@ public:
     CGSize  getSize();
     bool    isOpenGLReady();
     void    setFrameWitdAndHeight(int width, int height);
+    EGLTouchDelegate* getDelegate(void);
     
     // keep compatible
     void    release();
@@ -50,6 +51,7 @@ public:
 private:
 	int m_nWidth;
 	int m_nHeight;
+	EGLTouchDelegate *m_pDelegate;
 };
 
 }   // end of namespace   cocos2d

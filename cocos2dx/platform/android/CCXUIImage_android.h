@@ -96,9 +96,8 @@ public:
 	unsigned char* getData(void);
 
 private:
-  bool loadPng(const char* strFileName);
 	bool loadPngFromStream(unsigned char *data, int nLength);
-	bool loadJpg(const char *strFileName);
+	bool loadJpgFromStream(unsigned char *data, unsigned long nSize);
 
 private:
 	tImageInfo m_imageInfo;
