@@ -10,9 +10,9 @@ COCOS2D_ROOT=$COCOS2DX_ROOT/cocos2dx
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
 # create symbol link to other source code
-ln -s $BOX2D_ROOT $TESTS_ROOT/jni/Box2D
-ln -s $CHIPMUNK_ROOT $TESTS_ROOT/jni/chipmunk
-ln -s $COCOS2D_ROOT $TESTS_ROOT/jni/cocos2dx
+ln -s $BOX2D_ROOT $TESTS_ROOT/jni
+ln -s $CHIPMUNK_ROOT $TESTS_ROOT/jni
+ln -s $COCOS2D_ROOT $TESTS_ROOT/jni
 
 # build 
 pushd $ANDROID_NDK_ROOT
