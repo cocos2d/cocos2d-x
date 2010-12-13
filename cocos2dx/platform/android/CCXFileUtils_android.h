@@ -63,7 +63,23 @@ public:
     */
 	static void setResourcePath(const char *pszResourcePath);
 	
+	/**
+    @brief Get resource file data
+    @param[in]  pszFileName The resource file name which contain the path
+    @param[in]  pszMode The read mode of the file
+    @param[out] pSize If get the file data succeed the it will be the data size,or it will be 0
+    @return if success,the pointer of data will be returned,or NULL is returned
+    @warning If you get the file data succeed,you must delete it after used.
+    */
+    static unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+	
 	static const char* getResourcePath(void);
+	
+	static void setRelativePath(const char* pszRelativePath);
+	
+private:
+	static std::string m_sRelativePath;
+	static std::string m_sResourcePath;
 };
 }//namespace   cocos2d 
 

@@ -917,7 +917,8 @@ void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 
 	CCTexture2D *pNewTexture = pNewFrame->getTexture();
 	// update texture before updating texture rect
-	if (pNewTexture->getName() != m_pobTexture->getName())
+	if (!m_pobTexture ||
+		pNewTexture->getName() != m_pobTexture->getName())
 	{
         setTexture(pNewTexture);
 	}

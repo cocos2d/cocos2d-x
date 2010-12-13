@@ -387,7 +387,7 @@ void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriori
 {
 #if COCOS2D_DEBUG >= 1
 	tHashUpdateEntry *pHashElement = NULL;
-	HASH_FIND_INT(m_pHashForUpdates, &target, pHashElement);
+	HASH_FIND_INT(m_pHashForUpdates, &pTarget, pHashElement);
 	assert(pHashElement == NULL);
 #endif
 
