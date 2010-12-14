@@ -330,14 +330,14 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="a" artifactName="Box2D" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.lib.debug.750859454" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.lib.debug">
+<configuration artifactExtension="a" artifactName="Box2D_device" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.lib.debug.750859454" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.lib.debug">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.target.lib.debug.750859454." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug.649344577" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug.1579580934" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug"/>
 <builder buildPath="${workspace_loc:/Box2D/.Target-Debug}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug.1773667668" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.lib.debug"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug.660860966" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug.2067171510" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug">
-<option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.1072227878" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
+<option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.1072227878" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../&quot;"/>
@@ -636,14 +636,14 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="a" artifactName="Box2D" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.lib.release.1600037858" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.lib.release">
+<configuration artifactExtension="a" artifactName="Box2D_device" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.lib.release.1600037858" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.lib.release">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.target.lib.release.1600037858." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.lib.release.1324250934" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.lib.release">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.lib.release.1297193301" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.lib.release"/>
 <builder buildPath="${workspace_loc:/Box2D/.Target-Release}" command="cs-make" id="cdt.managedbuild.target.osp.gnu.target.builder.lib.release.797941129" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="bada Builder" superClass="cdt.managedbuild.target.osp.gnu.target.builder.lib.release"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.archiver.lib.release.1628574802" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.target.archiver.lib.release"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release.1344319780" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release">
-<option id="osp.gnu.target.cpp.compiler.release.lib.option.include.paths.862242866" superClass="osp.gnu.target.cpp.compiler.release.lib.option.include.paths" valueType="includePath">
+<option id="osp.gnu.target.cpp.compiler.release.lib.option.include.paths.862242866" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.release.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../&quot;"/>
