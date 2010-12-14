@@ -75,6 +75,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/EffectsTest.o \
 	$(OBJECTS_DIR)/HiResTest.o \
 	$(OBJECTS_DIR)/IntervalTest.o \
+	$(OBJECTS_DIR)/KeypadTest.o \
 	$(OBJECTS_DIR)/LayerTest.o \
 	$(OBJECTS_DIR)/MenuTest.o \
 	$(OBJECTS_DIR)/MotionStreakTest.o \
@@ -237,6 +238,9 @@ $(OBJECTS_DIR)/HiResTest.o : ../tests/HiResTest/HiResTest.cpp
 
 $(OBJECTS_DIR)/IntervalTest.o : ../tests/IntervalTest/IntervalTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/IntervalTest.o ../tests/IntervalTest/IntervalTest.cpp
+
+$(OBJECTS_DIR)/KeypadTest.o : ../tests/KeypadTest/KeypadTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/KeypadTest.o ../tests/KeypadTest/KeypadTest.cpp
 
 $(OBJECTS_DIR)/LayerTest.o : ../tests/LayerTest/LayerTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/LayerTest.o ../tests/LayerTest/LayerTest.cpp
