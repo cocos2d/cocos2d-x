@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "support/opengl_support/glu.h"
 
 #include "CCDrawingPrimitives.h"
-
+#include <stdio.h>
 using namespace std;
 namespace   cocos2d {
 

@@ -37,6 +37,119 @@ THE SOFTWARE.
 
 namespace cocos2d{
 	
+#ifdef SHP
+	static vector<string> Tokenize(const string& str,const string& delimiters)
+	{
+		vector<string> tokens;
+		string::size_type delimPos = 0, tokenPos = 0, pos = 0;
+
+		if(str.length()<1)  return tokens;
+		while(1){
+			delimPos = str.find_first_of(delimiters, pos);
+			tokenPos = str.find_first_not_of(delimiters, pos);
+
+			if(string::npos != delimPos){
+				if(string::npos != tokenPos){
+					if(tokenPos<delimPos){
+						tokens.push_back(str.substr(pos,delimPos-pos));
+					}else{
+						tokens.push_back("");
+					}
+				}else{
+					tokens.push_back("");
+				}
+				pos = delimPos+1;
+			} else {
+				if(string::npos != tokenPos){
+					tokens.push_back(str.substr(pos));
+				} else {
+					tokens.push_back("");
+				}
+				break;
+			}
+		}
+		return tokens;
+	}
+
+	static void sscanf_parseInfoArguments(const string& line, vector<string>& outStrList)
+	{
+		int index = line.find("padding=");
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index+8, index2-index-8);
+		outStrList = Tokenize(value, ",");
+	}
+
+	static void sscanf_parseCommonArguments(const string& line, string& outString)
+	{
+		int index = line.find("lineHeight=");
+		int index2 = line.find(' ', index);
+		outString = line.substr(index+11, index2-index-11);
+	}
+
+	static void sscanf_parseCharacterDefinition(const string& line, vector<string>& outStrList)
+	{
+		// Character ID
+		int index = line.find("id=");
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index+3, index2-index-3);
+		outStrList.push_back(value);
+		// Character x
+		index = line.find("x=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+2, index2-index-2);
+		outStrList.push_back(value);
+		// Character y
+		index = line.find("y=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+2, index2-index-2);
+		outStrList.push_back(value);
+		// Character width
+		index = line.find("width=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+6, index2-index-6);
+		outStrList.push_back(value);
+		// Character height
+		index = line.find("height=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+7, index2-index-7);
+		outStrList.push_back(value);
+		// Character xoffset
+		index = line.find("xoffset=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+8, index2-index-8);
+		outStrList.push_back(value);
+		// Character yoffset
+		index = line.find("yoffset=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+8, index2-index-8);
+		outStrList.push_back(value);
+		// Character xadvance
+		index = line.find("xadvance=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+9, index2-index-9);
+		outStrList.push_back(value);
+	}
+
+
+	static void sscanf_parseKerningEntry(const string& line, vector<string>& outStrList)
+	{
+		// first
+		int index = line.find("first=");
+		int index2 = line.find(' ', index);
+		std::string value = line.substr(index+6, index2-index-6);
+		outStrList.push_back(value);
+		// second
+		index = line.find("second=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+7, index2-index-7);
+		outStrList.push_back(value);
+		// amount
+		index = line.find("amount=");
+		index2 = line.find(' ', index);
+		value = line.substr(index+7, index2-index-7);
+		outStrList.push_back(value);
+	}
+#endif
 	//
 	//FNTConfig Cache - free functions
 	//
@@ -234,12 +347,20 @@ namespace cocos2d{
 		// info face="Script" size=32 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=1,4,3,2 spacing=0,0 outline=0
 		// info face="Cracked" size=36 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1
 		//////////////////////////////////////////////////////////////////////////
-
+#ifndef SHP
 		// padding
 		int index = line.find("padding=");
 		int index2 = line.find(' ', index);
 		std::string value = line.substr(index, index2-index);
 		sscanf(value.c_str(), "padding=%d,%d,%d,%d", &m_tPadding.top, &m_tPadding.right, &m_tPadding.bottom, &m_tPadding.left);
+#else
+		vector<string> strList;
+		sscanf_parseInfoArguments(line, strList);
+		m_tPadding.top = atoi(strList[0].c_str());
+		m_tPadding.right = atoi(strList[1].c_str());
+		m_tPadding.bottom = atoi(strList[2].c_str());
+		m_tPadding.left = atoi(strList[3].c_str());
+#endif
 		CCLOG("cocos2d: padding: %d,%d,%d,%d", m_tPadding.left, m_tPadding.top, m_tPadding.right, m_tPadding.bottom);
 	}
 	void CCBitmapFontConfiguration::parseCommonArguments(std::string line)
@@ -253,7 +374,15 @@ namespace cocos2d{
 		int index = line.find("lineHeight=");
 		int index2 = line.find(' ', index);
 		std::string value = line.substr(index, index2-index);
+#ifndef SHP
 		sscanf(value.c_str(), "lineHeight=%u", &m_uCommonHeight);
+#else
+		//cjh
+		string strLineHeight;
+		sscanf_parseCommonArguments(line, strLineHeight);
+		m_uCommonHeight = atoi(strLineHeight.c_str());
+		//
+#endif
 		// scaleW. sanity check
 		index = line.find("scaleW=") + strlen("scaleW=");
 		index2 = line.find(' ', index);
@@ -278,7 +407,7 @@ namespace cocos2d{
 		// line to parse:
 		// char id=32   x=0     y=0     width=0     height=0     xoffset=0     yoffset=44    xadvance=14     page=0  chnl=0 
 		//////////////////////////////////////////////////////////////////////////
-
+#ifndef SHP
 		// Character ID
 		int index = line.find("id=");
 		int index2 = line.find(' ', index);
@@ -320,6 +449,18 @@ namespace cocos2d{
 		index2 = line.find(' ', index);
 		value = line.substr(index, index2-index);
 		sscanf(value.c_str(), "xadvance=%d", &characterDefinition->xAdvance);
+#else
+		vector<string> pStr;
+		sscanf_parseCharacterDefinition(line, pStr);
+		characterDefinition->charID =  atoi(pStr[0].c_str());
+		characterDefinition->rect.origin.x = atoi(pStr[1].c_str());
+		characterDefinition->rect.origin.y = atoi(pStr[2].c_str());
+		characterDefinition->rect.size.width = atoi(pStr[3].c_str());
+		characterDefinition->rect.size.height = atoi(pStr[4].c_str());
+		characterDefinition->xOffset = atoi(pStr[5].c_str());
+		characterDefinition->yOffset = atoi(pStr[6].c_str());
+		characterDefinition->xAdvance = atoi(pStr[7].c_str());
+#endif
 	}
 	void CCBitmapFontConfiguration::parseKerningCapacity(std::string line)
 	{
@@ -348,7 +489,7 @@ namespace cocos2d{
 		// line to parse:
 		// kerning first=121  second=44  amount=-7
 		//////////////////////////////////////////////////////////////////////////
-
+#ifndef SHP
 		// first
 		int first;
 		int index = line.find("first=");
@@ -369,7 +510,14 @@ namespace cocos2d{
 		index2 = line.find(' ', index);
 		value = line.substr(index, index2-index);
 		sscanf(value.c_str(), "amount=%d", &amount);
-
+#else
+		int first = 0, second = 0, amount = 0;
+		vector<string> pStr;
+		sscanf_parseKerningEntry(line, pStr);
+		first = atoi(pStr[0].c_str());
+		second = atoi(pStr[1].c_str());
+		amount =  atoi(pStr[2].c_str());
+#endif
 		tKerningHashElement *element = (tKerningHashElement *)calloc( sizeof( *element ), 1 );
 		element->amount = amount;
 		element->key = (first<<16) | (second&0xffff);
