@@ -60,16 +60,26 @@ LOCAL_SRC_FILES := tests.cpp \
 ../../../tests/testBasic.cpp \
 ../../../AppDelegate.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../cocos2dx \
-                   $(LOCAL_PATH)/../cocos2dx/include \
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
+                   $(LOCAL_PATH)/../../../../cocos2dx/include \
                    $(LOCAL_PATH)/../../../tests \
+                   $(LOCAL_PATH)/../../../.. \
                    $(LOCAL_PATH)/../../.. \
-                   $(LOCAL_PATH)/../chipmunk/include/chipmunk \
-                   $(LOCAL_PATH)/../
+                   $(LOCAL_PATH)/../../../../chipmunk/include/chipmunk
                    
-LOCAL_LDLIBS := -lGLESv1_CM \
-                -L$(LOCAL_PATH)/../../libs/armeabi -lcocos2d -llog \
+# it is used for ndk-r4
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \
+                -lGLESv1_CM \
+                -lcocos2d -llog \
                 -lbox2d -lchipmunk
+
+# it is used for ndk-r5    
+# because the new Windows toolchain doesn't support Cygwin's drive
+# mapping (i.e /cygdrive/c/ instead of C:/)    
+#LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
+#                -lGLESv1_CM \
+#                -lcocos2d -llog \
+#                -lbox2d -lchipmunk
             
 include $(BUILD_SHARED_LIBRARY)
                    
