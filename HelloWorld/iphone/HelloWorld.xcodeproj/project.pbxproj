@@ -19,6 +19,10 @@
 		BF1B034B128BCCE300373CD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		BF1B034C128BCCF800373CD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		BF1B034D128BCD0800373CD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		BF3573CA12B5E9A1003C3188 /* CCKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3573C812B5E9A1003C3188 /* CCKeypadDelegate.cpp */; };
+		BF3573CB12B5E9A1003C3188 /* CCKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3573C912B5E9A1003C3188 /* CCKeypadDispatcher.cpp */; };
+		BF3573D012B5E9B4003C3188 /* CCKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */; };
+		BF3573D112B5E9B4003C3188 /* CCKeypadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */; };
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF492B6A12891AC600A09262 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
 		BF492C22128924A800A09262 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -303,6 +307,10 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BF3573C812B5E9A1003C3188 /* CCKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDelegate.cpp; sourceTree = "<group>"; };
+		BF3573C912B5E9A1003C3188 /* CCKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDispatcher.cpp; sourceTree = "<group>"; };
+		BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDelegate.h; sourceTree = "<group>"; };
+		BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDispatcher.h; sourceTree = "<group>"; };
 		BF365AA612A103F70050DCF4 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		BF365AA712A103F70050DCF4 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF4927C41289199700A09262 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -653,9 +661,19 @@
 			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
+		BF3573C712B5E9A1003C3188 /* keypad_dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				BF3573C812B5E9A1003C3188 /* CCKeypadDelegate.cpp */,
+				BF3573C912B5E9A1003C3188 /* CCKeypadDispatcher.cpp */,
+			);
+			path = keypad_dispatcher;
+			sourceTree = "<group>";
+		};
 		BF755BE712A1011A00450234 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				BF3573C712B5E9A1003C3188 /* keypad_dispatcher */,
 				BF755BE812A1011A00450234 /* actions */,
 				BF755BF512A1011A00450234 /* base_nodes */,
 				BF755BF812A1011A00450234 /* CCamera.cpp */,
@@ -739,6 +757,8 @@
 		BF755C0C12A1011A00450234 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */,
+				BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */,
 				BF755C0D12A1011A00450234 /* CCAction.h */,
 				BF755C0E12A1011A00450234 /* CCActionManager.h */,
 				BF755C0F12A1011A00450234 /* CCAtlasNode.h */,
@@ -1336,6 +1356,8 @@
 				BF8265B712A8BD5000C9FC48 /* FileUtils.h in Headers */,
 				BF8265BE12A8BD7300C9FC48 /* ioapi.h in Headers */,
 				BF8265C012A8BD7300C9FC48 /* unzip.h in Headers */,
+				BF3573D012B5E9B4003C3188 /* CCKeypadDelegate.h in Headers */,
+				BF3573D112B5E9B4003C3188 /* CCKeypadDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,6 +1536,8 @@
 				BF8265B612A8BD5000C9FC48 /* FileUtils.cpp in Sources */,
 				BF8265BD12A8BD7300C9FC48 /* ioapi.c in Sources */,
 				BF8265BF12A8BD7300C9FC48 /* unzip.c in Sources */,
+				BF3573CA12B5E9A1003C3188 /* CCKeypadDelegate.cpp in Sources */,
+				BF3573CB12B5E9A1003C3188 /* CCKeypadDispatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -40,6 +40,7 @@ LOCAL_SRC_FILES := tests.cpp \
 ../../../tests/EffectsTest/EffectsTest.cpp \
 ../../../tests/HiResTest/HiResTest.cpp \
 ../../../tests/IntervalTest/IntervalTest.cpp \
+../../../tests/KeypadTest/KeypadTest.cpp \
 ../../../tests/LayerTest/LayerTest.cpp \
 ../../../tests/MenuTest/MenuTest.cpp \
 ../../../tests/MotionStreakTest/MotionStreakTest.cpp \

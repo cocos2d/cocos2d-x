@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "CCActionManager.h"
 #include "CCLabel.h"
 #include "CCConfiguration.h"
+#include "CCKeypadDispatcher.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -166,6 +167,8 @@ CCDirector::~CCDirector(void)
 
 	// delete last compute time
 	CCX_SAFE_DELETE(m_pLastComputeFrameRate);
+
+    CCKeypadDispatcher::purgeSharedDispatcher();
 
 	// delete fps string
 	delete []m_pszFPS;

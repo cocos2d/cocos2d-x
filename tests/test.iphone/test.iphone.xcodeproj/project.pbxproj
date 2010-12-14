@@ -453,8 +453,13 @@
 		BF1B1A7D12951B7600E99D96 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7912951B7600E99D96 /* TileMaps */; };
 		BF1C47EB1293683800B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		BF35739212B5E902003C3188 /* CCKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF35739012B5E902003C3188 /* CCKeypadDelegate.cpp */; };
+		BF35739312B5E902003C3188 /* CCKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF35739112B5E902003C3188 /* CCKeypadDispatcher.cpp */; };
+		BF3573A312B5E93B003C3188 /* CCKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3573A112B5E93B003C3188 /* CCKeypadDelegate.h */; };
+		BF3573A412B5E93B003C3188 /* CCKeypadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3573A212B5E93B003C3188 /* CCKeypadDispatcher.h */; };
 		BF6A8FAB12966AEE00EDEB28 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF6A8FA912966AEE00EDEB28 /* AccelerometerDelegateWrapper.h */; };
 		BF6A8FAC12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF6A8FAA12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm */; };
+		BF7B9EDB12B703F400147B74 /* KeypadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF7B9ED912B703F400147B74 /* KeypadTest.cpp */; };
 		BF82668712A8C1E300C9FC48 /* FileData.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668412A8C1E300C9FC48 /* FileData.h */; };
 		BF82668812A8C1E300C9FC48 /* FileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82668512A8C1E300C9FC48 /* FileUtils.cpp */; };
 		BF82668912A8C1E300C9FC48 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668612A8C1E300C9FC48 /* FileUtils.h */; };
@@ -1013,8 +1018,14 @@
 		BF1B1A7812951B7600E99D96 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../Res/Images; sourceTree = SOURCE_ROOT; };
 		BF1B1A7912951B7600E99D96 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../Res/TileMaps; sourceTree = SOURCE_ROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BF35739012B5E902003C3188 /* CCKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDelegate.cpp; sourceTree = "<group>"; };
+		BF35739112B5E902003C3188 /* CCKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDispatcher.cpp; sourceTree = "<group>"; };
+		BF3573A112B5E93B003C3188 /* CCKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDelegate.h; sourceTree = "<group>"; };
+		BF3573A212B5E93B003C3188 /* CCKeypadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDispatcher.h; sourceTree = "<group>"; };
 		BF6A8FA912966AEE00EDEB28 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
 		BF6A8FAA12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
+		BF7B9ED912B703F400147B74 /* KeypadTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeypadTest.cpp; sourceTree = "<group>"; };
+		BF7B9EDA12B703F400147B74 /* KeypadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadTest.h; sourceTree = "<group>"; };
 		BF82668412A8C1E300C9FC48 /* FileData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileData.h; path = file_support/FileData.h; sourceTree = "<group>"; };
 		BF82668512A8C1E300C9FC48 /* FileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtils.cpp; path = file_support/FileUtils.cpp; sourceTree = "<group>"; };
 		BF82668612A8C1E300C9FC48 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileUtils.h; path = file_support/FileUtils.h; sourceTree = "<group>"; };
@@ -1145,6 +1156,7 @@
 		BF170C4B129286C000B8313A /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF7B9ED812B703F400147B74 /* KeypadTest */,
 				BF1B19FB12950B7900E99D96 /* ChipmunkTest */,
 				BF170C4C129286C000B8313A /* AccelerometerTest */,
 				BF170C4F129286C000B8313A /* ActionManagerTest */,
@@ -1494,6 +1506,7 @@
 		BF170DB812928E6200B8313A /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				BF35738F12B5E902003C3188 /* keypad_dispatcher */,
 				BF170DB912928E6200B8313A /* actions */,
 				BF170DC612928E6200B8313A /* base_nodes */,
 				BF170DC912928E6200B8313A /* CCamera.cpp */,
@@ -1577,6 +1590,8 @@
 		BF170DE012928E6200B8313A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF3573A112B5E93B003C3188 /* CCKeypadDelegate.h */,
+				BF3573A212B5E93B003C3188 /* CCKeypadDispatcher.h */,
 				BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */,
 				BF170DE112928E6200B8313A /* CCAction.h */,
 				BF170DE212928E6200B8313A /* CCActionManager.h */,
@@ -2220,6 +2235,24 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		BF35738F12B5E902003C3188 /* keypad_dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				BF35739012B5E902003C3188 /* CCKeypadDelegate.cpp */,
+				BF35739112B5E902003C3188 /* CCKeypadDispatcher.cpp */,
+			);
+			path = keypad_dispatcher;
+			sourceTree = "<group>";
+		};
+		BF7B9ED812B703F400147B74 /* KeypadTest */ = {
+			isa = PBXGroup;
+			children = (
+				BF7B9ED912B703F400147B74 /* KeypadTest.cpp */,
+				BF7B9EDA12B703F400147B74 /* KeypadTest.h */,
+			);
+			path = KeypadTest;
+			sourceTree = "<group>";
+		};
 		BF82668312A8C1CD00C9FC48 /* file_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -2421,6 +2454,8 @@
 				BF82668912A8C1E300C9FC48 /* FileUtils.h in Headers */,
 				BF82669012A8C1F600C9FC48 /* ioapi.h in Headers */,
 				BF82669212A8C1F600C9FC48 /* unzip.h in Headers */,
+				BF3573A312B5E93B003C3188 /* CCKeypadDelegate.h in Headers */,
+				BF3573A412B5E93B003C3188 /* CCKeypadDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2682,6 +2717,7 @@
 				BF1B1A2412950B7900E99D96 /* TheoJansen.cpp in Sources */,
 				BF1B1A2512950B7900E99D96 /* Tumble.cpp in Sources */,
 				BF1B1A2612950B7900E99D96 /* UnsafeOps.cpp in Sources */,
+				BF7B9EDB12B703F400147B74 /* KeypadTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2772,6 +2808,8 @@
 				BF82668812A8C1E300C9FC48 /* FileUtils.cpp in Sources */,
 				BF82668F12A8C1F600C9FC48 /* ioapi.c in Sources */,
 				BF82669112A8C1F600C9FC48 /* unzip.c in Sources */,
+				BF35739212B5E902003C3188 /* CCKeypadDelegate.cpp in Sources */,
+				BF35739312B5E902003C3188 /* CCKeypadDispatcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

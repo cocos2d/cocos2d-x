@@ -325,6 +325,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCKeypadDelegate.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCKeypadDispatcher.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCLabel.h"
 				>
 			</File>
@@ -1014,6 +1022,18 @@
 			</File>
 			<File
 				RelativePath="..\Makefile.ARM"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="keypad_dispatcher"
+			>
+			<File
+				RelativePath="..\keypad_dispatcher\CCKeypadDelegate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\keypad_dispatcher\CCKeypadDispatcher.cpp"
 				>
 			</File>
 		</Filter>
