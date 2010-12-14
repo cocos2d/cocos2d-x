@@ -575,6 +575,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\FileUtils.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\NSAutoreleasePool.h"
 				>
 			</File>
@@ -959,10 +963,6 @@
 				</File>
 				<File
 					RelativePath="..\support\file_support\FileUtils.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\support\file_support\FileUtils.h"
 					>
 				</File>
 			</Filter>
