@@ -32,74 +32,77 @@ THE SOFTWARE.
 
 #include <string.h>
 
-static int s_nWidth;
-static int s_nHeight;
-static unsigned char *s_pStrData;
-
-static void initWithString(const char *content, const char *fontName, float size)
+static void initWithString(const char *content, const char *fontName, float size, /*input params*/
+						   int *pWidth, int *pHeight, unsigned char** ppData)  /*output params*/
 {
 	NSUInteger				width, height;
-	CGContextRef			context;
 	unsigned char*			data;
-	CGColorSpaceRef		colorSpace;
+	CGContextRef			context;
+	CGColorSpaceRef			colorSpace;
 	id						uiFont;
-        NSString                                *string;
-        CGSize                                  dimensions;
-        UITextAlignment                  alignment;
-        NSString                                *name;
+	NSString                *string;
+	CGSize                  dimensions;
+	UITextAlignment         alignment;
+	NSString                *name;
     
-        alignment = UITextAlignmentCenter;
-        string = [[NSString alloc]initWithCString:content];
-        name = @"Thonburi";
-        dimensions = [string sizeWithFont:[UIFont fontWithName:name size:size]];
+	if (!pWidth || !pHeight || !ppData)
+	{
+		return;
+	}
+	
+	alignment = UITextAlignmentCenter;
+	string = [[NSString alloc] initWithCString:content];
+	name = @"Thonburi";
+	dimensions = [string sizeWithFont:[UIFont fontWithName:name size:size]];
     
 	width = dimensions.width;
-        height = dimensions.height;
-
+	height = dimensions.height;
+	
 	colorSpace = CGColorSpaceCreateDeviceRGB();
-        data = new unsigned char[height * width * 4];
-        memset(data, 0, height * width * 4);
+	data = new unsigned char[height * width * 4];
+	
+	memset(data, 0, height * width * 4);
 	context = CGBitmapContextCreate(data, width, height, 8, width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
 	CGColorSpaceRelease(colorSpace);
 		
-        CGContextSetRGBFillColor(context, 1, 1, 1, 1);
+	CGContextSetRGBFillColor(context, 1, 1, 1, 1);
 	CGContextTranslateCTM(context, 0.0f, height);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
 	UIGraphicsPushContext(context);
     
-        uiFont = [UIFont fontWithName:name size:size];
-        CGRect rect;
-        rect.origin.x = 0;
-        rect.origin.y = 0;
-        rect.size.width = dimensions.width;
-        rect.size.height = dimensions.height;
-        [string drawInRect:rect withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+	uiFont = [UIFont fontWithName:name size:size];
+	CGRect rect;
+	rect.origin.x = 0;
+	rect.origin.y = 0;
+	rect.size.width = dimensions.width;
+	rect.size.height = dimensions.height;
+	[string drawInRect:rect withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
 
-        UIGraphicsPopContext();
+	UIGraphicsPopContext();
 	
 	CGContextRelease(context);
     
-	s_pStrData = data;
-        s_nWidth = dimensions.width;
-        s_nHeight = dimensions.height;
+	[string release];
+	[name release];
+	
+	// output params
+	*pWidth = width;
+	*pHeight = height;
+	*ppData = data;
 }
 
 namespace cocos2d {
 
 	CCXBitmapDC::CCXBitmapDC()
+	:m_nWidth(0)
+	,m_nHeight(0)
+	,m_pData(NULL)
 	{
-		m_nWidth = 0;
-		m_nHeight = 0;
-		m_pData = NULL;
 	}
 	
 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
-	{
-                initWithString(text,  fontName, fontSize);
-        
-		m_nWidth = s_nWidth;
-		m_nHeight = s_nHeight;
-		m_pData = s_pStrData;
+	{	
+		initWithString(text, fontName, fontSize, &m_nWidth, &m_nHeight, &m_pData);
 	}
 	
 	CCXBitmapDC::~CCXBitmapDC()
