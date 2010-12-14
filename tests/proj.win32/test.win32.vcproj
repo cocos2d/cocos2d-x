@@ -836,6 +836,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="KeypadTest"
+				>
+				<File
+					RelativePath="..\tests\KeypadTest\KeypadTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\KeypadTest\KeypadTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
