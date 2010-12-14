@@ -52,6 +52,12 @@ THE SOFTWARE.
     #include "iphone/Cocos2dTypes.h"
     #include "iphone/CCXBitmapDC.h"
     #include "iphone/ZipUtils.h"
+#elif defined(CCX_PLATFORM_BADA)
+    #include "bada/CCTime.h"
+    #include "bada/NSLock.h"
+    #include "bada/Cocos2dTypes.h"
+    #include "bada/CCXBitmapDC.h"
+    #include "bada/ZipUtils.h"
 #else 
     #error
 #endif

@@ -34,6 +34,8 @@
     #include "android/CCXCocos2dDefine_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
     #include "iphone/CCXCocos2dDefine_iphone.h"
+#elif defined(CCX_PLATFORM_BADA)
+	#include "bada/CCXCocos2dDefine_bada.h"
 #else
     #error
 #endif 
