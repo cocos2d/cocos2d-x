@@ -79,25 +79,12 @@ public:
 
 			pEGL->m_eglNativeWindow = pWindow;
 
-			//cjh pEGL->m_eglNativeDisplay = GetDC(pEGL->m_eglNativeWindow);
-
 			EGLDisplay eglDisplay;
 			CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
 
 			EGLint nMajor, nMinor;
 			CCX_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
 
-//			const EGLint aConfigAttribs[] =
-//			{
-//				EGL_LEVEL,				0,
-//				EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,
-//				EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,
-//				EGL_NATIVE_RENDERABLE,	EGL_FALSE,
-//				EGL_DEPTH_SIZE,			16,
-//				EGL_NONE,
-//			};
-
-			//cjh bada
 			EGLint aConfigAttribs[] = {
 				EGL_RED_SIZE,	5,
 				EGL_GREEN_SIZE,	6,
@@ -217,7 +204,6 @@ CCXEGLView::~CCXEGLView()
 
 CGSize CCXEGLView::getSize()
 {
-//	CGSize size(GetBounds().width, GetBounds().height);
 	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
 	{
 		return CGSize(480, 800);
@@ -226,7 +212,6 @@ CGSize CCXEGLView::getSize()
 	{
 		return CGSize(800, 480);
 	}
-//	return size;
 }
 
 CGRect CCXEGLView::getFrame()
@@ -263,33 +248,6 @@ void CCXEGLView::swapBuffers()
         m_pEGL->swapBuffers();
     }
 }
-//typedef enum {
-//	/// Device oriented vertically, home button on the bottom
-//	kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,
-//	/// Device oriented vertically, home button on the top
-//    kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
-//	/// Device oriented horizontally, home button on the right
-//    kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
-//	/// Device oriented horizontally, home button on the left
-//    kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
-//
-//	// Backward compatibility stuff
-//	CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
-//	CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
-//	CCDeviceOrientationLandscapeLeft = kCCDeviceOrientationLandscapeLeft,
-//	CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
-//} ccDeviceOrientation;
-//
-//enum Orientation
-//{
-//	ORIENTATION_NONE,						/**< The control has no orientation style */
-//	ORIENTATION_PORTRAIT,					/**< The control has vertical orientation style */
-//	ORIENTATION_LANDSCAPE,					/**< The control has horizontal orientation style */
-//	ORIENTATION_PORTRAIT_REVERSE,		/**< The control has vertical upside-down orientation style */
-//	ORIENTATION_LANDSCAPE_REVERSE,			/**< The control has horizontal reverse orientation style */
-//	ORIENTATION_AUTOMATIC = 6,					/**< The control has vertical, horizontal, and horizontal reverse orientation styles*/
-//	ORIENTATION_AUTOMATIC_FOUR_DIRECTION = 8,	/**< The control has four-directional orientation style */
-//};
 
 static int badaOrientation[4] = {
 		ORIENTATION_PORTRAIT,
@@ -301,9 +259,7 @@ static int badaOrientation[4] = {
 int CCXEGLView::setDeviceOrientation(int eOritation)
 {
 	m_nowOrientation = (Orientation)badaOrientation[eOritation];
-	AppLog("111width = %d, height = %d", GetBounds().width, GetBounds().height);
 	SetOrientation(m_nowOrientation);
-	AppLog("222width = %d, height = %d", GetBounds().width, GetBounds().height);
 	return m_eInitOrientation;
 }
 

@@ -266,7 +266,8 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	}
 
 	// if something wrong,close file and return
-//cjh	if (setjmp(png_jmpbuf(png_ptr)))
+//bada not support setjmp
+//  if (setjmp(png_jmpbuf(png_ptr)))
 //	{
 //		png_destroy_read_struct(&png_ptr, NULL, NULL);
 //		png_destroy_info_struct(png_ptr, &info_ptr);

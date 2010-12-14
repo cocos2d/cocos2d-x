@@ -377,7 +377,6 @@ namespace cocos2d{
 #ifndef SHP
 		sscanf(value.c_str(), "lineHeight=%u", &m_uCommonHeight);
 #else
-		//cjh
 		string strLineHeight;
 		sscanf_parseCommonArguments(line, strLineHeight);
 		m_uCommonHeight = atoi(strLineHeight.c_str());

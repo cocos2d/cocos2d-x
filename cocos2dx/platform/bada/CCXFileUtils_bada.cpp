@@ -85,7 +85,7 @@ public:
 		* between the version it was compiled for and the actual shared
 		* library used.
 		*/
-//cjh		LIBXML_TEST_VERSION
+		LIBXML_TEST_VERSION
 		xmlSAXHandler saxHandler;
 		memset( &saxHandler, 0, sizeof(saxHandler) );
 		// Using xmlSAXVersion( &saxHandler, 2 ) generate crash as it sets plenty of other pointers...
@@ -106,7 +106,9 @@ public:
 		/*
 		* this is to debug memory for regression tests
 		*/
-//cjh		xmlMemoryDump();
+#ifndef SHP
+		xmlMemoryDump();
+#endif
 		delete []buffer;
 		return m_pRootDict;
 	}
