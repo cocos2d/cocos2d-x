@@ -36,6 +36,7 @@ THE SOFTWARE.
 
 #include "TCOM_Sensors_Interface.h"
 #include "CCXUIAccelerometer.h"
+#include "CCKeypadDispatcher.h"
 
 #include "CCXApplication.h"
 
@@ -250,6 +251,16 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     case EVENT_MultiTouchUp:
         bHandled = OnPenUp(pEvent, pEvent->lParam3);
+        break;
+
+    case EVENT_KeyCommand:
+        {
+            if (pEvent->sParam1 == SYS_KEY_SOFTKEY_RIGHT_UP ||
+                pEvent->sParam1 == SYS_KEY_SOFTKEY_RIGHT_LONG)
+            {
+                bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+            }
+        }
         break;
 
     case MESSAGE_SENSORS_DATA:

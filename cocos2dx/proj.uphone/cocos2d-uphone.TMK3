@@ -31,6 +31,7 @@ INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP_Arm.TMK3
 ;C、C++预定义宏，可以使用多个DEFINES串，也可以使用DEFINES1、DEFINES2等方式，MakeFile中依据出现顺序(不是数字大小)排列
 DEFINES=-DCCX_UNDER_UPHONE		;这里填入应用的自定义宏。注意：ITOPS自己的所需定义会自动包含，故此这里仅仅包含应用自己特有的定义即可
 DEFINES=-D__TG3_PURE_DLL__		;生成的是纯动态库（意思是：不是TOPS应用，但可以是TCOM组件）
+DEFINES=-DUSE_FILE32API				;读取 zip 文件需要此宏
 ;DEFINES=-D__TCOM_SUPPORT__		;生成的是TCOM组件（注意：TOPS应用也可以同时是TCOM组件）
 
 ;包含路径，可以使用多个INCLUDE_PATH串，也可以使用INCLUDE_PATH1、INCLUDE_PATH2等方式，MakeFile中依据出现顺序(不是数字大小)排列
