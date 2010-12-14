@@ -77,7 +77,9 @@ void SoundPlayer::PlaySoundFromMem(UInt8* pData, Int32 nSize, const char* FileNa
         }
         else
         {
-            TUString::StrGBToUnicode(m_fileName, (const Char*)(FileName));
+            std::string strTemp = FileName;
+            std::string strFileName = strTemp.substr(strTemp.rfind('/') + 1);
+            TUString::StrGBToUnicode(m_fileName, (const Char*)(strFileName.c_str()));
         }
 
         m_pMediaFile->SetName(m_fileName);
