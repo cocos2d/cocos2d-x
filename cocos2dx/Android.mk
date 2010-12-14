@@ -107,12 +107,24 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/android/third_party/skia/utils \
                     $(LOCAL_PATH)/platform/android/third_party/skia/views \
                     $(LOCAL_PATH)/platform/android/third_party/skia/ xml
+                    
+#it is used for ndk-r4
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/android/third_party/libs \
+                -lGLESv1_CM -llog -lz \
+                -lpng \
+                -lxml2 \
+                -ljpeg \
+                -lskia
 
-LOCAL_LDLIBS := -lGLESv1_CM -llog -lz \
-                -L$(LOCAL_PATH)/platform/android/third_party/libs -lpng \
-                -L$(LOCAL_PATH)/platform/android/third_party/libs -lxml2 \
-                -L$(LOCAL_PATH)/platform/android/third_party/libs -ljpeg \
-                -L$(LOCAL_PATH)/platform/android/third_party/libs -lskia
+# it is used for ndk-r5    
+# because the new Windows toolchain doesn't support Cygwin's drive
+# mapping (i.e /cygdrive/c/ instead of C:/)  
+#LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/android/third_party/libs) \
+#                -lGLESv1_CM -llog -lz \
+#                -lpng \
+#                -lxml2 \
+#                -ljpeg \
+#                -lskia
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
