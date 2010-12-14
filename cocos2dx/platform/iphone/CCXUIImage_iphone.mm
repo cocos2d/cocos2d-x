@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "CCXBitmapDC.h"
 
-static tImageInfo s_imageInfo;
 
 static unsigned int nextPOT(unsigned int x)
 {
@@ -41,18 +40,18 @@ static unsigned int nextPOT(unsigned int x)
 	return x + 1;
 }
 
-static bool static_initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POTWide, NSUInteger POTHigh)
+static bool static_initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POTWide, NSUInteger POTHigh, tImageInfo *pImageInfo)
 {
-	NSUInteger				i;
-	CGContextRef			context = nil;
-	unsigned char*			data = nil;;
+	NSUInteger			i;
+	CGContextRef		context = nil;
+	unsigned char*		data = nil;;
 	CGColorSpaceRef		colorSpace;
-	unsigned char*			tempData;
-	unsigned int*				inPixel32;
-	unsigned short*			outPixel16;
-	bool						hasAlpha;
-	CGImageAlphaInfo		info;
-	CGSize					imageSize;
+	unsigned char*		tempData;
+	unsigned int*		inPixel32;
+	unsigned short*		outPixel16;
+	bool				hasAlpha;
+	CGImageAlphaInfo	info;
+	CGSize				imageSize;
 	cocos2d::CCTexture2DPixelFormat	pixelFormat;
 	
 	info = CGImageGetAlphaInfo(image);
@@ -184,19 +183,24 @@ static bool static_initPremultipliedATextureWithImage(CGImageRef image, NSUInteg
 	
 	// should be after calling super init
 	//s_imageInfo.isPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
-	s_imageInfo.isPremultipliedAlpha = true;
-	s_imageInfo.hasAlpha = true;
+	pImageInfo->isPremultipliedAlpha = true;
+	pImageInfo->hasAlpha = true;
 	//s_imageInfo.hasAlpha = hasAlpha;
-	s_imageInfo.bitsPerComponent = bpp;
-	s_imageInfo.width = imageSize.width;
-	s_imageInfo.height = imageSize.height;
-	s_imageInfo.data = data;
+	pImageInfo->bitsPerComponent = bpp;
+	pImageInfo->width = imageSize.width;
+	pImageInfo->height = imageSize.height;
+	
+	if (pImageInfo->data)
+	{
+		delete []pImageInfo->data;
+	}
+	pImageInfo->data = data;
 	
 	CGContextRelease(context);
 	return true;
 }
 
-static bool static_initWithImage(const char* path)
+static bool static_initWithImage(const char* path, tImageInfo *pImageinfo)
 {
 	NSUInteger				POTWide, POTHigh;
 	CGImageRef				CGImage;	
@@ -218,8 +222,8 @@ static bool static_initWithImage(const char* path)
 	//CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 	cocos2d::CCConfiguration *conf = cocos2d::CCConfiguration::sharedConfiguration();
     
-        POTWide = CGImageGetWidth(CGImage);
-        POTHigh = CGImageGetHeight(CGImage);
+	POTWide = CGImageGetWidth(CGImage);
+	POTHigh = CGImageGetHeight(CGImage);
 	
 	unsigned maxTextureSize = conf->getMaxTextureSize();
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
@@ -229,7 +233,7 @@ static bool static_initWithImage(const char* path)
 	}
 	
 	// always load premultiplied images
-	static_initPremultipliedATextureWithImage(CGImage, POTWide, POTHigh);
+	static_initPremultipliedATextureWithImage(CGImage, POTWide, POTHigh, pImageinfo);
 	
 	[png release];
 	[jpg release];
@@ -293,8 +297,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 	{
 	case kImageFormatPNG:
 	case kImageFormatJPG:
-		bRet = static_initWithImage(strPath.c_str());
-			m_imageInfo = s_imageInfo;
+		bRet = static_initWithImage(strPath.c_str(), &m_imageInfo);
 		break;
 	default:
 		// unsupported image type
