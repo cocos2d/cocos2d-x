@@ -40,7 +40,7 @@ namespace cocos2d
 	public:
 		static inline int isnanCocos2d(double fValue)
 		{
-	 #ifdef WIN32
+	 #if defined(WIN32) && !defined (SHP)
  			return _isnan(fValue);
 	 #else
  			if (fValue != fValue)

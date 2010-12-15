@@ -760,6 +760,8 @@
 				BF00F6D012B71094003739C6 /* FileUtils.h */,
 				BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */,
 				BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */,
+				BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */,
+				BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */,
 				BF755C0D12A1011A00450234 /* CCAction.h */,
 				BF755C0E12A1011A00450234 /* CCActionManager.h */,
 				BF755C0F12A1011A00450234 /* CCAtlasNode.h */,
@@ -1358,6 +1360,8 @@
 				BF3573D012B5E9B4003C3188 /* CCKeypadDelegate.h in Headers */,
 				BF3573D112B5E9B4003C3188 /* CCKeypadDispatcher.h in Headers */,
 				BF00F6D112B71094003739C6 /* FileUtils.h in Headers */,
+				BF3573D012B5E9B4003C3188 /* CCKeypadDelegate.h in Headers */,
+				BF3573D112B5E9B4003C3188 /* CCKeypadDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

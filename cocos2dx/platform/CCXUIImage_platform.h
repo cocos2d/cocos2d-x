@@ -34,6 +34,8 @@ THE SOFTWARE.
     #include "android/CCXUIImage_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
     #include "iphone/CCXUIImage_iphone.h"
+#elif defined(CCX_PLATFORM_BADA)
+	#include "bada/CCXUIImage_bada.h"
 #else
     #error
 #endif // __CCX_UIIMAGE_PLATFORM_H__

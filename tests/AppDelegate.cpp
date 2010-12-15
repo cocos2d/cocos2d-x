@@ -31,6 +31,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (!(m_pMainWnd = new CCXEGLView()))
 #elif defined(CCX_PLATFORM_ANDROID)
     if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
+#elif defined(CCX_PLATFORM_BADA)
+    if (!(m_pMainWnd = new CCXEGLView()) || !m_pMainWnd->Create(this))
 #else
     #error
 #endif
@@ -60,6 +62,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #elif defined(CCX_PLATFORM_ANDROID)
     CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests-1.apk");
 	CCFileUtils::setRelativePath("assets");
+#elif defined(CCX_PLATFORM_BADA)
+    // set the resource path
+    CCFileUtils::setResourcePath("/Res/");
 #endif
 
 #if 0

@@ -18,7 +18,7 @@
 
 #ifndef EDGE_SHAPES_H
 #define EDGE_SHAPES_H
-
+#include <string.h>
 class EdgeShapesCallback : public b2RayCastCallback
 {
 public:

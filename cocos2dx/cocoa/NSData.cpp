@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "support/file_support/FileData.h"
 
 #include <stdio.h>
-
+#include <string.h>
 using namespace std;
 namespace   cocos2d {
 

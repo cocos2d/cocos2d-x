@@ -35,10 +35,11 @@ extern "C" {
 void
 cpMessage(char *message, char *condition, char *file, int line, int isError)
 {
+#ifndef SHP
 	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: %s\n" : "Chipmunk warning: %s\n"), message);
 	fprintf(stderr, "\tFailed condition: %s\n", condition);
 	fprintf(stderr, "\tSource:%s:%d\n", file, line);
-	
+#endif
 	if(isError) abort();
 }
 

@@ -34,6 +34,8 @@ THE SOFTWARE.
     #include "android/CCXUIAccelerometer_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
     #include "iphone/CCXUIAccelerometer_iphone.h"
+#elif defined(CCX_PLATFORM_BADA)
+	#include "bada/CCXUIAccelerometer_bada.h"
 #else
     #error
 #endif
