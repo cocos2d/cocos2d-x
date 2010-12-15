@@ -4,6 +4,8 @@
 
 #define BREAK_IF(cond)      if (cond) break;
 
+namespace CocosDenshion {
+
 SoundPlayer::SoundPlayer()
 : m_pPlayer(NULL)
 , m_pMediaFile(NULL)
@@ -193,3 +195,5 @@ Int32 SoundPlayer::DecodeFile(void* buffer, Int32 bufferLen, const char* pszFile
 
     return nRet;
 }
+
+} // end of namespace CocosDenshion

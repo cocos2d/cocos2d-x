@@ -8,6 +8,8 @@
 
 #include  "SimpleAudioEngine.h"
 
+using namespace CocosDenshion;
+
 const static char kszMusic[]	= "music.mid";
 const static char kszEffect1[]	= "effect1.wav";
 const static char kszEffect2[]	= "effect2.wav";

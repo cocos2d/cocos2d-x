@@ -5,6 +5,8 @@
 
 #define BREAK_IF(cond)  if (cond) break;
 
+namespace CocosDenshion {
+
 static char s_ResourcePath[MAX_PATH] = {0};
 static char s_ZipFilePath[MAX_PATH]  = {0};
 
@@ -208,3 +210,5 @@ void fullPathFromRelativePath(const char *pszRelativePath, char* fullPath)
 
     return;
 }
+
+} // end of namespace CocosDenshion

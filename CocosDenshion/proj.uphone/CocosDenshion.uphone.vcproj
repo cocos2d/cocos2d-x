@@ -224,7 +224,7 @@
 				Name="zip_support"
 				>
 				<File
-					RelativePath="..\uphone\zip_support\ioapi.c"
+					RelativePath="..\uphone\zip_support\ioapi.cpp"
 					>
 				</File>
 				<File
@@ -232,7 +232,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\uphone\zip_support\unzip.c"
+					RelativePath="..\uphone\zip_support\unzip.cpp"
 					>
 				</File>
 				<File

@@ -338,11 +338,11 @@ $(OBJECTS_DIR)/TGAlib.o : ../support/image_support/TGAlib.cpp
 $(OBJECTS_DIR)/glu.o : ../support/opengl_support/glu.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/glu.o ../support/opengl_support/glu.cpp
 
-$(OBJECTS_DIR)/ioapi.o : ../support/zip_support/ioapi.c
-	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../support/zip_support/ioapi.c
+$(OBJECTS_DIR)/ioapi.o : ../support/zip_support/ioapi.cpp
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../support/zip_support/ioapi.cpp
 
-$(OBJECTS_DIR)/unzip.o : ../support/zip_support/unzip.c
-	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../support/zip_support/unzip.c
+$(OBJECTS_DIR)/unzip.o : ../support/zip_support/unzip.cpp
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../support/zip_support/unzip.cpp
 
 $(OBJECTS_DIR)/CCTexture2D.o : ../textures/CCTexture2D.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTexture2D.o ../textures/CCTexture2D.cpp

@@ -4,6 +4,8 @@
 
 #define BREAK_IF(cond)      if (cond) break;
 
+namespace CocosDenshion {
+
 unsigned int BKDRHash(const char *str)
 {
     unsigned int seed = 31; // 31 131 1313 13131 131313 etc..
@@ -200,3 +202,5 @@ int SoundDataManager::loadFromFile(const char* pFilePath)
 
     return nSoundID;
 }
+
+} // end of namespace CocosDenshion
