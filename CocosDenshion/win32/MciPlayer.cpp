@@ -3,6 +3,8 @@
 #define WIN_CLASS_NAME		"CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
 
+namespace CocosDenshion {
+
 static HINSTANCE s_hInstance;
 static MCIERROR  s_mciError;
 
@@ -206,3 +208,5 @@ LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	}
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
+
+} // end of namespace CocosDenshion

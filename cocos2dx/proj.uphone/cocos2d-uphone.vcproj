@@ -768,7 +768,7 @@
 				Name="zip_support"
 				>
 				<File
-					RelativePath="..\support\zip_support\ioapi.c"
+					RelativePath="..\support\zip_support\ioapi.cpp"
 					>
 				</File>
 				<File
@@ -776,7 +776,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\support\zip_support\unzip.c"
+					RelativePath="..\support\zip_support\unzip.cpp"
 					>
 				</File>
 				<File

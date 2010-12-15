@@ -11,6 +11,8 @@
 #include  "SimpleAudioEngine.h"
 #include  <cassert>
 
+using namespace CocosDenshion;
+
 extern const  AppResourceEntry TestAudioEngineResourceEntry;
 
 /**

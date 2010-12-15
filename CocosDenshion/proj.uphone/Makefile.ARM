@@ -68,8 +68,8 @@ $(OBJECTS_DIR)/SoundDataManager.o : ../uphone/SoundDataManager.cpp
 $(OBJECTS_DIR)/SoundPlayer.o : ../uphone/SoundPlayer.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SoundPlayer.o ../uphone/SoundPlayer.cpp
 
-$(OBJECTS_DIR)/ioapi.o : ../uphone/zip_support/ioapi.c
-	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../uphone/zip_support/ioapi.c
+$(OBJECTS_DIR)/ioapi.o : ../uphone/zip_support/ioapi.cpp
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ioapi.o ../uphone/zip_support/ioapi.cpp
 
-$(OBJECTS_DIR)/unzip.o : ../uphone/zip_support/unzip.c
-	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../uphone/zip_support/unzip.c
+$(OBJECTS_DIR)/unzip.o : ../uphone/zip_support/unzip.cpp
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/unzip.o ../uphone/zip_support/unzip.cpp

@@ -6,6 +6,8 @@
 #include "TCOM_Generic_DataType.h"
 #include <string>
 
+namespace CocosDenshion {
+
 class SoundPlayer
 {
 public:
@@ -96,5 +98,7 @@ private:
 
     TUChar m_fileName[MAX_PATH];
 };
+
+} // end of namespace CocosDenshion
 
 #endif

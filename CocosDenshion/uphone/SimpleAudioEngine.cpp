@@ -6,6 +6,8 @@
 
 #define BREAK_IF(cond)  if (cond) break;
 
+namespace CocosDenshion {
+
 static SimpleAudioEngine *s_pSharedAudioEngine = NULL;
 static SoundDataManager  *s_pDataManager      = NULL;
 static SoundPlayer       *s_pBackPlayer       = NULL;
@@ -281,3 +283,5 @@ void SimpleAudioEngine::unloadEffectAll()
 {
     s_pDataManager->removeAllEffects();
 }
+
+} // end of namespace CocosDenshion

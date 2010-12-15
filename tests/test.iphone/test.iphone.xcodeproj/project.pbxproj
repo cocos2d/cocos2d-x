@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		BF0FFB6212B8CEB80074E104 /* ioapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0FFB6012B8CEB80074E104 /* ioapi.cpp */; };
+		BF0FFB6312B8CEB80074E104 /* unzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0FFB6112B8CEB80074E104 /* unzip.cpp */; };
 		BF170CED129286C000B8313A /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF170C49129286C000B8313A /* AppDelegate.cpp */; };
 		BF170CEE129286C000B8313A /* AccelerometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF170C4D129286C000B8313A /* AccelerometerTest.cpp */; };
 		BF170CEF129286C000B8313A /* ActionManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF170C50129286C000B8313A /* ActionManagerTest.cpp */; };
@@ -463,9 +465,7 @@
 		BF7B9EE312B7059A00147B74 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7B9EE212B7059A00147B74 /* FileUtils.h */; };
 		BF82668712A8C1E300C9FC48 /* FileData.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668412A8C1E300C9FC48 /* FileData.h */; };
 		BF82668812A8C1E300C9FC48 /* FileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82668512A8C1E300C9FC48 /* FileUtils.cpp */; };
-		BF82668F12A8C1F600C9FC48 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82668B12A8C1F600C9FC48 /* ioapi.c */; };
 		BF82669012A8C1F600C9FC48 /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668C12A8C1F600C9FC48 /* ioapi.h */; };
-		BF82669112A8C1F600C9FC48 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82668D12A8C1F600C9FC48 /* unzip.c */; };
 		BF82669212A8C1F600C9FC48 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82668E12A8C1F600C9FC48 /* unzip.h */; };
 		BF8DE46B1297A00D00DD1681 /* CCUIAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */; };
 		BF8DE4A01297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8DE49F1297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm */; };
@@ -504,6 +504,8 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_Prefix.pch; sourceTree = "<group>"; };
+		BF0FFB6012B8CEB80074E104 /* ioapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ioapi.cpp; path = zip_support/ioapi.cpp; sourceTree = "<group>"; };
+		BF0FFB6112B8CEB80074E104 /* unzip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unzip.cpp; path = zip_support/unzip.cpp; sourceTree = "<group>"; };
 		BF170C49129286C000B8313A /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF170C4A129286C000B8313A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF170C4D129286C000B8313A /* AccelerometerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccelerometerTest.cpp; sourceTree = "<group>"; };
@@ -1029,9 +1031,7 @@
 		BF7B9EE212B7059A00147B74 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; };
 		BF82668412A8C1E300C9FC48 /* FileData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileData.h; path = file_support/FileData.h; sourceTree = "<group>"; };
 		BF82668512A8C1E300C9FC48 /* FileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtils.cpp; path = file_support/FileUtils.cpp; sourceTree = "<group>"; };
-		BF82668B12A8C1F600C9FC48 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = zip_support/ioapi.c; sourceTree = "<group>"; };
 		BF82668C12A8C1F600C9FC48 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = zip_support/ioapi.h; sourceTree = "<group>"; };
-		BF82668D12A8C1F600C9FC48 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = zip_support/unzip.c; sourceTree = "<group>"; };
 		BF82668E12A8C1F600C9FC48 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = zip_support/unzip.h; sourceTree = "<group>"; };
 		BF8DE46A1297A00D00DD1681 /* CCUIAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUIAccelerometerDelegate.h; sourceTree = "<group>"; };
 		BF8DE49F1297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCXUIAccelerometer_iphone.mm; sourceTree = "<group>"; };
@@ -2266,9 +2266,9 @@
 		BF82668A12A8C1E700C9FC48 /* zip_support */ = {
 			isa = PBXGroup;
 			children = (
-				BF82668B12A8C1F600C9FC48 /* ioapi.c */,
+				BF0FFB6012B8CEB80074E104 /* ioapi.cpp */,
+				BF0FFB6112B8CEB80074E104 /* unzip.cpp */,
 				BF82668C12A8C1F600C9FC48 /* ioapi.h */,
-				BF82668D12A8C1F600C9FC48 /* unzip.c */,
 				BF82668E12A8C1F600C9FC48 /* unzip.h */,
 			);
 			name = zip_support;
@@ -2806,10 +2806,10 @@
 				BF6A8FAC12966AEE00EDEB28 /* AccelerometerDelegateWrapper.mm in Sources */,
 				BF8DE4A01297B1D500DD1681 /* CCXUIAccelerometer_iphone.mm in Sources */,
 				BF82668812A8C1E300C9FC48 /* FileUtils.cpp in Sources */,
-				BF82668F12A8C1F600C9FC48 /* ioapi.c in Sources */,
-				BF82669112A8C1F600C9FC48 /* unzip.c in Sources */,
 				BF35739212B5E902003C3188 /* CCKeypadDelegate.cpp in Sources */,
 				BF35739312B5E902003C3188 /* CCKeypadDispatcher.cpp in Sources */,
+				BF0FFB6212B8CEB80074E104 /* ioapi.cpp in Sources */,
+				BF0FFB6312B8CEB80074E104 /* unzip.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
