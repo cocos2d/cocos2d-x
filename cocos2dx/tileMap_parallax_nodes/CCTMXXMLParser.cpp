@@ -243,8 +243,9 @@ namespace cocos2d {
 		/*
 		* this is to debug memory for regression tests
 		*/
+#ifndef SHP
 		xmlMemoryDump();
-
+#endif
 		return true;
 	}
 

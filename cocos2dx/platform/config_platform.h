@@ -25,6 +25,8 @@ THE SOFTWARE.
 // pre configure
 #ifdef _TRANZDA_VM_                             // under uphone
     #define CCX_PLATFORM_UPHONE
+#elif defined (SHP)
+	#define CCX_PLATFORM_BADA
 #elif   defined (WIN32) && defined (_WINDOWS)   // under win32pc
     #define CCX_PLATFORM_WIN32
 #elif   defined (ANDROID)
@@ -64,6 +66,6 @@ THE SOFTWARE.
 #endif
 
 // check compiling platform
-#if ! defined(CCX_PLATFORM_UPHONE) && ! defined(CCX_PLATFORM_WIN32) && ! defined(CCX_PLATFORM_ANDROID) && ! defined(CCX_PLATFORM_IPHONE)
+#if ! defined(CCX_PLATFORM_UPHONE) && ! defined(CCX_PLATFORM_WIN32) && ! defined(CCX_PLATFORM_ANDROID) && ! defined(CCX_PLATFORM_IPHONE) && ! defined(CCX_PLATFORM_BADA)
     #error "no platform macro defined!"
 #endif

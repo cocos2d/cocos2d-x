@@ -35,6 +35,8 @@ THE SOFTWARE.
     #include "android/CCXEGLView_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
     #include "iphone/CCXEGLView_iphone.h"
+#elif defined(CCX_PLATFORM_BADA)
+	#include "bada/CCXEGLView_bada.h"
 #else
     #error
 #endif

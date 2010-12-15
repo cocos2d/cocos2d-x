@@ -35,6 +35,8 @@ THE SOFTWARE.
     #include "android/CCXApplication_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
     #include "iphone/CCXApplication_iphone.h"
+#elif defined(CCX_PLATFORM_BADA)
+	#include "bada/CCXApplication_bada.h"
 #else
     #error
 #endif
