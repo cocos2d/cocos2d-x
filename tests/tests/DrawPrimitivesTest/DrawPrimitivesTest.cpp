@@ -1,4 +1,4 @@
-#include "drawPrimitivesTest.h"
+#include "DrawPrimitivesTest.h"
 
 DrawPrimitivesTest::DrawPrimitivesTest()
 {
