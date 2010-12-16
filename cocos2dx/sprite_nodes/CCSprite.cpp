@@ -601,12 +601,11 @@ void CCSprite::draw(void)
 
 #if CC_SPRITE_DEBUG_DRAW
 	CGSize s = m_tContentSize;
-	CGSize s = [self contentSize];
 	CGPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
 	};
-	ccDrawPoly(vertices, 4, ture);
+	ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
 }
 
