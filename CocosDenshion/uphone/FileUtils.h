@@ -3,6 +3,8 @@
 
 #include "TG3.h"
 
+namespace CocosDenshion {
+
 /**
 @class FileUtils
 @brief Offer tools of file system
@@ -39,5 +41,7 @@ public:
     */
     static unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
 };
+
+} // end of namespace CocosDenshion
 
 #endif

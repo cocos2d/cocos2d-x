@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "Export.h"
 
+namespace CocosDenshion {
+
 /**
 @struct T_SoundResInfo
 @brief  The data type of resource name and resource ID
@@ -180,5 +182,7 @@ public:
     */
     void playPreloadedEffect(int nSoundId);
 };
+
+} // end of namespace CocosDenshion
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_

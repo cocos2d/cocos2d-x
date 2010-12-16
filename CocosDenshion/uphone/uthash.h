@@ -4,6 +4,8 @@
 #include <string.h>   /* memcmp,strlen */
 #include <stddef.h>   /* ptrdiff_t */
 
+namespace CocosDenshion {
+
 /* These macros use decltype or the earlier __typeof GNU extension.
    As decltype is only available in newer compilers (VS2010 or gcc 4.3+
    when compiling c++ source) this code uses whatever method is needed
@@ -929,5 +931,7 @@ typedef struct UT_hash_handle {
    unsigned keylen;                  /* enclosing struct's key len     */
    unsigned hashv;                   /* result of hash-fcn(key)        */
 } UT_hash_handle;
+
+} // end of namespace CocosDenshion
 
 #endif /* __SUPPORT_DATA_SUPPORT_UTHASH_H__*/
