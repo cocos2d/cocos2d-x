@@ -73,8 +73,8 @@ support/base64.cpp \
 support/file_support/FileUtils.cpp \
 support/image_support/TGAlib.cpp \
 support/opengl_support/glu.cpp \
-support/zip_support/ioapi.c \
-support/zip_support/unzip.c \
+support/zip_support/ioapi.cpp \
+support/zip_support/unzip.cpp \
 textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \

@@ -1,6 +1,8 @@
 #include "ResourceHandle.h"
 #include "TG3.h"
 
+namespace CocosDenshion {
+
 ResourceHandle::ResourceHandle()
 :m_pResLib(NULL)
 {
@@ -38,3 +40,5 @@ const void* ResourceHandle::LoadConstRawData(int nResID, unsigned int* nLen)
 
     return pResult;
 }
+
+} // end of namespace CocosDenshion

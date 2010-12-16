@@ -7,6 +7,8 @@
 #include "SimpleAudioEngine.h"
 #include <string>
 
+namespace CocosDenshion {
+
 /**
 @struct tEffectElement
 @brief  The struct of hash table elements
@@ -79,5 +81,7 @@ private:
     typedef std::map<std::string, int> SoundInfoMap;
     SoundInfoMap* m_pSoundMap;
 };
+
+} // end of namespace CocosDenshion
 
 #endif

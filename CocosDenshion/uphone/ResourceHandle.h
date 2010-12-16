@@ -4,6 +4,8 @@
 struct AppResourceEntry;
 class  TResourceLib;
 
+namespace CocosDenshion {
+
 /**
 @class ResourceHandle
 @brief Object that contains the ResourceEntry
@@ -35,5 +37,7 @@ public:
 private:
     TResourceLib* m_pResLib;
 };
+
+} // end of namespace CocosDenshion
 
 #endif
