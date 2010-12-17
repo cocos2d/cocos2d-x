@@ -33,7 +33,7 @@ extern "C" {
 #endif
 
 void
-cpMessage(char *message, char *condition, char *file, int line, int isError)
+cpMessage(const char *message, const char *condition, const char *file, int line, int isError)
 {
 	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: %s\n" : "Chipmunk warning: %s\n"), message);
 	fprintf(stderr, "\tFailed condition: %s\n", condition);

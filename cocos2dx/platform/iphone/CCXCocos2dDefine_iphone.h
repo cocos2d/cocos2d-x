@@ -96,6 +96,9 @@ if(! (_CONDITION) )			\
 assert( (_CONDITION) );	\
 }
 #else
+#ifdef NSAssert
+#undef NSAssert
+#endif
 #define NSAssert(_CONDITION, _TXT)
 #endif	// _DEBUG
 
