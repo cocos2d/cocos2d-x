@@ -60,7 +60,7 @@ namespace cocos2d {
 		,m_fEmitCounter(0)
 		,m_nParticleIdx(0)
 #if CC_ENABLE_PROFILERS
-		,m_pProfilingTimer(NULL);
+		,m_pProfilingTimer(NULL)
 #endif
 		,m_bIsActive(true)
 		,m_nParticleCount(0)

@@ -272,7 +272,7 @@ void CCSpriteSheet::draw(void)
 			}
 
 #if CC_SPRITESHEET_DEBUG_DRAW
-			CGRect rect = [child boundingBox]; //Issue #528
+		CGRect rect = pSprite->boundingBox(); // Issue #528
 		CGPoint vertices[4]={
 			ccp(rect.origin.x,rect.origin.y),
 			ccp(rect.origin.x+rect.size.width,rect.origin.y),

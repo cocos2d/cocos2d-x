@@ -23,6 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
 #include "CCTextureAtlas.h"
+#include "CGPointExtension.h"
+#include "CCDrawingPrimitives.h"
+
 namespace cocos2d{
 
 	//CCLabelAtlas - Creation & Init
