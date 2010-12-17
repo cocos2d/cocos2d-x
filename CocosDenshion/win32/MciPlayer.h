@@ -4,6 +4,8 @@
 #include<windows.h>
 #include <mmsystem.h>
 
+namespace CocosDenshion {
+
 class MciPlayer
 {
 public:
@@ -63,5 +65,7 @@ private:
 	UINT		m_uTimes;
 	bool		m_bPlaying;
 };
+
+} // end of namespace CocosDenshion
 
 #endif

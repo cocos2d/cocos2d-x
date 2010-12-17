@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "Export.h"
 
+namespace CocosDenshion {
+
 /**
 @struct T_SoundResInfo
 @brief  The data type of resource name and resource ID
@@ -57,6 +59,18 @@ public:
     @warning It must be called before the application exit, or a memroy leak will be casued.
     */
 	static void release();
+
+    /**
+    @brief  Set the ResourcePath,we will find resource in this path
+    @param pszResourcePath  The absolute resource path
+    */
+    static void setResourcePath(const char *pszResourcePath);
+
+    /**
+    @brief Set the absolute path of the .zip file which contains all resource files
+    @param pszZipPath The absolute path of the .zip file
+    */
+    static void setResourceZipFile(const char* pszZipPath);
 
     /**
     @brief set the sound ResInfo,it's only used on platform-uphone now
@@ -168,5 +182,7 @@ public:
     */
     void playPreloadedEffect(int nSoundId);
 };
+
+} // end of namespace CocosDenshion
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_

@@ -10,6 +10,9 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		BF00F6D112B71094003739C6 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF00F6D012B71094003739C6 /* FileUtils.h */; };
+		BF0FFAA412B8CDFE0074E104 /* ioapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0FFAA212B8CDFE0074E104 /* ioapi.cpp */; };
+		BF0FFAA512B8CDFE0074E104 /* unzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0FFAA312B8CDFE0074E104 /* unzip.cpp */; };
 		BF1373D3128A849B00D9F789 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4927C41289199700A09262 /* libcocos2d.a */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -19,6 +22,10 @@
 		BF1B034B128BCCE300373CD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		BF1B034C128BCCF800373CD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		BF1B034D128BCD0800373CD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		BF3573CA12B5E9A1003C3188 /* CCKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3573C812B5E9A1003C3188 /* CCKeypadDelegate.cpp */; };
+		BF3573CB12B5E9A1003C3188 /* CCKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3573C912B5E9A1003C3188 /* CCKeypadDispatcher.cpp */; };
+		BF3573D012B5E9B4003C3188 /* CCKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */; };
+		BF3573D112B5E9B4003C3188 /* CCKeypadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */; };
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF492B6A12891AC600A09262 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
 		BF492C22128924A800A09262 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -280,10 +287,7 @@
 		BF755FB212A1015E00450234 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAF12A1015E00450234 /* HelloWorld.png */; };
 		BF8265B512A8BD5000C9FC48 /* FileData.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265B212A8BD5000C9FC48 /* FileData.h */; };
 		BF8265B612A8BD5000C9FC48 /* FileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8265B312A8BD5000C9FC48 /* FileUtils.cpp */; };
-		BF8265B712A8BD5000C9FC48 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265B412A8BD5000C9FC48 /* FileUtils.h */; };
-		BF8265BD12A8BD7300C9FC48 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = BF8265B912A8BD7300C9FC48 /* ioapi.c */; };
 		BF8265BE12A8BD7300C9FC48 /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265BA12A8BD7300C9FC48 /* ioapi.h */; };
-		BF8265BF12A8BD7300C9FC48 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = BF8265BB12A8BD7300C9FC48 /* unzip.c */; };
 		BF8265C012A8BD7300C9FC48 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8265BC12A8BD7300C9FC48 /* unzip.h */; };
 /* End PBXBuildFile section */
 
@@ -302,7 +306,14 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BF00F6D012B71094003739C6 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; };
+		BF0FFAA212B8CDFE0074E104 /* ioapi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ioapi.cpp; path = zip_support/ioapi.cpp; sourceTree = "<group>"; };
+		BF0FFAA312B8CDFE0074E104 /* unzip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unzip.cpp; path = zip_support/unzip.cpp; sourceTree = "<group>"; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BF3573C812B5E9A1003C3188 /* CCKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDelegate.cpp; sourceTree = "<group>"; };
+		BF3573C912B5E9A1003C3188 /* CCKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCKeypadDispatcher.cpp; sourceTree = "<group>"; };
+		BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDelegate.h; sourceTree = "<group>"; };
+		BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDispatcher.h; sourceTree = "<group>"; };
 		BF365AA612A103F70050DCF4 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		BF365AA712A103F70050DCF4 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF4927C41289199700A09262 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,10 +579,7 @@
 		BF755FAF12A1015E00450234 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		BF8265B212A8BD5000C9FC48 /* FileData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileData.h; path = file_support/FileData.h; sourceTree = "<group>"; };
 		BF8265B312A8BD5000C9FC48 /* FileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileUtils.cpp; path = file_support/FileUtils.cpp; sourceTree = "<group>"; };
-		BF8265B412A8BD5000C9FC48 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileUtils.h; path = file_support/FileUtils.h; sourceTree = "<group>"; };
-		BF8265B912A8BD7300C9FC48 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = zip_support/ioapi.c; sourceTree = "<group>"; };
 		BF8265BA12A8BD7300C9FC48 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = zip_support/ioapi.h; sourceTree = "<group>"; };
-		BF8265BB12A8BD7300C9FC48 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = zip_support/unzip.c; sourceTree = "<group>"; };
 		BF8265BC12A8BD7300C9FC48 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = zip_support/unzip.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -653,9 +661,19 @@
 			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
+		BF3573C712B5E9A1003C3188 /* keypad_dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				BF3573C812B5E9A1003C3188 /* CCKeypadDelegate.cpp */,
+				BF3573C912B5E9A1003C3188 /* CCKeypadDispatcher.cpp */,
+			);
+			path = keypad_dispatcher;
+			sourceTree = "<group>";
+		};
 		BF755BE712A1011A00450234 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				BF3573C712B5E9A1003C3188 /* keypad_dispatcher */,
 				BF755BE812A1011A00450234 /* actions */,
 				BF755BF512A1011A00450234 /* base_nodes */,
 				BF755BF812A1011A00450234 /* CCamera.cpp */,
@@ -739,6 +757,9 @@
 		BF755C0C12A1011A00450234 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF00F6D012B71094003739C6 /* FileUtils.h */,
+				BF3573CE12B5E9B4003C3188 /* CCKeypadDelegate.h */,
+				BF3573CF12B5E9B4003C3188 /* CCKeypadDispatcher.h */,
 				BF755C0D12A1011A00450234 /* CCAction.h */,
 				BF755C0E12A1011A00450234 /* CCActionManager.h */,
 				BF755C0F12A1011A00450234 /* CCAtlasNode.h */,
@@ -1140,7 +1161,6 @@
 			children = (
 				BF8265B212A8BD5000C9FC48 /* FileData.h */,
 				BF8265B312A8BD5000C9FC48 /* FileUtils.cpp */,
-				BF8265B412A8BD5000C9FC48 /* FileUtils.h */,
 			);
 			name = file_support;
 			sourceTree = "<group>";
@@ -1148,9 +1168,9 @@
 		BF8265B812A8BD6300C9FC48 /* zip_support */ = {
 			isa = PBXGroup;
 			children = (
-				BF8265B912A8BD7300C9FC48 /* ioapi.c */,
+				BF0FFAA212B8CDFE0074E104 /* ioapi.cpp */,
+				BF0FFAA312B8CDFE0074E104 /* unzip.cpp */,
 				BF8265BA12A8BD7300C9FC48 /* ioapi.h */,
-				BF8265BB12A8BD7300C9FC48 /* unzip.c */,
 				BF8265BC12A8BD7300C9FC48 /* unzip.h */,
 			);
 			name = zip_support;
@@ -1333,9 +1353,11 @@
 				BF755F9712A1011B00450234 /* TransformUtils.h in Headers */,
 				BF755FA412A1011B00450234 /* CCTouchHandler.h in Headers */,
 				BF8265B512A8BD5000C9FC48 /* FileData.h in Headers */,
-				BF8265B712A8BD5000C9FC48 /* FileUtils.h in Headers */,
 				BF8265BE12A8BD7300C9FC48 /* ioapi.h in Headers */,
 				BF8265C012A8BD7300C9FC48 /* unzip.h in Headers */,
+				BF3573D012B5E9B4003C3188 /* CCKeypadDelegate.h in Headers */,
+				BF3573D112B5E9B4003C3188 /* CCKeypadDispatcher.h in Headers */,
+				BF00F6D112B71094003739C6 /* FileUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1512,8 +1534,10 @@
 				BF755FA212A1011B00450234 /* CCTouchDispatcher.cpp in Sources */,
 				BF755FA312A1011B00450234 /* CCTouchHandler.cpp in Sources */,
 				BF8265B612A8BD5000C9FC48 /* FileUtils.cpp in Sources */,
-				BF8265BD12A8BD7300C9FC48 /* ioapi.c in Sources */,
-				BF8265BF12A8BD7300C9FC48 /* unzip.c in Sources */,
+				BF3573CA12B5E9A1003C3188 /* CCKeypadDelegate.cpp in Sources */,
+				BF3573CB12B5E9A1003C3188 /* CCKeypadDispatcher.cpp in Sources */,
+				BF0FFAA412B8CDFE0074E104 /* ioapi.cpp in Sources */,
+				BF0FFAA512B8CDFE0074E104 /* unzip.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

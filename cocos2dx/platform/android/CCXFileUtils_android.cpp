@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include "NSString.h"
 #include "CCXFileUtils_android.h"
 #include "CCXCocos2dDefine.h"
-
-#define MAX_PATH 260
+#include "support/file_support/FileData.h"
+#include "support/zip_support/unzip.h"
 
 namespace cocos2d {
 
@@ -69,17 +69,15 @@ public:
 	}
 	NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName)
 	{
-		FILE *fp = NULL;
-		if( !(fp = fopen(pFileName, "r")) )
-		{
-			return NULL;
-		}
-		fseek(fp,0,SEEK_END);
-		int size = ftell(fp);
-		fseek(fp,0,SEEK_SET);
-		char *buffer = new char[size+1];
-		fread(buffer,sizeof(char),size,fp);
-		fclose(fp);
+		FileData data;
+        unsigned long size = 0;
+        char *pBuffer = (char *) data.getFileData(pFileName, "r", &size);
+
+        if (! pBuffer)
+        {
+            return NULL;
+        }
+        
 		/*
 		* this initialize the library and check potential ABI mismatches
 		* between the version it was compiled for and the actual shared
@@ -94,7 +92,7 @@ public:
  		saxHandler.endElement = &plist_endElement;
  		saxHandler.characters = &plist_characters;
 
-		int result = xmlSAXUserParseMemory( &saxHandler, this, buffer, size );
+		int result = xmlSAXUserParseMemory( &saxHandler, this, pBuffer, size );
 		if ( result != 0 )
 		{
 			return NULL;
@@ -107,7 +105,6 @@ public:
 		* this is to debug memory for regression tests
 		*/
 		xmlMemoryDump();
-		delete []buffer;
 		return m_pRootDict;
 	}
 };
@@ -197,37 +194,67 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
 }
 
 // record the resource path
-static char s_pszResourcePath[MAX_PATH] = {0};
+
+string CCFileUtils::m_sRelativePath = "";
+string CCFileUtils::m_sResourcePath = "";
+	
+void CCFileUtils::setRelativePath(const char* pszRelativePath)
+{
+	NSAssert(pszRelativePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
+	
+	if (! pszRelativePath)
+	{
+		return;
+	}
+	
+	m_sRelativePath = pszRelativePath;
+	
+	// if the path is not ended with '/', append it
+	if (m_sRelativePath.find("/") != (strlen(m_sRelativePath.c_str()) - 1))
+	{
+		m_sRelativePath += "/";
+	}
+}
 
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
     NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
     NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
 
-    strcpy(s_pszResourcePath, pszResourcePath);
+    m_sResourcePath = pszResourcePath;
 }
 
 const char* CCFileUtils::getResourcePath()
 {
-	return s_pszResourcePath;
+	return m_sResourcePath.c_str();
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-    return pszRelativePath;
+	return pszRelativePath;
 }
+
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+	//std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+	std::string relativeFile = pszRelativeFile;
 	NSString *pRet = new NSString();
 	pRet->autorelease();
 	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
 	pRet->m_sString += pszFilename;
 	return pRet->m_sString.c_str();
 }
+
 NSDictionary<std::string, NSObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);
 }
+
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+{	
+	string fullPath = m_sRelativePath + pszFileName;
+	return FileUtils::getFileDataFromZip(m_sResourcePath.c_str(), fullPath.c_str(), pSize);
+}
+
 }//namespace   cocos2d 
