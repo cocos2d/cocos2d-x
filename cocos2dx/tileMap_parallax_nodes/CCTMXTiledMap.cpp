@@ -48,7 +48,11 @@ namespace cocos2d{
 		setContentSize(CGSizeZero);
 
 		CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithTMXFile(tmxFile);
-
+    
+        if (! mapInfo)
+        {
+            return false;
+        }
 		NSAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
 
 		m_tMapSize = mapInfo->getMapSize();
