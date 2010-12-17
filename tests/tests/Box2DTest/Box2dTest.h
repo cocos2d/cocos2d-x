@@ -2,7 +2,7 @@
 #define _BOX2D_TEST_H_
 
 #include "cocos2d.h"
-#include "Box2d/Box2d.h"
+#include "Box2D/Box2D.h"
 #include "../testBasic.h"
 
 class Box2DTestLayer : public CCLayer

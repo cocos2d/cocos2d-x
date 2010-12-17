@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <ssFile.h>
 #include "ccxCommon.h"
 #include "NSMutableDictionary.h"
-#include "support/file_support/FileUtils.h"
+#include "FileUtils.h"
 
 class TBitmap;
 class TResourceLib;

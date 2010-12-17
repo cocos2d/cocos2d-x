@@ -11,6 +11,8 @@
 #include  "SimpleAudioEngine.h"
 #include  <cassert>
 
+using namespace CocosDenshion;
+
 extern const  AppResourceEntry TestAudioEngineResourceEntry;
 
 /**
@@ -44,8 +46,13 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 	{
 	case EVENT_WinInit:
 		{
+#if 1
             SimpleAudioEngine::sharedEngine()->setResourceEntry(&TestAudioEngineResourceEntry);
             SimpleAudioEngine::sharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
+#else
+            SimpleAudioEngine::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/TestAudioEngine/");
+            SimpleAudioEngine::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/APPS/TestAudioEngine/TestAudioEngine.zip");
+#endif
 			bHandled = TRUE;
 		}
 		break;

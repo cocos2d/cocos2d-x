@@ -44,13 +44,12 @@ namespace cocos2d{
         int getHeight();
         unsigned char* getData();
 	private:
-		unsigned int inline swapAlpha(unsigned int);
-		void getBitmapFromJava(const char *text, float fontSize);
+		void drawText(const char *text, float fontSize);
 		
 	private:
 		int m_nWidth;
 		int m_nHeight;
-		unsigned char *data;
+		unsigned char *m_pData;
 	};
 }
 

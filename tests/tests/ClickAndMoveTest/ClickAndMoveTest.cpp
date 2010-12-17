@@ -55,9 +55,9 @@ void MainLayer::ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent)
 	if( a < 0 ) 
 	{
 		if(  o < 0 )
-			at = 180 + std::abs((int)at);
+			at = 180 + fabs(at);
 		else
-			at = 180 - std::abs((int)at);	
+			at = 180 - fabs(at);	
 	}
 	
 	s->runAction( CCRotateTo::actionWithDuration(1, at) );

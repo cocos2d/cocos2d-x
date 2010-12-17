@@ -351,6 +351,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCKeypadDelegate.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCKeypadDispatcher.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCLabel.h"
 				>
 			</File>
@@ -564,6 +572,10 @@
 			</File>
 			<File
 				RelativePath="..\include\cocos2d.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\FileUtils.h"
 				>
 			</File>
 			<File
@@ -926,7 +938,7 @@
 				Name="zip_support"
 				>
 				<File
-					RelativePath="..\support\zip_support\ioapi.c"
+					RelativePath="..\support\zip_support\ioapi.cpp"
 					>
 				</File>
 				<File
@@ -934,7 +946,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\support\zip_support\unzip.c"
+					RelativePath="..\support\zip_support\unzip.cpp"
 					>
 				</File>
 				<File
@@ -951,10 +963,6 @@
 				</File>
 				<File
 					RelativePath="..\support\file_support\FileUtils.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\support\file_support\FileUtils.h"
 					>
 				</File>
 			</Filter>
@@ -1020,6 +1028,18 @@
 			</File>
 			<File
 				RelativePath="..\touch_dispatcher\CCTouchHandler.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="keypad_dispatcher"
+			>
+			<File
+				RelativePath="..\keypad_dispatcher\CCKeypadDelegate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\keypad_dispatcher\CCKeypadDispatcher.cpp"
 				>
 			</File>
 		</Filter>

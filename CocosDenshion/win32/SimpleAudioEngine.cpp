@@ -7,6 +7,8 @@
 
 using namespace std;
 
+namespace CocosDenshion {
+
 typedef map<unsigned int, MciPlayer> EffectList;
 typedef pair<unsigned int ,MciPlayer> Effect;
 
@@ -40,6 +42,15 @@ void SimpleAudioEngine::release()
 {
 	return;
 }
+
+void SimpleAudioEngine::setResourcePath(const char *pszResourcePath)
+{
+}
+
+void SimpleAudioEngine::setResourceZipFile(const char* pszZipPath)
+{
+}
+
 //////////////////////////////////////////////////////////////////////////
 // BackgroundMusic
 //////////////////////////////////////////////////////////////////////////
@@ -236,3 +247,5 @@ unsigned int _Hash(const char *key)
 	}
 	return (hash);
 }
+
+} // end of namespace CocosDenshion

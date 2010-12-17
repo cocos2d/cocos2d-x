@@ -56,17 +56,16 @@ public:
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
 
+protected:
+    Boolean OnPenDown(EventType* pEvent, Int32 nIndex);
+    Boolean OnPenUp(EventType* pEvent, Int32 nIndex);
+    Boolean OnPenMove(EventType* pEvent);
+
 private:
 
     MESSAGE_t m_tMsg;
     CCXEGL *            m_pEGL;
-
-    bool                m_bCaptured;
-    NSSet *             m_pSet;
-    CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
-
-    int                 m_nPenEventNum;
 };
 
 }   // end of namespace   cocos2d

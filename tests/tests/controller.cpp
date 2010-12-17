@@ -74,6 +74,8 @@ static TestScene* CreateTestScene(int nIdx)
 	case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
 #endif
+    case TEST_KEYPAD:
+        pScene = new KeypadTestScene(); break;
     default:
         break;
     }

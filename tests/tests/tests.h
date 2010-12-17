@@ -30,6 +30,7 @@
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "HiResTest/HiResTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
+#include "KeypadTest/KeypadTest.h"
 
 enum
 {
@@ -62,6 +63,7 @@ enum
     TEST_EFFECT_ADVANCE,
     TEST_HIRES,
     TEST_ACCELEROMRTER,
+    TEST_KEYPAD,
 
     TESTS_COUNT,
 };
@@ -96,6 +98,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "EffectAdvancedTest",
     "HiResTest",
     "Accelerometer",
+    "KeypadTest",
 };
 
 #endif
