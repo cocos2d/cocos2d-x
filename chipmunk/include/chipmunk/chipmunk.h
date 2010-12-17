@@ -26,7 +26,7 @@
 extern "C" {
 #endif
 
-void cpMessage(char *message, char *condition, char *file, int line, int isError);
+void cpMessage(const char *message, const char *condition, const char *file, int line, int isError);
 #ifdef NDEBUG
 	#define	cpAssertWarn(condition, message)
 #else

@@ -138,7 +138,7 @@ TestController::~TestController()
             // delete the userdata have recorded
             if (m_pMenuItems[i]->getUserData())
             {
-                delete m_pMenuItems[i]->getUserData();
+                delete (int*)m_pMenuItems[i]->getUserData();
                 m_pMenuItems[i]->setUserData(NULL);
             }
         }

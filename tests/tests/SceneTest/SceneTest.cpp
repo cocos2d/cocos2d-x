@@ -175,7 +175,7 @@ void SceneTestLayer3::testDealloc(ccTime dt)
 
 void SceneTestLayer3::ccTouchesEnded(NSSet* touches, UIEvent* event)
 {
-	static int i = 0;
+//	static int i = 0;
 	//UXLOG("SceneTestLayer3::ccTouchesEnded(%d)", ++i);
 	CCDirector::sharedDirector()->popScene();
 }
