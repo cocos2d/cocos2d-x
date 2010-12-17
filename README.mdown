@@ -15,15 +15,14 @@ Multi Platform
 
 Document
 ------------------
-   * Website: www.cocos2d-x.org
-   * Wiki Entry: http://wiki.cocos2d-x.org/
-   * [Offline API References][7] 
+   * Website: [www.cocos2d-x.org][7]
+   * [Offline API References][8] 
 	
 Contact us
 ------------------
-   * Forum: http://forum.cocos2d-x.org/
-   * Twitter: http://www.twitter.com/cocos2dx/
-   * Sina mini-blog: http://t.sina.com.cn/cocos2dx/
+   * Forum: [http://forum.cocos2d-x.org][9]
+   * Twitter: [http://www.twitter.com/cocos2dx][10]
+   * Sina mini-blog: [http://t.sina.com.cn/cocos2dx][11]
    
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
@@ -31,5 +30,8 @@ Contact us
 [4]: http://www.cocos2d-x.org/projects/cocos2d-android-ndk/wiki/Cocos2d-android-ndk "cocos2d-android-ndk"
 [5]: http://www.cocos2d-x.org/projects/cocos2d-uphone/wiki/Cocos2d-uphone "cocos2d-uphone"
 [6]: http://www.cocos2d-x.org/projects/cocos2d-win32/wiki/Cocos2d-win32 "cocos2d-win32"
-[7]: http://www.cocos2d-x.org/attachments/download/60/cocos2d-0.99.4-x-0.7.0-api-reference.zip "API References"
-
+[7]: http://www.cocos2dx.org "www.cocos2d-x.org"
+[8]: http://www.cocos2d-x.org/attachments/download/60/cocos2d-0.99.4-x-0.7.0-api-reference.zip "API References"
+[9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
+[10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
+[11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
