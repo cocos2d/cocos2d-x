@@ -25,18 +25,18 @@ THE SOFTWARE.
 #include <android/log.h>
 #include <stdio.h>
 
-#define MAX_LEN		256
+#define MAX_LEN		1024
 
 namespace cocos2d{
 
-    void CCX_DLL CCXLog(const char * pszFormat, ...)
+    void CCXLog(const char * pszFormat, ...)
     {
-    	va_list args;
-    	va_start(args, pszFormat);
-    	
     	char buf[MAX_LEN];
     	
-    	snprintf(buf, MAX_LEN, pszFormat, args);
+    	va_list args;
+    	va_start(args, pszFormat);    	
+    	vsprintf(buf, pszFormat, args);
+    	va_end(args);
     	
     	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
     }
