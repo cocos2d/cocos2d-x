@@ -154,6 +154,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 		break;
 	}
     
+#if defined(COCOS2D_DEBUG)
 	if (!bRet)
 	{
 		// notify the loading error
@@ -164,7 +165,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 		std::copy(strErr.begin(), strErr.end(), wsErr.begin());
 		MessageBox(NULL, wsErr.c_str(), L"cocos2d-x error", MB_OK);
 	}
-
+#endif
 	return bRet;
 }
 
