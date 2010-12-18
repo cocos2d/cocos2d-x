@@ -97,7 +97,7 @@ namespace cocos2d
 		int m_nSeed;
 		int m_nTilesCount;
 		int *m_pTilesOrder;
-		void *m_pTiles;
+		Tile *m_pTiles;
 	};
 
 	/** @brief CCFadeOutTRTiles action

@@ -119,7 +119,7 @@ drawSpaceOptions options = {
 };
 
 static void
-drawString(int x, int y, char *str)
+drawString(int x, int y, const char *str)
 {
 	// implement me
 }
@@ -158,7 +158,7 @@ drawInfo()
 	maxConstraints = constraints > maxConstraints ? constraints : maxConstraints;
 	
 	char buffer[1000];
-	char *format = 
+	const char *format = 
 		"Arbiters: %d (%d) - "
 		"Contact Points: %d (%d)\n"
 		"Other Constraints: %d, Iterations: %d\n"

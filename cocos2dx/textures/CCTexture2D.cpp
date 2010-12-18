@@ -229,8 +229,8 @@ bool CCTexture2D::initWithImage(UIImage * uiImage)
 bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
 	unsigned int					i;
-	void*					data = NULL;
-	void*					tempData =NULL;
+	UINT8*					data = NULL;
+	UINT8*					tempData =NULL;
 	unsigned int*			inPixel32 = NULL;
 	unsigned short*			outPixel16 = NULL;
 	bool					hasAlpha;
@@ -294,7 +294,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 
-			tempData = (void*)(image->getData());
+			tempData = (UINT8*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
 
 			if(image->width() == POTWide && image->height() == POTHigh)
@@ -318,7 +318,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 
 			break;    
 		case kCCTexture2DPixelFormat_RGB888:
-			tempData = (void*)(image->getData());
+			tempData = (UINT8*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{

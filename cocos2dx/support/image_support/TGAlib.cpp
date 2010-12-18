@@ -105,7 +105,7 @@ bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *p
 
 bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
 {
-    bool bRet = false;
+    //bool bRet = false;
     unsigned int mode,total,i, index = 0;
     unsigned char aux[4], runlength = 0;
     unsigned int skip = 0, flag = 0;

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 namespace   cocos2d {
 
-char* cocos2dVersion()
+const char* cocos2dVersion()
 {
 	return "cocos2d v0.99.4";
 }
