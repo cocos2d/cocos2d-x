@@ -153,6 +153,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
         }
     }
 
+#if defined(COCOS2D_DEBUG)
 	if (!bRet)
 	{
 		std::string strErr = "Load ";
@@ -162,6 +163,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 		TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
 		TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
 	}
+#endif
 
 	return bRet;
 }
