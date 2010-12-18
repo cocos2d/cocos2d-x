@@ -30,7 +30,7 @@
 static cpSpace *space;
 static cpBody *staticBody;
 
-enum {
+enum _CollisionTypes {
 	BALL_TYPE,
 	BLOCKING_SENSOR_TYPE,
 	CATCH_SENSOR_TYPE,

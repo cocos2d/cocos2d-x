@@ -50,7 +50,7 @@ THE SOFTWARE.
  
  Default value: 0.1f
  */
-#define CC_DIRECTOR_FPS_INTERVAL (0.1f)
+#define CC_DIRECTOR_FPS_INTERVAL (0.5f)
 
 /** @def CC_DIRECTOR_DISPATCH_FAST_EVENTS
  If enabled, and only when it is used with CCFastDirector, the main loop will wait 0.04 seconds to

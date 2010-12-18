@@ -619,7 +619,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	}
 	
 	////----UXLOG("----> Fetching 1 object by name");
-	CCXStringToStringDictionary* platform = group->objectNamed("platform");
+	// CCXStringToStringDictionary* platform = group->objectNamed("platform");
 	////----UXLOG("platform: %x", platform);
 }
 

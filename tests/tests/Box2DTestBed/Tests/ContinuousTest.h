@@ -104,7 +104,7 @@ public:
 			m_textLine += 15;
 		}
 
-		extern int b2_toiCalls, b2_toiIters, b2_toiMaxIters;
+		extern int b2_toiCalls, b2_toiIters; // b2_toiMaxIters;
 		extern int b2_toiRootIters, b2_toiMaxRootIters;
 		extern int b2_toiMaxOptIters;
 
