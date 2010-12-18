@@ -35,7 +35,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	if (! (m_pMainWnd = new CCXEGLView()) ||
 		! m_pMainWnd->Create(L"HelloWorld", 320, 480))
 #elif defined(CCX_PLATFORM_IPHONE)
-	if (! (m_pMainWnd = new CCXEGLView() ) )
+	if (! (m_pMainWnd = new CCXEGLView() ) 
+#elif defined(CCX_PLATFORM_ANDROID)
+        if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
 #else
 	#error
 #endif
