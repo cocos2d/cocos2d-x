@@ -228,9 +228,9 @@ bool CCTexture2D::initWithImage(UIImage * uiImage)
 }
 bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
-	unsigned int					i;
-	UINT8*					data = NULL;
-	UINT8*					tempData =NULL;
+	unsigned int			i;
+	unsigned char*			data = NULL;
+	unsigned char*			tempData =NULL;
 	unsigned int*			inPixel32 = NULL;
 	unsigned short*			outPixel16 = NULL;
 	bool					hasAlpha;

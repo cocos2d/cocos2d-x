@@ -102,7 +102,6 @@ struct Settings
 
 struct TestEntry
 {
-	//const char *name;
     const char*		name;
 	TestCreateFcn* createFcn;
 };
