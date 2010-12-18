@@ -592,6 +592,7 @@ void ParallaxParticle::onEnter()
 	ParticleDemo::onEnter();
 	
 	m_background->getParent()->removeChild(m_background, true);
+    m_background = NULL;
 
 	CCParallaxNode* p = CCParallaxNode::node(); 
 	addChild(p, 5);
