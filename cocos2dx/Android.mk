@@ -52,7 +52,7 @@ particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCPointParticleSystem.cpp \
 particle_nodes/CCQuadParticleSystem.cpp \
 platform/android/CCTime.cpp \
-platform/android/ccx_Common_android.cpp \
+platform/android/ccxCommon_android.cpp \
 platform/android/CCXApplication_android.cpp \
 platform/android/CCXBitmapDC.cpp \
 platform/android/CCXEGLView_android.cpp \

@@ -48,7 +48,11 @@ namespace cocos2d{
 		setContentSize(CGSizeZero);
 
 		CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithTMXFile(tmxFile);
-
+    
+        if (! mapInfo)
+        {
+            return false;
+        }
 		NSAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
 
 		m_tMapSize = mapInfo->getMapSize();
@@ -179,7 +183,7 @@ namespace cocos2d{
 		}
 
 		// If all the tiles are 0, return empty tileset
-		CCLOG("cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo.name);
+		CCLOG("cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo->m_sName);
 		return tileset;
 	}
 
