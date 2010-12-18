@@ -2933,6 +2933,7 @@
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = iphone;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -2958,6 +2959,7 @@
 				);
 				INFOPLIST_FILE = "iphone-Info.plist";
 				PRODUCT_NAME = iphone;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2981,6 +2983,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -3003,6 +3006,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -3017,6 +3021,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../..\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -3030,6 +3035,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../..\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -3047,6 +3053,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = chipmunk;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -3063,6 +3070,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = chipmunk;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
