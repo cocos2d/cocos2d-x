@@ -155,7 +155,7 @@ namespace cocos2d {
  		int tx = (int)m_pTexture->getContentSize().width;
  		int ty = (int)m_pTexture->getContentSize().height;
  
- 		void * pBuffer = new char[tx * ty * 4];
+ 		char * pBuffer = new char[tx * ty * 4];
  
  		this->begin();
  		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
