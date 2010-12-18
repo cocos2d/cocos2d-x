@@ -1,5 +1,4 @@
 package org.cocos2dx.application;
-
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
