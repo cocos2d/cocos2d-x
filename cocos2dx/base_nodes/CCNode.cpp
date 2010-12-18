@@ -537,8 +537,10 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 				pNode->setParent(NULL);
 			}
 		}
+		
+		m_pChildren->removeAllObjects();
 	}
-	m_pChildren->removeAllObjects();
+	
 }
 
 void CCNode::detachChild(CCNode *child, bool doCleanup)
