@@ -109,14 +109,14 @@ namespace cocos2d
 
 	void CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer)
 	{
-		CCTime::gettimeofday(&pTimer->getStartTime(), NULL);
+		CCTime::gettimeofdayCocos2d(&pTimer->getStartTime(), NULL);
 	}
 
 	void CCProfilingEndTimingBlock(CCProfilingTimer *pTimer)
 	{
         struct cc_timeval currentTime;
-		CCTime::gettimeofday(&currentTime, NULL);
-		CCTime::timersub(&currentTime, &pTimer->getStartTime(), &currentTime);
+		CCTime::gettimeofdayCocos2d(&currentTime, NULL);
+		CCTime::timersubCocos2d(&currentTime, &pTimer->getStartTime(), &currentTime);
 		double duration = currentTime.tv_sec * 1000.0 + currentTime.tv_usec / 1000.0;
 
 		// return in milliseconds

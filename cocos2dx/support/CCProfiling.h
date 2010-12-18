@@ -46,7 +46,7 @@ namespace cocos2d
 		bool init(void);
 
 	public:
-		static CCProfiler* getSharedProfiler(void);
+		static CCProfiler* sharedProfiler(void);
 		static CCProfilingTimer* timerWithName(const char *pszTimerName, NSObject *pInstance);
 		static void releaseTimer(CCProfilingTimer *pTimer);
 
