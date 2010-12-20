@@ -6,6 +6,7 @@
     <application android:label="@string/app_name" android:debuggable="true">
         <activity android:name=".ApplicationDemo"
                   android:label="@string/app_name"
+                  android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -13,5 +14,4 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-sdk android:minSdkVersion="8" />
 </manifest> 
