@@ -1,4 +1,25 @@
-cocos2d-0.99.4-x-0.7.0
+cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
+ [all platforms]
+    - add CCKeypadDelegate class, which enable CCLayer to respond "back" key in uphone & android
+    - Add namespace for CocosDenshion
+    - fix compile errors when enable CC_XXX_DEBUG_DRAW switchs in ccConfig.h
+    - fix memory leaks on each platform
+    - more details: http://www.cocos2d-x.org/versions/show/5
+ [android] 
+    - Run through all the test cases of cocos2d, support ndk r4,r5, sdk higher than 2.0. Tested on HTC G2,G3,G6,G7
+    - HelloWorld integrate all platforms in one directory now
+ [iphone]  
+    - Add support of loading textureImageData from the ParticleDesign plist file
+    - Fix more then 3000 complie warnings
+ [uphone]  
+    - Games can easily read resources from zip file now. This will drastically reduce the memory usage
+    - Add power management: pause the message loop when cocos2d-x game is switched to background or backlight down
+    - Multi-touch support
+ [win32]
+    - SimpleAudioEngine can play background musci with repeating now
+  
+
+cocos2d-0.99.4-x-0.7.0 @ Nov.29,2010
 * cocos2d-iphone-cpp port ready! include accelerometer & multi-touch
 * refactor the directory structure of HelloWorld & tests
 * cocos2d-uphone supports accelerometer
