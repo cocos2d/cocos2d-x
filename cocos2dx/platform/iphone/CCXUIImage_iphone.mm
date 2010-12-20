@@ -200,19 +200,9 @@ static bool static_initPremultipliedATextureWithImage(CGImageRef image, NSUInteg
 	return true;
 }
 
-static bool static_initWithImage(const char* path, tImageInfo *pImageinfo)
+static bool static_initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo)
 {
 	NSUInteger				POTWide, POTHigh;
-	CGImageRef				CGImage;	
-	UIImage					*jpg;
-	UIImage					*png;
-	
-	// convert jpg to png before loading the texture
-	NSString *fullPath = [NSString stringWithUTF8String:path];
-	jpg = [[UIImage alloc] initWithContentsOfFile: fullPath];
-	png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-	
-	CGImage = png.CGImage;
 	
 	if(CGImage == NULL) {
 		//CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
@@ -227,18 +217,52 @@ static bool static_initWithImage(const char* path, tImageInfo *pImageinfo)
 	
 	unsigned maxTextureSize = conf->getMaxTextureSize();
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		[png release];
-		[jpg release];
 		return false;
 	}
 	
 	// always load premultiplied images
 	static_initPremultipliedATextureWithImage(CGImage, POTWide, POTHigh, pImageinfo);
 	
+	return true;
+}
+
+static bool static_initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
+{
+	bool ret = false;
+	
+	if (pBuffer) {
+		CGImageRef				CGImage;
+		NSData                  *data;
+		
+		data = [NSData dataWithBytes:pBuffer length:length];
+		CGImage = [[UIImage imageWithData:data] CGImage];
+		
+		ret = static_initWithImage(CGImage, pImageinfo);
+	}
+	
+	return ret;
+}
+
+static bool static_initWithFile(const char* path, tImageInfo *pImageinfo)
+{
+	CGImageRef				CGImage;	
+	UIImage					*jpg;
+	UIImage					*png;
+	bool                    ret;
+	
+	// convert jpg to png before loading the texture
+
+	NSString *fullPath = [NSString stringWithUTF8String:path];
+	jpg = [[UIImage alloc] initWithContentsOfFile: fullPath];
+	png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
+	CGImage = png.CGImage;	
+	
+	ret = static_initWithImage(CGImage, pImageinfo);
+	
 	[png release];
 	[jpg release];
 	
-	return true;
+	return ret;
 }
 
 
@@ -297,7 +321,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 	{
 	case kImageFormatPNG:
 	case kImageFormatJPG:
-		bRet = static_initWithImage(strPath.c_str(), &m_imageInfo);
+		bRet = static_initWithFile(strPath.c_str(), &m_imageInfo);
 		break;
 	default:
 		// unsupported image type
@@ -355,7 +379,7 @@ bool UIImage::save(const std::string &strFileName, int nFormat)
 }
 bool UIImage::initWithData(unsigned char *pBuffer, int nLength)
 {
-	return true;
+	return static_initWithData(pBuffer, nLength, &m_imageInfo);
 }
 
 bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
