@@ -11,5 +11,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                     $(LOCAL_PATH)/../../..
                    
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi -lcocos2d -llog
+
+# it is used for ndk-r5    
+# because the new Windows toolchain doesn't support Cygwin's drive
+# mapping (i.e /cygdrive/c/ instead of C:/)  
+# LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
+#                -lcocos2d -llog
             
 include $(BUILD_SHARED_LIBRARY)
