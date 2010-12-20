@@ -6,7 +6,7 @@ COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
 
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
-if [ -d $TESTS_ROOT/assets]; then
+if [ -d $TESTS_ROOT/assets ]; then
     echo "resources already exist"
 else
     mkdir $TESTS_ROOT/assets
