@@ -6,9 +6,10 @@ COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
 
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld/android
 
-if [ -f $HELLOWORLD_ROOT/assets/CloseNormal.png ]; then
+if [ -f $HELLOWORLD_ROOT/assets ]; then
     echo "resources already exist"
 else
+    mkdir $HELLOWORLD_ROOT/assets
     cp $COCOS2DX_ROOT/HelloWorld/Resource/CloseNormal.png $HELLOWORLD_ROOT/assets
     cp $COCOS2DX_ROOT/HelloWorld/Resource/CloseSelected.png $HELLOWORLD_ROOT/assets
     cp $COCOS2DX_ROOT/HelloWorld/Resource/HelloWorld.png $HELLOWORLD_ROOT/assets
