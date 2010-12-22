@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCEASE_ACTION_H__
 #define __ACTION_CCEASE_ACTION_H__
 
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 #include "ccxCommon.h"
 
 namespace cocos2d {

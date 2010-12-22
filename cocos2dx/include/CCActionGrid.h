@@ -24,8 +24,8 @@ THE SOFTWARE.
 #ifndef __ACTION_CCGRID_ACTION_H__
 #define __ACTION_CCGRID_ACTION_H__
 
-#include "CCIntervalAction.h"
-#include "CCInstantAction.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
 
 namespace cocos2d
 {

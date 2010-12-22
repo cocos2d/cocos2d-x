@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #ifndef __CCCAMERA_ACTION_H__
 #define __CCCAMERA_ACTION_H__
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 
 namespace cocos2d {
 	class CCCamera;

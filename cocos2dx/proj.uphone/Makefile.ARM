@@ -39,15 +39,15 @@ OBJECTS = \
 	$(OBJECTS_DIR)/cocos2d.o \
 	$(OBJECTS_DIR)/CCAction.o \
 	$(OBJECTS_DIR)/CCActionManager.o \
-	$(OBJECTS_DIR)/CCCameraAction.o \
-	$(OBJECTS_DIR)/CCEaseAction.o \
-	$(OBJECTS_DIR)/CCGrid3DAction.o \
-	$(OBJECTS_DIR)/CCGridAction.o \
-	$(OBJECTS_DIR)/CCInstantAction.o \
-	$(OBJECTS_DIR)/CCIntervalAction.o \
-	$(OBJECTS_DIR)/CCPageTurn3DAction.o \
-	$(OBJECTS_DIR)/CCProgressTimerActions.o \
-	$(OBJECTS_DIR)/CCTiledGridAction.o \
+	$(OBJECTS_DIR)/CCActionCamera.o \
+	$(OBJECTS_DIR)/CCActionEase.o \
+	$(OBJECTS_DIR)/CCActionGrid3D.o \
+	$(OBJECTS_DIR)/CCActionGrid.o \
+	$(OBJECTS_DIR)/CCActionInstant.o \
+	$(OBJECTS_DIR)/CCActionInterval.o \
+	$(OBJECTS_DIR)/CCActionPageTurn3D.o \
+	$(OBJECTS_DIR)/CCActionProgressTimer.o \
+	$(OBJECTS_DIR)/CCActionTiledGrid.o \
 	$(OBJECTS_DIR)/CCAtlasNode.o \
 	$(OBJECTS_DIR)/CCNode.o \
 	$(OBJECTS_DIR)/CGAffineTransform.o \
@@ -155,32 +155,32 @@ $(OBJECTS_DIR)/CCAction.o : ../actions/CCAction.cpp
 $(OBJECTS_DIR)/CCActionManager.o : ../actions/CCActionManager.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionManager.o ../actions/CCActionManager.cpp
 
-$(OBJECTS_DIR)/CCCameraAction.o : ../actions/CCCameraAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCCameraAction.o ../actions/CCCameraAction.cpp
+$(OBJECTS_DIR)/CCActionCamera.o : ../actions/CCActionCamera.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionCamera.o ../actions/CCActionCamera.cpp
 
-$(OBJECTS_DIR)/CCEaseAction.o : ../actions/CCEaseAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCEaseAction.o ../actions/CCEaseAction.cpp
+$(OBJECTS_DIR)/CCActionEase.o : ../actions/CCActionEase.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionEase.o ../actions/CCActionEase.cpp
 
-$(OBJECTS_DIR)/CCGrid3DAction.o : ../actions/CCGrid3DAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrid3DAction.o ../actions/CCGrid3DAction.cpp
+$(OBJECTS_DIR)/CCActionGrid3D.o : ../actions/CCActionGrid3D.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionGrid3D.o ../actions/CCActionGrid3D.cpp
 
-$(OBJECTS_DIR)/CCGridAction.o : ../actions/CCGridAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGridAction.o ../actions/CCGridAction.cpp
+$(OBJECTS_DIR)/CCActionGrid.o : ../actions/CCActionGrid.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionGrid.o ../actions/CCActionGrid.cpp
 
-$(OBJECTS_DIR)/CCInstantAction.o : ../actions/CCInstantAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCInstantAction.o ../actions/CCInstantAction.cpp
+$(OBJECTS_DIR)/CCActionInstant.o : ../actions/CCActionInstant.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionInstant.o ../actions/CCActionInstant.cpp
 
-$(OBJECTS_DIR)/CCIntervalAction.o : ../actions/CCIntervalAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCIntervalAction.o ../actions/CCIntervalAction.cpp
+$(OBJECTS_DIR)/CCActionInterval.o : ../actions/CCActionInterval.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionInterval.o ../actions/CCActionInterval.cpp
 
-$(OBJECTS_DIR)/CCPageTurn3DAction.o : ../actions/CCPageTurn3DAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCPageTurn3DAction.o ../actions/CCPageTurn3DAction.cpp
+$(OBJECTS_DIR)/CCActionPageTurn3D.o : ../actions/CCActionPageTurn3D.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionPageTurn3D.o ../actions/CCActionPageTurn3D.cpp
 
-$(OBJECTS_DIR)/CCProgressTimerActions.o : ../actions/CCProgressTimerActions.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCProgressTimerActions.o ../actions/CCProgressTimerActions.cpp
+$(OBJECTS_DIR)/CCActionProgressTimer.o : ../actions/CCActionProgressTimer.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionProgressTimer.o ../actions/CCActionProgressTimer.cpp
 
-$(OBJECTS_DIR)/CCTiledGridAction.o : ../actions/CCTiledGridAction.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTiledGridAction.o ../actions/CCTiledGridAction.cpp
+$(OBJECTS_DIR)/CCActionTiledGrid.o : ../actions/CCActionTiledGrid.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCActionTiledGrid.o ../actions/CCActionTiledGrid.cpp
 
 $(OBJECTS_DIR)/CCAtlasNode.o : ../base_nodes/CCAtlasNode.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAtlasNode.o ../base_nodes/CCAtlasNode.cpp

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCInstantAction.h"
+#include "CCActionInstant.h"
 #include "CCXCocos2dDefine.h"
 #include "CCNode.h"
 #include "CCSprite.h"
