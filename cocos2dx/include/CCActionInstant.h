@@ -34,11 +34,11 @@ namespace cocos2d {
 	@brief Instant actions are immediate actions. They don't have a duration like
 	the CCIntervalAction actions.
 	*/ 
-	class CCX_DLL CCInstantAction : public CCFiniteTimeAction //<NSCopying>
+	class CCX_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 	{
 	public:
-		CCInstantAction();
-		virtual ~CCInstantAction(){}
+		CCActionInstant();
+		virtual ~CCActionInstant(){}
 		// CCAction methods
 		virtual NSObject* copyWithZone(NSZone *pZone);
 		virtual bool isDone(void);
@@ -50,7 +50,7 @@ namespace cocos2d {
 
 	/** @brief Show the node
 	*/
-	class CCX_DLL CCShow : public CCInstantAction
+	class CCX_DLL CCShow : public CCActionInstant
 	{
 	public:
 		CCShow(){}
@@ -67,7 +67,7 @@ namespace cocos2d {
 	/** 
 	@brief Hide the node
 	*/
-	class CCX_DLL CCHide : public CCInstantAction
+	class CCX_DLL CCHide : public CCActionInstant
 	{
 	public:
 		CCHide(){}
@@ -83,7 +83,7 @@ namespace cocos2d {
 
 	/** @brief Toggles the visibility of a node
 	*/
-	class CCX_DLL CCToggleVisibility : public CCInstantAction
+	class CCX_DLL CCToggleVisibility : public CCActionInstant
 	{
 	public:
 		CCToggleVisibility(){}
@@ -100,7 +100,7 @@ namespace cocos2d {
 	@brief Flips the sprite horizontally
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipX : public CCInstantAction
+	class CCX_DLL CCFlipX : public CCActionInstant
 	{
 	public:
 		CCFlipX(){}
@@ -123,7 +123,7 @@ namespace cocos2d {
 	@brief Flips the sprite vertically
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipY : public CCInstantAction
+	class CCX_DLL CCFlipY : public CCActionInstant
 	{
 	public:
 		CCFlipY(){}
@@ -144,7 +144,7 @@ namespace cocos2d {
 
 	/** @brief Places the node in a certain position
 	*/
-	class CCX_DLL CCPlace : public CCInstantAction //<NSCopying>
+	class CCX_DLL CCPlace : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCPlace(){}
@@ -162,7 +162,7 @@ namespace cocos2d {
 
 	/** @brief Calls a 'callback'
 	*/
-	class CCX_DLL CCCallFunc : public CCInstantAction //<NSCopying>
+	class CCX_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCCallFunc()

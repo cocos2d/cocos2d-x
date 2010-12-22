@@ -1,5 +1,5 @@
 #include "ParticleTest.h"
-// #include "CCIntervalAction.h"
+// #include "CCActionInterval.h"
 // #include "CCMenu.h"
 // #include "CCLabel.h"
 // #include "CCLabelAtlas.h"
@@ -614,10 +614,10 @@ void ParallaxParticle::onEnter()
 	p2->addChild(par, 10);
     par->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
-	CCIntervalAction* move_back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
+	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-	p->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));	
+	p->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));	
 }
 
 std::string ParallaxParticle::title()
@@ -1087,10 +1087,10 @@ ParticleDemo::ParticleDemo(void)
 	addChild(m_background, 5);
 	m_background->setPosition( CGPointMake(s.width/2, s.height-180) );
 
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0) );
-	CCIntervalAction* move_back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0) );
+	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-	m_background->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq) );
+	m_background->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq) );
 	
 	
 	schedule( schedule_selector(ParticleDemo::step) );

@@ -30,7 +30,7 @@ MainLayer::MainLayer()
 	sprite->runAction( CCJumpTo::actionWithDuration(4, CGPointMake(300,48), 100, 4) );
 	
 	layer->runAction( CCRepeatForever::actionWithAction( 
-														(CCIntervalAction*)( CCSequence::actions(	
+														(CCActionInterval*)( CCSequence::actions(	
 																			CCFadeIn::actionWithDuration(1),
 																			CCFadeOut::actionWithDuration(1),
 																			NULL) )

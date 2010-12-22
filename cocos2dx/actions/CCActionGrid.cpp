@@ -49,7 +49,7 @@ namespace cocos2d
 
 	bool CCGridAction::initWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
 	{
-		if (CCIntervalAction::initWithDuration(duration))
+		if (CCActionInterval::initWithDuration(duration))
 		{
 			m_sGridSize = gridSize;
 
@@ -61,7 +61,7 @@ namespace cocos2d
 
 	void CCGridAction::startWithTarget(CCNode *pTarget)
 	{
-		CCIntervalAction::startWithTarget(pTarget);
+		CCActionInterval::startWithTarget(pTarget);
 
 		CCGridBase *newgrid = this->getGrid();
 
@@ -100,7 +100,7 @@ namespace cocos2d
 		return NULL;
 	}
 
-	CCIntervalAction* CCGridAction::reverse(void)
+	CCActionInterval* CCGridAction::reverse(void)
 	{
 		return CCReverseTime::actionWithAction(this);
 	}
@@ -120,7 +120,7 @@ namespace cocos2d
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		CCIntervalAction::copyWithZone(pZone);
+		CCActionInterval::copyWithZone(pZone);
 
 		pCopy->initWithSize(m_sGridSize, m_fDuration);
 		
@@ -200,10 +200,10 @@ namespace cocos2d
 
 	bool CCAccelDeccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
 	{
-		if (CCIntervalAction::initWithDuration(duration))
+		if (CCActionInterval::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
-			m_pOther = (CCIntervalAction*)(pAction);
+			m_pOther = (CCActionInterval*)(pAction);
 			pAction->retain();
 
 			return true;
@@ -219,7 +219,7 @@ namespace cocos2d
 
 	void CCAccelDeccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
-		CCIntervalAction::startWithTarget(pTarget);
+		CCActionInterval::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
 	}
 
@@ -236,7 +236,7 @@ namespace cocos2d
 		((CCAccelDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(f, m_fRate));
 	}
 
-	CCIntervalAction* CCAccelDeccelAmplitude::reverse(void)
+	CCActionInterval* CCAccelDeccelAmplitude::reverse(void)
 	{
 		return CCAccelDeccelAmplitude::actionWithAction(m_pOther->reverse(), m_fDuration);
 	}
@@ -263,10 +263,10 @@ namespace cocos2d
 
 	bool CCAccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
 	{
-		if (CCIntervalAction::initWithDuration(duration))
+		if (CCActionInterval::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
-			m_pOther = (CCIntervalAction*)(pAction);
+			m_pOther = (CCActionInterval*)(pAction);
 			pAction->retain();
 
 			return true;
@@ -282,7 +282,7 @@ namespace cocos2d
 
 	void CCAccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
-		CCIntervalAction::startWithTarget(pTarget);
+		CCActionInterval::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
 	}
 
@@ -292,7 +292,7 @@ namespace cocos2d
 		m_pOther->update(time);
 	}
 
-	CCIntervalAction* CCAccelAmplitude::reverse(void)
+	CCActionInterval* CCAccelAmplitude::reverse(void)
 	{
 		return CCAccelAmplitude::actionWithAction(m_pOther->reverse(), m_fDuration);
 	}
@@ -319,10 +319,10 @@ namespace cocos2d
 
 	bool CCDeccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
 	{
-		if (CCIntervalAction::initWithDuration(duration))
+		if (CCActionInterval::initWithDuration(duration))
 		{
 			m_fRate = 1.0f;
-			m_pOther = (CCIntervalAction*)(pAction);
+			m_pOther = (CCActionInterval*)(pAction);
 			pAction->retain();
 
 			return true;
@@ -338,7 +338,7 @@ namespace cocos2d
 
 	void CCDeccelAmplitude::startWithTarget(CCNode *pTarget)
 	{
-		CCIntervalAction::startWithTarget(pTarget);
+		CCActionInterval::startWithTarget(pTarget);
 		m_pOther->startWithTarget(pTarget);
 	}
 
@@ -348,7 +348,7 @@ namespace cocos2d
 		m_pOther->update(time);
 	}
 
-	CCIntervalAction* CCDeccelAmplitude::reverse(void)
+	CCActionInterval* CCDeccelAmplitude::reverse(void)
 	{
 		return CCDeccelAmplitude::actionWithAction(m_pOther->reverse(), m_fDuration);
 	}
@@ -357,7 +357,7 @@ namespace cocos2d
 
 	void CCStopGrid::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 
 		CCGridBase *pGrid = m_pTarget->getGrid();
 		if (pGrid && pGrid->isActive())
@@ -403,7 +403,7 @@ namespace cocos2d
 
 	void CCReuseGrid::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 
 		if (m_pTarget->getGrid() && m_pTarget->getGrid()->isActive())
 		{

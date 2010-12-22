@@ -60,12 +60,12 @@ Parallax1::Parallax1()
 	// now create some actions that will move the 'void' node
 	// and the children of the 'void' node will move at different
 	// speed, thus, simulation the 3D environment
-	CCIntervalAction* goUp = CCMoveBy::actionWithDuration(4, ccp(0,-500) );
-	CCIntervalAction* goDown = goUp->reverse();
-	CCIntervalAction* go = CCMoveBy::actionWithDuration(8, ccp(-1000,0) );
-	CCIntervalAction* goBack = go->reverse();
+	CCActionInterval* goUp = CCMoveBy::actionWithDuration(4, ccp(0,-500) );
+	CCActionInterval* goDown = goUp->reverse();
+	CCActionInterval* go = CCMoveBy::actionWithDuration(8, ccp(-1000,0) );
+	CCActionInterval* goBack = go->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(goUp, go, goDown, goBack, NULL);
-	voidNode->runAction( (CCRepeatForever::actionWithAction((CCIntervalAction*) seq) ));
+	voidNode->runAction( (CCRepeatForever::actionWithAction((CCActionInterval*) seq) ));
 	
 	addChild( voidNode );
 }

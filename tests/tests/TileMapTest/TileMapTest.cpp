@@ -321,17 +321,17 @@ TMXReadWriteTest::TMXReadWriteTest()
 	tile2->setAnchorPoint( ccp(0.5f, 0.5f) );
 	tile3->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(0.5f, ccp(0,160));
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 5);
-	CCIntervalAction* opacity = CCFadeOut::actionWithDuration(2);
-	CCIntervalAction* fadein = CCFadeIn::actionWithDuration(2);
-	CCIntervalAction* scaleback = CCScaleTo::actionWithDuration(1, 1);
-	CCInstantAction* finish = CCCallFuncN::actionWithTarget(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(0.5f, ccp(0,160));
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 5);
+	CCActionInterval* opacity = CCFadeOut::actionWithDuration(2);
+	CCActionInterval* fadein = CCFadeIn::actionWithDuration(2);
+	CCActionInterval* scaleback = CCScaleTo::actionWithDuration(1, 1);
+	CCActionInstant* finish = CCCallFuncN::actionWithTarget(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
 	CCFiniteTimeAction* seq0 = CCSequence::actions(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
-	CCIntervalAction* seq1 = (CCIntervalAction*)(seq0->copy()->autorelease());
-	CCIntervalAction* seq2 = (CCIntervalAction*)(seq0->copy()->autorelease());
-	CCIntervalAction* seq3 = (CCIntervalAction*)(seq0->copy()->autorelease());
+	CCActionInterval* seq1 = (CCActionInterval*)(seq0->copy()->autorelease());
+	CCActionInterval* seq2 = (CCActionInterval*)(seq0->copy()->autorelease());
+	CCActionInterval* seq3 = (CCActionInterval*)(seq0->copy()->autorelease());
 	
 	tile0->runAction(seq0);
 	tile1->runAction(seq1);
@@ -809,10 +809,10 @@ TMXIsoZorder::TMXIsoZorder()
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*) seq) );
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*) seq) );
 	
 	schedule( schedule_selector(TMXIsoZorder::repositionSprite) );
 }
@@ -874,10 +874,10 @@ TMXOrthoZorder::TMXOrthoZorder()
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 	
 	schedule( schedule_selector(TMXOrthoZorder::repositionSprite));
 }
@@ -935,10 +935,10 @@ TMXIsoVertexZ::TMXIsoVertexZ()
 	m_tamara = layer->tileAt( ccp(29,29) );
 	m_tamara->retain();
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*) seq) );
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*) seq) );
 	
 	schedule( schedule_selector(TMXIsoVertexZ::repositionSprite));
 	
@@ -1002,10 +1002,10 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 	m_tamara = layer->tileAt(ccp(0,11));
 	m_tamara->retain();
 
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 	
 	schedule(schedule_selector(TMXOrthoVertexZ::repositionSprite));
 	
