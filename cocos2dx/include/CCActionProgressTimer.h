@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCPROGRESS_TIMER_H__
 #define __ACTION_CCPROGRESS_TIMER_H__
 
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 
 namespace cocos2d
 {

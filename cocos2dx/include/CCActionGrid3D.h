@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCGRID3D_ACTION_H__
 #define __ACTION_CCGRID3D_ACTION_H__
 
-#include "CCGridAction.h"
+#include "CCActionGrid.h"
 
 namespace cocos2d
 {

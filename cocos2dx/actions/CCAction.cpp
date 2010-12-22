@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAction.h"
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 #include "ccMacros.h"
 #include "CCNode.h"
 #include "CGPointExtension.h"

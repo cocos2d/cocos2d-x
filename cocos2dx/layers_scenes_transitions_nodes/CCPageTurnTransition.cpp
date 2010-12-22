@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 #include "CCPageTurnTransition.h"
 #include "CCDirector.h"
-#include "CCIntervalAction.h"
-#include "CCInstantAction.h"
-#include "CCGridAction.h"
-#include "CCPageTurn3DAction.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
+#include "CCActionGrid.h"
+#include "CCActionPageTurn3D.h"
 
 namespace   cocos2d {
 

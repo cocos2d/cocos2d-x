@@ -27,14 +27,14 @@ THE SOFTWARE.
 #include "CGPointExtension.h"
 #include "CCDirector.h"
 #include "CCTouchDispatcher.h"
-#include "CCIntervalAction.h"
-#include "CCInstantAction.h"
-#include "CCEaseAction.h"
-#include "CCCameraAction.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
+#include "CCActionEase.h"
+#include "CCActionCamera.h"
 #include "CCLayer.h"
-#include "CCGridAction.h"
+#include "CCActionGrid.h"
 #include "CCRenderTexture.h"
-#include "CCTiledGridAction.h"
+#include "CCActionTiledGrid.h"
 namespace   cocos2d {
 
 enum {
