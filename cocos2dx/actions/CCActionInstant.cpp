@@ -30,41 +30,41 @@ namespace cocos2d {
 	//
 	// InstantAction
 	//
-	CCInstantAction::CCInstantAction()
+	CCActionInstant::CCActionInstant()
 	{
 		m_fDuration = 0;
 	}
 
-	NSObject * CCInstantAction::copyWithZone(cocos2d::NSZone *pZone)
+	NSObject * CCActionInstant::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone *pNewZone = NULL;
-		CCInstantAction *pRet = NULL;
+		CCActionInstant *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
-			pRet = (CCInstantAction*)(pZone->m_pCopyObject);
+			pRet = (CCActionInstant*)(pZone->m_pCopyObject);
 		}
 		else
 		{
-			pRet = new CCInstantAction();
+			pRet = new CCActionInstant();
 			pZone = pNewZone = new NSZone(pRet);
 		}
 		CCFiniteTimeAction::copyWithZone(pZone);
 		CCX_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
-	bool CCInstantAction::isDone()
+	bool CCActionInstant::isDone()
 	{
 		return true;
 	}
-	void CCInstantAction::step(ccTime dt)
+	void CCActionInstant::step(ccTime dt)
 	{
 		update(1);
 	}
-	void CCInstantAction::update(ccTime time)
+	void CCActionInstant::update(ccTime time)
 	{
 		// ignore
 	}
-	CCFiniteTimeAction * CCInstantAction::reverse()
+	CCFiniteTimeAction * CCActionInstant::reverse()
 	{
 		return (CCFiniteTimeAction*)(copy()->autorelease());
 	}
@@ -80,7 +80,7 @@ namespace cocos2d {
 	}
 	void CCShow::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 		pTarget->setIsVisible(true);
 	}
 	CCFiniteTimeAction *CCShow::reverse()
@@ -98,7 +98,7 @@ namespace cocos2d {
 	}
 	void CCHide::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 		pTarget->setIsVisible(false);
 	}
 
@@ -118,7 +118,7 @@ namespace cocos2d {
 	}
 	void CCToggleVisibility::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 		pTarget->setIsVisible(! pTarget->getIsVisible());
 	}
 	//
@@ -138,7 +138,7 @@ namespace cocos2d {
 	}
 	void CCFlipX::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 		((CCSprite*)(pTarget))->setFlipX(m_bFlipX);
 	}
 
@@ -160,7 +160,7 @@ namespace cocos2d {
 			pRet = new CCFlipX();
 			pZone = pNewZone = new NSZone(pRet);
 		}
-		CCInstantAction::copyWithZone(pZone);
+		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithFlipX(m_bFlipX);
 		CCX_SAFE_DELETE(pNewZone);
 		return pRet;
@@ -184,7 +184,7 @@ namespace cocos2d {
 
 	void CCFlipY::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 		((CCSprite*)(pTarget))->setFlipY(m_bFlipY);
 	}
 
@@ -206,7 +206,7 @@ namespace cocos2d {
 			pRet = new CCFlipY();
 			pZone = pNewZone = new NSZone(pRet);
 		}
-		CCInstantAction::copyWithZone(pZone);
+		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithFlipY(m_bFlipY);
 		CCX_SAFE_DELETE(pNewZone);
 		return pRet;
@@ -241,7 +241,7 @@ namespace cocos2d {
 			pRet = new CCPlace();
 			pZone = pNewZone = new NSZone(pRet);
 		}
-		CCInstantAction::copyWithZone(pZone);
+		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithPosition(m_tPosition);
 		CCX_SAFE_DELETE(pNewZone);
 		return pRet;
@@ -249,7 +249,7 @@ namespace cocos2d {
 
 	void CCPlace::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 		m_pTarget->setPosition(m_tPosition);
 	}
 
@@ -292,7 +292,7 @@ namespace cocos2d {
 			pRet = new CCCallFunc();
 			pZone = pNewZone = new NSZone(pRet);
 		}
-		CCInstantAction::copyWithZone(pZone);
+		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithTarget(m_pSelectorTarget);
 		pRet->m_pCallFunc = m_pCallFunc;
 		CCX_SAFE_DELETE(pNewZone);
@@ -300,7 +300,7 @@ namespace cocos2d {
 	}
 	void CCCallFunc::startWithTarget(CCNode *pTarget)
 	{
-		CCInstantAction::startWithTarget(pTarget);
+		CCActionInstant::startWithTarget(pTarget);
 		this->execute();
 	}
 	void CCCallFunc::execute()
@@ -427,7 +427,7 @@ namespace cocos2d {
 	}
 
 	-(id) copyWithZone: (NSZone*) zone {
-		CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+		CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 		return copy;
 	}
 
@@ -464,7 +464,7 @@ namespace cocos2d {
 	}
 
 	-(id) copyWithZone: (NSZone*) zone {
-		CCInstantAction *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+		CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 		return copy;
 	}
 

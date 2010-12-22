@@ -36,32 +36,32 @@ class NSZone;
 /** 
  @brief Base class for Easing actions
  */
-class CCX_DLL CCEaseAction : public CCIntervalAction
+class CCX_DLL CCActionEase : public CCActionInterval
 {
 public:
-	virtual ~CCEaseAction(void);
+	virtual ~CCActionEase(void);
 
 	/** initializes the action */
-    bool initWithAction(CCIntervalAction *pAction);
+    bool initWithAction(CCActionInterval *pAction);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 
 public:
 	/** creates the action */
-	static CCEaseAction* actionWithAction(CCIntervalAction *pAction);
+	static CCActionEase* actionWithAction(CCActionInterval *pAction);
 
 protected:
-	CCIntervalAction *m_pOther;
+	CCActionInterval *m_pOther;
 };
 
 /** 
  @brief Base class for Easing actions with rate parameters
  */
-class CCX_DLL CCEaseRateAction : public CCEaseAction
+class CCX_DLL CCEaseRateAction : public CCActionEase
 {
 public:
 	virtual ~CCEaseRateAction(void);
@@ -72,14 +72,14 @@ public:
 	inline float getRate(void) { return m_fRate; }
 
 	/** Initializes the action with the inner action and the rate parameter */
-	bool initWithAction(CCIntervalAction *pAction, float fRate);
+	bool initWithAction(CCActionInterval *pAction, float fRate);
 
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 
 public:
 	/** Creates the action with the inner action and the rate parameter */
-	static CCEaseRateAction* actionWithAction(CCIntervalAction* pAction, float fRate);
+	static CCEaseRateAction* actionWithAction(CCActionInterval* pAction, float fRate);
 
 protected:
 	float m_fRate;
@@ -95,7 +95,7 @@ public:
 	virtual NSObject* copyWithZone(NSZone* pZone);
 public:
 	/** Creates the action with the inner action and the rate parameter */
-	static CCEaseIn* actionWithAction(CCIntervalAction* pAction, float fRate);
+	static CCEaseIn* actionWithAction(CCActionInterval* pAction, float fRate);
 };
 
 /** 
@@ -109,7 +109,7 @@ public:
 
 public:
 	/** Creates the action with the inner action and the rate parameter */
-    static CCEaseOut* actionWithAction(CCIntervalAction* pAction, float fRate);
+    static CCEaseOut* actionWithAction(CCActionInterval* pAction, float fRate);
 };
 
 /** 
@@ -120,48 +120,48 @@ class CCX_DLL CCEaseInOut : public CCEaseRateAction
 public:
 	virtual void update(ccTime time);
 	virtual NSObject* copyWithZone(NSZone* pZone);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 
 public:
 	/** Creates the action with the inner action and the rate parameter */
-	static CCEaseInOut* actionWithAction(CCIntervalAction* pAction, float fRate);
+	static CCEaseInOut* actionWithAction(CCActionInterval* pAction, float fRate);
 };
 
 /** 
  @brief CCEase Exponential In
  */
-class CCX_DLL CCEaseExponentialIn : public CCEaseAction
+class CCX_DLL CCEaseExponentialIn : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseExponentialIn* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseExponentialIn* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
  @brief Ease Exponential Out
  */
-class CCX_DLL CCEaseExponentialOut : public CCEaseAction
+class CCX_DLL CCEaseExponentialOut : public CCActionEase
 {
 public:
     virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseExponentialOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseExponentialOut* actionWithAction(CCActionInterval* pAction);
 
 };
 
 /** 
  @brief Ease Exponential InOut
  */
-class CCX_DLL CCEaseExponentialInOut : public CCEaseAction
+class CCX_DLL CCEaseExponentialInOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
@@ -169,44 +169,44 @@ public:
 
 public:
 	/** creates the action */
-	static CCEaseExponentialInOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseExponentialInOut* actionWithAction(CCActionInterval* pAction);
 
 };
 
 /** 
  @brief Ease Sine In
  */
-class CCX_DLL CCEaseSineIn : public CCEaseAction
+class CCX_DLL CCEaseSineIn : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseSineIn* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseSineIn* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
  @brief Ease Sine Out
  */
-class CCX_DLL CCEaseSineOut : public CCEaseAction
+class CCX_DLL CCEaseSineOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseSineOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseSineOut* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
  @brief Ease Sine InOut
  */
-class CCX_DLL CCEaseSineInOut : public CCEaseAction
+class CCX_DLL CCEaseSineInOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
@@ -214,14 +214,14 @@ public:
 
 public:
 	/** creates the action */
-	static CCEaseSineInOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseSineInOut* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
  @brief Ease Elastic abstract class
  @since v0.8.2
  */
-class CCX_DLL CCEaseElastic : public CCEaseAction
+class CCX_DLL CCEaseElastic : public CCActionEase
 {
 public:
 	/** get period of the wave in radians. default is 0.3 */
@@ -230,18 +230,18 @@ public:
 	inline void setPeriod(float fPeriod) { m_fPeriod = fPeriod; }
 
 	/** Initializes the action with the inner action and the period in radians (default is 0.3) */
-	bool initWithAction(CCIntervalAction *pAction, float fPeriod);
+	bool initWithAction(CCActionInterval *pAction, float fPeriod);
 	/** initializes the action */
-	bool initWithAction(CCIntervalAction *pAction);
+	bool initWithAction(CCActionInterval *pAction);
 
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseElastic* actionWithAction(CCIntervalAction *pAction);
+	static CCEaseElastic* actionWithAction(CCActionInterval *pAction);
 	/** Creates the action with the inner action and the period in radians (default is 0.3) */
-	static CCEaseElastic* actionWithAction(CCIntervalAction *pAction, float fPeriod);
+	static CCEaseElastic* actionWithAction(CCActionInterval *pAction, float fPeriod);
 
 protected:
 	float m_fPeriod;
@@ -256,14 +256,14 @@ class CCX_DLL CCEaseElasticIn : public CCEaseElastic
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseElasticIn* actionWithAction(CCIntervalAction *pAction);
+	static CCEaseElasticIn* actionWithAction(CCActionInterval *pAction);
 	/** Creates the action with the inner action and the period in radians (default is 0.3) */
-	static CCEaseElasticIn* actionWithAction(CCIntervalAction *pAction, float fPeriod);
+	static CCEaseElasticIn* actionWithAction(CCActionInterval *pAction, float fPeriod);
 };
 
 /** 
@@ -275,14 +275,14 @@ class CCX_DLL CCEaseElasticOut : public CCEaseElastic
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseElasticOut* actionWithAction(CCIntervalAction *pAction);
+	static CCEaseElasticOut* actionWithAction(CCActionInterval *pAction);
 	/** Creates the action with the inner action and the period in radians (default is 0.3) */
-	static CCEaseElasticOut* actionWithAction(CCIntervalAction *pAction, float fPeriod);
+	static CCEaseElasticOut* actionWithAction(CCActionInterval *pAction, float fPeriod);
 };
 
 /** 
@@ -294,21 +294,21 @@ class CCX_DLL CCEaseElasticInOut : public CCEaseElastic
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseElasticInOut* actionWithAction(CCIntervalAction *pAction);
+	static CCEaseElasticInOut* actionWithAction(CCActionInterval *pAction);
 	/** Creates the action with the inner action and the period in radians (default is 0.3) */
-	static CCEaseElasticInOut* actionWithAction(CCIntervalAction *pAction, float fPeriod);
+	static CCEaseElasticInOut* actionWithAction(CCActionInterval *pAction, float fPeriod);
 };
 
 /** 
  @brief CCEaseBounce abstract class.
  @since v0.8.2
 */
-class CCX_DLL CCEaseBounce : public CCEaseAction
+class CCX_DLL CCEaseBounce : public CCActionEase
 {
 public:
 	ccTime bounceTime(ccTime time);
@@ -316,7 +316,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCEaseBounce* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseBounce* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
@@ -328,12 +328,12 @@ class CCX_DLL CCEaseBounceIn : public CCEaseBounce
 {
 public:
     virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseBounceIn* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseBounceIn* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
@@ -345,12 +345,12 @@ class CCX_DLL CCEaseBounceOut : public CCEaseBounce
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseBounceOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseBounceOut* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
@@ -366,7 +366,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCEaseBounceInOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseBounceInOut* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
@@ -374,16 +374,16 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBackIn : public CCEaseAction
+class CCX_DLL CCEaseBackIn : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseBackIn* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseBackIn* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
@@ -391,16 +391,16 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBackOut : public CCEaseAction
+class CCX_DLL CCEaseBackOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual NSObject* copyWithZone(NSZone* pZone);
 
 public:
 	/** creates the action */
-	static CCEaseBackOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseBackOut* actionWithAction(CCActionInterval* pAction);
 };
 
 /** 
@@ -408,7 +408,7 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBackInOut : public CCEaseAction
+class CCX_DLL CCEaseBackInOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
@@ -416,7 +416,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCEaseBackInOut* actionWithAction(CCIntervalAction* pAction);
+	static CCEaseBackInOut* actionWithAction(CCActionInterval* pAction);
 };
 
 #endif // __ACTION_CCEASE_ACTION_H__

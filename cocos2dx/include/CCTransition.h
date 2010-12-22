@@ -34,7 +34,7 @@ namespace   cocos2d {
 #define DECLEAR_TRANSITIONWITHDURATION(_Type)\
     static _Type* transitionWithDuration(ccTime t, CCScene* scene);
 
-class CCIntervalAction;
+class CCActionInterval;
 class CCNode;
 
 /** @brief CCTransitionEaseScene can ease the actions of the scene protocol.
@@ -46,7 +46,7 @@ public:
 	/** returns the Ease action that will be performed on a linear action.
 	@since v0.8.2
 	*/
-	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action) = 0;
+	virtual CCActionInterval * easeActionWithAction(CCActionInterval * action) = 0;
 };
 
 /** Orientation Type used by some transitions
@@ -157,9 +157,9 @@ public:
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed */
-	virtual CCIntervalAction* action(void);
+	virtual CCActionInterval* action(void);
 
-	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
+	virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
 	virtual void onEnter();
 
@@ -217,11 +217,11 @@ public:
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
-	virtual CCIntervalAction* action(void);
+	virtual CCActionInterval* action(void);
 
 	virtual void onEnter();
 	
-	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
+	virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
     DECLEAR_TRANSITIONWITHDURATION(CCSlideInLTransition);
 protected:
@@ -240,7 +240,7 @@ public:
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
-	virtual CCIntervalAction* action(void);
+	virtual CCActionInterval* action(void);
 
     DECLEAR_TRANSITIONWITHDURATION(CCSlideInRTransition);
 protected:
@@ -259,7 +259,7 @@ public:
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
-	virtual CCIntervalAction* action(void);
+	virtual CCActionInterval* action(void);
 
     DECLEAR_TRANSITIONWITHDURATION(CCSlideInBTransition);
 protected: 
@@ -278,7 +278,7 @@ public:
 	/** initializes the scenes */
 	virtual void initScenes(void);
 	/** returns the action that will be performed by the incomming and outgoing scene */
-	virtual CCIntervalAction* action(void);
+	virtual CCActionInterval* action(void);
 
     DECLEAR_TRANSITIONWITHDURATION(CCSlideInTTransition);
 protected:
@@ -295,7 +295,7 @@ public:
 	virtual ~CCShrinkGrowTransition();
 
 	virtual void onEnter();
-	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
+	virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
     DECLEAR_TRANSITIONWITHDURATION(CCShrinkGrowTransition);
 };
@@ -444,7 +444,7 @@ public :
 	virtual ~CCTurnOffTilesTransition();
 
 	virtual void onEnter();
-	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
+	virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCTurnOffTilesTransition);
@@ -461,9 +461,9 @@ public:
 	CCSplitColsTransition();
 	virtual ~CCSplitColsTransition();
 
-	virtual CCIntervalAction* action(void);
+	virtual CCActionInterval* action(void);
 	virtual void onEnter();
-	virtual CCIntervalAction * easeActionWithAction(CCIntervalAction * action);
+	virtual CCActionInterval * easeActionWithAction(CCActionInterval * action);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCSplitColsTransition);
@@ -478,7 +478,7 @@ public:
 	CCSplitRowsTransition();
 	virtual ~CCSplitRowsTransition();
 
-	virtual CCIntervalAction* action(void);
+	virtual CCActionInterval* action(void);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCSplitRowsTransition)
@@ -492,9 +492,9 @@ class CCX_DLL CCFadeTRTransition : public CCTransitionScene , public CCTransitio
 public:
 	CCFadeTRTransition();
 	virtual ~CCFadeTRTransition();
-	virtual CCIntervalAction* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(ccGridSize size);
 	virtual void onEnter();
-	virtual CCIntervalAction* easeActionWithAction(CCIntervalAction * action);
+	virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeTRTransition)
@@ -511,7 +511,7 @@ class CCX_DLL CCFadeBLTransition : public CCFadeTRTransition
 public:
 	CCFadeBLTransition();
 	virtual ~CCFadeBLTransition();
-	virtual CCIntervalAction* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(ccGridSize size);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeBLTransition)
@@ -525,7 +525,7 @@ class CCX_DLL CCFadeUpTransition : public CCFadeTRTransition
 public:
 	CCFadeUpTransition();
 	virtual ~CCFadeUpTransition();
-	virtual CCIntervalAction* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(ccGridSize size);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeUpTransition)
@@ -539,7 +539,7 @@ class CCX_DLL CCFadeDownTransition : public CCFadeTRTransition
 public:
 	CCFadeDownTransition();
 	virtual ~CCFadeDownTransition();
-	virtual CCIntervalAction* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(ccGridSize size);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCFadeDownTransition)

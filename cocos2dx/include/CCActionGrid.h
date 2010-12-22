@@ -32,12 +32,12 @@ namespace cocos2d
 	class CCGridBase;
 
 	/** @brief Base class for Grid actions */
-	class CCX_DLL CCGridAction : public CCIntervalAction
+	class CCX_DLL CCGridAction : public CCActionInterval
 	{
 	public:
 		virtual NSObject* copyWithZone(NSZone* pZone);
 		virtual void startWithTarget(CCNode *pTarget);
-		virtual CCIntervalAction* reverse(void);
+		virtual CCActionInterval* reverse(void);
 
 		/** initializes the action with size and duration */
 		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
@@ -93,7 +93,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCAccelDeccelAmplitude action */
-	class CCX_DLL CCAccelDeccelAmplitude : public CCIntervalAction
+	class CCX_DLL CCAccelDeccelAmplitude : public CCActionInterval
 	{
 	public:
 		virtual ~CCAccelDeccelAmplitude(void);
@@ -102,7 +102,7 @@ namespace cocos2d
 
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
-        virtual CCIntervalAction* reverse(void);
+        virtual CCActionInterval* reverse(void);
 
 		/** get amplitude rate */
 		inline float getRate(void) { return m_fRate; }
@@ -115,11 +115,11 @@ namespace cocos2d
 
 	protected:
 		float m_fRate;
-		CCIntervalAction *m_pOther;
+		CCActionInterval *m_pOther;
 	};
 
 	/** @brief CCAccelAmplitude action */
-	class CCX_DLL CCAccelAmplitude : public CCIntervalAction
+	class CCX_DLL CCAccelAmplitude : public CCActionInterval
 	{
 	public:
 		~CCAccelAmplitude(void);
@@ -133,7 +133,7 @@ namespace cocos2d
 
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
-        virtual CCIntervalAction* reverse(void);
+        virtual CCActionInterval* reverse(void);
 
 	public:
 		/** creates the action with an inner action that has the amplitude property, and a duration time */
@@ -141,11 +141,11 @@ namespace cocos2d
 
 	protected:
 		float m_fRate;
-		CCIntervalAction *m_pOther;
+		CCActionInterval *m_pOther;
 	};
 
 	/** @brief CCDeccelAmplitude action */
-	class CCX_DLL CCDeccelAmplitude : public CCIntervalAction
+	class CCX_DLL CCDeccelAmplitude : public CCActionInterval
 	{
 	public:
 		~CCDeccelAmplitude(void);
@@ -159,7 +159,7 @@ namespace cocos2d
 
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
-        virtual CCIntervalAction* reverse(void);
+        virtual CCActionInterval* reverse(void);
 
 	public:
 		/** creates the action with an inner action that has the amplitude property, and a duration time */
@@ -167,7 +167,7 @@ namespace cocos2d
 
 	protected:
 		float m_fRate;
-		CCIntervalAction *m_pOther;
+		CCActionInterval *m_pOther;
 	};
 
 	/** @brief CCStopGrid action.
@@ -175,7 +175,7 @@ namespace cocos2d
 	 Call if you want to remove the the grid effect. Example:
 	 CCSequence::actions(Lens::action(...), CCStopGrid::action(...), NULL);
 	 */
-	class CCX_DLL CCStopGrid : public CCInstantAction
+	class CCX_DLL CCStopGrid : public CCActionInstant
 	{
 	public:
 		virtual void startWithTarget(CCNode *pTarget);
@@ -186,7 +186,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCReuseGrid action */
-	class CCX_DLL CCReuseGrid : public CCInstantAction
+	class CCX_DLL CCReuseGrid : public CCActionInstant
 	{
 	public:
 		/** initializes an action with the number of times that the current grid will be reused */
