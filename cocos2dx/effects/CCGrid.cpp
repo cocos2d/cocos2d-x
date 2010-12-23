@@ -83,7 +83,7 @@ namespace cocos2d
 		CCX_SAFE_RETAIN(m_pTexture);
 		m_bIsTextureFlipped = bFlipped;
 
-		CGSize texSize = m_pTexture->getContentSize();
+		CGSize texSize = m_pTexture->getContentSizeInPixels();
 		m_obStep.x = texSize.width / m_sGridSize.x;
 		m_obStep.y = texSize.height / m_sGridSize.y;
 
@@ -106,17 +106,14 @@ namespace cocos2d
 	bool CCGridBase::initWithSize(ccGridSize gridSize)
 	{
     	CCDirector *pDirector = CCDirector::sharedDirector();
-		CGSize s = pDirector->getWinSize();
-		int textureSize = 8;
-		while (textureSize < s.width || textureSize < s.height)
-		{
-			textureSize *= 2;
-		}
-
+		CGSize s = pDirector->getWinSizeInPixels();
+		
+		unsigned int POTWide = ccNextPOT(s.width);
+		unsigned int POTHigh = ccNextPOT(s.height);
 
 		CCTexture2DPixelFormat format = pDirector->getPiexFormat() == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
 
-		void *data = malloc((int)(textureSize * textureSize * 4));
+		void *data = calloc((int)(POTWide * POTHigh * 4), 1);
 		if (! data)
 		{
 			CCLOG("cocos2d: CCGrid: not enough memory.");
@@ -124,18 +121,25 @@ namespace cocos2d
 			return false;
 		}
 
-		memset(data, 0, (int)(textureSize * textureSize * 4));
-
 		CCTexture2D *pTexture = new CCTexture2D();
 		pTexture->initWithData(data, format, textureSize, textureSize, s);
 		pTexture->autorelease();
 
 		free(data);
 
+		if (! pTexture)
+		{
+			CCLOG("cocos2d: CCGrid: error creating texture");
+			delete this;
+			return false;
+		}
+
 		if (initWithSize(gridSize, pTexture, false))
 		{
 			// do something
 		}
+
+		pTexture->release();
 
 		return true;
 	}
