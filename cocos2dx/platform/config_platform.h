@@ -31,6 +31,8 @@ THE SOFTWARE.
     #define CCX_PLATFORM_ANDROID
 #elif defined (TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR)
     #define CCX_PLATFORM_IPHONE
+#elif defined (TARGET_OS_MAC)
+    #define CCX_PLATFORM_MAC
 #endif
 
 // user configure
@@ -60,7 +62,13 @@ THE SOFTWARE.
     #elif defined(CCX_UNDER_IPHONE)
         #define CCX_PLATFORM_IPHONE
     #endif
+#endif
 
+// distinguish mobile platforms and pc platforms
+#if defined(CCX_PLATFORM_UPHONE) || defined(CCX_PLATFORM_WIN32) || defined(CCX_PLATFORM_ANDROID) || defined(CCX_PLATFORM_IPHONE)
+    #define CCX_PLATFORM_MOBILE
+#elif defined (CCX_PLATFORM_MAC)
+    #define CCX_PLATFORM_PC
 #endif
 
 // check compiling platform

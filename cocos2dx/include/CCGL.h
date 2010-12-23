@@ -21,32 +21,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __EFFECTS_CCGRABBER_H__
-#define __EFFECTS_CCGRABBER_H__
-
-#include "NSObject.h"
-#include "CCGL.h"
-
-namespace cocos2d 
-{
-	class CCTexture2D;
-
-	/** FBO class that grabs the the contents of the screen */
-	class CCGrabber : public NSObject
-	{
-	public:
-		CCGrabber(void);
-		~CCGrabber(void);
-
-		void grab(CCTexture2D *pTexture);
-		void beforeRender(CCTexture2D *pTexture);
-		void afterRender(CCTexture2D *pTexture);
-
-	protected:
-		GLuint m_fbo;
-		GLint m_oldFBO;
-	};
-
-} // end of namespace cocos2d
-
-#endif // __EFFECTS_CCGRABBER_H__
+#include "platform/CCGL.h"
