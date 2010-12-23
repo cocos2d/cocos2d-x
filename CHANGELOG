@@ -1,4 +1,4 @@
-cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
+cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010  
  [all platforms]
     - add CCKeypadDelegate class, which enable CCLayer to respond "back" key in uphone & android
     - Add namespace for CocosDenshion
