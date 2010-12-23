@@ -18,7 +18,7 @@ make -f Makefile.ARM clean
 make -f Makefile.ARM all
 popd
 
-pushd ./tests/proj.uphone
+pushd ./tests/test.uphone
 make -f Makefile.ARM clean
 make -f Makefile.ARM all
 popd

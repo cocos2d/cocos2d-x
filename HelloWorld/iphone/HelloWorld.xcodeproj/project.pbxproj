@@ -267,7 +267,6 @@
 		BF755F9512A1011B00450234 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BF755DD212A1011B00450234 /* OpenGL_Internal.h */; };
 		BF755F9612A1011B00450234 /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755DD312A1011B00450234 /* TransformUtils.cpp */; };
 		BF755F9712A1011B00450234 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF755DD412A1011B00450234 /* TransformUtils.h */; };
-		BF755F9812A1011B00450234 /* CCPVRTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755DD612A1011B00450234 /* CCPVRTexture.cpp */; };
 		BF755F9912A1011B00450234 /* CCTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755DD712A1011B00450234 /* CCTexture2D.cpp */; };
 		BF755F9A12A1011B00450234 /* CCTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755DD812A1011B00450234 /* CCTextureAtlas.cpp */; };
 		BF755F9B12A1011B00450234 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755DD912A1011B00450234 /* CCTextureCache.cpp */; };
@@ -557,7 +556,6 @@
 		BF755DD212A1011B00450234 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		BF755DD312A1011B00450234 /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
 		BF755DD412A1011B00450234 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
-		BF755DD612A1011B00450234 /* CCPVRTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPVRTexture.cpp; sourceTree = "<group>"; };
 		BF755DD712A1011B00450234 /* CCTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2D.cpp; sourceTree = "<group>"; };
 		BF755DD812A1011B00450234 /* CCTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureAtlas.cpp; sourceTree = "<group>"; };
 		BF755DD912A1011B00450234 /* CCTextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCache.cpp; sourceTree = "<group>"; };
@@ -1103,7 +1101,6 @@
 		BF755DD512A1011B00450234 /* textures */ = {
 			isa = PBXGroup;
 			children = (
-				BF755DD612A1011B00450234 /* CCPVRTexture.cpp */,
 				BF755DD712A1011B00450234 /* CCTexture2D.cpp */,
 				BF755DD812A1011B00450234 /* CCTextureAtlas.cpp */,
 				BF755DD912A1011B00450234 /* CCTextureCache.cpp */,
@@ -1521,7 +1518,6 @@
 				BF755F9112A1011B00450234 /* TGAlib.cpp in Sources */,
 				BF755F9312A1011B00450234 /* glu.cpp in Sources */,
 				BF755F9612A1011B00450234 /* TransformUtils.cpp in Sources */,
-				BF755F9812A1011B00450234 /* CCPVRTexture.cpp in Sources */,
 				BF755F9912A1011B00450234 /* CCTexture2D.cpp in Sources */,
 				BF755F9A12A1011B00450234 /* CCTextureAtlas.cpp in Sources */,
 				BF755F9B12A1011B00450234 /* CCTextureCache.cpp in Sources */,
@@ -1559,10 +1555,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HelloWorld_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
@@ -1581,9 +1579,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HelloWorld_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = TARGET_OS_IPHONE;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../cocos2dx/platform/iphone/third_party/opengles\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
