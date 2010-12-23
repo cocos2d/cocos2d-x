@@ -407,6 +407,66 @@ namespace cocos2d {
 		}
 	}
 	
+    //
+    // CCCallFuncO
+    //
+    CCCallFuncO::CCCallFuncO()
+    {
+        m_pTarget = NULL;
+    }
+
+    CCCallFuncO::~CCCallFuncO()
+    {
+        m_pTarget->release();
+    }
+
+    void CCCallFuncO::execute()
+    {
+        if(m_pCallFuncO)
+        {
+            (m_pSelectorTarget->*m_pCallFuncO)(m_pTarget);
+        }
+    }
+    CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject)
+    {
+        CCCallFuncO *pRet = new CCCallFuncO();
+        if(pRet->initWithTarget(pSelectorTarget, selector, pObject))
+        {
+            pRet->autorelease();
+            return pRet;
+        }
+        CCX_SAFE_DELETE(pRet);
+        return NULL;
+    }
+    bool CCCallFuncO::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject)
+    {
+        if( CCCallFunc::initWithTarget(pSelectorTarget) ) 
+        {
+            m_pObject = pObject;
+            m_pObject->retain();
+
+            m_pCallFuncO = selector;
+            return true;
+        }
+        return false;
+    }
+    NSObject * CCCallFuncO::copyWithZone(NSZone* zone)
+    {
+        NSZone* pNewZone = NULL;
+        CCCallFuncO* pRet = NULL;
+        if(zone && zone->m_pCopyObject) //in case of being called at sub class
+            pRet = (CCCallFuncO*)(zone->m_pCopyObject);
+        else
+        {
+            pRet = new CCCallFuncO();
+            zone = pNewZone = new NSZone(pRet);
+        }
+        CCCallFunc::copyWithZone(zone);
+        pRet->initWithTarget(m_pSelectorTarget, m_pCallFuncO, m_pObject);
+        CCX_SAFE_DELETE(pNewZone);
+        return pRet;
+    }
+
 
 #if NS_BLOCKS_AVAILABLE
 

@@ -1342,7 +1342,7 @@ NSObject* CCBlink::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCBlink::update(cocos2d::ccTime time)
 {
-	if (m_pTarget)
+	if (m_pTarget && ! isDone())
 	{
 		ccTime slice = 1.0f / m_nTimes;
 		ccTime m = fmodf(time, slice);

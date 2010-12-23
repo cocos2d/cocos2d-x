@@ -200,6 +200,7 @@ namespace cocos2d {
 			SEL_CallFunc	m_pCallFunc;
 			SEL_CallFuncN	m_pCallFuncN;
 			SEL_CallFuncND	m_pCallFuncND;
+            SEL_CallFuncO   m_pCallFuncO;
 		};
 	};
 
@@ -247,6 +248,35 @@ namespace cocos2d {
 	protected:
 		void			*m_pData;
 	};
+
+
+    /**
+    @brief Calls a 'callback' with an object as the first argument.
+    O means Object.
+    @since v0.99.5
+    */
+    class CCX_DLL CCCallFuncO : public CCCallFunc
+    {
+    public:
+        CCCallFuncO();
+        virtual ~CCCallFuncO();
+        /** creates the action with the callback 
+
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        */
+        static CCCallFuncO * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        /** initializes the action with the callback 
+
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        */
+        virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        // super methods
+        virtual NSObject* copyWithZone(NSZone *pZone);
+        virtual void execute();
+
+    protected:
+        NSObject* m_pObject;
+    };
 
 }
 
