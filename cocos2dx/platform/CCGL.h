@@ -32,11 +32,11 @@ THE SOFTWARE.
 #include "config_platform.h"
 #include "CCXEGLView.h"
 
-#if defined(CCX_PLATFORM_UPHONE) || defined(CCX_PLATFORM_WIN32) || defined(CCX_PLATFORM_ANDROID) || defined(CCX_PLATFORM_IPHONE)
+#if defined(CCX_PLATFORM_MOBILE)
     #include <GLES/gl.h>
     #include <GLES/glext.h>
     #include "support/opengl_support/glu.h"
-#elif defined(CCX_PLATFORM_MAC)
+#elif defined(CCX_PLATFORM_PC)
     #include <OpenGL/gl.h>
     #include <OpenGL/glu.h>
 #else
@@ -47,7 +47,7 @@ THE SOFTWARE.
 
 
 // iOS
-#ifdef defined(CCX_PLATFORM_UPHONE) || defined(CCX_PLATFORM_WIN32) || defined(CCX_PLATFORM_ANDROID) || defined(CCX_PLATFORM_IPHONE)
+#if defined(CCX_PLATFORM_MOBILE)
     #define ccglOrtho					glOrthof
     #define	ccglClearDepth				glClearDepthf
     #define ccglGenerateMipmap			glGenerateMipmapOES
@@ -64,7 +64,7 @@ THE SOFTWARE.
     #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
 
 // Mac
-#elif defined(CCX_PLATFORM_MAC)
+#elif defined(CCX_PLATFORM_PC)
     #define ccglOrtho					glOrtho
     #define	ccglClearDepth				glClearDepth
     #define ccglGenerateMipmap			glGenerateMipmap

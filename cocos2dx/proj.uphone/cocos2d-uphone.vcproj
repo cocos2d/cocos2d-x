@@ -309,6 +309,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCGL.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCGrid3DAction.h"
 				>
 			</File>
@@ -894,6 +898,10 @@
 			>
 			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCGL.h"
 				>
 			</File>
 			<File
