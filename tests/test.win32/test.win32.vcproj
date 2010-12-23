@@ -3,9 +3,10 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="tests"
-	ProjectGUID="{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}"
-	RootNamespace="test_uphone"
-	TargetFrameworkVersion="131072"
+	ProjectGUID="{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
+	RootNamespace="test_win32"
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -17,11 +18,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../PRJ_TG3/LIB/Win32Lib"
-			IntermediateDirectory="Debug"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
-			CharacterSet="2"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
+			IntermediateDirectory="$(ConfigurationName).win32"
+			ConfigurationType="1"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -41,19 +41,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Res;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\OpenGL;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\cocos2dx\include;..\..\cocos2dx;..\..\chipmunk\include\chipmunk;..\..\;..\..\chipmunk\Demo;..\tests"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;_USE_MATH_DEFINES"
+				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				StructMemberAlignment="3"
-				TreatWChar_tAsBuiltInType="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				CompileAs="2"
-				DisableSpecificWarnings="4251;4244;4996"
-				ForcedIncludeFiles=""
+				DisableSpecificWarnings="4244;4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -66,17 +62,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib libEGL.lib libgles_cm.lib libBox2d.lib"
-				OutputFile="$(OutDir)/libCocos2dTests.dll"
+				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../../PRJ_TG3/Common/ICU/lib;../../../PRJ_TG3/Mtapi/Win32/lib;../../../PRJ_TG3/LIB/Win32Lib;../../../PRJ_TG3/Common/SoftSupport;&quot;$(OutDir)&quot;"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
-				GenerateMapFile="true"
-				MapExports="true"
-				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				ImportLibrary="$(OutDir)/$(TargetName).lib"
+				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -99,16 +90,16 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy_res.bat"
+				CommandLine="copy_res.bat $(OutDir)"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../PRJ_TG3/LIB/Win32Lib"
-			IntermediateDirectory="Release"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
+			IntermediateDirectory="$(ConfigurationName).win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
-			CharacterSet="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -127,13 +118,16 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\Res;..\..\PRJ_TG3\Include;..\..\PRJ_TG3\Include\MTAPI;..\..\PRJ_TG3\Include\ThirdParty;..\..\PRJ_TG3\Include\TCOM;..\..\PRJ_TG3\TG3\Include;..\..\PRJ_TG3\TG3\TG3_Implement;..\..\PRJ_TG3\EOS_SYS;..\..\PRJ_TG3\Common\SoftSupport;..\..\PRJ_TG3\Common\ICU\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
-				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4244;4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -146,14 +140,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/test_uphone.dll"
+				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -176,6 +170,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy_res.bat $(OutDir)"
 			/>
 		</Configuration>
 	</Configurations>
@@ -183,9 +178,19 @@
 	</References>
 	<Files>
 		<Filter
+			Name="framework"
+			>
+			<File
+				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\main.h"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="source"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
 				RelativePath="..\AppDelegate.cpp"
@@ -193,38 +198,6 @@
 			</File>
 			<File
 				RelativePath="..\AppDelegate.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Makefiles"
-			>
-			<File
-				RelativePath=".\Makefile.ARM"
-				>
-			</File>
-			<File
-				RelativePath=".\test_uphone_Arm.TMK3"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Framework"
-			>
-			<File
-				RelativePath="..\framework.uphone\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\framework.uphone\NewDeleteOp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\framework.uphone\TG3AppDllEntry.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\framework.uphone\TG3AppDllEntry.h"
 				>
 			</File>
 		</Filter>
@@ -860,18 +833,6 @@
 				</File>
 				<File
 					RelativePath="..\tests\HiResTest\HiResTest.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="AccelerometerTest"
-				>
-				<File
-					RelativePath="..\tests\AccelerometerTest\AccelerometerTest.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\tests\AccelerometerTest\AccelerometerTest.h"
 					>
 				</File>
 			</Filter>
