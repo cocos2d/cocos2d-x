@@ -43,10 +43,10 @@ namespace cocos2d
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
 		// bind
-		glBindFramebufferOES(CC_GL_FRAMEBUFFER, m_fbo);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
 
 		// associate texture with FBO
-		glFramebufferTexture2DOES(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+		ccglFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
 			pTexture->getName(), 0);
 
 		// check if it worked (probably worth doing :) )
