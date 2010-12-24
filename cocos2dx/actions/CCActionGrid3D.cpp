@@ -362,10 +362,11 @@ namespace cocos2d
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
-			m_position = pos;
+			m_position = ccp(-1, -1);
+            setPosition(pos);
 			m_fRadius = r;
 			m_fLensEffect = 0.7f;
-			m_lastPosition = ccp(-1, -1);
+            m_bDirty = YES;
 
 			return true;
 		}
@@ -396,9 +397,20 @@ namespace cocos2d
 		return pCopy;
 	}
 
+    void CCLens3D::setPosition(CGPoint pos)
+    {
+        if( ! CGPoint::CGPointEqualToPoint(pos, m_position) ) {
+            m_position = pos;
+            m_positionInPixels.x = pos.x * CC_CONTENT_SCALE_FACTOR();
+            m_positionInPixels.y = pos.y * CC_CONTENT_SCALE_FACTOR();
+
+            m_bDirty = YES;
+        }
+    }
+
 	void CCLens3D::update(cocos2d::ccTime time)
 	{
-		if (m_position.x != m_lastPosition.x || m_position.y != m_lastPosition.y )
+		if (m_bDirty)
 		{
 			int i, j;
 			
@@ -407,7 +419,7 @@ namespace cocos2d
 				for (j = 0; j < m_sGridSize.y + 1; ++j)
 				{
 					ccVertex3F v = originalVertex(ccg(i, j));
-					CGPoint vect = ccpSub(m_position, ccp(v.x, v.y));
+					CGPoint vect = ccpSub(m_positionInPixels, ccp(v.x, v.y));
 					CGFloat r = ccpLength(vect);
 					
 					if (r < m_fRadius)
@@ -434,7 +446,7 @@ namespace cocos2d
 				}
 			}
 			
-			m_lastPosition = m_position;
+			m_bDirty = NO;
 		}
 	}
 
@@ -463,7 +475,7 @@ namespace cocos2d
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
-			m_position = pos;
+			setPosition(pos);
 			m_fRadius = r;
 			m_nWaves = wav;
 			m_fAmplitude = amp;
@@ -474,6 +486,13 @@ namespace cocos2d
 
 		return false;
 	}
+
+    void CCRipple3D::setPosition(CGPoint position)
+    {
+        m_position = position;
+        m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
+        m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
+    }
 
 	NSObject* CCRipple3D::copyWithZone(cocos2d::NSZone *pZone)
 	{
@@ -507,7 +526,7 @@ namespace cocos2d
 			for (j = 0; j < (m_sGridSize.y+1); ++j)
 			{
 				ccVertex3F v = originalVertex(ccg(i, j));
-				CGPoint vect = ccpSub(m_position, ccp(v.x,v.y));
+				CGPoint vect = ccpSub(m_positionInPixels, ccp(v.x,v.y));
 				CGFloat r = ccpLength(vect);
 				
 				if (r < m_fRadius)
@@ -784,7 +803,7 @@ namespace cocos2d
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
-			m_position = pos;
+			setPosition(pos);
 			m_nTwirls = t;
 			m_fAmplitude = amp;
 			m_fAmplitudeRate = 1.0f;
@@ -794,6 +813,13 @@ namespace cocos2d
 
 		return false;
 	}
+
+    void CCTwirl::setPosition(CGPoint position)
+    {
+        m_position = position;
+        m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
+        m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
+    }
 
 	NSObject* CCTwirl::copyWithZone(cocos2d::NSZone *pZone)
 	{
@@ -822,7 +848,7 @@ namespace cocos2d
 	void CCTwirl::update(cocos2d::ccTime time)
 	{
 		int i, j;
-		CGPoint	c = m_position;
+		CGPoint	c = m_positionInPixels;
 		
 		for (i = 0; i < (m_sGridSize.x+1); ++i)
 		{
