@@ -240,10 +240,6 @@
 				RelativePath="..\base_nodes\CCAtlasNode.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\base_nodes\CCNode.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="effects"
@@ -894,6 +890,10 @@
 			>
 			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCNode_mobile.cpp"
 				>
 			</File>
 			<File
