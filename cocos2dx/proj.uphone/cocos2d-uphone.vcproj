@@ -893,6 +893,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCGrid_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCNode_mobile.cpp"
 				>
 			</File>
