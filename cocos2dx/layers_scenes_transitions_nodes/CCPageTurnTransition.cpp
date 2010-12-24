@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 #include "CCPageTurnTransition.h"
 #include "CCDirector.h"
-#include "CCIntervalAction.h"
-#include "CCInstantAction.h"
-#include "CCGridAction.h"
-#include "CCPageTurn3DAction.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
+#include "CCActionGrid.h"
+#include "CCActionPageTurn3D.h"
 
 namespace   cocos2d {
 
@@ -79,7 +79,7 @@ void CCPageTurnTransition::onEnter()
 		x=12;y=16;
 	}
 
-	CCIntervalAction *action  = this->actionWithSize(ccg(x,y));
+	CCActionInterval *action  = this->actionWithSize(ccg(x,y));
 
 	if(! m_bBack )
 	{
@@ -113,7 +113,7 @@ void CCPageTurnTransition::onEnter()
 }
 
 
-CCIntervalAction* CCPageTurnTransition:: actionWithSize(ccGridSize vector)
+CCActionInterval* CCPageTurnTransition:: actionWithSize(ccGridSize vector)
 {
 	if( m_bBack )
 	{

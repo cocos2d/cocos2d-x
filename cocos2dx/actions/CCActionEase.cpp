@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCEaseAction.h"
+#include "CCActionEase.h"
 #include "NSObject.h"
 
 /*
@@ -40,9 +40,9 @@ namespace cocos2d {
 	//
 	// EaseAction
 	//
-	CCEaseAction* CCEaseAction::actionWithAction(cocos2d::CCIntervalAction *pAction)
+	CCActionEase* CCActionEase::actionWithAction(cocos2d::CCActionInterval *pAction)
 	{
-		CCEaseAction *pRet = new CCEaseAction();
+		CCActionEase *pRet = new CCActionEase();
 		if (pRet)
 		{
 	        if (pRet->initWithAction(pAction))
@@ -58,11 +58,11 @@ namespace cocos2d {
 		return pRet;
 	}
 
-	bool CCEaseAction::initWithAction(cocos2d::CCIntervalAction *pAction)
+	bool CCActionEase::initWithAction(cocos2d::CCActionInterval *pAction)
 	{
 		assert(pAction != NULL);
 
-		if (CCIntervalAction::initWithDuration(pAction->getDuration()))
+		if (CCActionInterval::initWithDuration(pAction->getDuration()))
 		{
 			m_pOther = pAction;
 			pAction->retain();
@@ -73,60 +73,60 @@ namespace cocos2d {
 		return false;
 	}
 
-	NSObject* CCEaseAction::copyWithZone(cocos2d::NSZone *pZone)
+	NSObject* CCActionEase::copyWithZone(cocos2d::NSZone *pZone)
 	{
 		NSZone* pNewZone = NULL;
-		CCEaseAction* pCopy = NULL;
+		CCActionEase* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
 			//in case of being called at sub class
-			pCopy = (CCEaseAction*)(pZone->m_pCopyObject);
+			pCopy = (CCActionEase*)(pZone->m_pCopyObject);
 		}
 		else
 		{
-			pCopy = new CCEaseAction();
+			pCopy = new CCActionEase();
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		CCIntervalAction::copyWithZone(pZone);
+		CCActionInterval::copyWithZone(pZone);
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
-	CCEaseAction::~CCEaseAction(void)
+	CCActionEase::~CCActionEase(void)
 	{
 		CCX_SAFE_RELEASE(m_pOther);
 	}
 
-	void CCEaseAction::startWithTarget(CCNode *pTarget)
+	void CCActionEase::startWithTarget(CCNode *pTarget)
 	{
-		CCIntervalAction::startWithTarget(pTarget);
+		CCActionInterval::startWithTarget(pTarget);
 		m_pOther->startWithTarget(m_pTarget);
 	}
 
-	void CCEaseAction::stop(void)
+	void CCActionEase::stop(void)
 	{
 		m_pOther->stop();
-		CCIntervalAction::stop();
+		CCActionInterval::stop();
 	}
 
-	void CCEaseAction::update(cocos2d::ccTime time)
+	void CCActionEase::update(cocos2d::ccTime time)
 	{
 		m_pOther->update(time);
 	}
 
-	CCIntervalAction* CCEaseAction::reverse(void)
+	CCActionInterval* CCActionEase::reverse(void)
 	{
-		return CCEaseAction::actionWithAction(m_pOther->reverse());
+		return CCActionEase::actionWithAction(m_pOther->reverse());
 	}
 
 	//
 	// EaseRateAction
 	//
-	CCEaseRateAction* CCEaseRateAction::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	CCEaseRateAction* CCEaseRateAction::actionWithAction(cocos2d::CCActionInterval *pAction, float fRate)
 	{
 		CCEaseRateAction *pRet = new CCEaseRateAction();
 		if (pRet)
@@ -144,9 +144,9 @@ namespace cocos2d {
 		return pRet;
 	}
 
-	bool CCEaseRateAction::initWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	bool CCEaseRateAction::initWithAction(cocos2d::CCActionInterval *pAction, float fRate)
 	{
-		if (CCEaseAction::initWithAction(pAction))
+		if (CCActionEase::initWithAction(pAction))
 		{
 			m_fRate = fRate;
 			return true;
@@ -170,7 +170,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -180,7 +180,7 @@ namespace cocos2d {
 	{
 	}
 
-	CCIntervalAction* CCEaseRateAction::reverse(void)
+	CCActionInterval* CCEaseRateAction::reverse(void)
 	{
 		return CCEaseRateAction::actionWithAction(m_pOther->reverse(), 1 / m_fRate);
 	}
@@ -188,7 +188,7 @@ namespace cocos2d {
 	//
 	// EeseIn
 	//
-	CCEaseIn* CCEaseIn::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	CCEaseIn* CCEaseIn::actionWithAction(cocos2d::CCActionInterval *pAction, float fRate)
 	{
 		CCEaseIn *pRet = new CCEaseIn();
 		if (pRet)
@@ -221,7 +221,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -235,7 +235,7 @@ namespace cocos2d {
 	//
 	// EaseOut
 	//
-	CCEaseOut* CCEaseOut::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	CCEaseOut* CCEaseOut::actionWithAction(cocos2d::CCActionInterval *pAction, float fRate)
 	{
 		CCEaseOut *pRet = new CCEaseOut();
 		if (pRet)
@@ -268,7 +268,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -282,7 +282,7 @@ namespace cocos2d {
 	//
 	// EaseInOut
 	//
-	CCEaseInOut* CCEaseInOut::actionWithAction(cocos2d::CCIntervalAction *pAction, float fRate)
+	CCEaseInOut* CCEaseInOut::actionWithAction(cocos2d::CCActionInterval *pAction, float fRate)
 	{
 		CCEaseInOut *pRet = new CCEaseInOut();
 		if (pRet)
@@ -315,7 +315,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease()), m_fRate);
+		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -343,7 +343,7 @@ namespace cocos2d {
 	}
 
 	// InOut and OutIn are symmetrical
-	CCIntervalAction* CCEaseInOut::reverse(void)
+	CCActionInterval* CCEaseInOut::reverse(void)
 	{
 		return CCEaseInOut::actionWithAction(m_pOther->reverse(), m_fRate);
 	}
@@ -351,7 +351,7 @@ namespace cocos2d {
 	//
 	// EaseExponentialIn
 	//
-	CCEaseExponentialIn* CCEaseExponentialIn::actionWithAction(CCIntervalAction* pAction)
+	CCEaseExponentialIn* CCEaseExponentialIn::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseExponentialIn *pRet = new CCEaseExponentialIn();
 		if (pRet)
@@ -384,7 +384,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -395,7 +395,7 @@ namespace cocos2d {
 		m_pOther->update(time == 0 ? 0 : powf(2, 10 * (time/1 - 1)) - 1 * 0.001f);
 	}
 
-	CCIntervalAction* CCEaseExponentialIn::reverse(void)
+	CCActionInterval* CCEaseExponentialIn::reverse(void)
 	{
 		return CCEaseExponentialOut::actionWithAction(m_pOther->reverse());
 	}
@@ -403,7 +403,7 @@ namespace cocos2d {
 	//
 	// EaseExponentialOut
 	//
-	CCEaseExponentialOut* CCEaseExponentialOut::actionWithAction(CCIntervalAction* pAction)
+	CCEaseExponentialOut* CCEaseExponentialOut::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseExponentialOut *pRet = new CCEaseExponentialOut();
 		if (pRet)
@@ -436,7 +436,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -447,7 +447,7 @@ namespace cocos2d {
 		m_pOther->update(time == 1 ? 1 : (-powf(2, -10 * time / 1) + 1));
 	}
 
-	CCIntervalAction* CCEaseExponentialOut::reverse(void)
+	CCActionInterval* CCEaseExponentialOut::reverse(void)
 	{
 		return CCEaseExponentialIn::actionWithAction(m_pOther->reverse());
 	}
@@ -455,7 +455,7 @@ namespace cocos2d {
 	//
 	// EaseExponentialInOut
 	//
-	CCEaseExponentialInOut* CCEaseExponentialInOut::actionWithAction(cocos2d::CCIntervalAction *pAction)
+	CCEaseExponentialInOut* CCEaseExponentialInOut::actionWithAction(cocos2d::CCActionInterval *pAction)
 	{
 		CCEaseExponentialInOut *pRet = new CCEaseExponentialInOut();
 		if (pRet)
@@ -488,7 +488,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -512,7 +512,7 @@ namespace cocos2d {
 	//
 	// EaseSineIn
 	//
-	CCEaseSineIn* CCEaseSineIn::actionWithAction(CCIntervalAction* pAction)
+	CCEaseSineIn* CCEaseSineIn::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseSineIn *pRet = new CCEaseSineIn();
 		if (pRet)
@@ -545,7 +545,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -556,7 +556,7 @@ namespace cocos2d {
 		m_pOther->update(-1 * cosf(time * (float)M_PI_2) + 1);
 	}
 
-	CCIntervalAction* CCEaseSineIn::reverse(void)
+	CCActionInterval* CCEaseSineIn::reverse(void)
 	{
 		return CCEaseSineOut::actionWithAction(m_pOther->reverse());
 	}
@@ -564,7 +564,7 @@ namespace cocos2d {
 	//
 	// EaseSineOut
 	//
-	CCEaseSineOut* CCEaseSineOut::actionWithAction(CCIntervalAction* pAction)
+	CCEaseSineOut* CCEaseSineOut::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseSineOut *pRet = new CCEaseSineOut();
 		if (pRet)
@@ -597,7 +597,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -608,7 +608,7 @@ namespace cocos2d {
 		m_pOther->update(sinf(time * (float)M_PI_2));
 	}
 
-	CCIntervalAction* CCEaseSineOut::reverse(void)
+	CCActionInterval* CCEaseSineOut::reverse(void)
 	{
 		return CCEaseSineIn::actionWithAction(m_pOther->reverse());
 	}
@@ -616,7 +616,7 @@ namespace cocos2d {
 	//
 	// EaseSineInOut
 	//
-	CCEaseSineInOut* CCEaseSineInOut::actionWithAction(CCIntervalAction* pAction)
+	CCEaseSineInOut* CCEaseSineInOut::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseSineInOut *pRet = new CCEaseSineInOut();
 		if (pRet)
@@ -649,7 +649,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -663,7 +663,7 @@ namespace cocos2d {
 	//
 	// EaseElastic
 	//
-	CCEaseElastic* CCEaseElastic::actionWithAction(cocos2d::CCIntervalAction *pAction)
+	CCEaseElastic* CCEaseElastic::actionWithAction(cocos2d::CCActionInterval *pAction)
 	{
 		CCEaseElastic *pRet = new CCEaseElastic();
 		if (pRet)
@@ -681,7 +681,7 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	CCEaseElastic* CCEaseElastic::actionWithAction(cocos2d::CCIntervalAction *pAction, float fPeriod)
+	CCEaseElastic* CCEaseElastic::actionWithAction(cocos2d::CCActionInterval *pAction, float fPeriod)
 	{
 		CCEaseElastic *pRet = new CCEaseElastic();
 		if (pRet)
@@ -699,14 +699,14 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	bool CCEaseElastic::initWithAction(cocos2d::CCIntervalAction *pAction)
+	bool CCEaseElastic::initWithAction(cocos2d::CCActionInterval *pAction)
 	{
 		return initWithAction(pAction, 0.3f);
 	}
 
-	bool CCEaseElastic::initWithAction(cocos2d::CCIntervalAction *pAction, float fPeriod)
+	bool CCEaseElastic::initWithAction(cocos2d::CCActionInterval *pAction, float fPeriod)
 	{
-		if (CCEaseAction::initWithAction(pAction))
+		if (CCActionEase::initWithAction(pAction))
 		{
 			m_fPeriod = fPeriod;
 			return true;
@@ -730,13 +730,13 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
-	CCIntervalAction* CCEaseElastic::reverse(void)
+	CCActionInterval* CCEaseElastic::reverse(void)
 	{
 		assert(0);
 
@@ -746,7 +746,7 @@ namespace cocos2d {
     //
 	// EaseElasticIn
 	//
-	CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCIntervalAction *pAction, float fPeriod)
+	CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCActionInterval *pAction, float fPeriod)
 	{
 		CCEaseElasticIn *pRet = new CCEaseElasticIn();
 		if (pRet)
@@ -764,7 +764,7 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCIntervalAction *pAction)
+	CCEaseElasticIn* CCEaseElasticIn::actionWithAction(CCActionInterval *pAction)
 	{
 		CCEaseElasticIn *pRet = new CCEaseElasticIn();
 		if (pRet)
@@ -797,7 +797,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -820,7 +820,7 @@ namespace cocos2d {
 		m_pOther->update(newT);
 	}
 
-	CCIntervalAction* CCEaseElasticIn::reverse(void)
+	CCActionInterval* CCEaseElasticIn::reverse(void)
 	{
 		return CCEaseElasticOut::actionWithAction(m_pOther->reverse(), m_fPeriod);
 	}
@@ -828,7 +828,7 @@ namespace cocos2d {
 	//
 	// EaseElasticOut
 	//
-	CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCIntervalAction *pAction)
+	CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCActionInterval *pAction)
 	{
 		CCEaseElasticOut *pRet = new CCEaseElasticOut();
 		if (pRet)
@@ -846,7 +846,7 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCIntervalAction *pAction, float fPeriod)
+	CCEaseElasticOut* CCEaseElasticOut::actionWithAction(CCActionInterval *pAction, float fPeriod)
 	{
 		CCEaseElasticOut *pRet = new CCEaseElasticOut();
 		if (pRet)
@@ -879,7 +879,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -901,7 +901,7 @@ namespace cocos2d {
 		m_pOther->update(newT);
 	}
 
-	CCIntervalAction* CCEaseElasticOut::reverse(void)
+	CCActionInterval* CCEaseElasticOut::reverse(void)
 	{
 		return CCEaseElasticIn::actionWithAction(m_pOther->reverse(), m_fPeriod);
 	}
@@ -909,7 +909,7 @@ namespace cocos2d {
 	//
 	// EaseElasticInOut
 	//
-	CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCIntervalAction *pAction)
+	CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCActionInterval *pAction)
 	{
 		CCEaseElasticInOut *pRet = new CCEaseElasticInOut();
 		if (pRet)
@@ -927,7 +927,7 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCIntervalAction *pAction, float fPeriod)
+	CCEaseElasticInOut* CCEaseElasticInOut::actionWithAction(CCActionInterval *pAction, float fPeriod)
 	{
 		CCEaseElasticInOut *pRet = new CCEaseElasticInOut();
 		if (pRet)
@@ -960,7 +960,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()), m_fPeriod);
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -998,7 +998,7 @@ namespace cocos2d {
 		m_pOther->update(newT);
 	}
 
-	CCIntervalAction* CCEaseElasticInOut::reverse(void)
+	CCActionInterval* CCEaseElasticInOut::reverse(void)
 	{
 		return CCEaseInOut::actionWithAction(m_pOther->reverse(), m_fPeriod);
 	}
@@ -1006,7 +1006,7 @@ namespace cocos2d {
 	//
 	// EaseBounce
 	//
-	CCEaseBounce* CCEaseBounce::actionWithAction(CCIntervalAction* pAction)
+	CCEaseBounce* CCEaseBounce::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseBounce *pRet = new CCEaseBounce();
 		if (pRet)
@@ -1039,7 +1039,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1069,7 +1069,7 @@ namespace cocos2d {
 	//
 	// EaseBounceIn
 	//
-	CCEaseBounceIn* CCEaseBounceIn::actionWithAction(CCIntervalAction* pAction)
+	CCEaseBounceIn* CCEaseBounceIn::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseBounceIn *pRet = new CCEaseBounceIn();
 		if (pRet)
@@ -1102,7 +1102,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1114,7 +1114,7 @@ namespace cocos2d {
 		m_pOther->update(newT);
 	}
 
-	CCIntervalAction* CCEaseBounceIn::reverse(void)
+	CCActionInterval* CCEaseBounceIn::reverse(void)
 	{
 		return CCEaseBounceOut::actionWithAction(m_pOther->reverse());
 	}
@@ -1122,7 +1122,7 @@ namespace cocos2d {
 	//
 	// EaseBounceOut
 	//
-	CCEaseBounceOut* CCEaseBounceOut::actionWithAction(CCIntervalAction* pAction)
+	CCEaseBounceOut* CCEaseBounceOut::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseBounceOut *pRet = new CCEaseBounceOut();
 		if (pRet)
@@ -1155,7 +1155,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1167,7 +1167,7 @@ namespace cocos2d {
 		m_pOther->update(newT);
 	}
 
-	CCIntervalAction* CCEaseBounceOut::reverse(void)
+	CCActionInterval* CCEaseBounceOut::reverse(void)
 	{
 		return CCEaseBounceIn::actionWithAction(m_pOther->reverse());
 	}
@@ -1175,7 +1175,7 @@ namespace cocos2d {
 	//
 	// EaseBounceInOut
 	//
-	CCEaseBounceInOut* CCEaseBounceInOut::actionWithAction(CCIntervalAction* pAction)
+	CCEaseBounceInOut* CCEaseBounceInOut::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseBounceInOut *pRet = new CCEaseBounceInOut();
 		if (pRet)
@@ -1208,7 +1208,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1233,7 +1233,7 @@ namespace cocos2d {
 	//
 	// EaseBackIn
 	//
-	CCEaseBackIn* CCEaseBackIn::actionWithAction(cocos2d::CCIntervalAction *pAction)
+	CCEaseBackIn* CCEaseBackIn::actionWithAction(cocos2d::CCActionInterval *pAction)
 	{
 		CCEaseBackIn *pRet = new CCEaseBackIn();
 		if (pRet)
@@ -1266,7 +1266,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1278,7 +1278,7 @@ namespace cocos2d {
 		m_pOther->update(time * time * ((overshoot + 1) * time - overshoot));
 	}
 
-	CCIntervalAction* CCEaseBackIn::reverse(void)
+	CCActionInterval* CCEaseBackIn::reverse(void)
 	{
 		return CCEaseBackOut::actionWithAction(m_pOther->reverse());
 	}
@@ -1286,7 +1286,7 @@ namespace cocos2d {
 	//
 	// EaseBackOut
 	//
-	CCEaseBackOut* CCEaseBackOut::actionWithAction(CCIntervalAction* pAction)
+	CCEaseBackOut* CCEaseBackOut::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseBackOut *pRet = new CCEaseBackOut();
 		if (pRet)
@@ -1319,7 +1319,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;
@@ -1333,7 +1333,7 @@ namespace cocos2d {
 		m_pOther->update(time * time * ((overshoot + 1) * time + overshoot) + 1);
 	}
 
-	CCIntervalAction* CCEaseBackOut::reverse(void)
+	CCActionInterval* CCEaseBackOut::reverse(void)
 	{
 		return CCEaseBackIn::actionWithAction(m_pOther->reverse());
 	}
@@ -1341,7 +1341,7 @@ namespace cocos2d {
 	//
 	// EaseBackInOut
 	//
-	CCEaseBackInOut* CCEaseBackInOut::actionWithAction(CCIntervalAction* pAction)
+	CCEaseBackInOut* CCEaseBackInOut::actionWithAction(CCActionInterval* pAction)
 	{
 		CCEaseBackInOut *pRet = new CCEaseBackInOut();
 		if (pRet)
@@ -1374,7 +1374,7 @@ namespace cocos2d {
 			pZone = pNewZone = new NSZone(pCopy);
 		}
 
-		pCopy->initWithAction((CCIntervalAction *)(m_pOther->copy()->autorelease()));
+		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
 		CCX_SAFE_DELETE(pNewZone);
 		return pCopy;

@@ -220,7 +220,7 @@ void Sprite1::addNewSpriteWithCoords(CGPoint p)
 	
 	sprite->setPosition( ccp( p.x, p.y) );
 	
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -233,8 +233,8 @@ void Sprite1::addNewSpriteWithCoords(CGPoint p)
 		action = CCTintBy::actionWithDuration(2, 0, -255, -255);
 	else 
 		action = CCFadeOut::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( action, action_back, NULL ));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( action, action_back, NULL ));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
@@ -295,7 +295,7 @@ void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 
 	sprite->setPosition( ccp( p.x, p.y) );
 
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -309,8 +309,8 @@ void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 	else 
 		action = CCFadeOut::actionWithDuration(2);
 
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions(action, action_back, NULL));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions(action, action_back, NULL));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq));
 }
@@ -370,21 +370,21 @@ SpriteColorOpacity::SpriteColorOpacity()
 	sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
 	sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
 	
-	CCIntervalAction* action = CCFadeIn::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCAction* fade = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( action, action_back, NULL)));
+	CCActionInterval* action = CCFadeIn::actionWithDuration(2);
+	CCActionInterval* action_back = action->reverse();
+	CCAction* fade = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( action, action_back, NULL)));
 	
-	CCIntervalAction* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
-	CCIntervalAction* tintred_back = tintred->reverse();
-	CCAction* red = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintred, tintred_back, NULL)) );
+	CCActionInterval* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
+	CCActionInterval* tintred_back = tintred->reverse();
+	CCAction* red = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintred, tintred_back, NULL)) );
 	
-	CCIntervalAction* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
-	CCIntervalAction* tintgreen_back = tintgreen->reverse();
-	CCAction* green = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintgreen, tintgreen_back, NULL)));
+	CCActionInterval* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
+	CCActionInterval* tintgreen_back = tintgreen->reverse();
+	CCAction* green = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintgreen, tintgreen_back, NULL)));
 	
-	CCIntervalAction* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
-	CCIntervalAction* tintblue_back = tintblue->reverse();
-	CCAction* blue = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintblue, tintblue_back, NULL)) );
+	CCActionInterval* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
+	CCActionInterval* tintblue_back = tintblue->reverse();
+	CCAction* blue = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintblue, tintblue_back, NULL)) );
 	
 	sprite5->runAction(red);
 	sprite6->runAction(green);
@@ -456,21 +456,21 @@ SpriteSheetColorOpacity::SpriteSheetColorOpacity()
 	sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
 	sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
 
-	CCIntervalAction* action = CCFadeIn::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCAction* fade = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( action, action_back,NULL)));
+	CCActionInterval* action = CCFadeIn::actionWithDuration(2);
+	CCActionInterval* action_back = action->reverse();
+	CCAction* fade = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( action, action_back,NULL)));
 
-	CCIntervalAction* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
-	CCIntervalAction* tintred_back = tintred->reverse();
-	CCAction* red = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintred, tintred_back,NULL)));
+	CCActionInterval* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
+	CCActionInterval* tintred_back = tintred->reverse();
+	CCAction* red = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintred, tintred_back,NULL)));
 
-	CCIntervalAction* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
-	CCIntervalAction* tintgreen_back = tintgreen->reverse();
-	CCAction* green = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintgreen, tintgreen_back,NULL)));
+	CCActionInterval* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
+	CCActionInterval* tintgreen_back = tintgreen->reverse();
+	CCAction* green = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintgreen, tintgreen_back,NULL)));
 
-	CCIntervalAction* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
-	CCIntervalAction* tintblue_back = tintblue->reverse();
-	CCAction* blue = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintblue, tintblue_back,NULL)));
+	CCActionInterval* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
+	CCActionInterval* tintblue_back = tintblue->reverse();
+	CCAction* blue = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintblue, tintblue_back,NULL)));
 	
 	
 	sprite5->runAction(red);
@@ -893,7 +893,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* action = CCRepeatForever::actionWithAction(rotate);
 	
 	for(int i=0;i<3;i++) 
@@ -947,7 +947,7 @@ SpriteSheetAnchorPoint::SpriteSheetAnchorPoint()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* action = CCRepeatForever::actionWithAction(rotate);
 	for(int i=0;i<3;i++) 
 	{
@@ -1006,17 +1006,17 @@ Sprite6::Sprite6()
 	
 	
 	// SpriteSheet actions
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(5, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(5, 360);
 	CCAction* action = CCRepeatForever::actionWithAction(rotate);
 
 	// SpriteSheet actions
-	CCIntervalAction* rotate_back = rotate->reverse();
-	CCIntervalAction* rotate_seq = (CCIntervalAction*)(CCSequence::actions(rotate, rotate_back, NULL));
+	CCActionInterval* rotate_back = rotate->reverse();
+	CCActionInterval* rotate_seq = (CCActionInterval*)(CCSequence::actions(rotate, rotate_back, NULL));
 	CCAction* rotate_forever = CCRepeatForever::actionWithAction(rotate_seq);
 	
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(5, 1.5f);
-	CCIntervalAction* scale_back = scale->reverse();
-	CCIntervalAction* scale_seq = (CCIntervalAction*)(CCSequence::actions( scale, scale_back, NULL));
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(5, 1.5f);
+	CCActionInterval* scale_back = scale->reverse();
+	CCActionInterval* scale_seq = (CCActionInterval*)(CCSequence::actions( scale, scale_back, NULL));
 	CCAction* scale_forever = CCRepeatForever::actionWithAction(scale_seq);
 
 	float step = s.width/4;
@@ -1135,9 +1135,9 @@ SpriteAliased::SpriteAliased()
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	addChild(sprite2, 0, kTagSprite2);
 	
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 5);
-	CCIntervalAction* scale_back = scale->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( scale, scale_back, NULL));
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 5);
+	CCActionInterval* scale_back = scale->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( scale, scale_back, NULL));
 	CCAction* repeat = CCRepeatForever::actionWithAction(seq);
 	
 	CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
@@ -1194,9 +1194,9 @@ SpriteSheetAliased::SpriteSheetAliased()
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	sheet->addChild(sprite2, 0, kTagSprite2);
 	
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 5);
-	CCIntervalAction* scale_back = scale->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( scale, scale_back, NULL));
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 5);
+	CCActionInterval* scale_back = scale->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( scale, scale_back, NULL));
 	CCAction* repeat = CCRepeatForever::actionWithAction(seq);
 	
 	CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
@@ -1272,7 +1272,7 @@ void SpriteNewTexture::addNewSprite()
 	
 	sprite->setPosition( ccp( p.x, p.y) );
 	
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -1286,8 +1286,8 @@ void SpriteNewTexture::addNewSprite()
 	else 
 		action = CCFadeOut::actionWithDuration(2);
 
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions(action, action_back, NULL));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions(action, action_back, NULL));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
@@ -1379,7 +1379,7 @@ void SpriteSheetNewTexture::addNewSprite()
 	
 	sprite->setPosition( ccp( p.x, p.y) );
 	
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -1392,8 +1392,8 @@ void SpriteSheetNewTexture::addNewSprite()
 		action = CCTintBy::actionWithDuration(2, 0, -255, -255);
 	else 
 		action = CCFadeOut::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions(action, action_back, NULL));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions(action, action_back, NULL));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
@@ -1760,9 +1760,9 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
 		CCAnimation *animation = CCAnimation::animationWithName("dance", 0.2f, animFrames);
 		sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ));			
 		
-		CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 2);
-		CCIntervalAction* scale_back = scale->reverse();
-		CCIntervalAction* seq_scale = (CCIntervalAction*)(CCSequence::actions(scale, scale_back, NULL));
+		CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 2);
+		CCActionInterval* scale_back = scale->reverse();
+		CCActionInterval* seq_scale = (CCActionInterval*)(CCSequence::actions(scale, scale_back, NULL));
 		sprite->runAction(CCRepeatForever::actionWithAction(seq_scale));
 		
 		addChild(sprite, 0);
@@ -1836,9 +1836,9 @@ SpriteSheetOffsetAnchorScale::SpriteSheetOffsetAnchorScale()
 		CCAnimation *animation = CCAnimation::animationWithName("dance", 0.2f, animFrames);
 		sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
 
-		CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 2);
-		CCIntervalAction* scale_back = scale->reverse();
-		CCIntervalAction* seq_scale = (CCIntervalAction*)(CCSequence::actions(scale, scale_back, NULL) );
+		CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 2);
+		CCActionInterval* scale_back = scale->reverse();
+		CCActionInterval* seq_scale = (CCActionInterval*)(CCSequence::actions(scale, scale_back, NULL) );
 		sprite->runAction(CCRepeatForever::actionWithAction(seq_scale) );
 		
 		spritesheet->addChild(sprite, i);
@@ -1896,7 +1896,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 			
 	CCAnimation *animation = CCAnimation::animationWithName("fly", 0.2f, animFrames);
 	CCAnimate *animate = CCAnimate::actionWithAnimation(animation, false);
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( animate,
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( animate,
 					   CCFlipX::actionWithFlipX(true),
 					   animate->copy()->autorelease(),
 					   CCFlipX::actionWithFlipX(false),
@@ -1960,7 +1960,7 @@ SpriteHybrid::SpriteHybrid()
 		}
 		sprite->setPosition( ccp(x,y) );
 			
-		CCIntervalAction* action = CCRotateBy::actionWithDuration(4, 360);
+		CCActionInterval* action = CCRotateBy::actionWithDuration(4, 360);
 		sprite->runAction( CCRepeatForever::actionWithAction(action) );
 	}
 	
@@ -2066,18 +2066,18 @@ SpriteSheetChildren::SpriteSheetChildren()
 	sprite1->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
 	// END NEW CODE
 	
-	CCIntervalAction* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* action_rot = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* action_s = CCScaleBy::actionWithDuration(2, 2);
-	CCIntervalAction* action_s_back = action_s->reverse();
+	CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* action_rot = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* action_s = CCScaleBy::actionWithDuration(2, 2);
+	CCActionInterval* action_s_back = action_s->reverse();
 	
-	CCIntervalAction* seq2 = action_rot->reverse();
+	CCActionInterval* seq2 = action_rot->reverse();
 	sprite2->runAction( CCRepeatForever::actionWithAction(seq2) );
 	
 	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction(action_rot)) );
-	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action, action_back,NULL)) )));
-	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action_s, action_s_back,NULL)))) );
+	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action, action_back,NULL)) )));
+	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action_s, action_s_back,NULL)))) );
 
 	animFrames->release();
 		
@@ -2135,15 +2135,15 @@ SpriteSheetChildren2::SpriteSheetChildren2()
 	// don't scale and rotate with it's parent
 	sprite13->setHornorParentTransform((ccHonorParentTransform) (sprite13->getHornorParentTransform() & ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE) ));
 	
-	CCIntervalAction* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* action_rot = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* action_s = CCScaleBy::actionWithDuration(2, 2);
-	CCIntervalAction* action_s_back = action_s->reverse();
+	CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* action_rot = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* action_s = CCScaleBy::actionWithDuration(2, 2);
+	CCActionInterval* action_s_back = action_s->reverse();
 
 	sprite11->runAction( CCRepeatForever::actionWithAction(action_rot));
-	sprite11->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action, action_back,NULL))));
-	sprite11->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action_s, action_s_back,NULL))));
+	sprite11->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action, action_back,NULL))));
+	sprite11->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action_s, action_s_back,NULL))));
 	
 	//
 	// another set of parent / children
@@ -2171,7 +2171,7 @@ SpriteSheetChildren2::SpriteSheetChildren2()
 	sprite23->setHornorParentTransform((ccHonorParentTransform) (sprite23->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_SCALE));
 	
 	sprite21->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(1, 360) ));
-	sprite21->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions( CCScaleTo::actionWithDuration(0.5f, 5.0f), CCScaleTo::actionWithDuration(0.5f, 1), NULL ) )) );
+	sprite21->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions( CCScaleTo::actionWithDuration(0.5f, 5.0f), CCScaleTo::actionWithDuration(0.5f, 1), NULL ) )) );
 }
 
 void SpriteSheetChildren2::onExit()
@@ -2590,7 +2590,7 @@ SpriteSheetChildrenScale::SpriteSheetChildrenScale()
 
 	CCNode *aParent;
 	CCSprite* sprite1, *sprite2;
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* seq = CCRepeatForever::actionWithAction(rot);
 	
 	//
@@ -2691,10 +2691,10 @@ SpriteChildrenChildren::SpriteChildrenChildren()
 	
 	CCNode *aParent;
 	CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* seq = CCRepeatForever::actionWithAction(rot);
 	
-	CCIntervalAction* rot_back = rot->reverse();
+	CCActionInterval* rot_back = rot->reverse();
 	CCAction* rot_back_fe = CCRepeatForever::actionWithAction(rot_back);
 	
 	//
@@ -2774,10 +2774,10 @@ SpriteSheetChildrenChildren::SpriteSheetChildrenChildren()
 	
 	CCSpriteSheet *aParent;
 	CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* seq = CCRepeatForever::actionWithAction(rot);
 	
-	CCIntervalAction* rot_back = rot->reverse();
+	CCActionInterval* rot_back = rot->reverse();
 	CCAction* rot_back_fe = CCRepeatForever::actionWithAction(rot_back);
 	
 	//

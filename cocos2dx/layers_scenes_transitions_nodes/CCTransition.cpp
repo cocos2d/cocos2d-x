@@ -27,14 +27,14 @@ THE SOFTWARE.
 #include "CGPointExtension.h"
 #include "CCDirector.h"
 #include "CCTouchDispatcher.h"
-#include "CCIntervalAction.h"
-#include "CCInstantAction.h"
-#include "CCEaseAction.h"
-#include "CCCameraAction.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
+#include "CCActionEase.h"
+#include "CCActionCamera.h"
 #include "CCLayer.h"
-#include "CCGridAction.h"
+#include "CCActionGrid.h"
 #include "CCRenderTexture.h"
-#include "CCTiledGridAction.h"
+#include "CCActionTiledGrid.h"
 namespace   cocos2d {
 
 enum {
@@ -238,7 +238,7 @@ void CCRotoZoomTransition:: onEnter()
 	m_pInScene->setAnchorPoint(ccp(0.5f, 0.5f));
 	m_pOutScene->setAnchorPoint(ccp(0.5f, 0.5f));
 
-	CCIntervalAction *rotozoom = (CCIntervalAction*)(CCSequence::actions
+	CCActionInterval *rotozoom = (CCActionInterval*)(CCSequence::actions
 	(
 		CCSpawn::actions
 		(
@@ -285,14 +285,14 @@ void CCJumpZoomTransition::onEnter()
 	m_pInScene->setAnchorPoint(ccp(0.5f, 0.5f));
 	m_pOutScene->setAnchorPoint(ccp(0.5f, 0.5f));
 
-	CCIntervalAction *jump = CCJumpBy::actionWithDuration(m_fDuration/4, ccp(-s.width,0), s.width/4, 2);
-	CCIntervalAction *scaleIn = CCScaleTo::actionWithDuration(m_fDuration/4, 1.0f);
-	CCIntervalAction *scaleOut = CCScaleTo::actionWithDuration(m_fDuration/4, 0.5f);
+	CCActionInterval *jump = CCJumpBy::actionWithDuration(m_fDuration/4, ccp(-s.width,0), s.width/4, 2);
+	CCActionInterval *scaleIn = CCScaleTo::actionWithDuration(m_fDuration/4, 1.0f);
+	CCActionInterval *scaleOut = CCScaleTo::actionWithDuration(m_fDuration/4, 0.5f);
 
-	CCIntervalAction *jumpZoomOut = (CCIntervalAction*)(CCSequence::actions(scaleOut, jump, NULL));
-	CCIntervalAction *jumpZoomIn = (CCIntervalAction*)(CCSequence::actions(jump, scaleIn, NULL));
+	CCActionInterval *jumpZoomOut = (CCActionInterval*)(CCSequence::actions(scaleOut, jump, NULL));
+	CCActionInterval *jumpZoomIn = (CCActionInterval*)(CCSequence::actions(jump, scaleIn, NULL));
 
-	CCIntervalAction *delay = CCDelayTime::actionWithDuration(m_fDuration/2);
+	CCActionInterval *delay = CCDelayTime::actionWithDuration(m_fDuration/2);
 
 	m_pOutScene->runAction(jumpZoomOut);
 	m_pInScene->runAction
@@ -324,7 +324,7 @@ void CCMoveInLTransition::onEnter()
 	CCTransitionScene::onEnter();
 	this->initScenes();
 
-	CCIntervalAction *a = this->action();
+	CCActionInterval *a = this->action();
 
 	m_pInScene->runAction
 	(
@@ -337,12 +337,12 @@ void CCMoveInLTransition::onEnter()
 	);
 }
  
-CCIntervalAction* CCMoveInLTransition::action()
+CCActionInterval* CCMoveInLTransition::action()
 {
 	return CCMoveTo::actionWithDuration(m_fDuration, ccp(0,0));
 }
 
-CCIntervalAction* CCMoveInLTransition::easeActionWithAction(CCIntervalAction* action)
+CCActionInterval* CCMoveInLTransition::easeActionWithAction(CCActionInterval* action)
 {
 	return CCEaseOut::actionWithAction(action, 2.0f);
 //	return [EaseElasticOut actionWithAction:action period:0.4f];
@@ -432,11 +432,11 @@ void CCSlideInLTransition::onEnter()
 	CCTransitionScene::onEnter();
 	this->initScenes();
 
-	CCIntervalAction *in = this->action();
-	CCIntervalAction *out = this->action();
+	CCActionInterval *in = this->action();
+	CCActionInterval *out = this->action();
 
-	CCIntervalAction* inAction = easeActionWithAction(in);
-	CCIntervalAction* outAction = (CCIntervalAction*)CCSequence::actions
+	CCActionInterval* inAction = easeActionWithAction(in);
+	CCActionInterval* outAction = (CCActionInterval*)CCSequence::actions
 	(
 		easeActionWithAction(out),
 		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)), 
@@ -457,13 +457,13 @@ void CCSlideInLTransition:: initScenes()
 	m_pInScene->setPosition( ccp(-(s.width-ADJUST_FACTOR),0) );
 }
 
-CCIntervalAction* CCSlideInLTransition::action()
+CCActionInterval* CCSlideInLTransition::action()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(s.width-ADJUST_FACTOR,0));
 }
 
-CCIntervalAction* CCSlideInLTransition::easeActionWithAction(CCIntervalAction* action)
+CCActionInterval* CCSlideInLTransition::easeActionWithAction(CCActionInterval* action)
 {
 	return CCEaseOut::actionWithAction(action, 2.0f);
 //	return [EaseElasticOut actionWithAction:action period:0.4f];
@@ -494,7 +494,7 @@ void CCSlideInRTransition::initScenes()
 }
 
 
-CCIntervalAction* CCSlideInRTransition:: action()
+CCActionInterval* CCSlideInRTransition:: action()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(-(s.width-ADJUST_FACTOR),0));
@@ -525,7 +525,7 @@ void CCSlideInTTransition::initScenes()
 }
 
 
-CCIntervalAction* CCSlideInTTransition::action()
+CCActionInterval* CCSlideInTTransition::action()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,-(s.height-ADJUST_FACTOR)));
@@ -555,7 +555,7 @@ void CCSlideInBTransition:: initScenes()
 }
 
 
-CCIntervalAction* CCSlideInBTransition:: action()
+CCActionInterval* CCSlideInBTransition:: action()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,s.height-ADJUST_FACTOR));
@@ -583,8 +583,8 @@ void CCShrinkGrowTransition::onEnter()
 	m_pInScene->setAnchorPoint(ccp(2/3.0f,0.5f));
 	m_pOutScene->setAnchorPoint(ccp(1/3.0f,0.5f));	
 
-	CCIntervalAction* scaleOut = CCScaleTo::actionWithDuration(m_fDuration, 0.01f);
-	CCIntervalAction* scaleIn = CCScaleTo::actionWithDuration(m_fDuration, 1.0f);
+	CCActionInterval* scaleOut = CCScaleTo::actionWithDuration(m_fDuration, 0.01f);
+	CCActionInterval* scaleIn = CCScaleTo::actionWithDuration(m_fDuration, 1.0f);
 
 	m_pInScene->runAction(this->easeActionWithAction(scaleIn));
 	m_pOutScene->runAction
@@ -597,7 +597,7 @@ void CCShrinkGrowTransition::onEnter()
 		)
 	);
 }
-CCIntervalAction* CCShrinkGrowTransition:: easeActionWithAction(CCIntervalAction* action)
+CCActionInterval* CCShrinkGrowTransition:: easeActionWithAction(CCActionInterval* action)
 {
 	return CCEaseOut::actionWithAction(action, 2.0f);
 //	return [EaseElasticOut actionWithAction:action period:0.3f];
@@ -619,7 +619,7 @@ void CCFlipXTransition::onEnter()
 {
 	CCOrientedTransitionScene::onEnter();
 
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	m_pInScene->setIsVisible(false);
 
 	float inDeltaZ, inAngleZ;
@@ -640,7 +640,7 @@ void CCFlipXTransition::onEnter()
 		outAngleZ = 0;
 	}
 
-	inA = (CCIntervalAction*)CCSequence::actions
+	inA = (CCActionInterval*)CCSequence::actions
 		(
 			CCDelayTime::actionWithDuration(m_fDuration/2),
 			CCShow::action(),
@@ -649,7 +649,7 @@ void CCFlipXTransition::onEnter()
 			NULL
 		);
 
-	outA = (CCIntervalAction *)CCSequence::actions
+	outA = (CCActionInterval *)CCSequence::actions
 		(
 			CCOrbitCamera::actionWithDuration(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 0, 0),
 			CCHide::action(),
@@ -684,7 +684,7 @@ void CCFlipYTransition::onEnter()
 {
 	CCOrientedTransitionScene::onEnter();
 
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	m_pInScene->setIsVisible(false);
 
 	float inDeltaZ, inAngleZ;
@@ -705,7 +705,7 @@ void CCFlipYTransition::onEnter()
 		outAngleZ = 0;
 	}
 
-	inA = (CCIntervalAction*)CCSequence::actions
+	inA = (CCActionInterval*)CCSequence::actions
 		(
 			CCDelayTime::actionWithDuration(m_fDuration/2),
 			CCShow::action(),
@@ -713,7 +713,7 @@ void CCFlipYTransition::onEnter()
 			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)), 
 			NULL
 		);
-	outA = (CCIntervalAction*)CCSequence::actions
+	outA = (CCActionInterval*)CCSequence::actions
 		(
 			CCOrbitCamera::actionWithDuration(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 90, 0),
 			CCHide::action(),
@@ -749,7 +749,7 @@ void CCFlipAngularTransition::onEnter()
 {
 	CCOrientedTransitionScene::onEnter();
 
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	m_pInScene->setIsVisible(false);
 
 	float inDeltaZ, inAngleZ;
@@ -770,7 +770,7 @@ void CCFlipAngularTransition::onEnter()
 		outAngleZ = 0;
 	}
 
-	inA = (CCIntervalAction *)CCSequence::actions
+	inA = (CCActionInterval *)CCSequence::actions
 		(
 			CCDelayTime::actionWithDuration(m_fDuration/2),
 			CCShow::action(),
@@ -778,7 +778,7 @@ void CCFlipAngularTransition::onEnter()
 			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)), 
 			NULL
 		);
-	outA = (CCIntervalAction *)CCSequence::actions
+	outA = (CCActionInterval *)CCSequence::actions
 		(
 			CCOrbitCamera::actionWithDuration(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 45, 0),
 			CCHide::action(),
@@ -813,7 +813,7 @@ void CCZoomFlipXTransition::onEnter()
 {
 	CCOrientedTransitionScene::onEnter();
 
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	m_pInScene->setIsVisible(false);
 
 	float inDeltaZ, inAngleZ;
@@ -832,7 +832,7 @@ void CCZoomFlipXTransition::onEnter()
 		outDeltaZ = -90;
 		outAngleZ = 0;
 	}
-	inA = (CCIntervalAction *)CCSequence::actions
+	inA = (CCActionInterval *)CCSequence::actions
 		(
 			CCDelayTime::actionWithDuration(m_fDuration/2),
 			CCSpawn::actions
@@ -845,7 +845,7 @@ void CCZoomFlipXTransition::onEnter()
 			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
 			NULL
 		);
-	outA = (CCIntervalAction *)CCSequence::actions
+	outA = (CCActionInterval *)CCSequence::actions
 		(
 			CCSpawn::actions
 			(
@@ -886,7 +886,7 @@ void CCZoomFlipYTransition::onEnter()
 {
 	CCOrientedTransitionScene::onEnter();
 
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	m_pInScene->setIsVisible(false);
 
 	float inDeltaZ, inAngleZ;
@@ -904,7 +904,7 @@ void CCZoomFlipYTransition::onEnter()
 		outAngleZ = 0;
 	}
 
-	inA = (CCIntervalAction *)CCSequence::actions
+	inA = (CCActionInterval *)CCSequence::actions
 		(
 			CCDelayTime::actionWithDuration(m_fDuration/2),
 			CCSpawn::actions
@@ -918,7 +918,7 @@ void CCZoomFlipYTransition::onEnter()
 			NULL
 		);
 
-	outA = (CCIntervalAction *)CCSequence::actions
+	outA = (CCActionInterval *)CCSequence::actions
 		(
 			CCSpawn::actions
 			(
@@ -960,7 +960,7 @@ void CCZoomFlipAngularTransition::onEnter()
 {
 	CCOrientedTransitionScene::onEnter();
 
-	CCIntervalAction *inA, *outA;
+	CCActionInterval *inA, *outA;
 	m_pInScene->setIsVisible(false);
 
 	float inDeltaZ, inAngleZ;
@@ -980,7 +980,7 @@ void CCZoomFlipAngularTransition::onEnter()
 		outAngleZ = 0;
 	}
 
-	inA = (CCIntervalAction *)CCSequence::actions
+	inA = (CCActionInterval *)CCSequence::actions
 		(
 			CCDelayTime::actionWithDuration(m_fDuration/2),
 			CCSpawn::actions
@@ -994,7 +994,7 @@ void CCZoomFlipAngularTransition::onEnter()
 			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::finish)),
 			NULL
 		);
-	outA = (CCIntervalAction *)CCSequence::actions
+	outA = (CCActionInterval *)CCSequence::actions
 		(
 			CCSpawn::actions
 			(
@@ -1067,7 +1067,7 @@ void CCFadeTransition :: onEnter()
 	addChild(l, 2, kSceneFade);
 	CCNode* f = getChildByTag(kSceneFade);
 
-	CCIntervalAction* a = (CCIntervalAction *)CCSequence::actions
+	CCActionInterval* a = (CCActionInterval *)CCSequence::actions
 		(
 			CCFadeIn::actionWithDuration(m_fDuration/2),
 			CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),//CCCallFunc::actionWithTarget:self selector:@selector(hideOutShowIn)],
@@ -1209,7 +1209,7 @@ void CCTurnOffTilesTransition::onEnter()
 	int y = 12;
 
 	CCTurnOffTiles* toff = CCTurnOffTiles::actionWithSize( ccg(x,y), m_fDuration);
-	CCIntervalAction* action = easeActionWithAction(toff);
+	CCActionInterval* action = easeActionWithAction(toff);
 	m_pOutScene->runAction
 	(
 		CCSequence::actions
@@ -1223,7 +1223,7 @@ void CCTurnOffTilesTransition::onEnter()
 }
 
 
-CCIntervalAction* CCTurnOffTilesTransition:: easeActionWithAction(CCIntervalAction* action)
+CCActionInterval* CCTurnOffTilesTransition:: easeActionWithAction(CCActionInterval* action)
 {
 	return action;
 }
@@ -1246,8 +1246,8 @@ void CCSplitColsTransition::onEnter()
 	CCTransitionScene::onEnter();
 	m_pInScene->setIsVisible(false);
 
-	CCIntervalAction* split = action();
-	CCIntervalAction* seq = (CCIntervalAction*)CCSequence::actions
+	CCActionInterval* split = action();
+	CCActionInterval* seq = (CCActionInterval*)CCSequence::actions
 	(
 		split,
 		CCCallFunc::actionWithTarget(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),
@@ -1268,13 +1268,13 @@ void CCSplitColsTransition::onEnter()
 }
 
 
-CCIntervalAction* CCSplitColsTransition:: action()
+CCActionInterval* CCSplitColsTransition:: action()
 {
 	return CCSplitCols::actionWithCols(3, m_fDuration/2.0f);
 }
 
 
-CCIntervalAction* CCSplitColsTransition::easeActionWithAction(CCIntervalAction * action)
+CCActionInterval* CCSplitColsTransition::easeActionWithAction(CCActionInterval * action)
 {
 	return CCEaseInOut::actionWithAction(action, 3.0f);
 }
@@ -1293,7 +1293,7 @@ CCSplitRowsTransition::~CCSplitRowsTransition()
 }
 
 
-CCIntervalAction* CCSplitRowsTransition::action()
+CCActionInterval* CCSplitRowsTransition::action()
 {
 	return CCSplitRows::actionWithRows(3, m_fDuration/2.0f);
 }
@@ -1325,7 +1325,7 @@ void CCFadeTRTransition::onEnter()
 	int x = (int)(12 * aspect);
 	int y = 12;
 
-	CCIntervalAction* action  = actionWithSize(ccg(x,y));
+	CCActionInterval* action  = actionWithSize(ccg(x,y));
 
 	m_pOutScene->runAction
 	(
@@ -1340,12 +1340,12 @@ void CCFadeTRTransition::onEnter()
 }
 
 
-CCIntervalAction*  CCFadeTRTransition::actionWithSize(ccGridSize size)
+CCActionInterval*  CCFadeTRTransition::actionWithSize(ccGridSize size)
 {
 	return CCFadeOutTRTiles::actionWithSize(size, m_fDuration);
 }
 
-CCIntervalAction* CCFadeTRTransition:: easeActionWithAction(CCIntervalAction* action)
+CCActionInterval* CCFadeTRTransition:: easeActionWithAction(CCActionInterval* action)
 {
 	return action;
 }
@@ -1364,7 +1364,7 @@ CCFadeBLTransition::~CCFadeBLTransition()
 {
 }
 
-CCIntervalAction*  CCFadeBLTransition::actionWithSize(ccGridSize size)
+CCActionInterval*  CCFadeBLTransition::actionWithSize(ccGridSize size)
 {
 	return CCFadeOutBLTiles::actionWithSize(size, m_fDuration);
 }
@@ -1381,7 +1381,7 @@ CCFadeUpTransition::~CCFadeUpTransition()
 {
 }
 
-CCIntervalAction* CCFadeUpTransition::actionWithSize(ccGridSize size)
+CCActionInterval* CCFadeUpTransition::actionWithSize(ccGridSize size)
 {
 	return CCFadeOutUpTiles::actionWithSize(size, m_fDuration);
 }
@@ -1398,7 +1398,7 @@ CCFadeDownTransition::~CCFadeDownTransition()
 {
 }
 
-CCIntervalAction* CCFadeDownTransition::actionWithSize(ccGridSize size)
+CCActionInterval* CCFadeDownTransition::actionWithSize(ccGridSize size)
 {
 	return CCFadeOutDownTiles::actionWithSize(size, m_fDuration);
 }

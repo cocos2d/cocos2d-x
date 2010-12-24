@@ -61,10 +61,10 @@ MenuLayer1::MenuLayer1()
 	// Font Item
 	CCMenuItemFont* item6 = CCMenuItemFont::itemFromString("Quit", this, menu_selector(MenuLayer1::onQuit));
 	
-	CCIntervalAction* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
-	CCIntervalAction* color_back = color_action->reverse();
+	CCActionInterval* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
+	CCActionInterval* color_back = color_action->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(color_action, color_back, NULL);
-	item6->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
+	item6->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
 	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, item4, item5, item6, NULL);
 	menu->alignItemsVertically();
@@ -281,12 +281,12 @@ MenuLayer3::MenuLayer3()
 	
 	CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CGPointMake(400,0), 50, 4);
 	item2->runAction( CCRepeatForever::actionWithAction(
-								(CCIntervalAction*)(CCSequence::actions( jump, jump->reverse(), NULL))
+								(CCActionInterval*)(CCSequence::actions( jump, jump->reverse(), NULL))
 								)
 					);
-	CCIntervalAction* spin1 = CCRotateBy::actionWithDuration(3, 360);
-	CCIntervalAction* spin2 = (CCIntervalAction*)(spin1->copy()->autorelease());
-	CCIntervalAction* spin3 = (CCIntervalAction*)(spin1->copy()->autorelease());
+	CCActionInterval* spin1 = CCRotateBy::actionWithDuration(3, 360);
+	CCActionInterval* spin2 = (CCActionInterval*)(spin1->copy()->autorelease());
+	CCActionInterval* spin3 = (CCActionInterval*)(spin1->copy()->autorelease());
 	
 	item1->runAction( CCRepeatForever::actionWithAction(spin1) );
 	item2->runAction( CCRepeatForever::actionWithAction(spin2) );

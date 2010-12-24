@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #ifndef __CCCAMERA_ACTION_H__
 #define __CCCAMERA_ACTION_H__
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 
 namespace cocos2d {
 	class CCCamera;
@@ -32,10 +32,10 @@ namespace cocos2d {
 	/** 
 	@brief Base class for CCCamera actions
 	*/
-	class CCX_DLL CCCameraAction : public CCIntervalAction //<NSCopying> 
+	class CCX_DLL CCActionCamera : public CCActionInterval //<NSCopying> 
 	{
 	public:
-		CCCameraAction()
+		CCActionCamera()
 			:m_fCenterXOrig(0)
 			,m_fCenterYOrig(0)
 			,m_fCenterZOrig(0)
@@ -46,10 +46,10 @@ namespace cocos2d {
 			,m_fUpYOrig(0)
 			,m_fUpZOrig(0)
 		{}
-		virtual ~CCCameraAction(){}
+		virtual ~CCActionCamera(){}
 		// super methods
 		virtual void startWithTarget(CCNode *pTarget);
-		virtual CCIntervalAction * reverse();
+		virtual CCActionInterval * reverse();
 	protected:
 		float m_fCenterXOrig;
 		float m_fCenterYOrig;
@@ -68,7 +68,7 @@ namespace cocos2d {
 	@brief CCOrbitCamera action
 	Orbits the camera around the center of the screen using spherical coordinates
 	*/
-	class CCX_DLL CCOrbitCamera : public CCCameraAction //<NSCopying> 
+	class CCX_DLL CCOrbitCamera : public CCActionCamera //<NSCopying> 
 	{
 	public:
 		CCOrbitCamera(){}

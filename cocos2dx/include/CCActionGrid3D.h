@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCGRID3D_ACTION_H__
 #define __ACTION_CCGRID3D_ACTION_H__
 
-#include "CCGridAction.h"
+#include "CCActionGrid.h"
 
 namespace cocos2d
 {
@@ -93,7 +93,7 @@ namespace cocos2d
 		inline void setLensEffect(float fLensEffect) { m_fLensEffect = fLensEffect; }
 		
 		inline CGPoint getPosition(void) { return m_position; }
-		inline void setPosition(CGPoint position) { m_position = position; }
+		void setPosition(CGPoint position);
 
 		/** initializes the action with center position, radius, a grid size and duration */
 		bool initWithPosition(CGPoint pos, float r, ccGridSize gridSize, ccTime duration);
@@ -109,7 +109,11 @@ namespace cocos2d
 		float m_fRadius;
 		/** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
 		float m_fLensEffect;
-		CGPoint m_lastPosition;
+
+        /* @since v0.99.5 */
+        // CGPoint m_lastPosition;
+        CGPoint m_positionInPixels;
+        bool    m_bDirty;
 	};
 
 	/** @brief CCRipple3D action */
@@ -119,7 +123,7 @@ namespace cocos2d
 		/** get center position */
 		inline CGPoint getPosition(void) { return m_position; }
 		/** set center position */
-		inline void setPosition(CGPoint position) { m_position = position; }
+		void setPosition(CGPoint position);
 
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -144,6 +148,9 @@ namespace cocos2d
 		int m_nWaves;
 		float m_fAmplitude;
 		float m_fAmplitudeRate;
+
+        /*@since v0.99.5*/
+        CGPoint m_positionInPixels;
 	};
 
 	/** @brief CCShaky3D action */
@@ -224,7 +231,7 @@ namespace cocos2d
 		/** get twirl center */
 		inline CGPoint getPosition(void) { return m_position; }
 		/** set twirl center */
-		inline void setPosition(CGPoint position) { m_position = position; }
+		void setPosition(CGPoint position);
 
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -248,6 +255,9 @@ namespace cocos2d
 		int m_nTwirls;
 		float m_fAmplitude;
 		float m_fAmplitudeRate;
+
+        /*@since v0.99.5 */
+        CGPoint m_positionInPixels;
 	};
 }
 

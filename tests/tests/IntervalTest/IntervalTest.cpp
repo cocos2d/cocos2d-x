@@ -56,7 +56,7 @@ IntervalLayer::IntervalLayer()
 	
 	addChild(sprite);
 	sprite->runAction( CCRepeatForever::actionWithAction(
-															(CCIntervalAction*)(CCSequence::actions(jump, jump->reverse(), NULL ))
+															(CCActionInterval*)(CCSequence::actions(jump, jump->reverse(), NULL ))
 														)
 					 );
 	// pause button

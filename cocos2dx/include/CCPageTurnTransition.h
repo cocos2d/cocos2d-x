@@ -62,7 +62,7 @@ public:
 	*/
 	virtual bool initWithDuration(ccTime t,CCScene* scene,bool backwards);
 
-	CCIntervalAction* actionWithSize(ccGridSize vector);
+	CCActionInterval* actionWithSize(ccGridSize vector);
 
 	virtual void onEnter();
 

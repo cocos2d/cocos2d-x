@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include <cstring>
 #include "CCMenuItem.h"
 #include "CGPointExtension.h"
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabel.h"

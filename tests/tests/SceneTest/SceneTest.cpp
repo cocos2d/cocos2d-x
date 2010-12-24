@@ -31,7 +31,7 @@ SceneTestLayer1::SceneTestLayer1()
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
@@ -104,7 +104,7 @@ SceneTestLayer2::SceneTestLayer2()
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
@@ -161,7 +161,7 @@ SceneTestLayer3::SceneTestLayer3()
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
