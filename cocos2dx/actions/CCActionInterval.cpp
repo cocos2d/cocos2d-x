@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 #include "CCSprite.h"
 #include "CCNode.h"
 #include "CGPointExtension.h"
@@ -35,16 +35,16 @@ namespace cocos2d {
 //
 // IntervalAction
 //
-CCIntervalAction* CCIntervalAction::actionWithDuration(ccTime d)
+CCActionInterval* CCActionInterval::actionWithDuration(ccTime d)
 {
-	CCIntervalAction *pAction = new CCIntervalAction();
+	CCActionInterval *pAction = new CCActionInterval();
 	pAction->initWithDuration(d);
 	pAction->autorelease();
 
 	return pAction;
 }
 
-bool CCIntervalAction::initWithDuration(cocos2d::ccTime d)
+bool CCActionInterval::initWithDuration(cocos2d::ccTime d)
 {
 	m_fDuration = d;
 
@@ -62,21 +62,21 @@ bool CCIntervalAction::initWithDuration(cocos2d::ccTime d)
 	return true;
 }
 
-NSObject* CCIntervalAction::copyWithZone(NSZone *pZone)
+NSObject* CCActionInterval::copyWithZone(NSZone *pZone)
 {
 	NSZone* pNewZone = NULL;
-	CCIntervalAction* pCopy = NULL;
+	CCActionInterval* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
-		pCopy = (CCIntervalAction*)(pZone->m_pCopyObject);
+		pCopy = (CCActionInterval*)(pZone->m_pCopyObject);
 	}
 	else
 	{
 		// action's base class , must be called using __super::copyWithZone(), after overriding from derived class
 		assert(0);  
 
-		pCopy = new CCIntervalAction();
+		pCopy = new CCActionInterval();
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
@@ -90,12 +90,12 @@ NSObject* CCIntervalAction::copyWithZone(NSZone *pZone)
 	return pCopy;
 }
 
-bool CCIntervalAction::isDone(void)
+bool CCActionInterval::isDone(void)
 {
 	return m_elapsed >= m_fDuration;
 }
 
-void CCIntervalAction::step(ccTime dt)
+void CCActionInterval::step(ccTime dt)
 {
 	if (m_bFirstTick)
 	{
@@ -111,13 +111,13 @@ void CCIntervalAction::step(ccTime dt)
 	update(1 > m_elapsed/m_fDuration ? m_elapsed/m_fDuration : 1);
 }
 
-void CCIntervalAction::setAmplitudeRate(CGFloat amp)
+void CCActionInterval::setAmplitudeRate(CGFloat amp)
 {
 	// Abstract class needs implementation
 	assert(0);
 }
 
-CGFloat CCIntervalAction::getAmplitudeRate(void)
+CGFloat CCActionInterval::getAmplitudeRate(void)
 {
 	// Abstract class needs implementation
 	assert(0);
@@ -125,14 +125,14 @@ CGFloat CCIntervalAction::getAmplitudeRate(void)
 	return 0;
 }
 
-void CCIntervalAction::startWithTarget(CCNode *pTarget)
+void CCActionInterval::startWithTarget(CCNode *pTarget)
 {
 	CCFiniteTimeAction::startWithTarget(pTarget);
 	m_elapsed = 0.0f;
 	m_bFirstTick = true;
 }
 
-CCIntervalAction* CCIntervalAction::reverse(void)
+CCActionInterval* CCActionInterval::reverse(void)
 {
 	/*
 	 NSException* myException = [NSException
@@ -187,7 +187,7 @@ bool CCSequence::initOneTwo(cocos2d::CCFiniteTimeAction *pActionOne, cocos2d::CC
 	assert(pActionTwo != NULL);
 
 	ccTime d = pActionOne->getDuration() + pActionTwo->getDuration();
-	CCIntervalAction::initWithDuration(d);
+	CCActionInterval::initWithDuration(d);
 
 	m_pActions[0] = pActionOne;
 	pActionOne->retain();
@@ -213,7 +213,7 @@ NSObject* CCSequence::copyWithZone(NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initOneTwo((CCFiniteTimeAction*)(m_pActions[0]->copy()->autorelease()), 
 				(CCFiniteTimeAction*)(m_pActions[1]->copy()->autorelease()));
@@ -230,7 +230,7 @@ CCSequence::~CCSequence(void)
 
 void CCSequence::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_split = m_pActions[0]->getDuration() / m_fDuration;
 	m_last = -1;
 }
@@ -239,7 +239,7 @@ void CCSequence::stop(void)
 {
 	m_pActions[0]->stop();
 	m_pActions[1]->stop();
-	CCIntervalAction::stop();
+	CCActionInterval::stop();
 }
 
 void CCSequence::update(cocos2d::ccTime time)
@@ -294,7 +294,7 @@ void CCSequence::update(cocos2d::ccTime time)
 	m_last = found;
 }
 
-CCIntervalAction* CCSequence::reverse(void)
+CCActionInterval* CCSequence::reverse(void)
 {
 	return CCSequence::actionOneTwo(m_pActions[1]->reverse(), m_pActions[0]->reverse());
 }
@@ -315,7 +315,7 @@ bool CCRepeat::initWithAction(cocos2d::CCFiniteTimeAction *pAction, unsigned int
 {
 	ccTime d = pAction->getDuration() * times;
 
-	if (CCIntervalAction::initWithDuration(d))
+	if (CCActionInterval::initWithDuration(d))
 	{
         m_uTimes = times;
 		m_pOther = pAction;
@@ -345,7 +345,7 @@ NSObject* CCRepeat::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()), m_uTimes);
 
@@ -361,14 +361,14 @@ CCRepeat::~CCRepeat(void)
 void CCRepeat::startWithTarget(CCNode *pTarget)
 {
 	m_uTotal = 0;
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_pOther->startWithTarget(pTarget);
 }
 
 void CCRepeat::stop(void)
 {
 	m_pOther->stop();
-	CCIntervalAction::stop();
+	CCActionInterval::stop();
 }
 
 // issue #80. Instead of hooking step:, hook update: since it can be called by any 
@@ -418,7 +418,7 @@ bool CCRepeat::isDone(void)
 	return m_uTotal == m_uTimes;
 }
 
-CCIntervalAction* CCRepeat::reverse(void)
+CCActionInterval* CCRepeat::reverse(void)
 {
 	return CCRepeat::actionWithAction(m_pOther->reverse(), m_uTimes);
 }
@@ -430,7 +430,7 @@ CCRepeatForever::~CCRepeatForever()
 {
 	m_pOther->release();
 }
-CCRepeatForever *CCRepeatForever::actionWithAction(CCIntervalAction *pAction)
+CCRepeatForever *CCRepeatForever::actionWithAction(CCActionInterval *pAction)
 {
 	CCRepeatForever *pRet = new CCRepeatForever();
 	if (pRet && pRet->initWithAction(pAction))
@@ -442,7 +442,7 @@ CCRepeatForever *CCRepeatForever::actionWithAction(CCIntervalAction *pAction)
 	return NULL;
 }
 
-bool CCRepeatForever::initWithAction(CCIntervalAction *pAction)
+bool CCRepeatForever::initWithAction(CCActionInterval *pAction)
 {
 	assert(pAction != NULL);
 	pAction->retain();
@@ -462,16 +462,16 @@ NSObject* CCRepeatForever::copyWithZone(NSZone *pZone)
 		pRet = new CCRepeatForever();
 		pZone = pNewZone = new NSZone(pRet);
 	}
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 	// win32 : use the m_pOther's copy object.
-	pRet->initWithAction((CCIntervalAction*)(m_pOther->copy()->autorelease())); 
+	pRet->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease())); 
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 
 void CCRepeatForever::startWithTarget(CCNode* pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_pOther->startWithTarget(pTarget);
 }
 
@@ -492,9 +492,9 @@ bool CCRepeatForever::isDone()
 	return false;
 }
 
-CCIntervalAction *CCRepeatForever::reverse()
+CCActionInterval *CCRepeatForever::reverse()
 {
-	return (CCIntervalAction*)(CCRepeatForever::actionWithAction(m_pOther->reverse()));
+	return (CCActionInterval*)(CCRepeatForever::actionWithAction(m_pOther->reverse()));
 }
 
 //
@@ -544,7 +544,7 @@ bool CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAct
 
 	// __super::initWithDuration(fmaxf(d1, d2));
 	float maxd = (d1 >= d2 || CCXMath::isnanCocos2d(d2)) ? d1 : d2;
-	CCIntervalAction::initWithDuration(maxd);
+	CCActionInterval::initWithDuration(maxd);
 
     m_pOne = pAction1;
 	m_pTwo = pAction2;
@@ -579,7 +579,7 @@ NSObject* CCSpawn::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initOneTwo((CCFiniteTimeAction*)(m_pOne->copy()->autorelease()), 
 					(CCFiniteTimeAction*)(m_pTwo->copy()->autorelease()));
@@ -596,7 +596,7 @@ CCSpawn::~CCSpawn(void)
 
 void CCSpawn::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_pOne->startWithTarget(pTarget);
 	m_pTwo->startWithTarget(pTarget);
 }
@@ -605,7 +605,7 @@ void CCSpawn::stop(void)
 {
 	m_pOne->stop();
 	m_pTwo->stop();
-	CCIntervalAction::stop();
+	CCActionInterval::stop();
 }
 
 void CCSpawn::update(cocos2d::ccTime time)
@@ -620,7 +620,7 @@ void CCSpawn::update(cocos2d::ccTime time)
 	}
 }
 
-CCIntervalAction* CCSpawn::reverse(void)
+CCActionInterval* CCSpawn::reverse(void)
 {
 	return CCSpawn::actionOneTwo(m_pOne->reverse(), m_pTwo->reverse());
 }
@@ -639,7 +639,7 @@ CCRotateTo* CCRotateTo::actionWithDuration(cocos2d::ccTime duration, float fDelt
 
 bool CCRotateTo::initWithDuration(cocos2d::ccTime duration, float fDeltaAngle)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
 		m_fDstAngle = fDeltaAngle;
 		return true;
@@ -663,7 +663,7 @@ NSObject* CCRotateTo::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_fDstAngle);
 
@@ -674,7 +674,7 @@ NSObject* CCRotateTo::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCRotateTo::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 
 	m_fStartAngle = pTarget->getRotation();
 
@@ -721,7 +721,7 @@ CCRotateBy* CCRotateBy::actionWithDuration(cocos2d::ccTime duration, float fDelt
 
 bool CCRotateBy::initWithDuration(cocos2d::ccTime duration, float fDeltaAngle)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
 		m_fAngle = fDeltaAngle;
 		return true;
@@ -745,7 +745,7 @@ NSObject* CCRotateBy::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_fAngle);
 
@@ -755,7 +755,7 @@ NSObject* CCRotateBy::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCRotateBy::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_fStartAngle = pTarget->getRotation();
 }
 
@@ -768,7 +768,7 @@ void CCRotateBy::update(cocos2d::ccTime time)
 	}
 }
 
-CCIntervalAction* CCRotateBy::reverse(void)
+CCActionInterval* CCRotateBy::reverse(void)
 {
 	return CCRotateBy::actionWithDuration(m_fDuration, -m_fAngle);
 }
@@ -787,7 +787,7 @@ CCMoveTo* CCMoveTo::actionWithDuration(cocos2d::ccTime duration, cocos2d::CGPoin
 
 bool CCMoveTo::initWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint position)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
 		m_endPosition = position;
 		return true;
@@ -811,7 +811,7 @@ NSObject* CCMoveTo::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_endPosition);
 
@@ -821,7 +821,7 @@ NSObject* CCMoveTo::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCMoveTo::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_startPosition = pTarget->getPosition();
 	m_delta = ccpSub(m_endPosition, m_startPosition);
 }
@@ -849,7 +849,7 @@ CCMoveBy* CCMoveBy::actionWithDuration(cocos2d::ccTime duration, cocos2d::CGPoin
 
 bool CCMoveBy::initWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint position)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
 		m_delta = position;
 		return true;
@@ -888,7 +888,7 @@ void CCMoveBy::startWithTarget(CCNode *pTarget)
 	m_delta = dTmp;
 }
 
-CCIntervalAction* CCMoveBy::reverse(void)
+CCActionInterval* CCMoveBy::reverse(void)
 {
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(-m_delta.x, -m_delta.y));
 }
@@ -907,7 +907,7 @@ CCJumpBy* CCJumpBy::actionWithDuration(cocos2d::ccTime duration, cocos2d::CGPoin
 
 bool CCJumpBy::initWithDuration(cocos2d::ccTime duration, cocos2d::CGPoint position, cocos2d::ccTime height, int jumps)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
         m_delta = position;
 		m_height = height;
@@ -934,7 +934,7 @@ NSObject* CCJumpBy::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_delta, m_height, m_nJumps);
 	
@@ -944,7 +944,7 @@ NSObject* CCJumpBy::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCJumpBy::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_startPosition = pTarget->getPosition();
 }
 
@@ -961,7 +961,7 @@ void CCJumpBy::update(cocos2d::ccTime time)
 	}
 }
 
-CCIntervalAction* CCJumpBy::reverse(void)
+CCActionInterval* CCJumpBy::reverse(void)
 {
 	return CCJumpBy::actionWithDuration(m_fDuration, ccp(-m_delta.x, -m_delta.y),
 		m_height, m_nJumps);
@@ -1034,7 +1034,7 @@ CCBezierBy* CCBezierBy::actionWithDuration(cocos2d::ccTime t, cocos2d::ccBezierC
 
 bool CCBezierBy::initWithDuration(cocos2d::ccTime t, cocos2d::ccBezierConfig c)
 {
-	if (CCIntervalAction::initWithDuration(t))
+	if (CCActionInterval::initWithDuration(t))
 	{
         m_sConfig = c;
 		return true;
@@ -1045,7 +1045,7 @@ bool CCBezierBy::initWithDuration(cocos2d::ccTime t, cocos2d::ccBezierConfig c)
 
 void CCBezierBy::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_startPosition = pTarget->getPosition();
 }
 
@@ -1064,7 +1064,7 @@ NSObject* CCBezierBy::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_sConfig);
     
@@ -1092,7 +1092,7 @@ void CCBezierBy::update(cocos2d::ccTime time)
 	}
 }
 
-CCIntervalAction* CCBezierBy::reverse(void)
+CCActionInterval* CCBezierBy::reverse(void)
 {
 	ccBezierConfig r;
 
@@ -1161,7 +1161,7 @@ CCScaleTo* CCScaleTo::actionWithDuration(cocos2d::ccTime duration, float s)
 
 bool CCScaleTo::initWithDuration(cocos2d::ccTime duration, float s)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
         m_fEndScaleX = s;
 		m_fEndScaleY = s;
@@ -1183,7 +1183,7 @@ CCScaleTo* CCScaleTo::actionWithDuration(cocos2d::ccTime duration, float sx, flo
 
 bool CCScaleTo::initWithDuration(cocos2d::ccTime duration, float sx, float sy)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
 		m_fEndScaleX = sx;
 		m_fEndScaleY = sy;
@@ -1209,7 +1209,7 @@ NSObject* CCScaleTo::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 
 	pCopy->initWithDuration(m_fDuration, m_fEndScaleX, m_fEndScaleY);
@@ -1220,7 +1220,7 @@ NSObject* CCScaleTo::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCScaleTo::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_fStartScaleX = pTarget->getScaleX();
 	m_fStartScaleY = pTarget->getScaleY();
     m_fDeltaX = m_fEndScaleX - m_fStartScaleX;
@@ -1288,7 +1288,7 @@ void CCScaleBy::startWithTarget(CCNode *pTarget)
 	m_fDeltaY = m_fStartScaleY * m_fEndScaleY - m_fStartScaleY;
 }
 
-CCIntervalAction* CCScaleBy::reverse(void)
+CCActionInterval* CCScaleBy::reverse(void)
 {
 	return CCScaleBy::actionWithDuration(m_fDuration, 1 / m_fEndScaleX, 1 / m_fEndScaleY);
 }
@@ -1307,7 +1307,7 @@ CCBlink* CCBlink::actionWithDuration(cocos2d::ccTime duration, unsigned int uBli
 
 bool CCBlink::initWithDuration(cocos2d::ccTime duration, unsigned int uBlinks)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
         m_nTimes = uBlinks;
 		return true;
@@ -1332,7 +1332,7 @@ NSObject* CCBlink::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, (unsigned int)m_nTimes);
 	
@@ -1342,7 +1342,7 @@ NSObject* CCBlink::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCBlink::update(cocos2d::ccTime time)
 {
-	if (m_pTarget)
+	if (m_pTarget && ! isDone())
 	{
 		ccTime slice = 1.0f / m_nTimes;
 		ccTime m = fmodf(time, slice);
@@ -1350,7 +1350,7 @@ void CCBlink::update(cocos2d::ccTime time)
 	}
 }
 
-CCIntervalAction* CCBlink::reverse(void)
+CCActionInterval* CCBlink::reverse(void)
 {
 	// return 'self'
 	return CCBlink::actionWithDuration(m_fDuration, m_nTimes);
@@ -1384,7 +1384,7 @@ NSObject* CCFadeIn::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 	
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	CCX_SAFE_DELETE(pNewZone);
 
@@ -1401,7 +1401,7 @@ void CCFadeIn::update(cocos2d::ccTime time)
 	/*m_pTarget->setOpacity((GLubyte)(255 * time));*/
 }
 
-CCIntervalAction* CCFadeIn::reverse(void)
+CCActionInterval* CCFadeIn::reverse(void)
 {
 	return CCFadeOut::actionWithDuration(m_fDuration);
 }
@@ -1434,7 +1434,7 @@ NSObject* CCFadeOut::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	CCX_SAFE_DELETE(pNewZone);
 
@@ -1451,7 +1451,7 @@ void CCFadeOut::update(cocos2d::ccTime time)
 	/*m_pTarget->setOpacity(GLubyte(255 * (1 - time)));*/	
 }
 
-CCIntervalAction* CCFadeOut::reverse(void)
+CCActionInterval* CCFadeOut::reverse(void)
 {
 	return CCFadeIn::actionWithDuration(m_fDuration);
 }
@@ -1470,7 +1470,7 @@ CCFadeTo* CCFadeTo::actionWithDuration(cocos2d::ccTime duration, GLubyte opacity
 
 bool CCFadeTo::initWithDuration(cocos2d::ccTime duration, GLubyte opacity)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
         m_toOpacity = opacity;
 		return true;
@@ -1494,7 +1494,7 @@ NSObject* CCFadeTo::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_toOpacity);
 	
@@ -1504,7 +1504,7 @@ NSObject* CCFadeTo::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCFadeTo::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 
 	CCRGBAProtocol *pRGBAProtocol = pTarget->convertToRGBAProtocol();
 	if (pRGBAProtocol)
@@ -1538,7 +1538,7 @@ CCTintTo* CCTintTo::actionWithDuration(cocos2d::ccTime duration, GLubyte red, GL
 
 bool CCTintTo::initWithDuration(cocos2d::ccTime duration, GLubyte red, GLubyte green, GLubyte blue)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
         m_to = ccc3(red, green, blue);
 		return true;
@@ -1562,7 +1562,7 @@ NSObject* CCTintTo::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_to.r, m_to.g, m_to.b);
 	
@@ -1572,7 +1572,7 @@ NSObject* CCTintTo::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCTintTo::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
     CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
 	if (pRGBAProtocol)
 	{
@@ -1606,7 +1606,7 @@ CCTintBy* CCTintBy::actionWithDuration(cocos2d::ccTime duration, GLshort deltaRe
 
 bool CCTintBy::initWithDuration(cocos2d::ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue)
 {
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
         m_deltaR = deltaRed;
 		m_deltaG = deltaGreen;
@@ -1633,7 +1633,7 @@ NSObject* CCTintBy::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, (GLubyte)m_deltaR, (GLubyte)m_deltaG, (GLubyte)m_deltaB);
 
@@ -1643,7 +1643,7 @@ NSObject* CCTintBy::copyWithZone(cocos2d::NSZone *pZone)
 
 void CCTintBy::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 
 	CCRGBAProtocol *pRGBAProtocol = pTarget->convertToRGBAProtocol();
 	if (pRGBAProtocol)
@@ -1666,7 +1666,7 @@ void CCTintBy::update(cocos2d::ccTime time)
 	}	
 }
 
-CCIntervalAction* CCTintBy::reverse(void)
+CCActionInterval* CCTintBy::reverse(void)
 {
 	return CCTintBy::actionWithDuration(m_fDuration, -m_deltaR, -m_deltaG, -m_deltaB);
 }
@@ -1700,7 +1700,7 @@ NSObject* CCDelayTime::copyWithZone(cocos2d::NSZone *pZone)
 	}
 
 	
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	CCX_SAFE_DELETE(pNewZone);
 
@@ -1712,7 +1712,7 @@ void CCDelayTime::update(cocos2d::ccTime time)
 	return;
 }
 
-CCIntervalAction* CCDelayTime::reverse(void)
+CCActionInterval* CCDelayTime::reverse(void)
 {
 	return CCDelayTime::actionWithDuration(m_fDuration);
 }
@@ -1732,7 +1732,7 @@ CCReverseTime* CCReverseTime::actionWithAction(cocos2d::CCFiniteTimeAction *pAct
 
 bool CCReverseTime::initWithAction(cocos2d::CCFiniteTimeAction *pAction)
 {
-	if (CCIntervalAction::initWithDuration(pAction->getDuration()))
+	if (CCActionInterval::initWithDuration(pAction->getDuration()))
 	{
 		m_pOther = pAction;
 		pAction->retain();
@@ -1758,7 +1758,7 @@ NSObject* CCReverseTime::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()));
 
@@ -1773,14 +1773,14 @@ CCReverseTime::~CCReverseTime(void)
 
 void CCReverseTime::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	m_pOther->startWithTarget(pTarget);
 }
 
 void CCReverseTime::stop(void)
 {
 	m_pOther->stop();
-	CCIntervalAction::stop();
+	CCActionInterval::stop();
 }
 
 void CCReverseTime::update(cocos2d::ccTime time)
@@ -1791,9 +1791,9 @@ void CCReverseTime::update(cocos2d::ccTime time)
 	}
 }
 
-CCIntervalAction* CCReverseTime::reverse(void)
+CCActionInterval* CCReverseTime::reverse(void)
 {
-	return (CCIntervalAction*)(m_pOther->copy()->autorelease());
+	return (CCActionInterval*)(m_pOther->copy()->autorelease());
 }
 
 //
@@ -1828,7 +1828,7 @@ bool CCAnimate::initWithAnimation(cocos2d::CCAnimation *pAnimation, bool bRestor
 {
 	assert(pAnimation);
 
-	if (CCIntervalAction::initWithDuration(pAnimation->getFrames()->count() * pAnimation->getDelay()))
+	if (CCActionInterval::initWithDuration(pAnimation->getFrames()->count() * pAnimation->getDelay()))
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
        m_pAnimation = pAnimation;
@@ -1854,7 +1854,7 @@ bool CCAnimate::initWithDuration(cocos2d::ccTime duration, cocos2d::CCAnimation 
 {
 	assert(pAnimation != NULL);
 
-	if (CCIntervalAction::initWithDuration(duration))
+	if (CCActionInterval::initWithDuration(duration))
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
 		m_pAnimation = pAnimation;
@@ -1882,7 +1882,7 @@ NSObject* CCAnimate::copyWithZone(cocos2d::NSZone *pZone)
 		pZone = pNewZone = new NSZone(pCopy);
 	}
 
-	CCIntervalAction::copyWithZone(pZone);
+	CCActionInterval::copyWithZone(pZone);
 
 	pCopy->initWithDuration(m_fDuration, m_pAnimation, m_bRestoreOriginalFrame);
 
@@ -1898,7 +1898,7 @@ CCAnimate::~CCAnimate(void)
 
 void CCAnimate::startWithTarget(CCNode *pTarget)
 {
-	CCIntervalAction::startWithTarget(pTarget);
+	CCActionInterval::startWithTarget(pTarget);
 	CCSprite *pSprite = (CCSprite*)(pTarget);
 
 	CCX_SAFE_RELEASE(m_pOrigFrame);
@@ -1917,7 +1917,7 @@ void CCAnimate::stop(void)
 		((CCSprite*)(m_pTarget))->setDisplayFrame(m_pOrigFrame);
 	}
 
-	CCIntervalAction::stop();
+	CCActionInterval::stop();
 }
 
 void CCAnimate::update(cocos2d::ccTime time)
@@ -1939,7 +1939,7 @@ void CCAnimate::update(cocos2d::ccTime time)
 	}
 }
 
-CCIntervalAction* CCAnimate::reverse(void)
+CCActionInterval* CCAnimate::reverse(void)
 {
 	NSMutableArray<CCSpriteFrame*> *pOldArray = m_pAnimation->getFrames();
 	NSMutableArray<CCSpriteFrame*> *pNewArray = new NSMutableArray<CCSpriteFrame*>(pOldArray->count());

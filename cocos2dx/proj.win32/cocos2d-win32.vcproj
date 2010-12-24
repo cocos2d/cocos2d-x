@@ -251,43 +251,43 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionCamera.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionEase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionGrid.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionGrid3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionInstant.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionInterval.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\actions\CCCameraAction.cpp"
+				RelativePath="..\actions\CCActionPageTurn3D.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\actions\CCEaseAction.cpp"
+				RelativePath="..\actions\CCActionProgressTimer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\actions\CCGrid3DAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCGridAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCInstantAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCIntervalAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCPageTurn3DAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCProgressTimerActions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCTiledGridAction.cpp"
+				RelativePath="..\actions\CCActionTiledGrid.cpp"
 				>
 			</File>
 		</Filter>
@@ -299,7 +299,43 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCActionCamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionEase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionGrid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionGrid3D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionInstant.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionInterval.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCActionManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionPageTurn3D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionProgressTimer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionTiledGrid.h"
 				>
 			</File>
 			<File
@@ -315,10 +351,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCCameraAction.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\ccConfig.h"
 				>
 			</File>
@@ -328,26 +360,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCDrawingPrimitives.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCEaseAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCGrid3DAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCGridAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCInstantAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCIntervalAction.h"
 				>
 			</File>
 			<File
@@ -391,10 +403,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCPageTurn3DAction.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCPageTurnTransition.h"
 				>
 			</File>
@@ -416,10 +424,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCProgressTimer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCProgressTimerActions.h"
 				>
 			</File>
 			<File
@@ -480,10 +484,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCTextureCache.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTiledGridAction.h"
 				>
 			</File>
 			<File

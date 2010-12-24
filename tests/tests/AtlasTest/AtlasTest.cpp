@@ -303,10 +303,10 @@ LabelAtlasColorTest::LabelAtlasColorTest()
 	label2->setPosition( ccp(10,200) );
 	label2->setColor( ccRED );
 
-	CCIntervalAction* fade = CCFadeOut::actionWithDuration(1.0f);
-	CCIntervalAction* fade_in = fade->reverse();
+	CCActionInterval* fade = CCFadeOut::actionWithDuration(1.0f);
+	CCActionInterval* fade_in = fade->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(fade, fade_in, NULL);
-	CCAction* repeat = CCRepeatForever::actionWithAction( (CCIntervalAction*)seq );
+	CCAction* repeat = CCRepeatForever::actionWithAction( (CCActionInterval*)seq );
 	label2->runAction( repeat );	
 
 	m_time = 0;
@@ -356,10 +356,10 @@ Atlas3::Atlas3()
 	// testing anchors
 	label1->setAnchorPoint( ccp(0,0) );
 	addChild(label1, 0, kTagBitmapAtlas1);
-	CCIntervalAction* fade = CCFadeOut::actionWithDuration(1.0f);
-	CCIntervalAction* fade_in = fade->reverse();
+	CCActionInterval* fade = CCFadeOut::actionWithDuration(1.0f);
+	CCActionInterval* fade_in = fade->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(fade, fade_in, NULL);
-	CCAction* repeat = CCRepeatForever::actionWithAction((CCIntervalAction*)seq);
+	CCAction* repeat = CCRepeatForever::actionWithAction((CCActionInterval*)seq);
 	label1->runAction(repeat);
 	
 
@@ -441,21 +441,21 @@ Atlas4::Atlas4()
 	CCSprite* AChar = (CCSprite*) label->getChildByTag(12);
 	
 	
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* rot_4ever = CCRepeatForever::actionWithAction(rotate);
 	
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 1.5f);
-	CCIntervalAction* scale_back = scale->reverse();
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 1.5f);
+	CCActionInterval* scale_back = scale->reverse();
 	CCFiniteTimeAction* scale_seq = CCSequence::actions(scale, scale_back,NULL);
-	CCAction* scale_4ever = CCRepeatForever::actionWithAction((CCIntervalAction*)scale_seq);
+	CCAction* scale_4ever = CCRepeatForever::actionWithAction((CCActionInterval*)scale_seq);
 	
-	CCIntervalAction* jump = CCJumpBy::actionWithDuration(0.5f, CGPointZero, 60, 1);
+	CCActionInterval* jump = CCJumpBy::actionWithDuration(0.5f, CGPointZero, 60, 1);
 	CCAction* jump_4ever = CCRepeatForever::actionWithAction(jump);
 	
-	CCIntervalAction* fade_out = CCFadeOut::actionWithDuration(1);
-	CCIntervalAction* fade_in = CCFadeIn::actionWithDuration(1);
+	CCActionInterval* fade_out = CCFadeOut::actionWithDuration(1);
+	CCActionInterval* fade_in = CCFadeIn::actionWithDuration(1);
 	CCFiniteTimeAction* seq = CCSequence::actions(fade_out, fade_in, NULL);
-	CCAction* fade_4ever = CCRepeatForever::actionWithAction((CCIntervalAction*)seq);
+	CCAction* fade_4ever = CCRepeatForever::actionWithAction((CCActionInterval*)seq);
 	
 	BChar->runAction(rot_4ever);
 	BChar->runAction(scale_4ever);

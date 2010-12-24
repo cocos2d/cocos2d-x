@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __ACTION_CCPAGETURN3D_ACTION_H__
 #define __ACTION_CCPAGETURN3D_ACTION_H__
 
-#include "CCGrid3DAction.h"
+#include "CCActionGrid3D.h"
 
 namespace cocos2d
 {

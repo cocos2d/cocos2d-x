@@ -34,11 +34,11 @@ namespace cocos2d {
 	@brief Instant actions are immediate actions. They don't have a duration like
 	the CCIntervalAction actions.
 	*/ 
-	class CCX_DLL CCInstantAction : public CCFiniteTimeAction //<NSCopying>
+	class CCX_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 	{
 	public:
-		CCInstantAction();
-		virtual ~CCInstantAction(){}
+		CCActionInstant();
+		virtual ~CCActionInstant(){}
 		// CCAction methods
 		virtual NSObject* copyWithZone(NSZone *pZone);
 		virtual bool isDone(void);
@@ -50,7 +50,7 @@ namespace cocos2d {
 
 	/** @brief Show the node
 	*/
-	class CCX_DLL CCShow : public CCInstantAction
+	class CCX_DLL CCShow : public CCActionInstant
 	{
 	public:
 		CCShow(){}
@@ -67,7 +67,7 @@ namespace cocos2d {
 	/** 
 	@brief Hide the node
 	*/
-	class CCX_DLL CCHide : public CCInstantAction
+	class CCX_DLL CCHide : public CCActionInstant
 	{
 	public:
 		CCHide(){}
@@ -83,7 +83,7 @@ namespace cocos2d {
 
 	/** @brief Toggles the visibility of a node
 	*/
-	class CCX_DLL CCToggleVisibility : public CCInstantAction
+	class CCX_DLL CCToggleVisibility : public CCActionInstant
 	{
 	public:
 		CCToggleVisibility(){}
@@ -100,7 +100,7 @@ namespace cocos2d {
 	@brief Flips the sprite horizontally
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipX : public CCInstantAction
+	class CCX_DLL CCFlipX : public CCActionInstant
 	{
 	public:
 		CCFlipX(){}
@@ -123,7 +123,7 @@ namespace cocos2d {
 	@brief Flips the sprite vertically
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipY : public CCInstantAction
+	class CCX_DLL CCFlipY : public CCActionInstant
 	{
 	public:
 		CCFlipY(){}
@@ -144,7 +144,7 @@ namespace cocos2d {
 
 	/** @brief Places the node in a certain position
 	*/
-	class CCX_DLL CCPlace : public CCInstantAction //<NSCopying>
+	class CCX_DLL CCPlace : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCPlace(){}
@@ -162,7 +162,7 @@ namespace cocos2d {
 
 	/** @brief Calls a 'callback'
 	*/
-	class CCX_DLL CCCallFunc : public CCInstantAction //<NSCopying>
+	class CCX_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCCallFunc()
@@ -200,6 +200,7 @@ namespace cocos2d {
 			SEL_CallFunc	m_pCallFunc;
 			SEL_CallFuncN	m_pCallFuncN;
 			SEL_CallFuncND	m_pCallFuncND;
+            SEL_CallFuncO   m_pCallFuncO;
 		};
 	};
 
@@ -247,6 +248,35 @@ namespace cocos2d {
 	protected:
 		void			*m_pData;
 	};
+
+
+    /**
+    @brief Calls a 'callback' with an object as the first argument.
+    O means Object.
+    @since v0.99.5
+    */
+    class CCX_DLL CCCallFuncO : public CCCallFunc
+    {
+    public:
+        CCCallFuncO();
+        virtual ~CCCallFuncO();
+        /** creates the action with the callback 
+
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        */
+        static CCCallFuncO * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        /** initializes the action with the callback 
+
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        */
+        virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        // super methods
+        virtual NSObject* copyWithZone(NSZone *pZone);
+        virtual void execute();
+
+    protected:
+        NSObject* m_pObject;
+    };
 
 }
 

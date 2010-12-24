@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCTiledGridAction.h"
+#include "CCActionTiledGrid.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "CGPointExtension.h"
@@ -956,6 +956,10 @@ namespace cocos2d
 	void CCSplitRows::startWithTarget(CCNode *pTarget)
 	{
 		CCTiledGrid3DAction::startWithTarget(pTarget);
+
+        /**
+        @todo upto-0.99.5 Use CCDirector::sharedDirector()->getWinSizeInPixels()
+        */
 		m_winSize = CCDirector::sharedDirector()->getWinSize();
 	}
 
@@ -1033,6 +1037,10 @@ namespace cocos2d
 	void CCSplitCols::startWithTarget(CCNode *pTarget)
 	{
 		CCTiledGrid3DAction::startWithTarget(pTarget);
+
+        /**
+        @todo upto-0.99.5 Use CCDirector::sharedDirector()->getWinSizeInPixels()
+        */
 		m_winSize = CCDirector::sharedDirector()->getWinSize();
 	}
 

@@ -202,14 +202,14 @@ void LayerTest2::onEnter()
 	layer2->setIsRelativeAnchorPoint(true);
 	addChild(layer2, 1);
 	
-	CCIntervalAction* actionTint = CCTintBy::actionWithDuration(2, -255, -127, 0);
-	CCIntervalAction* actionTintBack = actionTint->reverse();
-	CCIntervalAction* seq1 = (CCIntervalAction*)CCSequence::actions( actionTint, actionTintBack, NULL);
+	CCActionInterval* actionTint = CCTintBy::actionWithDuration(2, -255, -127, 0);
+	CCActionInterval* actionTintBack = actionTint->reverse();
+	CCActionInterval* seq1 = (CCActionInterval*)CCSequence::actions( actionTint, actionTintBack, NULL);
 	layer1->runAction(seq1);
 
-	CCIntervalAction* actionFade = CCFadeOut::actionWithDuration(2.0f);
-	CCIntervalAction* actionFadeBack = actionFade->reverse();
-	CCIntervalAction* seq2 = (CCIntervalAction*)CCSequence::actions(actionFade, actionFadeBack, NULL);		
+	CCActionInterval* actionFade = CCFadeOut::actionWithDuration(2.0f);
+	CCActionInterval* actionFadeBack = actionFade->reverse();
+	CCActionInterval* seq2 = (CCActionInterval*)CCSequence::actions(actionFade, actionFadeBack, NULL);		
 	layer2->runAction(seq2);
 }
 

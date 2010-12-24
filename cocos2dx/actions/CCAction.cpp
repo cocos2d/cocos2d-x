@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCAction.h"
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 #include "ccMacros.h"
 #include "CCNode.h"
 #include "CGPointExtension.h"
@@ -120,7 +120,7 @@ CCSpeed::~CCSpeed()
 	CCX_SAFE_RELEASE(m_pOther);
 }
 
-CCSpeed * CCSpeed::actionWithAction(CCIntervalAction *pAction, float fRate)
+CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
 {
 	CCSpeed *pRet = new CCSpeed();
 	if (pRet && pRet->initWithAction(pAction, fRate))
@@ -132,7 +132,7 @@ CCSpeed * CCSpeed::actionWithAction(CCIntervalAction *pAction, float fRate)
 	return NULL;
 }
 
-bool CCSpeed::initWithAction(CCIntervalAction *pAction, float fRate)
+bool CCSpeed::initWithAction(CCActionInterval *pAction, float fRate)
 {
 	assert(pAction != NULL);
 	pAction->retain();
@@ -156,7 +156,7 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 	}
 	CCAction::copyWithZone(pZone);
 
-	pRet->initWithAction( (CCIntervalAction*)(m_pOther->copy()->autorelease()) , m_fSpeed );
+	pRet->initWithAction( (CCActionInterval*)(m_pOther->copy()->autorelease()) , m_fSpeed );
 	
 	CCX_SAFE_DELETE(pNewZone);
 	return pRet;
@@ -184,9 +184,9 @@ bool CCSpeed::isDone()
 	return m_pOther->isDone();
 }
 
-CCIntervalAction *CCSpeed::reverse()
+CCActionInterval *CCSpeed::reverse()
 {
-	 return (CCIntervalAction*)(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
+	 return (CCActionInterval*)(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
 }
 
 //

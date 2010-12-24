@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "CCRadialTransition.h"
 #include "CCDirector.h"
 #include "CCRenderTexture.h"
-#include "CCInstantAction.h"
-#include "CCProgressTimerActions.h"
+#include "CCActionInstant.h"
+#include "CCActionProgressTimer.h"
 #include "CGPointExtension.h"
 
 namespace   cocos2d {
