@@ -1,7 +1,7 @@
 #include "ParticleTest.h"
 // #include "CCActionInterval.h"
 // #include "CCMenu.h"
-// #include "CCLabel.h"
+// #include "CCLabelTTF.h"
 // #include "CCLabelAtlas.h"
 // #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "../testResource.h"
@@ -1049,11 +1049,11 @@ ParticleDemo::ParticleDemo(void)
 	setIsTouchEnabled( true );
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 100, 1000);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 	
-	CCLabel *tapScreen = CCLabel::labelWithString("(Tap the Screen)", "Arial", 20);
+	CCLabelTTF *tapScreen = CCLabelTTF::labelWithString("(Tap the Screen)", "Arial", 20);
 	tapScreen->setPosition( CGPointMake(s.width/2, s.height-80) );
 	addChild(tapScreen, 100);
 	
@@ -1105,7 +1105,7 @@ void ParticleDemo::onEnter(void)
 {
 	CCLayer::onEnter();
 
-	CCLabel* pLabel = (CCLabel*)(this->getChildByTag(1000));
+	CCLabelTTF* pLabel = (CCLabelTTF*)(this->getChildByTag(1000));
 	pLabel->setString(title().c_str());
 }
 

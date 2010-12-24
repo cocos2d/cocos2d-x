@@ -63,7 +63,7 @@ class ChipmunkTestLayer : public CCLayer
 protected:
 	std::string	m_strTitle;
     int demoIndex;
-    CCLabel *label;
+    CCLabelTTF *label;
 
 public:
     void init();

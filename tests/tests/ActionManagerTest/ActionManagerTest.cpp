@@ -84,7 +84,7 @@ void ActionManagerTest::onEnter()
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 
@@ -216,7 +216,7 @@ void PauseTest::onEnter()
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* l = CCLabel::labelWithString("After 5 seconds grossini should move", "Thonburi", 16);
+	CCLabelTTF* l = CCLabelTTF::labelWithString("After 5 seconds grossini should move", "Thonburi", 16);
 	addChild(l);
 	l->setPosition( CGPointMake(s.width/2, 245) );
 	
@@ -258,7 +258,7 @@ void RemoveTest::onEnter()
 
     CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabel* l = CCLabel::labelWithString("Should not crash", "Thonburi", 16);
+    CCLabelTTF* l = CCLabelTTF::labelWithString("Should not crash", "Thonburi", 16);
     addChild(l);
     l->setPosition( CGPointMake(s.width/2, 245) );
 
@@ -301,7 +301,7 @@ void ResumeTest::onEnter()
 
     CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabel* l = CCLabel::labelWithString("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+    CCLabelTTF* l = CCLabelTTF::labelWithString("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
     addChild(l);
     l->setPosition( CGPointMake(s.width/2, 245));
 

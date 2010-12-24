@@ -253,12 +253,12 @@ TestLayer1::TestLayer1(void)
     bg1->setPosition( CGPointMake(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    CCLabel* title = CCLabel::labelWithString( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    CCLabelTTF* title = CCLabelTTF::labelWithString( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
     title->setPosition( CGPointMake(x/2, y-100) );
 
-    CCLabel* label = CCLabel::labelWithString("SCENE 1", "Marker Felt", 38);
+    CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 1", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
     label->setPosition( CGPointMake(x/2,y/2));	
     addChild( label);
@@ -358,12 +358,12 @@ TestLayer2::TestLayer2()
     bg1->setPosition( CGPointMake(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    CCLabel* title = CCLabel::labelWithString((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    CCLabelTTF* title = CCLabelTTF::labelWithString((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
     title->setPosition( CGPointMake(x/2, y-100) );
 
-    CCLabel* label = CCLabel::labelWithString("SCENE 2", "Marker Felt", 38);
+    CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 2", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
     label->setPosition( CGPointMake(x/2,y/2));	
     addChild( label);
