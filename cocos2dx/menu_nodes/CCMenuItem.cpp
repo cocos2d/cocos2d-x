@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCActionInterval.h"
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
-#include "CCLabel.h"
+#include "CCLabelTTF.h"
 
 #include <stdarg.h>
 
