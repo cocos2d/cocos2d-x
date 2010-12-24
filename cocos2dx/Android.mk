@@ -33,8 +33,8 @@ cocoa/NSZone.cpp \
 cocos2d.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
-label_nodes/CCBitmapFontAtlas.cpp \
-label_nodes/CCLabel.cpp \
+label_nodes/CCLabelBMFont.cpp \
+label_nodes/CCLabelTTF.cpp \
 label_nodes/CCLabelAtlas.cpp \
 layers_scenes_transitions_nodes/CCLayer.cpp \
 layers_scenes_transitions_nodes/CCPageTurnTransition.cpp \

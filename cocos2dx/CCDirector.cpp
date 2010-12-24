@@ -38,9 +38,9 @@ THE SOFTWARE.
 #include "NSAutoreleasePool.h"
 #include "platform/platform.h"
 #include "CCXApplication.h"
-#include "CCBitmapFontAtlas.h"
+#include "CCLabelBMFont.h"
 #include "CCActionManager.h"
-#include "CCLabel.h"
+#include "CCLabelTTF.h"
 #include "CCConfiguration.h"
 #include "CCKeypadDispatcher.h"
 

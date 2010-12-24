@@ -956,11 +956,7 @@ namespace cocos2d
 	void CCSplitRows::startWithTarget(CCNode *pTarget)
 	{
 		CCTiledGrid3DAction::startWithTarget(pTarget);
-
-        /**
-        @todo upto-0.99.5 Use CCDirector::sharedDirector()->getWinSizeInPixels()
-        */
-		m_winSize = CCDirector::sharedDirector()->getWinSize();
+		m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 	}
 
 	void CCSplitRows::update(cocos2d::ccTime time)
@@ -1037,11 +1033,7 @@ namespace cocos2d
 	void CCSplitCols::startWithTarget(CCNode *pTarget)
 	{
 		CCTiledGrid3DAction::startWithTarget(pTarget);
-
-        /**
-        @todo upto-0.99.5 Use CCDirector::sharedDirector()->getWinSizeInPixels()
-        */
-		m_winSize = CCDirector::sharedDirector()->getWinSize();
+		m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 	}
 
 	void CCSplitCols::update(cocos2d::ccTime time)
