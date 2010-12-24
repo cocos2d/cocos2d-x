@@ -46,9 +46,11 @@ CCNode::CCNode(void)
 ,m_fScaleX(1.0f)
 ,m_fScaleY(1.0f)
 ,m_tPosition(CGPointZero)
+,m_tPositionInPixels(CGPointZero)
 ,m_tAnchorPointInPixels(CGPointZero)
 ,m_tAnchorPoint(CGPointZero)
 ,m_tContentSize(CGSizeZero)
+,m_tContentSizeInPixels(CGSizeZero)
 // "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
 ,m_bIsRelativeAnchorPoint(true)
 ,m_bIsTransformDirty(true)
@@ -139,7 +141,7 @@ float CCNode::getVertexZ()
 /// vertexZ setter
 void CCNode::setVertexZ(float var)
 {
-	m_fVertexZ = var;
+	m_fVertexZ = var * CC_CONTENT_SCALE_FACTOR();
 }
 
 
@@ -219,10 +221,39 @@ CGPoint CCNode::getPosition()
 void CCNode::setPosition(CGPoint newPosition)
 {
 	m_tPosition = newPosition;
+	if (CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		m_tAnchorPointInPixels = m_tPosition;
+	}
+	else
+	{
+		m_tAnchorPointInPixels = ccpMult(newPosition, CC_CONTENT_SCALE_FACTOR());
+	}
+
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
+}
+
+void CCNode::setPositionInPixels(CGPoint newPosition)
+{
+    m_tAnchorPointInPixels = newPosition;
+
+	if ( CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		m_tPosition = m_tAnchorPointInPixels;
+	}
+	else
+	{
+		m_tPosition = ccpMult(newPosition, 1/CC_CONTENT_SCALE_FACTOR());
+	}
+
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 }
 
 /// children getter
@@ -282,7 +313,7 @@ void CCNode::setAnchorPoint(CGPoint point)
 	if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) ) 
 	{
 		m_tAnchorPoint = point;
-		this->m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
+		m_tAnchorPointInPixels = ccp( m_tContentSizeInPixels.width * m_tAnchorPoint.x, m_tContentSizeInPixels.height * m_tAnchorPoint.y );
 		m_bIsTransformDirty = m_bIsInverseDirty = true;
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
@@ -312,6 +343,30 @@ void CCNode::setContentSize(CGSize size)
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
 #endif
+	}
+}
+
+void CCNode::setContentSizeInPixels(CGSize size)
+{
+	if (! CGSize::CGSizeEqualToSize(size, m_tContentSizeInPixels))
+	{
+        m_tContentSizeInPixels = size;
+
+		if (CC_CONTENT_SCALE_FACTOR() == 1)
+		{
+			m_tContentSize = m_tContentSizeInPixels;
+		}
+		else
+		{
+			m_tContentSize = CGSizeMake(size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR());
+		}
+
+		m_tAnchorPointInPixels = ccp(m_tContentSizeInPixels.width * m_tAnchorPoint.x, m_tContentSizeInPixels.height * m_tAnchorPoint.y);
+		m_bIsTransformDirty = m_bIsInverseDirty = true;
+
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+#endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	}
 }
 
@@ -376,7 +431,13 @@ void CCNode::setUserData(void *var)
 
 CGRect CCNode::boundingBox()
 {
-	CGRect rect = CGRectMake(0, 0, m_tContentSize.width, m_tContentSize.height);
+	CGRect ret = boundingBoxInPixels();
+	return CC_RECT_PIXELS_TO_POINTS(ret);
+}
+
+CGRect CCNode::boundingBoxInPixels()
+{
+	CGRect rect = CGRectMake(0, 0, m_tContentSizeInPixels.width, m_tContentSizeInPixels.height);
 	return CGRectApplyAffineTransform(rect, nodeToParentTransform());
 }
 
@@ -435,7 +496,7 @@ CCNode* CCNode::getChildByTag(int aTag)
 * If a class want's to extend the 'addChild' behaviour it only needs
 * to override this method
 */
-CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
+void CCNode::addChild(CCNode *child, int zOrder, int tag)
 {	
 	NSAssert( child != NULL, "Argument must be non-nil");
 	NSAssert( child->m_pParent == NULL, "child already added. It can't be added again");
@@ -454,20 +515,20 @@ CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
 	if( m_bIsRunning )
 	{
 		child->onEnter();
+		child->onEnterTransitionDidFinish();
 	}
-	return this;
 }
 
-CCNode * CCNode::addChild(CCNode *child, int zOrder)
+void CCNode::addChild(CCNode *child, int zOrder)
 {
 	NSAssert( child != NULL, "Argument must be non-nil");
-	return this->addChild(child, zOrder, child->m_nTag);
+	this->addChild(child, zOrder, child->m_nTag);
 }
 
-CCNode * CCNode::addChild(CCNode *child)
+void CCNode::addChild(CCNode *child)
 {
 	NSAssert( child != NULL, "Argument must be non-nil");
-	return this->addChild(child, child->m_nZOrder, child->m_nTag);
+	this->addChild(child, child->m_nZOrder, child->m_nTag);
 }
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
@@ -570,30 +631,32 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 // helper used by reorderChild & add
 void CCNode::insertChild(CCNode* child, int z)
 {
-	int index=0;
-	bool added = false;
+	unsigned int index=0;
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
-		CCNode* pNode;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
+		CCNode* pNode = m_pChildren->getLastObject();
+
+		// // quick comparison to improve performance
+		if (! pNode || pNode->getZOrder() <= z)
 		{
-			pNode = (*it);
-
-			if ( pNode && pNode->m_nZOrder > z ) 
-			{
-				added = true;
-				m_pChildren->insertObjectAtIndex(child, index);
-				break;
-			}
-			index++;
+            m_pChildren->addObject(child);
 		}
-	}
+		else
+		{
+			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
+			{
+				pNode = (*it);
 
-	if( ! added )
-	{
-		m_pChildren->addObject(child);
+				if ( pNode && pNode->m_nZOrder > z ) 
+				{
+					m_pChildren->insertObjectAtIndex(child, index);
+					break;
+				}
+				index++;
+			}
+		}		
 	}
 
 	child->setZOrder(z);
@@ -714,14 +777,14 @@ void CCNode::transform()
 
 		if( translate )
 		{
-			glTranslatef(RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.y), 0);
+			ccglTranslate(RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.y), 0);
 		}
 
 		m_pCamera->locate();
 
 		if( translate )
 		{
-			glTranslatef(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
+			ccglTranslate(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 		}
 	}
 
@@ -736,8 +799,8 @@ void CCNode::transform()
 		glTranslatef( RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
 	if (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPosition.y + m_tAnchorPointInPixels.y), m_fVertexZ);
-	else if ( m_tPosition.x !=0 || m_tPosition.y !=0 || m_fVertexZ != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPosition.y + m_tAnchorPointInPixels.y), m_fVertexZ);
+	else if ( m_tPositionInPixels.x !=0 || m_tPositionInPixels.y !=0 || m_fVertexZ != 0)
 		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x), RENDER_IN_SUBPIXEL(m_tPosition.y), m_fVertexZ );
 
 	// rotate
@@ -893,8 +956,8 @@ CGAffineTransform CCNode::nodeToParentTransform(void)
 		if( ! m_bIsRelativeAnchorPoint && ! CGPoint::CGPointEqualToPoint(m_tAnchorPointInPixels, CGPointZero) )
 			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tAnchorPointInPixels.x, m_tAnchorPointInPixels.y);
 
-		if( ! CGPoint::CGPointEqualToPoint(m_tPosition, CGPointZero) )
-			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tPosition.x, m_tPosition.y);
+		if( ! CGPoint::CGPointEqualToPoint(m_tPositionInPixels, CGPointZero) )
+			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tPositionInPixels.x, m_tPosition.y);
 		if( m_fRotation != 0 )
 			m_tTransform = CGAffineTransformRotate(m_tTransform, -CC_DEGREES_TO_RADIANS(m_fRotation));
 		if( ! (m_fScaleX == 1 && m_fScaleY == 1) ) 
@@ -936,24 +999,68 @@ CGAffineTransform CCNode::worldToNodeTransform(void)
 
 CGPoint CCNode::convertToNodeSpace(CGPoint worldPoint)
 {
-	return CGPointApplyAffineTransform(worldPoint, this->worldToNodeTransform());
+	CGPoint ret;
+	if(CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		ret = CGPointApplyAffineTransform(worldPoint, worldToNodeTransform());
+	}
+	else 
+	{
+		ret = ccpMult(worldPoint, CC_CONTENT_SCALE_FACTOR());
+		ret = CGPointApplyAffineTransform(ret, worldToNodeTransform());
+		ret = ccpMult(ret, 1/CC_CONTENT_SCALE_FACTOR());
+	}
+
+	return ret;
 }
 
 CGPoint CCNode::convertToWorldSpace(CGPoint nodePoint)
 {
-	return CGPointApplyAffineTransform(nodePoint, this->nodeToWorldTransform());
+	CGPoint ret;
+	if(CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		ret = CGPointApplyAffineTransform(nodePoint, nodeToWorldTransform());
+	}
+	else 
+	{
+		ret = ccpMult( nodePoint, CC_CONTENT_SCALE_FACTOR() );
+		ret = CGPointApplyAffineTransform(ret, nodeToWorldTransform());
+		ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+
+	return ret;
 }
 
 CGPoint CCNode::convertToNodeSpaceAR(CGPoint worldPoint)
 {
-	CGPoint nodePoint = this->convertToNodeSpace(worldPoint);
-	return ccpSub(nodePoint, m_tAnchorPointInPixels);
+	CGPoint nodePoint = convertToNodeSpace(worldPoint);
+	CGPoint anchorInPoints;
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+	{
+		anchorInPoints = m_tAnchorPointInPixels;
+	}
+	else
+	{
+		anchorInPoints = ccpMult( m_tAnchorPointInPixels, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+
+	return ccpSub(nodePoint, anchorInPoints);
 }
 
 CGPoint CCNode::convertToWorldSpaceAR(CGPoint nodePoint)
 {
-	nodePoint = ccpAdd(nodePoint, m_tAnchorPointInPixels);
-	return this->convertToWorldSpace(nodePoint);
+	CGPoint anchorInPoints;
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+	{
+		anchorInPoints = m_tAnchorPointInPixels;
+	}
+	else
+	{
+		anchorInPoints = ccpMult( m_tAnchorPointInPixels, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+
+	nodePoint = ccpAdd(nodePoint, anchorInPoints);
+	return convertToWorldSpace(nodePoint);
 }
 CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
 {
