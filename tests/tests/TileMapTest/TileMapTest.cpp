@@ -1189,7 +1189,7 @@ TileDemo::TileDemo(void)
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	m_label = CCLabel::labelWithString("", "Arial", 28);
+	m_label = CCLabelTTF::labelWithString("", "Arial", 28);
 	addChild(m_label, 1);
 	m_label->setPosition( ccp(s.width/2, s.height-50) );
 	m_label->retain();
@@ -1197,7 +1197,7 @@ TileDemo::TileDemo(void)
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
 		addChild(l, 1);
 		l->setPosition( ccp(s.width/2, s.height-80) );
 

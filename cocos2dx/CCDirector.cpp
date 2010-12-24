@@ -189,7 +189,7 @@ void CCDirector::setGLDefaultValues(void)
 #if CC_DIRECTOR_FAST_FPS
 	if (! m_pFPSLabel)
 	{
-        m_pFPSLabel = CCLabel::labelWithString("00.0", "XXX", 24);
+        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "XXX", 24);
 		m_pFPSLabel->retain();
 	}
 #endif
@@ -415,7 +415,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
 void CCDirector::purgeCachedData(void)
 {
-    CCBitmapFontAtlas::purgeCachedData();
+    CCLabelBMFont::purgeCachedData();
 	// removed in 0.99.4 release
 	/*CCSpriteFrameCache::purgeSharedSpriteFrameCache();*/
 	CCTextureCache::purgeSharedTextureCache();
@@ -658,7 +658,7 @@ void CCDirector::end(void)
 #endif
 
 	// purge bitmap cache
-	CCBitmapFontAtlas::purgeCachedData();
+	CCLabelBMFont::purgeCachedData();
 
 	// purge all managers
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();

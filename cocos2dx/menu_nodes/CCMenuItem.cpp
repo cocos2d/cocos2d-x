@@ -284,7 +284,7 @@ namespace cocos2d{
 	bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
 		NSAssert( value != NULL && strlen(value) != 0, "Value lenght must be greater than 0");
-		CCLabel *label = CCLabel::labelWithString(value, _fontName.c_str(), (float)_fontSize);
+		CCLabelTTF *label = CCLabelTTF::labelWithString(value, _fontName.c_str(), (float)_fontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
 			// do something ?

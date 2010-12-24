@@ -153,7 +153,7 @@ void SceneTestLayer2::onReplaceSceneTran(NSObject* pSender)
 SceneTestLayer3::SceneTestLayer3()
 {
 	setIsTouchEnabled( true );
-	CCLabel* label = CCLabel::labelWithString("Touch to popScene", "Marker Felt", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString("Touch to popScene", "Marker Felt", 28);
 	addChild(label);
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	label->setPosition( CGPointMake(s.width/2, s.height/2) );

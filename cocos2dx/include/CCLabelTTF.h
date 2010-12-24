@@ -28,31 +28,31 @@ THE SOFTWARE.
 
 namespace cocos2d{
 
-	/** @brief CCLabel is a subclass of CCTextureNode that knows how to render text labels
+	/** @brief CCLabelTTF is a subclass of CCTextureNode that knows how to render text labels
 	*
-	* All features from CCTextureNode are valid in CCLabel
+	* All features from CCTextureNode are valid in CCLabelTTF
 	*
-	* CCLabel objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
+	* CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
 	*/
-	class CCX_DLL CCLabel : public CCSprite, public CCLabelProtocol
+	class CCX_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 	{
 	public:
-		CCLabel()
+		CCLabelTTF()
 			:m_sFontName("")
 		{}
-		virtual ~CCLabel(){ m_sFontName.clear(); }
+		virtual ~CCLabelTTF(){ m_sFontName.clear(); }
 		char * description();
-		/** creates a CCLabel from a fontname, alignment, dimension and font size */
-		static CCLabel * labelWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
-		/** creates a CCLabel from a fontname and font size */
-		static CCLabel * labelWithString(const char *label, const char *fontName, float fontSize);
-		/** initializes the CCLabel with a font name, alignment, dimension and font size */
+		/** creates a CCLabelTTF from a fontname, alignment, dimension and font size */
+		static CCLabelTTF * labelWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+		/** creates a CCLabelTTF from a fontname and font size */
+		static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
+		/** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
 		bool initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
-		/** initializes the CCLabel with a font name and font size */
+		/** initializes the CCLabelTTF with a font name and font size */
 		bool initWithString(const char *label, const char *fontName, float fontSize);
 
 		/** changes the string to render
-		* @warning Changing the string is as expensive as creating a new CCLabel. To obtain better performance use CCLabelAtlas
+		* @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
 		*/
 		virtual void setString(const char *label);
 

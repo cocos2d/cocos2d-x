@@ -653,7 +653,7 @@ void EaseSpriteDemo::onEnter()
 	m_kathia->setPosition( CGPointMake(60, 150) );
 	m_tamara->setPosition( CGPointMake(60, 250) );
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 

@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace cocos2d{
 
 	//CCLabelAtlas - Creation & Init
-	CCLabelAtlas * CCLabelAtlas::labelAtlasWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+	CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 	{
 		CCLabelAtlas *pRet = new CCLabelAtlas();
 		if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
@@ -40,6 +40,12 @@ namespace cocos2d{
 		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
+
+    CCLabelAtlas * CCLabelAtlas::labelAtlasWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+    {
+        return labelWithString(label, charMapFile, itemWidth, itemHeight, startCharMap);
+    }
+
 	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 	{
 		assert(label != NULL);
@@ -61,19 +67,36 @@ namespace cocos2d{
 
 		const char *s = m_sString.c_str();
 
+        CCTexture2D *texture = m_pTextureAtlas->getTexture();
+        float textureWide = (float) texture->getPixelsWide();
+        float textureHigh = (float) texture->getPixelsHigh();
+
 		for( int i=0; i<n; i++) {
 			unsigned char a = s[i] - m_cMapStartChar;
-			float row = (a % m_nItemsPerRow) * m_fTexStepX;
-			float col = (a / m_nItemsPerRow) * m_fTexStepY;
+			float row = (float) (a % m_nItemsPerRow);
+			float col = (float) (a / m_nItemsPerRow);
 
-			quad.tl.texCoords.u = row;
-			quad.tl.texCoords.v = col;
-			quad.tr.texCoords.u = row + m_fTexStepX;
-			quad.tr.texCoords.v = col;
-			quad.bl.texCoords.u = row;
-			quad.bl.texCoords.v = col + m_fTexStepY;
-			quad.br.texCoords.u = row + m_fTexStepX;
-			quad.br.texCoords.v = col + m_fTexStepY;
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+            // Issue #938. Don't use texStepX & texStepY
+            float left		= (2 * row * m_nItemWidth + 1) / (2 * textureWide);
+            float right		= left + (m_nItemWidth * 2 - 2) / (2 * textureWide);
+            float top		= (2 * col * m_nItemHeight + 1) / (2 * textureHigh);
+            float bottom	= top + (m_nItemHeight * 2 - 2) / (2 * textureHigh);
+#else
+            float left		= row * m_nItemWidth / textureWide;
+            float right		= left + m_nItemWidth / textureWide;
+            float top		= col * m_nItemHeight / textureHigh;
+            float bottom	= top + m_nItemHeight / textureHigh;
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+
+            quad.tl.texCoords.u = left;
+            quad.tl.texCoords.v = top;
+            quad.tr.texCoords.u = right;
+            quad.tr.texCoords.v = top;
+            quad.bl.texCoords.u = left;
+            quad.bl.texCoords.v = bottom;
+            quad.br.texCoords.u = right;
+            quad.br.texCoords.v = bottom;
 
 			quad.bl.vertices.x = (float) (i * m_nItemWidth);
 			quad.bl.vertices.y = 0;
@@ -106,7 +129,7 @@ namespace cocos2d{
 		CGSize s;
 		s.width = (float)(m_sString.length() * m_nItemWidth);
 		s.height = (float)(m_nItemHeight);
-		this->setContentSize(s);
+		this->setContentSizeInPixels(s);
 	}
 
 	//CCLabelAtlas - draw
@@ -121,9 +144,9 @@ namespace cocos2d{
 
 		glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity);
 
-		bool newBlend = false;
-		if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) {
-			newBlend = true;
+		bool newBlend = (m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST);
+		if(newBlend)
+        {
 			glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 		}
 

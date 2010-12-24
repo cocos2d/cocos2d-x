@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace cocos2d{
 
-	class CCLabel;
+	class CCLabelTTF;
 	class CCLabelAtlas;
 	class CCSprite;
 
@@ -75,7 +75,7 @@ namespace cocos2d{
 	Supported nodes:
 	- CCBitmapFontAtlas
 	- CCLabelAtlas
-	- CCLabel
+	- CCLabelTTF
 	*/
 	class CCX_DLL CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
 	{

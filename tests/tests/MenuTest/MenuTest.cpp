@@ -52,7 +52,7 @@ MenuLayer1::MenuLayer1()
 	CCMenuItem *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
 	
 	// Label Item (BitmapFontAtlas)
-	CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("configuration", "fonts/bitmapFontTest3.fnt");
+	CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("configuration", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item5 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer1::menuCallbackConfig));
 
 	// Testing issue #500
@@ -257,7 +257,7 @@ MenuLayer3::MenuLayer3()
 	CCMenuItemFont::setFontName("Marker Felt");
 	CCMenuItemFont::setFontSize(28);
 
-	CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
+	CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item1 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer3::menuCallback2) );
 	CCMenuItemFont* item2 = CCMenuItemFont::itemFromString("--- Go Back ---", this, menu_selector(MenuLayer3::menuCallback) );
 	
@@ -387,7 +387,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName( "Marker Felt" );
 	CCMenuItemFont::setFontSize( 34 );
 	
-	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString( "go back", "fonts/bitmapFontTest3.fnt" );
+	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString( "go back", "fonts/bitmapFontTest3.fnt" );
 	CCMenuItemLabel* back = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer4::backCallback) );
     
 	CCMenu *menu = CCMenu::menuWithItems(

@@ -13,7 +13,7 @@ public:
     virtual void keyBackClicked();
 
 private:
-    CCLabel*			m_pLabel;
+    CCLabelTTF*			m_pLabel;
     bool                m_bShow;
 };
 
