@@ -102,7 +102,6 @@ namespace cocos2d{
 		@warning setIsEnabled changes the RGB color of the font
 		*/
 		virtual void setIsEnabled(bool enabled);
-		virtual void draw();
 		virtual void setOpacity(GLubyte opacity);
 		virtual GLubyte getOpacity();
 		virtual void setColor(ccColor3B color);
@@ -176,7 +175,6 @@ namespace cocos2d{
 			,m_pSelectedImage(NULL)
 			,m_pDisabledImage(NULL)
 		{}
-		virtual ~CCMenuItemSprite();
 		/** creates a menu item with a normal and selected image*/
 		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite);
 		/** creates a menu item with a normal and selected image with target/selector */
@@ -186,11 +184,17 @@ namespace cocos2d{
 		/** initializes a menu item with a normal, selected  and disabled image with target/selector */
 		bool initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
 		// super methods
-		virtual void draw();
 		virtual void setColor(ccColor3B color){}
 		virtual ccColor3B getColor(){return ccBLACK;}
 		virtual void setOpacity(GLubyte opacity){}
 		virtual GLubyte getOpacity(){return 0;}
+
+        /**
+        @since v0.99.5
+        */
+        virtual void selected();
+        virtual void unselected();
+        virtual void setIsEnabled(bool bEnabled);
 
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 	};
