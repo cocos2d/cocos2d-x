@@ -197,6 +197,36 @@ namespace cocos2d{
 		}
 	}
 
+    int CCMenu::mouseDelegatePriority()
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return -1;/** @todo upto-0.99.5  use NSIntegerMin+1 instead*/
+    }
+
+    CCMenuItem* CCMenu::itemForMouseEvent(NSEvent * pEvent)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NULL;
+    }
+
+    bool CCMenu::ccMouseUp(NSEvent * pEvent)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NO;
+    }
+
+    bool CCMenu::ccMouseDown(NSEvent * pEvent)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NO;
+    }
+
+    bool CCMenu::ccMouseDragged(NSEvent * pEvent)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NO;
+    }
+
 	void CCMenu::destroy(void)
 	{
 		release();

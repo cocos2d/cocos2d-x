@@ -126,6 +126,38 @@ namespace cocos2d{
         CCLayer::onExit();
     }
 
+    void CCMenu::registerWithTouchDispatcher()
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
+    CCMenuItem* CCMenu::itemForTouch(CCTouch * touch)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NULL;
+    }
+
+    bool CCMenu::ccTouchBegan(CCTouch* touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NO;
+    }
+
+    void CCMenu::ccTouchEnded(CCTouch* touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
+    void CCMenu::ccTouchCancelled(CCTouch *touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
+    void CCMenu::ccTouchMoved(CCTouch* touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
 	//Menu - Events
     int CCMenu::mouseDelegatePriority()
     {
@@ -592,40 +624,4 @@ namespace cocos2d{
 	{
 		return m_tColor;
 	}
-
-	CCMenuItem* CCMenu::itemForTouch(cocos2d::CCTouch *touch)
-	{
-		CGPoint touchLocation = touch->locationInView(touch->view());
-		touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
-
-        if (m_pChildren && m_pChildren->count() > 0)
-		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
-
-				// ignore invisible and disabled items: issue #779, #866
-				if ((*it)->getIsVisible() && ((CCMenuItem*)(*it))->getIsEnabled())
-				{
-					CGPoint local = (*it)->convertToNodeSpace(touchLocation);
-
-					CGRect r = ((CCMenuItem*)(*it))->rect();
-					r.origin = CGPointZero;
-
-					if (CGRect::CGRectContainsPoint(r, local))
-					{
-						return (CCMenuItem*)(*it);
-					}
-				}
-			}
-			
-		}
-
-		return NULL;
-	}
-
 }

@@ -134,7 +134,7 @@ void LayerTest1::onEnter()
 	setIsTouchEnabled(true);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	CCColorLayer* layer = CCColorLayer::layerWithColorWidthHeight( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
+	CCLayerColor* layer = CCLayerColor::layerWithColorWidthHeight( ccc4(0xFF, 0x00, 0x00, 0x80), 200, 200); 
 	
 	layer->setIsRelativeAnchorPoint(true);
 	layer->setPosition( CGPointMake(s.width/2, s.height/2) );
@@ -155,7 +155,7 @@ void LayerTest1::updateSize(CCTouch*touch)
 	
 	CGSize newSize = CGSizeMake( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2);
 	
-	CCColorLayer* l = (CCColorLayer*) getChildByTag(kTagLayer);
+	CCLayerColor* l = (CCLayerColor*) getChildByTag(kTagLayer);
 
 	l->setContentSize( newSize );
 }
@@ -192,12 +192,12 @@ void LayerTest2::onEnter()
 	LayerTest::onEnter();
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	CCColorLayer* layer1 = CCColorLayer::layerWithColorWidthHeight( ccc4(255, 255, 0, 80), 100, 300);
+	CCLayerColor* layer1 = CCLayerColor::layerWithColorWidthHeight( ccc4(255, 255, 0, 80), 100, 300);
 	layer1->setPosition(CGPointMake(s.width/3, s.height/2));
 	layer1->setIsRelativeAnchorPoint(true);
 	addChild(layer1, 1);
 	
-	CCColorLayer* layer2 = CCColorLayer::layerWithColorWidthHeight( ccc4(0, 0, 255, 255), 100, 300);
+	CCLayerColor* layer2 = CCLayerColor::layerWithColorWidthHeight( ccc4(0, 0, 255, 255), 100, 300);
 	layer2->setPosition(CGPointMake((s.width/3)*2, s.height/2));
 	layer2->setIsRelativeAnchorPoint(true);
 	addChild(layer2, 1);
@@ -227,7 +227,7 @@ std::string LayerTest2::title()
 LayerTestBlend::LayerTestBlend()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	CCColorLayer* layer1 = CCColorLayer::layerWithColor( ccc4(255, 255, 255, 80) );
+	CCLayerColor* layer1 = CCLayerColor::layerWithColor( ccc4(255, 255, 255, 80) );
 	
 	CCSprite* sister1 = CCSprite::spriteWithFile(s_pPathSister1);
 	CCSprite* sister2 = CCSprite::spriteWithFile(s_pPathSister2);
@@ -244,7 +244,7 @@ LayerTestBlend::LayerTestBlend()
 
 void LayerTestBlend::newBlend(ccTime dt)
 {
- 	CCColorLayer *layer = (CCColorLayer*)getChildByTag(kTagLayer);
+ 	CCLayerColor *layer = (CCLayerColor*)getChildByTag(kTagLayer);
 
     GLenum src;
     GLenum dst;

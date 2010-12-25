@@ -22,54 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCPAGE_TURN_TRANSITION_H__
-#define __CCPAGE_TURN_TRANSITION_H__
-
+#ifndef __CCRADIAL_TRANSITION_H__
+#define __CCRADIAL_TRANSITION_H__
 #include "CCTransition.h"
+#include "CCProgressTimer.h"
+
 namespace   cocos2d {
 
 /**
-@brief A transition which peels back the bottom right hand corner of a scene
-to transition to the scene beneath it simulating a page turn.
-
-This uses a 3DAction so it's strongly recommended that depth buffering
-is turned on in CCDirector using:
-
- CCDirector::sharedDirector()->setDepthBufferFormat(kDepthBuffer16);
-
- @since v0.8.2
-*/
-class CCX_DLL CCPageTurnTransition : public CCTransitionScene
+ @brief A counter colock-wise radial transition to the next scene
+ */
+class CCX_DLL CCTransitionRadialCCW : public CCTransitionScene
 {
-protected:
-	bool	m_bBack;
-	
 public:
-	CCPageTurnTransition();
-	virtual ~CCPageTurnTransition();
-
-	/**
-	* Creates a base transition with duration and incoming scene.
-	* If back is true then the effect is reversed to appear as if the incoming 
-	* scene is being turned from left over the outgoing scene.
-	*/
-	static CCPageTurnTransition* transitionWithDuration(ccTime t,CCScene* scene,bool backwards);
-
-	/**
-	* Creates a base transition with duration and incoming scene.
-	* If back is true then the effect is reversed to appear as if the incoming 
-	* scene is being turned from left over the outgoing scene.
-	*/
-	virtual bool initWithDuration(ccTime t,CCScene* scene,bool backwards);
-
-	CCActionInterval* actionWithSize(ccGridSize vector);
+	CCTransitionRadialCCW(){}
+	virtual ~CCTransitionRadialCCW(){}
 
 	virtual void onEnter();
+	virtual void onExit();
+
+    static CCTransitionRadialCCW* transitionWithDuration(ccTime t, CCScene* scene);
 
 protected:
 	virtual void sceneOrder();
+	virtual CCProgressTimerType radialType();
 };
+
+/**
+ @brief A counter colock-wise radial transition to the next scene
+ */
+class CCX_DLL CCTransitionRadialCW : public CCTransitionRadialCCW
+{
+public:
+	CCTransitionRadialCW(){}
+	virtual ~CCTransitionRadialCW(){}
+    static CCTransitionRadialCW* transitionWithDuration(ccTime t, CCScene* scene);
+
+protected:
+	virtual CCProgressTimerType radialType();
+};
+
 }//namespace   cocos2d 
 
-#endif // __CCPAGE_TURN_TRANSITION_H__
+#endif __CCRADIAL_TRANSITION_H__
 

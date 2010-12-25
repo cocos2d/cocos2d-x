@@ -373,10 +373,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCPageTurnTransition.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCParallaxNode.h"
 				>
 			</File>
@@ -402,10 +398,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCQuadParticleSystem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCRadialTransition.h"
 				>
 			</File>
 			<File
@@ -486,6 +478,14 @@
 			</File>
 			<File
 				RelativePath="..\include\CCTransition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTransitionPageTurn.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTransitionRadial.h"
 				>
 			</File>
 			<File
@@ -593,23 +593,15 @@
 			Name="layers_scenes_transition_nodes"
 			>
 			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCLayer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCPageTurnTransition.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCRadialTransition.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCScene.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCTransition.cpp"
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp"
 				>
 			</File>
 		</Filter>
@@ -889,11 +881,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCLayer_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCMenu_mobile.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\platform\CCNode_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCTransition_mobile.cpp"
 				>
 			</File>
 			<File
