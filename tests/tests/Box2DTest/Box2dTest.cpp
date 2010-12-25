@@ -78,7 +78,7 @@ Box2DTestLayer::Box2DTestLayer()
 	
 	addNewSpriteWithCoords( CGPointMake(screenSize.width/2, screenSize.height/2) );
 	
-	CCLabel *label = CCLabel::labelWithString("Tap screen", "Marker Felt", 32);
+	CCLabelTTF *label = CCLabelTTF::labelWithString("Tap screen", "Marker Felt", 32);
 	addChild(label, 0);
 	label->setColor( ccc3(0,0,255) );
 	label->setPosition( CGPointMake( screenSize.width/2, screenSize.height-50) );

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCBitmapFontAtlas.h"
+#include "CCLabelBMFont.h"
 
 #include "platform/platform.h"
 #include "NSMutableDictionary.h"
@@ -40,20 +40,20 @@ namespace cocos2d{
 	//
 	//FNTConfig Cache - free functions
 	//
-	NSMutableDictionary<std::string, CCBitmapFontConfiguration*> *configurations = NULL;
-	CCBitmapFontConfiguration* FNTConfigLoadFile( const char *fntFile)
+	NSMutableDictionary<std::string, CCBMFontConfiguration*> *configurations = NULL;
+	CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
 	{
-		CCBitmapFontConfiguration *pRet = NULL;
+		CCBMFontConfiguration *pRet = NULL;
 
 		if( configurations == NULL )
 		{
-			configurations = new NSMutableDictionary<std::string, CCBitmapFontConfiguration*>();
+			configurations = new NSMutableDictionary<std::string, CCBMFontConfiguration*>();
 		}
 		std::string key(fntFile);
 		pRet = configurations->objectForKey(key);
 		if( pRet == NULL )
 		{
-			pRet = CCBitmapFontConfiguration::configurationWithFNTFile(fntFile);
+			pRet = CCBMFontConfiguration::configurationWithFNTFile(fntFile);
 			configurations->setObject(pRet, key);
 		}
 
@@ -82,9 +82,9 @@ namespace cocos2d{
 	//BitmapFontConfiguration
 	//
 
-	CCBitmapFontConfiguration * CCBitmapFontConfiguration::configurationWithFNTFile(const char *FNTfile)
+	CCBMFontConfiguration * CCBMFontConfiguration::configurationWithFNTFile(const char *FNTfile)
 	{
-		CCBitmapFontConfiguration * pRet = new CCBitmapFontConfiguration();
+		CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
 		if (pRet->initWithFNTfile(FNTfile))
 		{
 			pRet->autorelease();
@@ -93,26 +93,26 @@ namespace cocos2d{
 		CCX_SAFE_DELETE(pRet);
 		return NULL;
 	}
-	bool CCBitmapFontConfiguration::initWithFNTfile(const char *FNTfile)
+	bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
 	{
 		assert(FNTfile != NULL && strlen(FNTfile)!=0);
 		m_pKerningDictionary = NULL;
 		this->parseConfigFile(FNTfile);
 		return true;
 	}
-	CCBitmapFontConfiguration::~CCBitmapFontConfiguration()
+	CCBMFontConfiguration::~CCBMFontConfiguration()
 	{
-		CCLOGINFO( "cocos2d: deallocing CCBitmapFontConfiguration" );
+		CCLOGINFO( "cocos2d: deallocing CCBMFontConfiguration" );
 		this->purgeKerningDictionary();
 		m_sAtlasName.clear();
 	}
-	char * CCBitmapFontConfiguration::description(void)
+	char * CCBMFontConfiguration::description(void)
 	{
 		char *ret = new char[100];
-		sprintf(ret, "<CCBitmapFontConfiguration | Kernings:%d | Image = %s>", HASH_COUNT(m_pKerningDictionary), m_sAtlasName.c_str());
+		sprintf(ret, "<CCBMFontConfiguration | Kernings:%d | Image = %s>", HASH_COUNT(m_pKerningDictionary), m_sAtlasName.c_str());
 		return ret;
 	}
-	void CCBitmapFontConfiguration::purgeKerningDictionary()
+	void CCBMFontConfiguration::purgeKerningDictionary()
 	{
 		tKerningHashElement *current;
 		while(m_pKerningDictionary) 
@@ -122,7 +122,7 @@ namespace cocos2d{
 			free(current);
 		}
 	}
-	void CCBitmapFontConfiguration::parseConfigFile(const char *controlFile)
+	void CCBMFontConfiguration::parseConfigFile(const char *controlFile)
 	{	
 		std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
 
@@ -130,7 +130,7 @@ namespace cocos2d{
         unsigned long nBufSize = 0;
         char* pBuffer = (char*) data.getFileData(fullpath.c_str(), "r", &nBufSize);
 
-        NSAssert(pBuffer, "CCBitmapFontConfiguration::parseConfigFile | Open file error.");
+        NSAssert(pBuffer, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 
         if (!pBuffer)
         {
@@ -192,7 +192,7 @@ namespace cocos2d{
             else if(line.substr(0,strlen("char")) == "char")
             {
                 // Parse the current line and create a new CharDef
-                ccBitmapFontDef characterDefinition;
+                ccBMFontDef characterDefinition;
                 this->parseCharacterDefinition(line, &characterDefinition);
 
                 // Add the CharDef returned to the charArray
@@ -208,7 +208,7 @@ namespace cocos2d{
             }
         }
 	}
-	void CCBitmapFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
+	void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fntFile)
 	{
 		//////////////////////////////////////////////////////////////////////////
 		// line to parse:
@@ -227,7 +227,7 @@ namespace cocos2d{
 
 		m_sAtlasName = CCFileUtils::fullPathFromRelativeFile(value.c_str(), fntFile);
 	}
-	void CCBitmapFontConfiguration::parseInfoArguments(std::string line)
+	void CCBMFontConfiguration::parseInfoArguments(std::string line)
 	{
 		//////////////////////////////////////////////////////////////////////////
 		// possible lines to parse:
@@ -242,7 +242,7 @@ namespace cocos2d{
 		sscanf(value.c_str(), "padding=%d,%d,%d,%d", &m_tPadding.top, &m_tPadding.right, &m_tPadding.bottom, &m_tPadding.left);
 		CCLOG("cocos2d: padding: %d,%d,%d,%d", m_tPadding.left, m_tPadding.top, m_tPadding.right, m_tPadding.bottom);
 	}
-	void CCBitmapFontConfiguration::parseCommonArguments(std::string line)
+	void CCBMFontConfiguration::parseCommonArguments(std::string line)
 	{
 		//////////////////////////////////////////////////////////////////////////
 		// line to parse:
@@ -258,12 +258,12 @@ namespace cocos2d{
 		index = line.find("scaleW=") + strlen("scaleW=");
 		index2 = line.find(' ', index);
 		value = line.substr(index, index2-index);
-		NSAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCBitmapFontAtlas: page can't be larger than supported");
+		NSAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
 		// scaleH. sanity check
 		index = line.find("scaleH=") + strlen("scaleH=");
 		index2 = line.find(' ', index);
 		value = line.substr(index, index2-index);
-		NSAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCBitmapFontAtlas: page can't be larger than supported");
+		NSAssert(atoi(value.c_str()) <= CCConfiguration::sharedConfiguration()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
 		// pages. sanity check
 		index = line.find("pages=") + strlen("pages=");
 		index2 = line.find(' ', index);
@@ -272,7 +272,7 @@ namespace cocos2d{
 
 		// packed (ignore) What does this mean ??
 	}
-	void CCBitmapFontConfiguration::parseCharacterDefinition(std::string line, ccBitmapFontDef *characterDefinition)
+	void CCBMFontConfiguration::parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition)
 	{	
 		//////////////////////////////////////////////////////////////////////////
 		// line to parse:
@@ -284,7 +284,7 @@ namespace cocos2d{
 		int index2 = line.find(' ', index);
 		std::string value = line.substr(index, index2-index);
 		sscanf(value.c_str(), "id=%u", &characterDefinition->charID);
-		NSAssert(characterDefinition->charID < kCCBitmapFontAtlasMaxChars, "BitmpaFontAtlas: CharID bigger than supported");
+		NSAssert(characterDefinition->charID < kCCBMFontMaxChars, "BitmpaFontAtlas: CharID bigger than supported");
 		// Character x
 		index = line.find("x=");
 		index2 = line.find(' ', index);
@@ -321,7 +321,7 @@ namespace cocos2d{
 		value = line.substr(index, index2-index);
 		sscanf(value.c_str(), "xadvance=%d", &characterDefinition->xAdvance);
 	}
-	void CCBitmapFontConfiguration::parseKerningCapacity(std::string line)
+	void CCBMFontConfiguration::parseKerningCapacity(std::string line)
 	{
 		// When using uthash there is not need to parse the capacity.
 
@@ -342,7 +342,7 @@ namespace cocos2d{
 		//	if( capacity != -1 )
 		//		kerningDictionary = ccHashSetNew(capacity, targetSetEql);
 	}
-	void CCBitmapFontConfiguration::parseKerningEntry(std::string line)
+	void CCBMFontConfiguration::parseKerningEntry(std::string line)
 	{		
 		//////////////////////////////////////////////////////////////////////////
 		// line to parse:
@@ -376,19 +376,19 @@ namespace cocos2d{
 		HASH_ADD_INT(m_pKerningDictionary,key, element);
 	}
 	//
-	//CCBitmapFontAtlas
+	//CCLabelBMFont
 	//
 
 	//BitmapFontAtlas - Purge Cache
-	void CCBitmapFontAtlas::purgeCachedData()
+	void CCLabelBMFont::purgeCachedData()
 	{
 		FNTConfigRemoveCache();
 	}
 
 	//BitmapFontAtlas - Creation & Init
-	CCBitmapFontAtlas *CCBitmapFontAtlas::bitmapFontAtlasWithString(const char *str, const char *fntFile)
+	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
 	{
-		CCBitmapFontAtlas *pRet = new CCBitmapFontAtlas();
+		CCLabelBMFont *pRet = new CCLabelBMFont();
 		if(pRet && pRet->initWithString(str, fntFile))
 		{
 			pRet->autorelease();
@@ -397,7 +397,13 @@ namespace cocos2d{
 		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
-	bool CCBitmapFontAtlas::initWithString(const char *theString, const char *fntFile)
+
+    CCLabelBMFont * CCLabelBMFont::bitmapFontAtlasWithString(const char *str, const char *fntFile)
+    {
+        return labelWithString(str, fntFile);
+    }
+
+	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 	{	
 		assert(theString != NULL);
 		CCX_SAFE_RELEASE(m_pConfiguration);// allow re-init
@@ -417,14 +423,14 @@ namespace cocos2d{
 		}
 		return false;
 	}
-	CCBitmapFontAtlas::~CCBitmapFontAtlas()
+	CCLabelBMFont::~CCLabelBMFont()
 	{
 		m_sString.clear();
 		m_pConfiguration->release();
 	}
 
 	// BitmapFontAtlas - Atlas generation
-	int CCBitmapFontAtlas::kerningAmountForFirst(unsigned short first, unsigned short second)
+	int CCLabelBMFont::kerningAmountForFirst(unsigned short first, unsigned short second)
 	{
 		int ret = 0;
 		unsigned int key = (first<<16) | (second & 0xffff);
@@ -437,22 +443,54 @@ namespace cocos2d{
 		}
 		return ret;
 	}
-	void CCBitmapFontAtlas::createFontChars()
+	void CCLabelBMFont::createFontChars()
 	{
 		int nextFontPositionX = 0;
+        int nextFontPositionY = 0;
 		INT16 prev = -1;
 		int kerningAmount = 0;
 
 		CGSize tmpSize = CGSizeZero;
+
+        int longestLine = 0;
+        int totalHeight = 0;
+
+        int quantityOfLines = 1;
+
 		UINT32 len = m_sString.length();
+
+        if (0 == len)
+        {
+            return;
+        }
+
+        for (UINT32 i = 0; i < len - 1; ++i)
+        {
+            INT16 c = m_sString[i];
+            if (c == '\n')
+            {
+                quantityOfLines++;
+            }
+        }
+
+        totalHeight = m_pConfiguration->m_uCommonHeight * quantityOfLines;
+        nextFontPositionY = m_pConfiguration->m_uCommonHeight * (quantityOfLines - 1);
+
 		for(UINT32 i=0; i<len; i++)
 		{
 			INT16 c = m_sString[i];
-			NSAssert( c < kCCBitmapFontAtlasMaxChars, "BitmapFontAtlas: character outside bounds");
+			NSAssert( c < kCCBMFontMaxChars, "BitmapFontAtlas: character outside bounds");
 
+            if (c == '\n')
+            {
+                nextFontPositionX = 0;
+                nextFontPositionY -= m_pConfiguration->m_uCommonHeight;
+                continue;
+            }
+            
 			kerningAmount = this->kerningAmountForFirst(prev, c);
 
-			ccBitmapFontDef fontDef = m_pConfiguration->m_pBitmapFontArray[c];
+			ccBMFontDef fontDef = m_pConfiguration->m_pBitmapFontArray[c];
 
 			CGRect rect = fontDef.rect;
 
@@ -469,25 +507,22 @@ namespace cocos2d{
 			else
 			{
 				// reusing fonts
-				fontChar->setTextureRect(rect);
+				fontChar->setTextureRectInPixels(rect, NO, rect.size);
 
 				// restore to default in case they were modified
 				fontChar->setIsVisible(true);
 				fontChar->setOpacity(255);
 			}
 
-			fontChar->setPosition( ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f ,
-				(m_pConfiguration->m_uCommonHeight - fontDef.yOffset) - rect.size.height/2.0f ) );		
+            float yOffset = (float) (m_pConfiguration->m_uCommonHeight - fontDef.yOffset);
+			fontChar->setPositionInPixels( ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f + kerningAmount,
+				                                (float) nextFontPositionY + yOffset - rect.size.height/2.0f ) );		
 
 			//		NSLog(@"position.y: %f", fontChar.position.y);
 
 			// update kerning
-			fontChar->setPosition( ccpAdd( fontChar->getPosition(), ccp((float)kerningAmount,0)) );
 			nextFontPositionX += m_pConfiguration->m_pBitmapFontArray[c].xAdvance + kerningAmount;
 			prev = c;
-
-			tmpSize.width += m_pConfiguration->m_pBitmapFontArray[c].xAdvance + kerningAmount;
-			tmpSize.height = (float)(m_pConfiguration->m_uCommonHeight);
 
 			// Apply label properties
 			fontChar->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
@@ -500,12 +535,21 @@ namespace cocos2d{
 			{
 				fontChar->setOpacity(m_cOpacity);
 			}
+
+            if (longestLine < nextFontPositionX)
+            {
+                longestLine = nextFontPositionX;
+            }
 		}
-		this->setContentSize(tmpSize);
+
+        tmpSize.width  = (float) longestLine;
+        tmpSize.height = (float) totalHeight;
+
+		this->setContentSizeInPixels(tmpSize);
 	}
 
 	//BitmapFontAtlas - CCLabelProtocol protocol
-	void CCBitmapFontAtlas::setString(const char *newString)
+	void CCLabelBMFont::setString(const char *newString)
 	{	
 		m_sString.clear();
 		m_sString = newString;
@@ -521,8 +565,13 @@ namespace cocos2d{
 		this->createFontChars();
 	}
 
+    void CCLabelBMFont::setCString(const char *label)
+    {
+        setString(label);
+    }
+
 	//BitmapFontAtlas - CCRGBAProtocol protocol
-	void CCBitmapFontAtlas::setColor(ccColor3B var)
+	void CCLabelBMFont::setColor(ccColor3B var)
 	{
 		m_tColor = var;
 		if (m_pChildren && m_pChildren->count() != 0)
@@ -534,11 +583,11 @@ namespace cocos2d{
 			}
 		}
 	}
-	ccColor3B CCBitmapFontAtlas::getColor()
+	ccColor3B CCLabelBMFont::getColor()
 	{
 		return m_tColor;
 	}
-	void CCBitmapFontAtlas::setOpacity(GLubyte var)
+	void CCLabelBMFont::setOpacity(GLubyte var)
 	{
 		m_cOpacity = var;
 
@@ -555,11 +604,11 @@ namespace cocos2d{
 			}
 		}
 	}
-	GLubyte CCBitmapFontAtlas::getOpacity()
+	GLubyte CCLabelBMFont::getOpacity()
 	{
 		return m_cOpacity;
 	}
-	void CCBitmapFontAtlas::setIsOpacityModifyRGB(bool var)
+	void CCLabelBMFont::setIsOpacityModifyRGB(bool var)
 	{
 		m_bIsOpacityModifyRGB = var;
 		if (m_pChildren && m_pChildren->count() != 0)
@@ -575,13 +624,13 @@ namespace cocos2d{
 			}
 		}
 	}
-	bool CCBitmapFontAtlas::getIsOpacityModifyRGB()
+	bool CCLabelBMFont::getIsOpacityModifyRGB()
 	{
 		return m_bIsOpacityModifyRGB;
 	}
 
 	// BitmapFontAtlas - AnchorPoint
-	void CCBitmapFontAtlas::setAnchorPoint(CGPoint point)
+	void CCLabelBMFont::setAnchorPoint(CGPoint point)
 	{
 		if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) )
 		{
@@ -592,7 +641,7 @@ namespace cocos2d{
 
 	//BitmapFontAtlas - Debug draw
 #if CC_BITMAPFONTATLAS_DEBUG_DRAW
-	void CCBitmapFontAtlas::draw()
+	void CCLabelBMFont::draw()
 	{
 		CCSpriteSheet::draw();
 		CGSize s = this->getContentSize();

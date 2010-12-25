@@ -21,15 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCLabel.h"
+#include "CCLabelTTF.h"
 
 namespace cocos2d{
 	//
-	//CCLabel
+	//CCLabelTTF
 	//
-	CCLabel * CCLabel::labelWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
-		CCLabel *pRet = new CCLabel();
+		CCLabelTTF *pRet = new CCLabelTTF();
 		if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
 		{
 			pRet->autorelease();
@@ -38,9 +38,9 @@ namespace cocos2d{
 		CCX_SAFE_DELETE(pRet)
 		return NULL;
 	}
-	CCLabel * CCLabel::labelWithString(const char *label, const char *fontName, float fontSize)
+	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const char *fontName, float fontSize)
 	{
-		CCLabel *pRet = new CCLabel();
+		CCLabelTTF *pRet = new CCLabelTTF();
 		if(pRet && pRet->initWithString(label, fontName, fontSize))
 		{
 			pRet->autorelease();
@@ -50,34 +50,34 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	bool CCLabel::initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	bool CCLabelTTF::initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{
 		assert(label != NULL);
 		if (CCSprite::init())
 		{
-			m_tDimensions = dimensions;
+			m_tDimensions = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
 			m_eAlignment = alignment;
 			m_sFontName = fontName;
-			m_fFontSize = fontSize;
+			m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
 			this->setString(label);
 			return true;
 		}
 		return false;
 	}
-	bool CCLabel::initWithString(const char *label, const char *fontName, float fontSize)
+	bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 	{
 		assert(label != NULL);
 		if (CCSprite::init())
 		{
 			m_tDimensions = CGSizeZero;
 			m_sFontName = fontName;
-			m_fFontSize = fontSize;
+			m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
 			this->setString(label);
 			return true;
 		}
 		return false;
 	}
-	void CCLabel::setString(const char *label)
+	void CCLabelTTF::setString(const char *label)
 	{
         if (strlen(label)==0)
         {
@@ -98,14 +98,15 @@ namespace cocos2d{
 		this->setTexture(texture);
 		texture->release();
 
-		CGSize size = m_pobTexture->getContentSize();
-		this->setTextureRect(CGRectMake(0, 0, size.width, size.height));
+        CGRect rect = CGRectZero;
+		rect.size = m_pobTexture->getContentSize();
+		this->setTextureRect(rect);
 	}
 
-	char * CCLabel::description()
+	char * CCLabelTTF::description()
 	{
 		char *ret = new char[100] ;
-		sprintf(ret, "<CCLabel | FontName = %s, FontSize = %.1f>", m_sFontName.c_str(), m_fFontSize);
+		sprintf(ret, "<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_sFontName.c_str(), m_fFontSize);
 		return ret;
 	}
 }// namespace cocos2d

@@ -152,14 +152,14 @@ void ActionsDemo::onEnter()
     // add title and subtitle
     std::string str = title();
     const char * pTitle = str.c_str();
-    CCLabel* label = CCLabel::labelWithString(pTitle, "Arial", 18);
+    CCLabelTTF* label = CCLabelTTF::labelWithString(pTitle, "Arial", 18);
     addChild(label, 1);
     label->setPosition( CGPointMake(s.width/2, s.height - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() ) 
     {
-        CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
+        CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
         addChild(l, 1);
         l->setPosition( CGPointMake(s.width/2, s.height - 60) );
     }	
@@ -605,7 +605,7 @@ void ActionSequence2::onEnter()
 void ActionSequence2::callback1()
 {
     CGSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabel *label = CCLabel::labelWithString("callback 1 called", "Marker Felt", 16);
+    CCLabelTTF *label = CCLabelTTF::labelWithString("callback 1 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*1,s.height/2));
 
     addChild(label);
@@ -614,7 +614,7 @@ void ActionSequence2::callback1()
 void ActionSequence2::callback2(CCNode* sender)
 {
     CGSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabel *label = CCLabel::labelWithString("callback 2 called", "Marker Felt", 16);
+    CCLabelTTF *label = CCLabelTTF::labelWithString("callback 2 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*2,s.height/2));
 
     addChild(label);
@@ -623,7 +623,7 @@ void ActionSequence2::callback2(CCNode* sender)
 void ActionSequence2::callback3(CCNode* sender, void* data)
 {
     CGSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabel *label = CCLabel::labelWithString("callback 3 called", "Marker Felt", 16);
+    CCLabelTTF *label = CCLabelTTF::labelWithString("callback 3 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*3,s.height/2));
 
     addChild(label);
@@ -671,7 +671,7 @@ void ActionCallFunc::onEnter()
 void ActionCallFunc::callback1()
 {
     CGSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabel *label = CCLabel::labelWithString("callback 1 called", "Marker Felt", 16);
+    CCLabelTTF *label = CCLabelTTF::labelWithString("callback 1 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*1,s.height/2));
 
     addChild(label);
@@ -680,7 +680,7 @@ void ActionCallFunc::callback1()
 void ActionCallFunc::callback2(CCNode* pSender)
 {
     CGSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabel *label = CCLabel::labelWithString("callback 2 called", "Marker Felt", 16);
+    CCLabelTTF *label = CCLabelTTF::labelWithString("callback 2 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*2,s.height/2));
 
     addChild(label);
@@ -689,7 +689,7 @@ void ActionCallFunc::callback2(CCNode* pSender)
 void ActionCallFunc::callback3(CCNode* pTarget, void* data)
 {
     CGSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabel *label = CCLabel::labelWithString("callback 3 called", "Marker Felt", 16);
+    CCLabelTTF *label = CCLabelTTF::labelWithString("callback 3 called", "Marker Felt", 16);
     label->setPosition(CGPointMake( s.width/4*3,s.height/2));
     addChild(label);
 }

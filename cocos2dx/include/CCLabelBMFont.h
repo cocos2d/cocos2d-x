@@ -29,9 +29,10 @@ namespace cocos2d{
 	struct _KerningHashElement;
 
 	/**
-	bitmap font definition
+    @struct ccBMFontDef
+    BMFont definition
 	*/
-	typedef struct _bitmapFontDef {
+	typedef struct _BMFontDef {
 		//! ID of the character
 		unsigned int charID;
 		//! origin and size of the font
@@ -42,13 +43,13 @@ namespace cocos2d{
 		int yOffset;
 		//! The amount to move the current position after drawing the character (in pixels)
 		int xAdvance;
-	} ccBitmapFontDef;
+	} ccBMFontDef;
 
-	/**
-	bitmap font padding
+    /** @struct ccBMFontPadding
+    BMFont padding
 	@since v0.8.2
 	*/
-	typedef struct _bitmapFontPadding {
+	typedef struct _BMFontPadding {
 		/// padding left
 		int	left;
 		/// padding top
@@ -57,43 +58,43 @@ namespace cocos2d{
 		int right;
 		/// padding bottom
 		int bottom;
-	} ccBitmapFontPadding;
+	} ccBMFontPadding;
 
 	enum {
 		// how many characters are supported
-		kCCBitmapFontAtlasMaxChars = 2048, //256,
+		kCCBMFontMaxChars = 2048, //256,
 	};
 
-	/** @brief CCBitmapFontConfiguration has parsed configuration of the the .fnt file
+	/** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
 	@since v0.8
 	*/
-	class CCX_DLL CCBitmapFontConfiguration : public NSObject
+	class CCX_DLL CCBMFontConfiguration : public NSObject
 	{
 		// XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 	public://@public
 		//! The characters building up the font
-		ccBitmapFontDef	m_pBitmapFontArray[kCCBitmapFontAtlasMaxChars];
+		ccBMFontDef	m_pBitmapFontArray[kCCBMFontMaxChars];
 		//! FNTConfig: Common Height
 		unsigned int m_uCommonHeight;
 		//! Padding
-		ccBitmapFontPadding	m_tPadding;
+		ccBMFontPadding	m_tPadding;
 		//! atlas name
 		std::string m_sAtlasName;
 		//! values for kerning
 		struct _KerningHashElement	*m_pKerningDictionary;
 	public:
-		CCBitmapFontConfiguration()
+		CCBMFontConfiguration()
 			:m_pKerningDictionary(NULL)
 		{}
-		virtual ~CCBitmapFontConfiguration();
+		virtual ~CCBMFontConfiguration();
 		char * description();
-		/** allocates a CCBitmapFontConfiguration with a FNT file */
-		static CCBitmapFontConfiguration * configurationWithFNTFile(const char *FNTfile);
+		/** allocates a CCBMFontConfiguration with a FNT file */
+		static CCBMFontConfiguration * configurationWithFNTFile(const char *FNTfile);
 		/** initializes a BitmapFontConfiguration with a FNT file */
 		bool initWithFNTfile(const char *FNTfile);
 	private:
 		void parseConfigFile(const char *controlFile);
-		void parseCharacterDefinition(std::string line, ccBitmapFontDef *characterDefinition);
+		void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
 		void parseInfoArguments(std::string line);
 		void parseCommonArguments(std::string line);
 		void parseImageFileName(std::string line, const char *fntFile);
@@ -102,7 +103,7 @@ namespace cocos2d{
 		void purgeKerningDictionary();
 	};
 
-	/** @brief CCBitmapFontAtlas is a subclass of CCSpriteSheet.
+	/** @brief CCLabelBMFont is a subclass of CCSpriteSheet.
 
 	Features:
 	- Treats each character like a CCSprite. This means that each individual character can be:
@@ -119,9 +120,9 @@ namespace cocos2d{
 	- All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
 	because it might affect the rendering
 
-	CCBitmapFontAtlas implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
-	CCBitmapFontAtlas has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
-	If in doubt, use CCBitmapFontAtlas instead of CCLabelAtlas / CCLabel.
+	CCLabelBMFont implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
+	CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
+	If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
 
 	Supported editors:
 	- http://www.n4te.com/hiero/hiero.jnlp
@@ -131,7 +132,7 @@ namespace cocos2d{
 	@since v0.8
 	*/
 
-	class CCX_DLL CCBitmapFontAtlas : public CCSpriteSheet, public CCLabelProtocol, public CCRGBAProtocol
+	class CCX_DLL CCLabelBMFont : public CCSpriteSheet, public CCLabelProtocol, public CCRGBAProtocol
 	{
 		/** conforms to CCRGBAProtocol protocol */
 		CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
@@ -142,25 +143,33 @@ namespace cocos2d{
 	protected:
 		// string to render
 		std::string m_sString;
-		CCBitmapFontConfiguration *m_pConfiguration;
+		CCBMFontConfiguration *m_pConfiguration;
 	public:
-		CCBitmapFontAtlas()
+		CCLabelBMFont()
 			:m_pConfiguration(NULL)
 		{}
-		virtual ~CCBitmapFontAtlas();
+		virtual ~CCLabelBMFont();
 		/** Purges the cached data.
 		Removes from memory the cached configurations and the atlas name dictionary.
 		@since v0.99.3
 		*/
 		static void purgeCachedData();
 		/** creates a bitmap font altas with an initial string and the FNT file */
-		static CCBitmapFontAtlas * bitmapFontAtlasWithString(const char *str, const char *fntFile);
+		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
+
+        /** creates a BMFont label with an initial string and the FNT file
+        @deprecated Will be removed in 1.0.1. Use "labelWithString" instead.
+        @since v0.99.5
+        */
+        static CCLabelBMFont * bitmapFontAtlasWithString(const char *str, const char *fntFile);
+
 		/** init a bitmap font altas with an initial string and the FNT file */
 		bool initWithString(const char *str, const char *fntFile);
 		/** updates the font chars based on the string to render */
 		void createFontChars();
 		// super method
 		virtual void setString(const char *label);
+        virtual void setCString(const char *label);
 		virtual void setAnchorPoint(CGPoint var);
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
@@ -175,10 +184,17 @@ namespace cocos2d{
 
 	/** Free function that parses a FNT file a place it on the cache
 	*/
-	CCBitmapFontConfiguration * FNTConfigLoadFile( const char *file );
+	CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
 	/** Purges the FNT config cache
 	*/
 	void FNTConfigRemoveCache( void );
+
+    /** CCBitmapFontAtlas
+    @deprecated Use CCLabelBMFont instead. Will be removed 1.0.1
+    */
+    class CCBitmapFontAtlas : public CCLabelBMFont
+    {
+    };
 
 }// namespace cocos2d
 

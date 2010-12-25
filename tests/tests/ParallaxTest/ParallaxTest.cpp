@@ -239,7 +239,7 @@ void ParallaxDemo::onEnter()
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 

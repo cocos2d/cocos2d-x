@@ -113,14 +113,14 @@ void AtlasDemo::onEnter()
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
 		addChild(l, 1);
 		l->setPosition( ccp(s.width/2, s.height-80) );
 	}	
@@ -351,7 +351,7 @@ Atlas3::Atlas3()
 	CCColorLayer* col = CCColorLayer::layerWithColor( ccc4(128,128,128,255) );
 	addChild(col, -10);
 	
-	CCBitmapFontAtlas* label1 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test",  "fonts/bitmapFontTest2.fnt");
+	CCLabelBMFont* label1 = CCLabelBMFont::bitmapFontAtlasWithString("Test",  "fonts/bitmapFontTest2.fnt");
 	
 	// testing anchors
 	label1->setAnchorPoint( ccp(0,0) );
@@ -367,14 +367,14 @@ Atlas3::Atlas3()
 	// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
 	// If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
 	// Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-	CCBitmapFontAtlas *label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
+	CCLabelBMFont *label2 = CCLabelBMFont::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
 	// testing anchors
 	label2->setAnchorPoint( ccp(0.5f, 0.5f) );
 	label2->setColor( ccRED );
 	addChild(label2, 0, kTagBitmapAtlas2);
 	label2->runAction( (CCAction*)(repeat->copy()->autorelease()) );
 	
-	CCBitmapFontAtlas* label3 = CCBitmapFontAtlas::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
+	CCLabelBMFont* label3 = CCLabelBMFont::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
 	// testing anchors
 	label3->setAnchorPoint( ccp(1,1) );
 	addChild(label3, 0, kTagBitmapAtlas3);
@@ -396,20 +396,20 @@ void Atlas3::step(ccTime dt)
     sprintf(string, "%2.2f Test j", m_time);
 	//string.format("%2.2f Test j", m_time);
 	
-	CCBitmapFontAtlas *label1 = (CCBitmapFontAtlas*) getChildByTag(kTagBitmapAtlas1);
+	CCLabelBMFont *label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas1);
 	label1->setString(string);
 	
-	CCBitmapFontAtlas *label2 = (CCBitmapFontAtlas*) getChildByTag(kTagBitmapAtlas2);
+	CCLabelBMFont *label2 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas2);
 	label2->setString(string);
 	
-	CCBitmapFontAtlas *label3 = (CCBitmapFontAtlas*) getChildByTag(kTagBitmapAtlas3);
+	CCLabelBMFont *label3 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas3);
 	label3->setString(string);
 
 }
 
 std::string Atlas3::title()
 {
-	return "CCBitmapFontAtlas";
+	return "CCLabelBMFont";
 }
 
 std::string Atlas3::subtitle()
@@ -427,7 +427,7 @@ Atlas4::Atlas4()
 	m_time = 0;
 
 	// Upper Label
-	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
+	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
 	addChild(label);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -464,7 +464,7 @@ Atlas4::Atlas4()
 	
 	
 	// Bottom Label
-	CCBitmapFontAtlas *label2 = CCBitmapFontAtlas::bitmapFontAtlasWithString("00.0", "fonts/bitmapFontTest.fnt");
+	CCLabelBMFont *label2 = CCLabelBMFont::bitmapFontAtlasWithString("00.0", "fonts/bitmapFontTest.fnt");
 	addChild(label2, 0, kTagBitmapAtlas2);
 	label2->setPosition( ccp(s.width/2.0f, 80) );
 	
@@ -489,13 +489,13 @@ void Atlas4::step(ccTime dt)
 // 	std::string string;
 // 	string.format("%04.1f", m_time);
 	
-	CCBitmapFontAtlas* label1 = (CCBitmapFontAtlas*) getChildByTag(kTagBitmapAtlas2);
+	CCLabelBMFont* label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas2);
 	label1->setString(string);
 }
 
 std::string Atlas4::title()
 {
-	return "CCBitmapFontAtlas";
+	return "CCLabelBMFont";
 }
 
 std::string Atlas4::subtitle()
@@ -511,7 +511,7 @@ std::string Atlas4::subtitle()
 
 Atlas5::Atlas5()
 {
-	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString("abcdefg", "fonts/bitmapFontTest4.fnt");
+	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString("abcdefg", "fonts/bitmapFontTest4.fnt");
 	addChild(label);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -522,7 +522,7 @@ Atlas5::Atlas5()
 
 std::string Atlas5::title()
 {
-	return "CCBitmapFontAtlas";
+	return "CCLabelBMFont";
 }
 
 std::string Atlas5::subtitle()
@@ -539,18 +539,18 @@ Atlas6::Atlas6()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCBitmapFontAtlas* label = NULL;
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
+	CCLabelBMFont* label = NULL;
+	label = CCLabelBMFont::bitmapFontAtlasWithString("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2+50) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) ) ;
 	
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("fafefifofu", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::bitmapFontAtlasWithString("fafefifofu", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("aeiou", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::bitmapFontAtlasWithString("aeiou", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2-50) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) ); 
@@ -558,7 +558,7 @@ Atlas6::Atlas6()
 
 std::string Atlas6::title()
 {
-	return "CCBitmapFontAtlas";
+	return "CCLabelBMFont";
 }
 
 std::string Atlas6::subtitle()
@@ -583,20 +583,20 @@ AtlasBitmapColor::AtlasBitmapColor()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
-	CCBitmapFontAtlas* label = NULL;
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Blue", "fonts/bitmapFontTest5.fnt");
+	CCLabelBMFont* label = NULL;
+	label = CCLabelBMFont::bitmapFontAtlasWithString("Blue", "fonts/bitmapFontTest5.fnt");
 	label->setColor( ccBLUE );
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Red", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::bitmapFontAtlasWithString("Red", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, 2*s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 	label->setColor( ccRED );
 
-	label = CCBitmapFontAtlas::bitmapFontAtlasWithString("G", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::bitmapFontAtlasWithString("G", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, 3*s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -606,7 +606,7 @@ AtlasBitmapColor::AtlasBitmapColor()
 
 std::string AtlasBitmapColor::title()
 {
-	return "CCBitmapFontAtlas";
+	return "CCLabelBMFont";
 }
 
 std::string AtlasBitmapColor::subtitle()
@@ -627,7 +627,7 @@ AtlasFastBitmap::AtlasFastBitmap()
 		{
             char str[6] = {0};
             sprintf(str, "-%d-", i);
-			CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString(str, "fonts/bitmapFontTest.fnt");
+			CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(str, "fonts/bitmapFontTest.fnt");
 			addChild(label);
 			
 			CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -640,12 +640,12 @@ AtlasFastBitmap::AtlasFastBitmap()
 
 std::string AtlasFastBitmap::title()
 {
-	return "CCBitmapFontAtlas";
+	return "CCLabelBMFont";
 }
 
 std::string AtlasFastBitmap::subtitle()
 {
-	return "Creating several CCBitmapFontAtlas with the same .fnt file should be fast";
+	return "Creating several CCLabelBMFont with the same .fnt file should be fast";
 }
 
 void AtlasTestScene::runThisTest()
