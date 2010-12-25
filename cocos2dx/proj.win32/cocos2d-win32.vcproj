@@ -186,10 +186,6 @@
 				RelativePath="..\base_nodes\CCAtlasNode.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\base_nodes\CCNode.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="cocoa"
@@ -659,10 +655,6 @@
 			Name="menu_nodes"
 			>
 			<File
-				RelativePath="..\menu_nodes\CCMenu.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\menu_nodes\CCMenuItem.cpp"
 				>
 			</File>
@@ -712,6 +704,14 @@
 			>
 			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCMenu_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCNode_mobile.cpp"
 				>
 			</File>
 			<File
