@@ -26,6 +26,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\test.win32\t
 		{929480E7-23C0-4DF6-8456-096D71547116} = {929480E7-23C0-4DF6-8456-096D71547116}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestWizW322.win32", "TestWizW322\TestWizW322.win32.vcproj", "{5BF91DC0-231D-4417-BFE7-1D355D8ED78A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestWizW3.win32", "TestWizW3\TestWizW3.win32.vcproj", "{F86F7F82-374A-4C5C-B2EC-915307438944}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestWizU.uphone", "TestWizU\TestWizU.uphone.vcproj", "{AAF3DDEB-F4D4-4E20-91FD-7B91A72B357C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestWizU2.uphone", "TestWizU2\TestWizU2.uphone.vcproj", "{11557180-2941-4020-8E02-1A7A4815B830}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -60,6 +68,22 @@ Global
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Debug|Win32.Build.0 = Debug|Win32
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.ActiveCfg = Release|Win32
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.Build.0 = Release|Win32
+		{5BF91DC0-231D-4417-BFE7-1D355D8ED78A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5BF91DC0-231D-4417-BFE7-1D355D8ED78A}.Debug|Win32.Build.0 = Debug|Win32
+		{5BF91DC0-231D-4417-BFE7-1D355D8ED78A}.Release|Win32.ActiveCfg = Release|Win32
+		{5BF91DC0-231D-4417-BFE7-1D355D8ED78A}.Release|Win32.Build.0 = Release|Win32
+		{F86F7F82-374A-4C5C-B2EC-915307438944}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F86F7F82-374A-4C5C-B2EC-915307438944}.Debug|Win32.Build.0 = Debug|Win32
+		{F86F7F82-374A-4C5C-B2EC-915307438944}.Release|Win32.ActiveCfg = Release|Win32
+		{F86F7F82-374A-4C5C-B2EC-915307438944}.Release|Win32.Build.0 = Release|Win32
+		{AAF3DDEB-F4D4-4E20-91FD-7B91A72B357C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AAF3DDEB-F4D4-4E20-91FD-7B91A72B357C}.Debug|Win32.Build.0 = Debug|Win32
+		{AAF3DDEB-F4D4-4E20-91FD-7B91A72B357C}.Release|Win32.ActiveCfg = Release|Win32
+		{AAF3DDEB-F4D4-4E20-91FD-7B91A72B357C}.Release|Win32.Build.0 = Release|Win32
+		{11557180-2941-4020-8E02-1A7A4815B830}.Debug|Win32.ActiveCfg = Debug|Win32
+		{11557180-2941-4020-8E02-1A7A4815B830}.Debug|Win32.Build.0 = Debug|Win32
+		{11557180-2941-4020-8E02-1A7A4815B830}.Release|Win32.ActiveCfg = Release|Win32
+		{11557180-2941-4020-8E02-1A7A4815B830}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
