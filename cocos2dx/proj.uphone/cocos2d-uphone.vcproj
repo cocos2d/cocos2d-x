@@ -313,10 +313,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCBitmapFontAtlas.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCCamera.h"
 				>
 			</File>
@@ -341,11 +337,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCLabel.h"
+				RelativePath="..\include\CCLabelAtlas.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCLabelAtlas.h"
+				RelativePath="..\include\CCLabelBMFont.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCLabelTTF.h"
 				>
 			</File>
 			<File
@@ -577,15 +577,15 @@
 			Name="label_nodes"
 			>
 			<File
-				RelativePath="..\label_nodes\CCBitmapFontAtlas.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\label_nodes\CCLabel.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\label_nodes\CCLabelAtlas.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\label_nodes\CCLabelBMFont.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\label_nodes\CCLabelTTF.cpp"
 				>
 			</File>
 		</Filter>

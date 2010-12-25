@@ -58,7 +58,7 @@ bool MenuLayer::initWithEntryID(int entryId)
 	view->setAnchorPoint( ccp(0,0) );
 	view->setPosition( ccp(s.width/2, s.height/3) );
 	
-	CCLabel* label = CCLabel::labelWithString(view->title().c_str(), "Arial", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(view->title().c_str(), "Arial", 28);
 	addChild(label, 1);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 

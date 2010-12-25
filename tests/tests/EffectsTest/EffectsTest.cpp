@@ -369,7 +369,7 @@ TextLayer::TextLayer(void)
 	CCActionInterval* sc2_back = sc2->reverse();
 	tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(sc2, sc2_back, NULL))) );
 	
-	CCLabel* label = CCLabel::labelWithString((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
 	
 	label->setPosition( CGPointMake(x/2,y-80) );
 	addChild(label);

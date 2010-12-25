@@ -98,7 +98,7 @@ TestController::TestController()
     // add menu items for tests
     for (int i = 0; i < ITEM_EVERYPAGE; ++i)
     {
-        CCLabel* label = CCLabel::labelWithString("For Test", "Arial", 24);
+        CCLabelTTF* label = CCLabelTTF::labelWithString("For Test", "Arial", 24);
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
         pMenu->addChild(pMenuItem, i + 2);
         pMenuItem->setPosition( CGPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
@@ -116,12 +116,12 @@ TestController::TestController()
     updateItemsText();
 
     // add menu item to change the page-number
-    CCLabel* pPreLabel = CCLabel::labelWithString("PrePage", "Arial", 22);
+    CCLabelTTF* pPreLabel = CCLabelTTF::labelWithString("PrePage", "Arial", 22);
     CCMenuItemLabel* pPreItem = CCMenuItemLabel::itemWithLabel(pPreLabel, this, menu_selector(TestController::prePageCallback));
     pMenu->addChild(pPreItem, ITEM_EVERYPAGE + 2);
     pPreItem->setPosition(CGPointMake(s.width - 150, 20));
 
-    CCLabel* pNextLabel = CCLabel::labelWithString("NextPage", "Arial", 22);
+    CCLabelTTF* pNextLabel = CCLabelTTF::labelWithString("NextPage", "Arial", 22);
     CCMenuItemLabel* pNextItem = CCMenuItemLabel::itemWithLabel(pNextLabel, this, menu_selector(TestController::nextPageCallback));
     pMenu->addChild(pNextItem, ITEM_EVERYPAGE + 3);
     pNextItem->setPosition(CGPointMake(s.width - 50, 20));

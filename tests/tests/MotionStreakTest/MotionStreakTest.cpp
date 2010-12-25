@@ -164,7 +164,7 @@ void MotionStreakTest::onEnter()
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 

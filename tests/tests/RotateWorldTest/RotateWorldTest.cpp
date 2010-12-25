@@ -19,7 +19,7 @@ void TestLayer::onEnter()
 	//NSArray *array = [UIFont familyNames];
 	//for( NSString *s in array )
 	//	NSLog( s );
-	CCLabel* label = CCLabel::labelWithString("cocos2d", "Tahoma", 64);
+	CCLabelTTF* label = CCLabelTTF::labelWithString("cocos2d", "Tahoma", 64);
 
 	label->setPosition( CGPointMake(x/2,y/2) );
 	

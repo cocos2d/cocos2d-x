@@ -319,7 +319,7 @@ void EffectAdvanceTextLayer::onEnter(void)
 	CCActionInterval* sc2_back = sc2->reverse();
 	tamara->runAction( CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions(sc2, sc2_back, NULL)) ) );
 	
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Marker Felt", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Marker Felt", 28);
 	
 	label->setPosition( ccp(x/2,y-80) );
 	addChild(label);
@@ -328,7 +328,7 @@ void EffectAdvanceTextLayer::onEnter(void)
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
 		addChild(l, 101);
 		l->setPosition( ccp(size.width/2, size.height-80) );
 	}	
