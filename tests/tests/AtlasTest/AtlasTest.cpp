@@ -348,7 +348,7 @@ Atlas3::Atlas3()
 {
 	m_time = 0;
 
-	CCColorLayer* col = CCColorLayer::layerWithColor( ccc4(128,128,128,255) );
+	CCLayerColor* col = CCLayerColor::layerWithColor( ccc4(128,128,128,255) );
 	addChild(col, -10);
 	
 	CCLabelBMFont* label1 = CCLabelBMFont::bitmapFontAtlasWithString("Test",  "fonts/bitmapFontTest2.fnt");

@@ -12,7 +12,7 @@ public:
     virtual void runThisTest();
 };
 
-class ParticleDemo : public CCColorLayer
+class ParticleDemo : public CCLayerColor
 {
 protected:
 	CCParticleSystem*	m_emitter;

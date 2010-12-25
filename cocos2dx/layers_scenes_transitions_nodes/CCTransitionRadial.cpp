@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCRadialTransition.h"
+#include "CCTransitionRadial.h"
 #include "CCDirector.h"
 #include "CCRenderTexture.h"
 #include "CCActionInstant.h"
@@ -42,17 +42,17 @@ enum {
 	kSceneRadial = 0xc001,
 };
 
-void CCRadialCCWTransition::sceneOrder()
+void CCTransitionRadialCCW::sceneOrder()
 {
 	m_bIsInSceneOnTop = false;
 }
 
-CCProgressTimerType CCRadialCCWTransition::radialType()
+CCProgressTimerType CCTransitionRadialCCW::radialType()
 {
 	return kCCProgressTimerTypeRadialCCW;
 }
 
-void CCRadialCCWTransition::onEnter()
+void CCTransitionRadialCCW::onEnter()
 {
 	CCTransitionScene::onEnter();
 	// create a transparent color layer
@@ -100,30 +100,30 @@ void CCRadialCCWTransition::onEnter()
 
 
 // clean up on exit
-void CCRadialCCWTransition::onExit()
+void CCTransitionRadialCCW::onExit()
 {
 	// remove our layer and release all containing objects 
 	this->removeChildByTag(kSceneRadial, false);
 	CCTransitionScene::onExit();
 }
 
-CCRadialCCWTransition* CCRadialCCWTransition::transitionWithDuration(ccTime t, CCScene* scene)
+CCTransitionRadialCCW* CCTransitionRadialCCW::transitionWithDuration(ccTime t, CCScene* scene)
 {
-    CCRadialCCWTransition* pScene = new CCRadialCCWTransition();
+    CCTransitionRadialCCW* pScene = new CCTransitionRadialCCW();
     pScene->initWithDuration(t, scene);
     pScene->autorelease();
 
     return pScene;
 }
 
-CCProgressTimerType CCRadialCWTransition::radialType()
+CCProgressTimerType CCTransitionRadialCW::radialType()
 {
 	return kCCProgressTimerTypeRadialCW;
 }
 
-CCRadialCWTransition* CCRadialCWTransition::transitionWithDuration(ccTime t, CCScene* scene)
+CCTransitionRadialCW* CCTransitionRadialCW::transitionWithDuration(ccTime t, CCScene* scene)
 {
-    CCRadialCWTransition* pScene = new CCRadialCWTransition();
+    CCTransitionRadialCW* pScene = new CCTransitionRadialCW();
     pScene->initWithDuration(t, scene);
     pScene->autorelease();
 
