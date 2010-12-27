@@ -108,7 +108,7 @@ TMXOrthoTest::TMXOrthoTest()
 	//
 	// it should not flicker. No artifacts should appear
 	//
-	//CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	//CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	//addChild(color, -1);
 
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test2.tmx");
@@ -428,7 +428,7 @@ std::string TMXReadWriteTest::title()
 //------------------------------------------------------------------
 TMXHexTest::TMXHexTest()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/hexa-test.tmx");
@@ -450,7 +450,7 @@ std::string TMXHexTest::title()
 //------------------------------------------------------------------
 TMXIsoTest::TMXIsoTest()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test.tmx");
@@ -474,7 +474,7 @@ std::string TMXIsoTest::title()
 //------------------------------------------------------------------
 TMXIsoTest1::TMXIsoTest1()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test1.tmx");
@@ -498,7 +498,7 @@ std::string TMXIsoTest1::title()
 //------------------------------------------------------------------
 TMXIsoTest2::TMXIsoTest2()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2.tmx");
@@ -525,7 +525,7 @@ std::string TMXIsoTest2::title()
 //------------------------------------------------------------------
 TMXUncompressedTest::TMXUncompressedTest()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2-uncompressed.tmx");
