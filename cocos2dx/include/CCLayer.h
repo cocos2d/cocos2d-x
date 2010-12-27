@@ -44,7 +44,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate, public CCKeypadDelegate
+class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
 {
 public:
 	CCLayer();
@@ -54,6 +54,7 @@ public:
 
 	virtual void onEnter();
 	virtual void onExit();
+    virtual void onEnterTransitionDidFinish();
 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
 	virtual void destroy(void);
 	virtual void keep(void);
@@ -77,6 +78,20 @@ public:
 	*/
 	virtual void registerWithTouchDispatcher(void);
 
+    /** priority of the mouse event delegate.
+    Default 0.
+    Override this method to set another priority.
+    @since v0.99.5
+    */
+    virtual int mouseDelegatePriority() { return 0; }
+
+    /** priority of the keyboard event delegate.
+    Default 0.
+    Override this method to set another priority.
+    @since v0.99.5
+    */
+    virtual int keyboardDelegatePriority() { return 0; }
+
 	/** whether or not it will receive Touch events.
 	You can enable / disable touch events with this property.
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
@@ -88,6 +103,16 @@ public:
 	@since v0.8.1
 	*/
 	CCX_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+    /** whether or not it will receive Keyboard events
+    You can enable / disable Keyboard events with this property.
+    @since v0.99.5
+    */
+    CCX_PROPERTY(bool, m_bIsKeyboardEnabled, IsKeyboardEnabled)
+    /** whether or not it will receive mouse events
+    You can enable / disable mouse events with this property.
+    @since v0.99.5
+    */
+    CCX_PROPERTY(bool, m_bIsMouseEnabled, IsMouseEnabled)
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
@@ -96,15 +121,15 @@ public:
 };
 
 //
-// CCColorLayer
+// CCLayerColor
 //
-/** @brief CCColorLayer is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+/** @brief CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
 
 All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CCX_DLL CCColorLayer : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
+class CCX_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
 	GLfloat m_pSquareVertices[4 * 2];
@@ -112,27 +137,27 @@ protected:
 
 public:
 
-	CCColorLayer();
-	virtual ~CCColorLayer();
+	CCLayerColor();
+	virtual ~CCLayerColor();
 
 	virtual void draw();
 	virtual void setContentSize(CGSize var);
 
-	/** creates a CCLayer with color, width and height */
-	static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	/** creates a CCLayer with color, width and height in Points */
+	static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** creates a CCLayer with color. Width and height are the window size. */
-	static CCColorLayer * layerWithColor(ccColor4B color);
+	static CCLayerColor * layerWithColor(ccColor4B color);
 
-	/** initializes a CCLayer with color, width and height */
-	bool initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	/** initializes a CCLayer with color, width and height in Points */
+	virtual bool initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** initializes a CCLayer with color. Width and height are the window size. */
-	bool initWithColor(ccColor4B color);
+	virtual bool initWithColor(ccColor4B color);
 
-	/** change width */
+	/** change width in Points*/
 	void changeWidth(GLfloat w);
-	/** change height */
+	/** change height in Points*/
 	void changeHeight(GLfloat h);
-	/** change width and height
+	/** change width and height in Points
 	@since v0.8
 	*/
 	void changeWidthAndHeight(GLfloat w ,GLfloat h);
@@ -146,8 +171,72 @@ public:
 
 	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 
-private :
-	void updateColor();
+protected:
+	virtual void updateColor();
+};
+
+/** CCColorLayer
+It is the same as CCLayerColor.
+
+@deprecated Use CCLayerColor instead. This class will be removed in v1.0.1
+*/
+class CCColorLayer : public CCLayerColor
+{
+
+};
+
+//
+// CCLayerGradient
+//
+/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
+the background.
+
+All features from CCLayerColor are valid, plus the following new features:
+- direction
+- final color
+
+Color is interpolated between the startColor and endColor along the given
+vector (starting at the origin, ending at the terminus).  If no vector is
+supplied, it defaults to (0, -1) -- a fade from top to bottom.
+
+Given the nature of
+the interpolation, you will not see either the start or end color for
+non-cardinal vectors; a smooth gradient implying both end points will be still
+be drawn, however.
+
+@since v0.99.5
+*/
+class CCLayerGradient : public CCLayerColor
+{
+public:
+    /** Creates a full-screen CCLayer with a gradient between start and end. */
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
+
+    /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CGPoint v);
+
+    /** Initializes the CCLayer with a gradient between start and end. */
+    virtual bool initWithColor(ccColor4B start, ccColor4B end);
+
+    /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
+    virtual bool initWithColor(ccColor4B start, ccColor4B end, CGPoint v);
+
+    ccColor3B getStartColor();
+    void      setStartColor(ccColor3B colors);
+
+    CCX_PROPERTY(ccColor3B, m_endColor, EndColor)
+    CCX_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
+    CCX_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
+    CCX_PROPERTY(CGPoint, m_AlongVector, AlongVector)
+
+protected:
+    virtual void updateColor();
+
+protected:
+    ccColor3B m_endColor;
+    GLubyte   m_cStartOpacity;
+    GLubyte   m_cEndOpacity;
+    CGPoint   m_AlongVector;
 };
 
 /** @brief CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
