@@ -186,10 +186,6 @@
 				RelativePath="..\base_nodes\CCAtlasNode.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\base_nodes\CCNode.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="cocoa"
@@ -403,10 +399,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCPageTurnTransition.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCParallaxNode.h"
 				>
 			</File>
@@ -436,10 +428,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCQuadParticleSystem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCRadialTransition.h"
 				>
 			</File>
 			<File
@@ -520,6 +508,14 @@
 			</File>
 			<File
 				RelativePath="..\include\CCTransition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTransitionPageTurn.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTransitionRadial.h"
 				>
 			</File>
 			<File
@@ -635,33 +631,21 @@
 			Name="layers_scenes_transitions_nodes"
 			>
 			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCLayer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCPageTurnTransition.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCRadialTransition.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCScene.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCTransition.cpp"
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="menu_nodes"
 			>
-			<File
-				RelativePath="..\menu_nodes\CCMenu.cpp"
-				>
-			</File>
 			<File
 				RelativePath="..\menu_nodes\CCMenuItem.cpp"
 				>
@@ -712,6 +696,22 @@
 			>
 			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCLayer_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCMenu_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCNode_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCTransition_mobile.cpp"
 				>
 			</File>
 			<File
