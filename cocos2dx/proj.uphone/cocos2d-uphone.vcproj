@@ -309,6 +309,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCAnimation.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCAnimationCache.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCAtlasNode.h"
 				>
 			</File>
@@ -426,6 +434,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCSprite.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCSpriteBatchNode.h"
 				>
 			</File>
 			<File
@@ -669,7 +681,15 @@
 			Name="sprite_nodes"
 			>
 			<File
+				RelativePath="..\sprite_nodes\CCAnimation.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\sprite_nodes\CCSprite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sprite_nodes\CCSpriteBatchNode.cpp"
 				>
 			</File>
 			<File
@@ -893,6 +913,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCGL.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCGrid_mobile.cpp"
 				>
 			</File>
@@ -901,7 +925,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCNode_mobile.cpp"
+				RelativePath="..\platform\CCNS.h"
 				>
 			</File>
 			<File

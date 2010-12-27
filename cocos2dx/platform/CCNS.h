@@ -1,0 +1,83 @@
+/****************************************************************************
+Copyright (c) 2010 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
+#ifndef __PLATFOMR_CCNS_H__
+#define __PLATFOMR_CCNS_H__
+
+#include "config_platform.h"
+
+#ifdef CCX_PLATFORM_IPHONE
+
+#include <Availability.h>
+#include <Foundation/Foundation.h> 
+
+#define CCRectFromString(__r__)		CGRectFromString(__r__)
+#define CCPointFromString(__p__)	CGPointFromString(__p__)
+#define CCSizeFromString(__s__)		CGSizeFromString(__s__)
+#define CCNSSizeToCGSize
+#define CCNSRectToCGRect
+#define CCNSPointToCGPoint
+#define CCTextAlignment				UITextAlignment
+#define CCTextAlignmentCenter		UITextAlignmentCenter
+#define CCTextAlignmentLeft			UITextAlignmentLeft
+#define CCTextAlignmentRight		UITextAlignmentRight
+
+
+#elif defined(CCX_PLATFORM_MAC)
+
+#include <Availability.h>
+#include <Foundation/Foundation.h> 
+
+#define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
+#define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )
+#define CCSizeFromString(__s__)		NSSizeToCGSize( NSSizeFromString(__s__) )
+#define CCNSSizeToCGSize			NSSizeToCGSize
+#define CCNSRectToCGRect			NSRectToCGRect
+#define CCNSPointToCGPoint			NSPointToCGPoint
+#define CCTextAlignment				NSTextAlignment
+#define CCTextAlignmentCenter		NSCenterTextAlignment
+#define CCTextAlignmentLeft			NSLeftTextAlignment
+#define CCTextAlignmentRight		NSRightTextAlignment
+
+#else
+
+/// @todo
+#include "CGGeometry.h"
+
+#define CCRectFromString(__r__)		CGRectZero
+#define CCPointFromString(__p__)	CGPointZero
+#define CCSizeFromString(__s__)		CGSizeZero
+#define CCNSSizeToCGSize			CGSizeZero
+#define CCNSRectToCGRect			CGRectZero
+#define CCNSPointToCGPoint			CGPointZero
+#define CCTextAlignment				0
+#define CCTextAlignmentCenter		0
+#define CCTextAlignmentLeft			0
+#define CCTextAlignmentRight		0
+
+#endif
+
+#endif // __PLATFOMR_CCNS_H__
+
+
