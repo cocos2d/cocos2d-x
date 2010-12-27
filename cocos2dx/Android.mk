@@ -22,7 +22,6 @@ actions/CCActionPageTurn3D.cpp \
 actions/CCActionProgressTimer.cpp \
 actions/CCActionTiledGrid.cpp \
 base_nodes/CCAtlasNode.cpp \
-base_nodes/CCNode.cpp \
 cocoa/CGAffineTransform.cpp \
 cocoa/CGGeometry.cpp \
 cocoa/NSAutoreleasePool.cpp \
@@ -36,12 +35,10 @@ effects/CCGrid.cpp \
 label_nodes/CCLabelBMFont.cpp \
 label_nodes/CCLabelTTF.cpp \
 label_nodes/CCLabelAtlas.cpp \
-layers_scenes_transitions_nodes/CCLayer.cpp \
-layers_scenes_transitions_nodes/CCPageTurnTransition.cpp \
-layers_scenes_transitions_nodes/CCRadialTransition.cpp \
+layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp \
+layers_scenes_transitions_nodes/CCTransitionRadial.cpp \
 layers_scenes_transitions_nodes/CCScene.cpp \
 layers_scenes_transitions_nodes/CCTransition.cpp \
-menu_nodes/CCMenu.cpp \
 menu_nodes/CCMenuItem.cpp \
 misc_nodes/CCMotionStreak.cpp \
 misc_nodes/CCProgressTimer.cpp \
@@ -51,6 +48,9 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCPointParticleSystem.cpp \
 particle_nodes/CCQuadParticleSystem.cpp \
+platform/CCLayer_mobile.cpp \
+platform/CCMenu_mobile.cpp \
+platform/CCNode_mobile.cpp \
 platform/android/CCTime.cpp \
 platform/android/ccxCommon_android.cpp \
 platform/android/CCXApplication_android.cpp \

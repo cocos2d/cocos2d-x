@@ -90,10 +90,10 @@ void RotateWorldMainLayer::onEnter()
 	x = size.width;
 	y = size.height;
 	
-	CCNode* blue =  CCColorLayer::layerWithColor(ccc4(0,0,255,255));
-	CCNode* red =   CCColorLayer::layerWithColor(ccc4(255,0,0,255));
-	CCNode* green = CCColorLayer::layerWithColor(ccc4(0,255,0,255));
-	CCNode* white = CCColorLayer::layerWithColor(ccc4(255,255,255,255));
+	CCNode* blue =  CCLayerColor::layerWithColor(ccc4(0,0,255,255));
+	CCNode* red =   CCLayerColor::layerWithColor(ccc4(255,0,0,255));
+	CCNode* green = CCLayerColor::layerWithColor(ccc4(0,255,0,255));
+	CCNode* white = CCLayerColor::layerWithColor(ccc4(255,255,255,255));
 
 	blue->setScale(0.5f);
 	blue->setPosition(CGPointMake(-x/4,-y/4));

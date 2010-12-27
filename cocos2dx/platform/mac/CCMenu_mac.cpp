@@ -63,7 +63,7 @@ namespace cocos2d{
 	{
 		if (CCLayer::init())
 		{
-			this->m_bIsTouchEnabled = true;
+			this->m_bIsMouseEnabled = true;
 
 			// menu in the center of the screen
 			CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -74,16 +74,6 @@ namespace cocos2d{
 
 			// XXX: in v0.7, winSize should return the visible size
 			// XXX: so the bar calculation should be done there
-			CGRect r = CCXApplication::sharedApplication()->statusBarFrame();
-			ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
-			if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
-			{
-				s.height -= r.size.width;
-			}
-			else
-			{
-				s.height -= r.size.height;
-			}
 			this->m_tPosition = ccp(s.width/2, s.height/2);
 
 			int z=0;
@@ -102,7 +92,7 @@ namespace cocos2d{
 			//	[self alignItemsVertically];
 
 			m_pSelectedItem = NULL;
-			m_eState = kMenuStateWaiting;
+			m_eState = kCCMenuStateWaiting;
 			return true;
 		}
 
@@ -124,66 +114,143 @@ namespace cocos2d{
 		return CCLayer::addChild(child, zOrder, tag);
 	}
 
+    void CCMenu::onExit()
+    {
+        if (m_eState == kCCMenuStateTrackingTouch)
+        {
+            m_pSelectedItem->unselected();
+            m_eState = kCCMenuStateWaiting;
+            m_pSelectedItem = NULL;
+        }
+
+        CCLayer::onExit();
+    }
+
+    void CCMenu::registerWithTouchDispatcher()
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
+    CCMenuItem* CCMenu::itemForTouch(CCTouch * touch)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NULL;
+    }
+
+    bool CCMenu::ccTouchBegan(CCTouch* touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+        return NO;
+    }
+
+    void CCMenu::ccTouchEnded(CCTouch* touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
+    void CCMenu::ccTouchCancelled(CCTouch *touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
+    void CCMenu::ccTouchMoved(CCTouch* touch, UIEvent* event)
+    {
+        CCLOG("cocos2d: CCMenu: unsupported");
+    }
+
 	//Menu - Events
-	void CCMenu::registerWithTouchDispatcher()
-	{
-		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
-	}
+    int CCMenu::mouseDelegatePriority()
+    {
+        return -1;/** @todo upto-0.99.5  use NSIntegerMin+1 instead*/
+    }
 
-	bool CCMenu::ccTouchBegan(CCTouch* touch, UIEvent* event)
-	{
-		if (m_eState != kMenuStateWaiting || ! m_bIsVisible)
-		{
-			return false;
-		}
-		m_pSelectedItem = this->itemForTouch(touch);
-		if (m_pSelectedItem)
-		{
-			m_eState = kMenuStateTrackingTouch;
-			m_pSelectedItem->selected();
-			return true;
-		}
-		return false;
-	}
+    CCMenuItem* CCMenu::itemForMouseEvent(NSEvent * pEvent)
+    {
+        CGPoint touchLocation = CCDirector::sharedDirector()->convertEventToGL(pEvent);
 
-	void CCMenu::ccTouchEnded(CCTouch *touch, UIEvent* event)
-	{
-		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
-		if (m_pSelectedItem)
-		{
-			m_pSelectedItem->unselected();
-			m_pSelectedItem->activate();
-		}
-		m_eState = kMenuStateWaiting;
-	}
+        if (m_pChildren && m_pChildren->count() > 0)
+        {
+            NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+            for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
+            {
+                if (! *it)
+                {
+                    break;
+                }
 
-	void CCMenu::ccTouchCancelled(CCTouch *touch, UIEvent* event)
-	{
-		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
-		if (m_pSelectedItem)
-		{
-			m_pSelectedItem->unselected();
-		}
-		m_eState = kMenuStateWaiting;
-	}
+                if ((*it)->getIsVisible() && ((CCMenuItem*)(*it))->getIsEnabled())
+                {
+                    CGPoint local = (*it)->convertToNodeSpace(touchLocation);
 
-	void CCMenu::ccTouchMoved(CCTouch* touch, UIEvent* event)
-	{
-		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
-		CCMenuItem *currentItem = this->itemForTouch(touch);
-		if (currentItem != m_pSelectedItem) 
-		{
-			if (m_pSelectedItem)
-			{
-				m_pSelectedItem->unselected();
-			}
-			m_pSelectedItem = currentItem;
-			if (m_pSelectedItem)
-			{
-				m_pSelectedItem->selected();
-			}
-		}
-	}
+                    CGRect r = ((CCMenuItem*)(*it))->rect();
+                    r.origin = CGPointZero;
+
+                    if (CGRect::CGRectContainsPoint(r, local))
+                    {
+                        return (CCMenuItem*)(*it);
+                    }
+                }
+            }
+        }
+
+        return NULL;
+    }
+
+    bool CCMenu::ccMouseUp(NSEvent * pEvent)
+    {
+        if (m_pSelectedItem)
+        {
+            m_pSelectedItem->unselected();
+            m_pSelectedItem->activate();
+
+            m_eState = kCCMenuStateWaiting;
+            return YES;
+        }
+        
+        return NO;
+    }
+
+    bool CCMenu::ccMouseDown(NSEvent * pEvent)
+    {
+        if (! getIsVisible())
+        {
+            return NO;
+        }
+        
+        m_pSelectedItem = itemForMouseEvent(pEvent);
+        m_pSelectedItem->selected();
+
+        if (m_pSelectedItem)
+        {
+            m_eState = kCCMenuStateTrackingTouch;
+            return YES;
+        }
+        
+        return NO;
+    }
+
+    bool CCMenu::ccMouseDragged(NSEvent * pEvent)
+    {
+        CCMenuItem* currentItem = itemForMouseEvent(pEvent);
+
+        if (currentItem && currentItem != m_pSelectedItem)
+        {
+            if (m_pSelectedItem)
+            {
+                m_pSelectedItem->unselected();
+            }
+
+            m_pSelectedItem = currentItem;
+            m_pSelectedItem->selected();
+        }
+        
+        if (currentItem && m_eState == kCCMenuStateTrackingTouch)
+        {
+            return YES;
+        }
+        
+        return NO;
+    }
 
 	void CCMenu::destroy(void)
 	{
@@ -557,40 +624,4 @@ namespace cocos2d{
 	{
 		return m_tColor;
 	}
-
-	CCMenuItem* CCMenu::itemForTouch(cocos2d::CCTouch *touch)
-	{
-		CGPoint touchLocation = touch->locationInView(touch->view());
-		touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
-
-        if (m_pChildren && m_pChildren->count() > 0)
-		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
-
-				// ignore invisible and disabled items: issue #779, #866
-				if ((*it)->getIsVisible() && ((CCMenuItem*)(*it))->getIsEnabled())
-				{
-					CGPoint local = (*it)->convertToNodeSpace(touchLocation);
-
-					CGRect r = ((CCMenuItem*)(*it))->rect();
-					r.origin = CGPointZero;
-
-					if (CGRect::CGRectContainsPoint(r, local))
-					{
-						return (CCMenuItem*)(*it);
-					}
-				}
-			}
-			
-		}
-
-		return NULL;
-	}
-
 }

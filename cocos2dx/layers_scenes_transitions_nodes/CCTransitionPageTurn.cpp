@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPageTurnTransition.h"
+#include "CCTransitionPageTurn.h"
 #include "CCDirector.h"
 #include "CCActionInterval.h"
 #include "CCActionInstant.h"
@@ -31,24 +31,24 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-CCPageTurnTransition::CCPageTurnTransition()
+CCTransitionPageTurn::CCTransitionPageTurn()
 {
 }
-CCPageTurnTransition::~CCPageTurnTransition()
+CCTransitionPageTurn::~CCTransitionPageTurn()
 {
 }
 
 /** creates a base transition with duration and incoming scene */
-CCPageTurnTransition * CCPageTurnTransition::transitionWithDuration(ccTime t, CCScene *scene, bool backwards)
+CCTransitionPageTurn * CCTransitionPageTurn::transitionWithDuration(ccTime t, CCScene *scene, bool backwards)
 {
-	CCPageTurnTransition * pTransition = new CCPageTurnTransition();
+	CCTransitionPageTurn * pTransition = new CCTransitionPageTurn();
 	pTransition->initWithDuration(t,scene,backwards);
 	pTransition->autorelease();
 	return pTransition;
 }
 
 /** initializes a transition with duration and incoming scene */
-bool CCPageTurnTransition::initWithDuration(ccTime t, CCScene *scene, bool backwards)
+bool CCTransitionPageTurn::initWithDuration(ccTime t, CCScene *scene, bool backwards)
 {
 	// XXX: needed before [super init]
 	m_bBack = backwards;
@@ -60,23 +60,25 @@ bool CCPageTurnTransition::initWithDuration(ccTime t, CCScene *scene, bool backw
 	return true;
 }
 
-void CCPageTurnTransition::sceneOrder()
+void CCTransitionPageTurn::sceneOrder()
 {
 	m_bIsInSceneOnTop = m_bBack;
 }
 
-void CCPageTurnTransition::onEnter()
+void CCTransitionPageTurn::onEnter()
 {
 	CCTransitionScene::onEnter();
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	int x,y;
 	if( s.width > s.height)
 	{
-		x=16;y=12;
+		x=16;
+        y=12;
 	}
 	else
 	{
-		x=12;y=16;
+		x=12;
+        y=16;
 	}
 
 	CCActionInterval *action  = this->actionWithSize(ccg(x,y));
@@ -113,7 +115,7 @@ void CCPageTurnTransition::onEnter()
 }
 
 
-CCActionInterval* CCPageTurnTransition:: actionWithSize(ccGridSize vector)
+CCActionInterval* CCTransitionPageTurn:: actionWithSize(ccGridSize vector)
 {
 	if( m_bBack )
 	{

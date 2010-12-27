@@ -9,7 +9,7 @@ public:
     virtual void runThisTest();
 };
 
-class TextLayer : public CCColorLayer
+class TextLayer : public CCLayerColor
 {
 protected:
 	//UxString	m_strTitle;
