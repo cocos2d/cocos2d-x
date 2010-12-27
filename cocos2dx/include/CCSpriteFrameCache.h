@@ -59,6 +59,11 @@ public:
 	 */
 	void addSpriteFramesWithFile(const char *pszPlist);
 
+	/** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
+	@since v0.99.5
+	*/
+	void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
+
 	/** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. */
 	void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
 
@@ -83,6 +88,24 @@ public:
 
 	/** Deletes an sprite frame from the sprite frame cache. */
 	void removeSpriteFrameByName(const char *pszName);
+
+	/** Removes multiple Sprite Frames from a plist file.
+	* Sprite Frames stored in this file will be removed.
+	* It is convinient to call this method when a specific texture needs to be removed.
+	* @since v0.99.5
+	*/
+	void removeSpriteFramesFromFile(const char* plist);
+
+	/** Removes multiple Sprite Frames from NSDictionary.
+	* @since v0.99.5
+	*/
+	void removeSpriteFramesFromDictionary(NSDictionary<std::string, CCSpriteFrame*> *dictionary);
+
+	/** Removes all Sprite Frames associated with the specified textures.
+	* It is convinient to call this method when a specific texture needs to be removed.
+	* @since v0.995.
+	*/
+	void removeSpriteFramesFromTexture(CCTexture2D* texture);
 
 	/** Returns an Sprite Frame that was previously added.
 	 If the name is not found it will return nil.
@@ -110,6 +133,7 @@ private:
 	
 protected:
 	NSDictionary<std::string, CCSpriteFrame*> *m_pSpriteFrames;
+	NSDictionary<std::string, CCSpriteFrame*> *m_pSpriteFramesAliases;
 };
 }//namespace   cocos2d 
 

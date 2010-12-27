@@ -53,6 +53,11 @@ namespace cocos2d {
 		{
 			return (float)atof(m_sString.c_str());
 		}
+
+		bool isEmpty()
+		{
+			return m_sString.empty();
+		}
 	};
 }// namespace cocos2d
 #endif //__NSSTRING_H__

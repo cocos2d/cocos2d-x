@@ -111,7 +111,8 @@ namespace cocos2d
 		unsigned int POTWide = ccNextPOT(s.width);
 		unsigned int POTHigh = ccNextPOT(s.height);
 
-		CCTexture2DPixelFormat format = pDirector->getPiexFormat() == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
+		// on mac, it use kCCTexture2DPixelFormat_RGBA8888
+		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
 
 		void *data = calloc((int)(POTWide * POTHigh * 4), 1);
 		if (! data)
@@ -123,7 +124,6 @@ namespace cocos2d
 
 		CCTexture2D *pTexture = new CCTexture2D();
 		pTexture->initWithData(data, format, textureSize, textureSize, s);
-		pTexture->autorelease();
 
 		free(data);
 
@@ -174,55 +174,27 @@ namespace cocos2d
 		}
 	}
 
-	// This routine can be merged with Director
+	// mac can not applay land space
 	void CCGridBase::applyLandscape(void)
-	{
-		CCDirector *pDirector = CCDirector::sharedDirector();
-
-		CGSize winSize = pDirector->getDisplaySize();
-		float w = winSize.width / 2;
-		float h = winSize.height / 2;
-
-		ccDeviceOrientation orientation = pDirector->getDeviceOrientation();
-
-		switch (orientation)
-		{
-		case CCDeviceOrientationLandscapeLeft:
- 			glTranslatef(w,h,0);
- 			glRotatef(-90,0,0,1);
- 			glTranslatef(-h,-w,0);
-            break;
-		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(w,h,0);
-			glRotatef(90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			glTranslatef(w,h,0);
-			glRotatef(180,0,0,1);
-			glTranslatef(-w,-h,0);
-			break;
-		default:
-			break;
-		}
+	{		
 	}
 
 	void CCGridBase::set2DProjection()
 	{
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CGSize winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 
 		glLoadIdentity();
 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrthof(0, winSize.width, 0, winSize.height, -100, 100);
+		ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
 		glMatrixMode(GL_MODELVIEW);
 	}
 
 	// This routine can be merged with Director
 	void CCGridBase::set3DProjection()
 	{
-		CGSize	winSize = CCDirector::sharedDirector()->getDisplaySize();
+		CGSize	winSize = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 
 		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
@@ -248,7 +220,8 @@ namespace cocos2d
 		m_pGrabber->afterRender(m_pTexture);
 
 		set3DProjection();
-		applyLandscape();
+		// mac can not applay land space
+		//applyLandscape();
 
 		if (pTarget->getCamera()->getDirty())
 		{
@@ -257,9 +230,9 @@ namespace cocos2d
 			//
 			// XXX: Camera should be applied in the AnchorPoint
 			//
-			glTranslatef(offset.x, offset.y, 0);
+			ccglTranslate(offset.x, offset.y, 0);
 			pTarget->getCamera()->locate();
-			glTranslatef(-offset.x, -offset.y, 0);
+			ccglTranslate(-offset.x, -offset.y, 0);
 		}
 
 		glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
@@ -353,7 +326,7 @@ namespace cocos2d
 	{
 		float width = (float)m_pTexture->getPixelsWide();
 		float height = (float)m_pTexture->getPixelsHigh();
-		float imageH = m_pTexture->getContentSize().height;
+		float imageH = m_pTexture->getContentSizeInPixels().height;
 
 		int x, y, i;
 
@@ -528,7 +501,7 @@ namespace cocos2d
 	{
  		float width = (float)m_pTexture->getPixelsWide();
  		float height = (float)m_pTexture->getPixelsHigh();
-		float imageH = m_pTexture->getContentSize().height;
+		float imageH = m_pTexture->getContentSizeInPixels().height;
 		
 		int numQuads = m_sGridSize.x * m_sGridSize.y;
 		
