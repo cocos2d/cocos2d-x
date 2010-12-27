@@ -207,7 +207,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
 				UIImage * image = new UIImage();
-				if(! image->initWithContentsOfFile(fullpath, kImageFormatJPG))
+				if(! image->initWithContentsOfFile(fullpath, kCCImageFormatJPG))
 				{
 					delete image;
 					break;
@@ -235,7 +235,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #else
 				// prevents overloading the autorelease pool
 				UIImage * image = new UIImage();
-				if(! image->initWithContentsOfFile(fullpath, kImageFormatPNG))
+				if(! image->initWithContentsOfFile(fullpath, kCCImageFormatPNG))
 				{
 					delete image;
 					break;
