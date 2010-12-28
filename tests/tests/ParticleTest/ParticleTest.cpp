@@ -478,7 +478,7 @@ void DemoModernArt::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCPointParticleSystem();
+	m_emitter = new CCParticleSystemPoint();
 	m_emitter->initWithTotalParticles(1000);
 	//m_emitter->autorelease();
 

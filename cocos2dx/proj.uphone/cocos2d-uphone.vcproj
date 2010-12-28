@@ -385,7 +385,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCPointParticleSystem.h"
+				RelativePath="..\include\CCParticleSystemPoint.h"
 				>
 			</File>
 			<File
@@ -645,7 +645,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\particle_nodes\CCPointParticleSystem.cpp"
+				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
 				>
 			</File>
 			<File
@@ -893,7 +893,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCTransition_mobile.cpp"
+				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCParticleSystemPoint_platform.h"
 				>
 			</File>
 			<File
