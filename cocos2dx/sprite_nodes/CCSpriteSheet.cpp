@@ -618,6 +618,7 @@ void CCSpriteSheet::addQuadFromSprite(CCSprite *sprite, unsigned int index)
 
 	// XXX: updateTransform will update the textureAtlas too using updateQuad.
 	// XXX: so, it should be AFTER the insertQuad
+    sprite->setDirty(YES);
 	sprite->updateTransform();
 }
 

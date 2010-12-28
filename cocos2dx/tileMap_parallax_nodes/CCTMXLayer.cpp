@@ -77,11 +77,11 @@ namespace cocos2d {
 
 			// offset (after layer orientation is set);
 			CGPoint offset = this->calculateLayerOffset(layerInfo->m_tOffset);
-			this->setPosition(offset);
+			this->setPositionInPixels(offset);
 
 			m_pAtlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
 
-			this->setContentSize(CGSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height));
+			this->setContentSizeInPixels(CGSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height));
 
 			m_bUseAutomaticVertexZ = false;
 			m_nVertexZvalue = 0;
@@ -147,7 +147,7 @@ namespace cocos2d {
 	void CCTMXLayer::setupTiles()
 	{	
 		// Optimization: quick hack that sets the image size on the tileset
-		m_pTileSet->m_tImageSize = m_pobTextureAtlas->getTexture()->getContentSize();
+		m_pTileSet->m_tImageSize = m_pobTextureAtlas->getTexture()->getContentSizeInPixels();
 
 		// By default all the tiles are aliased
 		// pros:
@@ -240,7 +240,7 @@ namespace cocos2d {
 				CGRect rect = m_pTileSet->rectForGID(gid);
 				tile = new CCSprite();
 				tile->initWithSpriteSheet(this, rect);
-				tile->setPosition(positionAt(pos));
+				tile->setPositionInPixels(positionAt(pos));
 				tile->setVertexZ((float)vertexZForPos(pos));
 				tile->setAnchorPoint(CGPointZero);
 				tile->setOpacity(m_cOpacity);
@@ -277,7 +277,7 @@ namespace cocos2d {
 		{
 			m_pReusedTile->initWithSpriteSheet(this, rect);
 		}
-		m_pReusedTile->setPosition(positionAt(pos));
+		m_pReusedTile->setPositionInPixels(positionAt(pos));
 		m_pReusedTile->setVertexZ((float)vertexZForPos(pos));
 		m_pReusedTile->setAnchorPoint(CGPointZero);
 		m_pReusedTile->setOpacity(m_cOpacity);
@@ -327,7 +327,7 @@ namespace cocos2d {
 			m_pReusedTile->initWithSpriteSheet(this, rect);
 		}
 		
-		m_pReusedTile->setPosition(positionAt(pos));
+		m_pReusedTile->setPositionInPixels(positionAt(pos));
 		m_pReusedTile->setVertexZ((float)vertexZForPos(pos));
 		m_pReusedTile->setAnchorPoint(CGPointZero);
 		m_pReusedTile->setOpacity(m_cOpacity);
@@ -335,6 +335,7 @@ namespace cocos2d {
 		// get atlas index
 		unsigned int indexForZ = atlasIndexForExistantZ(z);
 		m_pReusedTile->setAtlasIndex(indexForZ);
+        m_pReusedTile->setDirty(YES);
 		m_pReusedTile->updateTransform();
 		m_pTiles[z] = gid;
 
@@ -411,6 +412,7 @@ namespace cocos2d {
 	{
 		NSAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
 		NSAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
+        NSAssert( gid == 0 || gid >= m_pTileSet->m_uFirstGid, "TMXLayer: invalid gid" );
 
 		unsigned int currentGID = tileGIDAt(pos);
 
@@ -436,7 +438,7 @@ namespace cocos2d {
 				if( sprite )
 				{
 					CGRect rect = m_pTileSet->rectForGID(gid);
-					sprite->setTextureRect(rect);
+					sprite->setTextureRectInPixels(rect);
 					m_pTiles[z] = gid;
 				} 
 				else 
@@ -446,10 +448,9 @@ namespace cocos2d {
 			}
 		}
 	}
-	CCNode * CCTMXLayer::addChild(CCNode * child, int zOrder, int tag)
+	void CCTMXLayer::addChild(CCNode * child, int zOrder, int tag)
 	{
 		NSAssert(0, "addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
-		return NULL;
 	}
 	void CCTMXLayer::removeChild(CCNode* node, bool cleanup)
 	{
@@ -554,15 +555,19 @@ namespace cocos2d {
 	}
 	CGPoint CCTMXLayer::positionForOrthoAt(CGPoint pos)
 	{
-		int x = (int)(pos.x * m_tMapTileSize.width + 0.49f);
-		int y = (int)((m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + 0.49f);
-		return ccp((float)x, (float)y);
+        CGPoint xy = {
+            pos.x * m_tMapTileSize.width,
+            (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height,
+        };
+        return xy;
 	}
 	CGPoint CCTMXLayer::positionForIsoAt(CGPoint pos)
 	{
-		int x = (int)(m_tMapTileSize.width /2 * ( m_tLayerSize.width + pos.x - pos.y - 1) + 0.49f);
-		int y = (int)(m_tMapTileSize.height /2 * (( m_tLayerSize.height * 2 - pos.x - pos.y) - 2) + 0.49f);
-		return ccp((float)x, (float)y);
+        CGPoint xy = {
+            m_tMapTileSize.width /2 * ( m_tLayerSize.width + pos.x - pos.y - 1),
+            m_tMapTileSize.height /2 * (( m_tLayerSize.height * 2 - pos.x - pos.y) - 2),
+        };
+        return xy;
 	}
 	CGPoint CCTMXLayer::positionForHexAt(CGPoint pos)
 	{
@@ -572,9 +577,11 @@ namespace cocos2d {
 			diffY = -m_tMapTileSize.height/2 ;
 		}
 
-		int x = (int)(pos.x * m_tMapTileSize.width*3/4 + 0.49f);
-		int y = (int)((m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY + 0.49f);
-		return ccp((float)x, (float)y);
+        CGPoint xy = {
+            pos.x * m_tMapTileSize.width*3/4,
+            (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY
+        };
+        return xy;
 	}
 	int CCTMXLayer::vertexZForPos(CGPoint pos)
 	{
