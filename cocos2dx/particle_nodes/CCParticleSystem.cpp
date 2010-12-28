@@ -241,7 +241,7 @@ namespace cocos2d {
 						NSAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
 						CCX_BREAK_IF(!buffer);
 
-						int deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+						int deflatedLen = ZipUtils::ccInflateMemory(buffer, decodeLen, &deflated);
 						NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
 						CCX_BREAK_IF(!deflated);
 						

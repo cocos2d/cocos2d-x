@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __PLATFOMR_CCNODE_H__
 #define __PLATFOMR_CCNODE_H__
 
-#include "config_platform.h"
 #include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 #include "CGAffineTransform.h"

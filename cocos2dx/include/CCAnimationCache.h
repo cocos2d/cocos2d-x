@@ -21,28 +21,50 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __PLATFORM_IPHONE_ZIPUTILS_H__
-#define __PLATFORM_IPHONE_ZIPUTILS_H__
+#ifndef __CC_ANIMATION_CACHE_H__
+#define __CC_ANIMATION_CACHE_H__
+
+#include "NSObject.h"
+#include "NSMutableArray.h"
 
 namespace cocos2d
 {
-    class ZipUtils
+	class CCAnimation;
+
+	/** Singleton that manages the Animations.
+	It saves in a cache the animations. You should use this class if you want to save your animations in a cache.
+
+	Before v0.99.5, the recommend way was to save them on the CCSprite. Since v0.99.5, you should use this class instead.
+
+	@since v0.99.5
+	*/
+	class CCX_DLL CCAnimationCache : public NSObject
 	{
 	public:
-		/** 
-		* Inflates either zlib or gzip deflated memory. The inflated memory is
-		* expected to be freed by the caller.
-		*
-		* @returns the length of the deflated buffer
-		*
-		@since v0.8.1
+		/** Retruns ths shared instance of the Animation cache */
+		static CCAnimationCache* sharedAnimationCache(void);
+
+		/** Purges the cache. It releases all the CCAnimation objects and the shared instance.
 		*/
-		static int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
+		static void purgeSharedAnimationCache(void);
+
+		/** Adds a CCAnimation with a name.
+		*/
+		void addAnimation(CCAnimation *animation, const char * name);
+
+		/** Deletes a CCAnimation from the cache.
+		*/
+		void removeAnimationByName(const char* name);
+
+		/** Returns a CCAnimation that was previously added.
+		If the name is not found it will return nil.
+		You should retain the returned copy if you are going to use it.
+		*/
+		CCAnimation* animationByName(const char* name);
 
 	private:
-		static int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLengh);
+		NSMutableArray<CCAnimation*> *m_pAnimations;
 	};
+}
 
-} // end of namespace cocos2d
-#endif // __PLATFORM_IPHONE_ZIPUTILS_H__
-
+#endif // __CC_ANIMATION_CACHE_H__

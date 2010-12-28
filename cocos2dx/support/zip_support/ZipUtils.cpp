@@ -22,15 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include <zlib.h>
+#include <assert.h>
+#include <stdlib.h>
 
 #include "ZipUtils.h"
 #include "ccMacros.h"
 
 namespace cocos2d
 {
+	// memory in iPhone is precious
+	// Should buffer factor be 1.5 instead of 2 ?
+    #define BUFFER_INC_FACTOR (2)
+
 	int ZipUtils::inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 	{
-#if 1
 		/* ret value */
 		int err = Z_OK;
 
@@ -74,9 +79,6 @@ namespace cocos2d
 			// not enough memory ?
 			if (err != Z_STREAM_END) 
 			{
-				// memory in iPhone is precious
-				// Should buffer factor be 1.5 instead of 2 ?
-#define BUFFER_INC_FACTOR (2)
 				delete [] *out;
 				*out = new unsigned char[bufferSize * BUFFER_INC_FACTOR];
 
@@ -98,14 +100,10 @@ namespace cocos2d
 		*outLength = bufferSize - d_stream.avail_out;
 		err = inflateEnd(&d_stream);
 		return err;
-#else
-		return 0;
-#endif
 	}
 
-	int ZipUtils::inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
+	int ZipUtils::ccccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 	{
-#if 1
 		unsigned int outLength = 0;
 		int err = inflateMemory_(in, inLength, out, &outLength);
 
@@ -133,9 +131,149 @@ namespace cocos2d
 		}
 
 		return outLength;
-#else
-		return 0;
-#endif
+	}
+
+	int ZipUtils::ccInflateGZipFile(const char *path, unsigned char **out)
+	{
+		int len;
+		unsigned int offset = 0;
+
+		assert( out );
+		assert( &*out );
+
+		gzFile inFile = gzopen(path, "rb");
+		if( inFile == NULL ) {
+			CCLOG("cocos2d: ZipUtils: error open gzip file: %s", path);
+			return -1;
+		}
+
+		/* 512k initial decompress buffer */
+		unsigned int bufferSize = 512 * 1024;
+		unsigned int totalBufferSize = bufferSize;
+
+		*out = (unsigned char*)malloc( bufferSize );
+		if( ! out ) 
+		{
+			CCLOG("cocos2d: ZipUtils: out of memory");
+			return -1;
+		}
+
+		for (;;) {
+			len = gzread(inFile, *out + offset, bufferSize);
+			if (len < 0) 
+			{
+				CCLOG("cocos2d: ZipUtils: error in gzread");
+				free( *out );
+				*out = NULL;
+				return -1;
+			}
+			if (len == 0)
+			{
+				break;
+			}
+
+			offset += len;
+
+			// finish reading the file
+			if( (unsigned int)len < bufferSize )
+			{
+				break;
+			}
+
+			bufferSize *= BUFFER_INC_FACTOR;
+			totalBufferSize += bufferSize;
+			unsigned char *tmp = (unsigned char*)realloc(*out, totalBufferSize );
+
+			if( ! tmp ) 
+			{
+				CCLOG("cocos2d: ZipUtils: out of memory");
+				free( *out );
+				*out = NULL;
+				return -1;
+			}
+
+			*out = tmp;
+		}
+
+		if (gzclose(inFile) != Z_OK)
+		{
+			CCLOG("cocos2d: ZipUtils: gzclose failed");
+		}
+
+		return offset;
+	}
+
+	int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
+	{
+		///@todo implement CFSwapInt16BigToHost CFSwapInt32BigToHost
+		return -1;
+
+// 		assert( out );
+// 		assert( &*out );
+// 
+// 		// load file into memory
+// 		unsigned char *compressed = NULL;
+// 		int fileLen  = ccLoadFileIntoMemory( path, &compressed );
+// 		if( fileLen < 0 ) 
+// 		{
+// 			CCLOG("cocos2d: Error loading CCZ compressed file");
+// 		}
+// 
+// 		struct CCZHeader *header = (struct CCZHeader*) compressed;
+// 
+// 		// verify header
+// 		if( header->sig[0] != 'C' || header->sig[1] != 'C' || header->sig[2] != 'Z' || header->sig[3] != '!' ) 
+// 		{
+// 			CCLOG("cocos2d: Invalid CCZ file");
+// 			free(compressed);
+// 			return -1;
+// 		}
+// 
+// 		// verify header version
+// 		
+// 		unsigned int version = CFSwapInt16BigToHost( header->version );
+// 		if( version > 2 ) 
+// 		{
+// 			CCLOG("cocos2d: Unsupported CCZ header format");
+// 			free(compressed);
+// 			return -1;
+// 		}
+// 
+// 		// verify compression format
+// 		if( CFSwapInt16BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) 
+// 		{
+// 			CCLOG("cocos2d: CCZ Unsupported compression method");
+// 			free(compressed);
+// 			return -1;
+// 		}
+// 
+// 		uint32_t len = CFSwapInt32BigToHost( header->len );
+// 
+// 		*out = malloc( len );
+// 		if(! *out )
+// 		{
+// 			CCLOG("cocos2d: CCZ: Failed to allocate memory for texture");
+// 			free(compressed);
+// 			return -1;
+// 		}
+// 
+// 
+// 		uLongf destlen = len;
+// 		uLongf source = (uLongf) compressed + sizeof(*header);
+// 		int ret = uncompress(*out, &destlen, (Bytef*)source, fileLen - sizeof(*header) );
+// 
+// 		free( compressed );
+// 
+// 		if( ret != Z_OK )
+// 		{
+// 			CCLOG("cocos2d: CCZ: Failed to uncompress data");
+// 			free( *out );
+// 			*out = NULL;
+// 			return -1;
+// 		}
+// 
+// 
+// 		return len;
 	}
 
 } // end of namespace cocos2d

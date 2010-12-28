@@ -555,7 +555,7 @@ namespace cocos2d {
 			if( pTMXMapInfo->getLayerAttribs() & TMXLayerAttribGzip )
 			{
 				unsigned char *deflated;
-				ZipUtils::inflateMemory(buffer, len, &deflated);
+				ZipUtils::ccInflateMemory(buffer, len, &deflated);
 				delete [] buffer;
 				buffer = NULL;
 
