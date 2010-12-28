@@ -47,7 +47,7 @@ namespace cocos2d {
 
 	// Easy integration	
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
-	__object__=__array__->arr[0]; for(int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
+	__object__=__array__->arr[0]; for(unsigned int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
 typedef struct _ccArray 
 {
@@ -171,10 +171,12 @@ static inline void ccArrayRemoveAllObjects(ccArray *arr)
 static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index)
 {
 	arr->arr[index]->release(); 
-	
-	for( unsigned int last = --arr->num; index < last; index++)
+	arr->num--;
+
+	int remaining = arr->num - index;
+	if (remaining > 0)
 	{
-		arr->arr[index] = arr->arr[index + 1]; 
+			memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(void*));
 	}
 }
 
