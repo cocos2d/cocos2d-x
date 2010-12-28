@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "CGPointExtension.h"
 #include "CCDrawingPrimitives.h"
+#include "ccConfig.h"
 
 namespace cocos2d{
 

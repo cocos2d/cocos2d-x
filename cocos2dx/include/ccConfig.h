@@ -25,12 +25,36 @@ THE SOFTWARE.
 #ifndef __CCCONFIG_H__
 #define __CCCONFIG_H__
 
+/** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+If enabled, the texture coordinates will be calculated by using this formula:
+- texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
+- texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
+
+The same for bottom and top.
+
+This formula prevents artifacts by using 99% of the texture.
+The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
+
+Affected nodes:
+- CCSprite / CCSpriteBatchNode and subclasses: CCBitmapFontAtlas, CCTMXTiledMap
+- CCLabelAtlas
+- CCQuadParticleSystem
+- CCTileMap
+
+To enabled set it to 1. Disabled by default.
+
+@since v0.99.5
+*/
+#define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
+
 /** @def CC_FONT_LABEL_SUPPORT
  If enabled, FontLabel will be used to render .ttf files.
  If the .ttf file is not found, then it will use the standard UIFont class
  If disabled, the standard UIFont class will be used.
  
- To enable set it to a value different than 0. Enabled by default.
+ To disable set it to 0. Enabled by default.
+
+ Only valid for cocos2d-ios. Not supported on cocos2d-mac
  */
 #define CC_FONT_LABEL_SUPPORT	1
 
@@ -58,7 +82,7 @@ THE SOFTWARE.
  If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  Otherwise, it is safe to leave it disabled.
  
- To enable set it to a value different than 0. Disabled by default.
+ To enable set it to 1. Disabled by default.
  
  @warning This feature is experimental
  */

@@ -122,7 +122,7 @@ namespace cocos2d {
 		/** CCTMXLayer doesn't support adding a CCSprite manually.
 		@warning addchild(z, tag); is not supported on CCTMXLayer. Instead of setTileGID.
 		*/
-		CCNode * addChild(CCNode * child, int zOrder, int tag);
+		virtual void addChild(CCNode * child, int zOrder, int tag);
 		// super method
 		void removeChild(CCNode* child, bool cleanup);
 		void draw();

@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCXFileUtils.h"
 #include "CCTextureAtlas.h"
 #include "support/image_support/TGAlib.h"
+#include "ccConfig.h"
 
 namespace cocos2d {
 
@@ -178,17 +179,32 @@ namespace cocos2d {
 
 		int x = pos.x;
 		int y = pos.y;
-		float row = (value.r % m_nItemsPerRow) * m_fTexStepX;
-		float col = (value.r / m_nItemsPerRow) * m_fTexStepY;
+        float row = (value.r % m_nItemsPerRow);
+        float col = (value.r / m_nItemsPerRow);
 
-		quad.tl.texCoords.u = row;
-		quad.tl.texCoords.v = col;
-		quad.tr.texCoords.u = row + m_fTexStepX;
-		quad.tr.texCoords.v = col;
-		quad.bl.texCoords.u = row;
-		quad.bl.texCoords.v = col + m_fTexStepY;
-		quad.br.texCoords.u = row + m_fTexStepX;
-		quad.br.texCoords.v = col + m_fTexStepY;
+        float textureWide = m_pTextureAtlas->getTexture()->getPixelsWide();
+        float textureHigh = m_pTextureAtlas->getTexture()->getPixelsHigh();
+
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+        float left		= (2 * row * m_nItemWidth + 1) / (2 * textureWide);
+        float right		= left + (m_nItemWidth * 2 - 2) / (2 * textureWide);
+        float top		= (2 * col * m_nItemHeight + 1) / (2 * textureHigh);
+        float bottom	= top + (m_nItemHeight * 2 - 2) / (2 * textureHigh);
+#else
+        float left		= (row * m_nItemWidth) / textureWide;
+        float right		= left + m_nItemWidth / textureWide;
+        float top		= (col * m_nItemHeight) / textureHigh;
+        float bottom	= top + m_nItemHeight / textureHigh;
+#endif
+
+        quad.tl.texCoords.u = left;
+        quad.tl.texCoords.v = top;
+        quad.tr.texCoords.u = right;
+        quad.tr.texCoords.v = top;
+        quad.bl.texCoords.u = left;
+        quad.bl.texCoords.v = bottom;
+        quad.br.texCoords.u = right;
+        quad.br.texCoords.v = bottom;
 
 		quad.bl.vertices.x = (float) (x * m_nItemWidth);
 		quad.bl.vertices.y = (float) (y * m_nItemHeight);
