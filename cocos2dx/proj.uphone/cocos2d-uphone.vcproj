@@ -389,15 +389,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCParticleSystemQuad.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCProgressTimer.h"
 				>
 			</File>
 			<File
 				RelativePath="..\include\CCProtocols.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCQuadParticleSystem.h"
 				>
 			</File>
 			<File
@@ -649,7 +649,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\particle_nodes\CCQuadParticleSystem.cpp"
+				RelativePath="..\particle_nodes\CCParticleSystemQuad.cpp"
 				>
 			</File>
 		</Filter>
