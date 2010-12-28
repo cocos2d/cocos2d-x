@@ -21,28 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __PLATFORM_UPHONE_ZIPUTILS_H__
-#define __PLATFORM_UPHONE_ZIPUTILS_H__
+#ifndef __SUPPORT_CC_UTILS_H__
+#define __SUPPORT_CC_UTILS_H__
+
+/** @file ccUtils.h
+Misc free functions
+*/
 
 namespace cocos2d
 {
-    class ZipUtils
-	{
-	public:
-		/** 
-		* Inflates either zlib or gzip deflated memory. The inflated memory is
-		* expected to be freed by the caller.
-		*
-		* @returns the length of the deflated buffer
-		*
-		@since v0.8.1
-		*/
-		static int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
+	/*
+	ccNextPOT function is licensed under the same license that is used in CCTexture2D.m.
+	*/
 
-	private:
-		static int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLengh);
-	};
+	/** returns the Next Power of Two value.
 
-} // end of namespace cocos2d
-#endif // __PLATFORM_UPHONE_ZIPUTILS_H__
+	Examples:
+	- If "value" is 15, it will return 16.
+	- If "value" is 16, it will return 16.
+	- If "value" is 17, it will return 32.
 
+	@since v0.99.5
+	*/
+
+	unsigned int ccNextPOT( unsigned int value );
+}
+
+#endif // __SUPPORT_CC_UTILS_H__

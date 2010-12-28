@@ -713,6 +713,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\support\ccUtils.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\support\ccUtils.h"
+				>
+			</File>
+			<File
 				RelativePath="..\support\CGPointExtension.cpp"
 				>
 			</File>
@@ -785,6 +793,14 @@
 				</File>
 				<File
 					RelativePath="..\support\zip_support\unzip.h"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\ZipUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\ZipUtils.h"
 					>
 				</File>
 			</Filter>
@@ -901,14 +917,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCLayer_mobile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCMenu_mobile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCGL.h"
 				>
 			</File>
@@ -917,15 +925,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCLayer_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCMenu_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCNode_mobile.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCTransition_mobile.cpp"
+				RelativePath="..\platform\CCNS.h"
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCNS.h"
+				RelativePath="..\platform\CCTransition_mobile.cpp"
 				>
 			</File>
 			<File
@@ -1033,14 +1049,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\uphone\NSLock.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\ZipUtils.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\ZipUtils.h"
 					>
 				</File>
 			</Filter>
