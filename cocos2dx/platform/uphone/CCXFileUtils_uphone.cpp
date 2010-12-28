@@ -462,6 +462,18 @@ const TBitmap* CCFileUtils::getBitmapByResName(const char* pszBmpName)
     return pBmp;
 }
 
+int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
+{
+	///@todo
+	return 0;
+}
+
+const char* CCFileUtils::ccRemoveHDSuffixFromFile( const char *path )
+{
+	///@todo
+	return NULL;
+}
+
 //////////////////////////////////////////////////
 //
 // ResourceHandle

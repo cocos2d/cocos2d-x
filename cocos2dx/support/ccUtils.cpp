@@ -21,28 +21,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __PLATFORM_UPHONE_ZIPUTILS_H__
-#define __PLATFORM_UPHONE_ZIPUTILS_H__
+#include "ccUtils.h"
 
 namespace cocos2d
 {
-    class ZipUtils
+	unsigned int ccNextPOT(unsigned int x)
 	{
-	public:
-		/** 
-		* Inflates either zlib or gzip deflated memory. The inflated memory is
-		* expected to be freed by the caller.
-		*
-		* @returns the length of the deflated buffer
-		*
-		@since v0.8.1
-		*/
-		static int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
-
-	private:
-		static int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLengh);
-	};
-
-} // end of namespace cocos2d
-#endif // __PLATFORM_UPHONE_ZIPUTILS_H__
-
+		x = x - 1;
+		x = x | (x >> 1);
+		x = x | (x >> 2);
+		x = x | (x >> 4);
+		x = x | (x >> 8);
+		x = x | (x >>16);
+		return x + 1;
+	}
+}

@@ -80,7 +80,7 @@ public:
 	static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
 
 protected:
-	CGPoint vertexFromTexCoord(CGPoint texCoord);
+	ccVertex2F vertexFromTexCoord(CGPoint texCoord);
 	void updateProgress(void);
 	void updateBar(void);
 	void updateRadial(void);

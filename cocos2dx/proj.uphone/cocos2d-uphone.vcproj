@@ -309,6 +309,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCAnimation.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCAnimationCache.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCAtlasNode.h"
 				>
 			</File>
@@ -418,6 +426,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCSprite.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCSpriteBatchNode.h"
 				>
 			</File>
 			<File
@@ -657,7 +669,15 @@
 			Name="sprite_nodes"
 			>
 			<File
+				RelativePath="..\sprite_nodes\CCAnimation.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\sprite_nodes\CCSprite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sprite_nodes\CCSpriteBatchNode.cpp"
 				>
 			</File>
 			<File
@@ -690,6 +710,14 @@
 			</File>
 			<File
 				RelativePath="..\support\CCProfiling.h"
+				>
+			</File>
+			<File
+				RelativePath="..\support\ccUtils.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\support\ccUtils.h"
 				>
 			</File>
 			<File
@@ -765,6 +793,14 @@
 				</File>
 				<File
 					RelativePath="..\support\zip_support\unzip.h"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\ZipUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\ZipUtils.h"
 					>
 				</File>
 			</Filter>
@@ -881,6 +917,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCGL.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCGrid_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCLayer_mobile.cpp"
 				>
 			</File>
@@ -890,6 +934,10 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCNode_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCNS.h"
 				>
 			</File>
 			<File
@@ -1001,14 +1049,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\uphone\NSLock.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\ZipUtils.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\ZipUtils.h"
 					>
 				</File>
 			</Filter>

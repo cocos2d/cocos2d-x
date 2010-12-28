@@ -35,7 +35,9 @@ THE SOFTWARE.
 #include <string>
 namespace   cocos2d {
 
+class CCSpriteBatchNode;
 class CCSpriteSheet;
+class CCSpriteSheetInternalOnly;
 class CCSpriteFrame;
 class CCAnimation;
 class CGRect;
@@ -45,7 +47,7 @@ class CCTexture2D;
 struct transformValues_;
 
 enum {
-	/// CCSprite invalid index on the CCSpriteSheet
+	/// CCSprite invalid index on the CCSpriteBatchNode
 	CCSpriteIndexNotInitialized = 0xffffffff,
 };
 
@@ -68,27 +70,28 @@ typedef enum {
 
 } ccHonorParentTransform;
 
-/** @brief CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) ).
- *
- * CCSprite can be created with an image, or with a sub-rectangle of an image.
- *
- * If the parent or any of its ancestors is a CCSpriteSheet then the following features/limitations are valid
- *	- Features when the parent is a CCSpriteSheet:
- *		- MUCH faster rendering, specially if the CCSpriteSheet has many children. All the children will be drawn in a single batch.
- *
- *	- Limitations
- *		- Camera is not supported yet (eg: CCOrbitCamera action doesn't work)
- *		- GridBase actions are not supported (eg: CCLens, CCRipple, CCTwirl)
- *		- The Alias/Antialias property belongs to CCSpriteSheet, so you can't individually set the aliased property.
- *		- The Blending function property belongs to CCSpriteSheet, so you can't individually set the blending function property.
- *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
- *
- *  If the parent is an standard CCNode, then CCSprite behaves like any other CCNode:
- *    - It supports blending functions
- *    - It supports aliasing / antialiasing
- *    - But the rendering will be slower: 1 draw per children.
- *
- */
+/** CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
+*
+* CCSprite can be created with an image, or with a sub-rectangle of an image.
+*
+* If the parent or any of its ancestors is a CCSpriteBatchNode then the following features/limitations are valid
+*	- Features when the parent is a CCBatchNode:
+*		- MUCH faster rendering, specially if the CCSpriteBatchNode has many children. All the children will be drawn in a single batch.
+*
+*	- Limitations
+*		- Camera is not supported yet (eg: CCOrbitCamera action doesn't work)
+*		- GridBase actions are not supported (eg: CCLens, CCRipple, CCTwirl)
+*		- The Alias/Antialias property belongs to CCSpriteBatchNode, so you can't individually set the aliased property.
+*		- The Blending function property belongs to CCSpriteBatchNode, so you can't individually set the blending function property.
+*		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
+*
+*  If the parent is an standard CCNode, then CCSprite behaves like any other CCNode:
+*    - It supports blending functions
+*    - It supports aliasing / antialiasing
+*    - But the rendering will be slower: 1 draw per children.
+*
+* The default anchorPoint in CCSprite is (0.5, 0.5).
+*/
 class CCX_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 {
 public:
@@ -104,6 +107,9 @@ public:
 
 	/** get the quad (tex coords, vertex coords and color) information */
 	inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
+
+	/** returns whether or not the texture rectangle is rotated */
+	inline bool isTextureRectTotated(void) { return m_bRectRotated; }
 	
 	/** Set the index used on the TextureAtlas. */
 	inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
@@ -112,19 +118,19 @@ public:
 	*/
 	inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
 
-	/** returns the rect of the CCSprite */
+	/** returns the rect of the CCSprite in points */
 	inline CGRect getTextureRect(void) { return m_obRect; }
 
-	/** whether or not the Sprite is rendered using a CCSpriteSheet */
-	inline bool isUsesSpriteSheet(void) { return m_bUsesSpriteSheet; }
-	/** make the Sprite been rendered using a CCSpriteSheet */
-	inline void setUsesSpriteSheet(bool bUsesSpriteSheet) { m_bUsesSpriteSheet = bUsesSpriteSheet; }
+	/** whether or not the Sprite is rendered using a CCSpriteBatchNode */
+	inline bool isUsesBatchNode(void) { return m_bUsesBatchNode; }
+	/** make the Sprite been rendered using a CCSpriteBatchNode */
+	inline void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode) { m_bUsesBatchNode = bUsesSpriteBatchNode; }
 
 	inline CCTextureAtlas* getTextureAtlas(void) { return m_pobTextureAtlas; }
 	inline void setTextureAtlas(CCTextureAtlas *pobTextureAtlas) { m_pobTextureAtlas = pobTextureAtlas; }
 
-	inline CCSpriteSheet* getSpriteSheet(void) { return m_pobSpriteSheet; }
-	inline void setSpriteSheet(CCSpriteSheet *pobSpriteSheet) { m_pobSpriteSheet = pobSpriteSheet; }
+	inline CCSpriteBatchNode* getSpriteBatchNode(void) { return m_pobBatchNode; }
+	inline void setSpriteBatchNode(CCSpriteBatchNode *pobSpriteBatchNode) { m_pobBatchNode = pobSpriteBatchNode; }
 
 	/** whether or not to transform according to its parent transformations.
 	 Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
@@ -142,7 +148,7 @@ public:
 	/** Get offset position of the sprite. Calculated automatically by editors like Zwoptex.
 	 @since v0.99.0
 	 */
-	inline CGPoint getOffsetPosition(void) { return m_obOffsetPosition; }
+	inline CGPoint getOffsetPositionInPixels(void) { return m_obOffsetPositionInPixels; }
 
 	/** conforms to CCTextureProtocol protocol */
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
@@ -184,12 +190,12 @@ public:
 	 The offset will be (0,0).
 	 */
 	static CCSprite* spriteWithFile(const char *pszFileName, CGRect rect);
+    
+	/** Creates an sprite with an CCBatchNode and a rect
+	*/
+	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CGRect rect);
 
-	/** Creates an sprite with an CCSpriteSheet and a rect */
-    static CCSprite* spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
-
-	/** Creates an sprite with a texture, a rect and offset. */
-	static CCSprite* spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect, CGPoint offset);
+    static CCSprite* spriteWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CGRect rect);
 
 public:
 	bool init(void);
@@ -199,12 +205,13 @@ public:
 	virtual void removeChild(CCNode* pChild, bool bCleanup);
 	virtual void removeAllChildrenWithCleanup(bool bCleanup);
 	virtual void reorderChild(CCNode *pChild, int zOrder);
-	virtual CCNode* addChild(CCNode *pChild);
-	virtual CCNode* addChild(CCNode *pChild, int zOrder);
-	virtual CCNode* addChild(CCNode *pChild, int zOrder, int tag);
+	virtual void addChild(CCNode *pChild);
+	virtual void addChild(CCNode *pChild, int zOrder);
+	virtual void addChild(CCNode *pChild, int zOrder, int tag);
 
 	virtual void setDirtyRecursively(bool bValue);
 	virtual void setPosition(CGPoint pos);
+	virtual void setPositionInPixels(CGPoint pos);
 	virtual void setRotation(float fRotation);
 	virtual void setScaleX(float fScaleX);
 	virtual void setScaleY(float fScaleY);
@@ -281,10 +288,16 @@ public:
 	 */
     bool initWithFile(const char *pszFilename, CGRect rect);
 
-	/** Initializes an sprite with an CCSpriteSheet and a rect */
-    bool initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect);
+	/** Initializes an sprite with an CCSpriteSheet and a rect in points */
+	bool initWithBatchNode(CCSpriteBatchNode *batchNode, CGRect rect);
+    bool initWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CGRect rect);
 
-	// sprite sheet methods
+	/** Initializes an sprite with an CCSpriteSheet and a rect in pixels
+	@since v0.99.5
+	*/
+	bool initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, CGRect rect);
+
+	// BatchNode methods
 
 	/** updates the quad according the the rotation, position, scale values. */
 	void updateTransform(void);
@@ -294,13 +307,18 @@ public:
 	 */
 	void useSelfRender(void);
 
-	/** updates the texture rect of the CCSprite. */
+	/** updates the texture rect of the CCSprite in points. */
      void setTextureRect(CGRect rect);
 
-	/** tell the sprite to use sprite sheet render.
+	 /** updates the texture rect, rectRotated and untrimmed size of the CCSprite in pixels
+	 */
+	 void setTextureRectInPixels(CGRect rect, bool rotated, CGSize size);
+
+	/** tell the sprite to use batch node render.
 	 @since v0.99.0
 	 */
-	void useSpriteSheetRender(CCSpriteSheet *pSpriteSheet);
+	 void useBatchNode(CCSpriteBatchNode *batchNode);
+	 void useSpriteSheetRender(CCSpriteSheetInternalOnly *pSpriteSheet);
 
 	// Frames
 
@@ -313,23 +331,36 @@ public:
 	/** returns the current displayed frame. */
 	CCSpriteFrame* displayedFrame(void);
 
-	/** adds an Animation to the Sprite. */
+	/** adds an Animation to the Sprite.
+
+	@deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
+	*/
 	void addAnimation(CCAnimation *pAnimation);
 
-    /** returns an Animation given it's name. */
+	/** returns an Animation given it's name.
+
+	@deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
+	*/
 	CCAnimation* animationByName(const char *pszAnimationName);
 
 	// Animation
 
-	/** changes the display frame based on an animation and an index. */
+	/** changes the display frame based on an animation and an index.
+	@deprecated Will be removed in 1.0.1. Use setDisplayFrameWithAnimationName:index instead
+	*/
 	void setDisplayFrame(const char *pszAnimationName, int nFrameIndex);
+
+	/** changes the display frame with animation name and index.
+	The animation name will be get from the CCAnimationCache
+	@since v0.99.5
+	*/
+	void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
 protected:
 	void updateTextureCoords(CGRect rect);
 	void updateBlendFunc(void);
 	void initAnimationDictionary(void);
-	void setTextureRect(CGRect rect, CGSize size);
-    struct transformValues_ getTransformValues(void);
+    void getTransformValues(struct transformValues_ *tv); // optimization
 
 protected:
 	//
@@ -337,7 +368,7 @@ protected:
 	//
 	CCTextureAtlas			*m_pobTextureAtlas;		// Sprite Sheet texture atlas (weak reference)
 	unsigned int			m_uAtlasIndex;			// Absolute (real) Index on the SpriteSheet
-	CCSpriteSheet			*m_pobSpriteSheet;		// Used spritesheet (weak reference)
+	CCSpriteBatchNode       *m_pobBatchNode;        // Used batch node (weak reference)
 	ccHonorParentTransform	m_eHonorParentTransform;// whether or not to transform according to its parent transformations
 	bool					m_bDirty;				// Sprite needs to be updated
 	bool					m_bRecursiveDirty;		// Subchildren needs to be updated
@@ -353,14 +384,16 @@ protected:
 	// Shared data
 	//
 
-	// whether or not it's parent is a CCSpriteSheet
-	bool m_bUsesSpriteSheet;
+	// whether or not it's parent is a CCSpriteBatchNode
+	bool m_bUsesBatchNode;
 
-	// texture pixels
+	// texture
 	CGRect m_obRect;
+	CGRect m_obRectInPixels;
+	bool   m_bRectRotated;
 
 	// Offset Position (used by Zwoptex)
-	CGPoint m_obOffsetPosition; // absolute
+	CGPoint m_obOffsetPositionInPixels; // absolute
 	CGPoint m_obUnflippedOffsetPositionFromCenter;
 
 	// vertex coords, texture coords and color info

@@ -124,6 +124,21 @@ public:
     */
     static void setResourceZipFile(const char* pszZipPath);
 
+	/** loads a file into memory.
+	the caller should release the allocated buffer.
+
+	@returns the size of the allocated buffer
+	@since v0.99.5
+	*/
+	static int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
+
+	/** removes the HD suffix from a path
+
+	@returns NSString * without the HD suffix
+	@since v0.99.5
+	*/
+	static const char *ccRemoveHDSuffixFromFile( const char *path );
+
     /**
     @brief Get resource file data
     @param[in]  pszFileName The resource file name which contain the path
