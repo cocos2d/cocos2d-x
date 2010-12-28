@@ -877,6 +877,10 @@
 			Name="platform"
 			>
 			<File
+				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
 				>
 			</File>
