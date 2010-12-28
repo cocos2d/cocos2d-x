@@ -55,6 +55,7 @@ namespace cocos2d{
 		* @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
 		*/
 		virtual void setString(const char *label);
+		virtual const char* getString(void);
 
 		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 	protected:
@@ -62,6 +63,7 @@ namespace cocos2d{
 		UITextAlignment m_eAlignment;
 		std::string m_sFontName;
 		float m_fFontSize;
+		std::string m_sString;
 	};
 
 } //namespace cocos2d

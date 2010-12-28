@@ -61,7 +61,8 @@ namespace cocos2d{
 		// super methods
 		virtual void updateAtlasValues();
 		virtual void setString(const char *label);
-		virtual void draw();
+		virtual const char* getString(void);
+		virtual void draw();		
 
 		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 	protected:
