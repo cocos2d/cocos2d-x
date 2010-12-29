@@ -198,8 +198,8 @@ void CCScheduler::unscheduleAllTimers()
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused)
 {
-	assert(pfnSelector != NULL);
-	assert(pTarget != NULL);
+	assert(pfnSelector);
+	assert(pTarget);
 
 	tHashSelectorEntry *pElement = NULL;
 	HASH_FIND_INT(m_pHashForSelectors, &pTarget, pElement);
@@ -256,13 +256,13 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget)
 {
 	// explicity handle nil arguments when removing an object
-	if (pTarget == NULL || pfnSelector == NULL)
+	if (pTarget == 0 || pfnSelector == 0)
 	{
 		return;
 	}
 
-	assert(pTarget != NULL);
-	assert(pfnSelector != NULL);
+	assert(pTarget);
+	assert(pfnSelector);
 
 	tHashSelectorEntry *pElement = NULL;
 	HASH_FIND_INT(m_pHashForSelectors, &pTarget, pElement);

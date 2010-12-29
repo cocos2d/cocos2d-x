@@ -171,7 +171,7 @@ typedef enum {
 
 class CCLabel;
 class CCScene;
-class cocos2d::CCXEGLView;
+class CCXEGLView;
 
 /**
 @brief Class that creates and handle the main Window and manages how
