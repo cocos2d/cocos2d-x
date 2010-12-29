@@ -102,7 +102,7 @@ namespace cocos2d
 		return err;
 	}
 
-	int ZipUtils::ccccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
+	int ZipUtils::ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 	{
 		unsigned int outLength = 0;
 		int err = inflateMemory_(in, inLength, out, &outLength);

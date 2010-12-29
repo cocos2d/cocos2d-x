@@ -116,7 +116,7 @@ public:
 };
 
 /** OpenGL projection protocol */
-class CCX_DLL CCProjectionProtocol
+class CCX_DLL CCProjectionProtocol : public NSObject
 {
 	/** Called by CCDirector when the porjection is updated, and "custom" projection is used
 	@since v0.99.5

@@ -22,54 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_UPHONE_H__
-#define __CCX_EGLVIEW_UPHONE_H__
+#ifndef __PLATFORM_MAC_CCDIRECTOR_DISPLAYLINK_MAC_WRAPPER
+#define __PLATFORM_MAC_CCDIRECTOR_DISPLAYLINK_MAC_WRAPPER
 
-#include "GuiBase.h"
-#include "TWindow.h"
+#import <QuartzCore/CVDisplayLink.h>
 
-#include "CGGeometry.h"
-
-class TApplication;
-
-namespace   cocos2d {
-class NSSet;
-class CCTouch;
-class EGLTouchDelegate;
-
-class CCXEGL;
-
-class CCX_DLL CCXEGLView : public TWindow
+@interface CCDirectorDisplayLinkMacWrapper
 {
-public:
+    CVDisplayLinkRef displayLink;
+	NSThread	*runningThread_;
+}
 
-    CCXEGLView(TApplication * pApp);
-    virtual ~CCXEGLView();
+@property(nonatomic, readonly)NSThread	*runningThread_;
 
-    virtual Boolean AfterCreate(void);
-    virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
++(CCDirectorDisplayLinkMacWrapper*)sharedDisplayLinkMacWrapper;
+-(void)startAnimation;
+-(void)stopAnimation;
 
-	CGRect  getFrame();
-    CGSize  getSize();
-    bool    isOpenGLReady();
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void    swapBuffers();
-	bool    canSetContentScaleFactor();
-	void    setContentScaleFactor(float contentScaleFactor);
+@end
 
-protected:
-    Boolean OnPenDown(EventType* pEvent, Int32 nIndex);
-    Boolean OnPenUp(EventType* pEvent, Int32 nIndex);
-    Boolean OnPenMove(EventType* pEvent);
-
-private:
-
-    MESSAGE_t m_tMsg;
-    CCXEGL *            m_pEGL;
-    EGLTouchDelegate *  m_pDelegate;
-};
-
-}   // end of namespace   cocos2d
-
-#endif	// end of __CCX_EGLVIEW_UPHONE_H__
+#endif // __PLATFORM_MAC_CCDIRECTOR_DISPLAYLINK_MAC_WRAPPER
