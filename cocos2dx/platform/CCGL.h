@@ -43,11 +43,9 @@ THE SOFTWARE.
     #error
 #endif
 
-#define CC_GLVIEW CCXEGLView
-
-
 // iOS
 #if defined(CCX_PLATFORM_MOBILE)
+    #define CC_GLVIEW                   cocos2d::CCXEGLView
     #define ccglOrtho					glOrthof
     #define	ccglClearDepth				glClearDepthf
     #define ccglGenerateMipmap			glGenerateMipmapOES
@@ -65,6 +63,7 @@ THE SOFTWARE.
 
 // Mac
 #elif defined(CCX_PLATFORM_PC)
+    #define CC_GLVIEW                   MacGLView
     #define ccglOrtho					glOrtho
     #define	ccglClearDepth				glClearDepth
     #define ccglGenerateMipmap			glGenerateMipmap
