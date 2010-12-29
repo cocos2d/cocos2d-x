@@ -85,18 +85,18 @@ float CCCamera::getZEye(void)
 
 void CCCamera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
 {
-	m_fEyeX = fEyeX;
-	m_fEyeY = fEyeY;
-	m_fEyeZ = fEyeZ;
+	m_fEyeX = fEyeX * CC_CONTENT_SCALE_FACTOR();
+	m_fEyeY = fEyeY * CC_CONTENT_SCALE_FACTOR();
+	m_fEyeZ = fEyeZ * CC_CONTENT_SCALE_FACTOR();
 
 	m_bDirty = true;
 }
 
 void CCCamera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
 {
-	m_fCenterX = fCenterX;
-	m_fCenterY = fCenterY;
-	m_fCenterZ = fCenterZ;
+	m_fCenterX = fCenterX * CC_CONTENT_SCALE_FACTOR();
+	m_fCenterY = fCenterY * CC_CONTENT_SCALE_FACTOR();
+	m_fCenterZ = fCenterZ * CC_CONTENT_SCALE_FACTOR();
 
 	m_bDirty = true;
 }
@@ -112,16 +112,16 @@ void CCCamera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
 
 void CCCamera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ)
 {
-	*pEyeX = m_fEyeX;
-	*pEyeY = m_fEyeY;
-	*pEyeZ = m_fEyeZ;
+	*pEyeX = m_fEyeX / CC_CONTENT_SCALE_FACTOR();
+	*pEyeY = m_fEyeY / CC_CONTENT_SCALE_FACTOR();
+	*pEyeZ = m_fEyeZ / CC_CONTENT_SCALE_FACTOR();
 }
 
 void CCCamera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ)
 {
-	*pCenterX = m_fCenterX;
-	*pCenterY = m_fCenterY;
-	*pCenterZ = m_fCenterZ;
+	*pCenterX = m_fCenterX / CC_CONTENT_SCALE_FACTOR();
+	*pCenterY = m_fCenterY / CC_CONTENT_SCALE_FACTOR();
+	*pCenterZ = m_fCenterZ / CC_CONTENT_SCALE_FACTOR();
 }
 
 void CCCamera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ)

@@ -169,6 +169,7 @@ namespace cocos2d{
 		void createFontChars();
 		// super method
 		virtual void setString(const char *label);
+		virtual const char* getString(void);
         virtual void setCString(const char *label);
 		virtual void setAnchorPoint(CGPoint var);
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }

@@ -43,11 +43,15 @@ THE SOFTWARE.
 #define CCTextAlignmentLeft			UITextAlignmentLeft
 #define CCTextAlignmentRight		UITextAlignmentRight
 
+#define MacGLView					void
+#define NSWindow					void
+
 
 #elif defined(CCX_PLATFORM_MAC)
 
 #include <Availability.h>
 #include <Foundation/Foundation.h> 
+#include "platform/MacGLView.h"
 
 #define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
 #define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )
@@ -68,13 +72,16 @@ THE SOFTWARE.
 #define CCRectFromString(__r__)		CGRectZero
 #define CCPointFromString(__p__)	CGPointZero
 #define CCSizeFromString(__s__)		CGSizeZero
-#define CCNSSizeToCGSize			CGSizeZero
-#define CCNSRectToCGRect			CGRectZero
-#define CCNSPointToCGPoint			CGPointZero
+#define CCNSSizeToCGSize			
+#define CCNSRectToCGRect			
+#define CCNSPointToCGPoint			
 #define CCTextAlignment				0
 #define CCTextAlignmentCenter		0
 #define CCTextAlignmentLeft			0
 #define CCTextAlignmentRight		0
+
+#define MacGLView					void
+#define NSWindow					void
 
 #endif
 

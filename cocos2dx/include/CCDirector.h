@@ -34,9 +34,17 @@ THE SOFTWARE.
 #include "CGGeometry.h"
 #include "CCXEGLView.h"
 #include "ccxCommon.h"
+#include "CCGL.h"
 
 #include <assert.h>
 namespace   cocos2d {
+
+	enum  {
+		/// If the window is resized, it won't be autoscaled
+		kCCDirectorResize_NoScale,
+		/// If the window is resized, it will be autoscaled (default behavior)
+		kCCDirectorResize_AutoScale,
+	};
 
 /** @typedef tPixelFormat
  Possible Pixel Formats for the CCXEGLView
@@ -83,7 +91,7 @@ typedef enum {
 	/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
 	kCCDirectorProjection3D,
 	
-	/// it does nothing. But if you are using a custom projection set it this value.
+	/// it calls "updateProjection" on the projection delegate.
 	kCCDirectorProjectionCustom,
 	
 	/// Detault projection is 3D projection
@@ -172,22 +180,23 @@ typedef enum {
 class CCLabelTTF;
 class CCScene;
 class cocos2d::CCXEGLView;
+class NSEvent;
 
 /**
 @brief Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
  
  The CCDirector is also responsible for:
-  - initializing the OpenGL ES context
-  - setting the OpenGL ES pixel format (default on is RGB565)
-  - setting the OpenGL ES buffer depth (default one is 0-bit)
-  - setting the projection (default one is 2D)
+  - initializing the OpenGL context
+  - setting the OpenGL pixel format (default on is RGB565)
+  - setting the OpenGL buffer depth (default one is 0-bit)
+  - setting the projection (default one is 3D)
   - setting the orientation (default one is Protrait)
  
  Since the CCDirector is a singleton, the standard way to use it is by calling:
-  _ CCDirector::sharedDirector()->xxx();
+  _ CCDirector::sharedDirector()->methodName();
  
- The CCDirector also sets the default OpenGL ES context:
+ The CCDirector also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
   - GL_VERTEX_ARRAY is enabled
   - GL_COLOR_ARRAY is enabled
@@ -216,14 +225,11 @@ public:
 	inline void setDisplayFPS(bool bDisplayFPS) { m_bDisplayFPS = bDisplayFPS; }
 
 	/** Get the CCXEGLView, where everything is rendered */
-	inline cocos2d::CCXEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
-	void setOpenGLView(cocos2d::CCXEGLView *pobOpenGLView);
+	inline CC_GLVIEW* getOpenGLView(void) { return m_pobOpenGLView; }
+	void setOpenGLView(CC_GLVIEW *pobOpenGLView);
 
 	inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
 	void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
-
-	inline ccDeviceOrientation getDeviceOrientation(void) { return m_eDeviceOrientation; }
-	void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
 
 	/** Whether or not the Director is paused */
 	inline bool isPaused(void) { return m_bPaused; }
@@ -241,54 +247,27 @@ public:
 	 */
 	inline bool isSendCleanupToScene(void) { return m_bSendCleanupToScene; }
 
-	/** The size in pixels of the surface. It could be different than the screen size.
-	 High-res devices might have a higher surface size than the screen size.
-	 Only available when compiled using SDK >= 4.0.
-	 @since v0.99.4
-	 */
-	void setContentScaleFactor(CGFloat scaleFactor);
-	
-	inline CGFloat getContentScaleFactor(void) { return m_fContentScaleFactor; }
 
-    // UI dependent
+	// window size
 
-	/** Uses a new pixel format for the CCXEGLView.
-	 Call this class method before attaching it to a UIView
-	 Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
-	 
-	 @deprecated Set the pixel format when creating the CCXEGLView. This method will be removed in v1.0
-	 */
-	inline void setPixelFormat(tPixelFormat kPixelFormat)
-	{
-		// assert(! isOpenGLAttached());
-	    m_ePixelFormat = kPixelFormat;
-	}
-	/** Pixel format used to create the context */
-	inline tPixelFormat getPiexFormat(void) { return m_ePixelFormat; }
-
-	/** Change depth buffer format of the render buffer.
-	 Call this class method before attaching it to a UIWindow/UIView
-	 Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
-	 
-	 @deprecated Set the depth buffer format when creating the CCXEGLView. This method will be removed in v1.0
-	 */
-	inline void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat)
-	{
-        assert(! isOpenGLAttached());
-		m_eDepthBufferFormat = kDepthBufferFormat;
-	}
-
-	// Integration with UI
-	/** detach the cocos2d view from the view/window */
-	bool detach(void);
-
-	// Landspace
-
-	/** returns the size of the OpenGL view in pixels, according to the landspace */
+	/** returns the size of the OpenGL view in points.
+	It takes into account any possible rotation (device orientation) of the window
+	*/
 	CGSize getWinSize(void);
 
-	/** returns the display size of the OpenGL view in pixels */
-	CGSize getDisplaySize(void);
+	/** returns the size of the OpenGL view in pixels.
+	It takes into account any possible rotation (device orientation) of the window.
+	On Mac winSize and winSizeInPixels return the same value.
+	*/
+	CGSize getWinSizeInPixels(void);
+
+	/** returns the display size of the OpenGL view in pixels.
+	It doesn't take into account any possible rotation of the window.
+	*/
+	CGSize getDisplaySizeInPiXels(void);
+
+	/** changes the projection size */
+	void reshapeProjection(CGSize newWindowSize);
 
 	/** converts a UIKit coordinate to an OpenGL coordinate
 	 Useful to convert (multi) touches coordinates to the current layout (portrait or landscape)
@@ -299,9 +278,6 @@ public:
 	 Useful to convert node points to window points for calls such as glScissor
 	 */
 	CGPoint convertToUI(CGPoint obPoint);
-
-	/** rotates the screen if an orientation different than Portrait is used */
-	void applyOrientation(void);
 
 	/// XXX: missing description 
 	float getZEye(void);
@@ -385,36 +361,103 @@ public:
 	/** enables/disables OpenGL depth test */
 	void setDepthTest(bool bOn);
 
-	virtual void preMainLoop(void);
+	virtual void mainLoop(void);
+
+	// Profiler
+	void showProfilers(void);
+
+
+	/***************************************************
+     * mobile platforms specific functions
+	 **************************************************/
+
+	/** rotates the screen if an orientation different than Portrait is used */
+	void applyOrientation(void);
+
+	ccDeviceOrientation getDeviceOrientation(void);
+	void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
+
+	/** The size in pixels of the surface. It could be different than the screen size.
+	High-res devices might have a higher surface size than the screen size.
+	Only available when compiled using SDK >= 4.0.
+	@since v0.99.4
+	*/
+	void setContentScaleFactor(CGFloat scaleFactor);
+	CGFloat getContentScaleFactor(void);
+
+	/** Will enable Retina Display on devices that supports it.
+	It will enable Retina Display on iPhone4 and iPod Touch 4.
+	It will return YES, if it could enabled it, otherwise it will return NO.
+
+	This is the recommened way to enable Retina Display.
+	@since v0.99.5
+	*/
+	bool enableRetinaDisplay(bool enabled);
+
+	/** There are 4 types of Director.
+	- kCCDirectorTypeNSTimer (default)
+	- kCCDirectorTypeMainLoop
+	- kCCDirectorTypeThreadMainLoop
+	- kCCDirectorTypeDisplayLink
+
+	Each Director has it's own benefits, limitations.
+	Now we only support DisplayLink director, so it has not effect. 
+
+	This method should be called before any other call to the director.
+
+	@since v0.8.2
+	*/
+	static bool setDirectorType(ccDirectorType obDirectorType);
+
+	/** Uses a new pixel format for the CCXEGLView.
+	Call this class method before attaching it to a UIView
+	Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
+
+	@deprecated Set the pixel format when creating the CCXEGLView. This method will be removed in v1.0
+	*/
+	void setPixelFormat(tPixelFormat kPixelFormat);
+	/** Pixel format used to create the context */
+	tPixelFormat getPiexFormat(void);
+
+	/** Change depth buffer format of the render buffer.
+	Call this class method before attaching it to a UIWindow/UIView
+	Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
+
+	@deprecated Set the depth buffer format when creating the CCXEGLView. This method will be removed in v1.0
+	*/
+	void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat);
+
+	/** detach the cocos2d view from the view/window */
+	bool detach(void);
+
+	/***************************************************
+	* PC platforms specific functions, such as mac
+	**************************************************/
+	CGPoint convertEventToGL(NSEvent *event);
+	// whether or not the view is in fullscreen mode
+	bool isFullScreen(void);
+	// resize mode: with or without scaling
+	void setResizeMode(int resizeMode);
+	int getResizeMode(void);
+	/** Sets the view in fullscreen or window mode */
+    void setFullScreen(bool fullscreen);
+	/** Converts window size coordiantes to logical coordinates.
+	Useful only if resizeMode is kCCDirectorResize_Scale.
+	If resizeMode is kCCDirectorResize_NoScale, then no conversion will be done.
+	*/
+	CGPoint convertToLogicalCoordinates(CGPoint coordinates);
 
 public:
 	/** returns a shared instance of the director */
 	static CCDirector* sharedDirector(void);
 
-	/** There are 4 types of Director.
-	 - kCCDirectorTypeNSTimer (default)
-	 - kCCDirectorTypeMainLoop
-	 - kCCDirectorTypeThreadMainLoop
-	 - kCCDirectorTypeDisplayLink
-	 
-	 Each Director has it's own benefits, limitations.
-	 Now we only support DisplayLink director, so it has not effect. 
-	 
-	 This method should be called before any other call to the director.
-	 
-	 @since v0.8.2
-	 */
-	static bool setDirectorType(ccDirectorType obDirectorType);
-    
-         /** recalculate the projection view and projection size based on the EAGLVIEW
-        @since v0.99.4
-        */
-	void recalculateProjectionAndEAGLViewSize();
-
 protected:
+	/***************************************************
+	* mobile platforms specific functions
+	**************************************************/
 	bool isOpenGLAttached(void);
-
 	void updateContentScaleFactor(void);
+
 	void setNextScene(void);
 	
 #if CC_DIRECTOR_FAST_FPS
@@ -427,31 +470,21 @@ protected:
 	/** calculates delta time since last time it was called */
 	void calculateDeltaTime();
 
-#if CC_ENABLE_PROFILERS
-	void showProfilers(void);
-#endif // CC_ENABLE_PROFILERS
-
 protected:
 	// compute frame rate
-        void computeFrameRate(void);
+    void computeFrameRate(void);
 	// compute delta time between computing frame rate
 	void calculateFramerateDeltaTime(void);
 
 protected:
 	/* The CCXEGLView, where everything is rendered */
-    cocos2d::CCXEGLView	*m_pobOpenGLView;
+    CC_GLVIEW	*m_pobOpenGLView;
 
 	double m_dAnimationInterval;
 	double m_dOldAnimationInterval;
 
-	tPixelFormat m_ePixelFormat;
-	tDepthBufferFormat m_eDepthBufferFormat;
-
 	/* landscape mode ? */
 	bool m_bLandscape;
-	
-	/* The device orientation */
-	ccDeviceOrientation	m_eDeviceOrientation;
 	
 	bool m_bDisplayFPS;
 	int  m_nFrames;
@@ -494,21 +527,49 @@ protected:
 	
 	/* projection used */
 	ccDirectorProjection m_eProjection;
-	
-	/* screen, different than surface size */
-	CGSize	m_obScreenSize;
 
-	/* screen, different than surface size */
-	CGSize	m_obSurfaceSize;
+	/* window size in points */
+	CGSize	m_obWinSizeInPoints;
+
+	/* window size in pixels */
+	CGSize m_obWinSizeInPixels;
 	
 	/* content scale factor */
 	CGFloat	m_fContentScaleFactor;
 
-	/* contentScaleFactor could be simulated */
-	bool m_bIsContentScaleSupported;
-
 	/* store the fps string */
 	char *m_pszFPS;
+
+	/* This object will be visited after the scene. Useful to hook a notification node */
+	CCNode *m_pNotificationNode;
+
+	/* Projection protocol delegate */
+	CCProjectionProtocol *m_pProjectionDelegate;
+
+	/***************************************************
+	* mobile platforms specific members
+	**************************************************/
+	/* The device orientation */
+	ccDeviceOrientation	m_eDeviceOrientation;
+	/* contentScaleFactor could be simulated */
+	bool m_bIsContentScaleSupported;
+	// Deprecated. Will be removed in 1.0
+	tPixelFormat m_ePixelFormat;
+	tDepthBufferFormat m_eDepthBufferFormat;
+
+	/***************************************************
+	* mac platforms specific members
+	**************************************************/
+	bool m_bIsFullScreen;
+	int m_nResizeMode;
+	CGPoint m_winOffset;
+	CGSize m_originalWinSize;
+
+	MacGLView *m_pFullScreenGLView;
+	NSWindow  *m_pFullScreenWindow;
+
+	// cache
+	MacGLView *m_pWindowGLView;
 	
 #if CC_ENABLE_PROFILERS
 	ccTime m_fAccumDtForProfiler;
@@ -529,7 +590,7 @@ class CCDisplayLinkDirector : public CCDirector
 public:
 	CCDisplayLinkDirector(void) {}
 
-	virtual void preMainLoop(void);
+	virtual void mainLoop(void);
 	virtual void setAnimationInterval(double dValue);
 	virtual void startAnimation(void);
 	virtual void stopAnimation();

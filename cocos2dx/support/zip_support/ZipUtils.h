@@ -55,7 +55,7 @@ namespace cocos2d
 		*
 		@since v0.8.1
 		*/
-		static int ccccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
+		static int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
 
 		/** inflates a GZip file into memory
 		*

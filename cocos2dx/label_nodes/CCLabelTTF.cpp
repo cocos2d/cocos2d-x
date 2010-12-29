@@ -83,6 +83,8 @@ namespace cocos2d{
         {
             return;
         }
+
+		m_sString = string(label);
         
 		CCTexture2D *texture;
 		if( CGSize::CGSizeEqualToSize( m_tDimensions, CGSizeZero ) )
@@ -101,6 +103,11 @@ namespace cocos2d{
         CGRect rect = CGRectZero;
 		rect.size = m_pobTexture->getContentSize();
 		this->setTextureRect(rect);
+	}
+
+	const char* CCLabelTTF::getString(void)
+	{
+		return m_sString.c_str();
 	}
 
 	char * CCLabelTTF::description()

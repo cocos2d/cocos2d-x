@@ -22,11 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocos2d.h"
-namespace   cocos2d {
+#ifndef __PLATFORM_MAC_CCDIRECTOR_DISPLAYLINK_MAC_WRAPPER
+#define __PLATFORM_MAC_CCDIRECTOR_DISPLAYLINK_MAC_WRAPPER
 
-const char* cocos2dVersion()
+#import <QuartzCore/CVDisplayLink.h>
+
+@interface CCDirectorDisplayLinkMacWrapper
 {
-	return "cocos2d v0.99.5";
+    CVDisplayLinkRef displayLink;
+	NSThread	*runningThread_;
 }
-}//namespace   cocos2d 
+
+@property(nonatomic, readonly)NSThread	*runningThread_;
+
++(CCDirectorDisplayLinkMacWrapper*)sharedDisplayLinkMacWrapper;
+-(void)startAnimation;
+-(void)stopAnimation;
+
+@end
+
+#endif // __PLATFORM_MAC_CCDIRECTOR_DISPLAYLINK_MAC_WRAPPER

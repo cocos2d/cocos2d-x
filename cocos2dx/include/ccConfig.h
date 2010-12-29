@@ -88,30 +88,45 @@ To enabled set it to 1. Disabled by default.
  */
  #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
 
+/** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+If enabled, cocos2d-mac will run on the Display Link thread. If disabled cocos2d-mac will run in its own thread.
+
+If enabled, the images will be drawn at the "correct" time, but the events might not be very responsive.
+If disabled, some frames might be skipped, but the events will be dispatched as they arrived.
+
+To enable set it to a 1, to disable it set to 0. Enabled by default.
+
+Only valid for cocos2d-mac. Not supported on cocos2d-ios.
+
+*/
+#define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 1
+
 /** @def CC_COCOSNODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
- To enable set it to a value different than 0. Enabled by default.
+ To enable set it to 1. Enabled by default.
  */
 #define CC_COCOSNODE_RENDER_SUBPIXEL 1
 
-/** @def CC_SPRITESHEET_RENDER_SUBPIXEL
- If enabled, the CCSprite objects rendered with CCSpriteSheet will be able to render in subpixels.
+/** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
+ If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
- To enable set it to a value different than 0. Enabled by default.
+ To enable set it to 1. Enabled by default.
  */
-#define CC_SPRITESHEET_RENDER_SUBPIXEL	1
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
 
-/** @def CC_TEXTURE_ATLAS_USES_VBO
- If enabled, the CCTextureAtlas object will use VBO instead of vertex list (VBO is recommended by Apple)
- 
- To enable set it to a value different than 0. Enabled by default.
+/** @def CC_USES_VBO
+If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
 
- @since v0.99.0
- */
-#define CC_TEXTURE_ATLAS_USES_VBO 1
+To enable set it to 1.
+Enabled by default on iPhone with ARMv7 processors, iPhone Simulator and Mac
+Disabled by default on iPhone with ARMv6 processors.
+
+@since v0.99.5
+*/
+#define CC_USES_VBO 1
 
 /** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
  If enabled, CCNode will transform the nodes using a cached Affine matrix.
@@ -126,6 +141,16 @@ To enabled set it to 1. Disabled by default.
 
  */
 #define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
+
+/** @def CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
+If most of your imamges have pre-multiplied alpha, set it to 1 (if you are going to use .PNG/.JPG file images).
+Only set to 0 if ALL your images by-pass Apple UIImage loading system (eg: if you use libpng or PVR images)
+
+To enable set it to a value different than 0. Enabled by default.
+
+@since v0.99.5
+*/
+#define CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA 1
 
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
  Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
@@ -148,6 +173,41 @@ To enabled set it to 1. Disabled by default.
  */
 #define CC_TEXTURE_NPOT_SUPPORT 0
 
+/** @def CC_RETINA_DISPLAY_SUPPORT
+If enabled, cocos2d supports retina display. 
+For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
+
+To enable set it to 1. Use 0 to disable it. Enabled by default.
+
+@since v0.99.5
+*/
+#define CC_RETINA_DISPLAY_SUPPORT 1
+
+/** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
+It's the suffix that will be appended to the files in order to load "retina display" images.
+
+On an iPhone4 with Retina Display support enabled, the file @"sprite-hd.png" will be loaded instead of @"sprite.png".
+If the file doesn't exist it will use the non-retina display image.
+
+Platforms: Only used on Retina Display devices like iPhone 4.
+
+@since v0.99.5
+*/ 
+#define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
+
+/** @def CC_USE_RGBA32_LABELS_ON_NEON_ARCH
+If enabled, it will use RGBA8888 (32-bit textures) on Neon devices for CCLabelTTF objects.
+If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
+On Neon devices, RGBA8888 textures are 6% faster than A8 textures, but then will consule 4x memory.
+
+This feature is disabled by default.
+
+Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad.
+
+@since v0.99.5
+*/
+#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 0
+
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
@@ -156,13 +216,13 @@ To enabled set it to 1. Disabled by default.
  */
 #define CC_SPRITE_DEBUG_DRAW 0
 
-/** @def CC_SPRITESHEET_DEBUG_DRAW
- If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
- Useful for debugging purposes only. It is recommened to leave it disabled.
- 
- To enable set it to a value different than 0. Disabled by default.
- */
-#define CC_SPRITESHEET_DEBUG_DRAW 0
+/** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
+If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
+Useful for debugging purposes only. It is recommened to leave it disabled.
+
+To enable set it to a value different than 0. Disabled by default.
+*/
+#define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
 
 /** @def CC_BITMAPFONTATLAS_DEBUG_DRAW
  If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
@@ -197,5 +257,11 @@ To enabled set it to 1. Disabled by default.
  To enable set it to a value different than 0. Disabled by default.
  */
 #define CC_COMPATIBILITY_WITH_0_8 0
+
+#if CC_RETINA_DISPLAY_SUPPORT
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
+#else
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
+#endif
 
 #endif // __CCCONFIG_H__

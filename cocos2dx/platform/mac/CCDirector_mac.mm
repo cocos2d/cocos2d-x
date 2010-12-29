@@ -43,6 +43,8 @@ THE SOFTWARE.
 #include "CCLabelTTF.h"
 #include "CCConfiguration.h"
 #include "CCKeypadDispatcher.h"
+#include "CCGL.h"
+#include "CCDirectorDisplayLinkMacWrapper.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -73,55 +75,26 @@ CCDirector* CCDirector::sharedDirector(void)
 	return &s_sharedDirector;
 }
 
-bool CCDirector::setDirectorType(ccDirectorType obDirectorType)
-{
-	/*
-	switch (obDirectorType)
-	{
-	case CCDirectorTypeNSTimer:
-		CCTimerDirector::sharedDirector();
-		break;
-	case CCDirectorTypeMainLoop:
-		CCFastDirector::sharedDirector();
-		break;
-	case CCDirectorTypeThreadMainLoop:
-		CCThreadedFastDirector::sharedDirector();
-		break;
-	case CCDirectorTypeDiaplayLink:
-		CCDisplayLinkDirector::sharedDirector();
-		break;
-	default:
-        assert(false);
-		break;
-	}
-	*/
-
-    // we only support CCDisplayLinkDirector
-	CCDirector::sharedDirector();
-
-	return true;
-}
-
 bool CCDirector::init(void)
 {
 	CCLOG("cocos2d: %s", cocos2dVersion());
 
-	CCLOG("cocos2d: Using Director Type: %d", kCCDirectorTypeDisplayLink);
-
-	// default values
-    m_ePixelFormat = kCCPixelFormatDefault;
-	m_eDepthBufferFormat = kCCDepthBufferNone; // 0
+	CCLOG("cocos2d: Using Director Type: CCDirectorDisplayLink");
 
 	// scenes
 	m_pRunningScene = NULL;
 	m_pNextScene = NULL;
 
-	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;
+	m_pNotificationNode = NULL;
 
+	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;	
 	m_pobScenesStack = new NSMutableArray<CCScene*>();
 
-	// landspace
-	m_eDeviceOrientation = CCDeviceOrientationPortrait;
+	// Set default projection (3D)
+	m_eProjection = kCCDirectorProjectionDefault;
+
+	// projection delegate if "Custom" projection is used
+	m_pProjectionDelegate = NULL;
 
 	// FPS
 	m_bDisplayFPS = false;
@@ -130,17 +103,22 @@ bool CCDirector::init(void)
 	m_fExpectedFrameRate = (ccTime)(1 / m_dAnimationInterval);
 	m_fComputeFrameRateDeltaTime = 0;
 	m_pLastComputeFrameRate = new struct cc_timeval();
+	m_pLastUpdate = new struct cc_timeval();
 
 	// paused ?
 	m_bPaused = false;
 
+	m_obWinSizeInPixels = m_obWinSizeInPoints = CGSizeZero;	
+
 	m_pobOpenGLView = NULL;
 
-    m_fContentScaleFactor = 1;
-	m_obScreenSize = m_obSurfaceSize = CGSizeZero;
-	m_bIsContentScaleSupported =false;
+	m_bIsFullScreen = false;
+	m_nResizeMode = kCCDirectorResize_AutoScale;
 
-	m_pLastUpdate = new struct cc_timeval();
+	m_pFullScreenGLView = NULL;
+	m_pFullScreenWindow = NULL;
+	m_pWindowGLView = NULL;
+	m_winOffset = CGPointZero;
 
 	// create autorelease pool
 	NSPoolManager::getInstance()->push();
@@ -157,6 +135,7 @@ CCDirector::~CCDirector(void)
 #endif 
     
 	CCX_SAFE_RELEASE(m_pRunningScene);
+	CCX_SAFE_RELEASE(m_pNotificationNode);
 	CCX_SAFE_RELEASE(m_pobScenesStack);
 
 	// pop the autorelease pool
@@ -172,6 +151,11 @@ CCDirector::~CCDirector(void)
 
 	// delete fps string
 	delete []m_pszFPS;
+
+	[m_pFullScreenGLView release];
+	[m_pFullScreenWindow release];
+	[m_pWindowGLView release];
+	[[CCDirectorDisplayLinkMacWrapper sharedDisplayLinkMacWrapper] release];
 }
 
 void CCDirector::setGLDefaultValues(void)
@@ -181,7 +165,7 @@ void CCDirector::setGLDefaultValues(void)
 
 	setAlphaBlending(true);
 	setDepthTest(true);
-	setProjection(kCCDirectorProjectionDefault);
+	setProjection(m_eProjection);
 
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -218,8 +202,6 @@ void CCDirector::drawScene(void)
 
 	glPushMatrix();
 
-	applyOrientation();
-
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
 	CC_ENABLE_DEFAULT_GL_STATES();
 
@@ -228,6 +210,12 @@ void CCDirector::drawScene(void)
     {
         m_pRunningScene->visit();
     }
+
+	// draw the notifications node
+	if (m_pNotificationNode)
+	{
+		m_pNotificationNode->visit();
+	}
 
 	if (m_bDisplayFPS)
 	{
@@ -286,47 +274,45 @@ void CCDirector::setAnimationInterval(double dValue)
 
 // m_pobOpenGLView
 
-void CCDirector::setOpenGLView(CCXEGLView *pobOpenGLView)
+void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 {
 	assert(pobOpenGLView);
 
 	if (m_pobOpenGLView != pobOpenGLView)
 	{
-		// because EAGLView is not kind of NSObject
-		delete m_pobOpenGLView; // [openGLView_ release]
-		m_pobOpenGLView = pobOpenGLView;
+		[m_pobOpenGLView release];
+		m_pobOpenGLView = [pobOpenGLView retain];
+
+		
 
 		// set size
-		m_obScreenSize = pobOpenGLView->getSize();
-		m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * m_fContentScaleFactor,
-			m_obScreenSize.height * m_fContentScaleFactor);
+		m_obWinSizeInPixels = m_obWinSizeInPoints = CCNSSizeToCGSize([pobOpenGLView bounds].size);
 
-		if (m_fContentScaleFactor != 1)
+		setGLDefaultValues();	
+
+		// cache the NSWindow and NSOpgenGLView created from the NIB
+		if (!m_bIsFullScreen && !m_pWindowGLView)
 		{
-			updateContentScaleFactor();
+			m_pWindowGLView = [pobOpenGLView retain];
+			m_originalWinSize = m_obWinSizeInPixels;
 		}
 
- 		CCTouchDispatcher *pTouchDispatcher = CCTouchDispatcher::sharedDispatcher();
- 		m_pobOpenGLView->setTouchDelegate(pTouchDispatcher);
-        pTouchDispatcher->setDispatchEvents(true);
+		// for DirectorDisplayLink, because the it doesn't override setOpenGLView
 
-		setGLDefaultValues();
+		CCEventDispatcher *eventDispatcher = [CCEventDispatcher sharedDispatcher];
+		[m_pobOpenGLView setEventDelegate: eventDispatcher];
+		[eventDispatcher setDispatchEvents: YES];
+
+		// Enable Touches. Default no.
+		[pobOpenGLView setAcceptsTouchEvents:NO];
+		// [view setAcceptsTouchEvents:YES];
+
+
+		// Synchronize buffer swaps with vertical refresh rate
+		[[pobOpenGLView openGLContext] makeCurrentContext];
+		GLint swapInt = 1;
+		[[pobOpenGLView openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
 	}
-}
-
-void CCDirector::updateContentScaleFactor()
-{
-	// Do we support the scale factor
-	// now we don't support
-	m_bIsContentScaleSupported = false;
-}
-
-void CCDirector::recalculateProjectionAndEAGLViewSize()
-{
-	m_obScreenSize = m_pobOpenGLView->getSize();
-	m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * m_fContentScaleFactor,
-		                         m_obScreenSize.height * m_fContentScaleFactor);
-	setProjection(m_eProjection);
 }
 
 void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
@@ -334,55 +320,67 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 	m_bNextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-// m_eDeviceOrientation
-void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
-{
-	ccDeviceOrientation eNewOrientation;
-	eNewOrientation = CCXApplication::sharedApplication()->setDeviceOrientation(kDeviceOrientation);
-	if (m_eDeviceOrientation != eNewOrientation)
-	{
-		m_eDeviceOrientation = kDeviceOrientation;
-	}
-	else
-	{
-		recalculateProjectionAndEAGLViewSize();
-// 		m_obScreenSize = m_pobOpenGLView->getSize();
-// 		m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * m_fContentScaleFactor,
-// 			m_obScreenSize.height * m_fContentScaleFactor);
-	}
-}
-
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
-	CGSize size = m_obSurfaceSize;
-	switch (kProjection)
+	CGSize size = m_obWinSizeInPixels;
+
+	CGPoint offset = CGPointZero;
+	float widthAspect = size.width;
+	float heightAspect = size.height;
+
+	if( m_nResizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(m_originalWinSize, CGSizeZero ) ) 
 	{
+		size = m_originalWinSize;
+
+		float aspect = m_originalWinSize.width / m_originalWinSize.height;
+		widthAspect = m_obWinSizeInPixels.width;
+		heightAspect = m_obWinSizeInPixels.width / aspect;
+
+		if( heightAspect > m_obWinSizeInPixels.height ) 
+		{
+			widthAspect = m_obWinSizeInPixels.height * aspect;
+			heightAspect = m_obWinSizeInPixels.height;			
+		}
+
+		m_winOffset.x = (m_obWinSizeInPixels.width - widthAspect) / 2;
+		m_winOffset.y =  (m_obWinSizeInPixels.height - heightAspect) / 2;
+
+		offset = m_winOffset;
+	}
+
+	switch (kProjection) {
 	case kCCDirectorProjection2D:
-		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)size.width, (GLsizei)size.height);
+		glViewport(offset.x, offset.y, widthAspect, heightAspect);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrthof(0, size.width, 0, size.height, -1024, 1000);
+		ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		break;
 
 	case kCCDirectorProjection3D:
-		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+		glViewport(offset.x, offset.y, widthAspect, heightAspect);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
-			
+		gluPerspective(60, (GLfloat)widthAspect/heightAspect, 0.1f, 1500.0f);
+
 		glMatrixMode(GL_MODELVIEW);	
 		glLoadIdentity();
-		gluLookAt( size.width/2, size.height/2, getZEye(),
-				 size.width/2, size.height/2, 0,
-				 0.0f, 1.0f, 0.0f);				
+
+		float eyeZ = size.height * getZEye() / m_obWinSizeInPixels.height;
+
+		gluLookAt( size.width/2, size.height/2, eyeZ,
+				size.width/2, size.height/2, 0,
+				0.0f, 1.0f, 0.0f);			
 		break;
-			
+
 	case kCCDirectorProjectionCustom:
-		// if custom, ignore it. The user is resposible for setting the correct projection
+		if(m_pProjectionDelegate)
+		{
+			m_pProjectionDelegate->updateProjection();
+		}
 		break;
-			
+
 	default:
 		CCLOG("cocos2d: Director: unrecognized projecgtion");
 		break;
@@ -394,14 +392,12 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 void CCDirector::purgeCachedData(void)
 {
     CCLabelBMFont::purgeCachedData();
-	// removed in 0.99.4 release
-	/*CCSpriteFrameCache::purgeSharedSpriteFrameCache();*/
 	CCTextureCache::purgeSharedTextureCache();
 }
 
 float CCDirector::getZEye(void)
 {
-    return (m_obSurfaceSize.height / 1.1566f);	
+    return (m_obWinSizeInPixels.height / 1.1566f);	
 }
 
 void CCDirector::setAlphaBlending(bool bOn)
@@ -421,7 +417,7 @@ void CCDirector::setDepthTest(bool bOn)
 {
 	if (bOn)
 	{
-		glClearDepthf(1.0f);
+		ccglClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -432,144 +428,43 @@ void CCDirector::setDepthTest(bool bOn)
 	}
 }
 
-// is the view currently attached
-bool CCDirector::isOpenGLAttached(void)
-{
-	return m_pobOpenGLView->isOpenGLReady();
-}
-
-// detach or attach to a view or a window
-bool CCDirector::detach(void)
-{
-	assert(isOpenGLAttached());
-
-	CCX_SAFE_DELETE(m_pobOpenGLView);
-	return true;
-}
-
 CGPoint CCDirector::convertToGL(CGPoint obPoint)
 {
-	CGSize s = m_obScreenSize;
-	float newY = s.height - obPoint.y;
-	float newX = s.width - obPoint.x;
-
-	CGPoint ret = CGPointZero;
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		ret = ccp(obPoint.x, newY);
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		ret = ccp(newX, obPoint.y);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		ret.x = obPoint.y;
-		ret.y = obPoint.x;
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		ret.x = newY;
-		ret.y = newX;
-		break;
-	}
-
-	if (m_fContentScaleFactor != 1 && m_bIsContentScaleSupported)
-	{
-        ret = ccpMult(ret, m_fContentScaleFactor);
-	}
-	
-	return ret;
+	assert(0);
+	return CGPointZero;
 }
 
 CGPoint CCDirector::convertToUI(CGPoint obPoint)
 {
-	CGSize winSize = m_obSurfaceSize;
-	float oppositeX = winSize.width - obPoint.x;
-	float oppositeY = winSize.height - obPoint.y;
-	CGPoint uiPoint = CGPointZero;
-
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		uiPoint = ccp(obPoint.x, oppositeY);
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		uiPoint = ccp(oppositeX, obPoint.y);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		uiPoint = ccp(obPoint.y, obPoint.x);
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		// Can't use oppositeX/Y because x/y are flipped
-		uiPoint = ccp(winSize.width - obPoint.y, winSize.height - obPoint.x);
-		break;
-	}
-
-	uiPoint = ccpMult(uiPoint, 1/m_fContentScaleFactor);
-	return uiPoint;
+	assert(0);
+	return CGPointZero;
 }
 
 CGSize CCDirector::getWinSize(void)
 {
-	CGSize s = m_obSurfaceSize;
-
-	if (m_eDeviceOrientation == CCDeviceOrientationLandscapeLeft
-		|| m_eDeviceOrientation == CCDeviceOrientationLandscapeRight)
+	if (m_nResizeMode == kCCDirectorResize_AutoScale)
 	{
-		// swap x,y in landspace mode
-		CGSize tmp = s;
-		s.width = tmp.height;
-		s.height = tmp.width;
+		return m_originalWinSize;
 	}
 
-	return s;
+	return m_obWinSizeInPixels;
 }
 
 CGSize CCDirector::getWinSizeInPixels()
 {
-	return CGSizeZero;
+	return getWinSize();
 }
 
 // return the current frame size
 CGSize CCDirector::getDisplaySizeInPiXels(void)
 {
-	return m_obSurfaceSize;
+	return m_obWinSizeInPixels;
 }
 
 void CCDirector::reshapeProjection(CGSize newWindowSize)
 {
-
-}
-
-void CCDirector::applyOrientation(void)
-{
-	CGSize s = m_obSurfaceSize;
-	float w = s.width / 2;
-	float h = s.height / 2;
-
-	// XXX it's using hardcoded values.
-	// What if the the screen size changes in the future?
-	switch (m_eDeviceOrientation)
-	{
-	case CCDeviceOrientationPortrait:
-		// nothing
-		break;
-	case CCDeviceOrientationPortraitUpsideDown:
-		// upside down
-		glTranslatef(w,h,0);
-		glRotatef(180,0,0,1);
-		glTranslatef(-w,-h,0);
-		break;
-	case CCDeviceOrientationLandscapeRight:
-		glTranslatef(w,h,0);
-		glRotatef(90,0,0,1);
-		glTranslatef(-h,-w,0);
-		break;
-	case CCDeviceOrientationLandscapeLeft:
-		glTranslatef(w,h,0);
-		glRotatef(-90,0,0,1);
-		glTranslatef(-h,-w,0);
-		break;
-	}
+    m_obWinSizeInPixels = m_originalWinSize = newWindowSize;
+	setProjection(m_eProjection);
 }
 
 // scene management
@@ -618,12 +513,17 @@ void CCDirector::popScene(void)
 	}
 	else
 	{
+		m_bSendCleanupToScene = true;
 		m_pNextScene = m_pobScenesStack->getObjectAtIndex(c - 1);
 	}
 }
 
 void CCDirector::end(void)
 {
+	// don't release the event handlers
+	// They are needed in case the director is run again
+	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
+
 	m_pRunningScene->onExit();
 	m_pRunningScene->cleanup();
 	m_pRunningScene->release();
@@ -635,27 +535,26 @@ void CCDirector::end(void)
 	// runWithScene might be executed after 'end'.
 	m_pobScenesStack->removeAllObjects();
 
-	// don't release the event handlers
-	// They are needed in case the director is run again
-	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
-
 	stopAnimation();
 
 #if CC_DIRECTOR_FAST_FPS
 	CCX_SAFE_RELEASE_NULL(m_pFPSLabel);
 #endif
 
+	CCX_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();
 
 	// purge all managers
+	CCAnimationCache::purgeSharedAnimationCache();
  	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
 	CCActionManager::sharedManager()->purgeSharedManager();
 	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
 
 	// OpenGL view
-	m_pobOpenGLView->release();
+	[m_pobOpenGLView release];
 	m_pobOpenGLView = NULL;
 }
 
@@ -745,7 +644,7 @@ void CCDirector::stopAnimation(void)
 	assert(0);
 }
 
-void CCDirector::preMainLoop(void)
+void CCDirector::mainLoop(void)
 {
     CCLOG("cocos2d: Director#preMainLoop. Overrride me");
 	assert(0);
@@ -780,11 +679,6 @@ void CCDirector::calculateFramerateDeltaTime(void)
 	*m_pLastComputeFrameRate = now;
 }
 
-void CCDirector::showProfilers()
-{
-
-}
-
 void CCDirector::computeFrameRate()
 {
 	static bool bInvoked = true;
@@ -817,40 +711,217 @@ void CCDirector::computeFrameRate()
 	}
 }
 
-#if CC_ENABLE_PROFILERS
+
 void CCDirector::showProfilers()
 {
+#if CC_ENABLE_PROFILERS
 	m_fAccumDtForProfiler += m_fDeltaTime;
 	if (m_fAccumDtForProfiler > 1.0f)
 	{
 		m_fAccumDtForProfiler = 0;
 		CCProfiler::sharedProfiler()->displayTimers();
 	}
-}
 #endif
+}
+
+/***************************************************
+* mobile platforms specific functions
+**************************************************/
+
+// is the view currently attached
+bool CCDirector::isOpenGLAttached(void)
+{
+	assert(false);
+	return false;
+}
+
+void CCDirector::updateContentScaleFactor()
+{
+	assert(0);
+}
+
+// detach or attach to a view or a window
+bool CCDirector::detach(void)
+{
+	assert(false);
+	return false;
+}
+
+void CCDirector::setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat)
+{
+	assert(false);
+}
+
+void CCDirector::setPixelFormat(tPixelFormat kPixelFormat)
+{
+	assert(false);
+}
+
+tPixelFormat CCDirector::getPiexFormat(void)
+{
+	assert(false);
+	return m_ePixelFormat;
+}
+
+bool CCDirector::setDirectorType(ccDirectorType obDirectorType)
+{
+	// we only support CCDisplayLinkDirector
+	CCDirector::sharedDirector();
+
+	return true;
+}
+
+bool CCDirector::enableRetinaDisplay(bool enabled)
+{
+	assert(false);
+	return false;
+}
+
+CGFloat CCDirector::getContentScaleFactor(void)
+{
+	assert(false);
+	return m_fContentScaleFactor;
+}
 
 void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
 {
-	if (scaleFactor != m_fContentScaleFactor)
-	{
-		m_fContentScaleFactor = scaleFactor;
-		m_obSurfaceSize = CGSizeMake(m_obScreenSize.width * scaleFactor, m_obScreenSize.height * scaleFactor);
+	assert(false);
+}
 
-		if (m_pobOpenGLView)
+void CCDirector::applyOrientation(void)
+{
+	assert(false);
+}
+
+ccDeviceOrientation CCDirector::getDeviceOrientation(void)
+{
+	assert(false);
+	return m_eDeviceOrientation;
+}
+
+void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
+{
+	assert(false);
+}
+
+/***************************************************
+* PC platforms specific functions, such as mac
+**************************************************/
+
+CGPoint CCDirector::convertEventToGL(NSEvent *event);
+{
+    ///@todo NSEvent have not implemented
+	return CGPointZero;
+}
+
+bool CCDirector::isFullScreen(void)
+{
+    return m_bIsFullScreen;
+}
+
+void CCDirector::setResizeMode(int resizeMode)
+{
+    assert("not supported.");
+}
+
+int CCDirector::getResizeMode(void);
+{
+    assert("not supported.");
+	return -1;
+}
+
+void CCDirector::setFullScreen(bool fullscreen)
+{
+	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+
+	if( m_bIsFullScreen != fullscreen ) 
+	{
+		m_bIsFullScreen = fullscreen;
+
+		if( fullscreen ) 
 		{
-			updateContentScaleFactor();
+			// create the fullscreen view/window
+			NSRect mainDisplayRect, viewRect;
+
+			// Create a screen-sized window on the display you want to take over
+			// Note, mainDisplayRect has a non-zero origin if the key window is on a secondary display
+			mainDisplayRect = [[NSScreen mainScreen] frame];
+			m_pFullScreenWindow = [[NSWindow alloc] initWithContentRect:mainDisplayRect
+                                                    styleMask:NSBorderlessWindowMask
+                                                    backing:NSBackingStoreBuffered
+                                                    defer:YES];
+
+			// Set the window level to be above the menu bar
+			[m_pFullScreenWindow setLevel:NSMainMenuWindowLevel+1];
+
+			// Perform any other window configuration you desire
+			[m_pFullScreenWindow setOpaque:YES];
+			[m_pFullScreenWindow setHidesOnDeactivate:YES];
+
+			// Create a view with a double-buffered OpenGL context and attach it to the window
+			// By specifying the non-fullscreen context as the shareContext, we automatically inherit the OpenGL objects (textures, etc) it has defined
+			viewRect = NSMakeRect(0.0, 0.0, mainDisplayRect.size.width, mainDisplayRect.size.height);
+
+			m_pFullScreenGLView = [[MacGLView alloc] initWithFrame:viewRect shareContext:[m_pobOpenGLView openGLContext]];
+
+			[m_pFullScreenWindow setContentView:m_pFullScreenGLView];
+
+			// Show the window
+			[m_pFullScreenWindow makeKeyAndOrderFront:self];
+
+			[self setOpenGLView:fullScreenGLView_];
+
+		} 
+		else 
+		{
+			[m_pFullScreenWindow release];
+			[m_pFullScreenGLView release];
+			m_pFullScreenWindow = nil;
+			m_pFullScreenGLView = nil;
+
+			[[m_pFullScreenGLView openGLContext] makeCurrentContext];
+			setOpenGLView(m_pFullScreenGLView);
 		}
 
-		// update projection
-		setProjection(m_eProjection);
+		[m_pobOpenGLView setNeedsDisplay:YES];
 	}
+#else
+#error Full screen is not supported for Mac OS 10.5 or older yet
+#error If you don't want FullScreen support, you can safely remove these 2 lines
+#endif
 }
+
+CGPoint CCDirector::convertToLogicalCoordinates(CGPoint coordinates)
+{
+	CGPoint ret;
+
+	if( m_nResizeMode == kCCDirectorResize_NoScale )
+	{
+		ret = coordinates;
+	}
+	else 
+	{
+		float x_diff = m_originalWinSize.width / (m_obWinSizeInPixels.width - m_winOffset.x * 2);
+		float y_diff = m_originalWinSize.height / (m_obWinSizeInPixels.height - m_winOffset.y * 2);
+
+		float adjust_x = (m_obWinSizeInPixels.width * x_diff - m_originalWinSize.width ) / 2;
+		float adjust_y = (m_obWinSizeInPixels.height * y_diff - m_originalWinSize.height ) / 2;
+
+		ret = CGPointMake( (x_diff * coordinates.x) - adjust_x, ( y_diff * coordinates.y ) - adjust_y );		
+	}
+
+	return ret;
+}
+
+
+/***************************************************
+* implementation of DisplayLinkDirector
+**************************************************/
 
 // should we afford 4 types of director ??
 // I think DisplayLinkDirector is enough
 // so we now only support DisplayLinkDirector
-
-// implementation of DisplayLinkDirector
 void CCDisplayLinkDirector::startAnimation(void)
 {
 	if (CCTime::gettimeofdayCocos2d(m_pLastUpdate, NULL) != 0)
@@ -859,9 +930,11 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
+
+	[[CCDirectorDisplayLinkMacWrapper sharedDisplayLinkMacWrapper] startAnimation];
 }
 
-void CCDisplayLinkDirector::preMainLoop(void)
+void CCDisplayLinkDirector::mainLoop(void)
 {
  	if (! m_bInvalid)
  	{
@@ -882,6 +955,8 @@ void CCDisplayLinkDirector::preMainLoop(void)
 void CCDisplayLinkDirector::stopAnimation(void)
 {
 	m_bInvalid = true;
+
+    [[CCDirectorDisplayLinkMacWrapper sharedDisplayLinkMacWrapper] stopAnimation];
 }
 
 void CCDisplayLinkDirector::setAnimationInterval(double dValue)
