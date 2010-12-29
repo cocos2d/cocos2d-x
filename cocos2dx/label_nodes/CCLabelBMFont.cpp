@@ -565,6 +565,11 @@ namespace cocos2d{
 		this->createFontChars();
 	}
 
+	const char* CCLabelBMFont::getString(void)
+	{
+		return m_sString.c_str();
+	}
+
     void CCLabelBMFont::setCString(const char *label)
     {
         setString(label);

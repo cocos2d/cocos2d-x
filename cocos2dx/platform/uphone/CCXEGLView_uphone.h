@@ -55,6 +55,8 @@ public:
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
+	bool    canSetContentScaleFactor();
+	void    setContentScaleFactor(float contentScaleFactor);
 
 protected:
     Boolean OnPenDown(EventType* pEvent, Int32 nIndex);

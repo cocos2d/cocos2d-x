@@ -133,6 +133,11 @@ namespace cocos2d{
 		this->setContentSizeInPixels(s);
 	}
 
+	const char* CCLabelAtlas::getString(void)
+	{
+		return m_sString.c_str();
+	}
+
 	//CCLabelAtlas - draw
 
 	// XXX: overriding draw from AtlasNode
