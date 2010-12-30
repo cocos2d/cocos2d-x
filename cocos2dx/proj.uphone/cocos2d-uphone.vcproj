@@ -958,6 +958,9 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCTransition_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
 				>
 			</File>
