@@ -232,6 +232,14 @@
 				RelativePath="..\actions\CCActionTiledGrid.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\platform\mac\CCDirectorDisplayLinkMacWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\mac\CCDirectorDisplayLinkMacWrapper.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="base_nodes"
@@ -250,10 +258,6 @@
 			</File>
 			<File
 				RelativePath="..\effects\CCGrabber.h"
-				>
-			</File>
-			<File
-				RelativePath="..\effects\CCGrid.cpp"
 				>
 			</File>
 			<File
@@ -334,6 +338,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCDrawingPrimitives.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCGL.h"
 				>
 			</File>
 			<File

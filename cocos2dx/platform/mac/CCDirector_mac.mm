@@ -456,7 +456,7 @@ CGSize CCDirector::getWinSizeInPixels()
 }
 
 // return the current frame size
-CGSize CCDirector::getDisplaySizeInPiXels(void)
+CGSize CCDirector::getDisplaySizeInPixels(void)
 {
 	return m_obWinSizeInPixels;
 }
