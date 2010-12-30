@@ -22,9 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "ccMacros.h"
-#include "CCGrid.h"
+#include "effects/CCGrid.h"
 #include "CCDirector.h"
-#include "CCGrabber.h"
+#include "effects/CCGrabber.h"
+#include "support/ccUtils.h"
 
 #include "CCGL.h"
 #include "CGPointExtension.h"
@@ -108,8 +109,8 @@ namespace cocos2d
     	CCDirector *pDirector = CCDirector::sharedDirector();
 		CGSize s = pDirector->getWinSizeInPixels();
 		
-		unsigned int POTWide = ccNextPOT(s.width);
-		unsigned int POTHigh = ccNextPOT(s.height);
+		unsigned int POTWide = ccNextPOT((unsigned int)s.width);
+		unsigned int POTHigh = ccNextPOT((unsigned int)s.height);
 
 		// on mac, it use kCCTexture2DPixelFormat_RGBA8888
 		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
@@ -123,7 +124,7 @@ namespace cocos2d
 		}
 
 		CCTexture2D *pTexture = new CCTexture2D();
-		pTexture->initWithData(data, format, textureSize, textureSize, s);
+		pTexture->initWithData(data, format, POTWide, POTHigh, s);
 
 		free(data);
 
@@ -134,10 +135,7 @@ namespace cocos2d
 			return false;
 		}
 
-		if (initWithSize(gridSize, pTexture, false))
-		{
-			// do something
-		}
+		initWithSize(gridSize, pTexture, false);
 
 		pTexture->release();
 
@@ -176,7 +174,8 @@ namespace cocos2d
 
 	// mac can not applay land space
 	void CCGridBase::applyLandscape(void)
-	{		
+	{	
+		CCLOG("unsupported");
 	}
 
 	void CCGridBase::set2DProjection()
