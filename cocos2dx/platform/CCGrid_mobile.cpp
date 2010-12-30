@@ -22,9 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "ccMacros.h"
-#include "CCGrid.h"
+#include "effects/CCGrid.h"
 #include "CCDirector.h"
-#include "CCGrabber.h"
+#include "effects/CCGrabber.h"
+#include "support/ccUtils.h"
 
 #include "CCGL.h"
 #include "CGPointExtension.h"
@@ -108,8 +109,8 @@ namespace cocos2d
     	CCDirector *pDirector = CCDirector::sharedDirector();
 		CGSize s = pDirector->getWinSizeInPixels();
 		
-		unsigned int POTWide = ccNextPOT(s.width);
-		unsigned int POTHigh = ccNextPOT(s.height);
+		unsigned int POTWide = ccNextPOT((unsigned int)s.width);
+		unsigned int POTHigh = ccNextPOT((unsigned int)s.height);
 
 		CCTexture2DPixelFormat format = pDirector->getPiexFormat() == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
 
@@ -122,7 +123,7 @@ namespace cocos2d
 		}
 
 		CCTexture2D *pTexture = new CCTexture2D();
-		pTexture->initWithData(data, format, textureSize, textureSize, s);
+		pTexture->initWithData(data, format, POTWide, POTHigh, s);
 
 		free(data);
 
@@ -133,10 +134,7 @@ namespace cocos2d
 			return false;
 		}
 
-		if (initWithSize(gridSize, pTexture, false))
-		{
-			// do something
-		}
+		initWithSize(gridSize, pTexture, false);
 
 		pTexture->release();
 
@@ -178,7 +176,7 @@ namespace cocos2d
 	{
 		CCDirector *pDirector = CCDirector::sharedDirector();
 
-		CGSize winSize = pDirector->getDisplaySize();
+		CGSize winSize = pDirector->getDisplaySizeInPixels();
 		float w = winSize.width / 2;
 		float h = winSize.height / 2;
 
