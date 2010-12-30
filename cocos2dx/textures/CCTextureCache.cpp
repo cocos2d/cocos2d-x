@@ -184,6 +184,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	
 	m_pDictLock->lock();
 
+	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
+	fullpath = string(ccRemoveHDSuffixFromFile(fullpath.c_str()));
+
 	texture = m_pTextures->objectForKey(fullpath);
 
 	if( ! texture ) 
@@ -419,12 +422,19 @@ void CCTextureCache::removeTexture(CCTexture2D* texture)
 	}
 }
 
-void CCTextureCache::removeTextureForKey(const std::string & textureKeyName)
+void CCTextureCache::removeTextureForKey(const char *textureKeyName)
 {
-	if( textureKeyName.empty() )
+	if (textureKeyName == NULL)
+	{
 		return;
+	}
 
-	m_pTextures->removeObjectForKey(textureKeyName);
+	m_pTextures->removeObjectForKey(string(textureKeyName));
+}
+
+CCTexture2D* CCTextureCache::textureForKey(const char* key)
+{
+	return m_pTextures->objectForKey(string(key));
 }
 
 }//namespace   cocos2d 

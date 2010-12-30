@@ -37,8 +37,8 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
-
-#include <GLES/glext.h>
+#include "CCGL.h"
+#include "support/ccUtils.h"
 
 #ifdef _POWERVR_SUPPORT_
     #include "CCPVRTexture.h"
@@ -49,18 +49,6 @@ namespace   cocos2d {
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
 #endif// CC_FONT_LABEL_SUPPORT
-
-
-static unsigned int nextPOT(unsigned int x)
-{
-	x = x - 1;
-	x = x | (x >> 1);
-	x = x | (x >> 2);
-	x = x | (x >> 4);
-	x = x | (x >> 8);
-	x = x | (x >>16);
-	return x + 1;
-}
 
 //CLASS IMPLEMENTATIONS:
 
@@ -103,9 +91,18 @@ GLuint CCTexture2D::getName()
 	return m_uName;
 }
 
-CGSize CCTexture2D::getContentSize()
+CGSize CCTexture2D::getContentSizeInPixels()
 {
 	return m_tContentSize;
+}
+
+CGSize CCTexture2D::getContentSize()
+{
+	CGSize ret;
+	ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
+	ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
+
+	return ret;
 }
 
 GLfloat CCTexture2D::getMaxS()
@@ -126,6 +123,17 @@ GLfloat CCTexture2D::getMaxT()
 void CCTexture2D::setMaxT(GLfloat maxT)
 {
 	m_fMaxT = maxT;
+}
+
+void CCTexture2D::releaseData(void *data)
+{
+    free(data);
+}
+
+void* CCTexture2D::keepData(void *data, unsigned int length)
+{
+	//The texture data mustn't be saved becuase it isn't a mutable texture.
+	return data;
 }
 
 bool CCTexture2D::getHasPremultipliedAlpha()
@@ -353,11 +361,11 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 
 	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-		tempData = new UINT8[POTHigh * POTWide * 2];
+		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
 
 		delete [] data;
@@ -365,11 +373,11 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-		tempData = new UINT8[POTHigh * POTWide * 2];
+		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
@@ -381,11 +389,11 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-		tempData = new UINT8[POTHigh * POTWide * 2];
+		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
@@ -441,20 +449,11 @@ void CCTexture2D::drawAtPoint(CGPoint point)
 	GLfloat	width = (GLfloat)m_uPixelsWide * m_fMaxS,
 		height = (GLfloat)m_uPixelsHigh * m_fMaxT;
 
-#if 0
-	GLfloat		vertices[] = {	
-		-width / 2 + point.x,	-height / 2 + point.y,	0.0f,
-		width / 2 + point.x,	-height / 2 + point.y,	0.0f,
-		-width / 2 + point.x,	height / 2 + point.y,	0.0f,
-		width / 2 + point.x,	height / 2 + point.y,	0.0f };
-
-#else // anchor is done by cocos2d automagically
 	GLfloat		vertices[] = {	
 		point.x,			point.y,	0.0f,
 		width + point.x,	point.y,	0.0f,
 		point.x,			height  + point.y,	0.0f,
 		width + point.x,	height  + point.y,	0.0f };
-#endif
 
 	glBindTexture(GL_TEXTURE_2D, m_uName);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
@@ -563,14 +562,14 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 
 void CCTexture2D::generateMipmap()
 {
-	NSAssert( m_uPixelsWide == nextPOT(m_uPixelsWide) && m_uPixelsHigh == nextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
+	NSAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, this->m_uName );
-	glGenerateMipmapOES(GL_TEXTURE_2D);
+	ccglGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)
 {
-	NSAssert( (m_uPixelsWide == nextPOT(m_uPixelsWide) && m_uPixelsHigh == nextPOT(m_uPixelsHigh)) ||
+	NSAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh)) ||
 		(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 		"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture( GL_TEXTURE_2D, this->m_uName );
