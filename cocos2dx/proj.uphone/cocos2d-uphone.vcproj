@@ -393,7 +393,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCPointParticleSystem.h"
+				RelativePath="..\include\CCParticleSystemPoint.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCParticleSystemQuad.h"
 				>
 			</File>
 			<File
@@ -402,10 +406,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCProtocols.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCQuadParticleSystem.h"
 				>
 			</File>
 			<File
@@ -657,11 +657,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\particle_nodes\CCPointParticleSystem.cpp"
+				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\particle_nodes\CCQuadParticleSystem.cpp"
+				RelativePath="..\particle_nodes\CCParticleSystemQuad.cpp"
 				>
 			</File>
 		</Filter>
@@ -917,6 +917,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
 				>
 			</File>
@@ -946,6 +950,11 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCTransition_mobile.cpp"
+				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCParticleSystemPoint_platform.h"
 				>
 			</File>
 			<File

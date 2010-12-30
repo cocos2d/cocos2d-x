@@ -138,7 +138,7 @@ void DemoBigFlower::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCQuadParticleSystem();
+	m_emitter = new CCParticleSystemQuad();
 	m_emitter->initWithTotalParticles(50);
 	//m_emitter->autorelease();
 
@@ -222,7 +222,7 @@ void DemoRotFlower::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCQuadParticleSystem();
+	m_emitter = new CCParticleSystemQuad();
 	m_emitter->initWithTotalParticles(300);
 	//m_emitter->autorelease();
 
@@ -478,7 +478,7 @@ void DemoModernArt::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCPointParticleSystem();
+	m_emitter = new CCParticleSystemPoint();
 	m_emitter->initWithTotalParticles(1000);
 	//m_emitter->autorelease();
 
@@ -638,7 +638,7 @@ void RadiusMode1::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(200);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
@@ -722,7 +722,7 @@ void RadiusMode2::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(200);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
@@ -806,7 +806,7 @@ void Issue704::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(100);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
@@ -898,7 +898,7 @@ void Issue870::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    CCQuadParticleSystem *system = new CCQuadParticleSystem();
+    CCParticleSystemQuad *system = new CCParticleSystemQuad();
     system->initWithFile("Images/SpinningPeas.plist");
     system->setTextureWithRect(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"), CGRectMake(0,0,32,32));
     addChild(system, 10);
@@ -912,7 +912,7 @@ void Issue870::updateQuads(ccTime dt)
 {
     m_nIndex = (m_nIndex + 1) % 4;
     CGRect rect = CGRectMake(m_nIndex * 32, 0, 32, 32);
-    CCQuadParticleSystem* system = (CCQuadParticleSystem*)m_emitter;
+    CCParticleSystemQuad* system = (CCParticleSystemQuad*)m_emitter;
     system->setTextureWithRect(m_emitter->getTexture(), rect);
 }
 
@@ -939,7 +939,7 @@ void DemoParticleFromFile::onEnter()
 	removeChild(m_background, true);
 	m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     std::string filename = "Images/" + m_title + ".plist";
     m_emitter->initWithFile(filename.c_str());
     addChild(m_emitter, 10);
