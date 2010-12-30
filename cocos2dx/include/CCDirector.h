@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCXEGLView.h"
 #include "ccxCommon.h"
 #include "CCGL.h"
+#include "platform/CCNS.h"
 
 #include <assert.h>
 namespace   cocos2d {
@@ -181,6 +182,8 @@ class CCLabelTTF;
 class CCScene;
 class cocos2d::CCXEGLView;
 class NSEvent;
+class CCNode;
+class CCProjectionProtocol;
 
 /**
 @brief Class that creates and handle the main Window and manages how
@@ -264,7 +267,7 @@ public:
 	/** returns the display size of the OpenGL view in pixels.
 	It doesn't take into account any possible rotation of the window.
 	*/
-	CGSize getDisplaySizeInPiXels(void);
+	CGSize getDisplaySizeInPixels(void);
 
 	/** changes the projection size */
 	void reshapeProjection(CGSize newWindowSize);
