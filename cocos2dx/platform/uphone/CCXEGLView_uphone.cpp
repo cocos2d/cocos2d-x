@@ -225,11 +225,8 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinPaint:
-        if (CfgGetScreenStatus())
-        {
-            // draw 
-            CCDirector::sharedDirector()->preMainLoop();
-        }
+        // draw 
+        CCDirector::sharedDirector()->preMainLoop();
         bHandled = TRUE;
         break;
 
