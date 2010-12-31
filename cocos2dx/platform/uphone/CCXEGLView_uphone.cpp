@@ -257,6 +257,11 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             {
                 bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
             }
+            else if (pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_UP ||
+                     pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_LONG)
+            {
+                bHandled == CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+            }
         }
         break;
 
