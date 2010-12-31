@@ -212,19 +212,19 @@ namespace cocos2d{
     bool CCMenu::ccMouseUp(NSEvent * pEvent)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
-        return NO;
+        return false;
     }
 
     bool CCMenu::ccMouseDown(NSEvent * pEvent)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
-        return NO;
+        return false;
     }
 
     bool CCMenu::ccMouseDragged(NSEvent * pEvent)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
-        return NO;
+        return false;
     }
 
 	void CCMenu::destroy(void)
