@@ -140,7 +140,7 @@ namespace cocos2d{
     bool CCMenu::ccTouchBegan(CCTouch* touch, UIEvent* event)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
-        return NO;
+        return false;
     }
 
     void CCMenu::ccTouchEnded(CCTouch* touch, UIEvent* event)
@@ -204,17 +204,17 @@ namespace cocos2d{
             m_pSelectedItem->activate();
 
             m_eState = kCCMenuStateWaiting;
-            return YES;
+            return true;
         }
         
-        return NO;
+        return false;
     }
 
     bool CCMenu::ccMouseDown(NSEvent * pEvent)
     {
         if (! getIsVisible())
         {
-            return NO;
+            return false;
         }
         
         m_pSelectedItem = itemForMouseEvent(pEvent);
@@ -223,10 +223,10 @@ namespace cocos2d{
         if (m_pSelectedItem)
         {
             m_eState = kCCMenuStateTrackingTouch;
-            return YES;
+            return true;
         }
         
-        return NO;
+        return false;
     }
 
     bool CCMenu::ccMouseDragged(NSEvent * pEvent)
@@ -246,10 +246,10 @@ namespace cocos2d{
         
         if (currentItem && m_eState == kCCMenuStateTrackingTouch)
         {
-            return YES;
+            return true;
         }
         
-        return NO;
+        return false;
     }
 
 	void CCMenu::destroy(void)

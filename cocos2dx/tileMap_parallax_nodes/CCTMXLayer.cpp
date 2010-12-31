@@ -438,7 +438,7 @@ namespace cocos2d {
 				if( sprite )
 				{
 					CGRect rect = m_pTileSet->rectForGID(gid);
-					sprite->setTextureRectInPixels(rect, NO, rect.size);
+					sprite->setTextureRectInPixels(rect, false, rect.size);
 					m_pTiles[z] = gid;
 				} 
 				else 

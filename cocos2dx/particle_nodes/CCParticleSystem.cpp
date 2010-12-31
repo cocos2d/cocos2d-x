@@ -621,7 +621,6 @@ void CCParticleSystem::update(ccTime dt)
 	/// @todo CCProfilingEndTimingBlock(_profilingTimer);
 #endif
 
-//@todo CC_USES_VBO
 //#ifdef CC_USES_VBO
 	this->postStep();
 //#endif

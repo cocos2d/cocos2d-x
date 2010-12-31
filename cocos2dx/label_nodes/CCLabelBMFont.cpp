@@ -507,7 +507,7 @@ namespace cocos2d{
 			else
 			{
 				// reusing fonts
-				fontChar->setTextureRectInPixels(rect, NO, rect.size);
+				fontChar->setTextureRectInPixels(rect, false, rect.size);
 
 				// restore to default in case they were modified
 				fontChar->setIsVisible(true);
