@@ -189,7 +189,7 @@ void CCEventDispatcher::addDelegate(NSObject* pHandle, int priority, _listEntry*
     }
     else
     {
-        bool added = NO;		
+        bool added = false;		
 
         for( tListEntry *elem = *pList; elem ; elem = elem->next )
         {
@@ -208,7 +208,7 @@ void CCEventDispatcher::addDelegate(NSObject* pHandle, int priority, _listEntry*
                     elem->prev = listElement;
                 }
 
-                added = YES;
+                added = true;
                 break;
             }
         }

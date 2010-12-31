@@ -122,7 +122,7 @@ namespace cocos2d{
 
         if (m_pLabel)
         {
-            removeChild(m_pLabel, YES);
+            removeChild(m_pLabel, true);
         }
         
 		m_pLabel = var;
@@ -309,12 +309,12 @@ namespace cocos2d{
         {
             addChild(var);
             var->setAnchorPoint(ccp(0, 0));
-            var->setIsVisible(YES);
+            var->setIsVisible(true);
         }
 
         if (m_pNormalImage)
         {
-            removeChild(m_pNormalImage, YES);
+            removeChild(m_pNormalImage, true);
         }
 
         m_pNormalImage = var;
@@ -329,12 +329,12 @@ namespace cocos2d{
         {
             addChild(var);
             var->setAnchorPoint(ccp(0, 0));
-            var->setIsVisible(NO);
+            var->setIsVisible(false);
         }
 
         if (m_pSelectedImage)
         {
-            removeChild(m_pSelectedImage, YES);
+            removeChild(m_pSelectedImage, true);
         }
 
         m_pSelectedImage = var;
@@ -349,12 +349,12 @@ namespace cocos2d{
         {
             addChild(var);
             var->setAnchorPoint(ccp(0, 0));
-            var->setIsVisible(NO);
+            var->setIsVisible(false);
         }
 
         if (m_pDisabledImage)
         {
-            removeChild(m_pDisabledImage, YES);
+            removeChild(m_pDisabledImage, true);
         }
 
         m_pDisabledImage = var;
@@ -394,17 +394,17 @@ namespace cocos2d{
 
         if (m_pDisabledImage)
         {
-            m_pDisabledImage->setIsVisible(NO);
+            m_pDisabledImage->setIsVisible(false);
         }
 
         if (m_pSelectedImage)
         {
-            m_pNormalImage->setIsVisible(NO);
-            m_pSelectedImage->setIsVisible(YES);
+            m_pNormalImage->setIsVisible(false);
+            m_pSelectedImage->setIsVisible(true);
         }
         else
         {
-            m_pNormalImage->setIsVisible(YES);
+            m_pNormalImage->setIsVisible(true);
         }
     }
 
@@ -412,16 +412,16 @@ namespace cocos2d{
     {
         CCMenuItem::unselected();
 
-        m_pNormalImage->setIsVisible(YES);
+        m_pNormalImage->setIsVisible(true);
 
         if (m_pSelectedImage)
         {
-            m_pSelectedImage->setIsVisible(NO);
+            m_pSelectedImage->setIsVisible(false);
         }
 
         if (m_pDisabledImage)
         {
-            m_pDisabledImage->setIsVisible(NO);
+            m_pDisabledImage->setIsVisible(false);
         }
     }
 
@@ -431,28 +431,28 @@ namespace cocos2d{
 
         if (m_pSelectedImage)
         {
-            m_pSelectedImage->setIsVisible(NO);
+            m_pSelectedImage->setIsVisible(false);
         }
 
         if (bEnabled)
         {
-            m_pNormalImage->setIsVisible(YES);
+            m_pNormalImage->setIsVisible(true);
 
             if (m_pDisabledImage)
             {
-                m_pDisabledImage->setIsVisible(NO);
+                m_pDisabledImage->setIsVisible(false);
             }
         }
         else
         {
             if (m_pDisabledImage)
             {
-                m_pDisabledImage->setIsVisible(YES);
-                m_pNormalImage->setIsVisible(NO);
+                m_pDisabledImage->setIsVisible(true);
+                m_pNormalImage->setIsVisible(false);
             }
             else
             {
-                m_pNormalImage->setIsVisible(YES);
+                m_pNormalImage->setIsVisible(true);
             }
         }
     }

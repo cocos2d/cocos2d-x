@@ -649,7 +649,7 @@ namespace cocos2d
 
         // XXX: updateTransform will update the textureAtlas too using updateQuad.
         // XXX: so, it should be AFTER the insertQuad
-        sprite->setDirty(YES);
+        sprite->setDirty(true);
         sprite->updateTransform();
     }
 
