@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "CCXFileUtils.h"
 #include "CCXUIImage.h"
 
-// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
 namespace   cocos2d {
 
 class CCAsyncObject : NSObject
@@ -82,9 +81,6 @@ CCTextureCache::~CCTextureCache()
 	CCX_SAFE_RELEASE(m_pTextures);
 	CCX_SAFE_DELETE(m_pDictLock);
 	CCX_SAFE_DELETE(m_pContextLock);
-// @todo release
-// 	[auxEAGLcontext release];
-// 	auxEAGLcontext = nil;
 }
 
 void CCTextureCache::purgeSharedTextureCache()

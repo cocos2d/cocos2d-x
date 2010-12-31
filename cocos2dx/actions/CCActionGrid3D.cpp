@@ -366,7 +366,7 @@ namespace cocos2d
             setPosition(pos);
 			m_fRadius = r;
 			m_fLensEffect = 0.7f;
-            m_bDirty = YES;
+            m_bDirty = true;
 
 			return true;
 		}
@@ -404,7 +404,7 @@ namespace cocos2d
             m_positionInPixels.x = pos.x * CC_CONTENT_SCALE_FACTOR();
             m_positionInPixels.y = pos.y * CC_CONTENT_SCALE_FACTOR();
 
-            m_bDirty = YES;
+            m_bDirty = true;
         }
     }
 
@@ -446,7 +446,7 @@ namespace cocos2d
 				}
 			}
 			
-			m_bDirty = NO;
+			m_bDirty = false;
 		}
 	}
 
