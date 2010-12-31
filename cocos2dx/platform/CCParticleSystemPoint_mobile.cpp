@@ -54,7 +54,7 @@ bool CCParticleSystemPoint::initWithTotalParticles(int numberOfParticles)
 }
 CCParticleSystemPoint::~CCParticleSystemPoint()
 {
-    CCX_SAFE_DELETE_ARRAY(m_pVertices);
+    CCX_SAFE_DELETE(m_pVertices);
 #if CC_USES_VBO
 	glDeleteBuffers(1, &m_uVerticesID);
 #endif
@@ -62,7 +62,7 @@ CCParticleSystemPoint::~CCParticleSystemPoint()
 void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition)
 {
 	// place vertices and colos in array
-    m_pVertices[m_nParticleIdx].pos = (ccVertex2F){newPosition.x, newPosition.y};
+    m_pVertices[m_nParticleIdx].pos = vertex2(newPosition.x, newPosition.y);
 	m_pVertices[m_nParticleIdx].size = particle->size;
 	m_pVertices[m_nParticleIdx].colors = particle->color;
 }

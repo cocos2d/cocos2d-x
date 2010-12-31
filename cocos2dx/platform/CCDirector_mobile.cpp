@@ -44,6 +44,8 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "CCKeypadDispatcher.h"
 #include "CCGL.h"
+#include "CCAnimationCache.h"
+#include "NSEvent.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -286,7 +288,7 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 
 		// set size
 		m_obWinSizeInPoints = CCNSSizeToCGSize(m_pobOpenGLView->getSize());
-		m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints * m_fContentScaleFactor);
+		m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
 
 		if (m_fContentScaleFactor != 1)
 		{
@@ -901,7 +903,7 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 * PC platforms specific functions, such as mac
 **************************************************/
 
-CGPoint CCDirector::convertEventToGL(NSEvent *event);
+CGPoint CCDirector::convertEventToGL(NSEvent *event)
 {
     assert(false);
 	return CGPointZero;
@@ -918,7 +920,7 @@ void CCDirector::setResizeMode(int resizeMode)
     assert(false);
 }
 
-int CCDirector::getResizeMode(void);
+int CCDirector::getResizeMode(void)
 {
     assert(false);
 	return -1;
@@ -932,6 +934,7 @@ void CCDirector::setFullScreen(bool fullscreen)
 CGPoint CCDirector::convertToLogicalCoordinates(CGPoint coordinates)
 {
     assert(false);
+	return CGPointZero;
 }
 
 

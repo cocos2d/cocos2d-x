@@ -232,14 +232,6 @@
 				RelativePath="..\actions\CCActionTiledGrid.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\platform\mac\CCDirectorDisplayLinkMacWrapper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\mac\CCDirectorDisplayLinkMacWrapper.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="base_nodes"
@@ -345,15 +337,16 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCKeyboardEventDelegate.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCGL.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCKeypadDelegate.h"				>
+				RelativePath="..\include\CCKeyboardEventDelegate.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCKeypadDelegate.h"
+				>
 			</File>
 			<File
 				RelativePath="..\include\CCKeypadDispatcher.h"
@@ -696,6 +689,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\sprite_nodes\CCAnimationCache.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\sprite_nodes\CCSprite.cpp"
 				>
 			</File>
@@ -936,11 +933,11 @@
 			Name="platform"
 			>
 			<File
-				RelativePath="..\platform\CCDirector_mobile.cpp"
+				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
+				RelativePath="..\platform\CCDirector_mobile.cpp"
 				>
 			</File>
 			<File
@@ -972,15 +969,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCTransition_mobile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
 				>
 			</File>
 			<File
 				RelativePath="..\platform\CCParticleSystemPoint_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCTransition_mobile.cpp"
 				>
 			</File>
 			<File

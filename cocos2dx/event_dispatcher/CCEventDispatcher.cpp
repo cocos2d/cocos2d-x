@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "ccMacros.h"
 #include "CCEventDispatcher.h"
 #include "../support/data_support/uthash.h"	// hack: uthash needs to be imported before utlist to prevent warning
 #include "../support/data_support/utlist.h"
-#include "ccMacros.h"
 
 namespace cocos2d {
 
@@ -221,7 +221,7 @@ void CCEventDispatcher::addDelegate(NSObject* pHandle, int priority, _listEntry*
     }
 }
 
-void removeAllDelegatesFromList(_listEntry** pList)
+void CCEventDispatcher::removeAllDelegatesFromList(_listEntry** pList)
 {
     tListEntry *entry, *tmp;
 

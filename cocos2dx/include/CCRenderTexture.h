@@ -55,7 +55,7 @@ class CCX_DLL CCRenderTexture : public CCNode
     */
 	CCX_PROPERTY(CCSprite*, m_pSprite, Sprite)
 public:
-	CCRenderTexture(){}
+	CCRenderTexture();
 	virtual ~CCRenderTexture();
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
     static CCRenderTexture * renderTextureWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);

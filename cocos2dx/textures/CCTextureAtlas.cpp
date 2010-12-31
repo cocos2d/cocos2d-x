@@ -26,7 +26,7 @@ THE SOFTWARE.
 // cocos2d
 #include "CCTextureAtlas.h"
 #include "CCTextureCache.h"
-// #include "ccMacros.h"
+#include "ccMacros.h"
 
 // support
 #include "CCTexture2D.h"

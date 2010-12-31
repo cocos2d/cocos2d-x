@@ -221,7 +221,7 @@ namespace cocos2d
 
 		// xxx: instead of removing/adding, it is more efficient ot reorder manually
 		child->retain();
-		removeChild(child, false);
+		removeChild((CCSprite*)child, false);
 		addChild(child, zOrder);
 		child->release();
 	}

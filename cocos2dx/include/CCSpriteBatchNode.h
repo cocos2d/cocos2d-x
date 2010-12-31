@@ -134,11 +134,6 @@ namespace cocos2d
 		*/
 		void removeChildAtIndex(unsigned int index, bool doCleanup);
 
-		/** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
-		@warning Removing a child from a CCSpriteBatchNode is very slow
-		*/
-		void removeChild(CCSprite *sprite, bool doCleanup);
-
 		void insertChild(CCSprite *child, unsigned int index);
 		void removeSpriteFromAtlas(CCSprite *sprite);
 

@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __CC_PARTICLE_SYSTEM_POINT_MOBILE_H__
 #define __CC_PARTICLE_SYSTEM_POINT_MOBILE_H__
 
-#include "Availability.h"
+/*#include "Availability.h"*/
 #include "CCParticleSystem.h"
 
 namespace cocos2d {

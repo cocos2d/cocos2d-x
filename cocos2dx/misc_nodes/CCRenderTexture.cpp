@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
-#include "Support/ccUtls.h"
+#include "Support/ccUtils.h"
 
 #include <GLES/glext.h>
 
@@ -88,8 +88,8 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
     bool bRet = false;
     do 
     {
-        w *= CC_CONTENT_SCALE_FACTOR();
-        h *= CC_CONTENT_SCALE_FACTOR();
+        w *= (int)CC_CONTENT_SCALE_FACTOR();
+        h *= (int)CC_CONTENT_SCALE_FACTOR();
 
         glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &m_nOldFBO);
 
@@ -106,7 +106,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_pTexture = new CCTexture2D();
         CCX_BREAK_IF(! m_pTexture);
 
-        m_pTexture->initWithData(data, m_ePixelFormat, powW, powH, CGSizeMake((float)w, (float)h));
+        m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CGSizeMake((float)w, (float)h));
         free( data );
 
         // generate FBO
@@ -185,10 +185,10 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 
     // Adjust the orthographic propjection and viewport
     ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
-    glViewport(0, 0, texSize.width, texSize.height);
+    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
 
-    glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
-    ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);//Will direct drawing to the frame buffer created above
+    glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
+    ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);//Will direct drawing to the frame buffer created above
 
     glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

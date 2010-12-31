@@ -238,11 +238,11 @@ void CCNode::setPosition(CGPoint newPosition)
 
 void CCNode::setPositionInPixels(CGPoint newPosition)
 {
-    m_tAnchorPointInPixels = newPosition;
+    m_tPositionInPixels = newPosition;
 
 	if ( CC_CONTENT_SCALE_FACTOR() == 1)
 	{
-		m_tPosition = m_tAnchorPointInPixels;
+		m_tPosition = m_tPositionInPixels;
 	}
 	else
 	{
@@ -254,6 +254,11 @@ void CCNode::setPositionInPixels(CGPoint newPosition)
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+}
+
+CGPoint CCNode::getPositionInPixels()
+{
+	return m_tPositionInPixels;
 }
 
 /// children getter
@@ -368,6 +373,11 @@ void CCNode::setContentSizeInPixels(CGSize size)
 		m_bIsTransformGLDirty = true;
 #endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	}
+}
+
+CGSize CCNode::getContentSizeInPixels()
+{
+	return m_tContentSizeInPixels;
 }
 
 

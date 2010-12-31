@@ -25,7 +25,9 @@ THE SOFTWARE.
 #define __CC_ANIMATION_CACHE_H__
 
 #include "NSObject.h"
-#include "NSMutableArray.h"
+#include "NSMutableDictionary.h"
+
+#include <string>
 
 namespace cocos2d
 {
@@ -41,6 +43,9 @@ namespace cocos2d
 	class CCX_DLL CCAnimationCache : public NSObject
 	{
 	public:
+		~CCAnimationCache();
+		CCAnimationCache();
+
 		/** Retruns ths shared instance of the Animation cache */
 		static CCAnimationCache* sharedAnimationCache(void);
 
@@ -62,8 +67,11 @@ namespace cocos2d
 		*/
 		CCAnimation* animationByName(const char* name);
 
+		bool init(void);
+
 	private:
-		NSMutableArray<CCAnimation*> *m_pAnimations;
+		NSMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
+		static CCAnimationCache *s_pSharedAnimationCache;
 	};
 }
 
