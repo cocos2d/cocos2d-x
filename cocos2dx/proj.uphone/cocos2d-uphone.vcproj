@@ -341,12 +341,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCEventDispatcher.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCKeyboardEventDelegate.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCGL.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCKeypadDelegate.h"
-				>
+				RelativePath="..\include\CCKeypadDelegate.h"				>
 			</File>
 			<File
 				RelativePath="..\include\CCKeypadDispatcher.h"
@@ -382,6 +389,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCMotionStreak.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCMouseEventDelegate.h"
 				>
 			</File>
 			<File
@@ -562,6 +573,10 @@
 			</File>
 			<File
 				RelativePath="..\include\NSData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\NSEvent.h"
 				>
 			</File>
 			<File
@@ -1098,6 +1113,22 @@
 			</File>
 			<File
 				RelativePath="..\keypad_dispatcher\CCKeypadDispatcher.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="event_dispatcher"
+			>
+			<File
+				RelativePath="..\event_dispatcher\CCEventDispatcher.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\event_dispatcher\CCKeyboardEventDelegate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\event_dispatcher\CCMouseEventDelegate.cpp"
 				>
 			</File>
 		</Filter>

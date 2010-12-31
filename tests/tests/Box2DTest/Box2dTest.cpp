@@ -73,7 +73,7 @@ Box2DTestLayer::Box2DTestLayer()
 	
 	//Set up sprite
 	
-	CCSpriteSheet *mgr = CCSpriteSheet::spriteSheetWithFile(s_pPathBlock, 150);
+	CCSpriteBatchNode *mgr = CCSpriteBatchNode::spriteSheetWithFile(s_pPathBlock, 150);
 	addChild(mgr, 0, kTagSpriteManager);
 	
 	addNewSpriteWithCoords( CGPointMake(screenSize.width/2, screenSize.height/2) );
@@ -114,7 +114,7 @@ void Box2DTestLayer::draw()
 void Box2DTestLayer::addNewSpriteWithCoords(CGPoint p)
 {
 	//UXLOG(L"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteSheet* sheet = (CCSpriteSheet*)getChildByTag(kTagSpriteManager);
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*)getChildByTag(kTagSpriteManager);
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images

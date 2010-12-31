@@ -181,7 +181,7 @@ namespace cocos2d
 	private:
 		void updateBlendFunc();
 
-	private:
+	protected:
 		CCTextureAtlas *m_pobTextureAtlas;
 		ccBlendFunc m_blendFunc;
 

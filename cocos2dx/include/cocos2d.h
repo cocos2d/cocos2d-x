@@ -48,7 +48,7 @@ THE SOFTWARE.
 #include "CCMenu.h"
 #include "CCMenuItem.h"
 #include "CCParticleSystem.h"
-#include "CCPointParticleSystem.h"
+#include "CCParticleSystemPoint.h"
 #include "CCQuadParticleSystem.h"
 #include "CCParticleExamples.h"
 #include "CCScene.h"
