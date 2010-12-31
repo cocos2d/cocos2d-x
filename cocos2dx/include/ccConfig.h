@@ -88,6 +88,19 @@ To enabled set it to 1. Disabled by default.
  */
  #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
 
+/** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+If enabled, cocos2d-mac will run on the Display Link thread. If disabled cocos2d-mac will run in its own thread.
+
+If enabled, the images will be drawn at the "correct" time, but the events might not be very responsive.
+If disabled, some frames might be skipped, but the events will be dispatched as they arrived.
+
+To enable set it to a 1, to disable it set to 0. Enabled by default.
+
+Only valid for cocos2d-mac. Not supported on cocos2d-ios.
+
+*/
+#define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 1
+
 /** @def CC_COCOSNODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.

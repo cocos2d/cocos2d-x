@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCAction.h"
 #include "CCProtocols.h"
 #include "CCSpriteFrame.h"
+#include "CCAnimation.h"
 
 namespace cocos2d {
 

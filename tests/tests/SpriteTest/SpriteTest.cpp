@@ -274,7 +274,7 @@ SpriteSheet1::SpriteSheet1()
 {
 	setIsTouchEnabled( true );
 
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -283,7 +283,7 @@ SpriteSheet1::SpriteSheet1()
 
 void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 {
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
@@ -432,7 +432,7 @@ SpriteSheetColorOpacity::SpriteSheetColorOpacity()
 {
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
 	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*0, 121*1, 85, 121));
@@ -496,7 +496,7 @@ SpriteSheetColorOpacity::SpriteSheetColorOpacity()
 //   color array and vertex array should be reindexed
 void SpriteSheetColorOpacity::removeAndAddSprite(ccTime dt)
 {
-	CCSpriteSheet* sheet= (CCSpriteSheet*)(getChildByTag( kTagSpriteSheet ));
+	CCSpriteBatchNode* sheet= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteSheet ));
 	CCSprite* sprite = (CCSprite*)(sheet->getChildByTag(kTagSprite5));
 	
 	sprite->retain();
@@ -582,7 +582,7 @@ SpriteSheetZOrder::SpriteSheetZOrder()
 	
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -613,7 +613,7 @@ SpriteSheetZOrder::SpriteSheetZOrder()
 
 void SpriteSheetZOrder::reorderSprite(ccTime dt)
 {
-	CCSpriteSheet* sheet= (CCSpriteSheet*)(getChildByTag( kTagSpriteSheet ));
+	CCSpriteBatchNode* sheet= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteSheet ));
 	CCSprite* sprite = (CCSprite*)(sheet->getChildByTag(kTagSprite1));
 	
 	int z = sprite->getZOrder();
@@ -642,7 +642,7 @@ std::string SpriteSheetZOrder::title()
 SpriteSheetReorder::SpriteSheetReorder()
 {
 	NSMutableArray<NSObject*>* a = new NSMutableArray<NSObject*>(10);
-	CCSpriteSheet* asmtest = CCSpriteSheet::spriteSheetWithFile("animations/ghosts.png");
+	CCSpriteBatchNode* asmtest = CCSpriteBatchNode::spriteSheetWithFile("animations/ghosts.png");
 	
 	for(int i=0; i<10; i++)
 	{
@@ -715,7 +715,7 @@ SpriteSheetReorderIssue744::SpriteSheetReorderIssue744()
 
 	// Testing issue #744
 	// http://code.google.com/p/cocos2d-iphone/issues/detail?id=744
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 15);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 15);
 	addChild(sheet, 0, kTagSpriteSheet);		
 
 	CCSprite* sprite = CCSprite::spriteWithSpriteSheet(sheet,CGRectMake(0, 0, 85, 121));
@@ -848,7 +848,7 @@ SpriteSheetZVertex::SpriteSheetZVertex()
 	
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	// camera uses the center of the image as the pivoting point
 	sheet->setContentSize( CGSizeMake(s.width,s.height));
 	sheet->setAnchorPoint( ccp(0.5f, 0.5f));
@@ -941,7 +941,7 @@ SpriteSheetAnchorPoint::SpriteSheetAnchorPoint()
 {
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -995,7 +995,7 @@ Sprite6::Sprite6()
 {
 	// small capacity. Testing resizing
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);
 	sheet->setIsRelativeAnchorPoint( false );
 
@@ -1083,7 +1083,7 @@ std::string SpriteFlip::title()
 //------------------------------------------------------------------
 SpriteSheetFlip::SpriteSheetFlip()
 {
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1101,7 +1101,7 @@ SpriteSheetFlip::SpriteSheetFlip()
 
 void SpriteSheetFlip::flipSprites(ccTime dt)
 {
-	CCSpriteSheet* sheet= (CCSpriteSheet*)(getChildByTag( kTagSpriteSheet ));
+	CCSpriteBatchNode* sheet= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteSheet ));
 	CCSprite* sprite1 = (CCSprite*)(sheet->getChildByTag(kTagSprite1));
 	CCSprite* sprite2 = (CCSprite*)(sheet->getChildByTag(kTagSprite2));
 	
@@ -1181,7 +1181,7 @@ std::string SpriteAliased::title()
 
 SpriteSheetAliased::SpriteSheetAliased()
 {
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1208,14 +1208,14 @@ SpriteSheetAliased::SpriteSheetAliased()
 void SpriteSheetAliased::onEnter()
 {
 	SpriteTestDemo::onEnter();
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	sheet->getTexture()->setAliasTexParameters();
 }
 
 void SpriteSheetAliased::onExit()
 {
 	// restore the tex parameter to AntiAliased.
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	sheet->getTexture()->setAntiAliasTexParameters();
 	SpriteTestDemo::onExit();
 }
@@ -1344,7 +1344,7 @@ SpriteSheetNewTexture::SpriteSheetNewTexture()
 {
 	setIsTouchEnabled( true );
 	
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	m_texture1 = sheet->getTexture(); m_texture1->retain();
@@ -1367,7 +1367,7 @@ void SpriteSheetNewTexture::addNewSprite()
 	
 	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 	
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
@@ -1400,7 +1400,7 @@ void SpriteSheetNewTexture::addNewSprite()
 
 void SpriteSheetNewTexture::ccTouchesEnded(NSSet* touches, UIEvent* event)
 {
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
 	if( sheet->getTexture() == m_texture1 )
 		sheet->setTexture(m_texture2);
@@ -1437,7 +1437,7 @@ SpriteFrameTest::SpriteFrameTest()
 	m_pSprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
 	m_pSprite1->setPosition( ccp( s.width/2-80, s.height/2) );
 	
-	CCSpriteSheet* spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
+	CCSpriteBatchNode* spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 	spritesheet->addChild(m_pSprite1);
 	addChild(spritesheet);
 
@@ -1671,7 +1671,7 @@ SpriteSheetOffsetAnchorRotation::SpriteSheetOffsetAnchorRotation()
 		
 		point->setPosition( sprite->getPosition() );
 		
-		CCSpriteSheet *spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
+		CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 		addChild(spritesheet);
 		
 		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
@@ -1821,7 +1821,7 @@ SpriteSheetOffsetAnchorScale::SpriteSheetOffsetAnchorScale()
 		
 		point->setPosition( sprite->getPosition() );
 		
-		CCSpriteSheet *spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
+		CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 		addChild(spritesheet);
 		
 		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
@@ -1928,7 +1928,7 @@ SpriteHybrid::SpriteHybrid()
 
 	// parents
 	CCNode *parent1 = CCNode::node();
-	CCSpriteSheet *parent2 = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	CCSpriteBatchNode *parent2 = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	
 	addChild(parent1, 0, kTagNode);
 	addChild(parent2, 0, kTagSpriteSheet);
@@ -2033,7 +2033,7 @@ SpriteSheetChildren::SpriteSheetChildren()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	
 	addChild(sheet, 0, kTagSpriteSheet);
 	
@@ -2106,7 +2106,7 @@ SpriteSheetChildren2::SpriteSheetChildren2()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	sheet->getTexture()->generateMipmap();
 	
 	addChild(sheet, 0, kTagSpriteSheet);
@@ -2195,14 +2195,14 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
-	CCSpriteSheet* sheet;
+	CCSpriteBatchNode* sheet;
 	CCSprite* sprite1, *sprite2, *sprite3;
 
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
 	
 	// test 1
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2219,7 +2219,7 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	sprite1->addChild(sprite3, -2);
 	
 	// test 2
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2236,7 +2236,7 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	sprite1->addChild(sprite3, 2);
 	
 	// test 3
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2253,7 +2253,7 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	sheet->addChild(sprite3, -5);
 
 	// test 4
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2299,7 +2299,7 @@ SpriteChildrenVisibility::SpriteChildrenVisibility()
 	// SpriteSheet
 	//
 	// parents
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	aParent->setPosition( ccp(s.width/3, s.height/2) );
 	addChild(aParent, 0);
 	
@@ -2485,7 +2485,7 @@ SpriteSheetChildrenAnchorPoint::SpriteSheetChildrenAnchorPoint()
 	//
 	// parents
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(aParent, 0);
 	
 	// anchor (0,0)
@@ -2618,7 +2618,7 @@ SpriteSheetChildrenScale::SpriteSheetChildrenScale()
 	// Test 2
 	//
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini_family.png");
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini_family.png");
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossinis_sister1.png");
 	sprite1->setPosition( ccp( 3*s.width/4, s.height/4) );
 	sprite1->setScaleX( -0.5f );
@@ -2657,7 +2657,7 @@ SpriteSheetChildrenScale::SpriteSheetChildrenScale()
 	// Test 4
 	//
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini_family.png");
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini_family.png");
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossinis_sister1.png");
 	sprite1->setPosition( ccp( 3*s.width/4, 2*s.height/3) );
 	sprite1->setScaleX( 1.5f );
@@ -2772,7 +2772,7 @@ SpriteSheetChildrenChildren::SpriteSheetChildrenChildren()
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist");
 	
-	CCSpriteSheet *aParent;
+	CCSpriteBatchNode *aParent;
 	CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
 	CCActionInterval* rot = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* seq = CCRepeatForever::actionWithAction(rot);
@@ -2784,7 +2784,7 @@ SpriteSheetChildrenChildren::SpriteSheetChildrenChildren()
 	// SpriteSheet: 3 levels of children
 	//
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/ghosts.png");
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/ghosts.png");
 	aParent->getTexture()->generateMipmap();
 	addChild(aParent);
 	

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 #include "CCLayer.h"
-#include "CCTouchDispatcher.h"
+#include "CCEventDispatcher.h"
 #include "CCKeypadDispatcher.h"
 #include "CCDirector.h"
 #include "CGPointExtension.h"
@@ -109,6 +109,26 @@ void CCLayer::KeypadDestroy()
 }
 
 void CCLayer::KeypadKeep()
+{
+    this->retain();
+}
+
+void CCLayer::KeyboardDestroy(void)
+{
+    this->release();
+}
+
+void CCLayer::KeyboardKeep(void)
+{
+    this->retain();
+}
+
+void CCLayer::MouseDestroy()
+{
+    this->release();
+}
+
+void CCLayer::MouseKeep()
 {
     this->retain();
 }
@@ -478,7 +498,7 @@ bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CGPoint v)
     m_AlongVector   = v;
 
     start.a	= 255;
-    return this->initWithColor(start);
+    return CCLayerColor::initWithColor(start);
 }
 
 void CCLayerGradient::updateColor()
@@ -489,45 +509,45 @@ void CCLayerGradient::updateColor()
     if (h == 0)
         return;
 
-    double c = sqrt(2);
+    double c = sqrt(2.0);
     CGPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
 
     float opacityf = (float)m_cOpacity / 255.0f;
 
     ccColor4B S = {
-        m_tColor.r,
-        m_tColor.g,
-        m_tColor.b,
-        m_cStartOpacity * opacityf
+        (unsigned char) m_tColor.r,
+        (unsigned char) m_tColor.g,
+        (unsigned char) m_tColor.b,
+        (unsigned char) (m_cStartOpacity * opacityf)
     };
 
     ccColor4B E = {
-        m_endColor.r,
-        m_endColor.g,
-        m_endColor.b,
-        m_cEndOpacity * opacityf
+        (unsigned char) m_endColor.r,
+        (unsigned char) m_endColor.g,
+        (unsigned char) m_endColor.b,
+        (unsigned char) (m_cEndOpacity * opacityf)
     };
 
     // (-1, -1)
-    m_pSquareColors[0]  = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
-    m_pSquareColors[1]  = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
-    m_pSquareColors[2]  = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
-    m_pSquareColors[3]  = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
+    m_pSquareColors[0]  = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[1]  = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[2]  = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[3]  = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c)));
     // (1, -1)
-    m_pSquareColors[4]  = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
-    m_pSquareColors[5]  = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
-    m_pSquareColors[6]  = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
-    m_pSquareColors[7]  = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
+    m_pSquareColors[4]  = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[5]  = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[6]  = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[7]  = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c)));
     // (-1, 1)
-    m_pSquareColors[8]  = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
-    m_pSquareColors[9]  = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
-    m_pSquareColors[10] = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
-    m_pSquareColors[11] = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
+    m_pSquareColors[8]  = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[9]  = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[10] = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[11] = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c)));
     // (1, 1)
-    m_pSquareColors[12] = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
-    m_pSquareColors[13] = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
-    m_pSquareColors[14] = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
-    m_pSquareColors[15] = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
+    m_pSquareColors[12] = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[13] = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[14] = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[15] = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c)));
 }
 
 ccColor3B CCLayerGradient::getStartColor()

@@ -31,8 +31,10 @@ THE SOFTWARE.
 #include "CCTouchDelegateProtocol.h"
 #include "CCUIAccelerometerDelegate.h"
 #include "ccxCommon.h"
-#include "CCXUIAccelerometer.h"
 #include "CCKeypadDelegate.h"
+#include "CCMouseEventDelegate.h"
+#include "CCKeyboardEventDelegate.h"
+
 namespace   cocos2d {
 
 //
@@ -65,6 +67,12 @@ public:
 
     virtual void KeypadDestroy();
     virtual void KeypadKeep();
+
+    virtual void KeyboardDestroy(void);
+    virtual void KeyboardKeep(void);
+
+    virtual void MouseDestroy();
+    virtual void MouseKeep();
 
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
@@ -231,12 +239,6 @@ public:
 
 protected:
     virtual void updateColor();
-
-protected:
-    ccColor3B m_endColor;
-    GLubyte   m_cStartOpacity;
-    GLubyte   m_cEndOpacity;
-    CGPoint   m_AlongVector;
 };
 
 /** @brief CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
