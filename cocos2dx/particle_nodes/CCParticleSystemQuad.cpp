@@ -53,7 +53,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 		}
 
 		// initialize only once the texCoords and the indices
-		this->initTexCoordsWithRect(CGRectMake(0, 0, m_pTexture->getPixelsWide(), m_pTexture->getPixelsHigh()));
+		this->initTexCoordsWithRect(CGRectMake((float)0, (float)0, (float)m_pTexture->getPixelsWide(), (float)m_pTexture->getPixelsHigh()));
 		this->initIndices();
 
 #if CC_USES_VBO
@@ -89,8 +89,8 @@ void CCParticleSystemQuad::initTexCoordsWithRect(CGRect pointRect)
         pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
         pointRect.size.height * CC_CONTENT_SCALE_FACTOR());
 
-    GLfloat wide = m_pTexture->getPixelsWide();
-    GLfloat high = m_pTexture->getPixelsHigh();
+    GLfloat wide = (GLfloat)m_pTexture->getPixelsWide();
+    GLfloat high = (GLfloat)m_pTexture->getPixelsHigh();
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
     GLfloat left = (rect.origin.x*2+1) / (wide*2);
@@ -218,16 +218,16 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CGPoint
 		quad->bl.vertices.y = newPosition.y - size_2;
 
 		// bottom-right vertex:
-		quad->.br.vertices.x = newPosition.x + size_2;
-		quad->.br.vertices.y = newPosition.y - size_2;
+		quad->br.vertices.x = newPosition.x + size_2;
+		quad->br.vertices.y = newPosition.y - size_2;
 
 		// top-left vertex:
-		quad->.tl.vertices.x = newPosition.x - size_2;
-		quad->.tl.vertices.y = newPosition.y + size_2;
+		quad->tl.vertices.x = newPosition.x - size_2;
+		quad->tl.vertices.y = newPosition.y + size_2;
 
 		// top-right vertex:
-		quad->.tr.vertices.x = newPosition.x + size_2;
-		quad->.tr.vertices.y = newPosition.y + size_2;				
+		quad->tr.vertices.x = newPosition.x + size_2;
+		quad->tr.vertices.y = newPosition.y + size_2;				
 	}
 }
 void CCParticleSystemQuad::postStep()

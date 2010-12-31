@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CCMenuItem.h"
 #include "CCParticleSystem.h"
 #include "CCParticleSystemPoint.h"
-#include "CCQuadParticleSystem.h"
+#include "CCParticleSystemQuad.h"
 #include "CCParticleExamples.h"
 #include "CCScene.h"
 #include "CCSprite.h"

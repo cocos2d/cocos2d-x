@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCXFileUtils.h"
 #include "CCXUIImage.h"
 #include "platform/platform.h"
+#include "support/zip_support/ZipUtils.h"
 
 // opengl
 #include "platform/CCGL.h"
@@ -262,7 +263,6 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 						CCX_BREAK_IF(!isOK);
 						
 						m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str());
-					}
 				}
 			}
 			NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");

@@ -132,6 +132,12 @@ typedef struct _ccVertex2F
 	GLfloat y;
 } ccVertex2F;
 
+static inline ccVertex2F vertex2(const float x, const float y)
+{
+	ccVertex2F c = {x, y};
+	return c;
+}
+
 
 /** A vertex composed of 2 floats: x, y
  @since v0.8
