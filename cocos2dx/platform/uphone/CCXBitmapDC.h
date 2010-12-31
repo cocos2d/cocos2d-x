@@ -47,7 +47,6 @@ namespace cocos2d{
 	protected:
 		TBitmap *m_pBitmap;
 		CGSize m_tSize;
-		TWindow *m_pWindow;
 	};
 }
 
