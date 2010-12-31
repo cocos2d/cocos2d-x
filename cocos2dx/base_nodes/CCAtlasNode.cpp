@@ -55,8 +55,8 @@ CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, int tileWidth, in
 bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
 {
 	assert(tile != NULL);
-	m_nItemWidth = tileWidth * CC_CONTENT_SCALE_FACTOR();
-	m_nItemHeight = tileHeight * CC_CONTENT_SCALE_FACTOR();
+	m_nItemWidth  = (int) (tileWidth * CC_CONTENT_SCALE_FACTOR());
+	m_nItemHeight = (int) (tileHeight * CC_CONTENT_SCALE_FACTOR());
 
 	m_cOpacity = 255;
 	m_tColor = m_tColorUnmodified = ccWHITE;

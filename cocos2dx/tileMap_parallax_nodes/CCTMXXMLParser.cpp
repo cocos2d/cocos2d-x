@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
 #include "support/file_support/FileData.h"
+#include "support/zip_support/ZipUtils.h"
 #include "CGPointExtension.h"
 #include "support/base64.h"
 #include "platform/platform.h"

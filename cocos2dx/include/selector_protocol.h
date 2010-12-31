@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 class CCNode;
+class NSEvent;
 
 class CCX_DLL SelectorProtocol
 {
@@ -41,6 +42,7 @@ public:
 	virtual void callfunc(CCNode* pSender){};
 	virtual void callfunc(CCNode* pSender, void* pData){};
 	virtual void menuHandler(NSObject* pSender){};
+    virtual void eventHandler(NSEvent* pEvent) {};
 
 	// the child call responding retain/release function
 	virtual void selectorProtocolRetain(void) {};
@@ -55,6 +57,7 @@ typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
 typedef void (SelectorProtocol::*SEL_CallFuncND)(CCNode*, void*);
 typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
 typedef void (SelectorProtocol::*SEL_MenuHandler)(NSObject*);
+typedef void (SelectorProtocol::*SEL_EventHandler)(NSEvent*);
 
 //  #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(*((SEL_SCHEDULE*)(&(&_SELECTOR))) )
 //  #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(*((SEL_CallFunc*)(&(&_SELECTOR))) )
@@ -68,6 +71,7 @@ typedef void (SelectorProtocol::*SEL_MenuHandler)(NSObject*);
   #define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(&_SELECTOR)
   #define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
   #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
+  #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 }//namespace   cocos2d 
 
 #endif // __COCOA_SELECTOR_PROTOCOL_H__

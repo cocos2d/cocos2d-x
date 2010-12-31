@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
-#include "CCSpriteSheet.h"
+#include "CCSpriteBatchNode.h"
 namespace cocos2d{
 
 	struct _KerningHashElement;
@@ -132,7 +132,7 @@ namespace cocos2d{
 	@since v0.8
 	*/
 
-	class CCX_DLL CCLabelBMFont : public CCSpriteSheet, public CCLabelProtocol, public CCRGBAProtocol
+	class CCX_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 	{
 		/** conforms to CCRGBAProtocol protocol */
 		CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)

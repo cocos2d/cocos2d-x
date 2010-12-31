@@ -118,11 +118,11 @@ TMXOrthoTest::TMXOrthoTest()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
     NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;
@@ -167,11 +167,11 @@ TMXOrthoTest2::TMXOrthoTest2()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;
@@ -201,11 +201,11 @@ TMXOrthoTest3::TMXOrthoTest3()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;
@@ -236,11 +236,11 @@ TMXOrthoTest4::TMXOrthoTest4()
 	////----UXLOG("ContentSize: %f, %f", s1.width,s1.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;

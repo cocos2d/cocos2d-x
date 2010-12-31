@@ -56,7 +56,7 @@ namespace cocos2d {
 			texture = CCTextureCache::sharedTextureCache()->addImage(tilesetInfo->m_sSourceImage.c_str());
 		}
 
-		if (CCSpriteSheet::initWithTexture(texture, (unsigned int)capacity))
+		if (CCSpriteBatchNode::initWithTexture(texture, (unsigned int)capacity))
 		{
 			// layerInfo
 			m_sLayerName = layerInfo->m_sName;
@@ -239,7 +239,7 @@ namespace cocos2d {
 			{
 				CGRect rect = m_pTileSet->rectForGID(gid);
 				tile = new CCSprite();
-				tile->initWithSpriteSheet(this, rect);
+				tile->initWithSpriteSheet((CCSpriteSheetInternalOnly *)this, rect);
 				tile->setPositionInPixels(positionAt(pos));
 				tile->setVertexZ((float)vertexZForPos(pos));
 				tile->setAnchorPoint(CGPointZero);
@@ -271,11 +271,11 @@ namespace cocos2d {
 		if( ! m_pReusedTile )
 		{
 			m_pReusedTile = new CCSprite();
-			m_pReusedTile->initWithSpriteSheet(this, rect);
+			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
 		}
 		else
 		{
-			m_pReusedTile->initWithSpriteSheet(this, rect);
+			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
 		}
 		m_pReusedTile->setPositionInPixels(positionAt(pos));
 		m_pReusedTile->setVertexZ((float)vertexZForPos(pos));
@@ -320,11 +320,11 @@ namespace cocos2d {
 		if( ! m_pReusedTile )
 		{
 			m_pReusedTile = new CCSprite();
-			m_pReusedTile->initWithSpriteSheet(this, rect);
+			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
 		}
 		else
 		{
-			m_pReusedTile->initWithSpriteSheet(this, rect);
+			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
 		}
 		
 		m_pReusedTile->setPositionInPixels(positionAt(pos));
@@ -353,11 +353,11 @@ namespace cocos2d {
 		if( ! m_pReusedTile )
 		{
 			m_pReusedTile = new CCSprite();
-			m_pReusedTile->initWithSpriteSheet(this, rect);
+			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
 		}
 		else
 		{
-			m_pReusedTile->initWithSpriteSheet(this, rect);
+			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
 		}
 		
 		m_pReusedTile->setPosition(positionAt(pos));
@@ -438,7 +438,7 @@ namespace cocos2d {
 				if( sprite )
 				{
 					CGRect rect = m_pTileSet->rectForGID(gid);
-					sprite->setTextureRectInPixels(rect);
+					sprite->setTextureRectInPixels(rect, NO, rect.size);
 					m_pTiles[z] = gid;
 				} 
 				else 
@@ -465,7 +465,7 @@ namespace cocos2d {
 		unsigned int zz = (unsigned int) m_pAtlasIndexArray->arr[atlasIndex];
 		m_pTiles[zz] = 0;
 		ccCArrayRemoveValueAtIndex(m_pAtlasIndexArray, atlasIndex);
-		CCSpriteSheet::removeChild(sprite, cleanup);
+		CCSpriteBatchNode::removeChild(sprite, cleanup);
 	}
 	void CCTMXLayer::removeTileAt(CGPoint pos)
 	{
@@ -489,7 +489,7 @@ namespace cocos2d {
 			CCSprite *sprite = (CCSprite*)getChildByTag(z);
 			if( sprite )
 			{
-				CCSpriteSheet::removeChild(sprite, true);
+				CCSpriteBatchNode::removeChild(sprite, true);
 			}
 			else 
 			{
@@ -555,18 +555,14 @@ namespace cocos2d {
 	}
 	CGPoint CCTMXLayer::positionForOrthoAt(CGPoint pos)
 	{
-        CGPoint xy = {
-            pos.x * m_tMapTileSize.width,
-            (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height,
-        };
+        CGPoint xy = CGPointMake(pos.x * m_tMapTileSize.width,
+                                (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height);
         return xy;
 	}
 	CGPoint CCTMXLayer::positionForIsoAt(CGPoint pos)
 	{
-        CGPoint xy = {
-            m_tMapTileSize.width /2 * ( m_tLayerSize.width + pos.x - pos.y - 1),
-            m_tMapTileSize.height /2 * (( m_tLayerSize.height * 2 - pos.x - pos.y) - 2),
-        };
+        CGPoint xy = CGPointMake(m_tMapTileSize.width /2 * ( m_tLayerSize.width + pos.x - pos.y - 1),
+                                 m_tMapTileSize.height /2 * (( m_tLayerSize.height * 2 - pos.x - pos.y) - 2));
         return xy;
 	}
 	CGPoint CCTMXLayer::positionForHexAt(CGPoint pos)
@@ -577,10 +573,8 @@ namespace cocos2d {
 			diffY = -m_tMapTileSize.height/2 ;
 		}
 
-        CGPoint xy = {
-            pos.x * m_tMapTileSize.width*3/4,
-            (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY
-        };
+        CGPoint xy = CGPointMake(pos.x * m_tMapTileSize.width*3/4,
+                                (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY);
         return xy;
 	}
 	int CCTMXLayer::vertexZForPos(CGPoint pos)
@@ -622,7 +616,7 @@ namespace cocos2d {
 			glAlphaFunc(GL_GREATER, m_fAlphaFuncValue);
 		}
 
-		CCSpriteSheet::draw();
+		CCSpriteBatchNode::draw();
 
 		if( m_bUseAutomaticVertexZ )
 		{
