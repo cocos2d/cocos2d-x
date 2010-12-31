@@ -179,11 +179,11 @@ namespace cocos2d {
 
 		int x = pos.x;
 		int y = pos.y;
-        float row = (value.r % m_nItemsPerRow);
-        float col = (value.r / m_nItemsPerRow);
+        float row = (float) (value.r % m_nItemsPerRow);
+        float col = (float) (value.r / m_nItemsPerRow);
 
-        float textureWide = m_pTextureAtlas->getTexture()->getPixelsWide();
-        float textureHigh = m_pTextureAtlas->getTexture()->getPixelsHigh();
+        float textureWide = (float) (m_pTextureAtlas->getTexture()->getPixelsWide());
+        float textureHigh = (float) (m_pTextureAtlas->getTexture()->getPixelsHigh());
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         float left		= (2 * row * m_nItemWidth + 1) / (2 * textureWide);
