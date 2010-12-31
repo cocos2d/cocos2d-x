@@ -11,6 +11,7 @@ public:
 	~KeypadTest();
 
     virtual void keyBackClicked();
+	virtual void keyMenuClicked();
 
 private:
     CCLabel*			m_pLabel;

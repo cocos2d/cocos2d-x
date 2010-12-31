@@ -41,6 +41,9 @@ public:
 
     // The back key clicked
     virtual void keyBackClicked() {}
+
+    // The menu key clicked. only avialble on uphone & android
+    virtual void keyMenuClicked() {};
 };
 
 /**
