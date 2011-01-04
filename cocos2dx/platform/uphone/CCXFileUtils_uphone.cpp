@@ -470,8 +470,33 @@ int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 const char* CCFileUtils::ccRemoveHDSuffixFromFile( const char *path )
 {
-	///@todo
-	return NULL;
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+    if( CC_CONTENT_SCALE_FACTOR() == 2 )
+    {
+        std::string curPath = path;
+        int pos = curPath.rfind("/");
+        std::string fileName = curPath.substr(pos + 1);
+
+        std::string filePath = "";
+        if (-1 != pos)
+        {
+            filePath = curPath.substr(0, pos);
+        }
+        
+        int suffixPos = fileName.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        if (-1 != suffixPos)
+        {
+            fileName.replace(pos, strlen(CC_RETINA_DISPLAY_FILENAME_SUFFIX), "");
+        }
+        
+        std::string result = filePath + fileName;
+        return result.c_str();
+    }
+
+#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
+
+    return path;
 }
 
 //////////////////////////////////////////////////

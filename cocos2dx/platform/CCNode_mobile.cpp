@@ -343,7 +343,17 @@ void CCNode::setContentSize(CGSize size)
 	if( ! CGSize::CGSizeEqualToSize(size, m_tContentSize) ) 
 	{
 		m_tContentSize = size;
-		m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
+
+        if( CC_CONTENT_SCALE_FACTOR() == 1 )
+        {
+            m_tContentSizeInPixels = m_tContentSize;
+        }
+        else
+        {
+            m_tContentSizeInPixels = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+        }
+
+		m_tAnchorPointInPixels = ccp( m_tContentSizeInPixels.width * m_tAnchorPoint.x, m_tContentSizeInPixels.height * m_tAnchorPoint.y );
 		m_bIsTransformDirty = m_bIsInverseDirty = true;
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
@@ -641,35 +651,30 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 // helper used by reorderChild & add
 void CCNode::insertChild(CCNode* child, int z)
 {
-	unsigned int index=0;
+    unsigned int index = 0;
+    CCNode* a = m_pChildren->getLastObject();
+    if (!a || a->getZOrder() <= z)
+    {
+        m_pChildren->addObject(child);
+    }
+    else
+    {
+        CCNode* pNode;
+        NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+        for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
+        {
+            pNode = (*it);
 
-	if(m_pChildren && m_pChildren->count() > 0)
-	{
-		CCNode* pNode = m_pChildren->getLastObject();
+            if ( pNode && pNode->m_nZOrder > z ) 
+            {
+                m_pChildren->insertObjectAtIndex(child, index);
+                break;
+            }
+            index++;
+        }
+    }
 
-		// // quick comparison to improve performance
-		if (! pNode || pNode->getZOrder() <= z)
-		{
-            m_pChildren->addObject(child);
-		}
-		else
-		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
-			{
-				pNode = (*it);
-
-				if ( pNode && pNode->m_nZOrder > z ) 
-				{
-					m_pChildren->insertObjectAtIndex(child, index);
-					break;
-				}
-				index++;
-			}
-		}		
-	}
-
-	child->setZOrder(z);
+    child->setZOrder(z);
 }
 
 void CCNode::reorderChild(CCNode *child, int zOrder)
@@ -809,9 +814,9 @@ void CCNode::transform()
 		glTranslatef( RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
 	if (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPosition.y + m_tAnchorPointInPixels.y), m_fVertexZ);
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y + m_tAnchorPointInPixels.y), m_fVertexZ);
 	else if ( m_tPositionInPixels.x !=0 || m_tPositionInPixels.y !=0 || m_fVertexZ != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x), RENDER_IN_SUBPIXEL(m_tPosition.y), m_fVertexZ );
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y), m_fVertexZ );
 
 	// rotate
 	if (m_fRotation != 0.0f )
@@ -967,7 +972,7 @@ CGAffineTransform CCNode::nodeToParentTransform(void)
 			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tAnchorPointInPixels.x, m_tAnchorPointInPixels.y);
 
 		if( ! CGPoint::CGPointEqualToPoint(m_tPositionInPixels, CGPointZero) )
-			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tPositionInPixels.x, m_tPosition.y);
+			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tPositionInPixels.x, m_tPositionInPixels.y);
 		if( m_fRotation != 0 )
 			m_tTransform = CGAffineTransformRotate(m_tTransform, -CC_DEGREES_TO_RADIANS(m_fRotation));
 		if( ! (m_fScaleX == 1 && m_fScaleY == 1) ) 

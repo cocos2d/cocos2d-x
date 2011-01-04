@@ -121,7 +121,7 @@ void Box2DTestLayer::addNewSpriteWithCoords(CGPoint p)
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
 	CCSprite *sprite = sheet->createSpriteWithRect( CGRectMake(32 * idx,32 * idy,32,32));
-	(CCNode*)(sheet)->addChild(sprite);
+	sheet->addChild(sprite);
 	
 	sprite->setPosition( CGPointMake( p.x, p.y) );
 	

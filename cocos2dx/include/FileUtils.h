@@ -48,6 +48,12 @@ public:
     @warning If you get the file data succeed,you must delete it after used.
     */
     static unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
+
+    /** removes the HD suffix from a path
+    @returns const char * without the HD suffix
+    @since v0.99.5
+    */
+    static const char* ccRemoveHDSuffixFromFile(const char* path);
 };
 
 } // namespace cocos2d
