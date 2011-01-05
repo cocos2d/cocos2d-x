@@ -223,11 +223,11 @@ void CCNode::setPosition(CGPoint newPosition)
 	m_tPosition = newPosition;
 	if (CC_CONTENT_SCALE_FACTOR() == 1)
 	{
-		m_tAnchorPointInPixels = m_tPosition;
+		m_tPositionInPixels = m_tPosition;
 	}
 	else
 	{
-		m_tAnchorPointInPixels = ccpMult(newPosition, CC_CONTENT_SCALE_FACTOR());
+		m_tPositionInPixels = ccpMult(newPosition, CC_CONTENT_SCALE_FACTOR());
 	}
 
 	m_bIsTransformDirty = m_bIsInverseDirty = true;

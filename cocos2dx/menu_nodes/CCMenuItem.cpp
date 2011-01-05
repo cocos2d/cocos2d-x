@@ -378,9 +378,10 @@ namespace cocos2d{
 	{
 		assert(normalSprite != NULL);
 		CCMenuItem::initWithTarget(target, selector); 
-		this->m_pNormalImage = normalSprite; CCX_SAFE_RETAIN(normalSprite);
-		this->m_pSelectedImage = selectedSprite; CCX_SAFE_RETAIN(selectedSprite);
-		this->m_pDisabledImage = disabledSprite; CCX_SAFE_RETAIN(disabledSprite);
+        setNormalImage(normalSprite);
+        setSelectedImage(selectedSprite);
+        setDisabledImage(disabledSprite);
+
 		this->setContentSize(m_pNormalImage->getContentSize());
 		return true;
 	}
