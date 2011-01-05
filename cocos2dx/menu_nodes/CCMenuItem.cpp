@@ -145,7 +145,6 @@ namespace cocos2d{
 	}
 	CCMenuItemLabel::~CCMenuItemLabel()
 	{
-		CCX_SAFE_RELEASE(m_pLabel);
 	}
 	void CCMenuItemLabel::setString(const char * label)
 	{

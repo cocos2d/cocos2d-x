@@ -342,7 +342,8 @@ void CCSprite::useSelfRender(void)
 void CCSprite::useBatchNode(CCSpriteBatchNode *batchNode)
 {
     m_bUsesBatchNode = true;
-	m_pobTextureAtlas = m_pobBatchNode->getTextureAtlas(); // weak ref
+	m_pobTextureAtlas = batchNode->getTextureAtlas(); // weak ref
+    m_pobBatchNode = batchNode;
 }
 
 void CCSprite::useSpriteSheetRender(CCSpriteSheetInternalOnly *pSpriteSheet)

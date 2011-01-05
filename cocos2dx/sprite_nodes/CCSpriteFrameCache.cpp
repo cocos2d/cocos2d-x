@@ -227,7 +227,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 		// build texture path relative to plist file
 
 		// stringByDeletingLastPathComponent
-		string textureBase(pszPlist);
+		string textureBase(pszPath);
 		int indexOfLastSeperator = textureBase.find_last_of('/');
         if (indexOfLastSeperator == textureBase.length() - 1)
 		{
@@ -245,6 +245,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 	else
 	{
 		// build texture path by replacing file extension
+        texturePath = pszPath;
 
 		// remove .xxx
 		size_t startPos = texturePath.find_last_of("."); 
