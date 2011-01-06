@@ -335,7 +335,7 @@ namespace cocos2d {
 		// get atlas index
 		unsigned int indexForZ = atlasIndexForExistantZ(z);
 		m_pReusedTile->setAtlasIndex(indexForZ);
-        m_pReusedTile->setDirty(YES);
+        m_pReusedTile->setDirty(true);
 		m_pReusedTile->updateTransform();
 		m_pTiles[z] = gid;
 

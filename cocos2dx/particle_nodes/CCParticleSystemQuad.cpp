@@ -53,7 +53,15 @@ bool CCParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 		}
 
 		// initialize only once the texCoords and the indices
-		this->initTexCoordsWithRect(CGRectMake((float)0, (float)0, (float)m_pTexture->getPixelsWide(), (float)m_pTexture->getPixelsHigh()));
+        if (m_pTexture)
+        {
+            this->initTexCoordsWithRect(CGRectMake((float)0, (float)0, (float)m_pTexture->getPixelsWide(), (float)m_pTexture->getPixelsHigh()));
+        }
+        else
+        {
+            this->initTexCoordsWithRect(CGRectMake((float)0, (float)0, (float)1, (float)1));
+        }
+
 		this->initIndices();
 
 #if CC_USES_VBO
@@ -89,8 +97,14 @@ void CCParticleSystemQuad::initTexCoordsWithRect(CGRect pointRect)
         pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
         pointRect.size.height * CC_CONTENT_SCALE_FACTOR());
 
-    GLfloat wide = (GLfloat)m_pTexture->getPixelsWide();
-    GLfloat high = (GLfloat)m_pTexture->getPixelsHigh();
+    GLfloat wide = (GLfloat) pointRect.size.width;
+    GLfloat high = (GLfloat) pointRect.size.height;
+
+    if (m_pTexture)
+    {
+        wide = (GLfloat)m_pTexture->getPixelsWide();
+        high = (GLfloat)m_pTexture->getPixelsHigh();
+    }
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
     GLfloat left = (rect.origin.x*2+1) / (wide*2);

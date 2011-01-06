@@ -224,11 +224,11 @@ void CCNode::setPosition(CGPoint newPosition)
 	m_tPosition = newPosition;
 	if (CC_CONTENT_SCALE_FACTOR() == 1)
 	{
-		m_tAnchorPointInPixels = m_tPosition
+		m_tPositionInPixels = m_tPosition
 	}
 	else
 	{
-		m_tAnchorPointInPixels = ccpMult(newPosition, CC_CONTENT_SCALE_FACTOR());
+		m_tPositionInPixels = ccpMult(newPosition, CC_CONTENT_SCALE_FACTOR());
 	}
 
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
@@ -239,11 +239,11 @@ void CCNode::setPosition(CGPoint newPosition)
 
 void CCNode::setPositionInPixels(CGPoint newPosition)
 {
-    m_tAnchorPointInPixels = newPosition;
+    m_tPositionInPixels = newPosition;
 
 	if ( CC_CONTENT_SCALE_FACTOR() == 1)
 	{
-		m_tPosition = m_tAnchorPointInPixels;
+		m_tPosition = m_tPositionInPixels;
 	}
 	else
 	{
@@ -801,9 +801,9 @@ void CCNode::transform()
 		glTranslatef( RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
 	if (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPosition.y + m_tAnchorPointInPixels.y), m_fVertexZ);
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y + m_tAnchorPointInPixels.y), m_fVertexZ);
 	else if ( m_tPositionInPixels.x !=0 || m_tPositionInPixels.y !=0 || m_fVertexZ != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x), RENDER_IN_SUBPIXEL(m_tPosition.y), m_fVertexZ );
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y), m_fVertexZ );
 
 	// rotate
 	if (m_fRotation != 0.0f )
