@@ -15,10 +15,10 @@ KeypadTest::KeypadTest()
     setIsKeypadEnabled(true);
 
     // create a label to display the tip string
-    m_pLabel = CCLabel::labelWithString("Key Back Clicked!", "Arial", 22);
+    m_pLabel = CCLabel::labelWithString("Please press any key...", "Arial", 22);
     m_pLabel->setPosition(ccp(s.width / 2, s.height / 2));
 	addChild(m_pLabel, 0);
-    m_pLabel->setIsVisible(false);
+    // m_pLabel->setIsVisible(false);
     m_pLabel->retain();
 }
 
@@ -29,8 +29,16 @@ KeypadTest::~KeypadTest()
 
 void KeypadTest::keyBackClicked()
 {
-    m_pLabel->setIsVisible(m_bShow);
-    m_bShow = !m_bShow;
+	m_pLabel->setString("BACK clicked!");
+    // m_pLabel->setIsVisible(m_bShow);
+    // m_bShow = !m_bShow;
+}
+
+void KeypadTest::keyMenuClicked()
+{
+	m_pLabel->setString("MENU clicked!");
+	// m_pLabel->setIsVisible(m_bShow);
+	// m_bShow = !m_bShow;
 }
 
 void KeypadTestScene::runThisTest()
