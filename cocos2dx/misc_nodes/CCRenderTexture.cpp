@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
-#include "Support/ccUtils.h"
+#include "support/ccUtils.h"
 
 #include <GLES/glext.h>
 
