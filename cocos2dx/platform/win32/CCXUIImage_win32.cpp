@@ -135,17 +135,17 @@ UIImage::~UIImage(void)
 	delete []m_imageInfo.data;
 }
 
-bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageType)
+bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageType)
 {
 	bool bRet = false;
 
 	switch (imageType)
 	{
-	case kImageFormatPNG:
+	case kCCImageFormatPNG:
 		// use libpng load image
 		bRet =  loadPng(strPath.c_str());
 		break;
-	case kImageFormatJPG:
+	case kCCImageFormatJPG:
 		bRet = loadJpg(strPath.c_str());
 		break;
 	default:
