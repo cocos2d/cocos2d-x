@@ -284,11 +284,10 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 		delete m_pobOpenGLView; // [openGLView_ release]
 		m_pobOpenGLView = pobOpenGLView;
 
-		setGLDefaultValues();
-
 		// set size
 		m_obWinSizeInPoints = CCNSSizeToCGSize(m_pobOpenGLView->getSize());
 		m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
+        setGLDefaultValues();
 
 		if (m_fContentScaleFactor != 1)
 		{
@@ -297,7 +296,7 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 
  		CCTouchDispatcher *pTouchDispatcher = CCTouchDispatcher::sharedDispatcher();
  		m_pobOpenGLView->setTouchDelegate(pTouchDispatcher);
-        pTouchDispatcher->setDispatchEvents(true);		
+        pTouchDispatcher->setDispatchEvents(true);
 	}
 }
 

@@ -291,7 +291,7 @@ void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 	
 
 	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(x,y,85,121));
-	(CCNode*)(sheet)->addChild(sprite);
+	sheet->addChild(sprite);
 
 	sprite->setPosition( ccp( p.x, p.y) );
 
@@ -646,7 +646,7 @@ SpriteSheetReorder::SpriteSheetReorder()
 	
 	for(int i=0; i<10; i++)
 	{
-		CCSprite* s1 = CCSprite::spriteWithSpriteSheet(asmtest, CGRectMake(0, 0, 50, 50));
+		CCSprite* s1 = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )asmtest, CGRectMake(0, 0, 50, 50));
 		a->addObject(s1);
 		asmtest->addChild(s1, 10);
 	}
@@ -718,7 +718,7 @@ SpriteSheetReorderIssue744::SpriteSheetReorderIssue744()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 15);
 	addChild(sheet, 0, kTagSpriteSheet);		
 
-	CCSprite* sprite = CCSprite::spriteWithSpriteSheet(sheet,CGRectMake(0, 0, 85, 121));
+	CCSprite* sprite = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )sheet,CGRectMake(0, 0, 85, 121));
 	sprite->setPosition( ccp(s.width/2, s.height/2) );
 	sheet->addChild(sprite, 3);
 	sheet->reorderChild(sprite, 1);
@@ -1871,12 +1871,12 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 	CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage("animations/dragon_animation.png");
 	
 	// manually add frames to the frame cache
-	CCSpriteFrame *frame0 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame1 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame2 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*2, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame3 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*3, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame4 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*1, 132, 132), CGPointZero);
-	CCSpriteFrame *frame5 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*1, 132, 132), CGPointZero);
+	CCSpriteFrame *frame0 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*0, 132, 132));
+	CCSpriteFrame *frame1 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*0, 132, 132));
+	CCSpriteFrame *frame2 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*2, 132*0, 132, 132));
+	CCSpriteFrame *frame3 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*3, 132*0, 132, 132));
+	CCSpriteFrame *frame4 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*1, 132, 132));
+	CCSpriteFrame *frame5 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*1, 132, 132));
 	
 	
 	//

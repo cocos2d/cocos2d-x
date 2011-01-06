@@ -84,7 +84,7 @@ namespace cocos2d{
 			{
 				s.height -= r.size.height;
 			}
-			this->m_tPosition = ccp(s.width/2, s.height/2);
+			setPosition(ccp(s.width/2, s.height/2));
 
 			int z=0;
 

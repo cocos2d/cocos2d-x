@@ -74,7 +74,7 @@ namespace cocos2d{
 
 			// XXX: in v0.7, winSize should return the visible size
 			// XXX: so the bar calculation should be done there
-			this->m_tPosition = ccp(s.width/2, s.height/2);
+			setPosition(ccp(s.width/2, s.height/2));
 
 			int z=0;
 
