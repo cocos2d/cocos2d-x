@@ -50,7 +50,8 @@ public:
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
-
+    bool    canSetContentScaleFactor();
+    void    setContentScaleFactor(float contentScaleFactor);
 
 	virtual bool Create(LPCTSTR pTitle, int w, int h);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);

@@ -403,4 +403,15 @@ int CCXEGLView::setDeviceOrientation(int eOritation)
 	return m_eInitOrientation;
 }
 
+bool CCXEGLView::canSetContentScaleFactor()
+{
+    // can scale content?
+    return false;
+}
+
+void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+{
+    // if it supports scaling content, set it
+}
+
 }       // end of namespace cocos2d
