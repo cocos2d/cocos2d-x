@@ -50,6 +50,16 @@ bool CCXEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
 }
+    
+    bool CCXEGLView::canSetContentScaleFactor()
+    {
+       return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)];
+    }
+    
+    void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+    {
+        [[EAGLView sharedEGLView] setContentScaleFactor:contentScaleFactor];
+    }
 
 void CCXEGLView::release()
 {

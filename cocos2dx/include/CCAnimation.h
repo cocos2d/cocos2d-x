@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "NSMutableArray.h"
 #include "CGGeometry.h"
 #include "CCXCocos2dDefine.h"
-#include <string.h>
+#include <string>
 
 namespace   cocos2d {
 	class CCSpriteFrame;

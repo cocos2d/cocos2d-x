@@ -30,12 +30,12 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-enum eImageFormat
+typedef enum eImageFormat
 {
 	kCCImageFormatJPG       = 0,
 	kCCImageFormatPNG       = 1,
     kCCImageFormatRawData   = 2
-};
+} tImageFormat;
 /**
 @brief CCRenderTexture is a generic rendering target. To render things into it,
 simply construct a render target, call begin on it, call visit on any cocos

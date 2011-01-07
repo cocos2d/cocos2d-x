@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "platform/CCNS.h"
 #include "CCDirector.h"
 #include "CCScene.h"
 #include "NSMutableArray.h"
@@ -825,7 +826,11 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 
 	///@todo SD device iphone specific
 // 	if ([[UIScreen mainScreen] scale] == 1.0)
-// 		return NO;	float newScale = enabled ? 2 : 1;	setContentScaleFactor(newScale);
+// 		return NO;
+
+	float newScale = enabled ? 2 : 1;
+	setContentScaleFactor(newScale);
+
 	return true;
 }
 

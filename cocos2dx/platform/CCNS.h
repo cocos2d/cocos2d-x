@@ -30,7 +30,7 @@ THE SOFTWARE.
 #ifdef CCX_PLATFORM_IPHONE
 
 #include <Availability.h>
-#include <Foundation/Foundation.h> 
+//#include <Foundation/Foundation.h> 
 
 #define CCRectFromString(__r__)		CGRectFromString(__r__)
 #define CCPointFromString(__p__)	CGPointFromString(__p__)
@@ -43,15 +43,11 @@ THE SOFTWARE.
 #define CCTextAlignmentLeft			UITextAlignmentLeft
 #define CCTextAlignmentRight		UITextAlignmentRight
 
-#define MacGLView					void
-#define NSWindow					void
-
 
 #elif defined(CCX_PLATFORM_MAC)
 
 #include <Availability.h>
 #include <Foundation/Foundation.h> 
-#include "platform/MacGLView.h"
 
 #define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
 #define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )
@@ -79,9 +75,6 @@ THE SOFTWARE.
 #define CCTextAlignmentCenter		0
 #define CCTextAlignmentLeft			0
 #define CCTextAlignmentRight		0
-
-#define MacGLView					void
-#define NSWindow					void
 
 #endif
 
