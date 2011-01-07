@@ -47,6 +47,8 @@ public:
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
+    bool    canSetContentScaleFactor();
+    void    setContentScaleFactor(float contentScaleFactor); 
     
 private:
 	int m_nWidth;

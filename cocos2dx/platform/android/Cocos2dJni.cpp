@@ -77,6 +77,6 @@ extern "C"
 
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env)
 	{
-		cocos2d::CCDirector::sharedDirector()->preMainLoop();
+		cocos2d::CCDirector::sharedDirector()->mainLoop();
 	}
 }

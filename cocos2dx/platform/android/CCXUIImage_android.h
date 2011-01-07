@@ -63,7 +63,7 @@ public:
 					  - kImageFormatJPG -> jpeg
     @return  true if load correctly
 	 */
-	bool initWithContentsOfFile(const std::string &strPath, tImageFormat imageType = kImageFormatPNG);
+	bool initWithContentsOfFile(const std::string &strPath, eImageFormat imageType = kCCImageFormatPNG);
 	/**
 	Load image from stream buffer.
 	@param pBuffer  stream buffer that hold the image data
