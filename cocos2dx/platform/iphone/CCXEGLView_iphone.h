@@ -42,6 +42,8 @@ public:
 
     CGSize  getSize();
     bool    isOpenGLReady();
+    bool    canSetContentScaleFactor();
+    void    setContentScaleFactor(float contentScaleFactor);
     
     // keep compatible
     void    release();
