@@ -1012,6 +1012,10 @@
 				Name="uphone"
 				>
 				<File
+					RelativePath="..\platform\uphone\CCNS_uphone.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\platform\uphone\CCTime.cpp"
 					>
 				</File>

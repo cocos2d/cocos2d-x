@@ -286,7 +286,7 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 		
 
 		// set size
-		m_obWinSizeInPixels = m_obWinSizeInPoints = CCNSSizeToCGSize([pobOpenGLView bounds].size);
+		m_obWinSizeInPixels = m_obWinSizeInPoints = NSSizeToCGSize([pobOpenGLView bounds].size);
 
 		setGLDefaultValues();	
 

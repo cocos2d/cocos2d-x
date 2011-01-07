@@ -21,19 +21,49 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "platform/CCNS.h"
+#import <Availability.h>
+#import <Foundation/Foundation.h>
 
-#ifndef __PLATFOMR_CCNS_H__
-#define __PLATFOMR_CCNS_H__
-
-#include "CGGeometry.h"
-
-namespace cocos2d
+static cocos2d::CGRect static_CCRectFromString(const char* pszContent)
 {
-    CGRect CCRectFromString(const char* pszContent);
-	CGPoint CCPointFromString(const char* pszContent);
-	CGSize CCSizeFromString(const char* pszContent);
+    CGRect rect = CGRectFromString([NSString stringWithUTF8String: pszContent]);
+    cocos2d::CGRect ret(rect.x, rect.y, rect.width, rect.height);
+    
+    return ret;
 }
 
-#endif // __PLATFOMR_CCNS_H__
+static cocos2d::CGPoint static_CCPointFromString(const char* pszContent)
+{
+    CGPoint point = CGPointFromString([NSString stringWithUTF8String: pszContent]);
+    cocos2d::CGPoint ret(point.x, point.y);
+    
+    return ret;
+}
 
+static cocos2d::CGSize static_CCSizeFromString(const char* pszContent)
+{
+    CGSize size = CGSizeFromString([NSString stringWithUTF8String: pszContent]);
+    cocos2d::CGSize ret(size.width, size.height);
+    
+    return ret;
+}
 
+///@todo implement the functions
+namespace cocos2d
+{
+	CGRect CCRectFromString(const char* pszContent)
+	{
+        return static_CCRectFromString(pszContent);
+	}
+
+	CGPoint CCPointFromString(const char* pszContent)
+	{
+        return static_CCPointFromString(pszContent);
+	}
+
+	CGSize CCSizeFromString(const char* pszContent)
+	{
+        return static_CCSizeFromString(pszContent);
+	}
+}
