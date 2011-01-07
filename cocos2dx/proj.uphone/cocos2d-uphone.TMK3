@@ -62,3 +62,4 @@ EXCLUDEFILE= ./platform/uphone/NewDeleteOp.cpp
 EXCLUDEFILE= ./platform/win32/
 EXCLUDEFILE= ./platform/android/
 EXCLUDEFILE= ./platform/iphone/
+EXCLUDEFILE= ./platform/mac/
