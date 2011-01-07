@@ -286,7 +286,7 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 		m_pobOpenGLView = pobOpenGLView;
 
 		// set size
-		m_obWinSizeInPoints = CCNSSizeToCGSize(m_pobOpenGLView->getSize());
+		m_obWinSizeInPoints = m_pobOpenGLView->getSize();
 		m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
         setGLDefaultValues();
 
@@ -828,7 +828,7 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 // 	if ([[UIScreen mainScreen] scale] == 1.0)
 // 		return NO;
 
-	float newScale = enabled ? 2 : 1;
+	float newScale = (float)(enabled ? 2 : 1);
 	setContentScaleFactor(newScale);
 
 	return true;

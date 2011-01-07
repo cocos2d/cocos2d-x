@@ -21,19 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "platform/CCNS.h"
 
-#ifndef __PLATFOMR_CCNS_H__
-#define __PLATFOMR_CCNS_H__
-
-#include "CGGeometry.h"
-
+///@todo implement the functions
 namespace cocos2d
 {
-    CGRect CCRectFromString(const char* pszContent);
-	CGPoint CCPointFromString(const char* pszContent);
-	CGSize CCSizeFromString(const char* pszContent);
+	CGRect CCRectFromString(const char* pszContent)
+	{
+        return CGRectZero;
+	}
+
+	CGPoint CCPointFromString(const char* pszContent)
+	{
+        return CGPointZero;
+	}
+
+	CGSize CCSizeFromString(const char* pszContent)
+	{
+        return CGSizeZero;
+	}
 }
-
-#endif // __PLATFOMR_CCNS_H__
-
-
