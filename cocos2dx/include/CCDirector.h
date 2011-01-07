@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __CCDIRECTOR_H__
 #define __CCDIRECTOR_H__
 
+#include "platform/CCPlatformMacros.h"
 #include "ccConfig.h"
 #include "ccTypes.h"
 #include "CCXCocos2dDefine.h"
@@ -35,9 +36,8 @@ THE SOFTWARE.
 #include "CCXEGLView.h"
 #include "ccxCommon.h"
 #include "CCGL.h"
-#include "platform/CCNS.h"
-
 #include <assert.h>
+
 namespace   cocos2d {
 
 	enum  {

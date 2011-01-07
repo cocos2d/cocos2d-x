@@ -21,53 +21,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#import <Foundation/Foundation.h>
-#import "CCDirectorCaller.h"
-#import "CCDirector.h"
+#ifndef __CC_PLATFORM_MACROS_H__
+#define __CC_PLATFORM_MACROS_H__
 
-static id s_sharedDirectorCaller;
+/**
+ * define some platform specific macros
+ */
+#include "config_platform.h"
 
-@interface NSObject(CADisplayLink)
-+(id) displayLinkWithTarget: (id)arg1 selector:(SEL)arg2;
--(void) addToRunLoop: (id)arg1 forMode: (id)arg2;
--(void) setFrameInterval: (int)interval;
--(void) invalidate;
-@end
+#ifdef CCX_PLATFORM_MOBILE
+    #define MacGLView					void
+    #define NSWindow					        void
+#elif defined(CCX_PLATFORM_PC)
+    #include "platform/MacGLView.h"
+#endif
 
-@implementation CCDirectorCaller
-
-+(id) sharedDirectorCaller
-{
-	if (s_sharedDirectorCaller == nil)
-	{
-		s_sharedDirectorCaller = [CCDirectorCaller new];
-	}
-	
-	return s_sharedDirectorCaller;
-}
-
-+(void) destroy
-{
-	[s_sharedDirectorCaller release];
-}
-
--(void) dealloc
-{
-	[displayLink invalidate];
-	[displayLink release];
-	[super dealloc];
-}
-
--(void) startMainLoop
-{
-	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-	[displayLink setFrameInterval: 1];
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-}
-					  
--(void) doCaller: (id) sender
-{
-	cocos2d::CCDirector::sharedDirector()->mainLoop();
-}
-
-@end
+#endif // __CC_PLATFORM_MACROS_H__
