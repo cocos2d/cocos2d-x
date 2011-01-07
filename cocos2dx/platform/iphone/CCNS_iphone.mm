@@ -21,14 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "platform/CCNS.h"
+
 #import <Availability.h>
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#include "platform/CCNS.h"
 
 static cocos2d::CGRect static_CCRectFromString(const char* pszContent)
 {
     CGRect rect = CGRectFromString([NSString stringWithUTF8String: pszContent]);
-    cocos2d::CGRect ret(rect.x, rect.y, rect.width, rect.height);
+    cocos2d::CGRect ret(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     
     return ret;
 }
