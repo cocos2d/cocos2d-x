@@ -7,8 +7,6 @@
 
 using namespace cocos2d;
 
-#define RESOURCE_PATH	"/data/app/org.cocos2dx.tests-1.apk"
-
 extern "C"
 {
 	
