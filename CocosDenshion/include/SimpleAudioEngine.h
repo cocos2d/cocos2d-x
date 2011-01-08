@@ -159,28 +159,19 @@ public:
     @brief  		preload a compressed audio file
     @details	    the compressed audio will be decode to wave, then write into an 
     internal buffer in SimpleaudioEngine
-    @param[in]		pszFilePath		the relative path to currently executing program
-    @return         >0              preload success, return the SoundId
-    @return         ==0             can't read the file, or unsupported audio format
     */
-    int preloadEffect(const char* pszFilePath);
+    void preloadEffect(const char* pszFilePath);
 
     /**
     @brief  		unload the preloaded effect from internal buffer
-    @param[in]		nSoundId		the sound id returned from preloadEffect
+    @param[in]		pszFilePath		The path of the effect file,or the FileName of T_SoundResInfo
     */
-    void unloadEffect(int nSoundId);
+    void unloadEffect(const char* pszFilePath);
 
 	/**
 	@brief          unload all preloaded effect from internal buffer
 	*/
 	void unloadEffectAll();
-
-    /**
-    @brief          play the preloaded effect
-    @param[in]		nSoundId		the sound id returned from preloadEffect
-    */
-    void playPreloadedEffect(int nSoundId);
 };
 
 } // end of namespace CocosDenshion
