@@ -317,8 +317,10 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 	
 #endif // __IPHONE_4_0
 	
-// 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
+ 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
+        {
 // 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+        }
 
 #if COCOS2D_DEBUG
 	CHECK_GL_ERROR();
