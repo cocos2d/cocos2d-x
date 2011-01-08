@@ -1,10 +1,6 @@
-@interface ES1Renderer (private)
 
-- (GLenum) convertPixelFormat:(int) pixelFormat;
-
-@end
-
-
+#import "ES1Renderer.h"
+#import "support/opengl_support/OpenGL_Internal.h"
 @implementation ES1Renderer
 
 @synthesize context=context_;
