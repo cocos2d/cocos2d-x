@@ -43,8 +43,12 @@
 package org.cocos2dx.lib;
 
 import android.app.Activity;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 public class Cocos2dxActivity extends Activity{
 
@@ -59,6 +63,24 @@ public class Cocos2dxActivity extends Activity{
         screenHeight = dm.heightPixels;
     }
     
+    protected void setPackgeName(String packageName) {
+    	String apkFilePath = "";
+        ApplicationInfo appInfo = null;
+        PackageManager packMgmr = getApplication().getPackageManager();
+        try {
+            appInfo = packMgmr.getApplicationInfo(packageName, 0);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Unable to locate assets, aborting...");
+        }
+        apkFilePath = appInfo.sourceDir;
+        Log.w("apk path", apkFilePath);
+
+        // add this link at the renderer class
+        nativeSetPaths(apkFilePath);
+    }
+    
     public static int screenWidth;
     public static int screenHeight;
+    private static native void nativeSetPaths(String apkPath);
 }
