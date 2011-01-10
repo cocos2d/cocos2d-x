@@ -295,12 +295,14 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     case EVENT_ScreenSwitchNotify:
         if (! pEvent->sParam1)  // turn off screen
         {
-            CCDirector::sharedDirector()->pause();
+            // CCDirector::sharedDirector()->pause();
+            CCXApplication::sharedApplication()->applicationDidEnterBackground();
             CCXApplication::sharedApplication()->StopMainLoop();
         }
         else
         {
-            CCDirector::sharedDirector()->resume();
+            // CCDirector::sharedDirector()->resume();
+            CCXApplication::sharedApplication()->applicationWillEnterForeground();
             CCXApplication::sharedApplication()->StartMainLoop();
         }
         break;
