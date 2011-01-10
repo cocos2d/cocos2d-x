@@ -977,11 +977,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCPlatformMacros.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCTransition_mobile.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\platform\CCXApplication_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\ccxCommon_platform.h"
 				>
 			</File>
 			<File
