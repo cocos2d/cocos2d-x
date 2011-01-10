@@ -58,7 +58,7 @@ public:
     @brief Release the shared Engine object
     @warning It must be called before the application exit, or a memroy leak will be casued.
     */
-	static void release();
+	static void end();
 
     /**
     @brief  Set the ResourcePath,we will find resource in this path

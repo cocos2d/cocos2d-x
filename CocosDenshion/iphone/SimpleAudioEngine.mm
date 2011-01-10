@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "SimpleAudioEngine.h"
 #include "SimpleAudioEngine_objc.h"
 
-static void static_release()
+static void static_end()
 {
     [SimpleAudioEngine  end];
 }
@@ -134,7 +134,7 @@ namespace CocosDenshion
 		return s_pEngine;
 	}
 
-	void SimpleAudioEngine::release()
+	void SimpleAudioEngine::end()
 	{
 		if (s_pEngine)
 		{
@@ -142,7 +142,7 @@ namespace CocosDenshion
 			s_pEngine = NULL;
 		}
         
-                static_release();
+                static_end();
 	}
 
 	void SimpleAudioEngine::setResourcePath(const char *pszResourcePath)
