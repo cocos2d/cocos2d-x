@@ -60,6 +60,11 @@ bool CCXEGLView::isOpenGLReady()
     {
         [[EAGLView sharedEGLView] setContentScaleFactor:contentScaleFactor];
     }
+    
+    void CCXEGLView::setAnimationInterval(double interval)
+    {
+        [CCDirectorCaller setAnimationInterval: interval]
+    }
 
 void CCXEGLView::release()
 {

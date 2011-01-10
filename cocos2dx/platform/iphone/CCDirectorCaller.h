@@ -28,6 +28,7 @@
 }
 -(void) startMainLoop;
 -(void) doCaller: (id) sender;
+-(void) setAnimationInterval:(double)interval;
 +(id) sharedDirectorCaller;
 +(void) destroy;
 @end
