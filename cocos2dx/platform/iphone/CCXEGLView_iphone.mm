@@ -63,7 +63,7 @@ bool CCXEGLView::isOpenGLReady()
     
     void CCXEGLView::setAnimationInterval(double interval)
     {
-        [CCDirectorCaller setAnimationInterval: interval]
+        [[CCDirectorCaller sharedDirectorCaller ]setAnimationInterval: interval];
     }
 
 void CCXEGLView::release()
