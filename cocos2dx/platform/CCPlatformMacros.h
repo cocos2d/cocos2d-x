@@ -36,4 +36,16 @@
     #include "platform/MacGLView.h"
 #endif
 
+/** @def CC_ENABLE_CACHE_TEXTTURE_DATA
+Enable it if you want to cache the texture data.
+Basically,it's only enabled in android
+
+It's new in cocos2d-x since v0.99.5
+*/
+#ifdef CCX_PLATFORM_ANDROID
+    #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
+#else
+    #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
+#endif
+
 #endif // __CC_PLATFORM_MACROS_H__

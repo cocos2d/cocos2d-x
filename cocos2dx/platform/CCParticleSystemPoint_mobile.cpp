@@ -96,6 +96,10 @@ void CCParticleSystemPoint::draw()
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
 
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_nTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
+#endif
+
 	glVertexPointer(2,GL_FLOAT,kPointSize,0);
 
 	glColorPointer(4, GL_FLOAT, kPointSize,(GLvoid*) offsetof(ccPointSprite,colors) );

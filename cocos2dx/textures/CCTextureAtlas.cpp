@@ -342,6 +342,16 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 
 
 #if CC_USES_VBO
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+#endif
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
 
 	// XXX: update is done in draw... perhaps it should be done in a timer

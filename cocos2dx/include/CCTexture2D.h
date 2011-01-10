@@ -213,6 +213,11 @@ public:
 	*/
 	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
 
+    /** Reload all textures
+    It's only useful when the value of CC_ENABLE_CACHE_TEXTTURE_DATA is 1
+    */
+    static void reloadAllTextures();
+
 private:
 	bool initPremultipliedATextureWithImage(UIImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
