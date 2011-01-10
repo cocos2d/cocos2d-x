@@ -83,6 +83,12 @@ public:
     void setResourceEntry(const void* pResEntry);
 
     /**
+     @brief Preload background music
+     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
+     */
+    void preloadBackgroundMusic(const char* pszFilePath);
+    
+    /**
     @brief Play background music
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
@@ -122,24 +128,24 @@ public:
     /**
     @brief The volume of the background music max value is 100,the min value is 0
     */
-    int GetBackgroundMusicVolume();
+    int getBackgroundMusicVolume();
 
     /**
     @brief set the volume of background music
     @param volume must be in 0~100
     */
-    void SetBackgroundMusicVolume(int volume);
+    void setBackgroundMusicVolume(int volume);
 
     /**
     @brief The volume of the effects max value is 100,the min value is 0
     */
-    int GetEffectsVolume();
+    int getEffectsVolume();
 
     /**
     @brief set the volume of sound effecs
     @param volume must be in 0~100
     */
-    void SetEffectsVolume(int volume);
+    void setEffectsVolume(int volume);
 
     // for sound effects
     /**
