@@ -64,6 +64,11 @@ static id s_sharedDirectorCaller;
 	[displayLink setFrameInterval: 1];
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
+
+-(void) setAnimationInterval:(double)interval
+{
+        [displayLink setFrameInterval: interval];
+}
 					  
 -(void) doCaller: (id) sender
 {

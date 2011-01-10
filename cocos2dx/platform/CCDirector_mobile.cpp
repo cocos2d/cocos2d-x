@@ -102,9 +102,6 @@ bool CCDirector::init(void)
 	m_bDisplayFPS = false;
 	m_nFrames = 0;
 	m_pszFPS = new char[10];
-	m_fExpectedFrameRate = (ccTime)(1 / m_dAnimationInterval);
-	m_fComputeFrameRateDeltaTime = 0;
-	m_pLastComputeFrameRate = new struct cc_timeval();
 	m_pLastUpdate = new struct cc_timeval();
 
 	// paused ?
@@ -147,9 +144,6 @@ CCDirector::~CCDirector(void)
 
 	// delete m_pLastUpdate
 	CCX_SAFE_DELETE(m_pLastUpdate);
-
-	// delete last compute time
-	CCX_SAFE_DELETE(m_pLastComputeFrameRate);
 
     CCKeypadDispatcher::purgeSharedDispatcher();
 
@@ -678,61 +672,22 @@ void CCDirector::mainLoop(void)
 // updates the FPS every frame
 void CCDirector::showFPS(void)
 {
-	sprintf(m_pszFPS, "%.1f", m_fFrameRate);
-	m_pFPSLabel->setString(m_pszFPS);
-
-    m_pFPSLabel->draw();
-}
-#endif // CC_DIRECTOR_FAST_FPS
-
-void CCDirector::calculateFramerateDeltaTime(void)
-{
-	struct cc_timeval now;
-
-	if (CCTime::gettimeofdayCocos2d(&now, NULL) != 0)
-	{
-		CCLOG("error in gettimeofday");
-		m_fComputeFrameRateDeltaTime = 0;
-		return;
-	}
-
-	m_fComputeFrameRateDeltaTime = (now.tv_sec - m_pLastComputeFrameRate->tv_sec) + (now.tv_usec - m_pLastComputeFrameRate->tv_usec) / 1000000.0f;
-	m_fComputeFrameRateDeltaTime = MAX(0, m_fComputeFrameRateDeltaTime);
-
-	*m_pLastComputeFrameRate = now;
-}
-
-void CCDirector::computeFrameRate()
-{
-	static bool bInvoked = true;
-
-	// compute delta time
-	calculateFramerateDeltaTime();
-
-	// only add frames if the director really draw the scene
-	if (bInvoked)
-	{
-		m_nFrames++;
-	}
-
-	m_fAccumDt += m_fComputeFrameRateDeltaTime;
+	m_nFrames++;
+	m_fAccumDt += m_fDeltaTime;
 
 	if (m_fAccumDt > CC_DIRECTOR_FPS_INTERVAL)
 	{
 		m_fFrameRate = m_nFrames / m_fAccumDt;
+		m_nFrames = 0;
+		m_fAccumDt = 0;
 
-		if (m_fFrameRate > m_fExpectedFrameRate)
-		{
-			bInvoked = false;
-		}
-		else
-		{
-			m_nFrames = 0;
-			m_fAccumDt = 0;
-			bInvoked = true;
-		}
+		sprintf(m_pszFPS, "%.1f", m_fFrameRate);
+		m_pFPSLabel->setString(m_pszFPS);
 	}
+
+    m_pFPSLabel->draw();
 }
+#endif // CC_DIRECTOR_FAST_FPS
 
 
 void CCDirector::showProfilers()
@@ -957,23 +912,17 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
+	m_pobOpenGLView->setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
 {
  	if (! m_bInvalid)
  	{
-		// compute frame rate
-		computeFrameRate();
-
-		// control frame rate
-		if (m_fFrameRate <= m_fExpectedFrameRate)
-		{
- 			drawScene();
+ 		drawScene();
 	 
- 			// release the objects
- 			NSPoolManager::getInstance()->pop();
-		}		
+ 		// release the objects
+ 		NSPoolManager::getInstance()->pop();		
  	}
 }
 
@@ -985,7 +934,6 @@ void CCDisplayLinkDirector::stopAnimation(void)
 void CCDisplayLinkDirector::setAnimationInterval(double dValue)
 {
 	m_dAnimationInterval = dValue;
-	m_fExpectedFrameRate = (ccTime)(1 / m_dAnimationInterval);
 	if (! m_bInvalid)
 	{
 		stopAnimation();

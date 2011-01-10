@@ -57,6 +57,7 @@ public:
     void    swapBuffers();
 	bool    canSetContentScaleFactor();
 	void    setContentScaleFactor(float contentScaleFactor);
+	void    setAnimationInterval(double interval) {};
 
 protected:
     Boolean OnPenDown(EventType* pEvent, Int32 nIndex);
