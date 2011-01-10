@@ -232,7 +232,7 @@
 
 // reset
 - (void)button12Click:(UIButton*)sender{
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->release();
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
 }
 
 /*
