@@ -38,7 +38,7 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
     return &s_SharedEngine;
 }
 
-void SimpleAudioEngine::release()
+void SimpleAudioEngine::end()
 {
 	return;
 }
@@ -107,17 +107,22 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 // effect function
 //////////////////////////////////////////////////////////////////////////
 
-int SimpleAudioEngine::playEffect(const char* pszFilePath)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
 {
-	int nRet = preloadEffect(pszFilePath);
-	if (nRet)
-	{
-		playPreloadedEffect(nRet);
-	}
+    unsigned int nRet = _Hash(pszFilePath);
+
+	preloadEffect(pszFilePath);
+
+    EffectList::iterator p = s_List.find(nRet);
+    if (p != s_List.end())
+    {
+        p->second.Rewind();
+    }
+
 	return nRet;
 }
 
-void SimpleAudioEngine::stopEffect(int nSoundId)
+void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
 	EffectList::iterator p = s_List.find(nSoundId);
 	if (p != s_List.end())
@@ -126,7 +131,7 @@ void SimpleAudioEngine::stopEffect(int nSoundId)
 	}
 }
 
-int SimpleAudioEngine::preloadEffect(const char* pszFilePath)
+void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
 	int nRet = 0;
 	do 
@@ -146,12 +151,12 @@ int SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 		s_List.erase(nRet);
 		nRet = 0;
 	} while (0);
-	return nRet;
 }
 
-void SimpleAudioEngine::unloadEffect(int nSoundId)
+void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-	s_List.erase(nSoundId);
+    unsigned int nID = _Hash(pszFilePath);
+	s_List.erase(nID);
 }
 
 void SimpleAudioEngine::unloadEffectAll()
@@ -159,34 +164,25 @@ void SimpleAudioEngine::unloadEffectAll()
 	s_List.clear();
 }
 
-void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
-{
-	EffectList::iterator p = s_List.find(nSoundId);
-	if (p != s_List.end())
-	{
-		p->second.Rewind();
-	}
-}
-
 //////////////////////////////////////////////////////////////////////////
 // volume interface
 //////////////////////////////////////////////////////////////////////////
 
-int SimpleAudioEngine::GetBackgroundMusicVolume()
+int SimpleAudioEngine::getBackgroundMusicVolume()
 {
 	return 100;
 }
 
-void SimpleAudioEngine::SetBackgroundMusicVolume(int volume)
+void SimpleAudioEngine::setBackgroundMusicVolume(int volume)
 {
 }
 
-int SimpleAudioEngine::GetEffectsVolume()
+int SimpleAudioEngine::getEffectsVolume()
 {
 	return 100;
 }
 
-void SimpleAudioEngine::SetEffectsVolume(int volume)
+void SimpleAudioEngine::setEffectsVolume(int volume)
 {
 }
 
