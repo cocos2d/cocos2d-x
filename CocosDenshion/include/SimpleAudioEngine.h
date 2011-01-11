@@ -151,15 +151,14 @@ public:
     /**
     @brief Play sound effect
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-    @return If play succeed return the effect sound ID,or return 0
     */
-    int playEffect(const char* pszFilePath);
+    unsigned int playEffect(const char* pszFilePath);
 
     /**
     @brief Stop playing sound effect
-    @param nSoundId The return value of function playEffect or preloadEffect
+    @param nSoundId The return value of function playEffect
     */
-    void stopEffect(int nSoundId);
+    void stopEffect(unsigned int nSoundId);
 
     /**
     @brief  		preload a compressed audio file

@@ -7,7 +7,7 @@
 //
 //---┤编译器信息├---
 //   编译器名称: TR3C.exe 
-//   编译器版本: TG3 资源编译器 版本V1.5  Build 92
+//   编译器版本: TG3 资源编译器 版本V1.5  Build 94
 //
 //---┤注意├---
 // 警告：未经允许，任何人不准擅自修改此文件!!!否则后果自负!
@@ -95,7 +95,7 @@ const ResWindowType TESTAU_Form1002 =
   0X3, // BackColor
   0X2, // ForeColor
   {{0, 0}, {320, 480}}, // RectangleType windowBounds
-  6, // 控件个数
+  10, // 控件个数
   {//ResWindowExAttrType
     0,//closeBtnStyle
     0,//actionBtnStyle
@@ -302,7 +302,7 @@ const ResButtonType TESTAU_LoadEffect=//
     1,//TransParent
     0//OwnerDraw
   },//属性标志结束
-  {{5, 150}, {107, 30}},//rect
+  {{5, 250}, {107, 30}},//rect
   0x3,//backColor
   0x2,//boreColor
   0x4,//selectedBackColor
@@ -321,74 +321,6 @@ const ResButtonType TESTAU_LoadEffect=//
 };//TESTAU_LoadEffect定义结束
 
 //----------------------- Button TESTAU_LoadEffect属性定义 End------------------------
-
-//----------------------- Button TESTAU_PlayLoaded属性定义 Begin------------------------
-/*"PlayLoadedEffect"*/
-const TUChar TESTAU_PlayLoadedCaption[]={0x0050,0x006C,0x0061,0x0079,0x004C,0x006F,0x0061,0x0064,0x0065,0x0064,0x0045,0x0066,0x0066,0x0065,0x0063,0x0074,0x0000};
-
-const ResButtonType TESTAU_PlayLoaded=//
-{
-  {//资源公共头部定义
-    TESTAU_ID_Form1002_PlayLoaded, //资源ID号 
-    RES_CLASS_BUTTON,
-    sizeof(ResButtonType),//大小
-    TESTAU_ID_Form1002,//父容器资源ID 
-    0,//Tag
-    0//StyleOption
-  },//资源公共头部定义结束
-  {//属性标志
-    1,//enabled
-    1,//visibled
-    0,//ctl3D
-    1,//tabStop
-    0,//readOnly
-    0,//imeEnable
-    0,//wordWrap
-    0,//topLeftIsLock
-    0,//check 
-    0,//multiLine,(nouse here) 
-    0,//autoSize,(nouse here)
-    0,//modal,(Form使用) 
-    0,//numeric,(nouse here)
-    0,//autoShift,(nouse here)
-    0,//dynamicSize,(nouse here)
-    0,//underLine,(nouse here)
-    0,//bIClose,(nouse here)
-    0,//HasStatusBar,(nouse here)
-    0,//bIAction,(nouse here)
-    0,//bIMaximize,(nouse here)
-    0,//ForceShowTitle,(nouse here)
-    0,//graphical
-    0,//sbmHasVertical,垂直滚动条
-    0,//sbmHasHorizontal，水平滚动条
-    0,//sbmAuto,滚动条自动出现
-    0,//hasImage
-    0,//hasCheckBox
-    1,//UseSYSDefColor
-    0,//Smooth
-    0,//ShowText
-    1,//TransParent
-    0//OwnerDraw
-  },//属性标志结束
-  {{5, 190}, {160, 30}},//rect
-  0x3,//backColor
-  0x2,//boreColor
-  0x4,//selectedBackColor
-  0x5,//selectedForeColor
-  0x6,//focusBackColor
-  0x7,//focusForeColor
-  (TUChar *)TESTAU_PlayLoadedCaption,//Caption
-  0,//charSet
-  stdFont,//Font
-  -1,//BitmapID
-  -1,//SelectedBitmapID
-  -1,//FocusBitmapID
-  0,//Style
-  4,//TabOrder
-  0//TabOrderGroup
-};//TESTAU_PlayLoaded定义结束
-
-//----------------------- Button TESTAU_PlayLoaded属性定义 End------------------------
 
 //----------------------- Button TESTAU_PlayEffect属性定义 Begin------------------------
 /*"PlayEffect"*/
@@ -438,7 +370,7 @@ const ResButtonType TESTAU_PlayEffect=//
     1,//TransParent
     0//OwnerDraw
   },//属性标志结束
-  {{5, 250}, {107, 30}},//rect
+  {{5, 288}, {107, 30}},//rect
   0x3,//backColor
   0x2,//boreColor
   0x4,//selectedBackColor
@@ -452,7 +384,7 @@ const ResButtonType TESTAU_PlayEffect=//
   -1,//SelectedBitmapID
   -1,//FocusBitmapID
   0,//Style
-  5,//TabOrder
+  4,//TabOrder
   0//TabOrderGroup
 };//TESTAU_PlayEffect定义结束
 
@@ -506,7 +438,7 @@ const ResButtonType TESTAU_UnLoadBtn=//
     1,//TransParent
     0//OwnerDraw
   },//属性标志结束
-  {{135, 150}, {120, 30}},//rect
+  {{125, 250}, {120, 30}},//rect
   0x3,//backColor
   0x2,//boreColor
   0x4,//selectedBackColor
@@ -520,19 +452,363 @@ const ResButtonType TESTAU_UnLoadBtn=//
   -1,//SelectedBitmapID
   -1,//FocusBitmapID
   0,//Style
-  6,//TabOrder
+  5,//TabOrder
   0//TabOrderGroup
 };//TESTAU_UnLoadBtn定义结束
 
 //----------------------- Button TESTAU_UnLoadBtn属性定义 End------------------------
-const ResCommonType * const TESTAU_Form1002_ControlList[6]=
+
+//----------------------- Button TESTAU_PauseBack属性定义 Begin------------------------
+/*"Pause"*/
+const TUChar TESTAU_PauseBackCaption[]={0x0050,0x0061,0x0075,0x0073,0x0065,0x0000};
+
+const ResButtonType TESTAU_PauseBack=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_PauseBack, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{209, 60}, {100, 30}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_PauseBackCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  6,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_PauseBack定义结束
+
+//----------------------- Button TESTAU_PauseBack属性定义 End------------------------
+
+//----------------------- Button TESTAU_BackVolumeUp属性定义 Begin------------------------
+/*"BackVolumeUp"*/
+const TUChar TESTAU_BackVolumeUpCaption[]={0x0042,0x0061,0x0063,0x006B,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0055,0x0070,0x0000};
+
+const ResButtonType TESTAU_BackVolumeUp=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_BackVolumeUp, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 135}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_BackVolumeUpCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  7,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_BackVolumeUp定义结束
+
+//----------------------- Button TESTAU_BackVolumeUp属性定义 End------------------------
+
+//----------------------- Button TESTAU_BackVolumeDown属性定义 Begin------------------------
+/*"BackVolumeDown"*/
+const TUChar TESTAU_BackVolumeDownCaption[]={0x0042,0x0061,0x0063,0x006B,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0044,0x006F,0x0077,0x006E,0x0000};
+
+const ResButtonType TESTAU_BackVolumeDown=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_BackVolumeDown, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 180}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_BackVolumeDownCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  8,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_BackVolumeDown定义结束
+
+//----------------------- Button TESTAU_BackVolumeDown属性定义 End------------------------
+
+//----------------------- Button TESTAU_EffectVolumeUp属性定义 Begin------------------------
+/*"EffectVolumeUp"*/
+const TUChar TESTAU_EffectVolumeUpCaption[]={0x0045,0x0066,0x0066,0x0065,0x0063,0x0074,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0055,0x0070,0x0000};
+
+const ResButtonType TESTAU_EffectVolumeUp=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_EffectVolumeUp, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 330}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_EffectVolumeUpCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  9,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_EffectVolumeUp定义结束
+
+//----------------------- Button TESTAU_EffectVolumeUp属性定义 End------------------------
+
+//----------------------- Button TESTAU_EffectVolumeDown属性定义 Begin------------------------
+/*"EffectVolumeDown"*/
+const TUChar TESTAU_EffectVolumeDownCaption[]={0x0045,0x0066,0x0066,0x0065,0x0063,0x0074,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0044,0x006F,0x0077,0x006E,0x0000};
+
+const ResButtonType TESTAU_EffectVolumeDown=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_EffectVolumeDown, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 380}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_EffectVolumeDownCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  10,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_EffectVolumeDown定义结束
+
+//----------------------- Button TESTAU_EffectVolumeDown属性定义 End------------------------
+const ResCommonType * const TESTAU_Form1002_ControlList[10]=
 {
   (ResCommonType *)&TESTAU_PlayBack
   ,(ResCommonType *)&TESTAU_StopBack
   ,(ResCommonType *)&TESTAU_LoadEffect
-  ,(ResCommonType *)&TESTAU_PlayLoaded
   ,(ResCommonType *)&TESTAU_PlayEffect
   ,(ResCommonType *)&TESTAU_UnLoadBtn
+  ,(ResCommonType *)&TESTAU_PauseBack
+  ,(ResCommonType *)&TESTAU_BackVolumeUp
+  ,(ResCommonType *)&TESTAU_BackVolumeDown
+  ,(ResCommonType *)&TESTAU_EffectVolumeUp
+  ,(ResCommonType *)&TESTAU_EffectVolumeDown
 };
 
 const UInt32  TESTAU_rawdata_background[]=
@@ -3187,7 +3463,7 @@ const ResWindowType TESTAU_ENU_Form1002 =
   0X3, // BackColor
   0X2, // ForeColor
   {{0, 0}, {320, 480}}, // RectangleType windowBounds
-  6, // 控件个数
+  10, // 控件个数
   {//ResWindowExAttrType
     0,//closeBtnStyle
     0,//actionBtnStyle
@@ -3394,7 +3670,7 @@ const ResButtonType TESTAU_ENU_LoadEffect=//
     1,//TransParent
     0//OwnerDraw
   },//属性标志结束
-  {{5, 150}, {107, 30}},//rect
+  {{5, 250}, {107, 30}},//rect
   0x3,//backColor
   0x2,//boreColor
   0x4,//selectedBackColor
@@ -3413,74 +3689,6 @@ const ResButtonType TESTAU_ENU_LoadEffect=//
 };//TESTAU_ENU_LoadEffect定义结束
 
 //----------------------- Button TESTAU_ENU_LoadEffect属性定义 End------------------------
-
-//----------------------- Button TESTAU_ENU_PlayLoaded属性定义 Begin------------------------
-/*"PlayLoadedEffect"*/
-const TUChar TESTAU_ENU_PlayLoadedCaption[]={0x0050,0x006C,0x0061,0x0079,0x004C,0x006F,0x0061,0x0064,0x0065,0x0064,0x0045,0x0066,0x0066,0x0065,0x0063,0x0074,0x0000};
-
-const ResButtonType TESTAU_ENU_PlayLoaded=//
-{
-  {//资源公共头部定义
-    TESTAU_ID_Form1002_PlayLoaded, //资源ID号 
-    RES_CLASS_BUTTON,
-    sizeof(ResButtonType),//大小
-    TESTAU_ID_Form1002,//父容器资源ID 
-    0,//Tag
-    0//StyleOption
-  },//资源公共头部定义结束
-  {//属性标志
-    1,//enabled
-    1,//visibled
-    0,//ctl3D
-    1,//tabStop
-    0,//readOnly
-    0,//imeEnable
-    0,//wordWrap
-    0,//topLeftIsLock
-    0,//check 
-    0,//multiLine,(nouse here) 
-    0,//autoSize,(nouse here)
-    0,//modal,(Form使用) 
-    0,//numeric,(nouse here)
-    0,//autoShift,(nouse here)
-    0,//dynamicSize,(nouse here)
-    0,//underLine,(nouse here)
-    0,//bIClose,(nouse here)
-    0,//HasStatusBar,(nouse here)
-    0,//bIAction,(nouse here)
-    0,//bIMaximize,(nouse here)
-    0,//ForceShowTitle,(nouse here)
-    0,//graphical
-    0,//sbmHasVertical,垂直滚动条
-    0,//sbmHasHorizontal，水平滚动条
-    0,//sbmAuto,滚动条自动出现
-    0,//hasImage
-    0,//hasCheckBox
-    1,//UseSYSDefColor
-    0,//Smooth
-    0,//ShowText
-    1,//TransParent
-    0//OwnerDraw
-  },//属性标志结束
-  {{5, 190}, {160, 30}},//rect
-  0x3,//backColor
-  0x2,//boreColor
-  0x4,//selectedBackColor
-  0x5,//selectedForeColor
-  0x6,//focusBackColor
-  0x7,//focusForeColor
-  (TUChar *)TESTAU_ENU_PlayLoadedCaption,//Caption
-  0,//charSet
-  stdFont,//Font
-  -1,//BitmapID
-  -1,//SelectedBitmapID
-  -1,//FocusBitmapID
-  0,//Style
-  4,//TabOrder
-  0//TabOrderGroup
-};//TESTAU_ENU_PlayLoaded定义结束
-
-//----------------------- Button TESTAU_ENU_PlayLoaded属性定义 End------------------------
 
 //----------------------- Button TESTAU_ENU_PlayEffect属性定义 Begin------------------------
 /*"PlayEffect"*/
@@ -3530,7 +3738,7 @@ const ResButtonType TESTAU_ENU_PlayEffect=//
     1,//TransParent
     0//OwnerDraw
   },//属性标志结束
-  {{5, 250}, {107, 30}},//rect
+  {{5, 288}, {107, 30}},//rect
   0x3,//backColor
   0x2,//boreColor
   0x4,//selectedBackColor
@@ -3544,7 +3752,7 @@ const ResButtonType TESTAU_ENU_PlayEffect=//
   -1,//SelectedBitmapID
   -1,//FocusBitmapID
   0,//Style
-  5,//TabOrder
+  4,//TabOrder
   0//TabOrderGroup
 };//TESTAU_ENU_PlayEffect定义结束
 
@@ -3598,7 +3806,7 @@ const ResButtonType TESTAU_ENU_UnLoadBtn=//
     1,//TransParent
     0//OwnerDraw
   },//属性标志结束
-  {{135, 150}, {120, 30}},//rect
+  {{125, 250}, {120, 30}},//rect
   0x3,//backColor
   0x2,//boreColor
   0x4,//selectedBackColor
@@ -3612,19 +3820,363 @@ const ResButtonType TESTAU_ENU_UnLoadBtn=//
   -1,//SelectedBitmapID
   -1,//FocusBitmapID
   0,//Style
-  6,//TabOrder
+  5,//TabOrder
   0//TabOrderGroup
 };//TESTAU_ENU_UnLoadBtn定义结束
 
 //----------------------- Button TESTAU_ENU_UnLoadBtn属性定义 End------------------------
-const ResCommonType * const TESTAU_ENU_Form1002_ControlList[6]=
+
+//----------------------- Button TESTAU_ENU_PauseBack属性定义 Begin------------------------
+/*"Pause"*/
+const TUChar TESTAU_ENU_PauseBackCaption[]={0x0050,0x0061,0x0075,0x0073,0x0065,0x0000};
+
+const ResButtonType TESTAU_ENU_PauseBack=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_PauseBack, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{209, 60}, {100, 30}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_ENU_PauseBackCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  6,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_ENU_PauseBack定义结束
+
+//----------------------- Button TESTAU_ENU_PauseBack属性定义 End------------------------
+
+//----------------------- Button TESTAU_ENU_BackVolumeUp属性定义 Begin------------------------
+/*"BackVolumeUp"*/
+const TUChar TESTAU_ENU_BackVolumeUpCaption[]={0x0042,0x0061,0x0063,0x006B,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0055,0x0070,0x0000};
+
+const ResButtonType TESTAU_ENU_BackVolumeUp=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_BackVolumeUp, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 135}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_ENU_BackVolumeUpCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  7,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_ENU_BackVolumeUp定义结束
+
+//----------------------- Button TESTAU_ENU_BackVolumeUp属性定义 End------------------------
+
+//----------------------- Button TESTAU_ENU_BackVolumeDown属性定义 Begin------------------------
+/*"BackVolumeDown"*/
+const TUChar TESTAU_ENU_BackVolumeDownCaption[]={0x0042,0x0061,0x0063,0x006B,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0044,0x006F,0x0077,0x006E,0x0000};
+
+const ResButtonType TESTAU_ENU_BackVolumeDown=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_BackVolumeDown, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 180}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_ENU_BackVolumeDownCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  8,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_ENU_BackVolumeDown定义结束
+
+//----------------------- Button TESTAU_ENU_BackVolumeDown属性定义 End------------------------
+
+//----------------------- Button TESTAU_ENU_EffectVolumeUp属性定义 Begin------------------------
+/*"EffectVolumeUp"*/
+const TUChar TESTAU_ENU_EffectVolumeUpCaption[]={0x0045,0x0066,0x0066,0x0065,0x0063,0x0074,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0055,0x0070,0x0000};
+
+const ResButtonType TESTAU_ENU_EffectVolumeUp=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_EffectVolumeUp, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 330}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_ENU_EffectVolumeUpCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  9,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_ENU_EffectVolumeUp定义结束
+
+//----------------------- Button TESTAU_ENU_EffectVolumeUp属性定义 End------------------------
+
+//----------------------- Button TESTAU_ENU_EffectVolumeDown属性定义 Begin------------------------
+/*"EffectVolumeDown"*/
+const TUChar TESTAU_ENU_EffectVolumeDownCaption[]={0x0045,0x0066,0x0066,0x0065,0x0063,0x0074,0x0056,0x006F,0x006C,0x0075,0x006D,0x0065,0x0044,0x006F,0x0077,0x006E,0x0000};
+
+const ResButtonType TESTAU_ENU_EffectVolumeDown=//
+{
+  {//资源公共头部定义
+    TESTAU_ID_Form1002_EffectVolumeDown, //资源ID号 
+    RES_CLASS_BUTTON,
+    sizeof(ResButtonType),//大小
+    TESTAU_ID_Form1002,//父容器资源ID 
+    0,//Tag
+    0//StyleOption
+  },//资源公共头部定义结束
+  {//属性标志
+    1,//enabled
+    1,//visibled
+    0,//ctl3D
+    1,//tabStop
+    0,//readOnly
+    0,//imeEnable
+    0,//wordWrap
+    0,//topLeftIsLock
+    0,//check 
+    0,//multiLine,(nouse here) 
+    0,//autoSize,(nouse here)
+    0,//modal,(Form使用) 
+    0,//numeric,(nouse here)
+    0,//autoShift,(nouse here)
+    0,//dynamicSize,(nouse here)
+    0,//underLine,(nouse here)
+    0,//bIClose,(nouse here)
+    0,//HasStatusBar,(nouse here)
+    0,//bIAction,(nouse here)
+    0,//bIMaximize,(nouse here)
+    0,//ForceShowTitle,(nouse here)
+    0,//graphical
+    0,//sbmHasVertical,垂直滚动条
+    0,//sbmHasHorizontal，水平滚动条
+    0,//sbmAuto,滚动条自动出现
+    0,//hasImage
+    0,//hasCheckBox
+    1,//UseSYSDefColor
+    0,//Smooth
+    0,//ShowText
+    1,//TransParent
+    0//OwnerDraw
+  },//属性标志结束
+  {{5, 380}, {170, 40}},//rect
+  0x3,//backColor
+  0x2,//boreColor
+  0x4,//selectedBackColor
+  0x5,//selectedForeColor
+  0x6,//focusBackColor
+  0x7,//focusForeColor
+  (TUChar *)TESTAU_ENU_EffectVolumeDownCaption,//Caption
+  0,//charSet
+  stdFont,//Font
+  -1,//BitmapID
+  -1,//SelectedBitmapID
+  -1,//FocusBitmapID
+  0,//Style
+  10,//TabOrder
+  0//TabOrderGroup
+};//TESTAU_ENU_EffectVolumeDown定义结束
+
+//----------------------- Button TESTAU_ENU_EffectVolumeDown属性定义 End------------------------
+const ResCommonType * const TESTAU_ENU_Form1002_ControlList[10]=
 {
   (ResCommonType *)&TESTAU_ENU_PlayBack
   ,(ResCommonType *)&TESTAU_ENU_StopBack
   ,(ResCommonType *)&TESTAU_ENU_LoadEffect
-  ,(ResCommonType *)&TESTAU_ENU_PlayLoaded
   ,(ResCommonType *)&TESTAU_ENU_PlayEffect
   ,(ResCommonType *)&TESTAU_ENU_UnLoadBtn
+  ,(ResCommonType *)&TESTAU_ENU_PauseBack
+  ,(ResCommonType *)&TESTAU_ENU_BackVolumeUp
+  ,(ResCommonType *)&TESTAU_ENU_BackVolumeDown
+  ,(ResCommonType *)&TESTAU_ENU_EffectVolumeUp
+  ,(ResCommonType *)&TESTAU_ENU_EffectVolumeDown
 };
 
 const ResourceLangRegisterEntry TESTAU_ENU_Resource[] = 

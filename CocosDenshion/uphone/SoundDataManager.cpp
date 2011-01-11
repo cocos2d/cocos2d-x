@@ -6,19 +6,6 @@
 
 namespace CocosDenshion {
 
-unsigned int BKDRHash(const char *str)
-{
-    unsigned int seed = 31; // 31 131 1313 13131 131313 etc..
-    unsigned int hash = 0;
-
-    while (*str)
-    {
-        hash = hash * seed + (*str++);
-    }
-
-    return (hash & 0x7FFFFFFF);
-}
-
 SoundDataManager::SoundDataManager()
 : m_pEffects(NULL)
 {
@@ -69,40 +56,37 @@ void SoundDataManager::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCoun
     }
 }
 
-int SoundDataManager::loadSoundData(const char* pszFilePath)
+void SoundDataManager::loadSoundData(const char* pszFilePath)
 {
-    int nSoundID = 0;
     SoundInfoMap::iterator iter;
     iter = m_pSoundMap->find(pszFilePath);
 
     if (iter != m_pSoundMap->end())
     {
         // if the file is not existed, find in the ResourceInfo
-        nSoundID = loadFromResourceInfo(pszFilePath);
+        loadFromResourceInfo(pszFilePath);
     }
     else
     {
         // load effect info from file
-        nSoundID = loadFromFile(pszFilePath);
+        loadFromFile(pszFilePath);
     }
-
-    return nSoundID;
 }
 
-tEffectElement* SoundDataManager::getSoundData(int nSoundID)
+tEffectElement* SoundDataManager::getSoundData(const char* pFileName)
 {
     tEffectElement* pElement = NULL;
-    HASH_FIND_INT(m_pEffects, &nSoundID, pElement);
+    HASH_FIND_STR(m_pEffects, pFileName, pElement);
 
     return pElement;
 }
 
-void SoundDataManager::unloadEffect(int nSoundID)
+void SoundDataManager::unloadEffect(const char* pFileName)
 {
     do 
     {
         tEffectElement* pElement = NULL;
-        HASH_FIND_INT(m_pEffects, &nSoundID, pElement);
+        HASH_FIND_STR(m_pEffects, pFileName, pElement);
         BREAK_IF(!pElement);
 
         delete [] (pElement->pDataBuffer);
@@ -115,17 +99,16 @@ void SoundDataManager::removeAllEffects()
 {
     for (tEffectElement *pElement = m_pEffects; pElement != NULL; )
     {
-        int nSoundID = pElement->nSoundID;
+        std::string fName = pElement->FileName;
         pElement = (tEffectElement*)pElement->hh.next;
-        unloadEffect(nSoundID);
+        unloadEffect(fName.c_str());
     }
 }
 
-int SoundDataManager::loadFromResourceInfo(const char* pFileKey)
+void SoundDataManager::loadFromResourceInfo(const char* pFileKey)
 {
     SoundInfoMap::iterator iter;
     iter = m_pSoundMap->find(pFileKey);
-    int nSoundID = 0;
 
     do 
     {
@@ -133,10 +116,9 @@ int SoundDataManager::loadFromResourceInfo(const char* pFileKey)
 
         // if we have loaded the file before,break
         tEffectElement *pElement = NULL;
-        HASH_FIND_INT(m_pEffects, &iter->second, pElement);
+        HASH_FIND_STR(m_pEffects, pFileKey, pElement);
         if (pElement)
         {
-            nSoundID = iter->second;
             break;
         }
 
@@ -148,37 +130,26 @@ int SoundDataManager::loadFromResourceInfo(const char* pFileKey)
         unsigned char* pSoundData = new unsigned char[nSize];
         MemCopy(pSoundData, pData, nSize);
 
-        // record the id
-        nSoundID = iter->second;
-
         // add the data to hash map
         pElement = (tEffectElement*)calloc(sizeof(*pElement), 1);
-        pElement->nSoundID    = nSoundID;
         pElement->pDataBuffer = pSoundData;
         pElement->nDataSize   = nSize;
-        pElement->FileName    = pFileKey;
-        pElement->nPlayerSoundID = -1;
-        HASH_ADD_INT(m_pEffects, nSoundID, pElement);
+        strcpy(pElement->FileName, pFileKey);
+        HASH_ADD_STR(m_pEffects, FileName, pElement);
     } while (0);
-
-    return nSoundID;
 }
 
-int SoundDataManager::loadFromFile(const char* pFilePath)
+void SoundDataManager::loadFromFile(const char* pFilePath)
 {
-    int nSoundID = 0;
-
     do
     {
         BREAK_IF(! FileUtils::isFileExisted(pFilePath));
-        int nID = BKDRHash(pFilePath);
 
         // if we have loaded the file before,break
         tEffectElement *pElement = NULL;
-        HASH_FIND_INT(m_pEffects, &nID, pElement);
+        HASH_FIND_STR(m_pEffects, pFilePath, pElement);
         if (pElement)
         {
-            nSoundID = nID;
             break;
         }
 
@@ -187,20 +158,13 @@ int SoundDataManager::loadFromFile(const char* pFilePath)
         unsigned char* buffer = FileUtils::getFileData(pFilePath, "rb", &nBufferSize);
         BREAK_IF(!buffer || nBufferSize <= 0);
 
-        // record the id
-        nSoundID = nID;
-
         // add the data to hash map
         pElement = (tEffectElement*)calloc(sizeof(*pElement), 1);
-        pElement->nSoundID    = nSoundID;
         pElement->pDataBuffer = buffer;
         pElement->nDataSize   = nBufferSize;
-        pElement->FileName    = pFilePath;
-        pElement->nPlayerSoundID = -1;
-        HASH_ADD_INT(m_pEffects, nSoundID, pElement);
+        strcpy(pElement->FileName, pFilePath);
+        HASH_ADD_STR(m_pEffects, FileName, pElement);
     } while (0);
-
-    return nSoundID;
 }
 
 } // end of namespace CocosDenshion
