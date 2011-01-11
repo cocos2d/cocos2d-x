@@ -13,10 +13,10 @@ static SoundDataManager  *s_pDataManager      = NULL;
 static SoundPlayer       *s_pBackPlayer       = NULL;
 static TSoundPlayer      *s_pEffectPlayer     = NULL;
 
-static int     s_nBackMusicID = 0;
-static int     s_nBackgroundMusicVolume = 100;
-static int     s_nEffectsVolume = 100;
-static bool    s_bWillPlayBackgroundMusic = false;
+static std::string  s_strBackMusicName = "";
+static int          s_nBackgroundMusicVolume = 100;
+static int          s_nEffectsVolume = 100;
+static bool         s_bWillPlayBackgroundMusic = false;
 
 SimpleAudioEngine::SimpleAudioEngine()
 {
@@ -31,7 +31,7 @@ SimpleAudioEngine::SimpleAudioEngine()
         delete s_pBackPlayer;
     }
     s_pBackPlayer    = new SoundPlayer();
-    SetBackgroundMusicVolume(s_nBackgroundMusicVolume);
+    setBackgroundMusicVolume(s_nBackgroundMusicVolume);
 
     if (s_pDataManager)
     {
@@ -71,7 +71,7 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
     return s_pSharedAudioEngine;
 }
 
-void SimpleAudioEngine::release()
+void SimpleAudioEngine::end()
 {
 	if (s_pSharedAudioEngine)
 	{
@@ -98,8 +98,9 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         nTimes = -1;
     }
 
-    s_nBackMusicID = s_pDataManager->loadSoundData(pszFilePath);
-    tEffectElement* pElement = s_pDataManager->getSoundData(s_nBackMusicID);
+    s_strBackMusicName = pszFilePath;
+    s_pDataManager->loadSoundData(pszFilePath);
+    tEffectElement* pElement = s_pDataManager->getSoundData(pszFilePath);
 
     if (pElement)
     {
@@ -114,10 +115,10 @@ void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
         s_pBackPlayer->Stop();
     }
 
-    if (bReleaseData && s_nBackMusicID)
+    if (bReleaseData && s_strBackMusicName.length())
     {
-        s_pDataManager->unloadEffect(s_nBackMusicID);
-        s_nBackMusicID = 0;
+        s_pDataManager->unloadEffect(s_strBackMusicName.c_str());
+        s_strBackMusicName = "";
     }
 }
 
@@ -163,12 +164,12 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 }
 
 // properties
-int SimpleAudioEngine::GetBackgroundMusicVolume()
+int SimpleAudioEngine::getBackgroundMusicVolume()
 {
     return s_nBackgroundMusicVolume;
 }
 
-void SimpleAudioEngine::SetBackgroundMusicVolume(int volume)
+void SimpleAudioEngine::setBackgroundMusicVolume(int volume)
 {
     if (volume > 100)
     {
@@ -187,12 +188,12 @@ void SimpleAudioEngine::SetBackgroundMusicVolume(int volume)
     s_nBackgroundMusicVolume = volume;
 }
 
-int SimpleAudioEngine::GetEffectsVolume()
+int SimpleAudioEngine::getEffectsVolume()
 {
     return s_nEffectsVolume;
 }
 
-void SimpleAudioEngine::SetEffectsVolume(int volume)
+void SimpleAudioEngine::setEffectsVolume(int volume)
 {
     if (volume > 100)
     {
@@ -208,50 +209,14 @@ void SimpleAudioEngine::SetEffectsVolume(int volume)
 
 
 // for sound effects
-int SimpleAudioEngine::playEffect(const char* pszFilePath)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
 {
-    int nSoundID = preloadEffect(pszFilePath);
+    preloadEffect(pszFilePath);
+    int nRet = -1;
 
-    if (nSoundID > 0)
-    {
-        playPreloadedEffect(nSoundID);
-    }
-
-    return nSoundID;
-}
-
-void SimpleAudioEngine::stopEffect(int nSoundId)
-{
     do 
     {
-        tEffectElement* pElement = s_pDataManager->getSoundData(nSoundId);
-        BREAK_IF(! pElement);
-
-        Int32 nID = pElement->nPlayerSoundID;
-
-        if (nID >= 0)
-        {
-            s_pEffectPlayer->Stop(nID);
-            pElement->nPlayerSoundID = -1;
-        }
-    } while (0);    
-}
-
-int SimpleAudioEngine::preloadEffect(const char* pszFilePath)
-{
-    return s_pDataManager->loadSoundData(pszFilePath);
-}
-
-void SimpleAudioEngine::unloadEffect(int nSoundId)
-{
-    s_pDataManager->unloadEffect(nSoundId);
-}
-
-void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
-{
-    do 
-    {
-        tEffectElement* pElement = s_pDataManager->getSoundData(nSoundId);
+        tEffectElement* pElement = s_pDataManager->getSoundData(pszFilePath);
         BREAK_IF(! pElement);
 
         TSoundPlayParameter soundParam;
@@ -260,13 +225,31 @@ void SimpleAudioEngine::playPreloadedEffect(int nSoundId)
         soundParam.dataType   = SOUND_TYPE_WAVE;
         soundParam.volume     = (int) (0xFFFF * ((float) s_nEffectsVolume / 100));
 
-        Int32 nID = s_pEffectPlayer->Play(soundParam);
-
-        if (nID >= 0)
-        {
-            pElement->nPlayerSoundID = nID;
-        }
+        nRet = s_pEffectPlayer->Play(soundParam);
     } while (0);
+
+    return (unsigned int) nRet;
+}
+
+void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
+{
+    do 
+    {
+        int nID = (int) nSoundId;
+
+        BREAK_IF(nID < 0);
+        s_pEffectPlayer->Stop(nID);
+    } while (0);    
+}
+
+void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
+{
+    return s_pDataManager->loadSoundData(pszFilePath);
+}
+
+void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
+{
+    s_pDataManager->unloadEffect(pszFilePath);
 }
 
 void SimpleAudioEngine::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount)

@@ -6,6 +6,7 @@
 #include "uthash.h"
 #include "SimpleAudioEngine.h"
 #include <string>
+#include "TG3.h"
 
 namespace CocosDenshion {
 
@@ -15,11 +16,9 @@ namespace CocosDenshion {
 */
 typedef struct _hashElement
 {
-    int                 nSoundID;
+    char                FileName[MAX_PATH];
     unsigned char*      pDataBuffer;
-    const char*         FileName;
     int                 nDataSize;
-    int                 nPlayerSoundID;
     UT_hash_handle		hh;
 } tEffectElement;
 
@@ -46,22 +45,21 @@ public:
     /**
     @brief Load the sound data
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-    @return Load success, return the SoundId;Or return 0
     */
-    int  loadSoundData(const char* pszFilePath);
+    void  loadSoundData(const char* pszFilePath);
 
     /**
     @brief Get the sound data by SoundID
-    @param nSoundID The soundID
+    @param pFileName The sound file name(have the path)
     @return If find succeed,return the pointer of hash table element;or return NULL
     */
-    tEffectElement* getSoundData(int nSoundID);
+    tEffectElement* getSoundData(const char* pFileName);
 
     /**
     @brief Unload the sound effect element by SoundID
-    @param nSoundID The effect soundID
+    @param pFileName The sound file name(have the path)
     */
-    void unloadEffect(int nSoundID);
+    void unloadEffect(const char* pFileName);
 
     /**
     @brief Unload all effect elements
@@ -69,8 +67,8 @@ public:
     void removeAllEffects();
 
 private:
-    int  loadFromResourceInfo(const char* pFileKey);
-    int  loadFromFile(const char* pFilePath);
+    void loadFromResourceInfo(const char* pFileKey);
+    void loadFromFile(const char* pFilePath);
 
 private:
     ResourceHandle* m_pHRes;

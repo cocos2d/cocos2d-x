@@ -27,7 +27,6 @@ const T_SoundResInfo SoundResInfo[] =
 };
 
 TMainForm::TMainForm(TApplication * pApp):TWindow(pApp)
-, m_nEffect1ID(0)
 , m_nEffect2ID(0)
 {
 	Create(TESTAU_ID_Form1002);
@@ -35,7 +34,7 @@ TMainForm::TMainForm(TApplication * pApp):TWindow(pApp)
 
 TMainForm::~TMainForm()
 {
-	SimpleAudioEngine::sharedEngine()->release();
+	SimpleAudioEngine::sharedEngine()->end();
 }
 
 Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
@@ -53,6 +52,9 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
             SimpleAudioEngine::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/TestAudioEngine/");
             SimpleAudioEngine::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/APPS/TestAudioEngine/TestAudioEngine.zip");
 #endif
+
+            SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(30);
+            SimpleAudioEngine::sharedEngine()->setEffectsVolume(30);
 			bHandled = TRUE;
 		}
 		break;
@@ -97,8 +99,13 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
     {
     case TESTAU_ID_Form1002_PlayBack:
         // play background music
-        pAudioEngine->SetBackgroundMusicVolume(30);
         pAudioEngine->playBackgroundMusic(SoundResInfo[0].FileName, true);
+        bHandled = TRUE;
+        break;
+
+    case TESTAU_ID_Form1002_PauseBack:
+        // pause background music
+        pAudioEngine->pauseBackgroundMusic();
         bHandled = TRUE;
         break;
 
@@ -108,39 +115,55 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
         bHandled = TRUE;
         break;
 
+    case TESTAU_ID_Form1002_BackVolumeUp:
+        {
+            int nCurVolume = pAudioEngine->getBackgroundMusicVolume();
+            pAudioEngine->setBackgroundMusicVolume(nCurVolume + 5);
+            bHandled = TRUE;
+        }
+        break;
+
+    case TESTAU_ID_Form1002_BackVolumeDown:
+        {
+            int nCurVolume = pAudioEngine->getBackgroundMusicVolume();
+            pAudioEngine->setBackgroundMusicVolume(nCurVolume - 5);
+            bHandled = TRUE;
+        }
+        break;
+
     case TESTAU_ID_Form1002_LoadEffect:
         // load effect1
-        m_nEffect1ID = pAudioEngine->preloadEffect(SoundResInfo[1].FileName);
-        assert(m_nEffect1ID > 0);
+        pAudioEngine->preloadEffect(SoundResInfo[1].FileName);
         bHandled = TRUE;
         break;
 
     case TESTAU_ID_Form1002_UnLoadBtn:
         // unload effect1
-        pAudioEngine->unloadEffect(m_nEffect1ID);
-        m_nEffect1ID = 0;
+        pAudioEngine->unloadEffect(SoundResInfo[1].FileName);
         bHandled = TRUE;
         break;
 
-    case TESTAU_ID_Form1002_PlayLoaded:
-        // play loaded effect1
-        if (m_nEffect1ID == 0)
-        {
-            pApp->MessageBox(UnloadedTip, FailedTitle, WMB_OKCANCEL);
-        }
-        else
-        {
-            pAudioEngine->SetEffectsVolume(30);
-            pAudioEngine->playPreloadedEffect(m_nEffect1ID);
-        }
-        bHandled = TRUE;
-        break;
     case TESTAU_ID_Form1002_PlayEffect:
         // play effect2
-        pAudioEngine->SetEffectsVolume(30);
         m_nEffect2ID = pAudioEngine->playEffect(SoundResInfo[2].FileName);
-        assert(m_nEffect2ID > 0);
+/*        assert(m_nEffect2ID >= 0);*/
         bHandled = TRUE;
+        break;
+
+    case TESTAU_ID_Form1002_EffectVolumeUp:
+        {
+            int nCurVolume = pAudioEngine->getEffectsVolume();
+            pAudioEngine->setEffectsVolume(nCurVolume + 5);
+            bHandled = TRUE;
+        }
+        break;
+
+    case TESTAU_ID_Form1002_EffectVolumeDown:
+        {
+            int nCurVolume = pAudioEngine->getEffectsVolume();
+            pAudioEngine->setEffectsVolume(nCurVolume - 5);
+            bHandled = TRUE;
+        }
         break;
     default:
         break;
