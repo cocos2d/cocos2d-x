@@ -4,6 +4,9 @@
 
 using namespace cocos2d;
 
+
+char *AppDelegate::apkPath;
+
 // static void TimerCallback1(Int32 nTimerId, UInt32 uUserData);
 AppDelegate::AppDelegate()
 :m_pMainWnd(NULL)
@@ -58,8 +61,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
 #elif defined(CCX_PLATFORM_ANDROID)
-    CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests-1.apk");
-	CCFileUtils::setRelativePath("assets");
+    if ( AppDelegate::apkPath != NULL ) {
+        CCFileUtils::setResourcePath(AppDelegate::apkPath);
+    } else { 
+        CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests.apk");
+    }
+    CCFileUtils::setRelativePath("assets");
+
 #endif
 
 #if 0
