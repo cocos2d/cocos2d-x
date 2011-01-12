@@ -56,16 +56,12 @@ namespace cocos2d {
 		}
 		HGDIOBJ hOldFont = SelectObject(m_hMemDC, hNewFont);
 
-		// text
-		int len = strlen(text);
-		WCHAR *pText = new WCHAR[len + 1];
-        MultiByteToWideChar(CP_ACP, 0, text, len + 1, pText, len);
-
 		// calculate text size
+        int len = strlen(text);
 		SIZE extent;
 		if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
 		{
-			GetTextExtentPoint(m_hMemDC, pText, len, &extent);
+			GetTextExtentPointA(m_hMemDC, text, len, &extent);
 		}
 		else
 		{
@@ -100,10 +96,9 @@ namespace cocos2d {
 		RECT rc = {0, 0, extent.cx, extent.cy};
 		SetBkMode(m_hMemDC, TRANSPARENT);
 		SetTextColor(m_hMemDC, RGB(255, 255, 255)); // white color
-		DrawText(m_hMemDC, pText, len, &rc, dwStyle);
+		DrawTextA(m_hMemDC, text, len, &rc, dwStyle);
 
 		// free resource
- 		delete [] pText;
 		SelectObject(m_hMemDC, hOldFont);
 		if (hFont)
 		{
