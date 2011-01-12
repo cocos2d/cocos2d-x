@@ -7,7 +7,7 @@ class  AppDelegate  :  public  cocos2d::CCXApplication
 {
 
 public:
-	static char *apkPath;
+	static const char *apkPath;
 	AppDelegate();
 	~AppDelegate();
 

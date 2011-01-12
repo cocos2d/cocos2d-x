@@ -5,7 +5,7 @@
 using namespace cocos2d;
 
 
-char *AppDelegate::apkPath;
+const char *AppDelegate::apkPath;
 
 // static void TimerCallback1(Int32 nTimerId, UInt32 uUserData);
 AppDelegate::AppDelegate()
