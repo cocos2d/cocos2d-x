@@ -802,6 +802,10 @@
 				Name="win32"
 				>
 				<File
+					RelativePath="..\platform\win32\CCNS_win32.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\platform\win32\CCTime.cpp"
 					>
 				</File>
