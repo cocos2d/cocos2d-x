@@ -64,5 +64,5 @@ protected:
 
 }//namespace   cocos2d 
 
-#endif __CCRADIAL_TRANSITION_H__
+#endif //__CCRADIAL_TRANSITION_H__
 
