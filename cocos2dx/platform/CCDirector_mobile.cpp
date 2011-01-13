@@ -856,6 +856,15 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 	{
 		m_eDeviceOrientation = kDeviceOrientation;
 	}
+    else
+    {
+        // this logic is only run on win32 now
+        // On win32,the return value of CCXApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
+        // So,we should calculate the Projection and window size again.
+        m_obWinSizeInPoints = m_pobOpenGLView->getSize();
+        m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
+        setProjection(m_eProjection);
+    }
 }
 
 /***************************************************
