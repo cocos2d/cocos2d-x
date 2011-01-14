@@ -252,16 +252,6 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
     s_pDataManager->unloadEffect(pszFilePath);
 }
 
-void SimpleAudioEngine::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount)
-{
-    s_pDataManager->setSoundResInfo(ResInfo, nCount);
-}
-
-void SimpleAudioEngine::setResourceEntry(const void* pResEntry)
-{
-    s_pDataManager->setResEntry(pResEntry);
-}
-
 void SimpleAudioEngine::unloadEffectAll()
 {
     s_pDataManager->removeAllEffects();

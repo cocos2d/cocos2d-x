@@ -13,19 +13,6 @@
 
 using namespace CocosDenshion;
 
-extern const  AppResourceEntry TestAudioEngineResourceEntry;
-
-/**
-@warning 在声音数据信息的结构体中，FileName必须包含文件的扩展名，并且需要与原始文件的扩展名一致
-否则无法播。另：音效文件只支持 wav 格式。
-*/
-const T_SoundResInfo SoundResInfo[] =
-{
-    { "background.mp3",     TESTAU_ID_RAWDATA_background },
-    { "Effect1.wav",        TESTAU_ID_RAWDATA_Effect1 },
-    { "Effect2.wav",        TESTAU_ID_RAWDATA_Effect2 },
-};
-
 TMainForm::TMainForm(TApplication * pApp):TWindow(pApp)
 , m_nEffect2ID(0)
 {
@@ -45,14 +32,7 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 	{
 	case EVENT_WinInit:
 		{
-#if 1
-            SimpleAudioEngine::sharedEngine()->setResourceEntry(&TestAudioEngineResourceEntry);
-            SimpleAudioEngine::sharedEngine()->setSoundResInfo(SoundResInfo, sizeof(SoundResInfo) / sizeof(T_SoundResInfo));
-#else
             SimpleAudioEngine::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/TestAudioEngine/");
-            SimpleAudioEngine::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/APPS/TestAudioEngine/TestAudioEngine.zip");
-#endif
-
             SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(30);
             SimpleAudioEngine::sharedEngine()->setEffectsVolume(30);
 			bHandled = TRUE;
@@ -99,7 +79,7 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
     {
     case TESTAU_ID_Form1002_PlayBack:
         // play background music
-        pAudioEngine->playBackgroundMusic(SoundResInfo[0].FileName, true);
+        pAudioEngine->playBackgroundMusic("background.mp3", true);
         bHandled = TRUE;
         break;
 
@@ -133,19 +113,19 @@ Boolean TMainForm::CtrlSelected(TApplication * pApp, EventType * pEvent)
 
     case TESTAU_ID_Form1002_LoadEffect:
         // load effect1
-        pAudioEngine->preloadEffect(SoundResInfo[1].FileName);
+        pAudioEngine->preloadEffect("Effect1.wav");
         bHandled = TRUE;
         break;
 
     case TESTAU_ID_Form1002_UnLoadBtn:
         // unload effect1
-        pAudioEngine->unloadEffect(SoundResInfo[1].FileName);
+        pAudioEngine->unloadEffect("Effect1.wav");
         bHandled = TRUE;
         break;
 
     case TESTAU_ID_Form1002_PlayEffect:
         // play effect2
-        m_nEffect2ID = pAudioEngine->playEffect(SoundResInfo[2].FileName);
+        m_nEffect2ID = pAudioEngine->playEffect("Effect2.wav");
 /*        assert(m_nEffect2ID >= 0);*/
         bHandled = TRUE;
         break;

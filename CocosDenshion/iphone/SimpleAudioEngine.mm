@@ -154,19 +154,8 @@ namespace CocosDenshion
 	{
 
 	}
-
-	void SimpleAudioEngine::setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount)
-	{
-
-	}
-
-
-	void SimpleAudioEngine::setResourceEntry(const void* pResEntry)
-	{
-
-	}
     
-        void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
+    void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 	{
 		static_preloadBackgroundMusic(pszFilePath);
 	}
