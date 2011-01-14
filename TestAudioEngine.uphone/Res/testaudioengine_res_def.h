@@ -38,7 +38,4 @@
 
 #define TESTAU_ID_Form1002_EffectVolumeDown  1073742840/*"EffectVolumeDown"*/
 
-#define TESTAU_ID_RAWDATA_background  1073742833 
-#define TESTAU_ID_RAWDATA_Effect1  1073742834 
-#define TESTAU_ID_RAWDATA_Effect2  1073742835 
 #endif

@@ -1,7 +1,5 @@
 #include "HelloWorldScene.h"
 
-#include "Resource.h"
-
 using namespace cocos2d;
 
 CCScene* HelloWorld::scene()
@@ -35,8 +33,8 @@ bool HelloWorld::init()
 
     // add a "close" icon to exit the progress. it's an autorelease object
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
-                                        (ResInfo[0]).ResName,
-                                        (ResInfo[1]).ResName,
+                                        "CloseNormal.png",
+                                        "CloseSelected.png",
                                         this,
                                         menu_selector(HelloWorld::menuCloseCallback) );
     pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
@@ -50,7 +48,7 @@ bool HelloWorld::init()
     // 3. add your codes below...
     // add a label shows "Hello World"
     // create and initialize a label
-    CCLabel* pLabel = CCLabel::labelWithString("HelloWorld", "Thonburi", 64);
+    CCLabelTTF* pLabel = CCLabelTTF::labelWithString("HelloWorld", "Thonburi", 64);
 
     // ask director the window size
     CGSize size = CCDirector::sharedDirector()->getWinSize();

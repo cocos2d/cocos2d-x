@@ -1,10 +1,8 @@
 #ifndef _SOUND_DATA_MANAGER_H_
 #define _SOUND_DATA_MANAGER_H_
 
-#include "ResourceHandle.h"
 #include <map>
 #include "uthash.h"
-#include "SimpleAudioEngine.h"
 #include <string>
 #include "TG3.h"
 
@@ -33,16 +31,6 @@ public:
     ~SoundDataManager();
 
     /**
-    @brief Set the resource entry,it's only used on platform-uphone now
-    */
-    void setResEntry(const void* pResEntry);
-
-    /**
-    @brief set the sound ResInfo,it's only used on platform-uphone now
-    */
-    void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);
-
-    /**
     @brief Load the sound data
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
     */
@@ -67,17 +55,8 @@ public:
     void removeAllEffects();
 
 private:
-    void loadFromResourceInfo(const char* pFileKey);
-    void loadFromFile(const char* pFilePath);
-
-private:
-    ResourceHandle* m_pHRes;
-
     // use hash map to save the effects loaded
     struct _hashElement	*   m_pEffects;
-
-    typedef std::map<std::string, int> SoundInfoMap;
-    SoundInfoMap* m_pSoundMap;
 };
 
 } // end of namespace CocosDenshion

@@ -30,16 +30,6 @@ THE SOFTWARE.
 namespace CocosDenshion {
 
 /**
-@struct T_SoundResInfo
-@brief  The data type of resource name and resource ID
-*/
-typedef struct _tResourceInfo
-{
-    const char* FileName;
-    int         nResID;
-} T_SoundResInfo;
-
-/**
 @class          SimpleAudioEngine
 @brief  		offer a VERY simple interface to play background music & sound effect
 */
@@ -71,16 +61,6 @@ public:
     @param pszZipPath The absolute path of the .zip file
     */
     static void setResourceZipFile(const char* pszZipPath);
-
-    /**
-    @brief set the sound ResInfo,it's only used on platform-uphone now
-    */
-    void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);
-
-    /**
-    @brief Set the resource entry,it's only used on platform-uphone now
-    */
-    void setResourceEntry(const void* pResEntry);
 
     /**
      @brief Preload background music

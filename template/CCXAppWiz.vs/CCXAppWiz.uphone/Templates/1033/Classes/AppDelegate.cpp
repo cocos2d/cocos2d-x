@@ -5,12 +5,12 @@
 
 [! endif]
 #include "HelloWorldScene.h"
-[! if CCX_USE_UI_RESOURCE]
-
-#include "Resource.h"
-[! endif]
 
 using namespace cocos2d;
+
+[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
+using namespace CocosDenshion;
+[! endif]
 
 AppDelegate::AppDelegate()
 :m_pMainWnd(NULL)
@@ -21,7 +21,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 [! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
-    SimpleAudioEngine::release();
+    SimpleAudioEngine::end();
 [! endif]
 }
 
@@ -44,15 +44,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // set the resource path
     CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/[!output PROJECT_NAME]/");
-[! if CCX_USE_UI_RESOURCE]
-
-    // cocos2d find image in ResourceEntry first, in ResourcePath second.
-    // set the ResourceEntry, 
-    CCFileUtils::setResourceEntry(&[!output PROJECT_NAME]ResourceEntry);
-
-    // set the Images ResInfo (name and ResID)
-    CCFileUtils::setResourceInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ResourceInfo));
-[! endif]
 
     CCScene * pScene = HelloWorld::scene();
 

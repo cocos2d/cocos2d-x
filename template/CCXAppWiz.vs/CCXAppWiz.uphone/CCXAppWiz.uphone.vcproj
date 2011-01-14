@@ -100,10 +100,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Templates\1033\uphone\Resource.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Templates\1033\uphone\rootUnicodeScript.h"
 					>
 				</File>
