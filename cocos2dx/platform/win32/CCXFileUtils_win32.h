@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __PLATFORM_WIN32_CCFILE_UTILS_H__
 
 #include <string>
-#include "ccxCommon.h"
 #include "NSMutableDictionary.h"
 #include "FileUtils.h"
+
 namespace   cocos2d {
 
 //! @brief  Helper class to handle file operations

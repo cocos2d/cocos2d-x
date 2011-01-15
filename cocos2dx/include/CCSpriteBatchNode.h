@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
 #include "NSMutableArray.h"
-#include "CCXCocos2dDefine.h"
 
 namespace cocos2d
 {

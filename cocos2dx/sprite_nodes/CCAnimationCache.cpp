@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCAnimationCache.h"
-#include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 #include "CCAnimation.h"
 #include "CCSpriteFrame.h"

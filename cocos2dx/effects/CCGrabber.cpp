@@ -24,7 +24,6 @@ THE SOFTWARE.
 #include "CCGrabber.h"
 #include "ccMacros.h"
 #include "CCTexture2D.h"
-#include "support/opengl_support/OpenGL_Internal.h"
 #include "platform/platform.h"
 
 namespace cocos2d

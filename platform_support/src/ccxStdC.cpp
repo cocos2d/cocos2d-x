@@ -22,39 +22,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_CCXMATH_H__
-#define __PLATFORM_CCXMATH_H__
+#include "ccxStdC.h"
 
-#include <float.h>
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 
-namespace cocos2d
+#define _WINSOCKAPI_    // struct timeval redifined in winsock.h, exclude it 
+#include <Windows.h>
+
+int CCX_DLL_PS gettimeofday(struct timeval * val, struct timezone *)
 {
+    if (val)
+    {
+        SYSTEMTIME wtm;
+        GetLocalTime(&wtm);
 
-	/************************************************************************/
-	// VC have the function _isnan()
-	// In other compiler(such as gcc), we may implement ourself.
-	// We use a simple way: if it is a number, it should equal to itself.
-	/************************************************************************/
-	class CCXMath
-	{
-	public:
-		static inline int isnanCocos2d(double fValue)
-		{
-	 #ifdef WIN32
- 			return _isnan(fValue);
-	 #else
- 			if (fValue != fValue)
- 			{
- 				return 1;
- 			}
- 			else
- 			{
- 				return 0;
- 			}
-	 #endif // WIN32
-		}
-	};
-	  
-	} // end of namespace cocos2d
+        struct tm tTm;
+        tTm.tm_year     = wtm.wYear - 1900;
+        tTm.tm_mon      = wtm.wMonth - 1;
+        tTm.tm_mday     = wtm.wDay;
+        tTm.tm_hour     = wtm.wHour;
+        tTm.tm_min      = wtm.wMinute;
+        tTm.tm_sec      = wtm.wSecond;
+        tTm.tm_isdst    = -1;
 
-#endif // __PLATFORM_CCXMATH_H__
+        val->tv_sec     = (long)mktime(&tTm);       // time_t is 64-bit on win32
+        val->tv_usec    = wtm.wMilliseconds * 1000;
+    }
+    return 0;
+}
+
+#endif  // CCX_PLATFORM_WIN32

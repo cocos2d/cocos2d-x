@@ -25,28 +25,42 @@ THE SOFTWARE.
 #ifndef __PLATFORM_H__
 #define __PLATFORM_H__
 
-#include "config_platform.h"
+#include "ccxThread.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
-	#include "uphone/CCTime.h"
-	#include "uphone/NSLock.h"
-	#include "uphone/Cocos2dTypes.h"
-	// #include "uphone/CCXGLExtFunc.h"
+NS_CC_BEGIN;
+
+struct cc_timeval
+{
+    long	tv_sec;		// seconds
+    long	tv_usec;    // microSeconds
+};
+
+class CCTime
+{
+public:
+    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
+    static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
+};
+
+class NSLock : public CCXLock{};
+
+NS_CC_END;
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+// 	#include "uphone/CCTime.h"
+// 	#include "uphone/NSLock.h"
 	#include "uphone/CCXBitmapDC.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCTime.h"
-    #include "win32/NSLock.h"
-    #include "win32/Cocos2dTypes.h"
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+//     #include "win32/CCTime.h"
+//     #include "win32/NSLock.h"
     #include "win32/CCXBitmapDC.h"
-#elif defined(CCX_PLATFORM_ANDROID)
-    #include "android/CCTime.h"
-    #include "android/NSLock.h"
-    #include "android/Cocos2dTypes.h"
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+//     #include "android/CCTime.h"
+//     #include "android/NSLock.h"
     #include "android/CCXBitmapDC.h"
-#elif defined(CCX_PLATFORM_IPHONE)
-    #include "iphone/CCTime.h"
-    #include "iphone/NSLock.h"
-    #include "iphone/Cocos2dTypes.h"
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+//     #include "iphone/CCTime.h"
+//     #include "iphone/NSLock.h"
     #include "iphone/CCXBitmapDC.h"
 #else 
     #error

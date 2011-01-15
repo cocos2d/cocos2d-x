@@ -26,17 +26,13 @@ THE SOFTWARE.
 #define __CCDIRECTOR_H__
 
 #include "platform/CCPlatformMacros.h"
-#include "ccConfig.h"
-#include "ccTypes.h"
-#include "CCXCocos2dDefine.h"
 #include "NSObject.h"
+#include "ccTypes.h"
 #include "CGGeometry.h"
 #include "NSMutableArray.h"
 #include "CGGeometry.h"
 #include "CCXEGLView.h"
-#include "ccxCommon.h"
 #include "CCGL.h"
-#include <assert.h>
 
 namespace   cocos2d {
 

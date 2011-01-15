@@ -22,26 +22,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCTime.h"
+#if CCX_SUPPORT_MULTITHREAD
+
+#include "ccxThread.h"
 
 #include <Windows.h>
 
-namespace   cocos2d {
+NS_CC_BEGIN;
 
-// although it is not the same as gettimeofday as unix
-// but we only use the diffrences of tow values
-int CCTime::gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp)
+class CCXLock::Impl
 {
-	unsigned int ms = GetTickCount();
-	tp->tv_sec = ms / 1000;
-	tp->tv_usec = (ms % 1000) * 1000;
-	return 0;
+public:
+    Impl()              { InitializeCriticalSection(&m_cs); }
+    ~Impl()             { DeleteCriticalSection(&m_cs); }
+
+    CRITICAL_SECTION m_cs;
+};
+
+CCXLock::CCXLock()
+: m_pImp(new CCXLock::Impl)
+{
 }
 
-void CCTime::timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end)
+CCXLock::~CCXLock()
 {
-	out->tv_sec = end->tv_sec - start->tv_sec;
-	out->tv_usec = end->tv_usec - start->tv_usec;
 }
 
-}//namespace   cocos2d 
+void CCXLock::lock()
+{
+    if (m_pImp)
+    {
+        EnterCriticalSection(&m_pImp->m_cs);
+    }
+}
+
+void CCXLock::unlock()
+{
+    if (m_pImp)
+    {
+        LeaveCriticalSection(&m_pImp->m_cs);
+    }
+}
+
+NS_CC_END;
+
+#endif  // CCX_SUPPORT_MULTITHREAD

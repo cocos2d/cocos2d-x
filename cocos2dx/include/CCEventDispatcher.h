@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCEVENT_DISPATCHER_H__
 #define __CCEVENT_DISPATCHER_H__
 
-#include "CCXCocos2dDefine.h"
 #include "CCMouseEventDelegate.h"
 #include "CCKeyboardEventDelegate.h"
 #include "ccConfig.h"

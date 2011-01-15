@@ -29,19 +29,8 @@ THE SOFTWARE.
 // Common layer for OpenGL stuff
 //
 
-#include "config_platform.h"
+#include "ccxGL.h"
 #include "CCXEGLView.h"
-
-#if defined(CCX_PLATFORM_MOBILE)
-    #include <GLES/gl.h>
-    #include <GLES/glext.h>
-    #include "support/opengl_support/glu.h"
-#elif defined(CCX_PLATFORM_PC)
-    #include <OpenGL/gl.h>
-    #include <OpenGL/glu.h>
-#else
-    #error
-#endif
 
 // iOS
 #if defined(CCX_PLATFORM_MOBILE)

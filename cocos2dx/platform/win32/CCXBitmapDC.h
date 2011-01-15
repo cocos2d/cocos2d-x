@@ -25,9 +25,7 @@ THE SOFTWARE.
 #define __CCXBITMAP_DC_H__
 
 #include <Windows.h>
-#include "ccTypes.h"
-#include "CCXCocos2dDefine.h"
-#include "CCXUIImage.h"
+#include "CCXImage.h"
 
 namespace cocos2d{
 	class CCX_DLL CCXBitmapDC

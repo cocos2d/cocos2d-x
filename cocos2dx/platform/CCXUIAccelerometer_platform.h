@@ -24,15 +24,15 @@ THE SOFTWARE.
 #ifndef __CCX_UIACCELEROMETER_PLATFORM_H__
 #define __CCX_UIACCELEROMETER_PLATFORM_H__
 
-#include "config_platform.h"
+#include "ccxConfig.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
     #include "uphone/CCXUIAccelerometer_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
     #include "win32/CCXUIAccelerometer_win32.h"
-#elif defined(CCX_PLATFORM_ANDROID)
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     #include "android/CCXUIAccelerometer_android.h"
-#elif defined(CCX_PLATFORM_IPHONE)
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
     #include "iphone/CCXUIAccelerometer_iphone.h"
 #else
     #error

@@ -22,21 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_PLATFORM__
-#define __CCX_COMMON_PLATFORM__
+#ifndef __CCX_THREAD_H_YANGWS_20110114__
+#define __CCX_THREAD_H_YANGWS_20110114__
 
-#include "config_platform.h"
+#include "ccxCommon.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/ccxCommon_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/ccxCommon_win32.h"
-#elif defined(CCX_PLATFORM_ANDROID)
-    #include "android/ccxCommon_android.h"
-#elif defined(CCX_PLATFORM_IPHONE)
-    #include "iphone/ccxCommon_iphone.h"
-#else
-    #error
-#endif
+NS_CC_BEGIN;
 
-#endif	// end of __CCX_COMMON_PLATFORM__
+#if CCX_SUPPORT_MULTITHREAD
+/**
+@brief	The object for mutual-exclusion synchronization.
+
+@warning Don't enter a CCXLock twice in the same thread.
+*/
+class CCX_DLL_PS CCXLock
+{
+public:
+    CCXLock();
+    ~CCXLock();
+
+    void lock();
+    void unlock();
+
+private:
+    class Impl;
+    CCXScopedPtr<CCXLock::Impl> m_pImp;
+};
+#else   // CCX_SUPPORT_MULTITHREAD
+
+class CCX_DLL_PS CCXLock
+{
+public:
+    CCXLock() {}
+    ~CCXLock() {}
+
+    void lock() {}
+    void unlock() {}
+};
+
+#endif  // CCX_SUPPORT_MULTITHREAD
+
+NS_CC_END;
+
+#endif	// __CCX_THREAD_H_YANGWS_20110114__
