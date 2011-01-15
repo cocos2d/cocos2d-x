@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __PLATFORM_UPHONE_CCFILE_UTILS_H__
 
 #include <string>
-#include <ssFile.h>
+#include "ssFile.h"
 #include "ccxCommon.h"
 #include "NSMutableDictionary.h"
 #include "FileUtils.h"

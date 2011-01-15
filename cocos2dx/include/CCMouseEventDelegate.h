@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCMOUSE_EVENT_DELEGATE_H__
 
 #include "NSEvent.h"
-#include "ccxCommon.h"
 #include "NSObject.h"
 
 namespace   cocos2d {

@@ -22,22 +22,52 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_UPHONE_CCTIME_H__
-#define __PLATFORM_UPHONE_CCTIME_H__
-namespace   cocos2d {
+#ifndef __CCX_STD_C_H__
+#define __CCX_STD_C_H__
 
-struct cc_timeval
+#include "ccxMacros.h"
+
+#include <float.h>
+
+// for math.h on win32 platform
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+
+    #if ! defined(_USE_MATH_DEFINES)
+        #define _USE_MATH_DEFINES       // make M_PI can be use
+    #endif
+
+    #if ! defined(isnan)
+        #define isnan   _isnan
+    #endif
+
+#endif  // CCX_PLATFORM_WIN32
+#include <math.h>
+
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// for sys/time.h on win32 platform
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+
+#ifndef _WINSOCKAPI_    // struct timeval has define in winsock.h, no need redefine
+struct timeval
 {
- 	long	tv_sec;		// seconds
- 	long	tv_usec;    // microSeconds
+    long tv_sec; /*second*/
+    long tv_usec; /*microsecond*/
+};
+#endif  // _WINSOCKAPI_
+
+struct timezone
+{
+    int tz_minuteswest;
+    int tz_dsttime;
 };
 
-class CCTime 
-{
-public:
-	static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-	static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
-};
-}//namespace   cocos2d 
+int CCX_DLL_PS gettimeofday(struct timeval *, struct timezone *);
 
-#endif // __PLATFORM_UPHONE_NSTIME_H__
+#endif  // CCX_PLATFORM_WIN32
+
+#endif  // __CCX_STD_C_H__

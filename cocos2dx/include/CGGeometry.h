@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __COCOS_CGGEMETRY_H__
 
 #include "ccxCommon.h"
+
 namespace   cocos2d {
 
 typedef float CGFloat;

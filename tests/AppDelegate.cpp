@@ -21,15 +21,15 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
-#if defined(CCX_PLATFORM_UPHONE)
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
 	if (!(m_pMainWnd = new CCXEGLView(this)) || 
 		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
-#elif defined(CCX_PLATFORM_WIN32)
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 	if (!(m_pMainWnd = new CCXEGLView()) ||
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
-#elif defined(CCX_PLATFORM_IPHONE)
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IPHONE)
     if (!(m_pMainWnd = new CCXEGLView()))
-#elif defined(CCX_PLATFORM_ANDROID)
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
 #else
     #error

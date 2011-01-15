@@ -26,8 +26,6 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
-
-#include "CCXCocos2dDefine.h"
 #include "NSObject.h"
 #include "CGGeometry.h"
 #include "ccTypes.h"

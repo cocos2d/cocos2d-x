@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCActionCamera.h"
 #include "CCNode.h"
 #include "CCCamera.h"
-#include "platform/CCXMath.h"
+#include "ccxStdC.h"
 
 namespace cocos2d{
 	//
@@ -102,11 +102,11 @@ namespace cocos2d{
 		CCActionInterval::startWithTarget(pTarget);
 		float r, zenith, azimuth;
 		this->sphericalRadius(&r, &zenith, &azimuth);
-		if( CCXMath::isnanCocos2d(m_fRadius) )
+		if( isnan(m_fRadius) )
 			m_fRadius = r;
-		if( CCXMath::isnanCocos2d(m_fAngleZ) )
+		if( isnan(m_fAngleZ) )
 			m_fAngleZ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
-		if( CCXMath::isnanCocos2d(m_fAngleX) )
+		if( isnan(m_fAngleX) )
 			m_fAngleX = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
 		m_fRadZ = (CGFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);

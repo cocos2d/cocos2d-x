@@ -27,10 +27,10 @@ THE SOFTWARE.
 #include "CGPointExtension.h"
 #include "CCTouchDispatcher.h"
 #include "CCTouch.h"
-#include "platform/CCXMath.h"
+#include "ccxStdC.h"
 
 #include <vector>
-#include <float.h>
+
 using namespace std;
 
 namespace cocos2d{
@@ -360,7 +360,7 @@ namespace cocos2d{
 				assert(rowColumns);
 
 				float tmp = (*it)->getContentSize().height;
-				rowHeight = (unsigned int)((rowHeight >= tmp || CCXMath::isnanCocos2d(tmp)) ? rowHeight : tmp);
+				rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
 				++columnsOccupied;
 				if (columnsOccupied >= rowColumns)
@@ -404,7 +404,7 @@ namespace cocos2d{
 				}
 
 				float tmp = (*it)->getContentSize().height;
-				rowHeight = (unsigned int)((rowHeight >= tmp || CCXMath::isnanCocos2d(tmp)) ? rowHeight : tmp);
+				rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
 				(*it)->setPosition(ccp(x - winSize.width / 2,
 					                   y - (*it)->getContentSize().height / 2));
@@ -473,7 +473,7 @@ namespace cocos2d{
 
 				// columnWidth = fmaxf(columnWidth, [item contentSize].width);
 				float tmp = (*it)->getContentSize().width;
-				columnWidth = (unsigned int)((columnWidth >= tmp || CCXMath::isnanCocos2d(tmp)) ? columnWidth : tmp);
+				columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
 				columnHeight += (int)((*it)->getContentSize().height + 5);
 				++rowsOccupied;
@@ -521,7 +521,7 @@ namespace cocos2d{
 
 				// columnWidth = fmaxf(columnWidth, [item contentSize].width);
 				float tmp = (*it)->getContentSize().width;
-				columnWidth = (unsigned int)((columnWidth >= tmp || CCXMath::isnanCocos2d(tmp)) ? columnWidth : tmp);
+				columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
 				(*it)->setPosition(ccp(x + columnWidths[column] / 2,
 					                   y - winSize.height / 2));

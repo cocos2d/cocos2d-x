@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include <Windows.h>
 
-#include "CCXCocos2dDefine.h"
+#include "ccxCommon.h"
 #include "CGGeometry.h"
 
 namespace   cocos2d {

@@ -22,9 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_H__
-#define __CCX_COMMON_H__
+#include "ccxCommon.h"
 
-#include "platform/ccxCommon_platform.h"
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+#include <Windows.h>
 
-#endif	// end of __CCX_COMMON_H__
+#include "ccxStdC.h"
+
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
+
+NS_CC_BEGIN;
+
+void CCXLog(const char * pszFormat, ...)
+{
+    char szBuf[MAX_LEN];
+
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
+    va_end(ap);
+    OutputDebugStringA(szBuf);
+    OutputDebugStringA("\n");
+}
+
+NS_CC_END;
+
+#endif  // CCX_PLATFORM_WIN32

@@ -22,22 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __SUPPORT_OPGL_SUPPORT_GLU_H__
-#define __SUPPORT_OPGL_SUPPORT_GLU_H__
+#ifndef __CCX_LIBXML2_H__
+#define __CCX_LIBXML2_H__
 
-#include <GLES/gl.h>
+#include "ccxConfig.h"
 
-namespace   cocos2d {
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 
-/**
- @file
- cocos2d OpenGL GLU implementation
- */
+#endif  // CCX_PLATFORM_WIN32
 
-/** OpenGL gluLookAt implementation */
-void gluLookAt(float fEyeX, float fEyeY, float fEyeZ, float fLookAtX, float fLookAtY, float fLookAtZ, float fUpX, float fUpY, float fUpZ);
-/** OpenGL gluPerspective implementation */
-void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
-}//namespace   cocos2d 
-
-#endif // __SUPPORT_OPGL_SUPPORT_GLU_H__
+#endif	// __CCX_LIBXML2_H__

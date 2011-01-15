@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\platform\win32\third_party\iconv;..\platform\win32\third_party\zlib;..\platform\win32\third_party\libpng;..\platform\win32\third_party\libjpeg;..\platform\win32\third_party\libxml2;..\platform\win32\third_party\OGLES;..\include;..\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\iconv&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\zlib&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libpng&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\include;..\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,10 +63,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib libPlatformSupport.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\platform\win32\third_party\libraries"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="MSVCRT.lib;LIBCMTD.lib"
 				GenerateDebugInformation="true"
@@ -94,7 +94,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y ..\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y ..\platform\win32\third_party\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\platform\win32\third_party\iconv;..\platform\win32\third_party\zlib;..\platform\win32\third_party\libpng;..\platform\win32\third_party\libjpeg;..\platform\win32\third_party\libxml2;..\platform\win32\third_party\OGLES;..\include;..\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\iconv&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\zlib&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libpng&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\include;..\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -141,10 +141,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib libPlatformSupport.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\platform\win32\third_party\libraries"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -172,7 +172,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y ..\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y ..\platform\win32\third_party\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
@@ -555,14 +555,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCXCocos2dDefine.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxCommon.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCXEGLView.h"
 				>
 			</File>
@@ -767,19 +759,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCXCocos2dDefine_platform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\ccxCommon_platform.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCXEGLView_platform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCXMath.h"
 				>
 			</File>
 			<File
@@ -791,7 +771,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\config_platform.h"
+				RelativePath="..\platform\platform.cpp"
 				>
 			</File>
 			<File
@@ -802,11 +782,7 @@
 				Name="win32"
 				>
 				<File
-					RelativePath="..\platform\win32\CCTime.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCTime.h"
+					RelativePath="..\platform\win32\CCNS_win32.cpp"
 					>
 				</File>
 				<File
@@ -823,18 +799,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\win32\CCXBitmapDC.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXCocos2dDefine_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXCommon_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\ccxCommon_win32.h"
 					>
 				</File>
 				<File
@@ -863,18 +827,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\win32\CCXUIImage_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\Cocos2dTypes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\NSLock.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\NSLock.h"
 					>
 				</File>
 			</Filter>
@@ -975,22 +927,6 @@
 				</File>
 				<File
 					RelativePath="..\support\image_support\TGAlib.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="opengl_support"
-				>
-				<File
-					RelativePath="..\support\opengl_support\glu.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\support\opengl_support\glu.h"
-					>
-				</File>
-				<File
-					RelativePath="..\support\opengl_support\OpenGL_Internal.h"
 					>
 				</File>
 			</Filter>

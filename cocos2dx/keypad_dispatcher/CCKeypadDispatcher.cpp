@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCKeypadDispatcher.h"
-#include "CCXCocos2dDefine.h"
 #include "support/data_support/ccCArray.h"
 
 namespace   cocos2d {

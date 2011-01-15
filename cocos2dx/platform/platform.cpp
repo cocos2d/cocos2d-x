@@ -22,18 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __SUPPORT_COCOS2D_TYPES_H__
-#define __SUPPORT_COCOS2D_TYPES_H__
-namespace   cocos2d {
+#include "platform.h"
 
-typedef signed char         INT8;	
-typedef unsigned char       UINT8;
-typedef signed short        INT16;
-typedef unsigned short      UINT16;
-typedef signed int          INT32;
-typedef unsigned int        UINT32;
-typedef long long           INT64;
-typedef unsigned long long  UINT64;	
-}//namespace   cocos2d 
+#include "ccxStdC.h"
 
-#endif // __SUPPORT_COCOS2D_TYPES_H__
+NS_CC_BEGIN;
+
+int CCTime::gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp)
+{
+    if (tp)
+    {
+        gettimeofday((struct timeval *)tp,  0);
+    }
+    return 0;
+}
+
+void CCTime::timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end)
+{
+    if (! out || ! start || ! end)
+    {
+        return;
+    }
+    out->tv_sec = end->tv_sec - start->tv_sec;
+    out->tv_usec = end->tv_usec - start->tv_usec;
+}
+
+NS_CC_END;

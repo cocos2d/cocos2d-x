@@ -23,9 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionInstant.h"
-#include "CCXCocos2dDefine.h"
 #include "CCNode.h"
 #include "CCSprite.h"
+
 namespace cocos2d {
 	//
 	// InstantAction

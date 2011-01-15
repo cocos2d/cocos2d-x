@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
+#include "ccxLibxml2.h"
 #include "NSString.h"
-#include "CCXCocos2dDefine.h"
 
 namespace cocos2d {
 

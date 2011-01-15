@@ -22,24 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_WIN32_PLATFORM_NSLOCK_H__
-#define __PLATFORM_WIN32_PLATFORM_NSLOCK_H__
+#include "ccxThread.h"
 
-#include <windows.h>
-namespace   cocos2d {
+#if CCX_SUPPORT_MULTITHREAD
 
-class NSLock
-{
-public:
-	NSLock(void);
-	~NSLock(void);
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+#include "win32/ccxThread_win32.cpp"
+#endif
 
-	void lock(void);
-	void unlock(void);
-
-private:
-	CRITICAL_SECTION m_cs;
-};
-}//namespace   cocos2d 
-
-#endif // __PLATFORM_WIN32_PLATFORM_NSLOCK_H__
+#endif  // CCX_SUPPORT_MULTITHREAD
