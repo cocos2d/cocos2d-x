@@ -458,6 +458,7 @@ protected:
 	/***************************************************
 	* mobile platforms specific functions
 	**************************************************/
+	void purgeDirector();
 	bool isOpenGLAttached(void);
 	void updateContentScaleFactor(void);
 
