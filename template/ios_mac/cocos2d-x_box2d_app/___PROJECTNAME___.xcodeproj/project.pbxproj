@@ -22,8 +22,6 @@
 		50F4144910692EE7002A0D5E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144410692EE7002A0D5E /* Default.png */; };
 		50F4144B10692EE7002A0D5E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144610692EE7002A0D5E /* Icon.png */; };
 		BF151BD612E13A1A00703484 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF151BD512E13A1A00703484 /* HelloWorldScene.cpp */; };
-		BF151BDB12E13AEE00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF151BD812E13AEE00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
-		BF151BDC12E13AEE00703484 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF151BD912E13AEE00703484 /* AppDelegate.cpp */; };
 		BF151C3412E13C4800703484 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = BF151BDF12E13C4800703484 /* Box2D.h */; };
 		BF151C3512E13C4800703484 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF151BE112E13C4800703484 /* b2BroadPhase.cpp */; };
 		BF151C3612E13C4800703484 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = BF151BE212E13C4800703484 /* b2BroadPhase.h */; };
@@ -391,10 +389,10 @@
 		BF15292312E13C8200703484 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF1528FB12E13C8200703484 /* SimpleAudioEngine.mm */; };
 		BF15292412E13C8200703484 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1528FC12E13C8200703484 /* SimpleAudioEngine_objc.h */; };
 		BF15292512E13C8200703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1528FD12E13C8200703484 /* SimpleAudioEngine_objc.m */; };
-		BF15293E12E13D5A00703484 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15293D12E13D5A00703484 /* libxml2.dylib */; };
-		BF15294112E13D7000703484 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15293D12E13D5A00703484 /* libxml2.dylib */; };
 		BF152AD012E16ADD00703484 /* LICENSE.box2d in Resources */ = {isa = PBXBuildFile; fileRef = BF152ACE12E16ADD00703484 /* LICENSE.box2d */; };
 		BF152AD112E16ADD00703484 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */; };
+		BF15714312E3D6CB001F8977 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15714212E3D6CB001F8977 /* libxml2.dylib */; };
+		BF15729312E427EA001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF15729212E427EA001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -431,10 +429,6 @@
 		50F4144610692EE7002A0D5E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		BF151BD412E1372A00703484 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		BF151BD512E13A1A00703484 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		BF151BD712E13AEE00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
-		BF151BD812E13AEE00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
-		BF151BD912E13AEE00703484 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
-		BF151BDA12E13AEE00703484 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BF151BDF12E13C4800703484 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		BF151BE112E13C4800703484 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		BF151BE212E13C4800703484 /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -802,9 +796,11 @@
 		BF1528FB12E13C8200703484 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		BF1528FC12E13C8200703484 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		BF1528FD12E13C8200703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		BF15293D12E13D5A00703484 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
 		BF152ACE12E16ADD00703484 /* LICENSE.box2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.box2d; sourceTree = "<group>"; };
 		BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
+		BF15714212E3D6CB001F8977 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
+		BF15729112E427EA001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
+		BF15729212E427EA001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.mm"; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -834,7 +830,7 @@
 				506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */,
 				506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */,
 				506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */,
-				BF15294112E13D7000703484 /* libxml2.dylib in Frameworks */,
+				BF15714312E3D6CB001F8977 /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,7 +845,6 @@
 				5055745C1045D68500A31725 /* OpenGLES.framework in Frameworks */,
 				5055745D1045D68500A31725 /* QuartzCore.framework in Frameworks */,
 				5055745E1045D69D00A31725 /* libz.dylib in Frameworks */,
-				BF15293E12E13D5A00703484 /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,7 +871,6 @@
 				50F4144210692EE7002A0D5E /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				BF15293D12E13D5A00703484 /* libxml2.dylib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -884,6 +878,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				BF15729112E427EA001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
+				BF15729212E427EA001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm */,
 				1F3B9A820EF2151B00286867 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -893,6 +889,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF15714212E3D6CB001F8977 /* libxml2.dylib */,
 				DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */,
 				DCCBF1B80F6022AE0040855A /* Foundation.framework */,
 				DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */,
@@ -909,10 +906,6 @@
 		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BF151BD712E13AEE00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
-				BF151BD812E13AEE00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
-				BF151BD912E13AEE00703484 /* AppDelegate.cpp */,
-				BF151BDA12E13AEE00703484 /* AppDelegate.h */,
 				BF151BD512E13A1A00703484 /* HelloWorldScene.cpp */,
 				BF151BD412E1372A00703484 /* HelloWorldScene.h */,
 			);
@@ -1965,8 +1958,7 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				BF151BD612E13A1A00703484 /* HelloWorldScene.cpp in Sources */,
-				BF151BDB12E13AEE00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
-				BF151BDC12E13AEE00703484 /* AppDelegate.cpp in Sources */,
+				BF15729312E427EA001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
