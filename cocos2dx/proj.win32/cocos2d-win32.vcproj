@@ -94,7 +94,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y ..\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y ..\platform\win32\third_party\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
+				CommandLine="copy /Y &quot;..\platform\win32\third_party\libraries\*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;copy /Y &quot;..\platform\win32\third_party\libraries\*.lib&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -172,7 +172,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y ..\platform\win32\third_party\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y ..\platform\win32\third_party\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
+				CommandLine="copy /Y &quot;..\platform\win32\third_party\libraries\*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;copy /Y &quot;..\platform\win32\third_party\libraries\*.lib&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
