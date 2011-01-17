@@ -25,7 +25,7 @@ THE SOFTWARE.
 #define __CCTMX_LAYER_H__
 #include "CCTMXObjectGroup.h"
 #include "CCAtlasNode.h"
-#include "CCSpriteSheet.h"
+#include "CCSpriteBatchNode.h"
 namespace cocos2d {
 
 	class CCTMXMapInfo;
@@ -35,7 +35,7 @@ namespace cocos2d {
 
 	/** @brief CCTMXLayer represents the TMX layer.
 
-	It is a subclass of CCSpriteSheet. By default the tiles are rendered using a CCTextureAtlas.
+	It is a subclass of CCSpriteBatchNode. By default the tiles are rendered using a CCTextureAtlas.
 	If you modify a tile on runtime, then, that tile will become a CCSprite, otherwise no CCSprite objects are created.
 	The benefits of using CCSprite objects as tiles are:
 	- tiles (CCSprite) can be rotated/scaled/moved with a nice API
@@ -58,7 +58,7 @@ namespace cocos2d {
 
 	@since v0.8.1
 	*/
-	class CCX_DLL CCTMXLayer : public CCSpriteSheet
+	class CCX_DLL CCTMXLayer : public CCSpriteBatchNode
 	{
 		/** size of the layer in tiles */
 		CCX_SYNTHESIZE(CGSize, m_tLayerSize, LayerSize);
@@ -122,7 +122,7 @@ namespace cocos2d {
 		/** CCTMXLayer doesn't support adding a CCSprite manually.
 		@warning addchild(z, tag); is not supported on CCTMXLayer. Instead of setTileGID.
 		*/
-		CCNode * addChild(CCNode * child, int zOrder, int tag);
+		virtual void addChild(CCNode * child, int zOrder, int tag);
 		// super method
 		void removeChild(CCNode* child, bool cleanup);
 		void draw();

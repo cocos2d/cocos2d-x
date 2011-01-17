@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __SUPPORT_TRANSFORM_UTILS_H__
 #define __SUPPORT_TRANSFORM_UTILS_H__
 
+///@todo
+// when in MAC or windows, it includes <OpenGL/gl.h>
 #include <GLES/gl.h>
 
 namespace   cocos2d {

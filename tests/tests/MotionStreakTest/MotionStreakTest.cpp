@@ -29,11 +29,11 @@ void MotionStreakTest1::onEnter()
 	// schedule an update on each frame so we can syncronize the streak with the target
 	schedule(schedule_selector(MotionStreakTest1::onUpdate));
   
-	CCIntervalAction* a1 = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* a1 = CCRotateBy::actionWithDuration(2, 360);
 
 	CCAction* action1 = CCRepeatForever::actionWithAction(a1);
-	CCIntervalAction* motion = CCMoveBy::actionWithDuration(2, CGPointMake(100,0) );
-	m_root->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
+	CCActionInterval* motion = CCMoveBy::actionWithDuration(2, CGPointMake(100,0) );
+	m_root->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
 	m_root->runAction( action1 );
 }
 
@@ -164,7 +164,7 @@ void MotionStreakTest::onEnter()
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 

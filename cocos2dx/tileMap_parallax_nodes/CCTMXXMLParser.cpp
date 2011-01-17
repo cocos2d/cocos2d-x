@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
 #include "support/file_support/FileData.h"
+#include "support/zip_support/ZipUtils.h"
 #include "CGPointExtension.h"
 #include "support/base64.h"
 #include "platform/platform.h"
@@ -555,7 +556,7 @@ namespace cocos2d {
 			if( pTMXMapInfo->getLayerAttribs() & TMXLayerAttribGzip )
 			{
 				unsigned char *deflated;
-				ZipUtils::inflateMemory(buffer, len, &deflated);
+				ZipUtils::ccInflateMemory(buffer, len, &deflated);
 				delete [] buffer;
 				buffer = NULL;
 

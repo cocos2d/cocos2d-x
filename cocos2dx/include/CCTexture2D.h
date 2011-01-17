@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
-#include <GLES/gl.h>
 
 #include "CCXCocos2dDefine.h"
 #include "NSObject.h"
@@ -47,7 +46,7 @@ typedef enum {
 	kCCTexture2DPixelFormat_RGBA8888,
 	//! 24-bit texture: RGBA888
 	kCCTexture2DPixelFormat_RGB888,
-	//! 16-bit texture: used with images that have alpha pre-multiplied
+	//! 16-bit texture without Alpha channel
 	kCCTexture2DPixelFormat_RGB565,
 	//! 8-bit textures used as masks
 	kCCTexture2DPixelFormat_A8,
@@ -102,7 +101,7 @@ class CCX_DLL CCTexture2D : public NSObject
 	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
 
 	/** content size */
-	CCX_PROPERTY_READONLY(CGSize, m_tContentSize, ContentSize)
+	CCX_PROPERTY_READONLY(CGSize, m_tContentSize, ContentSizeInPixels)
 	/** texture max S */
 	CCX_PROPERTY(GLfloat, m_fMaxS, MaxS)
 	/** texture max T */
@@ -115,6 +114,10 @@ public:
 	virtual ~CCTexture2D();
 
 	char * description(void);
+
+	/** These functions are needed to create mutable textures */
+	void releaseData(void *data);
+	void* keepData(void *data, unsigned int length);
 
 	/** Intializes with a texture2d with data */
 	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize);
@@ -143,6 +146,9 @@ public:
 	bool initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
 	bool initWithString(const char *text, const char *fontName, float fontSize);
+
+	/** returns the content size of the texture in points */
+	CGSize getContentSize(void);
 
 #ifdef _POWERVR_SUPPORT_
 	/**
@@ -206,6 +212,11 @@ public:
 	@since v0.8
 	*/
 	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+
+    /** Reload all textures
+    It's only useful when the value of CC_ENABLE_CACHE_TEXTTURE_DATA is 1
+    */
+    static void reloadAllTextures();
 
 private:
 	bool initPremultipliedATextureWithImage(UIImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);

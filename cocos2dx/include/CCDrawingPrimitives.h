@@ -29,10 +29,12 @@ THE SOFTWARE.
 /**
  @file
  Drawing OpenGL ES primitives.
-  - drawPoint
-  - drawLine
-  - drawPoly
-  - drawCircle
+ - ccDrawPoint
+ - ccDrawLine
+ - ccDrawPoly
+ - ccDrawCircle
+ - ccDrawQuadBezier
+ - ccDrawCubicBezier
  
  You can change the color, width and other property by calling the
  glColor4ub(), glLineWitdh(), glPointSize().
@@ -43,20 +45,21 @@ THE SOFTWARE.
 #include "CGGeometry.h"	// for CGPoint
 namespace   cocos2d {
 
-/** draws a point given x and y coordinate */
+/** draws a point given x and y coordinate measured in points */
 void CCX_DLL ccDrawPoint( CGPoint point );
 
 /** draws an array of points.
  @since v0.7.2
  */
-void CCX_DLL ccDrawPoints( CGPoint *points, unsigned int numberOfPoints );
+void CCX_DLL ccDrawPoints( const CGPoint *points, unsigned int numberOfPoints );
 
-/** draws a line given the origin and destination point */
+/** draws a line given the origin and destination point measured in points */
 void CCX_DLL ccDrawLine( CGPoint origin, CGPoint destination );
 
-/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices. The polygon can be closed or open
- */
-void CCX_DLL ccDrawPoly( CGPoint *vertices, int numOfVertices, bool closePolygon );
+/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
+The polygon can be closed or open
+*/
+void CCX_DLL ccDrawPoly( const CGPoint *vertices, int numOfVertices, bool closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
 void CCX_DLL ccDrawCircle( CGPoint center, float radius, float angle, int segments, bool drawLineToCenter);

@@ -41,7 +41,10 @@
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
 										pixelFormat: kEAGLColorFormatRGBA8
 										depthFormat: 0
-								 preserveBackbuffer: NO];
+								 preserveBackbuffer: NO
+                                                                                 sharegroup:nil
+                                                                          multiSampling:NO
+                                                                    numberOfSamples:0];
     [window addSubview: __glView];
     [window makeKeyAndVisible];
 

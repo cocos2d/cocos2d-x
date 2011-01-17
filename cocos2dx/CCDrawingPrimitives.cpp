@@ -23,6 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDrawingPrimitives.h"
+#include "ccTypes.h"
+#include "ccMacros.h"
+#include "CCGL.h"
 
 #include <string.h>
 #include <cmath>
@@ -36,6 +39,7 @@ namespace   cocos2d {
 
 void ccDrawPoint(CGPoint point)
 {
+	ccVertex2F p = {point.x * CC_CONTENT_SCALE_FACTOR(), point.y * CC_CONTENT_SCALE_FACTOR() };
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
@@ -43,7 +47,7 @@ void ccDrawPoint(CGPoint point)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, &point);	
+	glVertexPointer(2, GL_FLOAT, 0, &p);	
 	glDrawArrays(GL_POINTS, 0, 1);
 
 	// restore default state
@@ -52,7 +56,7 @@ void ccDrawPoint(CGPoint point)
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawPoints(CGPoint *points, unsigned int numberOfPoints)
+void ccDrawPoints(const CGPoint *points, unsigned int numberOfPoints)
 {
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
@@ -61,8 +65,41 @@ void ccDrawPoints(CGPoint *points, unsigned int numberOfPoints)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 
-	glVertexPointer(2, GL_FLOAT, 0, points);
-	glDrawArrays(GL_POINTS, 0, numberOfPoints);
+	ccVertex2F *newPoints = new ccVertex2F[numberOfPoints];
+
+	// iPhone and 32-bit machines optimization
+	if( sizeof(CGPoint) == sizeof(ccVertex2F) ) {
+
+		// points ?
+		if( CC_CONTENT_SCALE_FACTOR() != 1 ) 
+		{
+			for( unsigned int i= 0; i < numberOfPoints; i++)
+			{
+				newPoints[i].x = points[i].x * CC_CONTENT_SCALE_FACTOR();
+				newPoints[i].y = points[i].y * CC_CONTENT_SCALE_FACTOR();
+			}
+
+			glVertexPointer(2, GL_FLOAT, 0, newPoints);
+
+		} else
+			glVertexPointer(2, GL_FLOAT, 0, points);
+
+		glDrawArrays(GL_POINTS, 0, numberOfPoints);
+
+	} else {
+
+		// Mac on 64-bit
+		for( unsigned int i = 0; i < numberOfPoints; i++)
+		{
+			newPoints[i].x = points[i].x;
+			newPoints[i].y = points[i].y;
+		}
+
+		glVertexPointer(2, GL_FLOAT, 0, newPoints);
+		glDrawArrays(GL_POINTS, 0, numberOfPoints);
+	}
+
+	delete[] newPoints;
 	
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -94,7 +131,7 @@ void ccDrawLine(CGPoint origin, CGPoint destination)
 }
 
 
-void ccDrawPoly(CGPoint *poli, int points, bool closePolygon)
+void ccDrawPoly(const CGPoint *poli, int points, bool closePolygon)
 {
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 

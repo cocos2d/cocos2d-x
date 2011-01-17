@@ -50,7 +50,9 @@ public:
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
-
+    bool    canSetContentScaleFactor();
+    void    setContentScaleFactor(float contentScaleFactor);
+	void    setAnimationInterval(double interval) {};
 
 	virtual bool Create(LPCTSTR pTitle, int w, int h);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);

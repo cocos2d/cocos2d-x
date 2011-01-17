@@ -49,9 +49,9 @@ class CCX_DLL CCTextureAtlas : public NSObject
 {
 protected:
 	GLushort			*m_pIndices;
-#if CC_TEXTURE_ATLAS_USES_VBO
+#if CC_USES_VBO
 	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
-#endif // CC_TEXTURE_ATLAS_USES_VBO
+#endif // CC_USES_VBO
 
 	/** quantity of quads that are going to be drawn */
 	CCX_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)

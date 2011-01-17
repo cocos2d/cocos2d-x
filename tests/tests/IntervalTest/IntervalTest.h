@@ -6,11 +6,11 @@
 class IntervalLayer : public CCLayer
 {
 protected:
-    CCBitmapFontAtlas*	m_label0;
-	CCBitmapFontAtlas*	m_label1;
-	CCBitmapFontAtlas*	m_label2;
-	CCBitmapFontAtlas*	m_label3;
-    CCBitmapFontAtlas*	m_label4;
+    CCLabelBMFont*	m_label0;
+	CCLabelBMFont*	m_label1;
+	CCLabelBMFont*	m_label2;
+	CCLabelBMFont*	m_label3;
+    CCLabelBMFont*	m_label4;
 	
 	ccTime		m_time0, m_time1, m_time2, m_time3, m_time4;
 

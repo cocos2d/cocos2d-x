@@ -54,7 +54,7 @@ int CCXApplication::Run()
 			dwTickNow = GetTickCount();
 			if (dwTickNow - dwTickLast > 0)
 			{
-				CCDirector::sharedDirector()->preMainLoop();
+				CCDirector::sharedDirector()->mainLoop();
 			}
 			else
 			{

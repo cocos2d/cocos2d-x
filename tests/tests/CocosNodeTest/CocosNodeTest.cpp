@@ -97,14 +97,14 @@ void TestCocosNodeDemo::onEnter()
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
 		addChild(l, 1);
 		l->setPosition( CGPointMake(s.width/2, s.height-80) );
 	}	
@@ -176,16 +176,16 @@ void Test2::onEnter()
 	sp1->addChild(sp3);
 	sp2->addChild(sp4);
 	
-	CCIntervalAction* a1 = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* a2 = CCScaleBy::actionWithDuration(2, 2);
+	CCActionInterval* a1 = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* a2 = CCScaleBy::actionWithDuration(2, 2);
 	
 	CCAction* action1 = CCRepeatForever::actionWithAction(
-													(CCIntervalAction*)(CCSequence::actions(a1, a2, a2->reverse(), NULL))
+													(CCActionInterval*)(CCSequence::actions(a1, a2, a2->reverse(), NULL))
 												);
 	CCAction* action2 = CCRepeatForever::actionWithAction(
-													(CCIntervalAction*)(CCSequence::actions(
-																						(CCIntervalAction*)(a1->copy()->autorelease()), 
-																						(CCIntervalAction*)(a2->copy()->autorelease()), 
+													(CCActionInterval*)(CCSequence::actions(
+																						(CCActionInterval*)(a1->copy()->autorelease()), 
+																						(CCActionInterval*)(a2->copy()->autorelease()), 
 																						a2->reverse(), 
 																						NULL) )
 												);
@@ -258,9 +258,9 @@ Test5::Test5()
 	sp2->setPosition(CGPointMake(380,160));
 
 	CCRotateBy* rot = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* rot_back = rot->reverse();
+	CCActionInterval* rot_back = rot->reverse();
 	CCAction* forever = CCRepeatForever::actionWithAction(
-													(CCIntervalAction*)(CCSequence::actions(rot, rot_back, NULL)) 
+													(CCActionInterval*)(CCSequence::actions(rot, rot_back, NULL)) 
 												);
 	CCAction* forever2 = (CCAction*)(forever->copy()->autorelease());
 	forever->setTag(101);
@@ -314,10 +314,10 @@ Test6::Test6()
 	sp1->setPosition(CGPointMake(100,160));
 	sp2->setPosition(CGPointMake(380,160));
 		
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* rot_back = rot->reverse();
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rot_back = rot->reverse();
 	CCAction* forever1 = CCRepeatForever::actionWithAction(
-															(CCIntervalAction*)(CCSequence::actions(rot, rot_back, NULL)));
+															(CCActionInterval*)(CCSequence::actions(rot, rot_back, NULL)));
 	CCAction* forever11 =  (CCAction*)(forever1->copy()->autorelease());
 
 	CCAction* forever2 =  (CCAction*)(forever1->copy()->autorelease());
@@ -427,18 +427,18 @@ StressTest2::StressTest2()
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
 	sp1->setPosition( CGPointMake(80, s.height/2) );
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
-	CCIntervalAction* move_ease_inout3 = CCEaseInOut::actionWithAction((CCIntervalAction*)(move->copy()->autorelease()), 2.0f);
-	CCIntervalAction* move_ease_inout_back3 = move_ease_inout3->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move_ease_inout3 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 2.0f);
+	CCActionInterval* move_ease_inout_back3 = move_ease_inout3->reverse();
 	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL);
-	sp1->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq3) );
+	sp1->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq3) );
 	sublayer->addChild(sp1, 1);
 
 	CCParticleFire* fire = CCParticleFire::node();
 	fire->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
 	fire->setPosition( CGPointMake(80, s.height/2-50) );
 	
-	CCIntervalAction* copy_seq3 = (CCIntervalAction*)(seq3->copy()->autorelease());
+	CCActionInterval* copy_seq3 = (CCActionInterval*)(seq3->copy()->autorelease());
 	
 	fire->runAction( CCRepeatForever::actionWithAction(copy_seq3) );
 	sublayer->addChild(fire, 2);
@@ -514,14 +514,14 @@ NodeToWorld::NodeToWorld()
 	menu->setPosition( CGPointMake(backSize.width/2, backSize.height/2));
 	back->addChild(menu);
 	
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(5, 360);
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(5, 360);
 	CCAction* fe = CCRepeatForever::actionWithAction( rot);
 	item->runAction( fe );
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(3, CGPointMake(200,0));
-	CCIntervalAction* move_back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(200,0));
+	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-	CCAction* fe2 = CCRepeatForever::actionWithAction((CCIntervalAction*)seq);
+	CCAction* fe2 = CCRepeatForever::actionWithAction((CCActionInterval*)seq);
 	back->runAction(fe2);
 }
 

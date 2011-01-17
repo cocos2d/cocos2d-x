@@ -1,10 +1,9 @@
-#include "tests.h"
 #include "controller.h"
 #include "testResource.h"
 
 #define LINE_SPACE          40
 
-static int s_nPageIndex = 0;
+static CGPoint s_tCurPos = CGPointZero;
 
 static TestScene* CreateTestScene(int nIdx)
 {
@@ -84,6 +83,7 @@ static TestScene* CreateTestScene(int nIdx)
 }
 
 TestController::TestController()
+: m_tBeginPos(CGPointZero)
 {
     CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 
@@ -96,54 +96,30 @@ TestController::TestController()
     pCloseItem->setPosition(CGPointMake( s.width - 30, s.height - 30));
 
     // add menu items for tests
-    for (int i = 0; i < ITEM_EVERYPAGE; ++i)
+    m_pItmeMenu = CCMenu::menuWithItems(NULL);
+    for (int i = 0; i < TESTS_COUNT; ++i)
     {
-        CCLabel* label = CCLabel::labelWithString("For Test", "Arial", 24);
+        CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
-        pMenu->addChild(pMenuItem, i + 2);
+
+        m_pItmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( CGPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
 
         // record the pointer of the menu item
         m_pMenuItems[i] = pMenuItem;
-
-        // record the value of i as userdata
-        int * nIdx = new int;
-        *nIdx = i;
-        pMenuItem->setUserData((void *) nIdx);
     }
 
-    // update menu items text
-    updateItemsText();
+    m_pItmeMenu->setContentSize(CGSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
+    m_pItmeMenu->setPosition(s_tCurPos);
+    addChild(m_pItmeMenu);
 
-    // add menu item to change the page-number
-    CCLabel* pPreLabel = CCLabel::labelWithString("PrePage", "Arial", 22);
-    CCMenuItemLabel* pPreItem = CCMenuItemLabel::itemWithLabel(pPreLabel, this, menu_selector(TestController::prePageCallback));
-    pMenu->addChild(pPreItem, ITEM_EVERYPAGE + 2);
-    pPreItem->setPosition(CGPointMake(s.width - 150, 20));
-
-    CCLabel* pNextLabel = CCLabel::labelWithString("NextPage", "Arial", 22);
-    CCMenuItemLabel* pNextItem = CCMenuItemLabel::itemWithLabel(pNextLabel, this, menu_selector(TestController::nextPageCallback));
-    pMenu->addChild(pNextItem, ITEM_EVERYPAGE + 3);
-    pNextItem->setPosition(CGPointMake(s.width - 50, 20));
+    setIsTouchEnabled(true);
 
     addChild(pMenu, 1);
 }
 
 TestController::~TestController()
 {
-    for (int i = 0; i < ITEM_EVERYPAGE; ++i)
-    {
-        if (m_pMenuItems[i])
-        {
-            // delete the userdata have recorded
-            if (m_pMenuItems[i]->getUserData())
-            {
-                delete (int*)m_pMenuItems[i]->getUserData();
-                m_pMenuItems[i]->setUserData(NULL);
-            }
-        }
-    }
-
     removeAllChildrenWithCleanup(true);
 }
 
@@ -151,11 +127,10 @@ void TestController::menuCallback(NSObject * pSender)
 {
     // get the userdata, it's the index of the menu item clicked
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
-    void * pUserData = pMenuItem->getUserData();
-    int  * nIdx = (int *) pUserData;
+    int nIdx = pMenuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-    TestScene* pScene = CreateTestScene(s_nPageIndex * ITEM_EVERYPAGE + (*nIdx));
+    TestScene* pScene = CreateTestScene(nIdx);
     if (pScene)
     {
         pScene->runThisTest();
@@ -168,57 +143,40 @@ void TestController::closeCallback(NSObject * pSender)
     CCDirector::sharedDirector()->end();
 }
 
-void TestController::nextPageCallback(NSObject * pSender)
+void TestController::ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent)
 {
-    int nPageCount = TESTS_COUNT / ITEM_EVERYPAGE;
-    if (TESTS_COUNT % ITEM_EVERYPAGE != 0)
-    {
-        nPageCount += 1;
-    }
+    NSSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
 
-    // compute the current page number
-    s_nPageIndex = (s_nPageIndex + 1) % nPageCount;
-
-    // update menu items text
-    updateItemsText();
+    m_tBeginPos = touch->locationInView( touch->view() );	
+    m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
-void TestController::prePageCallback(NSObject * pSender)
+void TestController::ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent)
 {
-    int nPageCount = TESTS_COUNT / ITEM_EVERYPAGE;
-    if (TESTS_COUNT % ITEM_EVERYPAGE != 0)
+    NSSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
+
+    CGPoint touchLocation = touch->locationInView( touch->view() );	
+    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    float nMoveY = touchLocation.y - m_tBeginPos.y;
+
+    CGPoint curPos  = m_pItmeMenu->getPosition();
+    CGPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+    if (nextPos.y < 0.0f)
     {
-        nPageCount += 1;
+        m_pItmeMenu->setPosition(CGPointZero);
+        return;
     }
 
-    // compute the current page number
-    s_nPageIndex -= 1;
-    if (s_nPageIndex < 0)
+    if (nextPos.y > ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height))
     {
-        s_nPageIndex = nPageCount - 1;
+        m_pItmeMenu->setPosition(ccp(0, ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height)));
+        return;
     }
 
-    // update menu items text
-    updateItemsText();
-}
-
-void TestController::updateItemsText()
-{
-    int nStartIndex = s_nPageIndex * ITEM_EVERYPAGE;
-
-    for (int i = 0; i < ITEM_EVERYPAGE; ++i)
-    {
-        m_pMenuItems[i]->setIsVisible(false);
-        int nIdx = nStartIndex + i;
-        if (nIdx < TESTS_COUNT)
-        {
-            std::string menuText = g_aTestNames[nIdx];
-
-            if (! menuText.empty())
-            {
-                m_pMenuItems[i]->setString(menuText.c_str());
-                m_pMenuItems[i]->setIsVisible(true);
-            }
-        }
-    }
+    m_pItmeMenu->setPosition(nextPos);
+    m_tBeginPos = touchLocation;
+    s_tCurPos   = nextPos;
 }

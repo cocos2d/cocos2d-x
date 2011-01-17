@@ -19,7 +19,7 @@ void TestLayer::onEnter()
 	//NSArray *array = [UIFont familyNames];
 	//for( NSString *s in array )
 	//	NSLog( s );
-	CCLabel* label = CCLabel::labelWithString("cocos2d", "Tahoma", 64);
+	CCLabelTTF* label = CCLabelTTF::labelWithString("cocos2d", "Tahoma", 64);
 
 	label->setPosition( CGPointMake(x/2,y/2) );
 	
@@ -61,11 +61,11 @@ void SpriteLayer::onEnter()
 	
 	sprite->runAction(rot);
 
-	CCIntervalAction *jump1 = CCJumpBy::actionWithDuration(4, CGPointMake(-400,0), 100, 4);
-	CCIntervalAction *jump2 = jump1->reverse();
+	CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, CGPointMake(-400,0), 100, 4);
+	CCActionInterval *jump2 = jump1->reverse();
 	
-	CCIntervalAction *rot1 = CCRotateBy::actionWithDuration(4, 360*2);
-	CCIntervalAction *rot2 = rot1->reverse();
+	CCActionInterval *rot1 = CCRotateBy::actionWithDuration(4, 360*2);
+	CCActionInterval *rot2 = rot1->reverse();
 	
 	spriteSister1->runAction(CCRepeat::actionWithAction( CCSequence::actions(jump2, jump1, NULL), 5 ));
 	spriteSister2->runAction(CCRepeat::actionWithAction( CCSequence::actions((CCFiniteTimeAction *)(jump1->copy()->autorelease()), (CCFiniteTimeAction *)(jump2->copy()->autorelease()), NULL), 5 ));
@@ -90,10 +90,10 @@ void RotateWorldMainLayer::onEnter()
 	x = size.width;
 	y = size.height;
 	
-	CCNode* blue =  CCColorLayer::layerWithColor(ccc4(0,0,255,255));
-	CCNode* red =   CCColorLayer::layerWithColor(ccc4(255,0,0,255));
-	CCNode* green = CCColorLayer::layerWithColor(ccc4(0,255,0,255));
-	CCNode* white = CCColorLayer::layerWithColor(ccc4(255,255,255,255));
+	CCNode* blue =  CCLayerColor::layerWithColor(ccc4(0,0,255,255));
+	CCNode* red =   CCLayerColor::layerWithColor(ccc4(255,0,0,255));
+	CCNode* green = CCLayerColor::layerWithColor(ccc4(0,255,0,255));
+	CCNode* white = CCLayerColor::layerWithColor(ccc4(255,255,255,255));
 
 	blue->setScale(0.5f);
 	blue->setPosition(CGPointMake(-x/4,-y/4));
