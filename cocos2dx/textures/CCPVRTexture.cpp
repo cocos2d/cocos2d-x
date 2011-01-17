@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#if 0 // PVR TEXTURE CANNOT CROSS PLATFORM
+
 #include "CCPVRTexture.h"
 #include "ccMacros.h"
 #include "NSData.h"
@@ -288,4 +290,4 @@ CCPVRTexture * CCPVRTexture::pvrTextureWithContentsOfFile(const char* path)
 
 }//namespace   cocos2d 
 
-
+#endif
