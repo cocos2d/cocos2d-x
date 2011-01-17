@@ -95,7 +95,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y $(ProjectDir)Res\*.mid $(OutDir)&#x0D;&#x0A;copy /Y $(ProjectDir)Res\*.wav $(OutDir)&#x0D;&#x0A;"
+				CommandLine="copy /Y &quot;$(ProjectDir)Res\*.mid&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;copy /Y &quot;$(ProjectDir)Res\*.wav&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -181,7 +181,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y $(ProjectDir)Res\*.mid $(OutDir)&#x0D;&#x0A;copy /Y $(ProjectDir)Res\*.wav $(OutDir)&#x0D;&#x0A;"
+				CommandLine="copy /Y &quot;$(ProjectDir)Res\*.mid&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;copy /Y &quot;$(ProjectDir)Res\*.wav&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
