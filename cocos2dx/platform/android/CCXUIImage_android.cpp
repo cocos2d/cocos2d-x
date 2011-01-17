@@ -109,7 +109,7 @@ UIImage::~UIImage(void)
 	}
 }
 
-bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageType)
+bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageType)
 {
 	bool bRet = false;
 	
@@ -121,11 +121,11 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
     {
 	    switch (imageType)
 	    {
-	    case kImageFormatPNG:
+	    case kCCImageFormatPNG:
 		    // use libpng load image
 		    bRet = loadPngFromStream(pBuffer, nSize);
 		    break;
-	    case kImageFormatJPG:
+	    case kCCImageFormatJPG:
 		    bRet = loadJpgFromStream(pBuffer, nSize);
 		    break;
 	    default:

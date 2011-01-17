@@ -2,10 +2,9 @@
 #define _CONTROLLER_H_
 
 #include "cocos2d.h"
+#include "tests.h"
 
 using namespace cocos2d;
-
-#define ITEM_EVERYPAGE              7
 
 class TestController : public CCLayer
 {
@@ -16,15 +15,14 @@ public:
     void menuCallback(NSObject * pSender);
     void closeCallback(NSObject * pSender);
 
-    void nextPageCallback(NSObject * pSender);
-    void prePageCallback(NSObject * pSender);
-
-    void updateItemsText();
+    virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent);
+    virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent);
 
 private:
-    CCMenuItemLabel * m_pMenuItems[ITEM_EVERYPAGE];
 
-    unsigned int m_nUIDs[ITEM_EVERYPAGE];
+    CGPoint m_tBeginPos;
+    CCMenuItemLabel * m_pMenuItems[TESTS_COUNT];
+    CCMenu* m_pItmeMenu;
 };
 
 #endif

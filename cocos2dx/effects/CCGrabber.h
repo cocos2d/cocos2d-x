@@ -25,7 +25,7 @@ THE SOFTWARE.
 #define __EFFECTS_CCGRABBER_H__
 
 #include "NSObject.h"
-#include <GLES/gl.h>
+#include "CCGL.h"
 
 namespace cocos2d 
 {

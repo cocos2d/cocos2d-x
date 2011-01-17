@@ -50,11 +50,6 @@ protected:
 	//! chars per column
 	int m_nItemsPerColumn;
 
-	//! texture coordinate x increment
-	float m_fTexStepX;
-	//! texture coordinate y increment
-	float m_fTexStepY;
-
 	//! width of each char
 	int	m_nItemWidth;
 	//! height of each char
@@ -99,7 +94,6 @@ public:
 
 private :
 	void calculateMaxItems();
-	void calculateTexCoordsSteps();
 	void updateBlendFunc();
 	void updateOpacityModifyRGB();
 

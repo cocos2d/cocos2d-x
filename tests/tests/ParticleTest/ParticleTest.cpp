@@ -1,7 +1,7 @@
 #include "ParticleTest.h"
-// #include "CCIntervalAction.h"
+// #include "CCActionInterval.h"
 // #include "CCMenu.h"
-// #include "CCLabel.h"
+// #include "CCLabelTTF.h"
 // #include "CCLabelAtlas.h"
 // #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "../testResource.h"
@@ -138,7 +138,7 @@ void DemoBigFlower::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCQuadParticleSystem();
+	m_emitter = new CCParticleSystemQuad();
 	m_emitter->initWithTotalParticles(50);
 	//m_emitter->autorelease();
 
@@ -222,7 +222,7 @@ void DemoRotFlower::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCQuadParticleSystem();
+	m_emitter = new CCParticleSystemQuad();
 	m_emitter->initWithTotalParticles(300);
 	//m_emitter->autorelease();
 
@@ -478,7 +478,7 @@ void DemoModernArt::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCPointParticleSystem();
+	m_emitter = new CCParticleSystemPoint();
 	m_emitter->initWithTotalParticles(1000);
 	//m_emitter->autorelease();
 
@@ -614,10 +614,10 @@ void ParallaxParticle::onEnter()
 	p2->addChild(par, 10);
     par->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
-	CCIntervalAction* move_back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
+	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-	p->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));	
+	p->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));	
 }
 
 std::string ParallaxParticle::title()
@@ -638,7 +638,7 @@ void RadiusMode1::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(200);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
@@ -722,7 +722,7 @@ void RadiusMode2::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(200);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
@@ -806,7 +806,7 @@ void Issue704::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(100);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
@@ -898,7 +898,7 @@ void Issue870::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    CCQuadParticleSystem *system = new CCQuadParticleSystem();
+    CCParticleSystemQuad *system = new CCParticleSystemQuad();
     system->initWithFile("Images/SpinningPeas.plist");
     system->setTextureWithRect(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"), CGRectMake(0,0,32,32));
     addChild(system, 10);
@@ -912,7 +912,7 @@ void Issue870::updateQuads(ccTime dt)
 {
     m_nIndex = (m_nIndex + 1) % 4;
     CGRect rect = CGRectMake(m_nIndex * 32, 0, 32, 32);
-    CCQuadParticleSystem* system = (CCQuadParticleSystem*)m_emitter;
+    CCParticleSystemQuad* system = (CCParticleSystemQuad*)m_emitter;
     system->setTextureWithRect(m_emitter->getTexture(), rect);
 }
 
@@ -939,7 +939,7 @@ void DemoParticleFromFile::onEnter()
 	removeChild(m_background, true);
 	m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     std::string filename = "Images/" + m_title + ".plist";
     m_emitter->initWithFile(filename.c_str());
     addChild(m_emitter, 10);
@@ -1049,11 +1049,11 @@ ParticleDemo::ParticleDemo(void)
 	setIsTouchEnabled( true );
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 100, 1000);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 	
-	CCLabel *tapScreen = CCLabel::labelWithString("(Tap the Screen)", "Arial", 20);
+	CCLabelTTF *tapScreen = CCLabelTTF::labelWithString("(Tap the Screen)", "Arial", 20);
 	tapScreen->setPosition( CGPointMake(s.width/2, s.height-80) );
 	addChild(tapScreen, 100);
 	
@@ -1087,10 +1087,10 @@ ParticleDemo::ParticleDemo(void)
 	addChild(m_background, 5);
 	m_background->setPosition( CGPointMake(s.width/2, s.height-180) );
 
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0) );
-	CCIntervalAction* move_back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0) );
+	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-	m_background->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq) );
+	m_background->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq) );
 	
 	
 	schedule( schedule_selector(ParticleDemo::step) );
@@ -1105,7 +1105,7 @@ void ParticleDemo::onEnter(void)
 {
 	CCLayer::onEnter();
 
-	CCLabel* pLabel = (CCLabel*)(this->getChildByTag(1000));
+	CCLabelTTF* pLabel = (CCLabelTTF*)(this->getChildByTag(1000));
 	pLabel->setString(title().c_str());
 }
 

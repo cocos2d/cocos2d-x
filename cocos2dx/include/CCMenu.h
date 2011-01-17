@@ -31,9 +31,14 @@ namespace cocos2d{
 
 	typedef enum  
 	{
-		kMenuStateWaiting,
-		kMenuStateTrackingTouch
-	} MenuState;
+        kCCMenuStateWaiting,
+        kCCMenuStateTrackingTouch
+    } tCCMenuState;
+
+    enum {
+        //* priority used by the menu
+        kCCMenuTouchPriority = -128,
+    };
 
 	/** @brief A CCMenu
 	* 
@@ -75,15 +80,36 @@ namespace cocos2d{
 		void alignItemsInRows(unsigned int rows, va_list args);
 
 		//super methods
-		virtual CCNode * addChild(CCNode * child, int zOrder);
-		virtual CCNode * addChild(CCNode * child, int zOrder, int tag);
+		virtual void addChild(CCNode * child, int zOrder);
+		virtual void addChild(CCNode * child, int zOrder, int tag);
 		virtual void registerWithTouchDispatcher();
+
+        /**
+        @brief For phone event handle functions
+        */
 		virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
 		virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
 		virtual void ccTouchCancelled(CCTouch *touch, UIEvent* event);
 		virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
+
+        /**
+        @brief For PC event handle functions
+        @since v0.99.5
+        */
+        virtual int mouseDelegatePriority();
+        virtual CCMenuItem* itemForMouseEvent(NSEvent * pEvent);
+        virtual bool ccMouseDown(NSEvent * pEvent);
+        virtual bool ccMouseDragged(NSEvent * pEvent);
+        virtual bool ccMouseUp(NSEvent * pEvent);
+
 		virtual void destroy(void);
 		virtual void keep(void);
+
+        /**
+        @since v0.99.5
+        override onExit
+        */
+        virtual void onExit();
 
 		virtual void setOpacity(GLubyte opacity);
 		virtual GLubyte getOpacity(void);
@@ -96,7 +122,7 @@ namespace cocos2d{
 		CCMenuItem* itemForTouch(CCTouch * touch);
 
 	protected:
-		MenuState m_eState;
+		tCCMenuState m_eState;
 		CCMenuItem *m_pSelectedItem;
 		GLubyte m_cOpacity;
 		ccColor3B m_tColor;

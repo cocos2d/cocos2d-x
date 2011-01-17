@@ -73,12 +73,12 @@ Box2DTestLayer::Box2DTestLayer()
 	
 	//Set up sprite
 	
-	CCSpriteSheet *mgr = CCSpriteSheet::spriteSheetWithFile(s_pPathBlock, 150);
+	CCSpriteBatchNode *mgr = CCSpriteBatchNode::spriteSheetWithFile(s_pPathBlock, 150);
 	addChild(mgr, 0, kTagSpriteManager);
 	
 	addNewSpriteWithCoords( CGPointMake(screenSize.width/2, screenSize.height/2) );
 	
-	CCLabel *label = CCLabel::labelWithString("Tap screen", "Marker Felt", 32);
+	CCLabelTTF *label = CCLabelTTF::labelWithString("Tap screen", "Marker Felt", 32);
 	addChild(label, 0);
 	label->setColor( ccc3(0,0,255) );
 	label->setPosition( CGPointMake( screenSize.width/2, screenSize.height-50) );
@@ -114,14 +114,14 @@ void Box2DTestLayer::draw()
 void Box2DTestLayer::addNewSpriteWithCoords(CGPoint p)
 {
 	//UXLOG(L"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteSheet* sheet = (CCSpriteSheet*)getChildByTag(kTagSpriteManager);
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*)getChildByTag(kTagSpriteManager);
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
 	CCSprite *sprite = sheet->createSpriteWithRect( CGRectMake(32 * idx,32 * idy,32,32));
-	(CCNode*)(sheet)->addChild(sprite);
+	sheet->addChild(sprite);
 	
 	sprite->setPosition( CGPointMake( p.x, p.y) );
 	

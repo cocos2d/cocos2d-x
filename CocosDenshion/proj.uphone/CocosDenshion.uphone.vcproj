@@ -189,14 +189,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\uphone\ResourceHandle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\uphone\ResourceHandle.h"
-				>
-			</File>
-			<File
 				RelativePath="..\uphone\SimpleAudioEngine.cpp"
 				>
 			</File>

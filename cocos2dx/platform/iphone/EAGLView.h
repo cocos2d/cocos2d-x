@@ -84,9 +84,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	NSString				*pixelformat_;
 	GLuint					depthFormat_;
+	BOOL					preserveBackbuffer_;
 
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
+
+	//fsaa addition
+	BOOL					multisampling_;
+	unsigned int			requestedSamples_;
 @private
         CFMutableDictionaryRef    touchesIntergerDict;
         unsigned int                           indexBitsUsed;
@@ -97,7 +102,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 /** creates an initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth;
+/** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping */
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
+
 // get the view object
 +(id) sharedEGLView;
 
@@ -105,8 +113,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
 /** Initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
-/** Initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
+/** Initializes an EAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup and multisampling support */
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 
 /** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
 @property(nonatomic,readonly) NSString* pixelFormat;
@@ -118,6 +126,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 /** OpenGL context */
 @property(nonatomic,readonly) EAGLContext *context;
+
+@property(nonatomic,readwrite) BOOL multiSampling;
 
 @property(readonly) CFMutableDictionaryRef touchesIntergerDict;
 @property(readwrite) unsigned int indexBitsUsed;

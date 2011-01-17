@@ -31,15 +31,14 @@
 	about Chipmunk which may change with little to no warning.
 */
  
+#include "cocos2d.h"
+#include "cocos2dChipmunkDemo.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <limits.h>
-
-#include "cocos2d.h"
-#include "cocos2dChipmunkDemo.h"
 
 #define SLEEP_TICKS 16
 
@@ -426,7 +425,7 @@ void ChipmunkTestLayer::init()
 
     runDemo(demos[firstDemoIndex]);
 
-    label = CCLabel::labelWithString(demos[firstDemoIndex]->name, "Arial", 32);
+    label = CCLabelTTF::labelWithString(demos[firstDemoIndex]->name, "Arial", 32);
     label->setPosition( ccp(0, -300) );
     label->setColor(ccBLACK);
     addChild(label);

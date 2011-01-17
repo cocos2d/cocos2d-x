@@ -86,14 +86,14 @@ void SpriteDemo::onEnter()
 
     CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 18);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 18);
 	addChild(label, 1);
 	label->setPosition( CGPointMake(s.width/2, s.height-50) );
 
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
 		addChild(l, 1);
 		l->setPosition( CGPointMake(s.width/2, s.height-80) );
 	}	

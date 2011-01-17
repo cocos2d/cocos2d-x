@@ -34,19 +34,26 @@
 
 @interface ES1Renderer : NSObject <ESRenderer>
 {
-    // The pixel dimensions of the CAEAGLLayer
-    GLint backingWidth_;
-    GLint backingHeight_;
+	// The pixel dimensions of the CAEAGLLayer
+	GLint backingWidth_;
+	GLint backingHeight_;
 
-    // The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
-    GLuint defaultFramebuffer_;
+	unsigned int	samplesToUse_;
+	BOOL			multiSampling_;
+
+	unsigned int	depthFormat_;
+	unsigned int	pixelFormat_;
+
+	// The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
+	GLuint defaultFramebuffer_;
 	GLuint colorRenderbuffer_;
 	GLuint depthBuffer_;
-	
-	unsigned int	depthFormat_;
 
 
-	@public
+	//buffers for MSAA
+	GLuint msaaFramebuffer_;
+	GLuint msaaColorbuffer_;
+
 	EAGLContext *context_;
 }
 

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CGGeometry.h"
 
-#include <GLES/gl.h>
+#include "CCGL.h"
 
 namespace   cocos2d {
 
@@ -73,10 +73,10 @@ static const ccColor3B ccGRAY={166,166,166};
 */
 typedef struct _ccColor4B
 {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-	unsigned char a;
+	GLubyte r;
+	GLubyte g;
+	GLubyte b;
+	GLubyte a;
 } ccColor4B;
 //! helper macro that creates an ccColor4B type
 static inline ccColor4B
@@ -91,10 +91,10 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 @since v0.8
 */
 typedef struct _ccColor4F {
-	float r;
-	float g;
-	float b;
-	float a;
+	GLfloat r;
+	GLfloat g;
+	GLfloat b;
+	GLfloat a;
 } ccColor4F;
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
@@ -126,16 +126,27 @@ static inline bool ccc4FEqual(ccColor4F a, ccColor4F b)
 /** A vertex composed of 2 floats: x, y
  @since v0.8
  */
-#define ccVertex2F CGPoint
+typedef struct _ccVertex2F
+{
+	GLfloat x;
+	GLfloat y;
+} ccVertex2F;
+
+static inline ccVertex2F vertex2(const float x, const float y)
+{
+	ccVertex2F c = {x, y};
+	return c;
+}
+
 
 /** A vertex composed of 2 floats: x, y
  @since v0.8
  */
 typedef struct _ccVertex3F
 {
-		float x;
-		float y;
-		float z;
+	GLfloat x;
+	GLfloat y;
+	GLfloat z;
 } ccVertex3F;
 
 static inline ccVertex3F vertex3(const float x, const float y, const float z)
@@ -148,8 +159,8 @@ static inline ccVertex3F vertex3(const float x, const float y, const float z)
  @since v0.8
  */
 typedef struct _ccTex2F {
-	 float u;
-	 float v;
+	 GLfloat u;
+	 GLfloat v;
 } ccTex2F;
 
 static inline ccTex2F tex2(const float u, const float v)
@@ -164,7 +175,7 @@ typedef struct _ccPointSprite
 {
 	ccVertex2F	pos;		// 8 bytes
 	ccColor4F	colors;		// 16 bytes
-	float		size;		// 4 bytes
+	GLfloat		size;		// 4 bytes
 } ccPointSprite;
 
 //!	A 2D Quad. 4 * 2 floats
