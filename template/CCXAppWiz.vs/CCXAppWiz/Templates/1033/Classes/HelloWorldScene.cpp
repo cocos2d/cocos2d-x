@@ -1,4 +1,3 @@
-
 #include "HelloWorldScene.h"
 
 using namespace cocos2d;
@@ -55,6 +54,7 @@ bool HelloWorld::init()
 
         // Create a menu with the "close" menu item, it's an auto release object.
         CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
+        pMenu->setPosition(CGPointZero);
         CCX_BREAK_IF(! pMenu);
 
         // Add the menu to HelloWorld layer as a child layer.
@@ -63,7 +63,7 @@ bool HelloWorld::init()
         // 2. Add a label shows "Hello World".
 
         // Create a label and initialize with string "Hello World".
-        CCLabel* pLabel = CCLabel::labelWithString("Hello World", "Thonburi", 34);
+        CCLabelTTF* pLabel = CCLabelTTF::labelWithString("Hello World", "Thonburi", 64);
         CCX_BREAK_IF(! pLabel);
 
         // Get window size and place the label upper. 
@@ -94,3 +94,4 @@ void HelloWorld::menuCloseCallback(NSObject* pSender)
     // "close" menu item clicked
     CCDirector::sharedDirector()->end();
 }
+
