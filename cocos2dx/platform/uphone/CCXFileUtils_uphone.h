@@ -62,10 +62,11 @@ public:
 	static NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 
     /**
-    @brief  Set the ResourcePath,we will find resource in this path
-    @param pszResourcePath  The absolute resource path
+    @brief  Set the ResourcePath and(or) the zip file name
+    @param pszResPath  The absolute resource path
+    @param pszZipFileName The relative path of the .zip file
     */
-	static void setResourcePath(const char *pszResourcePath);
+    static void setResource(const char* pszResPath, const char* pszZipFileName);
 
     /**
     @brief Whether the resource is exist or not.The function find the resource in hardware,if not find,it will find in resource map.
@@ -73,12 +74,6 @@ public:
     @return The return value is true if exist,otherwise return false.
     */
     static bool isResourceExist(const char* pszResName);
-
-    /**
-    @brief Set the relative path of the .zip file which contains all resource files
-    @param pszZipPath The relative path of the .zip file
-    */
-    static void setResourceZipFile(const char* pszZipPath);
 
 	/** loads a file into memory.
 	the caller should release the allocated buffer.

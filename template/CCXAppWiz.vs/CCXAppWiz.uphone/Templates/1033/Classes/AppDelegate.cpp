@@ -43,9 +43,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     // pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
 
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/[!output PROJECT_NAME]/");
-
     CCScene * pScene = HelloWorld::scene();
 
     pDirector->runWithScene(pScene);

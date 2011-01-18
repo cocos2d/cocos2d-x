@@ -43,11 +43,7 @@ void SimpleAudioEngine::end()
 	return;
 }
 
-void SimpleAudioEngine::setResourcePath(const char *pszResourcePath)
-{
-}
-
-void SimpleAudioEngine::setResourceZipFile(const char* pszZipPath)
+void SimpleAudioEngine::setResource(const char* pszResPath, const char* pszZipFileName)
 {
 }
 
@@ -151,6 +147,11 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 		s_List.erase(nRet);
 		nRet = 0;
 	} while (0);
+}
+
+void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
+{
+
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
