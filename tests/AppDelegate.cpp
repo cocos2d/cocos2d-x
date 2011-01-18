@@ -50,7 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if 0
     // set the resource zip file
-    CCFileUtils::setResourceZipFile("cocos2d_tests.zip");
+    CCFileUtils::setResource(NULL, "cocos2d_tests.zip");
 #endif
 
 #elif defined(CCX_PLATFORM_ANDROID)

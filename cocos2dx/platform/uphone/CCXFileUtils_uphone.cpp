@@ -201,46 +201,44 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
 static char s_pszResourcePath[EOS_FILE_MAX_PATH] = {0};
 static char s_pszZipFilePath[EOS_FILE_MAX_PATH]  = {0};
 
-void CCFileUtils::setResourcePath(const char *pszResourcePath)
+void updateZipFilePath(const char* pResPath)
 {
-    NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-    NSAssert(strlen(pszResourcePath) <= EOS_FILE_MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
-
-    // if have set the zip file path,update it.
-    if (strlen(s_pszZipFilePath))
+    if (! strlen(s_pszZipFilePath))
     {
-        std::string strTemp = s_pszZipFilePath;
-        int nPos = std::string::npos;
-
-        std::string ResPath;
-        if (strlen(s_pszResourcePath))
-        {
-            ResPath = s_pszResourcePath;
-        }
-        else
-        {
-            ResPath = CCXApplication::sharedApplication()->getAppDataPath();
-        }
-
-        nPos = strTemp.find(ResPath.c_str());
-        if (nPos != std::string::npos)
-        {
-            strTemp.replace(nPos, ResPath.length(), pszResourcePath);
-            memset(s_pszZipFilePath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
-            strcpy(s_pszZipFilePath, strTemp.c_str());
-        }
+        return;
     }
 
-    // record the resource path
-    strcpy(s_pszResourcePath, pszResourcePath);
+    std::string strTemp = s_pszZipFilePath;
+    int nPos = std::string::npos;
+
+    // find the path need br replaced
+    std::string ResPath;
+    if (strlen(s_pszResourcePath))
+    {
+        ResPath = s_pszResourcePath;
+    }
+    else
+    {
+        ResPath = CCXApplication::sharedApplication()->getAppDataPath();
+    }
+
+    // replace the resource path in s_pszZipFilePath
+    nPos = strTemp.find(ResPath.c_str());
+    if (nPos != std::string::npos)
+    {
+        strTemp.replace(nPos, ResPath.length(), pResPath);
+        memset(s_pszZipFilePath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
+        strcpy(s_pszZipFilePath, strTemp.c_str());
+    }
 }
 
-void CCFileUtils::setResourceZipFile(const char* pszZipPath)
+void setZipFilePath(const char* pZipFileName)
 {
-    NSAssert(pszZipPath != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
+    NSAssert(pZipFileName != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
 
     // get the full path of zip file
     char fullPath[EOS_FILE_MAX_PATH] = {0};
+
     if (strlen(s_pszResourcePath))
     {
         strcpy(fullPath, s_pszResourcePath);
@@ -250,7 +248,7 @@ void CCFileUtils::setResourceZipFile(const char* pszZipPath)
         const char* pAppDataPath = CCXApplication::sharedApplication()->getAppDataPath();
         strcpy(fullPath, pAppDataPath);
     }
-    strcat(fullPath, pszZipPath);
+    strcat(fullPath, pZipFileName);
 
     // if the zip file not exist,use message box to warn developer
     TUChar pszTmp[EOS_FILE_MAX_PATH] = {0};
@@ -277,6 +275,31 @@ void CCFileUtils::setResourceZipFile(const char* pszZipPath)
     // record the zip file path
     strcpy(s_pszZipFilePath, pszDriver);
     strcat(s_pszZipFilePath, fullPath);
+}
+
+void CCFileUtils::setResource(const char* pszResPath, const char* pszZipFileName)
+{
+    if (pszResPath != NULL && pszZipFileName != NULL)
+    {
+        // record the resource path
+        strcpy(s_pszResourcePath, pszResPath);
+
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
+    }
+    else if (pszResPath != NULL)
+    {
+        // update the zip file path
+        updateZipFilePath(pszResPath);
+
+        // record the resource path
+        strcpy(s_pszResourcePath, pszResPath);
+    }
+    else if (pszZipFileName != NULL)
+    {
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
+    }
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)

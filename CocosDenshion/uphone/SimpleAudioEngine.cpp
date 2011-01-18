@@ -80,14 +80,9 @@ void SimpleAudioEngine::end()
 	}
 }
 
-void SimpleAudioEngine::setResourcePath(const char *pszResourcePath)
+void SimpleAudioEngine::setResource(const char* pszResPath, const char* pszZipFileName)
 {
-    FileUtils::setResourcePath(pszResourcePath);
-}
-
-void SimpleAudioEngine::setResourceZipFile(const char* pszZipPath)
-{
-    FileUtils::setResourceZipFile(pszZipPath);
+    FileUtils::setResource(pszResPath, pszZipFileName);
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
@@ -244,7 +239,12 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-    return s_pDataManager->loadSoundData(pszFilePath);
+    s_pDataManager->loadSoundData(pszFilePath);
+}
+
+void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
+{
+    s_pDataManager->loadSoundData(pszFilePath);
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
