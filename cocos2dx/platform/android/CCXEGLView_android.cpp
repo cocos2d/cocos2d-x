@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "NSSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
+#include "CCTouchDispatcher.h"
 
 #include <stdlib.h>
 
