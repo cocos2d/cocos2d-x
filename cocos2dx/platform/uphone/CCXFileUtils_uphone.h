@@ -75,8 +75,8 @@ public:
     static bool isResourceExist(const char* pszResName);
 
     /**
-    @brief Set the absolute path of the .zip file which contains all resource files
-    @param pszZipPath The absolute path of the .zip file
+    @brief Set the relative path of the .zip file which contains all resource files
+    @param pszZipPath The relative path of the .zip file
     */
     static void setResourceZipFile(const char* pszZipPath);
 
@@ -87,13 +87,6 @@ public:
 	@since v0.99.5
 	*/
 	static int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
-
-	/** removes the HD suffix from a path
-
-	@returns NSString * without the HD suffix
-	@since v0.99.5
-	*/
-	static const char *ccRemoveHDSuffixFromFile( const char *path );
 
     /**
     @brief Get resource file data
