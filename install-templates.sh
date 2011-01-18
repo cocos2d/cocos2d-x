@@ -58,7 +58,7 @@ check_dst_dir(){
 	if [[ -d $DST_DIR ]];  then
 		if [[ $force ]]; then
 			echo "removing old libraries: ${DST_DIR}"
-			rm -rf $DST_DIR
+			rm -rf "${DST_DIR}"
 		else
 			echo "templates already installed. To force a re-install use the '-f' parameter"
 			exit 1
