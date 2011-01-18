@@ -723,7 +723,7 @@ void CCEventDispatcher::dispatchQueuedEvents()
 {
     for( int i=0; i < s_nEventQueueCount; i++ )
     {
-        SEL_EventHandler sel = eventQueue[i].selector;
+        // SEL_EventHandler sel = eventQueue[i].selector;
         NSEvent *pEvent = eventQueue[i].pEvent;
 
         

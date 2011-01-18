@@ -83,6 +83,12 @@ UIImage::UIImage(void)
 
 UIImage::UIImage(CCXBitmapDC * pBmpDC)
 {
+    m_imageInfo.hasAlpha = false;
+    m_imageInfo.isPremultipliedAlpha = false;
+    m_imageInfo.height = 0;
+    m_imageInfo.width = 0;
+    m_imageInfo.data = NULL;
+    m_imageInfo.bitsPerComponent = 0;
 	do 
 	{
 		CCX_BREAK_IF(! pBmpDC);

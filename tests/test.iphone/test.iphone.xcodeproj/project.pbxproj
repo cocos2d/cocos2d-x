@@ -279,7 +279,6 @@
 		BF2C660612D6C092005C1B81 /* CCParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C630F12D6C090005C1B81 /* CCParticleSystemQuad.h */; };
 		BF2C660712D6C092005C1B81 /* CCProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C631012D6C090005C1B81 /* CCProgressTimer.h */; };
 		BF2C660812D6C092005C1B81 /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C631112D6C090005C1B81 /* CCProtocols.h */; };
-		BF2C660912D6C092005C1B81 /* CCPVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C631212D6C090005C1B81 /* CCPVRTexture.h */; };
 		BF2C660A12D6C092005C1B81 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C631312D6C090005C1B81 /* CCRenderTexture.h */; };
 		BF2C660B12D6C092005C1B81 /* CCRibbon.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C631412D6C090005C1B81 /* CCRibbon.h */; };
 		BF2C660C12D6C092005C1B81 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C631512D6C090005C1B81 /* CCScene.h */; };
@@ -479,7 +478,6 @@
 		BF2C685D12D6C092005C1B81 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C65AF12D6C091005C1B81 /* unzip.h */; };
 		BF2C685E12D6C092005C1B81 /* ZipUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2C65B012D6C092005C1B81 /* ZipUtils.cpp */; };
 		BF2C685F12D6C092005C1B81 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2C65B112D6C092005C1B81 /* ZipUtils.h */; };
-		BF2C686012D6C092005C1B81 /* CCPVRTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2C65B312D6C092005C1B81 /* CCPVRTexture.cpp */; };
 		BF2C686112D6C092005C1B81 /* CCTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2C65B412D6C092005C1B81 /* CCTexture2D.cpp */; };
 		BF2C686212D6C092005C1B81 /* CCTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2C65B512D6C092005C1B81 /* CCTextureAtlas.cpp */; };
 		BF2C686312D6C092005C1B81 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2C65B612D6C092005C1B81 /* CCTextureCache.cpp */; };
@@ -868,7 +866,6 @@
 		BF2C630F12D6C090005C1B81 /* CCParticleSystemQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemQuad.h; sourceTree = "<group>"; };
 		BF2C631012D6C090005C1B81 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressTimer.h; sourceTree = "<group>"; };
 		BF2C631112D6C090005C1B81 /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
-		BF2C631212D6C090005C1B81 /* CCPVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPVRTexture.h; sourceTree = "<group>"; };
 		BF2C631312D6C090005C1B81 /* CCRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture.h; sourceTree = "<group>"; };
 		BF2C631412D6C090005C1B81 /* CCRibbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRibbon.h; sourceTree = "<group>"; };
 		BF2C631512D6C090005C1B81 /* CCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScene.h; sourceTree = "<group>"; };
@@ -1068,7 +1065,6 @@
 		BF2C65AF12D6C091005C1B81 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
 		BF2C65B012D6C092005C1B81 /* ZipUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZipUtils.cpp; sourceTree = "<group>"; };
 		BF2C65B112D6C092005C1B81 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
-		BF2C65B312D6C092005C1B81 /* CCPVRTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPVRTexture.cpp; sourceTree = "<group>"; };
 		BF2C65B412D6C092005C1B81 /* CCTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2D.cpp; sourceTree = "<group>"; };
 		BF2C65B512D6C092005C1B81 /* CCTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureAtlas.cpp; sourceTree = "<group>"; };
 		BF2C65B612D6C092005C1B81 /* CCTextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCache.cpp; sourceTree = "<group>"; };
@@ -1166,10 +1162,6 @@
 				080E96DDFE201D6D7F000001 /* iphone */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				BF170DB012928DE900B8313A /* OpenGLES.framework */,
-				BF170DB212928DE900B8313A /* libxml2.dylib */,
-				BF170DB412928DE900B8313A /* libz.dylib */,
-				BF1C47EA1293683800B63C5D /* QuartzCore.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1177,6 +1169,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF170DB012928DE900B8313A /* OpenGLES.framework */,
+				BF170DB212928DE900B8313A /* libxml2.dylib */,
+				BF170DB412928DE900B8313A /* libz.dylib */,
+				BF1C47EA1293683800B63C5D /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -1949,7 +1945,6 @@
 				BF2C630F12D6C090005C1B81 /* CCParticleSystemQuad.h */,
 				BF2C631012D6C090005C1B81 /* CCProgressTimer.h */,
 				BF2C631112D6C090005C1B81 /* CCProtocols.h */,
-				BF2C631212D6C090005C1B81 /* CCPVRTexture.h */,
 				BF2C631312D6C090005C1B81 /* CCRenderTexture.h */,
 				BF2C631412D6C090005C1B81 /* CCRibbon.h */,
 				BF2C631512D6C090005C1B81 /* CCScene.h */,
@@ -2307,7 +2302,6 @@
 		BF2C65B212D6C092005C1B81 /* textures */ = {
 			isa = PBXGroup;
 			children = (
-				BF2C65B312D6C092005C1B81 /* CCPVRTexture.cpp */,
 				BF2C65B412D6C092005C1B81 /* CCTexture2D.cpp */,
 				BF2C65B512D6C092005C1B81 /* CCTextureAtlas.cpp */,
 				BF2C65B612D6C092005C1B81 /* CCTextureCache.cpp */,
@@ -2397,7 +2391,6 @@
 				BF2C660612D6C092005C1B81 /* CCParticleSystemQuad.h in Headers */,
 				BF2C660712D6C092005C1B81 /* CCProgressTimer.h in Headers */,
 				BF2C660812D6C092005C1B81 /* CCProtocols.h in Headers */,
-				BF2C660912D6C092005C1B81 /* CCPVRTexture.h in Headers */,
 				BF2C660A12D6C092005C1B81 /* CCRenderTexture.h in Headers */,
 				BF2C660B12D6C092005C1B81 /* CCRibbon.h in Headers */,
 				BF2C660C12D6C092005C1B81 /* CCScene.h in Headers */,
@@ -2895,7 +2888,6 @@
 				BF2C685A12D6C092005C1B81 /* ioapi.cpp in Sources */,
 				BF2C685C12D6C092005C1B81 /* unzip.cpp in Sources */,
 				BF2C685E12D6C092005C1B81 /* ZipUtils.cpp in Sources */,
-				BF2C686012D6C092005C1B81 /* CCPVRTexture.cpp in Sources */,
 				BF2C686112D6C092005C1B81 /* CCTexture2D.cpp in Sources */,
 				BF2C686212D6C092005C1B81 /* CCTextureAtlas.cpp in Sources */,
 				BF2C686312D6C092005C1B81 /* CCTextureCache.cpp in Sources */,
