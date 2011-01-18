@@ -29,7 +29,6 @@ first: all
 
 OBJECTS = \
 	$(OBJECTS_DIR)/FileUtils.o \
-	$(OBJECTS_DIR)/ResourceHandle.o \
 	$(OBJECTS_DIR)/SimpleAudioEngine.o \
 	$(OBJECTS_DIR)/SoundDataManager.o \
 	$(OBJECTS_DIR)/SoundPlayer.o \
@@ -55,10 +54,7 @@ clean :
 
 $(OBJECTS_DIR)/FileUtils.o : ../uphone/FileUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/FileUtils.o ../uphone/FileUtils.cpp
-
-$(OBJECTS_DIR)/ResourceHandle.o : ../uphone/ResourceHandle.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ResourceHandle.o ../uphone/ResourceHandle.cpp
-
+	
 $(OBJECTS_DIR)/SimpleAudioEngine.o : ../uphone/SimpleAudioEngine.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/SimpleAudioEngine.o ../uphone/SimpleAudioEngine.cpp
 
