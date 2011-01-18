@@ -67,7 +67,7 @@ bool HelloWorld::init()
 	// position the sprite on the center of the screen
 	pSprite->setPosition( ccp(size.width/2, size.height/2) );
 
-	// ad the sprite as a child to this layer
+	// add the sprite as a child to this layer
 	this->addChild(pSprite, 0);
 	
 	return true;
