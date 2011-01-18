@@ -68,12 +68,11 @@ namespace cocos2d {
 		pRet->autorelease();
 		return pRet;
 	}
-	CCNode * CCParallaxNode::addChild(CCNode * child, int zOrder, int tag)
+	void CCParallaxNode::addChild(CCNode * child, int zOrder, int tag)
 	{
 		NSAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
-		return NULL; 
 	}
-	CCParallaxNode * CCParallaxNode::addChild(CCNode *child, int z, CGPoint ratio, CGPoint offset)
+	void CCParallaxNode::addChild(CCNode *child, int z, CGPoint ratio, CGPoint offset)
 	{
 		NSAssert( child != NULL, "Argument must be non-nil");
 		CGPointObject *obj = CGPointObject::pointWithCGPoint(ratio, offset);
@@ -81,11 +80,11 @@ namespace cocos2d {
 		ccArrayAppendObjectWithResize(m_pParallaxArray, (NSObject*)obj);
 
 		CGPoint pos = m_tPosition;
-		float x = pos.x * ratio.x + offset.x;
-		float y = pos.y * ratio.y + offset.y;
-		child->setPosition(ccp(x,y));
+		pos.x = pos.x * ratio.x + offset.x;
+		pos.y = pos.y * ratio.y + offset.y;
+		child->setPosition(pos);
 
-		return (CCParallaxNode*)CCNode::addChild(child, z, child->getTag());
+		CCNode::addChild(child, z, child->getTag());
 	}
 	void CCParallaxNode::removeChild(CCNode* child, bool cleanup)
 	{

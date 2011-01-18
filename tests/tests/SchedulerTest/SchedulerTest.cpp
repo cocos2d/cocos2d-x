@@ -72,14 +72,14 @@ void SchedulerTestLayer::onEnter()
 
     CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
     addChild(label);
     label->setPosition(ccp(s.width/2, s.height-50));
 
     std::string subTitle = subtitle();
     if(! subTitle.empty())
     {
-        CCLabel* l = CCLabel::labelWithString(subTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF* l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }

@@ -1,0 +1,160 @@
+/****************************************************************************
+Copyright (c) 2010 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+#ifndef __CC_ANIMATION_H__
+#define __CC_ANIMATION_H__
+
+#include "NSObject.h"
+#include "NSMutableArray.h"
+#include "CGGeometry.h"
+#include "CCXCocos2dDefine.h"
+#include <string>
+
+namespace   cocos2d {
+	class CCSpriteFrame;
+    class CCTexture2D;
+	/** A CCAnimation object is used to perform animations on the CCSprite objects.
+
+	The CCAnimation object contains CCSpriteFrame objects, and a possible delay between the frames.
+	You can animate a CCAnimation object by using the CCAnimate action. Example:
+
+	[sprite runAction:[CCAnimate actionWithAnimation:animation]];
+
+	*/
+	class CCX_DLL CCAnimation : public NSObject
+	{
+	protected:
+		std::string m_nameStr;
+		float m_fDelay;
+		NSMutableArray<CCSpriteFrame*> *m_pobFrames;
+
+	public:
+		// attributes
+
+		/** get name of the animation */
+		inline const char* getName(void) { return m_nameStr.c_str(); }
+		/** set name of the animation */
+		inline void setName(const char *pszName){ m_nameStr = pszName; }
+
+		/** get delay between frames in seconds */
+		inline float getDelay(void) { return m_fDelay; }
+		/** set delay between frames in seconds */
+		inline void setDelay(float fDelay) { m_fDelay = fDelay; }
+
+		/** get array of frames */
+		inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
+		/** set array of frames, the Frames is retained */
+		inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
+		{
+			CCX_SAFE_RETAIN(pFrames);
+			CCX_SAFE_RELEASE(m_pobFrames);
+			m_pobFrames = pFrames;
+		}
+
+	public:
+		~CCAnimation(void);
+
+		/** Initializes a CCAnimation with frames.
+		@since v0.99.5
+		*/
+		bool initWithFrames(NSArray<CCSpriteFrame*> *pFrames);
+
+		/** Initializes a CCAnimation with frames and a delay between frames
+		@since v0.99.5
+		*/
+		bool initWithFrames(NSArray<CCSpriteFrame*> *pFrames, float delay);
+
+		/** Initializes a CCAnimation with a name
+		@since v0.99.3
+		@deprecated Will be removed in 1.0.1. Use "init" instead.
+		*/
+		bool initWithName(const char *pszName);
+
+		/** Initializes a CCAnimation with a name and frames
+		@since v0.99.3
+		@deprecated Will be removed in 1.0.1. Use "initWithFrames" instead.
+		*/
+		bool initWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
+
+		/** Initializes a CCAnimation with a name and delay between frames.
+		@deprecated Will be removed in 1.0.1. Use "initWithFrames:nil delay:delay" instead.
+		*/
+		bool initWithName(const char *pszName, float fDelay);
+
+		/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
+		@deprecated Will be removed in 1.0.1. Use "initWithFrames:frames delay:delay" instead.
+		*/
+		bool initWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
+
+		/** adds a frame to a CCAnimation */
+		void addFrame(CCSpriteFrame *pFrame);
+
+		/** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
+		Added to facilitate the migration from v0.8 to v0.9.
+		*/
+		void addFrameWithFileName(const char *pszFileName);
+
+		/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
+		Added to facilitate the migration from v0.8 to v0.9.
+		*/
+		void addFrameWithTexture(CCTexture2D* pobTexture, CGRect rect);
+
+		bool init(void);
+
+	public:
+		/** Creates an animation
+		@since v0.99.5
+		*/
+        static CCAnimation* animation(void);
+
+		/** Creates an animation with frames.
+		@since v0.99.5
+		*/
+		static CCAnimation* animationWithFrames(NSArray<CCSpriteFrame*> *frames);
+
+		/* Creates an animation with frames and a delay between frames.
+		@since v0.99.5
+		*/
+		static CCAnimation* animationWithFrames(NSArray<CCSpriteFrame*> *frames, float delay);
+
+		/** Creates a CCAnimation with a name
+		@since v0.99.3
+		@deprecated Will be removed in 1.0.1. Use "animation" instead.
+		*/
+		static CCAnimation* animationWithName(const char *pszName);
+
+		/** Creates a CCAnimation with a name and frames
+		@since v0.99.3
+		@deprecated Will be removed in 1.0.1. Use "animationWithFrames" instead.
+		*/
+		static CCAnimation* animationWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
+
+		/** Creates a CCAnimation with a name and delay between frames. */
+		static CCAnimation* animationWithName(const char *pszName, float fDelay);
+
+		/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
+		static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
+	};
+} // end of name sapce cocos2d
+
+#endif // __CC_ANIMATION_H__

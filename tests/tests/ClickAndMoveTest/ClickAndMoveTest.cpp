@@ -21,7 +21,7 @@ MainLayer::MainLayer()
 	
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	
-	CCLayer* layer = CCColorLayer::layerWithColor(ccc4(255,255,0,255));
+	CCLayer* layer = CCLayerColor::layerWithColor(ccc4(255,255,0,255));
 	addChild(layer, -1);
 		
 	addChild(sprite, 0, kTagSprite);
@@ -30,7 +30,7 @@ MainLayer::MainLayer()
 	sprite->runAction( CCJumpTo::actionWithDuration(4, CGPointMake(300,48), 100, 4) );
 	
 	layer->runAction( CCRepeatForever::actionWithAction( 
-														(CCIntervalAction*)( CCSequence::actions(	
+														(CCActionInterval*)( CCSequence::actions(	
 																			CCFadeIn::actionWithDuration(1),
 																			CCFadeOut::actionWithDuration(1),
 																			NULL) )

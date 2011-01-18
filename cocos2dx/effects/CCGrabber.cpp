@@ -27,8 +27,6 @@ THE SOFTWARE.
 #include "support/opengl_support/OpenGL_Internal.h"
 #include "platform/platform.h"
 
-#include <GLES/glext.h>
-
 namespace cocos2d
 {
 	CCGrabber::CCGrabber(void)
@@ -37,34 +35,34 @@ namespace cocos2d
 		m_oldFBO = 0;
 
 		// generate FBO
-		glGenFramebuffersOES(1, &m_fbo);
+		ccglGenFramebuffers(1, &m_fbo);
 	}
 
 	void CCGrabber::grab(cocos2d::CCTexture2D *pTexture)
 	{
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &m_oldFBO);
+		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
 		// bind
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_fbo);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
 
 		// associate texture with FBO
-		glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D,
+		ccglFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
 			pTexture->getName(), 0);
 
 		// check if it worked (probably worth doing :) )
-		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
-		if (status != GL_FRAMEBUFFER_COMPLETE_OES)
+		GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
+		if (status != CC_GL_FRAMEBUFFER_COMPLETE)
 		{
 			CCLOG("Frame Grabber: could not attach texture to frmaebuffer");
 		}
 
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_oldFBO);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
 	}
 	
 	void CCGrabber::beforeRender(cocos2d::CCTexture2D *pTexture)
 	{
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &m_oldFBO);
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_fbo);
+		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
 
 		// BUG XXX: doesn't work with RGB565.
 
@@ -81,13 +79,13 @@ namespace cocos2d
 
 	void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
 	{
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_oldFBO);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
 		glColorMask(true, true, true, true);	// #631
 	}
 
 	CCGrabber::~CCGrabber()
 	{
 		CCLOGINFO("cocos2d: deallocing %p", this);
-		glDeleteFramebuffersOES(1, &m_fbo);
+		ccglDeleteFramebuffers(1, &m_fbo);
 	}
 } // end of namespace cocos2d

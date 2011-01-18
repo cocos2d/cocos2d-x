@@ -132,7 +132,7 @@ protected:
 	ccTime m_fDuration;
 };
 
-class CCIntervalAction;
+class CCActionInterval;
 class CCRepeatForever;
 
 /** 
@@ -152,22 +152,22 @@ public:
 	inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 
 	/** initializes the action */
-	bool initWithAction(CCIntervalAction *pAction, float fRate);
+	bool initWithAction(CCActionInterval *pAction, float fRate);
 
 	virtual NSObject* copyWithZone(NSZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
 	virtual void stop();
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
 
 public:
 	/** creates the action */
-	static CCSpeed* actionWithAction(CCIntervalAction *pAction, float fRate);
+	static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);
     
 protected:
 	float m_fSpeed;
-	CCIntervalAction *m_pOther;
+	CCActionInterval *m_pOther;
 };
 
 

@@ -82,5 +82,16 @@ void CCXEGLView::swapBuffers()
 {
 }
 
+bool CCXEGLView::canSetContentScaleFactor()
+{
+    // can scale content?
+    return false;
+}
+
+void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+{
+    // if it supports scaling content, set it
+} 
+
 }       // end of namespace cocos2d
 

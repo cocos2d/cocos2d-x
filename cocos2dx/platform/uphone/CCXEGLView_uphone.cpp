@@ -225,8 +225,11 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinPaint:
-        // draw 
-        CCDirector::sharedDirector()->preMainLoop();
+        if (CfgGetScreenStatus())
+        {
+            // draw 
+            CCDirector::sharedDirector()->mainLoop();
+        }
         bHandled = TRUE;
         break;
 
@@ -260,7 +263,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             else if (pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_UP ||
                      pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_LONG)
             {
-                bHandled == CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+                bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
             }
         }
         break;
@@ -460,6 +463,17 @@ void CCXEGLView::swapBuffers()
     {
         m_pEGL->swapBuffers();
     }
+}
+
+bool CCXEGLView::canSetContentScaleFactor()
+{
+	// can scale content?
+	return false;
+}
+
+void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+{
+	// if it supports scaling content, set it
 }
 
 }       // end of namespace cocos2d

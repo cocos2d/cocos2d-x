@@ -50,7 +50,7 @@ bool HelloWorld::init()
 	
 	// add a label shows "Hello World"
 	// create and initialize a label
-	CCLabel* pLabel = CCLabel::labelWithString("HelloWorld", "Thonburi", 64);
+	CCLabelTTF* pLabel = CCLabelTTF::labelWithString("HelloWorld", "Thonburi", 64);
 
 	// ask director the window size
 	CGSize size = CCDirector::sharedDirector()->getWinSize();

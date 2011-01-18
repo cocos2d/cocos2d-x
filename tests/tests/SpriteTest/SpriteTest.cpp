@@ -140,14 +140,14 @@ void SpriteTestDemo::onEnter()
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
 		addChild(l, 1);
 		l->setPosition( ccp(s.width/2, s.height-80) );
 	}	
@@ -220,7 +220,7 @@ void Sprite1::addNewSpriteWithCoords(CGPoint p)
 	
 	sprite->setPosition( ccp( p.x, p.y) );
 	
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -233,8 +233,8 @@ void Sprite1::addNewSpriteWithCoords(CGPoint p)
 		action = CCTintBy::actionWithDuration(2, 0, -255, -255);
 	else 
 		action = CCFadeOut::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( action, action_back, NULL ));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( action, action_back, NULL ));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
@@ -274,7 +274,7 @@ SpriteSheet1::SpriteSheet1()
 {
 	setIsTouchEnabled( true );
 
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -283,7 +283,7 @@ SpriteSheet1::SpriteSheet1()
 
 void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 {
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
@@ -291,11 +291,11 @@ void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 	
 
 	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(x,y,85,121));
-	(CCNode*)(sheet)->addChild(sprite);
+	sheet->addChild(sprite);
 
 	sprite->setPosition( ccp( p.x, p.y) );
 
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -309,8 +309,8 @@ void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 	else 
 		action = CCFadeOut::actionWithDuration(2);
 
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions(action, action_back, NULL));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions(action, action_back, NULL));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq));
 }
@@ -370,21 +370,21 @@ SpriteColorOpacity::SpriteColorOpacity()
 	sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
 	sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
 	
-	CCIntervalAction* action = CCFadeIn::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCAction* fade = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( action, action_back, NULL)));
+	CCActionInterval* action = CCFadeIn::actionWithDuration(2);
+	CCActionInterval* action_back = action->reverse();
+	CCAction* fade = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( action, action_back, NULL)));
 	
-	CCIntervalAction* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
-	CCIntervalAction* tintred_back = tintred->reverse();
-	CCAction* red = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintred, tintred_back, NULL)) );
+	CCActionInterval* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
+	CCActionInterval* tintred_back = tintred->reverse();
+	CCAction* red = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintred, tintred_back, NULL)) );
 	
-	CCIntervalAction* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
-	CCIntervalAction* tintgreen_back = tintgreen->reverse();
-	CCAction* green = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintgreen, tintgreen_back, NULL)));
+	CCActionInterval* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
+	CCActionInterval* tintgreen_back = tintgreen->reverse();
+	CCAction* green = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintgreen, tintgreen_back, NULL)));
 	
-	CCIntervalAction* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
-	CCIntervalAction* tintblue_back = tintblue->reverse();
-	CCAction* blue = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintblue, tintblue_back, NULL)) );
+	CCActionInterval* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
+	CCActionInterval* tintblue_back = tintblue->reverse();
+	CCAction* blue = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintblue, tintblue_back, NULL)) );
 	
 	sprite5->runAction(red);
 	sprite6->runAction(green);
@@ -432,7 +432,7 @@ SpriteSheetColorOpacity::SpriteSheetColorOpacity()
 {
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
 	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*0, 121*1, 85, 121));
@@ -456,21 +456,21 @@ SpriteSheetColorOpacity::SpriteSheetColorOpacity()
 	sprite7->setPosition( ccp( (s.width/5)*3, (s.height/3)*2) );
 	sprite8->setPosition( ccp( (s.width/5)*4, (s.height/3)*2) );
 
-	CCIntervalAction* action = CCFadeIn::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCAction* fade = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( action, action_back,NULL)));
+	CCActionInterval* action = CCFadeIn::actionWithDuration(2);
+	CCActionInterval* action_back = action->reverse();
+	CCAction* fade = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( action, action_back,NULL)));
 
-	CCIntervalAction* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
-	CCIntervalAction* tintred_back = tintred->reverse();
-	CCAction* red = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintred, tintred_back,NULL)));
+	CCActionInterval* tintred = CCTintBy::actionWithDuration(2, 0, -255, -255);
+	CCActionInterval* tintred_back = tintred->reverse();
+	CCAction* red = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintred, tintred_back,NULL)));
 
-	CCIntervalAction* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
-	CCIntervalAction* tintgreen_back = tintgreen->reverse();
-	CCAction* green = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintgreen, tintgreen_back,NULL)));
+	CCActionInterval* tintgreen = CCTintBy::actionWithDuration(2, -255, 0, -255);
+	CCActionInterval* tintgreen_back = tintgreen->reverse();
+	CCAction* green = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintgreen, tintgreen_back,NULL)));
 
-	CCIntervalAction* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
-	CCIntervalAction* tintblue_back = tintblue->reverse();
-	CCAction* blue = CCRepeatForever::actionWithAction( (CCIntervalAction*)(CCSequence::actions( tintblue, tintblue_back,NULL)));
+	CCActionInterval* tintblue = CCTintBy::actionWithDuration(2, -255, -255, 0);
+	CCActionInterval* tintblue_back = tintblue->reverse();
+	CCAction* blue = CCRepeatForever::actionWithAction( (CCActionInterval*)(CCSequence::actions( tintblue, tintblue_back,NULL)));
 	
 	
 	sprite5->runAction(red);
@@ -496,7 +496,7 @@ SpriteSheetColorOpacity::SpriteSheetColorOpacity()
 //   color array and vertex array should be reindexed
 void SpriteSheetColorOpacity::removeAndAddSprite(ccTime dt)
 {
-	CCSpriteSheet* sheet= (CCSpriteSheet*)(getChildByTag( kTagSpriteSheet ));
+	CCSpriteBatchNode* sheet= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteSheet ));
 	CCSprite* sprite = (CCSprite*)(sheet->getChildByTag(kTagSprite5));
 	
 	sprite->retain();
@@ -582,7 +582,7 @@ SpriteSheetZOrder::SpriteSheetZOrder()
 	
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -613,7 +613,7 @@ SpriteSheetZOrder::SpriteSheetZOrder()
 
 void SpriteSheetZOrder::reorderSprite(ccTime dt)
 {
-	CCSpriteSheet* sheet= (CCSpriteSheet*)(getChildByTag( kTagSpriteSheet ));
+	CCSpriteBatchNode* sheet= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteSheet ));
 	CCSprite* sprite = (CCSprite*)(sheet->getChildByTag(kTagSprite1));
 	
 	int z = sprite->getZOrder();
@@ -642,11 +642,11 @@ std::string SpriteSheetZOrder::title()
 SpriteSheetReorder::SpriteSheetReorder()
 {
 	NSMutableArray<NSObject*>* a = new NSMutableArray<NSObject*>(10);
-	CCSpriteSheet* asmtest = CCSpriteSheet::spriteSheetWithFile("animations/ghosts.png");
+	CCSpriteBatchNode* asmtest = CCSpriteBatchNode::spriteSheetWithFile("animations/ghosts.png");
 	
 	for(int i=0; i<10; i++)
 	{
-		CCSprite* s1 = CCSprite::spriteWithSpriteSheet(asmtest, CGRectMake(0, 0, 50, 50));
+		CCSprite* s1 = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )asmtest, CGRectMake(0, 0, 50, 50));
 		a->addObject(s1);
 		asmtest->addChild(s1, 10);
 	}
@@ -715,10 +715,10 @@ SpriteSheetReorderIssue744::SpriteSheetReorderIssue744()
 
 	// Testing issue #744
 	// http://code.google.com/p/cocos2d-iphone/issues/detail?id=744
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 15);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 15);
 	addChild(sheet, 0, kTagSpriteSheet);		
 
-	CCSprite* sprite = CCSprite::spriteWithSpriteSheet(sheet,CGRectMake(0, 0, 85, 121));
+	CCSprite* sprite = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )sheet,CGRectMake(0, 0, 85, 121));
 	sprite->setPosition( ccp(s.width/2, s.height/2) );
 	sheet->addChild(sprite, 3);
 	sheet->reorderChild(sprite, 1);
@@ -848,7 +848,7 @@ SpriteSheetZVertex::SpriteSheetZVertex()
 	
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	// camera uses the center of the image as the pivoting point
 	sheet->setContentSize( CGSizeMake(s.width,s.height));
 	sheet->setAnchorPoint( ccp(0.5f, 0.5f));
@@ -893,7 +893,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* action = CCRepeatForever::actionWithAction(rotate);
 	
 	for(int i=0;i<3;i++) 
@@ -941,13 +941,13 @@ SpriteSheetAnchorPoint::SpriteSheetAnchorPoint()
 {
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* action = CCRepeatForever::actionWithAction(rotate);
 	for(int i=0;i<3;i++) 
 	{
@@ -995,7 +995,7 @@ Sprite6::Sprite6()
 {
 	// small capacity. Testing resizing
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);
 	sheet->setIsRelativeAnchorPoint( false );
 
@@ -1006,17 +1006,17 @@ Sprite6::Sprite6()
 	
 	
 	// SpriteSheet actions
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(5, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(5, 360);
 	CCAction* action = CCRepeatForever::actionWithAction(rotate);
 
 	// SpriteSheet actions
-	CCIntervalAction* rotate_back = rotate->reverse();
-	CCIntervalAction* rotate_seq = (CCIntervalAction*)(CCSequence::actions(rotate, rotate_back, NULL));
+	CCActionInterval* rotate_back = rotate->reverse();
+	CCActionInterval* rotate_seq = (CCActionInterval*)(CCSequence::actions(rotate, rotate_back, NULL));
 	CCAction* rotate_forever = CCRepeatForever::actionWithAction(rotate_seq);
 	
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(5, 1.5f);
-	CCIntervalAction* scale_back = scale->reverse();
-	CCIntervalAction* scale_seq = (CCIntervalAction*)(CCSequence::actions( scale, scale_back, NULL));
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(5, 1.5f);
+	CCActionInterval* scale_back = scale->reverse();
+	CCActionInterval* scale_seq = (CCActionInterval*)(CCSequence::actions( scale, scale_back, NULL));
 	CCAction* scale_forever = CCRepeatForever::actionWithAction(scale_seq);
 
 	float step = s.width/4;
@@ -1083,7 +1083,7 @@ std::string SpriteFlip::title()
 //------------------------------------------------------------------
 SpriteSheetFlip::SpriteSheetFlip()
 {
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1101,7 +1101,7 @@ SpriteSheetFlip::SpriteSheetFlip()
 
 void SpriteSheetFlip::flipSprites(ccTime dt)
 {
-	CCSpriteSheet* sheet= (CCSpriteSheet*)(getChildByTag( kTagSpriteSheet ));
+	CCSpriteBatchNode* sheet= (CCSpriteBatchNode*)(getChildByTag( kTagSpriteSheet ));
 	CCSprite* sprite1 = (CCSprite*)(sheet->getChildByTag(kTagSprite1));
 	CCSprite* sprite2 = (CCSprite*)(sheet->getChildByTag(kTagSprite2));
 	
@@ -1135,9 +1135,9 @@ SpriteAliased::SpriteAliased()
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	addChild(sprite2, 0, kTagSprite2);
 	
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 5);
-	CCIntervalAction* scale_back = scale->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( scale, scale_back, NULL));
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 5);
+	CCActionInterval* scale_back = scale->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( scale, scale_back, NULL));
 	CCAction* repeat = CCRepeatForever::actionWithAction(seq);
 	
 	CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
@@ -1181,7 +1181,7 @@ std::string SpriteAliased::title()
 
 SpriteSheetAliased::SpriteSheetAliased()
 {
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -1194,9 +1194,9 @@ SpriteSheetAliased::SpriteSheetAliased()
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	sheet->addChild(sprite2, 0, kTagSprite2);
 	
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 5);
-	CCIntervalAction* scale_back = scale->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( scale, scale_back, NULL));
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 5);
+	CCActionInterval* scale_back = scale->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( scale, scale_back, NULL));
 	CCAction* repeat = CCRepeatForever::actionWithAction(seq);
 	
 	CCAction* repeat2 = (CCAction*)(repeat->copy()->autorelease());
@@ -1208,14 +1208,14 @@ SpriteSheetAliased::SpriteSheetAliased()
 void SpriteSheetAliased::onEnter()
 {
 	SpriteTestDemo::onEnter();
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	sheet->getTexture()->setAliasTexParameters();
 }
 
 void SpriteSheetAliased::onExit()
 {
 	// restore the tex parameter to AntiAliased.
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	sheet->getTexture()->setAntiAliasTexParameters();
 	SpriteTestDemo::onExit();
 }
@@ -1272,7 +1272,7 @@ void SpriteNewTexture::addNewSprite()
 	
 	sprite->setPosition( ccp( p.x, p.y) );
 	
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -1286,8 +1286,8 @@ void SpriteNewTexture::addNewSprite()
 	else 
 		action = CCFadeOut::actionWithDuration(2);
 
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions(action, action_back, NULL));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions(action, action_back, NULL));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
@@ -1344,7 +1344,7 @@ SpriteSheetNewTexture::SpriteSheetNewTexture()
 {
 	setIsTouchEnabled( true );
 	
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	m_texture1 = sheet->getTexture(); m_texture1->retain();
@@ -1367,7 +1367,7 @@ void SpriteSheetNewTexture::addNewSprite()
 	
 	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 	
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
@@ -1379,7 +1379,7 @@ void SpriteSheetNewTexture::addNewSprite()
 	
 	sprite->setPosition( ccp( p.x, p.y) );
 	
-	CCIntervalAction* action;
+	CCActionInterval* action;
 	float random = CCRANDOM_0_1();
 	
 	if( random < 0.20 )
@@ -1392,15 +1392,15 @@ void SpriteSheetNewTexture::addNewSprite()
 		action = CCTintBy::actionWithDuration(2, 0, -255, -255);
 	else 
 		action = CCFadeOut::actionWithDuration(2);
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions(action, action_back, NULL));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions(action, action_back, NULL));
 	
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
 
 void SpriteSheetNewTexture::ccTouchesEnded(NSSet* touches, UIEvent* event)
 {
-	CCSpriteSheet* sheet = (CCSpriteSheet*) getChildByTag( kTagSpriteSheet );
+	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
 	if( sheet->getTexture() == m_texture1 )
 		sheet->setTexture(m_texture2);
@@ -1437,7 +1437,7 @@ SpriteFrameTest::SpriteFrameTest()
 	m_pSprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
 	m_pSprite1->setPosition( ccp( s.width/2-80, s.height/2) );
 	
-	CCSpriteSheet* spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
+	CCSpriteBatchNode* spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 	spritesheet->addChild(m_pSprite1);
 	addChild(spritesheet);
 
@@ -1671,7 +1671,7 @@ SpriteSheetOffsetAnchorRotation::SpriteSheetOffsetAnchorRotation()
 		
 		point->setPosition( sprite->getPosition() );
 		
-		CCSpriteSheet *spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
+		CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 		addChild(spritesheet);
 		
 		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
@@ -1760,9 +1760,9 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
 		CCAnimation *animation = CCAnimation::animationWithName("dance", 0.2f, animFrames);
 		sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ));			
 		
-		CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 2);
-		CCIntervalAction* scale_back = scale->reverse();
-		CCIntervalAction* seq_scale = (CCIntervalAction*)(CCSequence::actions(scale, scale_back, NULL));
+		CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 2);
+		CCActionInterval* scale_back = scale->reverse();
+		CCActionInterval* seq_scale = (CCActionInterval*)(CCSequence::actions(scale, scale_back, NULL));
 		sprite->runAction(CCRepeatForever::actionWithAction(seq_scale));
 		
 		addChild(sprite, 0);
@@ -1821,7 +1821,7 @@ SpriteSheetOffsetAnchorScale::SpriteSheetOffsetAnchorScale()
 		
 		point->setPosition( sprite->getPosition() );
 		
-		CCSpriteSheet *spritesheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png");
+		CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 		addChild(spritesheet);
 		
 		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
@@ -1836,9 +1836,9 @@ SpriteSheetOffsetAnchorScale::SpriteSheetOffsetAnchorScale()
 		CCAnimation *animation = CCAnimation::animationWithName("dance", 0.2f, animFrames);
 		sprite->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
 
-		CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 2);
-		CCIntervalAction* scale_back = scale->reverse();
-		CCIntervalAction* seq_scale = (CCIntervalAction*)(CCSequence::actions(scale, scale_back, NULL) );
+		CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 2);
+		CCActionInterval* scale_back = scale->reverse();
+		CCActionInterval* seq_scale = (CCActionInterval*)(CCSequence::actions(scale, scale_back, NULL) );
 		sprite->runAction(CCRepeatForever::actionWithAction(seq_scale) );
 		
 		spritesheet->addChild(sprite, i);
@@ -1871,12 +1871,12 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 	CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage("animations/dragon_animation.png");
 	
 	// manually add frames to the frame cache
-	CCSpriteFrame *frame0 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame1 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame2 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*2, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame3 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*3, 132*0, 132, 132), CGPointZero);
-	CCSpriteFrame *frame4 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*1, 132, 132), CGPointZero);
-	CCSpriteFrame *frame5 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*1, 132, 132), CGPointZero);
+	CCSpriteFrame *frame0 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*0, 132, 132));
+	CCSpriteFrame *frame1 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*0, 132, 132));
+	CCSpriteFrame *frame2 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*2, 132*0, 132, 132));
+	CCSpriteFrame *frame3 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*3, 132*0, 132, 132));
+	CCSpriteFrame *frame4 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*1, 132, 132));
+	CCSpriteFrame *frame5 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*1, 132, 132));
 	
 	
 	//
@@ -1896,7 +1896,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 			
 	CCAnimation *animation = CCAnimation::animationWithName("fly", 0.2f, animFrames);
 	CCAnimate *animate = CCAnimate::actionWithAnimation(animation, false);
-	CCIntervalAction* seq = (CCIntervalAction*)(CCSequence::actions( animate,
+	CCActionInterval* seq = (CCActionInterval*)(CCSequence::actions( animate,
 					   CCFlipX::actionWithFlipX(true),
 					   animate->copy()->autorelease(),
 					   CCFlipX::actionWithFlipX(false),
@@ -1928,7 +1928,7 @@ SpriteHybrid::SpriteHybrid()
 
 	// parents
 	CCNode *parent1 = CCNode::node();
-	CCSpriteSheet *parent2 = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	CCSpriteBatchNode *parent2 = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	
 	addChild(parent1, 0, kTagNode);
 	addChild(parent2, 0, kTagSpriteSheet);
@@ -1960,7 +1960,7 @@ SpriteHybrid::SpriteHybrid()
 		}
 		sprite->setPosition( ccp(x,y) );
 			
-		CCIntervalAction* action = CCRotateBy::actionWithDuration(4, 360);
+		CCActionInterval* action = CCRotateBy::actionWithDuration(4, 360);
 		sprite->runAction( CCRepeatForever::actionWithAction(action) );
 	}
 	
@@ -2033,7 +2033,7 @@ SpriteSheetChildren::SpriteSheetChildren()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	
 	addChild(sheet, 0, kTagSpriteSheet);
 	
@@ -2066,18 +2066,18 @@ SpriteSheetChildren::SpriteSheetChildren()
 	sprite1->runAction(CCRepeatForever::actionWithAction( CCAnimate::actionWithAnimation(animation, false) ) );
 	// END NEW CODE
 	
-	CCIntervalAction* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* action_rot = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* action_s = CCScaleBy::actionWithDuration(2, 2);
-	CCIntervalAction* action_s_back = action_s->reverse();
+	CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* action_rot = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* action_s = CCScaleBy::actionWithDuration(2, 2);
+	CCActionInterval* action_s_back = action_s->reverse();
 	
-	CCIntervalAction* seq2 = action_rot->reverse();
+	CCActionInterval* seq2 = action_rot->reverse();
 	sprite2->runAction( CCRepeatForever::actionWithAction(seq2) );
 	
 	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction(action_rot)) );
-	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action, action_back,NULL)) )));
-	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action_s, action_s_back,NULL)))) );
+	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action, action_back,NULL)) )));
+	sprite1->runAction( (CCAction*)(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action_s, action_s_back,NULL)))) );
 
 	animFrames->release();
 		
@@ -2106,7 +2106,7 @@ SpriteSheetChildren2::SpriteSheetChildren2()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
-	CCSpriteSheet* sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	sheet->getTexture()->generateMipmap();
 	
 	addChild(sheet, 0, kTagSpriteSheet);
@@ -2135,15 +2135,15 @@ SpriteSheetChildren2::SpriteSheetChildren2()
 	// don't scale and rotate with it's parent
 	sprite13->setHornorParentTransform((ccHonorParentTransform) (sprite13->getHornorParentTransform() & ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE) ));
 	
-	CCIntervalAction* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
-	CCIntervalAction* action_back = action->reverse();
-	CCIntervalAction* action_rot = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* action_s = CCScaleBy::actionWithDuration(2, 2);
-	CCIntervalAction* action_s_back = action_s->reverse();
+	CCActionInterval* action = CCMoveBy::actionWithDuration(2, ccp(200,0));
+	CCActionInterval* action_back = action->reverse();
+	CCActionInterval* action_rot = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* action_s = CCScaleBy::actionWithDuration(2, 2);
+	CCActionInterval* action_s_back = action_s->reverse();
 
 	sprite11->runAction( CCRepeatForever::actionWithAction(action_rot));
-	sprite11->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action, action_back,NULL))));
-	sprite11->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(action_s, action_s_back,NULL))));
+	sprite11->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action, action_back,NULL))));
+	sprite11->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(action_s, action_s_back,NULL))));
 	
 	//
 	// another set of parent / children
@@ -2171,7 +2171,7 @@ SpriteSheetChildren2::SpriteSheetChildren2()
 	sprite23->setHornorParentTransform((ccHonorParentTransform) (sprite23->getHornorParentTransform() & ~CC_HONOR_PARENT_TRANSFORM_SCALE));
 	
 	sprite21->runAction(CCRepeatForever::actionWithAction(CCRotateBy::actionWithDuration(1, 360) ));
-	sprite21->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions( CCScaleTo::actionWithDuration(0.5f, 5.0f), CCScaleTo::actionWithDuration(0.5f, 1), NULL ) )) );
+	sprite21->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions( CCScaleTo::actionWithDuration(0.5f, 5.0f), CCScaleTo::actionWithDuration(0.5f, 1), NULL ) )) );
 }
 
 void SpriteSheetChildren2::onExit()
@@ -2195,14 +2195,14 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
-	CCSpriteSheet* sheet;
+	CCSpriteBatchNode* sheet;
 	CCSprite* sprite1, *sprite2, *sprite3;
 
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
 	
 	// test 1
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2219,7 +2219,7 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	sprite1->addChild(sprite3, -2);
 	
 	// test 2
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2236,7 +2236,7 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	sprite1->addChild(sprite3, 2);
 	
 	// test 3
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2253,7 +2253,7 @@ SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 	sheet->addChild(sprite3, -5);
 
 	// test 4
-	sheet = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
@@ -2299,7 +2299,7 @@ SpriteChildrenVisibility::SpriteChildrenVisibility()
 	// SpriteSheet
 	//
 	// parents
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	aParent->setPosition( ccp(s.width/3, s.height/2) );
 	addChild(aParent, 0);
 	
@@ -2485,7 +2485,7 @@ SpriteSheetChildrenAnchorPoint::SpriteSheetChildrenAnchorPoint()
 	//
 	// parents
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini.png", 50);
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
 	addChild(aParent, 0);
 	
 	// anchor (0,0)
@@ -2590,7 +2590,7 @@ SpriteSheetChildrenScale::SpriteSheetChildrenScale()
 
 	CCNode *aParent;
 	CCSprite* sprite1, *sprite2;
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* seq = CCRepeatForever::actionWithAction(rot);
 	
 	//
@@ -2618,7 +2618,7 @@ SpriteSheetChildrenScale::SpriteSheetChildrenScale()
 	// Test 2
 	//
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini_family.png");
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini_family.png");
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossinis_sister1.png");
 	sprite1->setPosition( ccp( 3*s.width/4, s.height/4) );
 	sprite1->setScaleX( -0.5f );
@@ -2657,7 +2657,7 @@ SpriteSheetChildrenScale::SpriteSheetChildrenScale()
 	// Test 4
 	//
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/grossini_family.png");
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini_family.png");
 	sprite1 = CCSprite::spriteWithSpriteFrameName("grossinis_sister1.png");
 	sprite1->setPosition( ccp( 3*s.width/4, 2*s.height/3) );
 	sprite1->setScaleX( 1.5f );
@@ -2691,10 +2691,10 @@ SpriteChildrenChildren::SpriteChildrenChildren()
 	
 	CCNode *aParent;
 	CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* seq = CCRepeatForever::actionWithAction(rot);
 	
-	CCIntervalAction* rot_back = rot->reverse();
+	CCActionInterval* rot_back = rot->reverse();
 	CCAction* rot_back_fe = CCRepeatForever::actionWithAction(rot_back);
 	
 	//
@@ -2772,19 +2772,19 @@ SpriteSheetChildrenChildren::SpriteSheetChildrenChildren()
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist");
 	
-	CCSpriteSheet *aParent;
+	CCSpriteBatchNode *aParent;
 	CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
-	CCIntervalAction* rot = CCRotateBy::actionWithDuration(10, 360);
+	CCActionInterval* rot = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* seq = CCRepeatForever::actionWithAction(rot);
 	
-	CCIntervalAction* rot_back = rot->reverse();
+	CCActionInterval* rot_back = rot->reverse();
 	CCAction* rot_back_fe = CCRepeatForever::actionWithAction(rot_back);
 	
 	//
 	// SpriteSheet: 3 levels of children
 	//
 	
-	aParent = CCSpriteSheet::spriteSheetWithFile("animations/ghosts.png");
+	aParent = CCSpriteBatchNode::spriteSheetWithFile("animations/ghosts.png");
 	aParent->getTexture()->generateMipmap();
 	addChild(aParent);
 	

@@ -21,7 +21,6 @@ public:
 	virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
     Boolean CtrlSelected(TApplication * pApp, EventType * pEvent);
 protected:
-    int m_nEffect1ID;
     int m_nEffect2ID;
 };
  

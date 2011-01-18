@@ -37,11 +37,16 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "platform/platform.h"
 #include "CCXUIImage.h"
-
-#include <GLES/glext.h>
+#include "CCGL.h"
+#include "support/ccUtils.h"
+#include "platform/CCPlatformMacros.h"
 
 #ifdef _POWERVR_SUPPORT_
     #include "CCPVRTexture.h"
+#endif
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    #include <list>
 #endif
 
 namespace   cocos2d {
@@ -50,20 +55,124 @@ namespace   cocos2d {
 // FontLabel support
 #endif// CC_FONT_LABEL_SUPPORT
 
-
-static unsigned int nextPOT(unsigned int x)
-{
-	x = x - 1;
-	x = x | (x >> 1);
-	x = x | (x >> 2);
-	x = x | (x >> 4);
-	x = x | (x >> 8);
-	x = x | (x >>16);
-	return x + 1;
-}
-
 //CLASS IMPLEMENTATIONS:
 
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    class VolatileTexture
+    {
+    protected:
+        CCTexture2D *texture;
+        unsigned char *data;
+        CCTexture2DPixelFormat pixelFormat;
+        unsigned int pixelsWide;
+        unsigned int pixelsHigh;
+        CGSize contentSize;
+
+    public:
+
+        static std::list<VolatileTexture*> textures;
+        static bool isReloading;
+
+        VolatileTexture(CCTexture2D *t) : texture(t), data(0)
+        {
+            textures.push_back(this);
+        }
+
+        ~VolatileTexture()
+        {
+            if (data)
+                delete [] data;
+            textures.remove(this);
+        }
+
+        static void addTextureWithData(CCTexture2D *tt, 
+            const void *d, 
+            CCTexture2DPixelFormat f, 
+            unsigned int w, 
+            unsigned int h, 
+            CGSize s)
+        {
+            if (isReloading)
+                return;
+
+            VolatileTexture *vt = 0;
+            std::list<VolatileTexture *>::iterator i = textures.begin();
+            while( i != textures.end() )
+            {
+                VolatileTexture *v = *i++;
+                if (v->texture == tt) {
+                    vt = v;
+                    break;
+                }
+            }
+
+            if (!vt)
+                vt = new VolatileTexture(tt);
+
+            vt->pixelFormat = f;
+            vt->pixelsWide = w;
+            vt->pixelsHigh = h;
+            vt->contentSize = s;
+
+            //CCLOGINFO("added volatile %d", textures.size());
+
+            if (vt->data) {
+                delete [] vt->data;
+                vt->data = 0;   
+            }
+
+            switch(f) {          
+    case kCCTexture2DPixelFormat_RGBA8888:
+    case kCCTexture2DPixelFormat_RGBA4444:
+    case kCCTexture2DPixelFormat_RGB5A1:
+    case kCCTexture2DPixelFormat_RGB565:
+    case kCCTexture2DPixelFormat_A8:
+        vt->data = new UINT8[w * h * 4];
+        memcpy(vt->data, d, w * h * 4);
+        break;    
+    case kCCTexture2DPixelFormat_RGB888:
+        vt->data = new UINT8[w * h * 3];
+        memcpy(vt->data, d, w * h * 3);
+        break;
+            }
+        }
+
+        static void removeTexture(CCTexture2D *t) {
+
+            std::list<VolatileTexture *>::iterator i = textures.begin();
+            while( i != textures.end() )
+            {
+                VolatileTexture *vt = *i++;
+                if (vt->texture == t) {
+                    delete vt;
+                    break;
+                }
+            }
+        }
+
+        static void reloadAllTextures()
+        {
+            isReloading = true;
+
+            CCLOG("reload all texture");
+            std::list<VolatileTexture *>::iterator i = textures.begin();
+
+            while( i != textures.end() )
+            {
+                VolatileTexture *vt = *i++;
+                if (vt->data) {
+                    unsigned int n = vt->texture->getName();
+                    vt->texture->initWithData((const void *)vt->data, vt->pixelFormat, vt->pixelsWide, vt->pixelsHigh, vt->contentSize);
+                }
+            }
+
+            isReloading = false;
+        }
+    };
+
+    std::list<VolatileTexture*> VolatileTexture::textures;
+    bool VolatileTexture::isReloading = false;
+#endif // CC_ENABLE_CACHE_TEXTTURE_DATA
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
@@ -76,6 +185,10 @@ CCTexture2D::CCTexture2D()
 
 CCTexture2D::~CCTexture2D()
 {
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    VolatileTexture::removeTexture(this);
+#endif
+
 	CCLOGINFO("cocos2d: deallocing CCTexture2D %u.", m_uName);
 	if(m_uName)
 	{
@@ -103,9 +216,18 @@ GLuint CCTexture2D::getName()
 	return m_uName;
 }
 
-CGSize CCTexture2D::getContentSize()
+CGSize CCTexture2D::getContentSizeInPixels()
 {
 	return m_tContentSize;
+}
+
+CGSize CCTexture2D::getContentSize()
+{
+	CGSize ret;
+	ret.width = m_tContentSize.width / CC_CONTENT_SCALE_FACTOR();
+	ret.height = m_tContentSize.height / CC_CONTENT_SCALE_FACTOR();
+
+	return ret;
 }
 
 GLfloat CCTexture2D::getMaxS()
@@ -128,6 +250,17 @@ void CCTexture2D::setMaxT(GLfloat maxT)
 	m_fMaxT = maxT;
 }
 
+void CCTexture2D::releaseData(void *data)
+{
+    free(data);
+}
+
+void* CCTexture2D::keepData(void *data, unsigned int length)
+{
+	//The texture data mustn't be saved becuase it isn't a mutable texture.
+	return data;
+}
+
 bool CCTexture2D::getHasPremultipliedAlpha()
 {
 	return m_bHasPremultipliedAlpha;
@@ -135,6 +268,12 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize)
 {
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    // cache the texture data
+    VolatileTexture::addTextureWithData(this, data, pixelFormat, pixelsWide, pixelsHigh, contentSize);
+#endif
+
 	glGenTextures(1, &m_uName);
 	glBindTexture(GL_TEXTURE_2D, m_uName);
 
@@ -211,8 +350,8 @@ bool CCTexture2D::initWithImage(UIImage * uiImage)
 	else 
 #endif
 	{
-		POTWide = nextPOT(uiImage->width());
-		POTHigh = nextPOT(uiImage->height());
+		POTWide = ccNextPOT(uiImage->width());
+		POTHigh = ccNextPOT(uiImage->height());
 	}
 
 	unsigned maxTextureSize = conf->getMaxTextureSize();
@@ -228,7 +367,6 @@ bool CCTexture2D::initWithImage(UIImage * uiImage)
 }
 bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
-	unsigned int			i;
 	unsigned char*			data = NULL;
 	unsigned char*			tempData =NULL;
 	unsigned int*			inPixel32 = NULL;
@@ -353,11 +491,11 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 
 	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-		tempData = new UINT8[POTHigh * POTWide * 2];
+		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
 
 		delete [] data;
@@ -365,11 +503,11 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-		tempData = new UINT8[POTHigh * POTWide * 2];
+		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
@@ -381,11 +519,11 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-		tempData = new UINT8[POTHigh * POTWide * 2];
+		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 
-		for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
 			*outPixel16++ = 
 			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
@@ -441,20 +579,11 @@ void CCTexture2D::drawAtPoint(CGPoint point)
 	GLfloat	width = (GLfloat)m_uPixelsWide * m_fMaxS,
 		height = (GLfloat)m_uPixelsHigh * m_fMaxT;
 
-#if 0
-	GLfloat		vertices[] = {	
-		-width / 2 + point.x,	-height / 2 + point.y,	0.0f,
-		width / 2 + point.x,	-height / 2 + point.y,	0.0f,
-		-width / 2 + point.x,	height / 2 + point.y,	0.0f,
-		width / 2 + point.x,	height / 2 + point.y,	0.0f };
-
-#else // anchor is done by cocos2d automagically
 	GLfloat		vertices[] = {	
 		point.x,			point.y,	0.0f,
 		width + point.x,	point.y,	0.0f,
 		point.x,			height  + point.y,	0.0f,
 		width + point.x,	height  + point.y,	0.0f };
-#endif
 
 	glBindTexture(GL_TEXTURE_2D, m_uName);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
@@ -563,14 +692,14 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 
 void CCTexture2D::generateMipmap()
 {
-	NSAssert( m_uPixelsWide == nextPOT(m_uPixelsWide) && m_uPixelsHigh == nextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
+	NSAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, this->m_uName );
-	glGenerateMipmapOES(GL_TEXTURE_2D);
+	ccglGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)
 {
-	NSAssert( (m_uPixelsWide == nextPOT(m_uPixelsWide) && m_uPixelsHigh == nextPOT(m_uPixelsHigh)) ||
+	NSAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh)) ||
 		(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 		"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture( GL_TEXTURE_2D, this->m_uName );
@@ -606,6 +735,13 @@ void CCTexture2D::setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format)
 CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
 {
 	return g_defaultAlphaPixelFormat;
+}
+
+void CCTexture2D::reloadAllTextures()
+{
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    VolatileTexture::reloadAllTextures();
+#endif
 }
 
 }//namespace   cocos2d 

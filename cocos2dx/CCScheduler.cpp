@@ -225,32 +225,26 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 	if (pElement->timers == NULL)
 	{
 		pElement->timers = ccArrayNew(10);
-	}else 
-	if (pElement->timers->num == pElement->timers->max)
-	{
-		ccArrayDoubleCapacity(pElement->timers);
 	}
-
-	bool found = false;
-    for (unsigned int i = 0; i < pElement->timers->num; ++i)
+	else 
 	{
-		CCTimer *timer = (CCTimer*)pElement->timers->arr[i];
-		if (pfnSelector == timer->m_pfnSelector)
+		for (unsigned int i = 0; i < pElement->timers->num; ++i)
 		{
-			CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
-			timer->m_fInterval = fInterval;
-			found = true;
+			CCTimer *timer = (CCTimer*)pElement->timers->arr[i];
+			if (pfnSelector == timer->m_pfnSelector)
+			{
+				CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
+				timer->m_fInterval = fInterval;
+				return;
+			}
 		}
+		ccArrayEnsureExtraCapacity(pElement->timers, 1);
 	}
 
-
-	if (! found)
-	{
-		CCTimer *pTimer = new CCTimer();
-		pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
-		ccArrayAppendObject(pElement->timers, pTimer);
-		pTimer->release();
-	}	
+	CCTimer *pTimer = new CCTimer();
+	pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
+	ccArrayAppendObject(pElement->timers, pTimer);
+	pTimer->release();	
 }
 
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget)
@@ -620,5 +614,6 @@ void CCScheduler::tick(ccTime dt)
 void CCScheduler::purgeSharedScheduler(void)
 {
 	pSharedScheduler->release();
+	pSharedScheduler = NULL;
 }
 }//namespace   cocos2d 

@@ -55,8 +55,8 @@ CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, int tileWidth, in
 bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
 {
 	assert(tile != NULL);
-	m_nItemWidth = tileWidth;
-	m_nItemHeight = tileHeight;
+	m_nItemWidth  = (int) (tileWidth * CC_CONTENT_SCALE_FACTOR());
+	m_nItemHeight = (int) (tileHeight * CC_CONTENT_SCALE_FACTOR());
 
 	m_cOpacity = 255;
 	m_tColor = m_tColorUnmodified = ccWHITE;
@@ -69,13 +69,18 @@ bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeig
 	// also, using: self.textureAtlas supports re-initialization without leaking
 	this->m_pTextureAtlas = new CCTextureAtlas();
 	m_pTextureAtlas->initWithFile(tile, itemsToRender);
-//	m_pTextureAtlas->release();
+    
+	if (! m_pTextureAtlas)
+	{
+		CCLOG("cocos2d: Could not initialize CCAtlasNode. Invalid Texture.");
+		delete this;
+		return false;
+	}
 
 	this->updateBlendFunc();
 	this->updateOpacityModifyRGB();
 
 	this->calculateMaxItems();
-	this->calculateTexCoordsSteps();
 
 	return true;
 }
@@ -85,16 +90,9 @@ bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeig
 
 void CCAtlasNode::calculateMaxItems()
 {
-	CGSize s = m_pTextureAtlas->getTexture()->getContentSize();
+	CGSize s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
 	m_nItemsPerColumn = (int)(s.height / m_nItemHeight);
 	m_nItemsPerRow = (int)(s.width / m_nItemWidth);
-}
-
-void CCAtlasNode:: calculateTexCoordsSteps()
-{
-	CCTexture2D *texture = m_pTextureAtlas->getTexture();
-	m_fTexStepX = m_nItemWidth / (float)(texture->getPixelsWide());
-	m_fTexStepY = m_nItemHeight / (float)(texture->getPixelsHigh());
 }
 
 void CCAtlasNode::updateAtlasValues()
@@ -113,10 +111,9 @@ void CCAtlasNode::draw()
 
 	glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity);
 
-	bool newBlend = false;
-	if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) 
+	bool newBlend = m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST;
+	if(newBlend) 
 	{
-		newBlend = true;
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
@@ -169,7 +166,7 @@ void CCAtlasNode::setOpacity(GLubyte opacity)
 
 	// special opacity for premultiplied textures
 	if( m_bIsOpacityModifyRGB )
-		this->setColor(m_bIsOpacityModifyRGB ? m_tColorUnmodified : m_tColor);
+		this->setColor(m_tColorUnmodified);
 }
 
 void CCAtlasNode::setIsOpacityModifyRGB(bool bValue)
