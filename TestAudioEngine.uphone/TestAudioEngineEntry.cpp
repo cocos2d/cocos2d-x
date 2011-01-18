@@ -14,7 +14,7 @@ const  ResourceRegisterEntry		ResRegList_TestAudioEngine[]  =
 	TG_RESOURCE_DEFINE
 };
 
-extern const  AppResourceEntry		TestAudioEngineResourceEntry  =
+const  AppResourceEntry		TestAudioEngineResourceEntry  =
 {
 	(ResourceRegisterEntry*)ResRegList_TestAudioEngine,                    //  res  list  in  this  app
 		sizeof(ResRegList_TestAudioEngine) /  sizeof(ResourceRegisterEntry),    //number  of  item  in  res

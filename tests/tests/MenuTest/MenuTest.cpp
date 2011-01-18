@@ -52,7 +52,7 @@ MenuLayer1::MenuLayer1()
 	CCMenuItem *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
 	
 	// Label Item (BitmapFontAtlas)
-	CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("configuration", "fonts/bitmapFontTest3.fnt");
+	CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("configuration", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item5 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer1::menuCallbackConfig));
 
 	// Testing issue #500
@@ -61,10 +61,10 @@ MenuLayer1::MenuLayer1()
 	// Font Item
 	CCMenuItemFont* item6 = CCMenuItemFont::itemFromString("Quit", this, menu_selector(MenuLayer1::onQuit));
 	
-	CCIntervalAction* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
-	CCIntervalAction* color_back = color_action->reverse();
+	CCActionInterval* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
+	CCActionInterval* color_back = color_action->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(color_action, color_back, NULL);
-	item6->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
+	item6->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
 	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, item4, item5, item6, NULL);
 	menu->alignItemsVertically();
@@ -257,7 +257,7 @@ MenuLayer3::MenuLayer3()
 	CCMenuItemFont::setFontName("Marker Felt");
 	CCMenuItemFont::setFontSize(28);
 
-	CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
+	CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item1 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer3::menuCallback2) );
 	CCMenuItemFont* item2 = CCMenuItemFont::itemFromString("--- Go Back ---", this, menu_selector(MenuLayer3::menuCallback) );
 	
@@ -281,12 +281,12 @@ MenuLayer3::MenuLayer3()
 	
 	CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CGPointMake(400,0), 50, 4);
 	item2->runAction( CCRepeatForever::actionWithAction(
-								(CCIntervalAction*)(CCSequence::actions( jump, jump->reverse(), NULL))
+								(CCActionInterval*)(CCSequence::actions( jump, jump->reverse(), NULL))
 								)
 					);
-	CCIntervalAction* spin1 = CCRotateBy::actionWithDuration(3, 360);
-	CCIntervalAction* spin2 = (CCIntervalAction*)(spin1->copy()->autorelease());
-	CCIntervalAction* spin3 = (CCIntervalAction*)(spin1->copy()->autorelease());
+	CCActionInterval* spin1 = CCRotateBy::actionWithDuration(3, 360);
+	CCActionInterval* spin2 = (CCActionInterval*)(spin1->copy()->autorelease());
+	CCActionInterval* spin3 = (CCActionInterval*)(spin1->copy()->autorelease());
 	
 	item1->runAction( CCRepeatForever::actionWithAction(spin1) );
 	item2->runAction( CCRepeatForever::actionWithAction(spin2) );
@@ -387,7 +387,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName( "Marker Felt" );
 	CCMenuItemFont::setFontSize( 34 );
 	
-	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString( "go back", "fonts/bitmapFontTest3.fnt" );
+	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString( "go back", "fonts/bitmapFontTest3.fnt" );
 	CCMenuItemLabel* back = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer4::backCallback) );
     
 	CCMenu *menu = CCMenu::menuWithItems(

@@ -108,7 +108,7 @@ TMXOrthoTest::TMXOrthoTest()
 	//
 	// it should not flicker. No artifacts should appear
 	//
-	//CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	//CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	//addChild(color, -1);
 
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test2.tmx");
@@ -118,11 +118,11 @@ TMXOrthoTest::TMXOrthoTest()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
     NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;
@@ -167,11 +167,11 @@ TMXOrthoTest2::TMXOrthoTest2()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;
@@ -201,11 +201,11 @@ TMXOrthoTest3::TMXOrthoTest3()
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;
@@ -236,11 +236,11 @@ TMXOrthoTest4::TMXOrthoTest4()
 	////----UXLOG("ContentSize: %f, %f", s1.width,s1.height);
 	
 	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
-	CCSpriteSheet* child = NULL;
+	CCSpriteBatchNode* child = NULL;
 	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
-		child = (CCSpriteSheet*)(*it);
+		child = (CCSpriteBatchNode*)(*it);
 
 		if(!child)
 			break;
@@ -321,17 +321,17 @@ TMXReadWriteTest::TMXReadWriteTest()
 	tile2->setAnchorPoint( ccp(0.5f, 0.5f) );
 	tile3->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(0.5f, ccp(0,160));
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
-	CCIntervalAction* scale = CCScaleBy::actionWithDuration(2, 5);
-	CCIntervalAction* opacity = CCFadeOut::actionWithDuration(2);
-	CCIntervalAction* fadein = CCFadeIn::actionWithDuration(2);
-	CCIntervalAction* scaleback = CCScaleTo::actionWithDuration(1, 1);
-	CCInstantAction* finish = CCCallFuncN::actionWithTarget(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(0.5f, ccp(0,160));
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* scale = CCScaleBy::actionWithDuration(2, 5);
+	CCActionInterval* opacity = CCFadeOut::actionWithDuration(2);
+	CCActionInterval* fadein = CCFadeIn::actionWithDuration(2);
+	CCActionInterval* scaleback = CCScaleTo::actionWithDuration(1, 1);
+	CCActionInstant* finish = CCCallFuncN::actionWithTarget(this, callfuncN_selector(TMXReadWriteTest::removeSprite));
 	CCFiniteTimeAction* seq0 = CCSequence::actions(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
-	CCIntervalAction* seq1 = (CCIntervalAction*)(seq0->copy()->autorelease());
-	CCIntervalAction* seq2 = (CCIntervalAction*)(seq0->copy()->autorelease());
-	CCIntervalAction* seq3 = (CCIntervalAction*)(seq0->copy()->autorelease());
+	CCActionInterval* seq1 = (CCActionInterval*)(seq0->copy()->autorelease());
+	CCActionInterval* seq2 = (CCActionInterval*)(seq0->copy()->autorelease());
+	CCActionInterval* seq3 = (CCActionInterval*)(seq0->copy()->autorelease());
 	
 	tile0->runAction(seq0);
 	tile1->runAction(seq1);
@@ -428,7 +428,7 @@ std::string TMXReadWriteTest::title()
 //------------------------------------------------------------------
 TMXHexTest::TMXHexTest()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/hexa-test.tmx");
@@ -450,7 +450,7 @@ std::string TMXHexTest::title()
 //------------------------------------------------------------------
 TMXIsoTest::TMXIsoTest()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test.tmx");
@@ -474,7 +474,7 @@ std::string TMXIsoTest::title()
 //------------------------------------------------------------------
 TMXIsoTest1::TMXIsoTest1()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test1.tmx");
@@ -498,7 +498,7 @@ std::string TMXIsoTest1::title()
 //------------------------------------------------------------------
 TMXIsoTest2::TMXIsoTest2()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2.tmx");
@@ -525,7 +525,7 @@ std::string TMXIsoTest2::title()
 //------------------------------------------------------------------
 TMXUncompressedTest::TMXUncompressedTest()
 {
-	CCColorLayer* color = CCColorLayer::layerWithColor( ccc4(64,64,64,255) );
+	CCLayerColor* color = CCLayerColor::layerWithColor( ccc4(64,64,64,255) );
 	addChild(color, -1);
 	
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2-uncompressed.tmx");
@@ -809,10 +809,10 @@ TMXIsoZorder::TMXIsoZorder()
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*) seq) );
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*) seq) );
 	
 	schedule( schedule_selector(TMXIsoZorder::repositionSprite) );
 }
@@ -874,10 +874,10 @@ TMXOrthoZorder::TMXOrthoZorder()
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 	
 	schedule( schedule_selector(TMXOrthoZorder::repositionSprite));
 }
@@ -935,10 +935,10 @@ TMXIsoVertexZ::TMXIsoVertexZ()
 	m_tamara = layer->tileAt( ccp(29,29) );
 	m_tamara->retain();
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*) seq) );
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*) seq) );
 	
 	schedule( schedule_selector(TMXIsoVertexZ::repositionSprite));
 	
@@ -1002,10 +1002,10 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 	m_tamara = layer->tileAt(ccp(0,11));
 	m_tamara->retain();
 
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
-	CCIntervalAction* back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
+	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
-	m_tamara->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
+	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 	
 	schedule(schedule_selector(TMXOrthoVertexZ::repositionSprite));
 	
@@ -1189,7 +1189,7 @@ TileDemo::TileDemo(void)
 
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-	m_label = CCLabel::labelWithString("", "Arial", 28);
+	m_label = CCLabelTTF::labelWithString("", "Arial", 28);
 	addChild(m_label, 1);
 	m_label->setPosition( ccp(s.width/2, s.height-50) );
 	m_label->retain();
@@ -1197,7 +1197,7 @@ TileDemo::TileDemo(void)
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
 		addChild(l, 1);
 		l->setPosition( ccp(s.width/2, s.height-80) );
 

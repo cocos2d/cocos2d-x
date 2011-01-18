@@ -193,43 +193,43 @@
 				>
 			</File>
 			<File
+				RelativePath="..\actions\CCActionCamera.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionEase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionGrid.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionGrid3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionInstant.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\actions\CCActionInterval.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\actions\CCActionManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\actions\CCCameraAction.cpp"
+				RelativePath="..\actions\CCActionPageTurn3D.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\actions\CCEaseAction.cpp"
+				RelativePath="..\actions\CCActionProgressTimer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\actions\CCGrid3DAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCGridAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCInstantAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCIntervalAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCPageTurn3DAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCProgressTimerActions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\actions\CCTiledGridAction.cpp"
+				RelativePath="..\actions\CCActionTiledGrid.cpp"
 				>
 			</File>
 		</Filter>
@@ -238,10 +238,6 @@
 			>
 			<File
 				RelativePath="..\base_nodes\CCAtlasNode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\base_nodes\CCNode.cpp"
 				>
 			</File>
 		</Filter>
@@ -257,10 +253,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\effects\CCGrid.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\effects\CCGrid.h"
 				>
 			</File>
@@ -273,7 +265,51 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCActionCamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionEase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionGrid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionGrid3D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionInstant.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionInterval.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCActionManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionPageTurn3D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionProgressTimer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCActionTiledGrid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCAnimation.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCAnimationCache.h"
 				>
 			</File>
 			<File
@@ -281,15 +317,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCBitmapFontAtlas.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCCamera.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCCameraAction.h"
 				>
 			</File>
 			<File
@@ -305,23 +333,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCEaseAction.h"
+				RelativePath="..\include\CCEventDispatcher.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCGrid3DAction.h"
+				RelativePath="..\include\CCGL.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCGridAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCInstantAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCIntervalAction.h"
+				RelativePath="..\include\CCKeyboardEventDelegate.h"
 				>
 			</File>
 			<File
@@ -333,11 +353,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCLabel.h"
+				RelativePath="..\include\CCLabelAtlas.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCLabelAtlas.h"
+				RelativePath="..\include\CCLabelBMFont.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCLabelTTF.h"
 				>
 			</File>
 			<File
@@ -361,15 +385,11 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCMouseEventDelegate.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCPageTurn3DAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCPageTurnTransition.h"
 				>
 			</File>
 			<File
@@ -385,7 +405,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCPointParticleSystem.h"
+				RelativePath="..\include\CCParticleSystemPoint.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCParticleSystemQuad.h"
 				>
 			</File>
 			<File
@@ -393,19 +417,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCProgressTimerActions.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCProtocols.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCQuadParticleSystem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCRadialTransition.h"
 				>
 			</File>
 			<File
@@ -426,6 +438,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCSprite.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCSpriteBatchNode.h"
 				>
 			</File>
 			<File
@@ -450,10 +466,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCTextureCache.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCTiledGridAction.h"
 				>
 			</File>
 			<File
@@ -490,6 +502,14 @@
 			</File>
 			<File
 				RelativePath="..\include\CCTransition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTransitionPageTurn.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTransitionRadial.h"
 				>
 			</File>
 			<File
@@ -549,6 +569,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\NSEvent.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\NSMutableArray.h"
 				>
 			</File>
@@ -581,15 +605,15 @@
 			Name="label_nodes"
 			>
 			<File
-				RelativePath="..\label_nodes\CCBitmapFontAtlas.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\label_nodes\CCLabel.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\label_nodes\CCLabelAtlas.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\label_nodes\CCLabelBMFont.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\label_nodes\CCLabelTTF.cpp"
 				>
 			</File>
 		</Filter>
@@ -597,33 +621,21 @@
 			Name="layers_scenes_transition_nodes"
 			>
 			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCLayer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCPageTurnTransition.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCRadialTransition.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCScene.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\layers_scenes_transitions_nodes\CCTransition.cpp"
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="menu_nodes"
 			>
-			<File
-				RelativePath="..\menu_nodes\CCMenu.cpp"
-				>
-			</File>
 			<File
 				RelativePath="..\menu_nodes\CCMenuItem.cpp"
 				>
@@ -661,11 +673,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\particle_nodes\CCPointParticleSystem.cpp"
+				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\particle_nodes\CCQuadParticleSystem.cpp"
+				RelativePath="..\particle_nodes\CCParticleSystemQuad.cpp"
 				>
 			</File>
 		</Filter>
@@ -673,7 +685,19 @@
 			Name="sprite_nodes"
 			>
 			<File
+				RelativePath="..\sprite_nodes\CCAnimation.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sprite_nodes\CCAnimationCache.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\sprite_nodes\CCSprite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sprite_nodes\CCSpriteBatchNode.cpp"
 				>
 			</File>
 			<File
@@ -706,6 +730,14 @@
 			</File>
 			<File
 				RelativePath="..\support\CCProfiling.h"
+				>
+			</File>
+			<File
+				RelativePath="..\support\ccUtils.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\support\ccUtils.h"
 				>
 			</File>
 			<File
@@ -781,6 +813,14 @@
 				</File>
 				<File
 					RelativePath="..\support\zip_support\unzip.h"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\ZipUtils.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\support\zip_support\ZipUtils.h"
 					>
 				</File>
 			</Filter>
@@ -893,11 +933,63 @@
 			Name="platform"
 			>
 			<File
+				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCDirector_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCGL.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCGrid_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCLayer_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCMenu_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCNode_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCNS.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCParticleSystemPoint_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCPlatformMacros.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCTransition_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCXApplication_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\ccxCommon_platform.h"
 				>
 			</File>
 			<File
@@ -927,6 +1019,10 @@
 			<Filter
 				Name="uphone"
 				>
+				<File
+					RelativePath="..\platform\uphone\CCNS_uphone.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\platform\uphone\CCTime.cpp"
 					>
@@ -1003,14 +1099,6 @@
 					RelativePath="..\platform\uphone\NSLock.h"
 					>
 				</File>
-				<File
-					RelativePath="..\platform\uphone\ZipUtils.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\ZipUtils.h"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1037,6 +1125,22 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="event_dispatcher"
+			>
+			<File
+				RelativePath="..\event_dispatcher\CCEventDispatcher.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\event_dispatcher\CCKeyboardEventDelegate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\event_dispatcher\CCMouseEventDelegate.cpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\CCamera.cpp"
 			>
@@ -1047,10 +1151,6 @@
 		</File>
 		<File
 			RelativePath="..\CCConfiguration.h"
-			>
-		</File>
-		<File
-			RelativePath="..\CCDirector.cpp"
 			>
 		</File>
 		<File

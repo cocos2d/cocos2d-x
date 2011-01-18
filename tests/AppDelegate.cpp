@@ -58,7 +58,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
 #elif defined(CCX_PLATFORM_ANDROID)
-    CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests-1.apk");
 	CCFileUtils::setRelativePath("assets");
 #endif
 

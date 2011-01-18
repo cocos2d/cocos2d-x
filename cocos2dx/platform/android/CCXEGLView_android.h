@@ -47,6 +47,9 @@ public:
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
+    bool    canSetContentScaleFactor();
+    void    setContentScaleFactor(float contentScaleFactor); 
+	void    setAnimationInterval(double interval) {};
     
 private:
 	int m_nWidth;

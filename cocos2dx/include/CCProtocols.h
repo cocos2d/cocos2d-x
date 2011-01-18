@@ -110,7 +110,21 @@ class CCX_DLL CCLabelProtocol
 public:
 	// sets a new label using an string
 	virtual void setString(const char *label) = 0;
+
+	/** returns the string that is rendered */
+	virtual const char* getString(void) = 0;
 };
+
+/** OpenGL projection protocol */
+class CCX_DLL CCProjectionProtocol : public NSObject
+{
+public:
+	/** Called by CCDirector when the porjection is updated, and "custom" projection is used
+	@since v0.99.5
+	*/
+	virtual void updateProjection(void) = 0;
+};
+
 }//namespace   cocos2d 
 
 #endif // __CCPROTOCOLS_H__

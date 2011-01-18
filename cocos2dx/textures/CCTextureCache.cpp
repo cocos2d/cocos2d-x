@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "CCXFileUtils.h"
 #include "CCXUIImage.h"
 
-// @todo EAGLContext static EAGLContext *auxEAGLcontext = NULL;
 namespace   cocos2d {
 
 class CCAsyncObject : NSObject
@@ -82,9 +81,6 @@ CCTextureCache::~CCTextureCache()
 	CCX_SAFE_RELEASE(m_pTextures);
 	CCX_SAFE_DELETE(m_pDictLock);
 	CCX_SAFE_DELETE(m_pContextLock);
-// @todo release
-// 	[auxEAGLcontext release];
-// 	auxEAGLcontext = nil;
 }
 
 void CCTextureCache::purgeSharedTextureCache()
@@ -184,6 +180,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	
 	m_pDictLock->lock();
 
+	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
+	fullpath = string(CCFileUtils::ccRemoveHDSuffixFromFile(fullpath.c_str()));
+
 	texture = m_pTextures->objectForKey(fullpath);
 
 	if( ! texture ) 
@@ -207,7 +206,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
 				UIImage * image = new UIImage();
-				if(! image->initWithContentsOfFile(fullpath, kImageFormatJPG))
+				if(! image->initWithContentsOfFile(fullpath, kCCImageFormatJPG))
 				{
 					delete image;
 					break;
@@ -235,7 +234,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #else
 				// prevents overloading the autorelease pool
 				UIImage * image = new UIImage();
-				if(! image->initWithContentsOfFile(fullpath, kImageFormatPNG))
+				if(! image->initWithContentsOfFile(fullpath, kCCImageFormatPNG))
 				{
 					delete image;
 					break;
@@ -419,12 +418,19 @@ void CCTextureCache::removeTexture(CCTexture2D* texture)
 	}
 }
 
-void CCTextureCache::removeTextureForKey(const std::string & textureKeyName)
+void CCTextureCache::removeTextureForKey(const char *textureKeyName)
 {
-	if( textureKeyName.empty() )
+	if (textureKeyName == NULL)
+	{
 		return;
+	}
 
-	m_pTextures->removeObjectForKey(textureKeyName);
+	m_pTextures->removeObjectForKey(string(textureKeyName));
+}
+
+CCTexture2D* CCTextureCache::textureForKey(const char* key)
+{
+	return m_pTextures->objectForKey(string(key));
 }
 
 }//namespace   cocos2d 

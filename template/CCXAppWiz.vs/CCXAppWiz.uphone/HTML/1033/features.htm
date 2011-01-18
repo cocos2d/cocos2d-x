@@ -232,15 +232,7 @@
 													</TD>
 													<TD VALIGN="top"  COLSPAN="7">
 														Select application feature:<br />
-                                                        <br />
-                                                        <input id="CCX_USE_UI_RESOURCE" accesskey="U" class="CheckBoxA" 
-                                                            name="CCX_USE_UI_RESOURCE" title="Application has UI resource project." 
-                                                            type="checkbox" value="ON" onClick="OnUseUIResource();"/>
-														<DIV CLASS="itemTextCheckboxB" ID="CCX_USE_UI_RESOURCE_DIV" FOR ="CCX_USE_UI_RESOURCE">
-															<LABEL ID="CCX_USE_UI_RESOURCE_LABLE" TITLE="Add UPhone resource files to project.">
-																<U>U</U>I Resource</LABEL>
-														</DIV>
-                                                        <br />
+                                                        &nbsp;<br />
                                                         <input id="CCX_USE_TCOM_SUPPORT" accesskey="T" class="CheckBoxA" 
                                                             name="CCX_USE_TCOM_SUPPORT" title="Application has TCOM support." 
                                                             type="checkbox" value="ON" onClick="OnUseTCOMSupport();"/>
@@ -376,14 +368,7 @@ function OnInit()
     {
         CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE.checked = true;
     }
-    
-    CCX_USE_UI_RESOURCE.disabled = false;
-    CCX_USE_TCOM_SUPPORT.disabled = false;
 
-    if (window.external.FindSymbol("CCX_USE_UI_RESOURCE")) 
-    {
-        CCX_USE_UI_RESOURCE.checked = true;
-    }
     if (window.external.FindSymbol("CCX_USE_TCOM_SUPPORT")) 
     {
         CCX_USE_TCOM_SUPPORT.checked = true;
@@ -412,18 +397,6 @@ function OnUseChipmunk()
     else 
     {
         window.external.AddSymbol("CCX_USE_CHIPMUNK", false);
-    }
-}
-
-function OnUseUIResource() 
-{
-    if (CCX_USE_UI_RESOURCE.checked) 
-    {
-        window.external.AddSymbol("CCX_USE_UI_RESOURCE", true);
-    }
-    else 
-    {
-        window.external.AddSymbol("CCX_USE_UI_RESOURCE", false);
     }
 }
 

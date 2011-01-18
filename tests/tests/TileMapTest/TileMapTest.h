@@ -6,8 +6,8 @@
 class TileDemo : public CCLayer
 {
 protected:
-	CCLabel* m_label;
-	CCLabel* m_subtitle;
+	CCLabelTTF* m_label;
+	CCLabelTTF* m_subtitle;
 
 public:
 	TileDemo(void);

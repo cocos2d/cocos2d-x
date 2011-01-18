@@ -319,8 +319,8 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 
 	switch (imageType)
 	{
-	case kImageFormatPNG:
-	case kImageFormatJPG:
+	case kCCImageFormatPNG:
+	case kCCImageFormatJPG:
 		bRet = static_initWithFile(strPath.c_str(), &m_imageInfo);
 		break;
 	default:

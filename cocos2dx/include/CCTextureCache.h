@@ -84,24 +84,6 @@ public:
 	
 	// @todo void addImageAsync(const char* filename, NSObject*target, fpAsyncCallback func);
 
-#if _POWERVR_SUPPORT_
-	/** Returns a Texture2D object given an PVRTC RAW filename
-	* If the file image was not previously loaded, it will create a new CCTexture2D
-	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
-	*
-	* It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
-	* bpp can only be 2 or 4. 2 means more compression but lower quality.
-	* hasAlpha: whether or not the image contains alpha channel
-	*/
-	CCTexture2D* addPVRTCImage(const char* fileimage, int bpp, bool hasAlpha, int width);
-
-	/** Returns a Texture2D object given an PVRTC filename
-	* If the file image was not previously loaded, it will create a new CCTexture2D
-	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
-	*/
-	CCTexture2D* addPVRTCImage(const char* fileimage);
-#endif
-
 	/* Returns a Texture2D object given an CGImageRef image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
 	* Otherwise it will return a reference of a previously loaded image
@@ -117,6 +99,11 @@ public:
 	* If "key" is nil, then a new texture will be created each time.
 	*/
 	CCTexture2D* addUIImage(UIImage *image, const char *key);
+
+	/** Returns an already created texture. Returns nil if the texture doesn't exist.
+	@since v0.99.5
+	*/
+	CCTexture2D* textureForKey(const char* key);
 	/** Purges the dictionary of loaded textures.
 	* Call this method if you receive the "Memory Warning"
 	* In the short term: it will free some resources preventing your app from being killed
@@ -139,7 +126,25 @@ public:
 	/** Deletes a texture from the cache given a its key name
 	@since v0.99.4
 	*/
-	void removeTextureForKey(const std::string & textureKeyName);
+	void removeTextureForKey(const char *textureKeyName);
+
+#if _POWERVR_SUPPORT_
+	/** Returns a Texture2D object given an PVRTC RAW filename
+	* If the file image was not previously loaded, it will create a new CCTexture2D
+	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+	*
+	* It can only load square images: width == height, and it must be a power of 2 (128,256,512...)
+	* bpp can only be 2 or 4. 2 means more compression but lower quality.
+	* hasAlpha: whether or not the image contains alpha channel
+	*/
+	CCTexture2D* addPVRTCImage(const char* fileimage, int bpp, bool hasAlpha, int width);
+
+	/** Returns a Texture2D object given an PVRTC filename
+	* If the file image was not previously loaded, it will create a new CCTexture2D
+	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+	*/
+	CCTexture2D* addPVRTCImage(const char* fileimage);
+#endif
 };
 }//namespace   cocos2d 
 

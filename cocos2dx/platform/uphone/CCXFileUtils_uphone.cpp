@@ -51,10 +51,6 @@ typedef enum
 	SAX_STRING
 }CCSAXState;
 
-typedef map<std::string, int> ResourceMap;
-static ResourceMap      s_ResMap;
-static ResourceHandle   s_HRes;
-
 class CCDictMaker
 {
 public:
@@ -350,36 +346,6 @@ const char* CCFileUtils::getDiffResolutionPath(const char *pszPath)
     return pRet->m_sString.c_str();
 }
 
-void CCFileUtils::setResourceEntry(const AppResourceEntry* pResEntry)
-{
-    if (pResEntry)
-    {
-        s_HRes.setResourceEntry(pResEntry);
-    }
-}
-
-void CCFileUtils::setResourceInfo(const T_ResourceInfo ResInfo[], int nCount)
-{
-    // first, clear the map before
-    if (!s_ResMap.empty())
-    {
-        s_ResMap.clear();
-    }
-
-    // second, insert the pairs
-    for (int i = 0; i < nCount; ++i)
-    {
-        /**
-        @brief Here we call fullPathFromRelativePath because when the UIImage find the ResName in s_ResMap,
-               the UIImage only have the ResName with fullpath.So we must save the ResName with fullpath.
-        */
-        std::string key  = CCFileUtils::fullPathFromRelativePath((ResInfo[i]).ResName);
-        int nResID       = (ResInfo[i]).nResID;
-
-        s_ResMap.insert(ResourceMap::value_type(key, nResID));
-    }
-}
-
 bool CCFileUtils::isResourceExist(const char* pszResName)
 {
     bool bRet = false;
@@ -404,11 +370,8 @@ bool CCFileUtils::isResourceExist(const char* pszResName)
     }
     else
     {
-        // find in the resource map and find in the hardware
-        ResourceMap::iterator iter;
-        iter = s_ResMap.find(pszResName);
-
-        if (iter != s_ResMap.end() || EOS_IsFileExist(FilePath))
+        // find in the hardware
+        if (EOS_IsFileExist(FilePath))
         {
             bRet = true;
         }
@@ -445,63 +408,40 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pBuffer;
 }
 
-const TBitmap* CCFileUtils::getBitmapByResName(const char* pszBmpName)
+int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
-    const TBitmap* pBmp = NULL;
+	///@todo
+	return 0;
+}
 
-    do 
+const char* CCFileUtils::ccRemoveHDSuffixFromFile( const char *path )
+{
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+    if( CC_CONTENT_SCALE_FACTOR() == 2 )
     {
-        // load bitmap from TResource
-        ResourceMap::iterator iter;
-        iter = s_ResMap.find(pszBmpName);
-        CCX_BREAK_IF(iter == s_ResMap.end());
+        std::string curPath = path;
+        int pos = curPath.rfind("/");
+        std::string fileName = curPath.substr(pos + 1);
 
-        pBmp = s_HRes.LoadConstBitmap(iter->second);
-    } while (0);
-
-    return pBmp;
-}
-
-//////////////////////////////////////////////////
-//
-// ResourceHandle
-//
-//////////////////////////////////////////////////
-ResourceHandle::ResourceHandle()
-:m_pResLib(NULL)
-{
-}
-
-ResourceHandle::~ResourceHandle()
-{
-    release();
-}
-
-void ResourceHandle::release()
-{
-    if (m_pResLib)
-    {
-        delete m_pResLib;
-        m_pResLib = NULL;
-    }
-}
-
-void ResourceHandle::setResourceEntry(const AppResourceEntry* pResEntry)
-{
-    release();
-
-    m_pResLib = new TResourceLib(pResEntry);
-}
-
-const TBitmap* ResourceHandle::LoadConstBitmap(int nResID)
-{
-    const TBitmap* pResult = NULL;
-
-    if (m_pResLib)
-    {
-        pResult = m_pResLib->LoadConstBitmap(nResID);
+        std::string filePath = "";
+        if (-1 != pos)
+        {
+            filePath = curPath.substr(0, pos);
+        }
+        
+        int suffixPos = fileName.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        if (-1 != suffixPos)
+        {
+            fileName.replace(pos, strlen(CC_RETINA_DISPLAY_FILENAME_SUFFIX), "");
+        }
+        
+        std::string result = filePath + fileName;
+        return result.c_str();
     }
 
-    return pResult;
+#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
+
+    return path;
 }
 }//namespace   cocos2d 

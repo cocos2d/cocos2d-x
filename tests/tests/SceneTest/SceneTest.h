@@ -32,7 +32,7 @@ public:
 	//CREATE_NODE(SceneTestLayer2);
 } ;
 
-class SceneTestLayer3 : public CCColorLayer
+class SceneTestLayer3 : public CCLayerColor
 {
 public:
 	SceneTestLayer3();

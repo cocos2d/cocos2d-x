@@ -31,7 +31,7 @@ SceneTestLayer1::SceneTestLayer1()
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
@@ -64,7 +64,7 @@ void SceneTestLayer1::onPushSceneTran(NSObject* pSender)
     CCLayer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
 
-	CCDirector::sharedDirector()->pushScene( CCSlideInTTransition::transitionWithDuration(1, scene) );
+	CCDirector::sharedDirector()->pushScene( CCTransitionSlideInT::transitionWithDuration(1, scene) );
     scene->release();
     pLayer->release();
 }
@@ -104,7 +104,7 @@ SceneTestLayer2::SceneTestLayer2()
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
@@ -139,7 +139,7 @@ void SceneTestLayer2::onReplaceSceneTran(NSObject* pSender)
 	CCScene* pScene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer3();
 	pScene->addChild( pLayer, 0 );
-	CCDirector::sharedDirector()->replaceScene( CCFlipXTransition::transitionWithDuration(2, pScene) );
+	CCDirector::sharedDirector()->replaceScene( CCTransitionFlipX::transitionWithDuration(2, pScene) );
     pScene->release();
     pLayer->release();
 }
@@ -153,7 +153,7 @@ void SceneTestLayer2::onReplaceSceneTran(NSObject* pSender)
 SceneTestLayer3::SceneTestLayer3()
 {
 	setIsTouchEnabled( true );
-	CCLabel* label = CCLabel::labelWithString("Touch to popScene", "Marker Felt", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString("Touch to popScene", "Marker Felt", 28);
 	addChild(label);
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	label->setPosition( CGPointMake(s.width/2, s.height/2) );
@@ -161,7 +161,7 @@ SceneTestLayer3::SceneTestLayer3()
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
 	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 

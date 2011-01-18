@@ -3,7 +3,7 @@
 RenderTextureTest::RenderTextureTest()
 {
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLabel* label = CCLabel::labelWithString("Render Texture Test", "Arial", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString("Render Texture Test", "Arial", 28);
 	addChild(label, 0);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 

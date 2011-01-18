@@ -4,7 +4,7 @@
 BackToMainMenuLayer::BackToMainMenuLayer()
 {
     //add the menu item for back to main menu
-    CCLabel* label = CCLabel::labelWithString("MainMenu", "Arial", 20);
+    CCLabelTTF* label = CCLabelTTF::labelWithString("MainMenu", "Arial", 20);
     CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(BackToMainMenuLayer::MainMenuCallback));
 
     CCMenu* pMenu =CCMenu::menuWithItems(pMenuItem, NULL);

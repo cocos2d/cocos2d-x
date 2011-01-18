@@ -24,10 +24,10 @@ THE SOFTWARE.
 #include <cstring>
 #include "CCMenuItem.h"
 #include "CGPointExtension.h"
-#include "CCIntervalAction.h"
+#include "CCActionInterval.h"
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
-#include "CCLabel.h"
+#include "CCLabelTTF.h"
 
 #include <stdarg.h>
 
@@ -113,10 +113,19 @@ namespace cocos2d{
 	}
 	void CCMenuItemLabel::setLabel(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pLabel);
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            setContentSize(var->getContentSize());
+        }
+
+        if (m_pLabel)
+        {
+            removeChild(m_pLabel, true);
+        }
+        
 		m_pLabel = var;
-		this->setContentSize(m_pLabel->getContentSize());
 	}
 	CCMenuItemLabel * CCMenuItemLabel::itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
@@ -136,7 +145,6 @@ namespace cocos2d{
 	}
 	CCMenuItemLabel::~CCMenuItemLabel()
 	{
-		CCX_SAFE_RELEASE(m_pLabel);
 	}
 	void CCMenuItemLabel::setString(const char * label)
 	{
@@ -195,10 +203,6 @@ namespace cocos2d{
 		}
 		CCMenuItem::setIsEnabled(enabled);
 	}
-	void CCMenuItemLabel::draw()
-	{
-		m_pLabel->draw();
-	}
 	void CCMenuItemLabel::setOpacity(GLubyte opacity)
 	{
 		m_pLabel->convertToRGBAProtocol()->setOpacity(opacity);
@@ -233,7 +237,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "value lenght must be greater than 0");
+		NSAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
 		CCLabelAtlas *label = new CCLabelAtlas();
 		label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
 		label->autorelease();
@@ -283,8 +287,8 @@ namespace cocos2d{
 	}
 	bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "Value lenght must be greater than 0");
-		CCLabel *label = CCLabel::labelWithString(value, _fontName.c_str(), (float)_fontSize);
+		NSAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+		CCLabelTTF *label = CCLabelTTF::labelWithString(value, _fontName.c_str(), (float)_fontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
 			// do something ?
@@ -300,9 +304,19 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setNormalImage(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pNormalImage);
-		m_pNormalImage = var;
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            var->setIsVisible(true);
+        }
+
+        if (m_pNormalImage)
+        {
+            removeChild(m_pNormalImage, true);
+        }
+
+        m_pNormalImage = var;
 	}
 	CCNode * CCMenuItemSprite::getSelectedImage()
 	{
@@ -310,9 +324,19 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setSelectedImage(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pSelectedImage);
-		m_pSelectedImage = var;
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            var->setIsVisible(false);
+        }
+
+        if (m_pSelectedImage)
+        {
+            removeChild(m_pSelectedImage, true);
+        }
+
+        m_pSelectedImage = var;
 	}
 	CCNode * CCMenuItemSprite::getDisabledImage()
 	{
@@ -320,9 +344,19 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setDisabledImage(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pDisabledImage);
-		m_pDisabledImage = var;
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            var->setIsVisible(false);
+        }
+
+        if (m_pDisabledImage)
+        {
+            removeChild(m_pDisabledImage, true);
+        }
+
+        m_pDisabledImage = var;
 	}
 	CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite)
 	{
@@ -343,44 +377,86 @@ namespace cocos2d{
 	{
 		assert(normalSprite != NULL);
 		CCMenuItem::initWithTarget(target, selector); 
-		this->m_pNormalImage = normalSprite; CCX_SAFE_RETAIN(normalSprite);
-		this->m_pSelectedImage = selectedSprite; CCX_SAFE_RETAIN(selectedSprite);
-		this->m_pDisabledImage = disabledSprite; CCX_SAFE_RETAIN(disabledSprite);
+        setNormalImage(normalSprite);
+        setSelectedImage(selectedSprite);
+        setDisabledImage(disabledSprite);
+
 		this->setContentSize(m_pNormalImage->getContentSize());
 		return true;
 	}
-	CCMenuItemSprite::~CCMenuItemSprite()
-	{
-		CCX_SAFE_RELEASE(m_pNormalImage);
-		CCX_SAFE_RELEASE(m_pSelectedImage);
-		CCX_SAFE_RELEASE(m_pDisabledImage);
-	}
-	void CCMenuItemSprite::draw()
-	{
-		if(m_bIsEnabled)
-		{
-			if( m_bIsSelected )
-			{
-				m_pSelectedImage->draw();
-			}
-			else
-			{
-				m_pNormalImage->draw();
-			}
-		} 
-		else 
-		{
-			if(m_pDisabledImage != NULL)
-			{
-				m_pDisabledImage->draw();
-			}
-			// disabled image was not provided
-			else
-			{
-				m_pNormalImage->draw();
-			}
-		}
-	}
+
+    /**
+    @since v0.99.5
+    */
+    void CCMenuItemSprite::selected()
+    {
+        CCMenuItem::selected();
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->setIsVisible(false);
+        }
+
+        if (m_pSelectedImage)
+        {
+            m_pNormalImage->setIsVisible(false);
+            m_pSelectedImage->setIsVisible(true);
+        }
+        else
+        {
+            m_pNormalImage->setIsVisible(true);
+        }
+    }
+
+    void CCMenuItemSprite::unselected()
+    {
+        CCMenuItem::unselected();
+
+        m_pNormalImage->setIsVisible(true);
+
+        if (m_pSelectedImage)
+        {
+            m_pSelectedImage->setIsVisible(false);
+        }
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->setIsVisible(false);
+        }
+    }
+
+    void CCMenuItemSprite::setIsEnabled(bool bEnabled)
+    {
+        CCMenuItem::setIsEnabled(bEnabled);
+
+        if (m_pSelectedImage)
+        {
+            m_pSelectedImage->setIsVisible(false);
+        }
+
+        if (bEnabled)
+        {
+            m_pNormalImage->setIsVisible(true);
+
+            if (m_pDisabledImage)
+            {
+                m_pDisabledImage->setIsVisible(false);
+            }
+        }
+        else
+        {
+            if (m_pDisabledImage)
+            {
+                m_pDisabledImage->setIsVisible(true);
+                m_pNormalImage->setIsVisible(false);
+            }
+            else
+            {
+                m_pNormalImage->setIsVisible(true);
+            }
+        }
+    }
+
 	//
 	//CCMenuItemImage - CCRGBAProtocol protocol
 	//
@@ -445,8 +521,13 @@ namespace cocos2d{
 	bool CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
 		CCNode *normalSprite = CCSprite::spriteWithFile(normalImage);
-		CCNode *selectedSprite = CCSprite::spriteWithFile(selectedImage); 
+		CCNode *selectedSprite = NULL;
 		CCNode *disabledSprite = NULL;
+
+        if (selectedImage)
+        {
+            selectedSprite = CCSprite::spriteWithFile(selectedImage);
+        }
 
 		if(disabledImage)
 		{

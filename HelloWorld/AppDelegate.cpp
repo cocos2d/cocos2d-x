@@ -46,6 +46,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 		return false;
 	}
 
+#if defined(CCX_PLATFORM_UPHONE)
+    // set the resource path
+    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/cocos2d_helloworld/");
+#endif
 
 	// init director
 	CCDirector *pDirector = CCDirector::sharedDirector();

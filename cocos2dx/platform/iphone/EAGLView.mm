@@ -77,7 +77,8 @@ static EAGLView *view;
 static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 @interface EAGLView (Private)
--(BOOL) setupSurface;
+- (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
+- (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
 @implementation EAGLView
@@ -87,6 +88,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 @synthesize context=context_;
 @synthesize touchesIntergerDict;
 @synthesize indexBitsUsed;
+@synthesize multiSampling=multiSampling_;
 
 + (Class) layerClass
 {
@@ -95,17 +97,22 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 + (id) viewWithFrame:(CGRect)frame
 {
-	return [[[self alloc] initWithFrame:frame] autorelease];
+	return [[[[self alloc] init] initWithFrame:frame] autorelease];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
+	return [[[[self alloc] init] initWithFrame:frame pixelFormat:format] autorelease];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
 {
-	return [[[[self alloc] init]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained] autorelease];
+	return [[[[self alloc] init] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+}
+
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
+{
+	return [[[[self alloc] init] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
 }
 
 + (id) sharedEGLView
@@ -122,23 +129,25 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO];
+	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO];
+	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 {
 	if((self = [super initWithFrame:frame]))
 	{
 		pixelformat_ = format;
 		depthFormat_ = depth;
-		size_ = frame.size;
+		multiSampling_ = sampling;
+		requestedSamples_ = nSamples;
+		preserveBackbuffer_ = retained;
 		
-		if( ! [self setupSurface] ) {
+		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
 			return nil;
 		}
@@ -152,13 +161,15 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
 		
-		CAEAGLLayer *eaglLayer = (CAEAGLLayer*)[self layer];
+		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
 		
 		pixelformat_ = kEAGLColorFormatRGB565;
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
+		multiSampling_= NO;
+		requestedSamples_ = 0;
 		size_ = [eaglLayer bounds].size;
 
-		if( ! [self setupSurface] ) {
+		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			[self release];
 			return nil;
 		}
@@ -209,20 +220,24 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     indexBitsUsed &= temp;
 }
 
--(BOOL) setupSurface
+-(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
 	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
 	
 	eaglLayer.opaque = YES;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
+									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
-		
-	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_];
+	
+	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_
+										 withPixelFormat:[self convertPixelFormat:pixelformat_]
+										  withSharegroup:sharegroup
+									   withMultiSampling:multiSampling_
+									 withNumberOfSamples:requestedSamples_];
 	if (!renderer_)
 		return NO;
-
+	
 	context_ = [renderer_ context];
 	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
@@ -233,7 +248,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void) dealloc
 {
-        CFRelease(touchesIntergerDict);
+    CFRelease(touchesIntergerDict);
 	[renderer_ release];
 	[super dealloc];
 }
@@ -241,9 +256,19 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (void) layoutSubviews
 {
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-    size_ = [renderer_ backingSize];
-    
-    cocos2d::CCDirector::sharedDirector()->recalculateProjectionAndEAGLViewSize();
+	size_ = [renderer_ backingSize];
+
+	// Issue #914 #924
+// 	CCDirector *director = [CCDirector sharedDirector];
+// 	[director reshapeProjection:size_];
+    cocos2d::CGSize size;
+    size.width = size_.width;
+    size.height = size_.height;
+    cocos2d::CCDirector::sharedDirector()->reshapeProjection(size);
+
+	// Avoid flicker. Issue #350
+	//[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	cocos2d::CCDirector::sharedDirector()->drawScene();
 }
 
 - (void) swapBuffers
@@ -251,21 +276,74 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 	// IMPORTANT:
 	// - preconditions
 	//	-> context_ MUST be the OpenGL context
-	//	-> renderBuffer_ must be the the RENDER BUFFER
+	//	-> renderbuffer_ must be the the RENDER BUFFER
 
 #ifdef __IPHONE_4_0
-	if( discardFramebufferSupported_ && depthFormat_ ) {
-		GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES };
-		glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+	
+	if (multiSampling_)
+	{
+		/* Resolve from msaaFramebuffer to resolveFramebuffer */
+		//glDisable(GL_SCISSOR_TEST);     
+		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
+		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+		glResolveMultisampleFramebufferAPPLE();
 	}
+	
+	if( discardFramebufferSupported_)
+	{	
+		if (multiSampling_)
+		{
+			if (depthFormat_)
+			{
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES};
+				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
+			}
+			else
+			{
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
+				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
+			}
+			
+			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
+	
+		}	
+		
+		// not MSAA
+		else if (depthFormat_ ) {
+			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
+			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+		}
+	}
+	
 #endif // __IPHONE_4_0
 	
-	//if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
-		//CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
-	[context_ presentRenderbuffer:GL_RENDERBUFFER_OES];
+ 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
+        {
+// 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+        }
+
 #if COCOS2D_DEBUG
 	CHECK_GL_ERROR();
-#endif	
+#endif
+	
+	// We can safely re-bind the framebuffer here, since this will be the
+	// 1st instruction of the new main loop
+	if( multiSampling_ )
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);	
+}
+
+- (unsigned int) convertPixelFormat:(NSString*) pixelFormat
+{
+	// define the pixel format
+	GLenum pFormat;
+	
+	
+	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
+		pFormat = GL_RGB565_OES;
+	else 
+		pFormat = GL_RGBA8_OES;
+	
+	return pFormat;
 }
 
 #pragma mark EAGLView - Point conversion
