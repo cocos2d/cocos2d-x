@@ -9,10 +9,6 @@ using namespace CocosDenshion;
 
 using namespace cocos2d;
 
-[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
-using namespace CocosDenshion;
-[! endif]
-
 AppDelegate::AppDelegate()
 :m_pMainWnd(NULL)
 {
