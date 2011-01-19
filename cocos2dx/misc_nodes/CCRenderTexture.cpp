@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
-#include "CCXUIImage.h"
+#include "ccxImage.h"
 #include "support/ccUtils.h"
 
 #include <GLES/glext.h>

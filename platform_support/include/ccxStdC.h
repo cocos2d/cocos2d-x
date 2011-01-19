@@ -52,13 +52,8 @@ THE SOFTWARE.
 // for sys/time.h on win32 platform
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 
-#ifndef _WINSOCKAPI_    // struct timeval has define in winsock.h, no need redefine
-struct timeval
-{
-    long tv_sec; /*second*/
-    long tv_usec; /*microsecond*/
-};
-#endif  // _WINSOCKAPI_
+// Struct timeval has define in winsock.h, include windows.h for it.
+#include <Windows.h>
 
 struct timezone
 {

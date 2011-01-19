@@ -79,12 +79,12 @@ bool CCXImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = 
     unsigned char *buffer = NULL;
     do 
     {
-        if (eFmtJpg == eImgFmt)
+        if (kFmtJpg == eImgFmt)
         {
             bRet = _initWithJpgFile(strPath);
             break;
         }
-        CCX_BREAK_IF(eFmtPng != eImgFmt);
+        CCX_BREAK_IF(kFmtPng != eImgFmt);
 
         // open file
         fp = fopen(strPath, "rb");
@@ -122,12 +122,12 @@ bool CCXImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/*
     {
     	CCX_BREAK_IF(! pData || nDataLen <= 0);
 
-        if (eFmtPng == eFmt)
+        if (kFmtPng == eFmt)
         {
             bRet = _initWithPngData(pData, nDataLen);
             break;
         }
-        else if (eFmtJpg == eFmt)
+        else if (kFmtJpg == eFmt)
         {
 //             bRet = _initWithJpgData(pData, nDataLen);
             break;
@@ -306,3 +306,7 @@ bool CCXImage::_initWithPngData(void * pData, int nDatalen)
 }
 
 NS_CC_END;
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+#include "win32/ccxImage_win32.cpp"
+#endif 

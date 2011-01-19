@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "support/base64.h"
 #include "CGPointExtension.h"
 #include "CCXFileUtils.h"
-#include "CCXUIImage.h"
+#include "ccxImage.h"
 #include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
 
@@ -133,7 +133,7 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 	bool bRet = false;
 	unsigned char *buffer = NULL;
 	unsigned char *deflated = NULL;
-	UIImage *image = NULL;
+	CCXImage *image = NULL;
 	do 
 	{
 		int maxParticles = atoi(valueForKey("maxParticles", dictionary));
@@ -257,8 +257,8 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 						NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
 						CCX_BREAK_IF(!deflated);
 						
-						image = new UIImage();
-						bool isOK = image->initWithData(deflated, deflatedLen);
+						image = new CCXImage();
+						bool isOK = image->initWithImageData(deflated, deflatedLen);
 						NSAssert(isOK, "CCParticleSystem: error init image with Data");
 						CCX_BREAK_IF(!isOK);
 						

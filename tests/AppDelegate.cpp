@@ -13,7 +13,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-#if defined(CCX_PLATFORM_WIN32)
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
     CCX_SAFE_DELETE(m_pMainWnd);
 #endif
 }

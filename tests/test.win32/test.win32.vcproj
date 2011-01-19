@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
+				AdditionalDependencies="libcocos2d.lib libPlatformSupport.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
+				AdditionalDependencies="libcocos2d.lib libPlatformSupport.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"

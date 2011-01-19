@@ -26,9 +26,6 @@ THE SOFTWARE.
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 
-#define _WINSOCKAPI_    // struct timeval redifined in winsock.h, exclude it 
-#include <Windows.h>
-
 int CCX_DLL_PS gettimeofday(struct timeval * val, struct timezone *)
 {
     if (val)
