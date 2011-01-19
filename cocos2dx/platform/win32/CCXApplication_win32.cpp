@@ -5,6 +5,7 @@
 namespace   cocos2d {
 
 static CCXApplication * s_pApplication;
+static LARGE_INTEGER s_nAnimationInterval;
 
 CCXApplication::CCXApplication()
 	: m_hAccelTable(NULL)
@@ -39,8 +40,12 @@ int CCXApplication::Run()
 {
 	// Main message loop:
 	MSG msg;
-	DWORD dwTickLast = 0;
-	DWORD dwTickNow = 0;
+    LARGE_INTEGER nFreq;
+    LARGE_INTEGER nLast;
+    LARGE_INTEGER nNow;
+
+    QueryPerformanceFrequency(&nFreq);
+    QueryPerformanceCounter(&nLast);
 
     if ( !applicationDidFinishLaunching() )
     {
@@ -51,16 +56,16 @@ int CCXApplication::Run()
 	{
 		if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			dwTickNow = GetTickCount();
-			if (dwTickNow - dwTickLast > 0)
+            QueryPerformanceCounter(&nNow);
+			if (nNow.QuadPart - nLast.QuadPart > s_nAnimationInterval.QuadPart)
 			{
+                nLast.QuadPart = nNow.QuadPart;
 				CCDirector::sharedDirector()->mainLoop();
 			}
 			else
 			{
 				Sleep(0);
 			}
-			dwTickLast = dwTickNow;
 			continue;
 		}
 
@@ -84,6 +89,13 @@ int CCXApplication::Run()
 CCXApplication * CCXApplication::sharedApplication()
 {
 	return s_pApplication;
+}
+
+void CCXApplication::setAnimationInterval(double interval)
+{
+    LARGE_INTEGER nFreq;
+    QueryPerformanceFrequency(&nFreq);
+    s_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
 }
 
 }
