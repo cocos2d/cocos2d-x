@@ -145,7 +145,7 @@ namespace CocosDenshion
                 static_end();
 	}
 
-	void SimpleAudioEngine::setResourceconst char* pszResPath, const char* pszZipFileName)
+	void SimpleAudioEngine::setResource(const char* pszResPath, const char* pszZipFileName)
 	{
 
 	}
