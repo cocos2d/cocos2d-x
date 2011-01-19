@@ -80,12 +80,21 @@ public:
 
     void StartMainLoop();
     void StopMainLoop();
+
+    /**
+    @brief Get the data path of the Application.
+    @return If the app is installed,the return value is the path of .so file.
+            else the return value is "/NEWPLUS/TG3/APP/"
+    */
+    const char* getAppDataPath();
+
 private:
     static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData);
 
     MESSAGE_t   m_tMsg;
     bool        m_bRunning;
     bool        m_bNeedStop;
+    char        m_AppDataPath[EOS_FILE_MAX_PATH];
 };
 
 }       // end of namespace   cocos2d

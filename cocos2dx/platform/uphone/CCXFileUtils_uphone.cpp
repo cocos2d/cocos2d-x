@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "NSString.h"
 #include "CCXFileUtils_uphone.h"
 #include "CCXCocos2dDefine.h"
+#include "CCXApplication.h"
 
 #include "support/file_support/FileData.h"
 #include "support/zip_support/unzip.h"
@@ -197,31 +198,68 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
 }
 
 // record the resource path
-static char s_pszResourcePath[MAX_PATH] = {0};
-static char s_pszZipFilePath[MAX_PATH]  = {0};
+static char s_pszResourcePath[EOS_FILE_MAX_PATH] = {0};
+static char s_pszZipFilePath[EOS_FILE_MAX_PATH]  = {0};
 
-void CCFileUtils::setResourcePath(const char *pszResourcePath)
+void updateZipFilePath(const char* pResPath)
 {
-    NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-    NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
+    if (! strlen(s_pszZipFilePath))
+    {
+        return;
+    }
 
-    strcpy(s_pszResourcePath, pszResourcePath);
+    std::string strTemp = s_pszZipFilePath;
+    int nPos = std::string::npos;
+
+    // find the path need br replaced
+    std::string ResPath;
+    if (strlen(s_pszResourcePath))
+    {
+        ResPath = s_pszResourcePath;
+    }
+    else
+    {
+        ResPath = CCXApplication::sharedApplication()->getAppDataPath();
+    }
+
+    // replace the resource path in s_pszZipFilePath
+    nPos = strTemp.find(ResPath.c_str());
+    if (nPos != std::string::npos)
+    {
+        strTemp.replace(nPos, ResPath.length(), pResPath);
+        memset(s_pszZipFilePath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
+        strcpy(s_pszZipFilePath, strTemp.c_str());
+    }
 }
 
-void CCFileUtils::setResourceZipFile(const char* pszZipPath)
+void setZipFilePath(const char* pZipFileName)
 {
-    NSAssert(pszZipPath != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
+    NSAssert(pZipFileName != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
+
+    // get the full path of zip file
+    char fullPath[EOS_FILE_MAX_PATH] = {0};
+
+    if (strlen(s_pszResourcePath))
+    {
+        strcpy(fullPath, s_pszResourcePath);
+    }
+    else
+    {
+        const char* pAppDataPath = CCXApplication::sharedApplication()->getAppDataPath();
+        strcpy(fullPath, pAppDataPath);
+    }
+    strcat(fullPath, pZipFileName);
 
     // if the zip file not exist,use message box to warn developer
-    TUChar pszTmp[MAX_PATH] = {0};
-    TUString::StrGBToUnicode(pszTmp, (const Char*) pszZipPath);
+    TUChar pszTmp[EOS_FILE_MAX_PATH] = {0};
+    TUString::StrGBToUnicode(pszTmp, (const Char*) fullPath);
     Boolean bExist = EOS_IsFileExist(pszTmp);
     if (!bExist)
     {
         std::string strErr = "zip file ";
-        strErr += pszZipPath;
+        strErr += fullPath;
         strErr += " not exist!";
-        TUChar szText[MAX_PATH] = { 0 };
+        TUChar szText[EOS_FILE_MAX_PATH] = { 0 };
         TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
         TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
         return;
@@ -232,11 +270,36 @@ void CCFileUtils::setResourceZipFile(const char* pszZipPath)
 #else
     char *pszDriver = "D:/Work7";
 #endif
-    NSAssert((strlen(pszDriver) + strlen(pszZipPath)) <= MAX_PATH, "[FileUtils setResourceZipFile] -- zip file path too long");
+    NSAssert((strlen(pszDriver) + strlen(fullPath)) <= EOS_FILE_MAX_PATH, "[FileUtils setResourceZipFile] -- zip file path too long");
 
     // record the zip file path
     strcpy(s_pszZipFilePath, pszDriver);
-    strcat(s_pszZipFilePath, pszZipPath);
+    strcat(s_pszZipFilePath, fullPath);
+}
+
+void CCFileUtils::setResource(const char* pszResPath, const char* pszZipFileName)
+{
+    if (pszResPath != NULL && pszZipFileName != NULL)
+    {
+        // record the resource path
+        strcpy(s_pszResourcePath, pszResPath);
+
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
+    }
+    else if (pszResPath != NULL)
+    {
+        // update the zip file path
+        updateZipFilePath(pszResPath);
+
+        // record the resource path
+        strcpy(s_pszResourcePath, pszResPath);
+    }
+    else if (pszZipFileName != NULL)
+    {
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
+    }
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
@@ -250,8 +313,8 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     // get the user data path and append relative path to it
     if (strlen(s_pszResourcePath) == 0)
     {
-        const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
-        TUString::StrUnicodeToStrUtf8((Char*) s_pszResourcePath, pszTmp);
+        const char* pAppDataPath = CCXApplication::sharedApplication()->getAppDataPath();
+        strcpy(s_pszResourcePath, pAppDataPath);
     }
 
 #ifndef _TRANZDA_VM_
@@ -350,7 +413,7 @@ bool CCFileUtils::isResourceExist(const char* pszResName)
 {
     bool bRet = false;
 
-    TUChar FilePath[MAX_PATH] = {0};
+    TUChar FilePath[EOS_FILE_MAX_PATH] = {0};
     TUString::StrGBToUnicode(FilePath, (const Char *) pszResName);
 
     if (strlen(s_pszZipFilePath) != 0)
@@ -414,34 +477,4 @@ int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return 0;
 }
 
-const char* CCFileUtils::ccRemoveHDSuffixFromFile( const char *path )
-{
-#if CC_IS_RETINA_DISPLAY_SUPPORTED
-
-    if( CC_CONTENT_SCALE_FACTOR() == 2 )
-    {
-        std::string curPath = path;
-        int pos = curPath.rfind("/");
-        std::string fileName = curPath.substr(pos + 1);
-
-        std::string filePath = "";
-        if (-1 != pos)
-        {
-            filePath = curPath.substr(0, pos);
-        }
-        
-        int suffixPos = fileName.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
-        if (-1 != suffixPos)
-        {
-            fileName.replace(pos, strlen(CC_RETINA_DISPLAY_FILENAME_SUFFIX), "");
-        }
-        
-        std::string result = filePath + fileName;
-        return result.c_str();
-    }
-
-#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
-
-    return path;
-}
 }//namespace   cocos2d 
