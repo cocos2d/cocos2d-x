@@ -56,6 +56,7 @@ platform/CCMenu_mobile.cpp \
 platform/CCNode_mobile.cpp \
 platform/CCParticleSystemPoint_mobile.cpp \
 platform/CCTransition_mobile.cpp \
+platform/android/CCNS_android.cpp \
 platform/android/CCTime.cpp \
 platform/android/CCXApplication_android.cpp \
 platform/android/CCXBitmapDC.cpp \

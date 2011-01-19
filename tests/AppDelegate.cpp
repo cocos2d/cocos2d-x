@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
 
-#if defined(CCX_PLATFORM_UPHONE)
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
 
 #if 1
     // set the resource path
@@ -57,7 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
 
-#elif defined(CCX_PLATFORM_ANDROID)
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
 	CCFileUtils::setRelativePath("assets");
 #endif
 

@@ -341,7 +341,12 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 
 
 #if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
+#endif
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0]) * n, m_pQuads);
@@ -356,6 +361,11 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
+#endif
+
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0);    
 #else

@@ -266,6 +266,10 @@ void CCParticleSystemQuad::draw()
 #if CC_USES_VBO
     glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
 
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_nTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
+#endif
+
 	glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
 
 	glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );

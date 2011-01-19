@@ -30,16 +30,6 @@ THE SOFTWARE.
 namespace CocosDenshion {
 
 /**
-@struct T_SoundResInfo
-@brief  The data type of resource name and resource ID
-*/
-typedef struct _tResourceInfo
-{
-    const char* FileName;
-    int         nResID;
-} T_SoundResInfo;
-
-/**
 @class          SimpleAudioEngine
 @brief  		offer a VERY simple interface to play background music & sound effect
 */
@@ -58,7 +48,7 @@ public:
     @brief Release the shared Engine object
     @warning It must be called before the application exit, or a memroy leak will be casued.
     */
-	static void release();
+	static void end();
 
     /**
     @brief  Set the ResourcePath,we will find resource in this path
@@ -73,15 +63,11 @@ public:
     static void setResourceZipFile(const char* pszZipPath);
 
     /**
-    @brief set the sound ResInfo,it's only used on platform-uphone now
-    */
-    void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);
-
-    /**
-    @brief Set the resource entry,it's only used on platform-uphone now
-    */
-    void setResourceEntry(const void* pResEntry);
-
+     @brief Preload background music
+     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
+     */
+    void preloadBackgroundMusic(const char* pszFilePath);
+    
     /**
     @brief Play background music
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
@@ -122,65 +108,55 @@ public:
     /**
     @brief The volume of the background music max value is 100,the min value is 0
     */
-    int GetBackgroundMusicVolume();
+    int getBackgroundMusicVolume();
 
     /**
     @brief set the volume of background music
     @param volume must be in 0~100
     */
-    void SetBackgroundMusicVolume(int volume);
+    void setBackgroundMusicVolume(int volume);
 
     /**
     @brief The volume of the effects max value is 100,the min value is 0
     */
-    int GetEffectsVolume();
+    int getEffectsVolume();
 
     /**
     @brief set the volume of sound effecs
     @param volume must be in 0~100
     */
-    void SetEffectsVolume(int volume);
+    void setEffectsVolume(int volume);
 
     // for sound effects
     /**
     @brief Play sound effect
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-    @return If play succeed return the effect sound ID,or return 0
     */
-    int playEffect(const char* pszFilePath);
+    unsigned int playEffect(const char* pszFilePath);
 
     /**
     @brief Stop playing sound effect
-    @param nSoundId The return value of function playEffect or preloadEffect
+    @param nSoundId The return value of function playEffect
     */
-    void stopEffect(int nSoundId);
+    void stopEffect(unsigned int nSoundId);
 
     /**
     @brief  		preload a compressed audio file
     @details	    the compressed audio will be decode to wave, then write into an 
     internal buffer in SimpleaudioEngine
-    @param[in]		pszFilePath		the relative path to currently executing program
-    @return         >0              preload success, return the SoundId
-    @return         ==0             can't read the file, or unsupported audio format
     */
-    int preloadEffect(const char* pszFilePath);
+    void preloadEffect(const char* pszFilePath);
 
     /**
     @brief  		unload the preloaded effect from internal buffer
-    @param[in]		nSoundId		the sound id returned from preloadEffect
+    @param[in]		pszFilePath		The path of the effect file,or the FileName of T_SoundResInfo
     */
-    void unloadEffect(int nSoundId);
+    void unloadEffect(const char* pszFilePath);
 
 	/**
 	@brief          unload all preloaded effect from internal buffer
 	*/
 	void unloadEffectAll();
-
-    /**
-    @brief          play the preloaded effect
-    @param[in]		nSoundId		the sound id returned from preloadEffect
-    */
-    void playPreloadedEffect(int nSoundId);
 };
 
 } // end of namespace CocosDenshion

@@ -9,17 +9,13 @@
 
 // cocos2d
 #include "AppDelegate.h"
-#include "cocos2d.h"
-
-// cocos2d-uphone
-#include "Resource.h"
 
 const  ResourceRegisterEntry		ResRegList_HelloWorld[]  =
 {
 	TG_RESOURCE_DEFINE
 };
 
-extern const  AppResourceEntry		HelloWorldResourceEntry  =
+const  AppResourceEntry		HelloWorldResourceEntry  =
 {
 	(ResourceRegisterEntry*)ResRegList_HelloWorld,                    //  res  list  in  this  app
 		sizeof(ResRegList_HelloWorld) /  sizeof(ResourceRegisterEntry),    //number  of  item  in  res
@@ -28,13 +24,7 @@ extern const  AppResourceEntry		HelloWorldResourceEntry  =
 
 Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
-	// set the ResourceEntry
-	cocos2d::CCFileUtils::setResourceEntry(&HelloWorldResourceEntry);
-    // set the Images ResInfo (name and ResID)
-	cocos2d::CCFileUtils::setResourceInfo(ResInfo, sizeof(ResInfo) / sizeof(T_ResourceInfo));
-
 	AppDelegate app;
-	app.WM_SetResourceEntry(&HelloWorldResourceEntry);
 	app.Run();
 
 	return 1;

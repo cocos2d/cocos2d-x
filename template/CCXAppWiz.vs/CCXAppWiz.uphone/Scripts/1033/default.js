@@ -127,12 +127,6 @@ function AddFilters(proj) {
         group = proj.Object.AddFilter('include');
         group.Filter = strSrcFilter;
 
-        if (wizard.FindSymbol('CCX_USE_UI_RESOURCE')) {
-            strSrcFilter = wizard.FindSymbol('RESOURCE_FILTER');
-            group = proj.Object.AddFilter('resource');
-            group.Filter = strSrcFilter;
-        }
-
         strSrcFilter = wizard.FindSymbol('MAKEFILE_FILTER');
         group = proj.Object.AddFilter('makefile');
         group.Filter = strSrcFilter;
