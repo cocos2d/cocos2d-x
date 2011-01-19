@@ -929,7 +929,7 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
-	m_pobOpenGLView->setAnimationInterval(m_dAnimationInterval);
+    CCXApplication::setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
