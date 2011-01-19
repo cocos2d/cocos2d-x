@@ -74,8 +74,9 @@ public:
     */
     static CCXApplication * sharedApplication();
 
-
 	virtual int Run();
+
+    static void setAnimationInterval(double interval);
 
 protected:
     HINSTANCE m_hInstance;
