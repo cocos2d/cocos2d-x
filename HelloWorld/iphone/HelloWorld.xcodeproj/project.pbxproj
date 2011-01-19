@@ -312,6 +312,7 @@
 		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
 		BF755FB112A1015E00450234 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAE12A1015E00450234 /* CloseSelected.png */; };
 		BF755FB212A1015E00450234 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAF12A1015E00450234 /* HelloWorld.png */; };
+		D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F25D12E53386005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -627,6 +628,8 @@
 		BF755FAD12A1015E00450234 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		BF755FAE12A1015E00450234 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		BF755FAF12A1015E00450234 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloWorld-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D4F9F25D12E53386005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1245,6 +1248,8 @@
 		BF755FAC12A1015E00450234 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				D4F9F25D12E53386005CA6D2 /* Icon.png */,
+				D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */,
 				BF755FAD12A1015E00450234 /* CloseNormal.png */,
 				BF755FAE12A1015E00450234 /* CloseSelected.png */,
 				BF755FAF12A1015E00450234 /* HelloWorld.png */,
@@ -1524,6 +1529,7 @@
 				BF755FB012A1015E00450234 /* CloseNormal.png in Resources */,
 				BF755FB112A1015E00450234 /* CloseSelected.png in Resources */,
 				BF755FB212A1015E00450234 /* HelloWorld.png in Resources */,
+				D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
