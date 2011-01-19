@@ -51,6 +51,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 public class Cocos2dxActivity extends Activity{
+	public static int screenWidth;
+    public static int screenHeight;
+    private static Cocos2dxMusic backgroundMusicPlayer;
+    private static Cocos2dxSound soundPlayer;
+    private static native void nativeSetPaths(String apkPath);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,14 @@ public class Cocos2dxActivity extends Activity{
         getWindowManager().getDefaultDisplay().getMetrics(dm);      
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
+        
+        // init media player and sound player
+        backgroundMusicPlayer = new Cocos2dxMusic(getApplicationContext());
+        soundPlayer = new Cocos2dxSound(getApplicationContext());
+    }
+    
+    public static void playBackgroundMusic(String path, boolean isLoop){
+    	backgroundMusicPlayer.playBackgroundMusic(path, isLoop);
     }
     
     protected void setPackgeName(String packageName) {
@@ -79,8 +92,4 @@ public class Cocos2dxActivity extends Activity{
         // add this link at the renderer class
         nativeSetPaths(apkFilePath);
     }
-    
-    public static int screenWidth;
-    public static int screenHeight;
-    private static native void nativeSetPaths(String apkPath);
 }
