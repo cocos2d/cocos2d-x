@@ -47,20 +47,17 @@ class NSLock : public CCXLock{};
 NS_CC_END;
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-// 	#include "uphone/CCTime.h"
-// 	#include "uphone/NSLock.h"
+	#include "uphone/CCTime.h"
+	#include "uphone/NSLock.h"
 	#include "uphone/CCXBitmapDC.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
-//     #include "win32/CCTime.h"
-//     #include "win32/NSLock.h"
-    #include "win32/CCXBitmapDC.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
-//     #include "android/CCTime.h"
-//     #include "android/NSLock.h"
+    #include "android/CCTime.h"
+    #include "android/NSLock.h"
     #include "android/CCXBitmapDC.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
-//     #include "iphone/CCTime.h"
-//     #include "iphone/NSLock.h"
+    #include "iphone/CCTime.h"
+    #include "iphone/NSLock.h"
     #include "iphone/CCXBitmapDC.h"
 #else 
     #error

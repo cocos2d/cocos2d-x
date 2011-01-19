@@ -33,7 +33,7 @@ namespace   cocos2d {
 class CCTexture2D;
 class CCAsyncObject;
 class NSLock;
-class UIImage;
+class CCXImage;
 
 typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 
@@ -98,7 +98,7 @@ public:
 	* The "key" parameter will be used as the "key" for the cache.
 	* If "key" is nil, then a new texture will be created each time.
 	*/
-	CCTexture2D* addUIImage(UIImage *image, const char *key);
+	CCTexture2D* addUIImage(CCXImage *image, const char *key);
 
 	/** Returns an already created texture. Returns nil if the texture doesn't exist.
 	@since v0.99.5

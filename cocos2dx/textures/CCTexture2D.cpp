@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "CCConfiguration.h"
 #include "platform/platform.h"
-#include "CCXUIImage.h"
+#include "ccxImage.h"
 #include "CCGL.h"
 #include "support/ccUtils.h"
 
@@ -197,7 +197,7 @@ char * CCTexture2D::description(void)
 
 // implementation CCTexture2D (Image)
 
-bool CCTexture2D::initWithImage(UIImage * uiImage)
+bool CCTexture2D::initWithImage(CCXImage * uiImage)
 {
 	unsigned int POTWide, POTHigh;
 
@@ -213,14 +213,14 @@ bool CCTexture2D::initWithImage(UIImage * uiImage)
 #if CC_TEXTURE_NPOT_SUPPORT
 	if( conf->isSupportsNPOT() ) 
 	{
-		POTWide = uiImage->width();
-		POTHigh = uiImage->height();
+		POTWide = uiimage->getWidth();
+		POTHigh = uiimage->getHeight();
 	}
 	else 
 #endif
 	{
-		POTWide = ccNextPOT(uiImage->width());
-		POTHigh = ccNextPOT(uiImage->height());
+		POTWide = ccNextPOT(uiImage->getWidth());
+		POTHigh = ccNextPOT(uiImage->getHeight());
 	}
 
 	unsigned maxTextureSize = conf->getMaxTextureSize();
@@ -234,7 +234,7 @@ bool CCTexture2D::initWithImage(UIImage * uiImage)
 	// always load premultiplied images
 	return initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
 }
-bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned int POTWide, unsigned int POTHigh)
+bool CCTexture2D::initPremultipliedATextureWithImage(CCXImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
 	unsigned char*			data = NULL;
 	unsigned char*			tempData =NULL;
@@ -244,10 +244,10 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
 
-	hasAlpha = image->isAlphaPixelFormat();
+	hasAlpha = image->hasAlpha();
 
-	size_t bpp = image->CGImageGetBitsPerComponent();
-	int colorSpace = image->CGImageGetColorSpace();
+	size_t bpp = image->getBitsPerComponent();
+	int colorSpace = image->getColorSpace();
 
 	if(colorSpace)
 	{
@@ -275,7 +275,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 
-	imageSize = CGSizeMake((float)(image->width()), (float)(image->height()));
+	imageSize = CGSizeMake((float)(image->getWidth()), (float)(image->getHeight()));
 
 	// Create the bitmap graphics context
 
@@ -304,7 +304,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 			tempData = (UINT8*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
 
-			if(image->width() == POTWide && image->height() == POTHigh)
+			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
 			{
 				data = new UINT8[POTHigh * POTWide * 4];
 				memcpy(data, tempData, POTHigh * POTWide * 4);
@@ -317,9 +317,9 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 				UINT8* pPixelData = (UINT8*) tempData;
 				UINT8* pTargetData = (UINT8*) data;
 
-				for(unsigned int y=0; y<image->height(); ++y)
+				for(int y=0; y<image->getHeight(); ++y)
 				{
-					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->width())*4*y, (image->width())*4);
+					memcpy(pTargetData+POTWide*4*y, pPixelData+(image->getWidth())*4*y, (image->getWidth())*4);
 				}
 			}
 
@@ -327,7 +327,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 		case kCCTexture2DPixelFormat_RGB888:
 			tempData = (UINT8*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
-			if(image->width() == POTWide && image->height() == POTHigh)
+			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
 			{
 				data = new UINT8[POTHigh * POTWide * 3];
 				memcpy(data, tempData, POTHigh * POTWide * 3);
@@ -340,9 +340,9 @@ bool CCTexture2D::initPremultipliedATextureWithImage(UIImage *image, unsigned in
 				UINT8* pPixelData = (UINT8*) tempData;
 				UINT8* pTargetData = (UINT8*) data;
 
-				for(unsigned int y=0; y<image->height(); ++y)
+				for(int y=0; y<image->getHeight(); ++y)
 				{
-					memcpy(pTargetData+POTWide*3*y, pPixelData+(image->width())*3*y, (image->width())*3);
+					memcpy(pTargetData+POTWide*3*y, pPixelData+(image->getWidth())*3*y, (image->getWidth())*3);
 				}
 			}
 			break;   
@@ -423,15 +423,15 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 }
 bool CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 {
-	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
-
-	UIImage *pImage = new UIImage(pBitmapDC);
-
-	initWithImage(pImage);
-
-	delete pBitmapDC;
-	delete pImage;
-	return true;
+	CCXImage image;
+    CCXImage::ETextAlign eAlign = (UITextAlignmentCenter == alignment) ? CCXImage::kAlignCenter
+        : (UITextAlignmentLeft == alignment) ? CCXImage::kAlignLeft : CCXImage::kAlignRight;
+    
+    if (image.initWidthString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize))
+    {
+        return false;
+    }
+    return initWithImage(&image);
 }
 
 

@@ -122,9 +122,9 @@ void ActionsDemo::onEnter()
     // Example:
     // You can create a sprite using a Texture2D
     CCTexture2D *tex = new CCTexture2D();
-    UIImage* pImage = new UIImage();
+    CCXImage* pImage = new CCXImage();
     std::string fullpath( CCFileUtils::fullPathFromRelativePath(s_pPathGrossini));
-    pImage->initWithContentsOfFile(fullpath);
+    pImage->initWithImageFile(fullpath.c_str());
     tex->initWithImage( pImage );
     m_grossini = CCSprite::spriteWithTexture(tex);
     m_grossini->retain();

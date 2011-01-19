@@ -767,10 +767,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCXUIImage_platform.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\platform.cpp"
 				>
 			</File>
@@ -794,14 +790,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\platform\win32\CCXBitmapDC.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXBitmapDC.h"
-					>
-				</File>
-				<File
 					RelativePath="..\platform\win32\CCXEGLView_win32.cpp"
 					>
 				</File>
@@ -819,14 +807,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\win32\CCXUIAccelerometer_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXUIImage_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXUIImage_win32.h"
 					>
 				</File>
 			</Filter>

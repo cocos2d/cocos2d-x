@@ -47,29 +47,28 @@ static const int kMaxLogLen = 255;
 */
 void CCX_DLL_PS CCXLog(const char * pszFormat, ...);
 
+struct CCXNullDeleter       { template< class TPTR > void operator()(TPTR ) {} };
+struct CCXNewDeleter        { template< class TPTR > void operator()(TPTR p) { delete p; } };
+struct CCXNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { delete[] p; } };
+
 /**
 @brief	A simple scoped pointer.
 */
-template < class T >
-class CCX_DLL_PS CCXScopedPtr   // noncopyable
+template < class T, class D = CCXNewDeleter >
+class CCXScopedPtr   // noncopyable
+    : private D
 {
 public:
     explicit CCXScopedPtr(T * p = 0): m_ptr(p) {}
-    ~CCXScopedPtr()         { CCX_SAFE_DELETE(m_ptr); }
+    ~CCXScopedPtr()                     { (*static_cast<D*>(this))(m_ptr); }
 
-    void reset(T * p = 0)   { CCXScopedPtr< T >(p).swap(*this); }
-    T * get() const         { return m_ptr; }
+    void reset(T * p = 0)               { CCXScopedPtr< T >(p).swap(*this); }
+    T *  get() const                    { return m_ptr; }
+    void swap(CCXScopedPtr & b)         { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr   = tmp; }
 
-    void swap(CCXScopedPtr & b)
-    {
-        T * tmp = b.m_ptr;
-        b.m_ptr = m_ptr;
-        m_ptr   = tmp;
-    }
-
-    T & operator*() const   { return * m_ptr; }
-    T * operator->() const  { return m_ptr; }
-    operator bool () const  { return m_ptr != 0; }
+    T & operator*() const               { return * m_ptr; }
+    T * operator->() const              { return m_ptr; }
+    operator bool () const              { return m_ptr != 0; }
 
 private:
     CCXScopedPtr(const CCXScopedPtr&);
@@ -77,6 +76,33 @@ private:
 
     void operator==(const CCXScopedPtr& ) const;
     void operator!=(const CCXScopedPtr& ) const;
+
+    T * m_ptr;
+};
+/**
+@brief	A simple scoped point for array.
+*/
+template< class T, class D = CCXNewArrayDeleter >
+class CCX_DLL_PS CCXScopedArray // noncopyable
+    : private D
+{
+public:
+    explicit CCXScopedArray( T * p = 0 ) : m_ptr( p ) {}
+    ~CCXScopedArray()                   { (*static_cast<D*>(this))(m_ptr); }
+
+    void reset(T * p = 0)               { CCXScopedArray<T>(p).swap(*this); }
+    T *  get() const                    { return m_ptr; }
+    void swap(CCXScopedArray & b)       { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr = tmp; }
+
+    T & operator[](int i) const         { CCX_ASSERT(m_ptr && i >= 0); return m_ptr[i]; }
+   operator bool () const              { return m_ptr != 0; }
+
+private:
+    CCXScopedArray(CCXScopedArray const &);
+    CCXScopedArray & operator=(CCXScopedArray const &);
+
+    void operator==( CCXScopedArray const& ) const;
+    void operator!=( CCXScopedArray const& ) const;
 
     T * m_ptr;
 };
@@ -90,6 +116,8 @@ NS_CC_END;
 #include <string>
 
 NS_CC_BEGIN;
+
+// operator const char * (std::string& str) { return (str.length()) ? str.c_str() : nil; }
 
 /**
 @brief	A enhanced std::string.
