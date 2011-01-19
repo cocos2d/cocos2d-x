@@ -5,7 +5,6 @@
 namespace   cocos2d {
 
 static CCXApplication * s_pApplication;
-static LARGE_INTEGER s_nAnimationInterval;
 
 CCXApplication::CCXApplication()
 	: m_hAccelTable(NULL)
@@ -57,7 +56,7 @@ int CCXApplication::Run()
 		if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
             QueryPerformanceCounter(&nNow);
-			if (nNow.QuadPart - nLast.QuadPart > s_nAnimationInterval.QuadPart)
+			if (nNow.QuadPart - nLast.QuadPart > m_nAnimationInterval.QuadPart)
 			{
                 nLast.QuadPart = nNow.QuadPart;
 				CCDirector::sharedDirector()->mainLoop();
@@ -95,7 +94,7 @@ void CCXApplication::setAnimationInterval(double interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
-    s_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
+    m_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
 }
 
 }
