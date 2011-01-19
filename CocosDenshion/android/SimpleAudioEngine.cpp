@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "SimpleAudioEngine.h"
+#include "jni/SimpleAudioEngineJni.h"
 
 namespace CocosDenshion
 {
@@ -70,7 +71,7 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
-
+        playBackgroundMusicJNI(pszFilePath, bLoop);
 	}
 
 	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)

@@ -887,6 +887,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="CocosDenshionTest"
+				>
+				<File
+					RelativePath="..\tests\CocosDenshionTest\CocosDenshionTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\CocosDenshionTest\CocosDenshionTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
