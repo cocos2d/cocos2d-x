@@ -154,4 +154,10 @@ const char* CCXApplication::getAppDataPath()
     return m_AppDataPath;
 }
 
+void CCXApplication::setAnimationInterval(double interval)
+{
+	// tbd
 }
+
+}
+

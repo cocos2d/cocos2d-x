@@ -88,6 +88,8 @@ public:
     */
     const char* getAppDataPath();
 
+	void setAnimationInterval(double interval);
+
 private:
     static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData);
 
