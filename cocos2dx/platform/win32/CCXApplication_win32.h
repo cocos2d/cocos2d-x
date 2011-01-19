@@ -76,11 +76,12 @@ public:
 
 	virtual int Run();
 
-    static void setAnimationInterval(double interval);
+    void setAnimationInterval(double interval);
 
 protected:
     HINSTANCE m_hInstance;
 	HACCEL    m_hAccelTable;
+	LARGE_INTEGER m_nAnimationInterval;
 };
 
 }       // end of namespace   cocos2d
