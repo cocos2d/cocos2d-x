@@ -59,6 +59,8 @@ public:
     
     void Run();
 
+	void setAnimationInterval(double interval);
+	
 	/**
 	@brief	Get current applicaiton instance.
 	@return Current application instance pointer.
