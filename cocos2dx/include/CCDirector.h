@@ -466,16 +466,7 @@ protected:
 	void showFPS(void) {}
 #endif // CC_DIRECTOR_FAST_FPS
 
-	/** calculates delta time since last time it was called */
-	void calculateDeltaTime();
-
-protected:
-	// compute frame rate
-    void computeFrameRate(void);
-	// compute delta time between computing frame rate
-	void calculateFramerateDeltaTime(void);
-
-protected:
+/** calculates delta time since last time it was called */	void calculateDeltaTime();protected:
 	/* The CCXEGLView, where everything is rendered */
     CC_GLVIEW	*m_pobOpenGLView;
 
@@ -489,7 +480,6 @@ protected:
 	int  m_nFrames;
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
-	ccTime m_fExpectedFrameRate;
 #if	CC_DIRECTOR_FAST_FPS
 	CCLabelTTF *m_pFPSLabel;
 #endif
@@ -515,11 +505,6 @@ protected:
 
 	/* delta time since last tick to main loop */
 	ccTime m_fDeltaTime;
-
-	/* last time the director compute frame rate */
-	struct cc_timeval *m_pLastComputeFrameRate;
-	/* delta time since last computing frame rate */
-	ccTime m_fComputeFrameRateDeltaTime;
 
 	/* whether or not the next delta time will be zero */
 	bool m_bNextDeltaTimeZero;

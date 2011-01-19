@@ -100,7 +100,7 @@ public:
  class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
  {
  public:
- 	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
+ 	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }
  	// optional
  	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
  	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}

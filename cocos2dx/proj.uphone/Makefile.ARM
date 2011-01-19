@@ -53,6 +53,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/NSAutoreleasePool.o \
 	$(OBJECTS_DIR)/NSData.o \
 	$(OBJECTS_DIR)/NSObject.o \
+	$(OBJECTS_DIR)/CCNS_uphone.o \
 	$(OBJECTS_DIR)/NSSet.o \
 	$(OBJECTS_DIR)/NSZone.o \
 	$(OBJECTS_DIR)/CCGrabber.o \
@@ -317,6 +318,9 @@ $(OBJECTS_DIR)/CCXUIImage_uphone.o : ../platform/uphone/CCXUIImage_uphone.cpp
 
 $(OBJECTS_DIR)/NSLock.o : ../platform/uphone/NSLock.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSLock.o ../platform/uphone/NSLock.cpp
+
+$(OBJECTS_DIR)/CCNS_uphone.o : ../platform/uphone/CCNS_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNS_uphone.o ../platform/uphone/CCNS_uphone.cpp
 
 $(OBJECTS_DIR)/CCAnimation.o : ../sprite_nodes/CCAnimation.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAnimation.o ../sprite_nodes/CCAnimation.cpp

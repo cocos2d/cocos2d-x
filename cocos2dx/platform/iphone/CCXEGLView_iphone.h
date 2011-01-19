@@ -44,6 +44,7 @@ public:
     bool    isOpenGLReady();
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
+	void    setAnimationInterval(double interval);
     
     // keep compatible
     void    release();
