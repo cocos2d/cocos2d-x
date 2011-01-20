@@ -32,12 +32,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\test.uphone\
 		{BA00DDF7-0F25-4C1E-B012-FA230C1F6463} = {BA00DDF7-0F25-4C1E-B012-FA230C1F6463}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TenDrip", "TenDrip\uphone\TenDrip.vcproj", "{55C6A9EE-A0EB-41AE-BB6C-C03888E7E6E6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
-		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0} = {AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -76,10 +70,6 @@ Global
 		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Debug|Win32.Build.0 = Debug|Win32
 		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Release|Win32.ActiveCfg = Release|Win32
 		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Release|Win32.Build.0 = Release|Win32
-		{55C6A9EE-A0EB-41AE-BB6C-C03888E7E6E6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{55C6A9EE-A0EB-41AE-BB6C-C03888E7E6E6}.Debug|Win32.Build.0 = Debug|Win32
-		{55C6A9EE-A0EB-41AE-BB6C-C03888E7E6E6}.Release|Win32.ActiveCfg = Release|Win32
-		{55C6A9EE-A0EB-41AE-BB6C-C03888E7E6E6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
