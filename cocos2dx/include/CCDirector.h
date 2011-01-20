@@ -454,6 +454,9 @@ protected:
 	/***************************************************
 	* mobile platforms specific functions
 	**************************************************/
+	void purgeDirector();
+	bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
+	
 	bool isOpenGLAttached(void);
 	void updateContentScaleFactor(void);
 

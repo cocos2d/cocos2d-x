@@ -3,10 +3,10 @@ function OnFinish(selProj, selObj) {
         var strProjectPath = wizard.FindSymbol('PROJECT_PATH');
         var strProjectName = wizard.FindSymbol('PROJECT_NAME');
 
-        // 		var WizardVersion = wizard.FindSymbol('WIZARD_VERSION');
-        // 		if(WizardVersion >= 8.0)
-        // 		{
-        // 		}
+        //         var WizardVersion = wizard.FindSymbol('WIZARD_VERSION');
+        //         if(WizardVersion >= 8.0)
+        //         {
+        //         }
 
         // Create symbols based on the project name
         var strSafeProjectName = CreateSafeName(strProjectName);
@@ -143,10 +143,10 @@ function AddConfigurations(proj, strProjectName) {
             // General settings
             var config = proj.Object.Configurations(astrConfigName[nCntr]);
 
-            // 			if(wizard.FindSymbol("CCX_USE_UNICODE"))
+            //             if(wizard.FindSymbol("CCX_USE_UNICODE"))
             config.CharacterSet = charSetUnicode;
-            // 			else
-            //				config.CharacterSet = charSetMBCS;
+            //             else
+            //                config.CharacterSet = charSetMBCS;
 
             config.OutputDirectory = '$(SolutionDir)$(ConfigurationName).win32'
             config.IntermediateDirectory = '$(ConfigurationName).win32';
@@ -248,9 +248,9 @@ function AddConfigurations(proj, strProjectName) {
             MidlTool.DLLDataFileName = "";
 
             // Post-build settings
-            // 			var PostBuildTool = config.Tools("VCPostBuildEventTool");
-            // 			PostBuildTool.Description = "Performing registration...";
-            // 			PostBuildTool.CommandLine = "\"$(TargetPath)\" /RegServer";
+            var PostBuildTool = config.Tools("VCPostBuildEventTool");
+            PostBuildTool.Description = "Performing copy resource from Resource to OutDir...";
+            PostBuildTool.CommandLine = "copy /Y \"$(ProjectDir)Resource\\*.*\" \"$(OutDir)\"";
         }
     }
     catch (e) {
@@ -260,15 +260,15 @@ function AddConfigurations(proj, strProjectName) {
 
 function AddPchSettings(proj) {
     try {
-        // 		var files = proj.Object.Files;
-        // 		var fStdafx = files("StdAfx.cpp");
+        //         var files = proj.Object.Files;
+        //         var fStdafx = files("StdAfx.cpp");
         // 
-        // 		var nCntr;
-        // 		for(nCntr = 0; nCntr < nNumConfigs; nCntr++)
-        // 		{
-        // 			var config = fStdafx.FileConfigurations(astrConfigName[nCntr]);
-        // 			config.Tool.UsePrecompiledHeader = pchCreateUsingSpecific;
-        // 		}
+        //         var nCntr;
+        //         for(nCntr = 0; nCntr < nNumConfigs; nCntr++)
+        //         {
+        //             var config = fStdafx.FileConfigurations(astrConfigName[nCntr]);
+        //             config.Tool.UsePrecompiledHeader = pchCreateUsingSpecific;
+        //         }
     }
     catch (e) {
         throw e;
@@ -343,16 +343,16 @@ function AddFilesToCustomProj(proj, strProjectName, strProjectPath, InfFile) {
                 var strTemplate = strTemplatePath + '\\' + strTpl;
                 var strFile = strProjectPath + '\\' + strTarget;
 
-                var bCopyOnly = false;  //"true" will only copy the file from strTemplate to strTarget without rendering/adding to the project
+                var bCopyOnly = true;  //"true" will only copy the file from strTemplate to strTarget without rendering/adding to the project
                 var strExt = strName.substr(strName.lastIndexOf("."));
-                if (strExt == ".bmp" || strExt == ".ico" || strExt == ".gif" || strExt == ".rtf" || strExt == ".css")
-                    bCopyOnly = true;
+                if (strExt == ".h" || strExt == ".cpp" || strExt == ".c" || strExt == ".rc")
+                    bCopyOnly = false;
                 wizard.RenderTemplate(strTemplate, strFile, bCopyOnly);
 
                 // don't add these files to the project
                 if (strTarget == strProjectName + ".h" ||
-				   strTarget == strProjectName + "ps.mk" ||
-				   strTarget == strProjectName + "ps.def")
+                   strTarget == strProjectName + "ps.mk" ||
+                   strTarget == strProjectName + "ps.def")
                     continue;
 
                 proj.Object.AddFile(strFile);

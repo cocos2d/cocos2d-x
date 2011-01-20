@@ -39,7 +39,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
 #else
-#error
+	#error
 #endif
     {
         CCX_SAFE_DELETE(m_pMainWnd);
@@ -60,6 +60,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	// turn on display FPS
 	pDirector->setDisplayFPS(true);
+
+	// set FPS. the default value is 1.0/60 if you don't call this
+	pDirector->setAnimationInterval( 1.0 / 60 );
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();

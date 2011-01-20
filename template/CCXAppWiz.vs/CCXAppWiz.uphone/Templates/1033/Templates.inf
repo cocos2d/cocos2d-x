@@ -7,7 +7,6 @@ uphone/TG3AppDllEntry.h
 
 uphone/main.cpp
 
-uphone/resource.h
 uphone/rootUnicodeScript.h
 uphone/rootUnicodeScript_str.h
 

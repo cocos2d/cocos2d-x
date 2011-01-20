@@ -7,11 +7,15 @@
 
 namespace CocosDenshion {
 
-static char s_ResourcePath[MAX_PATH] = {0};
-static char s_ZipFilePath[MAX_PATH]  = {0};
+static char s_ResourcePath[EOS_FILE_MAX_PATH] = {0};
+static char s_ZipFilePath[EOS_FILE_MAX_PATH]  = {0};
+static char s_AppDataPath[EOS_FILE_MAX_PATH]  = {0};
 
 unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
 void fullPathFromRelativePath(const char *pszRelativePath, char* fullPath);
+void updateZipFilePath(const char* pResPath);
+void setZipFilePath(const char* pZipFileName);
+const char* getDataPath();
 
 bool FileUtils::isFileExisted(const char* pFilePath)
 {
@@ -34,12 +38,12 @@ bool FileUtils::isFileExisted(const char* pFilePath)
     }
     else
     {
-        char fullPath[MAX_PATH];
+        char fullPath[EOS_FILE_MAX_PATH];
         fullPathFromRelativePath(pFilePath, fullPath);
 
         if (strlen(fullPath) > 0)
         {
-            TUChar FilePath[MAX_PATH] = {0};
+            TUChar FilePath[EOS_FILE_MAX_PATH] = {0};
             TUString::StrGBToUnicode(FilePath, (const Char *) fullPath);
 
             // find in the hardware
@@ -53,38 +57,29 @@ bool FileUtils::isFileExisted(const char* pFilePath)
     return bRet;
 }
 
-void FileUtils::setResourcePath(const char *pszResourcePath)
+void FileUtils::setResource(const char* pszResPath, const char* pszZipFileName)
 {
-    assert(pszResourcePath);
-    strcpy(s_ResourcePath, pszResourcePath);
-}
-
-void FileUtils::setResourceZipFile(const char* pszZipPath)
-{
-    // if the zip file not exist,use message box to warn developer
-    TUChar pszTmp[MAX_PATH] = {0};
-    TUString::StrGBToUnicode(pszTmp, (const Char*) pszZipPath);
-    Boolean bExist = EOS_IsFileExist(pszTmp);
-    if (!bExist)
+    if (pszResPath != NULL && pszZipFileName != NULL)
     {
-        std::string strErr = "zip file ";
-        strErr += pszZipPath;
-        strErr += " not exist!";
-        TUChar szText[MAX_PATH] = { 0 };
-        TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
-        TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
-        return;
+        // record the resource path
+        strcpy(s_ResourcePath, pszResPath);
+
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
     }
+    else if (pszResPath != NULL)
+    {
+        // update the zip file path
+        updateZipFilePath(pszResPath);
 
-#ifndef _TRANZDA_VM_
-    char *pszDriver = "";
-#else
-    char *pszDriver = "D:/Work7";
-#endif
-
-    // record the zip file path
-    strcpy(s_ZipFilePath, pszDriver);
-    strcat(s_ZipFilePath, pszZipPath);
+        // record the resource path
+        strcpy(s_ResourcePath, pszResPath);
+    }
+    else if (pszZipFileName != NULL)
+    {
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
+    }
 }
 
 unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
@@ -101,7 +96,7 @@ unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMo
         }
         
         // read the file from hardware
-        char fullPath[MAX_PATH] = {0};
+        char fullPath[EOS_FILE_MAX_PATH] = {0};
         fullPathFromRelativePath(pszFileName, fullPath);
 
         BREAK_IF(strlen(fullPath) <= 0);
@@ -119,6 +114,11 @@ unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMo
     return pBuffer;
 }
 
+////////////////////////////////////////
+//
+// tool functions
+//
+////////////////////////////////////////
 unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
@@ -165,7 +165,7 @@ void fullPathFromRelativePath(const char *pszRelativePath, char* fullPath)
     // if have set the zip file path,return the relative path of zip file
     if (strlen(s_ZipFilePath) != 0)
     {
-        if (strlen(pszRelativePath) < MAX_PATH)
+        if (strlen(pszRelativePath) < EOS_FILE_MAX_PATH)
         {
             strcpy(fullPath, pszRelativePath);
         }
@@ -175,8 +175,8 @@ void fullPathFromRelativePath(const char *pszRelativePath, char* fullPath)
     // get the user data path and append relative path to it
     if (strlen(s_ResourcePath) == 0)
     {
-        const TUChar *pszTmp = EOS_GetSpecialPath(EOS_FILE_SPECIAL_PATH_USER_DATA);
-        TUString::StrUnicodeToStrUtf8((Char*) s_ResourcePath, pszTmp);
+        const char* pAppDataPath = getDataPath();
+        strcpy(s_ResourcePath, pAppDataPath);
     }
 
 #ifndef _TRANZDA_VM_
@@ -202,13 +202,107 @@ void fullPathFromRelativePath(const char *pszRelativePath, char* fullPath)
         pRet += pszRelativePath;
     }
 
-    if (strlen(pRet.c_str()) < MAX_PATH &&
+    if (strlen(pRet.c_str()) < EOS_FILE_MAX_PATH &&
         strlen(pRet.c_str()) > 0)
     {
         strcpy(fullPath, pRet.c_str());
     }
 
     return;
+}
+
+void updateZipFilePath(const char* pResPath)
+{
+    if (! strlen(s_ZipFilePath))
+    {
+        return;
+    }
+
+    std::string strTemp = s_ZipFilePath;
+    int nPos = std::string::npos;
+
+    // find the path need br replaced
+    std::string ResPath;
+    if (strlen(s_ResourcePath))
+    {
+        ResPath = s_ResourcePath;
+    }
+    else
+    {
+        ResPath = getDataPath();
+    }
+
+    // replace the resource path in s_ZipFilePath
+    nPos = strTemp.find(ResPath.c_str());
+    if (nPos != std::string::npos)
+    {
+        strTemp.replace(nPos, ResPath.length(), pResPath);
+        memset(s_ZipFilePath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
+        strcpy(s_ZipFilePath, strTemp.c_str());
+    }
+}
+
+void setZipFilePath(const char* pZipFileName)
+{
+    // get the full path of zip file
+    char fullPath[EOS_FILE_MAX_PATH] = {0};
+    if (strlen(s_ResourcePath))
+    {
+        strcpy(fullPath, s_ResourcePath);
+    }
+    else
+    {
+        const char* pAppDataPath = getDataPath();
+        strcpy(fullPath, pAppDataPath);
+    }
+    strcat(fullPath, pZipFileName);
+
+    // if the zip file not exist,use message box to warn developer
+    TUChar pszTmp[EOS_FILE_MAX_PATH] = {0};
+    TUString::StrGBToUnicode(pszTmp, (const Char*) fullPath);
+    Boolean bExist = EOS_IsFileExist(pszTmp);
+    if (!bExist)
+    {
+        std::string strErr = "zip file ";
+        strErr += fullPath;
+        strErr += " not exist!";
+        TUChar szText[EOS_FILE_MAX_PATH] = { 0 };
+        TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
+        TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
+        return;
+    }
+
+#ifndef _TRANZDA_VM_
+    char *pszDriver = "";
+#else
+    char *pszDriver = "D:/Work7";
+#endif
+
+    // record the zip file path
+    strcpy(s_ZipFilePath, pszDriver);
+    strcat(s_ZipFilePath, fullPath);
+}
+
+const char* getDataPath()
+{
+    if (strlen(s_AppDataPath))
+    {
+        return s_AppDataPath;
+    }
+
+    do 
+    {
+        TUChar AppID[EOS_FILE_MAX_PATH] = {0};
+        UInt32 nCmdType = 0;
+        Int32  nRet = SS_AppRequest_GetAppName(AppID, &nCmdType);
+        BREAK_IF(nRet < 0);
+
+        TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
+        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_EXECUTABLE, AppPath);
+        TUString::StrUnicodeToStrUtf8((Char*) s_AppDataPath, AppPath);
+    } while (0);
+
+    return s_AppDataPath;
 }
 
 } // end of namespace CocosDenshion
