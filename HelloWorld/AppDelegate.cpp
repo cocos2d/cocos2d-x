@@ -46,11 +46,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 		return false;
 	}
 
-#if defined(CCX_PLATFORM_UPHONE)
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/cocos2d_helloworld/");
-#endif
-
 	// init director
 	CCDirector *pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(m_pMainWnd);
@@ -60,6 +55,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	// turn on display FPS
 	pDirector->setDisplayFPS(true);
+
+	// set FPS. the default value is 1.0/60 if you don't call this
+	pDirector->setAnimationInterval( 1.0 / 60 );
 
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();

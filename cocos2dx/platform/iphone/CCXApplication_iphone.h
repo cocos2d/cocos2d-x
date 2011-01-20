@@ -56,6 +56,8 @@ public:
     CGRect statusBarFrame();
 	
     void run();
+	
+	void setAnimationInterval(double interval);
 
     /**
      @brief	Get current applicaiton instance.

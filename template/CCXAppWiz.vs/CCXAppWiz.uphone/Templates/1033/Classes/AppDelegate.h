@@ -18,3 +18,4 @@ protected:
 };
  
 #endif  // __APP_DELEGATE_H__
+

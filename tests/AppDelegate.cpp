@@ -46,48 +46,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
 
-#if defined(CCX_PLATFORM_UPHONE)
-
-#if 1
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
-#else
-    // set the resource zip file
-    CCFileUtils::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/cocos2d_tests.zip");
-#endif
-
-
-#elif defined(CCX_PLATFORM_ANDROID)
+#if defined(CCX_PLATFORM_ANDROID)
 	CCFileUtils::setRelativePath("assets");
 #endif
 
-#if 0
-	// SHOW SPLASH SCREEN
-
-    // load background image texture and get window size
-    CCTexture2D * pSplashTexture = CCTextureCache::sharedTextureCache()->addImage("b1.png");
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
-
-    // splash sprite
-	CCSprite * pSplashSprite = CCSprite::spriteWithTexture(pSplashTexture);
-    pSplashSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
-
-    // splash layer
-    CCLayer * pSplashLayer = new CCLayer();
-    pSplashLayer->addChild(pSplashSprite);
-    pSplashLayer->autorelease();
-
-    // add layer to scene
-    CCScene * pSplashScene = CCScene::node();
-    pSplashScene->addChild(pSplashLayer);
-
-	// add scene to director
-    CCDirector::sharedDirector()->runWithScene(pSplashScene);
-
-	// CCSequence::actions(this, callfunc_selector(AppDelegate::replaceSplashScreen))
-    m_nTimer = TIMER_Create(3000, TIMER_MODE_NORMAL, TimerCallback1, 0, 0);
-    TIMER_Start(m_nTimer, 0);
-#endif
     CCScene * pScene = CCScene::node();
     CCLayer * pLayer = new TestController();
     pLayer->autorelease();
@@ -107,15 +69,3 @@ void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
 }
-
-/*
-static void TimerCallback1(Int32 nTimerId, UInt32 uUserData)
-{
-    CCScene * pScene = CCScene::node();
-    CCLayer * pLayer = new TestController();
-    pLayer->autorelease();
-
-    pScene->addChild(pLayer);
-    CCDirector::sharedDirector()->replaceScene(pScene);
-}
-*/

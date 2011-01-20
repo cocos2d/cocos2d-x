@@ -122,7 +122,6 @@ TestController::TestController()
 
 TestController::~TestController()
 {
-    removeAllChildrenWithCleanup(true);
 }
 
 void TestController::menuCallback(NSObject * pSender)
