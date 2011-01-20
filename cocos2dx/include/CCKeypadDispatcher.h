@@ -33,6 +33,7 @@ namespace   cocos2d {
 typedef enum {
     // the back key clicked msg
     kTypeBackClicked = 1,
+    kTypeMenuClicked,
 } ccKeypadMSGType;
 
 struct _ccCArray;

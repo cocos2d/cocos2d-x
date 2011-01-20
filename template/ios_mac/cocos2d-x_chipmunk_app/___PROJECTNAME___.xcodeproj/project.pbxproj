@@ -21,8 +21,6 @@
 		507023151076758E00393637 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 507023141076758E00393637 /* grossini_dance_atlas.png */; };
 		50F4144910692EE7002A0D5E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144410692EE7002A0D5E /* Default.png */; };
 		50F4144B10692EE7002A0D5E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144610692EE7002A0D5E /* Icon.png */; };
-		BF152ABE12E16A1B00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF152ABB12E16A1B00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
-		BF152ABF12E16A1B00703484 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF152ABC12E16A1B00703484 /* AppDelegate.cpp */; };
 		BF152AF212E16B4200703484 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF152AF112E16B4200703484 /* LICENSE.cocos2d-x */; };
 		BF152B3B12E16B6F00703484 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = BF152AF912E16B6F00703484 /* chipmunk.h */; };
 		BF152B3C12E16B6F00703484 /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = BF152AFA12E16B6F00703484 /* chipmunk_ffi.h */; };
@@ -370,9 +368,9 @@
 		BF1537EE12E16C0400703484 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C612E16C0400703484 /* SimpleAudioEngine.mm */; };
 		BF1537EF12E16C0400703484 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */; };
 		BF1537F012E16C0400703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */; };
-		BF15382912E16D9100703484 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15382812E16D9100703484 /* libxml2.dylib */; };
-		BF15382B12E16DAB00703484 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15382A12E16DAB00703484 /* libxml2.dylib */; };
 		BF15384F12E16ED600703484 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF15384D12E16ED600703484 /* HelloWorldScene.cpp */; };
+		BF15715C12E3D730001F8977 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15715B12E3D730001F8977 /* libxml2.dylib */; };
+		BF15737B12E42CCE001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF15737A12E42CCE001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -407,10 +405,6 @@
 		507023141076758E00393637 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
 		50F4144410692EE7002A0D5E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		50F4144610692EE7002A0D5E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		BF152ABA12E16A1B00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
-		BF152ABB12E16A1B00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
-		BF152ABC12E16A1B00703484 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
-		BF152ABD12E16A1B00703484 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BF152AF112E16B4200703484 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
 		BF152AF912E16B6F00703484 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		BF152AFA12E16B6F00703484 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -758,10 +752,11 @@
 		BF1537C612E16C0400703484 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		BF15382812E16D9100703484 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		BF15382A12E16DAB00703484 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF15384D12E16ED600703484 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
 		BF15384E12E16ED600703484 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
+		BF15715B12E3D730001F8977 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
+		BF15737912E42CCE001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
+		BF15737A12E42CCE001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.mm"; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -792,7 +787,7 @@
 				506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */,
 				506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */,
 				506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */,
-				BF15382912E16D9100703484 /* libxml2.dylib in Frameworks */,
+				BF15715C12E3D730001F8977 /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,7 +802,6 @@
 				5055745C1045D68500A31725 /* OpenGLES.framework in Frameworks */,
 				5055745D1045D68500A31725 /* QuartzCore.framework in Frameworks */,
 				5055745E1045D69D00A31725 /* libz.dylib in Frameworks */,
-				BF15382B12E16DAB00703484 /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,8 +828,6 @@
 				50F4144210692EE7002A0D5E /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				BF15382812E16D9100703484 /* libxml2.dylib */,
-				BF15382A12E16DAB00703484 /* libxml2.dylib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -843,6 +835,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				BF15737912E42CCE001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
+				BF15737A12E42CCE001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm */,
 				1F3B9A820EF2151B00286867 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -852,6 +846,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF15715B12E3D730001F8977 /* libxml2.dylib */,
 				DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */,
 				DCCBF1B80F6022AE0040855A /* Foundation.framework */,
 				DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */,
@@ -870,10 +865,6 @@
 			children = (
 				BF15384D12E16ED600703484 /* HelloWorldScene.cpp */,
 				BF15384E12E16ED600703484 /* HelloWorldScene.h */,
-				BF152ABA12E16A1B00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
-				BF152ABB12E16A1B00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
-				BF152ABC12E16A1B00703484 /* AppDelegate.cpp */,
-				BF152ABD12E16A1B00703484 /* AppDelegate.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1884,9 +1875,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				BF152ABE12E16A1B00703484 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
-				BF152ABF12E16A1B00703484 /* AppDelegate.cpp in Sources */,
 				BF15384F12E16ED600703484 /* HelloWorldScene.cpp in Sources */,
+				BF15737B12E42CCE001F8977 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -104,6 +104,9 @@ bool CCDirector::init(void)
 
 	// paused ?
 	m_bPaused = false;
+	
+	// purge ?
+	m_bPurgeDirecotorInNextLoop = false;
 
 	m_obWinSizeInPixels = m_obWinSizeInPoints = CGSizeZero;
 
@@ -124,7 +127,7 @@ bool CCDirector::init(void)
 
 	return true;
 }
-
+	
 CCDirector::~CCDirector(void)
 {
 	CCLOGINFO("cocos2d: deallocing %p", this);
@@ -533,7 +536,12 @@ void CCDirector::popScene(void)
 	}
 }
 
-void CCDirector::end(void)
+void CCDirector::end()
+{
+	m_bPurgeDirecotorInNextLoop = true;
+}
+	
+void CCDirector::purgeDirector()
 {
 	// don't release the event handlers
 	// They are needed in case the director is run again
@@ -919,12 +927,16 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
-	m_pobOpenGLView->setAnimationInterval(m_dAnimationInterval);
+	CCXApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
 {
- 	if (! m_bInvalid)
+	if (m_bPurgeDirecotorInNextLoop)
+	{
+		purgeDirector();
+	}
+	else if (! m_bInvalid)
  	{
  		drawScene();
 	 

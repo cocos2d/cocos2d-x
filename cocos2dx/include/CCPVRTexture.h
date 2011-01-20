@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#if 0 // PVR TEXTURE CANNOT CROSS PLATFORM
+
 #ifndef __CCPVRTEXTURE_H__
 #define __CCPVRTEXTURE_H__
 
@@ -68,4 +70,4 @@ private:
 
 #endif //__CCPVRTEXTURE_H__
 
-
+#endif

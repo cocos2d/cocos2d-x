@@ -260,6 +260,11 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             {
                 bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
             }
+            else if (pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_UP ||
+                     pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_LONG)
+            {
+                bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+            }
         }
         break;
 
@@ -293,12 +298,14 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     case EVENT_ScreenSwitchNotify:
         if (! pEvent->sParam1)  // turn off screen
         {
-            CCDirector::sharedDirector()->pause();
+            // CCDirector::sharedDirector()->pause();
+            CCXApplication::sharedApplication()->applicationDidEnterBackground();
             CCXApplication::sharedApplication()->StopMainLoop();
         }
         else
         {
-            CCDirector::sharedDirector()->resume();
+            // CCDirector::sharedDirector()->resume();
+            CCXApplication::sharedApplication()->applicationWillEnterForeground();
             CCXApplication::sharedApplication()->StartMainLoop();
         }
         break;

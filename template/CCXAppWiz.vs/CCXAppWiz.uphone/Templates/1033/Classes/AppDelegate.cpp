@@ -2,15 +2,12 @@
 
 [! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
 #include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 [! endif]
 #include "HelloWorldScene.h"
 
 using namespace cocos2d;
-
-[! if CCX_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE]
-using namespace CocosDenshion;
-[! endif]
 
 AppDelegate::AppDelegate()
 :m_pMainWnd(NULL)
@@ -41,9 +38,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
     // pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
-
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/[!output PROJECT_NAME]/");
 
     CCScene * pScene = HelloWorld::scene();
 

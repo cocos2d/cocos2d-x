@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy /Y $(ProjectDir)..\third_party\win32\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y $(ProjectDir)..\third_party\win32\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)\&quot;  md &quot;$(OutDir)\&quot;&#x0D;&#x0A;copy /Y &quot;$(ProjectDir)..\third_party\win32\libraries\*.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;copy /Y &quot;$(ProjectDir)..\third_party\win32\libraries\*.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -103,7 +103,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy /Y $(ProjectDir)..\third_party\win32\libraries\*.dll $(OutDir)&#x0D;&#x0A;copy /Y $(ProjectDir)..\third_party\win32\libraries\*.lib $(OutDir)&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)\&quot;  md &quot;$(OutDir)\&quot;&#x0D;&#x0A;copy /Y &quot;$(ProjectDir)..\third_party\win32\libraries\*.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;copy /Y &quot;$(ProjectDir)..\third_party\win32\libraries\*.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

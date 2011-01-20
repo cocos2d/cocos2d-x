@@ -420,7 +420,7 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	// Mode Gravity: A
 	if( m_nEmitterMode == kCCParticleModeGravity ) 
 	{
-		CGPoint v(sinf( a ), cosf( a ));
+		CGPoint v(cosf( a ), sinf( a ));
 		float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
         s *= CC_CONTENT_SCALE_FACTOR();
 
