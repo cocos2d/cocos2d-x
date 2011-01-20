@@ -56,7 +56,7 @@ int CCXApplication::Run()
 		if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
             QueryPerformanceCounter(&nNow);
-			if (nNow.QuadPart - nLast.QuadPart > m_nAnimationInterval.QuadPart)
+			if (nNow.QuadPart - nLast.QuadPart >= m_nAnimationInterval.QuadPart)
 			{
                 nLast.QuadPart = nNow.QuadPart;
 				CCDirector::sharedDirector()->mainLoop();
