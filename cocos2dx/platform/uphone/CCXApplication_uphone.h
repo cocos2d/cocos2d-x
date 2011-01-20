@@ -88,10 +88,7 @@ public:
     */
     const char* getAppDataPath();
 
-    bool isInBackground();
-    void setIsInBackground(bool bInBack);
-
-private:
+    void setAnimationInterval(double interval);    bool isInBackground();    void setIsInBackground(bool bInBack);private:
     static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData);
 
     MESSAGE_t   m_tMsg;
