@@ -223,9 +223,4 @@ bool CCXApplication::isInBackground()
     return m_bInBackground;
 }
 
-void CCXApplication::setIsInBackground(bool bInBack)
-{
-    m_bInBackground = bInBack;
-}
-
 }
