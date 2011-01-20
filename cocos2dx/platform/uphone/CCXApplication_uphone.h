@@ -88,12 +88,16 @@ public:
     */
     const char* getAppDataPath();
 
+    bool isInBackground();
+    void setIsInBackground(bool bInBack);
+
 private:
     static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData);
 
     MESSAGE_t   m_tMsg;
     bool        m_bRunning;
     bool        m_bNeedStop;
+    bool        m_bInBackground;
     char        m_AppDataPath[EOS_FILE_MAX_PATH];
 };
 

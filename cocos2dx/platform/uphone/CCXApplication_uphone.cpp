@@ -16,6 +16,7 @@ static const Int32 CCX_ON_APPLICATION_IDLE = (EVENT_FirstUser + EVENT_LastUser) 
 CCXApplication::CCXApplication()
 : m_bRunning(FALSE)
 , m_bNeedStop(FALSE)
+, m_bInBackground(FALSE)
 {
     memset(&m_tMsg, 0, sizeof(m_tMsg));
     SS_GetCurrentGTID(&m_tMsg.gtid);
@@ -63,7 +64,12 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
     case EVENT_AppActiveNotify:
         if (pEvent->sParam1 == 0)
         {
-            applicationDidEnterBackground();
+            if (!m_bInBackground)
+            {
+                applicationDidEnterBackground();
+                m_bInBackground = true;
+            }
+
             if (CCDirector::sharedDirector()->isPaused())
             {
                StopMainLoop();
@@ -73,7 +79,12 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
         }
         else if (pEvent->sParam1 > 0)
         {
-            applicationWillEnterForeground();
+            if (m_bInBackground)
+            {
+                applicationWillEnterForeground();
+                m_bInBackground = false;
+            }
+
             StartMainLoop();
             
             CfgTurnOnBackLightDelay(0x7fffffff);
@@ -152,6 +163,16 @@ Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 const char* CCXApplication::getAppDataPath()
 {
     return m_AppDataPath;
+}
+
+bool CCXApplication::isInBackground()
+{
+    return m_bInBackground;
+}
+
+void CCXApplication::setIsInBackground(bool bInBack)
+{
+    m_bInBackground = bInBack;
 }
 
 }
