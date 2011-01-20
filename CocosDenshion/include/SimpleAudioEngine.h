@@ -51,16 +51,11 @@ public:
 	static void end();
 
     /**
-    @brief  Set the ResourcePath,we will find resource in this path
-    @param pszResourcePath  The absolute resource path
+    @brief  Set the ResourcePath and(or) the zip file name
+    @param pszResPath  The absolute resource path
+    @param pszZipFileName The relative path of the .zip file
     */
-    static void setResourcePath(const char *pszResourcePath);
-
-    /**
-    @brief Set the absolute path of the .zip file which contains all resource files
-    @param pszZipPath The absolute path of the .zip file
-    */
-    static void setResourceZipFile(const char* pszZipPath);
+    static void setResource(const char* pszResPath, const char* pszZipFileName);
 
     /**
      @brief Preload background music

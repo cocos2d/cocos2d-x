@@ -74,12 +74,14 @@ public:
     */
     static CCXApplication * sharedApplication();
 
-
 	virtual int Run();
+
+    void setAnimationInterval(double interval);
 
 protected:
     HINSTANCE m_hInstance;
 	HACCEL    m_hAccelTable;
+	LARGE_INTEGER m_nAnimationInterval;
 };
 
 }       // end of namespace   cocos2d

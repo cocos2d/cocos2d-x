@@ -10,3 +10,7 @@ Classes/AppDelegate.cpp
 
 Classes/HelloWorldScene.h
 Classes/HelloWorldScene.cpp
+
+Resource/CloseSelected.png
+Resource/CloseNormal.png
+Resource/HelloWorld.png

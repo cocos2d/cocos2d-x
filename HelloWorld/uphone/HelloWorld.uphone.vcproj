@@ -96,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir D:\Work7\NEWPLUS\TDA_DATA\Data\APPS\cocos2d_helloworld&#x0D;&#x0A;copy ..\Resource\*.*  D:\Work7\NEWPLUS\TDA_DATA\Data\APPS\cocos2d_helloworld"
+				CommandLine="mkdir D:\Work7\NEWPLUS\TG3\APP&#x0D;&#x0A;copy ..\Resource\*.*  D:\Work7\NEWPLUS\TG3\APP&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration

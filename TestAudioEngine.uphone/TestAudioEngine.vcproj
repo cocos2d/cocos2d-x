@@ -96,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir D:\Work7\NEWPLUS\TDA_DATA\Data\APPS\TestAudioEngine&#x0D;&#x0A;copy .\Res\sounds\*.*  D:\Work7\NEWPLUS\TDA_DATA\Data\APPS\TestAudioEngine"
+				CommandLine="mkdir D:\Work7\NEWPLUS\TG3\APP&#x0D;&#x0A;copy .\Res\sounds\*.*  D:\Work7\NEWPLUS\TG3\APP&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration

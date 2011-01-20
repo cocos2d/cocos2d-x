@@ -51,7 +51,7 @@ static void initWithString(const char *content, const char *fontName, float size
 	}
 	
 	alignment = UITextAlignmentCenter;
-	string = [[NSString alloc] initWithCString:content];
+	string = [[NSString alloc] initWithUTF8String:content];
 	name = @"Thonburi";
 	dimensions = [string sizeWithFont:[UIFont fontWithName:name size:size]];
     

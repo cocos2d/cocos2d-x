@@ -22,6 +22,20 @@ CCXApplication::CCXApplication()
     m_tMsg.type = CCX_ON_APPLICATION_IDLE;
 
     Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, CCXApplication::_OnAppIdle, (UInt32)this);
+
+    memset(m_AppDataPath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
+
+    do 
+    {
+        TUChar AppID[EOS_FILE_MAX_PATH] = {0};
+        UInt32 nCmdType = 0;
+        Int32  nRet = SS_AppRequest_GetAppName(AppID, &nCmdType);
+        CCX_BREAK_IF(nRet < 0);
+
+        TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
+        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_EXECUTABLE, AppPath);
+        TUString::StrUnicodeToStrUtf8((Char*) m_AppDataPath, AppPath);
+    } while (0);
 }
 
 CCXApplication::~CCXApplication()
@@ -135,4 +149,15 @@ Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
     return 1;
 }
 
+const char* CCXApplication::getAppDataPath()
+{
+    return m_AppDataPath;
 }
+
+void CCXApplication::setAnimationInterval(double interval)
+{
+	// tbd
+}
+
+}
+

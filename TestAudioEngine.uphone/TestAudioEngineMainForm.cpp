@@ -32,7 +32,6 @@ Boolean TMainForm::EventHandler(TApplication * pApp, EventType * pEvent)
 	{
 	case EVENT_WinInit:
 		{
-            SimpleAudioEngine::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/TestAudioEngine/");
             SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(30);
             SimpleAudioEngine::sharedEngine()->setEffectsVolume(30);
 			bHandled = TRUE;
