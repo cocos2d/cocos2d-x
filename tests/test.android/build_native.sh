@@ -4,22 +4,23 @@ COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
 # make sure assets is exist
-if [ ! -d $TESTS_ROOT/assets ]; then
-    mkdir $TESTS_ROOT/assets
+if [ -d $TESTS_ROOT/assets ]; then
+    rm -rf $TESTS_ROOT/assets
 fi
 
+mkdir $TESTS_ROOT/assets
+
 # copy resources
-if [ -d $TESTS_ROOT/assets/animations ]; then
-    echo "resources already exist"
-else
-    cp -R $COCOS2DX_ROOT/tests/Res/animations $TESTS_ROOT/assets
-    cp -R $COCOS2DX_ROOT/tests/Res/fonts $TESTS_ROOT/assets
-    cp -R $COCOS2DX_ROOT/tests/Res/Images $TESTS_ROOT/assets
-    cp -R $COCOS2DX_ROOT/tests/Res/TileMaps $TESTS_ROOT/assets
-    cp $COCOS2DX_ROOT/tests/Res/effect1.wav $TESTS_ROOT/assets
-    cp $COCOS2DX_ROOT/tests/Res/effect2.wav $TESTS_ROOT/assets
-    cp $COCOS2DX_ROOT/tests/Res/music.mid $TESTS_ROOT/assets
-fi
+for file in $COCOS2DX_ROOT/tests/Res/*
+do
+    if [ -d $file ]; then
+        cp -rf $file $TESTS_ROOT/assets
+    fi
+
+    if [ -f $file ]; then
+        cp $file $TESTS_ROOT/assets
+    fi
+done
 
 
 # build
