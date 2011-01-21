@@ -24,8 +24,10 @@
 #import <Foundation/Foundation.h>
 
 @interface CCDirectorCaller : NSObject {
-	id displayLink;
+        id displayLink;
+        int interval;
 }
+@property (readwrite) int interval;
 -(void) startMainLoop;
 -(void) doCaller: (id) sender;
 -(void) setAnimationInterval:(double)interval;

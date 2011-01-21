@@ -36,6 +36,8 @@ static id s_sharedDirectorCaller;
 
 @implementation CCDirectorCaller
 
+@synthesize interval;
+
 +(id) sharedDirectorCaller
 {
 	if (s_sharedDirectorCaller == nil)
@@ -51,23 +53,39 @@ static id s_sharedDirectorCaller;
 	[s_sharedDirectorCaller release];
 }
 
+-(void) alloc
+{
+        interval = 1;
+}
+
 -(void) dealloc
 {
-	[displayLink invalidate];
 	[displayLink release];
 	[super dealloc];
 }
 
 -(void) startMainLoop
 {
-	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-	[displayLink setFrameInterval: 1];
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        // CCDirector::setAnimationInterval() is called, we should invalide it first
+        [displayLink invalidate];
+        displayLink = nil;
+        
+        displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
+        [displayLink setFrameInterval: self.interval];
+        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 -(void) setAnimationInterval:(double)interval
 {
-        [displayLink setFrameInterval: interval];
+        // CCDirector::setAnimationInterval() is called, we should invalide it first
+        [displayLink invalidate];
+        displayLink = nil;
+        
+        self.interval = 60.0 * interval;
+        
+        displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
+        [displayLink setFrameInterval: self.interval];
+        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 					  
 -(void) doCaller: (id) sender
