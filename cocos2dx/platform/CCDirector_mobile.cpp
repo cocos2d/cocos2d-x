@@ -169,7 +169,7 @@ void CCDirector::setGLDefaultValues(void)
 #if CC_DIRECTOR_FAST_FPS
 	if (! m_pFPSLabel)
 	{
-        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "XXX", 24);
+        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 24);
 		m_pFPSLabel->retain();
 	}
 #endif

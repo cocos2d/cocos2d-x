@@ -44,7 +44,7 @@ namespace cocos2d{
         int getHeight();
         unsigned char* getData();
 	private:
-		void drawText(const char *text, float fontSize);
+		void drawText(const char *text, const char *fontName, float fontSize);
 		
 	private:
 		int m_nWidth;
