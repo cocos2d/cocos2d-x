@@ -1,6 +1,22 @@
+// to enable CCLOG()
+#define COCOS2D_DEBUG 1
+
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
+
+// android effect only support ogg
+#ifdef CCX_PLATFORM_ANDROID
+	#define EFFECT_FILE		"effect2.ogg"
+#else
+	#define EFFECT_FILE		"effect1.wav"
+#endif // CCX_PLATFORM_ANDROID
+
+#ifdef CCX_PLATFORM_WIN32
+	#define MUSIC_FILE		"music.mid"
+#else
+	#define MUSIC_FILE		"background.mp3"
+#endif // CCX_PLATFORM_WIN32
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -9,20 +25,23 @@ using namespace CocosDenshion;
 
 CocosDenshionTest::CocosDenshionTest()
 : m_pItmeMenu(NULL),
-m_tBeginPos(CGPointZero)
+m_tBeginPos(CGPointZero),
+m_nSoundId(0)
 {
 	std::string testItems[] = {
-		"preload background music",
 		"play background music",
 		"stop background music",
 		"pause background music",
 		"resume background music",
 		"rewind background music",
 		"is background music playing",
-		"preload effect",
 		"play effect",
 		"stop effect",
-		"unload effect"
+		"unload effect",
+		"add background music volume",
+		"sub background music volume",
+		"add effects volume",
+		"sub effects volume"
 	};
 
 	// add menu items for tests
@@ -44,6 +63,10 @@ m_tBeginPos(CGPointZero)
 	addChild(m_pItmeMenu);
 
 	setIsTouchEnabled(true);
+
+	// preload background music and effect
+	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(MUSIC_FILE);
+	SimpleAudioEngine::sharedEngine()->preloadEffect(EFFECT_FILE);
 }
 
 CocosDenshionTest::~CocosDenshionTest()
@@ -65,41 +88,67 @@ void CocosDenshionTest::menuCallback(NSObject * pSender)
 
 	switch(nIdx)
 	{
-	// preload background music
-	case 0:
-		break;
 	// play background music
-	case 1:
-		SimpleAudioEngine::sharedEngine()->playBackgroundMusic("music.mid");
+	case 0:
+		SimpleAudioEngine::sharedEngine()->playBackgroundMusic(MUSIC_FILE, true);
 		break;
 	// stop background music
-	case 2:
+	case 1:
+		SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 		break;
 	// pause background music
-	case 3:
+	case 2:
+		SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 		break;
 	// resume background music
-	case 4:
+	case 3:
+		SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 		break;
 	// rewind background music
-	case 5:
+	case 4:
+		SimpleAudioEngine::sharedEngine()->rewindBackgroundMusic();
 		break;
 	// is background music playing
-	case 6:
-		break;
-	// preload effect
-	case 7:
+	case 5:
+		if (SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
+		{
+			CCLOG("background music is playing");
+		}
+		else
+		{
+            CCLOG("background music is not playing");
+		}
 		break;
 	// play effect
-	case 8:
+	case 6:
+		m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE);	
 		break;
 	// stop effect
-	case 9:
+	case 7:
+		SimpleAudioEngine::sharedEngine()->stopEffect(m_nSoundId);
 		break;
 	// unload effect
+	case 8:
+		SimpleAudioEngine::sharedEngine()->unloadEffect(EFFECT_FILE);
+		break;
+		// add bakcground music volume
+	case 9:
+		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() + 0.1);
+		break;
+		// sub backgroud music volume
 	case 10:
+		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() - 0.1);
+		break;
+		// add effects volume
+	case 11:
+		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() + 0.1);
+		break;
+		// sub effects volume
+	case 12:
+		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() - 0.1);
 		break;
 	}
+	
 }
 
 void CocosDenshionTest::ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent)
