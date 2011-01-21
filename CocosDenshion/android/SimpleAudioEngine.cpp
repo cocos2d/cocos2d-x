@@ -51,7 +51,7 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::end()
 	{
-
+		endJNI();
 	}
 
 	void SimpleAudioEngine::setResource(const char* pszResPath, const char* pszZipFileName)
@@ -71,76 +71,71 @@ namespace CocosDenshion
 
 	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 	{
-
+		stopBackgroundMusicJNI();
 	}
 
 	void SimpleAudioEngine::pauseBackgroundMusic()
 	{
-
+		pauseBackgroundMusicJNI();
 	}
 
 	void SimpleAudioEngine::resumeBackgroundMusic()
 	{
-
+		resumeBackgroundMusicJNI();
 	} 
 
 	void SimpleAudioEngine::rewindBackgroundMusic()
 	{
-
+		rewindBackgroundMusicJNI();
 	}
 
 	bool SimpleAudioEngine::willPlayBackgroundMusic()
 	{
-		return false;
+		return true;
 	}
 
 	bool SimpleAudioEngine::isBackgroundMusicPlaying()
 	{
-		return false;
+		return isBackgroundMusicPlayingJNI();
 	}
 
-	int SimpleAudioEngine::getBackgroundMusicVolume()
+	float SimpleAudioEngine::getBackgroundMusicVolume()
 	{
-		return -1;
+		return getBackgroundMusicVolumeJNI();
 	}
 
-	void SimpleAudioEngine::setBackgroundMusicVolume(int volume)
+	void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 	{
-
+		setBackgroundMusicVolumeJNI(volume);
 	}
 
-	int SimpleAudioEngine::getEffectsVolume()
+	float SimpleAudioEngine::getEffectsVolume()
 	{
-		return -1;
+		getEffectsVolumeJNI();
 	}
 
-	void SimpleAudioEngine::setEffectsVolume(int volume)
+	void SimpleAudioEngine::setEffectsVolume(float volume)
 	{
-
+		setEffectsVolumeJNI(volume);
 	}
 
 	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
 	{
-		return 0;
+		return playEffectJNI(pszFilePath);
 	}
 
 	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 	{
-
+		stopEffectJNI(nSoundId);
 	}
 
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 	{
-
+		preloadEffectJNI(pszFilePath);
 	}
 
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
-
-	}
-
-	void SimpleAudioEngine::unloadEffectAll()
-	{
-
+		unloadEffectJNI(pszFilePath);
 	}
 }
