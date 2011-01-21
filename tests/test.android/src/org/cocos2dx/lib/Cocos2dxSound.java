@@ -14,34 +14,46 @@ import android.util.Log;
  */
 
 public class Cocos2dxSound {
-	private Context context;
+	private Context mContext;
+	private SoundPool mSoundPool;
+	private float mLeftVolume;
+	private float mRightVolume;
+	
+	// sound id and stream id map
 	private HashMap<Integer,Integer> mSoundIdStreamIdMap;
-	private HashMap<String,Integer> mPathSoundIDMap;
-	private static final int MAX_SIMULTANEOUS_STREAMS_DEFAULT = 5;
-	private final SoundPool mSoundPool;
+	// sound path and sound id map
+	private HashMap<String,Integer> mPathSoundIDMap;	
+	
 	private static final String TAG = "Cocos2dxSound";
+	private static final int MAX_SIMULTANEOUS_STREAMS_DEFAULT = 5;
+	private static final float SOUND_RATE = 1.0f;
+	private static final int SOUND_PRIORITY = 1;
+	private static final int SOUND_LOOP_TIME = 0;
+	private static final int SOUND_QUALITY = 5;
+	
 	private final int INVALID_SOUND_ID = -1;
 	private final int INVALID_STREAM_ID = -1;
 	
 	public Cocos2dxSound(Context context){
-		this.context = context;
-		this.mSoundIdStreamIdMap = new HashMap<Integer,Integer>();
-		mSoundPool = new SoundPool(MAX_SIMULTANEOUS_STREAMS_DEFAULT, AudioManager.STREAM_MUSIC, 0);
-		mPathSoundIDMap = new HashMap<String,Integer>();
+		this.mContext = context;	
+		initData();
 	}
 	
-	void preloadEffect(String path){
+	public int preloadEffect(String path){
 		int soundId = createSoundIdFromAsset(path);
 		
 		if (soundId != INVALID_SOUND_ID){
 			// the sound is loaded but has not been played
 			this.mSoundIdStreamIdMap.put(soundId, INVALID_STREAM_ID);
 			
+			// record path and sound id map
 			this.mPathSoundIDMap.put(path, soundId);
 		}
+		
+		return soundId;
 	}
 	
-	void unloadEffect(String path){
+	public void unloadEffect(String path){
 		// get sound id and remove from mPathSoundIDMap
 		Integer soundId = this.mPathSoundIDMap.remove(path);
 		
@@ -54,25 +66,28 @@ public class Cocos2dxSound {
 		}
 	}
 	
-	void playEffect(String path){
+	public int playEffect(String path){
 		Integer soundId = this.mPathSoundIDMap.get(path);
 		
 		if (soundId != null){
 			// the sound is preloaded
 			
 			// play sound
-			int streamId = this.mSoundPool.play(soundId.intValue(), 1.0f, 1.0f, 1, 1, 1.0f);
+			int streamId = this.mSoundPool.play(soundId.intValue(), this.mLeftVolume, 
+					this.mRightVolume, SOUND_PRIORITY, SOUND_LOOP_TIME, SOUND_RATE);
 			
-			// record 
+			// record sound id and stream id map
 			this.mSoundIdStreamIdMap.put(soundId, streamId);
 		} else {
 			// the effect is not prepared
-			preloadEffect(path);	
+			soundId = preloadEffect(path);	
 			playEffect(path);
 		}
+		
+		return soundId.intValue();
 	}
 	
-	void stopEffect(int soundId){
+	public void stopEffect(int soundId){
         Integer streamId = this.mSoundIdStreamIdMap.get(soundId);
         
         if (streamId != null){
@@ -80,15 +95,40 @@ public class Cocos2dxSound {
         }
 	}
 	
+	public float getEffectsVolume(){
+		return (this.mLeftVolume + this.mRightVolume) / 2;
+	}
+	
+	public void setEffectsVolume(float volume){
+		this.mLeftVolume = this.mRightVolume = volume;
+	}
+	
+	public void end(){		
+		this.mSoundPool.release();	
+		this.mPathSoundIDMap.clear();	
+		this.mSoundIdStreamIdMap.clear();
+		
+		initData();
+	}
+	
 	public int createSoundIdFromAsset(String path){
 		int soundId = INVALID_SOUND_ID;
 		
 		try {
-			soundId = mSoundPool.load(context.getAssets().openFd(path), 1);
+			soundId = mSoundPool.load(mContext.getAssets().openFd(path), 0);
 		} catch(Exception e){
 			 Log.e(TAG, "error: " + e.getMessage(), e);
 		}
 		
 		return soundId;
+	}
+	
+	private void initData(){
+		this.mSoundIdStreamIdMap = new HashMap<Integer,Integer>();
+		mSoundPool = new SoundPool(MAX_SIMULTANEOUS_STREAMS_DEFAULT, AudioManager.STREAM_MUSIC, SOUND_QUALITY);
+		mPathSoundIDMap = new HashMap<String,Integer>();
+		
+		this.mLeftVolume = 0.5f;
+		this.mRightVolume = 0.5f;
 	}
 }
