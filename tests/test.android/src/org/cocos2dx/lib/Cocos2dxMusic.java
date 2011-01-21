@@ -13,12 +13,15 @@ import android.util.Log;
 public class Cocos2dxMusic {
 	
 	private static final String TAG = "Cocos2dxMusic";
-	private Context context;
+	private float mLeftVolume;
+	private float mRightVolume;
+	private Context mContext;
 	private MediaPlayer mBackgroundMediaPlayer;
+	private boolean mIsPaused;
 	
 	public Cocos2dxMusic(Context context){
-		this.context = context;
-		mBackgroundMediaPlayer = null;
+		this.mContext = context;
+		initData();
 	}
 	
 	public void playBackgroundMusic(String path, boolean isLoop){
@@ -44,32 +47,25 @@ public class Cocos2dxMusic {
 	}
 	
 	public void stopBackgroundMusic(){
-		assert(mBackgroundMediaPlayer != null);
-		
 		if (mBackgroundMediaPlayer != null){
 			mBackgroundMediaPlayer.stop();
 		}
 	}
 	
-	public void pauseBackgroundMusic(){
-		assert(mBackgroundMediaPlayer != null);
-		
-		if (mBackgroundMediaPlayer != null){
+	public void pauseBackgroundMusic(){		
+		if (mBackgroundMediaPlayer != null && mBackgroundMediaPlayer.isPlaying()){
 			mBackgroundMediaPlayer.pause();
+			this.mIsPaused = true;
 		}
 	}
 	
 	public void resumeBackgroundMusic(){
-		assert(mBackgroundMediaPlayer != null);
-		
-		if (mBackgroundMediaPlayer != null){
+		if (mBackgroundMediaPlayer != null && this.mIsPaused){
 			mBackgroundMediaPlayer.start();
 		}
 	}
 	
-	public void rewindBackgroundMusic(){
-		assert(mBackgroundMediaPlayer != null);
-		
+	public void rewindBackgroundMusic(){		
 		if (mBackgroundMediaPlayer != null){
 			mBackgroundMediaPlayer.stop();
 			
@@ -94,16 +90,37 @@ public class Cocos2dxMusic {
 		return ret;
 	}
 	
-	
-	/*
-	public int getBackgroundVolume(){
-		
+	public void end(){
+		if (mBackgroundMediaPlayer != null)
+		{
+			mBackgroundMediaPlayer.release();
+		}
+
+		initData();
 	}
 	
-	public void setBackgroundVolume(int volume){
-	
+
+	public float getBackgroundVolume(){
+		if (this.mBackgroundMediaPlayer != null){
+			return (this.mLeftVolume + this.mRightVolume) / 2;
+		} else {
+			return 0.0f;
+		}
 	}
-	*/
+	
+	public void setBackgroundVolume(float volume){
+		if (this.mBackgroundMediaPlayer != null){
+			this.mLeftVolume = this.mRightVolume = volume;
+			this.mBackgroundMediaPlayer.setVolume(this.mLeftVolume, this.mRightVolume);
+		}
+	}
+	
+	private void initData(){
+		mLeftVolume =1.0f;
+		mRightVolume = 1.0f;
+		mBackgroundMediaPlayer = null;
+		mIsPaused = false;
+	}
 	
 	/**
 	 * create mediaplayer for music
@@ -113,12 +130,15 @@ public class Cocos2dxMusic {
 	private MediaPlayer createMediaplayerFromAssets(String path){
 		MediaPlayer mediaPlayer = null;
 		
-		try{
+		try{			
+			AssetFileDescriptor assetFileDescritor = mContext.getAssets().openFd(path);
+			
 			mediaPlayer = new MediaPlayer();
-			AssetFileDescriptor assetFileDescritor = context.getAssets().openFd(path);    
 	        mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), 
 	        		assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());
 	        mediaPlayer.prepare();
+	        
+	        mediaPlayer.setVolume(mLeftVolume, mRightVolume);
 		}catch (Exception e) {
             Log.e(TAG, "error: " + e.getMessage(), e);
         }

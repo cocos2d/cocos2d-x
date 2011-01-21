@@ -2,8 +2,8 @@
 #include <android/log.h>
 
 #define  LOG_TAG    "libSimpleAudioEngine"
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+
 
 extern "C"
 {
@@ -15,10 +15,6 @@ extern "C"
 	{
 		gJavaVM = vm;
 
-		LOGI("JNI_OnLoad");
-
-		LOGI("JNI_OnLoad ok");
-
 		return JNI_VERSION_1_4;
 	}
 
@@ -26,37 +22,34 @@ extern "C"
 	{
 		jmethodID ret = 0;
 
-		LOGI("getMethodID");
-
 		// get jni environment and java class for Cocos2dxActivity
 		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
 		{
-			LOGE("Failed to get the environment using GetEnv()");
+			LOGD("Failed to get the environment using GetEnv()");
 			return 0;
 		}
 
 		if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
 		{
-			LOGE("Failed to get the environment using AttachCurrentThread()");
+			LOGD("Failed to get the environment using AttachCurrentThread()");
 			return 0;
 		}
 
 		classOfCocos2dxActivity = env->FindClass("org/cocos2dx/lib/Cocos2dxActivity");
 		if (! classOfCocos2dxActivity)
 		{
-			LOGE("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
+			LOGD("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
 			return 0;
 		}
 
 		if (env != 0 && classOfCocos2dxActivity != 0)
 		{
 			ret = env->GetStaticMethodID(classOfCocos2dxActivity, methodName, paramCode);
-			LOGI("after GetStaticMethodID");
 		}
 
-		if (ret)
+		if (! ret)
 		{
-			LOGI("get method id of %s ok", methodName);
+			LOGD("get method id of %s error", methodName);
 		}
 
 		return ret;
@@ -72,6 +65,176 @@ extern "C"
 			jstring StringArg = env->NewStringUTF(path);
 			env->CallStaticVoidMethod(classOfCocos2dxActivity, playBackgroundMusicMethodID, StringArg, isLoop);
 			//env->ReleaseStringUTFChars(StringArg, path);
+		}
+	}
+
+	void stopBackgroundMusicJNI()
+	{
+		// void stopBackgroundMusic()
+		jmethodID stopBackgroundMusicMethodID = getMethodID("stopBackgroundMusic", "()V");
+
+		if (stopBackgroundMusicMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, stopBackgroundMusicMethodID);
+		}
+	}
+
+	void pauseBackgroundMusicJNI()
+	{
+		// void pauseBackgroundMusic()
+		jmethodID pauseBackgroundMusicMethodID = getMethodID("pauseBackgroundMusic", "()V");
+
+		if (pauseBackgroundMusicMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, pauseBackgroundMusicMethodID);
+		}
+	}
+
+	void resumeBackgroundMusicJNI()
+	{
+		// void resumeBackgroundMusic()
+		jmethodID resumeBackgroundMusicMethodID = getMethodID("resumeBackgroundMusic", "()V");
+
+		if (resumeBackgroundMusicMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, resumeBackgroundMusicMethodID);
+		}
+	}
+
+	void rewindBackgroundMusicJNI()
+	{
+		// void rewindBackgroundMusic()
+		jmethodID rewindBackgroundMusicMethodID = getMethodID("rewindBackgroundMusic", "()V");
+
+		if (rewindBackgroundMusicMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, rewindBackgroundMusicMethodID);
+		}
+	}
+
+	bool isBackgroundMusicPlayingJNI()
+	{
+		// boolean rewindBackgroundMusic()
+		jmethodID isBackgroundMusicPlayingMethodID = getMethodID("isBackgroundMusicPlaying", "()Z");
+		jboolean ret = false;
+
+		if (isBackgroundMusicPlayingMethodID)
+		{
+			ret = env->CallStaticBooleanMethod(classOfCocos2dxActivity, isBackgroundMusicPlayingMethodID);
+		}
+
+		return ret;
+	}
+
+	float getBackgroundMusicVolumeJNI()
+	{
+		// float getBackgroundMusicVolume()
+		jmethodID getBackgroundMusicVolumeID = getMethodID("getBackgroundMusicVolume", "()F");
+		jfloat ret = 0.0;
+
+		if (getBackgroundMusicVolumeID)
+		{
+			ret = env->CallStaticFloatMethod(classOfCocos2dxActivity, getBackgroundMusicVolumeID);
+		}
+
+		return ret;
+	}
+
+	void setBackgroundMusicVolumeJNI(float volume)
+	{
+		// void setBackgroundMusicVolume()
+		jmethodID setBackgroundMusicVolumeMethodID = getMethodID("setBackgroundMusicVolume", "(F)V");
+
+		if (setBackgroundMusicVolumeMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, setBackgroundMusicVolumeMethodID, volume);
+		}
+	}
+
+	unsigned int playEffectJNI(const char* path)
+	{
+		int ret = 0;
+
+		// int playEffect(String)
+		jmethodID playEffectMethodID = getMethodID("playEffect", "(Ljava/lang/String;)I");
+
+		if (playEffectMethodID)
+		{
+			jstring StringArg = env->NewStringUTF(path);
+			ret = env->CallStaticIntMethod(classOfCocos2dxActivity, playEffectMethodID, StringArg);
+		}
+
+		return (unsigned int)ret;
+	}
+
+	void stopEffectJNI(unsigned int nSoundId)
+	{
+		// void stopEffect(int)
+		jmethodID stopEffectMethodID = getMethodID("stopEffect", "(I)V");
+
+		if (stopEffectMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, stopEffectMethodID, (int)nSoundId);
+		}
+	}
+
+	void endJNI()
+	{
+		// void end()
+		jmethodID endMethodID = getMethodID("end", "()V");
+
+		if (endMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, endMethodID);
+		}
+	}
+
+	float getEffectsVolumeJNI()
+	{
+		// float getEffectsVolume()
+		jmethodID getEffectsVolumeMethodID = getMethodID("getEffectsVolume", "()F");
+		jfloat ret = -1.0;
+
+		if (getEffectsVolumeMethodID)
+		{
+			ret = env->CallStaticFloatMethod(classOfCocos2dxActivity, getEffectsVolumeMethodID);
+		}
+
+		return ret;
+	}
+
+	void setEffectsVolumeJNI(float volume)
+	{
+		// void setEffectsVolume(float)
+		jmethodID setEffectsVolumeMethodID = getMethodID("setEffectsVolume", "(F)V");
+
+		if (setEffectsVolumeMethodID)
+		{
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, setEffectsVolumeMethodID, volume);
+		}
+	}
+
+	void preloadEffectJNI(const char *path)
+	{
+		// void preloadEffect(String)
+		jmethodID preloadEffectMethodID = getMethodID("preloadEffect", "(Ljava/lang/String;)V");
+
+		if (preloadEffectMethodID)
+		{
+			jstring StringArg = env->NewStringUTF(path);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, preloadEffectMethodID, StringArg);
+		}
+	}
+
+	void unloadEffectJNI(const char* path)
+	{
+		// void unloadEffect(String)
+		jmethodID unloadEffectMethodID = getMethodID("unloadEffect", "(Ljava/lang/String;)V");
+
+		if (unloadEffectMethodID)
+		{
+			jstring StringArg = env->NewStringUTF(path);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, unloadEffectMethodID, StringArg);
 		}
 	}
 }
