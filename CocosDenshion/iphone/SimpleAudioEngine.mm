@@ -70,22 +70,22 @@ static bool static_isBackgroundMusicPlaying()
     return [[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying];
 }
 
-static int static_getBackgroundMusicVolume()
+static float static_getBackgroundMusicVolume()
 {
-    return (int)[[SimpleAudioEngine sharedEngine] backgroundMusicVolume];
+    return [[SimpleAudioEngine sharedEngine] backgroundMusicVolume];
 }
 
-static void static_setBackgroundMusicVolume(int volume)
+static void static_setBackgroundMusicVolume(float volume)
 {
     [SimpleAudioEngine sharedEngine].backgroundMusicVolume = volume;
 }
      
-static int static_getEffectsVolume()
+static float static_getEffectsVolume()
 {
-    return (int)[[SimpleAudioEngine sharedEngine] effectsVolume];
+    return [[SimpleAudioEngine sharedEngine] effectsVolume];
 }
      
-static void static_setEffectsVolume(int volume)
+static void static_setEffectsVolume(float volume)
 {
     [SimpleAudioEngine sharedEngine].effectsVolume = volume;
 }
@@ -190,22 +190,22 @@ namespace CocosDenshion
                 return static_isBackgroundMusicPlaying();
 	}
 
-	int SimpleAudioEngine::getBackgroundMusicVolume()
+	float SimpleAudioEngine::getBackgroundMusicVolume()
 	{
-                return (int)static_getBackgroundMusicVolume();
+                return static_getBackgroundMusicVolume();
 	}
 
-	void SimpleAudioEngine::setBackgroundMusicVolume(int volume)
+	void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 	{
                  static_setBackgroundMusicVolume(volume);
 	}
 
-	int SimpleAudioEngine::getEffectsVolume()
+	float SimpleAudioEngine::getEffectsVolume()
 	{
                 return (int)static_getEffectsVolume();
 	}
 
-	void SimpleAudioEngine::setEffectsVolume(int volume)
+	void SimpleAudioEngine::setEffectsVolume(float volume)
 	{
                 static_setEffectsVolume(volume);
 	}
@@ -228,10 +228,5 @@ namespace CocosDenshion
 	void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	{
                 static_unloadEffect(pszFilePath);
-	}
-
-	void SimpleAudioEngine::unloadEffectAll()
-	{
-
 	}
 }

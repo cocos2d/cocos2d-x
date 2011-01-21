@@ -159,12 +159,12 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 }
 
 // properties
-int SimpleAudioEngine::getBackgroundMusicVolume()
+float SimpleAudioEngine::getBackgroundMusicVolume()
 {
     return s_nBackgroundMusicVolume;
 }
 
-void SimpleAudioEngine::setBackgroundMusicVolume(int volume)
+void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
     if (volume > 100)
     {
@@ -183,12 +183,12 @@ void SimpleAudioEngine::setBackgroundMusicVolume(int volume)
     s_nBackgroundMusicVolume = volume;
 }
 
-int SimpleAudioEngine::getEffectsVolume()
+float SimpleAudioEngine::getEffectsVolume()
 {
     return s_nEffectsVolume;
 }
 
-void SimpleAudioEngine::setEffectsVolume(int volume)
+void SimpleAudioEngine::setEffectsVolume(float volume)
 {
     if (volume > 100)
     {
@@ -252,9 +252,9 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
     s_pDataManager->unloadEffect(pszFilePath);
 }
 
-void SimpleAudioEngine::unloadEffectAll()
-{
-    s_pDataManager->removeAllEffects();
-}
+// void SimpleAudioEngine::unloadEffectAll()
+// {
+//     s_pDataManager->removeAllEffects();
+// }
 
 } // end of namespace CocosDenshion
