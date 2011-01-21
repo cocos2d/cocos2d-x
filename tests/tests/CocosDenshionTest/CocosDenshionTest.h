@@ -18,6 +18,7 @@ private:
 	CCMenu* m_pItmeMenu;
 	CGPoint m_tBeginPos;
 	int m_nTestCount;
+	unsigned int m_nSoundId;
 };
 
 class CocosDenshionTestScene : public TestScene
