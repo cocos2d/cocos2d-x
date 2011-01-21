@@ -51,6 +51,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 public class Cocos2dxActivity extends Activity{
+	public static int screenWidth;
+    public static int screenHeight;
+    private static Cocos2dxMusic backgroundMusicPlayer;
+    private static Cocos2dxSound soundPlayer;
+    private static native void nativeSetPaths(String apkPath);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,71 @@ public class Cocos2dxActivity extends Activity{
         getWindowManager().getDefaultDisplay().getMetrics(dm);      
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
+        
+        // init media player and sound player
+        backgroundMusicPlayer = new Cocos2dxMusic(getApplicationContext());
+        soundPlayer = new Cocos2dxSound(getApplicationContext());
+    }
+    
+    public static void playBackgroundMusic(String path, boolean isLoop){
+    	backgroundMusicPlayer.playBackgroundMusic(path, isLoop);
+    }
+    
+    public static void stopBackgroundMusic(){
+    	backgroundMusicPlayer.stopBackgroundMusic();
+    }
+    
+    public static void pauseBackgroundMusic(){
+    	backgroundMusicPlayer.pauseBackgroundMusic();
+    }
+    
+    public static void resumeBackgroundMusic(){
+    	backgroundMusicPlayer.resumeBackgroundMusic();
+    }
+    
+    public static void rewindBackgroundMusic(){
+    	backgroundMusicPlayer.rewindBackgroundMusic();
+    }
+    
+    public static boolean isBackgroundMusicPlaying(){
+    	return backgroundMusicPlayer.isBackgroundMusicPlaying();
+    }
+    
+    public static float getBackgroundMusicVolume(){
+    	return backgroundMusicPlayer.getBackgroundVolume();
+    }
+    
+    public static void setBackgroundMusicVolume(float volume){
+    	backgroundMusicPlayer.setBackgroundVolume(volume);
+    }
+    
+    public static int playEffect(String path){
+    	return soundPlayer.playEffect(path);
+    }
+    
+    public static void stopEffect(int soundId){
+    	soundPlayer.stopEffect(soundId);
+    }
+    
+    public static float getEffectsVolume(){
+    	return soundPlayer.getEffectsVolume();
+    }
+    
+    public static void setEffectsVolume(float volume){
+    	soundPlayer.setEffectsVolume(volume);
+    }
+    
+    public static void preloadEffect(String path){
+    	soundPlayer.playEffect(path);
+    }
+    
+    public static void unloadEffect(String path){
+    	soundPlayer.unloadEffect(path);
+    }
+    
+    public static void end(){
+    	backgroundMusicPlayer.end();
+    	soundPlayer.end();
     }
     
     protected void setPackgeName(String packageName) {
@@ -79,8 +149,4 @@ public class Cocos2dxActivity extends Activity{
         // add this link at the renderer class
         nativeSetPaths(apkFilePath);
     }
-    
-    public static int screenWidth;
-    public static int screenHeight;
-    private static native void nativeSetPaths(String apkPath);
 }

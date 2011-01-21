@@ -22,18 +22,24 @@ public class TestsDemo extends Cocos2dxActivity{
 	 @Override
 	 protected void onPause() {
 	     super.onPause();
-	     mGLView.onPause();
 	 }
 
 	 @Override
 	 protected void onResume() {
 	     super.onResume();
-	     mGLView.onResume();
+	 }
+	 
+	 protected void onDestroy()
+	 {
+		 super.onDestroy();
+		 
+		 android.os.Process.killProcess(android.os.Process.myPid());
 	 }
 	  
 	 private GLSurfaceView mGLView;
 	
      static {
+    	 System.loadLibrary("cocosdenshion");
     	 System.loadLibrary("chipmunk");
     	 System.loadLibrary("box2d");
     	 System.loadLibrary("cocos2d");

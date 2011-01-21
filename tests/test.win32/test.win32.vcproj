@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\CocosDenshion\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
+				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib libCocosDenshion.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -845,6 +845,18 @@
 				</File>
 				<File
 					RelativePath="..\tests\KeypadTest\KeypadTest.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CocosDenshionTest"
+				>
+				<File
+					RelativePath="..\tests\CocosDenshionTest\CocosDenshionTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\CocosDenshionTest\CocosDenshionTest.h"
 					>
 				</File>
 			</Filter>
