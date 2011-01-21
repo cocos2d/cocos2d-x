@@ -89,10 +89,10 @@ namespace   cocos2d {
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
     }
 
-	void CCXApplication::setAnimationInterval(double interval)
-	{
-		// TBD
-	}
+        void CCXApplication::setAnimationInterval(double interval)
+        {
+                [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
+        }
 	
 	//////////////////////////////////////////////////////////////////////////
 	/// Implement static class member
