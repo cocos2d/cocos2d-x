@@ -82,7 +82,7 @@ static void static_setBackgroundMusicVolume(float volume)
      
 static float static_getEffectsVolume()
 {
-    return [SimpleAudioEngine sharedEngine] effectsVolume];
+    return [[SimpleAudioEngine sharedEngine] effectsVolume];
 }
      
 static void static_setEffectsVolume(float volume)
