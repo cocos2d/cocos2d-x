@@ -1,6 +1,3 @@
-// to enable CCLOG()
-#define COCOS2D_DEBUG 1
-
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
