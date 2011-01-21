@@ -92,7 +92,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/Ball.o \
 	$(OBJECTS_DIR)/Paddle.o \
 	$(OBJECTS_DIR)/TouchesTest.o \
-	$(OBJECTS_DIR)/TransitionsTest.o
+	$(OBJECTS_DIR)/TransitionsTest.o \
+	$(OBJECTS_DIR)/CocosDenshionTest.o
 
 ADD_OBJECTS += 
 
@@ -290,4 +291,8 @@ $(OBJECTS_DIR)/TouchesTest.o : ../tests/TouchesTest/TouchesTest.cpp
 
 $(OBJECTS_DIR)/TransitionsTest.o : ../tests/TransitionsTest/TransitionsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TransitionsTest.o ../tests/TransitionsTest/TransitionsTest.cpp
+
+
+$(OBJECTS_DIR)/CocosDenshionTest.o : ../tests/CocosDenshionTest/CocosDenshionTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CocosDenshionTest.o ../tests/CocosDenshionTest/CocosDenshionTest.cpp
 
