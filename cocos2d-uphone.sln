@@ -14,11 +14,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocos2d-uphone", "cocos2dx\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion", "CocosDenshion\proj.uphone\CocosDenshion.uphone.vcproj", "{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAudioEngine", "TestAudioEngine.uphone\TestAudioEngine.vcproj", "{93D51450-73EC-48FA-9CFB-2095757678B1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0} = {AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "HelloWorld\uphone\HelloWorld.uphone.vcproj", "{74589012-5241-4918-997A-C0105ABD4DEC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
@@ -58,10 +53,6 @@ Global
 		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Debug|Win32.Build.0 = Debug|Win32
 		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Release|Win32.ActiveCfg = Release|Win32
 		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}.Release|Win32.Build.0 = Release|Win32
-		{93D51450-73EC-48FA-9CFB-2095757678B1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{93D51450-73EC-48FA-9CFB-2095757678B1}.Debug|Win32.Build.0 = Debug|Win32
-		{93D51450-73EC-48FA-9CFB-2095757678B1}.Release|Win32.ActiveCfg = Release|Win32
-		{93D51450-73EC-48FA-9CFB-2095757678B1}.Release|Win32.Build.0 = Release|Win32
 		{74589012-5241-4918-997A-C0105ABD4DEC}.Debug|Win32.ActiveCfg = Debug|Win32
 		{74589012-5241-4918-997A-C0105ABD4DEC}.Debug|Win32.Build.0 = Debug|Win32
 		{74589012-5241-4918-997A-C0105ABD4DEC}.Release|Win32.ActiveCfg = Release|Win32
