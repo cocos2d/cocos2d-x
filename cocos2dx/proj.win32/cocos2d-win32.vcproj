@@ -551,10 +551,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCXApplication.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCXEGLView.h"
 				>
 			</File>
@@ -564,10 +560,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCXUIAccelerometer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCXUIImage.h"
 				>
 			</File>
 			<File
@@ -755,10 +747,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCXApplication_platform.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCXEGLView_platform.h"
 				>
 			</File>
@@ -779,14 +767,6 @@
 				>
 				<File
 					RelativePath="..\platform\win32\CCNS_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXApplication_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXApplication_win32.h"
 					>
 				</File>
 				<File
