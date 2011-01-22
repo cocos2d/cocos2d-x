@@ -171,7 +171,7 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 
 float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-	return 100;
+	return 1.0;
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
@@ -180,7 +180,7 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-	return 100;
+	return 1.0;
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
