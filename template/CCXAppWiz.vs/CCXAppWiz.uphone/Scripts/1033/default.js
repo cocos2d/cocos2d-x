@@ -190,7 +190,7 @@ function AddConfig(proj, strProjectName) {
             var config = proj.Object.Configurations(astrConfigName[nCntr]);
 
             if (bDebug) {
-                strDefinitions = '_DEBUG;' + strDefinitions;
+                strDefinitions = '_DEBUG;COCOS2D_DEBUG=1' + strDefinitions;
             } 
             else {
                 strDefinitions = 'NDEBUG;' + strDefinitions;
