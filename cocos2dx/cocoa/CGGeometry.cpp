@@ -137,7 +137,7 @@ bool CGRect::CGRectIntersectsRect(const CGRect& rectA, const CGRect& rectB)
 	return !(CGRectGetMaxX(rectA) < CGRectGetMinX(rectB)||
 			CGRectGetMaxX(rectB) < CGRectGetMinX(rectA)||
 			CGRectGetMaxY(rectA) < CGRectGetMinY(rectB)||
-			CGRectGetMaxY(rectB) < CGRectGetMinY(rectB));
+			CGRectGetMaxY(rectB) < CGRectGetMinY(rectA));
 }
 
 }//namespace   cocos2d {

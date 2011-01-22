@@ -13,9 +13,27 @@ namespace   cocos2d {
 
 static const Int32 CCX_ON_APPLICATION_IDLE = (EVENT_FirstUser + EVENT_LastUser) / 2;
 
+// #undef _TRANZDA_VM_
+#ifdef _TRANZDA_VM_
+static  LARGE_INTEGER s_nAnimationInterval;
+static  LARGE_INTEGER s_nFreq;
+static  LARGE_INTEGER s_nLast;
+#else
+#include <sys/time.h>
+static long long s_nAnimationInterval;
+static long long s_nLast;
+static long long getTimeOfDayMicroSecond()
+{
+    timeval val;
+    gettimeofday(&val, NULL);
+    return (long long)val.tv_sec * 1000 * 1000 + val.tv_usec;
+}
+#endif
+
 CCXApplication::CCXApplication()
 : m_bRunning(FALSE)
 , m_bNeedStop(FALSE)
+, m_bInBackground(FALSE)
 {
     memset(&m_tMsg, 0, sizeof(m_tMsg));
     SS_GetCurrentGTID(&m_tMsg.gtid);
@@ -54,6 +72,12 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
             CCScheduler::purgeSharedScheduler();
             SendStopEvent();
         }
+#ifdef _TRANZDA_VM_
+        QueryPerformanceFrequency(&s_nFreq);
+        QueryPerformanceCounter(&s_nLast);
+#else
+        s_nLast = getTimeOfDayMicroSecond();
+#endif
         bHandled = TRUE;
         break;
 
@@ -63,7 +87,12 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
     case EVENT_AppActiveNotify:
         if (pEvent->sParam1 == 0)
         {
-            applicationDidEnterBackground();
+            if (!m_bInBackground)
+            {
+                applicationDidEnterBackground();
+                m_bInBackground = true;
+            }
+
             if (CCDirector::sharedDirector()->isPaused())
             {
                StopMainLoop();
@@ -73,7 +102,12 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
         }
         else if (pEvent->sParam1 > 0)
         {
-            applicationWillEnterForeground();
+            if (m_bInBackground)
+            {
+                applicationWillEnterForeground();
+                m_bInBackground = false;
+            }
+
             StartMainLoop();
             
             CfgTurnOnBackLightDelay(0x7fffffff);
@@ -129,6 +163,17 @@ CCXApplication * CCXApplication::sharedApplication()
     return (CCXApplication *)TApplication::GetCurrentApplication();
 }
 
+void CCXApplication::setAnimationInterval(double interval)
+{
+#ifdef _TRANZDA_VM_
+    LARGE_INTEGER nFreq;
+    QueryPerformanceFrequency(&nFreq);
+    s_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
+#else
+    s_nAnimationInterval = (long long)(interval * 1000 * 1000);
+#endif
+}
+
 Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 {
     CCXApplication *    pThis = CCXApplication::sharedApplication();
@@ -142,7 +187,26 @@ Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
         }
         else
         {
-            pView->UpdateWindow(0);
+#ifdef _TRANZDA_VM_
+            LARGE_INTEGER nNow;
+            QueryPerformanceCounter(&nNow);
+            if (nNow.QuadPart - s_nLast.QuadPart >= s_nAnimationInterval.QuadPart)
+            {
+                pView->UpdateWindow(0);
+                s_nLast.QuadPart = nNow.QuadPart;
+            }
+#else
+            long long nNow = getTimeOfDayMicroSecond();
+            if (nNow - s_nLast >= s_nAnimationInterval)
+            {
+                pView->UpdateWindow(0);
+                s_nLast = nNow;
+            }
+#endif
+            else
+            {
+                Sys_Sleep(0);
+            }
             Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &pThis->m_tMsg);
         }
     }
@@ -154,10 +218,9 @@ const char* CCXApplication::getAppDataPath()
     return m_AppDataPath;
 }
 
-void CCXApplication::setAnimationInterval(double interval)
+bool CCXApplication::isInBackground()
 {
-	// tbd
+    return m_bInBackground;
 }
 
 }
-

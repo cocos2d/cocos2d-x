@@ -160,30 +160,30 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 	s_List.erase(nID);
 }
 
-void SimpleAudioEngine::unloadEffectAll()
-{
-	s_List.clear();
-}
+// void SimpleAudioEngine::unloadEffectAll()
+// {
+// 	s_List.clear();
+// }
 
 //////////////////////////////////////////////////////////////////////////
 // volume interface
 //////////////////////////////////////////////////////////////////////////
 
-int SimpleAudioEngine::getBackgroundMusicVolume()
+float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-	return 100;
+	return 1.0;
 }
 
-void SimpleAudioEngine::setBackgroundMusicVolume(int volume)
+void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
 }
 
-int SimpleAudioEngine::getEffectsVolume()
+float SimpleAudioEngine::getEffectsVolume()
 {
-	return 100;
+	return 1.0;
 }
 
-void SimpleAudioEngine::setEffectsVolume(int volume)
+void SimpleAudioEngine::setEffectsVolume(float volume)
 {
 }
 

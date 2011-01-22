@@ -188,7 +188,7 @@ function AddConfigurations(proj, strProjectName) {
             var strDefines = GetPlatformDefine(config);
             strDefines += "_WINDOWS;STRICT;";
             if (bDebug)
-                strDefines += "_DEBUG";
+                strDefines += "_DEBUG;COCOS2D_DEBUG=1";
             else
                 strDefines += "NDEBUG";
             CLTool.PreprocessorDefinitions = strDefines;

@@ -59,19 +59,21 @@ LOCAL_SRC_FILES := tests.cpp \
 ../../../tests/TransitionsTest/TransitionsTest.cpp \
 ../../../tests/controller.cpp \
 ../../../tests/testBasic.cpp \
-../../../AppDelegate.cpp
+../../../AppDelegate.cpp \
+../../../tests/CocosDenshionTest/CocosDenshionTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                    $(LOCAL_PATH)/../../../../cocos2dx/include \
                    $(LOCAL_PATH)/../../../tests \
                    $(LOCAL_PATH)/../../../.. \
                    $(LOCAL_PATH)/../../.. \
-                   $(LOCAL_PATH)/../../../../chipmunk/include/chipmunk
+                   $(LOCAL_PATH)/../../../../chipmunk/include/chipmunk \
+                   $(LOCAL_PATH)/../../../../CocosDenshion/include
                    
 # it is used for ndk-r4
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \
                 -lGLESv1_CM \
-                -lcocos2d -llog \
+                -lcocos2d -lcocosdenshion -llog \
                 -lbox2d -lchipmunk
 
 # it is used for ndk-r5    
@@ -79,7 +81,7 @@ LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \
 # mapping (i.e /cygdrive/c/ instead of C:/)    
 #LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
 #                -lGLESv1_CM \
-#                -lcocos2d -llog \
+#                -lcocos2d -llog -lcocosdenshion \
 #                -lbox2d -lchipmunk
             
 include $(BUILD_SHARED_LIBRARY)

@@ -88,7 +88,8 @@ public:
     */
     const char* getAppDataPath();
 
-	void setAnimationInterval(double interval);
+    void setAnimationInterval(double interval);
+    bool isInBackground();
 
 private:
     static Int32 _OnAppIdle(MESSAGE_t * pMsg, UInt32 uData);
@@ -96,6 +97,7 @@ private:
     MESSAGE_t   m_tMsg;
     bool        m_bRunning;
     bool        m_bNeedStop;
+    bool        m_bInBackground;
     char        m_AppDataPath[EOS_FILE_MAX_PATH];
 };
 

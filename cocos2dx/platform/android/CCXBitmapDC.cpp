@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "SkPaint.h"
 #include "SkScalar.h"
 #include "SkCanvas.h"
+#include "SkTypeface.h"
 
 namespace cocos2d {
 
@@ -56,7 +57,7 @@ namespace cocos2d {
 		m_nHeight = 0;
 		m_pData = NULL;
 		
-		drawText(text, fontSize);
+		drawText(text, fontName, fontSize);
 	}
 	
 	CCXBitmapDC::~CCXBitmapDC()
@@ -82,12 +83,16 @@ namespace cocos2d {
     	return m_pData;
     }
 	
-	void CCXBitmapDC::drawText(const char *text, float fontSize)
+	void CCXBitmapDC::drawText(const char *text, const char *fontName, float fontSize)
 	{
 		// init paint
 		SkPaint *paint = new SkPaint();
 		paint->setColor(SK_ColorWHITE);
 		paint->setTextSize(fontSize);
+
+        // create font
+        SkTypeface *pTypeFace = SkTypeface::CreateFromName(fontName, SkTypeface::kNormal);
+        paint->setTypeface( pTypeFace ); 
 
         // get text width and height
         SkPaint::FontMetrics font;

@@ -66,7 +66,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib libEGL.lib libgles_cm.lib libBox2d.lib"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib libEGL.lib libgles_cm.lib libBox2d.lib libCocosDenshion.lib"
 				OutputFile="$(OutDir)/libCocos2dTests.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../../PRJ_TG3/Common/ICU/lib;../../../PRJ_TG3/Mtapi/Win32/lib;../../../PRJ_TG3/LIB/Win32Lib;../../../PRJ_TG3/Common/SoftSupport;&quot;$(OutDir)&quot;"
@@ -884,6 +884,18 @@
 				</File>
 				<File
 					RelativePath="..\tests\KeypadTest\KeypadTest.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CocosDenshionTest"
+				>
+				<File
+					RelativePath="..\tests\CocosDenshionTest\CocosDenshionTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\CocosDenshionTest\CocosDenshionTest.h"
 					>
 				</File>
 			</Filter>

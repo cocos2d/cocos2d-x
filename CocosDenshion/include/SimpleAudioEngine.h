@@ -101,26 +101,26 @@ public:
 
     // properties
     /**
-    @brief The volume of the background music max value is 100,the min value is 0
+    @brief The volume of the background music max value is 1.0,the min value is 0.0
     */
-    int getBackgroundMusicVolume();
+    float getBackgroundMusicVolume();
 
     /**
     @brief set the volume of background music
-    @param volume must be in 0~100
+    @param volume must be in 0.0~1.0
     */
-    void setBackgroundMusicVolume(int volume);
+    void setBackgroundMusicVolume(float volume);
 
     /**
-    @brief The volume of the effects max value is 100,the min value is 0
+    @brief The volume of the effects max value is 1.0,the min value is 0.0
     */
-    int getEffectsVolume();
+    float getEffectsVolume();
 
     /**
     @brief set the volume of sound effecs
-    @param volume must be in 0~100
+    @param volume must be in 0.0~1.0
     */
-    void setEffectsVolume(int volume);
+    void setEffectsVolume(float volume);
 
     // for sound effects
     /**
@@ -147,11 +147,6 @@ public:
     @param[in]		pszFilePath		The path of the effect file,or the FileName of T_SoundResInfo
     */
     void unloadEffect(const char* pszFilePath);
-
-	/**
-	@brief          unload all preloaded effect from internal buffer
-	*/
-	void unloadEffectAll();
 };
 
 } // end of namespace CocosDenshion

@@ -1,20 +1,26 @@
 # set params
 ANDROID_NDK_ROOT=/cygdrive/e/android-ndk-r4-crystax
 COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
-
-# copy resources
-
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
+# make sure assets is exist
 if [ -d $TESTS_ROOT/assets ]; then
-    echo "resources already exist"
-else
-    mkdir $TESTS_ROOT/assets
-    cp -R $COCOS2DX_ROOT/tests/Res/animations $TESTS_ROOT/assets
-    cp -R $COCOS2DX_ROOT/tests/Res/fonts $TESTS_ROOT/assets
-    cp -R $COCOS2DX_ROOT/tests/Res/Images $TESTS_ROOT/assets
-    cp -R $COCOS2DX_ROOT/tests/Res/TileMaps $TESTS_ROOT/assets
+    rm -rf $TESTS_ROOT/assets
 fi
+
+mkdir $TESTS_ROOT/assets
+
+# copy resources
+for file in $COCOS2DX_ROOT/tests/Res/*
+do
+    if [ -d $file ]; then
+        cp -rf $file $TESTS_ROOT/assets
+    fi
+
+    if [ -f $file ]; then
+        cp $file $TESTS_ROOT/assets
+    fi
+done
 
 
 # build

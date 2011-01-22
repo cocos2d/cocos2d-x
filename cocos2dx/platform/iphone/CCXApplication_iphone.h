@@ -57,7 +57,7 @@ public:
 	
     void run();
 	
-	void setAnimationInterval(double interval);
+        void setAnimationInterval(double interval);
 
     /**
      @brief	Get current applicaiton instance.
