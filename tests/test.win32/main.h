@@ -11,4 +11,4 @@
 
 extern HINSTANCE g_hInstance;
 
-#endif	// __WINMAIN_H__
+#endif	// __MAIN_H__

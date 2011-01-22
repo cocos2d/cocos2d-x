@@ -32,17 +32,41 @@ THE SOFTWARE.
 
 #include <string.h>
 
+static bool isValidFontName(const char *fontName)
+{
+        bool ret = false;
+        
+        NSString *fontNameNS = [NSString stringWithUTF8String:fontName];
+        
+        for (NSString *familiName in [UIFont familyNames]) {
+                if ([familiName isEqualToString:fontNameNS]) {
+                        ret = true;
+                        goto out;
+                }
+             
+                for(NSString *font in [UIFont fontNamesForFamilyName: familiName]){
+                        if ([font isEqualToString: fontNameNS]){
+                                ret = true;
+                                goto out;
+                        }
+                }
+        }
+        
+out:
+        return ret;
+}
+
 static void initWithString(const char *content, const char *fontName, float size, /*input params*/
 						   int *pWidth, int *pHeight, unsigned char** ppData)  /*output params*/
 {
-	NSUInteger				width, height;
+	NSUInteger			width, height;
 	unsigned char*			data;
 	CGContextRef			context;
-	CGColorSpaceRef			colorSpace;
-	id						uiFont;
+	CGColorSpaceRef		colorSpace;
+	id				uiFont;
 	NSString                *string;
 	CGSize                  dimensions;
-	UITextAlignment         alignment;
+	UITextAlignment   alignment;
 	NSString                *name;
     
 	if (!pWidth || !pHeight || !ppData)
@@ -52,7 +76,8 @@ static void initWithString(const char *content, const char *fontName, float size
 	
 	alignment = UITextAlignmentCenter;
 	string = [[NSString alloc] initWithUTF8String:content];
-	name = @"Thonburi";
+                //name = isValidFontName(fontName) ? [[NSString alloc] initWithUTF8String:fontName] : @"Thonburi";
+        name = isValidFontName(fontName) ? [[NSString alloc] initWithUTF8String:fontName] : @"MarkerFelt-Wide";
 	dimensions = [string sizeWithFont:[UIFont fontWithName:name size:size]];
     
 	width = dimensions.width;
