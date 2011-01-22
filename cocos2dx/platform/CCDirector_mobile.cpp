@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "CCSpriteFrameCache.h"
 #include "NSAutoreleasePool.h"
 #include "platform/platform.h"
-#include "CCXApplication.h"
+#include "ccxApplication.h"
 #include "CCLabelBMFont.h"
 #include "CCActionManager.h"
 #include "CCLabelTTF.h"
@@ -857,7 +857,10 @@ ccDeviceOrientation CCDirector::getDeviceOrientation(void)
 void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 {
 	ccDeviceOrientation eNewOrientation;
-	eNewOrientation = CCXApplication::sharedApplication()->setDeviceOrientation(kDeviceOrientation);
+
+	eNewOrientation = (ccDeviceOrientation)ccxApplication::sharedApplication().setOrientation(
+        (ccxApplication::Orientation)kDeviceOrientation);
+
 	if (m_eDeviceOrientation != eNewOrientation)
 	{
 		m_eDeviceOrientation = kDeviceOrientation;
@@ -927,7 +930,7 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
-	CCXApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
+	ccxApplication::sharedApplication().setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
