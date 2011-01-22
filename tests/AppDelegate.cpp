@@ -1,8 +1,9 @@
 #include "AppDelegate.h"
+
 #include "cocos2d.h"
 #include "tests/controller.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 // static void TimerCallback1(Int32 nTimerId, UInt32 uUserData);
 AppDelegate::AppDelegate()

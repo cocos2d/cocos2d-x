@@ -1,5 +1,6 @@
 #include "main.h"
-#include "../AppDelegate.h"
+
+#include "Application.h"
 
 HINSTANCE g_hInstance;
 
@@ -14,8 +15,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	g_hInstance = hInstance;
 
 	int nRet = 0;
-	AppDelegate app;
-	nRet = app.Run();
+	Application app;
+	nRet = app.run();
 
 	return nRet;
 }
