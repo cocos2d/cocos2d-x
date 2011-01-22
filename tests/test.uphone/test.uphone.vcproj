@@ -899,10 +899,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="CocosDenshonTest"
-				>
-			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

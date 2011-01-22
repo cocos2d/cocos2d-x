@@ -7,10 +7,10 @@ Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
 	AppDelegate app;
 
-// #ifndef _TRANZDA_VM_  // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+#ifndef _TRANZDA_VM_  // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
 	cocos2d::CCFileUtils::setResource(NULL, "TestCocos2dx.zip");
 	CocosDenshion::SimpleAudioEngine::setResource(NULL, "TestCocos2dx.zip");
-// #endif
+#endif
 
 	app.Run();
 
