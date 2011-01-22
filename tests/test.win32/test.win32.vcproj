@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;..\tests;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;..\tests;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;..\tests;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;..\tests;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -180,6 +180,14 @@
 		<Filter
 			Name="framework"
 			>
+			<File
+				RelativePath=".\Application.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Application.h"
+				>
+			</File>
 			<File
 				RelativePath=".\main.cpp"
 				>
