@@ -14,8 +14,8 @@ static SoundPlayer       *s_pBackPlayer       = NULL;
 static TSoundPlayer      *s_pEffectPlayer     = NULL;
 
 static std::string  s_strBackMusicName = "";
-static int          s_nBackgroundMusicVolume = 100;
-static int          s_nEffectsVolume = 100;
+static float        s_fBackgroundMusicVolume = 1.0f;
+static float        s_fEffectsVolume = 1.0f;
 static bool         s_bWillPlayBackgroundMusic = false;
 
 SimpleAudioEngine::SimpleAudioEngine()
@@ -31,7 +31,7 @@ SimpleAudioEngine::SimpleAudioEngine()
         delete s_pBackPlayer;
     }
     s_pBackPlayer    = new SoundPlayer();
-    setBackgroundMusicVolume(s_nBackgroundMusicVolume);
+    setBackgroundMusicVolume(s_fBackgroundMusicVolume);
 
     if (s_pDataManager)
     {
@@ -161,45 +161,45 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 // properties
 float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-    return s_nBackgroundMusicVolume;
+    return s_fBackgroundMusicVolume;
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
-    if (volume > 100)
+    if (volume > 1.0f)
     {
-        volume = 100;
+        volume = 1.0f;
     }
-    else if (volume < 0)
+    else if (volume < 0.0f)
     {
-        volume = 0;
+        volume = 0.0f;
     }
 
     if (s_pBackPlayer)
     {
-        s_pBackPlayer->SetVolumeValue(volume);
+        s_pBackPlayer->SetVolumeValue((Int32) (volume * 100));
     }
 
-    s_nBackgroundMusicVolume = volume;
+    s_fBackgroundMusicVolume = volume;
 }
 
 float SimpleAudioEngine::getEffectsVolume()
 {
-    return s_nEffectsVolume;
+    return s_fEffectsVolume;
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
-    if (volume > 100)
+    if (volume > 1.0f)
     {
-        volume = 100;
+        volume = 1.0f;
     }
-    else if (volume < 0)
+    else if (volume < 0.0f)
     {
-        volume = 0;
+        volume = 0.0f;
     }
 
-    s_nEffectsVolume = volume;
+    s_fEffectsVolume = volume;
 }
 
 
@@ -218,7 +218,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
         soundParam.pSoundData = pElement->pDataBuffer;
         soundParam.dataLen    = pElement->nDataSize;
         soundParam.dataType   = SOUND_TYPE_WAVE;
-        soundParam.volume     = (int) (0xFFFF * ((float) s_nEffectsVolume / 100));
+        soundParam.volume     = (int) (0xFFFF * s_fEffectsVolume);
 
         nRet = s_pEffectPlayer->Play(soundParam);
     } while (0);
