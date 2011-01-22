@@ -49,7 +49,6 @@ public:
     void    swapBuffers();
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor); 
-	void    setAnimationInterval(double interval) {};
     
 private:
 	int m_nWidth;
