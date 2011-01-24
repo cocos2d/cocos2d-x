@@ -154,18 +154,18 @@ void SchedulerAutoremove::onEnter()
 void SchedulerAutoremove::autoremove(ccTime dt)
 {
     accum += dt;
-    ////NSLog(@"Time: %f", accum);
+    CCXLog("Time: %f", accum);
 
     if( accum > 3 )
     {
         unschedule(schedule_selector(SchedulerAutoremove::autoremove));
-        ////NSLog(@"scheduler removed");
+        CCXLog("scheduler removed");
     }
 }
 
 void SchedulerAutoremove::tick(ccTime dt)
 {
-    ////NSLog(@"This scheduler should not be removed");
+    CCXLog("This scheduler should not be removed");
 }
 
 std::string SchedulerAutoremove::title()
@@ -194,12 +194,12 @@ void SchedulerPauseResume::onEnter()
 
 void SchedulerPauseResume::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCXLog("tick1");
 }
 
 void SchedulerPauseResume::tick2(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCXLog("tick2");
 }
 
 void SchedulerPauseResume::pause(ccTime dt)
@@ -235,22 +235,22 @@ void SchedulerUnscheduleAll::onEnter()
 
 void SchedulerUnscheduleAll::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCXLog("tick1");
 }
 
 void SchedulerUnscheduleAll::tick2(ccTime dt)
 {
-    ////NSLog(@"tick2");
+    CCXLog("tick2");
 }
 
 void SchedulerUnscheduleAll::tick3(ccTime dt)
 {
-    ////NSLog(@"tick3");
+    CCXLog("tick3");
 }
 
 void SchedulerUnscheduleAll::tick4(ccTime dt)
 {
-    ////NSLog(@"tick4");
+    CCXLog("tick4");
 }
 
 void SchedulerUnscheduleAll::unscheduleAll(ccTime dt)
@@ -286,22 +286,22 @@ void SchedulerUnscheduleAllHard::onEnter()
 
 void SchedulerUnscheduleAllHard::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCXLog("tick1");
 }
 
 void SchedulerUnscheduleAllHard::tick2(ccTime dt)
 {
-    ////NSLog(@"tick2");
+    CCXLog("tick2");
 }
 
 void SchedulerUnscheduleAllHard::tick3(ccTime dt)
 {
-    ////NSLog(@"tick3");
+    CCXLog("tick3");
 }
 
 void SchedulerUnscheduleAllHard::tick4(ccTime dt)
 {
-    ////NSLog(@"tick4");
+    CCXLog("tick4");
 }
 
 void SchedulerUnscheduleAllHard::unscheduleAll(ccTime dt)
@@ -335,22 +335,22 @@ void SchedulerSchedulesAndRemove::onEnter()
 
 void SchedulerSchedulesAndRemove::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCXLog("tick1");
 }
 
 void SchedulerSchedulesAndRemove::tick2(ccTime dt)
 {
-    ////NSLog(@"tick2");
+    CCXLog("tick2");
 }
 
 void SchedulerSchedulesAndRemove::tick3(ccTime dt)
 {
-    ////NSLog(@"tick3");
+    CCXLog("tick3");
 }
 
 void SchedulerSchedulesAndRemove::tick4(ccTime dt)
 {
-    ////NSLog(@"tick4");
+    CCXLog("tick4");
 }
 
 std::string SchedulerSchedulesAndRemove::title()
@@ -488,12 +488,12 @@ void SchedulerUpdateAndCustom::onEnter()
 
 void SchedulerUpdateAndCustom::update(ccTime dt)
 {
-    ////NSLog(@"update called:%f", dt);
+    CCXLog("update called:%f", dt);
 }
 
 void SchedulerUpdateAndCustom::tick(ccTime dt)
 {
-    ////NSLog(@"custom selector called:%f",dt);
+    CCXLog("custom selector called:%f",dt);
 }
 
 void SchedulerUpdateAndCustom::stopSelectors(ccTime dt)
@@ -525,7 +525,7 @@ void SchedulerUpdateFromCustom::onEnter()
 
 void SchedulerUpdateFromCustom::update(ccTime dt)
 {
-    ////NSLog(@"update called:%f", dt);
+    CCXLog("update called:%f", dt);
 }
 
 void SchedulerUpdateFromCustom::schedUpdate(ccTime dt)
@@ -579,7 +579,7 @@ void RescheduleSelector::schedUpdate(ccTime dt)
 {
     m_nTicks++;
 
-    //CCLOG(@"schedUpdate: %.2f", dt);
+    CCXLog("schedUpdate: %.2f", dt);
     if ( m_nTicks > 3 )
     {
         m_fInterval += 1.0f;
