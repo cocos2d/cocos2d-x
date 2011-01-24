@@ -180,7 +180,7 @@ typedef enum {
 
 class CCLabelTTF;
 class CCScene;
-class cocos2d::CCXEGLView;
+class CCXEGLView;
 class NSEvent;
 class CCNode;
 class CCProjectionProtocol;
