@@ -121,7 +121,7 @@ public class Cocos2dxActivity extends Activity{
     }
     
     public static void preloadEffect(String path){
-    	soundPlayer.playEffect(path);
+    	soundPlayer.preloadEffect(path);
     }
     
     public static void unloadEffect(String path){
