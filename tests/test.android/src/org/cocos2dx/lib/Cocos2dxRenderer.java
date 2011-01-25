@@ -6,25 +6,37 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLSurfaceView;
 
 public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
-	private static long animationInterval = (long)(1.0 / 60 * 1000000000L);
-	private long now;
+	private final static long NANOSECONDSPERSECOND = 1000000000L;
+	private final static long NANOSECONDSPERMINISECOND = 1000000;
+	private static long animationInterval = (long)(1.0 / 60 * NANOSECONDSPERSECOND);
 	private long last;
 	
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-    	now = last = System.nanoTime();
-    	nativeInit(Cocos2dxActivity.screenWidth, Cocos2dxActivity.screenHeight);  	
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) { 	
+    	nativeInit(Cocos2dxActivity.screenWidth, Cocos2dxActivity.screenHeight); 
+    	last = System.nanoTime();
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h) {  	
     }
-
+    
     public void onDrawFrame(GL10 gl) {
-    	now = System.nanoTime();
     	
-    	if (now - last >= animationInterval){ 
-    		last = now;
-    		nativeRender();   		
-    	}
+    	long now = System.nanoTime();
+    	long interval = now - last;
+    	
+    	// should render a frame when onDrawFrame() is called
+    	// or there is a "ghost"
+    	nativeRender();   	
+   	
+    	// fps controlling
+    	if (interval < animationInterval){ 
+    		try {
+    			// because we render it before, so we should sleep twice time interval
+    			Thread.sleep((animationInterval - interval) * 2 / NANOSECONDSPERMINISECOND);
+    		} catch (Exception e){}
+    	}	
+    	
+    	last = now;
     }
     
     public void handleActionDown(float x, float y)
@@ -48,7 +60,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     }
     
     public static void setAnimationInterval(double interval){
-    	animationInterval = (long)(interval * 1000000000L);
+    	animationInterval = (long)(interval * NANOSECONDSPERSECOND);
     }
     
     private static native void nativeTouchesBegin(float x, float y);
