@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define _SIMPLE_AUDIO_ENGINE_H_
 
 #include "Export.h"
+#include <stddef.h>
 
 namespace CocosDenshion {
 
@@ -55,7 +56,7 @@ public:
     @param pszResPath  The absolute resource path
     @param pszZipFileName The relative path of the .zip file
     */
-    static void setResource(const char* pszResPath, const char* pszZipFileName);
+    static void setResource(const char* pszZipFileName, const char* pszResPath = NULL);
 
     /**
      @brief Preload background music

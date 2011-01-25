@@ -277,7 +277,7 @@ void setZipFilePath(const char* pZipFileName)
     strcat(s_pszZipFilePath, fullPath);
 }
 
-void CCFileUtils::setResource(const char* pszResPath, const char* pszZipFileName)
+void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
 {
     if (pszResPath != NULL && pszZipFileName != NULL)
     {
