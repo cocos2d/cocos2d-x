@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\CocosDenshion\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
+				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib libCocosDenshion.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
