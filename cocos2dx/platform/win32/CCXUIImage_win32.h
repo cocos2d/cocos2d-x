@@ -103,7 +103,6 @@ public:
     */
     static void setIsPopupNotify(bool bNotify);
     static bool getIsPopupNotify();
-    static bool s_bPopupNotify;
 
 private:
     bool loadPng(const char* strFileName);
@@ -112,6 +111,7 @@ private:
 
 private:
 	tImageInfo m_imageInfo;
+	static bool s_bPopupNotify;
 };
 }//namespace   cocos2d 
 
