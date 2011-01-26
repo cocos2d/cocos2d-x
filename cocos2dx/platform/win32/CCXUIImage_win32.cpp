@@ -51,6 +51,7 @@ typedef struct
 	int offset;
 }tImageSource;
 
+static bool s_bNotifyInitFailed = true;
 
 // because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
 // the function as a static function
@@ -153,9 +154,8 @@ bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageTy
 		bRet = false;
 		break;
 	}
-    
-#if defined(COCOS2D_DEBUG)
-	if (!bRet)
+
+	if (!bRet && s_bNotifyInitFailed)
 	{
 		// notify the loading error
 		std::string strErr = "Load ";
@@ -165,7 +165,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageTy
 		std::copy(strErr.begin(), strErr.end(), wsErr.begin());
 		MessageBox(NULL, wsErr.c_str(), L"cocos2d-x error", MB_OK);
 	}
-#endif
+
 	return bRet;
 }
 
@@ -440,6 +440,16 @@ bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 {
 	/// @todo need copy pBuffer data
 	return false;
+}
+
+void UIImage::setEnableInitFailedNotify(bool bNotify)
+{
+    s_bNotifyInitFailed = bNotify;
+}
+
+bool UIImage::getEnableInitFailedNotify()
+{
+    return s_bNotifyInitFailed;
 }
 
 }//namespace   cocos2d 

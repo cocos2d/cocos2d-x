@@ -98,6 +98,12 @@ public:
 	/** get the image data */
 	unsigned char* getData(void);
 
+    /**
+    @brief Set/Get whether pop-up a message box when the image load failed
+    */
+    static void setEnableInitFailedNotify(bool bNotify);
+    static bool getEnableInitFailedNotify();
+
 private:
     bool loadPng(const char* strFileName);
 	bool loadPngFromStream(unsigned char *data, int nLength);
