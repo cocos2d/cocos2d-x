@@ -1,3 +1,24 @@
+cocos2d-0.99.5-x-0.7.2 @ Jan.26,2011
+ [all platforms]
+    - upgrade engine logic internal & interfaces to 0.99.5
+    - the list of menu items in tests is showing how to scroll now
+    - lots of bugs fixed
+ [iphone]
+    - add new project templates for Xcode
+    - add the c++ wrapper for CocosDenshion::SimpleAudioEngine
+    - support UTF8 charactors in text renderring, such as CCLabelTTF, CCMenuItemFont
+ [android]
+    - add CocosDenshion::SimpleAudioEngine implement on android
+    - the engine can adjust the apk filename automatically
+    - the engine will not crash at surface recreate, especially at background-to-foreground switching
+ [uphone]
+    - switch the game to background, then press power key will not cause the background music play again
+    - remove the methods of using resouce map in cocos2d-uphone & SimpleAudioEngine. 
+      Only zip resource is recommended and suppported.
+    - can auto find the installed path of your game, and load zip resource file from the current folder. 
+      No absolute path in code any more. Do this to support installing games to micro-SD card
+      
+
 cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
  [all platforms]
     - add CCKeypadDelegate class, which enable CCLayer to respond "back" key in uphone & android
