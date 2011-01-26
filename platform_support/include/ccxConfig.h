@@ -77,8 +77,12 @@ There are config below:
     #undef  CCX_TARGET_PLATFORM
     #define CCX_TARGET_PLATFORM         CCX_PLATFORM_WIN32
 
-    // win32 platform support multi-thread
     #define CCX_SUPPORT_MULTITHREAD     1
+    #if defined(UNICODE)
+        #define CCX_SUPPORT_UNICODE     1
+    #else
+        #define CCX_SUPPORT_UNICODE     0
+    #endif
 #endif
 
 //////////////////////////////////////////////////////////////////////////
@@ -120,6 +124,15 @@ There are config below:
     #define CCX_SUPPORT_MULTITHREAD     0
 #endif
 
+// Check user assigned supportive of unicode
+#if defined(CCX_ENABLE_UNICODE)
+#undef  CCX_SUPPORT_UNICODE
+#define CCX_SUPPORT_UNICODE             1
+#elif defined(CCX_DISABLE_UNICODE)
+#undef  CCX_SUPPORT_UNICODE
+#define CCX_SUPPORT_UNICODE             0
+#endif
+
 //////////////////////////////////////////////////////////////////////////
 // post configure
 //////////////////////////////////////////////////////////////////////////
@@ -139,6 +152,10 @@ There are config below:
 // cocos2d-x havn't support multi-thread yet
 #undef  CCX_SUPPORT_MULTITHREAD
 #define CCX_SUPPORT_MULTITHREAD         0
+
+// cocos2d-x havn't support unicode yet
+#undef  CCX_SUPPORT_UNICODE
+#define CCX_SUPPORT_UNICODE             0
 
 // Check the supportive of platform
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
