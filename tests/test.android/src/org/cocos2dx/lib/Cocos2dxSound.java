@@ -90,6 +90,11 @@ public class Cocos2dxSound {
 		} else {
 			// the effect is not prepared
 			soundId = preloadEffect(path);	
+			if (soundId == INVALID_SOUND_ID){
+				// can not preload effect
+				return INVALID_SOUND_ID;
+			}
+			
 			playEffect(path);
 		}
 		
