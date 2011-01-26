@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 
 class TBitmap;
-namespace   cocos2d {
+namespace   cocos2d {
 class CCXBitmapDC;
 
 /// @cond
@@ -102,7 +102,6 @@ public:
     */
     static void setIsPopupNotify(bool bNotify);
     static bool getIsPopupNotify();
-    static bool s_bPopupNotify;
 
 private:
 	bool loadPngFromStream(unsigned char *data, int nLength);
@@ -110,6 +109,7 @@ private:
 
 private:
 	tImageInfo m_imageInfo;
+	static bool s_bPopupNotify;
 };
 }//namespace   cocos2d 
 
