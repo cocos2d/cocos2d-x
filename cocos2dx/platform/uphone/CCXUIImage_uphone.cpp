@@ -53,6 +53,7 @@ typedef struct
 	int offset;
 }tImageSource;
 
+bool UIImage::s_bPopupNotify = true;
 
 // because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
 // the function as a static function
@@ -148,8 +149,7 @@ bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageTy
         }
     }
 
-#if defined(COCOS2D_DEBUG)
-	if (!bRet)
+	if (!bRet && s_bPopupNotify)
 	{
 		std::string strErr = "Load ";
 		strErr += strPath;
@@ -158,7 +158,6 @@ bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageTy
 		TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
 		TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
 	}
-#endif
 
 	return bRet;
 }
@@ -412,4 +411,15 @@ bool UIImage::initWithBitmap(const TBitmap* pBmp)
 
     return bRet;
 }
+
+void UIImage::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool UIImage::getIsPopupNotify()
+{
+    return s_bPopupNotify;
+}
+
 }//namespace   cocos2d 

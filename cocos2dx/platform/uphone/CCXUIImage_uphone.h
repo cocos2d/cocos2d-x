@@ -97,6 +97,13 @@ public:
 	/** get the image data */
 	unsigned char* getData(void);
 
+    /**
+    @brief Set/Get whether pop-up a message box when the image load failed
+    */
+    static void setIsPopupNotify(bool bNotify);
+    static bool getIsPopupNotify();
+    static bool s_bPopupNotify;
+
 private:
 	bool loadPngFromStream(unsigned char *data, int nLength);
     bool loadJpgFromStream(unsigned char *data, unsigned long nSize);
