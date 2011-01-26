@@ -100,8 +100,7 @@ public:
     @todo not implement now
     */
     static void setIsPopupNotify(bool bNotify);
-    static bool getIsPopupNotify();
-    static bool s_bPopupNotify;
+    static bool getIsPopupNotify();   
 
 private:
 	bool loadPngFromStream(unsigned char *data, int nLength);
@@ -109,6 +108,7 @@ private:
 
 private:
 	tImageInfo m_imageInfo;
+	static bool s_bPopupNotify;
 };
 }//namespace   cocos2d 
 
