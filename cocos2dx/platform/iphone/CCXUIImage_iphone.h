@@ -99,8 +99,9 @@ public:
     @brief Set/Get whether pop-up a message box when the image load failed
     @todo not implement now
     */
-    static void setEnableInitFailedNotify(bool bNotify) {}
-    static bool getEnableInitFailedNotify() {}
+    static void setIsPopupNotify(bool bNotify);
+    static bool getIsPopupNotify();
+    static bool s_bPopupNotify;
 
 private:
 	tImageInfo m_imageInfo;

@@ -297,5 +297,14 @@ bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 	return false;
 }
 
+void UIImage::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool UIImage::getIsPopupNotify()
+{
+    return s_bPopupNotify;
+}
 
 }//namespace   cocos2d 
