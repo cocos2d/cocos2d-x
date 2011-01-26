@@ -243,12 +243,12 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
             if (strlen(textureName) > 0)
             {
                 // set not pop-up message box when load image failed
-                bool bNotify = UIImage::getEnableInitFailedNotify();
-                UIImage::setEnableInitFailedNotify(false);
+                bool bNotify = UIImage::getIsPopupNotify();
+                UIImage::setIsPopupNotify(false);
                 this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
 
                 // reset the value of UIImage notify
-                UIImage::setEnableInitFailedNotify(bNotify);
+                UIImage::setIsPopupNotify(bNotify);
             }
 
 			// if it fails, try to get it from the base64-gzipped data			
