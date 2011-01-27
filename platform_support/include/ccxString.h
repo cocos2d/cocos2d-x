@@ -38,6 +38,7 @@ There are some useful tool for ccxString:
 - ccxStringToLower
 - ccxStringReplaceText
 - ccxStringExplode
+@todo ccxStringPrintf, ccxStringConvertToAnsi, ccxStringConvertToWide
 */
 
 #include <string>

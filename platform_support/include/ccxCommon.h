@@ -47,62 +47,62 @@ static const int kMaxLogLen = 255;
 */
 void CCX_DLL_PS CCXLog(const char * pszFormat, ...);
 
-struct CCXNullDeleter       { template< class TPTR > void operator()(TPTR ) {} };
-struct CCXNewDeleter        { template< class TPTR > void operator()(TPTR p) { delete p; } };
-struct CCXNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { delete[] p; } };
+struct ccxNullDeleter       { template< class TPTR > void operator()(TPTR ) {} };
+struct ccxNewDeleter        { template< class TPTR > void operator()(TPTR p) { delete p; } };
+struct ccxNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { delete[] p; } };
 
 /**
 @brief	A simple scoped pointer.
 */
-template < class T, class D = CCXNewDeleter >
-class CCXScopedPtr   // noncopyable
+template < class T, class D = ccxNewDeleter >
+class ccxScopedPtr   // noncopyable
     : private D
 {
 public:
-    explicit CCXScopedPtr(T * p = 0): m_ptr(p) {}
-    ~CCXScopedPtr()                     { (*static_cast<D*>(this))(m_ptr); }
+    explicit ccxScopedPtr(T * p = 0): m_ptr(p) {}
+    ~ccxScopedPtr()                     { (*static_cast<D*>(this))(m_ptr); }
 
-    void reset(T * p = 0)               { CCXScopedPtr< T >(p).swap(*this); }
+    void reset(T * p = 0)               { ccxScopedPtr< T >(p).swap(*this); }
     T *  get() const                    { return m_ptr; }
-    void swap(CCXScopedPtr & b)         { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr   = tmp; }
+    void swap(ccxScopedPtr & b)         { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr   = tmp; }
 
     T & operator*() const               { return * m_ptr; }
     T * operator->() const              { return m_ptr; }
     operator bool () const              { return m_ptr != 0; }
 
 private:
-    CCXScopedPtr(const CCXScopedPtr&);
-    CCXScopedPtr & operator=(const CCXScopedPtr&);
+    ccxScopedPtr(const ccxScopedPtr&);
+    ccxScopedPtr & operator=(const ccxScopedPtr&);
 
-    void operator==(const CCXScopedPtr& ) const;
-    void operator!=(const CCXScopedPtr& ) const;
+    void operator==(const ccxScopedPtr& ) const;
+    void operator!=(const ccxScopedPtr& ) const;
 
     T * m_ptr;
 };
 /**
 @brief	A simple scoped point for array.
 */
-template< class T, class D = CCXNewArrayDeleter >
-class CCX_DLL_PS CCXScopedArray // noncopyable
+template< class T, class D = ccxNewArrayDeleter >
+class CCX_DLL_PS ccxScopedArray // noncopyable
     : private D
 {
 public:
-    explicit CCXScopedArray( T * p = 0 ) : m_ptr( p ) {}
-    ~CCXScopedArray()                   { (*static_cast<D*>(this))(m_ptr); }
+    explicit ccxScopedArray( T * p = 0 ) : m_ptr( p ) {}
+    ~ccxScopedArray()                   { (*static_cast<D*>(this))(m_ptr); }
 
-    void reset(T * p = 0)               { CCXScopedArray<T>(p).swap(*this); }
+    void reset(T * p = 0)               { ccxScopedArray<T>(p).swap(*this); }
     T *  get() const                    { return m_ptr; }
-    void swap(CCXScopedArray & b)       { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr = tmp; }
+    void swap(ccxScopedArray & b)       { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr = tmp; }
 
     T & operator[](int i) const         { CCX_ASSERT(m_ptr && i >= 0); return m_ptr[i]; }
    operator bool () const              { return m_ptr != 0; }
 
 private:
-    CCXScopedArray(CCXScopedArray const &);
-    CCXScopedArray & operator=(CCXScopedArray const &);
+    ccxScopedArray(ccxScopedArray const &);
+    ccxScopedArray & operator=(ccxScopedArray const &);
 
-    void operator==( CCXScopedArray const& ) const;
-    void operator!=( CCXScopedArray const& ) const;
+    void operator==( ccxScopedArray const& ) const;
+    void operator!=( ccxScopedArray const& ) const;
 
     T * m_ptr;
 };

@@ -35,26 +35,26 @@ NS_CC_BEGIN;
 
 @warning Don't enter a CCXLock twice in the same thread.
 */
-class CCX_DLL_PS CCXLock
+class CCX_DLL_PS ccxLock
 {
 public:
-    CCXLock();
-    ~CCXLock();
+    ccxLock();
+    ~ccxLock();
 
     void lock();
     void unlock();
 
 private:
     class Impl;
-    CCXScopedPtr<CCXLock::Impl> m_pImp;
+    ccxScopedPtr<ccxLock::Impl> m_pImp;
 };
 #else   // CCX_SUPPORT_MULTITHREAD
 
-class CCX_DLL_PS CCXLock
+class CCX_DLL_PS ccxLock
 {
 public:
-    CCXLock() {}
-    ~CCXLock() {}
+    ccxLock() {}
+    ~ccxLock() {}
 
     void lock() {}
     void unlock() {}

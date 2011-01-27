@@ -162,7 +162,7 @@ public:
     CCX_SYNTHESIZE_READONLY(HDC, m_hDC, DC);
     CCX_SYNTHESIZE_READONLY(HBITMAP, m_hBmp, Bitmap);
 private:
-    friend class CCXImage;
+    friend class ccxImage;
     HFONT   m_hFont;
 };
 
@@ -172,7 +172,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCXImage::initWidthString(
+bool ccxImage::initWidthString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,

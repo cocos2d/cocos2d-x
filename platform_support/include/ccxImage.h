@@ -29,12 +29,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-class CCXImage;
-
-class CCX_DLL_PS CCXImage
+class CCX_DLL_PS ccxImage
 {
 public:
-    CCXImage();
+    ccxImage();
 
     typedef enum
     {
@@ -100,7 +98,7 @@ public:
     void release();
 
     /**
-    @brief	Save the CCXImage data to specified file with specified format.
+    @brief	Save the ccxImage data to specified file with specified format.
     */
     bool saveToFile(const char * pszFilePath) { return false; }
 
@@ -113,14 +111,14 @@ protected:
     bool _initWithJpgFile(const char * strPath);
     bool _initWithPngData(void * pData, int nDatalen);
 
-    CCXScopedArray<ccxByte> m_pData;
+    ccxScopedArray<ccxByte> m_pData;
     bool m_bHasAlpha;
     bool m_bPreMulti;
 
 private:
     // noncopyable
-    CCXImage(const CCXImage&    rImg);
-    CCXImage & operator=(const CCXImage&);
+    ccxImage(const ccxImage&    rImg);
+    ccxImage & operator=(const ccxImage&);
 };
 
 NS_CC_END;

@@ -59,10 +59,10 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 NS_CC_BEGIN;
 
 //////////////////////////////////////////////////////////////////////////
-// Impliment CCXImage
+// Impliment ccxImage
 //////////////////////////////////////////////////////////////////////////
 
-CCXImage::CCXImage()
+ccxImage::ccxImage()
 : m_nWidth(0)
 , m_nHeight(0)
 , m_nBitsPerComponent(0)
@@ -72,7 +72,7 @@ CCXImage::CCXImage()
 
 }
 
-bool CCXImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool ccxImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     bool bRet = false;
     FILE *fp = nil;
@@ -115,7 +115,7 @@ bool CCXImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = 
     return bRet;
 }
 
-bool CCXImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
+bool ccxImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
 {
     bool bRet = false;
     do 
@@ -136,7 +136,7 @@ bool CCXImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/*
     return bRet;
 }
 
-bool CCXImage::_initWithJpgFile(const char * strFileName)
+bool ccxImage::_initWithJpgFile(const char * strFileName)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -210,7 +210,7 @@ bool CCXImage::_initWithJpgFile(const char * strFileName)
     return true;
 }
 
-bool CCXImage::_initWithPngData(void * pData, int nDatalen)
+bool ccxImage::_initWithPngData(void * pData, int nDatalen)
 {
     bool bRet = false;
     png_byte        header[8]   = {0}; 

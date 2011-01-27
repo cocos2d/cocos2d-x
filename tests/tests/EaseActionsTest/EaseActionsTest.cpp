@@ -625,7 +625,7 @@ void EaseSpriteDemo::onEnter()
 	// Example:
 	// You can create a sprite using a Texture2D
 	CCTexture2D* tex = new CCTexture2D();
-	CCXImage* pImage = new CCXImage();
+	ccxImage* pImage = new ccxImage();
 	
 	if(pImage->initWithImageFile(CCFileUtils::fullPathFromRelativePath(s_pPathGrossini)))
 	{
