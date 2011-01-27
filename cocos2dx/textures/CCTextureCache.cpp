@@ -205,8 +205,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
-				CCXImage * image = new CCXImage();
-                if(! image->initWithImageFile(fullpath.c_str(), CCXImage::kFmtJpg))
+				ccxImage * image = new ccxImage();
+                if(! image->initWithImageFile(fullpath.c_str(), ccxImage::kFmtJpg))
 				{
 					delete image;
 					break;
@@ -233,8 +233,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 				tex = [ [CCTexture2D alloc] initWithImage: image ];
 #else
 				// prevents overloading the autorelease pool
-				CCXImage * image = new CCXImage();
-                if(! image->initWithImageFile(fullpath.c_str(), CCXImage::kFmtPng))
+				ccxImage * image = new ccxImage();
+                if(! image->initWithImageFile(fullpath.c_str(), ccxImage::kFmtPng))
 				{
 					delete image;
 					break;
@@ -345,7 +345,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 
 	return [tex autorelease];
 }*/
-CCTexture2D* CCTextureCache::addUIImage(CCXImage *image, const char *key)
+CCTexture2D* CCTextureCache::addUIImage(ccxImage *image, const char *key)
 {
 	NSAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
 

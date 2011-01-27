@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "ccTypes.h"
 
 namespace   cocos2d {
-class CCXImage;
+class ccxImage;
 
 //CONSTANTS:
 
@@ -134,7 +134,7 @@ public:
 	Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a UIImage object */
-	bool initWithImage(CCXImage * uiImage);
+	bool initWithImage(ccxImage * uiImage);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a string of text.
@@ -217,7 +217,7 @@ public:
     static void reloadAllTextures();
 
 private:
-	bool initPremultipliedATextureWithImage(CCXImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+	bool initPremultipliedATextureWithImage(ccxImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
 };
 }//namespace   cocos2d 

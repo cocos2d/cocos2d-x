@@ -133,7 +133,7 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 	bool bRet = false;
 	unsigned char *buffer = NULL;
 	unsigned char *deflated = NULL;
-	CCXImage *image = NULL;
+	ccxImage *image = NULL;
 	do 
 	{
 		int maxParticles = atoi(valueForKey("maxParticles", dictionary));
@@ -257,7 +257,7 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 						NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
 						CCX_BREAK_IF(!deflated);
 						
-						image = new CCXImage();
+						image = new ccxImage();
 						bool isOK = image->initWithImageData(deflated, deflatedLen);
 						NSAssert(isOK, "CCParticleSystem: error init image with Data");
 						CCX_BREAK_IF(!isOK);

@@ -328,7 +328,7 @@ char * CCTexture2D::description(void)
 
 // implementation CCTexture2D (Image)
 
-bool CCTexture2D::initWithImage(CCXImage * uiImage)
+bool CCTexture2D::initWithImage(ccxImage * uiImage)
 {
 	unsigned int POTWide, POTHigh;
 
@@ -365,7 +365,7 @@ bool CCTexture2D::initWithImage(CCXImage * uiImage)
 	// always load premultiplied images
 	return initPremultipliedATextureWithImage(uiImage, POTWide, POTHigh);
 }
-bool CCTexture2D::initPremultipliedATextureWithImage(CCXImage *image, unsigned int POTWide, unsigned int POTHigh)
+bool CCTexture2D::initPremultipliedATextureWithImage(ccxImage *image, unsigned int POTWide, unsigned int POTHigh)
 {
 	unsigned char*			data = NULL;
 	unsigned char*			tempData =NULL;
@@ -554,9 +554,9 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 }
 bool CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 {
-	CCXImage image;
-    CCXImage::ETextAlign eAlign = (UITextAlignmentCenter == alignment) ? CCXImage::kAlignCenter
-        : (UITextAlignmentLeft == alignment) ? CCXImage::kAlignLeft : CCXImage::kAlignRight;
+	ccxImage image;
+    ccxImage::ETextAlign eAlign = (UITextAlignmentCenter == alignment) ? ccxImage::kAlignCenter
+        : (UITextAlignmentLeft == alignment) ? ccxImage::kAlignLeft : ccxImage::kAlignRight;
     
     if (! image.initWidthString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize))
     {
