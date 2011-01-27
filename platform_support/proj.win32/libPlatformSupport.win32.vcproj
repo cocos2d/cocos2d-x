@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\ccxString.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\ccxThread.h"
 				>
 			</File>
