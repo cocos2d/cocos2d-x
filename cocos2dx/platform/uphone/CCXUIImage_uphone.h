@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 
 class TBitmap;
-namespace   cocos2d {
+namespace   cocos2d {
 class CCXBitmapDC;
 
 /// @cond
@@ -97,12 +97,19 @@ public:
 	/** get the image data */
 	unsigned char* getData(void);
 
+    /**
+    @brief Set/Get whether pop-up a message box when the image load failed
+    */
+    static void setIsPopupNotify(bool bNotify);
+    static bool getIsPopupNotify();
+
 private:
 	bool loadPngFromStream(unsigned char *data, int nLength);
     bool loadJpgFromStream(unsigned char *data, unsigned long nSize);
 
 private:
 	tImageInfo m_imageInfo;
+	static bool s_bPopupNotify;
 };
 }//namespace   cocos2d 
 

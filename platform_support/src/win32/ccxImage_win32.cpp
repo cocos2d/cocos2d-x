@@ -24,6 +24,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
+void ccxMessageBox(const ccxString& msg, const ccxString& title)
+{
+    MessageBoxA(NULL, msg.c_str(), title.c_str(), MB_OK);
+}
+
 /**
 @brief	A memory DC which uses to draw text on bitmap.
 */

@@ -35,6 +35,8 @@ THE SOFTWARE.
 //using namespace ImageToolKit;
 using namespace std;
 namespace   cocos2d {
+
+bool UIImage::s_bPopupNotify = false;
 	
 #define CCX_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
 	(unsigned int)(((unsigned int)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
@@ -297,5 +299,14 @@ bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 	return false;
 }
 
+void UIImage::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool UIImage::getIsPopupNotify()
+{
+    return s_bPopupNotify;
+}
 
 }//namespace   cocos2d 

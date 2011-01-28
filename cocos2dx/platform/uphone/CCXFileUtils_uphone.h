@@ -66,7 +66,7 @@ public:
     @param pszResPath  The absolute resource path
     @param pszZipFileName The relative path of the .zip file
     */
-    static void setResource(const char* pszResPath, const char* pszZipFileName);
+    static void setResource(const char* pszZipFileName, const char* pszResPath = NULL);
 
     /**
     @brief Whether the resource is exist or not.The function find the resource in hardware,if not find,it will find in resource map.

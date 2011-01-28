@@ -547,10 +547,13 @@ void CCDirector::purgeDirector()
 	// They are needed in case the director is run again
 	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
 
-	m_pRunningScene->onExit();
-	m_pRunningScene->cleanup();
-	m_pRunningScene->release();
-
+    if (m_pRunningScene)
+    {
+    	m_pRunningScene->onExit();
+    	m_pRunningScene->cleanup();
+    	m_pRunningScene->release();
+    }
+    
 	m_pRunningScene = NULL;
 	m_pNextScene = NULL;
 
@@ -938,6 +941,7 @@ void CCDisplayLinkDirector::mainLoop(void)
 	if (m_bPurgeDirecotorInNextLoop)
 	{
 		purgeDirector();
+        m_bPurgeDirecotorInNextLoop = false;
 	}
 	else if (! m_bInvalid)
  	{

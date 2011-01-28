@@ -95,8 +95,16 @@ public:
 	/** get the image data */
 	unsigned char* getData(void);
 
+    /**
+    @brief Set/Get whether pop-up a message box when the image load failed
+    @todo not implement now
+    */
+    static void setIsPopupNotify(bool bNotify);
+    static bool getIsPopupNotify();
+
 private:
 	tImageInfo m_imageInfo;
+	static bool s_bPopupNotify;
 };
 }//namespace   cocos2d 
 

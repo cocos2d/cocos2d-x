@@ -5,7 +5,7 @@ subdirs := $(addprefix $(LOCAL_PATH)/../../../,$(addsuffix /Android.mk, \
         Box2D \
         chipmunk \
 	cocos2dx \
-	CocosDenshion/Android \
+	CocosDenshion/android \
 	))
 	
 subdirs += $(LOCAL_PATH)/tests/Android.mk

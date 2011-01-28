@@ -238,11 +238,21 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 			// texture		
 			// Try to get the texture from the cache
 			char *textureName = (char *)valueForKey("textureFileName", dictionary);
-			std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
-			this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
+            std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
+
+            if (strlen(textureName) > 0)
+            {
+                // set not pop-up message box when load image failed
+                bool bNotify = ccxImage::getIsPopupNotify();
+                ccxImage::setIsPopupNotify(false);
+                this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
+
+                // reset the value of UIImage notify
+                ccxImage::setIsPopupNotify(bNotify);
+            }
 
 			// if it fails, try to get it from the base64-gzipped data			
-            char *textureData = NULL;;
+            char *textureData = NULL;
 			if ( ! m_pTexture && 
                 (textureData = (char *)valueForKey("textureImageData", dictionary)))
 			{

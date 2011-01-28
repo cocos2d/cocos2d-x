@@ -33,8 +33,6 @@ THE SOFTWARE.
 #include "support/file_support/FileData.h"
 #include "support/data_support/uthash.h"
 
-#define LINE_MAX_CHAR_NUM       1024
-
 namespace cocos2d{
 	
 	//
@@ -136,45 +134,32 @@ namespace cocos2d{
         {
             return;
         }
-        
-        char LineMax[LINE_MAX_CHAR_NUM] = {0};
-        size_t step = 0;
-        size_t leftSize = nBufSize - step;
 
-        while (leftSize > 0)
-        {
-            // clean temp data
-            memset(LineMax, 0, sizeof(char) * LINE_MAX_CHAR_NUM);
+        // parse spacing / padding
+        std::string line;
+        std::string strLeft = pBuffer;
+        while (strLeft.length() > 0)        {
+            int pos = strLeft.find('\n');
 
-            // read some data into LineMax[LINE_MAX_CHAR_NUM]
-            if (leftSize < LINE_MAX_CHAR_NUM)
+            if (pos != std::string::npos)
             {
-                memcpy(LineMax, pBuffer + step, sizeof(char) * leftSize);
+                // the data is more than a line.get one line
+                line = strLeft.substr(0, pos);
+                strLeft = strLeft.substr(pos + 1);
             }
             else
             {
-                // only read LINE_MAX_CHAR_NUM - 1 char from buffer,to make sure the LineMax is end with '\0'
-                memcpy(LineMax, pBuffer + step, sizeof(char) * (LINE_MAX_CHAR_NUM - 1));
+                // get the left data
+                line = strLeft;
+                strLeft.erase();
             }
 
-            // find the '\n'
-            char* pos = strchr(LineMax, '\n');
-            size_t lineSize = strlen(LineMax) * sizeof(char);
-            if (pos)
-            {
-                lineSize = (pos - LineMax + 1) * sizeof(char);
-                memset(LineMax + lineSize, 0, sizeof(char) * LINE_MAX_CHAR_NUM - lineSize);
-            }
-            step += lineSize;
-            leftSize = nBufSize - step;
-
-            // parse spacing / padding
-            std::string line = LineMax;
             if(line.substr(0,strlen("info face")) == "info face") 
             {
                 // XXX: info parsing is incomplete
                 // Not needed for the Hiero editors, but needed for the AngelCode editor
                 //			[self parseInfoArguments:line];
+                this->parseInfoArguments(line);
             }
             // Check to see if the start of the line is something we are interested in
             else if(line.substr(0,strlen("common lineHeight")) == "common lineHeight")
