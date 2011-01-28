@@ -270,6 +270,8 @@ static bool static_initWithFile(const char* path, tImageInfo *pImageinfo)
 using namespace std;
 namespace   cocos2d {
 
+bool UIImage::s_bPopupNotify = false;
+
 UIImage::UIImage(void)
 {
 	m_imageInfo.hasAlpha = false;
@@ -388,5 +390,14 @@ bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 	return false;
 }
 
+void UIImage::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool UIImage::getIsPopupNotify()
+{
+    return s_bPopupNotify;
+}
 
 }//namespace   cocos2d 

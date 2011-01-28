@@ -106,6 +106,13 @@ public:
     CCX_SYNTHESIZE_READONLY(ccxInt16,   m_nHeight,      Height);
     CCX_SYNTHESIZE_READONLY(int,        m_nBitsPerComponent,         BitsPerComponent);
 
+public:
+    /**
+    @brief Set/Get whether pop-up a message box when the image load failed
+    */
+    static void setIsPopupNotify(bool bNotify);
+    static bool getIsPopupNotify();
+
 protected:
     bool _initWithJpgData(void * pData, int nDatalen);
     bool _initWithJpgFile(const char * strPath);

@@ -261,7 +261,8 @@ void setZipFilePath(const char* pZipFileName)
         strErr += " not exist!";
         TUChar szText[EOS_FILE_MAX_PATH] = { 0 };
         TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
-        TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
+        // TApplication::GetCurrentApplication()->MessageBox(szText,NULL,WMB_OK);
+		TMessageBox box(szText, NULL, WMB_OK);  //  to be fix. This line isn't work, but not block
         return;
     }
 
@@ -277,7 +278,7 @@ void setZipFilePath(const char* pZipFileName)
     strcat(s_pszZipFilePath, fullPath);
 }
 
-void CCFileUtils::setResource(const char* pszResPath, const char* pszZipFileName)
+void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
 {
     if (pszResPath != NULL && pszZipFileName != NULL)
     {

@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ccxImage.h"
 
+#include "ccxString.h"
 #include "ccxStdC.h"
 #include "png.h"
 #include "jpeglib.h"
@@ -57,6 +58,8 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 }
 
 NS_CC_BEGIN;
+
+static void ccxMessageBox(const ccxString& msg, const ccxString& title);
 
 //////////////////////////////////////////////////////////////////////////
 // Impliment ccxImage
@@ -112,6 +115,14 @@ bool ccxImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = 
     {
         fclose(fp);
     }
+    if (! bRet && ccxImage::getIsPopupNotify())
+    {
+        ccxString title = "cocos2d-x error!";
+        ccxString msg = "Load ";
+        msg.append(strPath).append(" failed!");
+    
+        ccxMessageBox(msg, title);
+    }
     return bRet;
 }
 
@@ -134,6 +145,18 @@ bool ccxImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/*
         }
     } while (0);
     return bRet;
+}
+
+static bool s_bPopupNotify = true;
+
+void ccxImage::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool ccxImage::getIsPopupNotify()
+{
+    return s_bPopupNotify;
 }
 
 bool ccxImage::_initWithJpgFile(const char * strFileName)

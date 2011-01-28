@@ -75,13 +75,13 @@ static id s_sharedDirectorCaller;
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
--(void) setAnimationInterval:(double)interval
+-(void) setAnimationInterval:(double)intervalNew
 {
         // CCDirector::setAnimationInterval() is called, we should invalide it first
         [displayLink invalidate];
         displayLink = nil;
         
-        self.interval = 60.0 * interval;
+        self.interval = 60.0 * intervalNew;
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
         [displayLink setFrameInterval: self.interval];

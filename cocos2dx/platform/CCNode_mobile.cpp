@@ -929,7 +929,7 @@ void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 void CCNode::unschedule(SEL_SCHEDULE selector)
 {
 	// explicit nil handling
-	if (selector == NULL)
+	if (selector == 0)
 		return;
 
 	CCScheduler::sharedScheduler()->unscheduleSelector(selector, this);

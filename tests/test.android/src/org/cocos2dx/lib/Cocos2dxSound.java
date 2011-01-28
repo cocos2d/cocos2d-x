@@ -40,15 +40,24 @@ public class Cocos2dxSound {
 	}
 	
 	public int preloadEffect(String path){
-		int soundId = createSoundIdFromAsset(path);
+		int soundId = INVALID_SOUND_ID;
 		
-		if (soundId != INVALID_SOUND_ID){
-			// the sound is loaded but has not been played
-			this.mSoundIdStreamIdMap.put(soundId, INVALID_STREAM_ID);
+		// if the sound is preloaded, pass it
+		if (this.mPathSoundIDMap.get(path) != null){
+			soundId =  this.mPathSoundIDMap.get(path).intValue();
+		} else {
+			soundId = createSoundIdFromAsset(path);
 			
-			// record path and sound id map
-			this.mPathSoundIDMap.put(path, soundId);
+			if (soundId != INVALID_SOUND_ID){
+				// the sound is loaded but has not been played
+				this.mSoundIdStreamIdMap.put(soundId, INVALID_STREAM_ID);
+				
+				// record path and sound id map
+				this.mPathSoundIDMap.put(path, soundId);
+			}
 		}
+		
+		
 		
 		return soundId;
 	}
@@ -81,6 +90,11 @@ public class Cocos2dxSound {
 		} else {
 			// the effect is not prepared
 			soundId = preloadEffect(path);	
+			if (soundId == INVALID_SOUND_ID){
+				// can not preload effect
+				return INVALID_SOUND_ID;
+			}
+			
 			playEffect(path);
 		}
 		
@@ -90,7 +104,7 @@ public class Cocos2dxSound {
 	public void stopEffect(int soundId){
         Integer streamId = this.mSoundIdStreamIdMap.get(soundId);
         
-        if (streamId != null){
+        if (streamId != null && streamId.intValue() != INVALID_STREAM_ID){
         	this.mSoundPool.stop(streamId.intValue());
         }
 	}

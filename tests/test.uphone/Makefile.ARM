@@ -21,7 +21,7 @@ INCLUDE_PATH += -I../ -I../Res \
                 -I../../ \
                 -I../tests
 
-LIBS += -lCocos2dStatic	-lCocosDenshionStatic -lChipmunkStatic -lBox2dStatic -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
+LIBS += -lCocos2dStatic	-lCocosDenshionStatic -lTSoundPlayer -lChipmunkStatic -lBox2dStatic -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
