@@ -391,7 +391,7 @@ CGSize CCNode::getContentSizeInPixels()
 }
 
 
-/// isRunning getter
+// isRunning getter
 bool CCNode::getIsRunning()
 {
 	return m_bIsRunning;

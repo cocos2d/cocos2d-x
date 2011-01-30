@@ -27,14 +27,22 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 #include "CCXFileUtils.h"
-
+#include "platform/android/CCXUIAccelerometer_android.h"
 #include <android/log.h>
 
 extern "C"
 {
 	static cocos2d::CCTouch s_touch;
 	static cocos2d::NSSet s_set;
-	
+
+	// handle accelerometer changes
+
+	void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
+	{
+		// We need to invert to make it compatible with iOS.
+		cocos2d::UIAccelerometer::sharedAccelerometer()->update(-1*x, -1*y, -1*z, timeStamp);
+	}
+
 	// handle touch event
 	
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
