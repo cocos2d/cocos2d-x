@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "ccxCommon.h"
 #include "CCUIAccelerometerDelegate.h"
+#include <list>
 
 namespace   cocos2d {
 
@@ -40,11 +41,14 @@ public:
 
     void removeDelegate(UIAccelerometerDelegate* pDelegate);
     void addDelegate(UIAccelerometerDelegate* pDelegate);
-    
+    void update(float x, float y, float z, long sensorTimeStamp);
+
 private:
 	static UIAccelerometer* m_spUIAccelerometer;
+	std::list<UIAccelerometerDelegate*>* m_AccelDelegates;
+	UIAcceleration pAccelerationValue;
 };
 
-}//namespace   cocos2d 
+}//namespace cocos2d
 
 #endif

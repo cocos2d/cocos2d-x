@@ -23,21 +23,26 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCXUIAccelerometer_android.h"
 #include <stdio.h>
+#include <list>
+#include <android/log.h>
+
+#define  LOG_TAG    "CCXUIAccelerometer_android"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 namespace cocos2d
 {
 	UIAccelerometer* UIAccelerometer::m_spUIAccelerometer = NULL;
-		
-	UIAccelerometer::UIAccelerometer()
-	{
+
+	UIAccelerometer::UIAccelerometer() {
+		m_AccelDelegates = new std::list<UIAccelerometerDelegate*>();
 	}
-	
-    UIAccelerometer::~UIAccelerometer()
-    {
+
+    UIAccelerometer::~UIAccelerometer() {
+    	delete m_AccelDelegates;
     }
 
-    UIAccelerometer* UIAccelerometer::sharedAccelerometer()
-    {
+    UIAccelerometer* UIAccelerometer::sharedAccelerometer() {
+
     	if (m_spUIAccelerometer == NULL)
     	{
     		m_spUIAccelerometer = new UIAccelerometer();
@@ -46,15 +51,26 @@ namespace cocos2d
     	return m_spUIAccelerometer;
     }
 
-    void UIAccelerometer::removeDelegate(UIAccelerometerDelegate* pDelegate)
-    {
-    	
+    void UIAccelerometer::removeDelegate(UIAccelerometerDelegate* pDelegate) {
+    	m_AccelDelegates->remove(pDelegate);
     }
-    
-    void UIAccelerometer::addDelegate(UIAccelerometerDelegate* pDelegate)
-    {
-    	
+
+    void UIAccelerometer::addDelegate(UIAccelerometerDelegate* pDelegate) {
+    	m_AccelDelegates->push_front(pDelegate);
     }
-    
+
+    void UIAccelerometer::update(float x, float y, float z, long sensorTimeStamp) {
+    	if ( m_AccelDelegates != NULL && !m_AccelDelegates->empty() ) {
+    		pAccelerationValue.x = (double)x;
+    		pAccelerationValue.y = (double)y;
+    		pAccelerationValue.z = (double)z;
+    		pAccelerationValue.timestamp = (double)sensorTimeStamp;
+
+    		for(std::list<UIAccelerometerDelegate*>::const_iterator it = m_AccelDelegates->begin(); it != m_AccelDelegates->end(); ++it)
+    		{
+				(*it)->didAccelerate(&pAccelerationValue);
+    		}
+    	}
+    }
 } // end of namespace cococs2d
 

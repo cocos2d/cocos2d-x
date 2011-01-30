@@ -1,12 +1,16 @@
 #include "AccelerometerTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include <android/log.h>
 
 #define FIX_POS(_pos, _min, _max) \
     if (_pos < _min)        \
     _pos = _min;        \
 else if (_pos > _max)   \
     _pos = _max;        \
+
+#define  LOG_TAG    "AccelerometerTest"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 //------------------------------------------------------------------
 //
@@ -60,6 +64,12 @@ void AccelerometerTest::didAccelerate(UIAcceleration* pAccelerationValue)
 
     CCDirector* pDir = CCDirector::sharedDirector();
     CGSize winSize   = pDir->getWinSize();
+
+    /*FIXME: Testing on the Nexus S sometimes m_pBall is NULL */
+    if ( m_pBall == NULL ) {
+    	return;
+    }
+
     CGSize ballSize  = m_pBall->getContentSize();
 
     CGPoint ptNow  = m_pBall->getPosition();
