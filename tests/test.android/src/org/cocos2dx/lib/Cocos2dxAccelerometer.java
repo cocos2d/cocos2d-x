@@ -1,20 +1,14 @@
 package org.cocos2dx.lib;
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
-import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
-import android.view.WindowManager;
 
 /**
  * 
- * This class is used for controlling background music
+ * This class is used for controlling the Accelerometer
  *
  */
 public class Cocos2dxAccelerometer implements SensorEventListener {

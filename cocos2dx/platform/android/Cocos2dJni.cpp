@@ -40,7 +40,7 @@ extern "C"
 	void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
 	{
 		// We need to invert to make it compatible with iOS.
-		cocos2d::UIAccelerometer::sharedAccelerometer()->update(-1*x, -1*y, -1*z, timeStamp);
+		cocos2d::UIAccelerometer::sharedAccelerometer()->update(x, y, z, timeStamp);
 	}
 
 	// handle touch event

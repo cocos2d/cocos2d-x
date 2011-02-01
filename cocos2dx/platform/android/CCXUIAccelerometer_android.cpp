@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include <list>
 #include <android/log.h>
 
+#define TG3_GRAVITY_EARTH                    (9.80665f)
 #define  LOG_TAG    "CCXUIAccelerometer_android"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
@@ -61,9 +62,9 @@ namespace cocos2d
 
     void UIAccelerometer::update(float x, float y, float z, long sensorTimeStamp) {
     	if ( m_AccelDelegates != NULL && !m_AccelDelegates->empty() ) {
-    		pAccelerationValue.x = (double)x;
-    		pAccelerationValue.y = (double)y;
-    		pAccelerationValue.z = (double)z;
+    		pAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+    		pAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+    		pAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
     		pAccelerationValue.timestamp = (double)sensorTimeStamp;
 
     		for(std::list<UIAccelerometerDelegate*>::const_iterator it = m_AccelDelegates->begin(); it != m_AccelDelegates->end(); ++it)
