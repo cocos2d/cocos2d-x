@@ -34,3 +34,4 @@ obj/
 assets/
 .classpath
 .project
+.cproject
