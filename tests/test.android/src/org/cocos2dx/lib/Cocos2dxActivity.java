@@ -56,6 +56,7 @@ public class Cocos2dxActivity extends Activity{
     private static Cocos2dxMusic backgroundMusicPlayer;
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
+    private static boolean accelerometerEnabled = false;
 
     private static native void nativeSetPaths(String apkPath);
 
@@ -68,13 +69,23 @@ public class Cocos2dxActivity extends Activity{
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
-        
+        accelerometer = new Cocos2dxAccelerometer(this);
+
         // init media player and sound player
         backgroundMusicPlayer = new Cocos2dxMusic(this);
         soundPlayer = new Cocos2dxSound(this);
-        accelerometer = new Cocos2dxAccelerometer(this);
     }
-    
+
+    public static void enableAccelerometer() {
+        accelerometerEnabled = true;
+        accelerometer.enable();
+    }
+
+    public static void disableAccelerometer() {
+        accelerometerEnabled = false;
+        accelerometer.disable();
+    }
+
     public static void playBackgroundMusic(String path, boolean isLoop){
     	backgroundMusicPlayer.playBackgroundMusic(path, isLoop);
     }
@@ -139,13 +150,17 @@ public class Cocos2dxActivity extends Activity{
     @Override
     protected void onResume() {
     	super.onResume();
-    	accelerometer.enable();
+    	if (accelerometerEnabled) {
+    	    accelerometer.enable();
+    	}
     }
 
     @Override
     protected void onPause() {
     	super.onPause();
-    	accelerometer.disable();
+    	if (accelerometerEnabled) {
+    	    accelerometer.disable();
+    	}
     }
 
     protected void setPackgeName(String packageName) {

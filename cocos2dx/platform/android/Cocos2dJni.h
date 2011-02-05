@@ -29,7 +29,9 @@ THE SOFTWARE.
 extern "C"
 
 {
-    extern JavaVM *gJavaVM;
+	extern JavaVM *gJavaVM;
+	void enableAccelerometerJNI();
+	void disableAccelerometerJNI();
 }
 
 #endif // __ANDROID_COCOS2D_JNI_H__

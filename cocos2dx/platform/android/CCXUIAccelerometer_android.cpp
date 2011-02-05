@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCXUIAccelerometer_android.h"
 #include <stdio.h>
-#include <list>
 #include <android/log.h>
 
 #define TG3_GRAVITY_EARTH                    (9.80665f)
@@ -35,11 +34,14 @@ namespace cocos2d
 	UIAccelerometer* UIAccelerometer::m_spUIAccelerometer = NULL;
 
 	UIAccelerometer::UIAccelerometer() {
-		m_AccelDelegates = new std::list<UIAccelerometerDelegate*>();
+		m_pAccelDelegates = new std::list<UIAccelerometerDelegate*>();
 	}
 
     UIAccelerometer::~UIAccelerometer() {
-    	delete m_AccelDelegates;
+    	if ( m_pAccelDelegates ) {
+    		delete m_pAccelDelegates;
+    		m_pAccelDelegates = NULL;
+    	}
     }
 
     UIAccelerometer* UIAccelerometer::sharedAccelerometer() {
@@ -53,23 +55,31 @@ namespace cocos2d
     }
 
     void UIAccelerometer::removeDelegate(UIAccelerometerDelegate* pDelegate) {
-    	m_AccelDelegates->remove(pDelegate);
+    	m_pAccelDelegates->remove(pDelegate);
+
+    	if ( 0 == m_pAccelDelegates->size() ) {
+    		disableAccelerometerJNI();
+    	}
     }
 
     void UIAccelerometer::addDelegate(UIAccelerometerDelegate* pDelegate) {
-    	m_AccelDelegates->push_front(pDelegate);
+    	if ( 0 == m_pAccelDelegates->size() ) {
+    		enableAccelerometerJNI();
+    	}
+
+    	m_pAccelDelegates->push_front(pDelegate);
     }
 
     void UIAccelerometer::update(float x, float y, float z, long sensorTimeStamp) {
-    	if ( m_AccelDelegates != NULL && !m_AccelDelegates->empty() ) {
-    		pAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
-    		pAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
-    		pAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
-    		pAccelerationValue.timestamp = (double)sensorTimeStamp;
+    	if ( m_pAccelDelegates != NULL && !m_pAccelDelegates->empty() ) {
+    		m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+    		m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+    		m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
+    		m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
 
-    		for(std::list<UIAccelerometerDelegate*>::const_iterator it = m_AccelDelegates->begin(); it != m_AccelDelegates->end(); ++it)
+    		for(std::list<UIAccelerometerDelegate*>::const_iterator it = m_pAccelDelegates->begin(); it != m_pAccelDelegates->end(); ++it)
     		{
-				(*it)->didAccelerate(&pAccelerationValue);
+				(*it)->didAccelerate(&m_obAccelerationValue);
     		}
     	}
     }
