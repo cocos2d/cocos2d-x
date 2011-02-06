@@ -22,10 +22,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
         final int sdkVersion = Integer.parseInt(Build.VERSION.SDK);
         if (sdkVersion < Build.VERSION_CODES.ECLAIR) {
-            mTouchFilter = new SingleTouchFilter(mRenderer);
+            mTouchFilter = new SingleTouchFilter(this, mRenderer);
             Log.i(TAG, "using SingleTouchFilter");
         } else {
-            mTouchFilter = new MultiTouchFilter(mRenderer);
+            mTouchFilter = new MultiTouchFilter(this, mRenderer);
             Log.i(TAG, "using MultiTouchFilter");
         }
     }
