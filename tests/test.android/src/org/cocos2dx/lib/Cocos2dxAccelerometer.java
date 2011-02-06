@@ -27,7 +27,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 	}
 
 	public void enable() {
-		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 	}
 
 	public void disable () {
