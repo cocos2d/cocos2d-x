@@ -29,39 +29,68 @@ THE SOFTWARE.
 #include "CCXFileUtils.h"
 
 #include <android/log.h>
+#define  LOG_TAG    "Cocos2dJni"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 extern "C"
 {
-	static cocos2d::CCTouch s_touch;
+
+	#define MAX_TOUCHES         4
+	static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 	static cocos2d::NSSet s_set;
 	
 	// handle touch event
 	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jint id, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
-		s_set.addObject(&s_touch);
+		cocos2d::CCTouch* pTouch = s_pTouches[id];
+		if (!pTouch)
+		{
+			pTouch = new cocos2d::CCTouch;
+		}
+
+		pTouch->SetTouchInfo(0, x, y);
+		s_set.addObject(pTouch);
+		s_pTouches[id] = pTouch;
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesBegan(&s_set, NULL);
 	}
 	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jint id, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
-		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesEnded(&s_set, NULL);
-		s_set.removeObject(&s_touch);
+		cocos2d::CCTouch* pTouch = s_pTouches[id];
+		if (pTouch)
+		{
+			pTouch->SetTouchInfo(0, x, y);
+			s_set.addObject(pTouch);
+			cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesEnded(&s_set, NULL);
+			s_set.removeObject(pTouch);
+			pTouch->release();
+
+			s_pTouches[id] = NULL;
+		}
 	}
 	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jint id, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
-		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesMoved(&s_set, NULL);
+		cocos2d::CCTouch* pTouch = s_pTouches[id];
+		if (pTouch)
+		{
+			pTouch->SetTouchInfo(0, x, y);
+			s_set.addObject(pTouch);
+			cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesMoved(&s_set, NULL);
+		}
 	}
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jint id, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
-		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesCancelled(&s_set, NULL);
-		s_set.removeObject(&s_touch);
+		cocos2d::CCTouch* pTouch = s_pTouches[id];
+		if (pTouch)
+		{
+			pTouch->SetTouchInfo(0, x, y);
+			s_set.addObject(pTouch);
+			cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesCancelled(&s_set, NULL);
+			s_set.removeObject(pTouch);
+		}
 	}
 
     void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
