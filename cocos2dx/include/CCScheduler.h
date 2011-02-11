@@ -34,7 +34,7 @@ namespace   cocos2d {
 // CCTimer
 //
 /** @brief Light weight timer */
-class CCTimer : public NSObject
+class CCX_DLL CCTimer : public NSObject
 {
 public:
 	CCTimer(void) {}
