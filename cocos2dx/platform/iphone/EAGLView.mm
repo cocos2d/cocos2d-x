@@ -97,34 +97,27 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 + (id) viewWithFrame:(CGRect)frame
 {
-	return [[[[self alloc] init] initWithFrame:frame] autorelease];
+	return [[[self alloc] initWithFrame:frame] autorelease];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
-	return [[[[self alloc] init] initWithFrame:frame pixelFormat:format] autorelease];
+	return [[[self alloc]initWithFrame:frame pixelFormat:format] autorelease];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
 {
-	return [[[[self alloc] init] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
 {
-	return [[[[self alloc] init] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
+	return [[[self alloc]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
 }
 
 + (id) sharedEGLView
 {
 	return view;
-}
-
-- (id) init
-{
-    touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
-    indexBitsUsed = 0x00000000;
-    return self;
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -152,6 +145,9 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 			return nil;
 		}
 	}
+        
+                touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
+                indexBitsUsed = 0x00000000;
 
 	view = self;
 	return self;
