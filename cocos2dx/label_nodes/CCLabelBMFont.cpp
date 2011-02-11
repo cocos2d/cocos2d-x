@@ -137,7 +137,7 @@ namespace cocos2d{
 
         // parse spacing / padding
         std::string line;
-        std::string strLeft = pBuffer;
+        std::string strLeft(pBuffer, nBufSize);
         while (strLeft.length() > 0)        {
             int pos = strLeft.find('\n');
 
