@@ -214,7 +214,7 @@ be drawn, however.
 
 @since v0.99.5
 */
-class CCLayerGradient : public CCLayerColor
+class CCX_DLL CCLayerGradient : public CCLayerColor
 {
 public:
     /** Creates a full-screen CCLayer with a gradient between start and end. */
