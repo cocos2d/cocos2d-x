@@ -137,7 +137,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
-- (id) init;
 
 -(int) getWidth;
 -(int) getHeight;
