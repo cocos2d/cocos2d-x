@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCNode.h"
 #include "CGPointExtension.h"
-#include "platform/CCXMath.h"
+#include "ccxStdC.h"
 
 #include <stdarg.h>
 
@@ -543,7 +543,7 @@ bool CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAct
 	ccTime d2 = pAction2->getDuration();
 
 	// __super::initWithDuration(fmaxf(d1, d2));
-	float maxd = (d1 >= d2 || CCXMath::isnanCocos2d(d2)) ? d1 : d2;
+	float maxd = (d1 >= d2 || isnan(d2)) ? d1 : d2;
 	CCActionInterval::initWithDuration(maxd);
 
     m_pOne = pAction1;

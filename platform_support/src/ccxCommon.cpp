@@ -22,39 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_CCXMATH_H__
-#define __PLATFORM_CCXMATH_H__
+#include "ccxCommon.h"
 
-#include <float.h>
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+#include <Windows.h>
 
-namespace cocos2d
+#include "ccxStdC.h"
+
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
+
+NS_CC_BEGIN;
+
+void CCXLog(const char * pszFormat, ...)
 {
+    char szBuf[MAX_LEN];
 
-	/************************************************************************/
-	// VC have the function _isnan()
-	// In other compiler(such as gcc), we may implement ourself.
-	// We use a simple way: if it is a number, it should equal to itself.
-	/************************************************************************/
-	class CCXMath
-	{
-	public:
-		static inline int isnanCocos2d(double fValue)
-		{
-	 #ifdef WIN32
- 			return _isnan(fValue);
-	 #else
- 			if (fValue != fValue)
- 			{
- 				return 1;
- 			}
- 			else
- 			{
- 				return 0;
- 			}
-	 #endif // WIN32
-		}
-	};
-	  
-	} // end of namespace cocos2d
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
+    va_end(ap);
+    OutputDebugStringA(szBuf);
+    OutputDebugStringA("\n");
+}
 
-#endif // __PLATFORM_CCXMATH_H__
+NS_CC_END;
+
+#endif  // CCX_PLATFORM_WIN32

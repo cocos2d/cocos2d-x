@@ -6,11 +6,9 @@
 #include <windows.h>
 
 // C RunTime Header Files
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
+#include "ccxStdC.h"
 #include <tchar.h>
 
 extern HINSTANCE g_hInstance;
 
-#endif	// __WINMAIN_H__
+#endif	// __MAIN_H__

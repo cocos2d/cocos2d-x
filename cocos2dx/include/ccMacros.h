@@ -29,8 +29,12 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include <math.h>
-#include <cstdio>
+#include "ccxCommon.h"
+#include "ccxStdC.h"
+
+#define NSAssert(cond, msg)         CCX_ASSERT(cond)
+#define MIN                         min
+#define MAX                         max
 
 #include "ccConfig.h"
 
@@ -52,24 +56,25 @@ THE SOFTWARE.
  *		CCLOGERROR() will be enabled
  *		CCLOGINFO()	will be enabled 
  */
+// CCXLOG macros move to ccxMacros
 
-#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define CCLOG(...)              do {} while (0)
-#define CCLOGINFO(...)          do {} while (0)
-#define CCLOGERROR(...)         do {} while (0)
-
-#elif COCOS2D_DEBUG == 1
-#include "ccxCommon.h"
-#define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGINFO(format,...)   do {} while (0)
-
-#elif COCOS2D_DEBUG > 1
-#include "ccxCommon.h"
-#define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGINFO(format,...)   cocos2d::CCXLog(format, ##__VA_ARGS__)
-#endif // COCOS2D_DEBUG
+// #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
+// #define CCLOG(...)              do {} while (0)
+// #define CCLOGINFO(...)          do {} while (0)
+// #define CCLOGERROR(...)         do {} while (0)
+// 
+// #elif COCOS2D_DEBUG == 1
+// #include "ccxCommon.h"
+// #define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
+// #define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
+// #define CCLOGINFO(format,...)   do {} while (0)
+// 
+// #elif COCOS2D_DEBUG > 1
+// #include "ccxCommon.h"
+// #define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
+// #define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
+// #define CCLOGINFO(format,...)   cocos2d::CCXLog(format, ##__VA_ARGS__)
+// #endif // COCOS2D_DEBUG
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables

@@ -24,9 +24,7 @@ THE SOFTWARE.
 
 #include "CCCamera.h"
 //#include "CCDirector.h"
-#include "ccMacros.h"
-
-#include "support/opengl_support/glu.h"
+#include "ccGL.h"
 
 #include "CCDrawingPrimitives.h"
 

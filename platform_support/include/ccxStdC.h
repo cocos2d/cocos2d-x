@@ -21,9 +21,48 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_UIIMage_H__
-#define __CCX_UIIMage_H__
 
-#include "platform/CCXUIImage_platform.h"
+#ifndef __CCX_STD_C_H__
+#define __CCX_STD_C_H__
 
-#endif // __CCX_UIIMage_H__
+#include "ccxMacros.h"
+
+#include <float.h>
+
+// for math.h on win32 platform
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+
+    #if ! defined(_USE_MATH_DEFINES)
+        #define _USE_MATH_DEFINES       // make M_PI can be use
+    #endif
+
+    #if ! defined(isnan)
+        #define isnan   _isnan
+    #endif
+
+#endif  // CCX_PLATFORM_WIN32
+#include <math.h>
+
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// for sys/time.h on win32 platform
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+
+// Struct timeval has define in winsock.h, include windows.h for it.
+#include <Windows.h>
+
+struct timezone
+{
+    int tz_minuteswest;
+    int tz_dsttime;
+};
+
+int CCX_DLL_PS gettimeofday(struct timeval *, struct timezone *);
+
+#endif  // CCX_PLATFORM_WIN32
+
+#endif  // __CCX_STD_C_H__

@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\CocosDenshion\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib libCocosDenshion.lib"
+				AdditionalDependencies="libcocos2d.lib libPlatformSupport.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\cocos2dx;..\..\cocos2dx\include;..\..\CocosDenshion\include;..\..\;..\..\chipmunk\include\chipmunk;..\tests;..\..\cocos2dx\platform\win32\third_party\OGLES\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib libgles_cm.lib libBox2d.lib libchipmunk.lib libCocosDenshion.lib"
+				AdditionalDependencies="libcocos2d.lib libPlatformSupport.lib libgles_cm.lib libBox2d.lib libchipmunk.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -180,6 +180,14 @@
 		<Filter
 			Name="framework"
 			>
+			<File
+				RelativePath=".\Application.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Application.h"
+				>
+			</File>
 			<File
 				RelativePath=".\main.cpp"
 				>

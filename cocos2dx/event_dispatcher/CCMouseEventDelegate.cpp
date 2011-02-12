@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCMouseEventDelegate.h"
-#include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 
 namespace   cocos2d {

@@ -1,6 +1,5 @@
-
-#ifndef _HELLOWORLD_LAYER_H_
-#define _HELLOWORLD_LAYER_H_
+#ifndef __HELLOWORLD_SCENE_H__
+#define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
 
@@ -20,4 +19,4 @@ public:
 	LAYER_NODE_FUNC(HelloWorld);
 };
 
-#endif // _HELLOWORLD_SCENE_H_
+#endif // __HELLOWORLD_SCENE_H__

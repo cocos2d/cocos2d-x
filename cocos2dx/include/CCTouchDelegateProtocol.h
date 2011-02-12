@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
 #include "NSObject.h"
-#include "ccxCommon.h"
 
 namespace   cocos2d {
 

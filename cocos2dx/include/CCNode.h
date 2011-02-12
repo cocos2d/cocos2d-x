@@ -25,12 +25,9 @@ THE SOFTWARE.
 #ifndef __PLATFOMR_CCNODE_H__
 #define __PLATFOMR_CCNODE_H__
 
-#include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 #include "CGAffineTransform.h"
 #include "NSMutableArray.h"
-#include "ccConfig.h"
-#include "ccxCommon.h"
 #include "selector_protocol.h"
 
 #include "CCGL.h"

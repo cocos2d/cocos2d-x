@@ -24,9 +24,9 @@ THE SOFTWARE.
 #ifndef __CC_PARTICLE_SYSTEM_POINT_PLATFORM_H__
 #define __CC_PARTICLE_SYSTEM_POINT_PLATFORM_H__
 
-#include "config_platform.h"
+#include "ccxConfig.h"
 
-#ifdef CCX_PLATFORM_MAC
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_MAC)
 #include "mac/CCParticleSystemPoint_mac.h"
 #else 
 #include "CCParticleSystemPoint_mobile.h"

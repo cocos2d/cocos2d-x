@@ -21,34 +21,49 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCXBITMAP_DC_H__
-#define __CCXBITMAP_DC_H__
+
+#if CCX_SUPPORT_MULTITHREAD
+
+#include "ccxThread.h"
 
 #include <Windows.h>
-#include "ccTypes.h"
-#include "CCXCocos2dDefine.h"
-#include "CCXUIImage.h"
 
-namespace cocos2d{
-	class CCX_DLL CCXBitmapDC
-	{
-	public:
-		CCXBitmapDC(int width, int height);
-		CCXBitmapDC(const char *text, 
-					CGSize dimensions = CGSizeZero,
-					UITextAlignment alignment = UITextAlignmentCenter,
-					const char *fontName = NULL,
-					float fontSize = 0);
-		~CCXBitmapDC(void);
+NS_CC_BEGIN;
 
-		HBITMAP getBitmap(void);
-		HDC		getDC(void);
+class CCXLock::Impl
+{
+public:
+    Impl()              { InitializeCriticalSection(&m_cs); }
+    ~Impl()             { DeleteCriticalSection(&m_cs); }
 
-	protected:
-        HDC     m_hMemDC;
-        HBITMAP m_hBmp;
-        HGDIOBJ m_hOld;
-	};
+    CRITICAL_SECTION m_cs;
+};
+
+CCXLock::CCXLock()
+: m_pImp(new CCXLock::Impl)
+{
 }
 
-#endif //__CCXBITMAP_DC_H__
+CCXLock::~CCXLock()
+{
+}
+
+void CCXLock::lock()
+{
+    if (m_pImp)
+    {
+        EnterCriticalSection(&m_pImp->m_cs);
+    }
+}
+
+void CCXLock::unlock()
+{
+    if (m_pImp)
+    {
+        LeaveCriticalSection(&m_pImp->m_cs);
+    }
+}
+
+NS_CC_END;
+
+#endif  // CCX_SUPPORT_MULTITHREAD

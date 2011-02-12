@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CCAction.h"
 #include "NSMutableArray.h"
 #include "NSObject.h"
-#include "ccxCommon.h"
 #include "selector_protocol.h"
 
 namespace cocos2d {

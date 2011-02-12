@@ -27,7 +27,7 @@
 /**
  * define some platform specific macros
  */
-#include "config_platform.h"
+#include "ccConfig.h"
 
 #ifdef CCX_PLATFORM_MOBILE
     #define MacGLView					void

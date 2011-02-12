@@ -100,7 +100,7 @@ THE SOFTWARE.
 //
 #include "CCXApplication.h"
 #include "CCXEGLView.h"
-#include "CCXUIImage.h"
+#include "ccxImage.h"
 #include "CCXFileUtils.h"
 #include "CCXUIAccelerometer.h"
  

@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "NSObject.h"
-#include "ccxCommon.h"
 
 namespace   cocos2d {
 class CCNode;

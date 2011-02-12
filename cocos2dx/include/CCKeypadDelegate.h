@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCKEYPAD_DELEGATE_H__
 
 
-#include "ccxCommon.h"
 #include "NSObject.h"
 
 namespace   cocos2d {
