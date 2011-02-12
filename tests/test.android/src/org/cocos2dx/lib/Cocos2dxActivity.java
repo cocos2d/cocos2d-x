@@ -55,6 +55,9 @@ public class Cocos2dxActivity extends Activity{
     public static int screenHeight;
     private static Cocos2dxMusic backgroundMusicPlayer;
     private static Cocos2dxSound soundPlayer;
+    private static Cocos2dxAccelerometer accelerometer;
+    private static boolean accelerometerEnabled = false;
+
     private static native void nativeSetPaths(String apkPath);
 
     @Override
@@ -63,15 +66,26 @@ public class Cocos2dxActivity extends Activity{
         
         // get frame size
         DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);      
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
-        
+        accelerometer = new Cocos2dxAccelerometer(this);
+
         // init media player and sound player
-        backgroundMusicPlayer = new Cocos2dxMusic(getApplicationContext());
-        soundPlayer = new Cocos2dxSound(getApplicationContext());
+        backgroundMusicPlayer = new Cocos2dxMusic(this);
+        soundPlayer = new Cocos2dxSound(this);
     }
-    
+
+    public static void enableAccelerometer() {
+        accelerometerEnabled = true;
+        accelerometer.enable();
+    }
+
+    public static void disableAccelerometer() {
+        accelerometerEnabled = false;
+        accelerometer.disable();
+    }
+
     public static void playBackgroundMusic(String path, boolean isLoop){
     	backgroundMusicPlayer.playBackgroundMusic(path, isLoop);
     }
@@ -132,7 +146,23 @@ public class Cocos2dxActivity extends Activity{
     	backgroundMusicPlayer.end();
     	soundPlayer.end();
     }
-    
+
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	if (accelerometerEnabled) {
+    	    accelerometer.enable();
+    	}
+    }
+
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	if (accelerometerEnabled) {
+    	    accelerometer.disable();
+    	}
+    }
+
     protected void setPackgeName(String packageName) {
     	String apkFilePath = "";
         ApplicationInfo appInfo = null;
