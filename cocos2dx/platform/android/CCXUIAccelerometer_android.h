@@ -27,24 +27,29 @@ THE SOFTWARE.
 
 #include "ccxCommon.h"
 #include "CCUIAccelerometerDelegate.h"
+#include "Cocos2dJni.h"
+#include <list>
 
 namespace   cocos2d {
 
 class CCX_DLL UIAccelerometer
 {
 public:
-    UIAccelerometer();
+	UIAccelerometer();
     ~UIAccelerometer();
 
     static UIAccelerometer* sharedAccelerometer();
 
     void removeDelegate(UIAccelerometerDelegate* pDelegate);
     void addDelegate(UIAccelerometerDelegate* pDelegate);
-    
+    void update(float x, float y, float z, long sensorTimeStamp);
+
 private:
 	static UIAccelerometer* m_spUIAccelerometer;
+	std::list<UIAccelerometerDelegate*>* m_pAccelDelegates;
+	UIAcceleration m_obAccelerationValue;
 };
 
-}//namespace   cocos2d 
+}//namespace cocos2d
 
 #endif
