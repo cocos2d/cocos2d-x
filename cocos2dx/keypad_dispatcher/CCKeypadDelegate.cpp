@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCKeypadDelegate.h"
-#include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 
 namespace   cocos2d {

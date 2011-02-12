@@ -22,18 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __SUPPORT_COCOS2D_TYPES_H__
-#define __SUPPORT_COCOS2D_TYPES_H__
-namespace   cocos2d {
+#ifndef __CCX_THREAD_H_YANGWS_20110114__
+#define __CCX_THREAD_H_YANGWS_20110114__
 
-typedef signed char         INT8;	
-typedef unsigned char       UINT8;
-typedef signed short        INT16;
-typedef unsigned short      UINT16;
-typedef signed int          INT32;
-typedef unsigned int        UINT32;
-typedef long long           INT64;
-typedef unsigned long long  UINT64;	
-}//namespace   cocos2d 
+#include "ccxCommon.h"
 
-#endif // __SUPPORT_COCOS2D_TYPES_H__
+NS_CC_BEGIN;
+
+#if CCX_SUPPORT_MULTITHREAD
+/**
+@brief	The object for mutual-exclusion synchronization.
+
+@warning Don't enter a CCXLock twice in the same thread.
+*/
+class CCX_DLL_PS ccxLock
+{
+public:
+    ccxLock();
+    ~ccxLock();
+
+    void lock();
+    void unlock();
+
+private:
+    class Impl;
+    ccxScopedPtr<ccxLock::Impl> m_pImp;
+};
+#else   // CCX_SUPPORT_MULTITHREAD
+
+class CCX_DLL_PS ccxLock
+{
+public:
+    ccxLock() {}
+    ~ccxLock() {}
+
+    void lock() {}
+    void unlock() {}
+};
+
+#endif  // CCX_SUPPORT_MULTITHREAD
+
+NS_CC_END;
+
+#endif	// __CCX_THREAD_H_YANGWS_20110114__

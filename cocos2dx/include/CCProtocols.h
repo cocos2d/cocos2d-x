@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCTexture2D.h"
-#include "ccxCommon.h"
 
 #include <string>
 namespace   cocos2d {

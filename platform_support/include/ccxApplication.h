@@ -22,68 +22,60 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_APPLICATION_WIN32_H__
-#define __CCX_APPLICATION_WIN32_H__
+#ifndef __CCX_APP_DELEGATE_H_YANGWS_20110122__
+#define __CCX_APP_DELEGATE_H_YANGWS_20110122__
 
-#include <Windows.h>
-#include "CGGeometry.h"
-#include "CCDirector.h"
+#include "ccxCommon.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN;
 
-class CCX_DLL CCXApplication
+class CGRect;
+
+class CCX_DLL_PS ccxApplication
 {
 public:
-    CCXApplication();
-    virtual ~CCXApplication();
+    virtual ~ccxApplication() {}
 
     /**
-    @brief	Implement Window create, CCDirector and CCScene init code here.
-    @return true    Initialize success, app continue.
-    @return false   Initialize failed, app terminate.
+    @brief	Callback by CCDirector for limit FPS.
+    @interval       The time, which expressed in second in second, between current frame and next. 
     */
-    virtual bool applicationDidFinishLaunching() = 0;
-    
-    /**
-    @brief  The function be called when the application enter background
-    @param  the pointer of the application
-    */
-    virtual void applicationDidEnterBackground() {}
-    
-    /**
-    @brief  The function be called when the application enter foreground
-    @param  the pointer of the application
-    */
-    virtual void applicationWillEnterForeground() {}
+    virtual void    setAnimationInterval(double interval) = 0;
 
+    typedef enum
+    {
+        /// Device oriented vertically, home button on the bottom
+        kOrientationPortrait = 0,
+        /// Device oriented vertically, home button on the top
+        kOrientationPortraitUpsideDown = 1,
+        /// Device oriented horizontally, home button on the right
+        kOrientationLandscapeLeft = 2,
+        /// Device oriented horizontally, home button on the left
+        kOrientationLandscapeRight = 3,
+    } Orientation;
     /**
-    @brief	rotate main window by device orientation.
-    @param  nOritation device orientation enum value.
-    @see    ccDeviceOrientation
+    @brief	Callback by CCDirector for change device orientation.
+    @orientation    The defination of orientation which CCDirector want change to.
+    @return         The actual orientation of the application.
     */
-    ccDeviceOrientation setDeviceOrientation(ccDeviceOrientation eOritation);
+    virtual Orientation setOrientation(Orientation orientation) = 0;
 
     /**
     @brief	Get status bar rectangle in EGLView window.
     */
-    CGRect statusBarFrame();
+    virtual void    statusBarFrame(CGRect * rect) = 0;
 
     /**
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCXApplication * sharedApplication();
-
-	virtual int Run();
-
-    void setAnimationInterval(double interval);
+    static ccxApplication& sharedApplication();
 
 protected:
-    HINSTANCE m_hInstance;
-	HACCEL    m_hAccelTable;
-	LARGE_INTEGER m_nAnimationInterval;
+    ccxApplication() {}
+    static void setSharedApplication(ccxApplication& app);
 };
 
-}       // end of namespace   cocos2d
+NS_CC_END;
 
-#endif	// end of __CCX_APPLICATION_WIN32_H__
+#endif	// __CCX_APP_DELEGATE_H_YANGWS_20110122__

@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <string>
 #include "NSObject.h"
 #include "NSMutableArray.h"
+#include "ccMacros.h"
 
 using namespace std;
 namespace   cocos2d {

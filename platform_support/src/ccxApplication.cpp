@@ -22,22 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_UPHONE_CCTIME_H__
-#define __PLATFORM_UPHONE_CCTIME_H__
-namespace   cocos2d {
+#include "ccxApplication.h"
 
-struct cc_timeval
+NS_CC_BEGIN;
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+
+static ccxApplication* s_pSharedApplication;
+
+ccxApplication& ccxApplication::sharedApplication()
 {
- 	long	tv_sec;		// seconds
- 	long	tv_usec;    // microSeconds
-};
+    CCX_ASSERT(s_pSharedApplication);
+    return *s_pSharedApplication;
+}
 
-class CCTime 
+void ccxApplication::setSharedApplication(ccxApplication& app)
 {
-public:
-	static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-	static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
-};
-}//namespace   cocos2d 
+    s_pSharedApplication = &app;
+}
 
-#endif // __PLATFORM_UPHONE_NSTIME_H__
+#endif  // CCX_PLATFORM_WIN32
+
+NS_CC_END;

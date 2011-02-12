@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#include "CCXCocos2dDefine.h"
 #include "NSObject.h"
 #include "NSMutableArray.h"
 

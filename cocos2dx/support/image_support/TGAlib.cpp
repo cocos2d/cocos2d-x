@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "TGAlib.h"
 #include "support/file_support/FileData.h"
-#include "CCXCocos2dDefine.h"
 
 namespace   cocos2d {
 

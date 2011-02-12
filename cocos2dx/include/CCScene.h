@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCSCENE_H__
 
 #include "CCNode.h"
-#include "ccxCommon.h"
+
 namespace   cocos2d {
 
 typedef enum

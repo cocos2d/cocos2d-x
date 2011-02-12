@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "platform/platform.h"
 #include "CCXFileUtils.h"
-#include "CCXUIImage.h"
+#include "ccxImage.h"
 
 namespace   cocos2d {
 
@@ -205,8 +205,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
-				UIImage * image = new UIImage();
-				if(! image->initWithContentsOfFile(fullpath, kCCImageFormatJPG))
+				ccxImage * image = new ccxImage();
+                if(! image->initWithImageFile(fullpath.c_str(), ccxImage::kFmtJpg))
 				{
 					delete image;
 					break;
@@ -233,8 +233,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 				tex = [ [CCTexture2D alloc] initWithImage: image ];
 #else
 				// prevents overloading the autorelease pool
-				UIImage * image = new UIImage();
-				if(! image->initWithContentsOfFile(fullpath, kCCImageFormatPNG))
+				ccxImage * image = new ccxImage();
+                if(! image->initWithImageFile(fullpath.c_str(), ccxImage::kFmtPng))
 				{
 					delete image;
 					break;
@@ -345,7 +345,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 
 	return [tex autorelease];
 }*/
-CCTexture2D* CCTextureCache::addUIImage(UIImage *image, const char *key)
+CCTexture2D* CCTextureCache::addUIImage(ccxImage *image, const char *key)
 {
 	NSAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
 

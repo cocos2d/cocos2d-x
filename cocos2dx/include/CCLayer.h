@@ -25,12 +25,10 @@ THE SOFTWARE.
 #ifndef __CCLAYER_H__
 #define __CCLAYER_H__
 
-#include "CCXCocos2dDefine.h"
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCTouchDelegateProtocol.h"
 #include "CCUIAccelerometerDelegate.h"
-#include "ccxCommon.h"
 #include "CCKeypadDelegate.h"
 #include "CCMouseEventDelegate.h"
 #include "CCKeyboardEventDelegate.h"

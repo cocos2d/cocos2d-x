@@ -23,10 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
+
 #include "NSMutableArray.h"
 #include "NSMutableDictionary.h"
 #include "CGGeometry.h"
-#include "CCXCocos2dDefine.h"
+
 namespace cocos2d {
 
 	class CCTMXObjectGroup;

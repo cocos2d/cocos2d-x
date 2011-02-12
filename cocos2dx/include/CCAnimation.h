@@ -24,10 +24,10 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_H__
 #define __CC_ANIMATION_H__
 
+#include "ccxConfig.h"
 #include "NSObject.h"
 #include "NSMutableArray.h"
 #include "CGGeometry.h"
-#include "CCXCocos2dDefine.h"
 #include <string>
 
 namespace   cocos2d {

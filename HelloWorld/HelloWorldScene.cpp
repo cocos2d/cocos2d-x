@@ -1,7 +1,6 @@
-
 #include "HelloWorldScene.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 CCScene* HelloWorld::scene()
 {
