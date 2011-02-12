@@ -92,7 +92,7 @@ namespace cocos2d {
                 
                 Coord nMemWndW = (width >= nCurrentWidth) ? width : nCurrentWidth;
                 Coord nMemWndH = (height >= nCurrentHeight) ? height : nCurrentHeight;
-                CCX_BREAK_IF(s_pMemWnd->CreateMemWindow(nMemWndW, nMemWndH,screenTransparentFormat));
+                CCX_BREAK_IF(s_pMemWnd->CreateMemWindow(nMemWndW, nMemWndH,screenAlphaFormat));
                 delete s_pMemWnd;
                 s_pMemWnd = NULL;
             } while (0);
