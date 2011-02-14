@@ -57,31 +57,39 @@ out:
 }
 
 static void initWithString(const char *content, const char *fontName, float size, /*input params*/
-						   int *pWidth, int *pHeight, unsigned char** ppData)  /*output params*/
+						   int *pWidth, int *pHeight, UITextAlignment alignment, unsigned char** ppData)  /*output params*/
 {
-	NSUInteger			width, height;
-	unsigned char*			data;
-	CGContextRef			context;
-	CGColorSpaceRef		colorSpace;
+	NSUInteger		width, height;
+	unsigned char*	data;
+	CGContextRef	context;
+	CGColorSpaceRef	colorSpace;
 	id				uiFont;
-	NSString                *string;
-	CGSize                  dimensions;
-	UITextAlignment   alignment;
-	NSString                *name;
+	NSString		*string;
+	CGSize			dimensions;
+	NSString		*name;
     
 	if (!pWidth || !pHeight || !ppData)
 	{
 		return;
 	}
 	
-	alignment = UITextAlignmentCenter;
 	string = [[NSString alloc] initWithUTF8String:content];
-                //name = isValidFontName(fontName) ? [[NSString alloc] initWithUTF8String:fontName] : @"Thonburi";
-        name = isValidFontName(fontName) ? [[NSString alloc] initWithUTF8String:fontName] : @"MarkerFelt-Wide";
+	
+	name = isValidFontName(fontName) ? [[NSString alloc] initWithUTF8String:fontName] : @"MarkerFelt-Wide";
 	dimensions = [string sizeWithFont:[UIFont fontWithName:name size:size]];
     
-	width = dimensions.width;
-	height = dimensions.height;
+	width = *pWidth;
+	height = *pHeight;
+
+	// use whatever is larger, the dimension calculated, or the one passed in
+	if ( dimensions.width > *pWidth )
+	{
+		width = dimensions.width;
+	}
+	if ( dimensions.height > *pHeight )
+	{
+		height = dimensions.height;
+	}
 	
 	colorSpace = CGColorSpaceCreateDeviceRGB();
 	data = new unsigned char[height * width * 4];
@@ -99,8 +107,8 @@ static void initWithString(const char *content, const char *fontName, float size
 	CGRect rect;
 	rect.origin.x = 0;
 	rect.origin.y = 0;
-	rect.size.width = dimensions.width;
-	rect.size.height = dimensions.height;
+	rect.size.width = width;
+	rect.size.height = height;
 	[string drawInRect:rect withFont:uiFont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
 
 	UIGraphicsPopContext();
@@ -127,7 +135,9 @@ namespace cocos2d {
 	
 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 	{	
-		initWithString(text, fontName, fontSize, &m_nWidth, &m_nHeight, &m_pData);
+		m_nWidth = dimensions.width;
+		m_nHeight = dimensions.height;
+		initWithString(text, fontName, fontSize, &m_nWidth, &m_nHeight, (::UITextAlignment)alignment, &m_pData);
 	}
 	
 	CCXBitmapDC::~CCXBitmapDC()
