@@ -102,7 +102,7 @@ namespace cocos2d {
             // create DC
             TDC dc(s_pMemWnd);
             // set DC styles
-            UInt32 styles = GUI_API_STYLE_SPECIFY_FORE_COLOR |  GUI_API_STYLE_ROP_MODE_TRANSPARENT |
+            UInt32 styles = GUI_API_STYLE_SPECIFY_FORE_COLOR |  GUI_API_STYLE_ROP_MODE_TRANSPARENT | GUI_API_STYLE_CLIP_WORDWRAP |
                 GUI_API_STYLE_SPECIFY_BACK_COLOR | GUI_API_STYLE_ALIGNMENT_MIDDLE | GUI_API_STYLE_SPECIFY_FONT;
 
             switch (alignment)
