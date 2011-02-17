@@ -67,7 +67,7 @@ There are config below:
 #endif
 
 // uphone
-#if ! CCX_TARGET_PLATFORM && defined(_TRANZDA_VM_)
+#if ! CCX_TARGET_PLATFORM && (defined(_TRANZDA_VM_) || defined(CCX_UNDER_UPHONE))
     #undef  CCX_TARGET_PLATFORM
     #define CCX_TARGET_PLATFORM         CCX_PLATFORM_UPHONE
 #endif

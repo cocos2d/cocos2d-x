@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccxCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CCX_DLL_PS ccxImage
 {
@@ -80,7 +80,7 @@ public:
     @param  pFontName   the name of the font which use to draw the text. If nil, use the default system font.
     @param  nSize       the font size, if 0, use the system default size.
     */
-    bool initWidthString(
+    bool initWithString(
         const char *    pText, 
         int             nWidth = 0, 
         int             nHeight = 0,

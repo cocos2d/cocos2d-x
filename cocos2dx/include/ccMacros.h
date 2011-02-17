@@ -33,8 +33,6 @@ THE SOFTWARE.
 #include "ccxStdC.h"
 
 #define NSAssert(cond, msg)         CCX_ASSERT(cond)
-#define MIN                         min
-#define MAX                         max
 
 #include "ccConfig.h"
 

@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="HelloWorld"
-	ProjectGUID="{74589012-5241-4918-997A-C0105ABD4DEC}"
+	Name="PlatformSupport"
+	ProjectGUID="{560E20BA-9562-4AFC-A222-6B7B1956D607}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\cocos2dx\include;..\..\cocos2dx;..\..\..\PRJ_TG3\Include\OpenGL;..\uphone;..\;.\Res;..\..\platform_support\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
+				AdditionalIncludeDirectories="..\include;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\..\PRJ_TG3\Include\ThirdParty\libjpeg;..\..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\..\PRJ_TG3\Include\OpenGL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;__TG3_PURE_DLL__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -50,6 +50,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4996"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
@@ -63,8 +64,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib libPlatformSupport.lib"
-				OutputFile="$(OutDir)/HelloWorld.dll"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libTG3_EGL.lib libgles_cm.lib zlib.lib libpng14-imp.lib libjpeg.lib"
+				OutputFile="$(OutDir)/libPlatformSupport.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../../PRJ_TG3/Common/ICU/lib;../../../PRJ_TG3/Mtapi/Win32/lib;../../../PRJ_TG3/LIB/Win32Lib;../../../PRJ_TG3/Common/SoftSupport"
 				GenerateDebugInformation="true"
@@ -96,12 +97,11 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir D:\Work7\NEWPLUS\TG3\APP&#x0D;&#x0A;copy ..\Resource\*.*  D:\Work7\NEWPLUS\TG3\APP&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../PRJ_TG3/LIB/Win32Lib"
+			OutputDirectory="../../PRJ_TG3/LIB/Win32Lib"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,13 +124,14 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\Res;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
+				AdditionalIncludeDirectories="..\include;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\..\PRJ_TG3\Include\ThirdParty\libjpeg;..\..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\..\PRJ_TG3\Include\OpenGL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;__TG3_PURE_DLL__"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -143,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/HelloWorld.dll"
+				OutputFile="$(OutDir)/PlatformSupport.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -180,134 +181,80 @@
 	</References>
 	<Files>
 		<Filter
-			Name="source"
+			Name="src"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\AppDelegate.cpp"
+				RelativePath="..\src\ccxApplication.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\AppDelegate.h"
+				RelativePath="..\src\ccxCommon.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\HelloWorldScene.cpp"
+				RelativePath="..\src\ccxGL.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\HelloWorldScene.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Res"
-			>
-			<File
-				RelativePath=".\Res\HelloWorld_Res.ENU.tr3"
+				RelativePath="..\src\ccxImage.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\HelloWorld_Res.ENU.tr3.tts"
+				RelativePath="..\src\ccxStdC.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\HelloWorld_Res.h"
+				RelativePath="..\src\ccxThread.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\HelloWorld_Res.TR3"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_Res.TRG"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_res_c.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_res_def.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_res_h.h"
+				RelativePath="..\src\uphone\NewDeleteOp.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="Makefiles"
+			Name="include"
 			>
 			<File
-				RelativePath=".\HelloWorld.TMK3"
+				RelativePath="..\include\ccxApplication.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Makefile.ARM"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Framework"
-			>
-			<File
-				RelativePath=".\Application.cpp"
+				RelativePath="..\include\ccxCommon.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Application.h"
+				RelativePath="..\include\ccxConfig.h"
 				>
 			</File>
 			<File
-				RelativePath=".\HelloWorldUnicodeScript.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="..\..\..\PRJ_TG3\Common\StrConv\TzdStrConv_V1.exe $(InputPath) $(InputDir)$(InputName)_str.h&#x0D;&#x0A;"
-						AdditionalDependencies="..\..\..\PRJ_TG3\Common\StrConv\TzdStrConv_V1.exe"
-						Outputs="$(InputDir)$(InputName)_str.h"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\HelloWorldUnicodeScript_str.h"
+				RelativePath="..\include\ccxGL.h"
 				>
 			</File>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath="..\include\ccxImage.h"
 				>
 			</File>
 			<File
-				RelativePath=".\NewDeleteOp.cpp"
+				RelativePath="..\include\ccxLibxml2.h"
 				>
 			</File>
 			<File
-				RelativePath=".\TG3AppDllEntry.cpp"
+				RelativePath="..\include\ccxMacros.h"
 				>
 			</File>
 			<File
-				RelativePath=".\TG3AppDllEntry.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource"
-			>
-			<File
-				RelativePath="..\Resource\CloseNormal.png"
+				RelativePath="..\include\ccxStdC.h"
 				>
 			</File>
 			<File
-				RelativePath="..\Resource\CloseSelected.png"
+				RelativePath="..\include\ccxString.h"
 				>
 			</File>
 			<File
-				RelativePath="..\Resource\HelloWorld.png"
+				RelativePath="..\include\ccxThread.h"
 				>
 			</File>
 		</Filter>

@@ -48,3 +48,47 @@ void CCXLog(const char * pszFormat, ...)
 NS_CC_END;
 
 #endif  // CCX_PLATFORM_WIN32
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+#include "TG3.h"
+
+#define MAX_LEN         256
+#define LOG_FILE_PATH   "/NEWPLUS/TDA_DATA/UserData/Cocos2dLog.txt"
+
+NS_CC_BEGIN
+
+void CCXLog(const char * pszFormat, ...)
+{
+    SS_printf("Cocos2d: ");
+    char szBuf[MAX_LEN];
+
+    va_list ap;
+    va_start(ap, pszFormat);
+#ifdef _TRANZDA_VM_
+    vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
+#else
+    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
+#endif
+    va_end(ap);
+
+    SS_printf("%s", szBuf);
+#ifdef _TRANZDA_VM_
+    SS_printf("\n");
+#else
+    SS_printf("\r\n");
+    FILE * pf = fopen(LOG_FILE_PATH, "a+");
+    if (! pf)
+    {
+        return;
+    }
+
+    fwrite(szBuf, 1, strlen(szBuf), pf);
+    fwrite("\r\n", 1, strlen("\r\n"), pf);
+    fflush(pf);
+    fclose(pf);
+#endif
+}
+
+NS_CC_END;
+
+#endif  // CCX_PLATFORM_UPHONE

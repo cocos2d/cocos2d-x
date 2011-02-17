@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccxMacros.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 // [u]int[8|16|32|64]
 // char
@@ -48,8 +48,8 @@ static const int kMaxLogLen = 255;
 void CCX_DLL_PS CCXLog(const char * pszFormat, ...);
 
 struct ccxNullDeleter       { template< class TPTR > void operator()(TPTR ) {} };
-struct ccxNewDeleter        { template< class TPTR > void operator()(TPTR p) { delete p; } };
-struct ccxNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { delete[] p; } };
+struct ccxNewDeleter        { template< class TPTR > void operator()(TPTR p) { if (p) delete p; } };
+struct ccxNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { if (p) delete[] p; } };
 
 /**
 @brief	A simple scoped pointer.

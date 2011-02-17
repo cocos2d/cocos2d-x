@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\PRJ_TG3\Include\ThirdParty\iconv;..\..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\..\PRJ_TG3\Include\ThirdParty\libjpeg;..\..\..\PRJ_TG3\Include\ThirdParty\libxml2;..\include;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\OpenGL;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\"
+				AdditionalIncludeDirectories="..\..\..\PRJ_TG3\Include\ThirdParty\iconv;..\..\..\PRJ_TG3\Include\ThirdParty\zlib;..\..\..\PRJ_TG3\Include\ThirdParty\libpng;..\..\..\PRJ_TG3\Include\ThirdParty\libjpeg;..\..\..\PRJ_TG3\Include\ThirdParty\libxml2;..\include;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\OpenGL;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\;..\..\platform_support\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;__TG3_PURE_DLL__;_USE_MATH_DEFINES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libTG3_EGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib ImageToolKit_d.lib libjpeg.lib"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libEGL.lib libTG3_EGL.lib libgles_cm.lib libxml2.lib zlib.lib libpng14-imp.lib ImageToolKit_d.lib libjpeg.lib libPlatformSupport.lib"
 				OutputFile="$(OutDir)/libcocos2d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../../PRJ_TG3/Common/ICU/lib;../../../PRJ_TG3/Mtapi/Win32/lib;../../../PRJ_TG3/LIB/Win32Lib;../../../PRJ_TG3/Common/SoftSupport"
@@ -521,14 +521,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCXApplication.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxCommon.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCXEGLView.h"
 				>
 			</File>
@@ -538,10 +530,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCXUIAccelerometer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCXUIImage.h"
 				>
 			</File>
 			<File
@@ -781,22 +769,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="opengl_support"
-				>
-				<File
-					RelativePath="..\support\opengl_support\glu.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\support\opengl_support\glu.h"
-					>
-				</File>
-				<File
-					RelativePath="..\support\opengl_support\OpenGL_Internal.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="zip_support"
 				>
 				<File
@@ -985,19 +957,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCXApplication_platform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\ccxCommon_platform.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCXEGLView_platform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCXMath.h"
 				>
 			</File>
 			<File
@@ -1005,11 +965,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCXUIImage_platform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\config_platform.h"
+				RelativePath="..\platform\platform.cpp"
 				>
 			</File>
 			<File
@@ -1021,34 +977,6 @@
 				>
 				<File
 					RelativePath="..\platform\uphone\CCNS_uphone.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCTime.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCTime.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCXApplication_uphone.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCXApplication_uphone.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCXBitmapDC.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCXBitmapDC.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCXCommon_uphone.cpp"
 					>
 				</File>
 				<File
@@ -1076,27 +1004,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\platform\uphone\CCXUIImage_uphone.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\CCXUIImage_uphone.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\Cocos2dTypes.h"
-					>
-				</File>
-				<File
 					RelativePath="..\platform\uphone\NewDeleteOp.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\NSLock.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\uphone\NSLock.h"
 					>
 				</File>
 			</Filter>

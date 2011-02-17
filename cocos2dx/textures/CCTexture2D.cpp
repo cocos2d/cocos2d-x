@@ -558,7 +558,7 @@ bool CCTexture2D::initWithString(const char *text, CGSize dimensions, UITextAlig
     ccxImage::ETextAlign eAlign = (UITextAlignmentCenter == alignment) ? ccxImage::kAlignCenter
         : (UITextAlignmentLeft == alignment) ? ccxImage::kAlignLeft : ccxImage::kAlignRight;
     
-    if (! image.initWidthString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize))
+    if (! image.initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize))
     {
         return false;
     }

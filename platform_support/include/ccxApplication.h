@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccxCommon.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class CGRect;
 
@@ -70,6 +70,17 @@ public:
     @return Current application instance pointer.
     */
     static ccxApplication& sharedApplication();
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+    /**
+    @brief Get the data path of the Application.
+    @return If the app is installed,the return value is the path of .so file.
+    else the return value is "/NEWPLUS/TG3/APP/"
+    */
+    virtual const char* getAppDataPath() = 0;
+
+    virtual void switchNotify(int nTurnOn) = 0;
+#endif
 
 protected:
     ccxApplication() {}
