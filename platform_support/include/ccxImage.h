@@ -115,7 +115,6 @@ public:
 
 protected:
     bool _initWithJpgData(void * pData, int nDatalen);
-    bool _initWithJpgFile(const char * strPath);
     bool _initWithPngData(void * pData, int nDatalen);
 
     ccxScopedArray<ccxByte> m_pData;

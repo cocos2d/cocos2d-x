@@ -42,10 +42,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
 
-// on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
-// #ifndef _TRANZDA_VM_  
-//     cocos2d::CCFileUtils::setResource("HelloWorld.zip");
-// #endif
+#ifndef _TRANZDA_VM_  
+    // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+    cocos2d::CCFileUtils::setResource("HelloWorld.zip");
+#endif
 
 #endif
 
