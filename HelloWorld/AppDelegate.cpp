@@ -22,8 +22,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // init the window
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-    if (!(m_pMainWnd = new CCXEGLView(this)) || 
-        ! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
+    TApplication* pApp = TApplication::GetCurrentApplication();
+    if (!(m_pMainWnd = new CCXEGLView(pApp)) || 
+        ! m_pMainWnd->Create(&TRectangle(0,0,pApp->GetScreenWidth(),pApp->GetScreenHeight())))
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
     if (!(m_pMainWnd = new CCXEGLView()) ||
         ! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
@@ -40,8 +41,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/cocos2d_helloworld/");
+
+// on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+// #ifndef _TRANZDA_VM_  
+//     cocos2d::CCFileUtils::setResource("HelloWorld.zip");
+// #endif
+
 #endif
 
 	// init director

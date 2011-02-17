@@ -26,9 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
-
-static ccxApplication* s_pSharedApplication;
+static ccxApplication* s_pSharedApplication = 0;
 
 ccxApplication& ccxApplication::sharedApplication()
 {
@@ -40,7 +38,5 @@ void ccxApplication::setSharedApplication(ccxApplication& app)
 {
     s_pSharedApplication = &app;
 }
-
-#endif  // CCX_PLATFORM_WIN32
 
 NS_CC_END;

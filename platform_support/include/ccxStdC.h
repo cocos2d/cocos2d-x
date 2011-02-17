@@ -41,6 +41,19 @@ THE SOFTWARE.
     #endif
 
 #endif  // CCX_PLATFORM_WIN32
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE && defined(_TRANZDA_VM_))
+
+    #if ! defined(_USE_MATH_DEFINES)
+        #define _USE_MATH_DEFINES       // make M_PI can be use
+    #endif
+
+    #if ! defined(isnan)
+        #define isnan   _isnan
+    #endif
+
+#endif
+
 #include <math.h>
 
 #include <string.h>
@@ -49,10 +62,13 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <time.h>
 
-// for sys/time.h on win32 platform
+// for MIN MAX and sys/time.h on win32 platform
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 
-// Struct timeval has define in winsock.h, include windows.h for it.
+#define MIN     min
+#define MAX     max
+
+// Structure timeval has define in winsock.h, include windows.h for it.
 #include <Windows.h>
 
 struct timezone
@@ -64,5 +80,11 @@ struct timezone
 int CCX_DLL_PS gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CCX_PLATFORM_WIN32
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+
+#include "TG3.h"
+
+#endif  // CCX_PLATFORM_UPHONE
 
 #endif  // __CCX_STD_C_H__

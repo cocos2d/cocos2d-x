@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include <TG3.h>
 #include "NSString.h"
 #include "CCXFileUtils_uphone.h"
-#include "CCXCocos2dDefine.h"
 #include "CCXApplication.h"
 
 #include "support/file_support/FileData.h"
@@ -219,7 +218,7 @@ void updateZipFilePath(const char* pResPath)
     }
     else
     {
-        ResPath = CCXApplication::sharedApplication()->getAppDataPath();
+        ResPath = ccxApplication::sharedApplication().getAppDataPath();
     }
 
     // replace the resource path in s_pszZipFilePath
@@ -245,7 +244,7 @@ void setZipFilePath(const char* pZipFileName)
     }
     else
     {
-        const char* pAppDataPath = CCXApplication::sharedApplication()->getAppDataPath();
+        const char* pAppDataPath = ccxApplication::sharedApplication().getAppDataPath();
         strcpy(fullPath, pAppDataPath);
     }
     strcat(fullPath, pZipFileName);
@@ -314,7 +313,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     // get the user data path and append relative path to it
     if (strlen(s_pszResourcePath) == 0)
     {
-        const char* pAppDataPath = CCXApplication::sharedApplication()->getAppDataPath();
+        const char* pAppDataPath = ccxApplication::sharedApplication().getAppDataPath();
         strcpy(s_pszResourcePath, pAppDataPath);
     }
 

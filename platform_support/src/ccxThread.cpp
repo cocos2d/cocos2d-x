@@ -30,4 +30,8 @@ THE SOFTWARE.
 #include "win32/ccxThread_win32.cpp"
 #endif
 
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+#include "uphone/ccxThread_uphone.cpp"
+#endif
+
 #endif  // CCX_SUPPORT_MULTITHREAD

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccxThread.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 struct cc_timeval
 {
@@ -47,9 +47,6 @@ class NSLock : public ccxLock{};
 NS_CC_END;
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-	#include "uphone/CCTime.h"
-	#include "uphone/NSLock.h"
-	#include "uphone/CCXBitmapDC.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     #include "android/CCTime.h"

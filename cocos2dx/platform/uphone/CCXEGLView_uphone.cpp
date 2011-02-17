@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "EGL/egl.h"
 #include "GLES/gl.h"
 
-#include "CCXCocos2dDefine.h"
 #include "NSSet.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
@@ -297,23 +296,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     case EVENT_ScreenSwitchNotify:
         {
-            bool bInBack = CCXApplication::sharedApplication()->isInBackground();
-
-            // if the app have be in background,don't handle this message
-            CCX_BREAK_IF(bInBack);
-
-            if (! pEvent->sParam1)  // turn off screen
-            {
-                // CCDirector::sharedDirector()->pause();
-                CCXApplication::sharedApplication()->applicationDidEnterBackground();
-                CCXApplication::sharedApplication()->StopMainLoop();
-            }
-            else
-            {
-                // CCDirector::sharedDirector()->resume();
-                CCXApplication::sharedApplication()->applicationWillEnterForeground();
-                CCXApplication::sharedApplication()->StartMainLoop();
-            }
+            ccxApplication::sharedApplication().switchNotify(pEvent->sParam1);
             break;
         }
 

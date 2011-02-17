@@ -177,7 +177,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool ccxImage::initWidthString(
+bool ccxImage::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,

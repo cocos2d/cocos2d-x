@@ -27,7 +27,10 @@ THE SOFTWARE.
 #include "ccxString.h"
 #include "ccxStdC.h"
 #include "png.h"
+
+#define  QGLOBAL_H
 #include "jpeglib.h"
+#undef   QGLOBAL_H
 
 #define CCX_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
     (unsigned)(((unsigned)((ccxByte)(vr) * ((ccxByte)(va) + 1)) >> 8) | \
@@ -57,7 +60,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
     }
 }
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 static void ccxMessageBox(const ccxString& msg, const ccxString& title);
 
@@ -333,3 +336,7 @@ NS_CC_END;
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 #include "win32/ccxImage_win32.cpp"
 #endif 
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+#include "uphone/ccxImage_uphone.cpp"
+#endif

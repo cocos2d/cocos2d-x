@@ -1,19 +1,11 @@
-#include "CCXApplication_uphone.h"
-
+#include "Application.h"
 #include "ssBackLightControl.h"
 #include "ssKeyLockControl.h"
 
-#include "CCDirector.h"
-#include "CCScheduler.h"
-
-// #include "CCXGLExtFunc.h"
-#include <GLES/glext.h>
-
-namespace   cocos2d {
+using namespace cocos2d;
 
 static const Int32 CCX_ON_APPLICATION_IDLE = (EVENT_FirstUser + EVENT_LastUser) / 2;
 
-// #undef _TRANZDA_VM_
 #ifdef _TRANZDA_VM_
 static  LARGE_INTEGER s_nAnimationInterval;
 static  LARGE_INTEGER s_nFreq;
@@ -30,7 +22,7 @@ static long long getTimeOfDayMicroSecond()
 }
 #endif
 
-CCXApplication::CCXApplication()
+Application::Application()
 : m_bRunning(FALSE)
 , m_bNeedStop(FALSE)
 , m_bInBackground(FALSE)
@@ -39,7 +31,7 @@ CCXApplication::CCXApplication()
     SS_GetCurrentGTID(&m_tMsg.gtid);
     m_tMsg.type = CCX_ON_APPLICATION_IDLE;
 
-    Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, CCXApplication::_OnAppIdle, (UInt32)this);
+    Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, Application::_OnAppIdle, (UInt32)this);
 
     memset(m_AppDataPath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
 
@@ -56,18 +48,20 @@ CCXApplication::CCXApplication()
     } while (0);
 }
 
-CCXApplication::~CCXApplication()
+Application::~Application()
 {
     Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, NULL, NULL);
 }
 
-Boolean CCXApplication::EventHandler(EventType * pEvent)
+Boolean  Application::EventHandler(EventType*  pEvent)
 {
-    Boolean bHandled = FALSE;
-    switch (pEvent->eType)
+    Boolean     bHandled = FALSE;
+
+    switch(pEvent->eType)
     {
     case EVENT_AppLoad:
-        if (! applicationDidFinishLaunching())
+        setSharedApplication(*this);
+        if (! m_Delegate.applicationDidFinishLaunching())
         {
             CCScheduler::purgeSharedScheduler();
             SendStopEvent();
@@ -82,20 +76,20 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
         break;
 
     case EVENT_AppStopNotify:
-
         break;
+
     case EVENT_AppActiveNotify:
         if (pEvent->sParam1 == 0)
         {
             if (!m_bInBackground)
             {
-                applicationDidEnterBackground();
+                m_Delegate.applicationDidEnterBackground();
                 m_bInBackground = true;
             }
 
             if (CCDirector::sharedDirector()->isPaused())
             {
-               StopMainLoop();
+                StopMainLoop();
             }
             CfgTurnOnBackLight();
             EnableKeyLock();
@@ -104,12 +98,12 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
         {
             if (m_bInBackground)
             {
-                applicationWillEnterForeground();
+                m_Delegate.applicationWillEnterForeground();
                 m_bInBackground = false;
             }
 
             StartMainLoop();
-            
+
             CfgTurnOnBackLightDelay(0x7fffffff);
             // if KeyLock disactived, disable it.
             if (! CfgKeyLock_GetActive())
@@ -119,51 +113,15 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
         }
         break;
     }
-
-    if (! bHandled)
+    if (FALSE == bHandled) 
     {
-        bHandled = TApplication::EventHandler(pEvent);
+        return TApplication::EventHandler(pEvent);
     }
+
     return bHandled;
 }
 
-ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
-{
-	return eOritation;
-}
-
-CGRect CCXApplication::statusBarFrame()
-{
-    CGRect rc;
-    return rc;
-}
-
-void CCXApplication::StartMainLoop()
-{
-    if (m_bRunning)
-    {
-        m_bNeedStop = FALSE;
-        return;
-    }
-    Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &m_tMsg);
-    m_bRunning = TRUE;
-}
-
-void CCXApplication::StopMainLoop()
-{
-    m_bNeedStop = TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////////
-/// Implement static class member
-//////////////////////////////////////////////////////////////////////////
-
-CCXApplication * CCXApplication::sharedApplication()
-{
-    return (CCXApplication *)TApplication::GetCurrentApplication();
-}
-
-void CCXApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
 #ifdef _TRANZDA_VM_
     LARGE_INTEGER nFreq;
@@ -174,16 +132,75 @@ void CCXApplication::setAnimationInterval(double interval)
 #endif
 }
 
-Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
+Application::Orientation Application::setOrientation(Application::Orientation orientation)
 {
-    CCXApplication *    pThis = CCXApplication::sharedApplication();
-    CCXEGLView *        pView = CCDirector::sharedDirector()->getOpenGLView();
-    if (pThis && pView && pThis->m_bRunning)
+    return orientation;
+}
+
+void Application::statusBarFrame(CGRect * rect)
+{
+}
+
+const char* Application::getAppDataPath()
+{
+    return m_AppDataPath;
+}
+
+void Application::switchNotify(int nTurnOn)
+{
+    bool bInBack = isInBackground();
+
+    do 
     {
-        if (pThis->m_bNeedStop)
+        // if the app have be in background,don't handle this message
+        CCX_BREAK_IF(bInBack);
+
+        if (! nTurnOn)  // turn off screen
         {
-            pThis->m_bNeedStop = FALSE;
-            pThis->m_bRunning  = FALSE;
+            // CCDirector::sharedDirector()->pause();
+            m_Delegate.applicationDidEnterBackground();
+            StopMainLoop();
+        }
+        else
+        {
+            // CCDirector::sharedDirector()->resume();
+            m_Delegate.applicationWillEnterForeground();
+            StartMainLoop();
+        }
+    } while (0);
+}
+
+bool Application::isInBackground()
+{
+    return m_bInBackground;
+}
+
+void Application::StartMainLoop()
+{
+    if (m_bRunning)
+    {
+        m_bNeedStop = FALSE;
+        return;
+    }
+    Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &m_tMsg);
+    m_bRunning = TRUE;
+}
+
+void Application::StopMainLoop()
+{
+    m_bNeedStop = TRUE;
+}
+
+Int32 Application::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
+{
+    Application& rThis = (Application&) Application::sharedApplication();
+    CCXEGLView *     pView = CCDirector::sharedDirector()->getOpenGLView();
+    if (pView && rThis.m_bRunning)
+    {
+        if (rThis.m_bNeedStop)
+        {
+            rThis.m_bNeedStop = FALSE;
+            rThis.m_bRunning  = FALSE;
         }
         else
         {
@@ -207,20 +224,8 @@ Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
             {
                 Sys_Sleep(0);
             }
-            Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &pThis->m_tMsg);
+            Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &rThis.m_tMsg);
         }
     }
     return 1;
-}
-
-const char* CCXApplication::getAppDataPath()
-{
-    return m_AppDataPath;
-}
-
-bool CCXApplication::isInBackground()
-{
-    return m_bInBackground;
-}
-
 }

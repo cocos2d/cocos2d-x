@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCXUIAccelerometer_uphone.h"
-#include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 
 #include "TCOM_Generic_Method_IIDs.h"

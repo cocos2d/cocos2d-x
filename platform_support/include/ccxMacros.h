@@ -140,6 +140,17 @@ public: inline void set##funName(varType var){ varName = var; }
 
 #endif  // CCX_PLATFORM_WIN32
 
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE && defined(_TRANZDA_VM_))
+
+    #undef CCX_DLL
+    #if defined(SS_MAKEDLL)
+        #define CCX_DLL     __declspec(dllexport)
+    #else 		/* use a DLL library */
+        #define CCX_DLL     __declspec(dllimport)
+    #endif
+
+#endif  // uphone VM
+
 // shared library declator for platform_support project
 #define CCX_DLL_PS      CCX_DLL
 

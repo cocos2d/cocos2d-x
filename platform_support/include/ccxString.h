@@ -43,9 +43,16 @@ There are some useful tool for ccxString:
 
 #include <string>
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
+typedef std::string ccxAString;
+typedef ccxAString ccxString;
 
 // ccxStringTrim
+/** 
+@todo ccxStringTrim must re-implement.
+Because basic_string is not have the same implement on different platform.
+*/
+#if 0
 template <class _E, class Tr, class AllocT >
 std::basic_string<_E, Tr, AllocT >& ccxStringTrim(std::basic_string<_E, Tr, AllocT >& str, 
                                                  const _E* blanks)
@@ -314,6 +321,7 @@ inline void ccxStringTrim(std::basic_string<wchar_t, Tr, AllocT >& str)
 }
 
 #endif  // CCX_SUPPORT_UNICODE
+#endif
 
 NS_CC_END;
 
