@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCXFileUtils.h"
 #include "ccxImage.h"
+#include "support/file_support/FileData.h"
 
 namespace   cocos2d {
 
@@ -206,7 +207,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
 				ccxImage * image = new ccxImage();
-                if(! image->initWithImageFile(fullpath.c_str(), ccxImage::kFmtJpg))
+                FileData data;
+                unsigned long nSize  = 0;
+                unsigned char* pBuffer = data.getFileData(fullpath.c_str(), "rb", &nSize);
+                if(! image->initWithImageData((void*)pBuffer, nSize, ccxImage::kFmtJpg))
 				{
 					delete image;
 					break;
@@ -234,7 +238,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #else
 				// prevents overloading the autorelease pool
 				ccxImage * image = new ccxImage();
-                if(! image->initWithImageFile(fullpath.c_str(), ccxImage::kFmtPng))
+                FileData data;
+                unsigned long nSize  = 0;
+                unsigned char* pBuffer = data.getFileData(fullpath.c_str(), "rb", &nSize);
+                if(! image->initWithImageData((void*)pBuffer, nSize, ccxImage::kFmtPng))
 				{
 					delete image;
 					break;

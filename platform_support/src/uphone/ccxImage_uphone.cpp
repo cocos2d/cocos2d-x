@@ -28,7 +28,10 @@ NS_CC_BEGIN
 
 void ccxMessageBox(const ccxString& msg, const ccxString& title)
 {
-    //MessageBoxA(NULL, msg.c_str(), title.c_str(), MB_OK);
+    TUChar szText[256] = { 0 };
+    TUString::StrUtf8ToStrUnicode(szText,(Char*)msg.c_str());
+    TMessageBox box(szText, NULL, WMB_OK);
+    box.Show();
 }
 
 class BitmapDC

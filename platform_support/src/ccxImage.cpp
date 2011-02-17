@@ -85,13 +85,6 @@ bool ccxImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = 
     unsigned char *buffer = NULL;
     do 
     {
-        if (kFmtJpg == eImgFmt)
-        {
-            bRet = _initWithJpgFile(strPath);
-            break;
-        }
-        CCX_BREAK_IF(kFmtPng != eImgFmt);
-
         // open file
         fp = fopen(strPath, "rb");
         CCX_BREAK_IF(! fp);
@@ -108,9 +101,14 @@ bool ccxImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = 
         // read data
         size = fread(buffer, sizeof(unsigned char), size, fp);
 
-        bRet = _initWithPngData(buffer, size);
-
-    	bRet = true;
+        if (kFmtJpg == eImgFmt)
+        {
+            bRet = _initWithJpgData(buffer, size);
+        }
+        else
+        {
+            bRet = _initWithPngData(buffer, size);
+        }
     } while (0);
 
     CCX_SAFE_DELETE_ARRAY(buffer);
@@ -143,7 +141,7 @@ bool ccxImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/*
         }
         else if (kFmtJpg == eFmt)
         {
-//             bRet = _initWithJpgData(pData, nDataLen);
+            bRet = _initWithJpgData(pData, nDataLen);
             break;
         }
     } while (0);
@@ -162,7 +160,7 @@ bool ccxImage::getIsPopupNotify()
     return s_bPopupNotify;
 }
 
-bool ccxImage::_initWithJpgFile(const char * strFileName)
+bool ccxImage::_initWithJpgData(void * data, int nSize)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -170,14 +168,8 @@ bool ccxImage::_initWithJpgFile(const char * strFileName)
     /* libjpeg data structure for storing one row, that is, scanline of an image */
     JSAMPROW row_pointer[1];
 
-    FILE *infile = fopen( strFileName, "rb" );
     unsigned long location = 0;
     unsigned int i = 0;
-
-    if ( !infile )
-    {
-        return false;
-    }
 
     /* here we set up the standard libjpeg error handler */
     cinfo.err = jpeg_std_error( &jerr );
@@ -186,7 +178,7 @@ bool ccxImage::_initWithJpgFile(const char * strFileName)
     jpeg_create_decompress( &cinfo );
 
     /* this makes the library read from infile */
-    jpeg_stdio_src( &cinfo, infile );
+    jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
 
     /* reading the image header which contains image information */
     jpeg_read_header( &cinfo, true );
@@ -208,8 +200,8 @@ bool ccxImage::_initWithJpgFile(const char * strFileName)
     jpeg_start_decompress( &cinfo );
 
     /* init image info */
-    m_nWidth    = (ccxInt16)cinfo.image_width;
-    m_nHeight   = (ccxInt16)cinfo.image_height;
+    m_nWidth  = cinfo.image_width;
+    m_nHeight = cinfo.image_height;
     m_bHasAlpha = false;
     m_bPreMulti = false;
     m_nBitsPerComponent = 8;
@@ -231,7 +223,6 @@ bool ccxImage::_initWithJpgFile(const char * strFileName)
     jpeg_finish_decompress( &cinfo );
     jpeg_destroy_decompress( &cinfo );
     delete row_pointer[0];
-    fclose( infile );
 
     return true;
 }
