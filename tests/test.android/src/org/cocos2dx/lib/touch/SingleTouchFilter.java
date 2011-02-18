@@ -24,22 +24,34 @@ public class SingleTouchFilter extends TouchFilter {
     }
 
     private void parseTouch(MotionEvent event) {
-        final float x = event.getX();
-        final float y = event.getY();
-        final int id = 0;
-
+        final float[] x = {event.getX()};
+        final float[] y = {event.getY()};
+        final int[] id = {0};
+        
         switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
-            mRenderer.handleActionDown(id, x, y);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionDown(id, x, y);
+                }});
 
         case MotionEvent.ACTION_UP:
-            mRenderer.handleActionUp(id, x, y);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionUp(id, x, y);
+                }});
 
         case MotionEvent.ACTION_CANCEL:
-            mRenderer.handleActionCancel(id, x, y);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionCancel(id, x, y);
+                }});
 
         case MotionEvent.ACTION_MOVE:
-            mRenderer.handleActionMove(id, x, y);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionMove(id, x, y);
+                }});
         }
     }
 }

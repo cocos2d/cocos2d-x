@@ -1,5 +1,7 @@
 package org.cocos2dx.lib.touch;
 
+import java.util.ArrayList;
+
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.lib.Cocos2dxRenderer;
 
@@ -31,6 +33,11 @@ public class MultiTouchFilter extends TouchFilter {
 
     private void parseTouch(MotionEvent event) {
 
+        ArrayList<Touch> tDown = null;
+        ArrayList<Touch> tUp = null;
+        ArrayList<Touch> tMove = null;
+        ArrayList<Touch> tCancel = null;
+
         final int pointerCount = event.getPointerCount();
         for (int i = 0; i < pointerCount; i++) {
             final int action = event.getAction();
@@ -58,7 +65,11 @@ public class MultiTouchFilter extends TouchFilter {
                 }
 
             case MotionEvent.ACTION_DOWN:
-                mRenderer.handleActionDown(id, x, y);
+                if ( null == tDown ) {
+                    tDown = new ArrayList<MultiTouchFilter.Touch>(2);
+                }
+
+                tDown.add(new Touch(id, x, y));
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -72,21 +83,64 @@ public class MultiTouchFilter extends TouchFilter {
                     break;
                 }
             case MotionEvent.ACTION_UP:
-                mRenderer.handleActionUp(id, x, y);
+                if ( null == tUp ) {
+                    tUp = new ArrayList<MultiTouchFilter.Touch>(2);
+                }
+
+                tUp.add(new Touch(id, x, y));
                 break;
 
             case MotionEvent.ACTION_CANCEL:
-                mRenderer.handleActionCancel(id, x, y);
+                if ( null == tCancel ) {
+                    tCancel = new ArrayList<MultiTouchFilter.Touch>(2);
+                }
+
+                tCancel.add(new Touch(id, x, y));
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                mRenderer.handleActionMove(id, x, y);
+                if ( null == tMove ) {
+                    tMove = new ArrayList<MultiTouchFilter.Touch>(2);
+                }
+
+                tMove.add(new Touch(id, x, y));
                 break;
 
             }
         }
+
+        final TouchArrays arrays;
+        if ( tDown != null ) {
+            arrays = getArrays(tDown);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionDown(arrays.ids, arrays.xs, arrays.ys);
+            }});
+
+        } else if ( tMove != null ) {
+            arrays = getArrays(tMove);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionMove(arrays.ids, arrays.xs, arrays.ys);
+                }});
+
+        } else if ( tUp != null ) {
+            arrays = getArrays(tUp);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionUp(arrays.ids, arrays.xs, arrays.ys);
+                }});
+
+        } else if ( tCancel != null ) {
+            arrays = getArrays(tCancel);
+            mView.queueEvent(new Runnable() {
+                public void run() {
+                    mRenderer.handleActionCancel(arrays.ids, arrays.xs, arrays.ys);
+                }});
+        }
     }
 
+    
     @Override
     public boolean supportsMultitouch(Context context) {
         if (!mCheckedForMultitouch) {
@@ -99,4 +153,39 @@ public class MultiTouchFilter extends TouchFilter {
         return mSupportsMultitouch;
     }
 
+    private TouchArrays getArrays(ArrayList<Touch> touches) {
+        TouchArrays ret = new TouchArrays(touches.size());
+
+        for ( int i=0 ; i < touches.size() ; i++ ) {
+            ret.ids[i] = touches.get(i).id;
+            ret.xs[i] = touches.get(i).x;
+            ret.ys[i] = touches.get(i).y;
+        }
+
+        return ret;
+    }
+
+    private class TouchArrays {
+        public int[] ids;
+        public float[] xs;
+        public float[] ys;
+
+        public TouchArrays(int size) {
+            ids = new int[size];
+            xs = new float[size];
+            ys = new float[size];
+        }
+    }
+
+    private class Touch {
+        public int id;
+        public float x;
+        public float y;
+
+        public Touch(int id, float x, float y) {
+            this.id = id;
+            this.x = x;
+            this.y = x;
+        }
+    }
 }
