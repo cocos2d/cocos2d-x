@@ -185,7 +185,7 @@ public class MultiTouchFilter extends TouchFilter {
         public Touch(int id, float x, float y) {
             this.id = id;
             this.x = x;
-            this.y = x;
+            this.y = y;
         }
     }
 }
