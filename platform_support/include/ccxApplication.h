@@ -37,6 +37,11 @@ public:
     virtual ~ccxApplication() {}
 
     /**
+    @brief	Call for init OpenGL instance, source path, etc...
+    */
+    virtual bool initInstance() = 0;
+    
+    /**
     @brief	Callback by CCDirector for limit FPS.
     @interval       The time, which expressed in second in second, between current frame and next. 
     */

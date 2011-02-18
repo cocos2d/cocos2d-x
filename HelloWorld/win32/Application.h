@@ -5,6 +5,7 @@
 
 #include <Windows.h>
 #include "AppDelegate.h"
+#include "CCXEGLView.h"
 
 class Application : public cocos2d::ccxApplication
 {
@@ -16,6 +17,11 @@ public:
     @brief	Run the message loop.
     */
     int run();
+
+    /**
+    @brief	Call for init OpenGL instance, source path, etc...
+    */
+    virtual bool initInstance();
 
     /**
     @brief	Callback by CCDirector for limit FPS.
@@ -36,10 +42,13 @@ public:
     virtual void    statusBarFrame(cocos2d::CGRect * rect);
 
 protected:
-    AppDelegate     m_Delegate;
-    HINSTANCE       m_hInstance;
-    HACCEL          m_hAccelTable;
-    LARGE_INTEGER   m_nAnimationInterval;
+    cocos2d::CCXEGLView m_MainWnd;          // the OpenGLView window
+
+    AppDelegate         m_Delegate;
+
+    HINSTANCE           m_hInstance;
+    HACCEL              m_hAccelTable;
+    LARGE_INTEGER       m_nAnimationInterval;
 };
 
 #endif	// __APPLICATION_H__

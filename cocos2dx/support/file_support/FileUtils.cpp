@@ -95,30 +95,21 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
     return pBuffer;
 }
 
-const char* FileUtils::ccRemoveHDSuffixFromFile(const char* path)
+ccxString& FileUtils::ccRemoveHDSuffixFromFile(ccxString& path)
 {
 #if CC_IS_RETINA_DISPLAY_SUPPORTED
 
     if( CC_CONTENT_SCALE_FACTOR() == 2 )
     {
-        std::string curPath = path;
-        int pos = curPath.rfind("/");
-        std::string fileName = curPath.substr(pos + 1);
+        ccxString::size_type pos = path.rfind("/") + 1; // the begin index of last part of path
 
-        std::string filePath = "";
-        if (-1 != pos)
+        int suffixPos = path.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        if (ccxString::npos != suffixPos && suffixPos > pos)
         {
-            filePath = curPath.substr(0, pos);
+            CCXLog("cocos2d: FilePath(%s) contains suffix(%s), remove it.", path.c_str(),
+                CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+            path.replace(suffixPos, strlen(CC_RETINA_DISPLAY_FILENAME_SUFFIX), "");
         }
-
-        int suffixPos = fileName.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
-        if (-1 != suffixPos)
-        {
-            fileName.replace(pos, strlen(CC_RETINA_DISPLAY_FILENAME_SUFFIX), "");
-        }
-
-        std::string result = filePath + fileName;
-        return result.c_str();
     }
 
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED

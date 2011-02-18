@@ -47,7 +47,7 @@ NS_CC_BEGIN;
 
 // ccxStringTrim
 template <class _E, class Tr, class AllocT >
-std::basic_string<_E, Tr, AllocT >& ccxStringTrim(std::basic_string<_E, Tr, AllocT >& str, 
+inline std::basic_string<_E, Tr, AllocT >& ccxStringTrim(std::basic_string<_E, Tr, AllocT >& str, 
                                                  const _E* blanks)
 {
     typedef std::basic_string<_E, Tr, AllocT > StringT;
@@ -66,13 +66,13 @@ std::basic_string<_E, Tr, AllocT >& ccxStringTrim(std::basic_string<_E, Tr, Allo
 }
 
 // ccxStringCompareIgnoreCase
-int compareCharIgnoreCase(int left, int right)
+inline int compareCharIgnoreCase(int left, int right)
 {
     return tolower(left) - tolower(right);
 }
 
 template<class LeftIter, class RightIter, class CompT >
-int compareElementsByIterator(LeftIter  leftIterBegin, 
+inline int compareElementsByIterator(LeftIter  leftIterBegin, 
                               LeftIter  leftIterEnd, 
                               RightIter rightIterBegin, 
                               RightIter rightIterEnd, 
@@ -96,7 +96,7 @@ inline int ccxStringCompareIgnoreCase(std::basic_string<_E, Tr, AllocT >& left,
 
 // ccxStringToUpper 
 template <class _E, class Tr, class AllocT >
-std::basic_string<_E, Tr, AllocT >& ccxStringToUpper(std::basic_string<_E, Tr, AllocT >& str)
+inline std::basic_string<_E, Tr, AllocT >& ccxStringToUpper(std::basic_string<_E, Tr, AllocT >& str)
 {
     transform(str.begin(), str.end(), str.begin(), toupper);
     return str;
@@ -104,7 +104,7 @@ std::basic_string<_E, Tr, AllocT >& ccxStringToUpper(std::basic_string<_E, Tr, A
 
 // ccxStringToLower
 template <class _E, class Tr, class AllocT >
-std::basic_string<_E, Tr, AllocT >& ccxStringToLower(std::basic_string<_E, Tr, AllocT >& str)
+inline std::basic_string<_E, Tr, AllocT >& ccxStringToLower(std::basic_string<_E, Tr, AllocT >& str)
 {
     transform(str.begin(), str.end(), str.begin(), tolower);
     return str;
@@ -118,7 +118,7 @@ std::basic_string<_E, Tr, AllocT >& ccxStringToLower(std::basic_string<_E, Tr, A
 @return             The reference of string which after replace text.
 */
 template <class StringT >
-StringT& ccxStringReplaceText(StringT&      text, 
+inline StringT& ccxStringReplaceText(StringT&      text, 
                              const StringT& findText, 
                              const StringT& replaceText)
 {
@@ -179,7 +179,7 @@ Every token will be processed by verifier before save to container.
 @return             The count of tokens which saved to container.
 */
 template<class StringT, class ContainerT, class VerifierT >
-int ccxStringExplode(ContainerT&    container, 
+inline int ccxStringExplode(ContainerT&    container, 
                      const StringT& sequence, 
                      const StringT& delimiters, 
                      VerifierT&     verifier)
@@ -215,7 +215,7 @@ Every token will be processed by default verifier, which erase the delimiters, t
 @return             The count of tokens which saved to container.
 */
 template<class StringT, class ContainerT >
-int ccxStringExplode(ContainerT&    container, 
+inline int ccxStringExplode(ContainerT&    container, 
                      const StringT& sequence, 
                      const StringT& delimiters)
 {
@@ -235,7 +235,7 @@ Every token will be processed by verifier before save to container.
 @return             The count of tokens which saved to container.
 */
 template<class StringT, class ContainerT, class VerifierT >
-int ccxStringExplode2(ContainerT&       container, 
+inline int ccxStringExplode2(ContainerT&       container, 
                       const StringT&    sequence, 
                       const StringT&    deliLeft, 
                       const StringT&    deliRight, 
@@ -273,7 +273,7 @@ Every token will be processed by default verifier, which erase the delimiters, t
 @return             The count of tokens which saved to container.
 */
 template<class StringT, class ContainerT >
-int ccxStringExplode2(ContainerT&       container, 
+inline int ccxStringExplode2(ContainerT&       container, 
                       const StringT&    sequence, 
                       const StringT&    deliLeft, 
                       const StringT&    deliRight)
@@ -304,7 +304,7 @@ typedef std::wstring ccxWString;
 typedef ccxWString ccxString;
 
 template <class Tr, class AllocT >
-inline void ccxStringTrim(std::basic_string<wchar_t, Tr, AllocT >& str)
+inline inline void ccxStringTrim(std::basic_string<wchar_t, Tr, AllocT >& str)
 {
     const wchar_t blanks[] =
     {

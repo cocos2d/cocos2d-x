@@ -21,6 +21,7 @@ public:
     virtual void onEnter();
 
     virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class HiResTest2 : public HiResDemo

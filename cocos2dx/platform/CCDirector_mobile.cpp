@@ -307,7 +307,8 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 	switch (kProjection)
 	{
 	case kCCDirectorProjection2D:
-		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)size.width, (GLsizei)size.height);
+// 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)size.width, (GLsizei)size.height);
+        CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		ccglOrtho(0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 
@@ -317,7 +318,8 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 		break;
 
 	case kCCDirectorProjection3D:
-		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+// 		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+        CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
@@ -795,6 +797,14 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 	float newScale = (float)(enabled ? 2 : 1);
 	setContentScaleFactor(newScale);
 
+#if CC_DIRECTOR_FAST_FPS
+    if (m_pFPSLabel)
+    {
+        CCX_SAFE_RELEASE_NULL(m_pFPSLabel);
+        m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 24);
+        m_pFPSLabel->retain();
+    }
+#endif
 	return true;
 }
 
