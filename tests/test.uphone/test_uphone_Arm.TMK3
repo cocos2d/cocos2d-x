@@ -37,6 +37,7 @@ DEFINES=-DCCX_UNDER_UPHONE		;这里填入应用的自定义宏。注意：ITOPS自己的所需定义会
 INCLUDE_PATH =-I../ -I../Res \
 INCLUDE_PATH=-I../../cocos2dx \
 INCLUDE_PATH=-I../../cocos2dx/include \
+INCLUDE_PATH=-I../../platform_support/include \
 INCLUDE_PATH=-I../../chipmunk/include/chipmunk \
 INCLUDE_PATH=-I../../ \
 INCLUDE_PATH=-I../tests

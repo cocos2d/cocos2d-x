@@ -23,8 +23,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-	if (!(m_pMainWnd = new CCXEGLView(this)) || 
-		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
+    TApplication* pApp = TApplication::GetCurrentApplication();
+	if (!(m_pMainWnd = new CCXEGLView(pApp)) || 
+		! m_pMainWnd->Create(&TRectangle(0,0,pApp->GetScreenWidth(),pApp->GetScreenHeight())))
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 	if (!(m_pMainWnd = new CCXEGLView()) ||
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
@@ -49,6 +50,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if  (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
 	CCFileUtils::setRelativePath("assets");
+#endif
+
+#if  (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+
+#ifndef _TRANZDA_VM_
+    CCFileUtils::setResource("TestCocos2dx.zip");
+#endif
+
 #endif
 
     CCScene * pScene = CCScene::node();
