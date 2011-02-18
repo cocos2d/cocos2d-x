@@ -16,12 +16,13 @@ DEFINES += -DCCX_UNDER_UPHONE
 INCLUDE_PATH += -I../ -I../Res \
                 -I../../cocos2dx \
                 -I../../cocos2dx/include \
+                -I../../platform_support/include \
                 -I../../chipmunk/include/chipmunk \
                 -I../../CocosDenshion/include \
                 -I../../ \
                 -I../tests
 
-LIBS += -lCocos2dStatic	-lCocosDenshionStatic -lTSoundPlayer -lChipmunkStatic -lBox2dStatic -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
+LIBS += -lCocos2dStatic -lPlatformSupportStatic	-lCocosDenshionStatic -lTSoundPlayer -lChipmunkStatic -lBox2dStatic -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -34,6 +35,7 @@ first: all
 
 OBJECTS = \
 	$(OBJECTS_DIR)/AppDelegate.o \
+	$(OBJECTS_DIR)/Application.o \
 	$(OBJECTS_DIR)/main.o \
 	$(OBJECTS_DIR)/NewDeleteOp.o \
 	$(OBJECTS_DIR)/TG3AppDllEntry.o \
@@ -114,6 +116,9 @@ clean :
 
 $(OBJECTS_DIR)/AppDelegate.o : ../AppDelegate.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/AppDelegate.o ../AppDelegate.cpp
+
+$(OBJECTS_DIR)/Application.o : ./Application.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Application.o ./Application.cpp
 
 $(OBJECTS_DIR)/main.o : ./main.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/main.o ./main.cpp
