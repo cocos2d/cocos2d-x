@@ -6,47 +6,48 @@ USING_NS_CC;
 #include "HelloWorldScene.h"
 
 AppDelegate::AppDelegate()
-:m_pMainWnd(NULL)
 {
 
 }
 
 AppDelegate::~AppDelegate()
 {
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
-	CCX_SAFE_DELETE(m_pMainWnd);
-#endif
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // init the window
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-    if (!(m_pMainWnd = new CCXEGLView(this)) || 
-        ! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
-    if (!(m_pMainWnd = new CCXEGLView()) ||
-        ! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IPHONE)
-    if (!(m_pMainWnd = new CCXEGLView()))
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
-    if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
-#else
-	#error
-#endif
+    if (! ccxApplication::sharedApplication().initInstance())
     {
-        CCX_SAFE_DELETE(m_pMainWnd);
         return false;
     }
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/cocos2d_helloworld/");
-#endif
+// TODO: Remove this code to ccxApplication::initInstance()
+
+// #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+//     if (!(m_pMainWnd = new CCXEGLView(this)) || 
+//         ! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
+// #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IPHONE)
+//     if (!(m_pMainWnd = new CCXEGLView()))
+// #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+//     if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
+// #endif
+//     {
+//         CCX_SAFE_DELETE(m_pMainWnd);
+//         return false;
+//     }
+
+// #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+//     // set the resource path
+//     CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/cocos2d_helloworld/");
+// #endif
 
 	// init director
 	CCDirector *pDirector = CCDirector::sharedDirector();
-	pDirector->setOpenGLView(m_pMainWnd);
+    pDirector->setOpenGLView(&CCXEGLView::sharedOpenGLView());
+
+    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
+//     pDirector->enableRetinaDisplay(true);
 
 	// sets landscape mode
 	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);

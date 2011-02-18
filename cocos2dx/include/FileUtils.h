@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __SUPPORT_FILE_SUPPORT_FILEUTILS_H__
 #define __SUPPORT_FILE_SUPPORT_FILEUTILS_H__
 
+#include "ccxString.h"
+
 namespace cocos2d {
 
 class FileUtils
@@ -53,7 +55,7 @@ public:
     @returns const char * without the HD suffix
     @since v0.99.5
     */
-    static const char* ccRemoveHDSuffixFromFile(const char* path);
+    static ccxString& ccRemoveHDSuffixFromFile(ccxString& path);
 };
 
 } // namespace cocos2d

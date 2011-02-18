@@ -30,7 +30,8 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 #include "CGGeometry.h"
 
-namespace   cocos2d {
+NS_CC_BEGIN;
+
 class NSSet;
 class CCTouch;
 class EGLTouchDelegate;
@@ -44,7 +45,6 @@ public:
     CCXEGLView();
     virtual ~CCXEGLView();
 
-	CGRect  getFrame();
     CGSize  getSize();
     bool    isOpenGLReady();
     void    release();
@@ -56,8 +56,23 @@ public:
 	virtual bool Create(LPCTSTR pTitle, int w, int h);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
-	HWND    getHWnd();
-	int setDeviceOrientation(int eOritation);
+    int setDeviceOrientation(int eOritation);
+    void setViewPortInPoints(float x, float y, float w, float h);
+
+    // win32 platform function
+    HWND getHWnd();
+    void resize(int width, int height);
+    void centerWindow();
+    void setScreenScale(float factor);
+
+    // static function
+
+    /**
+    @brief	get the shared main open gl window
+    */
+    static CCXEGLView& sharedOpenGLView();
+
+protected:
 
 private:
 
@@ -73,8 +88,11 @@ private:
 	HWND				m_hWnd;
 
 	int					m_eInitOrientation;
+    SIZE                m_tSizeInPoints;
+    float               m_fScreenScaleFactor;
+    RECT                m_rcViewPort;
 };
 
-}   // end of namespace   cocos2d
+NS_CC_END;
 
 #endif	// end of __CCX_EGLVIEW_WIN32_H__
