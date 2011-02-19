@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccxCommon.h"
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
 
 class CGRect;
 
