@@ -121,6 +121,26 @@ Boolean  Application::EventHandler(EventType*  pEvent)
     return bHandled;
 }
 
+bool Application::initInstance()
+{
+    CCXEGLView* pMainWnd = new CCXEGLView(this);
+    bool bRet = false;
+
+    do 
+    {
+        CCX_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
+
+#ifndef _TRANZDA_VM_  
+        // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+        cocos2d::CCFileUtils::setResource("HelloWorld.zip");
+#endif
+
+        bRet = true;
+    } while (0);
+
+    return bRet;
+}
+
 void Application::setAnimationInterval(double interval)
 {
 #ifdef _TRANZDA_VM_

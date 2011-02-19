@@ -37,7 +37,8 @@ THE SOFTWARE.
 #include "CCXUIAccelerometer.h"
 #include "CCKeypadDispatcher.h"
 
-#include "CCXApplication.h"
+#include "ccxApplication.h"
+#include "ccMacros.h"
 
 namespace cocos2d {
 
@@ -194,10 +195,13 @@ private:
 // impliment CCXEGLView
 //////////////////////////////////////////////////////////////////////////
 
+static CCXEGLView* s_pMainWindow = NULL;
+
 CCXEGLView::CCXEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
+, m_fScreenScaleFactor(1.0f)
 {
 }
 
@@ -205,6 +209,36 @@ CCXEGLView::~CCXEGLView()
 {
     CCX_SAFE_DELETE(m_pDelegate);
     CCX_SAFE_DELETE(m_pEGL);
+}
+
+Boolean CCXEGLView::Create(int nWidthInPoints, int nHeightInPoints)
+{
+    // record the window size in points
+    m_tSizeInPoints.SetWidth(nWidthInPoints);
+    m_tSizeInPoints.SetHeight(nHeightInPoints);
+
+    // get the screen size
+    TApplication* pApp = TApplication::GetCurrentApplication();
+    Int32 nWidth  = pApp->GetScreenWidth();
+    Int32 nHeight = pApp->GetScreenHeight();
+
+    // calculate the factor and the rect of viewport
+    m_fScreenScaleFactor =  MIN((float)nWidth / nWidthInPoints, (float)nHeight / nHeightInPoints);
+    int viewPortW = (int)(m_tSizeInPoints.Width() * m_fScreenScaleFactor);
+    int viewPortH = (int)(m_tSizeInPoints.Height() * m_fScreenScaleFactor);
+    m_rcViewPort.SetX((nWidth - viewPortW) / 2);
+    m_rcViewPort.SetY((nHeight - viewPortH) / 2);
+    m_rcViewPort.SetWidth(viewPortW);
+    m_rcViewPort.SetHeight(viewPortH);
+
+    Boolean bRet = TWindow::Create(&TRectangle(0, 0, nWidth, nHeight));
+
+    if (bRet)
+    {
+        s_pMainWindow = this;
+    }
+
+    return bRet;
 }
 
 Boolean CCXEGLView::AfterCreate(void)
@@ -351,7 +385,8 @@ Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
             pTouch = new CCTouch;
         }
 
-        pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+        pTouch->SetTouchInfo(0, (float)(pEvent->sParam1 - m_rcViewPort.X()) / m_fScreenScaleFactor,
+                             (float)(pEvent->sParam2 - m_rcViewPort.Y()) / m_fScreenScaleFactor);
         s_pTouches[nIndex] = pTouch;
         NSSet set;
         set.addObject(pTouch);
@@ -369,7 +404,8 @@ Boolean CCXEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
         if (pTouch)
         {
             NSSet set;
-            pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
+            pTouch->SetTouchInfo(0, (float)(pEvent->sParam1 - m_rcViewPort.X()) / m_fScreenScaleFactor,
+                                 (float)(pEvent->sParam2 - m_rcViewPort.Y()) / m_fScreenScaleFactor);
             set.addObject(pTouch);
             m_pDelegate->touchesEnded(&set, NULL);
 
@@ -408,7 +444,8 @@ Boolean CCXEGLView::OnPenMove(EventType* pEvent)
             CCX_BREAK_IF(!pTouch);
 
             EvtGetPenMultiPointXY(pEvent, i, &nPosX, &nPosY);
-            pTouch->SetTouchInfo(0, (float) nPosX, (float) nPosY);
+            pTouch->SetTouchInfo(0, (float) (nPosX - m_rcViewPort.X()) / m_fScreenScaleFactor,
+                                 (float) (nPosY - m_rcViewPort.Y()) / m_fScreenScaleFactor);
             set.addObject(pTouch);
         }
 
@@ -420,9 +457,7 @@ Boolean CCXEGLView::OnPenMove(EventType* pEvent)
 
 CGSize CCXEGLView::getSize()
 {
-	Coord w, h;
-	TWindow::GetWindowExtent(&w, &h);
-    return CGSize((float)w, (float)h);
+    return CGSize((float)m_tSizeInPoints.Width(), (float)m_tSizeInPoints.Height());
 }
 
 CGRect CCXEGLView::getFrame()
@@ -464,6 +499,25 @@ bool CCXEGLView::canSetContentScaleFactor()
 void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
 {
 	// if it supports scaling content, set it
+    m_fScreenScaleFactor = contentScaleFactor;
+}
+
+void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
+{
+    if (m_pEGL)
+    {
+        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+        glViewport((GLint)(x * factor) + m_rcViewPort.X(),
+            (GLint)(y * factor) + m_rcViewPort.Y(),
+            (GLint)(w * factor),
+            (GLint)(h * factor));
+    }
+}
+
+CCXEGLView& CCXEGLView::sharedOpenGLView()
+{
+    CCX_ASSERT(s_pMainWindow);
+    return *s_pMainWindow;
 }
 
 }       // end of namespace cocos2d

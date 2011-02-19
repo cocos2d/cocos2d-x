@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "TWindow.h"
 
 #include "CGGeometry.h"
+#include "TG3.h"
 
 class TApplication;
 
@@ -46,6 +47,7 @@ public:
     CCXEGLView(TApplication * pApp);
     virtual ~CCXEGLView();
 
+    virtual Boolean Create(int nWidthInPoints, int nHeightInPoints);
     virtual Boolean AfterCreate(void);
     virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
 
@@ -58,6 +60,13 @@ public:
 	bool    canSetContentScaleFactor();
 	void    setContentScaleFactor(float contentScaleFactor);
 	void    setAnimationInterval(double interval) {};
+    void    setViewPortInPoints(float x, float y, float w, float h);
+
+    // static function
+    /**
+    @brief	get the shared main open gl window
+    */
+    static CCXEGLView& sharedOpenGLView();
 
 protected:
     Boolean OnPenDown(EventType* pEvent, Int32 nIndex);
@@ -69,6 +78,10 @@ private:
     MESSAGE_t m_tMsg;
     CCXEGL *            m_pEGL;
     EGLTouchDelegate *  m_pDelegate;
+
+    TSize               m_tSizeInPoints;
+    float               m_fScreenScaleFactor;
+    TRectangle          m_rcViewPort;
 };
 
 }   // end of namespace   cocos2d

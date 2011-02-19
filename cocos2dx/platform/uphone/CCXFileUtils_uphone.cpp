@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <TG3.h>
 #include "NSString.h"
 #include "CCXFileUtils_uphone.h"
-#include "CCXApplication.h"
+#include "ccxApplication.h"
 
 #include "support/file_support/FileData.h"
 #include "support/zip_support/unzip.h"
