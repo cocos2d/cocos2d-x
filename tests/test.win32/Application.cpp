@@ -36,6 +36,9 @@ int Application::run()
         return 0;
     }
 
+    m_MainWnd.centerWindow();
+    ShowWindow(m_MainWnd.getHWnd(), SW_SHOW);
+
     while (1)
     {
         if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -70,6 +73,27 @@ int Application::run()
         }
     }
     return (int) msg.wParam;
+}
+
+bool Application::initInstance()
+{
+    bool bRet = false;
+    do 
+    {
+        // the HelloWorld is designed as HVGA
+        CCX_BREAK_IF(! m_MainWnd.Create(TEXT("cocos2d-win32"), 320, 480));
+// #define SHOW_AS_WVGA
+#ifdef  SHOW_AS_WVGA
+        // the design size HVGA is 480x320
+        // the WVGA is 800x480
+        // screenScaleFactor = WVGA/HVGA = min(800/480, 480/320) = 1.5
+        m_MainWnd.setScreenScale(1.5f);
+        m_MainWnd.resize(480, 800);
+#endif  // SHOW_AS_WVGA
+
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 void Application::setAnimationInterval(double interval)

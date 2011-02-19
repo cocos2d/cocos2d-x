@@ -175,17 +175,18 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 	CCTexture2D * texture = NULL;
 	// Split up directory and filename
-	std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
 	// MUTEX:
 	// Needed since addImageAsync calls this method from a different thread
 	
 	m_pDictLock->lock();
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	fullpath = string(CCFileUtils::ccRemoveHDSuffixFromFile(fullpath.c_str()));
+    ccxString pathKey = path;
+	CCFileUtils::ccRemoveHDSuffixFromFile(pathKey);
 
-	texture = m_pTextures->objectForKey(fullpath);
+	texture = m_pTextures->objectForKey(pathKey);
 
+    std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
 	if( ! texture ) 
 	{
 		std::string lowerCase(path);
@@ -221,7 +222,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 				if( texture )
 				{
-					m_pTextures->setObject(texture, fullpath);
+					m_pTextures->setObject(texture, pathKey);
 					texture->release();
 				}
 				else
@@ -252,7 +253,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #endif
 				if( texture )
 				{
-					m_pTextures->setObject(texture, fullpath);
+					m_pTextures->setObject(texture, pathKey);
 					texture->release();
 				}
 				else
