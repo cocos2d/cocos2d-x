@@ -1,8 +1,6 @@
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
-#include "CCXEGLView.h"
-
 class  AppDelegate
 {
 public:
@@ -27,9 +25,6 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-
-protected:
-    cocos2d::CCXEGLView *   m_pMainWnd;
 };
  
 

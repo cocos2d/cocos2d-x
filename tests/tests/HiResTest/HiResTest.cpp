@@ -55,19 +55,18 @@ void HiResDemo::onEnter()
 
     CGSize s = CCDirector::sharedDirector()->getWinSize();
 
-    /**
-    @todo CCLabelTTF
-    */
-//     CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
-//     [self addChild: label z:1];
-//     [label setPosition: ccp(s.width/2, s.height-50)];
-//     NSString *subtitle = [self subtitle];
-//     if( subtitle ) {
-//         CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
-//         [self addChild:l z:1];
-//         [l setPosition:ccp(s.width/2, s.height-80)];
-//     }
+    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    label->setPosition(ccp(s.width/2, s.height-50));
+    addChild(label, 1);
 
+    std::string sSubTitle = subtitle();
+    if (sSubTitle.length())
+    {
+        CCLabelTTF *subLabel = CCLabelTTF::labelWithString(sSubTitle.c_str(), "Thonburi", 16);
+        subLabel->setPosition(ccp(s.width/2, s.height-80));
+        addChild(subLabel, 1);
+    }
+    
     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(HiResDemo::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(HiResDemo::restartCallback) );
     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(HiResDemo::nextCallback) );
@@ -155,7 +154,12 @@ void HiResTest1::onEnter()
 
 std::string HiResTest1::title()
 {
-    return "Standard image";
+    return "High resolution image test";
+}
+
+std::string HiResTest1::subtitle()
+{
+    return "Image without high resolution resource";
 }
 
 ////////////////////////////////////
@@ -176,12 +180,12 @@ void HiResTest2::onEnter()
 
 std::string HiResTest2::title()
 {
-    return "@2x images";
+    return "High resolution image test";
 }
 
 std::string HiResTest2::subtitle()
 {
-    return "Issue #910";
+    return "Image with high resolution resource";
 }
 
 ////////////////////////////////////

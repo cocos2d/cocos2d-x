@@ -248,6 +248,29 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         pRet->m_sString = s_pszResourcePath;
         pRet->m_sString += pszRelativePath;
     }
+#if (CC_IS_RETINA_DISPLAY_SUPPORTED)
+    if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
+    {
+        ccxString hiRes = pRet->m_sString.c_str();
+        ccxString::size_type pos = hiRes.find_last_of("/\\");
+        ccxString::size_type dotPos = hiRes.find_last_of(".");
+        
+        if (ccxString::npos != dotPos && dotPos > pos)
+        {
+            hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        }
+        else
+        {
+            hiRes.append(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        }
+        DWORD attrib = GetFileAttributesA(hiRes.c_str());
+        
+        if (attrib != INVALID_FILE_ATTRIBUTES && ! (FILE_ATTRIBUTE_DIRECTORY & attrib))
+        {
+            pRet->m_sString.swap(hiRes);
+        }
+    }
+#endif
 	return pRet->m_sString.c_str();
 }
 
