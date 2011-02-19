@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccxMacros.h"
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
 
 // [u]int[8|16|32|64]
 // char

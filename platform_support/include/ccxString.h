@@ -43,7 +43,8 @@ There are some useful tool for ccxString:
 
 #include <string>
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
+
 typedef std::string ccxAString;
 typedef ccxAString ccxString;
 

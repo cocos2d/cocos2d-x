@@ -52,7 +52,7 @@ THE SOFTWARE.
 
 #if defined(CCX_PLATFORM_MOBILE)
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
 
 /*
 OpenGL GLU implementation

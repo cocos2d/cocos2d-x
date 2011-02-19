@@ -25,9 +25,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 // TODO: Remove this code to ccxApplication::initInstance()
 
-// #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-//     if (!(m_pMainWnd = new CCXEGLView(this)) || 
-//         ! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
 // #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IPHONE)
 //     if (!(m_pMainWnd = new CCXEGLView()))
 // #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
@@ -37,11 +34,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 //         CCX_SAFE_DELETE(m_pMainWnd);
 //         return false;
 //     }
-
-// #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-//     // set the resource path
-//     CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/APPS/cocos2d_helloworld/");
-// #endif
 
 	// init director
 	CCDirector *pDirector = CCDirector::sharedDirector();
