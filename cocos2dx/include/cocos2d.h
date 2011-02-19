@@ -98,7 +98,7 @@ THE SOFTWARE.
 //
 // platform specific
 //
-#include "CCXApplication.h"
+#include "ccxApplication.h"
 #include "CCXEGLView.h"
 #include "ccxImage.h"
 #include "CCXFileUtils.h"

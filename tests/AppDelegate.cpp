@@ -63,14 +63,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	CCFileUtils::setRelativePath("assets");
 #endif
 
-#if  (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-
-#ifndef _TRANZDA_VM_
-    CCFileUtils::setResource("TestCocos2dx.zip");
-#endif
-
-#endif
-
     CCScene * pScene = CCScene::node();
     CCLayer * pLayer = new TestController();
     pLayer->autorelease();

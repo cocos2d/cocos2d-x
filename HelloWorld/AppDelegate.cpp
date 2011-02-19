@@ -22,16 +22,6 @@ bool AppDelegate::applicationDidFinishLaunching()
         return false;
     }
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-
-#ifndef _TRANZDA_VM_  
-    // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
-    cocos2d::CCFileUtils::setResource("HelloWorld.zip");
-#endif
-
-#endif
-
-W
 	// init director
 	CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCXEGLView::sharedOpenGLView());

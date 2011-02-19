@@ -14,6 +14,7 @@ public:
 
 public:
     // implement the virtual interface of class ccxApplication
+    virtual bool        initInstance();
     virtual void        setAnimationInterval(double interval);
     virtual Orientation setOrientation(Orientation orientation);
     virtual void        statusBarFrame(cocos2d::CGRect * rect);
