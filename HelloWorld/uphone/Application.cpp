@@ -4,6 +4,26 @@
 
 using namespace cocos2d;
 
+bool Application::initInstance()
+{
+    CCXEGLView* pMainWnd = new CCXEGLView(this);
+    bool bRet = false;
+
+    do 
+    {
+        CCX_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
+
+#ifndef _TRANZDA_VM_  
+        // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+        cocos2d::CCFileUtils::setResource("HelloWorld.zip");
+#endif
+
+        bRet = true;
+    } while (0);
+
+    return bRet;
+}
+
 static const Int32 CCX_ON_APPLICATION_IDLE = (EVENT_FirstUser + EVENT_LastUser) / 2;
 
 #ifdef _TRANZDA_VM_
@@ -119,26 +139,6 @@ Boolean  Application::EventHandler(EventType*  pEvent)
     }
 
     return bHandled;
-}
-
-bool Application::initInstance()
-{
-    CCXEGLView* pMainWnd = new CCXEGLView(this);
-    bool bRet = false;
-
-    do 
-    {
-        CCX_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
-
-#ifndef _TRANZDA_VM_  
-        // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
-        cocos2d::CCFileUtils::setResource("HelloWorld.zip");
-#endif
-
-        bRet = true;
-    } while (0);
-
-    return bRet;
 }
 
 void Application::setAnimationInterval(double interval)

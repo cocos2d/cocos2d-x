@@ -8,12 +8,22 @@ make -f Makefile.ARM clean
 make -f Makefile.ARM all
 popd
 
+pushd ./platform_support/proj.uphone
+make -f Makefile.ARM clean
+make -f Makefile.ARM all
+popd
+
 pushd ./cocos2dx/proj.uphone
 make -f Makefile.ARM clean
 make -f Makefile.ARM all
 popd
 
 pushd ./CocosDenshion/proj.uphone
+make -f Makefile.ARM clean
+make -f Makefile.ARM all
+popd
+
+pushd ./HelloWorld/uphone
 make -f Makefile.ARM clean
 make -f Makefile.ARM all
 popd
