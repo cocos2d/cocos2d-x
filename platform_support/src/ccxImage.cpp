@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "ccxStdC.h"
 #include "png.h"
 
-#define  QGLOBAL_H
+#define  QGLOBAL_H        // defined for uphone
 #include "jpeglib.h"
 #undef   QGLOBAL_H
 
@@ -60,7 +60,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
     }
 }
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
 
 static void ccxMessageBox(const ccxString& msg, const ccxString& title);
 
@@ -81,7 +81,7 @@ ccxImage::ccxImage()
 bool ccxImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     bool bRet = false;
-    FILE *fp = nil;
+    FILE *fp = 0;
     unsigned char *buffer = NULL;
     do 
     {
@@ -231,8 +231,8 @@ bool ccxImage::_initWithPngData(void * pData, int nDatalen)
 {
     bool bRet = false;
     png_byte        header[8]   = {0}; 
-    png_structp     png_ptr =   nil;
-    png_infop       info_ptr    = nil;
+    png_structp     png_ptr =   0;
+    png_infop       info_ptr    = 0;
 
     do 
     {
@@ -244,7 +244,7 @@ bool ccxImage::_initWithPngData(void * pData, int nDatalen)
         CCX_BREAK_IF(png_sig_cmp(header, 0, 8));
 
         // init png_struct
-        png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nil, nil, nil);
+        png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
         CCX_BREAK_IF(! png_ptr);
 
         // init png_info
@@ -266,13 +266,13 @@ bool ccxImage::_initWithPngData(void * pData, int nDatalen)
         // PNG_TRANSFORM_STRIP_16: strip 16-bit samples to 8 bits
         // PNG_TRANSFORM_GRAY_TO_RGB: expand grayscale samples to RGB (or GA to RGBA)
         png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_PACKING 
-            | PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_GRAY_TO_RGB, nil);
+            | PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_GRAY_TO_RGB, 0);
 
         int         color_type  = 0;
         png_uint_32 nWidth = 0;
         png_uint_32 nHeight = 0;
         int         nBitsPerComponent = 0;
-        png_get_IHDR(png_ptr, info_ptr, &nWidth, &nHeight, &nBitsPerComponent, &color_type, nil, nil, nil);
+        png_get_IHDR(png_ptr, info_ptr, &nWidth, &nHeight, &nBitsPerComponent, &color_type, 0, 0, 0);
 
         // init image info
         m_bPreMulti = true;
@@ -317,7 +317,7 @@ bool ccxImage::_initWithPngData(void * pData, int nDatalen)
 
     if (!png_ptr)
     {
-        png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : nil, nil);
+        png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
     return bRet;
 }

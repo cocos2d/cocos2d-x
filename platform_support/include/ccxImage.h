@@ -85,7 +85,7 @@ public:
         int             nWidth = 0, 
         int             nHeight = 0,
         ETextAlign      eAlignMask = kAlignCenter,
-        const char *    pFontName = nil,
+        const char *    pFontName = 0,
         int             nSize = 0);
 
     ccxByte *   getData()               { return m_pData.get(); }

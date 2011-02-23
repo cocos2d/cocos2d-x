@@ -28,8 +28,9 @@
  * define some platform specific macros
  */
 #include "ccConfig.h"
+#include "ccxConfig.h"
 
-#ifdef CCX_PLATFORM_MOBILE
+#if defined(CCX_PLATFORM_MOBILE)
     #define MacGLView					void
     #define NSWindow					        void
 #elif defined(CCX_PLATFORM_PC)

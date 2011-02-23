@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "ccxStdC.h"
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
 
 void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
 {	

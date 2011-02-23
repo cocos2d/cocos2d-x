@@ -31,6 +31,7 @@ THE SOFTWARE.
 namespace cocos2d {
 
 CCXEGLView::CCXEGLView()
+: m_pDelegate(0)
 {
 
 }
@@ -107,5 +108,15 @@ void CCXEGLView::touchesCancelled(NSSet *set)
 	}
 }
 
-}       // end of namespace cocos2d
+void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
+{
+        glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
+}
 
+CCXEGLView& CCXEGLView::sharedOpenGLView()
+{
+        static CCXEGLView instance;
+        return instance;
+}
+
+} // end of namespace cocos2d;

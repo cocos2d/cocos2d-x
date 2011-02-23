@@ -48,8 +48,8 @@ static const int kMaxLogLen = 255;
 void CCX_DLL_PS CCXLog(const char * pszFormat, ...);
 
 struct ccxNullDeleter       { template< class TPTR > void operator()(TPTR ) {} };
-struct ccxNewDeleter        { template< class TPTR > void operator()(TPTR p) { if (p) delete p; } };
-struct ccxNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { if (p) delete[] p; } };
+struct ccxNewDeleter        { template< class TPTR > void operator()(TPTR p) { delete p; } };
+struct ccxNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { delete[] p; } };
 
 /**
 @brief	A simple scoped pointer.
@@ -60,7 +60,7 @@ class ccxScopedPtr   // noncopyable
 {
 public:
     explicit ccxScopedPtr(T * p = 0): m_ptr(p) {}
-    ~ccxScopedPtr()                     { (*static_cast<D*>(this))(m_ptr); }
+    ~ccxScopedPtr()                     { if (m_ptr) (*static_cast<D*>(this))(m_ptr); }
 
     void reset(T * p = 0)               { ccxScopedPtr< T >(p).swap(*this); }
     T *  get() const                    { return m_ptr; }
@@ -88,7 +88,7 @@ class CCX_DLL_PS ccxScopedArray // noncopyable
 {
 public:
     explicit ccxScopedArray( T * p = 0 ) : m_ptr( p ) {}
-    ~ccxScopedArray()                   { (*static_cast<D*>(this))(m_ptr); }
+    ~ccxScopedArray()                   { if (m_ptr) (*static_cast<D*>(this))(m_ptr); }
 
     void reset(T * p = 0)               { ccxScopedArray<T>(p).swap(*this); }
     T *  get() const                    { return m_ptr; }

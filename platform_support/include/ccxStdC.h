@@ -87,4 +87,18 @@ int CCX_DLL_PS gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CCX_PLATFORM_UPHONE
 
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+
+#include <sys/time.h>
+
+#ifndef MIN
+#define MIN(x,y) (((x) > (y)) ? (y) : (x))
+#endif  // MIN
+
+#ifndef MAX
+#define MAX(x,y) (((x) < (y)) ? (y) : (x))
+#endif  // MAX
+
+#endif  // CCX_PLATFORM_IOS
+
 #endif  // __CCX_STD_C_H__

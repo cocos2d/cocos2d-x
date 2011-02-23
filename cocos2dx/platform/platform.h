@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccxThread.h"
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
 
 struct cc_timeval
 {
@@ -53,9 +53,6 @@ NS_CC_END;
     #include "android/NSLock.h"
     #include "android/CCXBitmapDC.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
-    #include "iphone/CCTime.h"
-    #include "iphone/NSLock.h"
-    #include "iphone/CCXBitmapDC.h"
 #else 
     #error
 #endif

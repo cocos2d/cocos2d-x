@@ -432,7 +432,7 @@ namespace cocos2d{
 	{
 		int nextFontPositionX = 0;
         int nextFontPositionY = 0;
-		INT16 prev = -1;
+		ccxInt16 prev = -1;
 		int kerningAmount = 0;
 
 		CGSize tmpSize = CGSizeZero;
@@ -442,16 +442,16 @@ namespace cocos2d{
 
         int quantityOfLines = 1;
 
-		UINT32 len = m_sString.length();
+		int len = m_sString.length();
 
         if (0 == len)
         {
             return;
         }
 
-        for (UINT32 i = 0; i < len - 1; ++i)
+        for (int i = 0; i < len - 1; ++i)
         {
-            INT16 c = m_sString[i];
+            ccxInt16 c = m_sString[i];
             if (c == '\n')
             {
                 quantityOfLines++;
@@ -461,9 +461,9 @@ namespace cocos2d{
         totalHeight = m_pConfiguration->m_uCommonHeight * quantityOfLines;
         nextFontPositionY = m_pConfiguration->m_uCommonHeight * (quantityOfLines - 1);
 
-		for(UINT32 i=0; i<len; i++)
+		for(int i=0; i<len; i++)
 		{
-			INT16 c = m_sString[i];
+			ccxInt16 c = m_sString[i];
 			NSAssert( c < kCCBMFontMaxChars, "BitmapFontAtlas: character outside bounds");
 
             if (c == '\n')

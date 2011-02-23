@@ -76,7 +76,7 @@ public:
      @returns NSString * without the HD suffix
      @since v0.99.5
      */
-	static const char *ccRemoveHDSuffixFromFile( const char *path );
+	static const char *ccRemoveHDSuffixFromFile( const char *path);
 	
     static const char* getResourcePath(void);
 };

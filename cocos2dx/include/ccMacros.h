@@ -32,7 +32,9 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 #include "ccxStdC.h"
 
+#ifndef NSAssert
 #define NSAssert(cond, msg)         CCX_ASSERT(cond)
+#endif  // NSAssert
 
 #include "ccConfig.h"
 

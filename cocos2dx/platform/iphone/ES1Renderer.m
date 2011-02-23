@@ -1,6 +1,6 @@
 
 #import "ES1Renderer.h"
-#import "support/opengl_support/OpenGL_Internal.h"
+#import "OpenGL_Internal.h"
 @implementation ES1Renderer
 
 @synthesize context=context_;
