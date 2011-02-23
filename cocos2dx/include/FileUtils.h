@@ -25,9 +25,11 @@ THE SOFTWARE.
 #ifndef __SUPPORT_FILE_SUPPORT_FILEUTILS_H__
 #define __SUPPORT_FILE_SUPPORT_FILEUTILS_H__
 
+#include "ccxString.h"
+
 namespace cocos2d {
 
-class FileUtils
+class CCX_DLL FileUtils
 {
 public:
     /**

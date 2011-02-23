@@ -604,13 +604,13 @@ GLubyte CCLayerGradient::getEndOpacity()
     return m_cEndOpacity;
 }
 
-void CCLayerGradient::setAlongVector(CGPoint var)
+void CCLayerGradient::setVector(CGPoint var)
 {
     m_AlongVector = var;
     updateColor();
 }
 
-CGPoint CCLayerGradient::getAlongVector()
+CGPoint CCLayerGradient::getVector()
 {
     return m_AlongVector;
 }

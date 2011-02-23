@@ -48,6 +48,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
 
+    if (! pDirector->enableRetinaDisplay(true))
+    {
+        CCLOG("Retina Display Not supported");
+    }
+
 #if  (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
 	CCFileUtils::setRelativePath("assets");
 #endif

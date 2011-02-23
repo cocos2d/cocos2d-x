@@ -43,6 +43,18 @@ void SceneTestLayer1::testDealloc(ccTime dt)
 	//UXLOG("SceneTestLayer1:testDealloc");
 }
 
+void SceneTestLayer1::onEnter()
+{
+    CCLOG("SceneTestLayer1#onEnter");
+    CCLayer::onEnter();
+}
+
+void SceneTestLayer1::onEnterTransitionDidFinish()
+{
+    CCLOG("SceneTestLayer1#onEnterTransitionDidFinish");
+    CCLayer::onEnterTransitionDidFinish();
+}
+
 SceneTestLayer1::~SceneTestLayer1()
 {
 	//NSLog(@"SceneTestLayer1 - dealloc");

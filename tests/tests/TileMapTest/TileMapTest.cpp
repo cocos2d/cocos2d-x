@@ -15,7 +15,7 @@ TileMapTest::TileMapTest()
 {
 	CCTileMapAtlas* map = CCTileMapAtlas::tileMapAtlasWithTileFile(s_TilesPng,  s_LevelMapTga, 16, 16);
 	// Convert it to "alias" (GL_LINEAR filtering)
-	map->getTexture()->setAliasTexParameters();
+	map->getTexture()->setAntiAliasTexParameters();
 	
 	CGSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
@@ -27,6 +27,13 @@ TileMapTest::TileMapTest()
 	addChild(map, 0, kTagTileMap);
 	
 	map->setAnchorPoint( ccp(0, 0.5f) );
+
+    CCScaleBy *scale = CCScaleBy::actionWithDuration(4, 0.8f);
+    CCActionInterval *scaleBack = scale->reverse();
+
+    CCFiniteTimeAction* seq = CCSequence::actions(scale, scaleBack, NULL);
+
+    map->runAction(CCRepeatForever::actionWithAction((CCActionInterval *)seq));
 }
 
 std::string TileMapTest::title()
@@ -796,20 +803,20 @@ TMXIsoZorder::TMXIsoZorder()
 {
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-zorder.tmx");
 	addChild(map, 0, kTagTileMap);
-	
-	map->setPosition(ccp(-700,-50));
+
 	CGSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
+    map->setPosition(ccp(-s.width/2,0));
 	
 	m_tamara = CCSprite::spriteWithFile(s_pPathSister1);
 	map->addChild(m_tamara, map->getChildren()->count() );
 	m_tamara->retain();
 	int mapWidth = map->getMapSize().width * map->getTileSize().width;
-	m_tamara->setPosition(ccp( mapWidth/2,0));
+	m_tamara->setPositionInPixels(ccp( mapWidth/2,0));
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccpMult(ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR()));
 	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
 	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*) seq) );
@@ -830,7 +837,7 @@ void TMXIsoZorder::onExit()
 
 void TMXIsoZorder::repositionSprite(ccTime dt)
 {
-	CGPoint p = m_tamara->getPosition();
+	CGPoint p = m_tamara->getPositionInPixels();
 	CCNode *map = getChildByTag(kTagTileMap);
 	
 	// there are only 4 layers. (grass and 3 trees layers)
@@ -874,7 +881,7 @@ TMXOrthoZorder::TMXOrthoZorder()
 	m_tamara->setAnchorPoint(ccp(0.5f,0));
 
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccpMult(ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR() ));
 	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
 	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq));
@@ -889,7 +896,7 @@ TMXOrthoZorder::~TMXOrthoZorder()
 
 void TMXOrthoZorder::repositionSprite(ccTime dt)
 {
-	CGPoint p = m_tamara->getPosition();
+	CGPoint p = m_tamara->getPositionInPixels();
 	CCNode* map = getChildByTag(kTagTileMap);
 	
 	// there are only 4 layers. (grass and 3 trees layers)
@@ -925,8 +932,8 @@ TMXIsoVertexZ::TMXIsoVertexZ()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-vertexz.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	map->setPosition( ccp(-700,-50) );
 	CGSize s = map->getContentSize();
+    map->setPosition( ccp(-s.width/2,0) );
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
@@ -935,7 +942,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
 	m_tamara = layer->tileAt( ccp(29,29) );
 	m_tamara->retain();
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(300,250));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccpMult( ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) );
 	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
 	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*) seq) );
@@ -953,7 +960,7 @@ void TMXIsoVertexZ::repositionSprite(ccTime dt)
 {
 	// tile height is 64x32
 	// map size: 30x30
-	CGPoint p = m_tamara->getPosition();
+	CGPoint p = m_tamara->getPositionInPixels();
 	m_tamara->setVertexZ( -( (p.y+32) /16) );
 }
 
@@ -1000,9 +1007,10 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 	// can use any CCSprite and it will work OK.
 	CCTMXLayer* layer = map->layerNamed("trees");
 	m_tamara = layer->tileAt(ccp(0,11));
+    CCLOG("%@ vertexZ: %f", m_tamara, m_tamara->getVertexZ());
 	m_tamara->retain();
 
-	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccp(400,450));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(10, ccpMult( ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR()));
 	CCActionInterval* back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(move, back,NULL);
 	m_tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq));
@@ -1020,7 +1028,7 @@ void TMXOrthoVertexZ::repositionSprite(ccTime dt)
 {
 	// tile height is 101x81
 	// map size: 12x12
-	CGPoint p = m_tamara->getPosition();
+	CGPoint p = m_tamara->getPositionInPixels();
 	m_tamara->setVertexZ( -( (p.y+81) /81) );
 }
 
@@ -1101,6 +1109,67 @@ std::string TMXOrthoMoveLayer::subtitle()
 	return "Trees should be horizontally aligned";
 }
 
+//------------------------------------------------------------------
+//
+// TMXBug987
+//
+//------------------------------------------------------------------
+TMXBug987::TMXBug987()
+{
+    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test6.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    CGSize s1 = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s1.width,s1.height);
+
+    NSMutableArray<CCNode*>* childs = map->getChildren();
+    CCTMXLayer* pNode;
+    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+
+    for(it = childs->begin(); it != childs->end(); it++)
+    {
+        pNode = (CCTMXLayer*)(*it);
+        CCX_BREAK_IF(!pNode);
+        pNode->getTexture()->setAntiAliasTexParameters();
+    }
+
+    map->setAnchorPoint(ccp(0, 0));
+    CCTMXLayer *layer = map->layerNamed("Tile Layer 1");
+    layer->setTileGID(3, ccp(2,2));
+}
+
+std::string TMXBug987::title()
+{
+    return "TMX Bug 987";
+}
+
+std::string TMXBug987::subtitle()
+{
+    return "You should see an square";
+}
+
+//------------------------------------------------------------------
+//
+// TMXBug787
+//
+//------------------------------------------------------------------
+TMXBug787::TMXBug787()
+{
+    CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-bug787.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    map->setScale(0.25f);
+}
+
+std::string TMXBug787::title()
+{
+    return "TMX Bug 787";
+}
+
+std::string TMXBug787::subtitle()
+{
+    return "You should see a map";
+}
 
 //------------------------------------------------------------------
 //
@@ -1117,7 +1186,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	22
+#define MAX_LAYER	24
 
 CCLayer* createTileMapLayer(int nIndex)
 {
@@ -1145,6 +1214,8 @@ CCLayer* createTileMapLayer(int nIndex)
 		case 19: return new TMXOrthoMoveLayer();
 		case 20: return new TileMapTest();
 		case 21: return new TileMapEditTest();
+        case 22: return new TMXBug987();
+        case 23: return new TMXBug787();
 	}
 
 	return NULL;

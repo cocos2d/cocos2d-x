@@ -10,6 +10,9 @@ public:
 	SceneTestLayer1();
 	~SceneTestLayer1();
 
+    virtual void onEnter();
+    virtual void onEnterTransitionDidFinish();
+
 	void testDealloc(ccTime dt);
 	void onPushScene(NSObject* pSender);
 	void onPushSceneTran(NSObject* pSender);

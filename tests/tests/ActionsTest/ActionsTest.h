@@ -28,6 +28,7 @@ enum
     ACTION_ROTATETOREPEATE_LAYER,
     ACTION_ROTATEJERK_LAYER,
     ACTION_CALLFUNC_LAYER,
+    ACTION_CALLFUNCND_LAYER,
     ACTION_REVERSESEQUENCE_LAYER,
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
@@ -233,6 +234,14 @@ public:
     void callback1();
     void callback2(CCNode* pTarget);
     void callback3(CCNode* pTarget, void* data);
+};
+
+class ActionCallFuncND : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class ActionFollow : public ActionsDemo

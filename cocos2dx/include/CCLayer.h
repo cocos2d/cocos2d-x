@@ -233,7 +233,7 @@ public:
     CCX_PROPERTY(ccColor3B, m_endColor, EndColor)
     CCX_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
     CCX_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
-    CCX_PROPERTY(CGPoint, m_AlongVector, AlongVector)
+    CCX_PROPERTY(CGPoint, m_AlongVector, Vector)
 
 protected:
     virtual void updateColor();

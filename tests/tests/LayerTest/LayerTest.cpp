@@ -8,7 +8,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	3
+#define MAX_LAYER	4
 
 CCLayer* createTestLayer(int nIndex)
 {
@@ -17,6 +17,7 @@ CCLayer* createTestLayer(int nIndex)
 		case 0: return new LayerTest1();
 		case 1: return new LayerTest2();
 		case 2: return new LayerTestBlend();
+        case 3: return new LayerGradient();
 	}
 
 	return NULL;
@@ -143,7 +144,7 @@ void LayerTest1::onEnter()
 
 void LayerTest1::registerWithTouchDispatcher()
 {
-    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority + 1, true);
 }
 
 void LayerTest1::updateSize(CCTouch*touch)
@@ -268,6 +269,41 @@ void LayerTestBlend::newBlend(ccTime dt)
 std::string LayerTestBlend::title()
 {
 	return "ColorLayer: blend";
+}
+
+//------------------------------------------------------------------
+//
+// LayerGradient
+//
+//------------------------------------------------------------------
+LayerGradient::LayerGradient()
+{
+    //		CGSize s = [[CCDirector sharedDirector] winSize];
+    CCLayerGradient* layer1 = CCLayerGradient::layerWithColor(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(1,0));
+    addChild(layer1, 0, 1);
+
+    setIsTouchEnabled(true);
+}
+
+void LayerGradient::ccTouchesMoved(NSSet * touches, UIEvent *event)
+{
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
+
+    NSSetIterator it = touches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
+    CGPoint start = touch->locationInView(touch->view());	
+    start = CCDirector::sharedDirector()->convertToGL(start);
+
+    CGPoint diff = ccpSub( ccp(s.width/2,s.height/2), start);	
+    diff = ccpNormalize(diff);
+
+    CCLayerGradient *gradient = (CCLayerGradient*) getChildByTag(1);
+    gradient->setVector(diff);
+}
+
+std::string LayerGradient::title()
+{
+    return "LayerGradient";
 }
 
 void LayerTestScene::runThisTest()

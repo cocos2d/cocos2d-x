@@ -104,7 +104,7 @@ class CameraZoomTest : public TestCocosNodeDemo
 	float	m_z;
 public:
 	CameraZoomTest();
-	void updateEye(ccTime dt);
+	void update(ccTime dt);
 
 	virtual void onEnter();
 	virtual void onExit();
@@ -118,6 +118,15 @@ public:
 	CameraCenterTest();
 	virtual std::string title();
 	virtual std::string subtitle();
+};
+
+class ConvertToNode : public TestCocosNodeDemo
+{
+public:
+    ConvertToNode();
+    virtual void ccTouchesEnded(NSSet* touches, UIEvent *event);
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class CocosNodeTestScene : public TestScene
