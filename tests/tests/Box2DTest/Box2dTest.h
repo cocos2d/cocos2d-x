@@ -17,7 +17,7 @@ public:
 	virtual void draw();
 
 	void addNewSpriteWithCoords(CGPoint p);
-	void tick(ccTime dt);
+	void update(ccTime dt);
 	virtual void ccTouchesEnded(NSSet* touches, UIEvent* event);
 
 	//CREATE_NODE(Box2DTestLayer);

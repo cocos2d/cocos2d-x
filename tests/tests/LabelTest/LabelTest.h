@@ -112,6 +112,50 @@ public:
 	virtual std::string subtitle();
 };
 
+class BitmapFontMultiLine : public AtlasDemo
+{
+public:
+    BitmapFontMultiLine();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LabelsEmpty : public AtlasDemo
+{
+public:
+    LabelsEmpty();
+    void updateStrings(ccTime dt);
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+    bool setEmpty;
+};
+
+class LabelBMFontHD : public AtlasDemo
+{
+public:
+    LabelBMFontHD();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LabelAtlasHD : public AtlasDemo
+{
+public:
+    LabelAtlasHD();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LabelGlyphDesigner : public AtlasDemo
+{
+public:
+    LabelGlyphDesigner();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class AtlasTestScene : public TestScene
 {
 public:

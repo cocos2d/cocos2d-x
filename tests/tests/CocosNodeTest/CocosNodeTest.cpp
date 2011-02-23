@@ -34,7 +34,7 @@ CCLayer* createCocosNodeLayer(int nIndex)
 		case 8: return new SchedulerTest1();
 		case 9: return new CameraOrbitTest();
 		case 10: return new CameraZoomTest();
-		case 11: return new CameraCenterTest();
+		case 11: return new ConvertToNode();
 	}
 
 	return NULL;
@@ -562,6 +562,7 @@ CameraOrbitTest::CameraOrbitTest()
 	CGSize ss;
 
 	// LEFT
+    s = p->getContentSize();
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	sprite->setScale(0.5f);
 	p->addChild(sprite, 0);		
@@ -650,10 +651,10 @@ CameraZoomTest::CameraZoomTest()
 //		[cam setCenterX:0 centerY:0 centerZ:0);
 
 	m_z = 0;
-	schedule(schedule_selector(CameraZoomTest::updateEye));
+	scheduleUpdate();
 }
 
-void CameraZoomTest::updateEye(ccTime dt)
+void CameraZoomTest::update(ccTime dt)
 {
 	CCNode *sprite;
 	CCCamera *cam;
@@ -759,6 +760,82 @@ std::string CameraCenterTest::title()
 std::string CameraCenterTest::subtitle()
 {
 	return "Sprites should rotate at the same speed";
+}
+
+//------------------------------------------------------------------
+//
+// ConvertToNode
+//
+//------------------------------------------------------------------
+ConvertToNode::ConvertToNode()
+{
+    setIsTouchEnabled(true);
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCRotateBy* rotate = CCRotateBy::actionWithDuration(10, 360);
+    CCRepeatForever* action = CCRepeatForever::actionWithAction(rotate);
+    for(int i = 0; i < 3; i++)
+    {
+        CCSprite *sprite = CCSprite::spriteWithFile("grossini.png");
+        sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
+
+        CCSprite *point = CCSprite::spriteWithFile("r1.png");
+        point->setScale(0.25f);
+        point->setPosition(sprite->getPosition());
+        addChild(point, 10, 100 + i);
+
+        switch(i)
+        {
+        case 0:
+            sprite->setAnchorPoint(CGPointZero);
+            break;
+        case 1:
+            sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+            break;
+        case 2:
+            sprite->setAnchorPoint(ccp(1,1));
+            break;
+        }
+
+        point->setPosition(sprite->getPosition());
+
+        CCRepeatForever* copy = (CCRepeatForever*) action->copy();
+        copy->autorelease();
+        sprite->runAction(copy);
+        addChild(sprite, i);
+    }
+}
+
+void ConvertToNode::ccTouchesEnded(NSSet* touches, UIEvent *event)
+{
+    for( NSSetIterator it = touches->begin(); it != touches->end(); ++it)
+    {
+        CCTouch* touch = (CCTouch*)(*it);
+        CGPoint location = touch->locationInView(touch->view());
+
+        location = CCDirector::sharedDirector()->convertToGL(location);
+
+        for( int i = 0; i < 3; i++)
+        {
+            CCNode *node = getChildByTag(100+i);
+            CGPoint p1, p2;
+
+            p1 = node->convertToNodeSpaceAR(location);
+            p2 = node->convertToNodeSpace(location);
+
+            CCLOG("AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
+        }
+    }	
+}
+
+std::string ConvertToNode::title()
+{
+    return "Convert To Node Space";
+}
+
+std::string ConvertToNode::subtitle()
+{
+    return "testing convertToNodeSpace / AR. Touch and see console";
 }
 
 void CocosNodeTestScene::runThisTest()

@@ -30,8 +30,8 @@ Parallax1::Parallax1()
 	// change the transform anchor to 0,0 (optional)
 	tilemap->setAnchorPoint( ccp(0, 0) );
 
-	// Aliased images
-//	[tilemap.texture setAliasTexParameters];
+	// Anti Aliased images
+    tilemap->getTexture()->setAntiAliasTexParameters();
 	
 
 	// background layer: another image
@@ -100,8 +100,8 @@ Parallax2::Parallax2()
 	// change the transform anchor to 0,0 (optional)
 	tilemap->setAnchorPoint( ccp(0, 0) );
 	
-	// Aliased images
-//		[tilemap.texture setAliasTexParameters];
+    // Anti Aliased images
+    tilemap->getTexture()->setAntiAliasTexParameters();
 	
 	
 	// background layer: another image

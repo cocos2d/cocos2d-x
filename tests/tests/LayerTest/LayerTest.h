@@ -51,6 +51,14 @@ public:
 	virtual std::string title();
 };
 
+class LayerGradient : public LayerTest
+{
+public:
+    LayerGradient();
+    virtual void ccTouchesMoved(NSSet * touches, UIEvent *event);
+    virtual std::string title();
+};
+
 class LayerTestScene : public TestScene
 {
 public:
