@@ -10,12 +10,14 @@
 
 #import "EAGLView.h"
 #import "cocos2d.h"
-#import "AppDelegate.h"
+#import "Application.h"
 
 @implementation AppController
 
 #pragma mark -
 #pragma mark Application lifecycle
+
+Application m_App;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
@@ -36,8 +38,7 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
     
-    AppDelegate app;
-    app.run();
+    m_App.Run();
 
     return YES;
 }

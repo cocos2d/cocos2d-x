@@ -30,47 +30,49 @@ THE SOFTWARE.
 #include <libxml/xmlmemory.h>
 #include "NSString.h"
 #include "CCXFileUtils_iphone.h"
-#include "CCXCocos2dDefine.h"
+#include "CCDirector.h"
 
 #define MAX_PATH 260
 
-static const char *static_ccRemoveHDSuffixFromFile( const char *pszPath )
+static const char *static_ccRemoveHDSuffixFromFile( const char *pszPath)
 {
 #if CC_IS_RETINA_DISPLAY_SUPPORTED
     
-	if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-                NSString *path = [NSString stringWithUTF8String: pszPath]
-		NSString *name = [path lastPathComponent];
-		
-		// check if path already has the suffix.
-		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
+        if(cocos2d::CC_CONTENT_SCALE_FACTOR() == 2 ) {
+                NSString *path = [NSString stringWithUTF8String: pszPath];
+                NSString *name = [path lastPathComponent];
+                NSString *suffix = [NSString stringWithUTF8String: CC_RETINA_DISPLAY_FILENAME_SUFFIX];
+                
+                        // check if path already has the suffix.
+                if( [name rangeOfString: suffix].location != NSNotFound ) {
 			
-			CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+                        CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
             
-			NSString *newLastname = [name stringByReplacingOccurrencesOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX withString:@""];
+                        NSString *newLastname = [name stringByReplacingOccurrencesOfString: suffix withString:@""];
 			
-			NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
-			return [[pathWithoutLastname stringByAppendingPathComponent:newLastname] UTF8String];
-		}		
-	}
+                        NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
+                        return [[pathWithoutLastname stringByAppendingPathComponent:newLastname] UTF8String];
+                }		
+        }
     
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED
     
-	return pszPath;
+        return pszPath;
 }
 
 static NSString* getDoubleResolutionImage(NSString* path)
 {
 #if CC_IS_RETINA_DISPLAY_SUPPORTED
     
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+	if( cocos2d::CC_CONTENT_SCALE_FACTOR() == 2 )
 	{
 		
 		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
 		NSString *name = [pathWithoutExtension lastPathComponent];
-		
+		NSString *suffix = [NSString stringWithUTF8String: CC_RETINA_DISPLAY_FILENAME_SUFFIX];
+                
 		// check if path already has the suffix.
-		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
+		if( [name rangeOfString: suffix].location != NSNotFound ) {
             
 			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
 			return path;
@@ -88,7 +90,7 @@ static NSString* getDoubleResolutionImage(NSString* path)
 		}
 		
 		
-		NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
+		NSString *retinaName = [pathWithoutExtension stringByAppendingString: suffix];
 		retinaName = [retinaName stringByAppendingPathExtension:extension];
         
                 NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
@@ -107,7 +109,7 @@ static const char* static_fullPathFromRelativePath(const char *pszRelativePath)
 
 {
     
-	NSAssert(pszRelativePath != nil, @"CCFileUtils: Invalid path");
+                // NSAssert(pszRelativePath != nil, @"CCFileUtils: Invalid path");
     
         // do not convert an absolute path (starting with '/')
 	NSString *relPath = [NSString stringWithUTF8String: pszRelativePath];
@@ -223,7 +225,7 @@ namespace cocos2d {
             }
             else
             {
-                NSAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
+                            // NSAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
                 pMaker->m_pCurDict->setObject(pNewDict, pMaker->m_sCurKey);
                 pNewDict->release();
                 pMaker->m_sCurKey.clear();
@@ -286,7 +288,7 @@ namespace cocos2d {
             case SAX_REAL:
             case SAX_STRING:
             {
-                NSAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
+                            // NSAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
                 pMaker->m_pCurDict->setObject(pText, pMaker->m_sCurKey);
                 break;
             }
@@ -299,8 +301,8 @@ namespace cocos2d {
     
     void CCFileUtils::setResourcePath(const char *pszResourcePath)
     {
-        NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-        NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
+                    // NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
+                    // NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
         
         strcpy(s_pszResourcePath, pszResourcePath);
     }

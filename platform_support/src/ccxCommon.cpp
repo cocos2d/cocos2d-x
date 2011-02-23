@@ -55,7 +55,7 @@ NS_CC_END;
 #define MAX_LEN         256
 #define LOG_FILE_PATH   "/NEWPLUS/TDA_DATA/UserData/Cocos2dLog.txt"
 
-NS_CC_BEGIN
+NS_CC_BEGIN;
 
 void CCXLog(const char * pszFormat, ...)
 {
@@ -90,5 +90,17 @@ void CCXLog(const char * pszFormat, ...)
 }
 
 NS_CC_END;
-
 #endif  // CCX_PLATFORM_UPHONE
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+
+NS_CC_BEGIN;
+
+void CCXLog(const char * pszFormat, ...)
+{
+                // todo
+}
+
+NS_CC_END;
+
+#endif  // CCX_PLATFORM_IOS

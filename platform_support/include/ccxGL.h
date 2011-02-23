@@ -28,7 +28,8 @@ THE SOFTWARE.
 #include "ccxCommon.h"
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
-#error
+#include <GLES/gl.h>
+#include <GLES/glext.h>
 #endif
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_MAC)

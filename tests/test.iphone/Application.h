@@ -22,46 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_IPHONE_H__
-#define __CCX_EGLVIEW_IPHONE_H__
+#ifndef __APPLICATION_H__
+#define __APPLICATION_H__
 
-//#include "CGGeometry.h"
-#include "ccxCommon_iphone.h"
+#include "ccxApplication.h"
+#include "AppDelegate.h"
 
-namespace   cocos2d {
-class NSSet;
-class CCTouch;
-class EGLTouchDelegate;
-class CGSize;
-
-class CCX_DLL CCXEGLView
+class Application : public cocos2d::ccxApplication
 {
 public:
-    CCXEGLView();
-   ~CCXEGLView();
+        Application();
+        virtual ~Application();
 
-    CGSize  getSize();
-    bool    isOpenGLReady();
-    bool    canSetContentScaleFactor();
-    void    setContentScaleFactor(float contentScaleFactor);
-    
-    // keep compatible
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void    swapBuffers();
-    void    setViewPortInPoints(float x, float y, float w, float h);
+        /**
+         @brief	Call for init OpenGL instance, source path, etc...
+         */
+        virtual bool initInstance();
         
-    void touchesBegan(NSSet *set);
-    void touchesMoved(NSSet *set);
-    void touchesEnded(NSSet *set);
-    void touchesCancelled(NSSet *set);
-    
-    static CCXEGLView& sharedOpenGLView();
+        /**
+         @brief	Callback by CCDirector for limit FPS.
+         @interval       The time, which expressed in second in second, between current frame and next. 
+         */
+        virtual void    setAnimationInterval(double interval);
         
-private:
-    EGLTouchDelegate *m_pDelegate;
-};
+        /**
+         @brief	Callback by CCDirector for change device orientation.
+         @orientation    The defination of orientation which CCDirector want change to.
+         @return         The actual orientation of the application.
+         */
+        virtual Orientation setOrientation(Orientation orientation);
+        
+        /**
+         @brief	Get status bar rectangle in EGLView window.
+         */
+        virtual void    statusBarFrame(cocos2d::CGRect * rect);
+	
+    void Run();
+        
+protected:
+        AppDelegate m_Delegate;
+ };
 
-}   // end of namespace   cocos2d
-
-#endif	// end of __CCX_EGLVIEW_IPHONE_H__
+#endif	// end of __CCX_APPLICATION_IPHONE_H__

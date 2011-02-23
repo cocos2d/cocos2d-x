@@ -103,7 +103,7 @@ ccxString& FileUtils::ccRemoveHDSuffixFromFile(ccxString& path)
     {
         ccxString::size_type pos = path.rfind("/") + 1; // the begin index of last part of path
 
-        int suffixPos = path.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        ccxString::size_type suffixPos = path.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
         if (ccxString::npos != suffixPos && suffixPos > pos)
         {
             CCXLog("cocos2d: FilePath(%s) contains suffix(%s), remove it.", path.c_str(),

@@ -52,6 +52,8 @@ There are config below:
 #if ! CCX_TARGET_PLATFORM && (defined(TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR))
     #undef  CCX_TARGET_PLATFORM
     #define CCX_TARGET_PLATFORM         CCX_PLATFORM_IOS
+    #define CCX_SUPPORT_MULTITHREAD 0
+    #define CCX_SUPPORT_UNICODE 0
 #endif
 
 // mac
@@ -67,7 +69,7 @@ There are config below:
 #endif
 
 // uphone
-#if ! CCX_TARGET_PLATFORM && (defined(_TRANZDA_VM_) || defined(CCX_UNDER_UPHONE))
+#if ! CCX_TARGET_PLATFORM && defined(_TRANZDA_VM_)
     #undef  CCX_TARGET_PLATFORM
     #define CCX_TARGET_PLATFORM         CCX_PLATFORM_UPHONE
 #endif
@@ -143,10 +145,10 @@ There are config below:
 #endif 
 
 // distinguish mobile platforms and pc platforms
-#if defined(CCX_PLATFORM_UPHONE) || defined(CCX_PLATFORM_WIN32) || defined(CCX_PLATFORM_ANDROID) || defined(CCX_PLATFORM_IOS)
-    #define CCX_PLATFORM_MOBILE
-#elif defined (CCX_PLATFORM_MAC)
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_MAC)
     #define CCX_PLATFORM_PC
+#else
+    #define CCX_PLATFORM_MOBILE
 #endif
 
 // cocos2d-x havn't support multi-thread yet

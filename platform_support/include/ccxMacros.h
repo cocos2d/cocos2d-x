@@ -98,10 +98,6 @@ public: inline void set##funName(varType var){ varName = var; }
 #define CCX_SAFE_RETAIN(p)			if(p) { p->retain(); }
 #define CCX_BREAK_IF(cond)			if(cond) break;
 
-#define self	this
-#define YES		true
-#define NO		false
-#define nil     0
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0

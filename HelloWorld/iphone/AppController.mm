@@ -25,7 +25,7 @@
 #import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
-#import "AppDelegate.h"
+#import "Application.h"
 
 @implementation AppController
 
@@ -50,8 +50,8 @@
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
     
-    AppDelegate app;    
-    app.run();
+    Application app;    
+    app.Run();
     return YES;
 }
 

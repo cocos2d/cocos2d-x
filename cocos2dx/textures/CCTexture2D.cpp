@@ -127,11 +127,11 @@ namespace   cocos2d {
     case kCCTexture2DPixelFormat_RGB5A1:
     case kCCTexture2DPixelFormat_RGB565:
     case kCCTexture2DPixelFormat_A8:
-        vt->data = new UINT8[w * h * 4];
+        vt->data = new ccxByte[w * h * 4];
         memcpy(vt->data, d, w * h * 4);
         break;    
     case kCCTexture2DPixelFormat_RGB888:
-        vt->data = new UINT8[w * h * 3];
+        vt->data = new ccxByte[w * h * 3];
         memcpy(vt->data, d, w * h * 3);
         break;
             }
@@ -161,7 +161,6 @@ namespace   cocos2d {
             {
                 VolatileTexture *vt = *i++;
                 if (vt->data) {
-                    unsigned int n = vt->texture->getName();
                     vt->texture->initWithData((const void *)vt->data, vt->pixelFormat, vt->pixelsWide, vt->pixelsHigh, vt->contentSize);
                 }
             }
@@ -432,21 +431,21 @@ bool CCTexture2D::initPremultipliedATextureWithImage(ccxImage *image, unsigned i
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 
-			tempData = (UINT8*)(image->getData());
+			tempData = (ccxByte*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
 
 			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
 			{
-				data = new UINT8[POTHigh * POTWide * 4];
+				data = new ccxByte[POTHigh * POTWide * 4];
 				memcpy(data, tempData, POTHigh * POTWide * 4);
 			}
 			else
 			{
-				data = new UINT8[POTHigh * POTWide * 4];
+				data = new ccxByte[POTHigh * POTWide * 4];
 				memset(data, 0, POTHigh * POTWide * 4);
 
-				UINT8* pPixelData = (UINT8*) tempData;
-				UINT8* pTargetData = (UINT8*) data;
+				ccxByte* pPixelData = (ccxByte*) tempData;
+				ccxByte* pTargetData = (ccxByte*) data;
 
 				for(int y=0; y<image->getHeight(); ++y)
 				{
@@ -456,20 +455,20 @@ bool CCTexture2D::initPremultipliedATextureWithImage(ccxImage *image, unsigned i
 
 			break;    
 		case kCCTexture2DPixelFormat_RGB888:
-			tempData = (UINT8*)(image->getData());
+			tempData = (ccxByte*)(image->getData());
 			NSAssert(tempData != NULL, "NULL image data.");
 			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
 			{
-				data = new UINT8[POTHigh * POTWide * 3];
+				data = new ccxByte[POTHigh * POTWide * 3];
 				memcpy(data, tempData, POTHigh * POTWide * 3);
 			}
 			else
 			{
-				data = new UINT8[POTHigh * POTWide * 3];
+				data = new ccxByte[POTHigh * POTWide * 3];
 				memset(data, 0, POTHigh * POTWide * 3);
 
-				UINT8* pPixelData = (UINT8*) tempData;
-				UINT8* pTargetData = (UINT8*) data;
+				ccxByte* pPixelData = (ccxByte*) tempData;
+				ccxByte* pTargetData = (ccxByte*) data;
 
 				for(int y=0; y<image->getHeight(); ++y)
 				{
