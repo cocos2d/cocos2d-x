@@ -326,7 +326,7 @@ static bool _isValidFontName(const char *fontName)
         return ret;
 }
 
-static bool _initWidthString(const char * pText, UITextAlignment align, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, UITextAlignment align, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
         NSUInteger		width, height, size;
         unsigned char*	data;
@@ -460,7 +460,7 @@ bool ccxImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/*
         return bRet;
 }
 
-bool ccxImage::initWidthString(
+bool ccxImage::initWithString(
                      const char *    pText, 
                      int             nWidth /* = 0 */, 
                      int             nHeight /* = 0 */,
@@ -476,7 +476,7 @@ bool ccxImage::initWidthString(
         align = (eAlignMask == ccxImage::kAlignCenter) ? UITextAlignmentCenter
         : (ccxImage::kAlignLeft == eAlignMask) ? UITextAlignmentLeft : UITextAlignmentRight;
         
-        if (! _initWidthString(pText, align, pFontName, nSize, &info))
+        if (! _initWithString(pText, align, pFontName, nSize, &info))
         {
                 return false;
         }
