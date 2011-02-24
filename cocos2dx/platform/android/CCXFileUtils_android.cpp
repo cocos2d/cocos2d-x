@@ -29,11 +29,12 @@ THE SOFTWARE.
 #include <libxml/xmlmemory.h>
 #include "NSString.h"
 #include "CCXFileUtils_android.h"
-#include "CCXCocos2dDefine.h"
 #include "support/file_support/FileData.h"
 #include "support/zip_support/unzip.h"
 
 namespace cocos2d {
+
+#define  MAX_PATH 256
 
 void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
 void plist_endElement(void *ctx, const xmlChar *name);

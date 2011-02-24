@@ -38,7 +38,8 @@ THE SOFTWARE.
 #endif
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
-#error
+#include <GLES/gl.h>
+#include <GLES/glext.h>
 #endif
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)

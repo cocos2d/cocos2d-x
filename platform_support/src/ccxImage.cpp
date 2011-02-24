@@ -331,3 +331,7 @@ NS_CC_END;
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
 #include "uphone/ccxImage_uphone.cpp"
 #endif
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+#include "android/ccxImage_android.cpp"
+#endif

@@ -28,10 +28,14 @@ THE SOFTWARE.
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 #include "win32/ccxThread_win32.cpp"
-#endif
+#endif // CCX_PLATFORM_WIN32
 
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
 #include "uphone/ccxThread_uphone.cpp"
-#endif
+#endif // CCX_PLATFORM_UPHONE
+
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+#include "android/ccxThread_android.cpp"
+#endif // CCX_PLATFORM_ANDROID
 
 #endif  // CCX_SUPPORT_MULTITHREAD

@@ -24,7 +24,6 @@ THE SOFTWARE.
 #include "CCXEGLView_android.h"
 #include "GLES/gl.h"
 
-#include "CCXCocos2dDefine.h"
 #include "NSSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
@@ -91,7 +90,19 @@ bool CCXEGLView::canSetContentScaleFactor()
 void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     // if it supports scaling content, set it
+	m_fScreenScaleFactor = contentScaleFactor;
 } 
+
+void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
+{
+	///@todo
+}
+
+CCXEGLView& CCXEGLView::sharedOpenGLView()
+{
+	static CCXEGLView instance;
+	return instance;
+}
 
 }       // end of namespace cocos2d
 
