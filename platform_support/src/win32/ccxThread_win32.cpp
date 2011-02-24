@@ -46,6 +46,10 @@ CCXLock::CCXLock()
 
 CCXLock::~CCXLock()
 {
+	if (m_pImp)
+	{
+		delete m_pImp;
+	}
 }
 
 void CCXLock::lock()

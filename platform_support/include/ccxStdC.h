@@ -52,7 +52,7 @@ THE SOFTWARE.
         #define isnan   _isnan
     #endif
 
-#endif
+#endif // CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE && defined(_TRANZDA_VM_)
 
 #include <math.h>
 
@@ -87,7 +87,7 @@ int CCX_DLL_PS gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CCX_PLATFORM_UPHONE
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS || CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
 
 #include <sys/time.h>
 
@@ -99,6 +99,6 @@ int CCX_DLL_PS gettimeofday(struct timeval *, struct timezone *);
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
 
-#endif  // CCX_PLATFORM_IOS
+#endif  // CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS || CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID
 
 #endif  // __CCX_STD_C_H__

@@ -46,15 +46,4 @@ class NSLock : public ccxLock{};
 
 NS_CC_END;
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
-    #include "android/CCTime.h"
-    #include "android/NSLock.h"
-    #include "android/CCXBitmapDC.h"
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
-#else 
-    #error
-#endif
-
 #endif // __PLATFORM_H__

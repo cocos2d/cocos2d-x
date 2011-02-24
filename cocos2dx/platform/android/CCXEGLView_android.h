@@ -49,11 +49,19 @@ public:
     void    swapBuffers();
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor); 
+	void    setViewPortInPoints(float x, float y, float w, float h);
+
+	// static function
+	/**
+	@brief	get the shared main open gl window
+	*/
+	static CCXEGLView& sharedOpenGLView();
     
 private:
 	int m_nWidth;
 	int m_nHeight;
 	EGLTouchDelegate *m_pDelegate;
+	float  m_fScreenScaleFactor;
 };
 
 }   // end of namespace   cocos2d

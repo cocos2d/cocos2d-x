@@ -22,22 +22,58 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_UPHONE_CCTIME_H__
-#define __PLATFORM_UPHONE_CCTIME_H__
-namespace   cocos2d {
+#if CCX_SUPPORT_MULTITHREAD
 
-struct cc_timeval
-{
- 	long	tv_sec;		// seconds
- 	long	tv_usec;    // microSeconds
-};
+#include <semaphore.h>
+#include "ccxThread.h"
 
-class CCTime 
+NS_CC_BEGIN;
+
+class CCXLock::Impl
 {
 public:
-	static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
-	static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
-};
-}//namespace   cocos2d 
+    Impl()
+    {
+        sem_init(&m_sMutex, 0, 0);
+    }
 
-#endif // __PLATFORM_UPHONE_NSTIME_H__
+    ~Impl()
+    {
+        sem_destroy(&m_sMutex);
+    }
+
+	sem_t m_sMutex;
+};
+
+CCXLock::CCXLock()
+: m_pImp(new CCXLock::Impl)
+{
+}
+
+CCXLock::~CCXLock()
+{
+	if (m_pImp)
+	{
+		delete m_pImp;
+	}
+}
+
+void CCXLock::lock()
+{
+    if (m_pImp)
+    {
+        sem_wait(&m_pImp->m_sMutex);
+    }
+}
+
+void CCXLock::unlock()
+{
+    if (m_pImp)
+    {
+		sem_post(&m_pImp->m_sMutex);
+    }
+}
+
+NS_CC_END;
+
+#endif  // CCX_SUPPORT_MULTITHREAD

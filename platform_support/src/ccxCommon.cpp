@@ -24,12 +24,15 @@ THE SOFTWARE.
 
 #include "ccxCommon.h"
 
+#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
+
+/****************************************************
+ * win32
+ ***************************************************/
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 #include <Windows.h>
 
 #include "ccxStdC.h"
-
-#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
 NS_CC_BEGIN;
 
@@ -49,10 +52,12 @@ NS_CC_END;
 
 #endif  // CCX_PLATFORM_WIN32
 
+/****************************************************
+ * uphone
+ ***************************************************/
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
 #include "TG3.h"
 
-#define MAX_LEN         256
 #define LOG_FILE_PATH   "/NEWPLUS/TDA_DATA/UserData/Cocos2dLog.txt"
 
 NS_CC_BEGIN;
@@ -90,8 +95,12 @@ void CCXLog(const char * pszFormat, ...)
 }
 
 NS_CC_END;
+
 #endif  // CCX_PLATFORM_UPHONE
 
+/****************************************************
+ * ios
+ ***************************************************/
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
 
 NS_CC_BEGIN;
@@ -104,3 +113,30 @@ void CCXLog(const char * pszFormat, ...)
 NS_CC_END;
 
 #endif  // CCX_PLATFORM_IOS
+
+/****************************************************
+ * android
+ ***************************************************/
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+
+#include <android/log.h>
+#include <stdio.h>
+
+NS_CC_BEGIN;
+
+void CCXLog(const char * pszFormat, ...)
+{
+	char buf[MAX_LEN];
+
+	va_list args;
+	va_start(args, pszFormat);    	
+	vsprintf(buf, pszFormat, args);
+	va_end(args);
+
+	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+}
+
+NS_CC_END;
+
+#endif // CCX_PLATFORM_ANDROID
+
