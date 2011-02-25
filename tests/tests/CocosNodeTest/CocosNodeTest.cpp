@@ -776,10 +776,10 @@ ConvertToNode::ConvertToNode()
     CCRepeatForever* action = CCRepeatForever::actionWithAction(rotate);
     for(int i = 0; i < 3; i++)
     {
-        CCSprite *sprite = CCSprite::spriteWithFile("grossini.png");
+        CCSprite *sprite = CCSprite::spriteWithFile("Images/grossini.png");
         sprite->setPosition(ccp( s.width/4*(i+1), s.height/2));
 
-        CCSprite *point = CCSprite::spriteWithFile("r1.png");
+        CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
         addChild(point, 10, 100 + i);
