@@ -4,7 +4,7 @@
 #include <android/log.h>
 #include <jni.h>
 
-#define  LOG_TAG    "HelloWorld Debug"
+#define  LOG_TAG    "tests Application"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 static JavaVM *gJavaVM = NULL;
@@ -94,9 +94,13 @@ Application::Orientation Application::setOrientation(Application::Orientation or
 
 void Application::statusBarFrame(cocos2d::CGRect * rect)
 {
+	LOGD("statusBarFrame 0");
+
     if (rect)
     {
+		LOGD("statusBarFrame 1");
         // Android doesn't have status bar.
         *rect = CGRectMake(0, 0, 0, 0);
+		LOGD("statusBarFrame 2");
     }
 }
