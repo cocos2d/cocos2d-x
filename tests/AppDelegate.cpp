@@ -51,10 +51,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
-#if  (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
-	CCFileUtils::setRelativePath("assets");
-#endif
-
     CCScene * pScene = CCScene::node();
     CCLayer * pLayer = new TestController();
     pLayer->autorelease();

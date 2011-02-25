@@ -2,7 +2,8 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE := tests
 
-LOCAL_SRC_FILES := tests.cpp \
+LOCAL_SRC_FILES := main.cpp \
+Application.cpp \
 ../../../tests/AccelerometerTest/AccelerometerTest.cpp \
 ../../../tests/ActionManagerTest/ActionManagerTest.cpp \
 ../../../tests/ActionsTest/ActionsTest.cpp \
@@ -68,7 +69,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                    $(LOCAL_PATH)/../../../.. \
                    $(LOCAL_PATH)/../../.. \
                    $(LOCAL_PATH)/../../../../chipmunk/include/chipmunk \
-                   $(LOCAL_PATH)/../../../../CocosDenshion/include
+                   $(LOCAL_PATH)/../../../../CocosDenshion/include \
+                   $(LOCAL_PATH)/../../../../platform_support/include
                    
 # it is used for ndk-r4
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \

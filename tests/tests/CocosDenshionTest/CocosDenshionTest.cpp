@@ -3,13 +3,13 @@
 #include "SimpleAudioEngine.h"
 
 // android effect only support ogg
-#ifdef CCX_PLATFORM_ANDROID
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
 	#define EFFECT_FILE		"effect2.ogg"
 #else
 	#define EFFECT_FILE		"effect1.wav"
 #endif // CCX_PLATFORM_ANDROID
 
-#ifdef CCX_PLATFORM_WIN32
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
 	#define MUSIC_FILE		"music.mid"
 #else
 	#define MUSIC_FILE		"background.mp3"
