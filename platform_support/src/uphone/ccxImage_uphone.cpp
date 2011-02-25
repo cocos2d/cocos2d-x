@@ -23,8 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TG3.h"
+#include <string>
 
 NS_CC_BEGIN
+
+typedef std::basic_string<TUChar> stdTUString;
 
 void ccxMessageBox(const ccxString& msg, const ccxString& title)
 {
@@ -66,8 +69,71 @@ public:
         do 
         {
             CCX_BREAK_IF(! pszText);
-            tSize.SetWidth(m_hFont.CharsWidth(pszText,nLen));
-            tSize.SetHeight(m_hFont.LineHeight());
+
+            if (tSize.Width() > 0 && tSize.Height() > 0)
+            {
+                bRet = true;
+                break;
+            }
+
+            int nLineCount = 0;
+            int nWinWidth = 0;
+            stdTUString FullString = pszText;
+
+            if (tSize.Width() == 0)
+            {
+                // not specified the width,calculate the width and line count
+
+                stdTUString strLeft = FullString;
+                stdTUString strLine;
+
+                while (strLeft.length() > 0)
+                {
+                    int nPos = strLeft.find('\n');
+
+                    // get one line text
+                    if (nPos != stdTUString::npos)
+                    {
+                        strLine = strLeft.substr(0, nPos);
+                        strLeft = strLeft.substr(nPos + 1);
+                    }
+                    else
+                    {
+                        strLine = strLeft;
+                        strLeft.erase();
+                    }
+
+                    // calculate the width of current line and update the window width
+                    int nTempWidth = m_hFont.CharsWidth(strLine.c_str(), strLine.length() + 1);
+                    if (nTempWidth >= nWinWidth)
+                    {
+                        nWinWidth = nTempWidth;
+                    }
+
+                    // update the line count
+                    ++nLineCount;
+                }
+            }
+            else
+            {
+                // have specified the window width,calculate the line count
+                nWinWidth = tSize.Width();
+
+                stdTUString strLeft = FullString;
+                int nCurPos = 0;
+                do 
+                {
+                    nCurPos = m_hFont.WordWrap(strLeft.c_str(), nWinWidth);
+                    strLeft = strLeft.substr(nCurPos);
+                    ++nLineCount;
+                } while (strLeft.length() > 0);
+            }
+
+            // calculate the window height.
+            tSize.SetHeight(nLineCount * m_hFont.LineHeight());
+            tSize.SetWidth(nWinWidth);
+
+            bRet = true;
         } while (0);
         return bRet;
     }
@@ -190,15 +256,8 @@ bool ccxImage::initWithString(
 
         dc.setFont(pFontName, nSize);
 
-        TSize size(0, 0);
-        if (nWidth > 0 && nHeight > 0)
-        {
-            size.SetSize(nWidth, nHeight);
-        }
-        else
-        {
-            dc.getTextExtentPoint(pWText, nLen, size);
-        }
+        TSize size(nWidth, nHeight);
+        dc.getTextExtentPoint(pWText, nLen, size);
         CCX_BREAK_IF(! size.Width() || ! size.Height());
 
         // set style
