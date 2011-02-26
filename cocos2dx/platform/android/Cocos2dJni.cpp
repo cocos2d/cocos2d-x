@@ -27,11 +27,14 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 #include "CCXFileUtils.h"
+#include "CGGeometry.h"
 #include "platform/android/CCXUIAccelerometer_android.h"
 #include <android/log.h>
 
 #define  LOG_TAG    "Cocos2dJni"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+
+using namespace cocos2d;
 
 extern "C"
 {
@@ -43,34 +46,47 @@ extern "C"
 	void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
 	{
 		// We need to invert to make it compatible with iOS.
-		cocos2d::UIAccelerometer::sharedAccelerometer()->update(x, y, z, timeStamp);
+		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		cocos2d::UIAccelerometer::sharedAccelerometer()->update((x - rcRect.origin.x) / fScreenScaleFactor,
+		                                                        (y - rcRect.origin.y) / fScreenScaleFactor, 
+		                                                         z, 
+		                                                         timeStamp);
 	}
 
 	// handle touch event
 	
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
+	        CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		s_touch.SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor, (y - rcRect.origin.y) / fScreenScaleFactor);
 		s_set.addObject(&s_touch);
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesBegan(&s_set, NULL);
 	}
 	
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
+	        CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		s_touch.SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor, (y - rcRect.origin.y) / fScreenScaleFactor);
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesEnded(&s_set, NULL);
 		s_set.removeObject(&s_touch);
 	}
 	
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
+		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		s_touch.SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor, (y - rcRect.origin.y) / fScreenScaleFactor);
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesMoved(&s_set, NULL);
 	}
 	
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
 	{
-		s_touch.SetTouchInfo(0, x, y);
+		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		s_touch.SetTouchInfo(0, (x - rcRect.origin.x) / fScreenScaleFactor, (y - rcRect.origin.y) / fScreenScaleFactor);
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesCancelled(&s_set, NULL);
 		s_set.removeObject(&s_touch);
 	}

@@ -40,7 +40,15 @@ public:
 
     CGSize  getSize();
     bool    isOpenGLReady();
+	/**
+	 * the width and height is the real size of phone
+	 */
     void    setFrameWitdAndHeight(int width, int height);
+	/**
+	 * create a drawing rect, 
+	 * the width and heiht is the resource size match best
+	 */
+	void    create(int width, int height);
     EGLTouchDelegate* getDelegate(void);
     
     // keep compatible
@@ -50,6 +58,8 @@ public:
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor); 
 	void    setViewPortInPoints(float x, float y, float w, float h);
+	CGRect  getViewPort();
+	float   getScreenScaleFactor();
 
 	// static function
 	/**
@@ -58,8 +68,11 @@ public:
 	static CCXEGLView& sharedOpenGLView();
     
 private:
-	int m_nWidth;
-	int m_nHeight;
+	CGSize m_sSizeInPixel;
+	CGSize m_sSizeInPoint;
+	CGRect m_rcViewPort;
+	bool   m_bNotHVGA;
+	
 	EGLTouchDelegate *m_pDelegate;
 	float  m_fScreenScaleFactor;
 };
