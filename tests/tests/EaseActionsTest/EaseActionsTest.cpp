@@ -622,31 +622,8 @@ void EaseSpriteDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	// Example:
-	// You can create a sprite using a Texture2D
-	CCTexture2D* tex = new CCTexture2D();
-	ccxImage* pImage = new ccxImage();
-	
-    std::string fullPath = CCFileUtils::fullPathFromRelativePath(s_pPathGrossini);
-    unsigned long nSize  = 0;
-    unsigned char* pBuffer = CCFileUtils::getFileData(fullPath.c_str(), "rb", &nSize);
-	if(pBuffer && pImage->initWithImageData(pBuffer, nSize))
-	{
-		tex->initWithImage(pImage);
-		m_grossini = CCSprite::spriteWithTexture(tex); 
-		m_grossini->retain();
-	}
-
-	tex->release();
-	delete pImage;
-
-    if (pBuffer)
-    {
-        delete [] pBuffer;
-    }
-	
-	// Example:
 	// Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
+    m_grossini = CCSprite::spriteWithFile(s_pPathGrossini); m_grossini->retain();
 	m_tamara = CCSprite::spriteWithFile(s_pPathSister1); m_tamara->retain();
 	m_kathia = CCSprite::spriteWithFile(s_pPathSister2); m_kathia->retain();
 	

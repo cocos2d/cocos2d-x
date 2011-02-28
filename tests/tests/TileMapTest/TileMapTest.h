@@ -232,6 +232,22 @@ public:
 	virtual std::string subtitle();
 };
 
+class TMXBug987 : public TileDemo
+{
+public:
+    TMXBug987();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TMXBug787 : public TileDemo
+{
+public:
+    TMXBug787();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class TileMapTestScene : public TestScene
 {
 public:

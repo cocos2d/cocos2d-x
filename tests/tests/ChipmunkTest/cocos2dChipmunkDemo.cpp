@@ -431,7 +431,7 @@ void ChipmunkTestLayer::init()
     addChild(label);
 
     // [self schedule: @selector(step:)];
-    schedule( schedule_selector(ChipmunkTestLayer::step)); 
+    scheduleUpdate();
 }
 
 void ChipmunkTestLayer::onEnter()
@@ -468,7 +468,7 @@ void ChipmunkTestLayer::onExit()
     CCLayer::onExit();
 }
 
-void ChipmunkTestLayer::step(ccTime dt)
+void ChipmunkTestLayer::update(ccTime dt)
 {
     // call chipmunk demo c function
     display();

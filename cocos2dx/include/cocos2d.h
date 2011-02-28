@@ -32,6 +32,8 @@ THE SOFTWARE.
 
 #include "ccConfig.h"	// should be included first
 #include "CCAction.h"
+#include "CCAnimation.h"
+#include "CCAnimationCache.h"
 #include "CCActionManager.h"
 #include "CCCamera.h"
 #include "CCActionCamera.h"

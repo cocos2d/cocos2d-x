@@ -49,6 +49,8 @@ CCLayer* CreateLayer(int nIndex)
         pLayer = new ActionRotateJerk(); break;    
     case ACTION_CALLFUNC_LAYER:
         pLayer = new ActionCallFunc(); break;
+    case ACTION_CALLFUNCND_LAYER:
+        pLayer = new ActionCallFuncND(); break;
     case ACTION_REVERSESEQUENCE_LAYER:
         pLayer = new ActionReverseSequence(); break;
     case ACTION_REVERSESEQUENCE2_LAYER:
@@ -119,33 +121,10 @@ void ActionsDemo::onEnter()
 {
     CCLayer::onEnter();
 
-    // Example:
-    // You can create a sprite using a Texture2D
-    CCTexture2D *tex = new CCTexture2D();
-    ccxImage* pImage = new ccxImage();
-
-    std::string fullpath( CCFileUtils::fullPathFromRelativePath(s_pPathGrossini));
-    unsigned long nSize  = 0;
-    unsigned char* pBuffer = CCFileUtils::getFileData(fullpath.c_str(), "rb", &nSize);
-
-    if (pBuffer)
-    {
-        pImage->initWithImageData(pBuffer, nSize);
-    }
-
-    tex->initWithImage( pImage );
-    m_grossini = CCSprite::spriteWithTexture(tex);
-    m_grossini->retain();
-    delete pImage;
-
-    if (pBuffer)
-    {
-        delete [] pBuffer;
-    }
-    tex->release();
-
-    // Example:
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
+    m_grossini = CCSprite::spriteWithFile(s_pPathGrossini);
+    m_grossini->retain();
+
     m_tamara = CCSprite::spriteWithFile(s_pPathSister1); 
     m_tamara->retain();
 
@@ -712,6 +691,33 @@ std::string ActionCallFunc::subtitle()
     return "Callbacks: CallFunc and friends";
 }
 
+//------------------------------------------------------------------
+//
+// ActionCallFuncND
+//
+//------------------------------------------------------------------
+void ActionCallFuncND::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(1);
+
+    CCFiniteTimeAction* action = CCSequence::actions(CCMoveBy::actionWithDuration(2.0f, ccp(200,0)),
+        //CCCallFuncND::actionWithTarget(m_grossini, callfuncND_selector(ActionCallFuncND::removeFromParentAndCleanup), (void*)true),
+        NULL);
+
+    m_grossini->runAction(action);
+}
+
+std::string ActionCallFuncND::title()
+{
+    return "CallFuncND + auto remove";
+}
+
+std::string ActionCallFuncND::subtitle()
+{
+    return "CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s";
+}
 
 //------------------------------------------------------------------
 //

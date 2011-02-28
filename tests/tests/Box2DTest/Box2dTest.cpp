@@ -73,7 +73,7 @@ Box2DTestLayer::Box2DTestLayer()
 	
 	//Set up sprite
 	
-	CCSpriteBatchNode *mgr = CCSpriteBatchNode::spriteSheetWithFile(s_pPathBlock, 150);
+	CCSpriteBatchNode *mgr = CCSpriteBatchNode::batchNodeWithFile(s_pPathBlock, 150);
 	addChild(mgr, 0, kTagSpriteManager);
 	
 	addNewSpriteWithCoords( CGPointMake(screenSize.width/2, screenSize.height/2) );
@@ -83,7 +83,7 @@ Box2DTestLayer::Box2DTestLayer()
 	label->setColor( ccc3(0,0,255) );
 	label->setPosition( CGPointMake( screenSize.width/2, screenSize.height-50) );
 	
-	schedule( schedule_selector(Box2DTestLayer::tick) );
+	scheduleUpdate();
 }
 
 Box2DTestLayer::~Box2DTestLayer()
@@ -114,14 +114,14 @@ void Box2DTestLayer::draw()
 void Box2DTestLayer::addNewSpriteWithCoords(CGPoint p)
 {
 	//UXLOG(L"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*)getChildByTag(kTagSpriteManager);
+	CCSpriteBatchNode* batch = (CCSpriteBatchNode*)getChildByTag(kTagSpriteManager);
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = sheet->createSpriteWithRect( CGRectMake(32 * idx,32 * idy,32,32));
-	sheet->addChild(sprite);
+	CCSprite *sprite = batch->createSpriteWithRect( CGRectMake(32 * idx,32 * idy,32,32));
+	batch->addChild(sprite);
 	
 	sprite->setPosition( CGPointMake( p.x, p.y) );
 	
@@ -146,7 +146,7 @@ void Box2DTestLayer::addNewSpriteWithCoords(CGPoint p)
 }
 
 
-void Box2DTestLayer::tick(ccTime dt)
+void Box2DTestLayer::update(ccTime dt)
 {
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.

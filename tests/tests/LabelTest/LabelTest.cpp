@@ -1,4 +1,4 @@
-#include "AtlasTest.h"
+#include "LabelTest.h"
 #include "../testResource.h"
 
 enum {
@@ -36,21 +36,28 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	9
+#define MAX_LAYER	14
 
 CCLayer* createAtlasLayer(int nIndex)
 {
 	switch(nIndex)
 	{
-		case 0: return new Atlas1();
-		case 1: return new LabelAtlasTest();
-		case 2: return new LabelAtlasColorTest();
-		case 3: return new Atlas3();
-		case 4: return new Atlas4();
-		case 5: return new Atlas5();
-		case 6: return new Atlas6();
-		case 7: return new AtlasBitmapColor();
-		case 8: return new AtlasFastBitmap();
+		case 0: return new LabelAtlasTest();
+		case 1: return new LabelAtlasColorTest();
+		case 2: return new Atlas3();
+		case 3: return new Atlas4();
+		case 4: return new Atlas5();
+		case 5: return new Atlas6();
+		case 6: return new AtlasBitmapColor();
+		case 7: return new AtlasFastBitmap();
+        case 8: return new BitmapFontMultiLine();
+        case 9: return new LabelsEmpty();
+        case 10: return new LabelBMFontHD();
+        case 11: return new LabelAtlasHD();
+        case 12: return new LabelGlyphDesigner();
+
+        // Not a label test. Should be moved to Atlas test
+        case 13: return new Atlas1();
 	}
 
 	return NULL;
@@ -246,12 +253,12 @@ LabelAtlasTest::LabelAtlasTest()
 {
 	m_time = 0;
 
-	CCLabelAtlas* label1 = CCLabelAtlas::labelAtlasWithString("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas* label1 = CCLabelAtlas::labelWithString("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label1, 0, kTagSprite1);
 	label1->setPosition( ccp(10,100) );
 	label1->setOpacity( 200 );
 
-	CCLabelAtlas *label2 = CCLabelAtlas::labelAtlasWithString("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas *label2 = CCLabelAtlas::labelWithString("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label2, 0, kTagSprite2);
 	label2->setPosition( ccp(10,200) );
 	label2->setOpacity( 32 );
@@ -293,12 +300,12 @@ std::string LabelAtlasTest::subtitle()
 //------------------------------------------------------------------
 LabelAtlasColorTest::LabelAtlasColorTest()
 {
-	CCLabelAtlas* label1 = CCLabelAtlas::labelAtlasWithString("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas* label1 = CCLabelAtlas::labelWithString("123 Test", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label1, 0, kTagSprite1);
 	label1->setPosition( ccp(10,100) );
 	label1->setOpacity( 200 );
 	
-	CCLabelAtlas* label2 = CCLabelAtlas::labelAtlasWithString("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+	CCLabelAtlas* label2 = CCLabelAtlas::labelWithString("0123456789", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
 	addChild(label2, 0, kTagSprite2);
 	label2->setPosition( ccp(10,200) );
 	label2->setColor( ccRED );
@@ -351,7 +358,7 @@ Atlas3::Atlas3()
 	CCLayerColor* col = CCLayerColor::layerWithColor( ccc4(128,128,128,255) );
 	addChild(col, -10);
 	
-	CCLabelBMFont* label1 = CCLabelBMFont::bitmapFontAtlasWithString("Test",  "fonts/bitmapFontTest2.fnt");
+	CCLabelBMFont* label1 = CCLabelBMFont::labelWithString("Test",  "fonts/bitmapFontTest2.fnt");
 	
 	// testing anchors
 	label1->setAnchorPoint( ccp(0,0) );
@@ -367,14 +374,14 @@ Atlas3::Atlas3()
 	// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
 	// If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
 	// Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-	CCLabelBMFont *label2 = CCLabelBMFont::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
+	CCLabelBMFont *label2 = CCLabelBMFont::labelWithString("Test", "fonts/bitmapFontTest2.fnt");
 	// testing anchors
 	label2->setAnchorPoint( ccp(0.5f, 0.5f) );
 	label2->setColor( ccRED );
 	addChild(label2, 0, kTagBitmapAtlas2);
 	label2->runAction( (CCAction*)(repeat->copy()->autorelease()) );
 	
-	CCLabelBMFont* label3 = CCLabelBMFont::bitmapFontAtlasWithString("Test", "fonts/bitmapFontTest2.fnt");
+	CCLabelBMFont* label3 = CCLabelBMFont::labelWithString("Test", "fonts/bitmapFontTest2.fnt");
 	// testing anchors
 	label3->setAnchorPoint( ccp(1,1) );
 	addChild(label3, 0, kTagBitmapAtlas3);
@@ -427,7 +434,7 @@ Atlas4::Atlas4()
 	m_time = 0;
 
 	// Upper Label
-	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
+	CCLabelBMFont *label = CCLabelBMFont::labelWithString("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
 	addChild(label);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -464,7 +471,7 @@ Atlas4::Atlas4()
 	
 	
 	// Bottom Label
-	CCLabelBMFont *label2 = CCLabelBMFont::bitmapFontAtlasWithString("00.0", "fonts/bitmapFontTest.fnt");
+	CCLabelBMFont *label2 = CCLabelBMFont::labelWithString("00.0", "fonts/bitmapFontTest.fnt");
 	addChild(label2, 0, kTagBitmapAtlas2);
 	label2->setPosition( ccp(s.width/2.0f, 80) );
 	
@@ -511,7 +518,7 @@ std::string Atlas4::subtitle()
 
 Atlas5::Atlas5()
 {
-	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString("abcdefg", "fonts/bitmapFontTest4.fnt");
+	CCLabelBMFont *label = CCLabelBMFont::labelWithString("abcdefg", "fonts/bitmapFontTest4.fnt");
 	addChild(label);
 	
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -540,17 +547,17 @@ Atlas6::Atlas6()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelBMFont* label = NULL;
-	label = CCLabelBMFont::bitmapFontAtlasWithString("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::labelWithString("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2+50) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) ) ;
 	
-	label = CCLabelBMFont::bitmapFontAtlasWithString("fafefifofu", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::labelWithString("fafefifofu", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	label = CCLabelBMFont::bitmapFontAtlasWithString("aeiou", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::labelWithString("aeiou", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/2-50) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) ); 
@@ -584,19 +591,19 @@ AtlasBitmapColor::AtlasBitmapColor()
 	CGSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCLabelBMFont* label = NULL;
-	label = CCLabelBMFont::bitmapFontAtlasWithString("Blue", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::labelWithString("Blue", "fonts/bitmapFontTest5.fnt");
 	label->setColor( ccBLUE );
 	addChild(label);
 	label->setPosition( ccp(s.width/2, s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 
-	label = CCLabelBMFont::bitmapFontAtlasWithString("Red", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::labelWithString("Red", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, 2*s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
 	label->setColor( ccRED );
 
-	label = CCLabelBMFont::bitmapFontAtlasWithString("G", "fonts/bitmapFontTest5.fnt");
+	label = CCLabelBMFont::labelWithString("G", "fonts/bitmapFontTest5.fnt");
 	addChild(label);
 	label->setPosition( ccp(s.width/2, 3*s.height/4) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -627,7 +634,7 @@ AtlasFastBitmap::AtlasFastBitmap()
 		{
             char str[6] = {0};
             sprintf(str, "-%d-", i);
-			CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(str, "fonts/bitmapFontTest.fnt");
+			CCLabelBMFont* label = CCLabelBMFont::labelWithString(str, "fonts/bitmapFontTest.fnt");
 			addChild(label);
 			
 			CGSize s = CCDirector::sharedDirector()->getWinSize();
@@ -646,6 +653,199 @@ std::string AtlasFastBitmap::title()
 std::string AtlasFastBitmap::subtitle()
 {
 	return "Creating several CCLabelBMFont with the same .fnt file should be fast";
+}
+
+//------------------------------------------------------------------
+//
+// BitmapFontMultiLine
+//
+//------------------------------------------------------------------
+BitmapFontMultiLine::BitmapFontMultiLine()
+{
+    CGSize s;
+
+    // Left
+    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString("Multi line\nLeft", "fonts/bitmapFontTest3.fnt");
+    label1->setAnchorPoint(ccp(0,0));
+    addChild(label1, 0, kTagBitmapAtlas1);
+
+    s = label1->getContentSize();
+    CCLOG("content size: %.2fx%.2f", s.width, s.height);
+
+
+    // Center
+    CCLabelBMFont *label2 = CCLabelBMFont::labelWithString("Multi line\nCenter", "fonts/bitmapFontTest3.fnt");
+    label2->setAnchorPoint(ccp(0.5f, 0.5f));
+    addChild(label2, 0, kTagBitmapAtlas2);
+
+    s= label2->getContentSize();
+    CCLOG("content size: %.2fx%.2f", s.width, s.height);
+
+    // right
+    CCLabelBMFont *label3 = CCLabelBMFont::labelWithString("Multi line\nRight\nThree lines Three", "fonts/bitmapFontTest3.fnt");
+    label3->setAnchorPoint(ccp(1, 1));
+    addChild(label3, 0, kTagBitmapAtlas3);
+
+    s = label3->getContentSize();
+    CCLOG("content size: %.2fx%.2f", s.width, s.height);
+
+    s = CCDirector::sharedDirector()->getWinSize();
+    label1->setPosition(ccp( 0,0));
+    label2->setPosition(ccp( s.width/2, s.height/2));
+    label3->setPosition(ccp( s.width, s.height));
+}
+
+std::string BitmapFontMultiLine::title()
+{
+    return "CCLabelBMFont";
+}
+
+std::string BitmapFontMultiLine::subtitle()
+{
+    return "Multiline + anchor point";
+}
+
+//------------------------------------------------------------------
+//
+// LabelsEmpty
+//
+//------------------------------------------------------------------
+LabelsEmpty::LabelsEmpty()
+{
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
+
+    // CCLabelBMFont
+    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString("", "fonts/bitmapFontTest3.fnt");
+    addChild(label1, 0, kTagBitmapAtlas1);
+    label1->setPosition(ccp(s.width/2, s.height-100));
+
+    // CCLabelTTF
+    CCLabelTTF* label2 = CCLabelTTF::labelWithString("", "Arial", 24);
+    addChild(label2, 0, kTagBitmapAtlas2);
+    label2->setPosition(ccp(s.width/2, s.height/2));
+
+    // CCLabelAtlas
+    CCLabelAtlas *label3 = CCLabelAtlas::labelWithString("", "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    addChild(label3, 0, kTagBitmapAtlas3);
+    label3->setPosition(ccp(s.width/2, 0+100));
+
+    schedule(schedule_selector(LabelsEmpty::updateStrings), 1.0f);
+
+    setEmpty = false;
+}
+
+void LabelsEmpty::updateStrings(ccTime dt)
+{
+    CCLabelBMFont* label1 = (CCLabelBMFont*) getChildByTag(kTagBitmapAtlas1);
+    CCLabelTTF* label2 = (CCLabelTTF*) getChildByTag(kTagBitmapAtlas2);
+    CCLabelAtlas* label3 = (CCLabelAtlas*) getChildByTag(kTagBitmapAtlas3);
+
+    if( ! setEmpty )
+    {
+        label1->setString("not empty");
+        label2->setString("not empty");
+        label3->setString("hi");
+
+        setEmpty = true;
+    }
+    else
+    {
+        label1->setString("");
+        label2->setString("");
+        label3->setString("");
+
+        setEmpty = false;
+    }
+}
+
+std::string LabelsEmpty::title()
+{
+    return "Testing empty labels";
+}
+
+std::string LabelsEmpty::subtitle()
+{
+    return "3 empty labels: LabelAtlas, Label and BitmapFontAtlas";
+}
+
+//------------------------------------------------------------------
+//
+// LabelBMFontHD
+//
+//------------------------------------------------------------------
+LabelBMFontHD::LabelBMFontHD()
+{
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
+
+    // CCLabelBMFont
+    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString("TESTING RETINA DISPLAY", "fonts/konqa32.fnt");
+    addChild(label1);
+    label1->setPosition(ccp(s.width/2, s.height/2));
+}
+
+std::string LabelBMFontHD::title()
+{
+    return "Testing Retina Display BMFont";
+}
+
+std::string LabelBMFontHD::subtitle()
+{
+    return "loading arista16 or arista16-hd";
+}
+
+//------------------------------------------------------------------
+//
+// LabelAtlasHD
+//
+//------------------------------------------------------------------
+LabelAtlasHD::LabelAtlasHD()
+{
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
+
+    // CCLabelBMFont
+    CCLabelAtlas *label1 = CCLabelAtlas::labelWithString("TESTING RETINA DISPLAY", "fonts/larabie-16.png", 10, 20, 'A');
+    label1->setAnchorPoint(ccp(0.5f, 0.5f));
+
+    addChild(label1);
+    label1->setPosition(ccp(s.width/2, s.height/2));
+}
+
+std::string LabelAtlasHD::title()
+{
+    return "LabelAtlas with Retina Display";
+}
+
+std::string LabelAtlasHD::subtitle()
+{
+    return "loading larabie-16 / larabie-16-hd";
+}
+
+//------------------------------------------------------------------
+//
+// LabelGlyphDesigner
+//
+//------------------------------------------------------------------
+LabelGlyphDesigner::LabelGlyphDesigner()
+{
+    CGSize s = CCDirector::sharedDirector()->getWinSize();
+
+    CCLayerColor *layer = CCLayerColor::layerWithColor(ccc4(128,128,128,255));
+    addChild(layer, -10);
+
+    // CCLabelBMFont
+    CCLabelBMFont *label1 = CCLabelBMFont::labelWithString("Testing Glyph Designer", "fonts/futura-48.fnt");
+    addChild(label1);
+    label1->setPosition(ccp(s.width/2, s.height/2));
+}
+
+std::string LabelGlyphDesigner::title()
+{
+    return "Testing Glyph Designer";
+}
+
+std::string LabelGlyphDesigner::subtitle()
+{
+    return "You should see a font with shawdows and outline";
 }
 
 void AtlasTestScene::runThisTest()

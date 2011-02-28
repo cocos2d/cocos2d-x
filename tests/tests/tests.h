@@ -21,7 +21,7 @@
 #include "TileMapTest/TileMapTest.h"
 #include "ChipmunkTest/cocos2dChipmunkDemo.h"
 #include "IntervalTest/IntervalTest.h"
-#include "AtlasTest/AtlasTest.h"
+#include "LabelTest/LabelTest.h"
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
@@ -91,7 +91,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "TileMapTest",
     "IntervalTest",
     "ChipmunkTest",
-    "AtlasTest",
+    "LabelTest",
     "SpriteTest",
     "SchdulerTest",
     "RenderTextureTest",
