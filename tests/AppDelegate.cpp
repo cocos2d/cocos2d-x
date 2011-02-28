@@ -25,16 +25,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 // TODO: Remove this code to ccxApplication::initInstance()
 
-// #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IPHONE)
-//     if (!(m_pMainWnd = new CCXEGLView()))
-// #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
-//     if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
-// #endif
-//     {
-//         CCX_SAFE_DELETE(m_pMainWnd);
-//         return false;
-//     }
+    if (! pDirector->enableRetinaDisplay(true))
+    {
+        CCLOG("Retina Display Not supported");
+    }
 
+#if  (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+	CCFileUtils::setRelativePath("assets");
+#endif
 	// init director
 	CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCXEGLView::sharedOpenGLView());

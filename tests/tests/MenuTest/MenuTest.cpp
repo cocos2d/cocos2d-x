@@ -43,7 +43,7 @@ MenuLayer1::MenuLayer1()
 	CCMenuItem* item2 = CCMenuItemImage::itemFromNormalImage(s_SendScore, s_PressSendScore, this, menu_selector(MenuLayer1::menuCallback2) );
 
 	// Label Item (LabelAtlas)
-	CCLabelAtlas* labelAtlas = CCLabelAtlas::labelAtlasWithString("0123456789", "fonts/fps_images.png", 16, 24, '.');
+	CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0123456789", "fonts/fps_images.png", 16, 24, '.');
 	CCMenuItemLabel* item3 = CCMenuItemLabel::itemWithLabel(labelAtlas, this, menu_selector(MenuLayer1::menuCallbackDisabled) );
 	item3->setDisabledColor( ccc3(32,32,64) );
 	item3->setColor( ccc3(200,200,255) );
@@ -52,7 +52,7 @@ MenuLayer1::MenuLayer1()
 	CCMenuItem *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
 	
 	// Label Item (BitmapFontAtlas)
-	CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("configuration", "fonts/bitmapFontTest3.fnt");
+	CCLabelBMFont* label = CCLabelBMFont::labelWithString("configuration", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item5 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer1::menuCallbackConfig));
 
 	// Testing issue #500
@@ -257,7 +257,7 @@ MenuLayer3::MenuLayer3()
 	CCMenuItemFont::setFontName("Marker Felt");
 	CCMenuItemFont::setFontSize(28);
 
-	CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
+	CCLabelBMFont* label = CCLabelBMFont::labelWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item1 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer3::menuCallback2) );
 	CCMenuItemFont* item2 = CCMenuItemFont::itemFromString("--- Go Back ---", this, menu_selector(MenuLayer3::menuCallback) );
 	
@@ -387,7 +387,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName( "Marker Felt" );
 	CCMenuItemFont::setFontSize( 34 );
 	
-	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString( "go back", "fonts/bitmapFontTest3.fnt" );
+	CCLabelBMFont *label = CCLabelBMFont::labelWithString( "go back", "fonts/bitmapFontTest3.fnt" );
 	CCMenuItemLabel* back = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer4::backCallback) );
     
 	CCMenu *menu = CCMenu::menuWithItems(

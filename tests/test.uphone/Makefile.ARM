@@ -44,7 +44,6 @@ OBJECTS = \
 	$(OBJECTS_DIR)/AccelerometerTest.o \
 	$(OBJECTS_DIR)/ActionManagerTest.o \
 	$(OBJECTS_DIR)/ActionsTest.o \
-	$(OBJECTS_DIR)/AtlasTest.o \
 	$(OBJECTS_DIR)/Box2dTest.o \
 	$(OBJECTS_DIR)/Box2dView.o \
 	$(OBJECTS_DIR)/GLES-Render.o \
@@ -79,6 +78,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/HiResTest.o \
 	$(OBJECTS_DIR)/IntervalTest.o \
 	$(OBJECTS_DIR)/KeypadTest.o \
+	$(OBJECTS_DIR)/LabelTest.o \
 	$(OBJECTS_DIR)/LayerTest.o \
 	$(OBJECTS_DIR)/MenuTest.o \
 	$(OBJECTS_DIR)/MotionStreakTest.o \
@@ -143,9 +143,6 @@ $(OBJECTS_DIR)/ActionManagerTest.o : ../tests/ActionManagerTest/ActionManagerTes
 
 $(OBJECTS_DIR)/ActionsTest.o : ../tests/ActionsTest/ActionsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ActionsTest.o ../tests/ActionsTest/ActionsTest.cpp
-
-$(OBJECTS_DIR)/AtlasTest.o : ../tests/AtlasTest/AtlasTest.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/AtlasTest.o ../tests/AtlasTest/AtlasTest.cpp
 
 $(OBJECTS_DIR)/Box2dTest.o : ../tests/Box2DTest/Box2dTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Box2dTest.o ../tests/Box2DTest/Box2dTest.cpp
@@ -248,6 +245,9 @@ $(OBJECTS_DIR)/IntervalTest.o : ../tests/IntervalTest/IntervalTest.cpp
 
 $(OBJECTS_DIR)/KeypadTest.o : ../tests/KeypadTest/KeypadTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/KeypadTest.o ../tests/KeypadTest/KeypadTest.cpp
+
+$(OBJECTS_DIR)/LabelTest.o : ../tests/LabelTest/LabelTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/LabelTest.o ../tests/LabelTest/LabelTest.cpp
 
 $(OBJECTS_DIR)/LayerTest.o : ../tests/LayerTest/LayerTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/LayerTest.o ../tests/LayerTest/LayerTest.cpp

@@ -1064,6 +1064,7 @@ ParticleDemo::ParticleDemo(void)
 	CCMenuItemToggle* item4 = CCMenuItemToggle::itemWithTarget(	this, 
 																menu_selector(ParticleDemo::toggleCallback), 
 																CCMenuItemFont::itemFromString( "Free Movement" ),
+                                                                CCMenuItemFont::itemFromString( "Relative Movement" ),
 																CCMenuItemFont::itemFromString( "Grouped Movement" ),
 																NULL );
 	
@@ -1078,7 +1079,7 @@ ParticleDemo::ParticleDemo(void)
 
 	addChild( menu, 100 );	
 	
-    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelAtlasWithString("0000", "fonts/fps_images.png", 16, 24, '.');
+    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fonts/fps_images.png", 16, 24, '.');
     addChild(labelAtlas, 100, kTagLabelAtlas);
 	labelAtlas->setPosition( CGPointMake(s.width-66,50) );
 	
@@ -1157,7 +1158,9 @@ void ParticleDemo::toggleCallback(NSObject* pSender)
 {
 	if( m_emitter->getPositionType() == kCCPositionTypeGrouped )
 		m_emitter->setPositionType( kCCPositionTypeFree );
-	else
+    else if (m_emitter->getPositionType() == kCCPositionTypeFree)
+        m_emitter->setPositionType(kCCPositionTypeRelative);
+	else if (m_emitter->getPositionType() == kCCPositionTypeRelative)
 		m_emitter->setPositionType( kCCPositionTypeGrouped );
 }
 

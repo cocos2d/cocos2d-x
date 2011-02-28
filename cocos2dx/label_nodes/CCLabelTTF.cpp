@@ -79,11 +79,6 @@ namespace cocos2d{
 	}
 	void CCLabelTTF::setString(const char *label)
 	{
-        if (strlen(label)==0)
-        {
-            return;
-        }
-
 		m_sString = string(label);
         
 		CCTexture2D *texture;
