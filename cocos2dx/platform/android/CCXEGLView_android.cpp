@@ -134,6 +134,13 @@ void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
 		(GLint)(y * factor) + m_rcViewPort.origin.y,
 		(GLint)(w * factor),
 		(GLint)(h * factor));
+        }
+        else
+        {
+                glViewport((GLint)x,
+		(GLint)y,
+		(GLint)w,
+		(GLint)h);
         }		
 }
 
