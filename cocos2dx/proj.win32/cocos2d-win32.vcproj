@@ -551,6 +551,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\ccxApplication.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCXEGLView.h"
 				>
 			</File>
@@ -767,6 +771,14 @@
 				>
 				<File
 					RelativePath="..\platform\win32\CCNS_win32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\ccxApplication_win32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\ccxApplication_win32.h"
 					>
 				</File>
 				<File
