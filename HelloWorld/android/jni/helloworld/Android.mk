@@ -3,7 +3,6 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := helloworld
 
 LOCAL_SRC_FILES := main.cpp \
-Application.cpp \
 ../../../AppDelegate.cpp \
 ../../../HelloWorldScene.cpp
 

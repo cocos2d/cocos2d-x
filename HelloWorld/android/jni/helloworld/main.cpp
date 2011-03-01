@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "AppDelegate.h"
 #include "cocos2d.h"
 #include <jni.h>
 #include <android/log.h>
@@ -25,8 +25,8 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
 
         CCFileUtils::setRelativePath(IMG_PATH);
 
-        Application app;
-        app.run();
+        AppDelegate *pAppDelegate = new AppDelegate();
+        cocos2d::ccxApplication::sharedApplication().run();
     }
     else
     {

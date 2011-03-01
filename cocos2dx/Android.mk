@@ -61,6 +61,7 @@ platform/android/CCNS_android.cpp \
 platform/android/CCXEGLView_android.cpp \
 platform/android/CCXFileUtils_android.cpp \
 platform/android/CCXUIAccelerometer_android.cpp \
+platform/android/ccxApplication_android.cpp \
 platform/android/Cocos2dJni.cpp \
 sprite_nodes/CCAnimation.cpp \
 sprite_nodes/CCAnimationCache.cpp \
@@ -92,8 +93,7 @@ touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp
 
 # platform_support
-LOCAL_SRC_FILES += ../platform_support/src/ccxApplication.cpp \
-                   ../platform_support/src/ccxGL.cpp \
+LOCAL_SRC_FILES += ../platform_support/src/ccxGL.cpp \
                    ../platform_support/src/ccxImage.cpp \
                    ../platform_support/src/ccxStdC.cpp \
                    ../platform_support/src/ccxThread.cpp \
