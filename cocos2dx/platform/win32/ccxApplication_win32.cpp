@@ -1,22 +1,30 @@
-#include "Application.h"
+#include "ccxApplication.h"
 
 #include "CCDirector.h"
-USING_NS_CC;
+#include "CCXEGLView.h"
 
-Application::Application()
+NS_CC_BEGIN;
+
+// sharedApplication pointer
+ccxApplication * ccxApplication::sm_pSharedApplication = 0;
+
+ccxApplication::ccxApplication()
 : m_hInstance(NULL)
 , m_hAccelTable(NULL)
 {
     m_hInstance	= GetModuleHandle(NULL);
     m_nAnimationInterval.QuadPart = 0;
+    CCX_ASSERT(! sm_pSharedApplication);
+    sm_pSharedApplication = this;
 }
 
-Application::~Application()
+ccxApplication::~ccxApplication()
 {
-
+    CCX_ASSERT(this == sm_pSharedApplication);
+    sm_pSharedApplication = NULL;
 }
 
-int Application::run()
+int ccxApplication::run()
 {
     // Main message loop:
     MSG msg;
@@ -27,17 +35,15 @@ int Application::run()
     QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
 
-    // Make sharedApplication work correctly.
-    setSharedApplication(*this);
-
-    // Initialize AppDelegate.
-    if (! m_Delegate.applicationDidFinishLaunching())
+    // Initialize instance and cocos2d.
+    if (! initInstance() || ! applicationDidFinishLaunching())
     {
         return 0;
     }
 
-    m_MainWnd.centerWindow();
-    ShowWindow(m_MainWnd.getHWnd(), SW_SHOW);
+    CCXEGLView& mainWnd = CCXEGLView::sharedOpenGLView();
+    mainWnd.centerWindow();
+    ShowWindow(mainWnd.getHWnd(), SW_SHOW);
 
     while (1)
     {
@@ -72,38 +78,18 @@ int Application::run()
             DispatchMessage(&msg);
         }
     }
+
     return (int) msg.wParam;
 }
 
-bool Application::initInstance()
-{
-    bool bRet = false;
-    do 
-    {
-        // the HelloWorld is designed as HVGA
-        CCX_BREAK_IF(! m_MainWnd.Create(TEXT("cocos2d-win32"), 320, 480));
-// #define SHOW_AS_WVGA
-#ifdef  SHOW_AS_WVGA
-        // the design size HVGA is 480x320
-        // the WVGA is 800x480
-        // screenScaleFactor = WVGA/HVGA = min(800/480, 480/320) = 1.5
-        m_MainWnd.setScreenScale(1.5f);
-        m_MainWnd.resize(480, 800);
-#endif  // SHOW_AS_WVGA
-
-        bRet = true;
-    } while (0);
-    return bRet;
-}
-
-void Application::setAnimationInterval(double interval)
+void ccxApplication::setAnimationInterval(double interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
     m_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
 }
 
-Application::Orientation Application::setOrientation(Application::Orientation orientation)
+ccxApplication::Orientation ccxApplication::setOrientation(Orientation orientation)
 {
     // swap width and height
     CCXEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
@@ -114,7 +100,7 @@ Application::Orientation Application::setOrientation(Application::Orientation or
     return (Orientation)CCDirector::sharedDirector()->getDeviceOrientation();
 }
 
-void Application::statusBarFrame(cocos2d::CGRect * rect)
+void ccxApplication::statusBarFrame(CGRect * rect)
 {
     if (rect)
     {
@@ -122,3 +108,14 @@ void Application::statusBarFrame(cocos2d::CGRect * rect)
         *rect = CGRectMake(0, 0, 0, 0);
     }
 }
+
+//////////////////////////////////////////////////////////////////////////
+// static member function
+//////////////////////////////////////////////////////////////////////////
+ccxApplication& ccxApplication::sharedApplication()
+{
+    CCX_ASSERT(sm_pSharedApplication);
+    return *sm_pSharedApplication;
+}
+
+NS_CC_END;

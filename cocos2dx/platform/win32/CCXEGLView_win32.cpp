@@ -197,11 +197,6 @@ CCXEGLView::CCXEGLView()
 
 CCXEGLView::~CCXEGLView()
 {
-	release();
-    CCX_SAFE_DELETE(m_pSet);
-    CCX_SAFE_DELETE(m_pTouch);
-    CCX_SAFE_DELETE(m_pDelegate);
-	CCX_SAFE_DELETE(m_pEGL);
 }
 
 bool CCXEGLView::Create(LPCTSTR pTitle, int w, int h)
@@ -356,6 +351,12 @@ void CCXEGLView::release()
 	}
 	s_pMainWindow = NULL;
 	UnregisterClass(kWindowClassName, GetModuleHandle(NULL));
+
+    CCX_SAFE_DELETE(m_pSet);
+    CCX_SAFE_DELETE(m_pTouch);
+    CCX_SAFE_DELETE(m_pDelegate);
+    CCX_SAFE_DELETE(m_pEGL);
+    delete this;
 }
 
 void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
