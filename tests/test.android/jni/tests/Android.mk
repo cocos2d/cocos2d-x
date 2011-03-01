@@ -3,11 +3,9 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := tests
 
 LOCAL_SRC_FILES := main.cpp \
-Application.cpp \
 ../../../tests/AccelerometerTest/AccelerometerTest.cpp \
 ../../../tests/ActionManagerTest/ActionManagerTest.cpp \
 ../../../tests/ActionsTest/ActionsTest.cpp \
-../../../tests/AtlasTest/AtlasTest.cpp \
 ../../../tests/Box2DTest/Box2dTest.cpp \
 ../../../tests/Box2DTestBed/Box2dView.cpp \
 ../../../tests/Box2DTestBed/GLES-Render.cpp \
@@ -34,6 +32,7 @@ Application.cpp \
 ../../../tests/ChipmunkTest/cocos2dChipmunkDemo.cpp \
 ../../../tests/ChipmunkTest/drawSpace.cpp \
 ../../../tests/ClickAndMoveTest/ClickAndMoveTest.cpp \
+../../../tests/CocosDenshionTest/CocosDenshionTest.cpp \
 ../../../tests/CocosNodeTest/CocosNodeTest.cpp \
 ../../../tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 ../../../tests/EaseActionsTest/EaseActionsTest.cpp \
@@ -42,6 +41,7 @@ Application.cpp \
 ../../../tests/HiResTest/HiResTest.cpp \
 ../../../tests/IntervalTest/IntervalTest.cpp \
 ../../../tests/KeypadTest/KeypadTest.cpp \
+../../../tests/LabelTest/LabelTest.cpp \
 ../../../tests/LayerTest/LayerTest.cpp \
 ../../../tests/MenuTest/MenuTest.cpp \
 ../../../tests/MotionStreakTest/MotionStreakTest.cpp \
@@ -60,8 +60,7 @@ Application.cpp \
 ../../../tests/TransitionsTest/TransitionsTest.cpp \
 ../../../tests/controller.cpp \
 ../../../tests/testBasic.cpp \
-../../../AppDelegate.cpp \
-../../../tests/CocosDenshionTest/CocosDenshionTest.cpp
+../../../AppDelegate.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                    $(LOCAL_PATH)/../../../../cocos2dx/include \
