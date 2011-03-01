@@ -171,7 +171,7 @@ public:
 				SkPaint::FontMetrics font;
 				m_pPaint->getFontMetrics(&font);
 				*pHeight = (int)ceil((font.fDescent - font.fAscent));
-				*pWidth = (int)ceil((m_pPaint->measureText(pszText, strlen(pszText))));
+				*pWidth = (int)ceil((m_pPaint->measureText(pszText, strlen(pszText)))) * 2;
 
 				bRet = true;
 			}			
