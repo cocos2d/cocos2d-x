@@ -22,21 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ccxApplication.h"
+#ifndef __CCX_APPLICATION_PLATFORM_H__
+#define __CCX_APPLICATION_PLATFORM_H__
 
-NS_CC_BEGIN;
+#include "ccxConfig.h"
 
-static ccxApplication* s_pSharedApplication = 0;
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+    #include "win32/ccxApplication_win32.h"
+#else
+    #error
+#endif
 
-ccxApplication& ccxApplication::sharedApplication()
-{
-    CCX_ASSERT(s_pSharedApplication);
-    return *s_pSharedApplication;
-}
-
-void ccxApplication::setSharedApplication(ccxApplication& app)
-{
-    s_pSharedApplication = &app;
-}
-
-NS_CC_END;
+#endif	// __CCX_APPLICATION_PLATFORM_H__

@@ -1,10 +1,9 @@
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
+#include "HelloWorldScene.h"
 
 USING_NS_CC;
-
-#include "HelloWorldScene.h"
 
 AppDelegate::AppDelegate()
 {
@@ -15,15 +14,29 @@ AppDelegate::~AppDelegate()
 {
 }
 
+bool AppDelegate::initInstance()
+{
+    bool bRet = false;
+    do 
+    {
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+
+        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
+        // The HelloWorld is designed as HVGA.
+        CCXEGLView * pMainWnd = new CCXEGLView();
+        CCX_BREAK_IF(! pMainWnd
+            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 320, 480));
+
+#endif  // CCX_PLATFORM_WIN32
+
+        bRet = true;
+    } while (0);
+    return bRet;
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    // init the window
-    if (! ccxApplication::sharedApplication().initInstance())
-    {
-        return false;
-    }
-
-	// init director
+	// initialize director
 	CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCXEGLView::sharedOpenGLView());
 

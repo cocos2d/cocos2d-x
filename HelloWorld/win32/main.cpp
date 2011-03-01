@@ -1,6 +1,6 @@
 #include "main.h"
 
-#include "Application.h"
+#include "AppDelegate.h"
 
 HINSTANCE g_hInstance;
 
@@ -15,8 +15,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	g_hInstance = hInstance;
 
 	int nRet = 0;
-	Application app;
-	nRet = app.run();
+
+    // create the application instance
+	AppDelegate app;
+
+    nRet = cocos2d::ccxApplication::sharedApplication().run();
 
 	return nRet;
 }
