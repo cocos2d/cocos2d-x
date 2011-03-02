@@ -1,7 +1,6 @@
 #include "main.h"
-#include "AppDelegate.h"
 
-HINSTANCE g_hInstance;
+#include "AppDelegate.h"
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
 					   HINSTANCE hPrevInstance,
@@ -11,11 +10,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	g_hInstance = hInstance;
+    // create the application instance
+    AppDelegate app;
 
-	int nRet = 0;
-	AppDelegate app;
-	nRet = app.Run();
-
-	return nRet;
+    return cocos2d::ccxApplication::sharedApplication().run();
 }
