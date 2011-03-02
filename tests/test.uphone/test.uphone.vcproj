@@ -212,14 +212,6 @@
 			Name="Framework"
 			>
 			<File
-				RelativePath=".\Application.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Application.h"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -508,14 +500,14 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="AtlasTest"
+				Name="LabelTest"
 				>
 				<File
-					RelativePath="..\tests\AtlasTest\AtlasTest.cpp"
+					RelativePath="..\tests\LabelTest\LabelTest.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\tests\AtlasTest\AtlasTest.h"
+					RelativePath="..\tests\LabelTest\LabelTest.h"
 					>
 				</File>
 			</Filter>

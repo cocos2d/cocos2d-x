@@ -85,6 +85,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCTransition_mobile.o \
 	$(OBJECTS_DIR)/platform.o \
 	$(OBJECTS_DIR)/CCNS_uphone.o \
+	$(OBJECTS_DIR)/ccxApplication_uphone.o \
 	$(OBJECTS_DIR)/CCXEGLView_uphone.o \
 	$(OBJECTS_DIR)/CCXFileUtils_uphone.o \
 	$(OBJECTS_DIR)/CCXUIAccelerometer_uphone.o \
@@ -292,6 +293,9 @@ $(OBJECTS_DIR)/platform.o : ../platform/platform.cpp
 
 $(OBJECTS_DIR)/CCNS_uphone.o : ../platform/uphone/CCNS_uphone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNS_uphone.o ../platform/uphone/CCNS_uphone.cpp
+
+$(OBJECTS_DIR)/ccxApplication_uphone.o : ../platform/uphone/ccxApplication_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ccxApplication_uphone.o ../platform/uphone/ccxApplication_uphone.cpp
 
 $(OBJECTS_DIR)/CCXEGLView_uphone.o : ../platform/uphone/CCXEGLView_uphone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXEGLView_uphone.o ../platform/uphone/CCXEGLView_uphone.cpp
