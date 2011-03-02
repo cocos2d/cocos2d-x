@@ -35,7 +35,6 @@ first: all
 
 OBJECTS = \
 	$(OBJECTS_DIR)/AppDelegate.o \
-	$(OBJECTS_DIR)/Application.o \
 	$(OBJECTS_DIR)/main.o \
 	$(OBJECTS_DIR)/NewDeleteOp.o \
 	$(OBJECTS_DIR)/TG3AppDllEntry.o \
@@ -116,9 +115,6 @@ clean :
 
 $(OBJECTS_DIR)/AppDelegate.o : ../AppDelegate.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/AppDelegate.o ../AppDelegate.cpp
-
-$(OBJECTS_DIR)/Application.o : ./Application.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Application.o ./Application.cpp
 
 $(OBJECTS_DIR)/main.o : ./main.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/main.o ./main.cpp

@@ -980,6 +980,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\platform\uphone\ccxApplication_uphone.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\uphone\ccxApplication_uphone.h"
+					>
+				</File>
+				<File
 					RelativePath="..\platform\uphone\CCXEGLView_uphone.cpp"
 					>
 				</File>
