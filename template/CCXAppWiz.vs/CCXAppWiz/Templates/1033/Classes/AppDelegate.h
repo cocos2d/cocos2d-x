@@ -1,20 +1,42 @@
-#ifndef __APP_DELEGATE_H__
-#define __APP_DELEGATE_H__
+#ifndef  _APP_DELEGATE_H_
+#define  _APP_DELEGATE_H_
 
-#include "cocos2d.h"
+#include "ccxApplication.h"
 
-class  AppDelegate  :  public  cocos2d::CCXApplication
+/**
+@brief	The cocos2d Application.
+
+The reason for implement as private inheritance is to hide some interface call by CCDirector.
+*/
+class  AppDelegate : private cocos2d::ccxApplication
 {
 public:
     AppDelegate();
-    ~AppDelegate();
+    virtual ~AppDelegate();
 
+    /**
+    @brief	Implement for initialize OpenGL instance, set source path, etc...
+    */
+    virtual bool initInstance();
+
+    /**
+    @brief	Implement CCDirector and CCScene init code here.
+    @return true    Initialize success, app continue.
+    @return false   Initialize failed, app terminate.
+    */
     virtual bool applicationDidFinishLaunching();
-    virtual void applicationDidEnterBackground();
-    virtual void applicationWillEnterForeground();
 
-protected:
-    cocos2d::CCXEGLView *m_pMainWnd;
+    /**
+    @brief  The function be called when the application enter background
+    @param  the pointer of the application
+    */
+    virtual void applicationDidEnterBackground();
+
+    /**
+    @brief  The function be called when the application enter foreground
+    @param  the pointer of the application
+    */
+    virtual void applicationWillEnterForeground();
 };
- 
-#endif  // __APP_DELEGATE_H__
+
+#endif // _APP_DELEGATE_H_
