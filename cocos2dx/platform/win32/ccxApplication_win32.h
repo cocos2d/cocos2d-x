@@ -1,8 +1,6 @@
 #ifndef __CCX_APPLICATION_WIN32_H__
 #define __CCX_APPLICATION_WIN32_H__
 
-#include "ccxApplication.h"
-
 #include <Windows.h>
 
 #include "ccxCommon.h"

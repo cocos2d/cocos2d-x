@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "ccxImage.h"
 #include "support/ccUtils.h"
 
-#include <GLES/glext.h>
+#include "CCGL.h"
 
 namespace cocos2d { 
 

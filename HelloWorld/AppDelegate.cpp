@@ -28,7 +28,11 @@ bool AppDelegate::initInstance()
             || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 320, 480));
 
 #endif  // CCX_PLATFORM_WIN32
-
+        
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+        // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
+#endif  // CCX_PLATFORM_IOS
+        
         bRet = true;
     } while (0);
     return bRet;

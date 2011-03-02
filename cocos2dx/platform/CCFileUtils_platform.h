@@ -33,7 +33,7 @@ THE SOFTWARE.
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     #include "android/CCXFileUtils_android.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
-    #include "iphone/CCXFileUtils_iphone.h"
+    #include "ios/CCXFileUtils_ios.h"
 #else
     #error
 #endif // __CCX_FILEUTILS_PLATFORM_H__
