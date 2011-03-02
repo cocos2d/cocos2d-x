@@ -29,13 +29,17 @@ THE SOFTWARE.
 #include "CCXFileUtils.h"
 #include "platform/android/CCXUIAccelerometer_android.h"
 #include <android/log.h>
+#define  LOG_TAG    "Cocos2dJni"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 #define  LOG_TAG    "Cocos2dJni"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 extern "C"
 {
-	static cocos2d::CCTouch s_touch;
+
+	#define MAX_TOUCHES         5
+	static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 	static cocos2d::NSSet s_set;
 
 	// handle accelerometer changes
@@ -48,31 +52,122 @@ extern "C"
 
 	// handle touch event
 	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys)
 	{
-		s_touch.SetTouchInfo(0, x, y);
-		s_set.addObject(&s_touch);
+		int size = env->GetArrayLength(ids);
+		jint id[size];
+		jfloat x[size];
+		jfloat y[size];
+
+		env->GetIntArrayRegion(ids, 0, size, id);
+		env->GetFloatArrayRegion(xs, 0, size, x);
+		env->GetFloatArrayRegion(ys, 0, size, y);
+
+		for( int i = 0 ; i < size ; i++ ) {
+			cocos2d::CCTouch* pTouch = s_pTouches[id[i]];
+			LOGD("Should create new pTouch if null: %d", pTouch);
+			if (!pTouch)
+			{
+				pTouch = new cocos2d::CCTouch;
+			}
+
+			LOGD("Beginning touches with id: %d, x=%f, y=%f", id[i], x[i], y[i]);
+			pTouch->SetTouchInfo(0, x[i], y[i]);
+
+			s_set.addObject(pTouch);
+			s_pTouches[id[i]] = pTouch;
+		}
+
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesBegan(&s_set, NULL);
 	}
 	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv*  env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys)
 	{
-		s_touch.SetTouchInfo(0, x, y);
+
+		int size = env->GetArrayLength(ids);
+		jint id[size];
+		jfloat x[size];
+		jfloat y[size];
+
+		env->GetIntArrayRegion(ids, 0, size, id);
+		env->GetFloatArrayRegion(xs, 0, size, x);
+		env->GetFloatArrayRegion(ys, 0, size, y);
+
+		/* Add to the set to send to the director */
+		for( int i = 0 ; i < size ; i++ ) {
+			cocos2d::CCTouch* pTouch = s_pTouches[id[i]];
+			LOGD("Ending touches with id: %d, x=%f, y=%f", id[i], x[i], y[i]);
+			if (pTouch)
+			{
+				pTouch->SetTouchInfo(0, x[i], y[i]);
+				s_set.addObject(pTouch);
+			} else {
+				LOGD("Error adding the touch to remove");
+			}
+		}
+
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesEnded(&s_set, NULL);
-		s_set.removeObject(&s_touch);
+
+		/* Update the set status */
+		for( int i = 0 ; i < size ; i++ ) {
+			cocos2d::CCTouch* pTouch = s_pTouches[id[i]];
+			LOGD("Ending touches with id: %d, x=%f, y=%f", id[i], x[i], y[i]);
+			if (pTouch)
+			{
+				s_set.removeObject(pTouch);
+				pTouch->release();
+				s_pTouches[id[i]] = NULL;
+			} else {
+				LOGD("Error removing from the set!");
+			}
+
+		}
 	}
 	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv*  env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys)
 	{
-		s_touch.SetTouchInfo(0, x, y);
-		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesMoved(&s_set, NULL);
+		int size = env->GetArrayLength(ids);
+		jint id[size];
+		jfloat x[size];
+		jfloat y[size];
+
+		env->GetIntArrayRegion(ids, 0, size, id);
+		env->GetFloatArrayRegion(xs, 0, size, x);
+		env->GetFloatArrayRegion(ys, 0, size, y);
+
+		for( int i = 0 ; i < size ; i++ ) {
+			LOGD("Moving touches with id: %d, x=%f, y=%f", id[i], x[i], y[i]);
+			cocos2d::CCTouch* pTouch = s_pTouches[id[i]];
+			if (pTouch)
+			{
+				pTouch->SetTouchInfo(0, x[i], y[i]);
+				s_set.addObject(pTouch);
+				cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesMoved(&s_set, NULL);
+			}
+		}
 	}
-	
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jfloat x, jfloat y)
+
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv*  env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys)
 	{
-		s_touch.SetTouchInfo(0, x, y);
-		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesCancelled(&s_set, NULL);
-		s_set.removeObject(&s_touch);
+		int size = env->GetArrayLength(ids);
+		jint id[size];
+		jfloat x[size];
+		jfloat y[size];
+
+		env->GetIntArrayRegion(ids, 0, size, id);
+		env->GetFloatArrayRegion(xs, 0, size, x);
+		env->GetFloatArrayRegion(ys, 0, size, y);
+
+		for( int i = 0 ; i < size ; i++ ) {
+			cocos2d::CCTouch* pTouch = s_pTouches[id[i]];
+			if (pTouch)
+			{
+				pTouch->SetTouchInfo(0, x[i], y[i]);
+				s_set.addObject(pTouch);
+				cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesCancelled(&s_set, NULL);
+				s_set.removeObject(pTouch);
+			}
+		}
 	}
 
     void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
