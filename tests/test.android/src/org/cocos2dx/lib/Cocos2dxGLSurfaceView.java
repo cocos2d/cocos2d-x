@@ -1,16 +1,12 @@
 package org.cocos2dx.lib;
 
-import org.cocos2dx.lib.touch.MultiTouchFilter;
-import org.cocos2dx.lib.touch.SingleTouchFilter;
-import org.cocos2dx.lib.touch.TouchFilter;
-import org.metalev.multitouch.controller.MultiTouchController;
-import org.metalev.multitouch.controller.MultiTouchController.MultiTouchObjectCanvas;
-import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
-import org.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
+import org.cocos2dx.lib.touch.metalev.multitouch.controller.MultiTouchController;
+import org.cocos2dx.lib.touch.metalev.multitouch.controller.MultiTouchController.MultiTouchObjectCanvas;
+import org.cocos2dx.lib.touch.metalev.multitouch.controller.MultiTouchController.PointInfo;
+import org.cocos2dx.lib.touch.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -43,57 +39,53 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView implements
                 Log.d(TAG,
                         "ACTION: " + pt.getAction() + "id[i]="
                                 + pt.getPointerIds()[i] + "x[i]= "
-                                + pt.getXs()[i] + " y[i]= " + pt.getYs()[i]);
-
-                switch (pt.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                case 261:
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    Log.d(TAG, "ACTION_DOWN");
-                    queueEvent(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            mRenderer.handleActionDown(ids, xs, ys);
-                        }
-                    });
-                    break;
-
-                case MotionEvent.ACTION_MOVE:
-                    Log.d(TAG, "ACTION_MOVE");
-                    queueEvent(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            mRenderer.handleActionMove(ids, xs, ys);
-                        }
-                    });
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_POINTER_UP:
-                    Log.d(TAG, "ACTION_UP");
-                    queueEvent(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            mRenderer.handleActionUp(ids, xs, ys);
-                        }
-                    });
-                    break;
-
-                case MotionEvent.ACTION_CANCEL:
-
-                    queueEvent(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            mRenderer.handleActionCancel(ids, xs, ys);
-                        }
-                    });
-                    break;
-                }
+                                + pt.getXs()[i] + " y[i]= " + pt.getYs()[i]);               
             }
+            
+            switch (pt.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case 261:
+            case MotionEvent.ACTION_POINTER_DOWN:
+                Log.d(TAG, "ACTION_DOWN");
+                queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRenderer.handleActionDown(ids, xs, ys);
+                    }
+                });
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                Log.d(TAG, "ACTION_MOVE");
+                queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRenderer.handleActionMove(ids, xs, ys);
+                    }
+                });
+                break;
+
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                Log.d(TAG, "ACTION_UP");
+                queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRenderer.handleActionUp(ids, xs, ys);
+                    }
+                });
+                break;
+
+            case MotionEvent.ACTION_CANCEL:
+                queueEvent(new Runnable() {
+                   @Override
+                    public void run() {
+                        mRenderer.handleActionCancel(ids, xs, ys);
+                    }
+                });
+                break;
+            }
+            
             return true;
         }
         return false;
