@@ -1,4 +1,4 @@
-package org.metalev.multitouch.controller;
+package org.cocos2dx.lib.touch.metalev.multitouch.controller;
 
 /**
  * MultiTouchController.java
