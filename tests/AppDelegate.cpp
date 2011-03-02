@@ -29,6 +29,10 @@ bool AppDelegate::initInstance()
 
 #endif  // CCX_PLATFORM_WIN32
 
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+        // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
+#endif  // CCX_PLATFORM_IOS
+        
         bRet = true;
     } while (0);
     return bRet;
@@ -36,15 +40,15 @@ bool AppDelegate::initInstance()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	// initialize director
-	CCDirector *pDirector = CCDirector::sharedDirector();
+    // initialize director
+    CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCXEGLView::sharedOpenGLView());
 
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-//     pDirector->enableRetinaDisplay(true);
+    // pDirector->enableRetinaDisplay(true);
 
-	// sets landscape mode
-	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+    // sets landscape mode
+    pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	// turn on display FPS
     pDirector->setDisplayFPS(true);

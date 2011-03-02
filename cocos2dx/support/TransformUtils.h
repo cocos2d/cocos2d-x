@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 ///@todo
 // when in MAC or windows, it includes <OpenGL/gl.h>
-#include <GLES/gl.h>
+#include "CCGL.h"
 
 namespace   cocos2d {
 

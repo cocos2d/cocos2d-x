@@ -33,7 +33,7 @@ THE SOFTWARE.
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     #include "android/CCXUIAccelerometer_android.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
-    #include "iphone/CCXUIAccelerometer_iphone.h"
+    #include "ios/CCXUIAccelerometer_ios.h"
 #else
     #error
 #endif

@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include <string.h>
 #include <cmath>
-#include <GLES/gl.h>
+#include "CCGL.h"
 
 #ifndef M_PI
 	#define M_PI       3.14159265358979323846

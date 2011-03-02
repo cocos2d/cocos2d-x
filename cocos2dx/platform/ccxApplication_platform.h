@@ -31,6 +31,8 @@ THE SOFTWARE.
     #include "win32/ccxApplication_win32.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     #include "android/ccxApplication_android.h"
+#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+    # include "ios/ccxApplication_ios.h"
 #else
     #error
 #endif
