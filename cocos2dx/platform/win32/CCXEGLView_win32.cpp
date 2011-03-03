@@ -102,7 +102,8 @@ public:
 
 			CCX_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
 
-			pEGL->m_eglDisplay = eglDisplay;
+
+            pEGL->m_eglDisplay = eglDisplay;
 			pEGL->m_eglConfig  = eglConfig;
 			pEGL->m_eglContext = eglContext;
 			pEGL->m_eglSurface = eglSurface;
@@ -191,6 +192,7 @@ CCXEGLView::CCXEGLView()
 	m_eInitOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
 	m_bOrientationInitVertical = (CCDeviceOrientationPortrait == m_eInitOrientation
 		|| kCCDeviceOrientationPortraitUpsideDown == m_eInitOrientation) ? true : false;
+
 }
 
 CCXEGLView::~CCXEGLView()
