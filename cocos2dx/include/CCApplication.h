@@ -25,6 +25,6 @@ THE SOFTWARE.
 #ifndef __CCX_APPLICATION_H__
 #define __CCX_APPLICATION_H__
 
-#include "platform/CCXApplication_platform.h"
+#include "platform/CCApplication_platform.h"
 
 #endif	// end of __CCX_APPLICATION_H__

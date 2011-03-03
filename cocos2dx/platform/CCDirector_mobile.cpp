@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "CCSpriteFrameCache.h"
 #include "CCAutoreleasePool.h"
 #include "platform/platform.h"
-#include "CCXApplication.h"
+#include "CCApplication.h"
 #include "CCLabelBMFont.h"
 #include "CCActionManager.h"
 #include "CCLabelTTF.h"

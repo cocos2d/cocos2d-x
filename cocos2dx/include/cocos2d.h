@@ -98,10 +98,10 @@ THE SOFTWARE.
 //
 // platform specific
 //
-#include "CCXApplication.h"
+#include "CCApplication.h"
 #include "CCEGLView.h"
 #include "CCImage.h"
-#include "CCXFileUtils.h"
+#include "CCFileUtils.h"
 #include "CCAccelerometer.h"
  
 //

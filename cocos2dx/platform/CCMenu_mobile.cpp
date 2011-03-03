@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCMenu.h"
 #include "CCDirector.h"
-#include "CCXApplication.h"
+#include "CCApplication.h"
 #include "CCPointExtension.h"
 #include "CCTouchDispatcher.h"
 #include "CCTouch.h"
