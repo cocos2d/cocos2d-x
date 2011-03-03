@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCXUIImage_win32.h"
+#include "CCImage_win32.h"
 
 #include "png.h"
 
-#include "CCXBitmapDC.h"
+#include "CCBitmapDC.h"
 
 // in order to compile correct in andLinux, because ssTypes(uphone)
 // and jmorecfg.h all typedef xxx INT32
@@ -51,9 +51,9 @@ typedef struct
 	int offset;
 }tImageSource;
 
-bool UIImage::s_bPopupNotify = true;
+bool CCImage::s_bPopupNotify = true;
 
-// because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
+// because we do not want to include "png.h" in CCXCCImage_uphone.h, so we implement
 // the function as a static function
 static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
 {
@@ -70,7 +70,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 	}
 }
 
-UIImage::UIImage(void)
+CCImage::CCImage(void)
 {
 	m_imageInfo.hasAlpha = false;
 	m_imageInfo.isPremultipliedAlpha = false;
@@ -80,7 +80,7 @@ UIImage::UIImage(void)
 	m_imageInfo.bitsPerComponent = 0;
 }
 
-UIImage::UIImage(CCXBitmapDC * pBmpDC)
+CCImage::CCImage(CCXBitmapDC * pBmpDC)
 {
     m_imageInfo.hasAlpha = false;
     m_imageInfo.isPremultipliedAlpha = false;
@@ -131,12 +131,12 @@ UIImage::UIImage(CCXBitmapDC * pBmpDC)
 	}
 }
 
-UIImage::~UIImage(void)
+CCImage::~CCImage(void)
 {
 	delete []m_imageInfo.data;
 }
 
-bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageType)
+bool CCImage::initWithContentsOfFile(const string &strPath, eImageFormat imageType)
 {
 	bool bRet = false;
 
@@ -169,47 +169,47 @@ bool UIImage::initWithContentsOfFile(const string &strPath, eImageFormat imageTy
 	return bRet;
 }
 
-unsigned int UIImage::width(void)
+unsigned int CCImage::width(void)
 {
 	return m_imageInfo.width;
 }
 
-unsigned int UIImage::height(void)
+unsigned int CCImage::height(void)
 {
 	return m_imageInfo.height;
 }
 
-bool UIImage::isAlphaPixelFormat(void)
+bool CCImage::isAlphaPixelFormat(void)
 {
 	return m_imageInfo.hasAlpha;
 }
 
 // now, uphone only support premultiplied data
 // so, we only return true
-bool UIImage::isPremultipliedAlpha(void)
+bool CCImage::isPremultipliedAlpha(void)
 {
 	return m_imageInfo.isPremultipliedAlpha;
 }
 
 // compute how many bits every color component 
-int UIImage::CGImageGetBitsPerComponent(void)
+int CCImage::CGImageGetBitsPerComponent(void)
 {
 	return m_imageInfo.bitsPerComponent;
 }
 
 // now we only support RGBA8888 or RGB888
 // so it has color space
-int UIImage::CGImageGetColorSpace(void)
+int CCImage::CGImageGetColorSpace(void)
 {
 	return 1;
 }
 
-unsigned char* UIImage::getData(void)
+unsigned char* CCImage::getData(void)
 {
 	return m_imageInfo.data;
 }
 
-bool UIImage::loadPng(const char* strFileName)
+bool CCImage::loadPng(const char* strFileName)
 {
     FILE *fp;
 	unsigned char *buffer = NULL;
@@ -255,7 +255,7 @@ bool UIImage::loadPng(const char* strFileName)
     return bRet;
 }
 
-bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
+bool CCImage::loadPngFromStream(unsigned char *data, int nLength)
 {
 	char                header[8]; 
 	png_structp         png_ptr;
@@ -353,7 +353,7 @@ bool UIImage::loadPngFromStream(unsigned char *data, int nLength)
 	return true;
 }
 
-bool UIImage::loadJpg(const char *strFileName)
+bool CCImage::loadJpg(const char *strFileName)
 {
 	/* these are standard libjpeg structures for reading(decompression) */
 	struct jpeg_decompress_struct cinfo;
@@ -426,28 +426,28 @@ bool UIImage::loadJpg(const char *strFileName)
 	return true;
 }
 
-bool UIImage::save(const std::string &strFileName, int nFormat)
+bool CCImage::save(const std::string &strFileName, int nFormat)
 {
-	/// @todo uiimage::save
+	/// @todo CCImage::save
 	return false;
 }
-bool UIImage::initWithData(unsigned char *pBuffer, int nLength)
+bool CCImage::initWithData(unsigned char *pBuffer, int nLength)
 {
 	return loadPngFromStream(pBuffer, nLength);
 }
 
-bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
+bool CCImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 {
 	/// @todo need copy pBuffer data
 	return false;
 }
 
-void UIImage::setIsPopupNotify(bool bNotify)
+void CCImage::setIsPopupNotify(bool bNotify)
 {
     s_bPopupNotify = bNotify;
 }
 
-bool UIImage::getIsPopupNotify()
+bool CCImage::getIsPopupNotify()
 {
     return s_bPopupNotify;
 }

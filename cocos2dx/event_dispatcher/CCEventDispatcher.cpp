@@ -35,7 +35,7 @@ typedef struct _listEntry
 {
     struct	_listEntry	*prev;
     struct	_listEntry	*next;
-    NSObject*           pHandle;
+    CCObject*           pHandle;
     int                 priority;
 } tListEntry;
 
@@ -167,7 +167,7 @@ void CCEventDispatcher::removeAllKeyboardDelegates()
     removeAllDelegatesFromList(&m_pKeyboardDelegates);
 }
 
-void CCEventDispatcher::addDelegate(NSObject* pHandle, int priority, _listEntry** pList)
+void CCEventDispatcher::addDelegate(CCObject* pHandle, int priority, _listEntry** pList)
 {
     if (! pHandle)
     {

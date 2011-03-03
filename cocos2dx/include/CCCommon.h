@@ -25,6 +25,6 @@ THE SOFTWARE.
 #ifndef __CCX_COMMON_H__
 #define __CCX_COMMON_H__
 
-#include "platform/ccxCommon_platform.h"
+#include "platform/CCCommon_platform.h"
 
 #endif	// end of __CCX_COMMON_H__

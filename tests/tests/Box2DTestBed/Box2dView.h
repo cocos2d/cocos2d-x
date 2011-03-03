@@ -14,9 +14,9 @@ public:
 
 	bool initWithEntryID(int entryId);
 
-	void restartCallback(NSObject* sender);
-	void nextCallback(NSObject* sender);
-	void backCallback(NSObject* sender);
+	void restartCallback(CCObject* sender);
+	void nextCallback(CCObject* sender);
+	void backCallback(CCObject* sender);
 
 	virtual void registerWithTouchDispatcher();
 
@@ -47,7 +47,7 @@ public:
 	virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
 	virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
 	virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
-	//virtual void accelerometer(UIAccelerometer* accelerometer, UIAcceleration* acceleration);
+	//virtual void accelerometer(CCAccelerometer* accelerometer, UIAcceleration* acceleration);
 
 	static Box2DView* viewWithEntryID(int entryId);
 };

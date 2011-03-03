@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 
 #include "CCGL.h"
 

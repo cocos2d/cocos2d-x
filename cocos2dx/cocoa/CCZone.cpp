@@ -21,11 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "NSZone.h"
-#include "NSObject.h"
+#include "CCZone.h"
+#include "CCObject.h"
 namespace   cocos2d {
 
-NSZone::NSZone(NSObject *pObject)
+CCZone::CCZone(CCObject *pObject)
 {
 	m_pCopyObject = pObject;
 }

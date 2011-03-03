@@ -24,10 +24,10 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_H__
 #define __CC_ANIMATION_H__
 
-#include "NSObject.h"
-#include "NSMutableArray.h"
-#include "CGGeometry.h"
-#include "CCXCocos2dDefine.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
+#include "CCGeometry.h"
+#include "CCCocos2dDefine.h"
 #include <string>
 
 namespace   cocos2d {
@@ -41,12 +41,12 @@ namespace   cocos2d {
 	[sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
 	*/
-	class CCX_DLL CCAnimation : public NSObject
+	class CCX_DLL CCAnimation : public CCObject
 	{
 	protected:
 		std::string m_nameStr;
 		float m_fDelay;
-		NSMutableArray<CCSpriteFrame*> *m_pobFrames;
+		CCMutableArray<CCSpriteFrame*> *m_pobFrames;
 
 	public:
 		// attributes
@@ -62,9 +62,9 @@ namespace   cocos2d {
 		inline void setDelay(float fDelay) { m_fDelay = fDelay; }
 
 		/** get array of frames */
-		inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
+		inline CCMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
 		/** set array of frames, the Frames is retained */
-		inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
+		inline void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
 		{
 			CCX_SAFE_RETAIN(pFrames);
 			CCX_SAFE_RELEASE(m_pobFrames);
@@ -77,12 +77,12 @@ namespace   cocos2d {
 		/** Initializes a CCAnimation with frames.
 		@since v0.99.5
 		*/
-		bool initWithFrames(NSArray<CCSpriteFrame*> *pFrames);
+		bool initWithFrames(CCArray<CCSpriteFrame*> *pFrames);
 
 		/** Initializes a CCAnimation with frames and a delay between frames
 		@since v0.99.5
 		*/
-		bool initWithFrames(NSArray<CCSpriteFrame*> *pFrames, float delay);
+		bool initWithFrames(CCArray<CCSpriteFrame*> *pFrames, float delay);
 
 		/** Initializes a CCAnimation with a name
 		@since v0.99.3
@@ -94,7 +94,7 @@ namespace   cocos2d {
 		@since v0.99.3
 		@deprecated Will be removed in 1.0.1. Use "initWithFrames" instead.
 		*/
-		bool initWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
+		bool initWithName(const char *pszName, CCArray<CCSpriteFrame*> *pFrames);
 
 		/** Initializes a CCAnimation with a name and delay between frames.
 		@deprecated Will be removed in 1.0.1. Use "initWithFrames:nil delay:delay" instead.
@@ -104,7 +104,7 @@ namespace   cocos2d {
 		/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
 		@deprecated Will be removed in 1.0.1. Use "initWithFrames:frames delay:delay" instead.
 		*/
-		bool initWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
+		bool initWithName(const char *pszName, float fDelay, CCArray<CCSpriteFrame*> *pFrames);
 
 		/** adds a frame to a CCAnimation */
 		void addFrame(CCSpriteFrame *pFrame);
@@ -117,7 +117,7 @@ namespace   cocos2d {
 		/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
 		Added to facilitate the migration from v0.8 to v0.9.
 		*/
-		void addFrameWithTexture(CCTexture2D* pobTexture, CGRect rect);
+		void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
 		bool init(void);
 
@@ -130,12 +130,12 @@ namespace   cocos2d {
 		/** Creates an animation with frames.
 		@since v0.99.5
 		*/
-		static CCAnimation* animationWithFrames(NSArray<CCSpriteFrame*> *frames);
+		static CCAnimation* animationWithFrames(CCArray<CCSpriteFrame*> *frames);
 
 		/* Creates an animation with frames and a delay between frames.
 		@since v0.99.5
 		*/
-		static CCAnimation* animationWithFrames(NSArray<CCSpriteFrame*> *frames, float delay);
+		static CCAnimation* animationWithFrames(CCArray<CCSpriteFrame*> *frames, float delay);
 
 		/** Creates a CCAnimation with a name
 		@since v0.99.3
@@ -147,13 +147,13 @@ namespace   cocos2d {
 		@since v0.99.3
 		@deprecated Will be removed in 1.0.1. Use "animationWithFrames" instead.
 		*/
-		static CCAnimation* animationWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
+		static CCAnimation* animationWithName(const char *pszName, CCArray<CCSpriteFrame*> *pFrames);
 
 		/** Creates a CCAnimation with a name and delay between frames. */
 		static CCAnimation* animationWithName(const char *pszName, float fDelay);
 
 		/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-		static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
+		static CCAnimation* animationWithName(const char *pszName, float fDelay, CCArray<CCSpriteFrame*> *pFrames);
 	};
 } // end of name sapce cocos2d
 

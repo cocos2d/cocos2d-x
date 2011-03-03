@@ -21,21 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CCX_COCOS2D_DEFINE_PLATFORM_H__
-#define __CCX_COCOS2D_DEFINE_PLATFORM_H__
+#ifndef __CC_COCOS2D_DEFINE_PLATFORM_H__
+#define __CC_COCOS2D_DEFINE_PLATFORM_H__
 
 #include "config_platform.h"
 
 #if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXCocos2dDefine_uphone.h"
+    #include "uphone/CCCocos2dDefine_uphone.h"
 #elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXCocos2dDefine_win32.h"
+    #include "win32/CCCocos2dDefine_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
-    #include "android/CCXCocos2dDefine_android.h"
+    #include "android/CCCocos2dDefine_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
-    #include "iphone/CCXCocos2dDefine_iphone.h"
+    #include "iphone/CCCocos2dDefine_iphone.h"
 #else
     #error
 #endif 
 
-#endif	// end of __CCX_COCOS2D_DEFINE_PLATFORM_H__
+#endif	// end of __CC_COCOS2D_DEFINE_PLATFORM_H__

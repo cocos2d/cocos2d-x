@@ -1,4 +1,4 @@
-#include "CCXApplication_win32.h"
+#include "CCApplication_win32.h"
 
 #include "CCDirector.h"
 
@@ -21,7 +21,7 @@ CCXApplication::~CCXApplication()
 ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
 {
 	// swap width and height
-	CCXEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
+	CCEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
 	if (pView)
 	{
 		return (ccDeviceOrientation)pView->setDeviceOrientation(eOritation);
@@ -29,9 +29,9 @@ ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOr
 	return CCDirector::sharedDirector()->getDeviceOrientation();
 }
 
-CGRect CCXApplication::statusBarFrame()
+CCRect CCXApplication::statusBarFrame()
 {
-	CGRect rc;
+	CCRect rc;
 	return rc;
 }
 

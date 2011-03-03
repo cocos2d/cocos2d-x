@@ -22,21 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_PLATFORM__
-#define __CCX_COMMON_PLATFORM__
+#ifndef __CC_COMMON_PLATFORM__
+#define __CC_COMMON_PLATFORM__
 
 #include "config_platform.h"
 
 #if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/ccxCommon_uphone.h"
+    #include "uphone/CCCommon_uphone.h"
 #elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/ccxCommon_win32.h"
+    #include "win32/CCCommon_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
-    #include "android/ccxCommon_android.h"
+    #include "android/CCCommon_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
-    #include "iphone/ccxCommon_iphone.h"
+    #include "iphone/CCCommon_iphone.h"
 #else
     #error
 #endif
 
-#endif	// end of __CCX_COMMON_PLATFORM__
+#endif	// end of __CC_COMMON_PLATFORM__

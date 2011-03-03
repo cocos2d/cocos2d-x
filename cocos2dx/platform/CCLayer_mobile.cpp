@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCTouchDispatcher.h"
 #include "CCKeypadDispatcher.h"
-#include "CCXUIAccelerometer.h"
+#include "CCAccelerometer.h"
 #include "CCDirector.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 namespace   cocos2d {
 
 // CCLayer
@@ -197,11 +197,11 @@ void CCLayer::setIsAccelerometerEnabled(bool enabled)
         {
             if (enabled)
             {
-                UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+                CCAccelerometer::sharedAccelerometer()->addDelegate(this);
             }
             else
             {
-                UIAccelerometer::sharedAccelerometer()->removeDelegate(this);
+                CCAccelerometer::sharedAccelerometer()->removeDelegate(this);
             }
         }
     }
@@ -250,7 +250,7 @@ void CCLayer::onEnter()
     // add this layer to concern the Accelerometer Sensor
     if (m_bIsAccelerometerEnabled)
     {
-        UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+        CCAccelerometer::sharedAccelerometer()->addDelegate(this);
     }
 
     // add this layer to concern the kaypad msg
@@ -270,7 +270,7 @@ void CCLayer::onExit()
     // remove this layer from the delegates who concern Accelerometer Sensor
     if (m_bIsAccelerometerEnabled)
     {
-        UIAccelerometer::sharedAccelerometer()->removeDelegate(this);
+        CCAccelerometer::sharedAccelerometer()->removeDelegate(this);
     }
 
     // remove this layer from the delegates who concern the kaypad msg
@@ -286,7 +286,7 @@ void CCLayer::onEnterTransitionDidFinish()
 {
     if (m_bIsAccelerometerEnabled)
     {
-        UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+        CCAccelerometer::sharedAccelerometer()->addDelegate(this);
     }
     
     CCNode::onEnterTransitionDidFinish();
@@ -387,19 +387,19 @@ bool CCLayerColor::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfl
 	}
 
 	this->updateColor();
-	this->setContentSize(CGSizeMake(width,height));
+	this->setContentSize(CCSizeMake(width,height));
 	return true;
 }
 
 bool CCLayerColor::initWithColor(ccColor4B color)
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	this->initWithColorWidthHeight(color, s.width, s.height);
 	return true;
 }
 
 /// override contentSize
-void CCLayerColor::setContentSize(CGSize size)
+void CCLayerColor::setContentSize(CCSize size)
 {
 	m_pSquareVertices[2] = size.width * CC_CONTENT_SCALE_FACTOR();
 	m_pSquareVertices[5] = size.height * CC_CONTENT_SCALE_FACTOR();
@@ -411,17 +411,17 @@ void CCLayerColor::setContentSize(CGSize size)
 
 void CCLayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
-	this->setContentSize(CGSizeMake(w, h));
+	this->setContentSize(CCSizeMake(w, h));
 }
 
 void CCLayerColor::changeWidth(GLfloat w)
 {
-	this->setContentSize(CGSizeMake(w, m_tContentSize.height));
+	this->setContentSize(CCSizeMake(w, m_tContentSize.height));
 }
 
 void CCLayerColor::changeHeight(GLfloat h)
 {
-	this->setContentSize(CGSizeMake(m_tContentSize.width, h));
+	this->setContentSize(CCSizeMake(m_tContentSize.width, h));
 }
 
 void CCLayerColor::updateColor()
@@ -481,7 +481,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
     return NULL;
 }
 
-CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end, CGPoint v)
+CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end, CCPoint v)
 {
     CCLayerGradient * pLayer = new CCLayerGradient();
     if( pLayer && pLayer->initWithColor(start, end, v))
@@ -498,7 +498,7 @@ bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end)
     return initWithColor(start, end, ccp(0, -1));
 }
 
-bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CGPoint v)
+bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CCPoint v)
 {
     m_endColor.r  = end.r;
     m_endColor.g  = end.g;
@@ -521,7 +521,7 @@ void CCLayerGradient::updateColor()
         return;
 
     double c = sqrt(2.0);
-    CGPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
+    CCPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
 
     float opacityf = (float)m_cOpacity / 255.0f;
 
@@ -604,13 +604,13 @@ GLubyte CCLayerGradient::getEndOpacity()
     return m_cEndOpacity;
 }
 
-void CCLayerGradient::setAlongVector(CGPoint var)
+void CCLayerGradient::setAlongVector(CCPoint var)
 {
     m_AlongVector = var;
     updateColor();
 }
 
-CGPoint CCLayerGradient::getAlongVector()
+CCPoint CCLayerGradient::getAlongVector()
 {
     return m_AlongVector;
 }
@@ -644,7 +644,7 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 
 bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 {
-	m_pLayers = new NSMutableArray<CCLayer*>(5);
+	m_pLayers = new CCMutableArray<CCLayer*>(5);
 	//m_pLayers->retain();
 
 	m_pLayers->addObject(layer);

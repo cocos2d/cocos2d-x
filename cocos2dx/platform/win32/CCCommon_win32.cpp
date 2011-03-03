@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ccxCommon_win32.h"
+#include "CCCommon_win32.h"
 
 #include <Windows.h>
 #include <stdio.h>
@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-void CCXLog(const char * pszFormat, ...)
+void CCLog(const char * pszFormat, ...)
 {
     char szBuf[MAX_LEN];
 

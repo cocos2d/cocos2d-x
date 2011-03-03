@@ -59,7 +59,7 @@ CCParticleSystemPoint::~CCParticleSystemPoint()
 	glDeleteBuffers(1, &m_uVerticesID);
 #endif
 }
-void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition)
+void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// place vertices and colos in array
     m_pVertices[m_nParticleIdx].pos = vertex2(newPosition.x, newPosition.y);

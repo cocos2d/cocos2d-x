@@ -21,26 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __NSSTRING_H__
-#define __NSSTRING_H__
+#ifndef __CCSTRING_H__
+#define __CCSTRING_H__
 #include <string>
 #include <stdlib.h>
-#include "NSObject.h"
+#include "CCObject.h"
 namespace cocos2d {
 
-	class CCX_DLL NSString : public NSObject
+	class CCX_DLL CCString : public CCObject
 	{
 	public:
 		std::string m_sString;
 	public:
-		NSString()
+		CCString()
 			:m_sString("")
 		{}
-		NSString(const char * str)
+		CCString(const char * str)
 		{
 			m_sString = str;
 		}
-		virtual ~NSString(){ m_sString.clear(); }
+		virtual ~CCString(){ m_sString.clear(); }
 		int toInt()
 		{
 			return atoi(m_sString.c_str());
@@ -60,4 +60,4 @@ namespace cocos2d {
 		}
 	};
 }// namespace cocos2d
-#endif //__NSSTRING_H__
+#endif //__CCSTRING_H__

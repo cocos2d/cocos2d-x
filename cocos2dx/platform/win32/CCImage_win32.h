@@ -22,13 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_WIN32_UIIMAGE_H__
-#define __PLATFORM_WIN32_UIIMAGE_H__
+#ifndef __PLATFORM_WIN32_CCIMAGE_H__
+#define __PLATFORM_WIN32_CCIMAGE_H__
 
 #include <Windows.h>
 
 #include <string>
-#include "ccxCommon.h"
+#include "CCCommon.h"
 #include "CCRenderTexture.h"
 
 namespace   cocos2d {
@@ -50,13 +50,13 @@ typedef struct
 /**
 @brief image toolkits
 */
-class CCX_DLL UIImage
+class CCX_DLL CCImage
 {
 public:
-	UIImage(void);
- 	UIImage(CCXBitmapDC * pBmpDC);
+	CCImage(void);
+ 	CCImage(CCXBitmapDC * pBmpDC);
 	
-	~UIImage(void);
+	~CCImage(void);
 
 	/** 
 	Load the image from the specified path. 
@@ -115,4 +115,4 @@ private:
 };
 }//namespace   cocos2d 
 
-#endif // __PLATFORM_WIN32_UIIMAGE_H__
+#endif // __PLATFORM_WIN32_CCIMAGE_H__

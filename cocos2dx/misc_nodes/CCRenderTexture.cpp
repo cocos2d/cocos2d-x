@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
-#include "CCXUIImage.h"
+#include "CCImage.h"
 #include "support/ccUtils.h"
 
 #include <GLES/glext.h>
@@ -106,7 +106,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         m_pTexture = new CCTexture2D();
         CCX_BREAK_IF(! m_pTexture);
 
-        m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CGSizeMake((float)w, (float)h));
+        m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
         free( data );
 
         // generate FBO
@@ -151,10 +151,10 @@ void CCRenderTexture::begin()
 	// Save the current matrix
 	glPushMatrix();
 
-	CGSize texSize = m_pTexture->getContentSizeInPixels();
+	CCSize texSize = m_pTexture->getContentSizeInPixels();
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 
@@ -176,10 +176,10 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
     // Save the current matrix
     glPushMatrix();
 
-    CGSize texSize = m_pTexture->getContentSizeInPixels();
+    CCSize texSize = m_pTexture->getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
-    CGSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+    CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
     float widthRatio = size.width / texSize.width;
     float heightRatio = size.height / texSize.height;
 
@@ -201,7 +201,7 @@ void CCRenderTexture::end()
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
 	// Restore the original matrix and viewport
 	glPopMatrix();
-	CGSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
     this->restoreGLstate();
 }
@@ -233,12 +233,12 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 {
 	bool bRet = false;
 //@ todo CCRenderTexture::saveBuffer
-// 	UIImage *myImage = this->getUIImageFromBuffer(format);
-//     NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//     NSString *documentsDirectory	= [paths objectAtIndex:0];
-//     NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
+// 	CCImage *myImage = this->getCCImageFromBuffer(format);
+//     CCArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//     CCString *documentsDirectory	= [paths objectAtIndex:0];
+//     CCString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
 
-//     NSData * data = this->getUIImageAsDataFromBuffer(format);
+//     CCData * data = this->getCCImageAsDataFromBuffer(format);
 // 	if (data)
 // 	{
 //         bRet = data->writeToFile(path, true);
@@ -248,10 +248,10 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 	return bRet;
 }
 
-NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
+CCData * CCRenderTexture::getCCImageAsDataFromBuffer(int format)
 {
-    NSData *  pData     = NULL;
-//@ todo CCRenderTexture::getUIImageAsDataFromBuffer
+    CCData *  pData     = NULL;
+//@ todo CCRenderTexture::getCCImageAsDataFromBuffer
 
 // #include "Availability.h"
 // #include "UIKit.h"
@@ -264,7 +264,7 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 // 
 //         NSAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 // 
-//         CGSize s = m_pTexture->getContentSizeInPixels();
+//         CCSize s = m_pTexture->getContentSizeInPixels();
 //         int tx = s.width;
 //         int ty = s.height;
 // 
@@ -291,7 +291,7 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 // 
 //         if (format == kCCImageFormatRawData)
 //         {
-//             pData = NSData::dataWithBytesNoCopy(pPixels, myDataLength);
+//             pData = CCData::dataWithBytesNoCopy(pPixels, myDataLength);
 //             break;
 //         }
 
@@ -313,7 +313,7 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 //             NULL, false,
 //             kCGRenderingIntentDefault);
 // 
-//         UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
+//         CCImage* image					= [[CCImage alloc] initWithCGImage:iref];
 // 
 //         CGImageRelease(iref);	
 //         CGColorSpaceRelease(colorSpaceRef);
@@ -322,9 +322,9 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 // 
 // 
 //         if (format == kCCImageFormatPNG)
-//             data = UIImagePNGRepresentation(image);
+//             data = CCImagePNGRepresentation(image);
 //         else
-//             data = UIImageJPEGRepresentation(image, 1.0f);
+//             data = CCImageJPEGRepresentation(image, 1.0f);
 // 
 //         [image release];
 //     } while (0);

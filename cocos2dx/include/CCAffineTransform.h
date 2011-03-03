@@ -22,37 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __COCOA_CGAFFINETRANSFORM_H__
-#define __COCOA_CGAFFINETRANSFORM_H__
+#ifndef __CCAffineTransform_H__
+#define __CCAffineTransform_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 namespace   cocos2d {
 
-struct CGAffineTransform {
+struct CCAffineTransform {
   CGFloat a, b, c, d;
   CGFloat tx, ty;
 };
 
-CGAffineTransform __CGAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
-#define CGAffineTransformMake __CGAffineTransformMake
+CCAffineTransform __CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
+#define CCAffineTransformMake __CCAffineTransformMake
 
-CGPoint __CGPointApplyAffineTransform(CGPoint point, CGAffineTransform t);
-#define CGPointApplyAffineTransform __CGPointApplyAffineTransform
+CCPoint __CCPointApplyAffineTransform(CCPoint point, CCAffineTransform t);
+#define CCPointApplyAffineTransform __CCPointApplyAffineTransform
 
-CGSize __CGSizeApplyAffineTransform(CGSize size, CGAffineTransform t);
-#define CGSizeApplyAffineTransform __CGSizeApplyAffineTransform
+CCSize __CCSizeApplyAffineTransform(CCSize size, CCAffineTransform t);
+#define CCSizeApplyAffineTransform __CCSizeApplyAffineTransform
 
-CGAffineTransform CGAffineTransformMakeIdentity();
-CGRect CGRectApplyAffineTransform(CGRect rect, CGAffineTransform anAffineTransform);
+CCAffineTransform CCAffineTransformMakeIdentity();
+CCRect CCRectApplyAffineTransform(CCRect rect, CCAffineTransform anAffineTransform);
 
-CGAffineTransform CGAffineTransformTranslate(CGAffineTransform t, float tx, float ty);
-CGAffineTransform CGAffineTransformRotate(CGAffineTransform aTransform, CGFloat anAngle);
-CGAffineTransform CGAffineTransformScale(CGAffineTransform t, CGFloat sx, CGFloat sy);
-CGAffineTransform CGAffineTransformConcat(CGAffineTransform t1,CGAffineTransform t2);
-bool CGAffineTransformEqualToTransform(CGAffineTransform t1,CGAffineTransform t2);
-CGAffineTransform CGAffineTransformInvert(CGAffineTransform t);
+CCAffineTransform CCAffineTransformTranslate(CCAffineTransform t, float tx, float ty);
+CCAffineTransform CCAffineTransformRotate(CCAffineTransform aTransform, CGFloat anAngle);
+CCAffineTransform CCAffineTransformScale(CCAffineTransform t, CGFloat sx, CGFloat sy);
+CCAffineTransform CCAffineTransformConcat(CCAffineTransform t1,CCAffineTransform t2);
+bool CCAffineTransformEqualToTransform(CCAffineTransform t1,CCAffineTransform t2);
+CCAffineTransform CCAffineTransformInvert(CCAffineTransform t);
 
-extern const CGAffineTransform CGAffineTransformIdentity;
+extern const CCAffineTransform CCAffineTransformIdentity;
 }//namespace   cocos2d 
 
-#endif // __COCOA_CGAFFINETRANSFORM_H__
+#endif // CCAffineTransform_H__

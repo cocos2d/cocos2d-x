@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include "selector_protocol.h"
 #include "support/data_support/uthash.h"
 namespace   cocos2d {
@@ -34,7 +34,7 @@ namespace   cocos2d {
 // CCTimer
 //
 /** @brief Light weight timer */
-class CCX_DLL CCTimer : public NSObject
+class CCX_DLL CCTimer : public CCObject
 {
 public:
 	CCTimer(void) {}
@@ -87,7 +87,7 @@ There are 2 different types of callbacks (selectors):
 The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
 
 */
-class CCX_DLL CCScheduler : public NSObject
+class CCX_DLL CCScheduler : public CCObject
 {
 public:
     ~CCScheduler(void);

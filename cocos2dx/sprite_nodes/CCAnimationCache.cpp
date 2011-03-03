@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCAnimationCache.h"
-#include "CCXCocos2dDefine.h"
+#include "CCCocos2dDefine.h"
 #include "ccMacros.h"
 #include "CCAnimation.h"
 #include "CCSpriteFrame.h"
@@ -49,7 +49,7 @@ namespace cocos2d
 
 	bool CCAnimationCache::init()
 	{
-		m_pAnimations = new NSMutableDictionary<std::string, CCAnimation*>();
+		m_pAnimations = new CCMutableDictionary<std::string, CCAnimation*>();
 		return true;
 	}
 

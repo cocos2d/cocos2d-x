@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __PLATFORM_WIN32_CCXCOCOS2D_DEFINE_H__
-#define __PLATFORM_WIN32_CCXCOCOS2D_DEFINE_H__
+#ifndef __PLATFORM_WIN32_CCCOCOS2D_DEFINE_H__
+#define __PLATFORM_WIN32_CCCOCOS2D_DEFINE_H__
 
 /** CCX_PROPERTY_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
@@ -113,5 +113,5 @@ assert( (_CONDITION) );	\
 #define NO		false
 #define nil     NULL
 
-#endif // __PLATFORM_WIN32_CCXCOCOS2D_DEFINE_H__
+#endif // __PLATFORM_WIN32_CCCOCOS2D_DEFINE_H__
 

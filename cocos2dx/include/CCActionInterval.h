@@ -62,7 +62,7 @@ public:
 	/** returns true if the action has finished */
 	virtual bool isDone(void);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void step(ccTime dt);
 	virtual void startWithTarget(CCNode *pTarget);
 	/** returns a reversed action */
@@ -92,7 +92,7 @@ public:
 	/** initializes the action */
     bool initOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
@@ -121,7 +121,7 @@ public:
 	/** initializes a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
 	bool initWithAction(CCFiniteTimeAction *pAction, unsigned int times);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
@@ -150,7 +150,7 @@ public:
 
 	/** initializes the action */
 	bool initWithAction(CCActionInterval *pAction);
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
@@ -174,7 +174,7 @@ public:
 	/** initializes the Spawn action with the 2 actions to spawn */
 	bool initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
@@ -202,7 +202,7 @@ public:
 	/** initializes the action */
 	bool initWithDuration(ccTime duration, float fDeltaAngle);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
@@ -224,7 +224,7 @@ public:
 	/** initializes the action */
     bool initWithDuration(ccTime duration, float fDeltaAngle);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
@@ -244,20 +244,20 @@ class CCX_DLL CCMoveTo : public CCActionInterval
 {
 public:
 	/** initializes the action */
-	bool initWithDuration(ccTime duration, CGPoint position);
+	bool initWithDuration(ccTime duration, CCPoint position);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
 public:
 	/** creates the action */
-	static CCMoveTo* actionWithDuration(ccTime duration, CGPoint position);
+	static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
 
 protected:
-	CGPoint m_endPosition;
-	CGPoint m_startPosition;
-	CGPoint m_delta;
+	CCPoint m_endPosition;
+	CCPoint m_startPosition;
+	CCPoint m_delta;
 };
 
 /** @brief Moves a CCNode object x,y pixels by modifying it's position attribute.
@@ -268,15 +268,15 @@ class CCX_DLL CCMoveBy : public CCMoveTo
 {
 public:
 	/** initializes the action */
-	bool initWithDuration(ccTime duration, CGPoint position);
+	bool initWithDuration(ccTime duration, CCPoint position);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual CCActionInterval* reverse(void);
 
 public:
 	/** creates the action */
-	static CCMoveBy* actionWithDuration(ccTime duration, CGPoint position);
+	static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
 };
 
 /** @brief Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
@@ -285,20 +285,20 @@ class CCX_DLL CCJumpBy : public CCActionInterval
 {
 public:
 	/** initializes the action */
-	bool initWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
+	bool initWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
 
 public:
 	/** creates the action */
-	static CCJumpBy* actionWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
+	static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
 
 protected:
-	CGPoint m_startPosition;
-	CGPoint m_delta;
+	CCPoint m_startPosition;
+	CCPoint m_delta;
 	ccTime  m_height;
 	int     m_nJumps;
 };
@@ -309,22 +309,22 @@ class CCX_DLL CCJumpTo : public CCJumpBy
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
-	static CCJumpTo* actionWithDuration(ccTime duration, CGPoint position, ccTime height, int jumps);
+	static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
 };
 
 /** @typedef bezier configuration structure
  */
 typedef struct _ccBezierConfig {
 	//! end position of the bezier
-	CGPoint endPosition;
+	CCPoint endPosition;
 	//! Bezier control point 1
-	CGPoint controlPoint_1;
+	CCPoint controlPoint_1;
 	//! Bezier control point 2
-	CGPoint controlPoint_2;
+	CCPoint controlPoint_2;
 } ccBezierConfig;
 
 /** @brief An action that moves the target with a cubic Bezier curve by a certain distance.
@@ -335,7 +335,7 @@ public:
 	/** initializes the action with a duration and a bezier configuration */
 	bool initWithDuration(ccTime t, ccBezierConfig c);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
@@ -346,7 +346,7 @@ public:
 
 protected:
 	ccBezierConfig m_sConfig;
-	CGPoint m_startPosition;
+	CCPoint m_startPosition;
 };
 
 /** @brief An action that moves the target with a cubic Bezier curve to a destination point.
@@ -356,7 +356,7 @@ class CCX_DLL CCBezierTo : public CCBezierBy
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action with a duration and a bezier configuration */
@@ -375,7 +375,7 @@ public:
 	/** initializes the action with and X factor and a Y factor */
 	bool initWithDuration(ccTime duration, float sx, float sy);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
@@ -403,7 +403,7 @@ class CCX_DLL CCScaleBy : public CCScaleTo
 public:
     virtual void startWithTarget(CCNode *pTarget);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action with the same scale factor for X and Y */
@@ -421,7 +421,7 @@ public:
 	/** initializes the action */
 	bool initWithDuration(ccTime duration, unsigned int uBlinks);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
 
@@ -440,7 +440,7 @@ class CCX_DLL CCFadeIn : public CCActionInterval
 public:
     virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -455,7 +455,7 @@ class CCX_DLL CCFadeOut : public CCActionInterval
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -471,7 +471,7 @@ public:
 	/** initializes the action with duration and opacity */
 	bool initWithDuration(ccTime duration, GLubyte opacity);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
@@ -494,7 +494,7 @@ public:
 	/** initializes the action with duration and color */
 	bool initWithDuration(ccTime duration, GLubyte red, GLubyte green, GLubyte blue);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
@@ -516,7 +516,7 @@ public:
 	/** initializes the action with duration and color */
 	bool initWithDuration(ccTime duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
@@ -542,7 +542,7 @@ class CCX_DLL CCDelayTime : public CCActionInterval
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -564,7 +564,7 @@ public:
 	/** initializes the action */
     bool initWithAction(CCFiniteTimeAction *pAction);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
@@ -607,7 +607,7 @@ public:
 	 */
 	bool initWithDuration(ccTime duration, CCAnimation *pAnimation, bool bRestoreOriginalFrame);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);

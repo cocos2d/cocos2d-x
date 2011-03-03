@@ -48,16 +48,16 @@ namespace cocos2d {
 		CCParallaxNode();
 		virtual ~CCParallaxNode();
 		static CCParallaxNode * node();
-		virtual void addChild(CCNode * child, int z, CGPoint parallaxRatio, CGPoint positionOffset);
+		virtual void addChild(CCNode * child, int z, CCPoint parallaxRatio, CCPoint positionOffset);
 		// super methods
 		virtual void addChild(CCNode * child, int zOrder, int tag);
 		virtual void removeChild(CCNode* child, bool cleanup);
 		virtual void removeAllChildrenWithCleanup(bool cleanup);
 		virtual void visit(void);
 	private:
-		CGPoint absolutePosition();
+		CCPoint absolutePosition();
 	protected:
-		CGPoint	m_tLastPosition;
+		CCPoint	m_tLastPosition;
 	};
 
 } // namespace cocos2d

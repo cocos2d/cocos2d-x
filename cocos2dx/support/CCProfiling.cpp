@@ -44,7 +44,7 @@ namespace cocos2d
 		return g_sSharedProfiler;
 	}
 
-	CCProfilingTimer* CCProfiler::timerWithName(const char *pszTimerName, NSObject *pInstance)
+	CCProfilingTimer* CCProfiler::timerWithName(const char *pszTimerName, CCObject *pInstance)
 	{
 		CCProfiler *p = CCProfiler::sharedProfiler();
 		CCProfilingTimer *t = new CCProfilingTimer();
@@ -63,7 +63,7 @@ namespace cocos2d
 
 	bool CCProfiler::init()
 	{
-		m_pActiveTimers = new NSMutableArray<CCProfilingTimer*>();
+		m_pActiveTimers = new CCMutableArray<CCProfilingTimer*>();
 
 		return true;
 	}
@@ -75,7 +75,7 @@ namespace cocos2d
 
 	void CCProfiler::displayTimers()
 	{
-		NSMutableArray<CCProfilingTimer*>::NSMutableArrayIterator it;
+		CCMutableArray<CCProfilingTimer*>::CCMutableArrayIterator it;
 		for (it = m_pActiveTimers->begin(); it != m_pActiveTimers->end(); ++it)
 		{
 			char *pszDescription = (*it)->description();
@@ -86,7 +86,7 @@ namespace cocos2d
 
 	// implementation of CCProfilingTimer
 
-	bool CCProfilingTimer::initWithName(const char* pszTimerName, NSObject *pInstance)
+	bool CCProfilingTimer::initWithName(const char* pszTimerName, CCObject *pInstance)
 	{
 		char tmp[100];
 		sprintf(tmp, "%s (0x%.8x)", pszTimerName, pInstance);

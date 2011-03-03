@@ -36,7 +36,7 @@ namespace cocos2d
 		bool initWithRange(int nRange, bool bShakeZ, ccGridSize gridSize,
 			ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -57,7 +57,7 @@ namespace cocos2d
         bool initWithRange(int nRange, bool bShatterZ, ccGridSize gridSize,
 			ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -87,7 +87,7 @@ namespace cocos2d
 
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 
 	public:
 		/** creates the action with a random seed, the grid size and the duration */
@@ -170,7 +170,7 @@ namespace cocos2d
 		void turnOnTile(ccGridSize pos);
 		void turnOffTile(ccGridSize pos);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
 
@@ -201,7 +201,7 @@ namespace cocos2d
 		/** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -230,7 +230,7 @@ namespace cocos2d
 
 		/** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
 		bool initWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -250,7 +250,7 @@ namespace cocos2d
 		/** initializes the action with the number of rows to split and the duration */
 		bool initWithRows(int nRows, ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 		virtual void startWithTarget(CCNode *pTarget);
 
@@ -260,7 +260,7 @@ namespace cocos2d
 
 	protected:
 		int m_nRows;
-		CGSize m_winSize;
+		CCSize m_winSize;
 	};
 
 	/** @brief CCSplitCols action */
@@ -270,7 +270,7 @@ namespace cocos2d
 		/** initializes the action with the number of columns to split and the duration */
 		bool initWithCols(int nCols, ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 		virtual void startWithTarget(CCNode *pTarget);
 
@@ -280,7 +280,7 @@ namespace cocos2d
 
 	protected:
 		int m_nCols;
-		CGSize m_winSize;
+		CCSize m_winSize;
 	};
 } // end of namespace cocos2d
 

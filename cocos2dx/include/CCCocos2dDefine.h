@@ -24,6 +24,6 @@
 #ifndef __CCX_COCOS2D_DEFINE_H__
 #define __CCX_COCOS2D_DEFINE_H__
 
-#include "platform/CCXCocos2dDefine_platform.h"
+#include "platform/CCCocos2dDefine_platform.h"
 
 #endif // __CCX_COCOS2D_DEFINE_H__

@@ -42,37 +42,37 @@ THE SOFTWARE.
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
 
-#include "CGGeometry.h"	// for CGPoint
+#include "CCGeometry.h"	// for CCPoint
 namespace   cocos2d {
 
 /** draws a point given x and y coordinate measured in points */
-void CCX_DLL ccDrawPoint( CGPoint point );
+void CCX_DLL ccDrawPoint( CCPoint point );
 
 /** draws an array of points.
  @since v0.7.2
  */
-void CCX_DLL ccDrawPoints( const CGPoint *points, unsigned int numberOfPoints );
+void CCX_DLL ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints );
 
 /** draws a line given the origin and destination point measured in points */
-void CCX_DLL ccDrawLine( CGPoint origin, CGPoint destination );
+void CCX_DLL ccDrawLine( CCPoint origin, CCPoint destination );
 
-/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
+/** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
 The polygon can be closed or open
 */
-void CCX_DLL ccDrawPoly( const CGPoint *vertices, int numOfVertices, bool closePolygon );
+void CCX_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
-void CCX_DLL ccDrawCircle( CGPoint center, float radius, float angle, int segments, bool drawLineToCenter);
+void CCX_DLL ccDrawCircle( CCPoint center, float radius, float angle, int segments, bool drawLineToCenter);
 
 /** draws a quad bezier path
  @since v0.8
  */
-void CCX_DLL ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments);
+void CCX_DLL ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, int segments);
 
 /** draws a cubic bezier path
  @since v0.8
  */
-void CCX_DLL ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
+void CCX_DLL ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoint destination, int segments);
 }//namespace   cocos2d 
 
 #endif // __CCDRAWING_PRIMITIVES__

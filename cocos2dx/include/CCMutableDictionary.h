@@ -21,39 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __NSMUTABLE_DICTIONARY_H__
-#define __NSMUTABLE_DICTIONARY_H__
+#ifndef __CCMUTABLE_DICTIONARY_H__
+#define __CCMUTABLE_DICTIONARY_H__
 
 #include <map>
 #include <vector>
 #include <string>
-#include "NSObject.h"
-#include "NSMutableArray.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
 
 using namespace std;
 namespace   cocos2d {
-class NSString;
+class CCString;
 
-template<class _T, class _ValueT = NSObject*>
-class NSMutableDictionary : public NSObject
+template<class _T, class _ValueT = CCObject*>
+class CCMutableDictionary : public CCObject
 {
 public:
-	typedef std::map<_T, _ValueT>	NSObjectMap;
-	typedef typename NSObjectMap::iterator	NSObjectMapIter;
+	typedef std::map<_T, _ValueT>	CCObjectMap;
+	typedef typename CCObjectMap::iterator	CCObjectMapIter;
 
 protected:
 	typedef pair<_T, _ValueT> Int_Pair;
-	NSObjectMap		m_Map;
+	CCObjectMap		m_Map;
 	bool			m_bBegin;
-	NSObjectMapIter m_MapIter;
+	CCObjectMapIter m_MapIter;
 
 public:
-	NSMutableDictionary(void)
+	CCMutableDictionary(void)
 	{
 		m_bBegin = false;
 	}
 
-	~NSMutableDictionary(void)
+	~CCMutableDictionary(void)
 	{
 		removeAllObjects();
 	}
@@ -70,7 +70,7 @@ public:
 		std::vector<std::string> tRet;
 		if (m_Map.size() > 0)
 		{
-			NSObjectMapIter it;
+			CCObjectMapIter it;
 			for( it = m_Map.begin(); it != m_Map.end(); ++it)
 			{
 				tRet.push_back(it->first);
@@ -85,7 +85,7 @@ public:
 		std::vector<std::string> tRet;
 		if (m_Map.size() > 0)
 		{
-			NSObjectMapIter it;
+			CCObjectMapIter it;
 			for( it= m_Map.begin(); it != m_Map.end(); ++it)
 			{
 				if (it->second == object)
@@ -99,7 +99,7 @@ public:
 
 	_ValueT objectForKey(_T key)			///< 
 	{
-		NSObjectMapIter it;
+		CCObjectMapIter it;
 
 		it = m_Map.find(key);
 
@@ -112,7 +112,7 @@ public:
 
 	bool setObject(_ValueT pObject, _T key)
 	{
-		pair<NSObjectMapIter, bool > pr;
+		pair<CCObjectMapIter, bool > pr;
 
 		pr = m_Map.insert( Int_Pair(key, pObject) );
 
@@ -127,7 +127,7 @@ public:
 
 	void removeObjectForKey(_T key)
 	{
-		NSObjectMapIter it;
+		CCObjectMapIter it;
 
 		it = m_Map.find(key);
 
@@ -190,7 +190,7 @@ public:
 	{
 		if (m_Map.size() > 0)
 		{
-			NSObjectMapIter it;
+			CCObjectMapIter it;
 			for( it = m_Map.begin(); it != m_Map.end(); ++it)
 			{
 				if (it->second)
@@ -202,9 +202,9 @@ public:
 		m_Map.clear();
 	}
 
-	static NSMutableDictionary<_T, _ValueT>* dictionaryWithDictionary(NSMutableDictionary<_T, _ValueT>* srcDict)
+	static CCMutableDictionary<_T, _ValueT>* dictionaryWithDictionary(CCMutableDictionary<_T, _ValueT>* srcDict)
 	{
-		NSMutableDictionary<_T, _ValueT>* pNewDict = new NSMutableDictionary<_T, _ValueT>();
+		CCMutableDictionary<_T, _ValueT>* pNewDict = new CCMutableDictionary<_T, _ValueT>();
 
 		srcDict->begin();
 
@@ -222,9 +222,9 @@ public:
 	}
 };
 
-#define NSDictionary	NSMutableDictionary
-typedef NSDictionary<std::string, NSString*> CCXStringToStringDictionary;
+#define CCDictionary	CCMutableDictionary
+typedef CCDictionary<std::string, CCString*> CCXStringToStringDictionary;
 }//namespace   cocos2d 
 
 
-#endif //__NSMUTABLE_DICTIONARY_H__
+#endif //__CCMUTABLE_DICTIONARY_H__

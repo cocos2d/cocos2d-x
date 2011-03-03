@@ -23,19 +23,19 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "NSObject.h"
-#include "NSAutoreleasePool.h"
+#include "CCObject.h"
+#include "CCAutoreleasePool.h"
 #include <assert.h>
 namespace   cocos2d {
 
-NSObject* CCCopying::copyWithZone(NSZone *pZone)
+CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
 	assert(0);
 	return NULL;
 }
 
 
-NSObject::NSObject(void)
+CCObject::CCObject(void)
 {
 	static unsigned int uObjectCount = 0;
 
@@ -46,22 +46,22 @@ NSObject::NSObject(void)
 	m_bManaged = false;
 }
 
-NSObject::~NSObject(void)
+CCObject::~CCObject(void)
 {
 	// if the object is managed, we should remove it
 	// from pool manager
 	if (m_bManaged)
 	{
-		NSPoolManager::getInstance()->removeObject(this);
+		CCPoolManager::getInstance()->removeObject(this);
 	}
 }
 
-NSObject* NSObject::copy()
+CCObject* CCObject::copy()
 {
 	return copyWithZone(NULL);
 }
 
-void NSObject::release(void)
+void CCObject::release(void)
 {
 	assert(m_uRefrence > 0);
 	--m_uRefrence;
@@ -72,32 +72,32 @@ void NSObject::release(void)
 	}
 }
 
-void NSObject::retain(void)
+void CCObject::retain(void)
 {
 	assert(m_uRefrence > 0);
 
 	++m_uRefrence;
 }
 
-NSObject* NSObject::autorelease(void)
+CCObject* CCObject::autorelease(void)
 {
-	NSPoolManager::getInstance()->addObject(this);
+	CCPoolManager::getInstance()->addObject(this);
 
 	m_bManaged = true;
 	return this;
 }
 
-bool NSObject::isSingleRefrence(void)
+bool CCObject::isSingleRefrence(void)
 {
 	return m_uRefrence == 1;
 }
 
-unsigned int NSObject::retainCount(void)
+unsigned int CCObject::retainCount(void)
 {
 	return m_uRefrence;
 }
 
-bool NSObject::isEqual(const NSObject *pObject)
+bool CCObject::isEqual(const CCObject *pObject)
 {
 	return this == pObject;
 }

@@ -144,7 +144,7 @@ Disabled by default on iPhone with ARMv6 processors.
 
 /** @def CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 If most of your imamges have pre-multiplied alpha, set it to 1 (if you are going to use .PNG/.JPG file images).
-Only set to 0 if ALL your images by-pass Apple UIImage loading system (eg: if you use libpng or PVR images)
+Only set to 0 if ALL your images by-pass Apple CCImage loading system (eg: if you use libpng or PVR images)
 
 To enable set it to a value different than 0. Enabled by default.
 

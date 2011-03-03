@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 #include "CCProtocols.h"
 #include "CCNode.h"
-#include "NSMutableDictionary.h"
-#include "NSString.h"
+#include "CCMutableDictionary.h"
+#include "CCString.h"
 
 namespace cocos2d {
 
@@ -87,8 +87,8 @@ enum {
 Structure that contains the values of each particle
 */
 typedef struct sCCParticle {
-	CGPoint     pos;
-	CGPoint     startPos;
+	CCPoint     pos;
+	CCPoint     startPos;
 
 	ccColor4F	color;
 	ccColor4F	deltaColor;
@@ -103,7 +103,7 @@ typedef struct sCCParticle {
 
 	//! Mode A: gravity, direction, radial accel, tangential accel
 	struct {
-		CGPoint		dir;
+		CCPoint		dir;
 		float		radialAccel;
 		float		tangentialAccel;
 	} modeA;
@@ -118,7 +118,7 @@ typedef struct sCCParticle {
 
 }tCCParticle;
 
-//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
+//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CCPoint);
 
 class CCTexture2D;
 
@@ -176,7 +176,7 @@ protected:
 	//! Mode A:Gravity + Tangential Accel + Radial Accel
 	struct {
 		/** Gravity value. Only available in 'Gravity' mode. */
-		CGPoint gravity;
+		CCPoint gravity;
 		/** speed of each particle. Only available in 'Gravity' mode.  */
 		float speed;
 		/** speed variance of each particle. Only available in 'Gravity' mode. */
@@ -235,9 +235,9 @@ protected:
 	/** How many seconds the emitter wil run. -1 means 'forever' */
 	CCX_PROPERTY(float, m_fDuration, Duration)
 	/** sourcePosition of the emitter */
-	CCX_PROPERTY(CGPoint, m_tSourcePosition, SourcePosition)
+	CCX_PROPERTY(CCPoint, m_tSourcePosition, SourcePosition)
 	/** Position variance of the emitter */
-	CCX_PROPERTY(CGPoint, m_tPosVar, PosVar)
+	CCX_PROPERTY(CCPoint, m_tPosVar, PosVar)
 	/** life, and life variation of each particle */
 	CCX_PROPERTY(float, m_fLife, Life)
 	/** life variance of each particle */
@@ -250,8 +250,8 @@ protected:
 //////////////////////////////////////////////////////////////////////////
 public:
 	// mode A
-	virtual CGPoint getGravity();
-	virtual void setGravity(CGPoint g);
+	virtual CCPoint getGravity();
+	virtual void setGravity(CCPoint g);
 	virtual float getSpeed();
 	virtual void setSpeed(float speed);
 	virtual float getSpeedVar();
@@ -351,10 +351,10 @@ public:
 	*/
 	bool initWithFile(const char *plistFile);
 
-	/** initializes a CCQuadParticleSystem from a NSDictionary.
+	/** initializes a CCQuadParticleSystem from a CCDictionary.
 	@since v0.99.3
 	*/
-	bool initWithDictionary(NSDictionary<std::string, NSObject*> *dictionary);
+	bool initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary);
 
 	//! Initializes a system with a fixed number of particles
 	virtual bool initWithTotalParticles(int numberOfParticles);
@@ -370,7 +370,7 @@ public:
 	bool isFull();
 
 	//! should be overriden by subclasses
-	virtual void updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	//! should be overriden by subclasses
 	virtual void postStep();
 
@@ -379,11 +379,11 @@ private:
 	/** Private method, return the string found by key in dict.
 	@return "" if not found; return the string if found.
 	*/
-	inline const char * valueForKey(const char *key, NSDictionary<std::string, NSObject*> *dict)
+	inline const char * valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict)
 	{
 		if (dict)
 		{
-			NSString *pString = (NSString*)dict->objectForKey(std::string(key));
+			CCString *pString = (CCString*)dict->objectForKey(std::string(key));
 			return pString ? pString->m_sString.c_str() : "";
 		}
 		return "";

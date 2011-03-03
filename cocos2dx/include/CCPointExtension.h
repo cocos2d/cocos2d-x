@@ -27,77 +27,77 @@ THE SOFTWARE.
 
 /**
  @file
- CGPoint extensions based on Chipmunk's cpVect file.
- These extensions work both with CGPoint and cpVect.
+ CCPoint extensions based on Chipmunk's cpVect file.
+ These extensions work both with CCPoint and cpVect.
  
  The "ccp" prefix means: "CoCos2d Point"
  
  Examples:
   - ccpAdd( ccp(1,1), ccp(2,2) ); // preferred cocos2d way
-  - ccpAdd( CGPointMake(1,1), CGPointMake(2,2) ); // also ok but more verbose
+  - ccpAdd( CCPointMake(1,1), CCPointMake(2,2) ); // also ok but more verbose
   
   - cpvadd( cpv(1,1), cpv(2,2) ); // way of the chipmunk
   - ccpAdd( cpv(1,1), cpv(2,2) ); // mixing chipmunk and cocos2d (avoid)
-  - cpvadd( CGPointMake(1,1), CGPointMake(2,2) ); // mixing chipmunk and CG (avoid)
+  - cpvadd( CCPointMake(1,1), CCPointMake(2,2) ); // mixing chipmunk and CG (avoid)
  */
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 
 #include <math.h>
 namespace   cocos2d {
 
-/** Helper macro that creates a CGPoint
- @return CGPoint
+/** Helper macro that creates a CCPoint
+ @return CCPoint
  @since v0.7.2
  */
-#define ccp(__X__,__Y__) CGPointMake((float)__X__, (float)__Y__)
+#define ccp(__X__,__Y__) CCPointMake((float)__X__, (float)__Y__)
 
 /** Returns opposite of point.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpNeg(const CGPoint v)
+static inline CCPoint
+ccpNeg(const CCPoint v)
 {
 	return ccp(-v.x, -v.y);
 }
 
 /** Calculates sum of two points.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpAdd(const CGPoint v1, const CGPoint v2)
+static inline CCPoint
+ccpAdd(const CCPoint v1, const CCPoint v2)
 {
 	return ccp(v1.x + v2.x, v1.y + v2.y);
 }
 
 /** Calculates difference of two points.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpSub(const CGPoint v1, const CGPoint v2)
+static inline CCPoint
+ccpSub(const CCPoint v1, const CCPoint v2)
 {
 	return ccp(v1.x - v2.x, v1.y - v2.y);
 }
 
 /** Returns point multiplied by given factor.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpMult(const CGPoint v, const CGFloat s)
+static inline CCPoint
+ccpMult(const CCPoint v, const CGFloat s)
 {
 	return ccp(v.x*s, v.y*s);
 }
 
 /** Calculates midpoint between two points.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpMidpoint(const CGPoint v1, const CGPoint v2)
+static inline CCPoint
+ccpMidpoint(const CCPoint v1, const CCPoint v2)
 {
 	return ccpMult(ccpAdd(v1, v2), 0.5f);
 }
@@ -107,7 +107,7 @@ ccpMidpoint(const CGPoint v1, const CGPoint v2)
  @since v0.7.2
  */
 static inline CGFloat
-ccpDot(const CGPoint v1, const CGPoint v2)
+ccpDot(const CCPoint v1, const CCPoint v2)
 {
 	return v1.x*v2.x + v1.y*v2.y;
 }
@@ -117,67 +117,67 @@ ccpDot(const CGPoint v1, const CGPoint v2)
  @since v0.7.2
  */
 static inline CGFloat
-ccpCross(const CGPoint v1, const CGPoint v2)
+ccpCross(const CCPoint v1, const CCPoint v2)
 {
 	return v1.x*v2.y - v1.y*v2.x;
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpPerp(const CGPoint v)
+static inline CCPoint
+ccpPerp(const CCPoint v)
 {
 	return ccp(-v.y, v.x);
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpRPerp(const CGPoint v)
+static inline CCPoint
+ccpRPerp(const CCPoint v)
 {
 	return ccp(v.y, -v.x);
 }
 
 /** Calculates the projection of v1 over v2.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpProject(const CGPoint v1, const CGPoint v2)
+static inline CCPoint
+ccpProject(const CCPoint v1, const CCPoint v2)
 {
 	return ccpMult(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
 }
 
 /** Rotates two points.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpRotate(const CGPoint v1, const CGPoint v2)
+static inline CCPoint
+ccpRotate(const CCPoint v1, const CCPoint v2)
 {
 	return ccp(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
 }
 
 /** Unrotates two points.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-static inline CGPoint
-ccpUnrotate(const CGPoint v1, const CGPoint v2)
+static inline CCPoint
+ccpUnrotate(const CCPoint v1, const CCPoint v2)
 {
 	return ccp(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
 }
 
-/** Calculates the square length of a CGPoint (not calling sqrt() )
+/** Calculates the square length of a CCPoint (not calling sqrt() )
  @return CGFloat
  @since v0.7.2
  */
 static inline CGFloat
-ccpLengthSQ(const CGPoint v)
+ccpLengthSQ(const CCPoint v)
 {
 	return ccpDot(v, v);
 }
@@ -186,31 +186,31 @@ ccpLengthSQ(const CGPoint v)
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CCX_DLL ccpLength(const CGPoint v);
+CGFloat CCX_DLL ccpLength(const CCPoint v);
 
 /** Calculates the distance between two points
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CCX_DLL ccpDistance(const CGPoint v1, const CGPoint v2);
+CGFloat CCX_DLL ccpDistance(const CCPoint v1, const CCPoint v2);
 
 /** Returns point multiplied to a length of 1.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-CGPoint CCX_DLL ccpNormalize(const CGPoint v);
+CCPoint CCX_DLL ccpNormalize(const CCPoint v);
 
 /** Converts radians to a normalized vector.
- @return CGPoint
+ @return CCPoint
  @since v0.7.2
  */
-CGPoint CCX_DLL ccpForAngle(const CGFloat a);
+CCPoint CCX_DLL ccpForAngle(const CGFloat a);
 
 /** Converts a vector to radians.
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CCX_DLL ccpToAngle(const CGPoint v);
+CGFloat CCX_DLL ccpToAngle(const CCPoint v);
 
 
 /** Clamp a value between from and to.
@@ -221,12 +221,12 @@ float CCX_DLL clampf(float value, float min_inclusive, float max_inclusive);
 /** Clamp a point between from and to.
  @since v0.99.1
  */
-CGPoint CCX_DLL ccpClamp(CGPoint p, CGPoint from, CGPoint to);
+CCPoint CCX_DLL ccpClamp(CCPoint p, CCPoint from, CCPoint to);
 
-/** Quickly convert CGSize to a CGPoint
+/** Quickly convert CCSize to a CCPoint
  @since v0.99.1
  */
-CGPoint CCX_DLL ccpFromSize(CGSize s);
+CCPoint CCX_DLL ccpFromSize(CCSize s);
 
 /** Run a math operation function on each point component
  * absf, fllorf, ceilf, roundf
@@ -235,7 +235,7 @@ CGPoint CCX_DLL ccpFromSize(CGSize s);
  * ccpCompOp(p,floorf);
  @since v0.99.1
  */
-CGPoint CCX_DLL ccpCompOp(CGPoint p, float (*opFunc)(float));
+CCPoint CCX_DLL ccpCompOp(CCPoint p, float (*opFunc)(float));
 
 /** Linear Interpolation between two points a and b
  @returns
@@ -244,30 +244,30 @@ CGPoint CCX_DLL ccpCompOp(CGPoint p, float (*opFunc)(float));
 	otherwise a value between a..b
  @since v0.99.1
  */
-CGPoint CCX_DLL ccpLerp(CGPoint a, CGPoint b, float alpha);
+CCPoint CCX_DLL ccpLerp(CCPoint a, CCPoint b, float alpha);
 
 
 /** @returns if points have fuzzy equality which means equal with some degree of variance.
  @since v0.99.1
  */
-bool CCX_DLL ccpFuzzyEqual(CGPoint a, CGPoint b, float variance);
+bool CCX_DLL ccpFuzzyEqual(CCPoint a, CCPoint b, float variance);
 
 
 /** Multiplies a nd b components, a.x*b.x, a.y*b.y
  @returns a component-wise multiplication
  @since v0.99.1
  */
-CGPoint CCX_DLL ccpCompMult(CGPoint a, CGPoint b);
+CCPoint CCX_DLL ccpCompMult(CCPoint a, CCPoint b);
 
 /** @returns the signed angle in radians between two vector directions
  @since v0.99.1
  */
-float CCX_DLL ccpAngleSigned(CGPoint a, CGPoint b);
+float CCX_DLL ccpAngleSigned(CCPoint a, CCPoint b);
 
 /** @returns the angle in radians between two vector directions
  @since v0.99.1
 */
-float CCX_DLL ccpAngle(CGPoint a, CGPoint b);
+float CCX_DLL ccpAngle(CCPoint a, CCPoint b);
 
 /** Rotates a point counter clockwise by the angle around a pivot
  @param v is the point to rotate
@@ -276,7 +276,7 @@ float CCX_DLL ccpAngle(CGPoint a, CGPoint b);
  @returns the rotated point
  @since v0.99.1
  */
-CGPoint CCX_DLL ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
+CCPoint CCX_DLL ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle);
 
 /** A general line-line intersection test
  @param p1 
@@ -299,8 +299,8 @@ CGPoint CCX_DLL ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
 	the hit point also is	p1 + s * (p2 - p1);
  @since v0.99.1
  */
-bool CCX_DLL ccpLineIntersect(CGPoint p1, CGPoint p2, 
-					  CGPoint p3, CGPoint p4,
+bool CCX_DLL ccpLineIntersect(CCPoint p1, CCPoint p2, 
+					  CCPoint p3, CCPoint p4,
 					  float *s, float *t);
 
 }//namespace   cocos2d 

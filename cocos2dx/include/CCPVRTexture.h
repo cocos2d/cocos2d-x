@@ -31,17 +31,17 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#include "CCXCocos2dDefine.h"
-#include "NSObject.h"
-#include "NSMutableArray.h"
+#include "CCCocos2dDefine.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
 
 namespace   cocos2d {
-class NSData;
+class CCData;
 
-class CCPVRTexture : public NSObject
+class CCPVRTexture : public CCObject
 {
 protected:
-	NSMutableArray<NSData*> * m_pImageData;
+	CCMutableArray<CCData*> * m_pImageData;
 
 public:
 
@@ -63,7 +63,7 @@ public:
 	CCX_PROPERTY(bool, m_bRetainName, RetainName);
 
 private:
-	bool unpackPVRData(NSData *data);
+	bool unpackPVRData(CCData *data);
 	bool createGLTexture();
 };
 }//namespace   cocos2d 

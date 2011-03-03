@@ -22,32 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __COCOA_NS_MUTATLE_ARRAY_H__
-#define __COCOA_NS_MUTATLE_ARRAY_H__
+#ifndef __CC_MUTATLE_ARRAY_H__
+#define __CC_MUTATLE_ARRAY_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include <vector>
 #include <assert.h>
 #include <stdarg.h>
 
 namespace   cocos2d {
 
-// the element should be pointer of NSObject or it's sub class
-template<class T = NSObject*>
-class NSMutableArray : public NSObject
+// the element should be pointer of CCObject or it's sub class
+template<class T = CCObject*>
+class CCMutableArray : public CCObject
 {
 public:
-	typedef std::vector<T>								NSObjectArray;
-	typedef typename NSObjectArray::iterator			NSMutableArrayIterator;
-	typedef typename NSObjectArray::reverse_iterator	NSMutableArrayRevIterator;
+	typedef std::vector<T>								CCObjectArray;
+	typedef typename CCObjectArray::iterator			CCMutableArrayIterator;
+	typedef typename CCObjectArray::reverse_iterator	CCMutableArrayRevIterator;
 
 public:
-	NSMutableArray(unsigned int uSize = 0)
+	CCMutableArray(unsigned int uSize = 0)
 	{
 		m_array.resize(uSize);
 	}
 
-	~NSMutableArray(void)
+	~CCMutableArray(void)
 	{
 		removeAllObjects();
 	}
@@ -55,7 +55,7 @@ public:
 	unsigned int count(void)
 	{
 		unsigned int uCount = 0;
-		NSMutableArrayIterator it;
+		CCMutableArrayIterator it;
 		for (it = m_array.begin(); it != m_array.end(); ++it)
 		{
 			if (*it == NULL)
@@ -76,7 +76,7 @@ public:
 			return 0;
 		}
 
-		NSMutableArrayIterator iter;
+		CCMutableArrayIterator iter;
 		unsigned int uRet = 0;
 		int i;
 		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
@@ -91,7 +91,7 @@ public:
 		return uRet;
 	}
 
-	bool containsObject(T pObject)
+	bool contaiCCObject(T pObject)
 	{
 		if (m_array.empty() || (! pObject))
 		{
@@ -99,7 +99,7 @@ public:
 		}
 
 		bool bRet = false;
-		NSMutableArrayIterator iter;
+		CCMutableArrayIterator iter;
 		for (iter = m_array.begin(); iter != m_array.end(); ++iter)
 		{
 			if (*iter == pObject)
@@ -158,7 +158,7 @@ public:
 
 		// find a position to store
 		int count = 0;;
-        NSMutableArrayIterator it;
+        CCMutableArrayIterator it;
 		for (it = m_array.begin(); it != m_array.end(); ++it)
 		{
 			if (*it == NULL)
@@ -174,11 +174,11 @@ public:
 		m_array.push_back(pObject);
 	}
 
-	void addObjectsFromArray(NSMutableArray<T> *pArray)
+	void addObjectsFromArray(CCMutableArray<T> *pArray)
 	{
 		if (pArray && pArray->count() > 0)
 		{
-			NSMutableArrayIterator iter;
+			CCMutableArrayIterator iter;
 			for (iter = pArray->begin(); iter != pArray->end(); ++iter)
 			{
 				if (*iter)
@@ -229,7 +229,7 @@ public:
 			return;
 		}
 
-		NSMutableArrayIterator iter;
+		CCMutableArrayIterator iter;
 		int i;
 		for (iter = m_array.begin(), i = 0; iter != m_array.end(); ++iter, ++i)
 		{
@@ -247,11 +247,11 @@ public:
 		}
 	}
 
-	void removeObjectsInArray(NSMutableArray<T>* pDeleteArray)
+	void removeObjectsInArray(CCMutableArray<T>* pDeleteArray)
 	{
 		if(pDeleteArray && pDeleteArray->count())
 		{
-			NSMutableArrayIterator it;
+			CCMutableArrayIterator it;
 			for( it = pDeleteArray->m_array.begin(); it != pDeleteArray->m_array.end(); it++)
 			{
 				removeObject(*it);
@@ -282,7 +282,7 @@ public:
 	{
 		if (bDeleteObject)
 		{
-			NSMutableArrayIterator iter;
+			CCMutableArrayIterator iter;
 			for (iter = m_array.begin(); iter != m_array.end(); ++iter)
 			{
 				if (*iter)
@@ -311,35 +311,35 @@ public:
 		}
 	}
 
-	NSMutableArrayIterator begin(void)
+	CCMutableArrayIterator begin(void)
 	{
 		return m_array.begin();
 	}
 
-	NSMutableArrayRevIterator rbegin(void)
+	CCMutableArrayRevIterator rbegin(void)
 	{
 		return m_array.rbegin();
 	}
 
-	NSMutableArrayIterator end(void)
+	CCMutableArrayIterator end(void)
 	{
 		return m_array.end();
 	}
 
-	NSMutableArrayRevIterator rend(void)
+	CCMutableArrayRevIterator rend(void)
 	{
 		return m_array.rend();
 	}
 
-	NSMutableArray<T>* copy(void)
+	CCMutableArray<T>* copy(void)
 	{
-		NSMutableArray* pArray = new NSMutableArray();
+		CCMutableArray* pArray = new CCMutableArray();
 
 		pArray->m_array.assign(m_array.begin(), m_array.end());
 
 		if(pArray->count() > 0)
 		{
-			NSMutableArrayIterator it;
+			CCMutableArrayIterator it;
 			for(it = pArray->begin(); it != pArray->end(); it++)
 			{
 				if(*it)
@@ -353,9 +353,9 @@ public:
 	}
 
 public:
-	static NSMutableArray<T>* arrayWithObjects(T pObject1, ...)
+	static CCMutableArray<T>* arrayWithObjects(T pObject1, ...)
 	{
-		NSMutableArray<T> *pArray = new NSMutableArray<T>();
+		CCMutableArray<T> *pArray = new CCMutableArray<T>();
 
 		va_list params;
 		va_start(params, pObject1);
@@ -372,11 +372,11 @@ public:
 		return pArray;
 	}
 
-	static NSMutableArray<T>* arrayWithArray(NSMutableArray<T> *pArray)
+	static CCMutableArray<T>* arrayWithArray(CCMutableArray<T> *pArray)
 	{
 		if (pArray == NULL)
 		{
-			return new NSMutableArray<T>();
+			return new CCMutableArray<T>();
 		}
 
 		return pArray->copy();
@@ -386,7 +386,7 @@ private:
 	std::vector<T> m_array;
 };
 
-#define NSArray NSMutableArray
+#define CCArray CCMutableArray
 }//namespace   cocos2d 
 
-#endif // __COCOA_NS_MUTATLE_ARRAY_H__
+#endif // __CC_MUTATLE_ARRAY_H__

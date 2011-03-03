@@ -24,42 +24,42 @@ THE SOFTWARE.
 #ifndef __AUTORELEASEPOOL_H__
 #define __AUTORELEASEPOOL_H__
 
-#include "NSObject.h"
-#include "NSMutableArray.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
 
 namespace cocos2d {
-class CCX_DLL NSAutoreleasePool : public NSObject
+class CCX_DLL CCAutoreleasePool : public CCObject
 {
-	NSMutableArray<NSObject*>*	m_pManagedObjectArray;	
+	CCMutableArray<CCObject*>*	m_pManagedObjectArray;	
 public:
-	NSAutoreleasePool(void);
-	~NSAutoreleasePool(void);
+	CCAutoreleasePool(void);
+	~CCAutoreleasePool(void);
 
-	void addObject(NSObject *pObject);
-	void removeObject(NSObject *pObject);
+	void addObject(CCObject *pObject);
+	void removeObject(CCObject *pObject);
 
 	void clear();
 };
 
-class CCX_DLL NSPoolManager
+class CCX_DLL CCPoolManager
 {
-	NSMutableArray<NSAutoreleasePool*>*	m_pReleasePoolStack;	
-	NSAutoreleasePool*					m_pCurReleasePool;
+	CCMutableArray<CCAutoreleasePool*>*	m_pReleasePoolStack;	
+	CCAutoreleasePool*					m_pCurReleasePool;
 
-	NSAutoreleasePool* getCurReleasePool();
+	CCAutoreleasePool* getCurReleasePool();
 public:
-	NSPoolManager();
-	~NSPoolManager();
+	CCPoolManager();
+	~CCPoolManager();
 	void finalize();
 	void push();
 	void pop();
 
-	void removeObject(NSObject* pObject);
-	void addObject(NSObject* pObject);
+	void removeObject(CCObject* pObject);
+	void addObject(CCObject* pObject);
 
-	static NSPoolManager* getInstance();
+	static CCPoolManager* getInstance();
 
-	friend class NSAutoreleasePool;
+	friend class CCAutoreleasePool;
 };
 
 }

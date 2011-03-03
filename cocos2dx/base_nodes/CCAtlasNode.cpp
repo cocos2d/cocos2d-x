@@ -90,7 +90,7 @@ bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeig
 
 void CCAtlasNode::calculateMaxItems()
 {
-	CGSize s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
+	CCSize s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
 	m_nItemsPerColumn = (int)(s.height / m_nItemHeight);
 	m_nItemsPerRow = (int)(s.width / m_nItemWidth);
 }

@@ -58,7 +58,7 @@ namespace cocos2d{
 		/** Initializes a CCMenuItem with a target/selector */
 		bool initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
 		/** Returns the outside box */
-		CGRect rect();
+		CCRect rect();
 		/** Activate the item */
 		virtual void activate();
 		/** The item was selected (not activated), similar to "mouse-over" */
@@ -241,10 +241,10 @@ namespace cocos2d{
 		CCX_PROPERTY(ccColor3B, m_tColor, Color);
 		/** returns the selected item */
 		CCX_PROPERTY(unsigned int, m_uSelectedIndex, SelectedIndex);
-		/** NSMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
+		/** CCMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
 		@since v0.7.2
 		*/
-		CCX_PROPERTY(NSMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
+		CCX_PROPERTY(CCMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
 	public:
 		CCMenuItemToggle(){}
 		virtual ~CCMenuItemToggle();

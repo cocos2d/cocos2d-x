@@ -14,7 +14,7 @@ public:
     virtual void applicationWillEnterForeground();
 
 protected:
-    cocos2d::CCXEGLView *m_pMainWnd;
+    cocos2d::CCEGLView *m_pMainWnd;
 
 // private:
 //    Int32 m_nTimer;

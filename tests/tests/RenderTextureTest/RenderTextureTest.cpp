@@ -2,7 +2,7 @@
 
 RenderTextureTest::RenderTextureTest()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	CCLabelTTF* label = CCLabelTTF::labelWithString("Render Texture Test", "Arial", 28);
 	addChild(label, 0);
 	label->setPosition( ccp(s.width/2, s.height-50) );
@@ -30,13 +30,13 @@ RenderTextureTest::~RenderTextureTest()
 	m_brush->release();
 }
 
-void RenderTextureTest::ccTouchesMoved(NSSet* touches, UIEvent* event)
+void RenderTextureTest::ccTouchesMoved(CCSet* touches, UIEvent* event)
 {
-    NSSetIterator it = touches->begin();
+    CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
-	CGPoint start = touch->locationInView( touch->view() );	
+	CCPoint start = touch->locationInView( touch->view() );	
 	start = CCDirector::sharedDirector()->convertToGL( start );
-	CGPoint end = touch->previousLocationInView( touch->view() );
+	CCPoint end = touch->previousLocationInView( touch->view() );
 	end = CCDirector::sharedDirector()->convertToGL(end);
 
 	// begin drawing to the render texture

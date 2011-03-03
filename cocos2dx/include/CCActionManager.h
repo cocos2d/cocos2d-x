@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __ACTION_CCACTION_MANAGER_H__
 
 #include "CCAction.h"
-#include "NSMutableArray.h"
-#include "NSObject.h"
-#include "ccxCommon.h"
+#include "CCMutableArray.h"
+#include "CCObject.h"
+#include "CCCommon.h"
 #include "selector_protocol.h"
 
 namespace cocos2d {
@@ -45,7 +45,7 @@ struct _hashElement;
  
  @since v0.8
  */
-class CCX_DLL CCActionManager : public NSObject, public SelectorProtocol
+class CCX_DLL CCActionManager : public CCObject, public SelectorProtocol
 {
 public:
 	CCActionManager(void);
@@ -68,43 +68,43 @@ public:
     /** Removes all actions from a certain target.
 	 All the actions that belongs to the target will be removed.
 	 */
-	void removeAllActionsFromTarget(NSObject *pTarget);
+	void removeAllActionsFromTarget(CCObject *pTarget);
 
     /** Removes an action given an action reference.
     */
 	void removeAction(CCAction *pAction);
 
     /** Removes an action given its tag and the target */
-	void removeActionByTag(int tag, NSObject *pTarget);
+	void removeActionByTag(int tag, CCObject *pTarget);
 
 	/** Gets an action given its tag an a target
 	 @return the Action the with the given tag
 	 */
-	CCAction* getActionByTag(int tag, NSObject *pTarget);
+	CCAction* getActionByTag(int tag, CCObject *pTarget);
 
     /** Returns the numbers of actions that are running in a certain target. 
 	 * Composable actions are counted as 1 action. Example:
 	 * - If you are running 1 Sequence of 7 actions, it will return 1.
 	 * - If you are running 7 Sequences of 2 actions, it will return 7.
 	 */
-	int numberOfRunningActionsInTarget(NSObject *pTarget);
+	int numberOfRunningActionsInTarget(CCObject *pTarget);
 
     /** Pauses the target: all running actions and newly added actions will be paused.
 	*/
-	void pauseTarget(NSObject *pTarget);
+	void pauseTarget(CCObject *pTarget);
 
     /** Resumes the target. All queued actions will be resumed.
 	*/
-	void resumeTarget(NSObject *pTarget);
+	void resumeTarget(CCObject *pTarget);
 
     /** Resumes the target. All queued actions will be resumed.
 	 @deprecated Use resumeTarget: instead. Will be removed in v1.0.
 	 */
-	void resumeAllActionsForTarget(NSObject *pTarget);
+	void resumeAllActionsForTarget(CCObject *pTarget);
 
 	/** Pauses the target: all running actions and newly added actions will be paused.
 	*/
-	void pauseAllActionsForTarget(NSObject *pTarget);
+	void pauseAllActionsForTarget(CCObject *pTarget);
 
 	/** purges the shared action manager. It releases the retained instance.
 	 * because it uses this, so it can not be static

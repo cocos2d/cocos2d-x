@@ -25,13 +25,13 @@ THE SOFTWARE.
 #ifndef __PLATFOMR_CCNS_H__
 #define __PLATFOMR_CCNS_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 
 namespace cocos2d
 {
-    CGRect CCRectFromString(const char* pszContent);
-	CGPoint CCPointFromString(const char* pszContent);
-	CGSize CCSizeFromString(const char* pszContent);
+    CCRect CCRectFromString(const char* pszContent);
+	CCPoint CCPointFromString(const char* pszContent);
+	CCSize CCSizeFromString(const char* pszContent);
 }
 
 #endif // __PLATFOMR_CCNS_H__

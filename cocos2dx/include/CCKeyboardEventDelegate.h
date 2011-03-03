@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCKEYBOARD_EVENT_DELEGATE_H__
 #define __CCKEYBOARD_EVENT_DELEGATE_H__
 
-#include "NSEvent.h"
-#include "ccxCommon.h"
-#include "NSObject.h"
+#include "CCEvent.h"
+#include "CCCommon.h"
+#include "CCObject.h"
 
 namespace cocos2d {
 
@@ -55,7 +55,7 @@ public:
     virtual bool ccFlagsChanged(NSEvent* pEvent) { return false; }
 };
 
-class CCX_DLL CCKeyboardEventHandle : public NSObject
+class CCX_DLL CCKeyboardEventHandle : public CCObject
 {
 public:
     virtual ~CCKeyboardEventHandle(void);

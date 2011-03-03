@@ -22,25 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCParallaxNode.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "support/data_support/ccCArray.h"
 
 namespace cocos2d {
 
-	class CGPointObject : NSObject
+	class CCPointObject : CCObject
 	{
-		CCX_SYNTHESIZE(CGPoint, m_tRatio, Ratio)
-		CCX_SYNTHESIZE(CGPoint, m_tOffset, Offset)
+		CCX_SYNTHESIZE(CCPoint, m_tRatio, Ratio)
+		CCX_SYNTHESIZE(CCPoint, m_tOffset, Offset)
 		CCX_SYNTHESIZE(CCNode *,m_pChild, Child)	// weak ref
 
-		static CGPointObject * pointWithCGPoint(CGPoint ratio, CGPoint offset)
+		static CCPointObject * pointWithCCPoint(CCPoint ratio, CCPoint offset)
 		{
-			CGPointObject *pRet = new CGPointObject();
-			pRet->initWithCGPoint(ratio, offset);
+			CCPointObject *pRet = new CCPointObject();
+			pRet->initWithCCPoint(ratio, offset);
 			pRet->autorelease();
 			return pRet;
 		}
-		bool initWithCGPoint(CGPoint ratio, CGPoint offset)
+		bool initWithCCPoint(CCPoint ratio, CCPoint offset)
 		{
 			m_tRatio = ratio;
 			m_tOffset = offset;
@@ -52,7 +52,7 @@ namespace cocos2d {
 	CCParallaxNode::CCParallaxNode()
 	{
 		m_pParallaxArray = ccArrayNew(5);		
-		m_tLastPosition = CGPointMake(-100,-100);
+		m_tLastPosition = CCPointMake(-100,-100);
 	}
 	CCParallaxNode::~CCParallaxNode()
 	{
@@ -72,14 +72,14 @@ namespace cocos2d {
 	{
 		NSAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 	}
-	void CCParallaxNode::addChild(CCNode *child, int z, CGPoint ratio, CGPoint offset)
+	void CCParallaxNode::addChild(CCNode *child, int z, CCPoint ratio, CCPoint offset)
 	{
 		NSAssert( child != NULL, "Argument must be non-nil");
-		CGPointObject *obj = CGPointObject::pointWithCGPoint(ratio, offset);
+		CCPointObject *obj = CCPointObject::pointWithCCPoint(ratio, offset);
 		obj->setChild(child);
-		ccArrayAppendObjectWithResize(m_pParallaxArray, (NSObject*)obj);
+		ccArrayAppendObjectWithResize(m_pParallaxArray, (CCObject*)obj);
 
-		CGPoint pos = m_tPosition;
+		CCPoint pos = m_tPosition;
 		pos.x = pos.x * ratio.x + offset.x;
 		pos.y = pos.y * ratio.y + offset.y;
 		child->setPosition(pos);
@@ -90,7 +90,7 @@ namespace cocos2d {
 	{
 		for( unsigned int i=0;i < m_pParallaxArray->num;i++)
 		{
-			CGPointObject *point = (CGPointObject*)m_pParallaxArray->arr[i];
+			CCPointObject *point = (CCPointObject*)m_pParallaxArray->arr[i];
 			if( point->getChild()->isEqual(child)) 
 			{
 				ccArrayRemoveObjectAtIndex(m_pParallaxArray, i);
@@ -104,9 +104,9 @@ namespace cocos2d {
 		ccArrayRemoveAllObjects(m_pParallaxArray);
 		CCNode::removeAllChildrenWithCleanup(cleanup);
 	}
-	CGPoint CCParallaxNode::absolutePosition()
+	CCPoint CCParallaxNode::absolutePosition()
 	{
-		CGPoint ret = m_tPosition;
+		CCPoint ret = m_tPosition;
 		CCNode *cn = this;
 		while (cn->getParent() != NULL)
 		{
@@ -123,14 +123,14 @@ namespace cocos2d {
 	*/
 	void CCParallaxNode::visit()
 	{
-		//	CGPoint pos = position_;
-		//	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
-		CGPoint pos = this->absolutePosition();
-		if( ! CGPoint::CGPointEqualToPoint(pos, m_tLastPosition) )
+		//	CCPoint pos = position_;
+		//	CCPoint	pos = [self convertToWorldSpace:CCPointZero];
+		CCPoint pos = this->absolutePosition();
+		if( ! CCPoint::CCPointEqualToPoint(pos, m_tLastPosition) )
 		{
 			for(unsigned int i=0; i < m_pParallaxArray->num; i++ ) 
 			{
-				CGPointObject *point = (CGPointObject*)m_pParallaxArray->arr[i];
+				CCPointObject *point = (CCPointObject*)m_pParallaxArray->arr[i];
 				float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
 				float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;			
 				point->getChild()->setPosition(ccp(x,y));

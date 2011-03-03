@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCParticleExamples.h"
 #include "CCDirector.h"
 #include "CCTextureCache.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 namespace cocos2d {
 //
 // ParticleFire
@@ -55,7 +55,7 @@ bool CCParticleFire::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 10;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		this->m_tPosition = ccp(winSize.width/2, 60);
 		this->m_tPosVar = ccp(40, 20);
 
@@ -121,7 +121,7 @@ bool CCParticleFireworks::initWithTotalParticles(int numberOfParticles)
 		this->modeA.speedVar = 50;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height/2);
 
 		// angle
@@ -197,9 +197,9 @@ bool CCParticleSun::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 360;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height/2);
-		m_tPosVar = CGPointZero;
+		m_tPosVar = CCPointZero;
 
 		// life of particles
 		m_fLife = 1;
@@ -269,9 +269,9 @@ bool CCParticleGalaxy::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 360;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height/2);
-		m_tPosVar = CGPointZero;
+		m_tPosVar = CCPointZero;
 
 		// life of particles
 		m_fLife = 4;
@@ -343,9 +343,9 @@ bool CCParticleFlower::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 360;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height/2);
-		m_tPosVar = CGPointZero;
+		m_tPosVar = CCPointZero;
 
 		// life of particles
 		m_fLife = 4;
@@ -416,9 +416,9 @@ bool CCParticleMeteor::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 360;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height/2);
-		m_tPosVar = CGPointZero;
+		m_tPosVar = CCPointZero;
 
 		// life of particles
 		m_fLife = 2;
@@ -490,9 +490,9 @@ bool CCParticleSpiral::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 0;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height/2);
-		m_tPosVar = CGPointZero;
+		m_tPosVar = CCPointZero;
 
 		// life of particles
 		m_fLife = 12;
@@ -563,9 +563,9 @@ bool CCParticleExplosion::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 360;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height/2);
-		m_tPosVar = CGPointZero;
+		m_tPosVar = CCPointZero;
 
 		// life of particles
 		m_fLife = 5.0f;
@@ -633,7 +633,7 @@ bool CCParticleSmoke::initWithTotalParticles(int numberOfParticles)
 		m_fAngleVar = 5;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, 0);
 		m_tPosVar = ccp(20, 0);
 
@@ -702,7 +702,7 @@ bool CCParticleSnow::initWithTotalParticles(int numberOfParticles)
 		modeA.tangentialAccelVar = 1;
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height + 10);
 		m_tPosVar = ccp( winSize.width/2, 0 );
 
@@ -779,7 +779,7 @@ bool CCParticleRain::initWithTotalParticles(int numberOfParticles)
 
 
 		// emitter position
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		m_tPosition = ccp(winSize.width/2, winSize.height);
 		m_tPosVar = ccp( winSize.width/2, 0 );
 

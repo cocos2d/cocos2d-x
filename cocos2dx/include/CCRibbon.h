@@ -66,23 +66,23 @@ public:
 	/** init the ribbon */
 	bool initWithWidth(float w, const char *path, float length, ccColor4B color, float fade);
 	/** add a point to the ribbon */
-	void addPointAt(CGPoint location, float width);
+	void addPointAt(CCPoint location, float width);
 	/** polling function */
 	void update(ccTime delta);
 	/** determine side of line */
-	float sideOfLine(CGPoint p, CGPoint l1, CGPoint l2);
+	float sideOfLine(CCPoint p, CCPoint l1, CCPoint l2);
 	// super method
 	virtual void draw();
 private:
 	/** rotates a point around 0, 0 */
-	CGPoint rotatePoint(CGPoint vec, float rotation);
+	CCPoint rotatePoint(CCPoint vec, float rotation);
 protected:
-	NSMutableArray<CCRibbonSegment*> *m_pSegments;
-	NSMutableArray<CCRibbonSegment*> *m_pDeletedSegments;
+	CCMutableArray<CCRibbonSegment*> *m_pSegments;
+	CCMutableArray<CCRibbonSegment*> *m_pDeletedSegments;
 
-	CGPoint	m_tLastPoint1;
-	CGPoint	m_tLastPoint2;
-	CGPoint	m_tLastLocation;
+	CCPoint	m_tLastPoint1;
+	CCPoint	m_tLastPoint2;
+	CCPoint	m_tLastLocation;
 // 	int		m_nVertCount_;
 	float	m_fTexVPos;
 	float	m_fCurTime;
@@ -94,7 +94,7 @@ protected:
 };
 
 /** @brief object to hold ribbon segment data */
-class CCX_DLL CCRibbonSegment : public NSObject
+class CCX_DLL CCRibbonSegment : public CCObject
 {
 public:
 	GLfloat	m_pVerts[50*6];

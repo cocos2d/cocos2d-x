@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRABBER_H__
 #define __EFFECTS_CCGRABBER_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include "CCGL.h"
 
 namespace cocos2d 
@@ -32,7 +32,7 @@ namespace cocos2d
 	class CCTexture2D;
 
 	/** FBO class that grabs the the contents of the screen */
-	class CCGrabber : public NSObject
+	class CCGrabber : public CCObject
 	{
 	public:
 		CCGrabber(void);

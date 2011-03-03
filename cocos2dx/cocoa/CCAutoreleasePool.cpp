@@ -21,24 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "NSAutoreleasePool.h"
+#include "CCAutoreleasePool.h"
 
 namespace cocos2d 
 {
 
-NSPoolManager	g_PoolManager;
+CCPoolManager	g_PoolManager;
 
-NSAutoreleasePool::NSAutoreleasePool(void)
+CCAutoreleasePool::CCAutoreleasePool(void)
 {
-	m_pManagedObjectArray = new NSMutableArray<NSObject*>();
+	m_pManagedObjectArray = new CCMutableArray<CCObject*>();
 }
 
-NSAutoreleasePool::~NSAutoreleasePool(void)
+CCAutoreleasePool::~CCAutoreleasePool(void)
 {
 	delete m_pManagedObjectArray;
 }
 
-void NSAutoreleasePool::addObject(NSObject* pObject)
+void CCAutoreleasePool::addObject(CCObject* pObject)
 {
 	m_pManagedObjectArray->addObject(pObject);
 
@@ -47,20 +47,20 @@ void NSAutoreleasePool::addObject(NSObject* pObject)
 	pObject->release(); // no ref count, in this case autorelease pool added.
 }
 
-void NSAutoreleasePool::removeObject(NSObject* pObject)
+void CCAutoreleasePool::removeObject(CCObject* pObject)
 {
 	m_pManagedObjectArray->removeObject(pObject, false);
 }
 
-void NSAutoreleasePool::clear()
+void CCAutoreleasePool::clear()
 {
 	if(m_pManagedObjectArray->count() > 0)
 	{
-		//NSAutoreleasePool* pReleasePool;
+		//CCAutoreleasePool* pReleasePool;
 #ifdef _DEBUG
 		int nIndex = m_pManagedObjectArray->count() - 1;
 #endif
-		NSMutableArray<NSObject*>::NSMutableArrayRevIterator it;
+		CCMutableArray<CCObject*>::CCMutableArrayRevIterator it;
 		for(it = m_pManagedObjectArray->rbegin(); it != m_pManagedObjectArray->rend(); it++)
 		{
 			if(!*it)
@@ -81,22 +81,22 @@ void NSAutoreleasePool::clear()
 
 //--------------------------------------------------------------------
 //
-// NSPoolManager
+// CCPoolManager
 //
 //--------------------------------------------------------------------
 
-NSPoolManager* NSPoolManager::getInstance()
+CCPoolManager* CCPoolManager::getInstance()
 {
 	return &g_PoolManager;
 }
 
-NSPoolManager::NSPoolManager()
+CCPoolManager::CCPoolManager()
 {
-	m_pReleasePoolStack = new NSMutableArray<NSAutoreleasePool*>();	
+	m_pReleasePoolStack = new CCMutableArray<CCAutoreleasePool*>();	
 	m_pCurReleasePool = NULL;
 }
 
-NSPoolManager::~NSPoolManager()
+CCPoolManager::~CCPoolManager()
 {
 	
 	finalize();
@@ -108,12 +108,12 @@ NSPoolManager::~NSPoolManager()
 	delete m_pReleasePoolStack;
 }
 
-void NSPoolManager::finalize()
+void CCPoolManager::finalize()
 {
 	if(m_pReleasePoolStack->count() > 0)
 	{
-		//NSAutoreleasePool* pReleasePool;
-		NSMutableArray<NSAutoreleasePool*>::NSMutableArrayIterator it;
+		//CCAutoreleasePool* pReleasePool;
+		CCMutableArray<CCAutoreleasePool*>::CCMutableArrayIterator it;
 		for(it = m_pReleasePoolStack->begin(); it != m_pReleasePoolStack->end(); it++)
 		{
 			if(!*it)
@@ -124,9 +124,9 @@ void NSPoolManager::finalize()
 	}
 }
 
-void NSPoolManager::push()
+void CCPoolManager::push()
 {
-	NSAutoreleasePool* pPool = new NSAutoreleasePool();	   //ref = 1
+	CCAutoreleasePool* pPool = new CCAutoreleasePool();	   //ref = 1
 	m_pCurReleasePool = pPool;
 
 	m_pReleasePoolStack->addObject(pPool);				   //ref = 2
@@ -134,7 +134,7 @@ void NSPoolManager::push()
 	pPool->release();									   //ref = 1
 }
 
-void NSPoolManager::pop()
+void CCPoolManager::pop()
 {
     if (! m_pCurReleasePool)
     {
@@ -160,20 +160,20 @@ void NSPoolManager::pop()
 	/*m_pCurReleasePool = NULL;*/
 }
 
-void NSPoolManager::removeObject(NSObject* pObject)
+void CCPoolManager::removeObject(CCObject* pObject)
 {
 	assert(m_pCurReleasePool);
 
 	m_pCurReleasePool->removeObject(pObject);
 }
 
-void NSPoolManager::addObject(NSObject* pObject)
+void CCPoolManager::addObject(CCObject* pObject)
 {
 	getCurReleasePool()->addObject(pObject);
 }
 
 
-NSAutoreleasePool* NSPoolManager::getCurReleasePool()
+CCAutoreleasePool* CCPoolManager::getCurReleasePool()
 {
 	if(!m_pCurReleasePool)
 		push();

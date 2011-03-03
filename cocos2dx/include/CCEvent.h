@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __NSEVENT_H__
 #define __NSEVENT_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 
 namespace cocos2d {
 
-class NSEvent : public NSObject
+class NSEvent : public CCObject
 {
 
 };

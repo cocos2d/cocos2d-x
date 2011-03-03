@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __CCRENDER_TEXTURE_H__
 #define __CCRENDER_TEXTURE_H__
 
-#include "NSData.h"
+#include "CCData.h"
 #include "CCNode.h"
 #include "CCSprite.h"
 
@@ -84,8 +84,8 @@ public:
 	/** saves the texture into a file. The format can be JPG or PNG */
 	bool saveBuffer(const char *name, int format);
 
-    /* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
-    NSData *getUIImageAsDataFromBuffer(int format);
+    /* get buffer as CCImage, can only save a render buffer which has a RGBA8888 pixel format */
+    CCData *getCCImageAsDataFromBuffer(int format);
 protected:
 	GLuint				m_uFBO;
 	GLint				m_nOldFBO;

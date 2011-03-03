@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "FileUtils.h"
 #include <stdio.h>
-#include "CCXCocos2dDefine.h"
+#include "CCCocos2dDefine.h"
 #include "support/zip_support/unzip.h"
 #include <string>
 #include <assert.h>

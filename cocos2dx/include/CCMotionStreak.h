@@ -68,7 +68,7 @@ public:
 protected:
 	float		m_fSegThreshold;
 	float		m_fWidth;
-	CGPoint		m_tLastLocation;
+	CCPoint		m_tLastLocation;
 };
 
 } // namespace cocos2d

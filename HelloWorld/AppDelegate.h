@@ -8,7 +8,7 @@
 #define  _APP_DELEGATE_H_
 
 #include "CCXApplication.h"
-#include "CCXEGLView.h"
+#include "CCEGLView.h"
 
 class  AppDelegate  :  public cocos2d::CCXApplication
 {
@@ -21,7 +21,7 @@ public:
     virtual void    applicationWillEnterForeground();
 
 protected:
-    cocos2d::CCXEGLView *   m_pMainWnd;
+    cocos2d::CCEGLView *   m_pMainWnd;
 };
  
 

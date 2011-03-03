@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCActionCamera.h"
 #include "CCNode.h"
 #include "CCCamera.h"
-#include "platform/CCXMath.h"
+#include "platform/CCMath.h"
 
 namespace cocos2d{
 	//
@@ -59,16 +59,16 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	NSObject * CCOrbitCamera::copyWithZone(NSZone *pZone)
+	CCObject * CCOrbitCamera::copyWithZone(CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCOrbitCamera* pRet = NULL;
 		if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 			pRet = (CCOrbitCamera*)(pZone->m_pCopyObject);
 		else
 		{
 			pRet = new CCOrbitCamera();
-			pZone = pNewZone = new NSZone(pRet);
+			pZone = pNewZone = new CCZone(pRet);
 		}
 
 		CCActionInterval::copyWithZone(pZone);
@@ -102,11 +102,11 @@ namespace cocos2d{
 		CCActionInterval::startWithTarget(pTarget);
 		float r, zenith, azimuth;
 		this->sphericalRadius(&r, &zenith, &azimuth);
-		if( CCXMath::isnanCocos2d(m_fRadius) )
+		if( CCMath::isnanCocos2d(m_fRadius) )
 			m_fRadius = r;
-		if( CCXMath::isnanCocos2d(m_fAngleZ) )
+		if( CCMath::isnanCocos2d(m_fAngleZ) )
 			m_fAngleZ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
-		if( CCXMath::isnanCocos2d(m_fAngleX) )
+		if( CCMath::isnanCocos2d(m_fAngleX) )
 			m_fAngleX = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 
 		m_fRadZ = (CGFloat)CC_DEGREES_TO_RADIANS(m_fAngleZ);

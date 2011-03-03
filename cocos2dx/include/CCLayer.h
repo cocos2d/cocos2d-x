@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCLAYER_H__
 #define __CCLAYER_H__
 
-#include "CCXCocos2dDefine.h"
+#include "CCCocos2dDefine.h"
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCTouchDelegateProtocol.h"
-#include "CCUIAccelerometerDelegate.h"
-#include "ccxCommon.h"
+#include "CCAccelerometerDelegate.h"
+#include "CCCommon.h"
 #include "CCKeypadDelegate.h"
 #include "CCMouseEventDelegate.h"
 #include "CCKeyboardEventDelegate.h"
@@ -46,7 +46,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
+class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
 {
 public:
 	CCLayer();
@@ -149,7 +149,7 @@ public:
 	virtual ~CCLayerColor();
 
 	virtual void draw();
-	virtual void setContentSize(CGSize var);
+	virtual void setContentSize(CCSize var);
 
 	/** creates a CCLayer with color, width and height in Points */
 	static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
@@ -221,13 +221,13 @@ public:
     static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
 
     /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
-    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CGPoint v);
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
 
     /** Initializes the CCLayer with a gradient between start and end. */
     virtual bool initWithColor(ccColor4B start, ccColor4B end);
 
     /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
-    virtual bool initWithColor(ccColor4B start, ccColor4B end, CGPoint v);
+    virtual bool initWithColor(ccColor4B start, ccColor4B end, CCPoint v);
 
     ccColor3B getStartColor();
     void      setStartColor(ccColor3B colors);
@@ -235,7 +235,7 @@ public:
     CCX_PROPERTY(ccColor3B, m_endColor, EndColor)
     CCX_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
     CCX_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
-    CCX_PROPERTY(CGPoint, m_AlongVector, AlongVector)
+    CCX_PROPERTY(CCPoint, m_AlongVector, AlongVector)
 
 protected:
     virtual void updateColor();
@@ -250,7 +250,7 @@ class CCX_DLL CCMultiplexLayer : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;
-	NSMutableArray<CCLayer *> * m_pLayers;
+	CCMutableArray<CCLayer *> * m_pLayers;
 public:
 
 	CCMultiplexLayer();

@@ -24,11 +24,11 @@ THE SOFTWARE.
 #include "CCLabelBMFont.h"
 
 #include "platform/platform.h"
-#include "NSMutableDictionary.h"
+#include "CCMutableDictionary.h"
 #include "CCConfiguration.h"
 #include "CCDrawingPrimitives.h"
 #include "CCSprite.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 #include "support/file_support/FileData.h"
 #include "support/data_support/uthash.h"
@@ -38,14 +38,14 @@ namespace cocos2d{
 	//
 	//FNTConfig Cache - free functions
 	//
-	NSMutableDictionary<std::string, CCBMFontConfiguration*> *configurations = NULL;
+	CCMutableDictionary<std::string, CCBMFontConfiguration*> *configurations = NULL;
 	CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
 	{
 		CCBMFontConfiguration *pRet = NULL;
 
 		if( configurations == NULL )
 		{
-			configurations = new NSMutableDictionary<std::string, CCBMFontConfiguration*>();
+			configurations = new CCMutableDictionary<std::string, CCBMFontConfiguration*>();
 		}
 		std::string key(fntFile);
 		pRet = configurations->objectForKey(key);
@@ -313,9 +313,9 @@ namespace cocos2d{
 		//	NSAssert(!kerningDictionary, @"dictionary already initialized");
 		//	
 		//	// Break the values for this line up using =
-		//	NSArray *values = [line componentsSeparatedByString:@"="];
+		//	CCArray *values = [line componentsSeparatedByString:@"="];
 		//	NSEnumerator *nse = [values objectEnumerator];	
-		//	NSString *propertyValue;
+		//	CCString *propertyValue;
 		//	
 		//	// We need to move past the first entry in the array before we start assigning values
 		//	[nse nextObject];
@@ -400,7 +400,7 @@ namespace cocos2d{
 		{
 			m_cOpacity = 255;
 			m_tColor = ccWHITE;
-			m_tContentSize = CGSizeZero;
+			m_tContentSize = CCSizeZero;
 			m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
 			m_tAnchorPoint = ccp(0.5f, 0.5f);
 			this->setString(theString);
@@ -435,7 +435,7 @@ namespace cocos2d{
 		INT16 prev = -1;
 		int kerningAmount = 0;
 
-		CGSize tmpSize = CGSizeZero;
+		CCSize tmpSize = CCSizeZero;
 
         int longestLine = 0;
         int totalHeight = 0;
@@ -477,7 +477,7 @@ namespace cocos2d{
 
 			ccBMFontDef fontDef = m_pConfiguration->m_pBitmapFontArray[c];
 
-			CGRect rect = fontDef.rect;
+			CCRect rect = fontDef.rect;
 
 			CCSprite *fontChar;
 
@@ -541,7 +541,7 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				(*it)->setIsVisible(false);
@@ -566,7 +566,7 @@ namespace cocos2d{
 		m_tColor = var;
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				((CCSprite*)(*it))->setColor(m_tColor);
@@ -583,7 +583,7 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
@@ -603,7 +603,7 @@ namespace cocos2d{
 		m_bIsOpacityModifyRGB = var;
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
@@ -620,9 +620,9 @@ namespace cocos2d{
 	}
 
 	// BitmapFontAtlas - AnchorPoint
-	void CCLabelBMFont::setAnchorPoint(CGPoint point)
+	void CCLabelBMFont::setAnchorPoint(CCPoint point)
 	{
-		if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) )
+		if( ! CCPoint::CCPointEqualToPoint(point, m_tAnchorPoint) )
 		{
 			CCSpriteBatchNode::setAnchorPoint(point);
 			this->createFontChars();
@@ -634,8 +634,8 @@ namespace cocos2d{
 	void CCLabelBMFont::draw()
 	{
 		CCSpriteBatchNode::draw();
-		CGSize s = this->getContentSize();
-		CGPoint vertices[4]={
+		CCSize s = this->getContentSize();
+		CCPoint vertices[4]={
 			ccp(0,0),ccp(s.width,0),
 			ccp(s.width,s.height),ccp(0,s.height),
 		};

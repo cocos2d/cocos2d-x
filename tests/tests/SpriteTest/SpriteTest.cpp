@@ -138,7 +138,7 @@ void SpriteTestDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
@@ -158,7 +158,7 @@ void SpriteTestDemo::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
+	menu->setPosition( CCPointZero );
 	item1->setPosition( ccp( s.width/2 - 100,30) );
 	item2->setPosition( ccp( s.width/2, 30) );
 	item3->setPosition( ccp( s.width/2 + 100,30) );
@@ -166,7 +166,7 @@ void SpriteTestDemo::onEnter()
 	addChild(menu, 1);	
 }
 
-void SpriteTestDemo::restartCallback(NSObject* pSender)
+void SpriteTestDemo::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new SpriteTestScene();
 	s->addChild(restartSpriteTestAction()); 
@@ -175,7 +175,7 @@ void SpriteTestDemo::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void SpriteTestDemo::nextCallback(NSObject* pSender)
+void SpriteTestDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new SpriteTestScene();
 	s->addChild( nextSpriteTestAction() );
@@ -183,7 +183,7 @@ void SpriteTestDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void SpriteTestDemo::backCallback(NSObject* pSender)
+void SpriteTestDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new SpriteTestScene();
 	s->addChild( backSpriteTestAction() );
@@ -203,19 +203,19 @@ Sprite1::Sprite1()
 	setIsTouchEnabled( true );
 	
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	addNewSpriteWithCoords( ccp(s.width/2, s.height/2) );
 	
 }
 
-void Sprite1::addNewSpriteWithCoords(CGPoint p)
+void Sprite1::addNewSpriteWithCoords(CCPoint p)
 {
 	int idx = (int)(CCRANDOM_0_1() * 1400.0f / 100.0f);
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 	
-	CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(x,y,85,121) );
+	CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(x,y,85,121) );
 	addChild( sprite );
 	
 	sprite->setPosition( ccp( p.x, p.y) );
@@ -239,9 +239,9 @@ void Sprite1::addNewSpriteWithCoords(CGPoint p)
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
 
-void Sprite1::ccTouchesEnded(NSSet* touches, UIEvent* event)
+void Sprite1::ccTouchesEnded(CCSet* touches, UIEvent* event)
 {
-	NSSetIterator it;
+	CCSetIterator it;
 	CCTouch* touch;
 
 	for( it = touches->begin(); it != touches->end(); it++) 
@@ -251,7 +251,7 @@ void Sprite1::ccTouchesEnded(NSSet* touches, UIEvent* event)
 		if(!touch)
 			break;
 
-		CGPoint location = touch->locationInView(touch->view());
+		CCPoint location = touch->locationInView(touch->view());
 		
 		location = CCDirector::sharedDirector()->convertToGL(location);
 	
@@ -277,11 +277,11 @@ SpriteSheet1::SpriteSheet1()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 50);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	addNewSpriteWithCoords( ccp(s.width/2, s.height/2) );
 }
 
-void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
+void SpriteSheet1::addNewSpriteWithCoords(CCPoint p)
 {
 	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
@@ -290,7 +290,7 @@ void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 	int y = (idx/5) * 121;
 	
 
-	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(x,y,85,121));
+	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(x,y,85,121));
 	sheet->addChild(sprite);
 
 	sprite->setPosition( ccp( p.x, p.y) );
@@ -315,9 +315,9 @@ void SpriteSheet1::addNewSpriteWithCoords(CGPoint p)
 	sprite->runAction( CCRepeatForever::actionWithAction(seq));
 }
 
-void SpriteSheet1::ccTouchesEnded(NSSet* touches, UIEvent* event)
+void SpriteSheet1::ccTouchesEnded(CCSet* touches, UIEvent* event)
 {
-	NSSetIterator it;
+	CCSetIterator it;
 	CCTouch* touch;
 
 	for( it = touches->begin(); it != touches->end(); it++) 
@@ -327,7 +327,7 @@ void SpriteSheet1::ccTouchesEnded(NSSet* touches, UIEvent* event)
 		if(!touch)
 			break;
 
-		CGPoint location = touch->locationInView(touch->view());
+		CCPoint location = touch->locationInView(touch->view());
 		
 		location = CCDirector::sharedDirector()->convertToGL(location);
 	
@@ -350,17 +350,17 @@ std::string SpriteSheet1::title()
 
 SpriteColorOpacity::SpriteColorOpacity()
 {
-	CCSprite* sprite1 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*0, 121*1, 85, 121));
-	CCSprite* sprite2 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121));
-	CCSprite* sprite3 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*2, 121*1, 85, 121));
-	CCSprite* sprite4 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*3, 121*1, 85, 121));
+	CCSprite* sprite1 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
+	CCSprite* sprite2 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite3 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*2, 121*1, 85, 121));
+	CCSprite* sprite4 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*1, 85, 121));
 	
-	CCSprite* sprite5 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*0, 121*1, 85, 121));
-	CCSprite* sprite6 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121));
-	CCSprite* sprite7 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*2, 121*1, 85, 121));
-	CCSprite* sprite8 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*3, 121*1, 85, 121));
+	CCSprite* sprite5 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
+	CCSprite* sprite6 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite7 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*2, 121*1, 85, 121));
+	CCSprite* sprite8 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*1, 85, 121));
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	sprite1->setPosition( ccp( (s.width/5)*1, (s.height/3)*1) );
 	sprite2->setPosition( ccp( (s.width/5)*2, (s.height/3)*1) );
 	sprite3->setPosition( ccp( (s.width/5)*3, (s.height/3)*1) );
@@ -435,18 +435,18 @@ SpriteSheetColorOpacity::SpriteSheetColorOpacity()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
-	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*0, 121*1, 85, 121));
-	CCSprite* sprite2 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*1, 85, 121));
-	CCSprite* sprite3 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*2, 121*1, 85, 121));
-	CCSprite* sprite4 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*3, 121*1, 85, 121));
+	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+	CCSprite* sprite2 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite3 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
+	CCSprite* sprite4 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
 	
-	CCSprite* sprite5 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*0, 121*1, 85, 121));
-	CCSprite* sprite6 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*1, 85, 121));
-	CCSprite* sprite7 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*2, 121*1, 85, 121));
-	CCSprite* sprite8 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*3, 121*1, 85, 121));
+	CCSprite* sprite5 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
+	CCSprite* sprite6 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite7 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*2, 121*1, 85, 121));
+	CCSprite* sprite8 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*3, 121*1, 85, 121));
 	
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	sprite1->setPosition( ccp( (s.width/5)*1, (s.height/3)*1) );
 	sprite2->setPosition( ccp( (s.width/5)*2, (s.height/3)*1) );
 	sprite3->setPosition( ccp( (s.width/5)*3, (s.height/3)*1) );
@@ -522,24 +522,24 @@ SpriteZOrder::SpriteZOrder()
 {
 	m_dir = 1;
 			
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	float step = s.width/11;
 	for(int i=0;i<5;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*0, 121*1, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 		addChild(sprite, i);
 	}
 	
 	for(int i=5;i<10;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*0, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 		addChild(sprite, 14-i);
 	}
 	
-	CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*3, 121*0, 85, 121));
+	CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*3, 121*0, 85, 121));
 	addChild(sprite, -1, kTagSprite1);
 	sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
 	sprite->setScaleX( 6 );
@@ -585,24 +585,24 @@ SpriteSheetZOrder::SpriteSheetZOrder()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	float step = s.width/11;
 	for(int i=0;i<5;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*0, 121*1, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 		sheet->addChild(sprite, i);
 	}
 	
 	for(int i=5;i<10;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*0, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 		sheet->addChild(sprite, 14-i);
 	}
 	
-	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*3, 121*0, 85, 121));
+	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*3, 121*0, 85, 121));
 	sheet->addChild(sprite, -1, kTagSprite1);
 	sprite->setPosition( ccp(s.width/2, s.height/2 - 20) );
 	sprite->setScaleX( 6 );
@@ -641,12 +641,12 @@ std::string SpriteSheetZOrder::title()
 
 SpriteSheetReorder::SpriteSheetReorder()
 {
-	NSMutableArray<NSObject*>* a = new NSMutableArray<NSObject*>(10);
+	CCMutableArray<CCObject*>* a = new CCMutableArray<CCObject*>(10);
 	CCSpriteBatchNode* asmtest = CCSpriteBatchNode::spriteSheetWithFile("animations/ghosts.png");
 	
 	for(int i=0; i<10; i++)
 	{
-		CCSprite* s1 = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )asmtest, CGRectMake(0, 0, 50, 50));
+		CCSprite* s1 = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )asmtest, CCRectMake(0, 0, 50, 50));
 		a->addObject(s1);
 		asmtest->addChild(s1, 10);
 	}
@@ -657,10 +657,10 @@ SpriteSheetReorder::SpriteSheetReorder()
 			asmtest->reorderChild( (CCNode*)(a->getObjectAtIndex(i)), 9 );
 	}
 	
-    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 
 	int prev = -1;
-	NSMutableArray<CCNode*>* children = asmtest->getChildren();
+	CCMutableArray<CCNode*>* children = asmtest->getChildren();
 	CCSprite* child;
 	for(it = children->begin(); it != children->end(); it++)
 	{
@@ -675,8 +675,8 @@ SpriteSheetReorder::SpriteSheetReorder()
 	}
 	
 	prev = -1;
-    NSMutableArray<CCSprite*>::NSMutableArrayIterator itChild;
-	NSMutableArray<CCSprite*>* sChildren = asmtest->getDescendants();
+    CCMutableArray<CCSprite*>::CCMutableArrayIterator itChild;
+	CCMutableArray<CCSprite*>* sChildren = asmtest->getDescendants();
 	for(itChild = sChildren->begin(); itChild != sChildren->end(); itChild++)
 	{
 		child = (CCSprite*)(*itChild);
@@ -710,7 +710,7 @@ std::string SpriteSheetReorder::subtitle()
 
 SpriteSheetReorderIssue744::SpriteSheetReorderIssue744()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 
 	// Testing issue #744
@@ -718,7 +718,7 @@ SpriteSheetReorderIssue744::SpriteSheetReorderIssue744()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 15);
 	addChild(sheet, 0, kTagSpriteSheet);		
 
-	CCSprite* sprite = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )sheet,CGRectMake(0, 0, 85, 121));
+	CCSprite* sprite = CCSprite::spriteWithSpriteSheet((CCSpriteSheetInternalOnly* )sheet,CCRectMake(0, 0, 85, 121));
 	sprite->setPosition( ccp(s.width/2, s.height/2) );
 	sheet->addChild(sprite, 3);
 	sheet->reorderChild(sprite, 1);
@@ -771,12 +771,12 @@ SpriteZVertex::SpriteZVertex()
 	m_dir = 1;
 	m_time = 0;
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	float step = s.width/12;
 	
 	CCNode* node = CCNode::node();
 	// camera uses the center of the image as the pivoting point
-	node->setContentSize( CGSizeMake(s.width,s.height) );
+	node->setContentSize( CCSizeMake(s.width,s.height) );
 	node->setAnchorPoint( ccp(0.5f, 0.5f));
 	node->setPosition( ccp(s.width/2, s.height/2));
 
@@ -784,7 +784,7 @@ SpriteZVertex::SpriteZVertex()
 
 	for(int i=0;i<5;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*0, 121*1, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*0, 121*1, 85, 121));
 		sprite->setPosition( ccp((i+1)*step, s.height/2) );
 		sprite->setVertexZ( 10 + i*40 );
 		node->addChild(sprite, 0);
@@ -793,7 +793,7 @@ SpriteZVertex::SpriteZVertex()
 	
 	for(int i=5;i<11;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*0, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*0, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 		sprite->setVertexZ( 10 + (10-i)*40 );
 		node->addChild(sprite, 0);
@@ -843,14 +843,14 @@ SpriteSheetZVertex::SpriteSheetZVertex()
 	//
 	
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	float step = s.width/12;
 	
 	// small capacity. Testing resizing.
 	// Don't use capacity=1 in your real game. It is expensive to resize the capacity
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	// camera uses the center of the image as the pivoting point
-	sheet->setContentSize( CGSizeMake(s.width,s.height));
+	sheet->setContentSize( CCSizeMake(s.width,s.height));
 	sheet->setAnchorPoint( ccp(0.5f, 0.5f));
 	sheet->setPosition( ccp(s.width/2, s.height/2));
 	
@@ -859,7 +859,7 @@ SpriteSheetZVertex::SpriteSheetZVertex()
 	
 	for(int i=0;i<5;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*0, 121*1, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*0, 121*1, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 		sprite->setVertexZ(  10 + i*40 );
 		sheet->addChild(sprite, 0);
@@ -867,7 +867,7 @@ SpriteSheetZVertex::SpriteSheetZVertex()
 	}
 	
 	for(int i=5;i<11;i++) {
-		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*0, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*0, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 		sprite->setVertexZ(  10 + (10-i)*40 );
 		sheet->addChild(sprite, 0);
@@ -890,7 +890,7 @@ std::string SpriteSheetZVertex::title()
 
 SpriteAnchorPoint::SpriteAnchorPoint()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	
 	CCActionInterval* rotate = CCRotateBy::actionWithDuration(10, 360);
@@ -898,7 +898,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
 	
 	for(int i=0;i<3;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*i, 121*1, 85, 121) );
+		CCSprite* sprite = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*i, 121*1, 85, 121) );
 		sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
 		
 		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
@@ -909,7 +909,7 @@ SpriteAnchorPoint::SpriteAnchorPoint()
 		switch(i) 
 		{
 			case 0:
-				sprite->setAnchorPoint( CGPointZero );
+				sprite->setAnchorPoint( CCPointZero );
 				break;
 			case 1:
 				sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -944,14 +944,14 @@ SpriteSheetAnchorPoint::SpriteSheetAnchorPoint()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 1);
 	addChild(sheet, 0, kTagSpriteSheet);		
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	
 	CCActionInterval* rotate = CCRotateBy::actionWithDuration(10, 360);
 	CCAction* action = CCRepeatForever::actionWithAction(rotate);
 	for(int i=0;i<3;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*i, 121*1, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
 		sprite->setPosition( ccp( s.width/4*(i+1), s.height/2) );
 		
 		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
@@ -962,7 +962,7 @@ SpriteSheetAnchorPoint::SpriteSheetAnchorPoint()
 		switch(i) 
 		{
 			case 0:
-				sprite->setAnchorPoint( CGPointZero );
+				sprite->setAnchorPoint( CCPointZero );
 				break;
 			case 1:
 				sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -999,10 +999,10 @@ Sprite6::Sprite6()
 	addChild(sheet, 0, kTagSpriteSheet);
 	sheet->setIsRelativeAnchorPoint( false );
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	sheet->setAnchorPoint( ccp(0.5f, 0.5f) );
-	sheet->setContentSize( CGSizeMake(s.width, s.height) );
+	sheet->setContentSize( CCSizeMake(s.width, s.height) );
 	
 	
 	// SpriteSheet actions
@@ -1023,7 +1023,7 @@ Sprite6::Sprite6()
 
 	for(int i=0;i<3;i++) 
 	{
-		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*i, 121*1, 85, 121));
+		CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*i, 121*1, 85, 121));
 		sprite->setPosition( ccp( (i+1)*step, s.height/2) );
 
 		sprite->runAction( (CCAction*)(action->copy()->autorelease()) );
@@ -1046,13 +1046,13 @@ std::string Sprite6::title()
 //------------------------------------------------------------------
 SpriteFlip::SpriteFlip()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
-	CCSprite* sprite1 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite1 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
 	sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
 	addChild(sprite1, 0, kTagSprite1);
 	
-	CCSprite* sprite2 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite2 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	addChild(sprite2, 0, kTagSprite2);
 	
@@ -1086,13 +1086,13 @@ SpriteSheetFlip::SpriteSheetFlip()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
-	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
 	sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
 	sheet->addChild(sprite1, 0, kTagSprite1);
 	
-	CCSprite* sprite2 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite2 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	sheet->addChild(sprite2, 0, kTagSprite2);
 	
@@ -1125,13 +1125,13 @@ std::string SpriteSheetFlip::title()
 
 SpriteAliased::SpriteAliased()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
-	CCSprite* sprite1 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite1 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
 	sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
 	addChild(sprite1, 0, kTagSprite1);
 	
-	CCSprite* sprite2 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite2 = CCSprite::spriteWithFile("Images/grossini_dance_atlas.png", CCRectMake(85*1, 121*1, 85, 121));
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	addChild(sprite2, 0, kTagSprite2);
 	
@@ -1184,13 +1184,13 @@ SpriteSheetAliased::SpriteSheetAliased()
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("Images/grossini_dance_atlas.png", 10);
 	addChild(sheet, 0, kTagSpriteSheet);
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite1 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
 	sprite1->setPosition( ccp( s.width/2 - 100, s.height/2 ) );
 	sheet->addChild(sprite1, 0, kTagSprite1);
 	
-	CCSprite* sprite2 = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(85*1, 121*1, 85, 121));
+	CCSprite* sprite2 = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(85*1, 121*1, 85, 121));
 	sprite2->setPosition( ccp( s.width/2 + 100, s.height/2 ) );
 	sheet->addChild(sprite2, 0, kTagSprite2);
 	
@@ -1257,9 +1257,9 @@ SpriteNewTexture::~SpriteNewTexture()
 
 void SpriteNewTexture::addNewSprite()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+	CCPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
@@ -1267,7 +1267,7 @@ void SpriteNewTexture::addNewSprite()
 	
 	
 	CCNode* node = getChildByTag( kTagSpriteSheet );
-	CCSprite* sprite = CCSprite::spriteWithTexture(m_texture1, CGRectMake(x,y,85,121));
+	CCSprite* sprite = CCSprite::spriteWithTexture(m_texture1, CCRectMake(x,y,85,121));
 	node->addChild(sprite);
 	
 	sprite->setPosition( ccp( p.x, p.y) );
@@ -1292,13 +1292,13 @@ void SpriteNewTexture::addNewSprite()
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
 
-void SpriteNewTexture::ccTouchesEnded(NSSet* touches, UIEvent* event)
+void SpriteNewTexture::ccTouchesEnded(CCSet* touches, UIEvent* event)
 {
 
 	CCNode *node = getChildByTag( kTagSpriteSheet );
 	
-	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-	NSMutableArray<CCNode*>* children = node->getChildren();
+	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
+	CCMutableArray<CCNode*>* children = node->getChildren();
 	CCSprite* sprite;
 
 	if( m_usingTexture1 )						  //--> win32 : Let's it make just simple sentence
@@ -1363,9 +1363,9 @@ SpriteSheetNewTexture::~SpriteSheetNewTexture()
 
 void SpriteSheetNewTexture::addNewSprite()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
-	CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+	CCPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 	
 	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
@@ -1374,7 +1374,7 @@ void SpriteSheetNewTexture::addNewSprite()
 	int y = (idx/5) * 121;
 	
 	
-	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CGRectMake(x,y,85,121));
+	CCSprite* sprite = CCSprite::spriteWithTexture(sheet->getTexture(), CCRectMake(x,y,85,121));
 	sheet->addChild(sprite);
 	
 	sprite->setPosition( ccp( p.x, p.y) );
@@ -1398,7 +1398,7 @@ void SpriteSheetNewTexture::addNewSprite()
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
 
-void SpriteSheetNewTexture::ccTouchesEnded(NSSet* touches, UIEvent* event)
+void SpriteSheetNewTexture::ccTouchesEnded(CCSet* touches, UIEvent* event)
 {
 	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	
@@ -1422,7 +1422,7 @@ std::string SpriteSheetNewTexture::title()
 
 SpriteFrameTest::SpriteFrameTest()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	// IMPORTANT:
 	// The sprite frames will be cached AND RETAINED, and they won't be released unless you call
@@ -1441,7 +1441,7 @@ SpriteFrameTest::SpriteFrameTest()
 	spritesheet->addChild(m_pSprite1);
 	addChild(spritesheet);
 
-	NSMutableArray<CCSpriteFrame*>* animFrames = new NSMutableArray<CCSpriteFrame*>(15);
+	CCMutableArray<CCSpriteFrame*>* animFrames = new CCMutableArray<CCSpriteFrame*>(15);
 
     char str[100] = {0};
 	for(int i = 1; i < 15; i++) 
@@ -1466,7 +1466,7 @@ SpriteFrameTest::SpriteFrameTest()
 	addChild(m_pSprite2);
 	
 
-	NSMutableArray<CCSpriteFrame*>* moreFrames = new NSMutableArray<CCSpriteFrame*>(20);
+	CCMutableArray<CCSpriteFrame*>* moreFrames = new CCMutableArray<CCSpriteFrame*>(20);
 	for(int i = 1; i < 15; i++) 
 	{
         sprintf(str, "grossini_dance_gray_%02d.png",i);
@@ -1567,7 +1567,7 @@ void SpriteFrameTest::flipSprites(ccTime dt)
 //------------------------------------------------------------------
 SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();		
+	CCSize s = CCDirector::sharedDirector()->getWinSize();		
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_gray.plist");
 
@@ -1587,7 +1587,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
 		switch(i) 
 		{
 			case 0:
-				sprite->setAnchorPoint( CGPointZero );
+				sprite->setAnchorPoint( CCPointZero );
 				break;
 			case 1:
 				sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -1599,7 +1599,7 @@ SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
 		
 		point->setPosition( sprite->getPosition() );
 		
-		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
         char str[100] = {0};
 		for(int i = 0; i < 14; i++) 
 		{
@@ -1638,7 +1638,7 @@ std::string SpriteOffsetAnchorRotation::title()
 
 SpriteSheetOffsetAnchorRotation::SpriteSheetOffsetAnchorRotation()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();		
+	CCSize s = CCDirector::sharedDirector()->getWinSize();		
 	
 	for(int i=0;i<3;i++) 
 	{
@@ -1659,7 +1659,7 @@ SpriteSheetOffsetAnchorRotation::SpriteSheetOffsetAnchorRotation()
 		switch(i) 
 		{
 			case 0:
-				sprite->setAnchorPoint( CGPointZero );
+				sprite->setAnchorPoint( CCPointZero );
 				break;
 			case 1:
 				sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -1674,7 +1674,7 @@ SpriteSheetOffsetAnchorRotation::SpriteSheetOffsetAnchorRotation()
 		CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 		addChild(spritesheet);
 		
-		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
         char str[100] = {0};
         for(int k = 0; k < 14; k++) 
 		{
@@ -1715,7 +1715,7 @@ std::string SpriteSheetOffsetAnchorRotation::title()
 
 SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();		
+	CCSize s = CCDirector::sharedDirector()->getWinSize();		
 	
 	for(int i=0;i<3;i++) 
 	{
@@ -1736,7 +1736,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
 		switch(i) 
 		{
 			case 0:
-				sprite->setAnchorPoint( CGPointZero );
+				sprite->setAnchorPoint( CCPointZero );
 				break;
 			case 1:
 				sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -1748,7 +1748,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
 		
 		point->setPosition( sprite->getPosition() );
 		
-		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
         char str[100] = {0};
 		for(int i = 0; i < 14; i++) 
 		{
@@ -1789,7 +1789,7 @@ std::string SpriteOffsetAnchorScale::title()
 //------------------------------------------------------------------
 SpriteSheetOffsetAnchorScale::SpriteSheetOffsetAnchorScale()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();		
+	CCSize s = CCDirector::sharedDirector()->getWinSize();		
 	
 	for(int i=0;i<3;i++) 
 	{
@@ -1809,7 +1809,7 @@ SpriteSheetOffsetAnchorScale::SpriteSheetOffsetAnchorScale()
 		
 		switch(i) {
 			case 0:
-				sprite->setAnchorPoint( CGPointZero );
+				sprite->setAnchorPoint( CCPointZero );
 				break;
 			case 1:
 				sprite->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -1824,7 +1824,7 @@ SpriteSheetOffsetAnchorScale::SpriteSheetOffsetAnchorScale()
 		CCSpriteBatchNode *spritesheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png");
 		addChild(spritesheet);
 		
-		NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(14);
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(14);
         char str[100] = {0};
 		for(int k = 0; k < 14; k++) 
 		{
@@ -1866,17 +1866,17 @@ std::string SpriteSheetOffsetAnchorScale::title()
 
 SpriteAnimationSplit::SpriteAnimationSplit()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage("animations/dragon_animation.png");
 	
 	// manually add frames to the frame cache
-	CCSpriteFrame *frame0 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*0, 132, 132));
-	CCSpriteFrame *frame1 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*0, 132, 132));
-	CCSpriteFrame *frame2 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*2, 132*0, 132, 132));
-	CCSpriteFrame *frame3 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*3, 132*0, 132, 132));
-	CCSpriteFrame *frame4 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*0, 132*1, 132, 132));
-	CCSpriteFrame *frame5 = CCSpriteFrame::frameWithTexture(texture, CGRectMake(132*1, 132*1, 132, 132));
+	CCSpriteFrame *frame0 = CCSpriteFrame::frameWithTexture(texture, CCRectMake(132*0, 132*0, 132, 132));
+	CCSpriteFrame *frame1 = CCSpriteFrame::frameWithTexture(texture, CCRectMake(132*1, 132*0, 132, 132));
+	CCSpriteFrame *frame2 = CCSpriteFrame::frameWithTexture(texture, CCRectMake(132*2, 132*0, 132, 132));
+	CCSpriteFrame *frame3 = CCSpriteFrame::frameWithTexture(texture, CCRectMake(132*3, 132*0, 132, 132));
+	CCSpriteFrame *frame4 = CCSpriteFrame::frameWithTexture(texture, CCRectMake(132*0, 132*1, 132, 132));
+	CCSpriteFrame *frame5 = CCSpriteFrame::frameWithTexture(texture, CCRectMake(132*1, 132*1, 132, 132));
 	
 	
 	//
@@ -1886,7 +1886,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 	sprite->setPosition( ccp( s.width/2-80, s.height/2) );
 	addChild(sprite);
 			
-	NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>(6);
+	CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>(6);
 	animFrames->addObject(frame0);
 	animFrames->addObject(frame1);
 	animFrames->addObject(frame2);
@@ -1924,7 +1924,7 @@ std::string SpriteAnimationSplit::title()
 //------------------------------------------------------------------
 SpriteHybrid::SpriteHybrid()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	// parents
 	CCNode *parent1 = CCNode::node();
@@ -1974,7 +1974,7 @@ void SpriteHybrid::reparentSprite(ccTime dt)
 	CCNode *p1 = getChildByTag(kTagNode);
 	CCNode *p2 = getChildByTag( kTagSpriteSheet );
 	
-	NSMutableArray<CCNode*>* retArray = new NSMutableArray<CCNode*>(250);
+	CCMutableArray<CCNode*>* retArray = new CCMutableArray<CCNode*>(250);
 
 	if( m_usingSpriteSheet )
 		CC_SWAP(p1,p2, CCNode*);
@@ -1982,8 +1982,8 @@ void SpriteHybrid::reparentSprite(ccTime dt)
 	////----UXLOG("New parent is: %x", p2);
 	
 	CCNode* node;
-	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-	NSMutableArray<CCNode*>* children = p1->getChildren();
+	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
+	CCMutableArray<CCNode*>* children = p1->getChildren();
 	for(it = children->begin(); it != children->end(); it++)
 	{
 		node = (CCNode*)(*it);
@@ -2030,7 +2030,7 @@ std::string SpriteHybrid::title()
 
 SpriteSheetChildren::SpriteSheetChildren()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
@@ -2053,7 +2053,7 @@ SpriteSheetChildren::SpriteSheetChildren()
 	sprite1->addChild(sprite3);
 	
 	// BEGIN NEW CODE
-	NSMutableArray<CCSpriteFrame*> *animFrames = new NSMutableArray<CCSpriteFrame*>();
+	CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
     char str[100] = {0};
 	for(int i = 1; i < 15; i++) 
 	{
@@ -2103,7 +2103,7 @@ std::string SpriteSheetChildren::title()
 
 SpriteSheetChildren2::SpriteSheetChildren2()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
 	CCSpriteBatchNode* sheet = CCSpriteBatchNode::spriteSheetWithFile("animations/grossini.png", 50);
@@ -2192,7 +2192,7 @@ std::string SpriteSheetChildren2::title()
 //------------------------------------------------------------------
 SpriteSheetChildrenZ::SpriteSheetChildrenZ()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// parents
 	CCSpriteBatchNode* sheet;
@@ -2289,7 +2289,7 @@ std::string SpriteSheetChildrenZ::title()
 
 SpriteChildrenVisibility::SpriteChildrenVisibility()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
 
@@ -2361,7 +2361,7 @@ std::string SpriteChildrenVisibility::title()
 //------------------------------------------------------------------
 SpriteChildrenAnchorPoint::SpriteChildrenAnchorPoint()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
 	
@@ -2474,7 +2474,7 @@ std::string SpriteChildrenAnchorPoint::title()
 //------------------------------------------------------------------
 SpriteSheetChildrenAnchorPoint::SpriteSheetChildrenAnchorPoint()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini.plist");
 	
@@ -2584,7 +2584,7 @@ std::string SpriteSheetChildrenAnchorPoint::title()
 //------------------------------------------------------------------
 SpriteSheetChildrenScale::SpriteSheetChildrenScale()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();		
+	CCSize s = CCDirector::sharedDirector()->getWinSize();		
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/grossini_family.plist");
 
@@ -2685,7 +2685,7 @@ std::string SpriteSheetChildrenScale::title()
 //------------------------------------------------------------------
 SpriteChildrenChildren::SpriteChildrenChildren()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();		
+	CCSize s = CCDirector::sharedDirector()->getWinSize();		
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist");
 	
@@ -2709,14 +2709,14 @@ SpriteChildrenChildren::SpriteChildrenChildren()
 	l1->setPosition( ccp( s.width/2, s.height/2) );
 	l1->runAction( (CCAction*)(seq->copy()->autorelease()) );
 	aParent->addChild(l1);
-	CGSize l1Size = l1->getContentSize();
+	CCSize l1Size = l1->getContentSize();
 	
 	// child left
 	l2a = CCSprite::spriteWithSpriteFrameName("sister1.gif");
 	l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
 	l2a->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
 	l1->addChild(l2a);
-	CGSize l2aSize = l2a->getContentSize();		
+	CCSize l2aSize = l2a->getContentSize();		
 	
 	
 	// child right
@@ -2724,7 +2724,7 @@ SpriteChildrenChildren::SpriteChildrenChildren()
 	l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
 	l2b->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
 	l1->addChild(l2b);
-	CGSize l2bSize = l2a->getContentSize();		
+	CCSize l2bSize = l2a->getContentSize();		
 	
 	
 	// child left bottom
@@ -2768,7 +2768,7 @@ std::string SpriteChildrenChildren::title()
 
 SpriteSheetChildrenChildren::SpriteSheetChildrenChildren()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();		
+	CCSize s = CCDirector::sharedDirector()->getWinSize();		
 	
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("animations/ghosts.plist");
 	
@@ -2793,14 +2793,14 @@ SpriteSheetChildrenChildren::SpriteSheetChildrenChildren()
 	l1->setPosition( ccp( s.width/2, s.height/2) );
 	l1->runAction( (CCAction*)(seq->copy()->autorelease()) );
 	aParent->addChild(l1);
-	CGSize l1Size = l1->getContentSize();
+	CCSize l1Size = l1->getContentSize();
 
 	// child left
 	l2a = CCSprite::spriteWithSpriteFrameName("sister1.gif");
 	l2a->setPosition( ccp( -50 + l1Size.width/2, 0 + l1Size.height/2) );
 	l2a->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
 	l1->addChild(l2a);
-	CGSize l2aSize = l2a->getContentSize();		
+	CCSize l2aSize = l2a->getContentSize();		
 
 
 	// child right
@@ -2808,7 +2808,7 @@ SpriteSheetChildrenChildren::SpriteSheetChildrenChildren()
 	l2b->setPosition( ccp( +50 + l1Size.width/2, 0 + l1Size.height/2) );
 	l2b->runAction( (CCAction*)(rot_back_fe->copy()->autorelease()) );
 	l1->addChild(l2b);
-	CGSize l2bSize = l2a->getContentSize();		
+	CCSize l2bSize = l2a->getContentSize();		
 
 	
 	// child left bottom
@@ -2852,14 +2852,14 @@ std::string SpriteSheetChildrenChildren::title()
 
 SpriteNilTexture::SpriteNilTexture()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCSprite* sprite = NULL;
 	
 	// TEST: If no texture is given, then Opacity + Color should work.
 
 	sprite = new CCSprite();
-	sprite->setTextureRect( CGRectMake(0, 0, 300,300) );
+	sprite->setTextureRect( CCRectMake(0, 0, 300,300) );
 	sprite->setColor(ccRED);
 	sprite->setOpacity(128);
 	sprite->setPosition(ccp(3*s.width/4, s.height/2));
@@ -2867,7 +2867,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite->release();
 
 	sprite = new CCSprite();
-	sprite->setTextureRect(CGRectMake(0, 0, 300,300));
+	sprite->setTextureRect(CCRectMake(0, 0, 300,300));
 	sprite->setColor(ccBLUE);
 	sprite->setOpacity(128);
 	sprite->setPosition(ccp(1*s.width/4, s.height/2));

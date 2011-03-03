@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionEase.h"
-#include "NSObject.h"
+#include "CCObject.h"
 
 /*
  * Elastic, Back and Bounce actions based on code from:
@@ -73,9 +73,9 @@ namespace cocos2d {
 		return false;
 	}
 
-	NSObject* CCActionEase::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCActionEase::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCActionEase* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -85,7 +85,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCActionEase();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCActionInterval::copyWithZone(pZone);
@@ -155,9 +155,9 @@ namespace cocos2d {
 		return false;
 	}
 
-	NSObject* CCEaseRateAction::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseRateAction::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseRateAction* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -167,7 +167,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseRateAction();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -206,9 +206,9 @@ namespace cocos2d {
 		return pRet;
 	}
 
-	NSObject* CCEaseIn::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseIn::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseIn* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -218,7 +218,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseIn();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -253,9 +253,9 @@ namespace cocos2d {
 		return pRet;      
 	}
 
-	NSObject* CCEaseOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -265,7 +265,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -300,9 +300,9 @@ namespace cocos2d {
 		return pRet;        
 	}
 
-	NSObject* CCEaseInOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseInOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseInOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -312,7 +312,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseInOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
@@ -369,9 +369,9 @@ namespace cocos2d {
 		return pRet;      
 	}
 
-	NSObject* CCEaseExponentialIn::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseExponentialIn::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseExponentialIn* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -381,7 +381,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseExponentialIn();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -421,9 +421,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseExponentialOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseExponentialOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseExponentialOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -433,7 +433,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseExponentialOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -473,9 +473,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseExponentialInOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseExponentialInOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseExponentialInOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -485,7 +485,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseExponentialInOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -530,9 +530,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseSineIn::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseSineIn::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseSineIn* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
@@ -542,7 +542,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseSineIn();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -582,9 +582,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseSineOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseSineOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseSineOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -594,7 +594,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseSineOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -634,9 +634,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseSineInOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseSineInOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseSineInOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -646,7 +646,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseSineInOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -715,9 +715,9 @@ namespace cocos2d {
 		return false;
 	}
 
-	NSObject* CCEaseElastic::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseElastic::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseElastic* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -727,7 +727,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseElastic();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -782,9 +782,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseElasticIn::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseElasticIn::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseElasticIn* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -794,7 +794,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseElasticIn();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -864,9 +864,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject *CCEaseElasticOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject *CCEaseElasticOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseElasticOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -876,7 +876,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseElasticOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -945,9 +945,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseElasticInOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseElasticInOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseElasticInOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -957,7 +957,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseElasticInOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
@@ -1024,9 +1024,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseBounce::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseBounce::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseBounce* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -1036,7 +1036,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseBounce();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1087,9 +1087,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseBounceIn::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseBounceIn::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseBounceIn* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -1099,7 +1099,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseBounceIn();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1140,9 +1140,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseBounceOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseBounceOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseBounceOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
@@ -1152,7 +1152,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseBounceOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1193,9 +1193,9 @@ namespace cocos2d {
 		return pRet; 
 	}
 
-	NSObject* CCEaseBounceInOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseBounceInOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseBounceInOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -1205,7 +1205,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseBounceInOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1251,9 +1251,9 @@ namespace cocos2d {
 		return pRet;
 	}
 
-	NSObject* CCEaseBackIn::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseBackIn::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseBackIn* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -1263,7 +1263,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseBackIn();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1304,9 +1304,9 @@ namespace cocos2d {
 		return pRet;
 	}
 
-	NSObject* CCEaseBackOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseBackOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseBackOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -1316,7 +1316,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseBackOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
@@ -1359,9 +1359,9 @@ namespace cocos2d {
 		return pRet;
 	}
 
-	NSObject* CCEaseBackInOut::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCEaseBackInOut::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCEaseBackInOut* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -1371,7 +1371,7 @@ namespace cocos2d {
 		else
 		{
 			pCopy = new CCEaseBackInOut();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));

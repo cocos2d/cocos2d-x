@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCX_APPLICATION_WIN32_H__
 
 #include <Windows.h>
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 #include "CCDirector.h"
 
 namespace   cocos2d {
@@ -66,7 +66,7 @@ public:
     /**
     @brief	Get status bar rectangle in EGLView window.
     */
-    CGRect statusBarFrame();
+    CCRect statusBarFrame();
 
     /**
     @brief	Get current applicaiton instance.

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCKEYPAD_DISPATCHER_H__
 
 #include "CCKeypadDelegate.h"
-#include "NSMutableArray.h"
+#include "CCMutableArray.h"
 
 namespace   cocos2d {
 
@@ -41,7 +41,7 @@ struct _ccCArray;
 @class CCKeypadDispatcher
 @brief Dispatch the keypad message from the phone
 */
-class CCX_DLL CCKeypadDispatcher : public NSObject
+class CCX_DLL CCKeypadDispatcher : public CCObject
 {
 public:
     CCKeypadDispatcher();
@@ -84,7 +84,7 @@ public:
 
 protected:
 
-    typedef NSMutableArray<CCKeypadHandler*> KeypadDelegateArray;
+    typedef CCMutableArray<CCKeypadHandler*> KeypadDelegateArray;
 
     KeypadDelegateArray* m_pDelegates;
     bool m_bLocked;

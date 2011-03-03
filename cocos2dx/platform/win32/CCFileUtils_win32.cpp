@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCXFileUtils_win32.h"
+#include "CCFileUtils_win32.h"
 
 #include <windows.h>
 
@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
-#include "NSString.h"
-#include "CCXCocos2dDefine.h"
+#include "CCString.h"
+#include "CCCocos2dDefine.h"
 
 namespace cocos2d {
 
@@ -52,9 +52,9 @@ typedef enum
 class CCDictMaker
 {
 public:
-	NSDictionary<std::string, NSObject*> *m_pRootDict;
-	NSDictionary<std::string, NSObject*> *m_pCurDict;
-	std::stack<NSDictionary<std::string, NSObject*>*> m_tDictStack;
+	CCDictionary<std::string, CCObject*> *m_pRootDict;
+	CCDictionary<std::string, CCObject*> *m_pCurDict;
+	std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
 	std::string m_sCurKey;///< parsed key
 	CCSAXState m_tState;
 public:
@@ -67,7 +67,7 @@ public:
 	~CCDictMaker()
 	{
 	}
-	NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName)
+	CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
 	{
 		FILE *fp = NULL;
 		if( !(fp = fopen(pFileName, "r")) )
@@ -117,7 +117,7 @@ void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 	std::string sName((char*)name);
 	if( sName == "dict" )
 	{
-		NSDictionary<std::string, NSObject*> *pNewDict = new NSDictionary<std::string, NSObject*>();
+		CCDictionary<std::string, CCObject*> *pNewDict = new CCDictionary<std::string, CCObject*>();
 		if(! pMaker->m_pRootDict)
 		{
 			pMaker->m_pRootDict = pNewDict;
@@ -164,7 +164,7 @@ void plist_endElement(void *ctx, const xmlChar *name)
 		pMaker->m_tDictStack.pop();
 		if ( !pMaker->m_tDictStack.empty() )
 		{
-			pMaker->m_pCurDict = (NSDictionary<std::string, NSObject*>*)(pMaker->m_tDictStack.top());
+			pMaker->m_pCurDict = (CCDictionary<std::string, CCObject*>*)(pMaker->m_tDictStack.top());
 		}
 	}
 	pMaker->m_tState = SAX_NONE;
@@ -176,7 +176,7 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
 	{
 		return;
 	}
- 	NSString *pText = new NSString();
+ 	CCString *pText = new CCString();
 	pText->m_sString = std::string((char*)ch,0,len);
 
  	switch(pMaker->m_tState)
@@ -231,7 +231,7 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
 	_CheckPath();
 
-    NSString * pRet = new NSString();
+    CCString * pRet = new CCString();
     pRet->autorelease();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
     {
@@ -255,14 +255,14 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 {
 	_CheckPath();
 	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
-	NSString *pRet = new NSString();
+	CCString *pRet = new CCString();
 	pRet->autorelease();
 	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
 	pRet->m_sString += pszFilename;
 	return pRet->m_sString.c_str();
 }
 
-NSDictionary<std::string, NSObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);

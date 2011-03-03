@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_CCXMATH_H__
-#define __PLATFORM_CCXMATH_H__
+#ifndef __PLATFORM_CCMATH_H__
+#define __PLATFORM_CCMATH_H__
 
 #include <float.h>
 
@@ -35,7 +35,7 @@ namespace cocos2d
 	// In other compiler(such as gcc), we may implement ourself.
 	// We use a simple way: if it is a number, it should equal to itself.
 	/************************************************************************/
-	class CCXMath
+	class CCMath
 	{
 	public:
 		static inline int isnanCocos2d(double fValue)
@@ -57,4 +57,4 @@ namespace cocos2d
 	  
 	} // end of namespace cocos2d
 
-#endif // __PLATFORM_CCXMATH_H__
+#endif // __PLATFORM_CCMATH_H__

@@ -26,8 +26,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
-#include "NSMutableArray.h"
-#include "CCXCocos2dDefine.h"
+#include "CCMutableArray.h"
+#include "CCCocos2dDefine.h"
 
 #include <assert.h>
 namespace   cocos2d {
@@ -465,7 +465,7 @@ void CCScheduler::unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget)
 
 	if (pElement)
 	{
-		if (ccArrayContainsObject(pElement->timers, pElement->currentTimer)
+		if (ccArrayContaiCCObject(pElement->timers, pElement->currentTimer)
 			&& (! pElement->currentTimerSalvaged))
 		{
 			pElement->currentTimer->retain();

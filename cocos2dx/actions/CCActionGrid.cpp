@@ -105,9 +105,9 @@ namespace cocos2d
 		return CCReverseTime::actionWithAction(this);
 	}
 
-	NSObject* CCGridAction::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCGridAction::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCGridAction* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -117,7 +117,7 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCGridAction();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCActionInterval::copyWithZone(pZone);

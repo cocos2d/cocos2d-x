@@ -22,24 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __COCOA_NSOBJECT_H__
-#define __COCOA_NSOBJECT_H__
+#ifndef __COCOA_CCObject_H__
+#define __COCOA_CCObject_H__
 
-#include "ccxCommon.h"
+#include "CCCommon.h"
 
 
 namespace   cocos2d {
-class NSZone;
-class NSObject;
-class NSString;
+class CCZone;
+class CCObject;
+class CCString;
 
 class CCX_DLL CCCopying
 {
 public:
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 };
 
-class CCX_DLL NSObject : public CCCopying
+class CCX_DLL CCObject : public CCCopying
 {
 protected:
 	// object id
@@ -49,19 +49,19 @@ protected:
 	// is the object autoreleased
 	bool		m_bManaged;		
 public:
-	NSObject(void);
-	virtual ~NSObject(void);
+	CCObject(void);
+	virtual ~CCObject(void);
     
 	virtual void release(void);
 	virtual void retain(void);
-	NSObject* autorelease(void);
-	NSObject* copy(void);
+	CCObject* autorelease(void);
+	CCObject* copy(void);
 	bool isSingleRefrence(void);
 	unsigned int retainCount(void);
-	bool isEqual(const NSObject* pObject);
+	bool isEqual(const CCObject* pObject);
 
-	friend class NSAutoreleasePool;
+	friend class CCAutoreleasePool;
 };
 }//namespace   cocos2d 
 
-#endif // __COCOA_NSOBJECT_H__
+#endif // __COCOA_CCObject_H__

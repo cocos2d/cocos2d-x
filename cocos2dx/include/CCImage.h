@@ -21,9 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_UIIMage_H__
-#define __CCX_UIIMage_H__
+#ifndef __CCImage_H__
+#define __CCImage_H__
 
-#include "platform/CCXUIImage_platform.h"
+#include "platform/CCImage_platform.h"
 
-#endif // __CCX_UIIMage_H__
+#endif // __CCX_CCImage_H__

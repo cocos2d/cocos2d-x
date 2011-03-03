@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCTransition.h"
 #include "CCCamera.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCDirector.h"
 #include "CCTouchDispatcher.h"
 #include "CCActionInterval.h"
@@ -278,7 +278,7 @@ CCTransitionJumpZoom::~CCTransitionJumpZoom()
 void CCTransitionJumpZoom::onEnter()
 {
 	CCTransitionScene::onEnter();
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	m_pInScene->setScale(0.5f);
 	m_pInScene->setPosition(ccp(s.width, 0));
@@ -350,7 +350,7 @@ CCActionInterval* CCTransitionMoveInL::easeActionWithAction(CCActionInterval* ac
 
 void CCTransitionMoveInL::initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(-s.width,0) );
 }
 
@@ -368,7 +368,7 @@ CCTransitionMoveInR::~CCTransitionMoveInR()
 
 void CCTransitionMoveInR::initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(s.width,0) );
 }
 
@@ -386,7 +386,7 @@ CCTransitionMoveInT::~CCTransitionMoveInT()
 
 void CCTransitionMoveInT::initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,s.height) );
 }
 
@@ -404,7 +404,7 @@ CCTransitionMoveInB::~CCTransitionMoveInB()
 
 void CCTransitionMoveInB::initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,-s.height) );
 }
 
@@ -453,13 +453,13 @@ void CCTransitionSlideInL::sceneOrder()
 
 void CCTransitionSlideInL:: initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(-(s.width-ADJUST_FACTOR),0) );
 }
 
 CCActionInterval* CCTransitionSlideInL::action()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(s.width-ADJUST_FACTOR,0));
 }
 
@@ -489,14 +489,14 @@ void CCTransitionSlideInR::sceneOrder()
 
 void CCTransitionSlideInR::initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(s.width-ADJUST_FACTOR,0) );
 }
 
 
 CCActionInterval* CCTransitionSlideInR:: action()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(-(s.width-ADJUST_FACTOR),0));
 }
 
@@ -520,14 +520,14 @@ void CCTransitionSlideInT::sceneOrder()
 
 void CCTransitionSlideInT::initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,s.height-ADJUST_FACTOR) );
 }
 
 
 CCActionInterval* CCTransitionSlideInT::action()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,-(s.height-ADJUST_FACTOR)));
 }
 
@@ -550,14 +550,14 @@ void CCTransitionSlideInB::sceneOrder()
 
 void CCTransitionSlideInB:: initScenes()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_pInScene->setPosition( ccp(0,-(s.height-ADJUST_FACTOR)) );
 }
 
 
 CCActionInterval* CCTransitionSlideInB:: action()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	return CCMoveBy::actionWithDuration(m_fDuration, ccp(0,s.height-ADJUST_FACTOR));
 }
 
@@ -1107,7 +1107,7 @@ void CCTransitionCrossFade::onEnter()
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
 	ccColor4B  color = {0,0,0,0};
-	CGSize size = CCDirector::sharedDirector()->getWinSize();
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	CCLayerColor* layer = CCLayerColor::layerWithColor(color);
 
 	// create the first render texture for inScene
@@ -1203,7 +1203,7 @@ void CCTransitionTurnOffTiles::sceneOrder()
 void CCTransitionTurnOffTiles::onEnter()
 {
 	CCTransitionScene::onEnter();
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	float aspect = s.width / s.height;
 	int x = (int)(12 * aspect);
 	int y = 12;
@@ -1320,7 +1320,7 @@ void CCTransitionFadeTR::onEnter()
 {
 	CCTransitionScene::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	float aspect = s.width / s.height;
 	int x = (int)(12 * aspect);
 	int y = 12;

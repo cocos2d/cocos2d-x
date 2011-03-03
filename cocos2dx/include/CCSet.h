@@ -26,34 +26,34 @@ THE SOFTWARE.
 #define __NS_SET_H__
 
 #include <set>
-#include "NSObject.h"
+#include "CCObject.h"
 
 namespace   cocos2d {
 
-typedef std::set<NSObject *>::iterator NSSetIterator;
+typedef std::set<CCObject *>::iterator CCSetIterator;
 
-class CCX_DLL NSSet : public NSObject
+class CCX_DLL CCSet : public CCObject
 {
 public:
-	NSSet(void);
-	NSSet(const NSSet &rSetObject);
-	virtual ~NSSet(void);
+	CCSet(void);
+	CCSet(const CCSet &rSetObject);
+	virtual ~CCSet(void);
 
-	NSSet* copy();
-	NSSet* mutableCopy();
+	CCSet* copy();
+	CCSet* mutableCopy();
 	int count();
-	void addObject(NSObject *pObject);
-	void removeObject(NSObject *pObject);
-	bool containsObject(NSObject *pObject);
-	NSSetIterator begin();
-	NSSetIterator end();
-    NSObject* anyObject();
+	void addObject(CCObject *pObject);
+	void removeObject(CCObject *pObject);
+	bool contaiCCObject(CCObject *pObject);
+	CCSetIterator begin();
+	CCSetIterator end();
+    CCObject* anyObject();
 
 private:
-    std::set<NSObject *> *m_pSet;
+    std::set<CCObject *> *m_pSet;
 };
 
-typedef NSSet NSMutableSet;
+typedef CCSet NSMutableSet;
 }//namespace   cocos2d 
 
 #endif // __NS_SET_H__

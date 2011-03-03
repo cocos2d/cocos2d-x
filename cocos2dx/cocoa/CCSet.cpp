@@ -22,23 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "NSSet.h"
+#include "CCSet.h"
 
 using namespace std;
 
 namespace   cocos2d {
 
-NSSet::NSSet(void)
+CCSet::CCSet(void)
 {
-    m_pSet = new set<NSObject *>;
+    m_pSet = new set<CCObject *>;
 }
 
-NSSet::NSSet(const NSSet &rSetObject)
+CCSet::CCSet(const CCSet &rSetObject)
 {
-    m_pSet = new set<NSObject *>(*rSetObject.m_pSet);
+    m_pSet = new set<CCObject *>(*rSetObject.m_pSet);
 }
 
-NSSet::~NSSet(void)
+CCSet::~CCSet(void)
 {
     if (m_pSet)
     {
@@ -47,56 +47,56 @@ NSSet::~NSSet(void)
     }
 }
 
-NSSet* NSSet::copy(void)
+CCSet* CCSet::copy(void)
 {
-	NSSet *pSet = new NSSet(*this);
+	CCSet *pSet = new CCSet(*this);
 
 	return pSet;
 }
 
-NSSet* NSSet::mutableCopy(void)
+CCSet* CCSet::mutableCopy(void)
 {
 	return copy();
 }
 
-int NSSet::count(void)
+int CCSet::count(void)
 {
 	return (int)m_pSet->size();
 }
 
-void NSSet::addObject(NSObject *pObject)
+void CCSet::addObject(CCObject *pObject)
 {
 	m_pSet->insert(pObject);
 }
 
-void NSSet::removeObject(NSObject *pObject)
+void CCSet::removeObject(CCObject *pObject)
 {
 	m_pSet->erase(pObject);
 }
 
-bool NSSet::containsObject(NSObject *pObject)
+bool CCSet::contaiCCObject(CCObject *pObject)
 {
 	return m_pSet->find(pObject) != m_pSet->end();
 }
 
-NSSetIterator NSSet::begin(void)
+CCSetIterator CCSet::begin(void)
 {
 	return m_pSet->begin();
 }
 
-NSSetIterator NSSet::end(void)
+CCSetIterator CCSet::end(void)
 {
 	return m_pSet->end();
 }
 
-NSObject* NSSet::anyObject()
+CCObject* CCSet::anyObject()
 {
     if (!m_pSet || m_pSet->empty())
     {
         return NULL;
     }
     
-    NSSetIterator it;
+    CCSetIterator it;
 
     for( it = m_pSet->begin(); it != m_pSet->end(); it++)
     {

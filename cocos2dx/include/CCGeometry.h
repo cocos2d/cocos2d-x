@@ -22,15 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __COCOS_CGGEMETRY_H__
-#define __COCOS_CGGEMETRY_H__
+#ifndef __CCGEMETRY_H__
+#define __CCGEMETRY_H__
 
-#include "ccxCommon.h"
+#include "CCCommon.h"
 namespace   cocos2d {
 
 typedef float CGFloat;
 
-class CCX_DLL CGPoint
+class CCX_DLL CCPoint
 {
 public:
 	float x;
@@ -38,77 +38,77 @@ public:
 
 public:
 
-	CGPoint();
-	CGPoint(float x, float y);
+	CCPoint();
+	CCPoint(float x, float y);
 
 public:
-	static bool CGPointEqualToPoint(const CGPoint& point1, const CGPoint& point2);
+	static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
-class CCX_DLL CGSize
+class CCX_DLL CCSize
 {
 public:
 	float width;
 	float height;
 
 public:
-	CGSize();
-	CGSize(float width, float height);
+	CCSize();
+	CCSize(float width, float height);
 
 public:
-	static bool CGSizeEqualToSize(const CGSize& size1, const CGSize& size2);
+	static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
 
-class CCX_DLL CGRect
+class CCX_DLL CCRect
 {
 public:
-	CGPoint origin;
-	CGSize  size;
+	CCPoint origin;
+	CCSize  size;
 
 public:
-	CGRect();	
-	CGRect(float x, float y, float width, float height);
+	CCRect();	
+	CCRect(float x, float y, float width, float height);
 
 public:
 	//! return the leftmost x-value of 'rect'
-	static CGFloat CGRectGetMinX(const CGRect& rect);
+	static CGFloat CCRectGetMinX(const CCRect& rect);
 
 	//! return the rightmost x-value of 'rect'
-	static CGFloat CGRectGetMaxX(const CGRect& rect);
+	static CGFloat CCRectGetMaxX(const CCRect& rect);
 
 	//! return the midpoint x-value of 'rect'
-	static CGFloat CGRectGetMidX(const CGRect& rect);
+	static CGFloat CCRectGetMidX(const CCRect& rect);
 
 	//! Return the bottommost y-value of `rect'
-	static CGFloat CGRectGetMinY(const CGRect& rect);
+	static CGFloat CCRectGetMinY(const CCRect& rect);
 
 	//! Return the topmost y-value of `rect'
-	static CGFloat CGRectGetMaxY(const CGRect& rect);
+	static CGFloat CCRectGetMaxY(const CCRect& rect);
 
 	//! Return the midpoint y-value of `rect'
-	static CGFloat CGRectGetMidY(const CGRect& rect);
+	static CGFloat CCRectGetMidY(const CCRect& rect);
 
-	static bool CGRectEqualToRect(const CGRect& rect1, const CGRect& rect2);
+	static bool CCRectEqualToRect(const CCRect& rect1, const CCRect& rect2);
 
-    static bool CGRectContainsPoint(const CGRect& rect, const CGPoint& point);
+    static bool CCRectContainsPoint(const CCRect& rect, const CCPoint& point);
 
-	static bool CGRectIntersectsRect(const CGRect& rectA, const CGRect& rectB);
+	static bool CCRectIntersectsRect(const CCRect& rectA, const CCRect& rectB);
 };
 
 
-#define CGPointMake(x, y) CGPoint((x), (y))
-#define CGSizeMake(width, height) CGSize((width), (height))
-#define CGRectMake(x, y, width, height) CGRect((x), (y), (width), (height))
+#define CCPointMake(x, y) CCPoint((x), (y))
+#define CCSizeMake(width, height) CCSize((width), (height))
+#define CCRectMake(x, y, width, height) CCRect((x), (y), (width), (height))
 
 
-const CGPoint CGPointZero = CGPointMake(0,0);
+const CCPoint CCPointZero = CCPointMake(0,0);
 
-/* The "zero" size -- equivalent to CGSizeMake(0, 0). */ 
-const CGSize CGSizeZero = CGSizeMake(0,0);
+/* The "zero" size -- equivalent to CCSizeMake(0, 0). */ 
+const CCSize CCSizeZero = CCSizeMake(0,0);
 
-/* The "zero" rectangle -- equivalent to CGRectMake(0, 0, 0, 0). */ 
-const CGRect CGRectZero = CGRectMake(0,0,0,0);
+/* The "zero" rectangle -- equivalent to CCRectMake(0, 0, 0, 0). */ 
+const CCRect CCRectZero = CCRectMake(0,0,0,0);
 
 }//namespace   cocos2d 
 
-#endif // __COCOS_CGGEMETRY_H__
+#endif // __CCGEMETRY_H__

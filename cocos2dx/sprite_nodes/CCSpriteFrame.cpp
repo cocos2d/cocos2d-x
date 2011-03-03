@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 // implementation of CCSpriteFrame
 
-CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, CGRect rect)
+CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, CCRect rect)
 {
 	CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
 	pSpriteFrame->initWithTexture(pobTexture, rect);
@@ -36,7 +36,7 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, CGRect r
 	return pSpriteFrame;
 }
 
-CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, CGRect rect, bool rotated, CGPoint offset, CGSize originalSize)
+CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
 	pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);
@@ -45,13 +45,13 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, CGRect r
 	return pSpriteFrame;
 }
 
-bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CGRect rect)
+bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CCRect rect)
 {
-	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
-	return initWithTexture(pobTexture, rectInPixels, false, CGPointZero, rectInPixels.size);
+	CCRect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
+	return initWithTexture(pobTexture, rectInPixels, false, CCPointZero, rectInPixels.size);
 }
 
-bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CGRect rect, bool rotated, CGPoint offset, CGSize originalSize)
+bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize)
 {
 	m_pobTexture = pobTexture;
 	pobTexture->retain();
@@ -71,7 +71,7 @@ CCSpriteFrame::~CCSpriteFrame(void)
 	CCX_SAFE_RELEASE(m_pobTexture);
 }
 
-NSObject* CCSpriteFrame::copyWithZone(NSZone *pZone)
+CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)
 {
 	CCSpriteFrame *pCopy = new CCSpriteFrame();
 	

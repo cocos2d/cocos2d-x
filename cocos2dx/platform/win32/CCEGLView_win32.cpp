@@ -22,13 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCXEGLView.h"
+#include "CCEGLView.h"
 
 #include "EGL/egl.h"
 #include "gles/gl.h"
 
-#include "CCXCocos2dDefine.h"
-#include "NSSet.h"
+#include "CCCocos2dDefine.h"
+#include "CCSet.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
@@ -60,7 +60,7 @@ public:
 		}
 	}
 
-	static CCXEGL * create(CCXEGLView * pWindow)
+	static CCXEGL * create(CCEGLView * pWindow)
 	{
 		CCXEGL * pEGL = new CCXEGL;
 		BOOL bSuccess = FALSE;
@@ -162,9 +162,9 @@ private:
 };
 
 //////////////////////////////////////////////////////////////////////////
-// impliment CCXEGLView
+// impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
-static CCXEGLView * pMainWindow;
+static CCEGLView * pMainWindow;
 static const WCHAR * kWindowClassName = L"Cocos2dxWin32";
 
 static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -179,7 +179,7 @@ static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 	}
 }
 
-CCXEGLView::CCXEGLView()
+CCEGLView::CCEGLView()
 : m_bCaptured(false)
 , m_bOrientationReverted(false)
 , m_pDelegate(NULL)
@@ -187,13 +187,13 @@ CCXEGLView::CCXEGLView()
 , m_hWnd(NULL)
 {
     m_pTouch    = new CCTouch;
-    m_pSet      = new NSSet;
+    m_pSet      = new CCSet;
 	m_eInitOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
 	m_bOrientationInitVertical = (CCDeviceOrientationPortrait == m_eInitOrientation
 		|| kCCDeviceOrientationPortraitUpsideDown == m_eInitOrientation) ? true : false;
 }
 
-CCXEGLView::~CCXEGLView()
+CCEGLView::~CCEGLView()
 {
 	release();
     CCX_SAFE_DELETE(m_pSet);
@@ -202,7 +202,7 @@ CCXEGLView::~CCXEGLView()
 	CCX_SAFE_DELETE(m_pEGL);
 }
 
-bool CCXEGLView::Create(LPCTSTR pTitle, int w, int h)
+bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 {
 	bool bRet = false;
 	do 
@@ -268,7 +268,7 @@ bool CCXEGLView::Create(LPCTSTR pTitle, int w, int h)
 	return bRet;
 }
 
-LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 
@@ -321,26 +321,26 @@ LRESULT CCXEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-CGSize CCXEGLView::getSize()
+CCSize CCEGLView::getSize()
 {
 	RECT rc;
 	GetClientRect(m_hWnd, &rc);
-    return CGSize((float)(rc.right - rc.left), (float)(rc.bottom - rc.top));
+    return CCSize((float)(rc.right - rc.left), (float)(rc.bottom - rc.top));
 }
 
-CGRect CCXEGLView::getFrame()
+CCRect CCEGLView::getFrame()
 {
 	RECT rc;
 	GetClientRect(m_hWnd, &rc);
-	return (CGRect((float)rc.left, (float)rc.top, (float)(rc.right - rc.left), (float)(rc.bottom - rc.top)));
+	return (CCRect((float)rc.left, (float)rc.top, (float)(rc.right - rc.left), (float)(rc.bottom - rc.top)));
 }
 
-bool CCXEGLView::isOpenGLReady()
+bool CCEGLView::isOpenGLReady()
 {
     return (NULL != m_pEGL);
 }
 
-void CCXEGLView::release()
+void CCEGLView::release()
 {
 	if (m_hWnd)
 	{
@@ -351,12 +351,12 @@ void CCXEGLView::release()
 	UnregisterClass(kWindowClassName, GetModuleHandle(NULL));
 }
 
-void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
     m_pDelegate = pDelegate;
 }
 
-void CCXEGLView::swapBuffers()
+void CCEGLView::swapBuffers()
 {
     if (m_pEGL)
     {
@@ -364,12 +364,12 @@ void CCXEGLView::swapBuffers()
     }
 }
 
-HWND CCXEGLView::getHWnd()
+HWND CCEGLView::getHWnd()
 {
 	return m_hWnd;
 }
 
-int CCXEGLView::setDeviceOrientation(int eOritation)
+int CCEGLView::setDeviceOrientation(int eOritation)
 {
 	do 
 	{
@@ -403,13 +403,13 @@ int CCXEGLView::setDeviceOrientation(int eOritation)
 	return m_eInitOrientation;
 }
 
-bool CCXEGLView::canSetContentScaleFactor()
+bool CCEGLView::canSetContentScaleFactor()
 {
     // can scale content?
     return false;
 }
 
-void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     // if it supports scaling content, set it
 }

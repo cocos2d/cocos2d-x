@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "NSData.h"
+#include "CCData.h"
 #include "support/file_support/FileData.h"
 
 #include <stdio.h>
@@ -31,12 +31,12 @@ THE SOFTWARE.
 using namespace std;
 namespace   cocos2d {
 
-NSData::NSData(void)
+CCData::CCData(void)
 {
 	m_pData = NULL;
 }
 
-NSData::~NSData(void)
+CCData::~CCData(void)
 {
 	if (m_pData)
 	{
@@ -44,7 +44,7 @@ NSData::~NSData(void)
 	}
 }
 
-NSData* NSData::dataWithContentsOfFile(const string &strPath)
+CCData* CCData::dataWithContentsOfFile(const string &strPath)
 {
     FileData data;
     unsigned long  nSize = 0;
@@ -55,20 +55,20 @@ NSData* NSData::dataWithContentsOfFile(const string &strPath)
         return NULL;
     }
 
-	NSData *pRet = new NSData();
+	CCData *pRet = new CCData();
     pRet->m_pData = new char[nSize];
     memcpy(pRet->m_pData, pBuffer, nSize);
 
 	return pRet;
 }
 
-void* NSData::bytes(void)
+void* CCData::bytes(void)
 {
 	return m_pData;
 }
 
 //@todo implement
-NSData* NSData::dataWithBytes(unsigned char *pBytes, int size)
+CCData* CCData::dataWithBytes(unsigned char *pBytes, int size)
 {
 	return NULL;
 }

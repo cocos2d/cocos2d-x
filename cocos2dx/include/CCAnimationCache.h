@@ -24,8 +24,8 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_CACHE_H__
 #define __CC_ANIMATION_CACHE_H__
 
-#include "NSObject.h"
-#include "NSMutableDictionary.h"
+#include "CCObject.h"
+#include "CCMutableDictionary.h"
 
 #include <string>
 
@@ -40,7 +40,7 @@ namespace cocos2d
 
 	@since v0.99.5
 	*/
-	class CCX_DLL CCAnimationCache : public NSObject
+	class CCX_DLL CCAnimationCache : public CCObject
 	{
 	public:
 		~CCAnimationCache();
@@ -70,7 +70,7 @@ namespace cocos2d
 		bool init(void);
 
 	private:
-		NSMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
+		CCMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
 		static CCAnimationCache *s_pSharedAnimationCache;
 	};
 }

@@ -30,7 +30,7 @@ THE SOFTWARE.
 //
 
 #include "config_platform.h"
-#include "CCXEGLView.h"
+#include "CCEGLView.h"
 
 #if defined(CCX_PLATFORM_MOBILE)
     #include <GLES/gl.h>

@@ -40,10 +40,10 @@
 #endif
 
 //#if TARGET_OS_IPHONE
-	// CGPoints are structurally the same, and allow
+	// CCPoints are structurally the same, and allow
 	// easy interoperability with other iPhone libraries
-	//#import <CoreGraphics/CGGeometry.h>
-	//typedef CGPoint cpVect;
+	//#import <CoreGraphics/CCGeometry.h>
+	//typedef CCPoint cpVect;
 //#else
 	typedef struct cpVect{cpFloat x,y;} cpVect;
 //#endif

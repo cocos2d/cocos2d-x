@@ -22,29 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __NSDATA_H__
-#define __NSDATA_H__
+#ifndef __CCData_H__
+#define __CCData_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include <string>
 
 namespace   cocos2d {
 
-class NSData : public NSObject
+class CCData : public CCObject
 {
 public:
-	NSData(void);
-	~NSData(void);
+	CCData(void);
+	~CCData(void);
 	
 	void* bytes(void);
 
 public:
-	static NSData* dataWithBytes(unsigned char *pBytes, int size);
-	static NSData* dataWithContentsOfFile(const std::string &strPath);
+	static CCData* dataWithBytes(unsigned char *pBytes, int size);
+	static CCData* dataWithContentsOfFile(const std::string &strPath);
 
 private:
 	char *m_pData;
 };
 }//namespace   cocos2d 
 
-#endif //__NSDATA_H__
+#endif //__CCData_H__

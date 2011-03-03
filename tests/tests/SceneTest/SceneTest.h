@@ -11,9 +11,9 @@ public:
 	~SceneTestLayer1();
 
 	void testDealloc(ccTime dt);
-	void onPushScene(NSObject* pSender);
-	void onPushSceneTran(NSObject* pSender);
-	void onQuit(NSObject* pSender);
+	void onPushScene(CCObject* pSender);
+	void onPushSceneTran(CCObject* pSender);
+	void onQuit(CCObject* pSender);
 
 	//CREATE_NODE(SceneTestLayer1);
 } ;
@@ -25,9 +25,9 @@ public:
 	SceneTestLayer2();
 
 	void testDealloc(ccTime dt);
-	void onGoBack(NSObject* pSender);
-	void onReplaceScene(NSObject* pSender);
-	void onReplaceSceneTran(NSObject* pSender);
+	void onGoBack(CCObject* pSender);
+	void onReplaceScene(CCObject* pSender);
+	void onReplaceSceneTran(CCObject* pSender);
 
 	//CREATE_NODE(SceneTestLayer2);
 } ;
@@ -39,7 +39,7 @@ public:
 
 	virtual void testDealloc(ccTime dt);
 
-	virtual void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	virtual void ccTouchesEnded(CCSet* touches, UIEvent* event);
 
 	//CREATE_NODE(SceneTestLayer3);
 } ;

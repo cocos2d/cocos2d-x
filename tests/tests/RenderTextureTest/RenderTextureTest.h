@@ -9,7 +9,7 @@ class RenderTextureTest : public CCLayer
 public:
 	RenderTextureTest();
 	~RenderTextureTest();
-	virtual void ccTouchesMoved(NSSet* touches, UIEvent* event);
+	virtual void ccTouchesMoved(CCSet* touches, UIEvent* event);
 
 private:
     CCRenderTexture*	m_target;

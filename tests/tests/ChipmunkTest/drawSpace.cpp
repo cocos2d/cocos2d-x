@@ -416,7 +416,7 @@ drawBB(void *ptr, void *unused)
 {
 	cpShape *shape = (cpShape *)ptr;
 
-	CGPoint vertices[] = {
+	CCPoint vertices[] = {
 		ccp(shape->bb.l, shape->bb.b),
 		ccp(shape->bb.l, shape->bb.t),
 		ccp(shape->bb.r, shape->bb.t),
@@ -430,10 +430,10 @@ static void
 drawCollisions(void *ptr, void *data)
 {
 	cpArbiter *arb = (cpArbiter *)ptr;
-	CGPoint *aPoints = new CGPoint[arb->numContacts];
+	CCPoint *aPoints = new CCPoint[arb->numContacts];
 
 	for(int i=0; i<arb->numContacts; i++){
-		aPoints[i] = CGPoint(arb->contacts[i].p.x, arb->contacts[i].p.y);
+		aPoints[i] = CCPoint(arb->contacts[i].p.x, arb->contacts[i].p.y);
 	}
 
 	ccDrawPoints( aPoints, arb->numContacts );
@@ -507,12 +507,12 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 		glPointSize(options->bodyPointSize);
 		glColor4f(LINE_COLOR);
 
-		CGPoint *aPoints = new CGPoint[bodies->num];
+		CCPoint *aPoints = new CCPoint[bodies->num];
 
 		for(int i=0, count = bodies->num; i<count; i++){
 			cpBody *body = (cpBody *)bodies->arr[i];
 
-			aPoints[i] = CGPoint(body->p.x, body->p.y);
+			aPoints[i] = CCPoint(body->p.x, body->p.y);
 		}
 
 		ccDrawPoints( aPoints, bodies->num );

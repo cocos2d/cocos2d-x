@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __UIACCELEROMETER_DELEGATE_H__
-#define __UIACCELEROMETER_DELEGATE_H__
+#ifndef __CCAccelerometer_DELEGATE_H__
+#define __CCAccelerometer_DELEGATE_H__
 
-#include "ccxCommon.h"
+#include "CCCommon.h"
 
 namespace   cocos2d {
 /**
@@ -42,10 +42,10 @@ typedef struct
 
 /**
 @brief 
-The UIAccelerometerDelegate defines a single method for
+The CCAccelerometerDelegate defines a single method for
 receiving acceleration-related data from the system.
 */
-class CCX_DLL UIAccelerometerDelegate
+class CCX_DLL CCAccelerometerDelegate
 {
 public:
     virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCXBitmapDC.h"
+#include "CCBitmapDC.h"
 #include "CCDirector.h"
 
 namespace cocos2d {
@@ -32,7 +32,7 @@ namespace cocos2d {
 		m_hBmp   = CreateBitmap(width, height, 1, 32, NULL);
         m_hOld   = SelectObject(m_hMemDC, m_hBmp);
 	}
- 	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+ 	CCXBitmapDC::CCXBitmapDC(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
  	{
 		HWND hWnd  = CCDirector::sharedDirector()->getOpenGLView()->getHWnd();
 		HDC hWndDC = GetDC(hWnd);
@@ -59,7 +59,7 @@ namespace cocos2d {
 		// calculate text size
         int len = strlen(text);
 		SIZE extent;
-		if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
+		if (CCSize::CCSizeEqualToSize(dimensions, CCSizeZero))
 		{
 			GetTextExtentPointA(m_hMemDC, text, len, &extent);
 		}

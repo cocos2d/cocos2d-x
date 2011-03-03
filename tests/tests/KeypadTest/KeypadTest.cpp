@@ -3,7 +3,7 @@
 KeypadTest::KeypadTest()
 : m_bShow(true)
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	CCLabelTTF* label = CCLabelTTF::labelWithString("Keypad Test", "Arial", 28);
 	addChild(label, 0);
 	label->setPosition( ccp(s.width/2, s.height-50) );

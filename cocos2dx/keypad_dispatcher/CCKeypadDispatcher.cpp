@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCKeypadDispatcher.h"
-#include "CCXCocos2dDefine.h"
+#include "CCCocos2dDefine.h"
 #include "support/data_support/ccCArray.h"
 
 namespace   cocos2d {
@@ -119,7 +119,7 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 {
     CCKeypadHandler  *pHandler;
-    NSMutableArray<CCKeypadHandler*>::NSMutableArrayIterator  iter;
+    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
 
     for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
     {
@@ -136,7 +136,7 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
     CCKeypadHandler  *pHandler;
     CCKeypadDelegate *pDelegate;
-    NSMutableArray<CCKeypadHandler*>::NSMutableArrayIterator  iter;
+    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
 
     m_bLocked = true;
 

@@ -22,30 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_WIN32_H__
-#define __CCX_EGLVIEW_WIN32_H__
+#ifndef __CC_EGLVIEW_WIN32_H__
+#define __CC_EGLVIEW_WIN32_H__
 
 #include <Windows.h>
 
-#include "CCXCocos2dDefine.h"
-#include "CGGeometry.h"
+#include "CCCocos2dDefine.h"
+#include "CCGeometry.h"
 
 namespace   cocos2d {
-class NSSet;
+class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
 
 class CCXEGL;
 
-class CCX_DLL CCXEGLView
+class CCX_DLL CCEGLView
 {
 public:
 
-    CCXEGLView();
-    virtual ~CCXEGLView();
+    CCEGLView();
+    virtual ~CCEGLView();
 
-	CGRect  getFrame();
-    CGSize  getSize();
+	CCRect  getFrame();
+    CCSize  getSize();
     bool    isOpenGLReady();
     void    release();
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
@@ -64,7 +64,7 @@ private:
     bool                m_bCaptured;
 	bool				m_bOrientationReverted;
 	bool				m_bOrientationInitVertical;
-    NSSet *             m_pSet;
+    CCSet *             m_pSet;
     CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
 
@@ -77,4 +77,4 @@ private:
 
 }   // end of namespace   cocos2d
 
-#endif	// end of __CCX_EGLVIEW_WIN32_H__
+#endif	// end of __CC_EGLVIEW_WIN32_H__

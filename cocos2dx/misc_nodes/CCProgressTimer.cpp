@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "ccMacros.h"
 #include "CCTextureCache.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 #include <float.h>
 
@@ -155,21 +155,21 @@ void CCProgressTimer::setType(cocos2d::CCProgressTimerType type)
 ///
 //	@returns the vertex position from the texture coordinate
 ///
-ccVertex2F CCProgressTimer::vertexFromTexCoord(cocos2d::CGPoint texCoord)
+ccVertex2F CCProgressTimer::vertexFromTexCoord(cocos2d::CCPoint texCoord)
 {
-    CGPoint tmp;
+    CCPoint tmp;
     ccVertex2F ret;
 
     CCTexture2D *pTexture = m_pSprite->getTexture();
     if (pTexture)
     {
-        CGSize texSize = pTexture->getContentSizeInPixels();
+        CCSize texSize = pTexture->getContentSizeInPixels();
         tmp = ccp(texSize.width * texCoord.x / pTexture->getMaxS(),
                     texSize.height * (1 - (texCoord.y / pTexture->getMaxT())));
 	}
 	else
 	{
-	    tmp = CGPointZero;
+	    tmp = CCPointZero;
 	}
 
     ret.x = tmp.x;
@@ -233,11 +233,11 @@ void CCProgressTimer::updateProgress(void)
 void CCProgressTimer::updateRadial(void)
 {
 	//	Texture Max is the actual max coordinates to deal with non-power of 2 textures
-	CGPoint tMax = ccp(m_pSprite->getTexture()->getMaxS(),
+	CCPoint tMax = ccp(m_pSprite->getTexture()->getMaxS(),
 		               m_pSprite->getTexture()->getMaxT());
 
 	//	Grab the midpoint
-	CGPoint midpoint = ccpCompMult(m_tAnchorPoint, tMax);
+	CCPoint midpoint = ccpCompMult(m_tAnchorPoint, tMax);
 
 	float alpha = m_fPercentage / 100.f;
 
@@ -247,11 +247,11 @@ void CCProgressTimer::updateRadial(void)
 	//	We find the vector to do a hit detection based on the percentage
 	//	We know the first vector is the one @ 12 o'clock (top,mid) so we rotate 
 	//	from that by the progress angle around the midpoint pivot
-	CGPoint topMid = ccp(midpoint.x, 0.f);
-	CGPoint percentagePt = ccpRotateByAngle(topMid, midpoint, angle);
+	CCPoint topMid = ccp(midpoint.x, 0.f);
+	CCPoint percentagePt = ccpRotateByAngle(topMid, midpoint, angle);
 
 	int index = 0;
-	CGPoint hit = CGPointZero;
+	CCPoint hit = CCPointZero;
 
 	if (alpha == 0.f)
 	{
@@ -279,8 +279,8 @@ void CCProgressTimer::updateRadial(void)
 		{
 			int pIndex = (i + (kProgressTextureCoordsCount - 1)) % kProgressTextureCoordsCount;
 
-			CGPoint edgePtA = ccpCompMult(boundaryTexCoord(i % kProgressTextureCoordsCount), tMax);
-			CGPoint edgePtB = ccpCompMult(boundaryTexCoord(pIndex), tMax);
+			CCPoint edgePtA = ccpCompMult(boundaryTexCoord(i % kProgressTextureCoordsCount), tMax);
+			CCPoint edgePtB = ccpCompMult(boundaryTexCoord(pIndex), tMax);
 
 			//	Remember that the top edge is split in half for the 12 o'clock position
 			//	Let's deal with that here by finding the correct endpoints
@@ -365,7 +365,7 @@ void CCProgressTimer::updateRadial(void)
 
 		for (int i = 0; i < index; ++i)
 		{
-			CGPoint texCoords = ccpCompMult(boundaryTexCoord(i), tMax);
+			CCPoint texCoords = ccpCompMult(boundaryTexCoord(i), tMax);
 
 			m_pVertexData[i+2].texCoords = tex2(texCoords.x, texCoords.y);
 			m_pVertexData[i+2].vertices = vertexFromTexCoord(texCoords);
@@ -420,7 +420,7 @@ void CCProgressTimer::updateBar(void)
 {
 	float alpha = m_fPercentage / 100.f;
 
-	CGPoint tMax = ccp(m_pSprite->getTexture()->getMaxS(), m_pSprite->getTexture()->getMaxT());
+	CCPoint tMax = ccp(m_pSprite->getTexture()->getMaxS(), m_pSprite->getTexture()->getMaxT());
 
 	unsigned char vIndexes[2] = {0, 0};
 
@@ -532,7 +532,7 @@ void CCProgressTimer::updateBar(void)
 	}
 }
 
-CGPoint CCProgressTimer::boundaryTexCoord(char index)
+CCPoint CCProgressTimer::boundaryTexCoord(char index)
 {
 	if (index < kProgressTextureCoordsCount) 
 	{
@@ -547,7 +547,7 @@ CGPoint CCProgressTimer::boundaryTexCoord(char index)
 		}
 	}
 
-	return CGPointZero;
+	return CCPointZero;
 }
 
 void CCProgressTimer::draw(void)
@@ -570,7 +570,7 @@ void CCProgressTimer::draw(void)
 	}
 	
 	///	========================================================================
-	//	Replaced [texture_ drawAtPoint:CGPointZero] with my own vertexData
+	//	Replaced [texture_ drawAtPoint:CCPointZero] with my own vertexData
 	//	Everything above me and below me is copied from CCTextureNode's draw
 	glBindTexture(GL_TEXTURE_2D, m_pSprite->getTexture()->getName());
 	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &m_pVertexData[0].vertices);

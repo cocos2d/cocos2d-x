@@ -51,9 +51,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCProgressTo::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCProgressTo::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCProgressTo* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -63,7 +63,7 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCProgressTo();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCActionInterval::copyWithZone(pZone);
@@ -116,9 +116,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCProgressFromTo::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCProgressFromTo::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCProgressFromTo* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -128,7 +128,7 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCProgressFromTo();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCActionInterval::copyWithZone(pZone);

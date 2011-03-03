@@ -51,7 +51,7 @@ namespace cocos2d {
 		{
 			m_pPosToAtlasIndex = new StringToIntegerDictionary();
 			this->updateAtlasValues();
-			this->setContentSize(CGSizeMake((float)(m_pTGAInfo->width*m_nItemWidth),
+			this->setContentSize(CCSizeMake((float)(m_pTGAInfo->width*m_nItemWidth),
 											(float)(m_pTGAInfo->height*m_nItemHeight)));
 			return true;
 		}
@@ -115,8 +115,8 @@ namespace cocos2d {
 
 		//	//Find the path of the file
 		//	NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
-		//	NSString *resourcePath = [mainBndl resourcePath];
-		//	NSString * path = [resourcePath stringByAppendingPathComponent:file];
+		//	CCString *resourcePath = [mainBndl resourcePath];
+		//	CCString * path = [resourcePath stringByAppendingPathComponent:file];
 
 		m_pTGAInfo = tgaLoad( CCFileUtils::fullPathFromRelativePath(file) );
 	#if 1
