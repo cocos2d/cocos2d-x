@@ -38,7 +38,7 @@ void AccelerometerTest::onEnter()
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
     m_pBall = CCSprite::spriteWithFile("Images/ball.png");
     m_pBall->setPosition(ccp(s.width / 2, s.height / 2));

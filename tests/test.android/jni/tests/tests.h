@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::CCXApplication
+class HelloWorld : public cocos2d::CCApplication
 {
 public:
 	virtual bool applicationDidFinishLaunching();
