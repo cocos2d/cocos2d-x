@@ -32,7 +32,7 @@ namespace cocos2d {
 		m_hBmp   = CreateBitmap(width, height, 1, 32, NULL);
         m_hOld   = SelectObject(m_hMemDC, m_hBmp);
 	}
- 	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+ 	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
  	{
 		HWND hWnd  = CCDirector::sharedDirector()->getOpenGLView()->getHWnd();
 		HDC hWndDC = GetDC(hWnd);
@@ -78,13 +78,13 @@ namespace cocos2d {
 
 		switch (alignment)
 		{
-		case UITextAlignmentLeft:
+		case CCTextAlignmentLeft:
 			dwStyle |= DT_LEFT;
 			break;
-		case UITextAlignmentCenter:
+		case CCTextAlignmentCenter:
 			dwStyle |= DT_CENTER;
 			break;
-		case UITextAlignmentRight:
+		case CCTextAlignmentRight:
 			dwStyle |= DT_RIGHT;
 			break;
 		default:

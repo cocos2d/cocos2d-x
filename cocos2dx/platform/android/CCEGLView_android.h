@@ -38,7 +38,7 @@ public:
     CCEGLView();
     virtual ~CCEGLView();
 
-    CGSize  getSize();
+    CCSize  getSize();
     bool    isOpenGLReady();
     void    setFrameWitdAndHeight(int width, int height);
     EGLTouchDelegate* getDelegate(void);

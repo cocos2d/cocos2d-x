@@ -55,7 +55,7 @@ public:
     /**
     @brief	Get status bar rectangle in EGLView window.
     */
-    CGRect statusBarFrame();
+    CCRect statusBarFrame();
     
     void Run();
 

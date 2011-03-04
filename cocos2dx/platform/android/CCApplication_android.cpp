@@ -28,9 +28,9 @@ namespace   cocos2d {
 		return eOritation;
     }
 
-    CGRect CCApplication::statusBarFrame()
+    CCRect CCApplication::statusBarFrame()
     {
-        CGRect rc;
+        CCRect rc;
         return rc;
     }
     

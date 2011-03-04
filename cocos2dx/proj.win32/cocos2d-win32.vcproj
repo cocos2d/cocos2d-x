@@ -935,6 +935,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\support\CCPointExtension.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\support\CCProfiling.cpp"
 				>
 			</File>
@@ -948,10 +952,6 @@
 			</File>
 			<File
 				RelativePath="..\support\ccUtils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\support\CGPointExtension.cpp"
 				>
 			</File>
 			<File

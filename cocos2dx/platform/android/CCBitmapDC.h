@@ -25,8 +25,8 @@ THE SOFTWARE.
 #define __CCBITMAP_DC_H__
 
 #include "ccTypes.h"
-#include "CCXCocos2dDefine.h"
-#include "CCXUIImage.h"
+#include "CCCocos2dDefine.h"
+#include "CCImage.h"
 
 namespace cocos2d{
 	class CCX_DLL CCBitmapDC
@@ -34,8 +34,8 @@ namespace cocos2d{
 	public:
 		CCBitmapDC();
 		CCBitmapDC(const char *text, 
-					CGSize dimensions = CGSizeZero,
-					UITextAlignment alignment = UITextAlignmentCenter,
+					CCSize dimensions = CCSizeZero,
+					CCTextAlignment alignment = CCTextAlignmentCenter,
 					const char *fontName = NULL,
 					float fontSize = 0);
 		~CCBitmapDC(void);

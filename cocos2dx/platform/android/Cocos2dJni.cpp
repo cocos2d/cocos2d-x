@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "Cocos2dJni.h"
-#include "NSSet.h"
+#include "CCSet.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
-#include "CCXFileUtils.h"
-#include "platform/android/CCXUIAccelerometer_android.h"
+#include "CCFileUtils.h"
+#include "platform/android/CCAccelerometer_android.h"
 #include <android/log.h>
 
 #define  LOG_TAG    "Cocos2dJni"
@@ -36,14 +36,14 @@ THE SOFTWARE.
 extern "C"
 {
 	static cocos2d::CCTouch s_touch;
-	static cocos2d::NSSet s_set;
+	static cocos2d::CCSet s_set;
 
 	// handle accelerometer changes
 
 	void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
 	{
 		// We need to invert to make it compatible with iOS.
-		cocos2d::UIAccelerometer::sharedAccelerometer()->update(x, y, z, timeStamp);
+		cocos2d::CCAccelerometer::sharedAccelerometer()->update(x, y, z, timeStamp);
 	}
 
 	// handle touch event

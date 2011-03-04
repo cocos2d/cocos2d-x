@@ -21,34 +21,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCBITMAP_DC_H__
-#define __CCBITMAP_DC_H__
 
-#include <Windows.h>
-#include "ccTypes.h"
-#include "CCCocos2dDefine.h"
-#include "CCImage.h"
+#ifndef __PLATFORM_ANDROID_UIACCELEROMETER_H__
+#define __PLATFORM_ANDROID_UIACCELEROMETER_H__
 
-namespace cocos2d{
-	class CCX_DLL CCBitmapDC
-	{
-	public:
-		CCBitmapDC(int width, int height);
-		CCBitmapDC(const char *text, 
-					CCSize dimensions = CCSizeZero,
-					CCTextAlignment alignment = CCTextAlignmentCenter,
-					const char *fontName = NULL,
-					float fontSize = 0);
-		~CCBitmapDC(void);
+#include "CCCommon.h"
+#include "CCAccelerometerDelegate.h"
+#include "Cocos2dJni.h"
+#include <list>
 
-		HBITMAP getBitmap(void);
-		HDC		getDC(void);
+namespace   cocos2d {
 
-	protected:
-        HDC     m_hMemDC;
-        HBITMAP m_hBmp;
-        HGDIOBJ m_hOld;
-	};
-}
+class CCX_DLL CCAccelerometer
+{
+public:
+	CCAccelerometer();
+    ~CCAccelerometer();
 
-#endif //__CCBITMAP_DC_H__
+    static CCAccelerometer* sharedAccelerometer();
+
+    void removeDelegate(CCAccelerometerDelegate* pDelegate);
+    void addDelegate(CCAccelerometerDelegate* pDelegate);
+    void update(float x, float y, float z, long sensorTimeStamp);
+
+private:
+	static CCAccelerometer* m_spUIAccelerometer;
+	std::list<CCAccelerometerDelegate*>* m_pAccelDelegates;
+	CCAcceleration m_obAccelerationValue;
+};
+
+}//namespace cocos2d
+
+#endif

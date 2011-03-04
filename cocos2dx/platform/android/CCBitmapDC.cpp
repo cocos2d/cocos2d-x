@@ -51,7 +51,7 @@ namespace cocos2d {
 		m_pData = NULL;
 	}
 	
-	CCBitmapDC::CCBitmapDC(const char *text, CGSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{
 		m_nWidth = 0;
 		m_nHeight = 0;

@@ -49,7 +49,7 @@ void CCEGLView::setFrameWitdAndHeight(int width, int height)
 
 CCEGLView::~CCEGLView()
 {
-	CCX_SAFE_DELETE(m_pDelegate);
+	CC_SAFE_DELETE(m_pDelegate);
 }
 
 CCSize  CCEGLView::getSize()
