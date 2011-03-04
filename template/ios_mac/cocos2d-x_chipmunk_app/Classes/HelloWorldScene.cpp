@@ -27,7 +27,7 @@ eachShape(void *ptr, void* unused)
                 // TIP: cocos2d and chipmunk uses the same struct to store it's position
                 // chipmunk uses: cpVect, and cocos2d uses CGPoint but in reality the are the same
                 // since v0.7.1 you can mix them if you want.		
-                sprite->setPosition(CGPointMake(body->p.x, body->p.y));
+                sprite->setPosition(CCPointMake(body->p.x, body->p.y));
                 
                 sprite->setRotation((float) CC_RADIANS_TO_DEGREES( -body->a ));
         }
@@ -69,7 +69,7 @@ void HelloWorld::addNewSpriteX(float x,  float y)
         posx = (posx % 4) * 85;
         posy = (posy % 3) * 121;
 	
-        CCSprite *sprite = CCSprite::spriteWithBatchNode(batch, CGRectMake(posx, posy, 85, 121));
+        CCSprite *sprite = CCSprite::spriteWithBatchNode(batch, CCRectMake(posx, posy, 85, 121));
         batch->addChild(sprite);
 	
         sprite->setPosition(ccp(x, y));
@@ -104,7 +104,7 @@ bool HelloWorld::init()
         {
                 setIsTouchEnabled(true);
 		
-                CGSize wins = CCDirector::sharedDirector()->getWinSize();
+                CCSize wins = CCDirector::sharedDirector()->getWinSize();
                 cpInitChipmunk();
 		
                 cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
@@ -167,9 +167,9 @@ void HelloWorld::step(ccTime delta)
 }
 
 
-void HelloWorld::ccTouchesEnded(NSSet *touches, UIEvent *event)
+void HelloWorld::ccTouchesEnded(CCSet *touches, CCEvent *event)
 {
-        NSSetIterator it;
+        CCSetIterator it;
         CCTouch *touch;
         
         for (it = touches->begin(); it != touches->end(); it++) {
@@ -179,7 +179,7 @@ void HelloWorld::ccTouchesEnded(NSSet *touches, UIEvent *event)
                         break;
                 }
                 
-                CGPoint location = touch->locationInView(touch->view());
+                CCPoint location = touch->locationInView(touch->view());
                 location = CCDirector::sharedDirector()->convertToGL(location);
                 addNewSpriteX(location.x, location.y);
         }
