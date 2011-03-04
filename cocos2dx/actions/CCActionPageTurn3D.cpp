@@ -37,7 +37,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 

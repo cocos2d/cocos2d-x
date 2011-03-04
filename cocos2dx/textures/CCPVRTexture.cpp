@@ -66,7 +66,7 @@ CCPVRTexture::~CCPVRTexture()
 	CCLOGINFO( "cocos2d: deallocing CCPVRTexture" );
 
 	m_pImageData->removeAllObjects();
-	CCX_SAFE_DELETE(m_pImageData)
+	CC_SAFE_DELETE(m_pImageData)
 
 	if (m_uName != 0 && ! m_bRetainName )
 		glDeleteTextures(1, &m_uName);

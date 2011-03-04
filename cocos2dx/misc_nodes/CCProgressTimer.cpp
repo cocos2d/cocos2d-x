@@ -74,7 +74,7 @@ CCProgressTimer* CCProgressTimer::progressWithTexture(cocos2d::CCTexture2D *pTex
 bool CCProgressTimer::initWithTexture(cocos2d::CCTexture2D *pTexture)
 {
 	m_pSprite = CCSprite::spriteWithTexture(pTexture);
-	CCX_SAFE_RETAIN(m_pSprite);
+	CC_SAFE_RETAIN(m_pSprite);
 	m_fPercentage = 0.f;
 	m_pVertexData = NULL;
     m_nVertexDataCount = 0;
@@ -120,8 +120,8 @@ void CCProgressTimer::setSprite(cocos2d::CCSprite *pSprite)
 {
 	if (m_pSprite != pSprite)
 	{
-		CCX_SAFE_RETAIN(pSprite);
-		CCX_SAFE_RELEASE(m_pSprite);
+		CC_SAFE_RETAIN(pSprite);
+		CC_SAFE_RELEASE(m_pSprite);
 		m_pSprite = pSprite;
 
 		//	Everytime we set a new sprite, we free the current vertex data

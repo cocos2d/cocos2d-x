@@ -73,7 +73,7 @@ CCObject* CCAction::copyWithZone(CCZone *pZone)
 	}
 	//copy member data
 	pRet->m_nTag = m_nTag;
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 
@@ -117,7 +117,7 @@ CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 //
 CCSpeed::~CCSpeed()
 {
-	CCX_SAFE_RELEASE(m_pOther);
+	CC_SAFE_RELEASE(m_pOther);
 }
 
 CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
@@ -128,7 +128,7 @@ CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 
@@ -158,7 +158,7 @@ CCObject *CCSpeed::copyWithZone(CCZone *pZone)
 
 	pRet->initWithAction( (CCActionInterval*)(m_pOther->copy()->autorelease()) , m_fSpeed );
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 
@@ -205,7 +205,7 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, CCRect rect)
@@ -216,7 +216,7 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, CCRect rect)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 
@@ -286,7 +286,7 @@ CCObject *CCFollow::copyWithZone(CCZone *pZone)
 	CCAction::copyWithZone(pZone);
 	// copy member data
 	pRet->m_nTag = m_nTag;
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 void CCFollow::step(ccTime dt)

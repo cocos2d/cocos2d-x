@@ -135,18 +135,18 @@ CCDirector::~CCDirector(void)
 	CCLOGINFO("cocos2d: deallocing %p", this);
 
 #if CC_DIRECTOR_FAST_FPS
-	CCX_SAFE_RELEASE(m_pFPSLabel);
+	CC_SAFE_RELEASE(m_pFPSLabel);
 #endif 
     
-	CCX_SAFE_RELEASE(m_pRunningScene);
-	CCX_SAFE_RELEASE(m_pNotificationNode);
-	CCX_SAFE_RELEASE(m_pobScenesStack);
+	CC_SAFE_RELEASE(m_pRunningScene);
+	CC_SAFE_RELEASE(m_pNotificationNode);
+	CC_SAFE_RELEASE(m_pobScenesStack);
 
 	// pop the autorelease pool
 	CCPoolManager::getInstance()->pop();
 
 	// delete m_pLastUpdate
-	CCX_SAFE_DELETE(m_pLastUpdate);
+	CC_SAFE_DELETE(m_pLastUpdate);
 
     CCKeypadDispatcher::purgeSharedDispatcher();
 
@@ -566,10 +566,10 @@ void CCDirector::purgeDirector()
 	stopAnimation();
 
 #if CC_DIRECTOR_FAST_FPS
-	CCX_SAFE_RELEASE_NULL(m_pFPSLabel);
+	CC_SAFE_RELEASE_NULL(m_pFPSLabel);
 #endif
 
-		CCX_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+		CC_SAFE_RELEASE_NULL(m_pProjectionDelegate);
 
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();
@@ -742,7 +742,7 @@ bool CCDirector::detach(void)
 {
 	assert(isOpenGLAttached());
 
-	CCX_SAFE_DELETE(m_pobOpenGLView);
+	CC_SAFE_DELETE(m_pobOpenGLView);
 	return true;
 }
 

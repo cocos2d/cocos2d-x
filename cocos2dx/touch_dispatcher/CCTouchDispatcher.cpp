@@ -61,7 +61,7 @@ CCTouchDispatcher* CCTouchDispatcher::sharedDispatcher(void)
 +(id) allocWithZone:(CCZone *)zone
 {
 	@synchronized(self) {
-		NSAssert(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
+		CCAssert(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
 		return [super allocWithZone:zone];
 	}
 	return nil; // on subsequent allocation attempts return nil
@@ -235,7 +235,7 @@ void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 //
 // dispatch events
 //
-void CCTouchDispatcher::touches(CCSet *pTouches, UIEvent *pEvent, unsigned int uIndex)
+void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int uIndex)
 {
 	assert(uIndex >= 0 && uIndex < 4);
 
@@ -402,7 +402,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, UIEvent *pEvent, unsigned int u
 	}
 }
 
-void CCTouchDispatcher::touchesBegan(CCSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
 {
 	if (m_bDispatchEvents)
 	{
@@ -410,7 +410,7 @@ void CCTouchDispatcher::touchesBegan(CCSet *touches, UIEvent *pEvent)
 	}
 }
 
-void CCTouchDispatcher::touchesMoved(CCSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesMoved(CCSet *touches, CCEvent *pEvent)
 {
     if (m_bDispatchEvents)
 	{
@@ -418,7 +418,7 @@ void CCTouchDispatcher::touchesMoved(CCSet *touches, UIEvent *pEvent)
 	}
 }
 
-void CCTouchDispatcher::touchesEnded(CCSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesEnded(CCSet *touches, CCEvent *pEvent)
 {
     if (m_bDispatchEvents)
 	{
@@ -426,7 +426,7 @@ void CCTouchDispatcher::touchesEnded(CCSet *touches, UIEvent *pEvent)
 	}
 }
 
-void CCTouchDispatcher::touchesCancelled(CCSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesCancelled(CCSet *touches, CCEvent *pEvent)
 {
     if (m_bDispatchEvents)
 	{

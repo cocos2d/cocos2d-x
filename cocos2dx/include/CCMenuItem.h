@@ -46,8 +46,8 @@ namespace cocos2d{
 		/** whether or not the item is selected
 		@since v0.8.2
 		*/
-		CCX_PROPERTY_READONLY(bool, m_bIsSelected, IsSelected);
-		CCX_PROPERTY(bool, m_bIsEnabled, IsEnabled);
+		CC_PROPERTY_READONLY(bool, m_bIsSelected, IsSelected);
+		CC_PROPERTY(bool, m_bIsEnabled, IsEnabled);
 	public:
 		CCMenuItem()
 			:m_pListener(NULL)
@@ -80,9 +80,9 @@ namespace cocos2d{
 	class CCX_DLL CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** the color that will be used to disable the item */
-		CCX_PROPERTY(ccColor3B, m_tDisabledColor, DisabledColor);
+		CC_PROPERTY(ccColor3B, m_tDisabledColor, DisabledColor);
 		/** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
-		CCX_PROPERTY(CCNode*, m_pLabel, Label);
+		CC_PROPERTY(CCNode*, m_pLabel, Label);
 	public:
 		CCMenuItemLabel()
 			:m_pLabel(NULL)
@@ -164,11 +164,11 @@ namespace cocos2d{
 	class CCX_DLL CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** the image used when the item is not selected */
-		CCX_PROPERTY(CCNode*, m_pNormalImage, NormalImage);
+		CC_PROPERTY(CCNode*, m_pNormalImage, NormalImage);
 		/** the image used when the item is selected */
-		CCX_PROPERTY(CCNode*, m_pSelectedImage, SelectedImage);
+		CC_PROPERTY(CCNode*, m_pSelectedImage, SelectedImage);
 		/** the image used when the item is disabled */
-		CCX_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
+		CC_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
 	public:
 		CCMenuItemSprite()
 			:m_pNormalImage(NULL)
@@ -236,15 +236,15 @@ namespace cocos2d{
 	class CCX_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** conforms with CCRGBAProtocol protocol */
-		CCX_PROPERTY(GLubyte, m_cOpacity, Opacity);
+		CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
 		/** conforms with CCRGBAProtocol protocol */
-		CCX_PROPERTY(ccColor3B, m_tColor, Color);
+		CC_PROPERTY(ccColor3B, m_tColor, Color);
 		/** returns the selected item */
-		CCX_PROPERTY(unsigned int, m_uSelectedIndex, SelectedIndex);
+		CC_PROPERTY(unsigned int, m_uSelectedIndex, SelectedIndex);
 		/** CCMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
 		@since v0.7.2
 		*/
-		CCX_PROPERTY(CCMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
+		CC_PROPERTY(CCMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
 	public:
 		CCMenuItemToggle(){}
 		virtual ~CCMenuItemToggle();

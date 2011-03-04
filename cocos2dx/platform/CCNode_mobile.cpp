@@ -78,9 +78,9 @@ CCNode::~CCNode()
 	CCLOGINFO( "cocos2d: deallocing" );
 
 	// attributes
-	CCX_SAFE_RELEASE(m_pCamera);
+	CC_SAFE_RELEASE(m_pCamera);
 
-	CCX_SAFE_RELEASE(m_pGrid);
+	CC_SAFE_RELEASE(m_pGrid);
 
 
 	if(m_pChildren && m_pChildren->count() > 0)
@@ -96,7 +96,7 @@ CCNode::~CCNode()
 	}
 
 	// children
-	CCX_SAFE_RELEASE(m_pChildren);
+	CC_SAFE_RELEASE(m_pChildren);
 
 }
 
@@ -165,7 +165,7 @@ void CCNode::setRotation(float newRotation)
 /// scale getter
 float CCNode::getScale(void)
 {
-	NSAssert( m_fScaleX == m_fScaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+	CCAssert( m_fScaleX == m_fScaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
 	return m_fScaleX;
 }
 
@@ -288,8 +288,8 @@ CCGridBase* CCNode::getGrid()
 /// grid setter
 void CCNode::setGrid(CCGridBase* pGrid)
 {
-	CCX_SAFE_RETAIN(pGrid);
-	CCX_SAFE_RELEASE(m_pGrid);
+	CC_SAFE_RETAIN(pGrid);
+	CC_SAFE_RELEASE(m_pGrid);
 	m_pGrid = pGrid;
 }
 
@@ -496,7 +496,7 @@ void CCNode::childrenAlloc(void)
 
 CCNode* CCNode::getChildByTag(int aTag)
 {
-	NSAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
+	CCAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
@@ -518,8 +518,8 @@ CCNode* CCNode::getChildByTag(int aTag)
 */
 void CCNode::addChild(CCNode *child, int zOrder, int tag)
 {	
-	NSAssert( child != NULL, "Argument must be non-nil");
-	NSAssert( child->m_pParent == NULL, "child already added. It can't be added again");
+	CCAssert( child != NULL, "Argument must be non-nil");
+	CCAssert( child->m_pParent == NULL, "child already added. It can't be added again");
 
 	if( ! m_pChildren )
 	{
@@ -541,13 +541,13 @@ void CCNode::addChild(CCNode *child, int zOrder, int tag)
 
 void CCNode::addChild(CCNode *child, int zOrder)
 {
-	NSAssert( child != NULL, "Argument must be non-nil");
+	CCAssert( child != NULL, "Argument must be non-nil");
 	this->addChild(child, zOrder, child->m_nTag);
 }
 
 void CCNode::addChild(CCNode *child)
 {
-	NSAssert( child != NULL, "Argument must be non-nil");
+	CCAssert( child != NULL, "Argument must be non-nil");
 	this->addChild(child, child->m_nZOrder, child->m_nTag);
 }
 
@@ -576,7 +576,7 @@ void CCNode::removeChild(CCNode* child, bool cleanup)
 
 void CCNode::removeChildByTag(int tag, bool cleanup)
 {
-	NSAssert( tag != kCCNodeTagInvalid, "Invalid tag");
+	CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
 
 	CCNode *child = this->getChildByTag(tag);
 
@@ -679,7 +679,7 @@ void CCNode::insertChild(CCNode* child, int z)
 
 void CCNode::reorderChild(CCNode *child, int zOrder)
 {
-	NSAssert( child != NULL, "Child must be non-nil");
+	CCAssert( child != NULL, "Child must be non-nil");
 
 	child->retain();
 	m_pChildren->removeObject(child);
@@ -864,7 +864,7 @@ void CCNode::onExit()
 }
 CCAction * CCNode::runAction(CCAction* action)
 {
-	NSAssert( action != NULL, "Argument must be non-nil");
+	CCAssert( action != NULL, "Argument must be non-nil");
 	CCActionManager::sharedManager()->addAction(action, this, !m_bIsRunning);
 	return action;
 }
@@ -881,13 +881,13 @@ void CCNode::stopAction(CCAction* action)
 
 void CCNode::stopActionByTag(int tag)
 {
-	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
+	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	CCActionManager::sharedManager()->removeActionByTag(tag, this);
 }
 
 CCAction * CCNode::getActionByTag(int tag)
 {
-	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
+	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	return CCActionManager::sharedManager()->getActionByTag(tag, this);
 }
 
@@ -920,8 +920,8 @@ void CCNode::schedule(SEL_SCHEDULE selector)
 
 void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 {
-	NSAssert( selector != NULL, "Argument must be non-nil");
-	NSAssert( interval >=0, "Argument must be positive");
+	CCAssert( selector != NULL, "Argument must be non-nil");
+	CCAssert( interval >=0, "Argument must be positive");
 
 	CCScheduler::sharedScheduler()->scheduleSelector(selector, this, interval, !m_bIsRunning);
 }

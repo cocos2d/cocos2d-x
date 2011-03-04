@@ -126,7 +126,7 @@ void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 		}
 		else
 		{
-			NSAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
+			CCAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
 			pMaker->m_pCurDict->setObject(pNewDict, pMaker->m_sCurKey);
 			pNewDict->release();
 			pMaker->m_sCurKey.clear();
@@ -189,7 +189,7 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
  	case SAX_REAL:
  	case SAX_STRING:
  		{
- 			NSAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
+ 			CCAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
  			pMaker->m_pCurDict->setObject(pText, pMaker->m_sCurKey);
  			break;
  		}
@@ -234,7 +234,7 @@ void updateZipFilePath(const char* pResPath)
 
 void setZipFilePath(const char* pZipFileName)
 {
-    NSAssert(pZipFileName != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
+    CCAssert(pZipFileName != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
 
     // get the full path of zip file
     char fullPath[EOS_FILE_MAX_PATH] = {0};
@@ -271,7 +271,7 @@ void setZipFilePath(const char* pZipFileName)
 #else
     char *pszDriver = "D:/Work7";
 #endif
-    NSAssert((strlen(pszDriver) + strlen(fullPath)) <= EOS_FILE_MAX_PATH, "[FileUtils setResourceZipFile] -- zip file path too long");
+    CCAssert((strlen(pszDriver) + strlen(fullPath)) <= EOS_FILE_MAX_PATH, "[FileUtils setResourceZipFile] -- zip file path too long");
 
     // record the zip file path
     strcpy(s_pszZipFilePath, pszDriver);
@@ -366,19 +366,19 @@ const char* CCFileUtils::getDiffResolutionPath(const char *pszPath)
     do 
     {
         TApplication* pApp = TApplication::GetCurrentApplication();
-        CCX_BREAK_IF(!pApp);
+        CC_BREAK_IF(!pApp);
 
         // get the Resolution
         int nScreenWidth  = pApp->GetScreenWidth();
         int nScreenHeight = pApp->GetScreenHeight();
 
         // it's default resolution, do nothing
-        CCX_BREAK_IF(nScreenWidth == 320 && nScreenHeight == 480);
+        CC_BREAK_IF(nScreenWidth == 320 && nScreenHeight == 480);
 
         if (nScreenWidth == 480 && nScreenHeight == 800)
         {
             // it's WVGA
-            CCX_BREAK_IF(pRet->m_sString.find("@WVGA") != -1);
+            CC_BREAK_IF(pRet->m_sString.find("@WVGA") != -1);
 
             std::string filePathWithoutExtension = pszPath;
             std::string extension = "";
@@ -403,7 +403,7 @@ const char* CCFileUtils::getDiffResolutionPath(const char *pszPath)
         else
         {
             // not support resolution
-            NSAssert(0, "it's not supportted resolution.");
+            CCAssert(0, "it's not supportted resolution.");
         }
     } while (0);
 
@@ -423,10 +423,10 @@ bool CCFileUtils::isResourceExist(const char* pszResName)
         unzFile pZipFile = unzOpen(s_pszZipFilePath);
         do 
         {
-            CCX_BREAK_IF(!pZipFile);
+            CC_BREAK_IF(!pZipFile);
 
             Int32 nPos = unzLocateFile(pZipFile, pszResName, 1);
-            CCX_BREAK_IF(nPos != UNZ_OK);
+            CC_BREAK_IF(nPos != UNZ_OK);
 
             bRet = true;
             unzClose(pZipFile);
@@ -454,12 +454,12 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         {
             // if specify the zip file,load from it first
             pBuffer = FileUtils::getFileDataFromZip(s_pszZipFilePath, pszFileName, pSize);
-            CCX_BREAK_IF(pBuffer);
+            CC_BREAK_IF(pBuffer);
         }
 
         // read the file from hardware
         FILE *fp = fopen(pszFileName, pszMode);
-        CCX_BREAK_IF(!fp);
+        CC_BREAK_IF(!fp);
 
         fseek(fp,0,SEEK_END);
         *pSize = ftell(fp);

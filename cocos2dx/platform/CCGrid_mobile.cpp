@@ -46,7 +46,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pGridBase);
+				CC_SAFE_RELEASE_NULL(pGridBase);
 			}
 		}
 
@@ -65,7 +65,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pGridBase);
+				CC_SAFE_RELEASE_NULL(pGridBase);
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace cocos2d
 		m_sGridSize = gridSize;
 
 		m_pTexture = pTexture;
-		CCX_SAFE_RETAIN(m_pTexture);
+		CC_SAFE_RETAIN(m_pTexture);
 		m_bIsTextureFlipped = bFlipped;
 
 		CCSize texSize = m_pTexture->getContentSizeInPixels();
@@ -146,8 +146,8 @@ namespace cocos2d
 		CCLOGINFO("cocos2d: deallocing %p", this);
 
 		setActive(false);
-		CCX_SAFE_RELEASE(m_pTexture);
-		CCX_SAFE_RELEASE(m_pGrabber);
+		CC_SAFE_RELEASE(m_pTexture);
+		CC_SAFE_RELEASE(m_pGrabber);
 	}
 
 	// properties

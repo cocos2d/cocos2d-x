@@ -62,7 +62,7 @@ namespace cocos2d {
 	CCTMXLayerInfo::~CCTMXLayerInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pProperties);
 		if( m_bOwnTiles && m_pTiles )
 		{
 			delete [] m_pTiles;
@@ -75,8 +75,8 @@ namespace cocos2d {
 	}
 	void CCTMXLayerInfo::setProperties(CCXStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
 
@@ -115,7 +115,7 @@ namespace cocos2d {
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
@@ -150,11 +150,11 @@ namespace cocos2d {
 	CCTMXMapInfo::~CCTMXMapInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
-		CCX_SAFE_RELEASE(m_pTilesets);
-		CCX_SAFE_RELEASE(m_pLayers);
-		CCX_SAFE_RELEASE(m_pProperties);
-		CCX_SAFE_RELEASE(m_pTileProperties);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RELEASE(m_pTilesets);
+		CC_SAFE_RELEASE(m_pLayers);
+		CC_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RELEASE(m_pObjectGroups);
 	}
 	CCMutableArray<CCTMXLayerInfo*> * CCTMXMapInfo::getLayers()
 	{
@@ -162,8 +162,8 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setLayers(CCMutableArray<CCTMXLayerInfo*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pLayers);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pLayers);
 		m_pLayers = var;
 	}
 	CCMutableArray<CCTMXTilesetInfo*> * CCTMXMapInfo::getTilesets()
@@ -172,8 +172,8 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setTilesets(CCMutableArray<CCTMXTilesetInfo*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pTilesets);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pTilesets);
 		m_pTilesets = var;
 	}
 	CCMutableArray<CCTMXObjectGroup*> * CCTMXMapInfo::getObjectGroups()
@@ -182,8 +182,8 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 	}
 	CCXStringToStringDictionary * CCTMXMapInfo::getProperties()
@@ -192,8 +192,8 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setProperties(CCXStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
 	CCDictionary<int, CCXStringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
@@ -202,8 +202,8 @@ namespace cocos2d {
 	}
 	void CCTMXMapInfo::setTileProperties(CCDictionary<int, CCXStringToStringDictionary*> * tileProperties)
 	{
-		CCX_SAFE_RETAIN(tileProperties);
-		CCX_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RETAIN(tileProperties);
+		CC_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = tileProperties;
 	}
 
@@ -325,7 +325,7 @@ namespace cocos2d {
 			CCXStringToStringDictionary *dict = new CCXStringToStringDictionary();
 			pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
 			pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
-			CCX_SAFE_RELEASE(dict);
+			CC_SAFE_RELEASE(dict);
 			
 			pTMXMapInfo->setParentElement(TMXPropertyTile);
 
@@ -405,9 +405,9 @@ namespace cocos2d {
 					layerAttribs = pTMXMapInfo->getLayerAttribs();
 					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribGzip);
 				}
-				NSAssert( compression == "" || compression == "gzip", "TMX: unsupported compression method" );
+				CCAssert( compression == "" || compression == "gzip", "TMX: unsupported compression method" );
 			}
-			NSAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip maps are supported" );
+			CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip maps are supported" );
 
 		} 
 		else if(elementName == "object")

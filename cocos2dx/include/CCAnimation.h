@@ -66,8 +66,8 @@ namespace   cocos2d {
 		/** set array of frames, the Frames is retained */
 		inline void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
 		{
-			CCX_SAFE_RETAIN(pFrames);
-			CCX_SAFE_RELEASE(m_pobFrames);
+			CC_SAFE_RETAIN(pFrames);
+			CC_SAFE_RELEASE(m_pobFrames);
 			m_pobFrames = pFrames;
 		}
 

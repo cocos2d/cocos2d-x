@@ -38,12 +38,12 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-        CCX_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCTMXTiledMap::initWithTMXFile(const char *tmxFile)
 	{
-		NSAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi nil");
+		CCAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi nil");
 		
 		setContentSize(CCSizeZero);
 
@@ -53,16 +53,16 @@ namespace cocos2d{
         {
             return false;
         }
-		NSAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+		CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
 
 		m_tMapSize = mapInfo->getMapSize();
 		m_tTileSize = mapInfo->getTileSize();
 		m_nMapOrientation = mapInfo->getOrientation();
 		setObjectGroups(mapInfo->getObjectGroups());
 		setProperties(mapInfo->getProperties());
-		CCX_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = mapInfo->getTileProperties();
-		CCX_SAFE_RETAIN(m_pTileProperties);
+		CC_SAFE_RETAIN(m_pTileProperties);
 
 		int idx = 0;
 
@@ -102,9 +102,9 @@ namespace cocos2d{
 	}
 	CCTMXTiledMap::~CCTMXTiledMap()
 	{
-		CCX_SAFE_RELEASE(m_pProperties);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
-		CCX_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RELEASE(m_pTileProperties);
 	}
 	CCMutableArray<CCTMXObjectGroup*> * CCTMXTiledMap::getObjectGroups()
 	{
@@ -112,8 +112,8 @@ namespace cocos2d{
 	}
 	void CCTMXTiledMap::setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 	}
 	CCXStringToStringDictionary * CCTMXTiledMap::getProperties()
@@ -122,8 +122,8 @@ namespace cocos2d{
 	}
 	void CCTMXTiledMap::setProperties(CCXStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
 	// private

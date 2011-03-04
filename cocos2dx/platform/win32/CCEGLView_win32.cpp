@@ -66,17 +66,17 @@ public:
 		BOOL bSuccess = FALSE;
 		do 
 		{
-			CCX_BREAK_IF(! pEGL);
+			CC_BREAK_IF(! pEGL);
 
 			pEGL->m_eglNativeWindow = pWindow->getHWnd();
 
 			pEGL->m_eglNativeDisplay = GetDC(pEGL->m_eglNativeWindow);
 
 			EGLDisplay eglDisplay;
-			CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
+			CC_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
 
 			EGLint nMajor, nMinor;
-			CCX_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
+			CC_BREAK_IF(EGL_FALSE == eglInitialize(eglDisplay, &nMajor, &nMinor) || 1 != nMajor);
 
 			const EGLint aConfigAttribs[] =
 			{
@@ -89,18 +89,18 @@ public:
 			};
 			EGLint iConfigs;
 			EGLConfig eglConfig;
-			CCX_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
+			CC_BREAK_IF(EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) 
 				|| (iConfigs != 1));
 
 			EGLContext eglContext;
 			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
-			CCX_BREAK_IF(EGL_NO_CONTEXT == eglContext);
+			CC_BREAK_IF(EGL_NO_CONTEXT == eglContext);
 
 			EGLSurface eglSurface;
 			eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, pEGL->m_eglNativeWindow, NULL);
-			CCX_BREAK_IF(EGL_NO_SURFACE == eglSurface);
+			CC_BREAK_IF(EGL_NO_SURFACE == eglSurface);
 
-			CCX_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
+			CC_BREAK_IF(EGL_FALSE == eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext));
 
 			pEGL->m_eglDisplay = eglDisplay;
 			pEGL->m_eglConfig  = eglConfig;
@@ -111,7 +111,7 @@ public:
 
 		if (! bSuccess)
 		{
-			CCX_SAFE_DELETE(pEGL);  
+			CC_SAFE_DELETE(pEGL);  
 		}
 
 		return pEGL;
@@ -196,10 +196,10 @@ CCEGLView::CCEGLView()
 CCEGLView::~CCEGLView()
 {
 	release();
-    CCX_SAFE_DELETE(m_pSet);
-    CCX_SAFE_DELETE(m_pTouch);
-    CCX_SAFE_DELETE(m_pDelegate);
-	CCX_SAFE_DELETE(m_pEGL);
+    CC_SAFE_DELETE(m_pSet);
+    CC_SAFE_DELETE(m_pTouch);
+    CC_SAFE_DELETE(m_pDelegate);
+	CC_SAFE_DELETE(m_pEGL);
 }
 
 bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
@@ -207,7 +207,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 	bool bRet = false;
 	do 
 	{
-		CCX_BREAK_IF(m_hWnd);
+		CC_BREAK_IF(m_hWnd);
 
 		HINSTANCE hInstance = GetModuleHandle( NULL );
 		WNDCLASS  wc;		// Windows Class Structure
@@ -224,7 +224,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 		wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
 		wc.lpszClassName  = kWindowClassName;               // Set The Class Name
 
-		CCX_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());		
+		CC_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());		
 
 		// center window position
 		RECT rcDesktop;
@@ -248,7 +248,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 			hInstance,											// Instance
 			NULL );
 
-		CCX_BREAK_IF(! m_hWnd);
+		CC_BREAK_IF(! m_hWnd);
 
 		// init egl
 		m_pEGL = CCXEGL::create(this);
@@ -376,8 +376,8 @@ int CCEGLView::setDeviceOrientation(int eOritation)
 		bool bVertical = (CCDeviceOrientationPortrait == eOritation
 			|| kCCDeviceOrientationPortraitUpsideDown == eOritation) ? true : false;
 
-		CCX_BREAK_IF(m_bOrientationReverted && bVertical != m_bOrientationInitVertical);
-		CCX_BREAK_IF(! m_bOrientationReverted && bVertical == m_bOrientationInitVertical);
+		CC_BREAK_IF(m_bOrientationReverted && bVertical != m_bOrientationInitVertical);
+		CC_BREAK_IF(! m_bOrientationReverted && bVertical == m_bOrientationInitVertical);
 
 		RECT rc;
 		GetClientRect(m_hWnd, &rc);

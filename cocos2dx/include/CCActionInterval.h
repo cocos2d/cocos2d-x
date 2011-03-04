@@ -590,8 +590,8 @@ public:
 	/** Set animation used for the animate, the object is retained */
 	inline void setAnimation(CCAnimation *pAnimation) 
 	{
-		CCX_SAFE_RETAIN(pAnimation);
-		CCX_SAFE_RELEASE(m_pAnimation);
+		CC_SAFE_RETAIN(pAnimation);
+		CC_SAFE_RELEASE(m_pAnimation);
 		m_pAnimation = pAnimation;
 	}
 

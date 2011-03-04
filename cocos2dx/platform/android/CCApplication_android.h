@@ -22,21 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_APPLICATION_UPHONE_H__
-#define __CCX_APPLICATION_UPHONE_H__
+#ifndef __CC_APPLICATION_UPHONE_H__
+#define __CC_APPLICATION_UPHONE_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 #include "CCDirector.h"
 
 #include <jni.h>
 
 namespace   cocos2d {
 
-class CCX_DLL CCXApplication
+class CCX_DLL CCApplication
 {
 public:
-    CCXApplication();
-    virtual ~CCXApplication();
+    CCApplication();
+    virtual ~CCApplication();
 
     /**
     @brief	rotate main window by device orientation.
@@ -65,9 +65,9 @@ public:
 	@brief	Get current applicaiton instance.
 	@return Current application instance pointer.
 	*/
-	static CCXApplication * sharedApplication();
+	static CCApplication * sharedApplication();
 };
 
 }       // end of namespace   cocos2d
 
-#endif	// end of __CCX_APPLICATION_UPHONE_H__
+#endif	// end of __CC_APPLICATION_UPHONE_H__

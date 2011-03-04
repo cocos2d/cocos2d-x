@@ -44,7 +44,7 @@ namespace cocos2d
 
 	void CCAnimationCache::purgeSharedAnimationCache(void)
 	{
-        CCX_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
+        CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
 	}
 
 	bool CCAnimationCache::init()

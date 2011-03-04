@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include <cstring>
-#include "CCXBitmapDC.h"
+#include "CCBitmapDC.h"
 #include "Cocos2dJni.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
@@ -44,14 +44,14 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	CCXBitmapDC::CCXBitmapDC()
+	CCBitmapDC::CCBitmapDC()
 	{
 		m_nWidth = 0;
 		m_nHeight = 0;
 		m_pData = NULL;
 	}
 	
-	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	CCBitmapDC::CCBitmapDC(const char *text, CGSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{
 		m_nWidth = 0;
 		m_nHeight = 0;
@@ -60,7 +60,7 @@ namespace cocos2d {
 		drawText(text, fontName, fontSize);
 	}
 	
-	CCXBitmapDC::~CCXBitmapDC()
+	CCBitmapDC::~CCBitmapDC()
 	{
 		if (m_pData)
 		{
@@ -68,22 +68,22 @@ namespace cocos2d {
 		}
 	}
 	
-	int CCXBitmapDC::getWidth()
+	int CCBitmapDC::getWidth()
     {
     	return m_nWidth;
     }
     
-    int CCXBitmapDC::getHeight()
+    int CCBitmapDC::getHeight()
     {
     	return m_nHeight;
     }
     
-    unsigned char* CCXBitmapDC::getData()
+    unsigned char* CCBitmapDC::getData()
     {
     	return m_pData;
     }
 	
-	void CCXBitmapDC::drawText(const char *text, const char *fontName, float fontSize)
+	void CCBitmapDC::drawText(const char *text, const char *fontName, float fontSize)
 	{
 		// init paint
 		SkPaint *paint = new SkPaint();
@@ -127,26 +127,5 @@ namespace cocos2d {
 		
 		m_nWidth = w;
 		m_nHeight = h;
-		
-
-// 		JNIEnv *env;
-// 		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) <0 )
-// 		{
-// 			if (gJavaVM->AttachCurrentThread(&env, NULL) < 0)
-// 			{
-// 				return;
-// 			}
-// 		}
-// 		
-// 		//__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "get env");
-// 		
-// 		jclass mClass = env->FindClass("org/cocos2dx/lib/Cocos2dxJNI");
-// 		if (! mClass)
-// 		{
-// 			__android_log_write(ANDROID_LOG_DEBUG, "cocos2d::CCXBitmapDC", "can not find org.cocos2dx.Cocos2dJNI");
-// 			return;
-// 		}
-// 		
-// 		jmethodID mid = env->GetStaticMethodID(mClass, "createTextBitmap", "(Ljava/lang/String;I)Landroid/graphics/Bitmap;");
 	}
 }

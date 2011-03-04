@@ -39,7 +39,7 @@ public:
 
 	virtual void testDealloc(ccTime dt);
 
-	virtual void ccTouchesEnded(CCSet* touches, UIEvent* event);
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
 	//CREATE_NODE(SceneTestLayer3);
 } ;

@@ -29,7 +29,7 @@ public:
 	virtual std::string title();
 
 	void addNewSpriteWithCoords(CCPoint p);
-	void ccTouchesEnded(CCSet* touches, UIEvent* event);
+	void ccTouchesEnded(CCSet* touches, CCEvent* event);
 };
 
 class SpriteSheet1: public SpriteTestDemo
@@ -37,7 +37,7 @@ class SpriteSheet1: public SpriteTestDemo
 public:
 	SpriteSheet1();
 	void addNewSpriteWithCoords(CCPoint p);
-	virtual void ccTouchesEnded(CCSet* touches, UIEvent* event);
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 	virtual std::string title();
 };
 
@@ -178,7 +178,7 @@ public:
 	SpriteNewTexture();
 	virtual ~SpriteNewTexture();
 	void addNewSprite();
-	void ccTouchesEnded(CCSet* touches, UIEvent* event);
+	void ccTouchesEnded(CCSet* touches, CCEvent* event);
 	virtual std::string title();
 };
 
@@ -191,7 +191,7 @@ public:
 	SpriteSheetNewTexture();
 	virtual ~SpriteSheetNewTexture();
 	void addNewSprite();
-	void ccTouchesEnded(CCSet* touches, UIEvent* event);
+	void ccTouchesEnded(CCSet* touches, CCEvent* event);
 	virtual std::string title();
 };
 

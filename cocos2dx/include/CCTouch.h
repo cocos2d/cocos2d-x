@@ -54,7 +54,7 @@ private:
     CCPoint	m_prevPoint;
 };
 
-class UIEvent : public CCObject
+class CCEvent : public CCObject
 {
 };
 

@@ -37,11 +37,11 @@ namespace cocos2d {
 	class CCX_DLL CCTMXObjectGroup : public CCObject
 	{
 		/** offset position of child objects */
-		CCX_SYNTHESIZE(CCPoint, m_tPositionOffset, PositionOffset);
+		CC_SYNTHESIZE(CCPoint, m_tPositionOffset, PositionOffset);
 		/** list of properties stored in a dictionary */
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 		/** array of the objects */
-		CCX_PROPERTY(CCArray<CCXStringToStringDictionary*>*, m_pObjects, Objects);
+		CC_PROPERTY(CCArray<CCXStringToStringDictionary*>*, m_pObjects, Objects);
 	public:
 		CCTMXObjectGroup();
 		virtual ~CCTMXObjectGroup();

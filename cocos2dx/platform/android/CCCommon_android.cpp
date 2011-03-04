@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "ccxCommon_android.h"
+#include "CCCommon_android.h"
 #include <android/log.h>
 #include <stdio.h>
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 namespace cocos2d{
 
-    void CCXLog(const char * pszFormat, ...)
+    void CCLog(const char * pszFormat, ...)
     {
     	char buf[MAX_LEN];
     	

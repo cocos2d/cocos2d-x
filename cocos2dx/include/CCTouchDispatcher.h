@@ -50,12 +50,12 @@ enum {
 };
 
 class CCSet;
-class UIEvent;
+class CCEvent;
 
 struct ccTouchHandlerHelperData {
 	// we only use the type
-//	void (StandardTouchDelegate::*touchesSel)(CCSet*, UIEvent*);
-//	void (TargetedTouchDelegate::*touchSel)(NSTouch*, UIEvent*);
+//	void (StandardTouchDelegate::*touchesSel)(CCSet*, CCEvent*);
+//	void (TargetedTouchDelegate::*touchSel)(NSTouch*, CCEvent*);
 	int  m_type;
 };
 
@@ -63,10 +63,10 @@ struct ccTouchHandlerHelperData {
 class CCX_DLL EGLTouchDelegate
 {
 public:
-	virtual void touchesBegan(CCSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesMoved(CCSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesEnded(CCSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesCancelled(CCSet* touches, UIEvent* pEvent) = 0;
+	virtual void touchesBegan(CCSet* touches, CCEvent* pEvent) = 0;
+	virtual void touchesMoved(CCSet* touches, CCEvent* pEvent) = 0;
+	virtual void touchesEnded(CCSet* touches, CCEvent* pEvent) = 0;
+	virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent) = 0;
 
     virtual ~EGLTouchDelegate() {}
 };
@@ -125,12 +125,12 @@ public:
     the higher the priority */
 	void setPriority(int nPriority, CCTouchDelegate *pDelegate);
 
-	void touches(CCSet *pTouches, UIEvent *pEvent, unsigned int uIndex);
+	void touches(CCSet *pTouches, CCEvent *pEvent, unsigned int uIndex);
 
-	virtual void touchesBegan(CCSet* touches, UIEvent* pEvent);
-	virtual void touchesMoved(CCSet* touches, UIEvent* pEvent);
-	virtual void touchesEnded(CCSet* touches, UIEvent* pEvent);
-	virtual void touchesCancelled(CCSet* touches, UIEvent* pEvent);
+	virtual void touchesBegan(CCSet* touches, CCEvent* pEvent);
+	virtual void touchesMoved(CCSet* touches, CCEvent* pEvent);
+	virtual void touchesEnded(CCSet* touches, CCEvent* pEvent);
+	virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent);
 
 public:
 	/** singleton of the CCTouchDispatcher */

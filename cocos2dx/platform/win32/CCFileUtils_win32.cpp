@@ -125,7 +125,7 @@ void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 		}
 		else
 		{
-			NSAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
+			CCAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
 			pMaker->m_pCurDict->setObject(pNewDict, pMaker->m_sCurKey);
 			pNewDict->release();
 			pMaker->m_sCurKey.clear();
@@ -188,7 +188,7 @@ void plist_characters(void *ctx, const xmlChar *ch, int len)
  	case SAX_REAL:
  	case SAX_STRING:
  		{
- 			NSAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
+ 			CCAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
  			pMaker->m_pCurDict->setObject(pText, pMaker->m_sCurKey);
  			break;
  		}
@@ -221,8 +221,8 @@ void _CheckPath()
 
 void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
-    NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-    NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
+    CCAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
+    CCAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
 
     strcpy(s_pszResourcePath, pszResourcePath);
 }

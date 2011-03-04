@@ -144,7 +144,7 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     {
         for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
         {
-            CCX_BREAK_IF(!(*iter));
+            CC_BREAK_IF(!(*iter));
 
             pHandler = *iter;
             pDelegate = pHandler->getDelegate();

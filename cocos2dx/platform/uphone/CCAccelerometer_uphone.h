@@ -87,7 +87,7 @@ namespace   cocos2d {
 		/**
 		@brief call delegates' didAccelerate function
 		*/
-		void didAccelerate(UIAcceleration* pAccelerationValue);
+		void didAccelerate(CCAcceleration* pAccelerationValue);
 
 	protected:
 		typedef CCMutableArray<CCAccelerometerHandler*> AccDelegateArray;

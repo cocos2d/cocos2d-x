@@ -341,6 +341,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCCocos2dDefine.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCCommon.h"
 				>
 			</File>
@@ -377,7 +381,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCGeometry.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCGL.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCImage.h"
 				>
 			</File>
 			<File
@@ -441,6 +453,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCObject.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCParallaxNode.h"
 				>
 			</File>
@@ -461,11 +477,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCPointExtension.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCProgressTimer.h"
 				>
 			</File>
 			<File
 				RelativePath="..\include\CCProtocols.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCPVRTexture.h"
 				>
 			</File>
 			<File
@@ -1029,6 +1053,10 @@
 				</File>
 				<File
 					RelativePath="..\platform\uphone\CCBitmapDC.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\uphone\CCCocos2dDefine_uphone.h"
 					>
 				</File>
 				<File

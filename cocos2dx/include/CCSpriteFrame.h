@@ -77,8 +77,8 @@ public:
 	/** set texture of the frame, the texture is retained */
 	inline void setTexture(CCTexture2D* pobTexture)
 	{
-		CCX_SAFE_RETAIN(pobTexture);
-		CCX_SAFE_RELEASE(m_pobTexture);
+		CC_SAFE_RETAIN(pobTexture);
+		CC_SAFE_RELEASE(m_pobTexture);
 		m_pobTexture = pobTexture;
 	}
 

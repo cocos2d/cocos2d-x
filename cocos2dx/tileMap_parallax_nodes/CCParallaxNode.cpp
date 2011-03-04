@@ -29,9 +29,9 @@ namespace cocos2d {
 
 	class CCPointObject : CCObject
 	{
-		CCX_SYNTHESIZE(CCPoint, m_tRatio, Ratio)
-		CCX_SYNTHESIZE(CCPoint, m_tOffset, Offset)
-		CCX_SYNTHESIZE(CCNode *,m_pChild, Child)	// weak ref
+		CC_SYNTHESIZE(CCPoint, m_tRatio, Ratio)
+		CC_SYNTHESIZE(CCPoint, m_tOffset, Offset)
+		CC_SYNTHESIZE(CCNode *,m_pChild, Child)	// weak ref
 
 		static CCPointObject * pointWithCCPoint(CCPoint ratio, CCPoint offset)
 		{
@@ -70,11 +70,11 @@ namespace cocos2d {
 	}
 	void CCParallaxNode::addChild(CCNode * child, int zOrder, int tag)
 	{
-		NSAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
+		CCAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 	}
 	void CCParallaxNode::addChild(CCNode *child, int z, CCPoint ratio, CCPoint offset)
 	{
-		NSAssert( child != NULL, "Argument must be non-nil");
+		CCAssert( child != NULL, "Argument must be non-nil");
 		CCPointObject *obj = CCPointObject::pointWithCCPoint(ratio, offset);
 		obj->setChild(child);
 		ccArrayAppendObjectWithResize(m_pParallaxArray, (CCObject*)obj);

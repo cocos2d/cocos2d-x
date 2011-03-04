@@ -237,7 +237,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+		CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
 		CCLabelAtlas *label = new CCLabelAtlas();
 		label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
 		label->autorelease();
@@ -287,7 +287,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+		CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 		CCLabelTTF *label = CCLabelTTF::labelWithString(value, _fontName.c_str(), (float)_fontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
@@ -504,7 +504,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage)
@@ -515,7 +515,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector)
@@ -540,8 +540,8 @@ namespace cocos2d{
 	//
 	void CCMenuItemToggle::setSubItems(CCMutableArray<CCMenuItem*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pSubItems);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pSubItems);
 		m_pSubItems = var;
 	}
 	CCMutableArray<CCMenuItem*> *CCMenuItemToggle::getSubItems()

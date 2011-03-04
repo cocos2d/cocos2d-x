@@ -83,7 +83,7 @@ CCObject* CCActionInterval::copyWithZone(CCZone *pZone)
 	
 	CCFiniteTimeAction::copyWithZone(pZone);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 
 	pCopy->initWithDuration(m_fDuration);
 
@@ -218,7 +218,7 @@ CCObject* CCSequence::copyWithZone(CCZone *pZone)
 	pCopy->initOneTwo((CCFiniteTimeAction*)(m_pActions[0]->copy()->autorelease()), 
 				(CCFiniteTimeAction*)(m_pActions[1]->copy()->autorelease()));
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -349,7 +349,7 @@ CCObject* CCRepeat::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()), m_uTimes);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -438,7 +438,7 @@ CCRepeatForever *CCRepeatForever::actionWithAction(CCActionInterval *pAction)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet);
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
@@ -465,7 +465,7 @@ CCObject* CCRepeatForever::copyWithZone(CCZone *pZone)
 	CCActionInterval::copyWithZone(pZone);
 	// win32 : use the m_pOther's copy object.
 	pRet->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease())); 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 
@@ -584,7 +584,7 @@ CCObject* CCSpawn::copyWithZone(cocos2d::CCZone *pZone)
 	pCopy->initOneTwo((CCFiniteTimeAction*)(m_pOne->copy()->autorelease()), 
 					(CCFiniteTimeAction*)(m_pTwo->copy()->autorelease()));
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -668,7 +668,7 @@ CCObject* CCRotateTo::copyWithZone(cocos2d::CCZone *pZone)
 	pCopy->initWithDuration(m_fDuration, m_fDstAngle);
 
 	//Action *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angle: angle];
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -749,7 +749,7 @@ CCObject* CCRotateBy::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_fAngle);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -815,7 +815,7 @@ CCObject* CCMoveTo::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_endPosition);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -877,7 +877,7 @@ CCObject* CCMoveBy::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_delta);
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -938,7 +938,7 @@ CCObject* CCJumpBy::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_delta, m_height, m_nJumps);
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -998,7 +998,7 @@ CCObject* CCJumpTo::copyWithZone(CCZone* pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_delta, m_height, m_nJumps);
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1068,7 +1068,7 @@ CCObject* CCBezierBy::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_sConfig);
     
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1135,7 +1135,7 @@ CCObject* CCBezierTo::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_sConfig);
     
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1214,7 +1214,7 @@ CCObject* CCScaleTo::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_fEndScaleX, m_fEndScaleY);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1277,7 +1277,7 @@ CCObject* CCScaleBy::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_fEndScaleX, m_fEndScaleY);
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1336,7 +1336,7 @@ CCObject* CCBlink::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, (unsigned int)m_nTimes);
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1386,7 +1386,7 @@ CCObject* CCFadeIn::copyWithZone(cocos2d::CCZone *pZone)
 	
 	CCActionInterval::copyWithZone(pZone);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 
 	return pCopy;
 }
@@ -1436,7 +1436,7 @@ CCObject* CCFadeOut::copyWithZone(cocos2d::CCZone *pZone)
 
 	CCActionInterval::copyWithZone(pZone);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 
 	return pCopy;
 }
@@ -1498,7 +1498,7 @@ CCObject* CCFadeTo::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_toOpacity);
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1566,7 +1566,7 @@ CCObject* CCTintTo::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_to.r, m_to.g, m_to.b);
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1637,7 +1637,7 @@ CCObject* CCTintBy::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, (GLubyte)m_deltaR, (GLubyte)m_deltaG, (GLubyte)m_deltaB);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1702,7 +1702,7 @@ CCObject* CCDelayTime::copyWithZone(cocos2d::CCZone *pZone)
 	
 	CCActionInterval::copyWithZone(pZone);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 
 	return pCopy;
 }
@@ -1762,7 +1762,7 @@ CCObject* CCReverseTime::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()));
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
@@ -1832,7 +1832,7 @@ bool CCAnimate::initWithAnimation(cocos2d::CCAnimation *pAnimation, bool bRestor
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
        m_pAnimation = pAnimation;
-		CCX_SAFE_RETAIN(m_pAnimation);
+		CC_SAFE_RETAIN(m_pAnimation);
 		m_pOrigFrame = NULL;
 
 		return true;
@@ -1858,7 +1858,7 @@ bool CCAnimate::initWithDuration(cocos2d::ccTime duration, cocos2d::CCAnimation 
 	{
 		m_bRestoreOriginalFrame = bRestoreOriginalFrame;
 		m_pAnimation = pAnimation;
-		CCX_SAFE_RETAIN(m_pAnimation);
+		CC_SAFE_RETAIN(m_pAnimation);
 		m_pOrigFrame = NULL;
 
 		return true;
@@ -1886,14 +1886,14 @@ CCObject* CCAnimate::copyWithZone(cocos2d::CCZone *pZone)
 
 	pCopy->initWithDuration(m_fDuration, m_pAnimation, m_bRestoreOriginalFrame);
 
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
 }
 
 CCAnimate::~CCAnimate(void)
 {
-	CCX_SAFE_RELEASE(m_pAnimation);
-    CCX_SAFE_RELEASE(m_pOrigFrame);
+	CC_SAFE_RELEASE(m_pAnimation);
+    CC_SAFE_RELEASE(m_pOrigFrame);
 }
 
 void CCAnimate::startWithTarget(CCNode *pTarget)
@@ -1901,7 +1901,7 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
 	CCActionInterval::startWithTarget(pTarget);
 	CCSprite *pSprite = (CCSprite*)(pTarget);
 
-	CCX_SAFE_RELEASE(m_pOrigFrame);
+	CC_SAFE_RELEASE(m_pOrigFrame);
 
 	if (m_bRestoreOriginalFrame)
 	{

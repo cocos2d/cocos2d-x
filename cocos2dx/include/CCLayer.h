@@ -57,11 +57,11 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
     virtual void onEnterTransitionDidFinish();
-	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void destroy(void);
 	virtual void keep(void);
 	
-    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {}
     virtual void AccelerometerDestroy(void);
     virtual void AccelerometerKeep(void);
 
@@ -105,27 +105,27 @@ public:
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
 	@since v0.8.1
 	*/
-	CCX_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
+	CC_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
 	/** whether or not it will receive Accelerometer events
 	You can enable / disable accelerometer events with this property.
 	@since v0.8.1
 	*/
-	CCX_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+	CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
     /** whether or not it will receive Keyboard events
     You can enable / disable Keyboard events with this property.
     @since v0.99.5
     */
-    CCX_PROPERTY(bool, m_bIsKeyboardEnabled, IsKeyboardEnabled)
+    CC_PROPERTY(bool, m_bIsKeyboardEnabled, IsKeyboardEnabled)
     /** whether or not it will receive mouse events
     You can enable / disable mouse events with this property.
     @since v0.99.5
     */
-    CCX_PROPERTY(bool, m_bIsMouseEnabled, IsMouseEnabled)
+    CC_PROPERTY(bool, m_bIsMouseEnabled, IsMouseEnabled)
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-    CCX_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
+    CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
 };
 
 //
@@ -171,11 +171,11 @@ public:
 	void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
+	CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(ccColor3B, m_tColor, Color)
+	CC_PROPERTY(ccColor3B, m_tColor, Color)
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
 	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 
@@ -232,10 +232,10 @@ public:
     ccColor3B getStartColor();
     void      setStartColor(ccColor3B colors);
 
-    CCX_PROPERTY(ccColor3B, m_endColor, EndColor)
-    CCX_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
-    CCX_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
-    CCX_PROPERTY(CCPoint, m_AlongVector, AlongVector)
+    CC_PROPERTY(ccColor3B, m_endColor, EndColor)
+    CC_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
+    CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
+    CC_PROPERTY(CCPoint, m_AlongVector, AlongVector)
 
 protected:
     virtual void updateColor();

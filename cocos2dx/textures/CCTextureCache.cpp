@@ -47,8 +47,8 @@ public:
 	~CCAsyncObject()
 	{
 		CCLOGINFO("cocos2d: deallocing CCAsyncObject.");
-		CCX_SAFE_DELETE(m_pTarget);
-		CCX_SAFE_DELETE(m_pData);
+		CC_SAFE_DELETE(m_pTarget);
+		CC_SAFE_DELETE(m_pData);
 	}
 };
 
@@ -67,7 +67,7 @@ CCTextureCache * CCTextureCache::sharedTextureCache()
 
 CCTextureCache::CCTextureCache()
 {
-	NSAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
+	CCAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
 	
 	m_pTextures = new CCMutableDictionary<std::string, CCTexture2D*>();
 	m_pDictLock = new CCLock();
@@ -78,14 +78,14 @@ CCTextureCache::~CCTextureCache()
 {
 	CCLOG("cocos2d: deallocing CCTextureCache.");
 
-	CCX_SAFE_RELEASE(m_pTextures);
-	CCX_SAFE_DELETE(m_pDictLock);
-	CCX_SAFE_DELETE(m_pContextLock);
+	CC_SAFE_RELEASE(m_pTextures);
+	CC_SAFE_DELETE(m_pDictLock);
+	CC_SAFE_DELETE(m_pContextLock);
 }
 
 void CCTextureCache::purgeSharedTextureCache()
 {
-	CCX_SAFE_RELEASE_NULL(g_sharedTextureCache);
+	CC_SAFE_RELEASE_NULL(g_sharedTextureCache);
 }
 
 
@@ -137,7 +137,7 @@ sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 /* @todo selector, NSThread
 void CCTextureCache::addImageAsync(const char* filename, CCObject *target, fpAsyncCallback func)
 {
-	NSAssert(filename != NULL , "TextureCache: fileimage MUST not be nill");
+	CCAssert(filename != NULL , "TextureCache: fileimage MUST not be nill");
 
 	// optimization
 
@@ -170,7 +170,7 @@ void CCTextureCache::addImageAsync(const char* filename, CCObject *target, fpAsy
 
 CCTexture2D * CCTextureCache::addImage(const char * path)
 {
-	NSAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
+	CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
 	CCTexture2D * texture = NULL;
 	// Split up directory and filename
@@ -213,7 +213,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 				}
 				texture = new CCTexture2D();
 				texture->initWithImage(image);
-				CCX_SAFE_DELETE(image);// image->release();
+				CC_SAFE_DELETE(image);// image->release();
 
 				if( texture )
 				{
@@ -241,7 +241,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 				}
 				texture = new CCTexture2D();
 				texture->initWithImage(image);
-				CCX_SAFE_DELETE(image);// image->release();
+				CC_SAFE_DELETE(image);// image->release();
 #endif
 				if( texture )
 				{
@@ -264,8 +264,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
 {
 	
-	NSAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
-	NSAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
+	CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
+	CCAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
 	CCTexture2D * texture;
 	std::string temp(path);
@@ -289,14 +289,14 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 	{
 		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",path);
 	}
-	CCX_SAFE_DELETE(data);
+	CC_SAFE_DELETE(data);
 
 	return texture;
 }
 
 CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 {
-	NSAssert(fileimage != NULL, "TextureCache: fileimage MUST not be nill");
+	CCAssert(fileimage != NULL, "TextureCache: fileimage MUST not be nill");
 
 	CCTexture2D * texture;
 	std::string key(fileimage);
@@ -324,7 +324,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 /* @todo CGImageRef
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key
 {
-	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");
+	CCAssert(imageref != nil, @"TextureCache: image MUST not be nill");
 
 	CCTexture2D * tex = nil;
 
@@ -347,7 +347,7 @@ CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
 }*/
 CCTexture2D* CCTextureCache::addCCImage(CCImage *image, const char *key)
 {
-	NSAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
+	CCAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
 
 	CCTexture2D * texture = NULL;
 	std::string forKey = key;

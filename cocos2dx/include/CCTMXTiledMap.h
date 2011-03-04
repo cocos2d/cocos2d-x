@@ -101,15 +101,15 @@ namespace cocos2d {
 	class CCX_DLL CCTMXTiledMap : public CCNode
 	{
 		/** the map's size property measured in tiles */
-		CCX_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
+		CC_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
 		/** the tiles's size property measured in pixels */
-		CCX_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
+		CC_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
 		/** map orientation */
-		CCX_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
+		CC_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
 		/** object groups */
-		CCX_PROPERTY(CCMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
+		CC_PROPERTY(CCMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/** properties */
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXTiledMap();
 		virtual ~CCTMXTiledMap();

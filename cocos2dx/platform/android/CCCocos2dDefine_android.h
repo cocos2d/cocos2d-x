@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __PLATFORM_ANDROID_CCXCOCOS2D_DEFINE_H__
-#define __PLATFORM_ANDROID_CCXCOCOS2D_DEFINE_H__
+#ifndef __PLATFORM_ANDROID_CCCOCOS2D_DEFINE_H__
+#define __PLATFORM_ANDROID_CCCOCOS2D_DEFINE_H__
 
 /** CCX_PROPERTY_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
@@ -33,7 +33,7 @@
  The variables and methods declared after CCX_PROPERTY_READONLY are all public.
  If you need protected or private, please declare.
  */
-#define CCX_PROPERTY_READONLY(varType, varName, funName)\
+#define CC_PROPERTY_READONLY(varType, varName, funName)\
 protected: varType varName;\
 public: virtual varType get##funName(void);
 
@@ -47,7 +47,7 @@ public: virtual varType get##funName(void);
  The variables and methods declared after CCX_PROPERTY are all public.
  If you need protected or private, please declare.
  */
-#define CCX_PROPERTY(varType, varName, funName)\
+#define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
 public: virtual varType get##funName(void);\
 public: virtual void set##funName(varType var);
@@ -61,7 +61,7 @@ public: virtual void set##funName(varType var);
  The variables and methods declared after CCX_SYNTHESIZE_READONLY are all public.
  If you need protected or private, please declare.
  */
-#define CCX_SYNTHESIZE_READONLY(varType, varName, funName)\
+#define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
 public: inline varType get##funName(void){ return varName; }
 
@@ -75,29 +75,29 @@ public: inline varType get##funName(void){ return varName; }
  The variables and methods declared after CCX_SYNTHESIZE are all public.
  If you need protected or private, please declare.
  */
-#define CCX_SYNTHESIZE(varType, varName, funName)\
+#define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
 public: inline varType get##funName(void){ return varName; }\
 public: inline void set##funName(varType var){ varName = var; }
 
-#define CCX_SAFE_DELETE(p)			if(p) { delete p; p=NULL; }
-#define CCX_SAFE_DELETE_ARRAY(p)    if(p) { delete[] p; p=NULL; }
-#define CCX_SAFE_FREE(p)			if(p) { free(p); p=NULL; }
-#define CCX_SAFE_RELEASE(p)			if(p) { p->release(); }
-#define CCX_SAFE_RELEASE_NULL(p)	if(p) { p->release(); p = NULL; }
-#define CCX_SAFE_RETAIN(p)			if(p) { p->retain(); }
-#define CCX_BREAK_IF(cond)			if(cond) break;
+#define CC_SAFE_DELETE(p)			if(p) { delete p; p=NULL; }
+#define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] p; p=NULL; }
+#define CC_SAFE_FREE(p)			if(p) { free(p); p=NULL; }
+#define CC_SAFE_RELEASE(p)			if(p) { p->release(); }
+#define CC_SAFE_RELEASE_NULL(p)	if(p) { p->release(); p = NULL; }
+#define CC_SAFE_RETAIN(p)			if(p) { p->retain(); }
+#define CC_BREAK_IF(cond)			if(cond) break;
 
 #ifdef _DEBUG
 #include <assert.h>
 #include <stdio.h>
-#define NSAssert(_CONDITION, _TXT)\
+#define CCAssert(_CONDITION, _TXT)\
 if(! (_CONDITION) )			\
 {							\
 assert( (_CONDITION) );	\
 }
 #else
-#define NSAssert(_CONDITION, _TXT)
+#define CCAssert(_CONDITION, _TXT)
 #endif	// _DEBUG
 
 #ifndef MAX
@@ -108,10 +108,5 @@ assert( (_CONDITION) );	\
 #define MIN(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
-#define self	this
-#define YES		true
-#define NO		false
-#define nil     NULL
-
-#endif // __PLATFORM_ANDROID_CCXCOCOS2D_DEFINE_H__
+#endif // __PLATFORM_ANDROID_CCCOCOS2D_DEFINE_H__
 

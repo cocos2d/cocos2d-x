@@ -45,7 +45,7 @@ CCMotionStreak * CCMotionStreak::streakWithFade(float fade, float seg, const cha
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 

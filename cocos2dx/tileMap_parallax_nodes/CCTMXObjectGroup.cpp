@@ -37,8 +37,8 @@ namespace cocos2d {
 	CCTMXObjectGroup::~CCTMXObjectGroup()
 	{
 		CCLOGINFO( "cocos2d: deallocing.");
-		CCX_SAFE_RELEASE(m_pObjects);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pObjects);
+		CC_SAFE_RELEASE(m_pProperties);
 	}
 	CCXStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
 	{
@@ -68,8 +68,8 @@ namespace cocos2d {
 	}
 	void CCTMXObjectGroup::setProperties(CCXStringToStringDictionary * properties)
 	{
-		CCX_SAFE_RETAIN(properties);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(properties);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = properties;
 	}
 	CCArray<CCXStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
@@ -78,8 +78,8 @@ namespace cocos2d {
 	}
 	void CCTMXObjectGroup::setObjects(CCArray<CCXStringToStringDictionary*> * objects)
 	{
-		CCX_SAFE_RETAIN(objects);
-		CCX_SAFE_RELEASE(m_pObjects);
+		CC_SAFE_RETAIN(objects);
+		CC_SAFE_RELEASE(m_pObjects);
 		m_pObjects = objects;
 	}
 

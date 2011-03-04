@@ -51,7 +51,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -92,13 +92,13 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
 	CCActionEase::~CCActionEase(void)
 	{
-		CCX_SAFE_RELEASE(m_pOther);
+		CC_SAFE_RELEASE(m_pOther);
 	}
 
 	void CCActionEase::startWithTarget(CCNode *pTarget)
@@ -137,7 +137,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -172,7 +172,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -199,7 +199,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -223,7 +223,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -246,7 +246,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -270,7 +270,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -293,7 +293,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -317,7 +317,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease()), m_fRate);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -362,7 +362,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -386,7 +386,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -414,7 +414,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -438,7 +438,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -466,7 +466,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -490,7 +490,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -523,7 +523,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -547,7 +547,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -575,7 +575,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -599,7 +599,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -627,7 +627,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -651,7 +651,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -674,7 +674,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -692,7 +692,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -732,7 +732,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -757,7 +757,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -775,7 +775,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -799,7 +799,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -839,7 +839,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -857,7 +857,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -881,7 +881,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -920,7 +920,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -938,7 +938,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -962,7 +962,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()), m_fPeriod);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 
 	}
@@ -1017,7 +1017,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -1041,7 +1041,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -1080,7 +1080,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -1104,7 +1104,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -1133,7 +1133,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -1157,7 +1157,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -1186,7 +1186,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -1210,7 +1210,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -1244,7 +1244,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -1268,7 +1268,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -1297,7 +1297,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -1321,7 +1321,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -1352,7 +1352,7 @@ namespace cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pRet);
+				CC_SAFE_RELEASE_NULL(pRet);
 			}
 		}
 
@@ -1376,7 +1376,7 @@ namespace cocos2d {
 
 		pCopy->initWithAction((CCActionInterval *)(m_pOther->copy()->autorelease()));
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 

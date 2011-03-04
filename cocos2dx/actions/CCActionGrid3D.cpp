@@ -42,7 +42,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace cocos2d
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -116,7 +116,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -160,7 +160,7 @@ namespace cocos2d
 
 		pCopy->initWithSize(m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -242,7 +242,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -268,7 +268,7 @@ namespace cocos2d
 
 		pCopy->initWithSize(m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -351,7 +351,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -393,7 +393,7 @@ namespace cocos2d
 
 		pCopy->initWithPosition(m_position, m_fRadius, m_sGridSize, m_fDuration);
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -464,7 +464,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -513,7 +513,7 @@ namespace cocos2d
 
 		pCopy->initWithPosition(m_position, m_fRadius, m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -555,7 +555,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -594,7 +594,7 @@ namespace cocos2d
 
 		pCopy->initWithRange(m_nRandrange, m_bShakeZ, m_sGridSize, m_fDuration);
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -633,7 +633,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -673,7 +673,7 @@ namespace cocos2d
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -707,7 +707,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -749,7 +749,7 @@ namespace cocos2d
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_bHorizontal, m_bVertical, m_sGridSize, m_fDuration);
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -792,7 +792,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -841,7 +841,7 @@ namespace cocos2d
 
 		pCopy->initWithPosition(m_position, m_nTwirls, m_fAmplitude, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 

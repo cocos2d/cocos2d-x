@@ -239,7 +239,7 @@ void Sprite1::addNewSpriteWithCoords(CCPoint p)
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
 
-void Sprite1::ccTouchesEnded(CCSet* touches, UIEvent* event)
+void Sprite1::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 	CCSetIterator it;
 	CCTouch* touch;
@@ -315,7 +315,7 @@ void SpriteSheet1::addNewSpriteWithCoords(CCPoint p)
 	sprite->runAction( CCRepeatForever::actionWithAction(seq));
 }
 
-void SpriteSheet1::ccTouchesEnded(CCSet* touches, UIEvent* event)
+void SpriteSheet1::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 	CCSetIterator it;
 	CCTouch* touch;
@@ -669,7 +669,7 @@ SpriteSheetReorder::SpriteSheetReorder()
 			break;
 
 		int currentIndex = child->getAtlasIndex();
-		NSAssert( prev == currentIndex-1, "Child order failed");
+		CCAssert( prev == currentIndex-1, "Child order failed");
 		////----UXLOG("children %x - atlasIndex:%d", child, currentIndex);
 		prev = currentIndex;
 	}
@@ -684,7 +684,7 @@ SpriteSheetReorder::SpriteSheetReorder()
 			break;
 
 		int currentIndex = child->getAtlasIndex();
-		NSAssert( prev == currentIndex-1, "Child order failed");
+		CCAssert( prev == currentIndex-1, "Child order failed");
 		////----UXLOG("descendant %x - atlasIndex:%d", child, currentIndex);
 		prev = currentIndex;
 	}
@@ -1292,7 +1292,7 @@ void SpriteNewTexture::addNewSprite()
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
 
-void SpriteNewTexture::ccTouchesEnded(CCSet* touches, UIEvent* event)
+void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 
 	CCNode *node = getChildByTag( kTagSpriteSheet );
@@ -1398,7 +1398,7 @@ void SpriteSheetNewTexture::addNewSprite()
 	sprite->runAction( CCRepeatForever::actionWithAction(seq) );
 }
 
-void SpriteSheetNewTexture::ccTouchesEnded(CCSet* touches, UIEvent* event)
+void SpriteSheetNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*) getChildByTag( kTagSpriteSheet );
 	

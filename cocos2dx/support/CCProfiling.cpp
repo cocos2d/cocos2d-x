@@ -70,7 +70,7 @@ namespace cocos2d
 
 	CCProfiler::~CCProfiler(void)
 	{
-		CCX_SAFE_RELEASE(m_pActiveTimers);
+		CC_SAFE_RELEASE(m_pActiveTimers);
 	}
 
 	void CCProfiler::displayTimers()

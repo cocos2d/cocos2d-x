@@ -79,8 +79,8 @@ bool CCParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 }
 CCParticleSystemQuad::~CCParticleSystemQuad()
 {
-	CCX_SAFE_DELETE_ARRAY(m_pQuads);
-	CCX_SAFE_DELETE_ARRAY(m_pIndices);
+	CC_SAFE_DELETE_ARRAY(m_pQuads);
+	CC_SAFE_DELETE_ARRAY(m_pIndices);
 #if CC_USES_VBO
     glDeleteBuffers(1, &m_uQuadsID);
 #endif
@@ -155,7 +155,7 @@ void CCParticleSystemQuad::setTexture(CCTexture2D* var)
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 {
-	NSAssert( CCPoint::CCPointEqualToPoint( spriteFrame->getOffsetInPixels() , CCPointZero ), "QuadParticle only supports SpriteFrames with no offsets");
+	CCAssert( CCPoint::CCPointEqualToPoint( spriteFrame->getOffsetInPixels() , CCPointZero ), "QuadParticle only supports SpriteFrames with no offsets");
 
 	// update texture before updating texture rect
 	if ( !m_pTexture || spriteFrame->getTexture()->getName() != m_pTexture->getName())
@@ -299,7 +299,7 @@ void CCParticleSystemQuad::draw()
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-    NSAssert( m_nParticleIdx == m_nParticleCount, "Abnormal error in particle quad");
+    CCAssert( m_nParticleIdx == m_nParticleCount, "Abnormal error in particle quad");
 
 	glDrawElements(GL_TRIANGLES, m_nParticleIdx*6, GL_UNSIGNED_SHORT, m_pIndices);	
 

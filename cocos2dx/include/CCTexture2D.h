@@ -91,23 +91,23 @@ typedef struct _ccTexParams {
 class CCX_DLL CCTexture2D : public CCObject
 {
 	/** pixel format of the texture */
-	CCX_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
+	CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
 	/** width in pixels */
-	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
 	/** hight in pixels */
-	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
 
 	/** texture name */
-	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
+	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
 
 	/** content size */
-	CCX_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSizeInPixels)
+	CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSizeInPixels)
 	/** texture max S */
-	CCX_PROPERTY(GLfloat, m_fMaxS, MaxS)
+	CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
 	/** texture max T */
-	CCX_PROPERTY(GLfloat, m_fMaxT, MaxT)
+	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
 	/** whether or not the texture has their Alpha premultiplied */
-	CCX_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
+	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
 
 public:
 	CCTexture2D();

@@ -53,14 +53,14 @@ public:
 	static CCPVRTexture * pvrTextureWithContentsOfFile(const char* path);
 // @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
 
-	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
-	CCX_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
-	CCX_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
-	CCX_PROPERTY_READONLY(GLenum, m_uInternalFormat, InternalFormat)
-	CCX_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
+	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
+	CC_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
+	CC_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
+	CC_PROPERTY_READONLY(GLenum, m_uInternalFormat, InternalFormat)
+	CC_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
 
 	// cocos2d integration
-	CCX_PROPERTY(bool, m_bRetainName, RetainName);
+	CC_PROPERTY(bool, m_bRetainName, RetainName);
 
 private:
 	bool unpackPVRData(CCData *data);

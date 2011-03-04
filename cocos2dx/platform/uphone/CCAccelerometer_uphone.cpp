@@ -86,7 +86,7 @@ namespace   cocos2d {
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pHandler);
+				CC_SAFE_RELEASE_NULL(pHandler);
 			}
 		}
 
@@ -176,7 +176,7 @@ namespace   cocos2d {
 		}
 	}
 
-	void CCAccelerometer::didAccelerate(UIAcceleration* pAccelerationValue)
+	void CCAccelerometer::didAccelerate(CCAcceleration* pAccelerationValue)
 	{
 		CCAccelerometerHandler  *pHandler;
 		CCAccelerometerDelegate *pDelegate;

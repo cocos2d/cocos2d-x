@@ -69,7 +69,7 @@ CCActionManager* CCActionManager::sharedManager(void)
 void CCActionManager::purgeSharedManager(void)
 {
 	CCScheduler::sharedScheduler()->unscheduleUpdateForTarget(this);
-	CCX_SAFE_RELEASE(gSharedManager);
+	CC_SAFE_RELEASE(gSharedManager);
 }
 
 void CCActionManager::selectorProtocolRetain()

@@ -69,7 +69,7 @@ namespace cocos2d {
 
 			// tilesetInfo
 			m_pTileSet = tilesetInfo;
-			CCX_SAFE_RETAIN(m_pTileSet);
+			CC_SAFE_RETAIN(m_pTileSet);
 
 			// mapInfo
 			m_tMapTileSize = mapInfo->getTileSize();
@@ -102,9 +102,9 @@ namespace cocos2d {
 	{}
 	CCTMXLayer::~CCTMXLayer()
 	{
-		CCX_SAFE_RELEASE(m_pTileSet);
-		CCX_SAFE_RELEASE(m_pReusedTile);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pTileSet);
+		CC_SAFE_RELEASE(m_pReusedTile);
+		CC_SAFE_RELEASE(m_pProperties);
 
 		if( m_pAtlasIndexArray )
 		{
@@ -124,8 +124,8 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::setTileSet(CCTMXTilesetInfo* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pTileSet);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pTileSet);
 		m_pTileSet = var;
 	}
 	void CCTMXLayer::releaseMap()
@@ -186,7 +186,7 @@ namespace cocos2d {
 			}
 		}
 
-		NSAssert( m_uMaxGID >= m_pTileSet->m_uFirstGid &&
+		CCAssert( m_uMaxGID >= m_pTileSet->m_uFirstGid &&
 			m_uMinGID >= m_pTileSet->m_uFirstGid, "TMX: Only 1 tilset per layer is supported");	
 	}
 
@@ -222,8 +222,8 @@ namespace cocos2d {
 	// CCTMXLayer - obtaining tiles/gids
 	CCSprite * CCTMXLayer::tileAt(CCPoint pos)
 	{
-		NSAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-		NSAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
+		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
 
 		CCSprite *tile = NULL;
 		unsigned int gid = this->tileGIDAt(pos);
@@ -254,8 +254,8 @@ namespace cocos2d {
 	}
 	unsigned int CCTMXLayer::tileGIDAt(CCPoint pos)
 	{
-		NSAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-		NSAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
+		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
 
 		int idx = (int)(pos.x + pos.y * m_tLayerSize.width);
 		return m_pTiles[ idx ];
@@ -389,7 +389,7 @@ namespace cocos2d {
 		int key=z;
 		int *item = (int*)bsearch((void*)&key, (void*)&m_pAtlasIndexArray->arr[0], m_pAtlasIndexArray->num, sizeof(void*), compareInts);
 
-		NSAssert( item, "TMX atlas index not found. Shall not happen");
+		CCAssert( item, "TMX atlas index not found. Shall not happen");
 
 		int index = ((int)item - (int)m_pAtlasIndexArray->arr) / sizeof(void*);
 		return index;
@@ -410,9 +410,9 @@ namespace cocos2d {
 	// CCTMXLayer - adding / remove tiles
 	void CCTMXLayer::setTileGID(unsigned int gid, CCPoint pos)
 	{
-		NSAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-		NSAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
-        NSAssert( gid == 0 || gid >= m_pTileSet->m_uFirstGid, "TMXLayer: invalid gid" );
+		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
+        CCAssert( gid == 0 || gid >= m_pTileSet->m_uFirstGid, "TMXLayer: invalid gid" );
 
 		unsigned int currentGID = tileGIDAt(pos);
 
@@ -450,7 +450,7 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::addChild(CCNode * child, int zOrder, int tag)
 	{
-		NSAssert(0, "addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
+		CCAssert(0, "addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
 	}
 	void CCTMXLayer::removeChild(CCNode* node, bool cleanup)
 	{
@@ -459,7 +459,7 @@ namespace cocos2d {
 		if( ! sprite )
 			return;
 
-		NSAssert( m_pChildren->contaiCCObject(sprite), "Tile does not belong to TMXLayer");
+		CCAssert( m_pChildren->contaiCCObject(sprite), "Tile does not belong to TMXLayer");
 
 		unsigned int atlasIndex = sprite->getAtlasIndex();
 		unsigned int zz = (unsigned int) m_pAtlasIndexArray->arr[atlasIndex];
@@ -469,8 +469,8 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::removeTileAt(CCPoint pos)
 	{
-		NSAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-		NSAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
+		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
+		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
 
 		unsigned int gid = tileGIDAt(pos);
 
@@ -531,7 +531,7 @@ namespace cocos2d {
 				(m_tMapTileSize.height /2 ) * (-pos.x - pos.y) );
 			break;
 		case CCTMXOrientationHex:
-			NSAssert(CCPoint::CCPointEqualToPoint(pos, CCPointZero), "offset for hexagonal map not implemented yet");
+			CCAssert(CCPoint::CCPointEqualToPoint(pos, CCPointZero), "offset for hexagonal map not implemented yet");
 			break;
 		}
 		return ret;	
@@ -593,10 +593,10 @@ namespace cocos2d {
 				ret = (int)(-(m_tLayerSize.height-pos.y));
 				break;
 			case CCTMXOrientationHex:
-				NSAssert(0, "TMX Hexa zOrder not supported");
+				CCAssert(0, "TMX Hexa zOrder not supported");
 				break;
 			default:
-				NSAssert(0, "TMX invalid value");
+				CCAssert(0, "TMX invalid value");
 				break;
 			}
 		} 
@@ -630,8 +630,8 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::setProperties(CCXStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
 

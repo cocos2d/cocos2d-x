@@ -55,7 +55,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 
@@ -75,7 +75,7 @@ namespace cocos2d{
 
 		pRet->initWithDuration(m_fDuration, m_fRadius, m_fDeltaRadius, m_fAngleZ, m_fDeltaAngleZ, m_fAngleX, m_fDeltaAngleX);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 

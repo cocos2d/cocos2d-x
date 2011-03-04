@@ -68,7 +68,7 @@ bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CCRect rect, bool r
 CCSpriteFrame::~CCSpriteFrame(void)
 {
 	CCLOGINFO("cocos2d: deallocing %p", this);
-	CCX_SAFE_RELEASE(m_pobTexture);
+	CC_SAFE_RELEASE(m_pobTexture);
 }
 
 CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)

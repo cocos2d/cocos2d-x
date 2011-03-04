@@ -22,21 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_UPHONE_H__
-#define __CCX_EGLVIEW_UPHONE_H__
+#ifndef __CC_EGLVIEW_UPHONE_H__
+#define __CC_EGLVIEW_UPHONE_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 
 namespace   cocos2d {
 class NSSet;
 class CCTouch;
 class EGLTouchDelegate;
 
-class CCX_DLL CCXEGLView
+class CCX_DLL CCEGLView
 {
 public:
-    CCXEGLView();
-    virtual ~CCXEGLView();
+    CCEGLView();
+    virtual ~CCEGLView();
 
     CGSize  getSize();
     bool    isOpenGLReady();
@@ -58,4 +58,4 @@ private:
 
 }   // end of namespace   cocos2d
 
-#endif	// end of __CCX_EGLVIEW_UPHONE_H__
+#endif	// end of __CC_EGLVIEW_UPHONE_H__

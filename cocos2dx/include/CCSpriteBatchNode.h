@@ -64,8 +64,8 @@ namespace cocos2d
 		{ 
 			if (textureAtlas != m_pobTextureAtlas)
 			{
-				CCX_SAFE_RETAIN(textureAtlas);
-				CCX_SAFE_RELEASE(m_pobTextureAtlas);
+				CC_SAFE_RETAIN(textureAtlas);
+				CC_SAFE_RELEASE(m_pobTextureAtlas);
 				m_pobTextureAtlas = textureAtlas;
 			}
 		}

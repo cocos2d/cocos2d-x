@@ -1273,20 +1273,20 @@ void TileDemo::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool TileDemo::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool TileDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	return true;
 }
 
-void TileDemo::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void TileDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 }
 
-void TileDemo::ccTouchCancelled(CCTouch* touch, UIEvent* event)
+void TileDemo::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 {
 }
 
-void TileDemo::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void TileDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	

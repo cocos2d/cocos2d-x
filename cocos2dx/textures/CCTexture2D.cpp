@@ -302,7 +302,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, pixelsWide, pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 		break;
 	default:;
-		NSAssert(0, "NSInternalInconsistencyException");
+		CCAssert(0, "NSInternalInconsistencyException");
 
 	}
 
@@ -433,7 +433,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 
 			tempData = (UINT8*)(image->getData());
-			NSAssert(tempData != NULL, "NULL image data.");
+			CCAssert(tempData != NULL, "NULL image data.");
 
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{
@@ -457,7 +457,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 			break;    
 		case kCCTexture2DPixelFormat_RGB888:
 			tempData = (UINT8*)(image->getData());
-			NSAssert(tempData != NULL, "NULL image data.");
+			CCAssert(tempData != NULL, "NULL image data.");
 			if(image->width() == POTWide && image->height() == POTHigh)
 			{
 				data = new UINT8[POTHigh * POTWide * 3];
@@ -478,7 +478,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 			}
 			break;   
 		default:
-			NSAssert(0, "Invalid pixel format");
+			CCAssert(0, "Invalid pixel format");
 			//[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
 	}
 
@@ -692,14 +692,14 @@ CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
 
 void CCTexture2D::generateMipmap()
 {
-	NSAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
+	CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, this->m_uName );
 	ccglGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)
 {
-	NSAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh)) ||
+	CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh)) ||
 		(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 		"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture( GL_TEXTURE_2D, this->m_uName );

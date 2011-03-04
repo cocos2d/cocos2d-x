@@ -45,11 +45,11 @@ namespace cocos2d {
         {
             // create font
             TFont font;
-            CCX_BREAK_IF(! font.Create(0, (Int32)fontSize));
+            CC_BREAK_IF(! font.Create(0, (Int32)fontSize));
 
             // text
             Int32 len = strlen(text) + 1;
-            CCX_BREAK_IF(! (pText = new TUChar[len]));
+            CC_BREAK_IF(! (pText = new TUChar[len]));
             TUString::StrGBToUnicode(pText, (Char*)text);
 
             // calculate text size
@@ -66,7 +66,7 @@ namespace cocos2d {
             Int16 height = (Int16)m_tSize.height;
 
             // create bitmap
-            CCX_BREAK_IF(! (m_pBitmap = TBitmap::Create(width, height, 32)));
+            CC_BREAK_IF(! (m_pBitmap = TBitmap::Create(width, height, 32)));
 
             // create memory window
             if (s_pMemWnd)
@@ -83,21 +83,21 @@ namespace cocos2d {
             do 
             {
                 // if memery window is already break
-                CCX_BREAK_IF(s_pMemWnd);
+                CC_BREAK_IF(s_pMemWnd);
 
-                CCX_BREAK_IF(! (s_pMemWnd = new TWindow(CCApplication::sharedApplication())));
+                CC_BREAK_IF(! (s_pMemWnd = new TWindow(CCApplication::sharedApplication())));
 
                 Coord nCurrentWidth = CCApplication::GetCurrentApplication()->GetScreenWidth();
                 Coord nCurrentHeight = CCApplication::GetCurrentApplication()->GetScreenHeight();
                 
                 Coord nMemWndW = (width >= nCurrentWidth) ? width : nCurrentWidth;
                 Coord nMemWndH = (height >= nCurrentHeight) ? height : nCurrentHeight;
-                CCX_BREAK_IF(s_pMemWnd->CreateMemWindow(nMemWndW, nMemWndH,screenAlphaFormat));
+                CC_BREAK_IF(s_pMemWnd->CreateMemWindow(nMemWndW, nMemWndH,screenAlphaFormat));
                 delete s_pMemWnd;
                 s_pMemWnd = NULL;
             } while (0);
 
-            CCX_BREAK_IF(! s_pMemWnd);
+            CC_BREAK_IF(! s_pMemWnd);
             
             // create DC
             TDC dc(s_pMemWnd);

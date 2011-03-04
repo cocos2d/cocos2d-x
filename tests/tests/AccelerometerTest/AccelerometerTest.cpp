@@ -47,7 +47,7 @@ void AccelerometerTest::onEnter()
     m_pBall->retain();
 }
 
-void AccelerometerTest::didAccelerate(UIAcceleration* pAccelerationValue)
+void AccelerometerTest::didAccelerate(CCAcceleration* pAccelerationValue)
 {
 //     double fNow = pAccelerationValue->timestamp;
 // 

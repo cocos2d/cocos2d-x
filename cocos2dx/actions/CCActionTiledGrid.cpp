@@ -52,7 +52,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -91,7 +91,7 @@ namespace cocos2d
 
 		pCopy->initWithRange(m_nRandrange, m_bShakeZ, m_sGridSize, m_fDuration);
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -144,7 +144,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -184,7 +184,7 @@ namespace cocos2d
 
 		pCopy->initWithRange(m_nRandrange, m_bShatterZ, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -242,7 +242,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -281,7 +281,7 @@ namespace cocos2d
 
 		pCopy->initWithSeed(m_nSeed, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -408,7 +408,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -496,7 +496,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -528,7 +528,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -572,7 +572,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -600,7 +600,7 @@ namespace cocos2d
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pAction);
+			CC_SAFE_RELEASE_NULL(pAction);
 		}
 		return pAction;
 	}
@@ -617,7 +617,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -655,7 +655,7 @@ namespace cocos2d
 
 		pCopy->initWithSeed(m_nSeed, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -750,7 +750,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -789,7 +789,7 @@ namespace cocos2d
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -828,7 +828,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -866,7 +866,7 @@ namespace cocos2d
 		CCTiledGrid3DAction::copyWithZone(pZone);
 		pCopy->initWithJumps(m_nJumps, m_fAmplitude, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -917,7 +917,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -949,7 +949,7 @@ namespace cocos2d
 
 		pCopy->initWithRows(m_nRows, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -996,7 +996,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -1026,7 +1026,7 @@ namespace cocos2d
 		CCTiledGrid3DAction::copyWithZone(pZone);
 		pCopy->initWithCols(m_nCols, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 

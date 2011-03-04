@@ -148,7 +148,7 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
 	
 }
 
-void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent)
+void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
 	CCSetIterator it = pTouches->begin();
 	CCTouch* touch = (CCTouch*)(*it);
@@ -157,7 +157,7 @@ void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent)
 	m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
-void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent)
+void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
 	CCSetIterator it = pTouches->begin();
 	CCTouch* touch = (CCTouch*)(*it);

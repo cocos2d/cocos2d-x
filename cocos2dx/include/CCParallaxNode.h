@@ -38,7 +38,7 @@ namespace cocos2d {
 	class CCX_DLL CCParallaxNode : public CCNode 
 	{
 		/** array that holds the offset / ratio of the children */
-		CCX_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
+		CC_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
 
 	public:
 		/** Adds a child to the container with a z-order, a parallax ratio and a position offset

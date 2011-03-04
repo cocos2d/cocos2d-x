@@ -133,20 +133,20 @@ void Parallax2::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool Parallax2::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool Parallax2::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	return true;
 }
 
-void Parallax2::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void Parallax2::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 }
 
-void Parallax2::ccTouchCancelled(CCTouch* touch, UIEvent* event)
+void Parallax2::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 {
 }
 
-void Parallax2::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void Parallax2::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	

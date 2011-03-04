@@ -64,7 +64,7 @@ namespace cocos2d {
 	*/
 	class CCX_DLL CCTMXLayerInfo : public CCObject
 	{
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		std::string			m_sName;
 		CCSize				m_tLayerSize;
@@ -125,27 +125,27 @@ namespace cocos2d {
 	{	
 	public:	
 		/// map orientation
-		CCX_SYNTHESIZE(int,	m_nOrientation, Orientation);
+		CC_SYNTHESIZE(int,	m_nOrientation, Orientation);
 		/// map width & height
-		CCX_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
+		CC_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
 		/// tiles width & height
-		CCX_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
+		CC_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
 		/// Layers
-		CCX_PROPERTY(CCMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
+		CC_PROPERTY(CCMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
 		/// tilesets
-		CCX_PROPERTY(CCMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
+		CC_PROPERTY(CCMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
 		/// ObjectGroups
-		CCX_PROPERTY(CCMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
+		CC_PROPERTY(CCMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/// parent element
-		CCX_SYNTHESIZE(int, m_nParentElement, ParentElement);
+		CC_SYNTHESIZE(int, m_nParentElement, ParentElement);
 		/// parent GID
-		CCX_SYNTHESIZE(unsigned int, m_uParentGID, ParentGID);
+		CC_SYNTHESIZE(unsigned int, m_uParentGID, ParentGID);
 		/// layer attribs
-		CCX_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
+		CC_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
 		/// is stroing characters?
-		CCX_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
+		CC_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
 		/// properties
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:	
 		CCTMXMapInfo();
 		virtual ~CCTMXMapInfo();

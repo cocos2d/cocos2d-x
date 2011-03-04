@@ -48,7 +48,7 @@ enum {
 	if(pScene && pScene->initWithDuration(t, scene)){\
     pScene->autorelease();\
 	return pScene;}\
-	CCX_SAFE_DELETE(pScene);\
+	CC_SAFE_DELETE(pScene);\
 	return NULL;\
 }
 
@@ -71,13 +71,13 @@ CCTransitionScene * CCTransitionScene::transitionWithDuration(ccTime t, CCScene 
 		pScene->autorelease();
 		return pScene;
 	}
-	CCX_SAFE_DELETE(pScene);
+	CC_SAFE_DELETE(pScene);
 	return NULL;
 }
 
 bool CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
 {
-	NSAssert( scene != NULL, "Argument scene must be non-nil");
+	CCAssert( scene != NULL, "Argument scene must be non-nil");
 
 	if (CCScene::init())
 	{
@@ -90,7 +90,7 @@ bool CCTransitionScene::initWithDuration(ccTime t, CCScene *scene)
 		m_pOutScene->retain();
 		m_eSceneType = ccTransitionScene;
 
-		NSAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
+		CCAssert( m_pInScene != m_pOutScene, "Incoming scene must be different from the outgoing scene" );
 
 		// disable events while transitions
 		CCTouchDispatcher::sharedDispatcher()->setDispatchEvents(false);

@@ -92,18 +92,18 @@ CCImage::CCImage(CCBitmapDC * pBmpDC)
     m_imageInfo.bitsPerComponent = 0;
 	do 
 	{
-		CCX_BREAK_IF(! pBmpDC);
+		CC_BREAK_IF(! pBmpDC);
 		TBitmap * pBitmap = pBmpDC->getBitmap();
-		CCX_BREAK_IF(! pBitmap);
+		CC_BREAK_IF(! pBitmap);
 		
 		// init imageinfo
 		INT32 nWidth	= pBitmap->GetWidth();
 		INT32 nHeight	= pBitmap->GetHeight();
-		CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 
 		INT32 nLen = pBitmap->GetRowBytes() * nHeight;
 		m_imageInfo.data = new unsigned char [nLen];
-		CCX_BREAK_IF(! m_imageInfo.data);
+		CC_BREAK_IF(! m_imageInfo.data);
 		memcpy(m_imageInfo.data, pBitmap->GetDataPtr(), nLen);
 
 		m_imageInfo.height		= nHeight;
@@ -387,16 +387,16 @@ bool CCImage::initWithBitmap(const TBitmap* pBmp)
 
     do 
     {
-        CCX_BREAK_IF(! pBmp);
+        CC_BREAK_IF(! pBmp);
 
         // init imageinfo
         INT32 nWidth	= pBmp->GetWidth();
         INT32 nHeight	= pBmp->GetHeight();
-        CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+        CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 
         INT32 nLen = pBmp->GetRowBytes() * nHeight;
         m_imageInfo.data = new unsigned char [nLen];
-        CCX_BREAK_IF(! m_imageInfo.data);
+        CC_BREAK_IF(! m_imageInfo.data);
         memcpy(m_imageInfo.data, pBmp->GetDataPtr(), nLen);
 
         m_imageInfo.height		= nHeight;

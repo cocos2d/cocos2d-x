@@ -229,23 +229,23 @@ protected:
 #endif
 
 	/** Is the emitter active */
-	CCX_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
+	CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
 	/** Quantity of particles that are being simulated at the moment */
-	CCX_PROPERTY_READONLY(int, m_nParticleCount, ParticleCount)
+	CC_PROPERTY_READONLY(int, m_nParticleCount, ParticleCount)
 	/** How many seconds the emitter wil run. -1 means 'forever' */
-	CCX_PROPERTY(float, m_fDuration, Duration)
+	CC_PROPERTY(float, m_fDuration, Duration)
 	/** sourcePosition of the emitter */
-	CCX_PROPERTY(CCPoint, m_tSourcePosition, SourcePosition)
+	CC_PROPERTY(CCPoint, m_tSourcePosition, SourcePosition)
 	/** Position variance of the emitter */
-	CCX_PROPERTY(CCPoint, m_tPosVar, PosVar)
+	CC_PROPERTY(CCPoint, m_tPosVar, PosVar)
 	/** life, and life variation of each particle */
-	CCX_PROPERTY(float, m_fLife, Life)
+	CC_PROPERTY(float, m_fLife, Life)
 	/** life variance of each particle */
-	CCX_PROPERTY(float, m_fLifeVar, LifeVar)
+	CC_PROPERTY(float, m_fLifeVar, LifeVar)
 	/** angle and angle variation of each particle */
-	CCX_PROPERTY(float, m_fAngle, Angle)
+	CC_PROPERTY(float, m_fAngle, Angle)
 	/** angle variance of each particle */
-	CCX_PROPERTY(float, m_fAngleVar, AngleVar)
+	CC_PROPERTY(float, m_fAngleVar, AngleVar)
 
 //////////////////////////////////////////////////////////////////////////
 public:
@@ -280,37 +280,37 @@ public:
 //////////////////////////////////////////////////////////////////////////
 	
 	/** start size in pixels of each particle */
-	CCX_PROPERTY(float, m_fStartSize, StartSize)
+	CC_PROPERTY(float, m_fStartSize, StartSize)
 	/** size variance in pixels of each particle */
-	CCX_PROPERTY(float, m_fStartSizeVar, StartSizeVar)
+	CC_PROPERTY(float, m_fStartSizeVar, StartSizeVar)
 	/** end size in pixels of each particle */
-	CCX_PROPERTY(float, m_fEndSize, EndSize)
+	CC_PROPERTY(float, m_fEndSize, EndSize)
 	/** end size variance in pixels of each particle */
-	CCX_PROPERTY(float, m_fEndSizeVar, EndSizeVar)
+	CC_PROPERTY(float, m_fEndSizeVar, EndSizeVar)
 	/** start color of each particle */
-	CCX_PROPERTY(ccColor4F, m_tStartColor, StartColor)
+	CC_PROPERTY(ccColor4F, m_tStartColor, StartColor)
 	/** start color variance of each particle */
-	CCX_PROPERTY(ccColor4F, m_tStartColorVar, StartColorVar)
+	CC_PROPERTY(ccColor4F, m_tStartColorVar, StartColorVar)
 	/** end color and end color variation of each particle */
-	CCX_PROPERTY(ccColor4F, m_tEndColor, EndColor)
+	CC_PROPERTY(ccColor4F, m_tEndColor, EndColor)
 	/** end color variance of each particle */
-	CCX_PROPERTY(ccColor4F, m_tEndColorVar, EndColorVar)
+	CC_PROPERTY(ccColor4F, m_tEndColorVar, EndColorVar)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fStartSpin, StartSpin)
+	CC_PROPERTY(float, m_fStartSpin, StartSpin)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fStartSpinVar, StartSpinVar)
+	CC_PROPERTY(float, m_fStartSpinVar, StartSpinVar)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fEndSpin, EndSpin)
+	CC_PROPERTY(float, m_fEndSpin, EndSpin)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fEndSpinVar, EndSpinVar)
+	CC_PROPERTY(float, m_fEndSpinVar, EndSpinVar)
 	/** emission rate of the particles */
-	CCX_PROPERTY(float, m_fEmissionRate, EmissionRate)
+	CC_PROPERTY(float, m_fEmissionRate, EmissionRate)
 	/** maximum particles of the system */
-	CCX_PROPERTY(int, m_nTotalParticles, TotalParticles)
+	CC_PROPERTY(int, m_nTotalParticles, TotalParticles)
 	/** conforms to CocosNodeTexture protocol */
-	CCX_PROPERTY(CCTexture2D*, m_pTexture, Texture)
+	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
 	/** conforms to CocosNodeTexture protocol */
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 	/** whether or not the particles are using blend additive.
 	If enabled, the following blending function will be used.
 	@code
@@ -318,21 +318,21 @@ public:
 	dest blend function = GL_ONE;
 	@endcode
 	*/
-	CCX_PROPERTY(bool, m_bIsBlendAdditive, IsBlendAdditive)
+	CC_PROPERTY(bool, m_bIsBlendAdditive, IsBlendAdditive)
 	/** particles movement type: Free or Grouped
 	@since v0.8
 	*/
-	CCX_PROPERTY(tCCPositionType, m_ePositionType, PositionType)
+	CC_PROPERTY(tCCPositionType, m_ePositionType, PositionType)
 	/** whether or not the node will be auto-removed when it has no particles left.
 	By default it is false.
 	@since v0.8
 	*/
-	CCX_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
+	CC_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
 	/** Switch between different kind of emitter modes:
 	- kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
 	- kCCParticleModeRadius: uses radius movement + rotation
 	*/
-	CCX_PROPERTY(int, m_nEmitterMode, EmitterMode)
+	CC_PROPERTY(int, m_nEmitterMode, EmitterMode)
 
 public:
 	CCParticleSystem();

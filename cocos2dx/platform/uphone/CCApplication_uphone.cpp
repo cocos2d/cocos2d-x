@@ -48,7 +48,7 @@ CCApplication::CCApplication()
         TUChar AppID[EOS_FILE_MAX_PATH] = {0};
         UInt32 nCmdType = 0;
         Int32  nRet = SS_AppRequest_GetAppName(AppID, &nCmdType);
-        CCX_BREAK_IF(nRet < 0);
+        CC_BREAK_IF(nRet < 0);
 
         TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
         SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_EXECUTABLE, AppPath);

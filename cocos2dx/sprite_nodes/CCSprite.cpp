@@ -317,8 +317,8 @@ CCSprite::CCSprite()
 
 CCSprite::~CCSprite(void)
 {
-	CCX_SAFE_RELEASE(m_pobTexture);
-	CCX_SAFE_RELEASE(m_pAnimations);
+	CC_SAFE_RELEASE(m_pobTexture);
+	CC_SAFE_RELEASE(m_pAnimations);
 }
 
 void CCSprite::useSelfRender(void)
@@ -536,7 +536,7 @@ void CCSprite::updateTransform(void)
 		{
 			// Might happen. Issue #1053
 			// how to implement, we can not use dynamic
-			// NSAssert( [p isKindOfClass:[CCSprite class]], @"CCSprite should be a CCSprite subclass. Probably you initialized an sprite with a batchnode, but you didn't add it to the batch node." );
+			// CCAssert( [p isKindOfClass:[CCSprite class]], @"CCSprite should be a CCSprite subclass. Probably you initialized an sprite with a batchnode, but you didn't add it to the batch node." );
 			struct transformValues_ tv;
 			((CCSprite*)p)->getTransformValues(&tv);
 
@@ -755,7 +755,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 		{
 			pChild = (CCSprite*)(*iter);
-            CCX_BREAK_IF(! pChild);
+            CC_BREAK_IF(! pChild);
 			m_pobBatchNode->removeSpriteFromAtlas(pChild);
 		}
 	}
@@ -781,7 +781,7 @@ void CCSprite::setDirtyRecursively(bool bValue)
 		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 		{
 			pChild = (CCSprite*)(*iter);
-            CCX_BREAK_IF(! pChild);
+            CC_BREAK_IF(! pChild);
 			pChild->setDirtyRecursively(true);
 		}
 	}
@@ -1082,7 +1082,7 @@ void CCSprite::setTexture(CCTexture2D *texture)
 	// accept texture==nil as argument
 	/*assert((! texture) || dynamic_cast<CCTexture2D*>(texture));*/
 
-	CCX_SAFE_RELEASE(m_pobTexture);
+	CC_SAFE_RELEASE(m_pobTexture);
 
 	m_pobTexture = texture;
 	if (texture)

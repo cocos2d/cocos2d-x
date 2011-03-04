@@ -117,7 +117,7 @@ public:
     void queueEvent(NSEvent* pEvent, SEL_EventHandler selector);
 #endif
 
-    CCX_PROPERTY(bool, m_bDispatchEvents, IsDispatchEvents)
+    CC_PROPERTY(bool, m_bDispatchEvents, IsDispatchEvents)
 
 protected:
     void addDelegate(CCObject* pHandle, int priority, _listEntry** pList);

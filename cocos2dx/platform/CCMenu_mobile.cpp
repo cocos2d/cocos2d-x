@@ -55,7 +55,7 @@ namespace cocos2d{
 			return pRet;
 		}
 		va_end(args);
-		CCX_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
 
@@ -120,7 +120,7 @@ namespace cocos2d{
 	void CCMenu::addChild(CCNode * child, int zOrder, int tag)
 	{
 		// we can not use RTTI, so we do not known the type of object
-		/*NSAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
+		/*CCAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
 		CCLayer::addChild(child, zOrder, tag);
 	}
 
@@ -142,7 +142,7 @@ namespace cocos2d{
 		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority, true);
 	}
 
-	bool CCMenu::ccTouchBegan(CCTouch* touch, UIEvent* event)
+	bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
 	{
 		if (m_eState != kCCMenuStateWaiting || ! m_bIsVisible)
 		{
@@ -158,9 +158,9 @@ namespace cocos2d{
 		return false;
 	}
 
-	void CCMenu::ccTouchEnded(CCTouch *touch, UIEvent* event)
+	void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
 	{
-		NSAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
 		if (m_pSelectedItem)
 		{
 			m_pSelectedItem->unselected();
@@ -169,9 +169,9 @@ namespace cocos2d{
 		m_eState = kCCMenuStateWaiting;
 	}
 
-	void CCMenu::ccTouchCancelled(CCTouch *touch, UIEvent* event)
+	void CCMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
 	{
-		NSAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
 		if (m_pSelectedItem)
 		{
 			m_pSelectedItem->unselected();
@@ -179,9 +179,9 @@ namespace cocos2d{
 		m_eState = kCCMenuStateWaiting;
 	}
 
-	void CCMenu::ccTouchMoved(CCTouch* touch, UIEvent* event)
+	void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
 	{
-		NSAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
 		CCMenuItem *currentItem = this->itemForTouch(touch);
 		if (currentItem != m_pSelectedItem) 
 		{

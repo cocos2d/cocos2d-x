@@ -135,11 +135,11 @@ namespace cocos2d{
 	class CCX_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 	{
 		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
+		CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
 		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(ccColor3B, m_tColor, Color)
+		CC_PROPERTY(ccColor3B, m_tColor, Color)
 		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+		CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
 	protected:
 		// string to render
 		std::string m_sString;

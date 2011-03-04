@@ -70,7 +70,7 @@ namespace cocos2d
 
 		pCopy->initWithDuration(m_fDuration, m_fTo);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -135,7 +135,7 @@ namespace cocos2d
 
 		pCopy->initWithDuration(m_fDuration, m_fFrom, m_fTo);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 

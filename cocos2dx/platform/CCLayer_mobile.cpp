@@ -54,7 +54,7 @@ bool CCLayer::init()
 	do 
 	{
 		CCDirector * pDirector;
-		CCX_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
 		this->setContentSize(pDirector->getWinSize());
 		// success
 		bRet = true;
@@ -72,7 +72,7 @@ CCLayer *CCLayer::node()
 	}
     else
     {
-	    CCX_SAFE_DELETE(pRet)
+	    CC_SAFE_DELETE(pRet)
 	    return NULL;
     }
 }
@@ -292,9 +292,9 @@ void CCLayer::onEnterTransitionDidFinish()
     CCNode::onEnterTransitionDidFinish();
 }
 
-bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
+bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-	NSAssert(false, "Layer#ccTouchBegan override me");
+	CCAssert(false, "Layer#ccTouchBegan override me");
 	return true;
 }
 
@@ -355,7 +355,7 @@ CCLayerColor * CCLayerColor::layerWithColorWidthHeight(ccColor4B color, GLfloat 
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
@@ -366,7 +366,7 @@ CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 
@@ -477,7 +477,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
@@ -489,7 +489,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end,
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
@@ -638,7 +638,7 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 		return pMultiplexLayer;
 	}
 	va_end(args);
-	CCX_SAFE_DELETE(pMultiplexLayer);
+	CC_SAFE_DELETE(pMultiplexLayer);
 	return NULL;
 }
 
@@ -664,7 +664,7 @@ bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 
 void CCMultiplexLayer::switchTo(unsigned int n)
 {
-	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
 	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 
@@ -675,7 +675,7 @@ void CCMultiplexLayer::switchTo(unsigned int n)
 
 void CCMultiplexLayer::switchToAndReleaseMe(unsigned int n)
 {
-	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
 	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 

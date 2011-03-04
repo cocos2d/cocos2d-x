@@ -49,14 +49,14 @@ CCTextureAtlas::~CCTextureAtlas()
 {
 //	CCLOGINFO("cocos2d: deallocing CCTextureAtlas.");
 
-	CCX_SAFE_FREE(m_pQuads)
-	CCX_SAFE_FREE(m_pIndices)
+	CC_SAFE_FREE(m_pQuads)
+	CC_SAFE_FREE(m_pIndices)
 
 #if CC_USES_VBO
 	glDeleteBuffers(2, m_pBuffersVBO);
 #endif // CC_USES_VBO
 
-	CCX_SAFE_RELEASE(m_pTexture);
+	CC_SAFE_RELEASE(m_pTexture);
 }
 
 unsigned int CCTextureAtlas::getTotalQuads()
@@ -76,8 +76,8 @@ CCTexture2D* CCTextureAtlas::getTexture()
 
 void CCTextureAtlas::setTexture(CCTexture2D * var)
 {
-	CCX_SAFE_RETAIN(var);
-	CCX_SAFE_RELEASE(m_pTexture);
+	CC_SAFE_RETAIN(var);
+	CC_SAFE_RELEASE(m_pTexture);
 	m_pTexture = var;
 }
 
@@ -101,7 +101,7 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithFile(const char* file, unsigned
 		pTextureAtlas->autorelease();
 		return pTextureAtlas;
 	}
-	CCX_SAFE_DELETE(pTextureAtlas);
+	CC_SAFE_DELETE(pTextureAtlas);
 	return NULL;
 }
 
@@ -113,7 +113,7 @@ CCTextureAtlas * CCTextureAtlas::textureAtlasWithTexture(CCTexture2D *texture, u
 		pTextureAtlas->autorelease();
 		return pTextureAtlas;
 	}
-	CCX_SAFE_DELETE(pTextureAtlas);
+	CC_SAFE_DELETE(pTextureAtlas);
 	return NULL;
 }
 
@@ -143,15 +143,15 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 	// retained in property
 	this->m_pTexture = texture;
-	CCX_SAFE_RETAIN(m_pTexture);
+	CC_SAFE_RETAIN(m_pTexture);
 
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)calloc( sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, 1 );
 	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
 
 	if( ! ( m_pQuads && m_pIndices) ) {
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
-		CCX_SAFE_FREE(m_pQuads)
-		CCX_SAFE_FREE(m_pIndices)
+		CC_SAFE_FREE(m_pQuads)
+		CC_SAFE_FREE(m_pIndices)
 		return false;
 	}
 
@@ -213,7 +213,7 @@ void CCTextureAtlas::initIndices()
 
 void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 {
-	NSAssert( index >= 0 && index < m_uCapacity, "updateQuadWithTexture: Invalid index");
+	CCAssert( index >= 0 && index < m_uCapacity, "updateQuadWithTexture: Invalid index");
 
 	m_uTotalQuads = max( index+1, m_uTotalQuads);
 
@@ -222,10 +222,10 @@ void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 
 void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 {
-	NSAssert( index < m_uCapacity, "insertQuadWithTexture: Invalid index");
+	CCAssert( index < m_uCapacity, "insertQuadWithTexture: Invalid index");
 
 	m_uTotalQuads++;
-	NSAssert( m_uTotalQuads <= m_uCapacity, "invalid totalQuads");
+	CCAssert( m_uTotalQuads <= m_uCapacity, "invalid totalQuads");
 
 	// issue #575. index can be > totalQuads
 	unsigned int remaining = (m_uTotalQuads-1) - index;
@@ -241,8 +241,8 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 
 void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int newIndex)
 {
-	NSAssert( newIndex >= 0 && newIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
-	NSAssert( oldIndex >= 0 && oldIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
+	CCAssert( newIndex >= 0 && newIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
+	CCAssert( oldIndex >= 0 && oldIndex < m_uTotalQuads, "insertQuadFromIndex:atIndex: Invalid index");
 
 	if( oldIndex == newIndex )
 		return;
@@ -265,7 +265,7 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 
 void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
 {
-	NSAssert( index < m_uTotalQuads, "removeQuadAtIndex: Invalid index");
+	CCAssert( index < m_uTotalQuads, "removeQuadAtIndex: Invalid index");
 
 	unsigned int remaining = (m_uTotalQuads-1) - index;
 

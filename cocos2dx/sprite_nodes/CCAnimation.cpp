@@ -141,7 +141,7 @@ namespace cocos2d
 		CCLOGINFO("cocos2d, deallocing %p", this);
 		// [name_ release];
 		m_nameStr.clear();
-		CCX_SAFE_RELEASE(m_pobFrames);
+		CC_SAFE_RELEASE(m_pobFrames);
 	}
 
 	void CCAnimation::addFrame(CCSpriteFrame *pFrame)

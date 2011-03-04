@@ -711,7 +711,7 @@ void CCEventDispatcher::touchesCancelledWithEvent(NSEvent *pEvent)
 
 void CCEventDispatcher::queueEvent(NSEvent* pEvent, SEL_EventHandler selector)
 {
-    NSAssert( s_nEventQueueCount < QUEUE_EVENT_MAX, "CCEventDispatcher: recompile. Increment QUEUE_EVENT_MAX value");
+    CCAssert( s_nEventQueueCount < QUEUE_EVENT_MAX, "CCEventDispatcher: recompile. Increment QUEUE_EVENT_MAX value");
 
     eventQueue[s_nEventQueueCount].selector = selector;
     eventQueue[s_nEventQueueCount].pEvent   = (NSEvent*) (pEvent->copy());

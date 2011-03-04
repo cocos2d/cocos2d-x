@@ -49,13 +49,13 @@ class CCRibbonSegment;
 class CCX_DLL CCRibbon : public CCNode, public CCTextureProtocol
 {
 	/** Texture used by the ribbon. Conforms to CCTextureProtocol protocol */
-	CCX_PROPERTY(CCTexture2D*, m_pTexture, Texture)
+	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
 	/** Texture lengths in pixels */
-	CCX_PROPERTY(float, m_fTextureLength, TextureLength)
+	CC_PROPERTY(float, m_fTextureLength, TextureLength)
 	/** GL blendind function */
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 	/** color used by the Ribbon (RGBA) */
-	CCX_PROPERTY(ccColor4B, m_tColor, Color)
+	CC_PROPERTY(ccColor4B, m_tColor, Color)
 
 public:
     CCRibbon() : m_pTexture(0), m_pSegments(0), m_pDeletedSegments(0){}

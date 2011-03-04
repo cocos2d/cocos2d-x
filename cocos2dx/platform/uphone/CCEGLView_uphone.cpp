@@ -73,7 +73,7 @@ public:
 		Boolean bSuccess = FALSE;
 		do 
 		{
-			CCX_BREAK_IF(! pEGL);
+			CC_BREAK_IF(! pEGL);
 
 			TUChar szError[] = {'E','R','R','O','R',0};
 			TUChar szEglInitFailed[] = {'e','g','l','I','n','i','t','i','a','l','i','z','e',' ','f','a','i','l','e','d',0};
@@ -84,7 +84,7 @@ public:
 			pEGL->m_eglNativeWindow = pWindow;
 
 			EGLDisplay eglDisplay;
-			CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
+			CC_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
 
 			EGLint nMajor, nMinor;
 			EGLBoolean bEglRet;
@@ -107,7 +107,7 @@ public:
 			};
 			EGLint iConfigs;
 			EGLConfig eglConfig;
-			CCX_BREAK_IF( EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) ||
+			CC_BREAK_IF( EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) ||
 						  (iConfigs != 1) );
 
 			EGLContext eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
@@ -141,7 +141,7 @@ public:
 
 		if (! bSuccess)
 		{
-			CCX_SAFE_DELETE(pEGL);   
+			CC_SAFE_DELETE(pEGL);   
 		}
 
 		return pEGL;
@@ -204,8 +204,8 @@ CCEGLView::CCEGLView(TApplication * pApp)
 
 CCEGLView::~CCEGLView()
 {
-    CCX_SAFE_DELETE(m_pDelegate);
-    CCX_SAFE_DELETE(m_pEGL);
+    CC_SAFE_DELETE(m_pDelegate);
+    CC_SAFE_DELETE(m_pEGL);
 }
 
 Boolean CCEGLView::AfterCreate(void)
@@ -276,7 +276,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
                 TG3_SENSOR_TYPE_ACCELEROMETER == data.sensorMask)
             {
                 // convert the data to iphone format
-                UIAcceleration AccValue;
+                CCAcceleration AccValue;
                 AccValue.x = -(data.acceleration.x / TG3_GRAVITY_EARTH);
                 AccValue.y = -(data.acceleration.y / TG3_GRAVITY_EARTH);
                 AccValue.z = -(data.acceleration.z / TG3_GRAVITY_EARTH);
@@ -300,7 +300,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             bool bInBack = CCApplication::sharedApplication()->isInBackground();
 
             // if the app have be in background,don't handle this message
-            CCX_BREAK_IF(bInBack);
+            CC_BREAK_IF(bInBack);
 
             if (! pEvent->sParam1)  // turn off screen
             {
@@ -412,17 +412,17 @@ Boolean CCEGLView::OnPenMove(EventType* pEvent)
 {
     do 
     {
-        CCX_BREAK_IF(!m_pDelegate);
+        CC_BREAK_IF(!m_pDelegate);
 
         Int32 nCount = EvtGetPenMultiPointCount(pEvent);
-        CCX_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
+        CC_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
 
         CCSet set;
         Int32 nPosX, nPosY;
         for (Int32 i = 0; i < nCount; ++i)
         {
             CCTouch* pTouch = s_pTouches[i];
-            CCX_BREAK_IF(!pTouch);
+            CC_BREAK_IF(!pTouch);
 
             EvtGetPenMultiPointXY(pEvent, i, &nPosX, &nPosY);
             pTouch->SetTouchInfo(0, (float) nPosX, (float) nPosY);

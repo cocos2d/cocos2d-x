@@ -54,7 +54,7 @@ CCRibbon * CCRibbon::ribbonWithWidth(float w, const char *path, float length, cc
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 
@@ -89,7 +89,7 @@ bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B 
 	m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
 	m_pTexture = CCTextureCache::sharedTextureCache()->addImage(path);
-	CCX_SAFE_RETAIN(m_pTexture);
+	CC_SAFE_RETAIN(m_pTexture);
 
 	/* default texture parameter */
 	ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
@@ -99,9 +99,9 @@ bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B 
 
 CCRibbon::~CCRibbon()
 {
-    CCX_SAFE_RELEASE(m_pSegments);
-    CCX_SAFE_RELEASE(m_pDeletedSegments);
-    CCX_SAFE_RELEASE(m_pTexture);
+    CC_SAFE_RELEASE(m_pSegments);
+    CC_SAFE_RELEASE(m_pDeletedSegments);
+    CC_SAFE_RELEASE(m_pTexture);
 }
 
 CCPoint CCRibbon::rotatePoint(CCPoint vec, float rotation)
@@ -293,8 +293,8 @@ void CCRibbon::draw()
 // Ribbon - CocosNodeTexture protocol
 void CCRibbon::setTexture(CCTexture2D* var)
 {
-	CCX_SAFE_RETAIN(var);
-	CCX_SAFE_RELEASE(m_pTexture);
+	CC_SAFE_RETAIN(var);
+	CC_SAFE_RELEASE(m_pTexture);
 	m_pTexture = var;
 	this->setContentSize(m_pTexture->getContentSizeInPixels());
 	/* XXX Don't update blending function in Ribbons */

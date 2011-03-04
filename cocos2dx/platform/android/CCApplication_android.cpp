@@ -1,6 +1,6 @@
-#include "CCXApplication_android.h"
-#include "CCXUIImage_android.h"
-#include "CCXEGLView_android.h"
+#include "CCApplication_android.h"
+#include "CCImage_android.h"
+#include "CCEGLView_android.h"
 #include "CCDirector.h"
 #include "Cocos2dJni.h"
 
@@ -11,35 +11,35 @@
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 namespace   cocos2d {
-	static CCXApplication *s_pApplication;
+	static CCApplication *s_pApplication;
 
-    CCXApplication::CCXApplication()
+    CCApplication::CCApplication()
     {
     	s_pApplication = this;
     }
 
-    CCXApplication::~CCXApplication()
+    CCApplication::~CCApplication()
     {
         
     }
 
-	ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
+	ccDeviceOrientation CCApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
     {
 		return eOritation;
     }
 
-    CGRect CCXApplication::statusBarFrame()
+    CGRect CCApplication::statusBarFrame()
     {
         CGRect rc;
         return rc;
     }
     
-    void CCXApplication::Run()
+    void CCApplication::Run()
     {
     	applicationDidFinishLaunching();
     }
 
-	void CCXApplication::setAnimationInterval(double interval)
+	void CCApplication::setAnimationInterval(double interval)
 	{
 		jmethodID ret = 0;
 		JNIEnv *env = 0;
@@ -79,7 +79,7 @@ namespace   cocos2d {
 	//////////////////////////////////////////////////////////////////////////
 	/// Implement static class member
 	//////////////////////////////////////////////////////////////////////////
-	CCXApplication * CCXApplication::sharedApplication()
+	CCApplication * CCApplication::sharedApplication()
 	{
 		return s_pApplication;
 	}

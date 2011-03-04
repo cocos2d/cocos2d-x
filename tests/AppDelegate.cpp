@@ -14,7 +14,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 #if defined(CCX_PLATFORM_WIN32)
-    CCX_SAFE_DELETE(m_pMainWnd);
+    CC_SAFE_DELETE(m_pMainWnd);
 #endif
 }
 
@@ -35,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     #error
 #endif
 	{
-        CCX_SAFE_DELETE(m_pMainWnd);
+        CC_SAFE_DELETE(m_pMainWnd);
 		return false;
 	}
 
