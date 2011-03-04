@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCX_APPLICATION_UPHONE_H__
 #define __CCX_APPLICATION_UPHONE_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 
 #include "TG3.h"
 
@@ -33,11 +33,11 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCXApplication : public TApplication
+class CCX_DLL CCApplication : public TApplication
 {
 public:
-    CCXApplication();
-    virtual ~CCXApplication();
+    CCApplication();
+    virtual ~CCApplication();
 
     virtual Boolean EventHandler(EventType * pEvent);
 
@@ -58,7 +58,7 @@ public:
     /**
     @brief	Get status bar rectangle in EGLView window.
     */
-    CGRect statusBarFrame();
+    CCRect statusBarFrame();
 
     /**
     @brief  The function be called when the application enter background
@@ -76,7 +76,7 @@ public:
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCXApplication * sharedApplication();
+    static CCApplication * sharedApplication();
 
     void StartMainLoop();
     void StopMainLoop();

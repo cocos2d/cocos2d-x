@@ -1,4 +1,4 @@
-#include "CCXApplication_uphone.h"
+#include "CCApplication_uphone.h"
 
 #include "ssBackLightControl.h"
 #include "ssKeyLockControl.h"
@@ -30,7 +30,7 @@ static long long getTimeOfDayMicroSecond()
 }
 #endif
 
-CCXApplication::CCXApplication()
+CCApplication::CCApplication()
 : m_bRunning(FALSE)
 , m_bNeedStop(FALSE)
 , m_bInBackground(FALSE)
@@ -39,7 +39,7 @@ CCXApplication::CCXApplication()
     SS_GetCurrentGTID(&m_tMsg.gtid);
     m_tMsg.type = CCX_ON_APPLICATION_IDLE;
 
-    Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, CCXApplication::_OnAppIdle, (UInt32)this);
+    Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, CCApplication::_OnAppIdle, (UInt32)this);
 
     memset(m_AppDataPath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
 
@@ -56,12 +56,12 @@ CCXApplication::CCXApplication()
     } while (0);
 }
 
-CCXApplication::~CCXApplication()
+CCApplication::~CCApplication()
 {
     Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, NULL, NULL);
 }
 
-Boolean CCXApplication::EventHandler(EventType * pEvent)
+Boolean CCApplication::EventHandler(EventType * pEvent)
 {
     Boolean bHandled = FALSE;
     switch (pEvent->eType)
@@ -127,18 +127,18 @@ Boolean CCXApplication::EventHandler(EventType * pEvent)
     return bHandled;
 }
 
-ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
+ccDeviceOrientation CCApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
 {
 	return eOritation;
 }
 
-CGRect CCXApplication::statusBarFrame()
+CCRect CCApplication::statusBarFrame()
 {
-    CGRect rc;
+    CCRect rc;
     return rc;
 }
 
-void CCXApplication::StartMainLoop()
+void CCApplication::StartMainLoop()
 {
     if (m_bRunning)
     {
@@ -149,7 +149,7 @@ void CCXApplication::StartMainLoop()
     m_bRunning = TRUE;
 }
 
-void CCXApplication::StopMainLoop()
+void CCApplication::StopMainLoop()
 {
     m_bNeedStop = TRUE;
 }
@@ -158,12 +158,12 @@ void CCXApplication::StopMainLoop()
 /// Implement static class member
 //////////////////////////////////////////////////////////////////////////
 
-CCXApplication * CCXApplication::sharedApplication()
+CCApplication * CCApplication::sharedApplication()
 {
-    return (CCXApplication *)TApplication::GetCurrentApplication();
+    return (CCApplication *)TApplication::GetCurrentApplication();
 }
 
-void CCXApplication::setAnimationInterval(double interval)
+void CCApplication::setAnimationInterval(double interval)
 {
 #ifdef _TRANZDA_VM_
     LARGE_INTEGER nFreq;
@@ -174,10 +174,10 @@ void CCXApplication::setAnimationInterval(double interval)
 #endif
 }
 
-Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
+Int32 CCApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 {
-    CCXApplication *    pThis = CCXApplication::sharedApplication();
-    CCXEGLView *        pView = CCDirector::sharedDirector()->getOpenGLView();
+    CCApplication *    pThis = CCApplication::sharedApplication();
+    CCEGLView *        pView = CCDirector::sharedDirector()->getOpenGLView();
     if (pThis && pView && pThis->m_bRunning)
     {
         if (pThis->m_bNeedStop)
@@ -213,12 +213,12 @@ Int32 CCXApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
     return 1;
 }
 
-const char* CCXApplication::getAppDataPath()
+const char* CCApplication::getAppDataPath()
 {
     return m_AppDataPath;
 }
 
-bool CCXApplication::isInBackground()
+bool CCApplication::isInBackground()
 {
     return m_bInBackground;
 }

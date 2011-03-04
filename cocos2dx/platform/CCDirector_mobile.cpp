@@ -862,7 +862,7 @@ ccDeviceOrientation CCDirector::getDeviceOrientation(void)
 void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 {
 	ccDeviceOrientation eNewOrientation;
-	eNewOrientation = CCXApplication::sharedApplication()->setDeviceOrientation(kDeviceOrientation);
+	eNewOrientation = CCApplication::sharedApplication()->setDeviceOrientation(kDeviceOrientation);
 	if (m_eDeviceOrientation != eNewOrientation)
 	{
 		m_eDeviceOrientation = kDeviceOrientation;
@@ -870,7 +870,7 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
     else
     {
         // this logic is only run on win32 now
-        // On win32,the return value of CCXApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
+        // On win32,the return value of CCApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
         // So,we should calculate the Projection and window size again.
         m_obWinSizeInPoints = m_pobOpenGLView->getSize();
         m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
@@ -932,7 +932,7 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
-	CCXApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
+	CCApplication::sharedApplication()->setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)

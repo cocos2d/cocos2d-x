@@ -26,27 +26,27 @@ THE SOFTWARE.
 
 #include "TG3.h"
 #include "ccTypes.h"
-#include "CCXCocos2dDefine.h"
-#include "CCXUIImage.h"
+#include "CCCocos2dDefine.h"
+#include "CCImage.h"
 
 namespace cocos2d{
-	class CCX_DLL CCXBitmapDC
+	class CCX_DLL CCBitmapDC
 	{
 	public:
-		CCXBitmapDC(int width, int height);
-		CCXBitmapDC(const char *text, 
-					CGSize dimensions = CGSizeZero,
+		CCBitmapDC(int width, int height);
+		CCBitmapDC(const char *text, 
+					CCSize dimensions = CCSizeZero,
 					UITextAlignment alignment = UITextAlignmentCenter,
 					const char *fontName = NULL,
 					float fontSize = 0);
-		~CCXBitmapDC(void);
+		~CCBitmapDC(void);
 
 		TBitmap* getBitmap(void);
-		CGSize getSize(void);
+		CCSize getSize(void);
 		void* getBuffer(void);
 	protected:
 		TBitmap *m_pBitmap;
-		CGSize m_tSize;
+		CCSize m_tSize;
 	};
 }
 

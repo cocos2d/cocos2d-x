@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCXUIAccelerometer_uphone.h"
-#include "CCXCocos2dDefine.h"
+#include "CCAccelerometer_uphone.h"
+#include "CCCocos2dDefine.h"
 #include "ccMacros.h"
 
 #include "TCOM_Generic_Method_IIDs.h"
@@ -33,164 +33,164 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-static UIAccelerometer s_Accelerometer;
+	static CCAccelerometer s_Accelerometer;
 
-//------------------------------------------------------------------
-//
-// UIAccelerometerHandler
-//
-//------------------------------------------------------------------
-UIAccelerometerDelegate* UIAccelerometerHandler::getDelegate()
-{
-    return m_pDelegate;
-}
+	//------------------------------------------------------------------
+	//
+	// CCAccelerometerHandler
+	//
+	//------------------------------------------------------------------
+	CCAccelerometerDelegate* CCAccelerometerHandler::getDelegate()
+	{
+		return m_pDelegate;
+	}
 
-UIAccelerometerHandler::~UIAccelerometerHandler()
-{
-    m_pDelegate->AccelerometerDestroy();
-}
+	CCAccelerometerHandler::~CCAccelerometerHandler()
+	{
+		m_pDelegate->AccelerometerDestroy();
+	}
 
-void UIAccelerometerHandler::setDelegate(UIAccelerometerDelegate *pDelegate)
-{
-    if (pDelegate)
-    {
-        pDelegate->AccelerometerKeep();
-    }
+	void CCAccelerometerHandler::setDelegate(CCAccelerometerDelegate *pDelegate)
+	{
+		if (pDelegate)
+		{
+			pDelegate->AccelerometerKeep();
+		}
 
-    if (m_pDelegate)
-    {
-        m_pDelegate->AccelerometerDestroy();
-    }
-    m_pDelegate = pDelegate;
-}
+		if (m_pDelegate)
+		{
+			m_pDelegate->AccelerometerDestroy();
+		}
+		m_pDelegate = pDelegate;
+	}
 
-bool UIAccelerometerHandler::initWithDelegate(UIAccelerometerDelegate *pDelegate)
-{
-    assert(pDelegate != NULL);
+	bool CCAccelerometerHandler::initWithDelegate(CCAccelerometerDelegate *pDelegate)
+	{
+		assert(pDelegate != NULL);
 
-    m_pDelegate = pDelegate;
-    pDelegate->AccelerometerKeep();
+		m_pDelegate = pDelegate;
+		pDelegate->AccelerometerKeep();
 
-    return true;
-}
+		return true;
+	}
 
-UIAccelerometerHandler* UIAccelerometerHandler::handlerWithDelegate(UIAccelerometerDelegate *pDelegate)
-{
-    UIAccelerometerHandler* pHandler = new UIAccelerometerHandler;
+	CCAccelerometerHandler* CCAccelerometerHandler::handlerWithDelegate(CCAccelerometerDelegate *pDelegate)
+	{
+		CCAccelerometerHandler* pHandler = new CCAccelerometerHandler;
 
-    if (pHandler)
-    {
-        if (pHandler->initWithDelegate(pDelegate))
-        {
-            pHandler->autorelease();
-        }
-        else
-        {
-            CCX_SAFE_RELEASE_NULL(pHandler);
-        }
-    }
+		if (pHandler)
+		{
+			if (pHandler->initWithDelegate(pDelegate))
+			{
+				pHandler->autorelease();
+			}
+			else
+			{
+				CCX_SAFE_RELEASE_NULL(pHandler);
+			}
+		}
 
-    return pHandler;
-}
+		return pHandler;
+	}
 
 
-//------------------------------------------------------------------
-//
-// UIAccelerometer
-//
-//------------------------------------------------------------------
-UIAccelerometer::UIAccelerometer()
-: m_pSensor(NULL)
-{
-    m_pDelegates = new AccDelegateArray;
-}
+	//------------------------------------------------------------------
+	//
+	// CCAccelerometer
+	//
+	//------------------------------------------------------------------
+	CCAccelerometer::CCAccelerometer()
+		: m_pSensor(NULL)
+	{
+		m_pDelegates = new AccDelegateArray;
+	}
 
-UIAccelerometer::~UIAccelerometer()
-{
-    m_pDelegates->release();
+	CCAccelerometer::~CCAccelerometer()
+	{
+		m_pDelegates->release();
 
-    if (m_pSensor)
-    {
-        m_pSensor->Release();
-        m_pSensor = NULL;
-    }
-}
+		if (m_pSensor)
+		{
+			m_pSensor->Release();
+			m_pSensor = NULL;
+		}
+	}
 
-UIAccelerometer* UIAccelerometer::sharedAccelerometer()
-{
-    return &s_Accelerometer;
-}
+	CCAccelerometer* CCAccelerometer::sharedAccelerometer()
+	{
+		return &s_Accelerometer;
+	}
 
-void UIAccelerometer::removeDelegate(UIAccelerometerDelegate* pDelegate)
-{
-    UIAccelerometerHandler *pHandler;
-    NSMutableArray<UIAccelerometerHandler*>::NSMutableArrayIterator  iter;
+	void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate)
+	{
+		CCAccelerometerHandler *pHandler;
+		CCMutableArray<CCAccelerometerHandler*>::CCMutableArrayIterator  iter;
 
-    if (pDelegate)
-    {
-        for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
-        {
-            pHandler = *iter;
-            if (pHandler && pHandler->getDelegate() == pDelegate)
-            {
-                m_pDelegates->removeObject(pHandler);
-                break;
-            }
-        }
-    }
+		if (pDelegate)
+		{
+			for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
+			{
+				pHandler = *iter;
+				if (pHandler && pHandler->getDelegate() == pDelegate)
+				{
+					m_pDelegates->removeObject(pHandler);
+					break;
+				}
+			}
+		}
 
-    if (0 == m_pDelegates->count())
-    {
-        m_pSensor->Release();
-        m_pSensor = NULL;
-    }
-}
+		if (0 == m_pDelegates->count())
+		{
+			m_pSensor->Release();
+			m_pSensor = NULL;
+		}
+	}
 
-void UIAccelerometer::addDelegate(UIAccelerometerDelegate* pDelegate)
-{
-    UIAccelerometerHandler* pHandler = UIAccelerometerHandler::handlerWithDelegate(pDelegate);
+	void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
+	{
+		CCAccelerometerHandler* pHandler = CCAccelerometerHandler::handlerWithDelegate(pDelegate);
 
-    if (pHandler)
-    {
-        m_pDelegates->addObject(pHandler);
+		if (pHandler)
+		{
+			m_pDelegates->addObject(pHandler);
 
-        if (!m_pSensor)
-        {
-            m_pSensor = TCOM_Sensors_DataType_Client::GetInstance();
+			if (!m_pSensor)
+			{
+				m_pSensor = TCOM_Sensors_DataType_Client::GetInstance();
 
-            if (m_pSensor)
-            {
-                m_pSensor->StartUp();
-                m_pSensor->SetDelay(TG3_SENSOR_DELAY_FASTEST);
+				if (m_pSensor)
+				{
+					m_pSensor->StartUp();
+					m_pSensor->SetDelay(TG3_SENSOR_DELAY_FASTEST);
 
-                TApplication* pApp = TApplication::GetCurrentApplication();
-                TWindow* pWnd = pApp->GetActiveWindow();
-                m_pSensor->SetWindowCtrlId(pWnd->GetWindowHwndId(), 0);
-                m_pSensor->Activate(TG3_SENSOR_TYPE_ACCELEROMETER, TRUE);
-            }
-            else
-            {
-                CCLOG("cocos2d: The Accelerometer Sensor Open failed");
-            }
-        }
-    }
-}
+					TApplication* pApp = TApplication::GetCurrentApplication();
+					TWindow* pWnd = pApp->GetActiveWindow();
+					m_pSensor->SetWindowCtrlId(pWnd->GetWindowHwndId(), 0);
+					m_pSensor->Activate(TG3_SENSOR_TYPE_ACCELEROMETER, TRUE);
+				}
+				else
+				{
+					CCLOG("cocos2d: The Accelerometer Sensor Open failed");
+				}
+			}
+		}
+	}
 
-void UIAccelerometer::didAccelerate(UIAcceleration* pAccelerationValue)
-{
-    UIAccelerometerHandler  *pHandler;
-    UIAccelerometerDelegate *pDelegate;
-    NSMutableArray<UIAccelerometerHandler*>::NSMutableArrayIterator  iter;
+	void CCAccelerometer::didAccelerate(UIAcceleration* pAccelerationValue)
+	{
+		CCAccelerometerHandler  *pHandler;
+		CCAccelerometerDelegate *pDelegate;
+		CCMutableArray<CCAccelerometerHandler*>::CCMutableArrayIterator  iter;
 
-    if (m_pDelegates->count() > 0)
-    {
-        for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
-        {
-            pHandler = *iter;
-            pDelegate = pHandler->getDelegate();
-            pDelegate->didAccelerate(pAccelerationValue);
-        }
-    }
-}
+		if (m_pDelegates->count() > 0)
+		{
+			for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
+			{
+				pHandler = *iter;
+				pDelegate = pHandler->getDelegate();
+				pDelegate->didAccelerate(pAccelerationValue);
+			}
+		}
+	}
 
 }//namespace   cocos2d 

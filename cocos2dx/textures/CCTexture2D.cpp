@@ -554,7 +554,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 }
 bool CCTexture2D::initWithString(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
 {
-	CCXBitmapDC *pBitmapDC = new CCXBitmapDC(text, dimensions, alignment, fontName, fontSize);
+	CCBitmapDC *pBitmapDC = new CCBitmapDC(text, dimensions, alignment, fontName, fontSize);
 
 	CCImage *pImage = new CCImage(pBitmapDC);
 

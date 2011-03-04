@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ccxCommon_uphone.h"
+#include "CCCommon_uphone.h"
 
 #include "TG3.h"
 
@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-void CCXLog(const char * pszFormat, ...)
+void CCLog(const char * pszFormat, ...)
 {
     SS_printf("Cocos2d: ");
     char szBuf[MAX_LEN];

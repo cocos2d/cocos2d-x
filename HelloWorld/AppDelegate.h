@@ -7,10 +7,10 @@
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
-#include "CCXApplication.h"
+#include "CCApplication.h"
 #include "CCEGLView.h"
 
-class  AppDelegate  :  public cocos2d::CCXApplication
+class  AppDelegate  :  public cocos2d::CCApplication
 {
 public:
 	AppDelegate();

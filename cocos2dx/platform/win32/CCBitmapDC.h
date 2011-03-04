@@ -30,16 +30,16 @@ THE SOFTWARE.
 #include "CCImage.h"
 
 namespace cocos2d{
-	class CCX_DLL CCXBitmapDC
+	class CCX_DLL CCBitmapDC
 	{
 	public:
-		CCXBitmapDC(int width, int height);
-		CCXBitmapDC(const char *text, 
+		CCBitmapDC(int width, int height);
+		CCBitmapDC(const char *text, 
 					CCSize dimensions = CCSizeZero,
 					UITextAlignment alignment = UITextAlignmentCenter,
 					const char *fontName = NULL,
 					float fontSize = 0);
-		~CCXBitmapDC(void);
+		~CCBitmapDC(void);
 
 		HBITMAP getBitmap(void);
 		HDC		getDC(void);

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include <cstring>
-#include "CCXBitmapDC.h"
-#include "CCXApplication_uphone.h"
+#include "CCBitmapDC.h"
+#include "CCApplication_uphone.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
 
@@ -31,13 +31,13 @@ namespace cocos2d {
 
     static TWindow * s_pMemWnd = NULL;
 
-	CCXBitmapDC::CCXBitmapDC(int width, int height)
+	CCBitmapDC::CCBitmapDC(int width, int height)
         : m_pBitmap(NULL)
 	{
         m_pBitmap = TBitmap::Create(width, height, 32);
 	}
 
-	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
         : m_pBitmap(NULL)
 	{
         TUChar *pText = NULL; 
@@ -53,7 +53,7 @@ namespace cocos2d {
             TUString::StrGBToUnicode(pText, (Char*)text);
 
             // calculate text size
-            if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
+            if (CCSize::CCSizeEqualToSize(dimensions, CCSizeZero))
             {
                 m_tSize.width = font.CharsWidth(pText,len);
                 m_tSize.height = font.LineHeight();
@@ -85,10 +85,10 @@ namespace cocos2d {
                 // if memery window is already break
                 CCX_BREAK_IF(s_pMemWnd);
 
-                CCX_BREAK_IF(! (s_pMemWnd = new TWindow(CCXApplication::sharedApplication())));
+                CCX_BREAK_IF(! (s_pMemWnd = new TWindow(CCApplication::sharedApplication())));
 
-                Coord nCurrentWidth = CCXApplication::GetCurrentApplication()->GetScreenWidth();
-                Coord nCurrentHeight = CCXApplication::GetCurrentApplication()->GetScreenHeight();
+                Coord nCurrentWidth = CCApplication::GetCurrentApplication()->GetScreenWidth();
+                Coord nCurrentHeight = CCApplication::GetCurrentApplication()->GetScreenHeight();
                 
                 Coord nMemWndW = (width >= nCurrentWidth) ? width : nCurrentWidth;
                 Coord nMemWndH = (height >= nCurrentHeight) ? height : nCurrentHeight;
@@ -136,7 +136,7 @@ namespace cocos2d {
         }
 	}
 
-	CCXBitmapDC::~CCXBitmapDC(void)
+	CCBitmapDC::~CCBitmapDC(void)
 	{
         if (m_pBitmap)
         {
@@ -145,17 +145,17 @@ namespace cocos2d {
         }
 	}
 
-	void *CCXBitmapDC::getBuffer()
+	void *CCBitmapDC::getBuffer()
 	{
 		return m_pBitmap->GetDataPtr();
 	}
 
-	CGSize CCXBitmapDC::getSize()
+	CCSize CCBitmapDC::getSize()
 	{
 		return m_tSize;
 	}
 
-	TBitmap* CCXBitmapDC::getBitmap()
+	TBitmap* CCBitmapDC::getBitmap()
 	{
 		return m_pBitmap;
 	}

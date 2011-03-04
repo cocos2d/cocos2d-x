@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCXBitmapDC;
+class CCBitmapDC;
 
 /// @cond
 typedef struct
@@ -54,7 +54,7 @@ class CCX_DLL CCImage
 {
 public:
 	CCImage(void);
- 	CCImage(CCXBitmapDC * pBmpDC);
+ 	CCImage(CCBitmapDC * pBmpDC);
 	
 	~CCImage(void);
 

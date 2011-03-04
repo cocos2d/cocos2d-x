@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class  AppDelegate  :  public  cocos2d::CCXApplication
+class  AppDelegate  :  public  cocos2d::CCApplication
 {
 public:
 	AppDelegate();

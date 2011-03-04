@@ -80,7 +80,7 @@ CCImage::CCImage(void)
 	m_imageInfo.bitsPerComponent = 0;
 }
 
-CCImage::CCImage(CCXBitmapDC * pBmpDC)
+CCImage::CCImage(CCBitmapDC * pBmpDC)
 {
     m_imageInfo.hasAlpha = false;
     m_imageInfo.isPremultipliedAlpha = false;

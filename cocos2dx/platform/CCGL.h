@@ -45,7 +45,7 @@ THE SOFTWARE.
 
 // iOS
 #if defined(CCX_PLATFORM_MOBILE)
-    #define CC_GLVIEW                   cocos2d::CCXEGLView
+    #define CC_GLVIEW                   cocos2d::CCEGLView
     #define ccglOrtho					glOrthof
     #define	ccglClearDepth				glClearDepthf
     #define ccglGenerateMipmap			glGenerateMipmapOES

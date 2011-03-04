@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_UPHONE__
-#define __CCX_COMMON_UPHONE__
+#ifndef __CC_COMMON_UPHONE__
+#define __CC_COMMON_UPHONE__
 
 #if defined(_WIN32)
     #if defined(SS_MAKEDLL)
@@ -48,8 +48,8 @@ namespace cocos2d{
     /**
     @brief	Output Debug message to Application console.
     */
-    void CCX_DLL CCXLog(const char * pszFormat, ...);
+    void CCX_DLL CCLog(const char * pszFormat, ...);
 
 }//namespace   cocos2d 
 
-#endif	// end of __CCX_COMMON_UPHONE__
+#endif	// end of __CC_COMMON_UPHONE__

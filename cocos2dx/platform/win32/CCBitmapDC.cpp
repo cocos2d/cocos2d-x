@@ -26,13 +26,13 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	CCXBitmapDC::CCXBitmapDC(int width, int height)
+	CCBitmapDC::CCBitmapDC(int width, int height)
 	{
         m_hMemDC = CreateDC(NULL, NULL, NULL, NULL);
 		m_hBmp   = CreateBitmap(width, height, 1, 32, NULL);
         m_hOld   = SelectObject(m_hMemDC, m_hBmp);
 	}
- 	CCXBitmapDC::CCXBitmapDC(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+ 	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
  	{
 		HWND hWnd  = CCDirector::sharedDirector()->getOpenGLView()->getHWnd();
 		HDC hWndDC = GetDC(hWnd);
@@ -106,19 +106,19 @@ namespace cocos2d {
 		}
  	}
 
-	CCXBitmapDC::~CCXBitmapDC(void)
+	CCBitmapDC::~CCBitmapDC(void)
 	{
 		SelectObject(m_hMemDC, m_hOld);
         DeleteObject(m_hBmp);
         DeleteDC(m_hMemDC);
 	}
 
-	HBITMAP CCXBitmapDC::getBitmap()
+	HBITMAP CCBitmapDC::getBitmap()
 	{
 		return m_hBmp;
 	}
 
-	HDC CCXBitmapDC::getDC()
+	HDC CCBitmapDC::getDC()
 	{
 		return m_hMemDC;
 	}

@@ -22,17 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
-#define __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
+#ifndef __PLATFORM_UPHONE_PLATFORM_CCLOCK_H__
+#define __PLATFORM_UPHONE_PLATFORM_CCLOCK_H__
 
 #include <TG3.h>
 namespace   cocos2d {
 
-class NSLock
+class CCLock
 {
 public:
-	NSLock(void);
-	~NSLock(void);
+	CCLock(void);
+	~CCLock(void);
 
 	void lock(void);
 	void unlock(void);
@@ -42,4 +42,4 @@ private:
 };
 }//namespace   cocos2d 
 
-#endif // __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
+#endif // __PLATFORM_UPHONE_PLATFORM_CCLOCK_H__

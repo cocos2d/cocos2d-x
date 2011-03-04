@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include <string>
 #include <ssFile.h>
-#include "ccxCommon.h"
-#include "NSMutableDictionary.h"
+#include "CCCommon.h"
+#include "CCMutableDictionary.h"
 #include "FileUtils.h"
 
 namespace cocos2d {
@@ -55,11 +55,11 @@ public:
 	/// @endcond
 
     /**
-    @brief   Generate a NSDictionary pointer by file
+    @brief   Generate a CCDictionary pointer by file
     @param   pFileName  The file name of *.plist file
-    @return  The NSDictionary pointer generated from the file
+    @return  The CCDictionary pointer generated from the file
     */
-	static NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName);
+	static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 
     /**
     @brief  Set the ResourcePath and(or) the zip file name

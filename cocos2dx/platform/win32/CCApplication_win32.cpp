@@ -4,21 +4,21 @@
 
 namespace   cocos2d {
 
-static CCXApplication * s_pApplication;
+static CCApplication * s_pApplication;
 
-CCXApplication::CCXApplication()
+CCApplication::CCApplication()
 	: m_hAccelTable(NULL)
 {
 	m_hInstance	= GetModuleHandle(NULL);
 	s_pApplication = this;
 }
 
-CCXApplication::~CCXApplication()
+CCApplication::~CCApplication()
 {
 	s_pApplication = NULL;
 }
 
-ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
+ccDeviceOrientation CCApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
 {
 	// swap width and height
 	CCEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
@@ -29,13 +29,13 @@ ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOr
 	return CCDirector::sharedDirector()->getDeviceOrientation();
 }
 
-CCRect CCXApplication::statusBarFrame()
+CCRect CCApplication::statusBarFrame()
 {
 	CCRect rc;
 	return rc;
 }
 
-int CCXApplication::Run()
+int CCApplication::Run()
 {
 	// Main message loop:
 	MSG msg;
@@ -85,12 +85,12 @@ int CCXApplication::Run()
 //////////////////////////////////////////////////////////////////////////
 /// Implement static class member
 //////////////////////////////////////////////////////////////////////////
-CCXApplication * CCXApplication::sharedApplication()
+CCApplication * CCApplication::sharedApplication()
 {
 	return s_pApplication;
 }
 
-void CCXApplication::setAnimationInterval(double interval)
+void CCApplication::setAnimationInterval(double interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);

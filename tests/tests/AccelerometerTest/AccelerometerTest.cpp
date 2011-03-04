@@ -34,7 +34,7 @@ void AccelerometerTest::onEnter()
 
     setIsAccelerometerEnabled(true);
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
@@ -53,28 +53,28 @@ void AccelerometerTest::didAccelerate(UIAcceleration* pAccelerationValue)
 // 
 //     if (m_fLastTime > 0.0)
 //     {
-//         CGPoint ptNow = convertToUI
+//         CCPoint ptNow = convertToUI
 //     }
 // 
 //     m_fLastTime = fNow;
 
     CCDirector* pDir = CCDirector::sharedDirector();
-    CGSize winSize   = pDir->getWinSize();
+    CCSize winSize   = pDir->getWinSize();
 
     /*FIXME: Testing on the Nexus S sometimes m_pBall is NULL */
     if ( m_pBall == NULL ) {
     	return;
     }
 
-    CGSize ballSize  = m_pBall->getContentSize();
+    CCSize ballSize  = m_pBall->getContentSize();
 
-    CGPoint ptNow  = m_pBall->getPosition();
-    CGPoint ptTemp = pDir->convertToUI(ptNow);
+    CCPoint ptNow  = m_pBall->getPosition();
+    CCPoint ptTemp = pDir->convertToUI(ptNow);
 
     ptTemp.x += pAccelerationValue->x * 9.81f;
     ptTemp.y -= pAccelerationValue->y * 9.81f;
 
-    CGPoint ptNext = pDir->convertToGL(ptTemp);
+    CCPoint ptNext = pDir->convertToGL(ptTemp);
     FIX_POS(ptNext.x, (ballSize.width / 2.0), (winSize.width - ballSize.width / 2.0));
     FIX_POS(ptNext.y, (ballSize.height / 2.0), (winSize.height - ballSize.height / 2.0));
     m_pBall->setPosition(ptNext);

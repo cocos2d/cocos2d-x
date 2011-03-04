@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCTileMapAtlas.h"
-#include "CCXFileUtils.h"
+#include "CCFileUtils.h"
 #include "CCTextureAtlas.h"
 #include "support/image_support/TGAlib.h"
 #include "ccConfig.h"

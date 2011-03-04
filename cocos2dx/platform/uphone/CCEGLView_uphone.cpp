@@ -28,17 +28,17 @@ THE SOFTWARE.
 #include "EGL/egl.h"
 #include "GLES/gl.h"
 
-#include "CCXCocos2dDefine.h"
-#include "NSSet.h"
+#include "CCCocos2dDefine.h"
+#include "CCSet.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 
 #include "TCOM_Sensors_Interface.h"
-#include "CCXUIAccelerometer.h"
+#include "CCAccelerometer.h"
 #include "CCKeypadDispatcher.h"
 
-#include "CCXApplication.h"
+#include "CCApplication.h"
 
 namespace cocos2d {
 
@@ -192,28 +192,28 @@ private:
 };
 
 //////////////////////////////////////////////////////////////////////////
-// impliment CCXEGLView
+// impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
 
-CCXEGLView::CCXEGLView(TApplication * pApp)
+CCEGLView::CCEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
 {
 }
 
-CCXEGLView::~CCXEGLView()
+CCEGLView::~CCEGLView()
 {
     CCX_SAFE_DELETE(m_pDelegate);
     CCX_SAFE_DELETE(m_pEGL);
 }
 
-Boolean CCXEGLView::AfterCreate(void)
+Boolean CCEGLView::AfterCreate(void)
 {
     return (m_pEGL = CCXEGL::create(this)) ? TRUE : FALSE;
 }
 
-Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
+Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 {
     Boolean bHandled = FALSE;
 
@@ -283,7 +283,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
                 AccValue.timestamp = (double) TimGetTicks() / 100;
 
                 // call delegates' didAccelerate function
-                UIAccelerometer::sharedAccelerometer()->didAccelerate(&AccValue);
+                CCAccelerometer::sharedAccelerometer()->didAccelerate(&AccValue);
                 bHandled = TRUE;
             }
         }
@@ -297,7 +297,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     case EVENT_ScreenSwitchNotify:
         {
-            bool bInBack = CCXApplication::sharedApplication()->isInBackground();
+            bool bInBack = CCApplication::sharedApplication()->isInBackground();
 
             // if the app have be in background,don't handle this message
             CCX_BREAK_IF(bInBack);
@@ -305,14 +305,14 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             if (! pEvent->sParam1)  // turn off screen
             {
                 // CCDirector::sharedDirector()->pause();
-                CCXApplication::sharedApplication()->applicationDidEnterBackground();
-                CCXApplication::sharedApplication()->StopMainLoop();
+                CCApplication::sharedApplication()->applicationDidEnterBackground();
+                CCApplication::sharedApplication()->StopMainLoop();
             }
             else
             {
                 // CCDirector::sharedDirector()->resume();
-                CCXApplication::sharedApplication()->applicationWillEnterForeground();
-                CCXApplication::sharedApplication()->StartMainLoop();
+                CCApplication::sharedApplication()->applicationWillEnterForeground();
+                CCApplication::sharedApplication()->StartMainLoop();
             }
             break;
         }
@@ -358,7 +358,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     return bHandled;
 }
 
-Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
@@ -370,7 +370,7 @@ Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
 
         pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
         s_pTouches[nIndex] = pTouch;
-        NSSet set;
+        CCSet set;
         set.addObject(pTouch);
         m_pDelegate->touchesBegan(&set, NULL);
     }
@@ -378,14 +378,14 @@ Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCXEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
         CCTouch* pTouch = s_pTouches[nIndex];
         if (pTouch)
         {
-            NSSet set;
+            CCSet set;
             pTouch->SetTouchInfo(0, (float)pEvent->sParam1, (float)pEvent->sParam2);
             set.addObject(pTouch);
             m_pDelegate->touchesEnded(&set, NULL);
@@ -408,7 +408,7 @@ Boolean CCXEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCXEGLView::OnPenMove(EventType* pEvent)
+Boolean CCEGLView::OnPenMove(EventType* pEvent)
 {
     do 
     {
@@ -417,7 +417,7 @@ Boolean CCXEGLView::OnPenMove(EventType* pEvent)
         Int32 nCount = EvtGetPenMultiPointCount(pEvent);
         CCX_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
 
-        NSSet set;
+        CCSet set;
         Int32 nPosX, nPosY;
         for (Int32 i = 0; i < nCount; ++i)
         {
@@ -435,36 +435,36 @@ Boolean CCXEGLView::OnPenMove(EventType* pEvent)
     return FALSE;
 }
 
-CGSize CCXEGLView::getSize()
+CCSize CCEGLView::getSize()
 {
 	Coord w, h;
 	TWindow::GetWindowExtent(&w, &h);
-    return CGSize((float)w, (float)h);
+    return CCSize((float)w, (float)h);
 }
 
-CGRect CCXEGLView::getFrame()
+CCRect CCEGLView::getFrame()
 {
 	TRectangle rc;
 	GetClientBounds(&rc);
-	return (CGRect((float)rc.X(), (float)rc.Y(), (float)rc.Width(), (float)rc.Height()));
+	return (CCRect((float)rc.X(), (float)rc.Y(), (float)rc.Width(), (float)rc.Height()));
 }
 
-bool CCXEGLView::isOpenGLReady()
+bool CCEGLView::isOpenGLReady()
 {
     return (NULL != m_pEGL);
 }
 
-void CCXEGLView::release()
+void CCEGLView::release()
 {
     CloseWindow();
 }
 
-void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
     m_pDelegate = pDelegate;
 }
 
-void CCXEGLView::swapBuffers()
+void CCEGLView::swapBuffers()
 {
     if (m_pEGL)
     {
@@ -472,13 +472,13 @@ void CCXEGLView::swapBuffers()
     }
 }
 
-bool CCXEGLView::canSetContentScaleFactor()
+bool CCEGLView::canSetContentScaleFactor()
 {
 	// can scale content?
 	return false;
 }
 
-void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
 	// if it supports scaling content, set it
 }

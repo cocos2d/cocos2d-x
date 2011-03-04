@@ -31,11 +31,11 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCXApplication
+class CCX_DLL CCApplication
 {
 public:
-    CCXApplication();
-    virtual ~CCXApplication();
+    CCApplication();
+    virtual ~CCApplication();
 
     /**
     @brief	Implement Window create, CCDirector and CCScene init code here.
@@ -72,7 +72,7 @@ public:
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static CCXApplication * sharedApplication();
+    static CCApplication * sharedApplication();
 
 	virtual int Run();
 
