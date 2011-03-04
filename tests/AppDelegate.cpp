@@ -29,10 +29,27 @@ bool AppDelegate::initInstance()
 
 #endif  // CCX_PLATFORM_WIN32
 
+<<<<<<< HEAD
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
         // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
 #endif  // CCX_PLATFORM_IOS
         
+=======
+#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+
+        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
+        // The tests is designed as HVGA.
+        CCXEGLView* pMainWnd = new CCXEGLView(this);
+        CCX_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
+
+#ifndef _TRANZDA_VM_  
+        // on uphone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+        cocos2d::CCFileUtils::setResource("TestCocos2dx.zip");
+#endif
+
+#endif
+
+>>>>>>> e08db45d46a9c7572480c307b6bbbaab71ba6330
         bRet = true;
     } while (0);
     return bRet;

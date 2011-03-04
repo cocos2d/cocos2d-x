@@ -7,13 +7,13 @@
 #include "TG3.h"
 
 // game
-#include "Application.h"
+#include "AppDelegate.h"
 
 
 Int32 TG3AppMain(const TUChar * pAppID, UInt32 nCmd, void * pCmdParam)
 {
-	Application app;
-	app.Run();
+	AppDelegate app;
+    cocos2d::ccxApplication::sharedApplication().Run();
 
 	return 1;
 }

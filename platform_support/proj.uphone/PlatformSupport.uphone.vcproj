@@ -186,10 +186,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\ccxApplication.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\src\ccxCommon.cpp"
 				>
 			</File>
@@ -217,10 +213,6 @@
 		<Filter
 			Name="include"
 			>
-			<File
-				RelativePath="..\include\ccxApplication.h"
-				>
-			</File>
 			<File
 				RelativePath="..\include\ccxCommon.h"
 				>
