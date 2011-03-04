@@ -55,7 +55,7 @@ bool HelloWorld::init()
 	CGSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// position the label on the center of the screen
-	pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
+	pLabel->setPosition( ccp(size.width / 2, size.height - 60) );
 
 	// add the label as a child to this layer
 	this->addChild(pLabel, 1);
