@@ -37,7 +37,7 @@ namespace cocos2d {
         m_pBitmap = TBitmap::Create(width, height, 32);
 	}
 
-	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
         : m_pBitmap(NULL)
 	{
         TUChar *pText = NULL; 
@@ -107,13 +107,13 @@ namespace cocos2d {
 
             switch (alignment)
             {
-            case UITextAlignmentLeft:
+            case CCTextAlignmentLeft:
                 styles |= GUI_API_STYLE_ALIGNMENT_LEFT;
                 break;
-            case UITextAlignmentCenter:
+            case CCTextAlignmentCenter:
                 styles |= GUI_API_STYLE_ALIGNMENT_CENTER;
                 break;
-            case UITextAlignmentRight:
+            case CCTextAlignmentRight:
                 styles |= GUI_API_STYLE_ALIGNMENT_RIGHT;
                 break;
             default:

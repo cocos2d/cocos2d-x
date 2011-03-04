@@ -36,7 +36,7 @@ namespace cocos2d{
 		CCBitmapDC(int width, int height);
 		CCBitmapDC(const char *text, 
 					CCSize dimensions = CCSizeZero,
-					UITextAlignment alignment = UITextAlignmentCenter,
+					CCTextAlignment alignment = CCTextAlignmentCenter,
 					const char *fontName = NULL,
 					float fontSize = 0);
 		~CCBitmapDC(void);
