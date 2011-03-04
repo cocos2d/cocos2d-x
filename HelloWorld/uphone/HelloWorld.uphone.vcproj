@@ -202,42 +202,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Res"
-			>
-			<File
-				RelativePath=".\Res\HelloWorld_Res.ENU.tr3"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_Res.ENU.tr3.tts"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_Res.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_Res.TR3"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_Res.TRG"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_res_c.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_res_def.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Res\HelloWorld_res_h.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="Makefiles"
 			>
 			<File
@@ -252,14 +216,6 @@
 		<Filter
 			Name="Framework"
 			>
-			<File
-				RelativePath=".\Application.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Application.h"
-				>
-			</File>
 			<File
 				RelativePath=".\HelloWorldUnicodeScript.h"
 				>

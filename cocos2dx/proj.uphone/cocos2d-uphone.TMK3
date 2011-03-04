@@ -36,7 +36,9 @@ DEFINES=-DUSE_FILE32API				;读取 zip 文件需要此宏
 
 ;包含路径，可以使用多个INCLUDE_PATH串，也可以使用INCLUDE_PATH1、INCLUDE_PATH2等方式，MakeFile中依据出现顺序(不是数字大小)排列
 ;应用额外的包含路径。注意：ITOPS自己的所有路径都会自动包含，故此这里仅仅包含应用自己特有的路径即可
-INCLUDE_PATH=-I./ -I./Res -I./include -I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2
+INCLUDE_PATH=-I../ -I../include 
+INCLUDE_PATH=-I../../platform_support/include
+INCLUDE_PATH=-I$(TO_PROJECT_ROOT)/Include/ThirdParty/libxml2
 INCLUDE_PATH=-I$(TO_PROJECT_ROOT)/Include/ThirdParty/iconv
 INCLUDE_PATH=-I$(TO_PROJECT_ROOT)/Include/ThirdParty/libpng
 INCLUDE_PATH=-I$(TO_PROJECT_ROOT)/Include/ThirdParty/libjpeg

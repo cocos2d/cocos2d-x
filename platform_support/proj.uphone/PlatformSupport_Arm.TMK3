@@ -52,3 +52,5 @@ INCLUDEFILE=
 ;可以使用多个EXCLUDEFILE串，也可以使用EXCLUDEFILE1、EXCLUDEFILE2等方式，MakeFile中依据出现顺序(不是数字大小)排列
 EXCLUDEFILE= ./src/uphone/
 EXCLUDEFILE= ./src/win32/
+EXCLUDEFILE= ./src/android/
+EXCLUDEFILE= ./src/ios/

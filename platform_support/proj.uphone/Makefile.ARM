@@ -29,7 +29,6 @@ MKDIR = mkdir -p
 first: all
 
 OBJECTS = \
-	$(OBJECTS_DIR)/ccxApplication.o \
 	$(OBJECTS_DIR)/ccxCommon.o \
 	$(OBJECTS_DIR)/ccxGL.o \
 	$(OBJECTS_DIR)/ccxImage.o \
@@ -52,9 +51,6 @@ $(TARGET) : $(OBJECTS)
 clean : 
 	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) $(TARGET)
-
-$(OBJECTS_DIR)/ccxApplication.o : ../src/ccxApplication.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ccxApplication.o ../src/ccxApplication.cpp
 
 $(OBJECTS_DIR)/ccxCommon.o : ../src/ccxCommon.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ccxCommon.o ../src/ccxCommon.cpp
