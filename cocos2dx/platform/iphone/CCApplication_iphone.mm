@@ -25,27 +25,27 @@
 #import "CCDirectorCaller.h"
 #import <UIKit/UIKit.h>
 
-#include "CCXApplication_iphone.h"
-#include "CCXUIImage_iphone.h"
-#include "CCXEGLView_iphone.h"
+#include "CCApplication_iphone.h"
+#include "CCImage_iphone.h"
+#include "CCEGLView_iphone.h"
 #include "CCDirector.h"
 
 #include <GLES/gl.h>
 
 namespace   cocos2d {
-    static CCXApplication *s_pApplication;
+    static CCApplication *s_pApplication;
 
-    CCXApplication::CCXApplication()
+    CCApplication::CCApplication()
     {
     	s_pApplication = this;
     }
 
-    CCXApplication::~CCXApplication()
+    CCApplication::~CCApplication()
     {
         
     }
 
-	ccDeviceOrientation CCXApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
+	ccDeviceOrientation CCApplication::setDeviceOrientation(ccDeviceOrientation eOritation)
     {
         ccDeviceOrientation oldOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
         
@@ -72,24 +72,24 @@ namespace   cocos2d {
         return eOritation;
     }
 
-    CGRect CCXApplication::statusBarFrame()
+    CCRect CCApplication::statusBarFrame()
     {
         float originX = [[UIApplication sharedApplication] statusBarFrame].origin.x;
         float originY = [[UIApplication sharedApplication] statusBarFrame].origin.y;
         float width = [[UIApplication sharedApplication] statusBarFrame].size.width;
         float height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-        CGRect rc(originX, originY, width, height);
+        CCRect rc(originX, originY, width, height);
         
         return rc;
     }
 	
-    void CCXApplication::run()
+    void CCApplication::run()
     {
         applicationDidFinishLaunching();
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
     }
 
-        void CCXApplication::setAnimationInterval(double interval)
+        void CCApplication::setAnimationInterval(double interval)
         {
                 [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
         }
@@ -97,7 +97,7 @@ namespace   cocos2d {
 	//////////////////////////////////////////////////////////////////////////
 	/// Implement static class member
 	//////////////////////////////////////////////////////////////////////////
-	CCXApplication * CCXApplication::sharedApplication()
+	CCApplication * CCApplication::sharedApplication()
 	{
 		return s_pApplication;
 	}

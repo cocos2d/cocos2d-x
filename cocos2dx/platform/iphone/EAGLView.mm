@@ -66,7 +66,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "EAGLView.h"
 #import "ES1Renderer.h"
 #import "CCDirector.h"
-#import "NSSet.h"
+#import "CCSet.h"
 #import "CCTouch.h"
 
 //CLASS IMPLEMENTATIONS:
@@ -257,7 +257,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 	// Issue #914 #924
 // 	CCDirector *director = [CCDirector sharedDirector];
 // 	[director reshapeProjection:size_];
-    cocos2d::CGSize size;
+    cocos2d::CCSize size;
     size.width = size_.width;
     size.height = size_.height;
     cocos2d::CCDirector::sharedDirector()->reshapeProjection(size);
@@ -373,7 +373,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::NSSet set;
+	cocos2d::CCSet set;
         cocos2d::CCTouch *pTouch;
     
 	for (UITouch *touch in touches) {
@@ -406,7 +406,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::NSSet set;
+	cocos2d::CCSet set;
 	for (UITouch *touch in touches) {
 		NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
                 if (! index) {
@@ -432,7 +432,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::NSSet set;
+	cocos2d::CCSet set;
 	for (UITouch *touch in touches) {
             NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
             if (! index) {
@@ -462,7 +462,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	cocos2d::NSSet set;
+	cocos2d::CCSet set;
 	for (UITouch *touch in touches) {
             NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
             if (! index) {

@@ -22,26 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_IPHONE_UIACCELEROMETER_H__
-#define __PLATFORM_IPHONE_UIACCELEROMETER_H__
+#ifndef __PLATFORM_IPHONE_CCACCELEROMETER_H__
+#define __PLATFORM_IPHONE_CCACCELEROMETER_H__
 
-#include "CCUIAccelerometerDelegate.h"
+#include "CCAccelerometerDelegate.h"
 
 namespace   cocos2d {
 
-class CCX_DLL UIAccelerometer
+class CCX_DLL CCAccelerometer
 {
 public:
-    UIAccelerometer();
-    ~UIAccelerometer();
+    CCAccelerometer();
+    ~CCAccelerometer();
 
-    static UIAccelerometer* sharedAccelerometer();
+    static CCAccelerometer* sharedAccelerometer();
 
-    void removeDelegate(UIAccelerometerDelegate* pDelegate);
-    void addDelegate(UIAccelerometerDelegate* pDelegate);
+    void removeDelegate(CCAccelerometerDelegate* pDelegate);
+    void addDelegate(CCAccelerometerDelegate* pDelegate);
     
 private:
-    static UIAccelerometer* m_spUIAccelerometer;
+    static CCAccelerometer* m_spCCAccelerometer;
 };
 
 }//namespace   cocos2d 

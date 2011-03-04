@@ -21,24 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCXBITMAP_DC_H__
-#define __CCXBITMAP_DC_H__
+#ifndef __CCBITMAP_DC_H__
+#define __CCBITMAP_DC_H__
 
 #include "ccTypes.h"
-#include "CCXCocos2dDefine.h"
-#include "CCXUIImage.h"
+#include "CCCocos2dDefine.h"
+#include "CCImage.h"
 
 namespace cocos2d{
-	class CCX_DLL CCXBitmapDC
+	class CCX_DLL CCBitmapDC
 	{
 	public:
-		CCXBitmapDC();
-		CCXBitmapDC(const char *text, 
-					CGSize dimensions = CGSizeZero,
-					cocos2d::UITextAlignment alignment = UITextAlignmentCenter,
+		CCBitmapDC();
+		CCBitmapDC(const char *text, 
+					CCSize dimensions = CCSizeZero,
+					cocos2d::CCTextAlignment alignment = CCTextAlignmentCenter,
 					const char *fontName = NULL,
 					float fontSize = 0);
-		~CCXBitmapDC(void);
+		~CCBitmapDC(void);
 		
 		int getWidth();
         int getHeight();

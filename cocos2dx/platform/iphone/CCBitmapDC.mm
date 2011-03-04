@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include <UIKit/UIKit.h>
 
 #include <cstring>
-#include "CCXBitmapDC.h"
-#include "CCXApplication_iphone.h"
+#include "CCBitmapDC.h"
+#include "CCApplication_iphone.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
 
@@ -126,21 +126,21 @@ static void initWithString(const char *content, const char *fontName, float size
 
 namespace cocos2d {
 
-	CCXBitmapDC::CCXBitmapDC()
+	CCBitmapDC::CCBitmapDC()
 	:m_nWidth(0)
 	,m_nHeight(0)
 	,m_pData(NULL)
 	{
 	}
 	
-	CCXBitmapDC::CCXBitmapDC(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	CCBitmapDC::CCBitmapDC(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{	
 		m_nWidth = dimensions.width;
 		m_nHeight = dimensions.height;
-		initWithString(text, fontName, fontSize, &m_nWidth, &m_nHeight, (::UITextAlignment)alignment, &m_pData);
+		initWithString(text, fontName, fontSize, &m_nWidth, &m_nHeight, (UITextAlignment)alignment, &m_pData);
 	}
 	
-	CCXBitmapDC::~CCXBitmapDC()
+	CCBitmapDC::~CCBitmapDC()
 	{
 		if (m_pData)
 		{
@@ -148,17 +148,17 @@ namespace cocos2d {
 		}
 	}
 	
-	int CCXBitmapDC::getWidth()
+	int CCBitmapDC::getWidth()
     {
     	return m_nWidth;
     }
     
-    int CCXBitmapDC::getHeight()
+    int CCBitmapDC::getHeight()
     {
     	return m_nHeight;
     }
     
-    unsigned char* CCXBitmapDC::getData()
+    unsigned char* CCBitmapDC::getData()
     {
     	return m_pData;
     }

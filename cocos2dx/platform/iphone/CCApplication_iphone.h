@@ -22,19 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_APPLICATION_IPHONE_H__
-#define __CCX_APPLICATION_IPHONE_H__
+#ifndef __CC_APPLICATION_IPHONE_H__
+#define __CC_APPLICATION_IPHONE_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 #include "CCDirector.h"
 
 namespace   cocos2d {
 
-class CCX_DLL CCXApplication
+class CCX_DLL CCApplication
 {
 public:
-    CCXApplication();
-    virtual ~CCXApplication();
+    CCApplication();
+    virtual ~CCApplication();
 
     /**
     @brief	rotate main window by device orientation.
@@ -53,7 +53,7 @@ public:
     /**
     @brief	Get status bar rectangle in EGLView window.
     */
-    CGRect statusBarFrame();
+    CCRect statusBarFrame();
 	
     void run();
 	
@@ -63,7 +63,7 @@ public:
      @brief	Get current applicaiton instance.
      @return Current application instance pointer.
      */
-    static CCXApplication * sharedApplication();
+    static CCApplication * sharedApplication();
 };
 
 }       // end of namespace   cocos2d

@@ -22,25 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_IPHONE_H__
-#define __CCX_EGLVIEW_IPHONE_H__
+#ifndef __CC_EGLVIEW_IPHONE_H__
+#define __CC_EGLVIEW_IPHONE_H__
 
-//#include "CGGeometry.h"
-#include "ccxCommon_iphone.h"
+#include "CCCommon_iphone.h"
 
 namespace   cocos2d {
-class NSSet;
+class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
-class CGSize;
+class CCSize;
 
-class CCX_DLL CCXEGLView
+class CCX_DLL CCEGLView
 {
 public:
-    CCXEGLView();
-   ~CCXEGLView();
+    CCEGLView();
+   ~CCEGLView();
 
-    CGSize  getSize();
+    CCSize  getSize();
     bool    isOpenGLReady();
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
@@ -50,10 +49,10 @@ public:
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
     
-    void touchesBegan(NSSet *set);
-    void touchesMoved(NSSet *set);
-    void touchesEnded(NSSet *set);
-    void touchesCancelled(NSSet *set);
+    void touchesBegan(CCSet *set);
+    void touchesMoved(CCSet *set);
+    void touchesEnded(CCSet *set);
+    void touchesCancelled(CCSet *set);
     
 private:
     EGLTouchDelegate *m_pDelegate;
