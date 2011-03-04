@@ -29,12 +29,10 @@ bool AppDelegate::initInstance()
 
 #endif  // CCX_PLATFORM_WIN32
 
-<<<<<<< HEAD
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
         // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
 #endif  // CCX_PLATFORM_IOS
         
-=======
 #if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
 
         // Initialize OpenGLView instance, that release by CCDirector when application terminate.
@@ -49,7 +47,6 @@ bool AppDelegate::initInstance()
 
 #endif
 
->>>>>>> e08db45d46a9c7572480c307b6bbbaab71ba6330
         bRet = true;
     } while (0);
     return bRet;
