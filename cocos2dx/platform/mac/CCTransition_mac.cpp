@@ -48,7 +48,7 @@ enum {
 	if(pScene && pScene->initWithDuration(t, scene)){\
     pScene->autorelease();\
 	return pScene;}\
-	CCX_SAFE_DELETE(pScene);\
+	CC_SAFE_DELETE(pScene);\
 	return NULL;\
 }
 
@@ -71,7 +71,7 @@ CCTransitionScene * CCTransitionScene::transitionWithDuration(ccTime t, CCScene 
 		pScene->autorelease();
 		return pScene;
 	}
-	CCX_SAFE_DELETE(pScene);
+	CC_SAFE_DELETE(pScene);
 	return NULL;
 }
 

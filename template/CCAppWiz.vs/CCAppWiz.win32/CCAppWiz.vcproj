@@ -4,7 +4,7 @@
 	Version="9.00"
 	Name="CCAppWiz.win32"
 	ProjectGUID="{104F4414-0DA5-4982-A413-766DD1698469}"
-	RootNamespace="CCXAppWiz.win32"
+	RootNamespace="CCAppWiz.win32"
 	Keyword="CustomAppWizProj"
 	TargetFrameworkVersion="196613"
 	>

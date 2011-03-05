@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCApplication
+class CC_DLL CCApplication
 {
 public:
     CCApplication();

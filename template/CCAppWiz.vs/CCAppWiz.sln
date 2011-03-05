@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCAppWiz.win32", "CCAppWiz.win32\CCAppWiz.vcproj", "{104F4414-0DA5-4982-A413-766DD1698469}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCXAppWiz.uphone", "CCAppWiz.wophone\CCAppWiz.wohone.vcproj", "{64CF0B7A-FC68-41D7-B3DC-2908D74BDAE9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCAppWiz.uphone", "CCAppWiz.wophone\CCAppWiz.wohone.vcproj", "{64CF0B7A-FC68-41D7-B3DC-2908D74BDAE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

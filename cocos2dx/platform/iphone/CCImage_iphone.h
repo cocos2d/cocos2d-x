@@ -47,7 +47,7 @@ class CCBitmapDC;
 /**
 @brief image toolkits
 */
-class CCX_DLL CCImage
+class CC_DLL CCImage
 {
 public:
 	CCImage(void);

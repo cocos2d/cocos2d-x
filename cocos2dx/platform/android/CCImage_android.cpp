@@ -41,7 +41,7 @@ namespace   cocos2d {
 
 bool CCImage::s_bPopupNotify = false;
 	
-#define CCX_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
+#define CC_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
 	(unsigned int)(((unsigned int)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
 	((unsigned int)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
 	((unsigned int)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
@@ -54,7 +54,7 @@ typedef struct
 	int offset;
 }tImageSource;
 
-// because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
+// because we do not want to include "png.h" in CCUIImage_uphone.h, so we implement
 // the function as a static function
 static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
 {
@@ -261,7 +261,7 @@ bool CCImage::loadPngFromStream(unsigned char *data, int nLength)
 		{
 			for(int j = 0; j < bytesPerRow; j += 4)
 			{
-				*tmp++ = CCX_RGB_PREMULTIPLY_APLHA( rowPointers[i][j], rowPointers[i][j + 1], 
+				*tmp++ = CC_RGB_PREMULTIPLY_APLHA( rowPointers[i][j], rowPointers[i][j + 1], 
 					rowPointers[i][j + 2], rowPointers[i][j + 3] );
 			}
 		}

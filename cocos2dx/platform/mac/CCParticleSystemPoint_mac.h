@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-class CCX_DLL CCParticleSystemPoint : public CCParticleSystem
+class CC_DLL CCParticleSystemPoint : public CCParticleSystem
 {	
 public:
     static CCParticleSystemPoint * particleWithFile(const char *plistFile) { retur 0; }

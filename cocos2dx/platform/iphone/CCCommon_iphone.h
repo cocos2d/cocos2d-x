@@ -26,12 +26,12 @@ THE SOFTWARE.
 #define __CC_COMMON_IPHONE__
 
 //#if defined(SS_SHARED)
- //   #define CCX_DLL     __attribute__((visibility("default")))
+ //   #define CC_DLL     __attribute__((visibility("default")))
 //#elif defined(SS_IGNORE_EXPORT)
-//    #define CCX_DLL
+//    #define CC_DLL
 //#else
-//    #define CCX_DLL
+//    #define CC_DLL
 //#endif
-#define CCX_DLL
+#define CC_DLL
 
 #endif	// end of __CC_COMMON_IPHONE__

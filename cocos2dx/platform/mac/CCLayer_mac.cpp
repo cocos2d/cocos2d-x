@@ -53,7 +53,7 @@ bool CCLayer::init()
 	do 
 	{
 		CCDirector * pDirector;
-		CCX_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
 		this->setContentSize(pDirector->getWinSize());
 		// success
 		bRet = true;
@@ -71,7 +71,7 @@ CCLayer *CCLayer::node()
 	}
     else
     {
-	    CCX_SAFE_DELETE(pRet)
+	    CC_SAFE_DELETE(pRet)
 	    return NULL;
     }
 }
@@ -344,7 +344,7 @@ CCLayerColor * CCLayerColor::layerWithColorWidthHeight(ccColor4B color, GLfloat 
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
@@ -355,7 +355,7 @@ CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 
@@ -466,7 +466,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
@@ -478,7 +478,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end,
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
@@ -627,7 +627,7 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 		return pMultiplexLayer;
 	}
 	va_end(args);
-	CCX_SAFE_DELETE(pMultiplexLayer);
+	CC_SAFE_DELETE(pMultiplexLayer);
 	return NULL;
 }
 

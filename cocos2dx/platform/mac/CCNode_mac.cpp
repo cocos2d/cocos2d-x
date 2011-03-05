@@ -79,9 +79,9 @@ CCNode::~CCNode()
 	CCLOGINFO( "cocos2d: deallocing" );
 
 	// attributes
-	CCX_SAFE_RELEASE(m_pCamera);
+	CC_SAFE_RELEASE(m_pCamera);
 
-	CCX_SAFE_RELEASE(m_pGrid);
+	CC_SAFE_RELEASE(m_pGrid);
 
 
 	if(m_pChildren && m_pChildren->count() > 0)
@@ -97,7 +97,7 @@ CCNode::~CCNode()
 	}
 
 	// children
-	CCX_SAFE_RELEASE(m_pChildren);
+	CC_SAFE_RELEASE(m_pChildren);
 
 }
 
@@ -284,8 +284,8 @@ CCGridBase* CCNode::getGrid()
 /// grid setter
 void CCNode::setGrid(CCGridBase* pGrid)
 {
-	CCX_SAFE_RETAIN(pGrid);
-	CCX_SAFE_RELEASE(m_pGrid);
+	CC_SAFE_RETAIN(pGrid);
+	CC_SAFE_RELEASE(m_pGrid);
 	m_pGrid = pGrid;
 }
 

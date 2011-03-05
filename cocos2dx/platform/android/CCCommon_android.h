@@ -27,19 +27,19 @@ THE SOFTWARE.
 
 #if defined(_WIN32)
     #if defined(SS_MAKEDLL)
-    #define CCX_DLL     __declspec(dllexport)
+    #define CC_DLL     __declspec(dllexport)
     #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
+    #define CC_DLL
     #else 		/* use a DLL library */
-    #define CCX_DLL     __declspec(dllimport)
+    #define CC_DLL     __declspec(dllimport)
     #endif
 #else
     #if defined(SS_SHARED)
-    #define CCX_DLL     __attribute__((visibility("default")))
+    #define CC_DLL     __attribute__((visibility("default")))
     #elif defined(SS_IGNORE_EXPORT)
-    #define CCX_DLL
+    #define CC_DLL
     #else
-    #define CCX_DLL
+    #define CC_DLL
     #endif
 #endif 
 
@@ -48,7 +48,7 @@ namespace cocos2d{
     /**
     @brief	Output Debug message to Application console.
     */
-    void CCX_DLL CCLog(const char * pszFormat, ...);
+    void CC_DLL CCLog(const char * pszFormat, ...);
 
 }//namespace   cocos2d 
 

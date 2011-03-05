@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "NSMutableArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "CCXCocos2dDefine.h"
+#include "CCCocos2dDefine.h"
 #include "CCTouchDispatcher.h"
 #include "support/opengl_support/glu.h"
 #include "CGPointExtension.h"
@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "CCSpriteFrameCache.h"
 #include "NSAutoreleasePool.h"
 #include "platform/platform.h"
-#include "CCXApplication.h"
+#include "CCApplication.h"
 #include "CCLabelBMFont.h"
 #include "CCActionManager.h"
 #include "CCLabelTTF.h"
@@ -128,21 +128,21 @@ CCDirector::~CCDirector(void)
 	CCLOGINFO("cocos2d: deallocing %p", this);
 
 #if CC_DIRECTOR_FAST_FPS
-	CCX_SAFE_RELEASE(m_pFPSLabel);
+	CC_SAFE_RELEASE(m_pFPSLabel);
 #endif 
     
-	CCX_SAFE_RELEASE(m_pRunningScene);
-	CCX_SAFE_RELEASE(m_pNotificationNode);
-	CCX_SAFE_RELEASE(m_pobScenesStack);
+	CC_SAFE_RELEASE(m_pRunningScene);
+	CC_SAFE_RELEASE(m_pNotificationNode);
+	CC_SAFE_RELEASE(m_pobScenesStack);
 
 	// pop the autorelease pool
 	NSPoolManager::getInstance()->pop();
 
 	// delete m_pLastUpdate
-	CCX_SAFE_DELETE(m_pLastUpdate);
+	CC_SAFE_DELETE(m_pLastUpdate);
 
 	// delete last compute time
-	CCX_SAFE_DELETE(m_pLastComputeFrameRate);
+	CC_SAFE_DELETE(m_pLastComputeFrameRate);
 
     CCKeypadDispatcher::purgeSharedDispatcher();
 
@@ -535,10 +535,10 @@ void CCDirector::end(void)
 	stopAnimation();
 
 #if CC_DIRECTOR_FAST_FPS
-	CCX_SAFE_RELEASE_NULL(m_pFPSLabel);
+	CC_SAFE_RELEASE_NULL(m_pFPSLabel);
 #endif
 
-	CCX_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+	CC_SAFE_RELEASE_NULL(m_pProjectionDelegate);
 
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();

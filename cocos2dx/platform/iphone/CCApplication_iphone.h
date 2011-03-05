@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCApplication
+class CC_DLL CCApplication
 {
 public:
     CCApplication();
@@ -68,4 +68,4 @@ public:
 
 }       // end of namespace   cocos2d
 
-#endif	// end of __CCX_APPLICATION_IPHONE_H__
+#endif	// end of __CC_APPLICATION_IPHONE_H__

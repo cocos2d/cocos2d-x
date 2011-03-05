@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 
 namespace cocos2d{
-	class CCX_DLL CCBitmapDC
+	class CC_DLL CCBitmapDC
 	{
 	public:
 		CCBitmapDC();
@@ -54,4 +54,4 @@ namespace cocos2d{
 	};
 }
 
-#endif //__CCXBITMAP_DC_H__
+#endif //__CCBITMAP_DC_H__

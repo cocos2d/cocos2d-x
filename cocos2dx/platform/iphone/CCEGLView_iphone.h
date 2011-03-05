@@ -33,7 +33,7 @@ class CCTouch;
 class EGLTouchDelegate;
 class CCSize;
 
-class CCX_DLL CCEGLView
+class CC_DLL CCEGLView
 {
 public:
     CCEGLView();
@@ -60,4 +60,4 @@ private:
 
 }   // end of namespace   cocos2d
 
-#endif	// end of __CCX_EGLVIEW_IPHONE_H__
+#endif	// end of __CC_EGLVIEW_IPHONE_H__

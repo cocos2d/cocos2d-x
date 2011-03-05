@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="CCXAppWiz.uphone"
+	Name="CCAppWiz.uphone"
 	ProjectGUID="{64CF0B7A-FC68-41D7-B3DC-2908D74BDAE9}"
-	RootNamespace="CCXAppWiz.uphone"
+	RootNamespace="CCAppWiz.wophone"
 	Keyword="CustomAppWizProj"
 	TargetFrameworkVersion="196613"
 	>

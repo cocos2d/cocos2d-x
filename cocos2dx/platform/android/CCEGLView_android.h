@@ -32,7 +32,7 @@ class NSSet;
 class CCTouch;
 class EGLTouchDelegate;
 
-class CCX_DLL CCEGLView
+class CC_DLL CCEGLView
 {
 public:
     CCEGLView();
