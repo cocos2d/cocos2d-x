@@ -52,7 +52,7 @@ public:
 	virtual ~CCParticleSystemPoint();
 	// super methods
 	virtual bool initWithTotalParticles(int numberOfParticles);
-	virtual void updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	virtual void postStep();
 	virtual void draw();
 	virtual void setStartSpin(float var);

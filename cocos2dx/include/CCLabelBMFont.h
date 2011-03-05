@@ -36,7 +36,7 @@ namespace cocos2d{
 		//! ID of the character
 		unsigned int charID;
 		//! origin and size of the font
-		CGRect rect;
+		CCRect rect;
 		//! The X amount the image should be offset when drawing the image (in pixels)
 		int xOffset;
 		//! The Y amount the image should be offset when drawing the image (in pixels)
@@ -68,7 +68,7 @@ namespace cocos2d{
 	/** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
 	@since v0.8
 	*/
-	class CCX_DLL CCBMFontConfiguration : public NSObject
+	class CCX_DLL CCBMFontConfiguration : public CCObject
 	{
 		// XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 	public://@public
@@ -135,11 +135,11 @@ namespace cocos2d{
 	class CCX_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 	{
 		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
+		CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
 		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(ccColor3B, m_tColor, Color)
+		CC_PROPERTY(ccColor3B, m_tColor, Color)
 		/** conforms to CCRGBAProtocol protocol */
-		CCX_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+		CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
 	protected:
 		// string to render
 		std::string m_sString;
@@ -171,7 +171,7 @@ namespace cocos2d{
 		virtual void setString(const char *label);
 		virtual const char* getString(void);
         virtual void setCString(const char *label);
-		virtual void setAnchorPoint(CGPoint var);
+		virtual void setAnchorPoint(CCPoint var);
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 #if CC_BITMAPFONTATLAS_DEBUG_DRAW

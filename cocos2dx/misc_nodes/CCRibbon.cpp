@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCRibbon.h"
 #include "CCTextureCache.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 namespace cocos2d {
 
@@ -54,14 +54,14 @@ CCRibbon * CCRibbon::ribbonWithWidth(float w, const char *path, float length, cc
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 
 bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B color, float fade)
 {
-	m_pSegments = new NSMutableArray<CCRibbonSegment*>();
-	m_pDeletedSegments = new NSMutableArray<CCRibbonSegment*>();
+	m_pSegments = new CCMutableArray<CCRibbonSegment*>();
+	m_pDeletedSegments = new CCMutableArray<CCRibbonSegment*>();
 
 	/* 1 initial segment */
 	CCRibbonSegment* seg = new CCRibbonSegment();
@@ -73,7 +73,7 @@ bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B 
 
 	m_tColor = color;
 	m_fFadeTime = fade;
-	m_tLastLocation = CGPointZero;
+	m_tLastLocation = CCPointZero;
 	m_fLastWidth = w/2;
 	m_fTexVPos = 0.0f;
 
@@ -89,7 +89,7 @@ bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B 
 	m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
 	m_pTexture = CCTextureCache::sharedTextureCache()->addImage(path);
-	CCX_SAFE_RETAIN(m_pTexture);
+	CC_SAFE_RETAIN(m_pTexture);
 
 	/* default texture parameter */
 	ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
@@ -99,12 +99,12 @@ bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B 
 
 CCRibbon::~CCRibbon()
 {
-    CCX_SAFE_RELEASE(m_pSegments);
-    CCX_SAFE_RELEASE(m_pDeletedSegments);
-    CCX_SAFE_RELEASE(m_pTexture);
+    CC_SAFE_RELEASE(m_pSegments);
+    CC_SAFE_RELEASE(m_pDeletedSegments);
+    CC_SAFE_RELEASE(m_pTexture);
 }
 
-CGPoint CCRibbon::rotatePoint(CGPoint vec, float rotation)
+CCPoint CCRibbon::rotatePoint(CCPoint vec, float rotation)
 {
 	float xtemp = (vec.x * cosf(rotation)) - (vec.y * sinf(rotation));
 	vec.y = (vec.x * sinf(rotation)) + (vec.y * cosf(rotation));
@@ -118,15 +118,15 @@ void CCRibbon::update(ccTime delta)
 	m_fDelta = delta;
 }
 
-float CCRibbon::sideOfLine(CGPoint p, CGPoint l1, CGPoint l2)
+float CCRibbon::sideOfLine(CCPoint p, CCPoint l1, CCPoint l2)
 {
-	CGPoint vp = ccpPerp(ccpSub(l1, l2));
-	CGPoint vx = ccpSub(p, l1);
+	CCPoint vp = ccpPerp(ccpSub(l1, l2));
+	CCPoint vx = ccpSub(p, l1);
 	return ccpDot(vx, vp);
 }
 
 // adds a new segment to the ribbon
-void CCRibbon::addPointAt(CGPoint location, float width)
+void CCRibbon::addPointAt(CCPoint location, float width)
 {
     location.x *= CC_CONTENT_SCALE_FACTOR();
     location.y *= CC_CONTENT_SCALE_FACTOR();
@@ -141,10 +141,10 @@ void CCRibbon::addPointAt(CGPoint location, float width)
 		return;
 	}
 
-	CGPoint sub = ccpSub(m_tLastLocation, location);
+	CCPoint sub = ccpSub(m_tLastLocation, location);
 	float r = ccpToAngle(sub) + (float)M_PI_2;
-	CGPoint p1 = ccpAdd(this->rotatePoint(ccp(-width, 0), r), location);
-	CGPoint p2 = ccpAdd(this->rotatePoint(ccp(+width, 0), r), location);
+	CCPoint p1 = ccpAdd(this->rotatePoint(ccp(-width, 0), r), location);
+	CCPoint p2 = ccpAdd(this->rotatePoint(ccp(+width, 0), r), location);
 	float len = sqrtf(powf(m_tLastLocation.x - location.x, 2) + powf(m_tLastLocation.y - location.y, 2));
 	float tend = m_fTexVPos + len/m_fTextureLength;
 	CCRibbonSegment* seg;
@@ -153,7 +153,7 @@ void CCRibbon::addPointAt(CGPoint location, float width)
 	// lets kill old segments
 	if (m_pSegments && m_pSegments->count()>0)
 	{
-		NSMutableArray<CCRibbonSegment*>::NSMutableArrayIterator it;
+		CCMutableArray<CCRibbonSegment*>::CCMutableArrayIterator it;
 		for (it = m_pSegments->begin(); it != m_pSegments->end(); ++it)
 		{
 			if (*it != seg && (*it)->m_bFinished)
@@ -211,8 +211,8 @@ void CCRibbon::addPointAt(CGPoint location, float width)
 	if (seg->m_uEnd == 0)
 	{
 		// first edge has to get rotation from the first real polygon
-		CGPoint lp1 = ccpAdd(this->rotatePoint(ccp(-m_fLastWidth, 0), r), m_tLastLocation);
-		CGPoint lp2 = ccpAdd(this->rotatePoint(ccp(+m_fLastWidth, 0), r), m_tLastLocation);
+		CCPoint lp1 = ccpAdd(this->rotatePoint(ccp(-m_fLastWidth, 0), r), m_tLastLocation);
+		CCPoint lp2 = ccpAdd(this->rotatePoint(ccp(+m_fLastWidth, 0), r), m_tLastLocation);
 		seg->m_pCreationTime[0] = m_fCurTime - m_fDelta;
 		seg->m_pVerts[0] = lp1.x;
 		seg->m_pVerts[1] = lp1.y;
@@ -272,7 +272,7 @@ void CCRibbon::draw()
 		if(m_pSegments && m_pSegments->count() > 0)
 		{
 			CCRibbonSegment* seg;
-			NSMutableArray<CCRibbonSegment*>::NSMutableArrayIterator it;
+			CCMutableArray<CCRibbonSegment*>::CCMutableArrayIterator it;
 			for( it = m_pSegments->begin(); it != m_pSegments->end(); it++)
 			{
 				seg = (CCRibbonSegment*)*it;
@@ -293,8 +293,8 @@ void CCRibbon::draw()
 // Ribbon - CocosNodeTexture protocol
 void CCRibbon::setTexture(CCTexture2D* var)
 {
-	CCX_SAFE_RETAIN(var);
-	CCX_SAFE_RELEASE(m_pTexture);
+	CC_SAFE_RETAIN(var);
+	CC_SAFE_RELEASE(m_pTexture);
 	m_pTexture = var;
 	this->setContentSize(m_pTexture->getContentSizeInPixels());
 	/* XXX Don't update blending function in Ribbons */

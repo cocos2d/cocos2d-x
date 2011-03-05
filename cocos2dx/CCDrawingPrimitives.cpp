@@ -37,7 +37,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-void ccDrawPoint(CGPoint point)
+void ccDrawPoint(CCPoint point)
 {
 	ccVertex2F p = {point.x * CC_CONTENT_SCALE_FACTOR(), point.y * CC_CONTENT_SCALE_FACTOR() };
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -56,7 +56,7 @@ void ccDrawPoint(CGPoint point)
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawPoints(const CGPoint *points, unsigned int numberOfPoints)
+void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 {
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
@@ -68,7 +68,7 @@ void ccDrawPoints(const CGPoint *points, unsigned int numberOfPoints)
 	ccVertex2F *newPoints = new ccVertex2F[numberOfPoints];
 
 	// iPhone and 32-bit machines optimization
-	if( sizeof(CGPoint) == sizeof(ccVertex2F) ) {
+	if( sizeof(CCPoint) == sizeof(ccVertex2F) ) {
 
 		// points ?
 		if( CC_CONTENT_SCALE_FACTOR() != 1 ) 
@@ -107,9 +107,9 @@ void ccDrawPoints(const CGPoint *points, unsigned int numberOfPoints)
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawLine(CGPoint origin, CGPoint destination)
+void ccDrawLine(CCPoint origin, CCPoint destination)
 {
-	CGPoint vertices[2];
+	CCPoint vertices[2];
 	
 	vertices[0] = origin;
 	vertices[1] = destination;
@@ -131,7 +131,7 @@ void ccDrawLine(CGPoint origin, CGPoint destination)
 }
 
 
-void ccDrawPoly(const CGPoint *poli, int points, bool closePolygon)
+void ccDrawPoly(const CCPoint *poli, int points, bool closePolygon)
 {
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
@@ -156,7 +156,7 @@ void ccDrawPoly(const CGPoint *poli, int points, bool closePolygon)
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawCircle(CGPoint center, float r, float a, int segs, bool drawLineToCenter)
+void ccDrawCircle(CCPoint center, float r, float a, int segs, bool drawLineToCenter)
 {
 	int additionalSegment = 1;
 	if (drawLineToCenter)
@@ -204,16 +204,16 @@ void ccDrawCircle(CGPoint center, float r, float a, int segs, bool drawLineToCen
 	delete[] vertices; //	free(vertices);
 }
 
-void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments)
+void ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, int segments)
 {
-	CGPoint *vertices = new CGPoint[segments + 1];
+	CCPoint *vertices = new CCPoint[segments + 1];
 	
 	float t = 0.0f;
 	for(int i = 0; i < segments; i++)
 	{
 		float x = powf(1 - t, 2) * origin.x + 2.0f * (1 - t) * t * control.x + t * t * destination.x;
 		float y = powf(1 - t, 2) * origin.y + 2.0f * (1 - t) * t * control.y + t * t * destination.y;
-		vertices[i] = CGPointMake(x, y);
+		vertices[i] = CCPointMake(x, y);
 		t += 1.0f / segments;
 	}
 	vertices[segments] = destination;
@@ -235,16 +235,16 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int 
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments)
+void ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoint destination, int segments)
 {
-	CGPoint *vertices = new CGPoint[segments + 1];
+	CCPoint *vertices = new CCPoint[segments + 1];
 	
 	float t = 0;
 	for(int i = 0; i < segments; ++i)
 	{
 		float x = powf(1 - t, 3) * origin.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * destination.x;
 		float y = powf(1 - t, 3) * origin.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * destination.y;
-		vertices[i] = CGPointMake(x, y);
+		vertices[i] = CCPointMake(x, y);
 		t += 1.0f / segments;
 	}
 	vertices[segments] = destination;

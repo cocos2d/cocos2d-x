@@ -29,25 +29,25 @@ THE SOFTWARE.
 
 #if defined(CCX_PLATFORM_UPHONE)
 	#include "uphone/CCTime.h"
-	#include "uphone/NSLock.h"
+	#include "uphone/CCLock.h"
 	#include "uphone/Cocos2dTypes.h"
-	// #include "uphone/CCXGLExtFunc.h"
-	#include "uphone/CCXBitmapDC.h"
+	// #include "uphone/CCGLExtFunc.h"
+	#include "uphone/CCBitmapDC.h"
 #elif defined(CCX_PLATFORM_WIN32)
     #include "win32/CCTime.h"
-    #include "win32/NSLock.h"
+    #include "win32/CCLock.h"
     #include "win32/Cocos2dTypes.h"
-    #include "win32/CCXBitmapDC.h"
+    #include "win32/CCBitmapDC.h"
 #elif defined(CCX_PLATFORM_ANDROID)
     #include "android/CCTime.h"
-    #include "android/NSLock.h"
+    #include "android/CCLock.h"
     #include "android/Cocos2dTypes.h"
-    #include "android/CCXBitmapDC.h"
+    #include "android/CCBitmapDC.h"
 #elif defined(CCX_PLATFORM_IPHONE)
     #include "iphone/CCTime.h"
-    #include "iphone/NSLock.h"
+    #include "iphone/CCLock.h"
     #include "iphone/Cocos2dTypes.h"
-    #include "iphone/CCXBitmapDC.h"
+    #include "iphone/CCBitmapDC.h"
 #else 
     #error
 #endif

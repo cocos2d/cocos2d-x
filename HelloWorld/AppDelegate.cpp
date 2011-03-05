@@ -21,7 +21,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 #if defined(CCX_PLATFORM_WIN32)
-	CCX_SAFE_DELETE(m_pMainWnd);
+	CC_SAFE_DELETE(m_pMainWnd);
 #endif
 }
 
@@ -29,13 +29,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
 #if defined(CCX_PLATFORM_UPHONE)
-	if (!(m_pMainWnd = new CCXEGLView(this)) || 
+	if (!(m_pMainWnd = new CCEGLView(this)) || 
 		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
 #elif defined(CCX_PLATFORM_WIN32)
-	if (! (m_pMainWnd = new CCXEGLView()) ||
+	if (! (m_pMainWnd = new CCEGLView()) ||
 		! m_pMainWnd->Create(L"HelloWorld", 320, 480))
 #elif defined(CCX_PLATFORM_IPHONE)
-	if (! (m_pMainWnd = new CCXEGLView() ) ) 
+	if (! (m_pMainWnd = new CCEGLView() ) ) 
 #elif defined(CCX_PLATFORM_ANDROID)
         if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
 #else

@@ -25,6 +25,6 @@ done
 
 # build
 pushd $ANDROID_NDK_ROOT
-./ndk-build -C $TESTS_ROOT
+./ndk-build -C $TESTS_ROOT $*
 popd
 

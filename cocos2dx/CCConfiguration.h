@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include <string>
 #include "CCGL.h"
 
@@ -54,7 +54,7 @@ namespace   cocos2d {
  @brief CCConfiguration contains some openGL variables
  @since v0.99.0
  */
-class CCConfiguration : public NSObject
+class CCConfiguration : public CCObject
 {
 protected:
 	GLint			m_nMaxTextureSize;

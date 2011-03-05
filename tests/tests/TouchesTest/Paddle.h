@@ -19,14 +19,14 @@ public:
 	Paddle(void);
 	virtual ~Paddle(void);
 
-	CGRect rect();
+	CCRect rect();
 	bool initWithTexture(CCTexture2D* aTexture);
 	virtual void onEnter();
 	virtual void onExit();
 	bool containsTouchLocation(CCTouch* touch);
-	virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
+	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
 
 	static Paddle* paddleWithTexture(CCTexture2D* aTexture);
 };

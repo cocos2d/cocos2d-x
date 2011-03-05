@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCTexture2D.h"
-#include "ccxCommon.h"
+#include "CCCommon.h"
 
 #include <string>
 namespace   cocos2d {
@@ -116,7 +116,7 @@ public:
 };
 
 /** OpenGL projection protocol */
-class CCX_DLL CCProjectionProtocol : public NSObject
+class CCX_DLL CCProjectionProtocol : public CCObject
 {
 public:
 	/** Called by CCDirector when the porjection is updated, and "custom" projection is used

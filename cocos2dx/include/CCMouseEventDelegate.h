@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCMOUSE_EVENT_DELEGATE_H__
 #define __CCMOUSE_EVENT_DELEGATE_H__
 
-#include "NSEvent.h"
-#include "ccxCommon.h"
-#include "NSObject.h"
+#include "CCEvent.h"
+#include "CCCommon.h"
+#include "CCObject.h"
 
 namespace   cocos2d {
 
@@ -127,7 +127,7 @@ public:
     virtual void ccMouseExited(NSEvent *pEvent) {}
 };
 
-class CCX_DLL CCMouseEventHandle : public NSObject
+class CCX_DLL CCMouseEventHandle : public CCObject
 {
 public:
     virtual ~CCMouseEventHandle(void);

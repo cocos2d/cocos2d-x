@@ -48,14 +48,13 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCActionProgressTimer.o \
 	$(OBJECTS_DIR)/CCActionTiledGrid.o \
 	$(OBJECTS_DIR)/CCAtlasNode.o \
-	$(OBJECTS_DIR)/CGAffineTransform.o \
-	$(OBJECTS_DIR)/CGGeometry.o \
-	$(OBJECTS_DIR)/NSAutoreleasePool.o \
-	$(OBJECTS_DIR)/NSData.o \
-	$(OBJECTS_DIR)/NSObject.o \
-	$(OBJECTS_DIR)/CCNS_uphone.o \
-	$(OBJECTS_DIR)/NSSet.o \
-	$(OBJECTS_DIR)/NSZone.o \
+	$(OBJECTS_DIR)/CCAffineTransform.o \
+	$(OBJECTS_DIR)/CCAutoreleasePool.o \
+	$(OBJECTS_DIR)/CCData.o \
+	$(OBJECTS_DIR)/CCGeometry.o \
+	$(OBJECTS_DIR)/CCObject.o \
+	$(OBJECTS_DIR)/CCSet.o \
+	$(OBJECTS_DIR)/CCZone.o \
 	$(OBJECTS_DIR)/CCGrabber.o \
 	$(OBJECTS_DIR)/CCEventDispatcher.o \
 	$(OBJECTS_DIR)/CCKeyboardEventDelegate.o \
@@ -83,15 +82,16 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCNode_mobile.o \
 	$(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o \
 	$(OBJECTS_DIR)/CCTransition_mobile.o \
+	$(OBJECTS_DIR)/CCAccelerometer_uphone.o \
+	$(OBJECTS_DIR)/CCApplication_uphone.o \
+	$(OBJECTS_DIR)/CCBitmapDC.o \
+	$(OBJECTS_DIR)/CCCommon_uphone.o \
+	$(OBJECTS_DIR)/CCEGLView_uphone.o \
+	$(OBJECTS_DIR)/CCFileUtils_uphone.o \
+	$(OBJECTS_DIR)/CCImage_uphone.o \
+	$(OBJECTS_DIR)/CCLock.o \
+	$(OBJECTS_DIR)/CCNS_uphone.o \
 	$(OBJECTS_DIR)/CCTime.o \
-	$(OBJECTS_DIR)/CCXApplication_uphone.o \
-	$(OBJECTS_DIR)/CCXBitmapDC.o \
-	$(OBJECTS_DIR)/CCXCommon_uphone.o \
-	$(OBJECTS_DIR)/CCXEGLView_uphone.o \
-	$(OBJECTS_DIR)/CCXFileUtils_uphone.o \
-	$(OBJECTS_DIR)/CCXUIAccelerometer_uphone.o \
-	$(OBJECTS_DIR)/CCXUIImage_uphone.o \
-	$(OBJECTS_DIR)/NSLock.o \
 	$(OBJECTS_DIR)/CCAnimation.o \
 	$(OBJECTS_DIR)/CCAnimationCache.o \
 	$(OBJECTS_DIR)/CCSprite.o \
@@ -100,9 +100,9 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCSpriteFrameCache.o \
 	$(OBJECTS_DIR)/CCSpriteSheet.o \
 	$(OBJECTS_DIR)/base64.o \
+	$(OBJECTS_DIR)/CCPointExtension.o \
 	$(OBJECTS_DIR)/CCProfiling.o \
 	$(OBJECTS_DIR)/ccUtils.o \
-	$(OBJECTS_DIR)/CGPointExtension.o \
 	$(OBJECTS_DIR)/TransformUtils.o \
 	$(OBJECTS_DIR)/FileUtils.o \
 	$(OBJECTS_DIR)/TGAlib.o \
@@ -190,26 +190,26 @@ $(OBJECTS_DIR)/CCActionTiledGrid.o : ../actions/CCActionTiledGrid.cpp
 $(OBJECTS_DIR)/CCAtlasNode.o : ../base_nodes/CCAtlasNode.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAtlasNode.o ../base_nodes/CCAtlasNode.cpp
 
-$(OBJECTS_DIR)/CGAffineTransform.o : ../cocoa/CGAffineTransform.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CGAffineTransform.o ../cocoa/CGAffineTransform.cpp
+$(OBJECTS_DIR)/CCAffineTransform.o : ../cocoa/CCAffineTransform.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAffineTransform.o ../cocoa/CCAffineTransform.cpp
 
-$(OBJECTS_DIR)/CGGeometry.o : ../cocoa/CGGeometry.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CGGeometry.o ../cocoa/CGGeometry.cpp
+$(OBJECTS_DIR)/CCAutoreleasePool.o : ../cocoa/CCAutoreleasePool.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAutoreleasePool.o ../cocoa/CCAutoreleasePool.cpp
 
-$(OBJECTS_DIR)/NSAutoreleasePool.o : ../cocoa/NSAutoreleasePool.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSAutoreleasePool.o ../cocoa/NSAutoreleasePool.cpp
+$(OBJECTS_DIR)/CCData.o : ../cocoa/CCData.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCData.o ../cocoa/CCData.cpp
 
-$(OBJECTS_DIR)/NSData.o : ../cocoa/NSData.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSData.o ../cocoa/NSData.cpp
+$(OBJECTS_DIR)/CCGeometry.o : ../cocoa/CCGeometry.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGeometry.o ../cocoa/CCGeometry.cpp
 
-$(OBJECTS_DIR)/NSObject.o : ../cocoa/NSObject.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSObject.o ../cocoa/NSObject.cpp
+$(OBJECTS_DIR)/CCObject.o : ../cocoa/CCObject.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCObject.o ../cocoa/CCObject.cpp
 
-$(OBJECTS_DIR)/NSSet.o : ../cocoa/NSSet.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSSet.o ../cocoa/NSSet.cpp
+$(OBJECTS_DIR)/CCSet.o : ../cocoa/CCSet.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSet.o ../cocoa/CCSet.cpp
 
-$(OBJECTS_DIR)/NSZone.o : ../cocoa/NSZone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSZone.o ../cocoa/NSZone.cpp
+$(OBJECTS_DIR)/CCZone.o : ../cocoa/CCZone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCZone.o ../cocoa/CCZone.cpp
 
 $(OBJECTS_DIR)/CCGrabber.o : ../effects/CCGrabber.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrabber.o ../effects/CCGrabber.cpp
@@ -292,35 +292,35 @@ $(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o : ../platform/CCParticleSystemPoin
 $(OBJECTS_DIR)/CCTransition_mobile.o : ../platform/CCTransition_mobile.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransition_mobile.o ../platform/CCTransition_mobile.cpp
 
-$(OBJECTS_DIR)/CCTime.o : ../platform/uphone/CCTime.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTime.o ../platform/uphone/CCTime.cpp
+$(OBJECTS_DIR)/CCAccelerometer_uphone.o : ../platform/uphone/CCAccelerometer_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAccelerometer_uphone.o ../platform/uphone/CCAccelerometer_uphone.cpp
 
-$(OBJECTS_DIR)/CCXApplication_uphone.o : ../platform/uphone/CCXApplication_uphone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXApplication_uphone.o ../platform/uphone/CCXApplication_uphone.cpp
+$(OBJECTS_DIR)/CCApplication_uphone.o : ../platform/uphone/CCApplication_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCApplication_uphone.o ../platform/uphone/CCApplication_uphone.cpp
 
-$(OBJECTS_DIR)/CCXBitmapDC.o : ../platform/uphone/CCXBitmapDC.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXBitmapDC.o ../platform/uphone/CCXBitmapDC.cpp
+$(OBJECTS_DIR)/CCBitmapDC.o : ../platform/uphone/CCBitmapDC.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCBitmapDC.o ../platform/uphone/CCBitmapDC.cpp
 
-$(OBJECTS_DIR)/CCXCommon_uphone.o : ../platform/uphone/CCXCommon_uphone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXCommon_uphone.o ../platform/uphone/CCXCommon_uphone.cpp
+$(OBJECTS_DIR)/CCCommon_uphone.o : ../platform/uphone/CCCommon_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCCommon_uphone.o ../platform/uphone/CCCommon_uphone.cpp
 
-$(OBJECTS_DIR)/CCXEGLView_uphone.o : ../platform/uphone/CCXEGLView_uphone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXEGLView_uphone.o ../platform/uphone/CCXEGLView_uphone.cpp
+$(OBJECTS_DIR)/CCEGLView_uphone.o : ../platform/uphone/CCEGLView_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCEGLView_uphone.o ../platform/uphone/CCEGLView_uphone.cpp
 
-$(OBJECTS_DIR)/CCXFileUtils_uphone.o : ../platform/uphone/CCXFileUtils_uphone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXFileUtils_uphone.o ../platform/uphone/CCXFileUtils_uphone.cpp
+$(OBJECTS_DIR)/CCFileUtils_uphone.o : ../platform/uphone/CCFileUtils_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCFileUtils_uphone.o ../platform/uphone/CCFileUtils_uphone.cpp
 
-$(OBJECTS_DIR)/CCXUIAccelerometer_uphone.o : ../platform/uphone/CCXUIAccelerometer_uphone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXUIAccelerometer_uphone.o ../platform/uphone/CCXUIAccelerometer_uphone.cpp
+$(OBJECTS_DIR)/CCImage_uphone.o : ../platform/uphone/CCImage_uphone.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCImage_uphone.o ../platform/uphone/CCImage_uphone.cpp
 
-$(OBJECTS_DIR)/CCXUIImage_uphone.o : ../platform/uphone/CCXUIImage_uphone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCXUIImage_uphone.o ../platform/uphone/CCXUIImage_uphone.cpp
-
-$(OBJECTS_DIR)/NSLock.o : ../platform/uphone/NSLock.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NSLock.o ../platform/uphone/NSLock.cpp
+$(OBJECTS_DIR)/CCLock.o : ../platform/uphone/CCLock.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLock.o ../platform/uphone/CCLock.cpp
 
 $(OBJECTS_DIR)/CCNS_uphone.o : ../platform/uphone/CCNS_uphone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNS_uphone.o ../platform/uphone/CCNS_uphone.cpp
+
+$(OBJECTS_DIR)/CCTime.o : ../platform/uphone/CCTime.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTime.o ../platform/uphone/CCTime.cpp
 
 $(OBJECTS_DIR)/CCAnimation.o : ../sprite_nodes/CCAnimation.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAnimation.o ../sprite_nodes/CCAnimation.cpp
@@ -346,14 +346,14 @@ $(OBJECTS_DIR)/CCSpriteSheet.o : ../sprite_nodes/CCSpriteSheet.cpp
 $(OBJECTS_DIR)/base64.o : ../support/base64.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/base64.o ../support/base64.cpp
 
+$(OBJECTS_DIR)/CCPointExtension.o : ../support/CCPointExtension.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCPointExtension.o ../support/CCPointExtension.cpp
+
 $(OBJECTS_DIR)/CCProfiling.o : ../support/CCProfiling.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCProfiling.o ../support/CCProfiling.cpp
 
 $(OBJECTS_DIR)/ccUtils.o : ../support/ccUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ccUtils.o ../support/ccUtils.cpp
-
-$(OBJECTS_DIR)/CGPointExtension.o : ../support/CGPointExtension.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CGPointExtension.o ../support/CGPointExtension.cpp
 
 $(OBJECTS_DIR)/TransformUtils.o : ../support/TransformUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TransformUtils.o ../support/TransformUtils.cpp

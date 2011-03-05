@@ -29,25 +29,25 @@ namespace cocos2d {
 
 	CCTMXObjectGroup::CCTMXObjectGroup()
 		:m_sGroupName("")
-		,m_tPositionOffset(CGPointZero)
+		,m_tPositionOffset(CCPointZero)
 	{
-		m_pObjects = new NSArray<CCXStringToStringDictionary*>();
+		m_pObjects = new CCArray<CCXStringToStringDictionary*>();
 		m_pProperties = new CCXStringToStringDictionary();
 	}
 	CCTMXObjectGroup::~CCTMXObjectGroup()
 	{
 		CCLOGINFO( "cocos2d: deallocing.");
-		CCX_SAFE_RELEASE(m_pObjects);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pObjects);
+		CC_SAFE_RELEASE(m_pProperties);
 	}
 	CCXStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
 	{
 		if (m_pObjects && m_pObjects->count() > 0)
 		{
-			NSArray<CCXStringToStringDictionary*>::NSMutableArrayIterator it;
+			CCArray<CCXStringToStringDictionary*>::CCMutableArrayIterator it;
 			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
 			{
-				NSString *name = (*it)->objectForKey(std::string("name"));
+				CCString *name = (*it)->objectForKey(std::string("name"));
 				if (name && name->m_sString == objectName)
 				{
 					return *it;
@@ -57,7 +57,7 @@ namespace cocos2d {
 		// object not found
 		return NULL;	
 	}
-	NSString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
+	CCString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
 	{
 		return m_pProperties->objectForKey(std::string(propertyName));
 	}
@@ -68,18 +68,18 @@ namespace cocos2d {
 	}
 	void CCTMXObjectGroup::setProperties(CCXStringToStringDictionary * properties)
 	{
-		CCX_SAFE_RETAIN(properties);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(properties);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = properties;
 	}
-	NSArray<CCXStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
+	CCArray<CCXStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
 	{
 		return m_pObjects;
 	}
-	void CCTMXObjectGroup::setObjects(NSArray<CCXStringToStringDictionary*> * objects)
+	void CCTMXObjectGroup::setObjects(CCArray<CCXStringToStringDictionary*> * objects)
 	{
-		CCX_SAFE_RETAIN(objects);
-		CCX_SAFE_RELEASE(m_pObjects);
+		CC_SAFE_RETAIN(objects);
+		CC_SAFE_RELEASE(m_pObjects);
 		m_pObjects = objects;
 	}
 

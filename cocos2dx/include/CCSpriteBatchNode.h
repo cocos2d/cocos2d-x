@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
-#include "NSMutableArray.h"
-#include "CCXCocos2dDefine.h"
+#include "CCMutableArray.h"
+#include "CCCocos2dDefine.h"
 
 namespace cocos2d
 {
@@ -64,13 +64,13 @@ namespace cocos2d
 		{ 
 			if (textureAtlas != m_pobTextureAtlas)
 			{
-				CCX_SAFE_RETAIN(textureAtlas);
-				CCX_SAFE_RELEASE(m_pobTextureAtlas);
+				CC_SAFE_RETAIN(textureAtlas);
+				CC_SAFE_RELEASE(m_pobTextureAtlas);
 				m_pobTextureAtlas = textureAtlas;
 			}
 		}
 
-		inline NSArray<CCSprite*>* getDescendants(void) { return m_pobDescendants; }
+		inline CCArray<CCSprite*>* getDescendants(void) { return m_pobDescendants; }
 
 		/** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
 		The capacity will be increased in 33% in runtime if it run out of space.
@@ -117,7 +117,7 @@ namespace cocos2d
 		- set the textureAtlas to the same texture Atlas as the CCSpriteBatchNode
 		@deprecated Use [CCSprite spriteWithBatchNode:rect:] instead;
 		*/
-		CCSprite* createSpriteWithRect(CGRect rect);
+		CCSprite* createSpriteWithRect(CCRect rect);
 
 		/** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteBatchNode.
 		It's the same as:
@@ -127,7 +127,7 @@ namespace cocos2d
 		@since v0.99.0
 		@deprecated Use [CCSprite initWithBatchNode:rect:] instead;
 		*/ 
-		void initSprite(CCSprite *sprite, CGRect rect);
+		void initSprite(CCSprite *sprite, CCRect rect);
 
 		/** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
 		@warning Removing a child from a CCSpriteBatchNode is very slow
@@ -181,7 +181,7 @@ namespace cocos2d
 		ccBlendFunc m_blendFunc;
 
 		// all descendants: chlidren, gran children, etc...
-		NSArray<CCSprite*>* m_pobDescendants;
+		CCArray<CCSprite*>* m_pobDescendants;
 	};
 }
 

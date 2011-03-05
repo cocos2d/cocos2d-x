@@ -27,7 +27,7 @@ void Effect1::onEnter()
 	//     Lens3D is Grid3D and it's size is (15,10)
 	//     Waves3D is Grid3D and it's size is (15,10)
 	
-	CGSize size = CCDirector::sharedDirector()->getWinSize();
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	CCActionInterval* lens = CCLens3D::actionWithPosition(ccp(size.width/2,size.height/2), 240, ccg(15,10), 0.0f);
 	CCActionInterval* waves = CCWaves3D::actionWithWaves(18, 15, ccg(15,10), 10);
 
@@ -297,7 +297,7 @@ void EffectAdvanceTextLayer::onEnter(void)
 	CCLayer::onEnter();
 	float x,y;
 	
-	CGSize size = CCDirector::sharedDirector()->getWinSize();
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	x = size.width;
 	y = size.height;
 	
@@ -339,7 +339,7 @@ void EffectAdvanceTextLayer::onEnter(void)
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
+	menu->setPosition( CCPointZero );
 	item1->setPosition( ccp( size.width/2 - 100,30) );
 	item2->setPosition( ccp( size.width/2, 30) );
 	item3->setPosition( ccp( size.width/2 + 100,30) );
@@ -361,7 +361,7 @@ std::string EffectAdvanceTextLayer::subtitle()
 	return "";
 }
 
-void EffectAdvanceTextLayer::restartCallback(NSObject* pSender)
+void EffectAdvanceTextLayer::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new EffectAdvanceScene();
 	s->addChild(restartEffectAdvanceAction()); 
@@ -370,7 +370,7 @@ void EffectAdvanceTextLayer::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void EffectAdvanceTextLayer::nextCallback(NSObject* pSender)
+void EffectAdvanceTextLayer::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new EffectAdvanceScene();
 	s->addChild( nextEffectAdvanceAction() );
@@ -379,7 +379,7 @@ void EffectAdvanceTextLayer::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void EffectAdvanceTextLayer::backCallback(NSObject* pSender)
+void EffectAdvanceTextLayer::backCallback(CCObject* pSender)
 {
 	CCScene* s = new EffectAdvanceScene();
 	s->addChild( backEffectAdvanceAction() );

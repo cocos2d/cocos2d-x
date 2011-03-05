@@ -15,7 +15,7 @@ public:
 	AccelerometerTest(void);
 	~AccelerometerTest(void);
 
-    virtual void didAccelerate(UIAcceleration* pAccelerationValue);
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 
 	virtual std::string title();
 	virtual void onEnter();

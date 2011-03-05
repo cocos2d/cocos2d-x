@@ -22,7 +22,7 @@ HelloWorld::HelloWorld()
 	setIsTouchEnabled( true );
 	setIsAccelerometerEnabled( true );
     
-	CGSize screenSize = CCDirector::sharedDirector()->getWinSize();
+	CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 	//UXLOG(L"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
     
 	// Define the gravity vector.
@@ -84,12 +84,12 @@ HelloWorld::HelloWorld()
 	CCSpriteBatchNode *mgr = CCSpriteBatchNode::spriteSheetWithFile("blocks.png", 150);
 	addChild(mgr, 0, kTagSpriteManager);
 	
-	addNewSpriteWithCoords( CGPointMake(screenSize.width/2, screenSize.height/2) );
+	addNewSpriteWithCoords( CCPointMake(screenSize.width/2, screenSize.height/2) );
 	
 	CCLabelTTF *label = CCLabelTTF::labelWithString("Tap screen", "Marker Felt", 32);
 	addChild(label, 0);
 	label->setColor( ccc3(0,0,255) );
-	label->setPosition( CGPointMake( screenSize.width/2, screenSize.height-50) );
+	label->setPosition( CCPointMake( screenSize.width/2, screenSize.height-50) );
 	
 	schedule( schedule_selector(HelloWorld::tick) );
 }
@@ -119,7 +119,7 @@ void HelloWorld::draw()
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 }
 
-void HelloWorld::addNewSpriteWithCoords(CGPoint p)
+void HelloWorld::addNewSpriteWithCoords(CCPoint p)
 {
 	//UXLOG(L"Add sprite %0.2f x %02.f",p.x,p.y);
 	CCSpriteBatchNode* sheet = (CCSpriteBatchNode*)getChildByTag(kTagSpriteManager);
@@ -128,10 +128,10 @@ void HelloWorld::addNewSpriteWithCoords(CGPoint p)
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = sheet->createSpriteWithRect( CGRectMake(32 * idx,32 * idy,32,32));
+	CCSprite *sprite = sheet->createSpriteWithRect( CCRectMake(32 * idx,32 * idy,32,32));
 	sheet->addChild(sprite);
 	
-	sprite->setPosition( CGPointMake( p.x, p.y) );
+	sprite->setPosition( CCPointMake( p.x, p.y) );
 	
 	// Define the dynamic body.
 	//Set up a 1m squared box in the physics world
@@ -174,16 +174,16 @@ void HelloWorld::tick(ccTime dt)
 		if (b->GetUserData() != NULL) {
 			//Synchronize the AtlasSprites position and rotation with the corresponding body
 			CCSprite* myActor = (CCSprite*)b->GetUserData();
-			myActor->setPosition( CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
+			myActor->setPosition( CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
 			myActor->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
 		}	
 	}
 }
 
-void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
+void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 	//Add a new body/atlas sprite at the touched location
-	NSSetIterator it;
+	CCSetIterator it;
 	CCTouch* touch;
     
 	for( it = touches->begin(); it != touches->end(); it++) 
@@ -193,7 +193,7 @@ void HelloWorld::ccTouchesEnded(NSSet* touches, UIEvent* event)
 		if(!touch)
 			break;
         
-		CGPoint location = touch->locationInView(touch->view());
+		CCPoint location = touch->locationInView(touch->view());
 		
 		location = CCDirector::sharedDirector()->convertToGL(location);
         

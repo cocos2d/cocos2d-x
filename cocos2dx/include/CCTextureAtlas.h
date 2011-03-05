@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "ccTypes.h"
-#include "NSObject.h"
+#include "CCObject.h"
 #include "ccConfig.h"
 
 namespace   cocos2d {
@@ -45,7 +45,7 @@ Supported features:
 The quads are rendered using an OpenGL ES VBO.
 To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
 */
-class CCX_DLL CCTextureAtlas : public NSObject 
+class CCX_DLL CCTextureAtlas : public CCObject 
 {
 protected:
 	GLushort			*m_pIndices;
@@ -54,13 +54,13 @@ protected:
 #endif // CC_USES_VBO
 
 	/** quantity of quads that are going to be drawn */
-	CCX_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
+	CC_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
 	/** quantity of quads that can be stored with the current texture atlas size */
-	CCX_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
+	CC_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
 	/** Texture of the texture atlas */
-	CCX_PROPERTY(CCTexture2D *, m_pTexture, Texture)
+	CC_PROPERTY(CCTexture2D *, m_pTexture, Texture)
 	/** Quads that are going to be rendered */
-	CCX_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
+	CC_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
 
 public:
 

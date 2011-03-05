@@ -22,7 +22,7 @@ using namespace CocosDenshion;
 
 CocosDenshionTest::CocosDenshionTest()
 : m_pItmeMenu(NULL),
-m_tBeginPos(CGPointZero),
+m_tBeginPos(CCPointZero),
 m_nSoundId(0)
 {
 	std::string testItems[] = {
@@ -43,7 +43,7 @@ m_nSoundId(0)
 
 	// add menu items for tests
 	m_pItmeMenu = CCMenu::menuWithItems(NULL);
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	m_nTestCount = sizeof(testItems) / sizeof(testItems[0]);
 
 	for (int i = 0; i < m_nTestCount; ++i)
@@ -52,11 +52,11 @@ m_nSoundId(0)
 		CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(CocosDenshionTest::menuCallback));
 
 		m_pItmeMenu->addChild(pMenuItem, i + 10000);
-		pMenuItem->setPosition( CGPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
+		pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
 	}
 
-	m_pItmeMenu->setContentSize(CGSizeMake(s.width, (m_nTestCount + 1) * LINE_SPACE));
-	m_pItmeMenu->setPosition(CGPointZero);
+	m_pItmeMenu->setContentSize(CCSizeMake(s.width, (m_nTestCount + 1) * LINE_SPACE));
+	m_pItmeMenu->setPosition(CCPointZero);
 	addChild(m_pItmeMenu);
 
 	setIsTouchEnabled(true);
@@ -77,7 +77,7 @@ void CocosDenshionTest::onExit()
 	SimpleAudioEngine::sharedEngine()->end();
 }
 
-void CocosDenshionTest::menuCallback(NSObject * pSender)
+void CocosDenshionTest::menuCallback(CCObject * pSender)
 {
 	// get the userdata, it's the index of the menu item clicked
 	CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
@@ -148,30 +148,30 @@ void CocosDenshionTest::menuCallback(NSObject * pSender)
 	
 }
 
-void CocosDenshionTest::ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent)
+void CocosDenshionTest::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-	NSSetIterator it = pTouches->begin();
+	CCSetIterator it = pTouches->begin();
 	CCTouch* touch = (CCTouch*)(*it);
 
 	m_tBeginPos = touch->locationInView( touch->view() );	
 	m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
-void CocosDenshionTest::ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent)
+void CocosDenshionTest::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-	NSSetIterator it = pTouches->begin();
+	CCSetIterator it = pTouches->begin();
 	CCTouch* touch = (CCTouch*)(*it);
 
-	CGPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	float nMoveY = touchLocation.y - m_tBeginPos.y;
 
-	CGPoint curPos  = m_pItmeMenu->getPosition();
-	CGPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
-	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+	CCPoint curPos  = m_pItmeMenu->getPosition();
+	CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	if (nextPos.y < 0.0f)
 	{
-		m_pItmeMenu->setPosition(CGPointZero);
+		m_pItmeMenu->setPosition(CCPointZero);
 		return;
 	}
 

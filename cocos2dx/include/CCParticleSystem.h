@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 #include "CCProtocols.h"
 #include "CCNode.h"
-#include "NSMutableDictionary.h"
-#include "NSString.h"
+#include "CCMutableDictionary.h"
+#include "CCString.h"
 
 namespace cocos2d {
 
@@ -87,8 +87,8 @@ enum {
 Structure that contains the values of each particle
 */
 typedef struct sCCParticle {
-	CGPoint     pos;
-	CGPoint     startPos;
+	CCPoint     pos;
+	CCPoint     startPos;
 
 	ccColor4F	color;
 	ccColor4F	deltaColor;
@@ -103,7 +103,7 @@ typedef struct sCCParticle {
 
 	//! Mode A: gravity, direction, radial accel, tangential accel
 	struct {
-		CGPoint		dir;
+		CCPoint		dir;
 		float		radialAccel;
 		float		tangentialAccel;
 	} modeA;
@@ -118,7 +118,7 @@ typedef struct sCCParticle {
 
 }tCCParticle;
 
-//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
+//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CCPoint);
 
 class CCTexture2D;
 
@@ -176,7 +176,7 @@ protected:
 	//! Mode A:Gravity + Tangential Accel + Radial Accel
 	struct {
 		/** Gravity value. Only available in 'Gravity' mode. */
-		CGPoint gravity;
+		CCPoint gravity;
 		/** speed of each particle. Only available in 'Gravity' mode.  */
 		float speed;
 		/** speed variance of each particle. Only available in 'Gravity' mode. */
@@ -229,29 +229,29 @@ protected:
 #endif
 
 	/** Is the emitter active */
-	CCX_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
+	CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
 	/** Quantity of particles that are being simulated at the moment */
-	CCX_PROPERTY_READONLY(int, m_nParticleCount, ParticleCount)
+	CC_PROPERTY_READONLY(int, m_nParticleCount, ParticleCount)
 	/** How many seconds the emitter wil run. -1 means 'forever' */
-	CCX_PROPERTY(float, m_fDuration, Duration)
+	CC_PROPERTY(float, m_fDuration, Duration)
 	/** sourcePosition of the emitter */
-	CCX_PROPERTY(CGPoint, m_tSourcePosition, SourcePosition)
+	CC_PROPERTY(CCPoint, m_tSourcePosition, SourcePosition)
 	/** Position variance of the emitter */
-	CCX_PROPERTY(CGPoint, m_tPosVar, PosVar)
+	CC_PROPERTY(CCPoint, m_tPosVar, PosVar)
 	/** life, and life variation of each particle */
-	CCX_PROPERTY(float, m_fLife, Life)
+	CC_PROPERTY(float, m_fLife, Life)
 	/** life variance of each particle */
-	CCX_PROPERTY(float, m_fLifeVar, LifeVar)
+	CC_PROPERTY(float, m_fLifeVar, LifeVar)
 	/** angle and angle variation of each particle */
-	CCX_PROPERTY(float, m_fAngle, Angle)
+	CC_PROPERTY(float, m_fAngle, Angle)
 	/** angle variance of each particle */
-	CCX_PROPERTY(float, m_fAngleVar, AngleVar)
+	CC_PROPERTY(float, m_fAngleVar, AngleVar)
 
 //////////////////////////////////////////////////////////////////////////
 public:
 	// mode A
-	virtual CGPoint getGravity();
-	virtual void setGravity(CGPoint g);
+	virtual CCPoint getGravity();
+	virtual void setGravity(CCPoint g);
 	virtual float getSpeed();
 	virtual void setSpeed(float speed);
 	virtual float getSpeedVar();
@@ -280,37 +280,37 @@ public:
 //////////////////////////////////////////////////////////////////////////
 	
 	/** start size in pixels of each particle */
-	CCX_PROPERTY(float, m_fStartSize, StartSize)
+	CC_PROPERTY(float, m_fStartSize, StartSize)
 	/** size variance in pixels of each particle */
-	CCX_PROPERTY(float, m_fStartSizeVar, StartSizeVar)
+	CC_PROPERTY(float, m_fStartSizeVar, StartSizeVar)
 	/** end size in pixels of each particle */
-	CCX_PROPERTY(float, m_fEndSize, EndSize)
+	CC_PROPERTY(float, m_fEndSize, EndSize)
 	/** end size variance in pixels of each particle */
-	CCX_PROPERTY(float, m_fEndSizeVar, EndSizeVar)
+	CC_PROPERTY(float, m_fEndSizeVar, EndSizeVar)
 	/** start color of each particle */
-	CCX_PROPERTY(ccColor4F, m_tStartColor, StartColor)
+	CC_PROPERTY(ccColor4F, m_tStartColor, StartColor)
 	/** start color variance of each particle */
-	CCX_PROPERTY(ccColor4F, m_tStartColorVar, StartColorVar)
+	CC_PROPERTY(ccColor4F, m_tStartColorVar, StartColorVar)
 	/** end color and end color variation of each particle */
-	CCX_PROPERTY(ccColor4F, m_tEndColor, EndColor)
+	CC_PROPERTY(ccColor4F, m_tEndColor, EndColor)
 	/** end color variance of each particle */
-	CCX_PROPERTY(ccColor4F, m_tEndColorVar, EndColorVar)
+	CC_PROPERTY(ccColor4F, m_tEndColorVar, EndColorVar)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fStartSpin, StartSpin)
+	CC_PROPERTY(float, m_fStartSpin, StartSpin)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fStartSpinVar, StartSpinVar)
+	CC_PROPERTY(float, m_fStartSpinVar, StartSpinVar)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fEndSpin, EndSpin)
+	CC_PROPERTY(float, m_fEndSpin, EndSpin)
 	//* initial angle of each particle
-	CCX_PROPERTY(float, m_fEndSpinVar, EndSpinVar)
+	CC_PROPERTY(float, m_fEndSpinVar, EndSpinVar)
 	/** emission rate of the particles */
-	CCX_PROPERTY(float, m_fEmissionRate, EmissionRate)
+	CC_PROPERTY(float, m_fEmissionRate, EmissionRate)
 	/** maximum particles of the system */
-	CCX_PROPERTY(int, m_nTotalParticles, TotalParticles)
+	CC_PROPERTY(int, m_nTotalParticles, TotalParticles)
 	/** conforms to CocosNodeTexture protocol */
-	CCX_PROPERTY(CCTexture2D*, m_pTexture, Texture)
+	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
 	/** conforms to CocosNodeTexture protocol */
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 	/** whether or not the particles are using blend additive.
 	If enabled, the following blending function will be used.
 	@code
@@ -318,21 +318,21 @@ public:
 	dest blend function = GL_ONE;
 	@endcode
 	*/
-	CCX_PROPERTY(bool, m_bIsBlendAdditive, IsBlendAdditive)
+	CC_PROPERTY(bool, m_bIsBlendAdditive, IsBlendAdditive)
 	/** particles movement type: Free or Grouped
 	@since v0.8
 	*/
-	CCX_PROPERTY(tCCPositionType, m_ePositionType, PositionType)
+	CC_PROPERTY(tCCPositionType, m_ePositionType, PositionType)
 	/** whether or not the node will be auto-removed when it has no particles left.
 	By default it is false.
 	@since v0.8
 	*/
-	CCX_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
+	CC_PROPERTY(bool, m_bIsAutoRemoveOnFinish, IsAutoRemoveOnFinish)
 	/** Switch between different kind of emitter modes:
 	- kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
 	- kCCParticleModeRadius: uses radius movement + rotation
 	*/
-	CCX_PROPERTY(int, m_nEmitterMode, EmitterMode)
+	CC_PROPERTY(int, m_nEmitterMode, EmitterMode)
 
 public:
 	CCParticleSystem();
@@ -351,10 +351,10 @@ public:
 	*/
 	bool initWithFile(const char *plistFile);
 
-	/** initializes a CCQuadParticleSystem from a NSDictionary.
+	/** initializes a CCQuadParticleSystem from a CCDictionary.
 	@since v0.99.3
 	*/
-	bool initWithDictionary(NSDictionary<std::string, NSObject*> *dictionary);
+	bool initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary);
 
 	//! Initializes a system with a fixed number of particles
 	virtual bool initWithTotalParticles(int numberOfParticles);
@@ -370,7 +370,7 @@ public:
 	bool isFull();
 
 	//! should be overriden by subclasses
-	virtual void updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	//! should be overriden by subclasses
 	virtual void postStep();
 
@@ -379,11 +379,11 @@ private:
 	/** Private method, return the string found by key in dict.
 	@return "" if not found; return the string if found.
 	*/
-	inline const char * valueForKey(const char *key, NSDictionary<std::string, NSObject*> *dict)
+	inline const char * valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict)
 	{
 		if (dict)
 		{
-			NSString *pString = (NSString*)dict->objectForKey(std::string(key));
+			CCString *pString = (CCString*)dict->objectForKey(std::string(key));
 			return pString ? pString->m_sString.c_str() : "";
 		}
 		return "";

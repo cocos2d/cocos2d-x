@@ -27,26 +27,26 @@ THE SOFTWARE.
 #import <UIKit/UIKit.h>
 #include "platform/CCNS.h"
 
-static cocos2d::CGRect static_CCRectFromString(const char* pszContent)
+static cocos2d::CCRect static_CCRectFromString(const char* pszContent)
 {
     CGRect rect = CGRectFromString([NSString stringWithUTF8String: pszContent]);
-    cocos2d::CGRect ret(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    cocos2d::CCRect ret(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     
     return ret;
 }
 
-static cocos2d::CGPoint static_CCPointFromString(const char* pszContent)
+static cocos2d::CCPoint static_CCPointFromString(const char* pszContent)
 {
     CGPoint point = CGPointFromString([NSString stringWithUTF8String: pszContent]);
-    cocos2d::CGPoint ret(point.x, point.y);
+    cocos2d::CCPoint ret(point.x, point.y);
     
     return ret;
 }
 
-static cocos2d::CGSize static_CCSizeFromString(const char* pszContent)
+static cocos2d::CCSize static_CCSizeFromString(const char* pszContent)
 {
     CGSize size = CGSizeFromString([NSString stringWithUTF8String: pszContent]);
-    cocos2d::CGSize ret(size.width, size.height);
+    cocos2d::CCSize ret(size.width, size.height);
     
     return ret;
 }
@@ -54,17 +54,17 @@ static cocos2d::CGSize static_CCSizeFromString(const char* pszContent)
 ///@todo implement the functions
 namespace cocos2d
 {
-	CGRect CCRectFromString(const char* pszContent)
+	CCRect CCRectFromString(const char* pszContent)
 	{
         return static_CCRectFromString(pszContent);
 	}
 
-	CGPoint CCPointFromString(const char* pszContent)
+	CCPoint CCPointFromString(const char* pszContent)
 	{
         return static_CCPointFromString(pszContent);
 	}
 
-	CGSize CCSizeFromString(const char* pszContent)
+	CCSize CCSizeFromString(const char* pszContent)
 	{
         return static_CCSizeFromString(pszContent);
 	}

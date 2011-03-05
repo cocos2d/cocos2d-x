@@ -39,7 +39,7 @@ public:
 	/** Initializes with a duration and a percent */
 	bool initWithDuration(ccTime duration, float fPercent);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
@@ -62,7 +62,7 @@ public:
 	/** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual CCActionInterval* reverse(void);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);

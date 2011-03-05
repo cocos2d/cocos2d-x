@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCCAMERA_H__
 #define __CCCAMERA_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include "ccMacros.h"
 #include <string>
 namespace   cocos2d {
@@ -51,7 +51,7 @@ namespace   cocos2d {
 	- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effecs, use the action CCFollow or position/scale/rotate.
 
 	*/
-	class CCX_DLL CCCamera : public NSObject
+	class CCX_DLL CCCamera : public CCObject
 	{
 	protected:
 		float m_fEyeX;

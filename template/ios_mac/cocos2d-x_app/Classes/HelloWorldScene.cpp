@@ -1,10 +1,4 @@
-//
-//  HelloWorldScene.cpp
-//  ___PROJECTNAME___
-//
-//  Created by ___FULLUSERNAME___ on ___DATE___.
-//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
-//
+
 #include "HelloWorldScene.h"
 
 using namespace cocos2d;
@@ -48,7 +42,7 @@ bool HelloWorld::init()
 
 	// create menu, it's an autorelease object
 	CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
-	pMenu->setPosition( CGPointZero );
+	pMenu->setPosition( CCPointZero );
 	this->addChild(pMenu, 1);
 
 	/////////////////////////////
@@ -59,7 +53,7 @@ bool HelloWorld::init()
 	CCLabelTTF* pLabel = CCLabelTTF::labelWithString("HelloWorld", "Thonburi", 34);
 
 	// ask director the window size
-	CGSize size = CCDirector::sharedDirector()->getWinSize();
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// position the label on the center of the screen
 	pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
@@ -73,13 +67,13 @@ bool HelloWorld::init()
 	// position the sprite on the center of the screen
 	pSprite->setPosition( ccp(size.width/2, size.height/2) );
 
-	// ad the sprite as a child to this layer
+	// add the sprite as a child to this layer
 	this->addChild(pSprite, 0);
 	
 	return true;
 }
 
-void HelloWorld::menuCloseCallback(NSObject* pSender)
+void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
 	CCDirector::sharedDirector()->end();
 }

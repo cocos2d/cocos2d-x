@@ -26,14 +26,14 @@ THE SOFTWARE.
 #define __CCTEXTURE_CACHE_H__
 
 #include <string>
-#include "NSObject.h"
-#include "NSMutableDictionary.h"
+#include "CCObject.h"
+#include "CCMutableDictionary.h"
 
 namespace   cocos2d {
 class CCTexture2D;
 class CCAsyncObject;
-class NSLock;
-class UIImage;
+class CCLock;
+class CCImage;
 
 typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 
@@ -41,12 +41,12 @@ typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 * Once the texture is loaded, the next time it will return
 * a reference of the previously loaded texture reducing GPU & CPU memory
 */
-class CCX_DLL CCTextureCache : public NSObject
+class CCX_DLL CCTextureCache : public CCObject
 {
 protected:
-	NSMutableDictionary<std::string, CCTexture2D*> * m_pTextures;
-	NSLock				*m_pDictLock;
-	NSLock				*m_pContextLock;
+	CCMutableDictionary<std::string, CCTexture2D*> * m_pTextures;
+	CCLock				*m_pDictLock;
+	CCLock				*m_pContextLock;
 
 private:
 	// @todo void addImageWithAsyncObject(CCAsyncObject* async);
@@ -82,7 +82,7 @@ public:
 	* @since v0.8
 	*/
 	
-	// @todo void addImageAsync(const char* filename, NSObject*target, fpAsyncCallback func);
+	// @todo void addImageAsync(const char* filename, CCObject*target, fpAsyncCallback func);
 
 	/* Returns a Texture2D object given an CGImageRef image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
@@ -92,13 +92,13 @@ public:
 	* @since v0.8
 	*/
 	// @todo CGImageRef CCTexture2D* addCGImage(CGImageRef image, string &  key);
-	/** Returns a Texture2D object given an UIImage image
+	/** Returns a Texture2D object given an CCImage image
 	* If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
 	* Otherwise it will return a reference of a previously loaded image
 	* The "key" parameter will be used as the "key" for the cache.
 	* If "key" is nil, then a new texture will be created each time.
 	*/
-	CCTexture2D* addUIImage(UIImage *image, const char *key);
+	CCTexture2D* addCCImage(CCImage *image, const char *key);
 
 	/** Returns an already created texture. Returns nil if the texture doesn't exist.
 	@since v0.99.5

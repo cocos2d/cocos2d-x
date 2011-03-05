@@ -8,10 +8,10 @@ Paddle::~Paddle(void)
 {
 }
 
-CGRect Paddle::rect()
+CCRect Paddle::rect()
 {
-	CGSize s = getTexture()->getContentSize();
-	return CGRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
+	CCSize s = getTexture()->getContentSize();
+	return CCRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
 Paddle* Paddle::paddleWithTexture(CCTexture2D* aTexture)
@@ -47,10 +47,10 @@ void Paddle::onExit()
 
 bool Paddle::containsTouchLocation(CCTouch* touch)
 {
-	return CGRect::CGRectContainsPoint(rect(), convertTouchToNodeSpaceAR(touch));
+	return CCRect::CCRectContainsPoint(rect(), convertTouchToNodeSpaceAR(touch));
 }
 
-bool Paddle::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool Paddle::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	if (m_state != kPaddleStateUngrabbed) return false;
 	if ( !containsTouchLocation(touch) ) return false;
@@ -59,26 +59,26 @@ bool Paddle::ccTouchBegan(CCTouch* touch, UIEvent* event)
 	return true;
 }
 
-void Paddle::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void Paddle::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	// If it weren't for the TouchDispatcher, you would need to keep a reference
 	// to the touch from touchBegan and check that the current touch is the same
 	// as that one.
 	// Actually, it would be even more complicated since in the Cocos dispatcher
-	// you get NSSets instead of 1 UITouch, so you'd need to loop through the set
+	// you get CCSets instead of 1 UITouch, so you'd need to loop through the set
 	// in each touchXXX method.
 	
-	NSAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");	
+	CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");	
 	
-	CGPoint touchPoint = touch->locationInView( touch->view() );
+	CCPoint touchPoint = touch->locationInView( touch->view() );
     touchPoint = CCDirector::sharedDirector()->convertToGL( touchPoint );
 	
-	setPosition( CGPointMake(touchPoint.x, getPosition().y) );
+	setPosition( CCPointMake(touchPoint.x, getPosition().y) );
 }
 
-void Paddle::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void Paddle::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-	NSAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");	
+	CCAssert(m_state == kPaddleStateGrabbed, L"Paddle - Unexpected state!");	
 	
 	m_state = kPaddleStateUngrabbed;
 } 

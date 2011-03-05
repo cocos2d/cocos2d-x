@@ -27,15 +27,15 @@ THE SOFTWARE.
 
 #include "CCTouchDelegateProtocol.h"
 #include "CCTouchDispatcher.h"
-#include "NSObject.h"
-#include "NSSet.h"
+#include "CCObject.h"
+#include "CCSet.h"
 namespace   cocos2d {
 
 /**
  CCTouchHandler
  Object than contains the delegate and priority of the event handler.
 */
-class CCTouchHandler : public NSObject
+class CCTouchHandler : public CCObject
 {
 public:
 	virtual ~CCTouchHandler(void);

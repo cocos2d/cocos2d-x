@@ -54,12 +54,12 @@ bool CCParticleSystemPoint::initWithTotalParticles(int numberOfParticles)
 }
 CCParticleSystemPoint::~CCParticleSystemPoint()
 {
-    CCX_SAFE_DELETE(m_pVertices);
+    CC_SAFE_DELETE(m_pVertices);
 #if CC_USES_VBO
 	glDeleteBuffers(1, &m_uVerticesID);
 #endif
 }
-void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition)
+void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// place vertices and colos in array
     m_pVertices[m_nParticleIdx].pos = vertex2(newPosition.x, newPosition.y);
@@ -149,22 +149,22 @@ void CCParticleSystemPoint::draw()
 //
 void CCParticleSystemPoint::setStartSpin(float var)
 {
-	NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
+	CCAssert(var == 0, "PointParticleSystem doesn't support spinning");
 	CCParticleSystem::setStartSpin(var);
 }
 void CCParticleSystemPoint::setStartSpinVar(float var)
 {
-	NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
+	CCAssert(var == 0, "PointParticleSystem doesn't support spinning");
 	CCParticleSystem::setStartSpinVar(var);
 }
 void CCParticleSystemPoint::setEndSpin(float var)
 {
-	NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
+	CCAssert(var == 0, "PointParticleSystem doesn't support spinning");
 	CCParticleSystem::setEndSpin(var);
 }
 void CCParticleSystemPoint::setEndSpinVar(float var)
 {
-	NSAssert(var == 0, "PointParticleSystem doesn't support spinning");
+	CCAssert(var == 0, "PointParticleSystem doesn't support spinning");
 	CCParticleSystem::setEndSpinVar(var);
 }
 //
@@ -172,12 +172,12 @@ void CCParticleSystemPoint::setEndSpinVar(float var)
 //
 void CCParticleSystemPoint::setStartSize(float size)
 {
-	NSAssert(size >= 0 && size <= CC_MAX_PARTICLE_SIZE, "PointParticleSystem only supports 0 <= size <= 64");
+	CCAssert(size >= 0 && size <= CC_MAX_PARTICLE_SIZE, "PointParticleSystem only supports 0 <= size <= 64");
 	CCParticleSystem::setStartSize(size);
 }
 void CCParticleSystemPoint::setEndSize(float size)
 {
-	NSAssert( (size == kCCParticleStartSizeEqualToEndSize) ||
+	CCAssert( (size == kCCParticleStartSizeEqualToEndSize) ||
 		( size >= 0 && size <= CC_MAX_PARTICLE_SIZE), "PointParticleSystem only supports 0 <= size <= 64");
 	CCParticleSystem::setEndSize(size);
 }

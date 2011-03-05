@@ -85,8 +85,8 @@ class Lens3DDemo : public CCLens3D
 public:
 	static CCActionInterval* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::sharedDirector()->getWinSize();
-		return CCLens3D::actionWithPosition(CGPointMake(size.width/2,size.height/2), 240, ccg(15,10), t); 
+		CCSize size = CCDirector::sharedDirector()->getWinSize();
+		return CCLens3D::actionWithPosition(CCPointMake(size.width/2,size.height/2), 240, ccg(15,10), t); 
 	}
 };
 
@@ -96,8 +96,8 @@ class Ripple3DDemo : public CCRipple3D
 public:
 	static CCActionInterval* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::sharedDirector()->getWinSize();
-		return CCRipple3D::actionWithPosition(CGPointMake(size.width/2,size.height/2), 240, 4, 160, ccg(32,24), t);
+		CCSize size = CCDirector::sharedDirector()->getWinSize();
+		return CCRipple3D::actionWithPosition(CCPointMake(size.width/2,size.height/2), 240, 4, 160, ccg(32,24), t);
 	}
 };
 
@@ -127,8 +127,8 @@ class TwirlDemo : public CCTwirl
 public:
 	static CCActionInterval* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::sharedDirector()->getWinSize();
-		return CCTwirl::actionWithPosition(CGPointMake(size.width/2, size.height/2), 1, 2.5f, ccg(12,8), t); 
+		CCSize size = CCDirector::sharedDirector()->getWinSize();
+		return CCTwirl::actionWithPosition(CCPointMake(size.width/2, size.height/2), 1, 2.5f, ccg(12,8), t); 
 	}
 };
 
@@ -248,7 +248,7 @@ class JumpTiles3DDemo : public CCJumpTiles3D
 public:
 	static CCActionInterval* actionWithDuration(ccTime t)
 	{
-		CGSize size = CCDirector::sharedDirector()->getWinSize();
+		CCSize size = CCDirector::sharedDirector()->getWinSize();
 		return CCJumpTiles3D::actionWithJumps(2, 30, ccg(15,10), t); 
 	}
 };
@@ -341,7 +341,7 @@ TextLayer::TextLayer(void)
 		
 	float x,y;
 	
-	CGSize size = CCDirector::sharedDirector()->getWinSize();
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 	x = size.width;
 	y = size.height;
 	
@@ -353,25 +353,25 @@ TextLayer::TextLayer(void)
 	
 	CCSprite *bg = CCSprite::spriteWithFile(s_back3);
 	node->addChild(bg, 0);
-	bg->setAnchorPoint( CGPointZero );
+	bg->setAnchorPoint( CCPointZero );
 
 	CCSprite* grossini = CCSprite::spriteWithFile(s_pPathSister2);
 	node->addChild(grossini, 1);
-	grossini->setPosition( CGPointMake(x/3,y/2) );
+	grossini->setPosition( CCPointMake(x/3,y/2) );
 	CCActionInterval* sc = CCScaleBy::actionWithDuration(2, 5);
 	CCActionInterval* sc_back = sc->reverse();
 	grossini->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(sc, sc_back, NULL)) ) );
 
 	CCSprite* tamara = CCSprite::spriteWithFile(s_pPathSister1);
 	node->addChild(tamara, 1);
-	tamara->setPosition( CGPointMake(2*x/3,y/2) );
+	tamara->setPosition( CCPointMake(2*x/3,y/2) );
 	CCActionInterval* sc2 = CCScaleBy::actionWithDuration(2, 5);
 	CCActionInterval* sc2_back = sc2->reverse();
 	tamara->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(sc2, sc2_back, NULL))) );
 	
 	CCLabelTTF* label = CCLabelTTF::labelWithString((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
 	
-	label->setPosition( CGPointMake(x/2,y-80) );
+	label->setPosition( CCPointMake(x/2,y-80) );
 	addChild(label);
 	label->setTag( kTagLabel );
 
@@ -381,10 +381,10 @@ TextLayer::TextLayer(void)
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
-	item1->setPosition( CGPointMake( size.width/2 - 100,30) );
-	item2->setPosition( CGPointMake( size.width/2, 30) );
-	item3->setPosition( CGPointMake( size.width/2 + 100,30) );
+	menu->setPosition( CCPointZero );
+	item1->setPosition( CCPointMake( size.width/2 - 100,30) );
+	item2->setPosition( CCPointMake( size.width/2, 30) );
+	item3->setPosition( CCPointMake( size.width/2 + 100,30) );
 	
 	addChild(menu, 1);	
 
@@ -447,13 +447,13 @@ void TextLayer::newScene()
     s->release();
 }
 
-void TextLayer::restartCallback(NSObject* pSender)
+void TextLayer::restartCallback(CCObject* pSender)
 {
 	/*newOrientation();*/
 	newScene();
 }
 
-void TextLayer::nextCallback(NSObject* pSender)
+void TextLayer::nextCallback(CCObject* pSender)
 {
     // update the action index
     actionIdx++;
@@ -463,7 +463,7 @@ void TextLayer::nextCallback(NSObject* pSender)
 	newScene();
 }
 
-void TextLayer::backCallback(NSObject* pSender)
+void TextLayer::backCallback(CCObject* pSender)
 {
     // update the action index
     actionIdx--;

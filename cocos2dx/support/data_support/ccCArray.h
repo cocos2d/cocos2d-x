@@ -25,8 +25,8 @@ THE SOFTWARE.
 /** 
  @file
  Based on Chipmunk cpArray.
- ccArray is a faster alternative to NSMutableArray, it does pretty much the
- same thing (stores NSObjects and retains/releases them appropriately). It's
+ ccArray is a faster alternative to CCMutableArray, it does pretty much the
+ same thing (stores CCObjects and retains/releases them appropriately). It's
  faster because:
  - it uses a plain C interface so it doesn't incur Objective-c messaging overhead 
  - it assumes you know what you're doing, so it doesn't spend time on safety checks
@@ -40,8 +40,8 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 
-#include "NSMutableArray.h"
-#include "NSObject.h"
+#include "CCMutableArray.h"
+#include "CCObject.h"
 
 namespace cocos2d {
 
@@ -52,7 +52,7 @@ namespace cocos2d {
 typedef struct _ccArray 
 {
 	unsigned int num, max;
-	NSObject**    arr; //equals NSObject** arr;
+	CCObject**    arr; //equals CCObject** arr;
 } ccArray;
 
 /** Allocates and initializes a new array with specified capacity */
@@ -66,7 +66,7 @@ static inline ccArray* ccArrayNew(unsigned int capacity)
 	ccArray *arr = (ccArray*)malloc( sizeof(ccArray) );
 	arr->num = 0;
 	
-	arr->arr =  (NSObject**)malloc( capacity * sizeof(NSObject*) );
+	arr->arr =  (CCObject**)malloc( capacity * sizeof(CCObject*) );
 	arr->max = capacity;
 	
 	return arr;
@@ -94,7 +94,7 @@ static inline void ccArrayFree(ccArray *arr)
 static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
-	arr->arr = (NSObject**) realloc(arr->arr, arr->max * sizeof(NSObject*));
+	arr->arr = (CCObject**) realloc(arr->arr, arr->max * sizeof(CCObject*));
 }
 
 /** Increases array capacity such that max >= num + extra. */
@@ -107,7 +107,7 @@ static inline void ccArrayEnsureExtraCapacity(ccArray *arr, unsigned int extra)
 }
 
 /** Returns index of first occurence of object, UXNotFound if object not found. */
-static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, NSObject* object)
+static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, CCObject* object)
 {
 	for ( unsigned int i = 0; i < arr->num; i++)
 	{
@@ -121,20 +121,20 @@ static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, NSObject* objec
 }
 
 /** Returns a Boolean value that indicates whether object is present in array. */
-static inline bool ccArrayContainsObject(ccArray *arr, NSObject* object)
+static inline bool ccArrayContaiCCObject(ccArray *arr, CCObject* object)
 {
 	return ccArrayGetIndexOfObject(arr, object) != -1;
 }
 
 /** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
-static inline void ccArrayAppendObject(ccArray *arr, NSObject* object)
+static inline void ccArrayAppendObject(ccArray *arr, CCObject* object)
 {
 	arr->arr[arr->num] = object; object->retain();
 	arr->num++;
 }
 
 /** Appends an object. Capacity of arr is increased if needed. */
-static inline void ccArrayAppendObjectWithResize(ccArray *arr, NSObject* object)
+static inline void ccArrayAppendObjectWithResize(ccArray *arr, CCObject* object)
 {
 	ccArrayEnsureExtraCapacity(arr, 1);
 	ccArrayAppendObject(arr, object);
@@ -193,7 +193,7 @@ static inline void ccArrayFastRemoveObjectAtIndex(ccArray *arr, unsigned int ind
 
 /** Searches for the first occurance of object and removes it. If object is not
  found the function has no effect. */
-static inline void ccArrayRemoveObject(ccArray *arr, NSObject* object)
+static inline void ccArrayRemoveObject(ccArray *arr, CCObject* object)
 {
 	unsigned int index = ccArrayGetIndexOfObject(arr, object);
 
@@ -221,7 +221,7 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	
 	for( unsigned int i = 0; i < arr->num; i++) 
 	{
-		if( ccArrayContainsObject(minusArr, arr->arr[i]) ) 
+		if( ccArrayContaiCCObject(minusArr, arr->arr[i]) ) 
 		{
 			delete arr->arr[i]; 
 			back++;
@@ -238,7 +238,7 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 typedef struct _ccCArray 
 {
 	unsigned int num, max;
-	void**    arr; //equals NSObject** arr;
+	void**    arr; //equals CCObject** arr;
 } ccCArray;
 
 static inline void ccCArrayRemoveAllValues(ccCArray *arr);

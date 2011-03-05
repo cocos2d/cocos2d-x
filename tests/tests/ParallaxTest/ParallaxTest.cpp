@@ -48,7 +48,7 @@ Parallax1::Parallax1()
 	// NOW add the 3 layers to the 'void' node
 
 	// background image is moved at a ratio of 0.4x, 0.5y
-	voidNode->addChild(background, -1, ccp(0.4f,0.5f), CGPointZero);
+	voidNode->addChild(background, -1, ccp(0.4f,0.5f), CCPointZero);
 	
 	// tiles are moved at a ratio of 2.2x, 1.0y
 	voidNode->addChild(tilemap, 1, ccp(2.2f,1.0f), ccp(0,-200) );
@@ -118,7 +118,7 @@ Parallax2::Parallax2()
 	// NOW add the 3 layers to the 'void' node
 	
 	// background image is moved at a ratio of 0.4x, 0.5y
-	voidNode->addChild(background, -1, ccp(0.4f,0.5f), CGPointZero);
+	voidNode->addChild(background, -1, ccp(0.4f,0.5f), CCPointZero);
 	
 	// tiles are moved at a ratio of 1.0, 1.0y
 	voidNode->addChild(tilemap, 1, ccp(1.0f,1.0f), ccp(0,-200) );
@@ -133,31 +133,31 @@ void Parallax2::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool Parallax2::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool Parallax2::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	return true;
 }
 
-void Parallax2::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void Parallax2::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 }
 
-void Parallax2::ccTouchCancelled(CCTouch* touch, UIEvent* event)
+void Parallax2::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 {
 }
 
-void Parallax2::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void Parallax2::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-	CGPoint touchLocation = touch->locationInView( touch->view() );	
-	CGPoint prevLocation = touch->previousLocationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	
 
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
 
-	CGPoint diff = ccpSub(touchLocation,prevLocation);
+	CCPoint diff = ccpSub(touchLocation,prevLocation);
 	
 	CCNode* node = getChildByTag(kTagNode);
-	CGPoint currentPos = node->getPosition();
+	CCPoint currentPos = node->getPosition();
 	node->setPosition( ccpAdd(currentPos, diff) );
 }
 
@@ -237,7 +237,7 @@ void ParallaxDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
@@ -249,7 +249,7 @@ void ParallaxDemo::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
+	menu->setPosition( CCPointZero );
 	item1->setPosition( ccp( s.width/2 - 100,30) );
 	item2->setPosition( ccp( s.width/2, 30) );
 	item3->setPosition( ccp( s.width/2 + 100,30) );
@@ -257,7 +257,7 @@ void ParallaxDemo::onEnter()
 	addChild(menu, 1);	
 }
 
-void ParallaxDemo::restartCallback(NSObject* pSender)
+void ParallaxDemo::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new ParallaxTestScene();
 	s->addChild(restartParallaxAction()); 
@@ -266,7 +266,7 @@ void ParallaxDemo::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void ParallaxDemo::nextCallback(NSObject* pSender)
+void ParallaxDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new ParallaxTestScene();
 	s->addChild( nextParallaxAction() );
@@ -274,7 +274,7 @@ void ParallaxDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void ParallaxDemo::backCallback(NSObject* pSender)
+void ParallaxDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new ParallaxTestScene();
 	s->addChild( backParallaxAction() );

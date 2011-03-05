@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCTouchHandler.h"
 #include "ccMacros.h"
-#include "CCXCocos2dDefine.h"
+#include "CCCocos2dDefine.h"
 
 #include <assert.h>
 namespace   cocos2d {
@@ -80,7 +80,7 @@ CCTouchHandler* CCTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, 
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pHandler);
+			CC_SAFE_RELEASE_NULL(pHandler);
 		}
 	}
 	
@@ -138,7 +138,7 @@ CCStandardTouchHandler* CCStandardTouchHandler::handlerWithDelegate(CCTouchDeleg
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pHandler);
+			CC_SAFE_RELEASE_NULL(pHandler);
 		}
 	}
 
@@ -173,7 +173,7 @@ CCTargetedTouchHandler* CCTargetedTouchHandler::handlerWithDelegate(CCTouchDeleg
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pHandler);
+			CC_SAFE_RELEASE_NULL(pHandler);
 		}
 	}
 
