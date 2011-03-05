@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCEVENT_DISPATCHER_H__
 #define __CCEVENT_DISPATCHER_H__
 
-#include "CCXCocos2dDefine.h"
+#include "CCCocos2dDefine.h"
 #include "CCMouseEventDelegate.h"
 #include "CCKeyboardEventDelegate.h"
 #include "ccConfig.h"
@@ -44,7 +44,7 @@ This is object is responsible for dispatching the events:
 
 Only available on Mac
 */
-class CCEventDispatcher : public NSObject
+class CCEventDispatcher : public CCObject
 {
 public:
     static CCEventDispatcher* sharedDispatcher();
@@ -117,10 +117,10 @@ public:
     void queueEvent(NSEvent* pEvent, SEL_EventHandler selector);
 #endif
 
-    CCX_PROPERTY(bool, m_bDispatchEvents, IsDispatchEvents)
+    CC_PROPERTY(bool, m_bDispatchEvents, IsDispatchEvents)
 
 protected:
-    void addDelegate(NSObject* pHandle, int priority, _listEntry** pList);
+    void addDelegate(CCObject* pHandle, int priority, _listEntry** pList);
     void removeAllDelegatesFromList(_listEntry** pList);
 
 protected:

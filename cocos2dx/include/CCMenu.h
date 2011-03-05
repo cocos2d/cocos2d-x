@@ -87,10 +87,10 @@ namespace cocos2d{
         /**
         @brief For phone event handle functions
         */
-		virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-		virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
-		virtual void ccTouchCancelled(CCTouch *touch, UIEvent* event);
-		virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
+		virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+		virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+		virtual void ccTouchCancelled(CCTouch *touch, CCEvent* event);
+		virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 
         /**
         @brief For PC event handle functions

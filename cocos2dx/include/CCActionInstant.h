@@ -40,7 +40,7 @@ namespace cocos2d {
 		CCActionInstant();
 		virtual ~CCActionInstant(){}
 		// CCAction methods
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 		virtual bool isDone(void);
 		virtual void step(ccTime dt);
 		virtual void update(ccTime time);
@@ -113,7 +113,7 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 
 	protected:
 		bool	m_bFlipX;
@@ -136,7 +136,7 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 
 	protected:
 		bool	m_bFlipY;
@@ -150,14 +150,14 @@ namespace cocos2d {
 		CCPlace(){}
 		virtual ~CCPlace(){}
 		/** creates a Place action with a position */
-		static CCPlace * actionWithPosition(CGPoint pos);
+		static CCPlace * actionWithPosition(CCPoint pos);
 		/** Initializes a Place action with a position */
-		bool initWithPosition(CGPoint pos);
+		bool initWithPosition(CCPoint pos);
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 	protected:
-		CGPoint m_tPosition;
+		CCPoint m_tPosition;
 	};
 
 	/** @brief Calls a 'callback'
@@ -191,7 +191,7 @@ namespace cocos2d {
 		virtual void execute();
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
-		NSObject * copyWithZone(cocos2d::NSZone *pZone);
+		CCObject * copyWithZone(cocos2d::CCZone *pZone);
 
 	protected:
 		SelectorProtocol*   m_pSelectorTarget;
@@ -224,7 +224,7 @@ namespace cocos2d {
 		*/
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
 		// super methods
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 		virtual void execute();
 	};
 
@@ -242,7 +242,7 @@ namespace cocos2d {
 		/** initializes the action with the callback and the data to pass as an argument */
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
 		// super methods
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 		virtual void execute();
 
 	protected:
@@ -262,20 +262,20 @@ namespace cocos2d {
         virtual ~CCCallFuncO();
         /** creates the action with the callback 
 
-        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(CCObject*);
         */
-        static CCCallFuncO * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        static CCCallFuncO * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
         /** initializes the action with the callback 
 
-        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(CCObject*);
         */
-        virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
         // super methods
-        virtual NSObject* copyWithZone(NSZone *pZone);
+        virtual CCObject* copyWithZone(CCZone *pZone);
         virtual void execute();
 
     protected:
-        NSObject* m_pObject;
+        CCObject* m_pObject;
     };
 
 }

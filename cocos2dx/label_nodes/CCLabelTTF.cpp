@@ -27,7 +27,7 @@ namespace cocos2d{
 	//
 	//CCLabelTTF
 	//
-	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{
 		CCLabelTTF *pRet = new CCLabelTTF();
 		if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
@@ -35,7 +35,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
 	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, const char *fontName, float fontSize)
@@ -46,16 +46,16 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
 
-	bool CCLabelTTF::initWithString(const char *label, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	bool CCLabelTTF::initWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{
 		assert(label != NULL);
 		if (CCSprite::init())
 		{
-			m_tDimensions = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
+			m_tDimensions = CCSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
 			m_eAlignment = alignment;
 			m_sFontName = fontName;
 			m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
@@ -69,7 +69,7 @@ namespace cocos2d{
 		assert(label != NULL);
 		if (CCSprite::init())
 		{
-			m_tDimensions = CGSizeZero;
+			m_tDimensions = CCSizeZero;
 			m_sFontName = fontName;
 			m_fFontSize = fontSize * CC_CONTENT_SCALE_FACTOR();
 			this->setString(label);
@@ -87,7 +87,7 @@ namespace cocos2d{
 		m_sString = string(label);
         
 		CCTexture2D *texture;
-		if( CGSize::CGSizeEqualToSize( m_tDimensions, CGSizeZero ) )
+		if( CCSize::CCSizeEqualToSize( m_tDimensions, CCSizeZero ) )
 		{
 			texture = new CCTexture2D();
 			texture->initWithString(label, m_sFontName.c_str(), m_fFontSize);
@@ -100,7 +100,7 @@ namespace cocos2d{
 		this->setTexture(texture);
 		texture->release();
 
-        CGRect rect = CGRectZero;
+        CCRect rect = CCRectZero;
 		rect.size = m_pobTexture->getContentSize();
 		this->setTextureRect(rect);
 	}

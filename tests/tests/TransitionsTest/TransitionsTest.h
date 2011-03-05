@@ -17,9 +17,9 @@ public:
     TestLayer1(void);
     ~TestLayer1(void);
 
-    void restartCallback(NSObject* pSender);
-    void nextCallback(NSObject* pSender);
-    void backCallback(NSObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 
     void step(ccTime dt);
 };
@@ -30,9 +30,9 @@ public:
     TestLayer2(void);
     ~TestLayer2(void);
 
-    void restartCallback(NSObject* pSender);
-    void nextCallback(NSObject* pSender);
-    void backCallback(NSObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 
     void step(ccTime dt);
 };

@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCActionTiledGrid.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "effects/CCGrid.h"
 
 #include <stdlib.h>
@@ -33,8 +33,8 @@ namespace cocos2d
 {
 	struct Tile
 	{
-		CGPoint	position;
-		CGPoint	startPosition;
+		CCPoint	position;
+		CCPoint	startPosition;
 		ccGridSize	delta;
 	};
 
@@ -52,7 +52,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -72,9 +72,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCShakyTiles3D::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCShakyTiles3D::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCShakyTiles3D* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -84,14 +84,14 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCShakyTiles3D();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 		
 		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithRange(m_nRandrange, m_bShakeZ, m_sGridSize, m_fDuration);
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -144,7 +144,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -165,9 +165,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCShatteredTiles3D::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCShatteredTiles3D::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCShatteredTiles3D* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
@@ -176,7 +176,7 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCShatteredTiles3D();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		//copy super class's member
@@ -184,7 +184,7 @@ namespace cocos2d
 
 		pCopy->initWithRange(m_nRandrange, m_bShatterZ, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -242,7 +242,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -263,9 +263,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCShuffleTiles::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCShuffleTiles::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCShuffleTiles* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
@@ -274,14 +274,14 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCShuffleTiles();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithSeed(m_nSeed, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -312,7 +312,7 @@ namespace cocos2d
 
 	ccGridSize CCShuffleTiles::getDelta(cocos2d::ccGridSize pos)
 	{
-		CGPoint	pos2;
+		CCPoint	pos2;
 
 		int idx = pos.x * m_sGridSize.y + pos.y;
 
@@ -326,7 +326,7 @@ namespace cocos2d
 	{
 		ccQuad3 coords = originalTile(pos);
 
-		CGPoint step = m_pTarget->getGrid()->getStep();
+		CCPoint step = m_pTarget->getGrid()->getStep();
 		coords.bl.x += (int)(t->position.x * step.x);
 		coords.bl.y += (int)(t->position.y * step.y);
 
@@ -408,7 +408,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -417,7 +417,7 @@ namespace cocos2d
 
 	float CCFadeOutTRTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
 	{
-		CGPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), time);
+		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), time);
 		if ((n.x + n.y) == 0.0f)
 		{
 			return 1.0f;
@@ -441,7 +441,7 @@ namespace cocos2d
 	void CCFadeOutTRTiles::transformTile(cocos2d::ccGridSize pos, float distance)
 	{
 		ccQuad3 coords = originalTile(pos);
-		CGPoint step = m_pTarget->getGrid()->getStep();
+		CCPoint step = m_pTarget->getGrid()->getStep();
 
 		coords.bl.x += (step.x / 2) * (1.0f - distance);
 		coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -496,7 +496,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -505,7 +505,7 @@ namespace cocos2d
 
 	float CCFadeOutBLTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
 	{
-		CGPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), (1.0f - time));
+		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), (1.0f - time));
 		if ((pos.x + pos.y) == 0)
 		{
 			return 1.0f;
@@ -528,7 +528,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -537,7 +537,7 @@ namespace cocos2d
 
 	float CCFadeOutUpTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
 	{
-		CGPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), time);
+		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), time);
 		if (n.y == 0.0f)
 		{
 			return 1.0f;
@@ -549,7 +549,7 @@ namespace cocos2d
 	void CCFadeOutUpTiles::transformTile(cocos2d::ccGridSize pos, float distance)
 	{
 		ccQuad3 coords = originalTile(pos);
-		CGPoint step = m_pTarget->getGrid()->getStep();
+		CCPoint step = m_pTarget->getGrid()->getStep();
 
 		coords.bl.y += (step.y / 2) * (1.0f - distance);
 		coords.br.y += (step.y / 2) * (1.0f - distance);
@@ -572,7 +572,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -581,7 +581,7 @@ namespace cocos2d
 
 	float CCFadeOutDownTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
 	{
-		CGPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), (1.0f - time));
+		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), (1.0f - time));
 		if (pos.y == 0)
 		{
 			return 1.0f;
@@ -600,7 +600,7 @@ namespace cocos2d
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pAction);
+			CC_SAFE_RELEASE_NULL(pAction);
 		}
 		return pAction;
 	}
@@ -617,7 +617,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -637,9 +637,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCTurnOffTiles::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCTurnOffTiles::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCTurnOffTiles* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -648,14 +648,14 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCTurnOffTiles();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithSeed(m_nSeed, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -750,7 +750,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -771,9 +771,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCWavesTiles3D::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCWavesTiles3D::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCWavesTiles3D* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject)
 		{
@@ -782,14 +782,14 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCWavesTiles3D();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithWaves(m_nWaves, m_fAmplitude, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -828,7 +828,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -849,9 +849,9 @@ namespace cocos2d
 		return false;
 	}
 
-	NSObject* CCJumpTiles3D::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCJumpTiles3D::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCJumpTiles3D* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -860,13 +860,13 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCJumpTiles3D();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCTiledGrid3DAction::copyWithZone(pZone);
 		pCopy->initWithJumps(m_nJumps, m_fAmplitude, m_sGridSize, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -917,7 +917,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -931,9 +931,9 @@ namespace cocos2d
 		return CCTiledGrid3DAction::initWithSize(ccg(1, nRows), duration);
 	}
 
-	NSObject* CCSplitRows::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCSplitRows::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCSplitRows* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -942,14 +942,14 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCSplitRows();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCTiledGrid3DAction::copyWithZone(pZone);
 
 		pCopy->initWithRows(m_nRows, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -996,7 +996,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pAction);
+				CC_SAFE_RELEASE_NULL(pAction);
 			}
 		}
 
@@ -1009,9 +1009,9 @@ namespace cocos2d
 		return CCTiledGrid3DAction::initWithSize(ccg(nCols, 1), duration);
 	}
 
-	NSObject* CCSplitCols::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCSplitCols::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCSplitCols* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -1020,13 +1020,13 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCSplitCols();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCTiledGrid3DAction::copyWithZone(pZone);
 		pCopy->initWithCols(m_nCols, m_fDuration);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 

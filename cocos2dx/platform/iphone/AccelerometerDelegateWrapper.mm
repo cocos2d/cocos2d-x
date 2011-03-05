@@ -54,7 +54,7 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     [super dealloc];
 }
 
-- (id) findDelegateWrapperByDelegate: (cocos2d::UIAccelerometerDelegate *) delegate
+- (id) findDelegateWrapperByDelegate: (cocos2d::CCAccelerometerDelegate *) delegate
 {
     for (AccelerometerDelegateWrapper *wrapper in delegateWrappers) {
         if (wrapper.delegate_ == delegate) {
@@ -65,19 +65,19 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     return nil;
 }
 
-- (void) addDelegate: (cocos2d::UIAccelerometerDelegate *) delegate
+- (void) addDelegate: (cocos2d::CCAccelerometerDelegate *) delegate
 {
     [delegateWrappers addObject: [AccelerometerDelegateWrapper delegateWrapperWithDelegate:delegate]];
 }
 
-- (void) removeDelegate: (cocos2d::UIAccelerometerDelegate *) delegate
+- (void) removeDelegate: (cocos2d::CCAccelerometerDelegate *) delegate
 {
     [delegateWrappers removeObject:[self findDelegateWrapperByDelegate:delegate]];
 }
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
-    cocos2d::UIAcceleration accelerationCpp;
+    cocos2d::CCAcceleration accelerationCpp;
     
     accelerationCpp.x = acceleration.x;
     accelerationCpp.y = acceleration.y;
@@ -96,12 +96,12 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
 
 @synthesize delegate_;
 
-+ (id)delegateWrapperWithDelegate:(cocos2d::UIAccelerometerDelegate *)delegate
++ (id)delegateWrapperWithDelegate:(cocos2d::CCAccelerometerDelegate *)delegate
 {
     return [[self alloc] initWithDelegate: delegate];
 }
 
--  (id) initWithDelegate: (cocos2d::UIAccelerometerDelegate *)delegate
+-  (id) initWithDelegate: (cocos2d::CCAccelerometerDelegate *)delegate
 {
     delegate->AccelerometerKeep();
     self.delegate_ = delegate;
@@ -109,7 +109,7 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     return self;
 }
 
--  (void) didAccelerate: (cocos2d::UIAcceleration *)acceleration
+-  (void) didAccelerate: (cocos2d::CCAcceleration *)acceleration
 {
     self.delegate_->didAccelerate(acceleration);
 }

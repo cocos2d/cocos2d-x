@@ -21,21 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_FILEUTILS_PLATFORM_H__
-#define __CCX_FILEUTILS_PLATFORM_H__
+#ifndef __CC_FILEUTILS_PLATFORM_H__
+#define __CC_FILEUTILS_PLATFORM_H__
 
 #include "config_platform.h"
 
 #if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXFileUtils_uphone.h"
+    #include "uphone/CCFileUtils_uphone.h"
 #elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCXFileUtils_win32.h"
+    #include "win32/CCFileUtils_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
-    #include "android/CCXFileUtils_android.h"
+    #include "android/CCFileUtils_android.h"
 #elif defined(CCX_PLATFORM_IPHONE)
-    #include "iphone/CCXFileUtils_iphone.h"
+    #include "iphone/CCFileUtils_iphone.h"
 #else
     #error
-#endif // __CCX_FILEUTILS_PLATFORM_H__
+#endif 
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+#endif // __CC_FILEUTILS_PLATFORM_H__

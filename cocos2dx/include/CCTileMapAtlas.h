@@ -49,7 +49,7 @@ namespace cocos2d {
 	class CCX_DLL CCTileMapAtlas : public CCAtlasNode 
 	{
 		/** TileMap info */
-		CCX_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
+		CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
 	public:
 		CCTileMapAtlas();
 		virtual ~CCTileMapAtlas();

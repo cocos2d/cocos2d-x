@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCTYPES_H__
 #define __CCTYPES_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 
 #include "CCGL.h"
 
@@ -278,10 +278,10 @@ typedef float ccTime;
 
 typedef enum 
 {
-	UITextAlignmentLeft,
-	UITextAlignmentCenter,
-	UITextAlignmentRight,
-} UITextAlignment;
+	CCTextAlignmentLeft,
+	CCTextAlignmentCenter,
+	CCTextAlignmentRight,
+} CCTextAlignment;
 
 }//namespace   cocos2d 
 

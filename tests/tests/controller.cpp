@@ -3,7 +3,7 @@
 
 #define LINE_SPACE          40
 
-static CGPoint s_tCurPos = CGPointZero;
+static CCPoint s_tCurPos = CCPointZero;
 
 static TestScene* CreateTestScene(int nIdx)
 {
@@ -85,7 +85,7 @@ static TestScene* CreateTestScene(int nIdx)
 }
 
 TestController::TestController()
-: m_tBeginPos(CGPointZero)
+: m_tBeginPos(CCPointZero)
 {
     CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 
@@ -93,9 +93,9 @@ TestController::TestController()
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
-    pMenu->setPosition( CGPointZero );
-    pCloseItem->setPosition(CGPointMake( s.width - 30, s.height - 30));
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    pMenu->setPosition( CCPointZero );
+    pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
 
     // add menu items for tests
     m_pItmeMenu = CCMenu::menuWithItems(NULL);
@@ -105,13 +105,13 @@ TestController::TestController()
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
 
         m_pItmeMenu->addChild(pMenuItem, i + 10000);
-        pMenuItem->setPosition( CGPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
+        pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
 
         // record the pointer of the menu item
         m_pMenuItems[i] = pMenuItem;
     }
 
-    m_pItmeMenu->setContentSize(CGSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
+    m_pItmeMenu->setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
     m_pItmeMenu->setPosition(s_tCurPos);
     addChild(m_pItmeMenu);
 
@@ -124,7 +124,7 @@ TestController::~TestController()
 {
 }
 
-void TestController::menuCallback(NSObject * pSender)
+void TestController::menuCallback(CCObject * pSender)
 {
     // get the userdata, it's the index of the menu item clicked
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
@@ -139,35 +139,35 @@ void TestController::menuCallback(NSObject * pSender)
     }
 }
 
-void TestController::closeCallback(NSObject * pSender)
+void TestController::closeCallback(CCObject * pSender)
 {
     CCDirector::sharedDirector()->end();
 }
 
-void TestController::ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent)
+void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    NSSetIterator it = pTouches->begin();
+    CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
     m_tBeginPos = touch->locationInView( touch->view() );	
     m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
-void TestController::ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent)
+void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    NSSetIterator it = pTouches->begin();
+    CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-    CGPoint touchLocation = touch->locationInView( touch->view() );	
+    CCPoint touchLocation = touch->locationInView( touch->view() );	
     touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
     float nMoveY = touchLocation.y - m_tBeginPos.y;
 
-    CGPoint curPos  = m_pItmeMenu->getPosition();
-    CGPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
-    CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+    CCPoint curPos  = m_pItmeMenu->getPosition();
+    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     if (nextPos.y < 0.0f)
     {
-        m_pItmeMenu->setPosition(CGPointZero);
+        m_pItmeMenu->setPosition(CCPointZero);
         return;
     }
 

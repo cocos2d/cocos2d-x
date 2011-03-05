@@ -37,7 +37,7 @@
                 //      }
         
                 // init director
-        view = new cocos2d::CCXEGLView();
+        view = new cocos2d::CCEGLView();
         cocos2d::CCDirector *pDirector = cocos2d::CCDirector::sharedDirector();
         pDirector->setOpenGLView(view);
         

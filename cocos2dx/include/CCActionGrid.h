@@ -35,7 +35,7 @@ namespace cocos2d
 	class CCX_DLL CCGridAction : public CCActionInterval
 	{
 	public:
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCActionInterval* reverse(void);
 

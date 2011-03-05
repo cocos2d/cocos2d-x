@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer.h"
 #include "CCSprite.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 namespace cocos2d{
 
@@ -38,14 +38,14 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-        CCX_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCTMXTiledMap::initWithTMXFile(const char *tmxFile)
 	{
-		NSAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi nil");
+		CCAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi nil");
 		
-		setContentSize(CGSizeZero);
+		setContentSize(CCSizeZero);
 
 		CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithTMXFile(tmxFile);
     
@@ -53,24 +53,24 @@ namespace cocos2d{
         {
             return false;
         }
-		NSAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+		CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
 
 		m_tMapSize = mapInfo->getMapSize();
 		m_tTileSize = mapInfo->getTileSize();
 		m_nMapOrientation = mapInfo->getOrientation();
 		setObjectGroups(mapInfo->getObjectGroups());
 		setProperties(mapInfo->getProperties());
-		CCX_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = mapInfo->getTileProperties();
-		CCX_SAFE_RETAIN(m_pTileProperties);
+		CC_SAFE_RETAIN(m_pTileProperties);
 
 		int idx = 0;
 
-		NSMutableArray<CCTMXLayerInfo*>* layers = mapInfo->getLayers();
+		CCMutableArray<CCTMXLayerInfo*>* layers = mapInfo->getLayers();
 		if (layers && layers->count()>0)
 		{
 			CCTMXLayerInfo *layerInfo = NULL;
-			NSMutableArray<CCTMXLayerInfo*>::NSMutableArrayIterator it;
+			CCMutableArray<CCTMXLayerInfo*>::CCMutableArrayIterator it;
 			for (it = layers->begin(); it != layers->end(); ++it)
 			{
 				layerInfo = *it;
@@ -80,8 +80,8 @@ namespace cocos2d{
 					addChild((CCNode*)child, idx, idx);
 
 					// update content size with the max size
-					CGSize childSize = child->getContentSize();
-					CGSize currentSize = this->getContentSize();
+					CCSize childSize = child->getContentSize();
+					CCSize currentSize = this->getContentSize();
 					currentSize.width = MAX( currentSize.width, childSize.width );
 					currentSize.height = MAX( currentSize.height, childSize.height );
 					this->setContentSize(currentSize);
@@ -93,8 +93,8 @@ namespace cocos2d{
 		return true;
 	}
 	CCTMXTiledMap::CCTMXTiledMap()
-		:m_tTileSize(CGSizeZero)
-		,m_tMapSize(CGSizeZero)
+		:m_tTileSize(CCSizeZero)
+		,m_tMapSize(CCSizeZero)
 		,m_pObjectGroups(NULL)
 		,m_pProperties(NULL)
 		,m_pTileProperties(NULL)
@@ -102,18 +102,18 @@ namespace cocos2d{
 	}
 	CCTMXTiledMap::~CCTMXTiledMap()
 	{
-		CCX_SAFE_RELEASE(m_pProperties);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
-		CCX_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RELEASE(m_pTileProperties);
 	}
-	NSMutableArray<CCTMXObjectGroup*> * CCTMXTiledMap::getObjectGroups()
+	CCMutableArray<CCTMXObjectGroup*> * CCTMXTiledMap::getObjectGroups()
 	{
 		return m_pObjectGroups;
 	}
-	void CCTMXTiledMap::setObjectGroups(NSMutableArray<CCTMXObjectGroup*>* var)
+	void CCTMXTiledMap::setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 	}
 	CCXStringToStringDictionary * CCTMXTiledMap::getProperties()
@@ -122,8 +122,8 @@ namespace cocos2d{
 	}
 	void CCTMXTiledMap::setProperties(CCXStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
 	// private
@@ -144,12 +144,12 @@ namespace cocos2d{
 		CCTMXTilesetInfo *tileset = NULL;
 		//CFByteOrder o = CFByteOrderGetCurrent();
 
-		CGSize size = layerInfo->m_tLayerSize;
-		NSMutableArray<CCTMXTilesetInfo*>* tilesets = mapInfo->getTilesets();
+		CCSize size = layerInfo->m_tLayerSize;
+		CCMutableArray<CCTMXTilesetInfo*>* tilesets = mapInfo->getTilesets();
 		if (tilesets && tilesets->count()>0)
 		{
 			CCTMXTilesetInfo *tileset = NULL;
-			NSMutableArray<CCTMXTilesetInfo*>::NSMutableArrayRevIterator rit;
+			CCMutableArray<CCTMXTilesetInfo*>::CCMutableArrayRevIterator rit;
 			for (rit = tilesets->rbegin(); rit != tilesets->rend(); ++rit)
 			{
 				tileset = *rit;
@@ -195,7 +195,7 @@ namespace cocos2d{
 		if (m_pChildren && m_pChildren->count()>0)
 		{
 			CCTMXLayer *layer;
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				layer = (CCTMXLayer*)(*it);
@@ -215,7 +215,7 @@ namespace cocos2d{
 		if (m_pObjectGroups && m_pObjectGroups->count()>0)
 		{
 			CCTMXObjectGroup *objectGroup;
-			NSMutableArray<CCTMXObjectGroup*>::NSMutableArrayIterator it;
+			CCMutableArray<CCTMXObjectGroup*>::CCMutableArrayIterator it;
 			for (it = m_pObjectGroups->begin(); it != m_pObjectGroups->end(); ++it)
 			{
 				objectGroup = (CCTMXObjectGroup*)(*it);
@@ -235,11 +235,11 @@ namespace cocos2d{
 	{
 		return objectGroupNamed(groupName);
 	}
-	NSString * CCTMXTiledMap::propertyNamed(const char *propertyName)
+	CCString * CCTMXTiledMap::propertyNamed(const char *propertyName)
 	{
 		return m_pProperties->objectForKey(std::string(propertyName));
 	}
-	NSDictionary<std::string, NSString*> * CCTMXTiledMap::propertiesForGID(int GID)
+	CCDictionary<std::string, CCString*> * CCTMXTiledMap::propertiesForGID(int GID)
 	{
 		return m_pTileProperties->objectForKey(GID);
 	}

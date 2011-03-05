@@ -30,15 +30,15 @@ THE SOFTWARE.
 
 #include <string.h>
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include "platform/platform.h"
-#include "NSMutableArray.h"
+#include "CCMutableArray.h"
 
 namespace cocos2d
 {
 	class CCProfilingTimer;
 
-	class CCProfiler : public NSObject
+	class CCProfiler : public CCObject
 	{
 	public:
 		~CCProfiler(void);
@@ -47,17 +47,17 @@ namespace cocos2d
 
 	public:
 		static CCProfiler* sharedProfiler(void);
-		static CCProfilingTimer* timerWithName(const char *pszTimerName, NSObject *pInstance);
+		static CCProfilingTimer* timerWithName(const char *pszTimerName, CCObject *pInstance);
 		static void releaseTimer(CCProfilingTimer *pTimer);
 
 	protected:
-		NSMutableArray<CCProfilingTimer*> *m_pActiveTimers;
+		CCMutableArray<CCProfilingTimer*> *m_pActiveTimers;
 	};
 
-	class CCProfilingTimer : public NSObject
+	class CCProfilingTimer : public CCObject
 	{
 	public:
-		bool initWithName(const char* pszTimerName, NSObject *pInstance);
+		bool initWithName(const char* pszTimerName, CCObject *pInstance);
 		~CCProfilingTimer(void);
 		char* description(void);
 		inline struct cc_timeval getStartTime(void) { return m_sStartTime; };

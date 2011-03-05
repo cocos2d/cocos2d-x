@@ -17,15 +17,15 @@ public:
 	virtual std::string subtitle();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 
 	void registerWithTouchDispatcher();
-	bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-	void ccTouchEnded(CCTouch* touch, UIEvent* event);
-	void ccTouchCancelled(CCTouch* touch, UIEvent* event);
-	void ccTouchMoved(CCTouch* touch, UIEvent* event);
+	bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+	void ccTouchEnded(CCTouch* touch, CCEvent* event);
+	void ccTouchCancelled(CCTouch* touch, CCEvent* event);
+	void ccTouchMoved(CCTouch* touch, CCEvent* event);
 };
 
 class TileMapTest : public TileDemo

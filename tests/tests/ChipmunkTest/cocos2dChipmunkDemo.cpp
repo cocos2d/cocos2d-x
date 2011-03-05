@@ -479,7 +479,7 @@ void ChipmunkTestLayer::draw()
     drawSpace(space, currDemo->drawOptions ? currDemo->drawOptions : &options);
 }
 
-void ChipmunkTestLayer::ccTouchesEnded(NSSet* touches, UIEvent *event)
+void ChipmunkTestLayer::ccTouchesEnded(CCSet* touches, CCEvent *event)
 {
     demoIndex++;
     if( demoIndex >= maxDemos )

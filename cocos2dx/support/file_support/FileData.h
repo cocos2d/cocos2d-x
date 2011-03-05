@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __SUPPORT_DATA_SUPPORT_FILEDATA_H__
 #define __SUPPORT_DATA_SUPPORT_FILEDATA_H__
 
-#include "CCXFileUtils.h"
+#include "CCFileUtils.h"
 
 namespace cocos2d
 {

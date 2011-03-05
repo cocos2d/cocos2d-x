@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
-#include "NSObject.h"
-#include "ccxCommon.h"
+#include "CCObject.h"
+#include "CCCommon.h"
 
 namespace   cocos2d {
 
@@ -38,8 +38,8 @@ typedef enum
 } ccTouchDelegateFlag;
 
 class CCTouch;
-class UIEvent;
-class NSSet;
+class CCEvent;
+class CCSet;
 class CCX_DLL CCTouchDelegate
 {
 protected:
@@ -52,23 +52,23 @@ public:
 	//! call the retain() in child (layer or menu)
 	virtual void keep(void) {}
 
-	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { return false;};
 
 	// optional
-	virtual void ccTouchMoved(CCTouch *pTouch, UIEvent *pEvent) {}
-	virtual void ccTouchEnded(CCTouch *pTouch, UIEvent *pEvent) {}
-	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
+	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {}
+	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {}
+	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {}
 
 	// optional
- 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
 };
 /**
  @brief
  Using this type of delegate results in two benefits:
- - 1. You don't need to deal with NSSets, the dispatcher does the job of splitting
+ - 1. You don't need to deal with CCSets, the dispatcher does the job of splitting
  them. You get exactly one UITouch per call.
  - 2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
@@ -86,12 +86,12 @@ public:
  	/** Return YES to claim the touch.
  	 @since v0
 	 */
- 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
+ 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { return false;};
  
  	// optional
- 	virtual void ccTouchMoved(CCTouch *pTouch, UIEvent *pEvent) {}
- 	virtual void ccTouchEnded(CCTouch *pTouch, UIEvent *pEvent) {}
- 	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
+ 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {}
+ 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {}
+ 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {}
  };
  
 /** @brief
@@ -103,10 +103,10 @@ public:
  public:
  	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }
  	// optional
- 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
  };
 
 }//namespace   cocos2d 

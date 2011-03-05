@@ -80,7 +80,7 @@ namespace cocos2d {
 		/** positions the camera according to spherical coordinates */
 		void sphericalRadius(float *r, float *zenith, float *azimuth);
 		// super methods
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
 

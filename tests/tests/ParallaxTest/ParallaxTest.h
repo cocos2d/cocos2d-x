@@ -15,9 +15,9 @@ public:
 	virtual std::string title();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 };
 
 class Parallax1 : public ParallaxDemo
@@ -43,10 +43,10 @@ public:
 	Parallax2();
 	
 	virtual void registerWithTouchDispatcher();
-	virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchCancelled(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
+	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchCancelled(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 
 	virtual std::string title();
 };

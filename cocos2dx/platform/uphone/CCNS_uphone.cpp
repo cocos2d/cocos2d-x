@@ -26,18 +26,18 @@ THE SOFTWARE.
 ///@todo implement the functions
 namespace cocos2d
 {
-	CGRect CCRectFromString(const char* pszContent)
+	CCRect CCRectFromString(const char* pszContent)
 	{
-        return CGRectZero;
+        return CCRectZero;
 	}
 
-	CGPoint CCPointFromString(const char* pszContent)
+	CCPoint CCPointFromString(const char* pszContent)
 	{
-        return CGPointZero;
+        return CCPointZero;
 	}
 
-	CGSize CCSizeFromString(const char* pszContent)
+	CCSize CCSizeFromString(const char* pszContent)
 	{
-        return CGSizeZero;
+        return CCSizeZero;
 	}
 }

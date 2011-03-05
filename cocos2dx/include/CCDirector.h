@@ -28,13 +28,13 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "ccConfig.h"
 #include "ccTypes.h"
-#include "CCXCocos2dDefine.h"
-#include "NSObject.h"
-#include "CGGeometry.h"
-#include "NSMutableArray.h"
-#include "CGGeometry.h"
-#include "CCXEGLView.h"
-#include "ccxCommon.h"
+#include "CCCocos2dDefine.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
+#include "CCMutableArray.h"
+#include "CCGeometry.h"
+#include "CCEGLView.h"
+#include "CCCommon.h"
 #include "CCGL.h"
 #include <assert.h>
 
@@ -48,7 +48,7 @@ namespace   cocos2d {
 	};
 
 /** @typedef tPixelFormat
- Possible Pixel Formats for the CCXEGLView
+ Possible Pixel Formats for the CCEGLView
  */
 typedef enum {
 	/** RGB565 pixel format. No alpha. 16-bit. (Default) */
@@ -66,7 +66,7 @@ typedef enum {
 } tPixelFormat;
 
 /** @typedef tDepthBufferFormat
- Possible DepthBuffer Formats for the CCXEGLView.
+ Possible DepthBuffer Formats for the CCEGLView.
  Use 16 or 24 bit depth buffers if you are going to use real 3D objects.
  */
 typedef enum {
@@ -180,7 +180,7 @@ typedef enum {
 
 class CCLabelTTF;
 class CCScene;
-class CCXEGLView;
+class CCEGLView;
 class NSEvent;
 class CCNode;
 class CCProjectionProtocol;
@@ -205,7 +205,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CCX_DLL CCDirector : public NSObject
+class CCX_DLL CCDirector : public CCObject
 {
 public: 
 	virtual bool init(void);
@@ -227,9 +227,9 @@ public:
 	/** Display the FPS on the bottom-left corner */
 	inline void setDisplayFPS(bool bDisplayFPS) { m_bDisplayFPS = bDisplayFPS; }
 
-	/** Get the CCXEGLView, where everything is rendered */
-	inline CC_GLVIEW* getOpenGLView(void) { return m_pobOpenGLView; }
-	void setOpenGLView(CC_GLVIEW *pobOpenGLView);
+	/** Get the CCEGLView, where everything is rendered */
+	inline CCEGLView* getOpenGLView(void) { return m_pobOpenGLView; }
+	void setOpenGLView(CCEGLView *pobOpenGLView);
 
 	inline bool isNextDeltaTimeZero(void) { return m_bNextDeltaTimeZero; }
 	void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
@@ -256,31 +256,31 @@ public:
 	/** returns the size of the OpenGL view in points.
 	It takes into account any possible rotation (device orientation) of the window
 	*/
-	CGSize getWinSize(void);
+	CCSize getWinSize(void);
 
 	/** returns the size of the OpenGL view in pixels.
 	It takes into account any possible rotation (device orientation) of the window.
 	On Mac winSize and winSizeInPixels return the same value.
 	*/
-	CGSize getWinSizeInPixels(void);
+	CCSize getWinSizeInPixels(void);
 
 	/** returns the display size of the OpenGL view in pixels.
 	It doesn't take into account any possible rotation of the window.
 	*/
-	CGSize getDisplaySizeInPixels(void);
+	CCSize getDisplaySizeInPixels(void);
 
 	/** changes the projection size */
-	void reshapeProjection(CGSize newWindowSize);
+	void reshapeProjection(CCSize newWindowSize);
 
 	/** converts a UIKit coordinate to an OpenGL coordinate
 	 Useful to convert (multi) touches coordinates to the current layout (portrait or landscape)
 	 */
-	CGPoint convertToGL(CGPoint obPoint);
+	CCPoint convertToGL(CCPoint obPoint);
 
 	/** converts an OpenGL coordinate to a UIKit coordinate
 	 Useful to convert node points to window points for calls such as glScissor
 	 */
-	CGPoint convertToUI(CGPoint obPoint);
+	CCPoint convertToUI(CCPoint obPoint);
 
 	/// XXX: missing description 
 	float getZEye(void);
@@ -412,11 +412,11 @@ public:
 	*/
 	static bool setDirectorType(ccDirectorType obDirectorType);
 
-	/** Uses a new pixel format for the CCXEGLView.
+	/** Uses a new pixel format for the CCEGLView.
 	Call this class method before attaching it to a UIView
 	Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
 
-	@deprecated Set the pixel format when creating the CCXEGLView. This method will be removed in v1.0
+	@deprecated Set the pixel format when creating the CCEGLView. This method will be removed in v1.0
 	*/
 	void setPixelFormat(tPixelFormat kPixelFormat);
 	/** Pixel format used to create the context */
@@ -426,7 +426,7 @@ public:
 	Call this class method before attaching it to a UIWindow/UIView
 	Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
 
-	@deprecated Set the depth buffer format when creating the CCXEGLView. This method will be removed in v1.0
+	@deprecated Set the depth buffer format when creating the CCEGLView. This method will be removed in v1.0
 	*/
 	void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat);
 
@@ -436,7 +436,7 @@ public:
 	/***************************************************
 	* PC platforms specific functions, such as mac
 	**************************************************/
-	CGPoint convertEventToGL(NSEvent *event);
+	CCPoint convertEventToGL(NSEvent *event);
 	// whether or not the view is in fullscreen mode
 	bool isFullScreen(void);
 	// resize mode: with or without scaling
@@ -448,7 +448,7 @@ public:
 	Useful only if resizeMode is kCCDirectorResize_Scale.
 	If resizeMode is kCCDirectorResize_NoScale, then no conversion will be done.
 	*/
-	CGPoint convertToLogicalCoordinates(CGPoint coordinates);
+	CCPoint convertToLogicalCoordinates(CCPoint coordinates);
 
 public:
 	/** returns a shared instance of the director */
@@ -474,8 +474,8 @@ protected:
 #endif // CC_DIRECTOR_FAST_FPS
 
 /** calculates delta time since last time it was called */	void calculateDeltaTime();protected:
-	/* The CCXEGLView, where everything is rendered */
-    CC_GLVIEW	*m_pobOpenGLView;
+	/* The CCEGLView, where everything is rendered */
+    CCEGLView	*m_pobOpenGLView;
 
 	double m_dAnimationInterval;
 	double m_dOldAnimationInterval;
@@ -505,7 +505,7 @@ protected:
 	bool	m_bSendCleanupToScene;
 
 	/* scheduled scenes */
-	NSMutableArray<CCScene*> *m_pobScenesStack;
+	CCMutableArray<CCScene*> *m_pobScenesStack;
 	
 	/* last time the main loop was updated */
 	struct cc_timeval *m_pLastUpdate;
@@ -520,10 +520,10 @@ protected:
 	ccDirectorProjection m_eProjection;
 
 	/* window size in points */
-	CGSize	m_obWinSizeInPoints;
+	CCSize	m_obWinSizeInPoints;
 
 	/* window size in pixels */
-	CGSize m_obWinSizeInPixels;
+	CCSize m_obWinSizeInPixels;
 	
 	/* content scale factor */
 	CGFloat	m_fContentScaleFactor;
@@ -553,8 +553,8 @@ protected:
 	**************************************************/
 	bool m_bIsFullScreen;
 	int m_nResizeMode;
-	CGPoint m_winOffset;
-	CGSize m_originalWinSize;
+	CCPoint m_winOffset;
+	CCSize m_originalWinSize;
 
 	MacGLView *m_pFullScreenGLView;
 	NSWindow  *m_pFullScreenWindow;

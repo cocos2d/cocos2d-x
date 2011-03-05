@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "CCTextureCache.h"
 #include "support/base64.h"
-#include "CGPointExtension.h"
-#include "CCXFileUtils.h"
-#include "CCXUIImage.h"
+#include "CCPointExtension.h"
+#include "CCFileUtils.h"
+#include "CCImage.h"
 #include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
 
@@ -69,8 +69,8 @@ CCParticleSystem::CCParticleSystem()
 	,m_bIsActive(true)
 	,m_nParticleCount(0)
 	,m_fDuration(0)
-	,m_tSourcePosition(CGPointZero)
-	,m_tPosVar(CGPointZero)
+	,m_tSourcePosition(CCPointZero)
+	,m_tPosVar(CCPointZero)
 	,m_fLife(0)
 	,m_fLifeVar(0)
 	,m_fAngle(0)
@@ -91,7 +91,7 @@ CCParticleSystem::CCParticleSystem()
 	,m_bIsAutoRemoveOnFinish(false)
 	,m_nEmitterMode(kCCParticleModeGravity)
 {
-	modeA.gravity = CGPointZero;
+	modeA.gravity = CCPointZero;
 	modeA.speed = 0;
 	modeA.speedVar = 0;
 	modeA.tangentialAccel = 0;
@@ -116,24 +116,24 @@ CCParticleSystem * CCParticleSystem::particleWithFile(const char *plistFile)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return pRet;
 }
 bool CCParticleSystem::initWithFile(const char *plistFile)
 {
 	m_sPlistFile = CCFileUtils::fullPathFromRelativePath(plistFile);
-	NSDictionary<std::string, NSObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(m_sPlistFile.c_str());
+	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(m_sPlistFile.c_str());
 
-	NSAssert( dict != NULL, "Particles: file not found");
+	CCAssert( dict != NULL, "Particles: file not found");
 	return this->initWithDictionary(dict);
 }
 
-bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *dictionary)
+bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary)
 {
 	bool bRet = false;
 	unsigned char *buffer = NULL;
 	unsigned char *deflated = NULL;
-	UIImage *image = NULL;
+	CCImage *image = NULL;
 	do 
 	{
 		int maxParticles = atoi(valueForKey("maxParticles", dictionary));
@@ -224,8 +224,8 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 				modeB.rotatePerSecondVar = (float)atof(valueForKey("rotatePerSecondVariance", dictionary));
 
 			} else {
-				NSAssert( false, "Invalid emitterType in config file");
-				CCX_BREAK_IF(true);
+				CCAssert( false, "Invalid emitterType in config file");
+				CC_BREAK_IF(true);
 			}
 
 			// life span
@@ -243,12 +243,12 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
             if (strlen(textureName) > 0)
             {
                 // set not pop-up message box when load image failed
-                bool bNotify = UIImage::getIsPopupNotify();
-                UIImage::setIsPopupNotify(false);
+                bool bNotify = CCImage::getIsPopupNotify();
+                CCImage::setIsPopupNotify(false);
                 this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
 
-                // reset the value of UIImage notify
-                UIImage::setIsPopupNotify(bNotify);
+                // reset the value of CCImage notify
+                CCImage::setIsPopupNotify(bNotify);
             }
 
 			// if it fails, try to get it from the base64-gzipped data			
@@ -260,38 +260,38 @@ bool CCParticleSystem::initWithDictionary(NSDictionary<std::string, NSObject*> *
 				if(dataLen != 0)
 				{
 					int decodeLen = base64Decode((unsigned char*)textureData, dataLen, &buffer);
-					NSAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
-					CCX_BREAK_IF(!buffer);
+					CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+					CC_BREAK_IF(!buffer);
 
 						int deflatedLen = ZipUtils::ccInflateMemory(buffer, decodeLen, &deflated);
-						NSAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
-						CCX_BREAK_IF(!deflated);
+						CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
+						CC_BREAK_IF(!deflated);
 						
-						image = new UIImage();
+						image = new CCImage();
 						bool isOK = image->initWithData(deflated, deflatedLen);
-						NSAssert(isOK, "CCParticleSystem: error init image with Data");
-						CCX_BREAK_IF(!isOK);
+						CCAssert(isOK, "CCParticleSystem: error init image with Data");
+						CC_BREAK_IF(!isOK);
 						
-						m_pTexture = CCTextureCache::sharedTextureCache()->addUIImage(image, fullpath.c_str());
+						m_pTexture = CCTextureCache::sharedTextureCache()->addCCImage(image, fullpath.c_str());
 				}
 			}
-			NSAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
+			CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
 			
-			CCX_BREAK_IF(!m_pTexture);
+			CC_BREAK_IF(!m_pTexture);
 			this->m_pTexture->retain();
 			bRet = true;
 		}
 	} while (0);
-	CCX_SAFE_DELETE_ARRAY(buffer);
-    CCX_SAFE_DELETE_ARRAY(deflated);
-	CCX_SAFE_DELETE(image);
+	CC_SAFE_DELETE_ARRAY(buffer);
+    CC_SAFE_DELETE_ARRAY(deflated);
+	CC_SAFE_DELETE(image);
 	return bRet;
 }
 bool CCParticleSystem::initWithTotalParticles(int numberOfParticles)
 {
 	m_nTotalParticles = numberOfParticles;
 
-    CCX_SAFE_DELETE_ARRAY(m_pParticles);
+    CC_SAFE_DELETE_ARRAY(m_pParticles);
 	
 	m_pParticles = new tCCParticle[m_nTotalParticles];
 
@@ -338,8 +338,8 @@ bool CCParticleSystem::initWithTotalParticles(int numberOfParticles)
 
 CCParticleSystem::~CCParticleSystem()
 {
-    CCX_SAFE_DELETE_ARRAY(m_pParticles);
-	CCX_SAFE_RELEASE(m_pTexture)
+    CC_SAFE_DELETE_ARRAY(m_pParticles);
+	CC_SAFE_RELEASE(m_pTexture)
 	// profiling
 #if CC_ENABLE_PROFILERS
 	/// @todo [CCProfiler releaseTimer:_profilingTimer];
@@ -416,7 +416,7 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	// position
 	if( m_ePositionType == kCCPositionTypeFree )
 	{
-        CGPoint p = this->convertToWorldSpace(CGPointZero);
+        CCPoint p = this->convertToWorldSpace(CCPointZero);
 		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
 	}
     else if ( m_ePositionType == kCCPositionTypeRelative )
@@ -430,7 +430,7 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	// Mode Gravity: A
 	if( m_nEmitterMode == kCCParticleModeGravity ) 
 	{
-		CGPoint v(cosf( a ), sinf( a ));
+		CCPoint v(cosf( a ), sinf( a ));
 		float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
         s *= CC_CONTENT_SCALE_FACTOR();
 
@@ -514,10 +514,10 @@ void CCParticleSystem::update(ccTime dt)
 #endif
 
 
-	CGPoint currentPosition = CGPointZero;
+	CCPoint currentPosition = CCPointZero;
 	if( m_ePositionType == kCCPositionTypeFree )
 	{
-		currentPosition = this->convertToWorldSpace(CGPointZero);
+		currentPosition = this->convertToWorldSpace(CCPointZero);
         currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
         currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}
@@ -540,9 +540,9 @@ void CCParticleSystem::update(ccTime dt)
 			// Mode A: gravity, direction, tangential accel & radial accel
 			if( m_nEmitterMode == kCCParticleModeGravity ) 
 			{
-				CGPoint tmp, radial, tangential;
+				CCPoint tmp, radial, tangential;
 
-				radial = CGPointZero;
+				radial = CCPointZero;
 				// radial acceleration
 				if(p->pos.x || p->pos.y)
 					radial = ccpNormalize(p->pos);
@@ -590,11 +590,11 @@ void CCParticleSystem::update(ccTime dt)
 			// update values in quad
 			//
 
-			CGPoint	newPos;
+			CCPoint	newPos;
 
 			if( m_ePositionType == kCCPositionTypeFree || m_ePositionType == kCCPositionTypeRelative ) 
 			{
-				CGPoint diff = ccpSub( currentPosition, p->startPos );
+				CCPoint diff = ccpSub( currentPosition, p->startPos );
 				newPos = ccpSub(p->pos, diff);
 			} 
 			else
@@ -635,7 +635,7 @@ void CCParticleSystem::update(ccTime dt)
 	this->postStep();
 //#endif
 }
-void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition)
+void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// should be overriden
 }
@@ -647,8 +647,8 @@ void CCParticleSystem::postStep()
 // ParticleSystem - CCTexture protocol
 void CCParticleSystem::setTexture(CCTexture2D* var)
 {
-	CCX_SAFE_RETAIN(var);
-	CCX_SAFE_RELEASE(m_pTexture)
+	CC_SAFE_RETAIN(var);
+	CC_SAFE_RELEASE(m_pTexture)
 	m_pTexture = var;
 
 	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
@@ -694,134 +694,134 @@ bool CCParticleSystem::getIsBlendAdditive()
 // ParticleSystem - Properties of Gravity Mode 
 void CCParticleSystem::setTangentialAccel(float t)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.tangentialAccel = t;
 }
 float CCParticleSystem::getTangentialAccel()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.tangentialAccel;
 }
 void CCParticleSystem::setTangentialAccelVar(float t)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.tangentialAccelVar = t;
 }
 float CCParticleSystem::getTangentialAccelVar()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.tangentialAccelVar;
 }	
 void CCParticleSystem::setRadialAccel(float t)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.radialAccel = t;
 }
 float CCParticleSystem::getRadialAccel()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.radialAccel;
 }
 void CCParticleSystem::setRadialAccelVar(float t)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.radialAccelVar = t;
 }
 float CCParticleSystem::getRadialAccelVar()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.radialAccelVar;
 }
-void CCParticleSystem::setGravity(CGPoint g)
+void CCParticleSystem::setGravity(CCPoint g)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.gravity = g;
 }
-CGPoint CCParticleSystem::getGravity()
+CCPoint CCParticleSystem::getGravity()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.gravity;
 }
 void CCParticleSystem::setSpeed(float speed)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.speed = speed;
 }
 float CCParticleSystem::getSpeed()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.speed;
 }
 void CCParticleSystem::setSpeedVar(float speedVar)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	modeA.speedVar = speedVar;
 }
 float CCParticleSystem::getSpeedVar()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
+	CCAssert( m_nEmitterMode == kCCParticleModeGravity, "Particle Mode should be Gravity");
 	return modeA.speedVar;
 }
 
 // ParticleSystem - Properties of Radius Mode
 void CCParticleSystem::setStartRadius(float startRadius)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.startRadius = startRadius;
 }
 float CCParticleSystem::getStartRadius()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.startRadius;
 }
 void CCParticleSystem::setStartRadiusVar(float startRadiusVar)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.startRadiusVar = startRadiusVar;
 }
 float CCParticleSystem::getStartRadiusVar()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.startRadiusVar;
 }
 void CCParticleSystem::setEndRadius(float endRadius)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.endRadius = endRadius;
 }
 float CCParticleSystem::getEndRadius()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.endRadius;
 }
 void CCParticleSystem::setEndRadiusVar(float endRadiusVar)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.endRadiusVar = endRadiusVar;
 }
 float CCParticleSystem::getEndRadiusVar()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.endRadiusVar;
 }
 void CCParticleSystem::setRotatePerSecond(float degrees)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.rotatePerSecond = degrees;
 }
 float CCParticleSystem::getRotatePerSecond()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.rotatePerSecond;
 }
 void CCParticleSystem::setRotatePerSecondVar(float degrees)
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	modeB.rotatePerSecondVar = degrees;
 }
 float CCParticleSystem::getRotatePerSecondVar()
 {
-	NSAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
+	CCAssert( m_nEmitterMode == kCCParticleModeRadius, "Particle Mode should be Radius");
 	return modeB.rotatePerSecondVar;
 }
 bool CCParticleSystem::getIsActive()
@@ -840,19 +840,19 @@ void CCParticleSystem::setDuration(float var)
 {
 	m_fDuration = var;
 }
-CGPoint CCParticleSystem::getSourcePosition()
+CCPoint CCParticleSystem::getSourcePosition()
 {
 	return m_tSourcePosition;
 }
-void CCParticleSystem::setSourcePosition(CGPoint var)
+void CCParticleSystem::setSourcePosition(CCPoint var)
 {
 	m_tSourcePosition = var;
 }
-CGPoint CCParticleSystem::getPosVar()
+CCPoint CCParticleSystem::getPosVar()
 {
 	return m_tPosVar;
 }
-void CCParticleSystem::setPosVar(CGPoint var)
+void CCParticleSystem::setPosVar(CCPoint var)
 {
 	m_tPosVar = var;
 }

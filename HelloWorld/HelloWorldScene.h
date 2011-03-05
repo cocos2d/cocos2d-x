@@ -14,7 +14,7 @@ public:
 	static cocos2d::CCScene* scene();
 	
 	// a selector callback
-	virtual void menuCloseCallback(NSObject* pSender);
+	virtual void menuCloseCallback(CCObject* pSender);
 
 	// implement the "static node()" method manually
 	LAYER_NODE_FUNC(HelloWorld);

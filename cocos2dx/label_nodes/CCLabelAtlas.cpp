@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
 #include "CCTextureAtlas.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCDrawingPrimitives.h"
 #include "ccConfig.h"
 
@@ -38,7 +38,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
 
@@ -127,7 +127,7 @@ namespace cocos2d{
 		m_sString = label;
 		this->updateAtlasValues();
 
-		CGSize s;
+		CCSize s;
 		s.width = (float)(m_sString.length() * m_nItemWidth);
 		s.height = (float)(m_nItemHeight);
 		this->setContentSizeInPixels(s);
@@ -171,8 +171,8 @@ namespace cocos2d{
 
 
 #if CC_LABELATLAS_DEBUG_DRAW
-		CGSize s = this->getContentSize();
-		CGPoint vertices[4]={
+		CCSize s = this->getContentSize();
+		CCPoint vertices[4]={
 			ccp(0,0),ccp(s.width,0),
 			ccp(s.width,s.height),ccp(0,s.height),
 		};

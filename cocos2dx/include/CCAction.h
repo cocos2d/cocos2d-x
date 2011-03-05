@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __ACTIONS_CCACTION_H__
 
 #include "ccTypes.h"
-#include "NSObject.h"
-#include "NSZone.h"
+#include "CCObject.h"
+#include "CCZone.h"
 #include "CCNode.h"
 
 namespace   cocos2d {
@@ -40,7 +40,7 @@ enum {
 /** 
 @brief Base class for CCAction objects.
  */
-class CCX_DLL CCAction : public NSObject 
+class CCX_DLL CCAction : public CCObject 
 {
 public:
     CCAction(void);
@@ -48,7 +48,7 @@ public:
 
 	char * description();
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 
 	//! return true if the action has finished
 	virtual bool isDone(void);
@@ -154,7 +154,7 @@ public:
 	/** initializes the action */
 	bool initWithAction(CCActionInterval *pAction, float fRate);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
 	virtual void stop();
 	virtual void step(ccTime dt);
@@ -172,8 +172,8 @@ protected:
 
 
 class CCNode;
-class CGPoint;
-class CGRect;
+class CCPoint;
+class CCRect;
 /** 
 @brief CCFollow is an action that "follows" a node.
 
@@ -197,9 +197,9 @@ public:
 	bool initWithTarget(CCNode *pFollowedNode);
 
 	/** initializes the action with a set boundary */
-	bool initWithTarget(CCNode *pFollowedNode, CGRect rect);
+	bool initWithTarget(CCNode *pFollowedNode, CCRect rect);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
 	virtual void stop(void);
@@ -209,7 +209,7 @@ public:
 	static CCFollow* actionWithTarget(CCNode *pFollowedNode);
 
 	/** creates the action with a set boundary */
-	static CCFollow* actionWithTarget(CCNode *pFollowedNode, CGRect rect);
+	static CCFollow* actionWithTarget(CCNode *pFollowedNode, CCRect rect);
 
 protected:
 	// node to follow
@@ -222,8 +222,8 @@ protected:
 	bool m_bBoundaryFullyCovered;
 
 	// fast access to the screen dimensions
-	CGPoint m_obHalfScreenSize;
-	CGPoint m_obFullScreenSize;
+	CCPoint m_obHalfScreenSize;
+	CCPoint m_obFullScreenSize;
 
 	// world boundaries
 	float m_fLeftBoundary;

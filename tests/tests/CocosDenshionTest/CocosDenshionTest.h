@@ -9,14 +9,14 @@ public:
 	CocosDenshionTest(void);
 	~CocosDenshionTest(void);
 
-	void menuCallback(NSObject * pSender);
-	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent);
-	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent);
+	void menuCallback(CCObject * pSender);
+	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
 	virtual void onExit();
 
 private:
 	CCMenu* m_pItmeMenu;
-	CGPoint m_tBeginPos;
+	CCPoint m_tBeginPos;
 	int m_nTestCount;
 	unsigned int m_nSoundId;
 };

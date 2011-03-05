@@ -31,17 +31,17 @@ THE SOFTWARE.
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#include "CCXCocos2dDefine.h"
-#include "NSObject.h"
-#include "NSMutableArray.h"
+#include "CCCocos2dDefine.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
 
 namespace   cocos2d {
-class NSData;
+class CCData;
 
-class CCPVRTexture : public NSObject
+class CCPVRTexture : public CCObject
 {
 protected:
-	NSMutableArray<NSData*> * m_pImageData;
+	CCMutableArray<CCData*> * m_pImageData;
 
 public:
 
@@ -53,17 +53,17 @@ public:
 	static CCPVRTexture * pvrTextureWithContentsOfFile(const char* path);
 // @todo	static CCPVRTexture * pvrTextureWithContentsOfURL(NSURL *url);
 
-	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
-	CCX_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
-	CCX_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
-	CCX_PROPERTY_READONLY(GLenum, m_uInternalFormat, InternalFormat)
-	CCX_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
+	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
+	CC_PROPERTY_READONLY(unsigned int, m_uWidth, Width)
+	CC_PROPERTY_READONLY(unsigned int, m_uHeight, Height)
+	CC_PROPERTY_READONLY(GLenum, m_uInternalFormat, InternalFormat)
+	CC_PROPERTY_READONLY(bool, m_bHasAlpha, HasAlpha)
 
 	// cocos2d integration
-	CCX_PROPERTY(bool, m_bRetainName, RetainName);
+	CC_PROPERTY(bool, m_bRetainName, RetainName);
 
 private:
-	bool unpackPVRData(NSData *data);
+	bool unpackPVRData(CCData *data);
 	bool createGLTexture();
 };
 }//namespace   cocos2d 

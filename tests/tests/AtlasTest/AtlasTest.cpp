@@ -111,7 +111,7 @@ void AtlasDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 1);
@@ -131,7 +131,7 @@ void AtlasDemo::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
+	menu->setPosition( CCPointZero );
 	item1->setPosition( ccp( s.width/2 - 100,30) );
 	item2->setPosition( ccp( s.width/2, 30) );
 	item3->setPosition( ccp( s.width/2 + 100,30) );
@@ -139,7 +139,7 @@ void AtlasDemo::onEnter()
 	addChild(menu, 1);	
 }
 
-void AtlasDemo::restartCallback(NSObject* pSender)
+void AtlasDemo::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new AtlasTestScene();
 	s->addChild(restartAtlasAction()); 
@@ -148,7 +148,7 @@ void AtlasDemo::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void AtlasDemo::nextCallback(NSObject* pSender)
+void AtlasDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new AtlasTestScene();
 	s->addChild( nextAtlasAction() );
@@ -156,7 +156,7 @@ void AtlasDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void AtlasDemo::backCallback(NSObject* pSender)
+void AtlasDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new AtlasTestScene();
 	s->addChild( backAtlasAction() );
@@ -174,7 +174,7 @@ Atlas1::Atlas1()
 {
 	m_textureAtlas = CCTextureAtlas::textureAtlasWithFile(s_AtlasTest, 3); m_textureAtlas->retain();
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	//
 	// Notice: u,v tex coordinates are inverted
@@ -380,7 +380,7 @@ Atlas3::Atlas3()
 	addChild(label3, 0, kTagBitmapAtlas3);
 	
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();	
+	CCSize s = CCDirector::sharedDirector()->getWinSize();	
 	label1->setPosition( ccp( 0,0) );
 	label2->setPosition( ccp( s.width/2, s.height/2) );
 	label3->setPosition( ccp( s.width, s.height) );
@@ -430,7 +430,7 @@ Atlas4::Atlas4()
 	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
 	addChild(label);
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	label->setPosition( ccp(s.width/2, s.height/2) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -449,7 +449,7 @@ Atlas4::Atlas4()
 	CCFiniteTimeAction* scale_seq = CCSequence::actions(scale, scale_back,NULL);
 	CCAction* scale_4ever = CCRepeatForever::actionWithAction((CCActionInterval*)scale_seq);
 	
-	CCActionInterval* jump = CCJumpBy::actionWithDuration(0.5f, CGPointZero, 60, 1);
+	CCActionInterval* jump = CCJumpBy::actionWithDuration(0.5f, CCPointZero, 60, 1);
 	CCAction* jump_4ever = CCRepeatForever::actionWithAction(jump);
 	
 	CCActionInterval* fade_out = CCFadeOut::actionWithDuration(1);
@@ -476,7 +476,7 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	ccDrawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
 	ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
 }
@@ -514,7 +514,7 @@ Atlas5::Atlas5()
 	CCLabelBMFont *label = CCLabelBMFont::bitmapFontAtlasWithString("abcdefg", "fonts/bitmapFontTest4.fnt");
 	addChild(label);
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	label->setPosition( ccp(s.width/2, s.height/2) );
 	label->setAnchorPoint( ccp(0.5f, 0.5f) );
@@ -537,7 +537,7 @@ std::string Atlas5::subtitle()
 
 Atlas6::Atlas6()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelBMFont* label = NULL;
 	label = CCLabelBMFont::bitmapFontAtlasWithString("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt");
@@ -581,7 +581,7 @@ std::string Atlas6::subtitle()
 
 AtlasBitmapColor::AtlasBitmapColor()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCLabelBMFont* label = NULL;
 	label = CCLabelBMFont::bitmapFontAtlasWithString("Blue", "fonts/bitmapFontTest5.fnt");
@@ -630,9 +630,9 @@ AtlasFastBitmap::AtlasFastBitmap()
 			CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(str, "fonts/bitmapFontTest.fnt");
 			addChild(label);
 			
-			CGSize s = CCDirector::sharedDirector()->getWinSize();
+			CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-			CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+			CCPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
 			label->setPosition( p );
 			label->setAnchorPoint(ccp(0.5f, 0.5f));
 		}

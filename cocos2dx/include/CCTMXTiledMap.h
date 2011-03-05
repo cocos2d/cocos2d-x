@@ -66,7 +66,7 @@ namespace cocos2d {
 	- The tileset image will be loaded using the CCTextureCache
 	- Each tile will have a unique tag
 	- Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z
-	- Each object group will be treated as an NSMutableArray
+	- Each object group will be treated as an CCMutableArray
 	- Object class which will contain all the properties in a dictionary
 	- Properties can be assigned to the Map, Layer, Object Group, and Object
 
@@ -82,13 +82,13 @@ namespace cocos2d {
 	- map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
 	- map->layerNamed(name_of_the_layer);
 
-	Each object group is created using a CCTMXObjectGroup which is a subclass of NSMutableArray.
+	Each object group is created using a CCTMXObjectGroup which is a subclass of CCMutableArray.
 	You can obtain the object groups at runtime by:
 	- map->objectGroupNamed(name_of_the_object_group);
 
 	Each object is a CCTMXObject.
 
-	Each property is stored as a key-value pair in an NSMutableDictionary.
+	Each property is stored as a key-value pair in an CCMutableDictionary.
 	You can obtain the properties at runtime by:
 
 	map->propertyNamed(name_of_the_property);
@@ -101,15 +101,15 @@ namespace cocos2d {
 	class CCX_DLL CCTMXTiledMap : public CCNode
 	{
 		/** the map's size property measured in tiles */
-		CCX_SYNTHESIZE(CGSize, m_tMapSize, MapSize);
+		CC_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
 		/** the tiles's size property measured in pixels */
-		CCX_SYNTHESIZE(CGSize, m_tTileSize, TileSize);
+		CC_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
 		/** map orientation */
-		CCX_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
+		CC_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
 		/** object groups */
-		CCX_PROPERTY(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
+		CC_PROPERTY(CCMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/** properties */
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXTiledMap();
 		virtual ~CCTMXTiledMap();
@@ -132,10 +132,10 @@ namespace cocos2d {
 		CCTMXObjectGroup* groupNamed(const char *groupName);
 
 		/** return the value for the specific property name */
-		NSString *propertyNamed(const char *propertyName);
+		CCString *propertyNamed(const char *propertyName);
 
 		/** return properties dictionary for tile GID */
-		NSDictionary<std::string, NSString*> *propertiesForGID(int GID);
+		CCDictionary<std::string, CCString*> *propertiesForGID(int GID);
 
 	private:
  		CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
@@ -143,7 +143,7 @@ namespace cocos2d {
 
 	protected:
 		//! tile properties
-		NSDictionary<int, CCXStringToStringDictionary*> *m_pTileProperties;
+		CCDictionary<int, CCXStringToStringDictionary*> *m_pTileProperties;
 
 	};
 
