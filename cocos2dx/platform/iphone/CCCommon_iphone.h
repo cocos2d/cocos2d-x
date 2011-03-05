@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_IPHONE__
-#define __CCX_COMMON_IPHONE__
+#ifndef __CC_COMMON_IPHONE__
+#define __CC_COMMON_IPHONE__
 
 //#if defined(SS_SHARED)
  //   #define CCX_DLL     __attribute__((visibility("default")))
@@ -34,4 +34,4 @@ THE SOFTWARE.
 //#endif
 #define CCX_DLL
 
-#endif	// end of __CCX_COMMON_IPHONE__
+#endif	// end of __CC_COMMON_IPHONE__

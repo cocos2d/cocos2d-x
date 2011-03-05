@@ -14,7 +14,7 @@
 @interface ___PROJECTNAMEASIDENTIFIER___AppDelegate : NSObject <UIApplicationDelegate> {
         UIWindow                              *window;
         RootViewController             *viewController;
-        cocos2d::CCXEGLView     *view;
+        cocos2d::CCEGLView     *view;
 }
 
 @property (nonatomic, retain) UIWindow *window;

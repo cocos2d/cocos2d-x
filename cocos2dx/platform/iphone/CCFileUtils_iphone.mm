@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
-#include "NSString.h"
-#include "CCXFileUtils_iphone.h"
-#include "CCXCocos2dDefine.h"
+#include "CCString.h"
+#include "CCFileUtils_iphone.h"
+#include "CCCocos2dDefine.h"
 
 #define MAX_PATH 260
 
@@ -107,7 +107,7 @@ static const char* static_fullPathFromRelativePath(const char *pszRelativePath)
 
 {
     
-	NSAssert(pszRelativePath != nil, @"CCFileUtils: Invalid path");
+	CCAssert(pszRelativePath != NULL, @"CCFileUtils: Invalid path");
     
         // do not convert an absolute path (starting with '/')
 	NSString *relPath = [NSString stringWithUTF8String: pszRelativePath];
@@ -150,9 +150,9 @@ namespace cocos2d {
     class CCDictMaker
     {
     public:
-        NSDictionary<std::string, NSObject*> *m_pRootDict;
-        NSDictionary<std::string, NSObject*> *m_pCurDict;
-        std::stack<NSDictionary<std::string, NSObject*>*> m_tDictStack;
+        CCDictionary<std::string, CCObject*> *m_pRootDict;
+        CCDictionary<std::string, CCObject*> *m_pCurDict;
+        std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
         std::string m_sCurKey;///< parsed key
         CCSAXState m_tState;
     public:
@@ -165,7 +165,7 @@ namespace cocos2d {
         ~CCDictMaker()
         {
         }
-        NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName)
+        CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
         {
             FILE *fp = NULL;
             if( !(fp = fopen(pFileName, "r")) )
@@ -215,7 +215,7 @@ namespace cocos2d {
         std::string sName((char*)name);
         if( sName == "dict" )
         {
-            NSDictionary<std::string, NSObject*> *pNewDict = new NSDictionary<std::string, NSObject*>();
+            CCDictionary<std::string, CCObject*> *pNewDict = new CCDictionary<std::string, CCObject*>();
             if(! pMaker->m_pRootDict)
             {
                 pMaker->m_pRootDict = pNewDict;
@@ -223,7 +223,7 @@ namespace cocos2d {
             }
             else
             {
-                NSAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
+                CCAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
                 pMaker->m_pCurDict->setObject(pNewDict, pMaker->m_sCurKey);
                 pNewDict->release();
                 pMaker->m_sCurKey.clear();
@@ -262,7 +262,7 @@ namespace cocos2d {
             pMaker->m_tDictStack.pop();
             if ( !pMaker->m_tDictStack.empty() )
             {
-                pMaker->m_pCurDict = (NSDictionary<std::string, NSObject*>*)(pMaker->m_tDictStack.top());
+                pMaker->m_pCurDict = (CCDictionary<std::string, CCObject*>*)(pMaker->m_tDictStack.top());
             }
         }
         pMaker->m_tState = SAX_NONE;
@@ -274,7 +274,7 @@ namespace cocos2d {
         {
             return;
         }
-        NSString *pText = new NSString();
+        CCString *pText = new CCString();
         pText->m_sString = std::string((char*)ch,0,len);
         
         switch(pMaker->m_tState)
@@ -286,7 +286,7 @@ namespace cocos2d {
             case SAX_REAL:
             case SAX_STRING:
             {
-                NSAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
+                CCAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
                 pMaker->m_pCurDict->setObject(pText, pMaker->m_sCurKey);
                 break;
             }
@@ -299,8 +299,8 @@ namespace cocos2d {
     
     void CCFileUtils::setResourcePath(const char *pszResourcePath)
     {
-        NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-        NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
+        CCAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
+        CCAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
         
         strcpy(s_pszResourcePath, pszResourcePath);
     }
@@ -352,13 +352,13 @@ namespace cocos2d {
     const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
     {
         std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
-        NSString *pRet = new NSString();
+        CCString *pRet = new CCString();
         pRet->autorelease();
         pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
         pRet->m_sString += pszFilename;
         return pRet->m_sString.c_str();
     }
-    NSDictionary<std::string, NSObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+    CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
     {
         CCDictMaker tMaker;
         return tMaker.dictionaryWithContentsOfFile(pFileName);

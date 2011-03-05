@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_IPHONE_UIIMAGE_H__
-#define __PLATFORM_IPHONE_UIIMAGE_H__
+#ifndef __PLATFORM_IPHONE_CCIMAGE_H__
+#define __PLATFORM_IPHONE_CCIMAGE_H__
 
 #include <string>
-#include "ccxCommon.h"
+#include "CCCommon.h"
 #include "CCRenderTexture.h"
 
 struct AppResourceEntry;
@@ -42,18 +42,18 @@ typedef struct
 } tImageInfo;
 
 namespace   cocos2d {
-class CCXBitmapDC;
+class CCBitmapDC;
 
 /**
 @brief image toolkits
 */
-class CCX_DLL UIImage
+class CCX_DLL CCImage
 {
 public:
-	UIImage(void);
-	UIImage(CCXBitmapDC * pBmpDC);
+	CCImage(void);
+	CCImage(CCBitmapDC * pBmpDC);
 	
-	~UIImage(void);
+	~CCImage(void);
 
 	/** 
 	Load the image from the specified path. 
@@ -108,4 +108,4 @@ private:
 };
 }//namespace   cocos2d 
 
-#endif // __PLATFORM_IPHONE_UIIMAGE_H__
+#endif // __PLATFORM_IPHONE_CCIMAGE_H__

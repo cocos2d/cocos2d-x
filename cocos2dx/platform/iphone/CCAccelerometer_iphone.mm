@@ -22,36 +22,36 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCXUIAccelerometer.h"
+#include "CCAccelerometer.h"
 #include "AccelerometerDelegateWrapper.h"
 
 namespace cocos2d {
     
-    UIAccelerometer* UIAccelerometer::m_spUIAccelerometer = NULL;
+    CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
     
-    UIAccelerometer::UIAccelerometer()
+    CCAccelerometer::CCAccelerometer()
     {
     }
     
-    UIAccelerometer::~UIAccelerometer()
+    CCAccelerometer::~CCAccelerometer()
     {
     }
     
-    UIAccelerometer* UIAccelerometer::sharedAccelerometer()
+    CCAccelerometer* CCAccelerometer::sharedAccelerometer()
     {
-        if (m_spUIAccelerometer == NULL) {
-            m_spUIAccelerometer = new UIAccelerometer();
+        if (m_spCCAccelerometer == NULL) {
+            m_spCCAccelerometer = new CCAccelerometer();
         }
         
-        return m_spUIAccelerometer;
+        return m_spCCAccelerometer;
     }
     
-    void UIAccelerometer::removeDelegate(UIAccelerometerDelegate* pDelegate)
+    void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate)
     {
         [[AccelerometerDispatcher sharedAccelerometerDispather] removeDelegate:pDelegate];
     }
     
-    void UIAccelerometer::addDelegate(UIAccelerometerDelegate* pDelegate)
+    void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
     {
         [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:pDelegate];
     }

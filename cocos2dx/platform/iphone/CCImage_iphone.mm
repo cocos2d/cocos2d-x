@@ -23,10 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #include <Foundation/Foundation.h>
 #include <UIKit/UIKit.h>
-#include "CCXUIImage_iphone.h"
-#include "CCXFileUtils.h"
+#include "CCImage_iphone.h"
+#include "CCFileUtils.h"
 #include "CCConfiguration.h"
-#include "CCXBitmapDC.h"
+#include "CCBitmapDC.h"
 
 
 static unsigned int nextPOT(unsigned int x)
@@ -270,9 +270,9 @@ static bool static_initWithFile(const char* path, tImageInfo *pImageinfo)
 using namespace std;
 namespace   cocos2d {
 
-bool UIImage::s_bPopupNotify = false;
+bool CCImage::s_bPopupNotify = false;
 
-UIImage::UIImage(void)
+CCImage::CCImage(void)
 {
 	m_imageInfo.hasAlpha = false;
 	m_imageInfo.isPremultipliedAlpha = false;
@@ -282,20 +282,20 @@ UIImage::UIImage(void)
 	m_imageInfo.bitsPerComponent = 0;
 }
 
-UIImage::UIImage(CCXBitmapDC * pBmpDC)
+CCImage::CCImage(CCBitmapDC * pBmpDC)
 {
     do 
 	{
-		CCX_BREAK_IF(! pBmpDC);
+		CC_BREAK_IF(! pBmpDC);
 		
 		// init imageinfo
 		int nWidth	= pBmpDC->getWidth();
 		int nHeight	= pBmpDC->getHeight();
-		CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 
 		int nLen = nWidth * nHeight * 4;
 		m_imageInfo.data = new unsigned char [nLen];
-		CCX_BREAK_IF(! m_imageInfo.data);
+		CC_BREAK_IF(! m_imageInfo.data);
 		memcpy(m_imageInfo.data, pBmpDC->getData(), nLen);
 
 		m_imageInfo.height		= nHeight;
@@ -307,7 +307,7 @@ UIImage::UIImage(CCXBitmapDC * pBmpDC)
 	} while (0);
 }
 
-UIImage::~UIImage(void)
+CCImage::~CCImage(void)
 {
 	if (m_imageInfo.data)
 	{
@@ -315,7 +315,7 @@ UIImage::~UIImage(void)
 	}
 }
 
-bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageType)
+bool CCImage::initWithContentsOfFile(const string &strPath, tImageFormat imageType)
 {
 	bool bRet = false;
 
@@ -334,68 +334,68 @@ bool UIImage::initWithContentsOfFile(const string &strPath, tImageFormat imageTy
 	return bRet;
 }
 
-unsigned int UIImage::width(void)
+unsigned int CCImage::width(void)
 {
 	return m_imageInfo.width;
 }
 
-unsigned int UIImage::height(void)
+unsigned int CCImage::height(void)
 {
 	return m_imageInfo.height;
 }
 
-bool UIImage::isAlphaPixelFormat(void)
+bool CCImage::isAlphaPixelFormat(void)
 {
 	return m_imageInfo.hasAlpha;
 }
 
 // now, uphone only support premultiplied data
 // so, we only return true
-bool UIImage::isPremultipliedAlpha(void)
+bool CCImage::isPremultipliedAlpha(void)
 {
 	return m_imageInfo.isPremultipliedAlpha;
 }
 
 // compute how many bits every color component 
-int UIImage::CGImageGetBitsPerComponent(void)
+int CCImage::CGImageGetBitsPerComponent(void)
 {
 	return m_imageInfo.bitsPerComponent;
 }
 
 // now we only support RGBA8888 or RGB888
 // so it has color space
-int UIImage::CGImageGetColorSpace(void)
+int CCImage::CGImageGetColorSpace(void)
 {
 	return 1;
 }
 
-unsigned char* UIImage::getData(void)
+unsigned char* CCImage::getData(void)
 {
 	return m_imageInfo.data;
 }
 
-bool UIImage::save(const std::string &strFileName, int nFormat)
+bool CCImage::save(const std::string &strFileName, int nFormat)
 {
 	/// @todo uiimage::save
 	return false;
 }
-bool UIImage::initWithData(unsigned char *pBuffer, int nLength)
+bool CCImage::initWithData(unsigned char *pBuffer, int nLength)
 {
 	return static_initWithData(pBuffer, nLength, &m_imageInfo);
 }
 
-bool UIImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
+bool CCImage::initWithBuffer(int tx, int ty, unsigned char *pBuffer)
 {
 	/// @todo
 	return false;
 }
 
-void UIImage::setIsPopupNotify(bool bNotify)
+void CCImage::setIsPopupNotify(bool bNotify)
 {
     s_bPopupNotify = bNotify;
 }
 
-bool UIImage::getIsPopupNotify()
+bool CCImage::getIsPopupNotify()
 {
     return s_bPopupNotify;
 }
