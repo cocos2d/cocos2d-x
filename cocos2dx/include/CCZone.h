@@ -24,6 +24,13 @@ THE SOFTWARE.
 
 #ifndef __CC_ZONE_H__
 #define __CC_ZONE_H__
+
+/************************************************************************/
+/* CCZone implements some functions of NSZone, but it is too simple.
+/* It is used only for cocos2dx, don't use it in your code, or you may have
+/* trouble.
+/************************************************************************/
+
 #include <stdio.h>
 
 namespace   cocos2d {

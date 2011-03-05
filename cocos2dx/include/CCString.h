@@ -23,9 +23,17 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __CCSTRING_H__
 #define __CCSTRING_H__
+
+/************************************************************************/
+/* CCString implements some functions of NSString, but it is too simple.
+/* It is used only for cocos2dx, don't use it in your code, or you may have
+/* trouble.
+/************************************************************************/
+
 #include <string>
 #include <stdlib.h>
 #include "CCObject.h"
+
 namespace cocos2d {
 
 	class CCX_DLL CCString : public CCObject

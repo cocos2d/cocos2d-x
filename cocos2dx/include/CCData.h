@@ -25,6 +25,12 @@ THE SOFTWARE.
 #ifndef __CCData_H__
 #define __CCData_H__
 
+/************************************************************************
+* CCData implements some functions of NSData, but it is 
+* too simple. It is used only for cocos2dx, don't use it in your code, 
+* or you may have trouble.
+************************************************************************/
+
 #include "CCObject.h"
 #include <string>
 

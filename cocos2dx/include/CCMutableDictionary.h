@@ -24,6 +24,12 @@ THE SOFTWARE.
 #ifndef __CCMUTABLE_DICTIONARY_H__
 #define __CCMUTABLE_DICTIONARY_H__
 
+/************************************************************************
+* CCMutableDictionary implements some functions of NSMutableDictionary, 
+* but it is too simple. It is used only for cocos2dx, don't use it in your 
+* code, or you may have trouble.
+************************************************************************/
+
 #include <map>
 #include <vector>
 #include <string>

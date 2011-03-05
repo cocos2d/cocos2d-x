@@ -25,6 +25,12 @@ THE SOFTWARE.
 #ifndef __NS_SET_H__
 #define __NS_SET_H__
 
+/************************************************************************/
+/* CCSet implements some functions of NSSet, but it is too simple.
+/* It is used only for cocos2dx, don't use it in your code, or you may have
+/* trouble.
+/************************************************************************/
+
 #include <set>
 #include "CCObject.h"
 

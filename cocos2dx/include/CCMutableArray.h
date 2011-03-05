@@ -25,6 +25,13 @@ THE SOFTWARE.
 #ifndef __CC_MUTATLE_ARRAY_H__
 #define __CC_MUTATLE_ARRAY_H__
 
+/************************************************************************
+ * CCMutableArray implements some functions of NSMutableArray, but it is 
+ * too simple. It is used only for cocos2dx, don't use it in your code, 
+ * or you may have
+ * trouble.
+************************************************************************/
+
 #include "CCObject.h"
 #include <vector>
 #include <assert.h>

@@ -25,6 +25,12 @@ THE SOFTWARE.
 #ifndef __COCOA_CCObject_H__
 #define __COCOA_CCObject_H__
 
+/************************************************************************/
+/* CCObject implements some functions of NSObject, but it is too simple.
+/* It is used only for cocos2dx, don't use it in your code, or you may have
+/* trouble.
+/************************************************************************/
+
 #include "CCCommon.h"
 
 
