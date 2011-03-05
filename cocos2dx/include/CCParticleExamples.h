@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace cocos2d {
 
 //! @brief A fire particle system
-class CCX_DLL CCParticleFire : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleFire : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleFire(){}
@@ -50,7 +50,7 @@ public:
 };
 
 //! @brief A fireworks particle system
-class CCX_DLL CCParticleFireworks : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleFireworks : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleFireworks(){}
@@ -71,7 +71,7 @@ public:
 };
 
 //! @brief A sun particle system
-class CCX_DLL CCParticleSun : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleSun : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleSun(){}
@@ -92,7 +92,7 @@ public:
 };
 
 //! @brief A galaxy particle system
-class CCX_DLL CCParticleGalaxy : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleGalaxy : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleGalaxy(){}
@@ -113,7 +113,7 @@ public:
 };
 
 //! @brief A flower particle system
-class CCX_DLL CCParticleFlower : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleFlower : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleFlower(){}
@@ -134,7 +134,7 @@ public:
 };
 
 //! @brief A meteor particle system
-class CCX_DLL CCParticleMeteor : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleMeteor : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleMeteor(){}
@@ -155,7 +155,7 @@ public:
 };
 
 //! @brief An spiral particle system
-class CCX_DLL CCParticleSpiral : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleSpiral : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleSpiral(){}
@@ -176,7 +176,7 @@ public:
 };
 
 //! @brief An explosion particle system
-class CCX_DLL CCParticleExplosion : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleExplosion : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleExplosion(){}
@@ -197,7 +197,7 @@ public:
 };
 
 //! @brief An smoke particle system
-class CCX_DLL CCParticleSmoke : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleSmoke : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleSmoke(){}
@@ -218,7 +218,7 @@ public:
 };
 
 //! @brief An snow particle system
-class CCX_DLL CCParticleSnow : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleSnow : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleSnow(){}
@@ -239,7 +239,7 @@ public:
 };
 
 //! @brief A rain particle system
-class CCX_DLL CCParticleRain : public ARCH_OPTIMAL_PARTICLE_SYSTEM
+class CC_DLL CCParticleRain : public ARCH_OPTIMAL_PARTICLE_SYSTEM
 {
 public:
 	CCParticleRain(){}

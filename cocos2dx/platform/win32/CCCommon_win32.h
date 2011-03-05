@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __CC_COMMON_WIN32__
 
 #if defined(_USRDLL)
-#define CCX_DLL     __declspec(dllexport)
+#define CC_DLL     __declspec(dllexport)
 #else 		/* use a DLL library */
-#define CCX_DLL     __declspec(dllimport)
+#define CC_DLL     __declspec(dllimport)
 #endif
 
 namespace cocos2d{
@@ -36,7 +36,7 @@ namespace cocos2d{
     /**
     @brief	Output Debug message to VS Output window.
     */
-    void CCX_DLL CCLog(const char * pszFormat, ...);
+    void CC_DLL CCLog(const char * pszFormat, ...);
 
 }//namespace   cocos2d 
 

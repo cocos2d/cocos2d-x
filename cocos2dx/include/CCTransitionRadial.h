@@ -32,7 +32,7 @@ namespace   cocos2d {
 /**
  @brief A counter colock-wise radial transition to the next scene
  */
-class CCX_DLL CCTransitionRadialCCW : public CCTransitionScene
+class CC_DLL CCTransitionRadialCCW : public CCTransitionScene
 {
 public:
 	CCTransitionRadialCCW(){}
@@ -51,7 +51,7 @@ protected:
 /**
  @brief A counter colock-wise radial transition to the next scene
  */
-class CCX_DLL CCTransitionRadialCW : public CCTransitionRadialCCW
+class CC_DLL CCTransitionRadialCW : public CCTransitionRadialCCW
 {
 public:
 	CCTransitionRadialCW(){}

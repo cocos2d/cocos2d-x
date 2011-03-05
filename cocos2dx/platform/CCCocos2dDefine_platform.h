@@ -26,13 +26,13 @@
 
 #include "config_platform.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
+#if defined(CC_PLATFORM_UPHONE)
     #include "uphone/CCCocos2dDefine_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
+#elif defined(CC_PLATFORM_WIN32)
     #include "win32/CCCocos2dDefine_win32.h"
-#elif defined(CCX_PLATFORM_ANDROID)
+#elif defined(CC_PLATFORM_ANDROID)
     #include "android/CCCocos2dDefine_android.h"
-#elif defined(CCX_PLATFORM_IPHONE)
+#elif defined(CC_PLATFORM_IPHONE)
     #include "iphone/CCCocos2dDefine_iphone.h"
 #else
     #error

@@ -51,7 +51,7 @@ namespace   cocos2d {
 	- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effecs, use the action CCFollow or position/scale/rotate.
 
 	*/
-	class CCX_DLL CCCamera : public CCObject
+	class CC_DLL CCCamera : public CCObject
 	{
 	protected:
 		float m_fEyeX;

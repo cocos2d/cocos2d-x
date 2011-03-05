@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "config_platform.h"
 
-#ifdef CCX_PLATFORM_MAC
+#ifdef CC_PLATFORM_MAC
 #include "mac/CCParticleSystemPoint_mac.h"
 #else 
 #include "CCParticleSystemPoint_mobile.h"

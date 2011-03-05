@@ -35,7 +35,7 @@ namespace cocos2d {
 	The children will be moved faster / slower than the parent according the the parallax ratio.
 
 	*/
-	class CCX_DLL CCParallaxNode : public CCNode 
+	class CC_DLL CCParallaxNode : public CCNode 
 	{
 		/** array that holds the offset / ratio of the children */
 		CC_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)

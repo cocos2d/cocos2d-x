@@ -32,11 +32,11 @@ THE SOFTWARE.
 #include "config_platform.h"
 #include "CCEGLView.h"
 
-#if defined(CCX_PLATFORM_MOBILE)
+#if defined(CC_PLATFORM_MOBILE)
     #include <GLES/gl.h>
     #include <GLES/glext.h>
     #include "support/opengl_support/glu.h"
-#elif defined(CCX_PLATFORM_PC)
+#elif defined(CC_PLATFORM_PC)
     #include <OpenGL/gl.h>
     #include <OpenGL/glu.h>
 #else
@@ -44,7 +44,7 @@ THE SOFTWARE.
 #endif
 
 // iOS
-#if defined(CCX_PLATFORM_MOBILE)
+#if defined(CC_PLATFORM_MOBILE)
     #define CC_GLVIEW                   cocos2d::CCEGLView
     #define ccglOrtho					glOrthof
     #define	ccglClearDepth				glClearDepthf
@@ -62,7 +62,7 @@ THE SOFTWARE.
     #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
 
 // Mac
-#elif defined(CCX_PLATFORM_PC)
+#elif defined(CC_PLATFORM_PC)
     #define CC_GLVIEW                   MacGLView
     #define ccglOrtho					glOrtho
     #define	ccglClearDepth				glClearDepth

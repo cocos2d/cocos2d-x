@@ -43,7 +43,7 @@ class CCSprite;
  It saves in a cache the sprite frames.
  @since v0.9
  */
-class CCX_DLL CCSpriteFrameCache : public CCObject
+class CC_DLL CCSpriteFrameCache : public CCObject
 {
 public:
 	bool init(void);

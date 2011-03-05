@@ -21,9 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_FILEUTILS_H__
-#define __CCX_FILEUTILS_H__
+#ifndef __CC_FILEUTILS_H__
+#define __CC_FILEUTILS_H__
 
 #include "platform/CCFileUtils_platform.h"
 
-#endif // __CCX_FILEUTILS_H__
+#endif // __CC_FILEUTILS_H__

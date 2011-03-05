@@ -165,7 +165,7 @@ emitter.startSpin = 0;
 @endcode
 
 */
-class CCX_DLL CCParticleSystem : public CCNode, public CCTextureProtocol
+class CC_DLL CCParticleSystem : public CCNode, public CCTextureProtocol
 {	
 protected:
 	std::string m_sPlistFile;

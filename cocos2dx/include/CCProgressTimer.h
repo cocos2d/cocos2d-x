@@ -52,7 +52,7 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CCX_DLL CCProgressTimer : public CCNode
+class CC_DLL CCProgressTimer : public CCNode
 {
 public:
 	~CCProgressTimer(void);

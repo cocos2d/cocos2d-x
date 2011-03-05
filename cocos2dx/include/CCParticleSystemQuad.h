@@ -44,7 +44,7 @@ Special features and Limitations:
 - It supports subrects
 @since v0.8
 */
-class CCX_DLL CCParticleSystemQuad : public CCParticleSystem
+class CC_DLL CCParticleSystemQuad : public CCParticleSystem
 {
 protected:
 	ccV2F_C4F_T2F_Quad	*m_pQuads;		// quads to be rendered

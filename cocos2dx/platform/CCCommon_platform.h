@@ -27,13 +27,13 @@ THE SOFTWARE.
 
 #include "config_platform.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
+#if defined(CC_PLATFORM_UPHONE)
     #include "uphone/CCCommon_uphone.h"
-#elif defined(CCX_PLATFORM_WIN32)
+#elif defined(CC_PLATFORM_WIN32)
     #include "win32/CCCommon_win32.h"
-#elif defined(CCX_PLATFORM_ANDROID)
+#elif defined(CC_PLATFORM_ANDROID)
     #include "android/CCCommon_android.h"
-#elif defined(CCX_PLATFORM_IPHONE)
+#elif defined(CC_PLATFORM_IPHONE)
     #include "iphone/CCCommon_iphone.h"
 #else
     #error

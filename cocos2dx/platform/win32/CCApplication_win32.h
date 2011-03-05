@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_APPLICATION_WIN32_H__
-#define __CCX_APPLICATION_WIN32_H__
+#ifndef __CC_APPLICATION_WIN32_H__
+#define __CC_APPLICATION_WIN32_H__
 
 #include <Windows.h>
 #include "CCGeometry.h"
@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCApplication
+class CC_DLL CCApplication
 {
 public:
     CCApplication();
@@ -86,4 +86,4 @@ protected:
 
 }       // end of namespace   cocos2d
 
-#endif	// end of __CCX_APPLICATION_WIN32_H__
+#endif	// end of __CC_APPLICATION_WIN32_H__

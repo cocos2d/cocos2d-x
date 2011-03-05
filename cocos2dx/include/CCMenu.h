@@ -46,7 +46,7 @@ namespace cocos2d{
 	*  - You can add MenuItem objects in runtime using addChild:
 	*  - But the only accecpted children are MenuItem objects
 	*/
-	class CCX_DLL CCMenu : public CCLayer, public CCRGBAProtocol
+	class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
 	{
 	public:
 		CCMenu(){}

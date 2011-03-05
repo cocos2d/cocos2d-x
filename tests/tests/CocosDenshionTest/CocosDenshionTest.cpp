@@ -3,17 +3,17 @@
 #include "SimpleAudioEngine.h"
 
 // android effect only support ogg
-#ifdef CCX_PLATFORM_ANDROID
+#ifdef CC_PLATFORM_ANDROID
 	#define EFFECT_FILE		"effect2.ogg"
 #else
 	#define EFFECT_FILE		"effect1.wav"
-#endif // CCX_PLATFORM_ANDROID
+#endif // CC_PLATFORM_ANDROID
 
-#ifdef CCX_PLATFORM_WIN32
+#ifdef CC_PLATFORM_WIN32
 	#define MUSIC_FILE		"music.mid"
 #else
 	#define MUSIC_FILE		"background.mp3"
-#endif // CCX_PLATFORM_WIN32
+#endif // CC_PLATFORM_WIN32
 
 using namespace cocos2d;
 using namespace CocosDenshion;

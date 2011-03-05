@@ -35,9 +35,9 @@ class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
 
-class CCXEGL;
+class CCEGL;
 
-class CCX_DLL CCEGLView
+class CC_DLL CCEGLView
 {
 public:
 
@@ -68,7 +68,7 @@ private:
     CCTouch *           m_pTouch;
     EGLTouchDelegate *  m_pDelegate;
 
-    CCXEGL *            m_pEGL;
+    CCEGL *            m_pEGL;
 
 	HWND				m_hWnd;
 

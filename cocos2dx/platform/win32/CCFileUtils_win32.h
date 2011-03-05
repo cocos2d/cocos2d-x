@@ -32,7 +32,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 //! @brief  Helper class to handle file operations
-class CCX_DLL CCFileUtils : public FileUtils
+class CC_DLL CCFileUtils : public FileUtils
 {
 public:
 

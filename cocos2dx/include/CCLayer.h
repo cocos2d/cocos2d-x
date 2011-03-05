@@ -46,7 +46,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
+class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
 {
 public:
 	CCLayer();
@@ -137,7 +137,7 @@ All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CCX_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
+class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
 	GLfloat m_pSquareVertices[4 * 2];
@@ -214,7 +214,7 @@ be drawn, however.
 
 @since v0.99.5
 */
-class CCX_DLL CCLayerGradient : public CCLayerColor
+class CC_DLL CCLayerGradient : public CCLayerColor
 {
 public:
     /** Creates a full-screen CCLayer with a gradient between start and end. */
@@ -246,7 +246,7 @@ Features:
 - It supports one or more children
 - Only one children will be active a time
 */
-class CCX_DLL CCMultiplexLayer : public CCLayer
+class CC_DLL CCMultiplexLayer : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;

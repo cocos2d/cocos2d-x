@@ -62,9 +62,9 @@ namespace cocos2d {
 
 	This information is obtained from the TMX file.
 	*/
-	class CCX_DLL CCTMXLayerInfo : public CCObject
+	class CC_DLL CCTMXLayerInfo : public CCObject
 	{
-		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		std::string			m_sName;
 		CCSize				m_tLayerSize;
@@ -90,7 +90,7 @@ namespace cocos2d {
 
 	This information is obtained from the TMX file. 
 	*/
-	class CCX_DLL CCTMXTilesetInfo : public CCObject
+	class CC_DLL CCTMXTilesetInfo : public CCObject
 	{
 	public:
 		std::string		m_sName;
@@ -121,7 +121,7 @@ namespace cocos2d {
 	This information is obtained from the TMX file.
 
 	*/
-	class CCX_DLL CCTMXMapInfo : public CCObject
+	class CC_DLL CCTMXMapInfo : public CCObject
 	{	
 	public:	
 		/// map orientation
@@ -145,7 +145,7 @@ namespace cocos2d {
 		/// is stroing characters?
 		CC_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
 		/// properties
-		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:	
 		CCTMXMapInfo();
 		virtual ~CCTMXMapInfo();
@@ -156,8 +156,8 @@ namespace cocos2d {
 		/** initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
 	
-		CCDictionary<int, CCXStringToStringDictionary*> * getTileProperties();
-		void setTileProperties(CCDictionary<int, CCXStringToStringDictionary*> * tileProperties);
+		CCDictionary<int, CCStringToStringDictionary*> * getTileProperties();
+		void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
 
 		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
@@ -170,7 +170,7 @@ namespace cocos2d {
 		//! current string
 		std::string m_sCurrentString;
 		//! tile properties
-		CCDictionary<int, CCXStringToStringDictionary*>* m_pTileProperties;
+		CCDictionary<int, CCStringToStringDictionary*>* m_pTileProperties;
 	};
 
 }// namespace cocos2d

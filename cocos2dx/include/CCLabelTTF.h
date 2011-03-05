@@ -34,7 +34,7 @@ namespace cocos2d{
 	*
 	* CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
 	*/
-	class CCX_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
+	class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 	{
 	public:
 		CCLabelTTF()

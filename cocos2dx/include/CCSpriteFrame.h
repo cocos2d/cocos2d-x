@@ -46,7 +46,7 @@ class CCZone;
 	CCSpriteFrame *frame = CCSpriteFrame::frameWithTexture(texture, rect, offset);
 	sprite->setDisplayFrame(frame);
  */
-class CCX_DLL CCSpriteFrame : public CCObject
+class CC_DLL CCSpriteFrame : public CCObject
 {
 public:
 	// attributes

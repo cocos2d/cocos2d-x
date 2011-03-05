@@ -26,4 +26,4 @@ THE SOFTWARE.
 
 #include "platform/CCImage_platform.h"
 
-#endif // __CCX_CCImage_H__
+#endif // __CC_CCImage_H__

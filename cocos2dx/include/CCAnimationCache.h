@@ -40,7 +40,7 @@ namespace cocos2d
 
 	@since v0.99.5
 	*/
-	class CCX_DLL CCAnimationCache : public CCObject
+	class CC_DLL CCAnimationCache : public CCObject
 	{
 	public:
 		~CCAnimationCache();

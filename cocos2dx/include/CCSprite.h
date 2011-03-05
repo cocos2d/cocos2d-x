@@ -92,7 +92,7 @@ typedef enum {
 *
 * The default anchorPoint in CCSprite is (0.5, 0.5).
 */
-class CCX_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
+class CC_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 {
 public:
 	virtual void draw(void);

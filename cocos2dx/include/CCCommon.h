@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_H__
-#define __CCX_COMMON_H__
+#ifndef __CC_COMMON_H__
+#define __CC_COMMON_H__
 
 #include "platform/CCCommon_platform.h"
 
-#endif	// end of __CCX_COMMON_H__
+#endif	// end of __CC_COMMON_H__

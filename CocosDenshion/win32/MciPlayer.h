@@ -1,5 +1,5 @@
-#ifndef _MCI_PLAYER_UPHONE_H_
-#define _MCI_PLAYER_UPHONE_H_
+#ifndef _MCI_PLAYER_H_
+#define _MCI_PLAYER_H_
 
 #include<windows.h>
 #include <mmsystem.h>
@@ -68,4 +68,4 @@ private:
 
 } // end of namespace CocosDenshion
 
-#endif
+#endif  // _MCI_PLAYER_H_

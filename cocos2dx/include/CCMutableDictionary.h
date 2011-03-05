@@ -229,7 +229,7 @@ public:
 };
 
 #define CCDictionary	CCMutableDictionary
-typedef CCDictionary<std::string, CCString*> CCXStringToStringDictionary;
+typedef CCDictionary<std::string, CCString*> CCStringToStringDictionary;
 }//namespace   cocos2d 
 
 

@@ -41,7 +41,7 @@ struct _ccCArray;
 @class CCKeypadDispatcher
 @brief Dispatch the keypad message from the phone
 */
-class CCX_DLL CCKeypadDispatcher : public CCObject
+class CC_DLL CCKeypadDispatcher : public CCObject
 {
 public:
     CCKeypadDispatcher();

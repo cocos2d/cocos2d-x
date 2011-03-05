@@ -37,7 +37,7 @@ namespace cocos2d
 	  
 	 @since v0.8.2
 	 */
-	class CCX_DLL CCPageTurn3D : public CCGrid3DAction
+	class CC_DLL CCPageTurn3D : public CCGrid3DAction
 	{
 	public:
 		virtual void update(ccTime time);

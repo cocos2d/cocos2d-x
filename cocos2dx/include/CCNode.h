@@ -103,7 +103,7 @@ namespace   cocos2d {
 	- Each node has a camera. By default it points to the center of the CCNode.
 	*/ 
 
-	class CCX_DLL CCNode : public SelectorProtocol, public CCObject
+	class CC_DLL CCNode : public SelectorProtocol, public CCObject
 	{
 
 		// variable property

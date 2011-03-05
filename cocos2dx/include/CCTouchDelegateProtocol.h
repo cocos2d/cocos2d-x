@@ -40,7 +40,7 @@ typedef enum
 class CCTouch;
 class CCEvent;
 class CCSet;
-class CCX_DLL CCTouchDelegate
+class CC_DLL CCTouchDelegate
 {
 protected:
 	ccTouchDelegateFlag m_eTouchDelegateType;
@@ -79,7 +79,7 @@ public:
  handler, without bothering the other handlers.)
  @since v0.8
  */
- class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
+ class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  {
  public:
  	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
@@ -98,7 +98,7 @@ public:
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
  @since v0.8
  */
- class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
+ class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
  {
  public:
  	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }

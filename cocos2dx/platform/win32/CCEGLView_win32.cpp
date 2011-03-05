@@ -36,13 +36,13 @@ THE SOFTWARE.
 namespace cocos2d {
 
 //////////////////////////////////////////////////////////////////////////
-// impliment CCXEGL
+// impliment CCEGL
 //////////////////////////////////////////////////////////////////////////
 
-class CCXEGL
+class CCEGL
 {
 public:
-	~CCXEGL() 
+	~CCEGL() 
 	{
 		if (EGL_NO_SURFACE != m_eglSurface)
 		{
@@ -60,9 +60,9 @@ public:
 		}
 	}
 
-	static CCXEGL * create(CCEGLView * pWindow)
+	static CCEGL * create(CCEGLView * pWindow)
 	{
-		CCXEGL * pEGL = new CCXEGL;
+		CCEGL * pEGL = new CCEGL;
 		BOOL bSuccess = FALSE;
 		do 
 		{
@@ -145,7 +145,7 @@ public:
 		}
 	}
 private:
-	CCXEGL() 
+	CCEGL() 
 		: m_eglNativeWindow(NULL)
 		, m_eglNativeDisplay(EGL_DEFAULT_DISPLAY)
 		, m_eglDisplay(EGL_NO_DISPLAY)
@@ -253,7 +253,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 		CC_BREAK_IF(! m_hWnd);
 
 		// init egl
-		m_pEGL = CCXEGL::create(this);
+		m_pEGL = CCEGL::create(this);
 
 		if (! m_pEGL)
 		{

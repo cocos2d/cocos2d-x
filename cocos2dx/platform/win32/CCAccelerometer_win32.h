@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCAccelerometer
+class CC_DLL CCAccelerometer
 {
 public:
     CCAccelerometer();

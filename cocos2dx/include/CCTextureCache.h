@@ -41,7 +41,7 @@ typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
 * Once the texture is loaded, the next time it will return
 * a reference of the previously loaded texture reducing GPU & CPU memory
 */
-class CCX_DLL CCTextureCache : public CCObject
+class CC_DLL CCTextureCache : public CCObject
 {
 protected:
 	CCMutableDictionary<std::string, CCTexture2D*> * m_pTextures;

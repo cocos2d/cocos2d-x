@@ -51,7 +51,7 @@ namespace cocos2d
 	* 
 	* @since v0.7.1
 	*/
-	class CCX_DLL CCSpriteBatchNode : public CCNode, public CCTextureProtocol
+	class CC_DLL CCSpriteBatchNode : public CCNode, public CCTextureProtocol
 	{
 	public:
 		~CCSpriteBatchNode();

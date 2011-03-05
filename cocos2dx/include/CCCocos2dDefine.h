@@ -21,9 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CCX_COCOS2D_DEFINE_H__
-#define __CCX_COCOS2D_DEFINE_H__
+#ifndef __CC_COCOS2D_DEFINE_H__
+#define __CC_COCOS2D_DEFINE_H__
 
 #include "platform/CCCocos2dDefine_platform.h"
 
-#endif // __CCX_COCOS2D_DEFINE_H__
+#endif // __CC_COCOS2D_DEFINE_H__

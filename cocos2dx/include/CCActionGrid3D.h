@@ -31,7 +31,7 @@ namespace cocos2d
 	/** 
 	@brief CCWaves3D action 
 	*/
-	class CCX_DLL CCWaves3D : public CCGrid3DAction
+	class CC_DLL CCWaves3D : public CCGrid3DAction
 	{
 	public:
 		inline float getAmplitude(void) { return m_fAmplitude; }
@@ -57,7 +57,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCFlipX3D action */
-	class CCX_DLL CCFlipX3D : public CCGrid3DAction
+	class CC_DLL CCFlipX3D : public CCGrid3DAction
 	{
 	public:
 		/** initializes the action with duration */
@@ -72,7 +72,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCFlipY3D action */
-	class CCX_DLL CCFlipY3D : public CCFlipX3D
+	class CC_DLL CCFlipY3D : public CCFlipX3D
 	{
 	public:
 		virtual void update(ccTime time);
@@ -84,7 +84,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCLens3D action */
-	class CCX_DLL CCLens3D : public CCGrid3DAction
+	class CC_DLL CCLens3D : public CCGrid3DAction
 	{
 	public:
 		/** Get lens center position */
@@ -117,7 +117,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCRipple3D action */
-	class CCX_DLL CCRipple3D : public CCGrid3DAction
+	class CC_DLL CCRipple3D : public CCGrid3DAction
 	{
 	public:
 		/** get center position */
@@ -154,7 +154,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCShaky3D action */
-	class CCX_DLL CCShaky3D : public CCGrid3DAction
+	class CC_DLL CCShaky3D : public CCGrid3DAction
 	{
 	public:
 		/** initializes the action with a range, shake Z vertices, a grid and duration */
@@ -172,7 +172,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCLiquid action */
-	class CCX_DLL CCLiquid : public CCGrid3DAction
+	class CC_DLL CCLiquid : public CCGrid3DAction
 	{
 	public:
 		inline float getAmplitude(void) { return m_fAmplitude; }
@@ -197,7 +197,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCWaves action */
-	class CCX_DLL CCWaves : public CCGrid3DAction
+	class CC_DLL CCWaves : public CCGrid3DAction
 	{
 	public:
 		inline float getAmplitude(void) { return m_fAmplitude; }
@@ -225,7 +225,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCTwirl action */
-	class CCX_DLL CCTwirl : public CCGrid3DAction
+	class CC_DLL CCTwirl : public CCGrid3DAction
 	{
 	public:
 		/** get twirl center */

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCMutableArray.h"
 
 namespace cocos2d {
-class CCX_DLL CCAutoreleasePool : public CCObject
+class CC_DLL CCAutoreleasePool : public CCObject
 {
 	CCMutableArray<CCObject*>*	m_pManagedObjectArray;	
 public:
@@ -41,7 +41,7 @@ public:
 	void clear();
 };
 
-class CCX_DLL CCPoolManager
+class CC_DLL CCPoolManager
 {
 	CCMutableArray<CCAutoreleasePool*>*	m_pReleasePoolStack;	
 	CCAutoreleasePool*					m_pCurReleasePool;

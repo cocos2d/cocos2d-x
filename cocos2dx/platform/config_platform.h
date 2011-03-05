@@ -24,54 +24,54 @@ THE SOFTWARE.
 
 // pre configure
 #ifdef _TRANZDA_VM_                             // under uphone
-    #define CCX_PLATFORM_UPHONE
+    #define CC_PLATFORM_UPHONE
 #elif   defined (WIN32) && defined (_WINDOWS)   // under win32pc
-    #define CCX_PLATFORM_WIN32
+    #define CC_PLATFORM_WIN32
 #elif   defined (ANDROID)
-    #define CCX_PLATFORM_ANDROID
+    #define CC_PLATFORM_ANDROID
 #elif defined (TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR)
-    #define CCX_PLATFORM_IPHONE
+    #define CC_PLATFORM_IPHONE
 #elif defined (TARGET_OS_MAC)
-    #define CCX_PLATFORM_MAC
+    #define CC_PLATFORM_MAC
 #endif
 
 // user configure
 
 // use these macros to set compiling environment if needed
 
-// #define CCX_UNDER_UPHONE
-// #define CCX_UNDER_WIN32
-// #define CCX_UNDER_ANDROID
-// #define CCX_UNDER_IPHONE
+// #define CC_UNDER_UPHONE
+// #define CC_UNDER_WIN32
+// #define CC_UNDER_ANDROID
+// #define CC_UNDER_IPHONE
 
 // post configure
 
 // check user set platform
-#if defined(CCX_UNDER_UPHONE) || defined(CCX_UNDER_WIN32) || defined(CCX_UNDER_ANDROID) || defined(CCX_UNDER_IPHONE)
-    #undef CCX_PLATFORM_UPHONE
-    #undef CCX_PLATFORM_WIN32
-    #undef CCX_PLATFORM_ANDROID
-    #undef CCX_PLATFORM_IPHONE
+#if defined(CC_UNDER_UPHONE) || defined(CC_UNDER_WIN32) || defined(CC_UNDER_ANDROID) || defined(CC_UNDER_IPHONE)
+    #undef CC_PLATFORM_UPHONE
+    #undef CC_PLATFORM_WIN32
+    #undef CC_PLATFORM_ANDROID
+    #undef CC_PLATFORM_IPHONE
 
-    #if defined(CCX_UNDER_UPHONE)
-        #define CCX_PLATFORM_UPHONE	// under uphone
-    #elif defined(CCX_UNDER_WIN32)
-        #define CCX_PLATFORM_WIN32
-    #elif defined(CCX_UNDER_ANDROID)
-        #define CCX_PLATFORM_ANDROID
-    #elif defined(CCX_UNDER_IPHONE)
-        #define CCX_PLATFORM_IPHONE
+    #if defined(CC_UNDER_UPHONE)
+        #define CC_PLATFORM_UPHONE	// under uphone
+    #elif defined(CC_UNDER_WIN32)
+        #define CC_PLATFORM_WIN32
+    #elif defined(CC_UNDER_ANDROID)
+        #define CC_PLATFORM_ANDROID
+    #elif defined(CC_UNDER_IPHONE)
+        #define CC_PLATFORM_IPHONE
     #endif
 #endif
 
 // distinguish mobile platforms and pc platforms
-#if defined(CCX_PLATFORM_UPHONE) || defined(CCX_PLATFORM_WIN32) || defined(CCX_PLATFORM_ANDROID) || defined(CCX_PLATFORM_IPHONE)
-    #define CCX_PLATFORM_MOBILE
-#elif defined (CCX_PLATFORM_MAC)
-    #define CCX_PLATFORM_PC
+#if defined(CC_PLATFORM_UPHONE) || defined(CC_PLATFORM_WIN32) || defined(CC_PLATFORM_ANDROID) || defined(CC_PLATFORM_IPHONE)
+    #define CC_PLATFORM_MOBILE
+#elif defined (CC_PLATFORM_MAC)
+    #define CC_PLATFORM_PC
 #endif
 
 // check compiling platform
-#if ! defined(CCX_PLATFORM_UPHONE) && ! defined(CCX_PLATFORM_WIN32) && ! defined(CCX_PLATFORM_ANDROID) && ! defined(CCX_PLATFORM_IPHONE)
+#if ! defined(CC_PLATFORM_UPHONE) && ! defined(CC_PLATFORM_WIN32) && ! defined(CC_PLATFORM_ANDROID) && ! defined(CC_PLATFORM_IPHONE)
     #error "no platform macro defined!"
 #endif

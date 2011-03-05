@@ -32,7 +32,7 @@ namespace cocos2d
 	class CCGridBase;
 
 	/** @brief Base class for Grid actions */
-	class CCX_DLL CCGridAction : public CCActionInterval
+	class CC_DLL CCGridAction : public CCActionInterval
 	{
 	public:
 		virtual CCObject* copyWithZone(CCZone* pZone);
@@ -56,7 +56,7 @@ namespace cocos2d
 	 @brief Base class for CCGrid3D actions.
 	 Grid3D actions can modify a non-tiled grid.
 	 */
-	class CCX_DLL CCGrid3DAction : public CCGridAction
+	class CC_DLL CCGrid3DAction : public CCGridAction
 	{
 	public:
 		/** returns the grid */
@@ -74,7 +74,7 @@ namespace cocos2d
 	};
 
 	/** @brief Base class for CCTiledGrid3D actions */
-	class CCX_DLL CCTiledGrid3DAction : public CCGridAction
+	class CC_DLL CCTiledGrid3DAction : public CCGridAction
 	{
 	public:
 		/** returns the tile that belongs to a certain position of the grid */
@@ -93,7 +93,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCAccelDeccelAmplitude action */
-	class CCX_DLL CCAccelDeccelAmplitude : public CCActionInterval
+	class CC_DLL CCAccelDeccelAmplitude : public CCActionInterval
 	{
 	public:
 		virtual ~CCAccelDeccelAmplitude(void);
@@ -119,7 +119,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCAccelAmplitude action */
-	class CCX_DLL CCAccelAmplitude : public CCActionInterval
+	class CC_DLL CCAccelAmplitude : public CCActionInterval
 	{
 	public:
 		~CCAccelAmplitude(void);
@@ -145,7 +145,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCDeccelAmplitude action */
-	class CCX_DLL CCDeccelAmplitude : public CCActionInterval
+	class CC_DLL CCDeccelAmplitude : public CCActionInterval
 	{
 	public:
 		~CCDeccelAmplitude(void);
@@ -175,7 +175,7 @@ namespace cocos2d
 	 Call if you want to remove the the grid effect. Example:
 	 CCSequence::actions(Lens::action(...), CCStopGrid::action(...), NULL);
 	 */
-	class CCX_DLL CCStopGrid : public CCActionInstant
+	class CC_DLL CCStopGrid : public CCActionInstant
 	{
 	public:
 		virtual void startWithTarget(CCNode *pTarget);
@@ -186,7 +186,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCReuseGrid action */
-	class CCX_DLL CCReuseGrid : public CCActionInstant
+	class CC_DLL CCReuseGrid : public CCActionInstant
 	{
 	public:
 		/** initializes an action with the number of times that the current grid will be reused */

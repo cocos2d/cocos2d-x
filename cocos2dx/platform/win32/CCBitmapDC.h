@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 
 namespace cocos2d{
-	class CCX_DLL CCBitmapDC
+	class CC_DLL CCBitmapDC
 	{
 	public:
 		CCBitmapDC(int width, int height);

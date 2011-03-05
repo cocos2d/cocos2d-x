@@ -4,7 +4,7 @@ main();
 
 function main() {
     // Decode command line arguments
-    var bDebug = true;
+    var bDebug = false;
     var bElevated = false;
     var Args = WScript.Arguments;
     for (var i = 0; i < Args.length; i++) {

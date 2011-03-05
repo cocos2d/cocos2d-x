@@ -41,7 +41,7 @@ namespace   cocos2d {
 	[sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
 	*/
-	class CCX_DLL CCAnimation : public CCObject
+	class CC_DLL CCAnimation : public CCObject
 	{
 	protected:
 		std::string m_nameStr;

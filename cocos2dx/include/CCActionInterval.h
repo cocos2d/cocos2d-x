@@ -50,7 +50,7 @@ Example:
 
 CCAction *pingPongAction = CCSequence::actions(action, action->reverse(), NULL);
 */
-class CCX_DLL CCActionInterval : public CCFiniteTimeAction
+class CC_DLL CCActionInterval : public CCFiniteTimeAction
 {
 public:
 	/** how many seconds had elapsed since the actions started to run. */
@@ -84,7 +84,7 @@ protected:
 
 /** @brief Runs actions sequentially, one after another
  */
-class CCX_DLL CCSequence : public CCActionInterval
+class CC_DLL CCSequence : public CCActionInterval
 {
 public:
 	~CCSequence(void);
@@ -113,7 +113,7 @@ protected:
 /** @brief Repeats an action a number of times.
  * To repeat an action forever use the CCRepeatForever action.
  */
-class CCX_DLL CCRepeat : public CCActionInterval
+class CC_DLL CCRepeat : public CCActionInterval
 {
 public:
 	~CCRepeat(void);
@@ -142,7 +142,7 @@ protected:
 To repeat the an action for a limited number of times use the Repeat action.
 @warning This action can't be Sequenceable because it is not an IntervalAction
 */
-class CCX_DLL CCRepeatForever : public CCActionInterval
+class CC_DLL CCRepeatForever : public CCActionInterval
 {
 public:
 	CCRepeatForever(){}
@@ -166,7 +166,7 @@ protected:
 
 /** @brief Spawn a new action immediately
  */
-class CCX_DLL CCSpawn : public CCActionInterval
+class CC_DLL CCSpawn : public CCActionInterval
 {
 public:
 	~CCSpawn(void);
@@ -196,7 +196,7 @@ protected:
  rotation attribute.
  The direction will be decided by the shortest angle.
 */ 
-class CCX_DLL CCRotateTo : public CCActionInterval
+class CC_DLL CCRotateTo : public CCActionInterval
 {
 public:
 	/** initializes the action */
@@ -218,7 +218,7 @@ protected:
 
 /** @brief Rotates a CCNode object clockwise a number of degrees by modifying it's rotation attribute.
 */
-class CCX_DLL CCRotateBy : public CCActionInterval
+class CC_DLL CCRotateBy : public CCActionInterval
 {
 public:
 	/** initializes the action */
@@ -240,7 +240,7 @@ protected:
 
 /** @brief Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
 */
-class CCX_DLL CCMoveTo : public CCActionInterval
+class CC_DLL CCMoveTo : public CCActionInterval
 {
 public:
 	/** initializes the action */
@@ -264,7 +264,7 @@ protected:
  x and y are relative to the position of the object.
  Duration is is seconds.
 */ 
-class CCX_DLL CCMoveBy : public CCMoveTo
+class CC_DLL CCMoveBy : public CCMoveTo
 {
 public:
 	/** initializes the action */
@@ -281,7 +281,7 @@ public:
 
 /** @brief Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
-class CCX_DLL CCJumpBy : public CCActionInterval
+class CC_DLL CCJumpBy : public CCActionInterval
 {
 public:
 	/** initializes the action */
@@ -305,7 +305,7 @@ protected:
 
 /** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
 */ 
-class CCX_DLL CCJumpTo : public CCJumpBy
+class CC_DLL CCJumpTo : public CCJumpBy
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
@@ -329,7 +329,7 @@ typedef struct _ccBezierConfig {
 
 /** @brief An action that moves the target with a cubic Bezier curve by a certain distance.
  */
-class CCX_DLL CCBezierBy : public CCActionInterval
+class CC_DLL CCBezierBy : public CCActionInterval
 {
 public:
 	/** initializes the action with a duration and a bezier configuration */
@@ -352,7 +352,7 @@ protected:
 /** @brief An action that moves the target with a cubic Bezier curve to a destination point.
  @since v0.8.2
  */
-class CCX_DLL CCBezierTo : public CCBezierBy
+class CC_DLL CCBezierTo : public CCBezierBy
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
@@ -366,7 +366,7 @@ public:
 /** @brief Scales a CCNode object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
  */
-class CCX_DLL CCScaleTo : public CCActionInterval
+class CC_DLL CCScaleTo : public CCActionInterval
 {
 public:
 	/** initializes the action with the same scale factor for X and Y */
@@ -398,7 +398,7 @@ protected:
 
 /** @brief Scales a CCNode object a zoom factor by modifying it's scale attribute.
 */
-class CCX_DLL CCScaleBy : public CCScaleTo
+class CC_DLL CCScaleBy : public CCScaleTo
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
@@ -415,7 +415,7 @@ public:
 
 /** @brief Blinks a CCNode object by modifying it's visible attribute
 */
-class CCX_DLL CCBlink : public CCActionInterval
+class CC_DLL CCBlink : public CCActionInterval
 {
 public:
 	/** initializes the action */
@@ -435,7 +435,7 @@ protected:
 /** @brief Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
  */
-class CCX_DLL CCFadeIn : public CCActionInterval
+class CC_DLL CCFadeIn : public CCActionInterval
 {
 public:
     virtual void update(ccTime time);
@@ -450,7 +450,7 @@ public:
 /** @brief Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
 */
-class CCX_DLL CCFadeOut : public CCActionInterval
+class CC_DLL CCFadeOut : public CCActionInterval
 {
 public:
 	virtual void update(ccTime time);
@@ -465,7 +465,7 @@ public:
 /** @brief Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  @warning This action doesn't support "reverse"
  */
-class CCX_DLL CCFadeTo : public CCActionInterval
+class CC_DLL CCFadeTo : public CCActionInterval
 {
 public:
 	/** initializes the action with duration and opacity */
@@ -488,7 +488,7 @@ protected:
  @warning This action doesn't support "reverse"
  @since v0.7.2
 */
-class CCX_DLL CCTintTo : public CCActionInterval
+class CC_DLL CCTintTo : public CCActionInterval
 {
 public:
 	/** initializes the action with duration and color */
@@ -510,7 +510,7 @@ protected:
 /** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @since v0.7.2
  */
-class CCX_DLL CCTintBy : public CCActionInterval
+class CC_DLL CCTintBy : public CCActionInterval
 {
 public:
 	/** initializes the action with duration and color */
@@ -537,7 +537,7 @@ protected:
 
 /** @brief Delays the action a certain amount of seconds
 */
-class CCX_DLL CCDelayTime : public CCActionInterval
+class CC_DLL CCDelayTime : public CCActionInterval
 {
 public:
 	virtual void update(ccTime time);
@@ -556,7 +556,7 @@ public:
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
 */
-class CCX_DLL CCReverseTime : public CCActionInterval
+class CC_DLL CCReverseTime : public CCActionInterval
 {
 public:
 	~CCReverseTime(void);
@@ -580,7 +580,7 @@ protected:
 
 class CCTexture2D;
 /** @brief Animates a sprite given the name of an Animation */
-class CCX_DLL CCAnimate : public CCActionInterval
+class CC_DLL CCAnimate : public CCActionInterval
 {
 public:
 	~CCAnimate(void);

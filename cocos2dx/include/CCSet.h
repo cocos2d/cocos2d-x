@@ -38,7 +38,7 @@ namespace   cocos2d {
 
 typedef std::set<CCObject *>::iterator CCSetIterator;
 
-class CCX_DLL CCSet : public CCObject
+class CC_DLL CCSet : public CCObject
 {
 public:
 	CCSet(void);

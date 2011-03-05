@@ -41,7 +41,7 @@ namespace cocos2d{
 	*
 	*  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
 	*/
-	class CCX_DLL CCMenuItem : public CCNode
+	class CC_DLL CCMenuItem : public CCNode
 	{
 		/** whether or not the item is selected
 		@since v0.8.2
@@ -77,7 +77,7 @@ namespace cocos2d{
 	- CCLabelAtlas
 	- CCLabelTTF
 	*/
-	class CCX_DLL CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
+	class CC_DLL CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** the color that will be used to disable the item */
 		CC_PROPERTY(ccColor3B, m_tDisabledColor, DisabledColor);
@@ -116,7 +116,7 @@ namespace cocos2d{
 	/** @brief A CCMenuItemAtlasFont
 	Helper class that creates a MenuItemLabel class with a LabelAtlas
 	*/
-	class CCX_DLL CCMenuItemAtlasFont : public CCMenuItemLabel
+	class CC_DLL CCMenuItemAtlasFont : public CCMenuItemLabel
 	{
 	public:
 		CCMenuItemAtlasFont(){}
@@ -132,7 +132,7 @@ namespace cocos2d{
 	/** @brief A CCMenuItemFont
 	Helper class that creates a CCMenuItemLabel class with a Label
 	*/
-	class CCX_DLL CCMenuItemFont : public CCMenuItemLabel
+	class CC_DLL CCMenuItemFont : public CCMenuItemLabel
 	{
 	public:
 		CCMenuItemFont(){}
@@ -161,7 +161,7 @@ namespace cocos2d{
 
 	@since v0.8.0
 	*/
-	class CCX_DLL CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
+	class CC_DLL CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** the image used when the item is not selected */
 		CC_PROPERTY(CCNode*, m_pNormalImage, NormalImage);
@@ -207,7 +207,7 @@ namespace cocos2d{
 
 	For best results try that all images are of the same size
 	*/
-	class CCX_DLL CCMenuItemImage : public CCMenuItemSprite
+	class CC_DLL CCMenuItemImage : public CCMenuItemSprite
 	{
 	public:
 		CCMenuItemImage(){}
@@ -233,7 +233,7 @@ namespace cocos2d{
 	A simple container class that "toggles" it's inner items
 	The inner itmes can be any MenuItem
 	*/
-	class CCX_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
+	class CC_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** conforms with CCRGBAProtocol protocol */
 		CC_PROPERTY(GLubyte, m_cOpacity, Opacity);

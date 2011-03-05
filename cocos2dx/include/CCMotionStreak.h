@@ -47,7 +47,7 @@ class CCRibbon;
 *
 * @since v0.8.1
 */
-class CCX_DLL CCMotionStreak : public CCNode, public CCTextureProtocol
+class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol
 {
 	/** Ribbon used by MotionStreak (weak reference) */
 	CC_PROPERTY_READONLY(CCRibbon*, m_pRibbon, Ribbon)

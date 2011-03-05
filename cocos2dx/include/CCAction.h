@@ -40,7 +40,7 @@ enum {
 /** 
 @brief Base class for CCAction objects.
  */
-class CCX_DLL CCAction : public CCObject 
+class CC_DLL CCAction : public CCObject 
 {
 public:
     CCAction(void);
@@ -115,7 +115,7 @@ protected:
 
  Infinite time actions are valid
  */
-class CCX_DLL CCFiniteTimeAction : public CCAction
+class CC_DLL CCFiniteTimeAction : public CCAction
 {
 public:
 	CCFiniteTimeAction(){}
@@ -141,7 +141,7 @@ class CCRepeatForever;
  Useful to simulate 'slow motion' or 'fast forward' effect.
  @warning This action can't be Sequenceable because it is not an IntervalAction
  */
-class CCX_DLL CCSpeed : public CCAction
+class CC_DLL CCSpeed : public CCAction
 {
 public:
 	CCSpeed(){}
@@ -183,7 +183,7 @@ layer->runAction(CCFollow::actionWithTarget(hero));
 Instead of using CCCamera as a "follower", use this action instead.
 @since v0.99.2
 */
-class CCX_DLL CCFollow : public CCAction
+class CC_DLL CCFollow : public CCAction
 {
 public:
 	CCFollow(){}

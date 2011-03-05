@@ -31,8 +31,8 @@ namespace cocos2d {
 		:m_sGroupName("")
 		,m_tPositionOffset(CCPointZero)
 	{
-		m_pObjects = new CCArray<CCXStringToStringDictionary*>();
-		m_pProperties = new CCXStringToStringDictionary();
+		m_pObjects = new CCArray<CCStringToStringDictionary*>();
+		m_pProperties = new CCStringToStringDictionary();
 	}
 	CCTMXObjectGroup::~CCTMXObjectGroup()
 	{
@@ -40,11 +40,11 @@ namespace cocos2d {
 		CC_SAFE_RELEASE(m_pObjects);
 		CC_SAFE_RELEASE(m_pProperties);
 	}
-	CCXStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
+	CCStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
 	{
 		if (m_pObjects && m_pObjects->count() > 0)
 		{
-			CCArray<CCXStringToStringDictionary*>::CCMutableArrayIterator it;
+			CCArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
 			{
 				CCString *name = (*it)->objectForKey(std::string("name"));
@@ -62,21 +62,21 @@ namespace cocos2d {
 		return m_pProperties->objectForKey(std::string(propertyName));
 	}
 
-	CCXStringToStringDictionary * CCTMXObjectGroup::getProperties()
+	CCStringToStringDictionary * CCTMXObjectGroup::getProperties()
 	{ 
 		return m_pProperties;
 	}
-	void CCTMXObjectGroup::setProperties(CCXStringToStringDictionary * properties)
+	void CCTMXObjectGroup::setProperties(CCStringToStringDictionary * properties)
 	{
 		CC_SAFE_RETAIN(properties);
 		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = properties;
 	}
-	CCArray<CCXStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
+	CCArray<CCStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
 	{
 		return m_pObjects;
 	}
-	void CCTMXObjectGroup::setObjects(CCArray<CCXStringToStringDictionary*> * objects)
+	void CCTMXObjectGroup::setObjects(CCArray<CCStringToStringDictionary*> * objects)
 	{
 		CC_SAFE_RETAIN(objects);
 		CC_SAFE_RELEASE(m_pObjects);

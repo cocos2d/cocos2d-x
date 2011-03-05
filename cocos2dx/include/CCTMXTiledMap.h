@@ -98,7 +98,7 @@ namespace cocos2d {
 
 	@since v0.8.1
 	*/
-	class CCX_DLL CCTMXTiledMap : public CCNode
+	class CC_DLL CCTMXTiledMap : public CCNode
 	{
 		/** the map's size property measured in tiles */
 		CC_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
@@ -109,7 +109,7 @@ namespace cocos2d {
 		/** object groups */
 		CC_PROPERTY(CCMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/** properties */
-		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXTiledMap();
 		virtual ~CCTMXTiledMap();
@@ -143,7 +143,7 @@ namespace cocos2d {
 
 	protected:
 		//! tile properties
-		CCDictionary<int, CCXStringToStringDictionary*> *m_pTileProperties;
+		CCDictionary<int, CCStringToStringDictionary*> *m_pTileProperties;
 
 	};
 

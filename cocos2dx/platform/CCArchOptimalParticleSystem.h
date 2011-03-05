@@ -28,7 +28,7 @@
 // build each architecture with the optimal particle system
 
 // ARMv7, Mac or Simulator use "Quad" particle
-#if defined(__ARM_NEON__) || defined(CCX_PLATFORM_MAC) || defined(CCX_PLATFORM_IPHONE) || defined(CCX_PLATFORM_WIN32) || defined(_TRANZDA_VM_) || defined(CCX_PLATFORM_ANDROID)
+#if defined(__ARM_NEON__) || defined(CC_PLATFORM_MAC) || defined(CC_PLATFORM_IPHONE) || defined(CC_PLATFORM_WIN32) || defined(_TRANZDA_VM_) || defined(CC_PLATFORM_ANDROID)
 
 #include "CCParticleSystemQuad.h"
 #define ARCH_OPTIMAL_PARTICLE_SYSTEM CCParticleSystemQuad

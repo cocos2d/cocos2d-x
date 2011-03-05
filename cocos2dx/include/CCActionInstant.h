@@ -34,7 +34,7 @@ namespace cocos2d {
 	@brief Instant actions are immediate actions. They don't have a duration like
 	the CCIntervalAction actions.
 	*/ 
-	class CCX_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
+	class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 	{
 	public:
 		CCActionInstant();
@@ -50,7 +50,7 @@ namespace cocos2d {
 
 	/** @brief Show the node
 	*/
-	class CCX_DLL CCShow : public CCActionInstant
+	class CC_DLL CCShow : public CCActionInstant
 	{
 	public:
 		CCShow(){}
@@ -67,7 +67,7 @@ namespace cocos2d {
 	/** 
 	@brief Hide the node
 	*/
-	class CCX_DLL CCHide : public CCActionInstant
+	class CC_DLL CCHide : public CCActionInstant
 	{
 	public:
 		CCHide(){}
@@ -83,7 +83,7 @@ namespace cocos2d {
 
 	/** @brief Toggles the visibility of a node
 	*/
-	class CCX_DLL CCToggleVisibility : public CCActionInstant
+	class CC_DLL CCToggleVisibility : public CCActionInstant
 	{
 	public:
 		CCToggleVisibility(){}
@@ -100,7 +100,7 @@ namespace cocos2d {
 	@brief Flips the sprite horizontally
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipX : public CCActionInstant
+	class CC_DLL CCFlipX : public CCActionInstant
 	{
 	public:
 		CCFlipX(){}
@@ -123,7 +123,7 @@ namespace cocos2d {
 	@brief Flips the sprite vertically
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipY : public CCActionInstant
+	class CC_DLL CCFlipY : public CCActionInstant
 	{
 	public:
 		CCFlipY(){}
@@ -144,7 +144,7 @@ namespace cocos2d {
 
 	/** @brief Places the node in a certain position
 	*/
-	class CCX_DLL CCPlace : public CCActionInstant //<NSCopying>
+	class CC_DLL CCPlace : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCPlace(){}
@@ -162,7 +162,7 @@ namespace cocos2d {
 
 	/** @brief Calls a 'callback'
 	*/
-	class CCX_DLL CCCallFunc : public CCActionInstant //<NSCopying>
+	class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCCallFunc()
@@ -208,7 +208,7 @@ namespace cocos2d {
 	@brief Calls a 'callback' with the node as the first argument
 	N means Node
 	*/
-	class CCX_DLL CCCallFuncN : public CCCallFunc
+	class CC_DLL CCCallFuncN : public CCCallFunc
 	{
 	public:
 		CCCallFuncN(){}
@@ -233,7 +233,7 @@ namespace cocos2d {
 	@brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
 	* ND means: Node and Data. Data is void *, so it could be anything.
 	*/
-	class CCX_DLL CCCallFuncND : public CCCallFuncN
+	class CC_DLL CCCallFuncND : public CCCallFuncN
 	{
 	public:
 
@@ -255,7 +255,7 @@ namespace cocos2d {
     O means Object.
     @since v0.99.5
     */
-    class CCX_DLL CCCallFuncO : public CCCallFunc
+    class CC_DLL CCCallFuncO : public CCCallFunc
     {
     public:
         CCCallFuncO();

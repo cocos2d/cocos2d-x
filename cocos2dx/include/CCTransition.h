@@ -40,7 +40,7 @@ class CCNode;
 /** @brief CCTransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
 */
-class CCX_DLL CCTransitionEaseScene// : public CCObject
+class CC_DLL CCTransitionEaseScene// : public CCObject
 {
 public:
 	/** returns the Ease action that will be performed on a linear action.
@@ -64,7 +64,7 @@ typedef enum {
 
 /** @brief Base class for CCTransition scenes
 */
-class CCX_DLL CCTransitionScene : public CCScene
+class CC_DLL CCTransitionScene : public CCScene
 {
 
 protected:
@@ -105,7 +105,7 @@ private:
 /** @brief A CCTransition that supports orientation like.
 * Possible orientation: LeftOver, RightOver, UpOver, DownOver
 */
-class CCX_DLL CCTransitionSceneOriented : public CCTransitionScene
+class CC_DLL CCTransitionSceneOriented : public CCTransitionScene
 {
 protected:
 	tOrientation m_eOrientation;
@@ -123,7 +123,7 @@ public:
 /** @brief CCTransitionRotoZoom:
 Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
 */
-class CCX_DLL CCTransitionRotoZoom : public CCTransitionScene
+class CC_DLL CCTransitionRotoZoom : public CCTransitionScene
 {
 public:
 	CCTransitionRotoZoom();
@@ -136,7 +136,7 @@ public:
 /** @brief CCTransitionJumpZoom:
 Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
 */
-class CCX_DLL CCTransitionJumpZoom : public CCTransitionScene
+class CC_DLL CCTransitionJumpZoom : public CCTransitionScene
 {
 public:
 	CCTransitionJumpZoom();
@@ -149,7 +149,7 @@ public:
 /** @brief CCTransitionMoveInL:
 Move in from to the left the incoming scene.
 */
-class CCX_DLL CCTransitionMoveInL : public CCTransitionScene, public CCTransitionEaseScene
+class CC_DLL CCTransitionMoveInL : public CCTransitionScene, public CCTransitionEaseScene
 {
 public:
 	CCTransitionMoveInL();
@@ -169,7 +169,7 @@ public:
 /** @brief CCTransitionMoveInR:
 Move in from to the right the incoming scene.
 */
-class CCX_DLL CCTransitionMoveInR : public CCTransitionMoveInL
+class CC_DLL CCTransitionMoveInR : public CCTransitionMoveInL
 {
 public:
 	CCTransitionMoveInR();
@@ -182,7 +182,7 @@ public:
 /** @brief CCTransitionMoveInT:
 Move in from to the top the incoming scene.
 */
-class CCX_DLL CCTransitionMoveInT : public CCTransitionMoveInL 
+class CC_DLL CCTransitionMoveInT : public CCTransitionMoveInL 
 {
 public:
 	CCTransitionMoveInT();
@@ -195,7 +195,7 @@ public:
 /** @brief CCTransitionMoveInB:
 Move in from to the bottom the incoming scene.
 */
-class CCX_DLL CCTransitionMoveInB : public CCTransitionMoveInL
+class CC_DLL CCTransitionMoveInB : public CCTransitionMoveInL
 {
 public:
 	CCTransitionMoveInB();
@@ -208,7 +208,7 @@ public:
 /** @brief CCTransitionSlideInL:
 Slide in the incoming scene from the left border.
 */
-class CCX_DLL CCTransitionSlideInL : public CCTransitionScene, public CCTransitionEaseScene
+class CC_DLL CCTransitionSlideInL : public CCTransitionScene, public CCTransitionEaseScene
 {
 public:
 	CCTransitionSlideInL();
@@ -231,7 +231,7 @@ protected:
 /** @brief CCTransitionSlideInR:
 Slide in the incoming scene from the right border.
 */
-class CCX_DLL CCTransitionSlideInR : public CCTransitionSlideInL 
+class CC_DLL CCTransitionSlideInR : public CCTransitionSlideInL 
 {
 public:
 	CCTransitionSlideInR();
@@ -250,7 +250,7 @@ protected:
 /** @brief CCTransitionSlideInB:
 Slide in the incoming scene from the bottom border.
 */
-class CCX_DLL CCTransitionSlideInB : public CCTransitionSlideInL
+class CC_DLL CCTransitionSlideInB : public CCTransitionSlideInL
 {
 public:
 	CCTransitionSlideInB();
@@ -269,7 +269,7 @@ protected:
 /** @brief CCTransitionSlideInT:
 Slide in the incoming scene from the top border.
 */
-class CCX_DLL CCTransitionSlideInT : public CCTransitionSlideInL
+class CC_DLL CCTransitionSlideInT : public CCTransitionSlideInL
 {
 public:
 	CCTransitionSlideInT();
@@ -288,7 +288,7 @@ protected:
 /**
 @brief Shrink the outgoing scene while grow the incoming scene
 */
-class CCX_DLL CCTransitionShrinkGrow : public CCTransitionScene , public CCTransitionEaseScene
+class CC_DLL CCTransitionShrinkGrow : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
 	CCTransitionShrinkGrow();
@@ -304,7 +304,7 @@ public:
 Flips the screen horizontally.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CCX_DLL CCTransitionFlipX : public CCTransitionSceneOriented
+class CC_DLL CCTransitionFlipX : public CCTransitionSceneOriented
 {
 public:
 	CCTransitionFlipX();
@@ -319,7 +319,7 @@ public:
 Flips the screen vertically.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CCX_DLL CCTransitionFlipY : public CCTransitionSceneOriented
+class CC_DLL CCTransitionFlipY : public CCTransitionSceneOriented
 {
 public:
 	CCTransitionFlipY();
@@ -334,7 +334,7 @@ public:
 Flips the screen half horizontally and half vertically.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CCX_DLL CCTransitionFlipAngular : public CCTransitionSceneOriented
+class CC_DLL CCTransitionFlipAngular : public CCTransitionSceneOriented
 {
 public:
 	CCTransitionFlipAngular();
@@ -349,7 +349,7 @@ public:
 Flips the screen horizontally doing a zoom out/in
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CCX_DLL CCTransitionZoomFlipX : public CCTransitionSceneOriented
+class CC_DLL CCTransitionZoomFlipX : public CCTransitionSceneOriented
 {
 public:
 	CCTransitionZoomFlipX();
@@ -364,7 +364,7 @@ public:
 Flips the screen vertically doing a little zooming out/in
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CCX_DLL CCTransitionZoomFlipY : public CCTransitionSceneOriented
+class CC_DLL CCTransitionZoomFlipY : public CCTransitionSceneOriented
 {
 public:
 	CCTransitionZoomFlipY();
@@ -379,7 +379,7 @@ public:
 Flips the screen half horizontally and half vertically doing a little zooming out/in.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
-class CCX_DLL CCTransitionZoomFlipAngular : public CCTransitionSceneOriented
+class CC_DLL CCTransitionZoomFlipAngular : public CCTransitionSceneOriented
 {
 public:
 	CCTransitionZoomFlipAngular();
@@ -393,7 +393,7 @@ public:
 /** @brief CCTransitionFade:
 Fade out the outgoing scene and then fade in the incoming scene.'''
 */
-class CCX_DLL CCTransitionFade : public CCTransitionScene
+class CC_DLL CCTransitionFade : public CCTransitionScene
 {
 protected:
 	ccColor4B	m_tColor;
@@ -420,7 +420,7 @@ class CCRenderTexture;
 @brief CCTransitionCrossFade:
 Cross fades two scenes using the CCRenderTexture object.
 */
-class CCX_DLL CCTransitionCrossFade : public CCTransitionScene
+class CC_DLL CCTransitionCrossFade : public CCTransitionScene
 {
 public :
 	CCTransitionCrossFade();
@@ -437,7 +437,7 @@ public:
 /** @brief CCTransitionTurnOffTiles:
 Turn off the tiles of the outgoing scene in random order
 */
-class CCX_DLL CCTransitionTurnOffTiles : public CCTransitionScene ,public CCTransitionEaseScene
+class CC_DLL CCTransitionTurnOffTiles : public CCTransitionScene ,public CCTransitionEaseScene
 {
 public :
 	CCTransitionTurnOffTiles();
@@ -455,7 +455,7 @@ protected:
 /** @brief CCTransitionSplitCols:
 The odd columns goes upwards while the even columns goes downwards.
 */
-class CCX_DLL CCTransitionSplitCols : public CCTransitionScene , public CCTransitionEaseScene
+class CC_DLL CCTransitionSplitCols : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
 	CCTransitionSplitCols();
@@ -472,7 +472,7 @@ public:
 /** @brief CCTransitionSplitRows:
 The odd rows goes to the left while the even rows goes to the right.
 */
-class CCX_DLL CCTransitionSplitRows : public CCTransitionSplitCols
+class CC_DLL CCTransitionSplitRows : public CCTransitionSplitCols
 {
 public:
 	CCTransitionSplitRows();
@@ -487,7 +487,7 @@ public:
 /** @brief CCTransitionFadeTR:
 Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
 */
-class CCX_DLL CCTransitionFadeTR : public CCTransitionScene , public CCTransitionEaseScene
+class CC_DLL CCTransitionFadeTR : public CCTransitionScene , public CCTransitionEaseScene
 {
 public:
 	CCTransitionFadeTR();
@@ -506,7 +506,7 @@ protected:
 /** @brief CCTransitionFadeBL:
 Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
 */
-class CCX_DLL CCTransitionFadeBL : public CCTransitionFadeTR
+class CC_DLL CCTransitionFadeBL : public CCTransitionFadeTR
 {
 public:
 	CCTransitionFadeBL();
@@ -520,7 +520,7 @@ public:
 /** @brief CCTransitionFadeUp:
 * Fade the tiles of the outgoing scene from the bottom to the top.
 */
-class CCX_DLL CCTransitionFadeUp : public CCTransitionFadeTR
+class CC_DLL CCTransitionFadeUp : public CCTransitionFadeTR
 {
 public:
 	CCTransitionFadeUp();
@@ -534,7 +534,7 @@ public:
 /** @brief CCTransitionFadeDown:
 * Fade the tiles of the outgoing scene from the top to the bottom.
 */
-class CCX_DLL CCTransitionFadeDown : public CCTransitionFadeTR
+class CC_DLL CCTransitionFadeDown : public CCTransitionFadeTR
 {
 public:
 	CCTransitionFadeDown();

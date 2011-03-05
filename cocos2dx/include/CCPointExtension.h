@@ -186,47 +186,47 @@ ccpLengthSQ(const CCPoint v)
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CCX_DLL ccpLength(const CCPoint v);
+CGFloat CC_DLL ccpLength(const CCPoint v);
 
 /** Calculates the distance between two points
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CCX_DLL ccpDistance(const CCPoint v1, const CCPoint v2);
+CGFloat CC_DLL ccpDistance(const CCPoint v1, const CCPoint v2);
 
 /** Returns point multiplied to a length of 1.
  @return CCPoint
  @since v0.7.2
  */
-CCPoint CCX_DLL ccpNormalize(const CCPoint v);
+CCPoint CC_DLL ccpNormalize(const CCPoint v);
 
 /** Converts radians to a normalized vector.
  @return CCPoint
  @since v0.7.2
  */
-CCPoint CCX_DLL ccpForAngle(const CGFloat a);
+CCPoint CC_DLL ccpForAngle(const CGFloat a);
 
 /** Converts a vector to radians.
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CCX_DLL ccpToAngle(const CCPoint v);
+CGFloat CC_DLL ccpToAngle(const CCPoint v);
 
 
 /** Clamp a value between from and to.
  @since v0.99.1
  */
-float CCX_DLL clampf(float value, float min_inclusive, float max_inclusive);
+float CC_DLL clampf(float value, float min_inclusive, float max_inclusive);
 
 /** Clamp a point between from and to.
  @since v0.99.1
  */
-CCPoint CCX_DLL ccpClamp(CCPoint p, CCPoint from, CCPoint to);
+CCPoint CC_DLL ccpClamp(CCPoint p, CCPoint from, CCPoint to);
 
 /** Quickly convert CCSize to a CCPoint
  @since v0.99.1
  */
-CCPoint CCX_DLL ccpFromSize(CCSize s);
+CCPoint CC_DLL ccpFromSize(CCSize s);
 
 /** Run a math operation function on each point component
  * absf, fllorf, ceilf, roundf
@@ -235,7 +235,7 @@ CCPoint CCX_DLL ccpFromSize(CCSize s);
  * ccpCompOp(p,floorf);
  @since v0.99.1
  */
-CCPoint CCX_DLL ccpCompOp(CCPoint p, float (*opFunc)(float));
+CCPoint CC_DLL ccpCompOp(CCPoint p, float (*opFunc)(float));
 
 /** Linear Interpolation between two points a and b
  @returns
@@ -244,30 +244,30 @@ CCPoint CCX_DLL ccpCompOp(CCPoint p, float (*opFunc)(float));
 	otherwise a value between a..b
  @since v0.99.1
  */
-CCPoint CCX_DLL ccpLerp(CCPoint a, CCPoint b, float alpha);
+CCPoint CC_DLL ccpLerp(CCPoint a, CCPoint b, float alpha);
 
 
 /** @returns if points have fuzzy equality which means equal with some degree of variance.
  @since v0.99.1
  */
-bool CCX_DLL ccpFuzzyEqual(CCPoint a, CCPoint b, float variance);
+bool CC_DLL ccpFuzzyEqual(CCPoint a, CCPoint b, float variance);
 
 
 /** Multiplies a nd b components, a.x*b.x, a.y*b.y
  @returns a component-wise multiplication
  @since v0.99.1
  */
-CCPoint CCX_DLL ccpCompMult(CCPoint a, CCPoint b);
+CCPoint CC_DLL ccpCompMult(CCPoint a, CCPoint b);
 
 /** @returns the signed angle in radians between two vector directions
  @since v0.99.1
  */
-float CCX_DLL ccpAngleSigned(CCPoint a, CCPoint b);
+float CC_DLL ccpAngleSigned(CCPoint a, CCPoint b);
 
 /** @returns the angle in radians between two vector directions
  @since v0.99.1
 */
-float CCX_DLL ccpAngle(CCPoint a, CCPoint b);
+float CC_DLL ccpAngle(CCPoint a, CCPoint b);
 
 /** Rotates a point counter clockwise by the angle around a pivot
  @param v is the point to rotate
@@ -276,7 +276,7 @@ float CCX_DLL ccpAngle(CCPoint a, CCPoint b);
  @returns the rotated point
  @since v0.99.1
  */
-CCPoint CCX_DLL ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle);
+CCPoint CC_DLL ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle);
 
 /** A general line-line intersection test
  @param p1 
@@ -299,7 +299,7 @@ CCPoint CCX_DLL ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle);
 	the hit point also is	p1 + s * (p2 - p1);
  @since v0.99.1
  */
-bool CCX_DLL ccpLineIntersect(CCPoint p1, CCPoint p2, 
+bool CC_DLL ccpLineIntersect(CCPoint p1, CCPoint p2, 
 					  CCPoint p3, CCPoint p4,
 					  float *s, float *t);
 

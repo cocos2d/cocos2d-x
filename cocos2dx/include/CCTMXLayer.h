@@ -58,7 +58,7 @@ namespace cocos2d {
 
 	@since v0.8.1
 	*/
-	class CCX_DLL CCTMXLayer : public CCSpriteBatchNode
+	class CC_DLL CCTMXLayer : public CCSpriteBatchNode
 	{
 		/** size of the layer in tiles */
 		CC_SYNTHESIZE(CCSize, m_tLayerSize, LayerSize);
@@ -71,7 +71,7 @@ namespace cocos2d {
 		/** Layer orientation, which is the same as the map orientation */
 		CC_SYNTHESIZE(int, m_nLayerOrientation, LayerOrientation);
 		/** properties from the layer. They can be added using Tiled */
-		CC_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXLayer();
 		virtual ~CCTMXLayer();

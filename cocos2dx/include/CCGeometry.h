@@ -30,7 +30,7 @@ namespace   cocos2d {
 
 typedef float CGFloat;
 
-class CCX_DLL CCPoint
+class CC_DLL CCPoint
 {
 public:
 	float x;
@@ -45,7 +45,7 @@ public:
 	static bool CCPointEqualToPoint(const CCPoint& point1, const CCPoint& point2);
 };
 
-class CCX_DLL CCSize
+class CC_DLL CCSize
 {
 public:
 	float width;
@@ -59,7 +59,7 @@ public:
 	static bool CCSizeEqualToSize(const CCSize& size1, const CCSize& size2);
 };
 
-class CCX_DLL CCRect
+class CC_DLL CCRect
 {
 public:
 	CCPoint origin;

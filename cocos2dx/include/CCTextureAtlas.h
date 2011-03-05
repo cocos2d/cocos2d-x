@@ -45,7 +45,7 @@ Supported features:
 The quads are rendered using an OpenGL ES VBO.
 To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
 */
-class CCX_DLL CCTextureAtlas : public CCObject 
+class CC_DLL CCTextureAtlas : public CCObject 
 {
 protected:
 	GLushort			*m_pIndices;

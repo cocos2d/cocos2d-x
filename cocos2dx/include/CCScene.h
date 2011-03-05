@@ -45,7 +45,7 @@ additional logic.
 
 It is a good practice to use and CCScene as the parent of all your nodes.
 */
-class CCX_DLL CCScene : public CCNode
+class CC_DLL CCScene : public CCNode
 {
 public:
 	CCScene();

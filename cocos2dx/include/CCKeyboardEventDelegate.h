@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-class CCX_DLL CCKeyboardEventDelegate
+class CC_DLL CCKeyboardEventDelegate
 {
 public:
     //! call the release() in child layer
@@ -55,7 +55,7 @@ public:
     virtual bool ccFlagsChanged(NSEvent* pEvent) { return false; }
 };
 
-class CCX_DLL CCKeyboardEventHandle : public CCObject
+class CC_DLL CCKeyboardEventHandle : public CCObject
 {
 public:
     virtual ~CCKeyboardEventHandle(void);

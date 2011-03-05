@@ -13,7 +13,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-#if defined(CCX_PLATFORM_WIN32)
+#if defined(CC_PLATFORM_WIN32)
     CC_SAFE_DELETE(m_pMainWnd);
 #endif
 }
@@ -21,15 +21,15 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
-#if defined(CCX_PLATFORM_UPHONE)
+#if defined(CC_PLATFORM_UPHONE)
 	if (!(m_pMainWnd = new CCEGLView(this)) || 
 		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
-#elif defined(CCX_PLATFORM_WIN32)
+#elif defined(CC_PLATFORM_WIN32)
 	if (!(m_pMainWnd = new CCEGLView()) ||
 		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
-#elif defined(CCX_PLATFORM_IPHONE)
+#elif defined(CC_PLATFORM_IPHONE)
     if (!(m_pMainWnd = new CCEGLView()))
-#elif defined(CCX_PLATFORM_ANDROID)
+#elif defined(CC_PLATFORM_ANDROID)
     if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
 #else
     #error
@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
     pDirector->setDisplayFPS(true);
 
-#if defined(CCX_PLATFORM_ANDROID)
+#if defined(CC_PLATFORM_ANDROID)
 	CCFileUtils::setRelativePath("assets");
 #endif
 

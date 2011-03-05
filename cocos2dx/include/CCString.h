@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	class CCX_DLL CCString : public CCObject
+	class CC_DLL CCString : public CCObject
 	{
 	public:
 		std::string m_sString;

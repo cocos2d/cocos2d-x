@@ -45,7 +45,7 @@ struct _hashElement;
  
  @since v0.8
  */
-class CCX_DLL CCActionManager : public CCObject, public SelectorProtocol
+class CC_DLL CCActionManager : public CCObject, public SelectorProtocol
 {
 public:
 	CCActionManager(void);

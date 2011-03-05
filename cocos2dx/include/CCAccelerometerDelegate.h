@@ -45,7 +45,7 @@ typedef struct
 The CCAccelerometerDelegate defines a single method for
 receiving acceleration-related data from the system.
 */
-class CCX_DLL CCAccelerometerDelegate
+class CC_DLL CCAccelerometerDelegate
 {
 public:
     virtual void didAccelerate(CCAcceleration* pAccelerationValue) {}

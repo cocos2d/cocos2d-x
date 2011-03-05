@@ -67,7 +67,7 @@ bool HelloWorld::init()
         CC_BREAK_IF(! pLabel);
 
         // Get window size and place the label upper. 
-        CGSize size = CCDirector::sharedDirector()->getWinSize();
+        CCSize size = CCDirector::sharedDirector()->getWinSize();
         pLabel->setPosition(ccp(size.width / 2, size.height - 20));
 
         // Add the label to HelloWorld layer as a child layer.
@@ -89,7 +89,7 @@ bool HelloWorld::init()
     return bRet;
 }
 
-void HelloWorld::menuCloseCallback(NSObject* pSender)
+void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
     // "close" menu item clicked
     CCDirector::sharedDirector()->end();

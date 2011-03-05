@@ -60,7 +60,7 @@ struct ccTouchHandlerHelperData {
 };
 
 
-class CCX_DLL EGLTouchDelegate
+class CC_DLL EGLTouchDelegate
 {
 public:
 	virtual void touchesBegan(CCSet* touches, CCEvent* pEvent) = 0;
@@ -89,7 +89,7 @@ struct _ccCArray;
 
  @since v0.8.0
  */
-class CCX_DLL CCTouchDispatcher : public CCObject, public EGLTouchDelegate
+class CC_DLL CCTouchDispatcher : public CCObject, public EGLTouchDelegate
 {
 public:
 	~CCTouchDispatcher();

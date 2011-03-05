@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCMouseEventDelegate
+class CC_DLL CCMouseEventDelegate
 {
 public:
     //! call the release() in child layer
@@ -127,7 +127,7 @@ public:
     virtual void ccMouseExited(NSEvent *pEvent) {}
 };
 
-class CCX_DLL CCMouseEventHandle : public CCObject
+class CC_DLL CCMouseEventHandle : public CCObject
 {
 public:
     virtual ~CCMouseEventHandle(void);

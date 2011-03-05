@@ -116,11 +116,11 @@ namespace cocos2d{
 		CC_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 	}
-	CCXStringToStringDictionary * CCTMXTiledMap::getProperties()
+	CCStringToStringDictionary * CCTMXTiledMap::getProperties()
 	{
 		return m_pProperties;
 	}
-	void CCTMXTiledMap::setProperties(CCXStringToStringDictionary* var)
+	void CCTMXTiledMap::setProperties(CCStringToStringDictionary* var)
 	{
 		CC_SAFE_RETAIN(var);
 		CC_SAFE_RELEASE(m_pProperties);

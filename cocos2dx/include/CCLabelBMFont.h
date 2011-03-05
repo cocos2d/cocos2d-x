@@ -68,7 +68,7 @@ namespace cocos2d{
 	/** @brief CCBMFontConfiguration has parsed configuration of the the .fnt file
 	@since v0.8
 	*/
-	class CCX_DLL CCBMFontConfiguration : public CCObject
+	class CC_DLL CCBMFontConfiguration : public CCObject
 	{
 		// XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 	public://@public
@@ -132,7 +132,7 @@ namespace cocos2d{
 	@since v0.8
 	*/
 
-	class CCX_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
+	class CC_DLL CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol
 	{
 		/** conforms to CCRGBAProtocol protocol */
 		CC_PROPERTY(GLubyte, m_cOpacity, Opacity)

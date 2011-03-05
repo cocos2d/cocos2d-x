@@ -39,13 +39,13 @@ class CCZone;
 class CCObject;
 class CCString;
 
-class CCX_DLL CCCopying
+class CC_DLL CCCopying
 {
 public:
 	virtual CCObject* copyWithZone(CCZone* pZone);
 };
 
-class CCX_DLL CCObject : public CCCopying
+class CC_DLL CCObject : public CCCopying
 {
 protected:
 	// object id

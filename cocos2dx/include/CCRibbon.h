@@ -46,7 +46,7 @@ class CCRibbonSegment;
 *
 * @since v0.8.1
 */
-class CCX_DLL CCRibbon : public CCNode, public CCTextureProtocol
+class CC_DLL CCRibbon : public CCNode, public CCTextureProtocol
 {
 	/** Texture used by the ribbon. Conforms to CCTextureProtocol protocol */
 	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
@@ -94,7 +94,7 @@ protected:
 };
 
 /** @brief object to hold ribbon segment data */
-class CCX_DLL CCRibbonSegment : public CCObject
+class CC_DLL CCRibbonSegment : public CCObject
 {
 public:
 	GLfloat	m_pVerts[50*6];

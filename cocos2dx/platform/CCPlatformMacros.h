@@ -29,10 +29,10 @@
  */
 #include "config_platform.h"
 
-#ifdef CCX_PLATFORM_MOBILE
-    #define MacGLView					void
-    #define NSWindow					        void
-#elif defined(CCX_PLATFORM_PC)
+#ifdef CC_PLATFORM_MOBILE
+    #define MacGLView					    void
+    #define NSWindow                        void
+#elif defined(CC_PLATFORM_PC)
     #include "platform/MacGLView.h"
 #endif
 
@@ -42,7 +42,7 @@ Basically,it's only enabled in android
 
 It's new in cocos2d-x since v0.99.5
 */
-#ifdef CCX_PLATFORM_ANDROID
+#ifdef CC_PLATFORM_ANDROID
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0

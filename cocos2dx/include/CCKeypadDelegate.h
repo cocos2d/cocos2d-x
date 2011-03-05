@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CCX_DLL CCKeypadDelegate
+class CC_DLL CCKeypadDelegate
 {
 public:
     //! call the release() in child layer
@@ -51,7 +51,7 @@ public:
 CCKeypadHandler
 Object than contains the CCKeypadDelegate.
 */
-class CCX_DLL CCKeypadHandler : public CCObject
+class CC_DLL CCKeypadHandler : public CCObject
 {
 public:
     virtual ~CCKeypadHandler(void);

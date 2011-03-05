@@ -46,7 +46,7 @@ namespace cocos2d {
 	You SHOULD not use this class.
 	Instead, use the newer TMX file format: CCTMXTiledMap
 	*/
-	class CCX_DLL CCTileMapAtlas : public CCAtlasNode 
+	class CC_DLL CCTileMapAtlas : public CCAtlasNode 
 	{
 		/** TileMap info */
 		CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);

@@ -205,7 +205,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CCX_DLL CCDirector : public CCObject
+class CC_DLL CCDirector : public CCObject
 {
 public: 
 	virtual bool init(void);

@@ -604,13 +604,13 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	
 	////----UXLOG("----> Iterating over all the group objets");
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
-	CCArray<CCXStringToStringDictionary*> * objects = group->getObjects();
+	CCArray<CCStringToStringDictionary*> * objects = group->getObjects();
 
-	CCXStringToStringDictionary* dict;
-	CCArray<CCXStringToStringDictionary*>::CCMutableArrayIterator it;
+	CCStringToStringDictionary* dict;
+	CCArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
-		dict = (*it);//dynamic_cast<CCXStringToStringDictionary*>(*it);
+		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
 
 		if(!dict)
 			break;
@@ -619,7 +619,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	}
 	
 	////----UXLOG("----> Fetching 1 object by name");
-	// CCXStringToStringDictionary* platform = group->objectNamed("platform");
+	// CCStringToStringDictionary* platform = group->objectNamed("platform");
 	////----UXLOG("platform: %x", platform);
 }
 
@@ -628,13 +628,13 @@ void TMXOrthoObjectsTest::draw()
 	CCTMXTiledMap* map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
-	CCArray<CCXStringToStringDictionary*> * objects = group->getObjects();
-	CCXStringToStringDictionary* dict;
-	CCArray<CCXStringToStringDictionary*>::CCMutableArrayIterator it;
+	CCArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCStringToStringDictionary* dict;
+	CCArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
-		dict = (*it);//dynamic_cast<CCXStringToStringDictionary*>(*it);
+		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
 		
 		if(!dict)
 			break;
@@ -686,11 +686,11 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
     //UxMutableArray* objects = group->objects();
-	CCArray<CCXStringToStringDictionary*> * objects = group->getObjects();
+	CCArray<CCStringToStringDictionary*> * objects = group->getObjects();
 	//UxMutableDictionary<std::string>* dict;
-    CCXStringToStringDictionary* dict;
+    CCStringToStringDictionary* dict;
 	//CCMutableArray<CCObject*>::CCMutableArrayIterator it;
-    CCArray<CCXStringToStringDictionary*>::CCMutableArrayIterator it;
+    CCArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -708,13 +708,13 @@ void TMXIsoObjectsTest::draw()
 	CCTMXTiledMap *map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
 
-	CCArray<CCXStringToStringDictionary*> * objects = group->getObjects();
-	CCXStringToStringDictionary* dict;
-	CCArray<CCXStringToStringDictionary*>::CCMutableArrayIterator it;
+	CCArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCStringToStringDictionary* dict;
+	CCArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
-		dict = (*it);//dynamic_cast<CCXStringToStringDictionary*>(*it);
+		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
 
 		if(!dict)
 			break;

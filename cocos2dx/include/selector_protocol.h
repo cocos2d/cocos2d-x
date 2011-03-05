@@ -33,7 +33,7 @@ namespace   cocos2d {
 class CCNode;
 class NSEvent;
 
-class CCX_DLL SelectorProtocol
+class CC_DLL SelectorProtocol
 {
 public:
 	virtual void update(ccTime dt) {};
