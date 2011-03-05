@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_APPLICATION_UPHONE_H__
-#define __CCX_APPLICATION_UPHONE_H__
+#ifndef __CCX_APPLICATION_ANDROID_H__
+#define __CCX_APPLICATION_ANDROID_H__
 
 #include "CGGeometry.h"
 #include "CCDirector.h"
@@ -70,4 +70,4 @@ public:
 
 }       // end of namespace   cocos2d
 
-#endif	// end of __CCX_APPLICATION_UPHONE_H__
+#endif	// end of __CCX_APPLICATION_ANDROID_H__

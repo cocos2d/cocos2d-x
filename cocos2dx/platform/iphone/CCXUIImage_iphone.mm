@@ -349,7 +349,7 @@ bool UIImage::isAlphaPixelFormat(void)
 	return m_imageInfo.hasAlpha;
 }
 
-// now, uphone only support premultiplied data
+// now, wophone only support premultiplied data
 // so, we only return true
 bool UIImage::isPremultipliedAlpha(void)
 {

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_UPHONE_CCTIME_H__
-#define __PLATFORM_UPHONE_CCTIME_H__
+#ifndef __PLATFORM_WIN32_CCTIME_H__
+#define __PLATFORM_WIN32_CCTIME_H__
 namespace   cocos2d {
 
 struct cc_timeval
@@ -40,4 +40,4 @@ public:
 };
 }//namespace   cocos2d 
 
-#endif // __PLATFORM_UPHONE_NSTIME_H__
+#endif // __PLATFORM_WIN32_CCTIME_H__

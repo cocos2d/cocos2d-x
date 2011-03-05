@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_COMMON_UPHONE__
-#define __CCX_COMMON_UPHONE__
+#ifndef __CCX_COMMON_ANDROID__
+#define __CCX_COMMON_ANDROID__
 
 #if defined(_WIN32)
     #if defined(SS_MAKEDLL)
@@ -52,4 +52,4 @@ namespace cocos2d{
 
 }//namespace   cocos2d 
 
-#endif	// end of __CCX_COMMON_UPHONE__
+#endif	// end of __CCX_COMMON_ANDROID__

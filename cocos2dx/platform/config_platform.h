@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 // pre configure
-#ifdef _TRANZDA_VM_                             // under uphone
-    #define CCX_PLATFORM_UPHONE
+#ifdef _TRANZDA_VM_                             // under wophone
+    #define CCX_PLATFORM_WOPHONE
 #elif   defined (WIN32) && defined (_WINDOWS)   // under win32pc
     #define CCX_PLATFORM_WIN32
 #elif   defined (ANDROID)
@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 // use these macros to set compiling environment if needed
 
-// #define CCX_UNDER_UPHONE
+// #define CCX_UNDER_WOPHONE
 // #define CCX_UNDER_WIN32
 // #define CCX_UNDER_ANDROID
 // #define CCX_UNDER_IPHONE
@@ -47,14 +47,14 @@ THE SOFTWARE.
 // post configure
 
 // check user set platform
-#if defined(CCX_UNDER_UPHONE) || defined(CCX_UNDER_WIN32) || defined(CCX_UNDER_ANDROID) || defined(CCX_UNDER_IPHONE)
-    #undef CCX_PLATFORM_UPHONE
+#if defined(CCX_UNDER_WOPHONE) || defined(CCX_UNDER_WIN32) || defined(CCX_UNDER_ANDROID) || defined(CCX_UNDER_IPHONE)
+    #undef CCX_PLATFORM_WOPHONE
     #undef CCX_PLATFORM_WIN32
     #undef CCX_PLATFORM_ANDROID
     #undef CCX_PLATFORM_IPHONE
 
-    #if defined(CCX_UNDER_UPHONE)
-        #define CCX_PLATFORM_UPHONE	// under uphone
+    #if defined(CCX_UNDER_WOPHONE)
+        #define CCX_PLATFORM_WOPHONE	// under wophone
     #elif defined(CCX_UNDER_WIN32)
         #define CCX_PLATFORM_WIN32
     #elif defined(CCX_UNDER_ANDROID)
@@ -65,13 +65,13 @@ THE SOFTWARE.
 #endif
 
 // distinguish mobile platforms and pc platforms
-#if defined(CCX_PLATFORM_UPHONE) || defined(CCX_PLATFORM_WIN32) || defined(CCX_PLATFORM_ANDROID) || defined(CCX_PLATFORM_IPHONE)
+#if defined(CCX_PLATFORM_WOPHONE) || defined(CCX_PLATFORM_WIN32) || defined(CCX_PLATFORM_ANDROID) || defined(CCX_PLATFORM_IPHONE)
     #define CCX_PLATFORM_MOBILE
 #elif defined (CCX_PLATFORM_MAC)
     #define CCX_PLATFORM_PC
 #endif
 
 // check compiling platform
-#if ! defined(CCX_PLATFORM_UPHONE) && ! defined(CCX_PLATFORM_WIN32) && ! defined(CCX_PLATFORM_ANDROID) && ! defined(CCX_PLATFORM_IPHONE)
+#if ! defined(CCX_PLATFORM_WOPHONE) && ! defined(CCX_PLATFORM_WIN32) && ! defined(CCX_PLATFORM_ANDROID) && ! defined(CCX_PLATFORM_IPHONE)
     #error "no platform macro defined!"
 #endif

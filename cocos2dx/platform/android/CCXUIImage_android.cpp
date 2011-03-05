@@ -54,7 +54,7 @@ typedef struct
 	int offset;
 }tImageSource;
 
-// because we do not want to include "png.h" in CCXUIImage_uphone.h, so we implement
+// because we do not want to include "png.h" in CCXUIImage_wophone.h, so we implement
 // the function as a static function
 static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
 {
@@ -158,7 +158,7 @@ bool UIImage::isAlphaPixelFormat(void)
 	return m_imageInfo.hasAlpha;
 }
 
-// now, uphone only support premultiplied data
+// now, wophone only support premultiplied data
 // so, we only return true
 bool UIImage::isPremultipliedAlpha(void)
 {

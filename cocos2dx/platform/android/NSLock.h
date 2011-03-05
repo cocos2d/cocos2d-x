@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
-#define __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
+#ifndef __PLATFORM_ANDROID_PLATFORM_NSLOCK_H__
+#define __PLATFORM_ANDROID_PLATFORM_NSLOCK_H__
 
 namespace   cocos2d {
 
@@ -38,4 +38,4 @@ public:
 };
 }//namespace   cocos2d 
 
-#endif // __PLATFORM_UPHONE_PLATFORM_NSLOCK_H__
+#endif // __PLATFORM_ANDROID_PLATFORM_NSLOCK_H__

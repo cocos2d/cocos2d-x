@@ -28,7 +28,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
 	// init the window
-#if defined(CCX_PLATFORM_UPHONE)
+#if defined(CCX_PLATFORM_WOPHONE)
 	if (!(m_pMainWnd = new CCXEGLView(this)) || 
 		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
 #elif defined(CCX_PLATFORM_WIN32)

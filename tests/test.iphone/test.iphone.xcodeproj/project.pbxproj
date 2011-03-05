@@ -93,7 +93,7 @@
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1712591292930200B8313A /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF17118712928FA700B8313A /* libbox2d.a */; };
 		BF17125A1292930200B8313A /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DAB12928DAA00B8313A /* libcocos2d.a */; };
-		BF1712AA1292933300B8313A /* ccxCommon_uphone.h in Headers */ = {isa = PBXBuildFile; fileRef = BF17126D1292933300B8313A /* ccxCommon_uphone.h */; };
+		BF1712AA1292933300B8313A /* ccxCommon_wophone.h in Headers */ = {isa = PBXBuildFile; fileRef = BF17126D1292933300B8313A /* ccxCommon_wophone.h */; };
 		BF1712AB1292933300B8313A /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = BF17126F1292933300B8313A /* chipmunk.h */; };
 		BF1712AC1292933300B8313A /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1712701292933300B8313A /* chipmunk_ffi.h */; };
 		BF1712AD1292933300B8313A /* chipmunk_types.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1712711292933300B8313A /* chipmunk_types.h */; };
@@ -631,7 +631,7 @@
 		BF1711DC12928FCB00B8313A /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
 		BF1711DD12928FCB00B8313A /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
 		BF1712631292931F00B8313A /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF17126D1292933300B8313A /* ccxCommon_uphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccxCommon_uphone.h; sourceTree = "<group>"; };
+		BF17126D1292933300B8313A /* ccxCommon_wophone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccxCommon_wophone.h; sourceTree = "<group>"; };
 		BF17126F1292933300B8313A /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		BF1712701292933300B8313A /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		BF1712711292933300B8313A /* chipmunk_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_types.h; sourceTree = "<group>"; };
@@ -1387,7 +1387,7 @@
 		BF17126C1292933300B8313A /* include */ = {
 			isa = PBXGroup;
 			children = (
-				BF17126D1292933300B8313A /* ccxCommon_uphone.h */,
+				BF17126D1292933300B8313A /* ccxCommon_wophone.h */,
 				BF17126E1292933300B8313A /* chipmunk */,
 			);
 			path = include;
@@ -2703,7 +2703,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF1712AA1292933300B8313A /* ccxCommon_uphone.h in Headers */,
+				BF1712AA1292933300B8313A /* ccxCommon_wophone.h in Headers */,
 				BF1712AB1292933300B8313A /* chipmunk.h in Headers */,
 				BF1712AC1292933300B8313A /* chipmunk_ffi.h in Headers */,
 				BF1712AD1292933300B8313A /* chipmunk_types.h in Headers */,

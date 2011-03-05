@@ -27,12 +27,12 @@ THE SOFTWARE.
 
 #include "config_platform.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
-	#include "uphone/CCTime.h"
-	#include "uphone/NSLock.h"
-	#include "uphone/Cocos2dTypes.h"
-	// #include "uphone/CCXGLExtFunc.h"
-	#include "uphone/CCXBitmapDC.h"
+#if defined(CCX_PLATFORM_WOPHONE)
+	#include "wophone/CCTime.h"
+	#include "wophone/NSLock.h"
+	#include "wophone/Cocos2dTypes.h"
+	// #include "wophone/CCXGLExtFunc.h"
+	#include "wophone/CCXBitmapDC.h"
 #elif defined(CCX_PLATFORM_WIN32)
     #include "win32/CCTime.h"
     #include "win32/NSLock.h"

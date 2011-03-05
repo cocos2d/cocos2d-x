@@ -26,8 +26,8 @@
 
 #include "config_platform.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXCocos2dDefine_uphone.h"
+#if defined(CCX_PLATFORM_WOPHONE)
+    #include "wophone/CCXCocos2dDefine_wophone.h"
 #elif defined(CCX_PLATFORM_WIN32)
     #include "win32/CCXCocos2dDefine_win32.h"
 #elif defined(CCX_PLATFORM_ANDROID)
