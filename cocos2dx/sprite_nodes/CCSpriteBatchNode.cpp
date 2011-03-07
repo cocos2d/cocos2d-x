@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "effects/CCGrid.h"
 #include "CCDrawingPrimitives.h"
 #include "CCTextureCache.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 namespace cocos2d
 {
@@ -108,8 +108,8 @@ namespace cocos2d
 		updateBlendFunc();
 
 		// no lazy alloc in this node
-		m_pChildren = new NSMutableArray<CCNode*>();
-		m_pobDescendants = new NSMutableArray<CCSprite*>();
+		m_pChildren = new CCMutableArray<CCNode*>();
+		m_pobDescendants = new CCMutableArray<CCSprite*>();
 
 		return true;
 	}
@@ -166,7 +166,7 @@ namespace cocos2d
 	}
 
 	// xxx deprecated
-	CCSprite* CCSpriteBatchNode::createSpriteWithRect(CGRect rect)
+	CCSprite* CCSpriteBatchNode::createSpriteWithRect(CCRect rect)
 	{
 		CCSprite *pSprite = CCSprite::spriteWithTexture(m_pobTextureAtlas->getTexture(), rect);
 		pSprite->useBatchNode(this);
@@ -175,7 +175,7 @@ namespace cocos2d
 	}
 
 	// XXX deprecated
-	void CCSpriteBatchNode::initSprite(cocos2d::CCSprite *sprite, cocos2d::CGRect rect)
+	void CCSpriteBatchNode::initSprite(cocos2d::CCSprite *sprite, cocos2d::CCRect rect)
 	{
 		if (sprite)
 		{
@@ -256,7 +256,7 @@ namespace cocos2d
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
 			CCSprite *pSprite;
-			NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
 			for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
 			{
 				pSprite = (CCSprite*)(*iter);
@@ -288,7 +288,7 @@ namespace cocos2d
 		if (m_pobDescendants && m_pobDescendants->count() > 0)
 		{
 			CCSprite *pSprite;
-			NSMutableArray<CCSprite*>::NSMutableArrayIterator iter;
+			CCMutableArray<CCSprite*>::CCMutableArrayIterator iter;
 			for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
 			{
 				pSprite = *iter;
@@ -304,8 +304,8 @@ namespace cocos2d
 
 #if CC_SPRITESHEET_DEBUG_DRAW
 				// issue #528
-				CGRect rect = pSprite->boundingBox();
-				CGPoint vertices[4]={
+				CCRect rect = pSprite->boundingBox();
+				CCPoint vertices[4]={
 					ccp(rect.origin.x,rect.origin.y),
 					ccp(rect.origin.x+rect.size.width,rect.origin.y),
 					ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
@@ -352,12 +352,12 @@ namespace cocos2d
 
 	unsigned int CCSpriteBatchNode::rebuildIndexInOrder(CCSprite *pobParent, unsigned int uIndex)
 	{
-		NSMutableArray<CCNode*> *pChildren = pobParent->getChildren();
+		CCMutableArray<CCNode*> *pChildren = pobParent->getChildren();
 
 		if (pChildren && pChildren->count() > 0)
 		{
 			CCSprite *pSprite;
-			NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
 			for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 			{
 				pSprite = (CCSprite*)(*iter);
@@ -384,7 +384,7 @@ namespace cocos2d
 		if (pChildren && pChildren->count() > 0)
 		{
 			CCSprite *pSprite;
-			NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
 			for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 			{
 				pSprite = (CCSprite*)(*iter);
@@ -406,7 +406,7 @@ namespace cocos2d
 
 	unsigned int CCSpriteBatchNode::highestAtlasIndexInChild(CCSprite *pSprite)
 	{
-		NSMutableArray<CCNode*> *pChildren = pSprite->getChildren();
+		CCMutableArray<CCNode*> *pChildren = pSprite->getChildren();
 
 		if (! pChildren || pChildren->count() == 0)
 		{
@@ -420,7 +420,7 @@ namespace cocos2d
 
 	unsigned int CCSpriteBatchNode::lowestAtlasIndexInChild(CCSprite *pSprite)
 	{
-		NSMutableArray<CCNode*> *pChildren = pSprite->getChildren();
+		CCMutableArray<CCNode*> *pChildren = pSprite->getChildren();
 
 		if (! pChildren || pChildren->count() == 0)
 		{
@@ -434,7 +434,7 @@ namespace cocos2d
 
 	unsigned int CCSpriteBatchNode::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 	{
-		NSMutableArray<CCNode*> *pBrothers = pobSprite->getParent()->getChildren();
+		CCMutableArray<CCNode*> *pBrothers = pobSprite->getParent()->getChildren();
 		unsigned int uChildIndex = pBrothers->getIndexOfObject(pobSprite);
 
 		// ignore parent Z if parent is spriteSheet
@@ -513,7 +513,7 @@ namespace cocos2d
 		unsigned int i = 0;
 		if (m_pobDescendants && m_pobDescendants->count() > 0)
 		{
-			NSMutableArray<CCSprite*>::NSMutableArrayIterator iter;
+			CCMutableArray<CCSprite*>::CCMutableArrayIterator iter;
 			for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
 			{
 				if (! *iter)
@@ -531,10 +531,10 @@ namespace cocos2d
 		}	
 
 		// add children recursively
-		NSMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
+		CCMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
 		if (pChildren && pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator iterNode;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator iterNode;
 			CCSprite *pSprite;
 			for (iterNode = pChildren->begin(); iterNode != pChildren->end(); ++iterNode)
 			{
@@ -575,11 +575,11 @@ namespace cocos2d
 		}
 
 		// remove children recursively
-		NSMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
+		CCMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
 		if (pChildren && pChildren->count() > 0)
 		{
 			CCSprite *pSprite;
-			NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
 			for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
 			{
 				pSprite = (CCSprite*)(*iter);
@@ -631,8 +631,8 @@ namespace cocos2d
 
     void CCSpriteBatchNode::addQuadFromSprite(CCSprite *sprite, unsigned int index)
     {
-        NSAssert( sprite != NULL, "Argument must be non-nil");
-        /// @todo NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
+        CCAssert( sprite != NULL, "Argument must be non-nil");
+        /// @todo CCAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
 
         while(index >= m_pobTextureAtlas->getCapacity() || m_pobTextureAtlas->getCapacity() == m_pobTextureAtlas->getTotalQuads())
         {
@@ -655,8 +655,8 @@ namespace cocos2d
 
     CCSpriteBatchNode * CCSpriteBatchNode::addSpriteWithoutQuad(CCSprite*child, unsigned int z, int aTag)
     {
-        NSAssert( child != NULL, "Argument must be non-nil");
-        /// @todo NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
+        CCAssert( child != NULL, "Argument must be non-nil");
+        /// @todo CCAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
 
         // quad index is Z
         child->setAtlasIndex(z);
@@ -665,7 +665,7 @@ namespace cocos2d
         int i=0;
         if (m_pobDescendants && m_pobDescendants->count() > 0)
         {
-            NSMutableArray<CCSprite*>::NSMutableArrayIterator iter;
+            CCMutableArray<CCSprite*>::CCMutableArrayIterator iter;
             for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
             {
                 // fast dispatch

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 
 namespace   cocos2d {
 
@@ -38,8 +38,8 @@ typedef enum
 
 class CCTouch;
 class UIEvent;
-class NSSet;
-class CCX_DLL CCTouchDelegate
+class CCSet;
+class CC_DLL CCTouchDelegate
 {
 protected:
 	ccTouchDelegateFlag m_eTouchDelegateType;
@@ -59,15 +59,15 @@ public:
 	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
 
 	// optional
- 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(CCSet *pTouches, UIEvent *pEvent) {}
 };
 /**
  @brief
  Using this type of delegate results in two benefits:
- - 1. You don't need to deal with NSSets, the dispatcher does the job of splitting
+ - 1. You don't need to deal with CCSets, the dispatcher does the job of splitting
  them. You get exactly one UITouch per call.
  - 2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
@@ -78,7 +78,7 @@ public:
  handler, without bothering the other handlers.)
  @since v0.8
  */
- class CCX_DLL CCTargetedTouchDelegate : public CCTouchDelegate
+ class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
  {
  public:
  	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
@@ -97,15 +97,15 @@ public:
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
  @since v0.8
  */
- class CCX_DLL CCStandardTouchDelegate : public CCTouchDelegate
+ class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
  {
  public:
  	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }
  	// optional
- 	virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(NSSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(CCSet *pTouches, UIEvent *pEvent) {}
  };
 
 }//namespace   cocos2d 

@@ -40,7 +40,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_DELETE(pAction);
+				CC_SAFE_DELETE(pAction);
 			}
 		}
 
@@ -105,9 +105,9 @@ namespace cocos2d
 		return CCReverseTime::actionWithAction(this);
 	}
 
-	NSObject* CCGridAction::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject* CCGridAction::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCGridAction* pCopy = NULL;
 		if(pZone && pZone->m_pCopyObject) 
 		{
@@ -117,14 +117,14 @@ namespace cocos2d
 		else
 		{
 			pCopy = new CCGridAction();
-			pZone = pNewZone = new NSZone(pCopy);
+			pZone = pNewZone = new CCZone(pCopy);
 		}
 
 		CCActionInterval::copyWithZone(pZone);
 
 		pCopy->initWithSize(m_sGridSize, m_fDuration);
 		
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pCopy;
 	}
 
@@ -191,7 +191,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_DELETE(pRet);
+				CC_SAFE_DELETE(pRet);
 			}
 		}
 
@@ -214,7 +214,7 @@ namespace cocos2d
 
 	CCAccelDeccelAmplitude::~CCAccelDeccelAmplitude(void)
 	{
-		CCX_SAFE_RELEASE(m_pOther);
+		CC_SAFE_RELEASE(m_pOther);
 	}
 
 	void CCAccelDeccelAmplitude::startWithTarget(CCNode *pTarget)
@@ -254,7 +254,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_DELETE(pRet);
+				CC_SAFE_DELETE(pRet);
 			}
 		}
 
@@ -277,7 +277,7 @@ namespace cocos2d
 
 	CCAccelAmplitude::~CCAccelAmplitude(void)
 	{
-		CCX_SAFE_DELETE(m_pOther);
+		CC_SAFE_DELETE(m_pOther);
 	}
 
 	void CCAccelAmplitude::startWithTarget(CCNode *pTarget)
@@ -310,7 +310,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_DELETE(pRet);
+				CC_SAFE_DELETE(pRet);
 			}
 		}
 
@@ -333,7 +333,7 @@ namespace cocos2d
 
 	CCDeccelAmplitude::~CCDeccelAmplitude(void)
 	{
-		CCX_SAFE_RELEASE(m_pOther);
+		CC_SAFE_RELEASE(m_pOther);
 	}
 
 	void CCDeccelAmplitude::startWithTarget(CCNode *pTarget)
@@ -387,7 +387,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_DELETE(pAction);
+				CC_SAFE_DELETE(pAction);
 			}
 		}
 

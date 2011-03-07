@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "CCAction.h"
 #include "CCActionInterval.h"
 #include "CCNode.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCDirector.h"
-#include "NSZone.h"
+#include "CCZone.h"
 
 namespace   cocos2d {
 //
@@ -57,9 +57,9 @@ char * CCAction::description()
 	sprintf(ret,"<CCAction | Tag = %d>", m_nTag);
 	return ret;
 }
-NSObject* CCAction::copyWithZone(NSZone *pZone)
+CCObject* CCAction::copyWithZone(CCZone *pZone)
 {
-	NSZone *pNewZone = NULL;
+	CCZone *pNewZone = NULL;
 	CCAction *pRet = NULL;
 	if (pZone && pZone->m_pCopyObject)
 	{
@@ -68,11 +68,11 @@ NSObject* CCAction::copyWithZone(NSZone *pZone)
 	else
 	{
 		pRet = new CCAction();
-		pZone = pNewZone = new NSZone(pRet);
+		pZone = pNewZone = new CCZone(pRet);
 	}
 	//copy member data
 	pRet->m_nTag = m_nTag;
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 
@@ -116,7 +116,7 @@ CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 //
 CCSpeed::~CCSpeed()
 {
-	CCX_SAFE_RELEASE(m_pOther);
+	CC_SAFE_RELEASE(m_pOther);
 }
 
 CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
@@ -127,7 +127,7 @@ CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 
@@ -140,9 +140,9 @@ bool CCSpeed::initWithAction(CCActionInterval *pAction, float fRate)
 	return true;
 }
 
-NSObject *CCSpeed::copyWithZone(NSZone *pZone)
+CCObject *CCSpeed::copyWithZone(CCZone *pZone)
 {
-	NSZone* pNewZone = NULL;
+	CCZone* pNewZone = NULL;
 	CCSpeed* pRet = NULL;
 	if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 	{
@@ -151,13 +151,13 @@ NSObject *CCSpeed::copyWithZone(NSZone *pZone)
 	else
 	{
 		pRet = new CCSpeed();
-		pZone = pNewZone = new NSZone(pRet);
+		pZone = pNewZone = new CCZone(pRet);
 	}
 	CCAction::copyWithZone(pZone);
 
 	pRet->initWithAction( (CCActionInterval*)(m_pOther->copy()->autorelease()) , m_fSpeed );
 	
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 
@@ -204,10 +204,10 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
-CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, CGRect rect)
+CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, CCRect rect)
 {
 	CCFollow *pRet = new CCFollow();
 	if (pRet && pRet->initWithTarget(pFollowedNode, rect))
@@ -215,7 +215,7 @@ CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode, CGRect rect)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 
@@ -227,13 +227,13 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode)
 	m_bBoundarySet = false;
 	m_bBoundaryFullyCovered = false;
 
-	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
-	m_obFullScreenSize = CGPointMake(winSize.width, winSize.height);
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	m_obFullScreenSize = CCPointMake(winSize.width, winSize.height);
 	m_obHalfScreenSize = ccpMult(m_obFullScreenSize, 0.5f);
 	return true;
 }
 
-bool CCFollow::initWithTarget(CCNode *pFollowedNode, CGRect rect)
+bool CCFollow::initWithTarget(CCNode *pFollowedNode, CCRect rect)
 {
 	assert(pFollowedNode != NULL);
 	pFollowedNode->retain();
@@ -241,8 +241,8 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, CGRect rect)
 	m_bBoundarySet = true;
 	m_bBoundaryFullyCovered = false;
 
-	CGSize winSize = CCDirector::sharedDirector()->getWinSize();
-	m_obFullScreenSize = CGPointMake(winSize.width, winSize.height);
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	m_obFullScreenSize = CCPointMake(winSize.width, winSize.height);
 	m_obHalfScreenSize = ccpMult(m_obFullScreenSize, 0.5f);
 
 	m_fLeftBoundary = -((rect.origin.x+rect.size.width) - m_obFullScreenSize.x);
@@ -269,9 +269,9 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, CGRect rect)
 	}
 	return true;
 }
-NSObject *CCFollow::copyWithZone(NSZone *pZone)
+CCObject *CCFollow::copyWithZone(CCZone *pZone)
 {
-	NSZone *pNewZone = NULL;
+	CCZone *pNewZone = NULL;
 	CCFollow *pRet = NULL;
 	if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 	{
@@ -280,12 +280,12 @@ NSObject *CCFollow::copyWithZone(NSZone *pZone)
 	else
 	{
 		pRet = new CCFollow();
-		pZone = pNewZone = new NSZone(pRet);
+		pZone = pNewZone = new CCZone(pRet);
 	}
 	CCAction::copyWithZone(pZone);
 	// copy member data
 	pRet->m_nTag = m_nTag;
-	CCX_SAFE_DELETE(pNewZone);
+	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
 void CCFollow::step(ccTime dt)
@@ -298,7 +298,7 @@ void CCFollow::step(ccTime dt)
 		if(m_bBoundaryFullyCovered)
 			return;
 
-		CGPoint tempPos = ccpSub( m_obHalfScreenSize, m_pobFollowedNode->getPosition());
+		CCPoint tempPos = ccpSub( m_obHalfScreenSize, m_pobFollowedNode->getPosition());
 
 		m_pTarget->setPosition(ccp(CLAMP(tempPos.x, m_fLeftBoundary, m_fRightBoundary), 
 								   CLAMP(tempPos.y, m_fBottomBoundary, m_fTopBoundary)));

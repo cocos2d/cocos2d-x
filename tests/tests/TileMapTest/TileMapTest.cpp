@@ -17,7 +17,7 @@ TileMapTest::TileMapTest()
 	// Convert it to "alias" (GL_LINEAR filtering)
 	map->getTexture()->setAntiAliasTexParameters();
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
 	// If you are not going to use the Map, you can free it now
@@ -52,7 +52,7 @@ TileMapEditTest::TileMapEditTest()
 	// Create an Aliased Atlas
 	map->getTexture()->setAliasTexParameters();
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	// If you are not going to use the Map, you can free it now
@@ -121,12 +121,12 @@ TMXOrthoTest::TMXOrthoTest()
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test2.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
-	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
 		child = (CCSpriteBatchNode*)(*it);
@@ -170,12 +170,12 @@ TMXOrthoTest2::TMXOrthoTest2()
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test1.tmx");
 	addChild(map, 0, kTagTileMap);
 
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
-	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
 		child = (CCSpriteBatchNode*)(*it);
@@ -204,12 +204,12 @@ TMXOrthoTest3::TMXOrthoTest3()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test3.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
-	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
 		child = (CCSpriteBatchNode*)(*it);
@@ -239,12 +239,12 @@ TMXOrthoTest4::TMXOrthoTest4()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test4.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s1 = map->getContentSize();
+	CCSize s1 = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s1.width,s1.height);
 	
-	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
 		child = (CCSpriteBatchNode*)(*it);
@@ -258,7 +258,7 @@ TMXOrthoTest4::TMXOrthoTest4()
 	map->setAnchorPoint(ccp(0, 0));
 
 	CCTMXLayer* layer = map->layerNamed("Layer 0");
-	CGSize s = layer->getLayerSize();
+	CCSize s = layer->getLayerSize();
 	
 	CCSprite* sprite;
 	sprite = layer->tileAt(ccp(0,0));
@@ -280,7 +280,7 @@ void TMXOrthoTest4::removeSprite(ccTime dt)
 
 	CCTMXTiledMap *map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
 	CCTMXLayer* layer = map->layerNamed("Layer 0");
-	CGSize s = layer->getLayerSize();
+	CCSize s = layer->getLayerSize();
 
 	CCSprite* sprite = layer->tileAt( ccp(s.width-1,0) );
 	layer->removeChild(sprite, true);
@@ -310,7 +310,7 @@ TMXReadWriteTest::TMXReadWriteTest()
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test2.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
 	
@@ -381,7 +381,7 @@ void TMXReadWriteTest::updateCol(ccTime dt)
 	////----UXLOG("++++children: %d", layer->getChildren()->count() );
 
 
-	CGSize s = layer->getLayerSize();
+	CCSize s = layer->getLayerSize();
 
 	for( int y=0; y< s.height; y++ ) 
 	{
@@ -398,7 +398,7 @@ void TMXReadWriteTest::repaintWithGID(ccTime dt)
 	CCTMXTiledMap* map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
 	CCTMXLayer *layer = (CCTMXLayer*)map->getChildByTag(0);
 	
-	CGSize s = layer->getLayerSize();
+	CCSize s = layer->getLayerSize();
 	for( int x=0; x<s.width;x++) 
 	{
 		int y = (int)s.height-1;
@@ -413,7 +413,7 @@ void TMXReadWriteTest::removeTiles(ccTime dt)
 
 	CCTMXTiledMap* map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
 	CCTMXLayer *layer = (CCTMXLayer*)map->getChildByTag(0);
-	CGSize s = layer->getLayerSize();
+	CCSize s = layer->getLayerSize();
 
 	for( int y=0; y< s.height; y++ ) 
 	{
@@ -441,7 +441,7 @@ TMXHexTest::TMXHexTest()
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/hexa-test.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 }
 
@@ -464,8 +464,8 @@ TMXIsoTest::TMXIsoTest()
 	addChild(map, 0, kTagTileMap);		
 	
 	// move map to the center of the screen
-	CGSize ms = map->getMapSize();
-	CGSize ts = map->getTileSize();
+	CCSize ms = map->getMapSize();
+	CCSize ts = map->getTileSize();
 	map->runAction( CCMoveTo::actionWithDuration(1.0f, ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 )) ); 
 }
 
@@ -487,7 +487,7 @@ TMXIsoTest1::TMXIsoTest1()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test1.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	map->setAnchorPoint(ccp(0.5f, 0.5f));
@@ -511,12 +511,12 @@ TMXIsoTest2::TMXIsoTest2()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2.tmx");
 	addChild(map, 0, kTagTileMap);	
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	// move map to the center of the screen
-	CGSize ms = map->getMapSize();
-	CGSize ts = map->getTileSize();
+	CCSize ms = map->getMapSize();
+	CCSize ts = map->getTileSize();
 	map->runAction( CCMoveTo::actionWithDuration(1.0f, ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
 }
 
@@ -538,18 +538,18 @@ TMXUncompressedTest::TMXUncompressedTest()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test2-uncompressed.tmx");
 	addChild(map, 0, kTagTileMap);	
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	// move map to the center of the screen
-	CGSize ms = map->getMapSize();
-	CGSize ts = map->getTileSize();
+	CCSize ms = map->getMapSize();
+	CCSize ts = map->getTileSize();
 	map->runAction(CCMoveTo::actionWithDuration(1.0f, ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
 	
 	// testing release map
-	NSMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
 	CCTMXLayer* layer;
-	NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
 	{
 		layer= (CCTMXLayer*)(*it);
@@ -577,7 +577,7 @@ TMXTilesetTest::TMXTilesetTest()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test5.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	CCTMXLayer* layer;
@@ -606,18 +606,18 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/ortho-objects.tmx");
 	addChild(map, -1, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	////----UXLOG("----> Iterating over all the group objets");
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
-	NSArray<CCXStringToStringDictionary*> * objects = group->getObjects();
+	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
 
-	CCXStringToStringDictionary* dict;
-	NSArray<CCXStringToStringDictionary*>::NSMutableArrayIterator it;
+	CCStringToStringDictionary* dict;
+	NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
-		dict = (*it);//dynamic_cast<CCXStringToStringDictionary*>(*it);
+		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
 
 		if(!dict)
 			break;
@@ -626,7 +626,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	}
 	
 	////----UXLOG("----> Fetching 1 object by name");
-	// CCXStringToStringDictionary* platform = group->objectNamed("platform");
+	// CCStringToStringDictionary* platform = group->objectNamed("platform");
 	////----UXLOG("platform: %x", platform);
 }
 
@@ -635,13 +635,13 @@ void TMXOrthoObjectsTest::draw()
 	CCTMXTiledMap* map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
-	NSArray<CCXStringToStringDictionary*> * objects = group->getObjects();
-	CCXStringToStringDictionary* dict;
-	NSArray<CCXStringToStringDictionary*>::NSMutableArrayIterator it;
+	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCStringToStringDictionary* dict;
+	NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
-		dict = (*it);//dynamic_cast<CCXStringToStringDictionary*>(*it);
+		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
 		
 		if(!dict)
 			break;
@@ -687,17 +687,17 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-objectgroup.tmx");
 	addChild(map, -1, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
     //UxMutableArray* objects = group->objects();
-	NSArray<CCXStringToStringDictionary*> * objects = group->getObjects();
+	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
 	//UxMutableDictionary<std::string>* dict;
-    CCXStringToStringDictionary* dict;
-	//NSMutableArray<NSObject*>::NSMutableArrayIterator it;
-    NSArray<CCXStringToStringDictionary*>::NSMutableArrayIterator it;
+    CCStringToStringDictionary* dict;
+	//CCMutableArray<CCObject*>::CCMutableArrayIterator it;
+    NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -715,13 +715,13 @@ void TMXIsoObjectsTest::draw()
 	CCTMXTiledMap *map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
 
-	NSArray<CCXStringToStringDictionary*> * objects = group->getObjects();
-	CCXStringToStringDictionary* dict;
-	NSArray<CCXStringToStringDictionary*>::NSMutableArrayIterator it;
+	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCStringToStringDictionary* dict;
+	NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
-		dict = (*it);//dynamic_cast<CCXStringToStringDictionary*>(*it);
+		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
 
 		if(!dict)
 			break;
@@ -767,13 +767,13 @@ TMXResizeTest::TMXResizeTest()
 	CCTMXTiledMap* map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test5.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
 	CCTMXLayer* layer;
 	layer = map->layerNamed("Layer 0");
 
-	CGSize ls = layer->getLayerSize();
+	CCSize ls = layer->getLayerSize();
 	for (unsigned int y = 0; y < ls.height; y++) 
 	{
 		for (unsigned int x = 0; x < ls.width; x++) 
@@ -804,7 +804,7 @@ TMXIsoZorder::TMXIsoZorder()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-zorder.tmx");
 	addChild(map, 0, kTagTileMap);
 
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
     map->setPosition(ccp(-s.width/2,0));
 	
@@ -837,7 +837,7 @@ void TMXIsoZorder::onExit()
 
 void TMXIsoZorder::repositionSprite(ccTime dt)
 {
-	CGPoint p = m_tamara->getPositionInPixels();
+	CCPoint p = m_tamara->getPositionInPixels();
 	CCNode *map = getChildByTag(kTagTileMap);
 	
 	// there are only 4 layers. (grass and 3 trees layers)
@@ -872,7 +872,7 @@ TMXOrthoZorder::TMXOrthoZorder()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test-zorder.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	m_tamara = CCSprite::spriteWithFile(s_pPathSister1);
@@ -896,7 +896,7 @@ TMXOrthoZorder::~TMXOrthoZorder()
 
 void TMXOrthoZorder::repositionSprite(ccTime dt)
 {
-	CGPoint p = m_tamara->getPositionInPixels();
+	CCPoint p = m_tamara->getPositionInPixels();
 	CCNode* map = getChildByTag(kTagTileMap);
 	
 	// there are only 4 layers. (grass and 3 trees layers)
@@ -932,7 +932,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/iso-test-vertexz.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
     map->setPosition( ccp(-s.width/2,0) );
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
@@ -960,7 +960,7 @@ void TMXIsoVertexZ::repositionSprite(ccTime dt)
 {
 	// tile height is 64x32
 	// map size: 30x30
-	CGPoint p = m_tamara->getPositionInPixels();
+	CCPoint p = m_tamara->getPositionInPixels();
 	m_tamara->setVertexZ( -( (p.y+32) /16) );
 }
 
@@ -1000,7 +1000,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test-vertexz.tmx");
 	addChild(map, 0, kTagTileMap);
 	
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
 	// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
@@ -1028,7 +1028,7 @@ void TMXOrthoVertexZ::repositionSprite(ccTime dt)
 {
 	// tile height is 101x81
 	// map size: 12x12
-	CGPoint p = m_tamara->getPositionInPixels();
+	CCPoint p = m_tamara->getPositionInPixels();
 	m_tamara->setVertexZ( -( (p.y+81) /81) );
 }
 
@@ -1070,7 +1070,7 @@ TMXIsoMoveLayer::TMXIsoMoveLayer()
 	
 	map->setPosition(ccp(-700,-50));
 
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 }
 
@@ -1095,7 +1095,7 @@ TMXOrthoMoveLayer::TMXOrthoMoveLayer()
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test-movelayer.tmx");
 	addChild(map, 0, kTagTileMap);
 
-	CGSize s = map->getContentSize();
+	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 }
 
@@ -1119,17 +1119,17 @@ TMXBug987::TMXBug987()
     CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/orthogonal-test6.tmx");
     addChild(map, 0, kTagTileMap);
 
-    CGSize s1 = map->getContentSize();
+    CCSize s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
-    NSMutableArray<CCNode*>* childs = map->getChildren();
+    CCMutableArray<CCNode*>* childs = map->getChildren();
     CCTMXLayer* pNode;
-    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 
     for(it = childs->begin(); it != childs->end(); it++)
     {
         pNode = (CCTMXLayer*)(*it);
-        CCX_BREAK_IF(!pNode);
+        CC_BREAK_IF(!pNode);
         pNode->getTexture()->setAntiAliasTexParameters();
     }
 
@@ -1258,7 +1258,7 @@ TileDemo::TileDemo(void)
 {
 	setIsTouchEnabled( true );
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	m_label = CCLabelTTF::labelWithString("", "Arial", 28);
 	addChild(m_label, 1);
@@ -1282,7 +1282,7 @@ TileDemo::TileDemo(void)
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
+	menu->setPosition( CCPointZero );
 	item1->setPosition( ccp( s.width/2 - 100,30) );
 	item2->setPosition( ccp( s.width/2, 30) );
 	item3->setPosition( ccp( s.width/2 + 100,30) );
@@ -1314,7 +1314,7 @@ void TileDemo::onEnter()
 	m_subtitle->setString(subtitle().c_str());
 }
 
-void TileDemo::restartCallback(NSObject* pSender)
+void TileDemo::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new TileMapTestScene();
 	s->addChild(restartTileMapAction()); 
@@ -1323,7 +1323,7 @@ void TileDemo::restartCallback(NSObject* pSender)
 	s->release();
 }
 
-void TileDemo::nextCallback(NSObject* pSender)
+void TileDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new TileMapTestScene();
 	s->addChild( nextTileMapAction() );
@@ -1331,7 +1331,7 @@ void TileDemo::nextCallback(NSObject* pSender)
 	s->release();
 }
 
-void TileDemo::backCallback(NSObject* pSender)
+void TileDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new TileMapTestScene();
 	s->addChild( backTileMapAction() );
@@ -1359,16 +1359,16 @@ void TileDemo::ccTouchCancelled(CCTouch* touch, UIEvent* event)
 
 void TileDemo::ccTouchMoved(CCTouch* touch, UIEvent* event)
 {
-	CGPoint touchLocation = touch->locationInView( touch->view() );	
-	CGPoint prevLocation = touch->previousLocationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	
 	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	prevLocation = CCDirector::sharedDirector()->convertToGL( prevLocation );
 	
-	CGPoint diff = ccpSub(touchLocation, prevLocation);
+	CCPoint diff = ccpSub(touchLocation, prevLocation);
 	
 	CCNode *node = getChildByTag(kTagTileMap);
-	CGPoint currentPos = node->getPosition();
+	CCPoint currentPos = node->getPosition();
 	node->setPosition( ccpAdd(currentPos, diff) );
 }
 

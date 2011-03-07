@@ -35,7 +35,7 @@ typedef struct _listEntry
 {
     struct	_listEntry	*prev;
     struct	_listEntry	*next;
-    NSObject*           pHandle;
+    CCObject*           pHandle;
     int                 priority;
 } tListEntry;
 
@@ -45,7 +45,7 @@ typedef struct _listEntry
     #define QUEUE_EVENT_MAX 128
     struct _eventQueue {
         SEL_EventHandler		selector;
-        NSEvent	                *pEvent;
+        CCEvent	                *pEvent;
     };
 
     static struct _eventQueue eventQueue[QUEUE_EVENT_MAX];
@@ -167,7 +167,7 @@ void CCEventDispatcher::removeAllKeyboardDelegates()
     removeAllDelegatesFromList(&m_pKeyboardDelegates);
 }
 
-void CCEventDispatcher::addDelegate(NSObject* pHandle, int priority, _listEntry** pList)
+void CCEventDispatcher::addDelegate(CCObject* pHandle, int priority, _listEntry** pList)
 {
     if (! pHandle)
     {
@@ -249,7 +249,7 @@ void CCEventDispatcher::setIsDispatchEvents(bool bDispatch)
 //
 // Left
 //
-void CCEventDispatcher::mouseDown(NSEvent *pEvent)
+void CCEventDispatcher::mouseDown(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -275,7 +275,7 @@ void CCEventDispatcher::mouseDown(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::mouseMoved(NSEvent *pEvent)
+void CCEventDispatcher::mouseMoved(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -301,7 +301,7 @@ void CCEventDispatcher::mouseMoved(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::mouseDragged(NSEvent *pEvent)
+void CCEventDispatcher::mouseDragged(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -327,7 +327,7 @@ void CCEventDispatcher::mouseDragged(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::mouseUp(NSEvent *pEvent)
+void CCEventDispatcher::mouseUp(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -356,7 +356,7 @@ void CCEventDispatcher::mouseUp(NSEvent *pEvent)
 //
 // Mouse Right
 //
-void CCEventDispatcher::rightMouseDown(NSEvent *pEvent)
+void CCEventDispatcher::rightMouseDown(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -382,7 +382,7 @@ void CCEventDispatcher::rightMouseDown(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::rightMouseDragged(NSEvent *pEvent)
+void CCEventDispatcher::rightMouseDragged(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -408,7 +408,7 @@ void CCEventDispatcher::rightMouseDragged(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::rightMouseUp(NSEvent * pEvent)
+void CCEventDispatcher::rightMouseUp(CCEvent * pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -437,7 +437,7 @@ void CCEventDispatcher::rightMouseUp(NSEvent * pEvent)
 //
 // Mouse Other
 //
-void CCEventDispatcher::otherMouseDown(NSEvent *pEvent)
+void CCEventDispatcher::otherMouseDown(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -463,7 +463,7 @@ void CCEventDispatcher::otherMouseDown(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::otherMouseDragged(NSEvent *pEvent)
+void CCEventDispatcher::otherMouseDragged(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -489,7 +489,7 @@ void CCEventDispatcher::otherMouseDragged(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::otherMouseUp(NSEvent *pEvent)
+void CCEventDispatcher::otherMouseUp(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -518,7 +518,7 @@ void CCEventDispatcher::otherMouseUp(NSEvent *pEvent)
 //
 // Scroll Wheel
 //
-void CCEventDispatcher::scrollWheel(NSEvent *pEvent)
+void CCEventDispatcher::scrollWheel(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -546,7 +546,7 @@ void CCEventDispatcher::scrollWheel(NSEvent *pEvent)
 
 //
 // Mouse enter / exit
-void CCEventDispatcher::mouseExited(NSEvent *pEvent)
+void CCEventDispatcher::mouseExited(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -569,7 +569,7 @@ void CCEventDispatcher::mouseExited(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::mouseEntered(NSEvent *pEvent)
+void CCEventDispatcher::mouseEntered(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -594,7 +594,7 @@ void CCEventDispatcher::mouseEntered(NSEvent *pEvent)
 
 
 // Keyboard events
-void CCEventDispatcher::keyDown(NSEvent *pEvent)
+void CCEventDispatcher::keyDown(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -621,7 +621,7 @@ void CCEventDispatcher::keyDown(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::keyUp(NSEvent *pEvent)
+void CCEventDispatcher::keyUp(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -648,7 +648,7 @@ void CCEventDispatcher::keyUp(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::flagsChanged(NSEvent *pEvent)
+void CCEventDispatcher::flagsChanged(CCEvent *pEvent)
 {
     if(m_bDispatchEvents)
     {
@@ -675,7 +675,7 @@ void CCEventDispatcher::flagsChanged(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::touchesBeganWithEvent(NSEvent *pEvent)
+void CCEventDispatcher::touchesBeganWithEvent(CCEvent *pEvent)
 {
     if (m_bDispatchEvents )
     {
@@ -683,7 +683,7 @@ void CCEventDispatcher::touchesBeganWithEvent(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::touchesMovedWithEvent(NSEvent *pEvent)
+void CCEventDispatcher::touchesMovedWithEvent(CCEvent *pEvent)
 {
     if (m_bDispatchEvents )
     {
@@ -691,7 +691,7 @@ void CCEventDispatcher::touchesMovedWithEvent(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::touchesEndedWithEvent(NSEvent *pEvent)
+void CCEventDispatcher::touchesEndedWithEvent(CCEvent *pEvent)
 {
     if (m_bDispatchEvents )
     {
@@ -699,7 +699,7 @@ void CCEventDispatcher::touchesEndedWithEvent(NSEvent *pEvent)
     }
 }
 
-void CCEventDispatcher::touchesCancelledWithEvent(NSEvent *pEvent)
+void CCEventDispatcher::touchesCancelledWithEvent(CCEvent *pEvent)
 {
     if (m_bDispatchEvents )
     {
@@ -709,12 +709,12 @@ void CCEventDispatcher::touchesCancelledWithEvent(NSEvent *pEvent)
 
 #if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 
-void CCEventDispatcher::queueEvent(NSEvent* pEvent, SEL_EventHandler selector)
+void CCEventDispatcher::queueEvent(CCEvent* pEvent, SEL_EventHandler selector)
 {
-    NSAssert( s_nEventQueueCount < QUEUE_EVENT_MAX, "CCEventDispatcher: recompile. Increment QUEUE_EVENT_MAX value");
+    CCAssert( s_nEventQueueCount < QUEUE_EVENT_MAX, "CCEventDispatcher: recompile. Increment QUEUE_EVENT_MAX value");
 
     eventQueue[s_nEventQueueCount].selector = selector;
-    eventQueue[s_nEventQueueCount].pEvent   = (NSEvent*) (pEvent->copy());
+    eventQueue[s_nEventQueueCount].pEvent   = (CCEvent*) (pEvent->copy());
 
     s_nEventQueueCount++;
 }
@@ -724,7 +724,7 @@ void CCEventDispatcher::dispatchQueuedEvents()
     for( int i=0; i < s_nEventQueueCount; i++ )
     {
         // SEL_EventHandler sel = eventQueue[i].selector;
-        NSEvent *pEvent = eventQueue[i].pEvent;
+        CCEvent *pEvent = eventQueue[i].pEvent;
 
         
         //[self performSelector:sel withObject:event]; // @todo

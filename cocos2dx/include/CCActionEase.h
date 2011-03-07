@@ -29,13 +29,13 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-class NSObject;
-class NSZone;
+class CCObject;
+class CCZone;
 
 /** 
  @brief Base class for Easing actions
  */
-class CCX_DLL CCActionEase : public CCActionInterval
+class CC_DLL CCActionEase : public CCActionInterval
 {
 public:
 	virtual ~CCActionEase(void);
@@ -43,7 +43,7 @@ public:
 	/** initializes the action */
     bool initWithAction(CCActionInterval *pAction);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void stop(void);
 	virtual void update(ccTime time);
@@ -60,7 +60,7 @@ protected:
 /** 
  @brief Base class for Easing actions with rate parameters
  */
-class CCX_DLL CCEaseRateAction : public CCActionEase
+class CC_DLL CCEaseRateAction : public CCActionEase
 {
 public:
 	virtual ~CCEaseRateAction(void);
@@ -73,7 +73,7 @@ public:
 	/** Initializes the action with the inner action and the rate parameter */
 	bool initWithAction(CCActionInterval *pAction, float fRate);
 
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual CCActionInterval* reverse(void);
 
 public:
@@ -87,11 +87,11 @@ protected:
 /** 
  @brief CCEaseIn action with a rate
  */
-class CCX_DLL CCEaseIn : public CCEaseRateAction
+class CC_DLL CCEaseIn : public CCEaseRateAction
 {
 public:
 	virtual void update(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 public:
 	/** Creates the action with the inner action and the rate parameter */
 	static CCEaseIn* actionWithAction(CCActionInterval* pAction, float fRate);
@@ -100,11 +100,11 @@ public:
 /** 
  @brief CCEaseOut action with a rate
  */
-class CCX_DLL CCEaseOut : public CCEaseRateAction
+class CC_DLL CCEaseOut : public CCEaseRateAction
 {
 public:
 	virtual void update(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** Creates the action with the inner action and the rate parameter */
@@ -114,11 +114,11 @@ public:
 /** 
  @brief CCEaseInOut action with a rate
  */
-class CCX_DLL CCEaseInOut : public CCEaseRateAction
+class CC_DLL CCEaseInOut : public CCEaseRateAction
 {
 public:
 	virtual void update(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual CCActionInterval* reverse(void);
 
 public:
@@ -129,12 +129,12 @@ public:
 /** 
  @brief CCEase Exponential In
  */
-class CCX_DLL CCEaseExponentialIn : public CCActionEase
+class CC_DLL CCEaseExponentialIn : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -144,12 +144,12 @@ public:
 /** 
  @brief Ease Exponential Out
  */
-class CCX_DLL CCEaseExponentialOut : public CCActionEase
+class CC_DLL CCEaseExponentialOut : public CCActionEase
 {
 public:
     virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -160,11 +160,11 @@ public:
 /** 
  @brief Ease Exponential InOut
  */
-class CCX_DLL CCEaseExponentialInOut : public CCActionEase
+class CC_DLL CCEaseExponentialInOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -175,12 +175,12 @@ public:
 /** 
  @brief Ease Sine In
  */
-class CCX_DLL CCEaseSineIn : public CCActionEase
+class CC_DLL CCEaseSineIn : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -190,12 +190,12 @@ public:
 /** 
  @brief Ease Sine Out
  */
-class CCX_DLL CCEaseSineOut : public CCActionEase
+class CC_DLL CCEaseSineOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -205,11 +205,11 @@ public:
 /** 
  @brief Ease Sine InOut
  */
-class CCX_DLL CCEaseSineInOut : public CCActionEase
+class CC_DLL CCEaseSineInOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -220,7 +220,7 @@ public:
  @brief Ease Elastic abstract class
  @since v0.8.2
  */
-class CCX_DLL CCEaseElastic : public CCActionEase
+class CC_DLL CCEaseElastic : public CCActionEase
 {
 public:
 	/** get period of the wave in radians. default is 0.3 */
@@ -234,7 +234,7 @@ public:
 	bool initWithAction(CCActionInterval *pAction);
 
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -251,12 +251,12 @@ protected:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseElasticIn : public CCEaseElastic
+class CC_DLL CCEaseElasticIn : public CCEaseElastic
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -270,12 +270,12 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseElasticOut : public CCEaseElastic
+class CC_DLL CCEaseElasticOut : public CCEaseElastic
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -289,12 +289,12 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseElasticInOut : public CCEaseElastic
+class CC_DLL CCEaseElasticInOut : public CCEaseElastic
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -307,11 +307,11 @@ public:
  @brief CCEaseBounce abstract class.
  @since v0.8.2
 */
-class CCX_DLL CCEaseBounce : public CCActionEase
+class CC_DLL CCEaseBounce : public CCActionEase
 {
 public:
 	ccTime bounceTime(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -323,12 +323,12 @@ public:
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
 */
-class CCX_DLL CCEaseBounceIn : public CCEaseBounce
+class CC_DLL CCEaseBounceIn : public CCEaseBounce
 {
 public:
     virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -340,12 +340,12 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBounceOut : public CCEaseBounce
+class CC_DLL CCEaseBounceOut : public CCEaseBounce
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -357,11 +357,11 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBounceInOut : public CCEaseBounce
+class CC_DLL CCEaseBounceInOut : public CCEaseBounce
 {
 public:
 	virtual void update(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -373,12 +373,12 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBackIn : public CCActionEase
+class CC_DLL CCEaseBackIn : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -390,12 +390,12 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBackOut : public CCActionEase
+class CC_DLL CCEaseBackOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
 	virtual CCActionInterval* reverse(void);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */
@@ -407,11 +407,11 @@ public:
  @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-class CCX_DLL CCEaseBackInOut : public CCActionEase
+class CC_DLL CCEaseBackInOut : public CCActionEase
 {
 public:
 	virtual void update(ccTime time);
-	virtual NSObject* copyWithZone(NSZone* pZone);
+	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
 	/** creates the action */

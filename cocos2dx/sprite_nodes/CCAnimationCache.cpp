@@ -43,12 +43,12 @@ namespace cocos2d
 
 	void CCAnimationCache::purgeSharedAnimationCache(void)
 	{
-        CCX_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
+        CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
 	}
 
 	bool CCAnimationCache::init()
 	{
-		m_pAnimations = new NSMutableDictionary<std::string, CCAnimation*>();
+		m_pAnimations = new CCMutableDictionary<std::string, CCAnimation*>();
 		return true;
 	}
 

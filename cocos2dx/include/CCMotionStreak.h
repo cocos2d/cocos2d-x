@@ -47,13 +47,13 @@ class CCRibbon;
 *
 * @since v0.8.1
 */
-class CCX_DLL CCMotionStreak : public CCNode, public CCTextureProtocol
+class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol
 {
 	/** Ribbon used by MotionStreak (weak reference) */
-	CCX_PROPERTY_READONLY(CCRibbon*, m_pRibbon, Ribbon)
+	CC_PROPERTY_READONLY(CCRibbon*, m_pRibbon, Ribbon)
 	//CCTextureProtocol methods
-	CCX_PROPERTY(CCTexture2D*, m_pTexture, Texture)
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 public:
 	CCMotionStreak(){}
 	virtual ~CCMotionStreak(){}
@@ -68,7 +68,7 @@ public:
 protected:
 	float		m_fSegThreshold;
 	float		m_fWidth;
-	CGPoint		m_tLastLocation;
+	CCPoint		m_tLastLocation;
 };
 
 } // namespace cocos2d

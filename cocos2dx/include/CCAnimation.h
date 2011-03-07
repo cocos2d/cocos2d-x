@@ -24,10 +24,10 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_H__
 #define __CC_ANIMATION_H__
 
-#include "ccxConfig.h"
-#include "NSObject.h"
-#include "NSMutableArray.h"
-#include "CGGeometry.h"
+#include "CCPlatformConfig.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
+#include "CCGeometry.h"
 #include <string>
 
 namespace   cocos2d {
@@ -41,12 +41,12 @@ namespace   cocos2d {
 	[sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
 	*/
-	class CCX_DLL CCAnimation : public NSObject
+	class CC_DLL CCAnimation : public CCObject
 	{
 	protected:
 		std::string m_nameStr;
 		float m_fDelay;
-		NSMutableArray<CCSpriteFrame*> *m_pobFrames;
+		CCMutableArray<CCSpriteFrame*> *m_pobFrames;
 
 	public:
 		// attributes
@@ -62,12 +62,12 @@ namespace   cocos2d {
 		inline void setDelay(float fDelay) { m_fDelay = fDelay; }
 
 		/** get array of frames */
-		inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
+		inline CCMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
 		/** set array of frames, the Frames is retained */
-		inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
+		inline void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
 		{
-			CCX_SAFE_RETAIN(pFrames);
-			CCX_SAFE_RELEASE(m_pobFrames);
+			CC_SAFE_RETAIN(pFrames);
+			CC_SAFE_RELEASE(m_pobFrames);
 			m_pobFrames = pFrames;
 		}
 
@@ -117,7 +117,7 @@ namespace   cocos2d {
 		/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
 		Added to facilitate the migration from v0.8 to v0.9.
 		*/
-		void addFrameWithTexture(CCTexture2D* pobTexture, CGRect rect);
+		void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
 		bool init(void);
 

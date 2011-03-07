@@ -16,9 +16,9 @@ public:
 	virtual std::string title();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 };
 
 class LayerTest1 : public LayerTest
@@ -55,7 +55,7 @@ class LayerGradient : public LayerTest
 {
 public:
     LayerGradient();
-    virtual void ccTouchesMoved(NSSet * touches, UIEvent *event);
+    virtual void ccTouchesMoved(CCSet * touches, UIEvent *event);
     virtual std::string title();
 };
 

@@ -23,11 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCMenu.h"
 #include "CCDirector.h"
-#include "ccxApplication.h"
-#include "CGPointExtension.h"
+#include "CCApplication.h"
+#include "CCPointExtension.h"
 #include "CCTouchDispatcher.h"
 #include "CCTouch.h"
-#include "ccxStdC.h"
+#include "CCStdC.h"
 
 #include <vector>
 
@@ -55,7 +55,7 @@ namespace cocos2d{
 			return pRet;
 		}
 		va_end(args);
-		CCX_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
 
@@ -66,7 +66,7 @@ namespace cocos2d{
 			this->m_bIsTouchEnabled = true;
 
 			// menu in the center of the screen
-			CGSize s = CCDirector::sharedDirector()->getWinSize();
+			CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 			this->m_bIsRelativeAnchorPoint = false;
 			m_tAnchorPoint = ccp(0.5f, 0.5f);
@@ -74,8 +74,8 @@ namespace cocos2d{
 
 			// XXX: in v0.7, winSize should return the visible size
 			// XXX: so the bar calculation should be done there
-			CGRect r;
-            ccxApplication::sharedApplication().statusBarFrame(&r);
+			CCRect r;
+            CCApplication::sharedApplication().statusBarFrame(&r);
 			ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
 			if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
 			{
@@ -121,7 +121,7 @@ namespace cocos2d{
 	void CCMenu::addChild(CCNode * child, int zOrder, int tag)
 	{
 		// we can not use RTTI, so we do not known the type of object
-		/*NSAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
+		/*CCAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
 		CCLayer::addChild(child, zOrder, tag);
 	}
 
@@ -161,7 +161,7 @@ namespace cocos2d{
 
 	void CCMenu::ccTouchEnded(CCTouch *touch, UIEvent* event)
 	{
-		NSAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
 		if (m_pSelectedItem)
 		{
 			m_pSelectedItem->unselected();
@@ -172,7 +172,7 @@ namespace cocos2d{
 
 	void CCMenu::ccTouchCancelled(CCTouch *touch, UIEvent* event)
 	{
-		NSAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
 		if (m_pSelectedItem)
 		{
 			m_pSelectedItem->unselected();
@@ -182,7 +182,7 @@ namespace cocos2d{
 
 	void CCMenu::ccTouchMoved(CCTouch* touch, UIEvent* event)
 	{
-		NSAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
 		CCMenuItem *currentItem = this->itemForTouch(touch);
 		if (currentItem != m_pSelectedItem) 
 		{
@@ -204,25 +204,25 @@ namespace cocos2d{
         return -1;/** @todo upto-0.99.5  use NSIntegerMin+1 instead*/
     }
 
-    CCMenuItem* CCMenu::itemForMouseEvent(NSEvent * pEvent)
+    CCMenuItem* CCMenu::itemForMouseEvent(CCEvent * pEvent)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
         return NULL;
     }
 
-    bool CCMenu::ccMouseUp(NSEvent * pEvent)
+    bool CCMenu::ccMouseUp(CCEvent * pEvent)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
         return false;
     }
 
-    bool CCMenu::ccMouseDown(NSEvent * pEvent)
+    bool CCMenu::ccMouseDown(CCEvent * pEvent)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
         return false;
     }
 
-    bool CCMenu::ccMouseDragged(NSEvent * pEvent)
+    bool CCMenu::ccMouseDragged(CCEvent * pEvent)
     {
         CCLOG("cocos2d: CCMenu: unsupported");
         return false;
@@ -249,7 +249,7 @@ namespace cocos2d{
 		float height = -padding;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
                 if (!(*it))
@@ -264,7 +264,7 @@ namespace cocos2d{
 		float y = height / 2.0f;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
                 if (!(*it))
@@ -289,7 +289,7 @@ namespace cocos2d{
 		float width = -padding;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-            NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+            CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
                 if (!(*it))
@@ -304,7 +304,7 @@ namespace cocos2d{
 		float x = -width / 2.0f;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-            NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+            CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
                 if (!(*it))
@@ -345,7 +345,7 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				// if it has no value, break
@@ -378,7 +378,7 @@ namespace cocos2d{
 		// check if too many rows/columns for available menu items
 		assert(! columnsOccupied);
 
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 		row = 0;
 		rowHeight = 0;
@@ -389,7 +389,7 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				if (! *it)
@@ -457,7 +457,7 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				if (! *it)
@@ -496,7 +496,7 @@ namespace cocos2d{
 		// check if too many rows/columns for available menu items.
 		assert(! rowsOccupied);
 
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 		column = 0;
 		columnWidth = 0;
@@ -506,7 +506,7 @@ namespace cocos2d{
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				if (! *it)
@@ -551,7 +551,7 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				if (! *it)
@@ -579,7 +579,7 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				if (! *it)
@@ -603,12 +603,12 @@ namespace cocos2d{
 
 	CCMenuItem* CCMenu::itemForTouch(cocos2d::CCTouch *touch)
 	{
-		CGPoint touchLocation = touch->locationInView(touch->view());
+		CCPoint touchLocation = touch->locationInView(touch->view());
 		touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
 			{
 				if (! *it)
@@ -619,12 +619,12 @@ namespace cocos2d{
 				// ignore invisible and disabled items: issue #779, #866
 				if ((*it)->getIsVisible() && ((CCMenuItem*)(*it))->getIsEnabled())
 				{
-					CGPoint local = (*it)->convertToNodeSpace(touchLocation);
+					CCPoint local = (*it)->convertToNodeSpace(touchLocation);
 
-					CGRect r = ((CCMenuItem*)(*it))->rect();
-					r.origin = CGPointZero;
+					CCRect r = ((CCMenuItem*)(*it))->rect();
+					r.origin = CCPointZero;
 
-					if (CGRect::CGRectContainsPoint(r, local))
+					if (CCRect::CCRectContainsPoint(r, local))
 					{
 						return (CCMenuItem*)(*it);
 					}

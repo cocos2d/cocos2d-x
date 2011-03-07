@@ -31,7 +31,7 @@ namespace cocos2d
 	/** 
 	@brief CCWaves3D action 
 	*/
-	class CCX_DLL CCWaves3D : public CCGrid3DAction
+	class CC_DLL CCWaves3D : public CCGrid3DAction
 	{
 	public:
 		inline float getAmplitude(void) { return m_fAmplitude; }
@@ -43,7 +43,7 @@ namespace cocos2d
 		/** init the action */
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -57,13 +57,13 @@ namespace cocos2d
 	};
 
 	/** @brief CCFlipX3D action */
-	class CCX_DLL CCFlipX3D : public CCGrid3DAction
+	class CC_DLL CCFlipX3D : public CCGrid3DAction
 	{
 	public:
 		/** initializes the action with duration */
 		bool initWithDuration(ccTime duration);
 		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -72,11 +72,11 @@ namespace cocos2d
 	};
 
 	/** @brief CCFlipY3D action */
-	class CCX_DLL CCFlipY3D : public CCFlipX3D
+	class CC_DLL CCFlipY3D : public CCFlipX3D
 	{
 	public:
 		virtual void update(ccTime time);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 
 	public:
 		/** creates the action with duration */
@@ -84,7 +84,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCLens3D action */
-	class CCX_DLL CCLens3D : public CCGrid3DAction
+	class CC_DLL CCLens3D : public CCGrid3DAction
 	{
 	public:
 		/** Get lens center position */
@@ -92,38 +92,38 @@ namespace cocos2d
 		/** Set lens center position */
 		inline void setLensEffect(float fLensEffect) { m_fLensEffect = fLensEffect; }
 		
-		inline CGPoint getPosition(void) { return m_position; }
-		void setPosition(CGPoint position);
+		inline CCPoint getPosition(void) { return m_position; }
+		void setPosition(CCPoint position);
 
 		/** initializes the action with center position, radius, a grid size and duration */
-		bool initWithPosition(CGPoint pos, float r, ccGridSize gridSize, ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		bool initWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with center position, radius, a grid size and duration */
-        static CCLens3D* actionWithPosition(CGPoint pos, float r, ccGridSize gridSize, ccTime duration);
+        static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
 	protected:
 		/* lens center position */
-		CGPoint m_position;
+		CCPoint m_position;
 		float m_fRadius;
 		/** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
 		float m_fLensEffect;
 
         /* @since v0.99.5 */
-        // CGPoint m_lastPosition;
-        CGPoint m_positionInPixels;
+        // CCPoint m_lastPosition;
+        CCPoint m_positionInPixels;
         bool    m_bDirty;
 	};
 
 	/** @brief CCRipple3D action */
-	class CCX_DLL CCRipple3D : public CCGrid3DAction
+	class CC_DLL CCRipple3D : public CCGrid3DAction
 	{
 	public:
 		/** get center position */
-		inline CGPoint getPosition(void) { return m_position; }
+		inline CCPoint getPosition(void) { return m_position; }
 		/** set center position */
-		void setPosition(CGPoint position);
+		void setPosition(CCPoint position);
 
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -132,34 +132,34 @@ namespace cocos2d
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		/** initializes the action with radius, number of waves, amplitude, a grid size and duration */
-		bool initWithPosition(CGPoint pos, float r, int wav, float amp, 
+		bool initWithPosition(CCPoint pos, float r, int wav, float amp, 
 			ccGridSize gridSize, ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with radius, number of waves, amplitude, a grid size and duration */
-		static CCRipple3D* actionWithPosition(CGPoint pos, float r, int wav, float amp, 
+		static CCRipple3D* actionWithPosition(CCPoint pos, float r, int wav, float amp, 
 			ccGridSize gridSize, ccTime duration);
 	protected:
 		/* center position */
-		CGPoint m_position;
+		CCPoint m_position;
 		float m_fRadius;
 		int m_nWaves;
 		float m_fAmplitude;
 		float m_fAmplitudeRate;
 
         /*@since v0.99.5*/
-        CGPoint m_positionInPixels;
+        CCPoint m_positionInPixels;
 	};
 
 	/** @brief CCShaky3D action */
-	class CCX_DLL CCShaky3D : public CCGrid3DAction
+	class CC_DLL CCShaky3D : public CCGrid3DAction
 	{
 	public:
 		/** initializes the action with a range, shake Z vertices, a grid and duration */
 		bool initWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -172,7 +172,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCLiquid action */
-	class CCX_DLL CCLiquid : public CCGrid3DAction
+	class CC_DLL CCLiquid : public CCGrid3DAction
 	{
 	public:
 		inline float getAmplitude(void) { return m_fAmplitude; }
@@ -183,7 +183,7 @@ namespace cocos2d
 
 		/** initializes the action with amplitude, a grid and duration */
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -197,7 +197,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCWaves action */
-	class CCX_DLL CCWaves : public CCGrid3DAction
+	class CC_DLL CCWaves : public CCGrid3DAction
 	{
 	public:
 		inline float getAmplitude(void) { return m_fAmplitude; }
@@ -209,7 +209,7 @@ namespace cocos2d
 		/** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
 		bool initWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,
 			ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -225,13 +225,13 @@ namespace cocos2d
 	};
 
 	/** @brief CCTwirl action */
-	class CCX_DLL CCTwirl : public CCGrid3DAction
+	class CC_DLL CCTwirl : public CCGrid3DAction
 	{
 	public:
 		/** get twirl center */
-		inline CGPoint getPosition(void) { return m_position; }
+		inline CCPoint getPosition(void) { return m_position; }
 		/** set twirl center */
-		void setPosition(CGPoint position);
+		void setPosition(CCPoint position);
 
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -240,24 +240,24 @@ namespace cocos2d
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		/** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
-		bool initWithPosition(CGPoint pos, int t, float amp, ccGridSize gridSize,
+		bool initWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,
 			ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with center position, number of twirls, amplitude, a grid size and duration */
-		static CCTwirl* actionWithPosition(CGPoint pos, int t, float amp, ccGridSize gridSize,
+		static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,
 			ccTime duration);
 	protected:
 		/* twirl center */
-		CGPoint m_position;
+		CCPoint m_position;
 		int m_nTwirls;
 		float m_fAmplitude;
 		float m_fAmplitudeRate;
 
         /*@since v0.99.5 */
-        CGPoint m_positionInPixels;
+        CCPoint m_positionInPixels;
 	};
 }
 

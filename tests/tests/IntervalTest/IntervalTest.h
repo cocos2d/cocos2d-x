@@ -18,7 +18,7 @@ public:
 	IntervalLayer(void);
 
 public:
-	void onPause(NSObject* pSender);
+	void onPause(CCObject* pSender);
 
 	void step1(ccTime dt);
 	void step2(ccTime dt);

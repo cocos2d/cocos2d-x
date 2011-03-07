@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 #include "CCActionInstant.h"
 #include "CCActionProgressTimer.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 namespace   cocos2d {
 
@@ -36,7 +36,7 @@ namespace   cocos2d {
 //#import "CCRenderTexture.h"
 //#import "CCLayer.h"
 //#import "CCInstantAction.h"
-//#import "Support/CGPointExtension.h"
+//#import "Support/CCPointExtension.h"
 
 enum {
 	kSceneRadial = 0xc001,
@@ -57,7 +57,7 @@ void CCTransitionRadialCCW::onEnter()
 	CCTransitionScene::onEnter();
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
-	CGSize size = CCDirector::sharedDirector()->getWinSize();
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// create the second render texture for outScene
 	CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);

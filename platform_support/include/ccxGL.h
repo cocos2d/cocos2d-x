@@ -22,37 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_GL_H__
-#define __CCX_GL_H__
+#ifndef __CC_GL_H__
+#define __CC_GL_H__
 
-#include "ccxCommon.h"
+#include "CCCommon.h"
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "OpenGLES/ES1/gl.h"
 #include "OpenGLES/ES1/glext.h"
 #endif
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #endif
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #endif
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #endif
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #endif
 
-#if defined(CCX_PLATFORM_MOBILE)
+#if defined(CC_PLATFORM_MOBILE)
 
 NS_CC_BEGIN;
 
@@ -61,15 +61,15 @@ OpenGL GLU implementation
 */
 
 /** OpenGL gluLookAt implementation */
-void CCX_DLL_PS gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ, 
+void CC_DLL_PS gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ, 
                GLfloat fLookAtX, GLfloat fLookAtY, GLfloat fLookAtZ, 
                GLfloat fUpX, GLfloat fUpY, GLfloat fUpZ);
 
 /** OpenGL gluPerspective implementation */
-void CCX_DLL_PS gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
+void CC_DLL_PS gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
 
 NS_CC_END;
 
 #endif
 
-#endif	// __CCX_GL_H__
+#endif	// __CC_GL_H__

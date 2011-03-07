@@ -72,7 +72,7 @@ namespace cocos2d
 		return pAnimation;
 	}
 
-	CCAnimation* CCAnimation::animationWithName(const char *pszName, NSMutableArray<CCSpriteFrame*> *pFrames)
+	CCAnimation* CCAnimation::animationWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames)
 	{
 		CCAnimation *pAnimation = new CCAnimation();
 		pAnimation->initWithName(pszName, pFrames);
@@ -81,7 +81,7 @@ namespace cocos2d
 		return pAnimation;
 	}
 
-	CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
+	CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames)
 	{
 		CCAnimation *pAnimation = new CCAnimation();
 		pAnimation->initWithName(pszName, fDelay, pFrames);
@@ -102,7 +102,7 @@ namespace cocos2d
 	bool CCAnimation::initWithFrames(NSArray<CCSpriteFrame*> *pFrames, float delay)
 	{
         m_fDelay = delay;
-		m_pobFrames = NSMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
+		m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
 
 		return true;
 	}
@@ -122,16 +122,16 @@ namespace cocos2d
 		return initWithName(pszName, fDelay, NULL);
 	}
 
-	bool CCAnimation::initWithName(const char *pszName, NSMutableArray<CCSpriteFrame*> *pFrames)
+	bool CCAnimation::initWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames)
 	{
 		return initWithName(pszName, 0, pFrames);
 	}
 
-	bool CCAnimation::initWithName(const char *pszName, float fDelay, NSMutableArray<CCSpriteFrame*> *pFrames)
+	bool CCAnimation::initWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames)
 	{
 		m_fDelay = fDelay;
 		m_nameStr = pszName;
-		m_pobFrames = NSMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
+		m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
 
 		return true;
 	}
@@ -141,7 +141,7 @@ namespace cocos2d
 		CCLOGINFO("cocos2d, deallocing %p", this);
 		// [name_ release];
 		m_nameStr.clear();
-		CCX_SAFE_RELEASE(m_pobFrames);
+		CC_SAFE_RELEASE(m_pobFrames);
 	}
 
 	void CCAnimation::addFrame(CCSpriteFrame *pFrame)
@@ -152,13 +152,13 @@ namespace cocos2d
 	void CCAnimation::addFrameWithFileName(const char *pszFileName)
 	{
 		CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFileName);
-		CGRect rect = CGRectZero;
+		CCRect rect = CCRectZero;
 		rect.size = pTexture->getContentSize();
 		CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pTexture, rect);
 		m_pobFrames->addObject(pFrame);
 	}
 
-	void CCAnimation::addFrameWithTexture(CCTexture2D *pobTexture, CGRect rect)
+	void CCAnimation::addFrameWithTexture(CCTexture2D *pobTexture, CCRect rect)
 	{
 		CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pobTexture, rect);
 		m_pobFrames->addObject(pFrame);

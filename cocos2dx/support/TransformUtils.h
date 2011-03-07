@@ -31,10 +31,10 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-struct CGAffineTransform;
+struct CCAffineTransform;
 
-void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
-void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);
+void CGAffineToGL(const CCAffineTransform *t, GLfloat *m);
+void GLToCGAffine(const GLfloat *m, CCAffineTransform *t);
 }//namespace   cocos2d 
 
 #endif // __SUPPORT_TRANSFORM_UTILS_H__

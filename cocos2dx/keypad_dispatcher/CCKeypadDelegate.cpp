@@ -58,7 +58,7 @@ void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
 
 bool CCKeypadHandler::initWithDelegate(CCKeypadDelegate *pDelegate)
 {
-    NSAssert(pDelegate != NULL, "It's a wrong delegate!");
+    CCAssert(pDelegate != NULL, "It's a wrong delegate!");
 
     m_pDelegate = pDelegate;
     pDelegate->KeypadKeep();
@@ -78,7 +78,7 @@ CCKeypadHandler* CCKeypadHandler::handlerWithDelegate(CCKeypadDelegate *pDelegat
         }
         else
         {
-            CCX_SAFE_RELEASE_NULL(pHandler);
+            CC_SAFE_RELEASE_NULL(pHandler);
         }
     }
 

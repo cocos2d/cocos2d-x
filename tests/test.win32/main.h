@@ -8,6 +8,6 @@
 #include <tchar.h>
 
 // C RunTime Header Files
-#include "ccxStdC.h"
+#include "CCStdC.h"
 
 #endif	// __MAIN_H__

@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CCPVRTexture.h"
 #include "ccMacros.h"
-#include "NSData.h"
+#include "CCData.h"
 
 namespace   cocos2d {
 
@@ -66,7 +66,7 @@ CCPVRTexture::~CCPVRTexture()
 	CCLOGINFO( "cocos2d: deallocing CCPVRTexture" );
 
 	m_pImageData->removeAllObjects();
-	CCX_SAFE_DELETE(m_pImageData)
+	CC_SAFE_DELETE(m_pImageData)
 
 	if (m_uName != 0 && ! m_bRetainName )
 		glDeleteTextures(1, &m_uName);
@@ -107,8 +107,8 @@ void CCPVRTexture::setRetainName(bool var)
 	m_bRetainName = var;
 }
 
-/** @todo NSData uint8_t
-- (BOOL)unpackPVRData:(NSData *)data
+/** @todo CCData uint8_t
+- (BOOL)unpackPVRData:(CCData *)data
 {
 	BOOL success = FALSE;
 	PVRTexHeader *header = NULL;
@@ -181,7 +181,7 @@ void CCPVRTexture::setRetainName(bool var)
 
 			dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
 
-			[_imageData addObject:[NSData dataWithBytes:bytes+dataOffset length:dataSize]];
+			[_imageData addObject:[CCData dataWithBytes:bytes+dataOffset length:dataSize]];
 
 			dataOffset += dataSize;
 
@@ -200,7 +200,7 @@ bool CCPVRTexture::createGLTexture()
 {
 	int width = m_uWidth;
 	int height = m_uHeight;
-/// @todo	NSData *data;
+/// @todo	CCData *data;
 	GLenum err;
 
 	if (m_pImageData->count() > 0)
@@ -214,8 +214,8 @@ bool CCPVRTexture::createGLTexture()
 
 	for (unsigned int i=0; i < m_pImageData->count(); i++)
 	{
-/// @todo NSData		data = m_pImageData->getObjectAtIndex(i);
-/// @todo NSData		glCompressedTexImage2D(GL_TEXTURE_2D, i, m_uInternalFormat, width, height, 0, [data length], [data bytes]);
+/// @todo CCData		data = m_pImageData->getObjectAtIndex(i);
+/// @todo CCData		glCompressedTexImage2D(GL_TEXTURE_2D, i, m_uInternalFormat, width, height, 0, [data length], [data bytes]);
 
 		err = glGetError();
 		if (err != GL_NO_ERROR)
@@ -236,10 +236,10 @@ bool CCPVRTexture::createGLTexture()
 
 CCPVRTexture * CCPVRTexture::initWithContentsOfFile(const char* path)
 {
-	/** @todo NSData*/
-	NSData *data = NSData::dataWithContentsOfFile(path);
+	/** @todo CCData*/
+	CCData *data = CCData::dataWithContentsOfFile(path);
 
-	m_pImageData = new NSMutableArray<NSData*>(10);
+	m_pImageData = new CCMutableArray<CCData*>(10);
 
 	m_uName = 0;
 	m_uWidth = m_uHeight = 0;

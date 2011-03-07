@@ -39,7 +39,7 @@ unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMo
     {
         // read the file from hardware
         FILE *fp = fopen(pszFileName, pszMode);
-        CCX_BREAK_IF(!fp);
+        CC_BREAK_IF(!fp);
 
         fseek(fp,0,SEEK_END);
         *pSize = ftell(fp);
@@ -61,27 +61,27 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
 
     do 
     {
-        CCX_BREAK_IF(!pszZipFilePath || !pszFileName);
-        CCX_BREAK_IF(strlen(pszZipFilePath) == 0);
+        CC_BREAK_IF(!pszZipFilePath || !pszFileName);
+        CC_BREAK_IF(strlen(pszZipFilePath) == 0);
 
         pFile = unzOpen(pszZipFilePath);
-        CCX_BREAK_IF(!pFile);
+        CC_BREAK_IF(!pFile);
 
         int nRet = unzLocateFile(pFile, pszFileName, 1);
-        CCX_BREAK_IF(UNZ_OK != nRet);
+        CC_BREAK_IF(UNZ_OK != nRet);
 
         char szFilePathA[260];
         unz_file_info FileInfo;
         nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
-        CCX_BREAK_IF(UNZ_OK != nRet);
+        CC_BREAK_IF(UNZ_OK != nRet);
 
         nRet = unzOpenCurrentFile(pFile);
-        CCX_BREAK_IF(UNZ_OK != nRet);
+        CC_BREAK_IF(UNZ_OK != nRet);
 
         pBuffer = new unsigned char[FileInfo.uncompressed_size];
         int nSize = 0;
 		nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
-        NSAssert(nSize == 0 || nSize == FileInfo.uncompressed_size, "the file size is wrong");
+        CCAssert(nSize == 0 || nSize == FileInfo.uncompressed_size, "the file size is wrong");
 
         *pSize = FileInfo.uncompressed_size;
         unzCloseCurrentFile(pFile);
@@ -106,7 +106,7 @@ ccxString& FileUtils::ccRemoveHDSuffixFromFile(ccxString& path)
         ccxString::size_type suffixPos = path.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
         if (ccxString::npos != suffixPos && suffixPos > pos)
         {
-            CCXLog("cocos2d: FilePath(%s) contains suffix(%s), remove it.", path.c_str(),
+            CCLog("cocos2d: FilePath(%s) contains suffix(%s), remove it.", path.c_str(),
                 CC_RETINA_DISPLAY_FILENAME_SUFFIX);
             path.replace(suffixPos, strlen(CC_RETINA_DISPLAY_FILENAME_SUFFIX), "");
         }

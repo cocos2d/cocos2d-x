@@ -29,14 +29,14 @@ THE SOFTWARE.
 namespace cocos2d 
 {
 	/** @brief CCShakyTiles3D action */
-	class CCX_DLL CCShakyTiles3D : public CCTiledGrid3DAction
+	class CC_DLL CCShakyTiles3D : public CCTiledGrid3DAction
 	{
 	public:
 		/** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
 		bool initWithRange(int nRange, bool bShakeZ, ccGridSize gridSize,
 			ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -50,14 +50,14 @@ namespace cocos2d
 	};
 
 	/** @brief CCShatteredTiles3D action */
-	class CCX_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
+	class CC_DLL CCShatteredTiles3D : public CCTiledGrid3DAction
 	{
 	public:
 		/** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
         bool initWithRange(int nRange, bool bShatterZ, ccGridSize gridSize,
 			ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -75,7 +75,7 @@ namespace cocos2d
 	/** @brief CCShuffleTiles action
 	 Shuffle the tiles in random order
 	 */
-	class CCX_DLL CCShuffleTiles : public CCTiledGrid3DAction
+	class CC_DLL CCShuffleTiles : public CCTiledGrid3DAction
 	{
 	public:
 		~CCShuffleTiles(void);
@@ -87,7 +87,7 @@ namespace cocos2d
 
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 
 	public:
 		/** creates the action with a random seed, the grid size and the duration */
@@ -103,7 +103,7 @@ namespace cocos2d
 	/** @brief CCFadeOutTRTiles action
 	 Fades out the tiles in a Top-Right direction
 	 */
-	class CCX_DLL CCFadeOutTRTiles : public CCTiledGrid3DAction
+	class CC_DLL CCFadeOutTRTiles : public CCTiledGrid3DAction
 	{
 	public:
 		virtual float testFunc(ccGridSize pos, ccTime time);
@@ -120,7 +120,7 @@ namespace cocos2d
 	/** @brief CCFadeOutBLTiles action.
 	 Fades out the tiles in a Bottom-Left direction
 	 */
-	class CCX_DLL CCFadeOutBLTiles : public CCFadeOutTRTiles
+	class CC_DLL CCFadeOutBLTiles : public CCFadeOutTRTiles
 	{
 	public:
 		virtual float testFunc(ccGridSize pos, ccTime time);
@@ -133,7 +133,7 @@ namespace cocos2d
 	/** @brief CCFadeOutUpTiles action.
 	 Fades out the tiles in upwards direction
 	 */
-	class CCX_DLL CCFadeOutUpTiles : public CCFadeOutTRTiles
+	class CC_DLL CCFadeOutUpTiles : public CCFadeOutTRTiles
 	{
 	public:
 		virtual float testFunc(ccGridSize pos, ccTime time);
@@ -147,7 +147,7 @@ namespace cocos2d
 	/** @brief CCFadeOutDownTiles action.
 	 Fades out the tiles in downwards direction
 	 */
-	class CCX_DLL CCFadeOutDownTiles : public CCFadeOutUpTiles
+	class CC_DLL CCFadeOutDownTiles : public CCFadeOutUpTiles
 	{
 	public:
 		virtual float testFunc(ccGridSize pos, ccTime time);
@@ -160,7 +160,7 @@ namespace cocos2d
 	/** @brief CCTurnOffTiles action.
 	 Turn off the files in random order
 	 */
-	class CCX_DLL CCTurnOffTiles : public CCTiledGrid3DAction
+	class CC_DLL CCTurnOffTiles : public CCTiledGrid3DAction
 	{
 	public:
 		~CCTurnOffTiles(void);
@@ -170,7 +170,7 @@ namespace cocos2d
 		void turnOnTile(ccGridSize pos);
 		void turnOffTile(ccGridSize pos);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
 
@@ -187,7 +187,7 @@ namespace cocos2d
 	};
 
 	/** @brief CCWavesTiles3D action. */
-	class CCX_DLL CCWavesTiles3D : public CCTiledGrid3DAction
+	class CC_DLL CCWavesTiles3D : public CCTiledGrid3DAction
 	{
 	public:
 		/** waves amplitude */
@@ -201,7 +201,7 @@ namespace cocos2d
 		/** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
 		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -217,7 +217,7 @@ namespace cocos2d
 	/** @brief CCJumpTiles3D action.
 	 A sin function is executed to move the tiles across the Z axis
 	 */
-	class CCX_DLL CCJumpTiles3D : public CCTiledGrid3DAction
+	class CC_DLL CCJumpTiles3D : public CCTiledGrid3DAction
 	{
 	public:
 		/** amplitude of the sin*/
@@ -230,7 +230,7 @@ namespace cocos2d
 
 		/** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
 		bool initWithJumps(int j, float amp, ccGridSize gridSize, ccTime duration);
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
@@ -244,13 +244,13 @@ namespace cocos2d
 	};
 
 	/** @brief CCSplitRows action */
-	class CCX_DLL CCSplitRows : public CCTiledGrid3DAction
+	class CC_DLL CCSplitRows : public CCTiledGrid3DAction
 	{
 	public :
 		/** initializes the action with the number of rows to split and the duration */
 		bool initWithRows(int nRows, ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 		virtual void startWithTarget(CCNode *pTarget);
 
@@ -260,17 +260,17 @@ namespace cocos2d
 
 	protected:
 		int m_nRows;
-		CGSize m_winSize;
+		CCSize m_winSize;
 	};
 
 	/** @brief CCSplitCols action */
-	class CCX_DLL CCSplitCols : public CCTiledGrid3DAction
+	class CC_DLL CCSplitCols : public CCTiledGrid3DAction
 	{
 	public:
 		/** initializes the action with the number of columns to split and the duration */
 		bool initWithCols(int nCols, ccTime duration);
 
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 		virtual void startWithTarget(CCNode *pTarget);
 
@@ -280,7 +280,7 @@ namespace cocos2d
 
 	protected:
 		int m_nCols;
-		CGSize m_winSize;
+		CCSize m_winSize;
 	};
 } // end of namespace cocos2d
 

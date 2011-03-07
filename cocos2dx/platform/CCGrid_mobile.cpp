@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "support/ccUtils.h"
 
 #include "CCGL.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 namespace cocos2d
 {
@@ -46,7 +46,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pGridBase);
+				CC_SAFE_RELEASE_NULL(pGridBase);
 			}
 		}
 
@@ -65,7 +65,7 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pGridBase);
+				CC_SAFE_RELEASE_NULL(pGridBase);
 			}
 		}
 
@@ -81,10 +81,10 @@ namespace cocos2d
 		m_sGridSize = gridSize;
 
 		m_pTexture = pTexture;
-		CCX_SAFE_RETAIN(m_pTexture);
+		CC_SAFE_RETAIN(m_pTexture);
 		m_bIsTextureFlipped = bFlipped;
 
-		CGSize texSize = m_pTexture->getContentSizeInPixels();
+		CCSize texSize = m_pTexture->getContentSizeInPixels();
 		m_obStep.x = texSize.width / m_sGridSize.x;
 		m_obStep.y = texSize.height / m_sGridSize.y;
 
@@ -107,7 +107,7 @@ namespace cocos2d
 	bool CCGridBase::initWithSize(ccGridSize gridSize)
 	{
     	CCDirector *pDirector = CCDirector::sharedDirector();
-		CGSize s = pDirector->getWinSizeInPixels();
+		CCSize s = pDirector->getWinSizeInPixels();
 		
 		unsigned int POTWide = ccNextPOT((unsigned int)s.width);
 		unsigned int POTHigh = ccNextPOT((unsigned int)s.height);
@@ -146,8 +146,8 @@ namespace cocos2d
 		CCLOGINFO("cocos2d: deallocing %p", this);
 
 		setActive(false);
-		CCX_SAFE_RELEASE(m_pTexture);
-		CCX_SAFE_RELEASE(m_pGrabber);
+		CC_SAFE_RELEASE(m_pTexture);
+		CC_SAFE_RELEASE(m_pGrabber);
 	}
 
 	// properties
@@ -176,7 +176,7 @@ namespace cocos2d
 	{
 		CCDirector *pDirector = CCDirector::sharedDirector();
 
-		CGSize winSize = pDirector->getDisplaySizeInPixels();
+		CCSize winSize = pDirector->getDisplaySizeInPixels();
 		float w = winSize.width / 2;
 		float h = winSize.height / 2;
 
@@ -206,7 +206,7 @@ namespace cocos2d
 
 	void CCGridBase::set2DProjection()
 	{
-		CGSize winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 
 		glLoadIdentity();
 // 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
@@ -220,7 +220,7 @@ namespace cocos2d
 	// This routine can be merged with Director
 	void CCGridBase::set3DProjection()
 	{
-		CGSize	winSize = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+		CCSize	winSize = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 
 // 		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
         CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, winSize.width, winSize.height);
@@ -251,7 +251,7 @@ namespace cocos2d
 
 		if (pTarget->getCamera()->getDirty())
 		{
-			CGPoint offset = pTarget->getAnchorPointInPixels();
+			CCPoint offset = pTarget->getAnchorPointInPixels();
 
 			//
 			// XXX: Camera should be applied in the AnchorPoint
@@ -358,7 +358,7 @@ namespace cocos2d
 
 		m_pVertices = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
 		m_pOriginalVertices = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
-		m_pTexCoordinates = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(CGPoint));
+		m_pTexCoordinates = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(CCPoint));
 		m_pIndices = (GLushort*)malloc(m_sGridSize.x * m_sGridSize.y * sizeof(GLushort) * 6);
 
 		float *vertArray = (float*)m_pVertices;
@@ -394,7 +394,7 @@ namespace cocos2d
 				ccVertex3F l2[4] = {e, f, g, h};
 
 				int tex1[4] = {a*2, b*2, c*2, d*2};
-				CGPoint tex2[4] = {ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2)};
+				CCPoint tex2[4] = {ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2)};
 
 				for (i = 0; i < 4; ++i)
 				{

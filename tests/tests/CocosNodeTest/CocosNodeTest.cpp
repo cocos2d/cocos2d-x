@@ -95,18 +95,18 @@ void TestCocosNodeDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
 		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 16);
 		addChild(l, 1);
-		l->setPosition( CGPointMake(s.width/2, s.height-80) );
+		l->setPosition( CCPointMake(s.width/2, s.height-80) );
 	}	
 
 	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(TestCocosNodeDemo::backCallback) );
@@ -115,15 +115,15 @@ void TestCocosNodeDemo::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
-	item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-	item2->setPosition( CGPointMake( s.width/2, 30) );
-	item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+	menu->setPosition( CCPointZero );
+	item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+	item2->setPosition( CCPointMake( s.width/2, 30) );
+	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 	
 	addChild(menu, 1);	
 }
 
-void TestCocosNodeDemo::restartCallback(NSObject* pSender)
+void TestCocosNodeDemo::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild(restartCocosNodeAction()); 
@@ -132,7 +132,7 @@ void TestCocosNodeDemo::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void TestCocosNodeDemo::nextCallback(NSObject* pSender)
+void TestCocosNodeDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild( nextCocosNodeAction() );
@@ -140,7 +140,7 @@ void TestCocosNodeDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void TestCocosNodeDemo::backCallback(NSObject* pSender)
+void TestCocosNodeDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new CocosNodeTestScene();//CCScene::node();
 	s->addChild( backCocosNodeAction() );
@@ -158,15 +158,15 @@ void Test2::onEnter()
 {
 	TestCocosNodeDemo::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
 	CCSprite *sp2 = CCSprite::spriteWithFile(s_pPathSister2);
 	CCSprite *sp3 = CCSprite::spriteWithFile(s_pPathSister1);
 	CCSprite *sp4 = CCSprite::spriteWithFile(s_pPathSister2);
 	
-	sp1->setPosition(CGPointMake(100, s.height /2 ));
-	sp2->setPosition(CGPointMake(380, s.height /2 ));
+	sp1->setPosition(CCPointMake(100, s.height /2 ));
+	sp2->setPosition(CCPointMake(380, s.height /2 ));
 	addChild(sp1);
 	addChild(sp2);
 	
@@ -190,7 +190,7 @@ void Test2::onEnter()
 																						NULL) )
 												);
 	
-	sp2->setAnchorPoint(CGPointMake(0,0));
+	sp2->setAnchorPoint(CCPointMake(0,0));
 	
 	sp1->runAction(action1);
 	sp2->runAction(action2);
@@ -215,8 +215,8 @@ Test4::Test4()
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
 	CCSprite *sp2 = CCSprite::spriteWithFile(s_pPathSister2);
 	
-	sp1->setPosition( CGPointMake(100,160) );
-	sp2->setPosition( CGPointMake(380,160) );
+	sp1->setPosition( CCPointMake(100,160) );
+	sp2->setPosition( CCPointMake(380,160) );
 	
 	addChild(sp1, 0, 2);
 	addChild(sp2, 0, 3);
@@ -254,8 +254,8 @@ Test5::Test5()
 	CCSprite* sp1 = CCSprite::spriteWithFile(s_pPathSister1);
 	CCSprite* sp2 = CCSprite::spriteWithFile(s_pPathSister2);
 	
-	sp1->setPosition(CGPointMake(100,160));
-	sp2->setPosition(CGPointMake(380,160));
+	sp1->setPosition(CCPointMake(100,160));
+	sp2->setPosition(CCPointMake(380,160));
 
 	CCRotateBy* rot = CCRotateBy::actionWithDuration(2, 360);
 	CCActionInterval* rot_back = rot->reverse();
@@ -311,8 +311,8 @@ Test6::Test6()
 	CCSprite* sp2 = CCSprite::spriteWithFile(s_pPathSister2);
 	CCSprite* sp21 = CCSprite::spriteWithFile(s_pPathSister2);
 		
-	sp1->setPosition(CGPointMake(100,160));
-	sp2->setPosition(CGPointMake(380,160));
+	sp1->setPosition(CCPointMake(100,160));
+	sp2->setPosition(CCPointMake(380,160));
 		
 	CCActionInterval* rot = CCRotateBy::actionWithDuration(2, 360);
 	CCActionInterval* rot_back = rot->reverse();
@@ -367,12 +367,12 @@ std::string Test6::title()
 //------------------------------------------------------------------
 StressTest1::StressTest1()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
 	addChild(sp1, 0, kTagSprite1);
 	
-	sp1->setPosition( CGPointMake(s.width/2, s.height/2) );		
+	sp1->setPosition( CCPointMake(s.width/2, s.height/2) );		
 
 	schedule( schedule_selector(StressTest1::shouldNotCrash), 1.0f);
 }
@@ -381,7 +381,7 @@ void StressTest1::shouldNotCrash(ccTime dt)
 {
 	unschedule(schedule_selector(StressTest1::shouldNotCrash));
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	// if the node has timers, it crashes
 	CCNode* explosion = CCParticleSun::node();
@@ -390,7 +390,7 @@ void StressTest1::shouldNotCrash(ccTime dt)
 	// if it doesn't, it works Ok.
 //	CocosNode *explosion = [Sprite spriteWithFile:@"grossinis_sister2.png");
 
-	explosion->setPosition( CGPointMake(s.width/2, s.height/2) );
+	explosion->setPosition( CCPointMake(s.width/2, s.height/2) );
 	
 	runAction( CCSequence::actions(
 							CCRotateBy::actionWithDuration(2, 360),
@@ -420,14 +420,14 @@ std::string StressTest1::title()
 //------------------------------------------------------------------
 StressTest2::StressTest2()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCLayer* sublayer = CCLayer::node();
 	
 	CCSprite *sp1 = CCSprite::spriteWithFile(s_pPathSister1);
-	sp1->setPosition( CGPointMake(80, s.height/2) );
+	sp1->setPosition( CCPointMake(80, s.height/2) );
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_ease_inout3 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 2.0f);
 	CCActionInterval* move_ease_inout_back3 = move_ease_inout3->reverse();
 	CCFiniteTimeAction* seq3 = CCSequence::actions( move_ease_inout3, move_ease_inout_back3, NULL);
@@ -436,7 +436,7 @@ StressTest2::StressTest2()
 
 	CCParticleFire* fire = CCParticleFire::node();
 	fire->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-	fire->setPosition( CGPointMake(80, s.height/2-50) );
+	fire->setPosition( CCPointMake(80, s.height/2-50) );
 	
 	CCActionInterval* copy_seq3 = (CCActionInterval*)(seq3->copy()->autorelease());
 	
@@ -505,20 +505,20 @@ NodeToWorld::NodeToWorld()
 
 	CCSprite *back = CCSprite::spriteWithFile(s_back3);
 	addChild( back, -10);
-	back->setAnchorPoint( CGPointMake(0,0) );
-	CGSize backSize = back->getContentSize();
+	back->setAnchorPoint( CCPointMake(0,0) );
+	CCSize backSize = back->getContentSize();
 	
 	CCMenuItem *item = CCMenuItemImage::itemFromNormalImage(s_PlayNormal, s_PlaySelect);
 	CCMenu *menu = CCMenu::menuWithItems(item, NULL);
 	menu->alignItemsVertically();
-	menu->setPosition( CGPointMake(backSize.width/2, backSize.height/2));
+	menu->setPosition( CCPointMake(backSize.width/2, backSize.height/2));
 	back->addChild(menu);
 	
 	CCActionInterval* rot = CCRotateBy::actionWithDuration(5, 360);
 	CCAction* fe = CCRepeatForever::actionWithAction( rot);
 	item->runAction( fe );
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(200,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(200,0));
 	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
 	CCAction* fe2 = CCRepeatForever::actionWithAction((CCActionInterval*)seq);
@@ -549,24 +549,24 @@ void CameraOrbitTest::onExit()
 
 CameraOrbitTest::CameraOrbitTest()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCSprite *p = CCSprite::spriteWithFile(s_back3);
 	addChild( p, 0);
-	p->setPosition( CGPointMake(s.width/2, s.height/2) );
+	p->setPosition( CCPointMake(s.width/2, s.height/2) );
 	p->setOpacity( 128 );
 	
 	CCSprite* sprite;
 	CCOrbitCamera* orbit;
 	CCCamera* cam;
-	CGSize ss;
+	CCSize ss;
 
 	// LEFT
     s = p->getContentSize();
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	sprite->setScale(0.5f);
 	p->addChild(sprite, 0);		
-	sprite->setPosition( CGPointMake(s.width/4*1, s.height/2) );
+	sprite->setPosition( CCPointMake(s.width/4*1, s.height/2) );
 	cam = sprite->getCamera();
 	orbit = CCOrbitCamera::actionWithDuration(2, 1, 0, 0, 360, 0, 0);
 	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
@@ -575,7 +575,7 @@ CameraOrbitTest::CameraOrbitTest()
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	sprite->setScale( 1.0f );
 	p->addChild(sprite, 0);		
-	sprite->setPosition( CGPointMake(s.width/4*2, s.height/2) );
+	sprite->setPosition( CCPointMake(s.width/4*2, s.height/2) );
 	orbit = CCOrbitCamera::actionWithDuration(2, 1, 0, 0, 360, 45, 0);
 	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
 	
@@ -584,7 +584,7 @@ CameraOrbitTest::CameraOrbitTest()
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	sprite->setScale( 2.0f );
 	p->addChild(sprite, 0);		
-	sprite->setPosition( CGPointMake(s.width/4*3, s.height/2) );
+	sprite->setPosition( CCPointMake(s.width/4*3, s.height/2) );
 	ss = sprite->getContentSize();		
 	orbit = CCOrbitCamera::actionWithDuration(2, 1, 0, 0, 360, 90, -45),
 	sprite->runAction( CCRepeatForever::actionWithAction(orbit) );
@@ -623,7 +623,7 @@ void CameraZoomTest::onExit()
 
 CameraZoomTest::CameraZoomTest()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCSprite *sprite;
 	CCCamera *cam;
@@ -631,21 +631,21 @@ CameraZoomTest::CameraZoomTest()
 	// LEFT
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild( sprite, 0);		
-	sprite->setPosition( CGPointMake(s.width/4*1, s.height/2) );
+	sprite->setPosition( CCPointMake(s.width/4*1, s.height/2) );
 	cam = sprite->getCamera();
 	cam->setEyeXYZ(0, 0, 415);
 	
 	// CENTER
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild( sprite, 0, 40);
-	sprite->setPosition(CGPointMake(s.width/4*2, s.height/2));
+	sprite->setPosition(CCPointMake(s.width/4*2, s.height/2));
 //		cam = [sprite camera);
 //		[cam setEyeX:0 eyeY:0 eyeZ:415/2);
 	
 	// RIGHT
 	sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild( sprite, 0, 20);
-	sprite->setPosition(CGPointMake(s.width/4*3, s.height/2));
+	sprite->setPosition(CCPointMake(s.width/4*3, s.height/2));
 //		cam = [sprite camera);
 //		[cam setEyeX:0 eyeY:0 eyeZ:-485);
 //		[cam setCenterX:0 centerY:0 centerZ:0);
@@ -682,7 +682,7 @@ std::string CameraZoomTest::title()
 //------------------------------------------------------------------
 CameraCenterTest::CameraCenterTest()
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 			
 	CCSprite *sprite;
 	CCOrbitCamera *orbit;
@@ -691,13 +691,13 @@ CameraCenterTest::CameraCenterTest()
 	sprite = new CCSprite();//::node();
     sprite->init();
 	addChild( sprite, 0);
-	sprite->setPosition(CGPointMake(s.width/5*1, s.height/5*1));
+	sprite->setPosition(CCPointMake(s.width/5*1, s.height/5*1));
 	sprite->setColor(ccRED);
-	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
     sprite->release();
-//		[sprite setAnchorPoint: CGPointMake(0,1));
+//		[sprite setAnchorPoint: CCPointMake(0,1));
 
 	
 	
@@ -705,51 +705,51 @@ CameraCenterTest::CameraCenterTest()
 	sprite = new CCSprite();//::node();
     sprite->init();
 	addChild( sprite, 0, 40);
-	sprite->setPosition(CGPointMake(s.width/5*1, s.height/5*4));
+	sprite->setPosition(CCPointMake(s.width/5*1, s.height/5*4));
 	sprite->setColor(ccBLUE);
-	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ));
     sprite->release();
-    //		[sprite setAnchorPoint: CGPointMake(0,0));
+    //		[sprite setAnchorPoint: CCPointMake(0,0));
 
 
 	// RIGHT-TOP
 	sprite = new CCSprite();//::node();
     sprite->init();
 	addChild( sprite, 0);	
-	sprite->setPosition(CGPointMake(s.width/5*4, s.height/5*1));
+	sprite->setPosition(CCPointMake(s.width/5*4, s.height/5*1));
 	sprite->setColor(ccYELLOW);
-	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit) );
     sprite->release();
-//		[sprite setAnchorPoint: CGPointMake(1,1));
+//		[sprite setAnchorPoint: CCPointMake(1,1));
 
 	
 	// RIGHT-BOTTOM
 	sprite = new CCSprite();//::node();
     sprite->init();
 	addChild( sprite, 0, 40);
-	sprite->setPosition(CGPointMake(s.width/5*4, s.height/5*4));
+	sprite->setPosition(CCPointMake(s.width/5*4, s.height/5*4));
 	sprite->setColor(ccGREEN);
-	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction( CCRepeatForever::actionWithAction( orbit ) );
     sprite->release();
-//		[sprite setAnchorPoint: CGPointMake(1,0));
+//		[sprite setAnchorPoint: CCPointMake(1,0));
 
 	// CENTER
 	sprite = new CCSprite();
     sprite->init();
 	addChild( sprite, 0, 40);
-	sprite->setPosition(CGPointMake(s.width/2, s.height/2));
+	sprite->setPosition(CCPointMake(s.width/2, s.height/2));
 	sprite->setColor(ccWHITE);
-	sprite->setTextureRect(CGRectMake(0, 0, 120, 50));
+	sprite->setTextureRect(CCRectMake(0, 0, 120, 50));
 	orbit = CCOrbitCamera::actionWithDuration(10, 1, 0, 0, 360, 0, 0);
 	sprite->runAction(CCRepeatForever::actionWithAction( orbit ) );
     sprite->release();
-//		[sprite setAnchorPoint: CGPointMake(0.5f, 0.5f));
+//		[sprite setAnchorPoint: CCPointMake(0.5f, 0.5f));
 }
 
 std::string CameraCenterTest::title()
@@ -770,7 +770,7 @@ std::string CameraCenterTest::subtitle()
 ConvertToNode::ConvertToNode()
 {
     setIsTouchEnabled(true);
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCRotateBy* rotate = CCRotateBy::actionWithDuration(10, 360);
     CCRepeatForever* action = CCRepeatForever::actionWithAction(rotate);
@@ -787,7 +787,7 @@ ConvertToNode::ConvertToNode()
         switch(i)
         {
         case 0:
-            sprite->setAnchorPoint(CGPointZero);
+            sprite->setAnchorPoint(CCPointZero);
             break;
         case 1:
             sprite->setAnchorPoint(ccp(0.5f, 0.5f));
@@ -806,19 +806,19 @@ ConvertToNode::ConvertToNode()
     }
 }
 
-void ConvertToNode::ccTouchesEnded(NSSet* touches, UIEvent *event)
+void ConvertToNode::ccTouchesEnded(CCSet* touches, UIEvent *event)
 {
-    for( NSSetIterator it = touches->begin(); it != touches->end(); ++it)
+    for( CCSetIterator it = touches->begin(); it != touches->end(); ++it)
     {
         CCTouch* touch = (CCTouch*)(*it);
-        CGPoint location = touch->locationInView(touch->view());
+        CCPoint location = touch->locationInView(touch->view());
 
         location = CCDirector::sharedDirector()->convertToGL(location);
 
         for( int i = 0; i < 3; i++)
         {
             CCNode *node = getChildByTag(100+i);
-            CGPoint p1, p2;
+            CCPoint p1, p2;
 
             p1 = node->convertToNodeSpaceAR(location);
             p2 = node->convertToNodeSpace(location);

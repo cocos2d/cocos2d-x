@@ -27,14 +27,14 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "NSObject.h"
+#include "CCObject.h"
 
 namespace   cocos2d {
-class CGRect;
-class CGPoint;
-class CGSize;
+class CCRect;
+class CCPoint;
+class CCSize;
 class CCTexture2D;
-class NSZone;
+class CCZone;
 
 /** @brief A CCSpriteFrame has:
 	- texture: A CCTexture2D that will be used by the CCSprite
@@ -46,72 +46,72 @@ class NSZone;
 	CCSpriteFrame *frame = CCSpriteFrame::frameWithTexture(texture, rect, offset);
 	sprite->setDisplayFrame(frame);
  */
-class CCX_DLL CCSpriteFrame : public NSObject
+class CC_DLL CCSpriteFrame : public CCObject
 {
 public:
 	// attributes
 
-	inline CGRect getRectInPixels(void) { return m_obRectInPixels; }
-	inline void setRectInPixels(CGRect rectInPixels) { m_obRectInPixels = rectInPixels; }
+	inline CCRect getRectInPixels(void) { return m_obRectInPixels; }
+	inline void setRectInPixels(CCRect rectInPixels) { m_obRectInPixels = rectInPixels; }
 
 	inline bool isRotated(void) { return m_bRotated; }
 	inline void setRotated(bool bRotated) { m_bRotated = bRotated; }
 
 	/** get rect of the frame */
-	inline CGRect getRect(void) { return m_obRect; }
+	inline CCRect getRect(void) { return m_obRect; }
 	/** set rect of the frame */
-	inline void setRect(CGRect rect) { m_obRect = rect; }
+	inline void setRect(CCRect rect) { m_obRect = rect; }
 
 	/** get offset of the frame */
-	inline CGPoint getOffsetInPixels(void) { return m_obOffsetInPixels; }
+	inline CCPoint getOffsetInPixels(void) { return m_obOffsetInPixels; }
 	/** set offset of the frame */
-	inline void setOffsetInPixels(CGPoint offsetInPixels) { m_obOffsetInPixels = offsetInPixels; }
+	inline void setOffsetInPixels(CCPoint offsetInPixels) { m_obOffsetInPixels = offsetInPixels; }
 
 	/** get original size of the trimmed image */
-	inline CGSize getOriginalSizeInPixels(void) { return m_obOriginalSizeInPixels; }
+	inline CCSize getOriginalSizeInPixels(void) { return m_obOriginalSizeInPixels; }
 	/** set original size of the trimmed image */
-	inline void setOriginalSizeInPixels(CGSize sizeInPixels) { m_obOriginalSizeInPixels = sizeInPixels; }
+	inline void setOriginalSizeInPixels(CCSize sizeInPixels) { m_obOriginalSizeInPixels = sizeInPixels; }
 
 	/** get texture of the frame */
 	inline CCTexture2D* getTexture(void) { return m_pobTexture; }
 	/** set texture of the frame, the texture is retained */
 	inline void setTexture(CCTexture2D* pobTexture)
 	{
-		CCX_SAFE_RETAIN(pobTexture);
-		CCX_SAFE_RELEASE(m_pobTexture);
+		CC_SAFE_RETAIN(pobTexture);
+		CC_SAFE_RELEASE(m_pobTexture);
 		m_pobTexture = pobTexture;
 	}
 
 public:
 	~CCSpriteFrame(void);
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 
 	/** Create a CCSpriteFrame with a texture, rect in points.
 	 It is assumed that the frame was not trimmed.
 	 */
-	static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect);
+	static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
 	/** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
 	 The originalSize is the size in points of the frame before being trimmed.
 	 */
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect, bool rotated, CGPoint offset, CGSize originalSize);
+    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
 
 public:
 	/** Initializes a CCSpriteFrame with a texture, rect in points.
 	 It is assumed that the frame was not trimmed.
 	 */
-	bool initWithTexture(CCTexture2D* pobTexture, CGRect rect);
+	bool initWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
 	/** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
 	The originalSize is the size in points of the frame before being trimmed.
 	*/
-	bool initWithTexture(CCTexture2D* pobTexture, CGRect rect, bool rotated, CGPoint offset, CGSize originalSize);
+	bool initWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
 protected:
-	CGRect m_obRectInPixels;
+	CCRect m_obRectInPixels;
 	bool   m_bRotated;
-	CGRect m_obRect;
-	CGPoint m_obOffsetInPixels;
-	CGSize m_obOriginalSizeInPixels;
+	CCRect m_obRect;
+	CCPoint m_obOffsetInPixels;
+	CCSize m_obOriginalSizeInPixels;
 	CCTexture2D *m_pobTexture;
 };
 

@@ -24,9 +24,9 @@ THE SOFTWARE.
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
 
-#include "NSMutableArray.h"
-#include "NSMutableDictionary.h"
-#include "CGGeometry.h"
+#include "CCMutableArray.h"
+#include "CCMutableDictionary.h"
+#include "CCGeometry.h"
 
 namespace cocos2d {
 
@@ -63,19 +63,19 @@ namespace cocos2d {
 
 	This information is obtained from the TMX file.
 	*/
-	class CCX_DLL CCTMXLayerInfo : public NSObject
+	class CC_DLL CCTMXLayerInfo : public CCObject
 	{
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		std::string			m_sName;
-		CGSize				m_tLayerSize;
+		CCSize				m_tLayerSize;
 		unsigned int		*m_pTiles;
 		bool				m_bVisible;
 		unsigned char		m_cOpacity;
 		bool				m_bOwnTiles;
 		unsigned int		m_uMinGID;
 		unsigned int		m_uMaxGID;
-		CGPoint				m_tOffset;
+		CCPoint				m_tOffset;
 	public:
 		CCTMXLayerInfo();
 		virtual ~CCTMXLayerInfo();
@@ -91,22 +91,22 @@ namespace cocos2d {
 
 	This information is obtained from the TMX file. 
 	*/
-	class CCX_DLL CCTMXTilesetInfo : public NSObject
+	class CC_DLL CCTMXTilesetInfo : public CCObject
 	{
 	public:
 		std::string		m_sName;
 		unsigned int	m_uFirstGid;
-		CGSize			m_tTileSize;
+		CCSize			m_tTileSize;
 		unsigned int	m_uSpacing;
 		unsigned int	m_uMargin;
 		//! filename containing the tiles (should be spritesheet / texture atlas)
 		std::string		m_sSourceImage;
 		//! size in pixels of the image
-		CGSize			m_tImageSize;
+		CCSize			m_tImageSize;
 	public:
 		CCTMXTilesetInfo();
 		virtual ~CCTMXTilesetInfo();
-		CGRect rectForGID(unsigned int gid);
+		CCRect rectForGID(unsigned int gid);
 	};
 
 	/** @brief CCTMXMapInfo contains the information about the map like:
@@ -122,31 +122,31 @@ namespace cocos2d {
 	This information is obtained from the TMX file.
 
 	*/
-	class CCX_DLL CCTMXMapInfo : public NSObject
+	class CC_DLL CCTMXMapInfo : public CCObject
 	{	
 	public:	
 		/// map orientation
-		CCX_SYNTHESIZE(int,	m_nOrientation, Orientation);
+		CC_SYNTHESIZE(int,	m_nOrientation, Orientation);
 		/// map width & height
-		CCX_SYNTHESIZE(CGSize, m_tMapSize, MapSize);
+		CC_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
 		/// tiles width & height
-		CCX_SYNTHESIZE(CGSize, m_tTileSize, TileSize);
+		CC_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
 		/// Layers
-		CCX_PROPERTY(NSMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
+		CC_PROPERTY(CCMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
 		/// tilesets
-		CCX_PROPERTY(NSMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
+		CC_PROPERTY(CCMutableArray<CCTMXTilesetInfo*>*, m_pTilesets, Tilesets);
 		/// ObjectGroups
-		CCX_PROPERTY(NSMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
+		CC_PROPERTY(CCMutableArray<CCTMXObjectGroup*>*, m_pObjectGroups, ObjectGroups);
 		/// parent element
-		CCX_SYNTHESIZE(int, m_nParentElement, ParentElement);
+		CC_SYNTHESIZE(int, m_nParentElement, ParentElement);
 		/// parent GID
-		CCX_SYNTHESIZE(unsigned int, m_uParentGID, ParentGID);
+		CC_SYNTHESIZE(unsigned int, m_uParentGID, ParentGID);
 		/// layer attribs
-		CCX_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
+		CC_SYNTHESIZE(int, m_nLayerAttribs, LayerAttribs);
 		/// is stroing characters?
-		CCX_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
+		CC_SYNTHESIZE(bool, m_bStoringCharacters, StoringCharacters);
 		/// properties
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:	
 		CCTMXMapInfo();
 		virtual ~CCTMXMapInfo();
@@ -157,8 +157,8 @@ namespace cocos2d {
 		/** initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
 	
-		NSDictionary<int, CCXStringToStringDictionary*> * getTileProperties();
-		void setTileProperties(NSDictionary<int, CCXStringToStringDictionary*> * tileProperties);
+		NSDictionary<int, CCStringToStringDictionary*> * getTileProperties();
+		void setTileProperties(NSDictionary<int, CCStringToStringDictionary*> * tileProperties);
 
 		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
@@ -171,7 +171,7 @@ namespace cocos2d {
 		//! current string
 		std::string m_sCurrentString;
 		//! tile properties
-		NSDictionary<int, CCXStringToStringDictionary*>* m_pTileProperties;
+		NSDictionary<int, CCStringToStringDictionary*>* m_pTileProperties;
 	};
 
 }// namespace cocos2d

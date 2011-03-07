@@ -43,7 +43,7 @@ Features:
 Limitations:
 * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCParticleSystemQuad.
 */
-class CCX_DLL CCParticleSystemPoint : public CCParticleSystem
+class CC_DLL CCParticleSystemPoint : public CCParticleSystem
 {	
 public:
 	CCParticleSystemPoint()
@@ -52,7 +52,7 @@ public:
 	virtual ~CCParticleSystemPoint();
 	// super methods
 	virtual bool initWithTotalParticles(int numberOfParticles);
-	virtual void updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	virtual void postStep();
 	virtual void draw();
 	virtual void setStartSpin(float var);

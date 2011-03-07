@@ -29,12 +29,12 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include "ccxCommon.h"
-#include "ccxStdC.h"
+#include "CCCommon.h"
+#include "CCStdC.h"
 
-#ifndef NSAssert
-#define NSAssert(cond, msg)         CCX_ASSERT(cond)
-#endif  // NSAssert
+#ifndef CCAssert
+#define CCAssert(cond, msg)         CC_ASSERT(cond)
+#endif  // CCAssert
 
 #include "ccConfig.h"
 
@@ -56,7 +56,7 @@ THE SOFTWARE.
  *		CCLOGERROR() will be enabled
  *		CCLOGINFO()	will be enabled 
  */
-// CCXLOG macros move to ccxMacros
+// CCLOG macros move to CCMacros
 
 // #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 // #define CCLOG(...)              do {} while (0)
@@ -64,16 +64,16 @@ THE SOFTWARE.
 // #define CCLOGERROR(...)         do {} while (0)
 // 
 // #elif COCOS2D_DEBUG == 1
-// #include "ccxCommon.h"
-// #define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
-// #define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
+// #include "CCCommon.h"
+// #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
+// #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
 // #define CCLOGINFO(format,...)   do {} while (0)
 // 
 // #elif COCOS2D_DEBUG > 1
-// #include "ccxCommon.h"
-// #define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
-// #define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
-// #define CCLOGINFO(format,...)   cocos2d::CCXLog(format, ##__VA_ARGS__)
+// #include "CCCommon.h"
+// #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
+// #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
+// #define CCLOGINFO(format,...)   cocos2d::CCLog(format, ##__VA_ARGS__)
 // #endif // COCOS2D_DEBUG
 
 /** @def CC_SWAP
@@ -243,14 +243,14 @@ On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
 Converts a rect in pixels to points
 */
 #define CC_RECT_PIXELS_TO_POINTS(__pixels__)																		\
-    CGRectMake( (__pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),	\
+    CCRectMake( (__pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),	\
     (__pixels__).size.width / CC_CONTENT_SCALE_FACTOR(), (__pixels__).size.height / CC_CONTENT_SCALE_FACTOR() )
 
 /** @def CC_RECT_POINTS_TO_PIXELS
 Converts a rect in points to pixels
 */
 #define CC_RECT_POINTS_TO_PIXELS(__points__)																		\
-    CGRectMake( (__points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__points__).origin.y * CC_CONTENT_SCALE_FACTOR(),	\
+    CCRectMake( (__points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__points__).origin.y * CC_CONTENT_SCALE_FACTOR(),	\
     (__points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__points__).size.height * CC_CONTENT_SCALE_FACTOR() )
 
 #else // retina disabled

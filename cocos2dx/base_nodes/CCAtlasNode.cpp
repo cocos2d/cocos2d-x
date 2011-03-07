@@ -48,7 +48,7 @@ CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, int tileWidth, in
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet);
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
@@ -90,14 +90,14 @@ bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeig
 
 void CCAtlasNode::calculateMaxItems()
 {
-	CGSize s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
+	CCSize s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
 	m_nItemsPerColumn = (int)(s.height / m_nItemHeight);
 	m_nItemsPerRow = (int)(s.width / m_nItemWidth);
 }
 
 void CCAtlasNode::updateAtlasValues()
 {
-	NSAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overriden");
+	CCAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overriden");
 	//[NSException raise:@"CCAtlasNode:Abstract" format:@"updateAtlasValue not overriden"];
 }
 
@@ -220,8 +220,8 @@ CCTexture2D * CCAtlasNode::getTexture()
 
 void CCAtlasNode::setTextureAtlas(CCTextureAtlas* var)
 {
-	CCX_SAFE_RETAIN(var);
-	CCX_SAFE_RELEASE(m_pTextureAtlas);
+	CC_SAFE_RETAIN(var);
+	CC_SAFE_RELEASE(m_pTextureAtlas);
 	m_pTextureAtlas = var;
 }
 CCTextureAtlas * CCAtlasNode::getTextureAtlas()

@@ -30,11 +30,11 @@ THE SOFTWARE.
 //
 
 #include "ccxGL.h"
-#include "CCXEGLView.h"
+#include "CCEGLView.h"
 
 // iOS
-#if defined(CCX_PLATFORM_MOBILE)
-    #define CC_GLVIEW                   cocos2d::CCXEGLView
+#if defined(CC_PLATFORM_MOBILE)
+    #define CC_GLVIEW                   cocos2d::CCEGLView
     #define ccglOrtho					glOrthof
     #define	ccglClearDepth				glClearDepthf
     #define ccglGenerateMipmap			glGenerateMipmapOES
@@ -51,7 +51,7 @@ THE SOFTWARE.
     #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
 
 // Mac
-#elif defined(CCX_PLATFORM_PC)
+#elif defined(CC_PLATFORM_PC)
     #define CC_GLVIEW                   MacGLView
     #define ccglOrtho					glOrtho
     #define	ccglClearDepth				glClearDepth

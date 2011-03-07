@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include <cstring>
 #include "CCMenuItem.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCActionInterval.h"
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
@@ -86,9 +86,9 @@ namespace cocos2d{
 	{
 		return m_bIsEnabled;
 	}
-	CGRect CCMenuItem::rect()
+	CCRect CCMenuItem::rect()
 	{
-		return CGRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
+		return CCRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
 						m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
 						m_tContentSize.width, m_tContentSize.height);
 	}
@@ -237,7 +237,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+		CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
 		CCLabelAtlas *label = new CCLabelAtlas();
 		label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
 		label->autorelease();
@@ -287,7 +287,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+		CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 		CCLabelTTF *label = CCLabelTTF::labelWithString(value, _fontName.c_str(), (float)_fontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
@@ -504,7 +504,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage)
@@ -515,7 +515,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector)
@@ -538,13 +538,13 @@ namespace cocos2d{
 	//
 	// MenuItemToggle
 	//
-	void CCMenuItemToggle::setSubItems(NSMutableArray<CCMenuItem*>* var)
+	void CCMenuItemToggle::setSubItems(CCMutableArray<CCMenuItem*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pSubItems);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pSubItems);
 		m_pSubItems = var;
 	}
-	NSMutableArray<CCMenuItem*> *CCMenuItemToggle::getSubItems()
+	CCMutableArray<CCMenuItem*> *CCMenuItemToggle::getSubItems()
 	{
 		return m_pSubItems;
 	}
@@ -561,7 +561,7 @@ namespace cocos2d{
 	bool CCMenuItemToggle::initWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 	{
 		CCMenuItem::initWithTarget(target, selector);
-		this->m_pSubItems = new NSMutableArray<CCMenuItem*>();
+		this->m_pSubItems = new CCMutableArray<CCMenuItem*>();
 		int z = 0;
 		CCMenuItem *i = item;
 		while(i) 
@@ -586,7 +586,7 @@ namespace cocos2d{
 			this->removeChildByTag(kCurrentItem, false);
 			CCMenuItem *item = m_pSubItems->getObjectAtIndex(m_uSelectedIndex);
 			this->addChild(item, 0, kCurrentItem);
-			CGSize s = item->getContentSize();
+			CCSize s = item->getContentSize();
 			this->setContentSize(s);
 			item->setPosition( ccp( s.width/2, s.height/2 ) );
 		}
@@ -621,7 +621,7 @@ namespace cocos2d{
 
 		if(m_pSubItems && m_pSubItems->count() > 0)
 		{
-			NSMutableArray<CCMenuItem*>::NSMutableArrayIterator it;
+			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
 				(*it)->setIsEnabled(enabled);
@@ -644,7 +644,7 @@ namespace cocos2d{
 		m_cOpacity = opacity;
 		if(m_pSubItems && m_pSubItems->count() > 0)
 		{
-			NSMutableArray<CCMenuItem*>::NSMutableArrayIterator it;
+			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
 				(*it)->convertToRGBAProtocol()->setOpacity(opacity);
@@ -660,7 +660,7 @@ namespace cocos2d{
 		m_tColor = color;
 		if(m_pSubItems && m_pSubItems->count() > 0)
 		{
-			NSMutableArray<CCMenuItem*>::NSMutableArrayIterator it;
+			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
 				(*it)->convertToRGBAProtocol()->setColor(color);

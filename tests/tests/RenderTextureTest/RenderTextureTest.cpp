@@ -51,7 +51,7 @@ CCLayer* restartTestCase()
 void RenderTextureTestDemo::onEnter()
 {
     CCLayer::onEnter();
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
     addChild(label, 1);
@@ -71,7 +71,7 @@ void RenderTextureTestDemo::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CGPointZero );
+    menu->setPosition( CCPointZero );
     item1->setPosition( ccp( s.width/2 - 100,30) );
     item2->setPosition( ccp( s.width/2, 30) );
     item3->setPosition( ccp( s.width/2 + 100,30) );
@@ -79,7 +79,7 @@ void RenderTextureTestDemo::onEnter()
     addChild(menu, 1);
 }
 
-void RenderTextureTestDemo::restartCallback(NSObject* pSender)
+void RenderTextureTestDemo::restartCallback(CCObject* pSender)
 {
     CCScene* s = new RenderTextureScene();
     s->addChild(restartTestCase()); 
@@ -88,7 +88,7 @@ void RenderTextureTestDemo::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void RenderTextureTestDemo::nextCallback(NSObject* pSender)
+void RenderTextureTestDemo::nextCallback(CCObject* pSender)
 {
     CCScene* s = new RenderTextureScene();
     s->addChild( nextTestCase() );
@@ -96,7 +96,7 @@ void RenderTextureTestDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void RenderTextureTestDemo::backCallback(NSObject* pSender)
+void RenderTextureTestDemo::backCallback(CCObject* pSender)
 {
     CCScene* s = new RenderTextureScene();
     s->addChild( backTestCase() );
@@ -116,7 +116,7 @@ std::string RenderTextureTestDemo::subtitle()
 
 RenderTextureTest::RenderTextureTest()
 {
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we're going to draw into
     m_target = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height);
@@ -141,13 +141,13 @@ RenderTextureTest::~RenderTextureTest()
     m_brush->release();
 }
 
-void RenderTextureTest::ccTouchesMoved(NSSet* touches, UIEvent* event)
+void RenderTextureTest::ccTouchesMoved(CCSet* touches, UIEvent* event)
 {
-    NSSetIterator it = touches->begin();
+    CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
-    CGPoint start = touch->locationInView( touch->view() );	
+    CCPoint start = touch->locationInView( touch->view() );	
     start = CCDirector::sharedDirector()->convertToGL( start );
-    CGPoint end = touch->previousLocationInView( touch->view() );
+    CCPoint end = touch->previousLocationInView( touch->view() );
     end = CCDirector::sharedDirector()->convertToGL(end);
 
     // begin drawing to the render texture
@@ -211,7 +211,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     spr_nonpremulti->visit();
     rend->end(); 
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     /* A1: setup */
     spr_premulti->setPosition(ccp(s.width/2-16, s.height/2+16));

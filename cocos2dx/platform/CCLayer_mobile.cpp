@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCTouchDispatcher.h"
 #include "CCKeypadDispatcher.h"
-#include "CCXUIAccelerometer.h"
+#include "CCAccelerometer.h"
 #include "CCDirector.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 namespace   cocos2d {
 
 // CCLayer
@@ -54,7 +54,7 @@ bool CCLayer::init()
 	do 
 	{
 		CCDirector * pDirector;
-		CCX_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
 		this->setContentSize(pDirector->getWinSize());
 		// success
 		bRet = true;
@@ -72,7 +72,7 @@ CCLayer *CCLayer::node()
 	}
     else
     {
-	    CCX_SAFE_DELETE(pRet)
+	    CC_SAFE_DELETE(pRet)
 	    return NULL;
     }
 }
@@ -294,7 +294,7 @@ void CCLayer::onEnterTransitionDidFinish()
 
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
 {
-	NSAssert(false, "Layer#ccTouchBegan override me");
+	CCAssert(false, "Layer#ccTouchBegan override me");
 	return true;
 }
 
@@ -355,7 +355,7 @@ CCLayerColor * CCLayerColor::layerWithColorWidthHeight(ccColor4B color, GLfloat 
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
@@ -366,7 +366,7 @@ CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 
@@ -387,19 +387,19 @@ bool CCLayerColor::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfl
 	}
 
 	this->updateColor();
-	this->setContentSize(CGSizeMake(width,height));
+	this->setContentSize(CCSizeMake(width,height));
 	return true;
 }
 
 bool CCLayerColor::initWithColor(ccColor4B color)
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	this->initWithColorWidthHeight(color, s.width, s.height);
 	return true;
 }
 
 /// override contentSize
-void CCLayerColor::setContentSize(CGSize size)
+void CCLayerColor::setContentSize(CCSize size)
 {
 	m_pSquareVertices[2] = size.width * CC_CONTENT_SCALE_FACTOR();
 	m_pSquareVertices[5] = size.height * CC_CONTENT_SCALE_FACTOR();
@@ -411,17 +411,17 @@ void CCLayerColor::setContentSize(CGSize size)
 
 void CCLayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
-	this->setContentSize(CGSizeMake(w, h));
+	this->setContentSize(CCSizeMake(w, h));
 }
 
 void CCLayerColor::changeWidth(GLfloat w)
 {
-	this->setContentSize(CGSizeMake(w, m_tContentSize.height));
+	this->setContentSize(CCSizeMake(w, m_tContentSize.height));
 }
 
 void CCLayerColor::changeHeight(GLfloat h)
 {
-	this->setContentSize(CGSizeMake(m_tContentSize.width, h));
+	this->setContentSize(CCSizeMake(m_tContentSize.width, h));
 }
 
 void CCLayerColor::updateColor()
@@ -477,11 +477,11 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
-CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end, CGPoint v)
+CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end, CCPoint v)
 {
     CCLayerGradient * pLayer = new CCLayerGradient();
     if( pLayer && pLayer->initWithColor(start, end, v))
@@ -489,7 +489,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end,
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
@@ -498,7 +498,7 @@ bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end)
     return initWithColor(start, end, ccp(0, -1));
 }
 
-bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CGPoint v)
+bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CCPoint v)
 {
     m_endColor.r  = end.r;
     m_endColor.g  = end.g;
@@ -521,7 +521,7 @@ void CCLayerGradient::updateColor()
         return;
 
     double c = sqrt(2.0);
-    CGPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
+    CCPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
 
     float opacityf = (float)m_cOpacity / 255.0f;
 
@@ -604,13 +604,13 @@ GLubyte CCLayerGradient::getEndOpacity()
     return m_cEndOpacity;
 }
 
-void CCLayerGradient::setVector(CGPoint var)
+void CCLayerGradient::setVector(CCPoint var)
 {
     m_AlongVector = var;
     updateColor();
 }
 
-CGPoint CCLayerGradient::getVector()
+CCPoint CCLayerGradient::getVector()
 {
     return m_AlongVector;
 }
@@ -638,13 +638,13 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 		return pMultiplexLayer;
 	}
 	va_end(args);
-	CCX_SAFE_DELETE(pMultiplexLayer);
+	CC_SAFE_DELETE(pMultiplexLayer);
 	return NULL;
 }
 
 bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 {
-	m_pLayers = new NSMutableArray<CCLayer*>(5);
+	m_pLayers = new CCMutableArray<CCLayer*>(5);
 	//m_pLayers->retain();
 
 	m_pLayers->addObject(layer);
@@ -664,7 +664,7 @@ bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 
 void CCMultiplexLayer::switchTo(unsigned int n)
 {
-	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
 	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 
@@ -675,7 +675,7 @@ void CCMultiplexLayer::switchTo(unsigned int n)
 
 void CCMultiplexLayer::switchToAndReleaseMe(unsigned int n)
 {
-	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
 	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 

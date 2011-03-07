@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "CCActionCamera.h"
 #include "CCNode.h"
 #include "CCCamera.h"
-#include "ccxStdC.h"
+#include "CCStdC.h"
 
 namespace cocos2d{
 	//
@@ -55,27 +55,27 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 
-	NSObject * CCOrbitCamera::copyWithZone(NSZone *pZone)
+	CCObject * CCOrbitCamera::copyWithZone(CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCOrbitCamera* pRet = NULL;
 		if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 			pRet = (CCOrbitCamera*)(pZone->m_pCopyObject);
 		else
 		{
 			pRet = new CCOrbitCamera();
-			pZone = pNewZone = new NSZone(pRet);
+			pZone = pNewZone = new CCZone(pRet);
 		}
 
 		CCActionInterval::copyWithZone(pZone);
 
 		pRet->initWithDuration(m_fDuration, m_fRadius, m_fDeltaRadius, m_fAngleZ, m_fDeltaAngleZ, m_fAngleX, m_fDeltaAngleX);
 
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 

@@ -41,13 +41,13 @@ namespace cocos2d{
 	*
 	*  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
 	*/
-	class CCX_DLL CCMenuItem : public CCNode
+	class CC_DLL CCMenuItem : public CCNode
 	{
 		/** whether or not the item is selected
 		@since v0.8.2
 		*/
-		CCX_PROPERTY_READONLY(bool, m_bIsSelected, IsSelected);
-		CCX_PROPERTY(bool, m_bIsEnabled, IsEnabled);
+		CC_PROPERTY_READONLY(bool, m_bIsSelected, IsSelected);
+		CC_PROPERTY(bool, m_bIsEnabled, IsEnabled);
 	public:
 		CCMenuItem()
 			:m_pListener(NULL)
@@ -58,7 +58,7 @@ namespace cocos2d{
 		/** Initializes a CCMenuItem with a target/selector */
 		bool initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
 		/** Returns the outside box */
-		CGRect rect();
+		CCRect rect();
 		/** Activate the item */
 		virtual void activate();
 		/** The item was selected (not activated), similar to "mouse-over" */
@@ -77,12 +77,12 @@ namespace cocos2d{
 	- CCLabelAtlas
 	- CCLabelTTF
 	*/
-	class CCX_DLL CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
+	class CC_DLL CCMenuItemLabel : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** the color that will be used to disable the item */
-		CCX_PROPERTY(ccColor3B, m_tDisabledColor, DisabledColor);
+		CC_PROPERTY(ccColor3B, m_tDisabledColor, DisabledColor);
 		/** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
-		CCX_PROPERTY(CCNode*, m_pLabel, Label);
+		CC_PROPERTY(CCNode*, m_pLabel, Label);
 	public:
 		CCMenuItemLabel()
 			:m_pLabel(NULL)
@@ -116,7 +116,7 @@ namespace cocos2d{
 	/** @brief A CCMenuItemAtlasFont
 	Helper class that creates a MenuItemLabel class with a LabelAtlas
 	*/
-	class CCX_DLL CCMenuItemAtlasFont : public CCMenuItemLabel
+	class CC_DLL CCMenuItemAtlasFont : public CCMenuItemLabel
 	{
 	public:
 		CCMenuItemAtlasFont(){}
@@ -132,7 +132,7 @@ namespace cocos2d{
 	/** @brief A CCMenuItemFont
 	Helper class that creates a CCMenuItemLabel class with a Label
 	*/
-	class CCX_DLL CCMenuItemFont : public CCMenuItemLabel
+	class CC_DLL CCMenuItemFont : public CCMenuItemLabel
 	{
 	public:
 		CCMenuItemFont(){}
@@ -161,14 +161,14 @@ namespace cocos2d{
 
 	@since v0.8.0
 	*/
-	class CCX_DLL CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
+	class CC_DLL CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** the image used when the item is not selected */
-		CCX_PROPERTY(CCNode*, m_pNormalImage, NormalImage);
+		CC_PROPERTY(CCNode*, m_pNormalImage, NormalImage);
 		/** the image used when the item is selected */
-		CCX_PROPERTY(CCNode*, m_pSelectedImage, SelectedImage);
+		CC_PROPERTY(CCNode*, m_pSelectedImage, SelectedImage);
 		/** the image used when the item is disabled */
-		CCX_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
+		CC_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
 	public:
 		CCMenuItemSprite()
 			:m_pNormalImage(NULL)
@@ -207,7 +207,7 @@ namespace cocos2d{
 
 	For best results try that all images are of the same size
 	*/
-	class CCX_DLL CCMenuItemImage : public CCMenuItemSprite
+	class CC_DLL CCMenuItemImage : public CCMenuItemSprite
 	{
 	public:
 		CCMenuItemImage(){}
@@ -233,18 +233,18 @@ namespace cocos2d{
 	A simple container class that "toggles" it's inner items
 	The inner itmes can be any MenuItem
 	*/
-	class CCX_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
+	class CC_DLL CCMenuItemToggle : public CCMenuItem, public CCRGBAProtocol
 	{
 		/** conforms with CCRGBAProtocol protocol */
-		CCX_PROPERTY(GLubyte, m_cOpacity, Opacity);
+		CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
 		/** conforms with CCRGBAProtocol protocol */
-		CCX_PROPERTY(ccColor3B, m_tColor, Color);
+		CC_PROPERTY(ccColor3B, m_tColor, Color);
 		/** returns the selected item */
-		CCX_PROPERTY(unsigned int, m_uSelectedIndex, SelectedIndex);
-		/** NSMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
+		CC_PROPERTY(unsigned int, m_uSelectedIndex, SelectedIndex);
+		/** CCMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
 		@since v0.7.2
 		*/
-		CCX_PROPERTY(NSMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
+		CC_PROPERTY(CCMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
 	public:
 		CCMenuItemToggle(){}
 		virtual ~CCMenuItemToggle();

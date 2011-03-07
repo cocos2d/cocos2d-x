@@ -58,7 +58,7 @@ namespace   cocos2d {
 
     bool CCKeyboardEventHandle::initWithDelegate(CCKeyboardEventDelegate *pDelegate)
     {
-        NSAssert(pDelegate != NULL, "It's a wrong delegate!");
+        CCAssert(pDelegate != NULL, "It's a wrong delegate!");
 
         m_pDelegate = pDelegate;
         pDelegate->KeyboardKeep();
@@ -78,7 +78,7 @@ namespace   cocos2d {
             }
             else
             {
-                CCX_SAFE_RELEASE_NULL(pHandler);
+                CC_SAFE_RELEASE_NULL(pHandler);
             }
         }
 

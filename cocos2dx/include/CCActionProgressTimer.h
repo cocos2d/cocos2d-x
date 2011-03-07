@@ -33,13 +33,13 @@ namespace cocos2d
 @brief Progress to percentage
 @since v0.99.1
 */
-class CCX_DLL CCProgressTo : public CCActionInterval
+class CC_DLL CCProgressTo : public CCActionInterval
 {
 public:
 	/** Initializes with a duration and a percent */
 	bool initWithDuration(ccTime duration, float fPercent);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);
 
@@ -56,13 +56,13 @@ protected:
 @brief Progress from a percentage to another percentage
 @since v0.99.1
 */
-class CCX_DLL CCProgressFromTo : public CCActionInterval
+class CC_DLL CCProgressFromTo : public CCActionInterval
 {
 public:
 	/** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual CCActionInterval* reverse(void);
 	virtual void startWithTarget(CCNode *pTarget);
 	virtual void update(ccTime time);

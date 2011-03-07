@@ -14,9 +14,9 @@ public:
 
 	bool initWithEntryID(int entryId);
 
-	void restartCallback(NSObject* sender);
-	void nextCallback(NSObject* sender);
-	void backCallback(NSObject* sender);
+	void restartCallback(CCObject* sender);
+	void nextCallback(CCObject* sender);
+	void backCallback(CCObject* sender);
 
 	virtual void registerWithTouchDispatcher();
 
