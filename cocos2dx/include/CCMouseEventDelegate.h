@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCMOUSE_EVENT_DELEGATE_H__
 #define __CCMOUSE_EVENT_DELEGATE_H__
 
-#include "NSEvent.h"
-#include "NSObject.h"
+#include "CCEvent.h"
+#include "CCObject.h"
 
 namespace   cocos2d {
 
-class CCX_DLL CCMouseEventDelegate
+class CC_DLL CCMouseEventDelegate
 {
 public:
     //! call the release() in child layer
@@ -44,23 +44,23 @@ public:
     /** called when the "mouseDown" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccMouseDown(NSEvent* pEvent) { return false; }
+    virtual bool ccMouseDown(CCEvent* pEvent) { return false; }
 
     /** called when the "mouseDragged" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccMouseDragged(NSEvent* pEvent) { return false; }
+    virtual bool ccMouseDragged(CCEvent* pEvent) { return false; }
 
     /** called when the "mouseMoved" event is received.
     Return YES to avoid propagating the event to other delegates.
     By default, "mouseMoved" is disabled. To enable it, send the "setAcceptsMouseMovedEvents:YES" message to the main window.
     */
-    virtual bool ccMouseMoved(NSEvent* pEvent) { return false; }
+    virtual bool ccMouseMoved(CCEvent* pEvent) { return false; }
 
     /** called when the "mouseUp" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccMouseUp(NSEvent* pEvent) { return false; }
+    virtual bool ccMouseUp(CCEvent* pEvent) { return false; }
 
 
     //
@@ -70,17 +70,17 @@ public:
     /** called when the "rightMouseDown" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccRightMouseDown(NSEvent* pEvent) { return false; }
+    virtual bool ccRightMouseDown(CCEvent* pEvent) { return false; }
 
     /** called when the "rightMouseDragged" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccRightMouseDragged(NSEvent* pEvent) { return false; }
+    virtual bool ccRightMouseDragged(CCEvent* pEvent) { return false; }
 
     /** called when the "rightMouseUp" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccRightMouseUp(NSEvent* pEvent) { return false; }
+    virtual bool ccRightMouseUp(CCEvent* pEvent) { return false; }
 
     //
     // other
@@ -89,17 +89,17 @@ public:
     /** called when the "otherMouseDown" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccOtherMouseDown(NSEvent* pEvent) { return false; }
+    virtual bool ccOtherMouseDown(CCEvent* pEvent) { return false; }
 
     /** called when the "otherMouseDragged" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccOtherMouseDragged(NSEvent* pEvent) { return false; }
+    virtual bool ccOtherMouseDragged(CCEvent* pEvent) { return false; }
 
     /** called when the "otherMouseUp" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccOtherMouseUp(NSEvent* pEvent) { return false; }
+    virtual bool ccOtherMouseUp(CCEvent* pEvent) { return false; }
 
     //
     // scroll wheel
@@ -108,7 +108,7 @@ public:
     /** called when the "scrollWheel" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccScrollWheel(NSEvent *pEvent) { return false; }
+    virtual bool ccScrollWheel(CCEvent *pEvent) { return false; }
 
 
     //
@@ -118,15 +118,15 @@ public:
     /** called when the "mouseEntered" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual void ccMouseEntered(NSEvent *pEvent) {}
+    virtual void ccMouseEntered(CCEvent *pEvent) {}
 
     /** called when the "mouseExited" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual void ccMouseExited(NSEvent *pEvent) {}
+    virtual void ccMouseExited(CCEvent *pEvent) {}
 };
 
-class CCX_DLL CCMouseEventHandle : public NSObject
+class CC_DLL CCMouseEventHandle : public CCObject
 {
 public:
     virtual ~CCMouseEventHandle(void);

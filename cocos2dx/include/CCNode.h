@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __PLATFOMR_CCNODE_H__
 
 #include "ccMacros.h"
-#include "CGAffineTransform.h"
-#include "NSMutableArray.h"
+#include "CCAffineTransform.h"
+#include "CCMutableArray.h"
 #include "selector_protocol.h"
 
 #include "CCGL.h"
@@ -35,7 +35,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 	class CCCamera;
 	class CCGridBase;
-	class CGPoint;
+	class CCPoint;
 	class CCTouch;
 	class CCAction;
 	class CCRGBAProtocol;
@@ -100,13 +100,13 @@ namespace   cocos2d {
 	- Each node has a camera. By default it points to the center of the CCNode.
 	*/ 
 
-	class CCX_DLL CCNode : public SelectorProtocol, public NSObject
+	class CC_DLL CCNode : public SelectorProtocol, public CCObject
 	{
 
 		// variable property
 
 		/** The z order of the node relative to it's "brothers": children of the same parent */
-		CCX_PROPERTY_READONLY(int, m_nZOrder, ZOrder)
+		CC_PROPERTY_READONLY(int, m_nZOrder, ZOrder)
 
 			/** The real openGL Z vertex.
 			Differences between openGL Z vertex and cocos2d Z order:
@@ -116,10 +116,10 @@ namespace   cocos2d {
 			@warning: Use it at your own risk since it might break the cocos2d parent-children z order
 			@since v0.8
 			*/
-			CCX_PROPERTY(float, m_fVertexZ, VertexZ)
+			CC_PROPERTY(float, m_fVertexZ, VertexZ)
 
 			/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
-			CCX_PROPERTY(float, m_fRotation, Rotation)
+			CC_PROPERTY(float, m_fRotation, Rotation)
 
 			/** Get the scale factor of the node.
 			@warning: Assert when m_fScaleX != m_fScaleY.
@@ -129,26 +129,26 @@ namespace   cocos2d {
 		void setScale(float scale);
 
 		/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
-		CCX_PROPERTY(float, m_fScaleX, ScaleX)
+		CC_PROPERTY(float, m_fScaleX, ScaleX)
 
 			/** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
-			CCX_PROPERTY(float, m_fScaleY, ScaleY)
+			CC_PROPERTY(float, m_fScaleY, ScaleY)
 
 			/** Position (x,y) of the node in OpenGL coordinates. (0,0) is the left-bottom corner. */
-			CCX_PROPERTY(CGPoint, m_tPosition, Position)
-			CCX_PROPERTY(CGPoint, m_tPositionInPixels, PositionInPixels)
+			CC_PROPERTY(CCPoint, m_tPosition, Position)
+			CC_PROPERTY(CCPoint, m_tPositionInPixels, PositionInPixels)
 
-			CCX_PROPERTY_READONLY(NSMutableArray<CCNode *> *, m_pChildren, Children)
+			CC_PROPERTY_READONLY(CCMutableArray<CCNode *> *, m_pChildren, Children)
 
 			/** A CCCamera object that lets you move the node using a gluLookAt
 			*/
-			CCX_PROPERTY_READONLY(CCCamera *, m_pCamera, Camera)
+			CC_PROPERTY_READONLY(CCCamera *, m_pCamera, Camera)
 
 			/** A CCGrid object that is used when applying effects */
-			CCX_PROPERTY(CCGridBase *, m_pGrid, Grid)
+			CC_PROPERTY(CCGridBase *, m_pGrid, Grid)
 
 			/** Whether of not the node is visible. Default is true */
-			CCX_PROPERTY(bool, m_bIsVisible, IsVisible)
+			CC_PROPERTY(bool, m_bIsVisible, IsVisible)
 
 			/** anchorPoint is the point around which all transformations and positioning manipulations take place.
 			It's like a pin in the node where it is "attached" to its parent.
@@ -157,49 +157,49 @@ namespace   cocos2d {
 			The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
 			@since v0.8
 			*/
-			CCX_PROPERTY(CGPoint, m_tAnchorPoint, AnchorPoint)
+			CC_PROPERTY(CCPoint, m_tAnchorPoint, AnchorPoint)
 
 			/** The anchorPoint in absolute pixels.
 			Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
 			*/
-			CCX_PROPERTY_READONLY(CGPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
+			CC_PROPERTY_READONLY(CCPoint, m_tAnchorPointInPixels, AnchorPointInPixels)
 
 			/** The untransformed size of the node.
 			The contentSize remains the same no matter the node is scaled or rotated.
 			All nodes has a size. Layer and Scene has the same size of the screen.
 			@since v0.8
 			*/
-			CCX_PROPERTY(CGSize, m_tContentSize, ContentSize)
+			CC_PROPERTY(CCSize, m_tContentSize, ContentSize)
 
 			/** The untransformed size of the node in Pixels
 			The contentSize remains the same no matter the node is scaled or rotated.
 			All nodes has a size. Layer and Scene has the same size of the screen.
 			@since v0.8
 			*/
-			CCX_PROPERTY(CGSize, m_tContentSizeInPixels, ContentSizeInPixels)
+			CC_PROPERTY(CCSize, m_tContentSizeInPixels, ContentSizeInPixels)
 
 			/** whether or not the node is running */
-			CCX_PROPERTY_READONLY(bool, m_bIsRunning, IsRunning)
+			CC_PROPERTY_READONLY(bool, m_bIsRunning, IsRunning)
 
 			/** A weak reference to the parent */
-			CCX_PROPERTY(CCNode *, m_pParent, Parent)
+			CC_PROPERTY(CCNode *, m_pParent, Parent)
 
 			/** If true the transformtions will be relative to it's anchor point.
 			* Sprites, Labels and any other sizeble object use it have it enabled by default.
 			* Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
 			*/
-			CCX_PROPERTY(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
+			CC_PROPERTY(bool, m_bIsRelativeAnchorPoint, IsRelativeAnchorPoint)
 
 			/** A tag used to identify the node easily */
-			CCX_PROPERTY(int, m_nTag, Tag)
+			CC_PROPERTY(int, m_nTag, Tag)
 
 			/** A custom user data pointer */
-			CCX_PROPERTY(void *, m_pUserData, UserData)
+			CC_PROPERTY(void *, m_pUserData, UserData)
 
 	protected:
 
 		// transform
-		CGAffineTransform m_tTransform, m_tInverse;
+		CCAffineTransform m_tTransform, m_tInverse;
 
 #ifdef	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		GLfloat	m_pTransformGL[16];
@@ -227,9 +227,9 @@ namespace   cocos2d {
 
 		typedef void (CCNode::*callbackFunc)(void);
 
-		void arrayMakeObjectsPerformSelector(NSMutableArray<CCNode*> * pArray, callbackFunc func);
+		void arrayMakeObjectsPerformSelector(CCMutableArray<CCNode*> * pArray, callbackFunc func);
 
-		CGPoint convertToWindowSpace(CGPoint nodePoint);
+		CCPoint convertToWindowSpace(CCPoint nodePoint);
 
 	public:
 
@@ -359,7 +359,7 @@ namespace   cocos2d {
 
 		@since v0.8.2
 		*/
-		CGRect boundingBox(void);
+		CCRect boundingBox(void);
 
 		/** returns a "local" axis aligned bounding box of the node in pixels.
 		The returned box is relative only to its parent.
@@ -367,7 +367,7 @@ namespace   cocos2d {
 
 		@since v0.99.5
 		*/
-		CGRect boundingBoxInPixels(void);
+		CCRect boundingBoxInPixels(void);
 
 		// actions
 
@@ -477,52 +477,52 @@ namespace   cocos2d {
 		The matrix is in Pixels.
 		@since v0.7.1
 		*/
-		CGAffineTransform nodeToParentTransform(void);
+		CCAffineTransform nodeToParentTransform(void);
 
 		/** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
 		The matrix is in Pixels.
 		@since v0.7.1
 		*/
-		CGAffineTransform parentToNodeTransform(void);
+		CCAffineTransform parentToNodeTransform(void);
 
 		/** Retrusn the world affine transform matrix. The matrix is in Pixels.
 		@since v0.7.1
 		*/
-		CGAffineTransform nodeToWorldTransform(void);
+		CCAffineTransform nodeToWorldTransform(void);
 
 		/** Returns the inverse world affine transform matrix. The matrix is in Pixels.
 		@since v0.7.1
 		*/
-		CGAffineTransform worldToNodeTransform(void);
+		CCAffineTransform worldToNodeTransform(void);
 
 		/** Converts a Point to node (local) space coordinates. The result is in Points.
 		@since v0.7.1
 		*/
-		CGPoint convertToNodeSpace(CGPoint worldPoint);
+		CCPoint convertToNodeSpace(CCPoint worldPoint);
 		/** Converts a Point to world space coordinates. The result is in Points.
 		@since v0.7.1
 		*/
-		CGPoint convertToWorldSpace(CGPoint nodePoint);
+		CCPoint convertToWorldSpace(CCPoint nodePoint);
 		/** Converts a Point to node (local) space coordinates. The result is in Points.
 		treating the returned/received node point as anchor relative.
 		@since v0.7.1
 		*/
-		CGPoint convertToNodeSpaceAR(CGPoint worldPoint);
+		CCPoint convertToNodeSpaceAR(CCPoint worldPoint);
 		/** Converts a local Point to world space coordinates.The result is in Points.
 		treating the returned/received node point as anchor relative.
 		@since v0.7.1
 		*/
-		CGPoint convertToWorldSpaceAR(CGPoint nodePoint);
+		CCPoint convertToWorldSpaceAR(CCPoint nodePoint);
 
-		/** convenience methods which take a CCTouch instead of CGPoint
+		/** convenience methods which take a CCTouch instead of CCPoint
 		@since v0.7.1
 		*/
-		CGPoint convertTouchToNodeSpace(CCTouch * touch);
+		CCPoint convertTouchToNodeSpace(CCTouch * touch);
 
 		/** converts a CCTouch (world coordinates) into a local coordiante. This method is AR (Anchor Relative).
 		@since v0.7.1
 		*/
-		CGPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+		CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
 
 	};
 }//namespace   cocos2d 

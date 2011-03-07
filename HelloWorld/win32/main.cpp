@@ -13,5 +13,5 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     // create the application instance
 	AppDelegate app;
 
-    return cocos2d::ccxApplication::sharedApplication().run();
+    return cocos2d::CCApplication::sharedApplication().run();
 }

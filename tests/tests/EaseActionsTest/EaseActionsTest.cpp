@@ -17,7 +17,7 @@ void SpriteEase::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0) );
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0) );
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease_in = (CCActionInterval*)CCEaseIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 3.0f);
@@ -68,7 +68,7 @@ void SpriteEaseInOut::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 
-	CCActionInterval*  move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval*  move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 //	id move_back = move->reverse();
 	
 	CCActionInterval*  move_ease_inout1 = CCEaseInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 2.0f);
@@ -106,7 +106,7 @@ void SpriteEaseExponential::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease_in = CCEaseExponentialIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -141,7 +141,7 @@ void SpriteEaseExponentialInOut::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease = CCEaseExponentialInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -172,7 +172,7 @@ void SpriteEaseSine::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease_in = CCEaseSineIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -208,7 +208,7 @@ void SpriteEaseSineInOut::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease = CCEaseSineInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -237,7 +237,7 @@ std::string SpriteEaseSineInOut::title()
 void SpriteEaseElastic::onEnter()
 {
 	EaseSpriteDemo::onEnter();
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease_in = CCEaseElasticIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -271,7 +271,7 @@ void SpriteEaseElasticInOut::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 	
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 
 	CCActionInterval* move_ease_inout1 = CCEaseElasticInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()), 0.3f);
 	CCActionInterval* move_ease_inout_back1 = move_ease_inout1->reverse();
@@ -308,7 +308,7 @@ std::string SpriteEaseElasticInOut::title()
 void SpriteEaseBounce::onEnter()
 {
 	EaseSpriteDemo::onEnter();
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease_in = CCEaseBounceIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -343,7 +343,7 @@ void SpriteEaseBounceInOut::onEnter()
 {
 	EaseSpriteDemo::onEnter();
 
-		CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+		CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease = CCEaseBounceInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -373,7 +373,7 @@ std::string SpriteEaseBounceInOut::title()
 void SpriteEaseBack::onEnter()
 {
 	EaseSpriteDemo::onEnter();
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease_in = CCEaseBackIn::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -406,7 +406,7 @@ std::string SpriteEaseBack::title()
 void SpriteEaseBackInOut::onEnter()
 {
 	EaseSpriteDemo::onEnter();
-	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CGPointMake(350,0));
+	CCActionInterval* move = CCMoveBy::actionWithDuration(3, CCPointMake(350,0));
 	CCActionInterval* move_back = move->reverse();
 	
 	CCActionInterval* move_ease = CCEaseBackInOut::actionWithAction((CCActionInterval*)(move->copy()->autorelease()) );
@@ -438,7 +438,7 @@ void SpeedTest::onEnter()
 	EaseSpriteDemo::onEnter();
 
 	// rotate and jump
-	CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, CGPointMake(-400,0), 100, 4);
+	CCActionInterval *jump1 = CCJumpBy::actionWithDuration(4, CCPointMake(-400,0), 100, 4);
 	CCActionInterval *jump2 = jump1->reverse();
 	CCActionInterval *rot1 = CCRotateBy::actionWithDuration(4, 360*2);
 	CCActionInterval *rot2 = rot1->reverse();
@@ -488,7 +488,7 @@ void SchedulerTest::onEnter()
 	EaseSpriteDemo::onEnter();
 	
 	// rotate and jump
-	CCActionInterval* jump1 = CCJumpBy::actionWithDuration(4, CGPointMake(-400,0), 100, 4);
+	CCActionInterval* jump1 = CCJumpBy::actionWithDuration(4, CCPointMake(-400,0), 100, 4);
 	CCActionInterval* jump2 = jump1->reverse();
 	CCActionInterval* rot1 = CCRotateBy::actionWithDuration(4, 360*2);
 	CCActionInterval* rot2 = rot1->reverse();
@@ -607,8 +607,8 @@ EaseSpriteDemo::~EaseSpriteDemo(void)
 
 void EaseSpriteDemo::positionForTwo()
 {	
-	m_grossini->setPosition( CGPointMake( 60, 120 ) );
-	m_tamara->setPosition( CGPointMake( 60, 220) );
+	m_grossini->setPosition( CCPointMake( 60, 120 ) );
+	m_tamara->setPosition( CCPointMake( 60, 220) );
 	m_kathia->setIsVisible(false);
 }
 
@@ -631,15 +631,15 @@ void EaseSpriteDemo::onEnter()
 	addChild( m_kathia, 2);
 	addChild( m_tamara, 1);
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	m_grossini->setPosition( CGPointMake(60, 50) );
-	m_kathia->setPosition( CGPointMake(60, 150) );
-	m_tamara->setPosition( CGPointMake(60, 250) );
+	m_grossini->setPosition( CCPointMake(60, 50) );
+	m_kathia->setPosition( CCPointMake(60, 150) );
+	m_tamara->setPosition( CCPointMake(60, 250) );
 
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
 	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(EaseSpriteDemo::backCallback) );
 	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(EaseSpriteDemo::restartCallback) );
@@ -647,15 +647,15 @@ void EaseSpriteDemo::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
-	item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-	item2->setPosition( CGPointMake( s.width/2, 30) );
-	item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+	menu->setPosition( CCPointZero );
+	item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+	item2->setPosition( CCPointMake( s.width/2, 30) );
+	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 	
 	addChild(menu, 1);	
 }
 
-void EaseSpriteDemo::restartCallback(NSObject* pSender)
+void EaseSpriteDemo::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild(restartEaseAction()); 
@@ -664,7 +664,7 @@ void EaseSpriteDemo::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void EaseSpriteDemo::nextCallback(NSObject* pSender)
+void EaseSpriteDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild( nextEaseAction() );
@@ -672,7 +672,7 @@ void EaseSpriteDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void EaseSpriteDemo::backCallback(NSObject* pSender)
+void EaseSpriteDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new EaseActionsTestScene();//CCScene::node();
 	s->addChild( backEaseAction() );

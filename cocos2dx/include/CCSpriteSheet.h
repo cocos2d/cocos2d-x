@@ -31,7 +31,7 @@ namespace   cocos2d {
 	/* Added only to prevent GCC compile warnings
 	Will be removed in v1.1
 	*/
-	class CCX_DLL CCSpriteSheetInternalOnly : public CCSpriteBatchNode
+	class CC_DLL CCSpriteSheetInternalOnly : public CCSpriteBatchNode
 	{
 	};
 
@@ -51,7 +51,7 @@ namespace   cocos2d {
 	* @since v0.7.1
 	* @deprecated Use CCSpriteBatchNode instead. This class will be removed in v1.1
 	*/
-	class CCX_DLL CCSpriteSheet: public CCSpriteSheetInternalOnly
+	class CC_DLL CCSpriteSheet: public CCSpriteSheetInternalOnly
 	{
 	};
 

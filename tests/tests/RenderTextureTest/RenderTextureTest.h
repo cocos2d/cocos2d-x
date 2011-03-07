@@ -11,9 +11,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(NSObject* pSender);
-    void nextCallback(NSObject* pSender);
-    void backCallback(NSObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 };
 
 /**
@@ -24,7 +24,7 @@ class RenderTextureTest : public RenderTextureTestDemo
 public:
     RenderTextureTest();
     ~RenderTextureTest();
-    virtual void ccTouchesMoved(NSSet* touches, UIEvent* event);
+    virtual void ccTouchesMoved(CCSet* touches, UIEvent* event);
 
 private:
     CCRenderTexture*	m_target;

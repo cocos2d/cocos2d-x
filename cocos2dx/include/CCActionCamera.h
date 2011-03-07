@@ -32,7 +32,7 @@ namespace cocos2d {
 	/** 
 	@brief Base class for CCCamera actions
 	*/
-	class CCX_DLL CCActionCamera : public CCActionInterval //<NSCopying> 
+	class CC_DLL CCActionCamera : public CCActionInterval //<NSCopying> 
 	{
 	public:
 		CCActionCamera()
@@ -68,7 +68,7 @@ namespace cocos2d {
 	@brief CCOrbitCamera action
 	Orbits the camera around the center of the screen using spherical coordinates
 	*/
-	class CCX_DLL CCOrbitCamera : public CCActionCamera //<NSCopying> 
+	class CC_DLL CCOrbitCamera : public CCActionCamera //<NSCopying> 
 	{
 	public:
 		CCOrbitCamera(){}
@@ -80,7 +80,7 @@ namespace cocos2d {
 		/** positions the camera according to spherical coordinates */
 		void sphericalRadius(float *r, float *zenith, float *azimuth);
 		// super methods
-		virtual NSObject* copyWithZone(NSZone* pZone);
+		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual void update(ccTime time);
 

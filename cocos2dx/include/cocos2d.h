@@ -86,25 +86,25 @@ THE SOFTWARE.
 //
 // cocoa includes
 //
-#include "NSSet.h"
-#include "NSMutableArray.h"
-#include "NSMutableDictionary.h"
-#include "NSObject.h"
-#include "NSZone.h"
-#include "CGGeometry.h"
-#include "CGAffineTransform.h"
+#include "CCSet.h"
+#include "CCMutableArray.h"
+#include "CCMutableDictionary.h"
+#include "CCObject.h"
+#include "CCZone.h"
+#include "CCGeometry.h"
+#include "CCAffineTransform.h"
 #include "selector_protocol.h"
 #include "CCTouch.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 
 //
 // platform specific
 //
-#include "ccxApplication.h"
-#include "CCXEGLView.h"
-#include "ccxImage.h"
-#include "CCXFileUtils.h"
-#include "CCXUIAccelerometer.h"
+#include "CCApplication.h"
+#include "CCEGLView.h"
+#include "CCImage.h"
+#include "CCFileUtils.h"
+#include "CCAccelerometer.h"
  
 //
 // cocos2d macros

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccTypes.h"
-#include "NSMutableDictionary.h"
+#include "CCMutableDictionary.h"
 
 #include <string>
 namespace   cocos2d {
@@ -39,9 +39,9 @@ class CCSpriteSheet;
 class CCSpriteSheetInternalOnly;
 class CCSpriteFrame;
 class CCAnimation;
-class CGRect;
-class CGPoint;
-class CGSize;
+class CCRect;
+class CCPoint;
+class CCSize;
 class CCTexture2D;
 struct transformValues_;
 
@@ -91,7 +91,7 @@ typedef enum {
 *
 * The default anchorPoint in CCSprite is (0.5, 0.5).
 */
-class CCX_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
+class CC_DLL CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 {
 public:
 	virtual void draw(void);
@@ -118,7 +118,7 @@ public:
 	inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
 
 	/** returns the rect of the CCSprite in points */
-	inline CGRect getTextureRect(void) { return m_obRect; }
+	inline CCRect getTextureRect(void) { return m_obRect; }
 
 	/** whether or not the Sprite is rendered using a CCSpriteBatchNode */
 	inline bool isUsesBatchNode(void) { return m_bUsesBatchNode; }
@@ -147,7 +147,7 @@ public:
 	/** Get offset position of the sprite. Calculated automatically by editors like Zwoptex.
 	 @since v0.99.0
 	 */
-	inline CGPoint getOffsetPositionInPixels(void) { return m_obOffsetPositionInPixels; }
+	inline CCPoint getOffsetPositionInPixels(void) { return m_obOffsetPositionInPixels; }
 
 	/** conforms to CCTextureProtocol protocol */
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
@@ -164,10 +164,10 @@ public:
 	/** Creates an sprite with a texture and a rect.
 	 The offset will be (0,0).
 	 */
-	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CGRect rect);
+	static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect);
 
 	/** Creates an sprite with a texture, a rect and offset. */
-    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CGRect rect, CGPoint offset);
+    static CCSprite* spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset);
 
 	/** Creates an sprite with an sprite frame. */
 	static CCSprite* spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
@@ -188,13 +188,13 @@ public:
 	/** Creates an sprite with an image filename and a rect.
 	 The offset will be (0,0).
 	 */
-	static CCSprite* spriteWithFile(const char *pszFileName, CGRect rect);
+	static CCSprite* spriteWithFile(const char *pszFileName, CCRect rect);
     
 	/** Creates an sprite with an CCBatchNode and a rect
 	*/
-	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CGRect rect);
+	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
 
-    static CCSprite* spriteWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CGRect rect);
+    static CCSprite* spriteWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CCRect rect);
 
 public:
 	bool init(void);
@@ -209,14 +209,14 @@ public:
 	virtual void addChild(CCNode *pChild, int zOrder, int tag);
 
 	virtual void setDirtyRecursively(bool bValue);
-	virtual void setPosition(CGPoint pos);
-	virtual void setPositionInPixels(CGPoint pos);
+	virtual void setPosition(CCPoint pos);
+	virtual void setPositionInPixels(CCPoint pos);
 	virtual void setRotation(float fRotation);
 	virtual void setScaleX(float fScaleX);
 	virtual void setScaleY(float fScaleY);
 	virtual void setScale(float fScale);
 	virtual void setVertexZ(float fVertexZ);
-	virtual void setAnchorPoint(CGPoint anchor);
+	virtual void setAnchorPoint(CCPoint anchor);
 	virtual void setIsRelativeAnchorPoint(bool bRelative);
 	virtual void setIsVisible(bool bVisible);
 	void setFlipX(bool bFlipX);
@@ -264,7 +264,7 @@ public:
 	/** Initializes an sprite with a texture and a rect.
 	 The offset will be (0,0).
 	 */
-    bool initWithTexture(CCTexture2D *pTexture, CGRect rect);
+    bool initWithTexture(CCTexture2D *pTexture, CCRect rect);
 
 	// Initializes an sprite with an sprite frame.
     bool initWithSpriteFrame(CCSpriteFrame *pSpriteFrame);
@@ -285,16 +285,16 @@ public:
 	/** Initializes an sprite with an image filename, and a rect.
 	 The offset will be (0,0).
 	 */
-    bool initWithFile(const char *pszFilename, CGRect rect);
+    bool initWithFile(const char *pszFilename, CCRect rect);
 
 	/** Initializes an sprite with an CCSpriteSheet and a rect in points */
-	bool initWithBatchNode(CCSpriteBatchNode *batchNode, CGRect rect);
-    bool initWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CGRect rect);
+	bool initWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
+    bool initWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CCRect rect);
 
 	/** Initializes an sprite with an CCSpriteSheet and a rect in pixels
 	@since v0.99.5
 	*/
-	bool initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, CGRect rect);
+	bool initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, CCRect rect);
 
 	// BatchNode methods
 
@@ -307,11 +307,11 @@ public:
 	void useSelfRender(void);
 
 	/** updates the texture rect of the CCSprite in points. */
-     void setTextureRect(CGRect rect);
+     void setTextureRect(CCRect rect);
 
 	 /** updates the texture rect, rectRotated and untrimmed size of the CCSprite in pixels
 	 */
-	 void setTextureRectInPixels(CGRect rect, bool rotated, CGSize size);
+	 void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
 
 	/** tell the sprite to use batch node render.
 	 @since v0.99.0
@@ -356,7 +356,7 @@ public:
 	void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
 protected:
-	void updateTextureCoords(CGRect rect);
+	void updateTextureCoords(CCRect rect);
 	void updateBlendFunc(void);
 	void initAnimationDictionary(void);
     void getTransformValues(struct transformValues_ *tv); // optimization
@@ -387,13 +387,13 @@ protected:
 	bool m_bUsesBatchNode;
 
 	// texture
-	CGRect m_obRect;
-	CGRect m_obRectInPixels;
+	CCRect m_obRect;
+	CCRect m_obRectInPixels;
 	bool   m_bRectRotated;
 
 	// Offset Position (used by Zwoptex)
-	CGPoint m_obOffsetPositionInPixels; // absolute
-	CGPoint m_obUnflippedOffsetPositionFromCenter;
+	CCPoint m_obOffsetPositionInPixels; // absolute
+	CCPoint m_obUnflippedOffsetPositionFromCenter;
 
 	// vertex coords, texture coords and color info
 	ccV3F_C4B_T2F_Quad m_sQuad;
@@ -409,7 +409,7 @@ protected:
 	bool m_bFlipY;
 
 	// Animations that belong to the sprite
-	NSMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
+	CCMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
 };
 }//namespace   cocos2d 
 

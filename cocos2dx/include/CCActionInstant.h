@@ -34,13 +34,13 @@ namespace cocos2d {
 	@brief Instant actions are immediate actions. They don't have a duration like
 	the CCIntervalAction actions.
 	*/ 
-	class CCX_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
+	class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
 	{
 	public:
 		CCActionInstant();
 		virtual ~CCActionInstant(){}
 		// CCAction methods
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 		virtual bool isDone(void);
 		virtual void step(ccTime dt);
 		virtual void update(ccTime time);
@@ -50,7 +50,7 @@ namespace cocos2d {
 
 	/** @brief Show the node
 	*/
-	class CCX_DLL CCShow : public CCActionInstant
+	class CC_DLL CCShow : public CCActionInstant
 	{
 	public:
 		CCShow(){}
@@ -67,7 +67,7 @@ namespace cocos2d {
 	/** 
 	@brief Hide the node
 	*/
-	class CCX_DLL CCHide : public CCActionInstant
+	class CC_DLL CCHide : public CCActionInstant
 	{
 	public:
 		CCHide(){}
@@ -83,7 +83,7 @@ namespace cocos2d {
 
 	/** @brief Toggles the visibility of a node
 	*/
-	class CCX_DLL CCToggleVisibility : public CCActionInstant
+	class CC_DLL CCToggleVisibility : public CCActionInstant
 	{
 	public:
 		CCToggleVisibility(){}
@@ -100,7 +100,7 @@ namespace cocos2d {
 	@brief Flips the sprite horizontally
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipX : public CCActionInstant
+	class CC_DLL CCFlipX : public CCActionInstant
 	{
 	public:
 		CCFlipX(){}
@@ -113,7 +113,7 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 
 	protected:
 		bool	m_bFlipX;
@@ -123,7 +123,7 @@ namespace cocos2d {
 	@brief Flips the sprite vertically
 	@since v0.99.0
 	*/
-	class CCX_DLL CCFlipY : public CCActionInstant
+	class CC_DLL CCFlipY : public CCActionInstant
 	{
 	public:
 		CCFlipY(){}
@@ -136,7 +136,7 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 
 	protected:
 		bool	m_bFlipY;
@@ -144,25 +144,25 @@ namespace cocos2d {
 
 	/** @brief Places the node in a certain position
 	*/
-	class CCX_DLL CCPlace : public CCActionInstant //<NSCopying>
+	class CC_DLL CCPlace : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCPlace(){}
 		virtual ~CCPlace(){}
 		/** creates a Place action with a position */
-		static CCPlace * actionWithPosition(CGPoint pos);
+		static CCPlace * actionWithPosition(CCPoint pos);
 		/** Initializes a Place action with a position */
-		bool initWithPosition(CGPoint pos);
+		bool initWithPosition(CCPoint pos);
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 	protected:
-		CGPoint m_tPosition;
+		CCPoint m_tPosition;
 	};
 
 	/** @brief Calls a 'callback'
 	*/
-	class CCX_DLL CCCallFunc : public CCActionInstant //<NSCopying>
+	class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
 	{
 	public:
 		CCCallFunc()
@@ -191,7 +191,7 @@ namespace cocos2d {
 		virtual void execute();
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
-		NSObject * copyWithZone(cocos2d::NSZone *pZone);
+		CCObject * copyWithZone(cocos2d::CCZone *pZone);
 
 	protected:
 		SelectorProtocol*   m_pSelectorTarget;
@@ -208,7 +208,7 @@ namespace cocos2d {
 	@brief Calls a 'callback' with the node as the first argument
 	N means Node
 	*/
-	class CCX_DLL CCCallFuncN : public CCCallFunc
+	class CC_DLL CCCallFuncN : public CCCallFunc
 	{
 	public:
 		CCCallFuncN(){}
@@ -224,7 +224,7 @@ namespace cocos2d {
 		*/
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
 		// super methods
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 		virtual void execute();
 	};
 
@@ -233,7 +233,7 @@ namespace cocos2d {
 	@brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
 	* ND means: Node and Data. Data is void *, so it could be anything.
 	*/
-	class CCX_DLL CCCallFuncND : public CCCallFuncN
+	class CC_DLL CCCallFuncND : public CCCallFuncN
 	{
 	public:
 
@@ -242,7 +242,7 @@ namespace cocos2d {
 		/** initializes the action with the callback and the data to pass as an argument */
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
 		// super methods
-		virtual NSObject* copyWithZone(NSZone *pZone);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 		virtual void execute();
 
 	protected:
@@ -255,27 +255,27 @@ namespace cocos2d {
     O means Object.
     @since v0.99.5
     */
-    class CCX_DLL CCCallFuncO : public CCCallFunc
+    class CC_DLL CCCallFuncO : public CCCallFunc
     {
     public:
         CCCallFuncO();
         virtual ~CCCallFuncO();
         /** creates the action with the callback 
 
-        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(CCObject*);
         */
-        static CCCallFuncO * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        static CCCallFuncO * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
         /** initializes the action with the callback 
 
-        typedef void (SelectorProtocol::*SEL_CallFuncO)(NSObject*);
+        typedef void (SelectorProtocol::*SEL_CallFuncO)(CCObject*);
         */
-        virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject);
+        virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
         // super methods
-        virtual NSObject* copyWithZone(NSZone *pZone);
+        virtual CCObject* copyWithZone(CCZone *pZone);
         virtual void execute();
 
     protected:
-        NSObject* m_pObject;
+        CCObject* m_pObject;
     };
 
 }

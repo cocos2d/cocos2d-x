@@ -19,7 +19,7 @@ public:
 	Paddle(void);
 	virtual ~Paddle(void);
 
-	CGRect rect();
+	CCRect rect();
 	bool initWithTexture(CCTexture2D* aTexture);
 	virtual void onEnter();
 	virtual void onExit();

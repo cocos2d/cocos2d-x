@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-class CCX_DLL FileUtils
+class CC_DLL FileUtils
 {
 public:
     /**

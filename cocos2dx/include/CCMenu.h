@@ -46,7 +46,7 @@ namespace cocos2d{
 	*  - You can add MenuItem objects in runtime using addChild:
 	*  - But the only accecpted children are MenuItem objects
 	*/
-	class CCX_DLL CCMenu : public CCLayer, public CCRGBAProtocol
+	class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
 	{
 	public:
 		CCMenu(){}
@@ -97,10 +97,10 @@ namespace cocos2d{
         @since v0.99.5
         */
         virtual int mouseDelegatePriority();
-        virtual CCMenuItem* itemForMouseEvent(NSEvent * pEvent);
-        virtual bool ccMouseDown(NSEvent * pEvent);
-        virtual bool ccMouseDragged(NSEvent * pEvent);
-        virtual bool ccMouseUp(NSEvent * pEvent);
+        virtual CCMenuItem* itemForMouseEvent(CCEvent * pEvent);
+        virtual bool ccMouseDown(CCEvent * pEvent);
+        virtual bool ccMouseDragged(CCEvent * pEvent);
+        virtual bool ccMouseUp(CCEvent * pEvent);
 
 		virtual void destroy(void);
 		virtual void keep(void);

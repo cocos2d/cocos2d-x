@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCTouchDelegateProtocol.h"
-#include "CCUIAccelerometerDelegate.h"
+#include "CCAccelerometerDelegate.h"
 #include "CCKeypadDelegate.h"
 #include "CCMouseEventDelegate.h"
 #include "CCKeyboardEventDelegate.h"
@@ -44,7 +44,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
+class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
 {
 public:
 	CCLayer();
@@ -103,27 +103,27 @@ public:
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
 	@since v0.8.1
 	*/
-	CCX_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
+	CC_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
 	/** whether or not it will receive Accelerometer events
 	You can enable / disable accelerometer events with this property.
 	@since v0.8.1
 	*/
-	CCX_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+	CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
     /** whether or not it will receive Keyboard events
     You can enable / disable Keyboard events with this property.
     @since v0.99.5
     */
-    CCX_PROPERTY(bool, m_bIsKeyboardEnabled, IsKeyboardEnabled)
+    CC_PROPERTY(bool, m_bIsKeyboardEnabled, IsKeyboardEnabled)
     /** whether or not it will receive mouse events
     You can enable / disable mouse events with this property.
     @since v0.99.5
     */
-    CCX_PROPERTY(bool, m_bIsMouseEnabled, IsMouseEnabled)
+    CC_PROPERTY(bool, m_bIsMouseEnabled, IsMouseEnabled)
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-    CCX_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
+    CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
 };
 
 //
@@ -135,7 +135,7 @@ All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CCX_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
+class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
 	GLfloat m_pSquareVertices[4 * 2];
@@ -147,7 +147,7 @@ public:
 	virtual ~CCLayerColor();
 
 	virtual void draw();
-	virtual void setContentSize(CGSize var);
+	virtual void setContentSize(CCSize var);
 
 	/** creates a CCLayer with color, width and height in Points */
 	static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
@@ -169,11 +169,11 @@ public:
 	void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
+	CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(ccColor3B, m_tColor, Color)
+	CC_PROPERTY(ccColor3B, m_tColor, Color)
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
 	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 
@@ -212,28 +212,28 @@ be drawn, however.
 
 @since v0.99.5
 */
-class CCX_DLL CCLayerGradient : public CCLayerColor
+class CC_DLL CCLayerGradient : public CCLayerColor
 {
 public:
     /** Creates a full-screen CCLayer with a gradient between start and end. */
     static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
 
     /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
-    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CGPoint v);
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
 
     /** Initializes the CCLayer with a gradient between start and end. */
     virtual bool initWithColor(ccColor4B start, ccColor4B end);
 
     /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
-    virtual bool initWithColor(ccColor4B start, ccColor4B end, CGPoint v);
+    virtual bool initWithColor(ccColor4B start, ccColor4B end, CCPoint v);
 
     ccColor3B getStartColor();
     void      setStartColor(ccColor3B colors);
 
-    CCX_PROPERTY(ccColor3B, m_endColor, EndColor)
-    CCX_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
-    CCX_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
-    CCX_PROPERTY(CGPoint, m_AlongVector, Vector)
+    CC_PROPERTY(ccColor3B, m_endColor, EndColor)
+    CC_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
+    CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
+    CC_PROPERTY(CCPoint, m_AlongVector, Vector)
 
 protected:
     virtual void updateColor();
@@ -244,11 +244,11 @@ Features:
 - It supports one or more children
 - Only one children will be active a time
 */
-class CCX_DLL CCMultiplexLayer : public CCLayer
+class CC_DLL CCMultiplexLayer : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;
-	NSMutableArray<CCLayer *> * m_pLayers;
+	CCMutableArray<CCLayer *> * m_pLayers;
 public:
 
 	CCMultiplexLayer();

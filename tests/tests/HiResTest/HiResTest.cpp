@@ -53,7 +53,7 @@ void HiResDemo::onEnter()
 {
     CCLayer::onEnter();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
     label->setPosition(ccp(s.width/2, s.height-50));
@@ -73,10 +73,10 @@ void HiResDemo::onEnter()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CGPointZero );
-    item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CGPointMake( s.width/2, 30) );
-    item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+    menu->setPosition( CCPointZero );
+    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+    item2->setPosition( CCPointMake( s.width/2, 30) );
+    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 
     addChild(menu, 1);
 }
@@ -91,7 +91,7 @@ std::string HiResDemo::subtitle()
     return "";
 }
 
-void HiResDemo::restartCallback(NSObject* pSender)
+void HiResDemo::restartCallback(CCObject* pSender)
 {
     CCLayer* pLayer = restartHiResAction();
 
@@ -106,7 +106,7 @@ void HiResDemo::restartCallback(NSObject* pSender)
     }
 }
 
-void HiResDemo::nextCallback(NSObject* pSender)
+void HiResDemo::nextCallback(CCObject* pSender)
 {
     CCLayer* pLayer = nextHiResAction();
 
@@ -121,7 +121,7 @@ void HiResDemo::nextCallback(NSObject* pSender)
     }
 }
 
-void HiResDemo::backCallback(NSObject* pSender)
+void HiResDemo::backCallback(CCObject* pSender)
 {
     CCLayer* pLayer = backHiResAction();
 
@@ -145,7 +145,7 @@ void HiResTest1::onEnter()
 {
     HiResDemo::onEnter();
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
 
     CCSprite *sprite = CCSprite::spriteWithFile("Images/grossini.png");
     addChild(sprite);
@@ -171,7 +171,7 @@ void HiResTest2::onEnter()
 {
     HiResDemo::onEnter();
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
 
     CCSprite *sprite = CCSprite::spriteWithFile("Images/bugs/picture.png");
     addChild(sprite);

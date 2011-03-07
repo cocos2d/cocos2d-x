@@ -28,12 +28,12 @@
  * define some platform specific macros
  */
 #include "ccConfig.h"
-#include "ccxConfig.h"
+#include "CCPlatformConfig.h"
 
-#if defined(CCX_PLATFORM_MOBILE)
+#if defined(CC_PLATFORM_MOBILE)
     #define MacGLView					void
     #define NSWindow					        void
-#elif defined(CCX_PLATFORM_PC)
+#elif defined(CC_PLATFORM_PC)
     #include "platform/MacGLView.h"
 #endif
 
@@ -43,7 +43,7 @@ Basically,it's only enabled in android
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0

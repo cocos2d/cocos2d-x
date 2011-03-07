@@ -41,7 +41,7 @@ bool HelloWorld::init()
 
 	// create menu, it's an autorelease object
 	CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
-	pMenu->setPosition( CGPointZero );
+	pMenu->setPosition( CCPointZero );
 	this->addChild(pMenu, 1);
 
 	/////////////////////////////
@@ -52,7 +52,7 @@ bool HelloWorld::init()
 	CCLabelTTF* pLabel = CCLabelTTF::labelWithString("Hello World", "Thonburi", 34);
 
 	// ask director the window size
-	CGSize size = CCDirector::sharedDirector()->getWinSize();
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	// position the label on the center of the screen
 	pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
@@ -72,7 +72,7 @@ bool HelloWorld::init()
 	return true;
 }
 
-void HelloWorld::menuCloseCallback(NSObject* pSender)
+void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
 	CCDirector::sharedDirector()->end();
 }

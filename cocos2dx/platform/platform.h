@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __PLATFORM_H__
 #define __PLATFORM_H__
 
-#include "ccxThread.h"
+#include "CCThread.h"
 
 NS_CC_BEGIN;
 

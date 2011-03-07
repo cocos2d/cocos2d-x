@@ -21,21 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCX_FILEUTILS_PLATFORM_H__
-#define __CCX_FILEUTILS_PLATFORM_H__
+#ifndef __CC_FILEUTILS_PLATFORM_H__
+#define __CC_FILEUTILS_PLATFORM_H__
 
-#include "ccxConfig.h"
+#include "CCPlatformConfig.h"
 
-#if (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
-    #include "uphone/CCXFileUtils_uphone.h"
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_WIN32)
-    #include "win32/CCXFileUtils_win32.h"
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
-    #include "android/CCXFileUtils_android.h"
-#elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
-    #include "ios/CCXFileUtils_ios.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
+    #include "uphone/CCFileUtils_uphone.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    #include "win32/CCFileUtils_win32.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #include "android/CCFileUtils_android.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    #include "ios/CCFileUtils_ios.h"
 #else
     #error
-#endif // __CCX_FILEUTILS_PLATFORM_H__
+#endif // __CC_FILEUTILS_PLATFORM_H__
 
-#endif	// end of __CCX_EGLVIEW_PLATFORM_H__
+#endif	// end of __CC_EGLVIEW_PLATFORM_H__

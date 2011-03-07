@@ -183,11 +183,31 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\include\ccxCommon.h"
+				RelativePath="..\include\CCCommon.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\ccxConfig.h"
+				RelativePath="..\include\CCImage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCLibxml2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCPlatformConfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCPlatformMacros.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCStdC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCThread.h"
 				>
 			</File>
 			<File
@@ -195,27 +215,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\ccxImage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxLibxml2.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxMacros.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxStdC.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\ccxString.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxThread.h"
 				>
 			</File>
 		</Filter>
@@ -225,23 +225,23 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="..\src\ccxCommon.cpp"
+				RelativePath="..\src\CCCommon.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\CCImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\CCStdC.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\CCThread.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\src\ccxGL.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\ccxImage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\ccxStdC.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\ccxThread.cpp"
 				>
 			</File>
 		</Filter>

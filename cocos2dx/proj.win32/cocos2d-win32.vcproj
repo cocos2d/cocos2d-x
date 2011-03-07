@@ -191,31 +191,31 @@
 			Name="cocoa"
 			>
 			<File
-				RelativePath="..\cocoa\CGAffineTransform.cpp"
+				RelativePath="..\cocoa\CCAffineTransform.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\cocoa\CGGeometry.cpp"
+				RelativePath="..\cocoa\CCAutoreleasePool.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\cocoa\NSAutoreleasePool.cpp"
+				RelativePath="..\cocoa\CCData.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\cocoa\NSData.cpp"
+				RelativePath="..\cocoa\CCGeometry.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\cocoa\NSObject.cpp"
+				RelativePath="..\cocoa\CCObject.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\cocoa\NSSet.cpp"
+				RelativePath="..\cocoa\CCSet.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\cocoa\NSZone.cpp"
+				RelativePath="..\cocoa\CCZone.cpp"
 				>
 			</File>
 		</Filter>
@@ -287,6 +287,14 @@
 			Name="include"
 			>
 			<File
+				RelativePath="..\include\CCAccelerometer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCAccelerometerDelegate.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCAction.h"
 				>
 			</File>
@@ -331,6 +339,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCAffineTransform.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCAnimation.h"
 				>
 			</File>
@@ -339,7 +351,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCApplication.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCAtlasNode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCAutoreleasePool.h"
 				>
 			</File>
 			<File
@@ -351,6 +371,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCData.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCDirector.h"
 				>
 			</File>
@@ -359,7 +383,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCEGLView.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCEvent.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCEventDispatcher.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCFileUtils.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCGeometry.h"
 				>
 			</File>
 			<File
@@ -415,7 +455,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCMutableArray.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCMutableDictionary.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCNode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCObject.h"
 				>
 			</File>
 			<File
@@ -436,6 +488,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCParticleSystemQuad.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCPointExtension.h"
 				>
 			</File>
 			<File
@@ -467,6 +523,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCSet.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCSprite.h"
 				>
 			</File>
@@ -484,6 +544,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCSpriteSheet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCString.h"
 				>
 			</File>
 			<File
@@ -547,35 +611,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCUIAccelerometerDelegate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxApplication.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCXEGLView.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCXFileUtils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCXUIAccelerometer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CGAffineTransform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CGGeometry.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CGPointExtension.h"
+				RelativePath="..\include\CCZone.h"
 				>
 			</File>
 			<File
@@ -584,42 +620,6 @@
 			</File>
 			<File
 				RelativePath="..\include\FileUtils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSAutoreleasePool.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSData.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSEvent.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSMutableArray.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSMutableDictionary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSObject.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSSet.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSString.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\NSZone.h"
 				>
 			</File>
 			<File
@@ -699,10 +699,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\particle_nodes\CCParticleSystemQuad.cpp"
 				>
 			</File>
@@ -710,6 +706,14 @@
 		<Filter
 			Name="platform"
 			>
+			<File
+				RelativePath="..\platform\CCAccelerometer_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCApplication_platform.h"
+				>
+			</File>
 			<File
 				RelativePath="..\platform\CCArchOptimalParticleSystem.h"
 				>
@@ -719,7 +723,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCEGLView_platform.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCFileUtils_platform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCGL.h"
 				>
 			</File>
 			<File
@@ -739,6 +751,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCNS.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
 				>
 			</File>
@@ -747,15 +767,11 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCPlatformMacros.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCTransition_mobile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCXEGLView_platform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCXUIAccelerometer_platform.h"
 				>
 			</File>
 			<File
@@ -770,35 +786,35 @@
 				Name="win32"
 				>
 				<File
+					RelativePath="..\platform\win32\CCAccelerometer_win32.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCApplication_win32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCApplication_win32.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCEGLView_win32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCEGLView_win32.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCFileUtils_win32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\win32\CCFileUtils_win32.h"
+					>
+				</File>
+				<File
 					RelativePath="..\platform\win32\CCNS_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\ccxApplication_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\ccxApplication_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXEGLView_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXEGLView_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXFileUtils_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXFileUtils_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCXUIAccelerometer_win32.h"
 					>
 				</File>
 			</Filter>
@@ -847,6 +863,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\support\CCPointExtension.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\support\CCProfiling.cpp"
 				>
 			</File>
@@ -860,10 +880,6 @@
 			</File>
 			<File
 				RelativePath="..\support\ccUtils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\support\CGPointExtension.cpp"
 				>
 			</File>
 			<File

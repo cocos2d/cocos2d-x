@@ -52,7 +52,7 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CCX_DLL CCProgressTimer : public CCNode
+class CC_DLL CCProgressTimer : public CCNode
 {
 public:
 	~CCProgressTimer(void);
@@ -80,12 +80,12 @@ public:
 	static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
 
 protected:
-	ccVertex2F vertexFromTexCoord(CGPoint texCoord);
+	ccVertex2F vertexFromTexCoord(CCPoint texCoord);
 	void updateProgress(void);
 	void updateBar(void);
 	void updateRadial(void);
 	void updateColor(void);
-	CGPoint boundaryTexCoord(char index);
+	CCPoint boundaryTexCoord(char index);
 
 protected:
 	CCProgressTimerType m_eType;

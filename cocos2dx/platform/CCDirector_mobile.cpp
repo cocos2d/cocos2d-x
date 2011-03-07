@@ -25,18 +25,18 @@ THE SOFTWARE.
 #include "platform/CCNS.h"
 #include "CCDirector.h"
 #include "CCScene.h"
-#include "NSMutableArray.h"
+#include "CCMutableArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "CCTouchDispatcher.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCTransition.h"
 #include "CCTextureCache.h"
 #include "CCTransition.h"
 #include "CCSpriteFrameCache.h"
-#include "NSAutoreleasePool.h"
+#include "CCAutoreleasePool.h"
 #include "platform/platform.h"
-#include "ccxApplication.h"
+#include "CCApplication.h"
 #include "CCLabelBMFont.h"
 #include "CCActionManager.h"
 #include "CCLabelTTF.h"
@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "CCKeypadDispatcher.h"
 #include "CCGL.h"
 #include "CCAnimationCache.h"
-#include "NSEvent.h"
+#include "CCEvent.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -88,7 +88,7 @@ bool CCDirector::init(void)
 	m_pNotificationNode = NULL;
 
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / kDefaultFPS;	
-	m_pobScenesStack = new NSMutableArray<CCScene*>();
+	m_pobScenesStack = new CCMutableArray<CCScene*>();
 
 	// Set default projection (3D)
 	m_eProjection = kCCDirectorProjectionDefault;
@@ -108,7 +108,7 @@ bool CCDirector::init(void)
 	// purge ?
 	m_bPurgeDirecotorInNextLoop = false;
 
-	m_obWinSizeInPixels = m_obWinSizeInPoints = CGSizeZero;
+	m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;
 
 	// default values
 	m_ePixelFormat = kCCPixelFormatDefault;
@@ -133,18 +133,18 @@ CCDirector::~CCDirector(void)
 	CCLOGINFO("cocos2d: deallocing %p", this);
 
 #if CC_DIRECTOR_FAST_FPS
-	CCX_SAFE_RELEASE(m_pFPSLabel);
+	CC_SAFE_RELEASE(m_pFPSLabel);
 #endif 
     
-	CCX_SAFE_RELEASE(m_pRunningScene);
-	CCX_SAFE_RELEASE(m_pNotificationNode);
-	CCX_SAFE_RELEASE(m_pobScenesStack);
+	CC_SAFE_RELEASE(m_pRunningScene);
+	CC_SAFE_RELEASE(m_pNotificationNode);
+	CC_SAFE_RELEASE(m_pobScenesStack);
 
 	// pop the autorelease pool
 	NSPoolManager::getInstance()->pop();
 
 	// delete m_pLastUpdate
-	CCX_SAFE_DELETE(m_pLastUpdate);
+	CC_SAFE_DELETE(m_pLastUpdate);
 
     CCKeypadDispatcher::purgeSharedDispatcher();
 
@@ -276,13 +276,13 @@ void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
 
 	if (m_pobOpenGLView != pobOpenGLView)
 	{
-		// because EAGLView is not kind of NSObject
+		// because EAGLView is not kind of CCObject
 		delete m_pobOpenGLView; // [openGLView_ release]
 		m_pobOpenGLView = pobOpenGLView;
 
 		// set size
 		m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-		m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
+		m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
         setGLDefaultValues();
 
 		if (m_fContentScaleFactor != 1)
@@ -303,7 +303,7 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
-	CGSize size = m_obWinSizeInPixels;
+	CCSize size = m_obWinSizeInPixels;
 	switch (kProjection)
 	{
 	case kCCDirectorProjection2D:
@@ -385,13 +385,13 @@ void CCDirector::setDepthTest(bool bOn)
 	}
 }
 
-CGPoint CCDirector::convertToGL(CGPoint obPoint)
+CCPoint CCDirector::convertToGL(CCPoint obPoint)
 {
-	CGSize s = m_obWinSizeInPoints;
+	CCSize s = m_obWinSizeInPoints;
 	float newY = s.height - obPoint.y;
 	float newX = s.width - obPoint.x;
 
-	CGPoint ret = CGPointZero;
+	CCPoint ret = CCPointZero;
 	switch (m_eDeviceOrientation)
 	{
 	case CCDeviceOrientationPortrait:
@@ -418,12 +418,12 @@ CGPoint CCDirector::convertToGL(CGPoint obPoint)
 	return ret;
 }
 
-CGPoint CCDirector::convertToUI(CGPoint obPoint)
+CCPoint CCDirector::convertToUI(CCPoint obPoint)
 {
-	CGSize winSize = m_obWinSizeInPoints;
+	CCSize winSize = m_obWinSizeInPoints;
 	float oppositeX = winSize.width - obPoint.x;
 	float oppositeY = winSize.height - obPoint.y;
-	CGPoint uiPoint = CGPointZero;
+	CCPoint uiPoint = CCPointZero;
 
 	switch (m_eDeviceOrientation)
 	{
@@ -446,15 +446,15 @@ CGPoint CCDirector::convertToUI(CGPoint obPoint)
 	return uiPoint;
 }
 
-CGSize CCDirector::getWinSize(void)
+CCSize CCDirector::getWinSize(void)
 {
-	CGSize s = m_obWinSizeInPoints;
+	CCSize s = m_obWinSizeInPoints;
 
 	if (m_eDeviceOrientation == CCDeviceOrientationLandscapeLeft
 		|| m_eDeviceOrientation == CCDeviceOrientationLandscapeRight)
 	{
 		// swap x,y in landspace mode
-		CGSize tmp = s;
+		CCSize tmp = s;
 		s.width = tmp.height;
 		s.height = tmp.width;
 	}
@@ -462,9 +462,9 @@ CGSize CCDirector::getWinSize(void)
 	return s;
 }
 
-CGSize CCDirector::getWinSizeInPixels()
+CCSize CCDirector::getWinSizeInPixels()
 {
-	CGSize s = getWinSize();
+	CCSize s = getWinSize();
 
 	s.width *= CC_CONTENT_SCALE_FACTOR();
 	s.height *= CC_CONTENT_SCALE_FACTOR();
@@ -473,15 +473,15 @@ CGSize CCDirector::getWinSizeInPixels()
 }
 
 // return the current frame size
-CGSize CCDirector::getDisplaySizeInPixels(void)
+CCSize CCDirector::getDisplaySizeInPixels(void)
 {
 	return m_obWinSizeInPixels;
 }
 
-void CCDirector::reshapeProjection(CGSize newWindowSize)
+void CCDirector::reshapeProjection(CCSize newWindowSize)
 {
     m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-	m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
+	m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
 		                             m_obWinSizeInPoints.height * m_fContentScaleFactor);
 
 	setProjection(m_eProjection);
@@ -566,10 +566,10 @@ void CCDirector::purgeDirector()
 	stopAnimation();
 
 #if CC_DIRECTOR_FAST_FPS
-	CCX_SAFE_RELEASE_NULL(m_pFPSLabel);
+	CC_SAFE_RELEASE_NULL(m_pFPSLabel);
 #endif
 
-		CCX_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+		CC_SAFE_RELEASE_NULL(m_pProjectionDelegate);
 
 	// purge bitmap cache
 	CCLabelBMFont::purgeCachedData();
@@ -742,7 +742,7 @@ bool CCDirector::detach(void)
 {
 	assert(isOpenGLAttached());
 
-	CCX_SAFE_DELETE(m_pobOpenGLView);
+	CC_SAFE_DELETE(m_pobOpenGLView);
 	return true;
 }
 
@@ -800,7 +800,7 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 #if CC_DIRECTOR_FAST_FPS
     if (m_pFPSLabel)
     {
-        CCX_SAFE_RELEASE_NULL(m_pFPSLabel);
+        CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         m_pFPSLabel = CCLabelTTF::labelWithString("00.0", "Arial", 24);
         m_pFPSLabel->retain();
     }
@@ -818,7 +818,7 @@ void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
 	if (scaleFactor != m_fContentScaleFactor)
 	{
 		m_fContentScaleFactor = scaleFactor;
-		m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * scaleFactor, m_obWinSizeInPoints.height * scaleFactor);
+		m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * scaleFactor, m_obWinSizeInPoints.height * scaleFactor);
 
 		if (m_pobOpenGLView)
 		{
@@ -832,7 +832,7 @@ void CCDirector::setContentScaleFactor(CGFloat scaleFactor)
 
 void CCDirector::applyOrientation(void)
 {
-	CGSize s = m_obWinSizeInPixels;
+	CCSize s = m_obWinSizeInPixels;
 	float w = s.width / 2;
 	float h = s.height / 2;
 
@@ -871,8 +871,8 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 {
 	ccDeviceOrientation eNewOrientation;
 
-	eNewOrientation = (ccDeviceOrientation)ccxApplication::sharedApplication().setOrientation(
-        (ccxApplication::Orientation)kDeviceOrientation);
+	eNewOrientation = (ccDeviceOrientation)CCApplication::sharedApplication().setOrientation(
+        (CCApplication::Orientation)kDeviceOrientation);
 
 	if (m_eDeviceOrientation != eNewOrientation)
 	{
@@ -881,10 +881,10 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
     else
     {
         // this logic is only run on win32 now
-        // On win32,the return value of CCXApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
+        // On win32,the return value of CCApplication::setDeviceOrientation is always kCCDeviceOrientationPortrait
         // So,we should calculate the Projection and window size again.
         m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-        m_obWinSizeInPixels = CGSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
+        m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
         setProjection(m_eProjection);
     }
 }
@@ -893,10 +893,10 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 * PC platforms specific functions, such as mac
 **************************************************/
 
-CGPoint CCDirector::convertEventToGL(NSEvent *event)
+CCPoint CCDirector::convertEventToGL(CCEvent *event)
 {
     assert(false);
-	return CGPointZero;
+	return CCPointZero;
 }
 
 bool CCDirector::isFullScreen(void)
@@ -921,10 +921,10 @@ void CCDirector::setFullScreen(bool fullscreen)
     assert(false);
 }
 
-CGPoint CCDirector::convertToLogicalCoordinates(CGPoint coordinates)
+CCPoint CCDirector::convertToLogicalCoordinates(CCPoint coordinates)
 {
     assert(false);
-	return CGPointZero;
+	return CCPointZero;
 }
 
 
@@ -943,7 +943,7 @@ void CCDisplayLinkDirector::startAnimation(void)
 	}
 
 	m_bInvalid = false;
-	ccxApplication::sharedApplication().setAnimationInterval(m_dAnimationInterval);
+	CCApplication::sharedApplication().setAnimationInterval(m_dAnimationInterval);
 }
 
 void CCDisplayLinkDirector::mainLoop(void)

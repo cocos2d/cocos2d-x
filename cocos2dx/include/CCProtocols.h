@@ -32,7 +32,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 //! @brief  CC RGBA protocol
-class CCX_DLL CCRGBAProtocol
+class CC_DLL CCRGBAProtocol
 {
 public:
     /** sets Color
@@ -74,7 +74,7 @@ public:
  @brief You can specify the blending fuction.
  @since v0.99.0
  */
-class CCX_DLL CCBlendProtocol
+class CC_DLL CCBlendProtocol
 {
 public:
 	// set the source blending function for the texture
@@ -93,7 +93,7 @@ public:
  But you can change the blending funtion at any time.
  @since v0.8.0
  */
-class CCX_DLL CCTextureProtocol : public CCBlendProtocol
+class CC_DLL CCTextureProtocol : public CCBlendProtocol
 {
 public:
 	// returns the used texture
@@ -104,7 +104,7 @@ public:
 };
 
 //! @brief Common interface for Labels
-class CCX_DLL CCLabelProtocol
+class CC_DLL CCLabelProtocol
 {
 public:
 	// sets a new label using an string
@@ -115,7 +115,7 @@ public:
 };
 
 /** OpenGL projection protocol */
-class CCX_DLL CCProjectionProtocol : public NSObject
+class CC_DLL CCProjectionProtocol : public CCObject
 {
 public:
 	/** Called by CCDirector when the porjection is updated, and "custom" projection is used

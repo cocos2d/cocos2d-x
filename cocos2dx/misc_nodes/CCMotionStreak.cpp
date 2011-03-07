@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCMotionStreak.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCRibbon.h"
 namespace cocos2d {
 
@@ -45,7 +45,7 @@ CCMotionStreak * CCMotionStreak::streakWithFade(float fade, float seg, const cha
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 
@@ -53,7 +53,7 @@ bool CCMotionStreak::initWithFade(float fade, float seg, const char *imagePath, 
 {
 	m_fSegThreshold = seg;
 	m_fWidth = width;
-	m_tLastLocation = CGPointZero;
+	m_tLastLocation = CCPointZero;
 	m_pRibbon = CCRibbon::ribbonWithWidth(m_fWidth, imagePath, length, color, fade);
 	this->addChild(m_pRibbon);
 
@@ -64,7 +64,7 @@ bool CCMotionStreak::initWithFade(float fade, float seg, const char *imagePath, 
 
 void CCMotionStreak::update(ccTime delta)
 {
-	CGPoint location = this->convertToWorldSpace(CGPointZero);
+	CCPoint location = this->convertToWorldSpace(CCPointZero);
 	m_pRibbon->setPosition(ccp(-1*location.x, -1*location.y));
     float len = ccpLength(ccpSub(m_tLastLocation, location));
 	if (len > m_fSegThreshold)

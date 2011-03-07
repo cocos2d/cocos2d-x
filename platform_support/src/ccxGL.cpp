@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 #include "ccxGL.h"
 
-#if defined(CCX_PLATFORM_MOBILE)
+#if defined(CC_PLATFORM_MOBILE)
 
-#include "ccxStdC.h"
+#include "CCStdC.h"
 
 NS_CC_BEGIN;
 
@@ -130,4 +130,4 @@ void gluLookAt(float fEyeX, float fEyeY, float fEyeZ,
 
 NS_CC_END;
 
-#endif  // CCX_PLATFORM_MOBILE
+#endif  // CC_PLATFORM_MOBILE

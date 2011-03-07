@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
 #include "CCTouchDelegateProtocol.h"
-#include "NSObject.h"
-#include "NSMutableArray.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
 namespace   cocos2d {
 
 typedef enum
@@ -49,24 +49,24 @@ enum {
 	ccTouchMax,
 };
 
-class NSSet;
+class CCSet;
 class UIEvent;
 
 struct ccTouchHandlerHelperData {
 	// we only use the type
-//	void (StandardTouchDelegate::*touchesSel)(NSSet*, UIEvent*);
+//	void (StandardTouchDelegate::*touchesSel)(CCSet*, UIEvent*);
 //	void (TargetedTouchDelegate::*touchSel)(NSTouch*, UIEvent*);
 	int  m_type;
 };
 
 
-class CCX_DLL EGLTouchDelegate
+class CC_DLL EGLTouchDelegate
 {
 public:
-	virtual void touchesBegan(NSSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesMoved(NSSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesEnded(NSSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesCancelled(NSSet* touches, UIEvent* pEvent) = 0;
+	virtual void touchesBegan(CCSet* touches, UIEvent* pEvent) = 0;
+	virtual void touchesMoved(CCSet* touches, UIEvent* pEvent) = 0;
+	virtual void touchesEnded(CCSet* touches, UIEvent* pEvent) = 0;
+	virtual void touchesCancelled(CCSet* touches, UIEvent* pEvent) = 0;
 
     virtual ~EGLTouchDelegate() {}
 };
@@ -89,7 +89,7 @@ struct _ccCArray;
 
  @since v0.8.0
  */
-class CCX_DLL CCTouchDispatcher : public NSObject, public EGLTouchDelegate
+class CC_DLL CCTouchDispatcher : public CCObject, public EGLTouchDelegate
 {
 public:
 	~CCTouchDispatcher();
@@ -125,12 +125,12 @@ public:
     the higher the priority */
 	void setPriority(int nPriority, CCTouchDelegate *pDelegate);
 
-	void touches(NSSet *pTouches, UIEvent *pEvent, unsigned int uIndex);
+	void touches(CCSet *pTouches, UIEvent *pEvent, unsigned int uIndex);
 
-	virtual void touchesBegan(NSSet* touches, UIEvent* pEvent);
-	virtual void touchesMoved(NSSet* touches, UIEvent* pEvent);
-	virtual void touchesEnded(NSSet* touches, UIEvent* pEvent);
-	virtual void touchesCancelled(NSSet* touches, UIEvent* pEvent);
+	virtual void touchesBegan(CCSet* touches, UIEvent* pEvent);
+	virtual void touchesMoved(CCSet* touches, UIEvent* pEvent);
+	virtual void touchesEnded(CCSet* touches, UIEvent* pEvent);
+	virtual void touchesCancelled(CCSet* touches, UIEvent* pEvent);
 
 public:
 	/** singleton of the CCTouchDispatcher */
@@ -138,17 +138,17 @@ public:
 
 protected:
 	void forceRemoveDelegate(CCTouchDelegate *pDelegate);
-	void forceAddHandler(CCTouchHandler *pHandler, NSMutableArray<CCTouchHandler*> *pArray);
+	void forceAddHandler(CCTouchHandler *pHandler, CCMutableArray<CCTouchHandler*> *pArray);
 	void forceRemoveAllDelegates(void);
 
 protected:
- 	NSMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
- 	NSMutableArray<CCTouchHandler*> *m_pStandardHandlers;
+ 	CCMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
+ 	CCMutableArray<CCTouchHandler*> *m_pStandardHandlers;
 
 	bool m_bLocked;
 	bool m_bToAdd;
 	bool m_bToRemove;
- 	NSMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
+ 	CCMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
 	struct _ccCArray *m_pHandlersToRemove;
 	bool m_bToQuit;
 	bool m_bDispatchEvents;

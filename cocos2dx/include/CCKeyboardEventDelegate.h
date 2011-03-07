@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCKEYBOARD_EVENT_DELEGATE_H__
 #define __CCKEYBOARD_EVENT_DELEGATE_H__
 
-#include "NSEvent.h"
-#include "NSObject.h"
+#include "CCEvent.h"
+#include "CCObject.h"
 
 namespace cocos2d {
 
-class CCX_DLL CCKeyboardEventDelegate
+class CC_DLL CCKeyboardEventDelegate
 {
 public:
     //! call the release() in child layer
@@ -41,20 +41,20 @@ public:
     /** called when the "keyUp" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccKeyUp(NSEvent* pEvent) { return false; }
+    virtual bool ccKeyUp(CCEvent* pEvent) { return false; }
 
     /** called when the "keyDown" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccKeyDown(NSEvent* pEvent) { return false; }
+    virtual bool ccKeyDown(CCEvent* pEvent) { return false; }
 
     /** called when the "flagsChanged" event is received.
     Return YES to avoid propagating the event to other delegates.
     */
-    virtual bool ccFlagsChanged(NSEvent* pEvent) { return false; }
+    virtual bool ccFlagsChanged(CCEvent* pEvent) { return false; }
 };
 
-class CCX_DLL CCKeyboardEventHandle : public NSObject
+class CC_DLL CCKeyboardEventHandle : public CCObject
 {
 public:
     virtual ~CCKeyboardEventHandle(void);

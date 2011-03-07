@@ -14,16 +14,16 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void backCallback(NSObject* pSender);
-    void nextCallback(NSObject* pSender);
-    void restartCallback(NSObject* pSender);
+    void backCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void restartCallback(CCObject* pSender);
 };
 
 // class SchedulerTestLayer : CCLayer
 // {
 // }
-// -(NSString*) title;
-// -(NSString*) subtitle;
+// -(CCString*) title;
+// -(CCString*) subtitle;
 // 
 // -(void) backCallback:(id) sender;
 // -(void) nextCallback:(id) sender;
@@ -136,9 +136,9 @@ class TestNode : public CCNode
 public:
     ~TestNode();
 
-    void initWithString(NSString* pStr, int priority);
+    void initWithString(CCString* pStr, int priority);
 private:
-    NSString* m_pstring;
+    CCString* m_pstring;
 };
 
 class RescheduleSelector : public SchedulerTestLayer

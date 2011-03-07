@@ -12,15 +12,15 @@ public:
     TestController();
     ~TestController();
 
-    void menuCallback(NSObject * pSender);
-    void closeCallback(NSObject * pSender);
+    void menuCallback(CCObject * pSender);
+    void closeCallback(CCObject * pSender);
 
-    virtual void ccTouchesBegan(NSSet *pTouches, UIEvent *pEvent);
-    virtual void ccTouchesMoved(NSSet *pTouches, UIEvent *pEvent);
+    virtual void ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent);
 
 private:
 
-    CGPoint m_tBeginPos;
+    CCPoint m_tBeginPos;
     CCMenuItemLabel * m_pMenuItems[TESTS_COUNT];
     CCMenu* m_pItmeMenu;
 };

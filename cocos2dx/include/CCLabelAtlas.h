@@ -37,7 +37,7 @@ namespace cocos2d{
 
 	A more flexible class is CCBitmapFontAtlas. It supports variable width characters and it also has a nice editor.
 	*/
-	class CCX_DLL CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
+	class CC_DLL CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
 	{
 	public:
 		CCLabelAtlas()

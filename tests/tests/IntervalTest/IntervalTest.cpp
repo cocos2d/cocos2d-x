@@ -13,11 +13,11 @@ IntervalLayer::IntervalLayer()
 {
 	m_time0 = m_time1 = m_time2 = m_time3 = m_time4 = 0.0f;
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	// sun
 	CCParticleSystem* sun = CCParticleSun::node();
     sun->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
-	sun->setPosition( CGPointMake(s.width-32,s.height-32) );
+	sun->setPosition( CCPointMake(s.width-32,s.height-32) );
 
 	sun->setTotalParticles(130);
 	sun->setLife(0.6f);
@@ -36,11 +36,11 @@ IntervalLayer::IntervalLayer()
 	schedule(schedule_selector(IntervalLayer::step3), 1.0f);
     schedule(schedule_selector(IntervalLayer::step4), 2.0f);
 
-    m_label0->setPosition(CGPointMake(s.width*1/6, s.height/2));
-	m_label1->setPosition(CGPointMake(s.width*2/6, s.height/2));
-	m_label2->setPosition(CGPointMake(s.width*3/6, s.height/2));
-	m_label3->setPosition(CGPointMake(s.width*4/6, s.height/2));
-    m_label4->setPosition(CGPointMake(s.width*5/6, s.height/2));
+    m_label0->setPosition(CCPointMake(s.width*1/6, s.height/2));
+	m_label1->setPosition(CCPointMake(s.width*2/6, s.height/2));
+	m_label2->setPosition(CCPointMake(s.width*3/6, s.height/2));
+	m_label3->setPosition(CCPointMake(s.width*4/6, s.height/2));
+    m_label4->setPosition(CCPointMake(s.width*5/6, s.height/2));
 
     addChild(m_label0);
 	addChild(m_label1);
@@ -50,9 +50,9 @@ IntervalLayer::IntervalLayer()
 
 	// Sprite
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
-	sprite->setPosition( CGPointMake(40,50) );
+	sprite->setPosition( CCPointMake(40,50) );
 	
-	CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CGPointMake(s.width-80,0), 50, 4);
+	CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CCPointMake(s.width-80,0), 50, 4);
 	
 	addChild(sprite);
 	sprite->runAction( CCRepeatForever::actionWithAction(
@@ -62,7 +62,7 @@ IntervalLayer::IntervalLayer()
 	// pause button
 	CCMenuItem* item1 = CCMenuItemFont::itemFromString("Pause", this, menu_selector(IntervalLayer::onPause) );
 	CCMenu* menu = CCMenu::menuWithItems(item1, NULL);
-	menu->setPosition( CGPointMake(s.width/2, s.height-50) );
+	menu->setPosition( CCPointMake(s.width/2, s.height-50) );
 
 	addChild( menu );
 }
@@ -75,7 +75,7 @@ void IntervalLayer::update(ccTime dt)
     m_label0->setString(time);
 }
 
-void IntervalLayer::onPause(NSObject* pSender)
+void IntervalLayer::onPause(CCObject* pSender)
 {
 	if(CCDirector::sharedDirector()->isPaused())
 		CCDirector::sharedDirector()->resume(); 

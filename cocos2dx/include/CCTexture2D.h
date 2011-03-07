@@ -26,12 +26,12 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
-#include "NSObject.h"
-#include "CGGeometry.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
 #include "ccTypes.h"
 
 namespace   cocos2d {
-class ccxImage;
+class CCImage;
 
 //CONSTANTS:
 
@@ -86,26 +86,26 @@ typedef struct _ccTexParams {
 * Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
 * Be aware that the content of the generated textures will be upside-down!
 */
-class CCX_DLL CCTexture2D : public NSObject
+class CC_DLL CCTexture2D : public CCObject
 {
 	/** pixel format of the texture */
-	CCX_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
+	CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
 	/** width in pixels */
-	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
 	/** hight in pixels */
-	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
 
 	/** texture name */
-	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
+	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
 
 	/** content size */
-	CCX_PROPERTY_READONLY(CGSize, m_tContentSize, ContentSizeInPixels)
+	CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSizeInPixels)
 	/** texture max S */
-	CCX_PROPERTY(GLfloat, m_fMaxS, MaxS)
+	CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
 	/** texture max T */
-	CCX_PROPERTY(GLfloat, m_fMaxT, MaxT)
+	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
 	/** whether or not the texture has their Alpha premultiplied */
-	CCX_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
+	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
 
 public:
 	CCTexture2D();
@@ -118,35 +118,35 @@ public:
 	void* keepData(void *data, unsigned int length);
 
 	/** Intializes with a texture2d with data */
-	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize);
+	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CCSize contentSize);
 
 	/**
 	Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
 	These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
 	*/
 	/** draws a texture at a given point */
-	void drawAtPoint(CGPoint point);
+	void drawAtPoint(CCPoint point);
 	/** draws a texture inside a rect */
-	void drawInRect(CGRect rect);
+	void drawInRect(CCRect rect);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from an image file.
 	Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a UIImage object */
-	bool initWithImage(ccxImage * uiImage);
+	bool initWithImage(CCImage * uiImage);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a string of text.
 	Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	bool initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+	bool initWithString(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
 	bool initWithString(const char *text, const char *fontName, float fontSize);
 
 	/** returns the content size of the texture in points */
-	CGSize getContentSize(void);
+	CCSize getContentSize(void);
 
 #ifdef _POWERVR_SUPPORT_
 	/**
@@ -217,7 +217,7 @@ public:
     static void reloadAllTextures();
 
 private:
-	bool initPremultipliedATextureWithImage(ccxImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+	bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
 
 };
 }//namespace   cocos2d 

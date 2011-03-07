@@ -33,8 +33,8 @@ THE SOFTWARE.
 #include <string>
 #include "CCSpriteFrame.h"
 #include "CCTexture2D.h"
-#include "NSObject.h"
-#include "NSMutableDictionary.h"
+#include "CCObject.h"
+#include "CCMutableDictionary.h"
 
 namespace   cocos2d {
 class CCSprite;
@@ -43,7 +43,7 @@ class CCSprite;
  It saves in a cache the sprite frames.
  @since v0.9
  */
-class CCX_DLL CCSpriteFrameCache : public NSObject
+class CC_DLL CCSpriteFrameCache : public CCObject
 {
 public:
 	bool init(void);
@@ -51,7 +51,7 @@ public:
 
 	/*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
 	 */
-	void addSpriteFramesWithDictionary(NSDictionary<std::string, NSObject*> *pobDictionary, CCTexture2D *pobTexture);
+	void addSpriteFramesWithDictionary(NSDictionary<std::string, CCObject*> *pobDictionary, CCTexture2D *pobTexture);
 
 	/** Adds multiple Sprite Frames from a plist file.
 	 * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -129,7 +129,7 @@ public:
 
 private:
 	CCSpriteFrameCache(void) {}
-	const char * valueForKey(const char *key, NSDictionary<std::string, NSObject*> *dict);
+	const char * valueForKey(const char *key, NSDictionary<std::string, CCObject*> *dict);
 	
 protected:
 	NSDictionary<std::string, CCSpriteFrame*> *m_pSpriteFrames;

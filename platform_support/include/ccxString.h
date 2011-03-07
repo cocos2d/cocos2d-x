@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_STRING_H_YANGWS_20110127__
-#define __CCX_STRING_H_YANGWS_20110127__
+#ifndef __CC_STRING_H_YANGWS_20110127__
+#define __CC_STRING_H_YANGWS_20110127__
 
-#include "ccxCommon.h"
+#include "CCCommon.h"
 
 /**
 @file
@@ -290,7 +290,7 @@ inline int ccxStringExplode2(ContainerT&       container,
         TokenVerifier<kefDefaultFlag >());
 }
 
-#if ! (CCX_SUPPORT_UNICODE)
+#if ! (CC_SUPPORT_UNICODE)
 
 // ccxAstring
 
@@ -304,7 +304,7 @@ inline void ccxStringTrim(std::basic_string<char, Tr, AllocT >& str)
     ccxStringTrim(str, blanks);
 }
 
-#else   // CCX_SUPPORT_UNICODE
+#else   // CC_SUPPORT_UNICODE
 
 // ccxWString
 
@@ -321,9 +321,9 @@ inline inline void ccxStringTrim(std::basic_string<wchar_t, Tr, AllocT >& str)
     ccxStringTrim(str, blanks);
 }
 
-#endif  // CCX_SUPPORT_UNICODE
+#endif  // CC_SUPPORT_UNICODE
 #endif
 
 NS_CC_END;
 
-#endif	// __CCX_STRING_H_YANGWS_20110127__
+#endif	// __CC_STRING_H_YANGWS_20110127__

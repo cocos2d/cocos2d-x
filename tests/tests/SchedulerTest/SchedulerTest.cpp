@@ -70,7 +70,7 @@ void SchedulerTestLayer::onEnter()
 {
     CCLayer::onEnter();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
     addChild(label);
@@ -89,7 +89,7 @@ void SchedulerTestLayer::onEnter()
     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(SchedulerTestLayer::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
-    menu->setPosition(CGPointZero);
+    menu->setPosition(CCPointZero);
     item1->setPosition(ccp( s.width/2 - 100,30));
     item2->setPosition(ccp( s.width/2, 30));
     item3->setPosition(ccp( s.width/2 + 100,30));
@@ -97,7 +97,7 @@ void SchedulerTestLayer::onEnter()
     addChild(menu, 1);
 }
 
-void SchedulerTestLayer::backCallback(NSObject* pSender)
+void SchedulerTestLayer::backCallback(CCObject* pSender)
 {
     CCScene* pScene = new SchedulerTestScene();
     CCLayer* pLayer = backSchedulerTest();
@@ -107,7 +107,7 @@ void SchedulerTestLayer::backCallback(NSObject* pSender)
     pScene->release();
 }
 
-void SchedulerTestLayer::nextCallback(NSObject* pSender)
+void SchedulerTestLayer::nextCallback(CCObject* pSender)
 {
     CCScene* pScene = new SchedulerTestScene();
     CCLayer* pLayer = nextSchedulerTest();
@@ -117,7 +117,7 @@ void SchedulerTestLayer::nextCallback(NSObject* pSender)
     pScene->release();
 }
 
-void SchedulerTestLayer::restartCallback(NSObject* pSender)
+void SchedulerTestLayer::restartCallback(CCObject* pSender)
 {
     CCScene* pScene = new SchedulerTestScene();
     CCLayer* pLayer = restartSchedulerTest();
@@ -378,7 +378,7 @@ void SchedulerSchedulesAndRemove::scheduleAndUnschedule(ccTime dt)
 // TestNode
 //
 //------------------------------------------------------------------
-void TestNode::initWithString(NSString* pStr, int priority)
+void TestNode::initWithString(CCString* pStr, int priority)
 {
     m_pstring = pStr;
     m_pstring->retain();
@@ -400,42 +400,42 @@ void SchedulerUpdate::onEnter()
     SchedulerTestLayer::onEnter();
 
     TestNode* d = new TestNode();
-    NSString* pStr = new NSString("---");
+    CCString* pStr = new CCString("---");
     d->initWithString(pStr, 50);
     pStr->release();
     addChild(d);
     d->release();
 
     TestNode* b = new TestNode();
-    pStr = new NSString("3rd");
+    pStr = new CCString("3rd");
     b->initWithString(pStr, 0);
     pStr->release();
     addChild(b);
     b->release();
 
     TestNode* a = new TestNode();
-    pStr = new NSString("1st");
+    pStr = new CCString("1st");
     a->initWithString(pStr, -10);
     pStr->release();
     addChild(a);
     a->release();
 
     TestNode* c = new TestNode();
-    pStr = new NSString("4th");
+    pStr = new CCString("4th");
     c->initWithString(pStr, 10);
     pStr->release();
     addChild(c);
     c->release();
 
     TestNode* e = new TestNode();
-    pStr = new NSString("5th");
+    pStr = new CCString("5th");
     e->initWithString(pStr, 20);
     pStr->release();
     addChild(e);
     e->release();
 
     TestNode* f = new TestNode();
-    pStr = new NSString("2nd");
+    pStr = new CCString("2nd");
     f->initWithString(pStr, -5);
     pStr->release();
     addChild(f);
@@ -446,8 +446,8 @@ void SchedulerUpdate::onEnter()
 
 void SchedulerUpdate::removeUpdates(ccTime dt)
 {
-    NSMutableArray<CCNode*> * children = getChildren();
-    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+    CCMutableArray<CCNode*> * children = getChildren();
+    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 
     CCNode* pNode;
     for (it = children->begin(); it != children->end(); it++)

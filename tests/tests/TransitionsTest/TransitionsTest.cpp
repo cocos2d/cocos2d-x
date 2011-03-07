@@ -245,22 +245,22 @@ TestLayer1::TestLayer1(void)
 {
     float x,y;
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     x = size.width;
     y = size.height;
 
     CCSprite* bg1 = CCSprite::spriteWithFile(s_back1);
-    bg1->setPosition( CGPointMake(size.width/2, size.height/2) );
+    bg1->setPosition( CCPointMake(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
     CCLabelTTF* title = CCLabelTTF::labelWithString( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
-    title->setPosition( CGPointMake(x/2, y-100) );
+    title->setPosition( CCPointMake(x/2, y-100) );
 
     CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 1", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CGPointMake(x/2,y/2));	
+    label->setPosition( CCPointMake(x/2,y/2));	
     addChild( label);
 
     // menu
@@ -270,10 +270,10 @@ TestLayer1::TestLayer1(void)
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CGPointZero );
-    item1->setPosition( CGPointMake( size.width/2 - 100,30) );
-    item2->setPosition( CGPointMake( size.width/2, 30) );
-    item3->setPosition( CGPointMake( size.width/2 + 100,30) );
+    menu->setPosition( CCPointZero );
+    item1->setPosition( CCPointMake( size.width/2 - 100,30) );
+    item2->setPosition( CCPointMake( size.width/2, 30) );
+    item3->setPosition( CCPointMake( size.width/2 + 100,30) );
 
     addChild(menu, 1);	
 
@@ -285,7 +285,7 @@ TestLayer1::~TestLayer1(void)
 
 }
 
-void TestLayer1::restartCallback(NSObject* pSender)
+void TestLayer1::restartCallback(CCObject* pSender)
 {
     CCScene* s = new TransitionsTestScene();
 
@@ -301,7 +301,7 @@ void TestLayer1::restartCallback(NSObject* pSender)
     }    
 }
 
-void TestLayer1::nextCallback(NSObject* pSender)
+void TestLayer1::nextCallback(CCObject* pSender)
 {
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
@@ -320,7 +320,7 @@ void TestLayer1::nextCallback(NSObject* pSender)
     }
 }
 
-void TestLayer1::backCallback(NSObject* pSender)
+void TestLayer1::backCallback(CCObject* pSender)
 {
     s_nSceneIdx--;
     int total = MAX_LAYER;
@@ -350,22 +350,22 @@ TestLayer2::TestLayer2()
 {
     float x,y;
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     x = size.width;
     y = size.height;
 
     CCSprite* bg1 = CCSprite::spriteWithFile(s_back2);
-    bg1->setPosition( CGPointMake(size.width/2, size.height/2) );
+    bg1->setPosition( CCPointMake(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
     CCLabelTTF* title = CCLabelTTF::labelWithString((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
-    title->setPosition( CGPointMake(x/2, y-100) );
+    title->setPosition( CCPointMake(x/2, y-100) );
 
     CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 2", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CGPointMake(x/2,y/2));	
+    label->setPosition( CCPointMake(x/2,y/2));	
     addChild( label);
 
     // menu
@@ -375,10 +375,10 @@ TestLayer2::TestLayer2()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CGPointZero );
-    item1->setPosition( CGPointMake( x/2 - 100,30) );
-    item2->setPosition( CGPointMake( x/2, 30) );
-    item3->setPosition( CGPointMake( x/2 + 100,30) );
+    menu->setPosition( CCPointZero );
+    item1->setPosition( CCPointMake( x/2 - 100,30) );
+    item2->setPosition( CCPointMake( x/2, 30) );
+    item3->setPosition( CCPointMake( x/2 + 100,30) );
 
     addChild(menu, 1);	
 
@@ -390,7 +390,7 @@ TestLayer2::~TestLayer2()
 
 }
 
-void TestLayer2::restartCallback(NSObject* pSender)
+void TestLayer2::restartCallback(CCObject* pSender)
 {
     CCScene* s = new TransitionsTestScene();
 
@@ -406,7 +406,7 @@ void TestLayer2::restartCallback(NSObject* pSender)
     }
 }
 
-void TestLayer2::nextCallback(NSObject* pSender)
+void TestLayer2::nextCallback(CCObject* pSender)
 {
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
@@ -425,7 +425,7 @@ void TestLayer2::nextCallback(NSObject* pSender)
     }
 }
 
-void TestLayer2::backCallback(NSObject* pSender)
+void TestLayer2::backCallback(CCObject* pSender)
 {
     s_nSceneIdx--;
     int total = MAX_LAYER;

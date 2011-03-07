@@ -43,7 +43,7 @@ This is object is responsible for dispatching the events:
 
 Only available on Mac
 */
-class CCEventDispatcher : public NSObject
+class CCEventDispatcher : public CCObject
 {
 public:
     static CCEventDispatcher* sharedDispatcher();
@@ -79,47 +79,47 @@ public:
 
     /** Mouse events */
     // left
-    void mouseDown(NSEvent *pEvent);
-    void mouseMoved(NSEvent *pEvent);
-    void mouseDragged(NSEvent *pEvent);
-    void mouseUp(NSEvent *pEvent);
+    void mouseDown(CCEvent *pEvent);
+    void mouseMoved(CCEvent *pEvent);
+    void mouseDragged(CCEvent *pEvent);
+    void mouseUp(CCEvent *pEvent);
 
     // right
-    void rightMouseDown(NSEvent *pEvent);
-    void rightMouseDragged(NSEvent *pEvent);
-    void rightMouseUp(NSEvent *pEvent);
+    void rightMouseDown(CCEvent *pEvent);
+    void rightMouseDragged(CCEvent *pEvent);
+    void rightMouseUp(CCEvent *pEvent);
 
     // other
-    void otherMouseDown(NSEvent *pEvent);
-    void otherMouseDragged(NSEvent *pEvent);
-    void otherMouseUp(NSEvent *pEvent);
+    void otherMouseDown(CCEvent *pEvent);
+    void otherMouseDragged(CCEvent *pEvent);
+    void otherMouseUp(CCEvent *pEvent);
 
     // scroll Wheel
-    void scrollWheel(NSEvent *pEvent);
+    void scrollWheel(CCEvent *pEvent);
 
     // Mouse enter / exit
-    void mouseExited(NSEvent *pEvent);
-    void mouseEntered(NSEvent *pEvent);
+    void mouseExited(CCEvent *pEvent);
+    void mouseEntered(CCEvent *pEvent);
 
     /** keyboard events */
-    void keyDown(NSEvent *pEvent);
-    void keyUp(NSEvent *pEvent);
-    void flagsChanged(NSEvent *pEvent);
+    void keyDown(CCEvent *pEvent);
+    void keyUp(CCEvent *pEvent);
+    void flagsChanged(CCEvent *pEvent);
 
-    void touchesBeganWithEvent(NSEvent *pEvent);
-    void touchesMovedWithEvent(NSEvent *pEvent);
-    void touchesEndedWithEvent(NSEvent *pEvent);
-    void touchesCancelledWithEvent(NSEvent *pEvent);
+    void touchesBeganWithEvent(CCEvent *pEvent);
+    void touchesMovedWithEvent(CCEvent *pEvent);
+    void touchesEndedWithEvent(CCEvent *pEvent);
+    void touchesCancelledWithEvent(CCEvent *pEvent);
 
 #if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
     void dispatchQueuedEvents();
-    void queueEvent(NSEvent* pEvent, SEL_EventHandler selector);
+    void queueEvent(CCEvent* pEvent, SEL_EventHandler selector);
 #endif
 
-    CCX_PROPERTY(bool, m_bDispatchEvents, IsDispatchEvents)
+    CC_PROPERTY(bool, m_bDispatchEvents, IsDispatchEvents)
 
 protected:
-    void addDelegate(NSObject* pHandle, int priority, _listEntry** pList);
+    void addDelegate(CCObject* pHandle, int priority, _listEntry** pList);
     void removeAllDelegatesFromList(_listEntry** pList);
 
 protected:

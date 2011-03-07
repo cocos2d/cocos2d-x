@@ -17,9 +17,9 @@ public:
 	virtual std::string subtitle();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 };
 
 class Sprite1 : public SpriteTestDemo
@@ -28,16 +28,16 @@ public:
 	Sprite1();
 	virtual std::string title();
 
-	void addNewSpriteWithCoords(CGPoint p);
-	void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void addNewSpriteWithCoords(CCPoint p);
+	void ccTouchesEnded(CCSet* touches, UIEvent* event);
 };
 
 class SpriteBatchNode1: public SpriteTestDemo
 {
 public:
 	SpriteBatchNode1();
-	void addNewSpriteWithCoords(CGPoint p);
-	virtual void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void addNewSpriteWithCoords(CCPoint p);
+	virtual void ccTouchesEnded(CCSet* touches, UIEvent* event);
 	virtual std::string title();
 };
 
@@ -203,7 +203,7 @@ public:
 	SpriteNewTexture();
 	virtual ~SpriteNewTexture();
 	void addNewSprite();
-	void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void ccTouchesEnded(CCSet* touches, UIEvent* event);
 	virtual std::string title();
 };
 
@@ -216,7 +216,7 @@ public:
 	SpriteBatchNodeNewTexture();
 	virtual ~SpriteBatchNodeNewTexture();
 	void addNewSprite();
-	void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void ccTouchesEnded(CCSet* touches, UIEvent* event);
 	virtual std::string title();
 };
 

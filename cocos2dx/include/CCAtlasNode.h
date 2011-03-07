@@ -41,7 +41,7 @@ If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a
 All features from CCNode are valid, plus the following features:
 - opacity and RGB colors
 */
-class CCX_DLL CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
+class CC_DLL CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextureProtocol
 {
 protected:
 
@@ -57,13 +57,13 @@ protected:
 
 	ccColor3B	m_tColorUnmodified;
 
-	CCX_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
+	CC_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
 
 	// protocol variables
-	CCX_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
-	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity);
-	CCX_PROPERTY(ccColor3B, m_tColor, Color);
+	CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
+	CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
+	CC_PROPERTY(ccColor3B, m_tColor, Color);
 
 public:
 	CCAtlasNode();

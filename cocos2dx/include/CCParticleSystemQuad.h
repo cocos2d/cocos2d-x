@@ -44,7 +44,7 @@ Special features and Limitations:
 - It supports subrects
 @since v0.8
 */
-class CCX_DLL CCParticleSystemQuad : public CCParticleSystem
+class CC_DLL CCParticleSystemQuad : public CCParticleSystem
 {
 protected:
 	ccV2F_C4F_T2F_Quad	*m_pQuads;		// quads to be rendered
@@ -62,7 +62,7 @@ public:
 	void initIndices();
 
     /** initilizes the texture with a rectangle measured Points */
-	void initTexCoordsWithRect(CGRect rect);
+	void initTexCoordsWithRect(CCRect rect);
 
 	/** Sets a new CCSpriteFrame as particle.
 	WARNING: this method is experimental. Use setTexture:withRect instead.
@@ -73,11 +73,11 @@ public:
     /** Sets a new texture with a rect. The rect is in Points.
 	@since v0.99.4
 	*/
-	void setTextureWithRect(CCTexture2D *texture, CGRect rect);
+	void setTextureWithRect(CCTexture2D *texture, CCRect rect);
 	// super methods
 	virtual bool initWithTotalParticles(int numberOfParticles);
 	virtual void setTexture(CCTexture2D* var);
-	virtual void updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	virtual void postStep();
 	virtual void draw();
 };

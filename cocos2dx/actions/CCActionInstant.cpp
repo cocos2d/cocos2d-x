@@ -35,9 +35,9 @@ namespace cocos2d {
 		m_fDuration = 0;
 	}
 
-	NSObject * CCActionInstant::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject * CCActionInstant::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone *pNewZone = NULL;
+		CCZone *pNewZone = NULL;
 		CCActionInstant *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
@@ -46,10 +46,10 @@ namespace cocos2d {
 		else
 		{
 			pRet = new CCActionInstant();
-			pZone = pNewZone = new NSZone(pRet);
+			pZone = pNewZone = new CCZone(pRet);
 		}
 		CCFiniteTimeAction::copyWithZone(pZone);
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 	bool CCActionInstant::isDone()
@@ -147,9 +147,9 @@ namespace cocos2d {
 		return CCFlipX::actionWithFlipX(!m_bFlipX);
 	}
 
-	NSObject * CCFlipX::copyWithZone(NSZone *pZone)
+	CCObject * CCFlipX::copyWithZone(CCZone *pZone)
 	{
-		NSZone *pNewZone = NULL;
+		CCZone *pNewZone = NULL;
 		CCFlipX *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
@@ -158,11 +158,11 @@ namespace cocos2d {
 		else
 		{
 			pRet = new CCFlipX();
-			pZone = pNewZone = new NSZone(pRet);
+			pZone = pNewZone = new CCZone(pRet);
 		}
 		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithFlipX(m_bFlipX);
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 
@@ -193,9 +193,9 @@ namespace cocos2d {
 		return CCFlipY::actionWithFlipY(!m_bFlipY);
 	}
 
-	NSObject * CCFlipY::copyWithZone(NSZone *pZone)
+	CCObject * CCFlipY::copyWithZone(CCZone *pZone)
 	{
-		NSZone *pNewZone = NULL;
+		CCZone *pNewZone = NULL;
 		CCFlipY *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
@@ -204,33 +204,33 @@ namespace cocos2d {
 		else
 		{
 			pRet = new CCFlipY();
-			pZone = pNewZone = new NSZone(pRet);
+			pZone = pNewZone = new CCZone(pRet);
 		}
 		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithFlipY(m_bFlipY);
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 
 	//
 	// Place
 	//
-	CCPlace * CCPlace::actionWithPosition(CGPoint pos)
+	CCPlace * CCPlace::actionWithPosition(CCPoint pos)
 	{
 		CCPlace *pRet = new CCPlace();
 		pRet->initWithPosition(pos);
 		pRet->autorelease();
 		return pRet;
 	}
-	bool CCPlace::initWithPosition(CGPoint pos)
+	bool CCPlace::initWithPosition(CCPoint pos)
 	{
 		m_tPosition = pos;
 		return true;
 	}
 
-	NSObject * CCPlace::copyWithZone(NSZone *pZone)
+	CCObject * CCPlace::copyWithZone(CCZone *pZone)
 	{
-		NSZone *pNewZone = NULL;
+		CCZone *pNewZone = NULL;
 		CCPlace *pRet = NULL;
 		if (pZone && pZone->m_pCopyObject)
 		{
@@ -239,11 +239,11 @@ namespace cocos2d {
 		else
 		{
 			pRet = new CCPlace();
-			pZone = pNewZone = new NSZone(pRet);
+			pZone = pNewZone = new CCZone(pRet);
 		}
 		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithPosition(m_tPosition);
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 
@@ -281,21 +281,21 @@ namespace cocos2d {
 		return true;
 	}
 
-	NSObject * CCCallFunc::copyWithZone(cocos2d::NSZone *pZone)
+	CCObject * CCCallFunc::copyWithZone(cocos2d::CCZone *pZone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCCallFunc* pRet = NULL;
 		if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
 			pRet = (CCCallFunc*)(pZone->m_pCopyObject);
 		else
 		{
 			pRet = new CCCallFunc();
-			pZone = pNewZone = new NSZone(pRet);
+			pZone = pNewZone = new CCZone(pRet);
 		}
 		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithTarget(m_pSelectorTarget);
 		pRet->m_pCallFunc = m_pCallFunc;
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 	void CCCallFunc::startWithTarget(CCNode *pTarget)
@@ -328,7 +328,7 @@ namespace cocos2d {
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCCallFuncN::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
@@ -340,20 +340,20 @@ namespace cocos2d {
 		}
 		return false;
 	}
-	NSObject * CCCallFuncN::copyWithZone(NSZone* zone)
+	CCObject * CCCallFuncN::copyWithZone(CCZone* zone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCCallFuncN* pRet = NULL;
 		if(zone && zone->m_pCopyObject) //in case of being called at sub class
 			pRet = (CCCallFuncN*)(zone->m_pCopyObject);
 		else
 		{
 			pRet = new CCCallFuncN();
-			zone = pNewZone = new NSZone(pRet);
+			zone = pNewZone = new CCZone(pRet);
 		}
 		CCCallFunc::copyWithZone(zone);
 		pRet->initWithTarget(m_pSelectorTarget, m_pCallFuncN);
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 	//
@@ -367,7 +367,7 @@ namespace cocos2d {
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 
@@ -382,20 +382,20 @@ namespace cocos2d {
 		return false;
 	}
 
-	NSObject * CCCallFuncND::copyWithZone(NSZone* zone)
+	CCObject * CCCallFuncND::copyWithZone(CCZone* zone)
 	{
-		NSZone* pNewZone = NULL;
+		CCZone* pNewZone = NULL;
 		CCCallFuncND* pRet = NULL;
 		if(zone && zone->m_pCopyObject) //in case of being called at sub class
 			pRet = (CCCallFuncND*)(zone->m_pCopyObject);
 		else
 		{
 			pRet = new CCCallFuncND();
-			zone = pNewZone = new NSZone(pRet);
+			zone = pNewZone = new CCZone(pRet);
 		}
 		CCCallFunc::copyWithZone(zone);
 		pRet->initWithTarget(m_pSelectorTarget, m_pCallFuncND, m_pData);
-		CCX_SAFE_DELETE(pNewZone);
+		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
 
@@ -427,7 +427,7 @@ namespace cocos2d {
             (m_pSelectorTarget->*m_pCallFuncO)(m_pTarget);
         }
     }
-    CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject)
+    CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)
     {
         CCCallFuncO *pRet = new CCCallFuncO();
         if(pRet->initWithTarget(pSelectorTarget, selector, pObject))
@@ -435,10 +435,10 @@ namespace cocos2d {
             pRet->autorelease();
             return pRet;
         }
-        CCX_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(pRet);
         return NULL;
     }
-    bool CCCallFuncO::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, NSObject* pObject)
+    bool CCCallFuncO::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)
     {
         if( CCCallFunc::initWithTarget(pSelectorTarget) ) 
         {
@@ -450,20 +450,20 @@ namespace cocos2d {
         }
         return false;
     }
-    NSObject * CCCallFuncO::copyWithZone(NSZone* zone)
+    CCObject * CCCallFuncO::copyWithZone(CCZone* zone)
     {
-        NSZone* pNewZone = NULL;
+        CCZone* pNewZone = NULL;
         CCCallFuncO* pRet = NULL;
         if(zone && zone->m_pCopyObject) //in case of being called at sub class
             pRet = (CCCallFuncO*)(zone->m_pCopyObject);
         else
         {
             pRet = new CCCallFuncO();
-            zone = pNewZone = new NSZone(pRet);
+            zone = pNewZone = new CCZone(pRet);
         }
         CCCallFunc::copyWithZone(zone);
         pRet->initWithTarget(m_pSelectorTarget, m_pCallFuncO, m_pObject);
-        CCX_SAFE_DELETE(pNewZone);
+        CC_SAFE_DELETE(pNewZone);
         return pRet;
     }
 
@@ -486,7 +486,7 @@ namespace cocos2d {
 		return self;
 	}
 
-	-(id) copyWithZone: (NSZone*) zone {
+	-(id) copyWithZone: (CCZone*) zone {
 		CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 		return copy;
 	}
@@ -523,7 +523,7 @@ namespace cocos2d {
 		return self;
 	}
 
-	-(id) copyWithZone: (NSZone*) zone {
+	-(id) copyWithZone: (CCZone*) zone {
 		CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 		return copy;
 	}

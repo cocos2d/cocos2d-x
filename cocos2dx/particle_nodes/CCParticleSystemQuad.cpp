@@ -55,11 +55,11 @@ bool CCParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 		// initialize only once the texCoords and the indices
         if (m_pTexture)
         {
-            this->initTexCoordsWithRect(CGRectMake((float)0, (float)0, (float)m_pTexture->getPixelsWide(), (float)m_pTexture->getPixelsHigh()));
+            this->initTexCoordsWithRect(CCRectMake((float)0, (float)0, (float)m_pTexture->getPixelsWide(), (float)m_pTexture->getPixelsHigh()));
         }
         else
         {
-            this->initTexCoordsWithRect(CGRectMake((float)0, (float)0, (float)1, (float)1));
+            this->initTexCoordsWithRect(CCRectMake((float)0, (float)0, (float)1, (float)1));
         }
 
 		this->initIndices();
@@ -79,19 +79,19 @@ bool CCParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 }
 CCParticleSystemQuad::~CCParticleSystemQuad()
 {
-	CCX_SAFE_DELETE_ARRAY(m_pQuads);
-	CCX_SAFE_DELETE_ARRAY(m_pIndices);
+	CC_SAFE_DELETE_ARRAY(m_pQuads);
+	CC_SAFE_DELETE_ARRAY(m_pIndices);
 #if CC_USES_VBO
     glDeleteBuffers(1, &m_uQuadsID);
 #endif
 }
 
 // rect should be in Texture coordinates, not pixel coordinates
-void CCParticleSystemQuad::initTexCoordsWithRect(CGRect pointRect)
+void CCParticleSystemQuad::initTexCoordsWithRect(CCRect pointRect)
 {
     // convert to Tex coords
 
-    CGRect rect = CGRectMake(
+    CCRect rect = CCRectMake(
         pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
         pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
         pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
@@ -137,7 +137,7 @@ void CCParticleSystemQuad::initTexCoordsWithRect(CGRect pointRect)
 		m_pQuads[i].tr.texCoords.v = top;
 	}
 }
-void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, CGRect rect)
+void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, CCRect rect)
 {
 	// Only update the texture if is different from the current one
 	if( !m_pTexture || texture->getName() != m_pTexture->getName() )
@@ -149,13 +149,13 @@ void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, CGRect rect)
 }
 void CCParticleSystemQuad::setTexture(CCTexture2D* var)
 {
-	this->setTextureWithRect(var, CGRectMake(0, 0, 
+	this->setTextureWithRect(var, CCRectMake(0, 0, 
         (float)(var->getPixelsWide() / CC_CONTENT_SCALE_FACTOR()), 
         (float)(var->getPixelsHigh() / CC_CONTENT_SCALE_FACTOR())));
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 {
-	NSAssert( CGPoint::CGPointEqualToPoint( spriteFrame->getOffsetInPixels() , CGPointZero ), "QuadParticle only supports SpriteFrames with no offsets");
+	CCAssert( CCPoint::CCPointEqualToPoint( spriteFrame->getOffsetInPixels() , CCPointZero ), "QuadParticle only supports SpriteFrames with no offsets");
 
 	// update texture before updating texture rect
 	if ( !m_pTexture || spriteFrame->getTexture()->getName() != m_pTexture->getName())
@@ -178,7 +178,7 @@ void CCParticleSystemQuad::initIndices()
 		m_pIndices[i6+3] = (GLushort) i4+3;
 	}
 }
-void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CGPoint newPosition)
+void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// colors
     ccV2F_C4F_T2F_Quad *quad = &(m_pQuads[m_nParticleIdx]);
@@ -299,7 +299,7 @@ void CCParticleSystemQuad::draw()
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-    NSAssert( m_nParticleIdx == m_nParticleCount, "Abnormal error in particle quad");
+    CCAssert( m_nParticleIdx == m_nParticleCount, "Abnormal error in particle quad");
 
 	glDrawElements(GL_TRIANGLES, m_nParticleIdx*6, GL_UNSIGNED_SHORT, m_pIndices);	
 

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCRenderTexture.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
-#include "ccxImage.h"
+#include "CCImage.h"
 #include "support/ccUtils.h"
 
 #include "CCGL.h"
@@ -67,7 +67,7 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h,
         pRet->autorelease();
         return pRet;
     }
-    CCX_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(pRet);
     return NULL;
 }
 
@@ -80,7 +80,7 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet)
+	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
@@ -98,15 +98,15 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         unsigned int powH = ccNextPOT(h);
 
         void *data = malloc((int)(powW * powH * 4));
-        CCX_BREAK_IF(! data);
+        CC_BREAK_IF(! data);
 
         memset(data, 0, (int)(powW * powH * 4));
         m_ePixelFormat = eFormat;
 
         m_pTexture = new CCTexture2D();
-        CCX_BREAK_IF(! m_pTexture);
+        CC_BREAK_IF(! m_pTexture);
 
-        m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CGSizeMake((float)w, (float)h));
+        m_pTexture->initWithData(data, (CCTexture2DPixelFormat)m_ePixelFormat, powW, powH, CCSizeMake((float)w, (float)h));
         free( data );
 
         // generate FBO
@@ -120,8 +120,8 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
         if (status != CC_GL_FRAMEBUFFER_COMPLETE)
         {
-            NSAssert(0, "Render Texture : Could not attach texture to framebuffer");
-            CCX_SAFE_DELETE(m_pTexture);
+            CCAssert(0, "Render Texture : Could not attach texture to framebuffer");
+            CC_SAFE_DELETE(m_pTexture);
             break;
         }
 
@@ -151,10 +151,10 @@ void CCRenderTexture::begin()
 	// Save the current matrix
 	glPushMatrix();
 
-	CGSize texSize = m_pTexture->getContentSizeInPixels();
+	CCSize texSize = m_pTexture->getContentSizeInPixels();
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 
@@ -177,10 +177,10 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
     // Save the current matrix
     glPushMatrix();
 
-    CGSize texSize = m_pTexture->getContentSizeInPixels();
+    CCSize texSize = m_pTexture->getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
-    CGSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+    CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
     float widthRatio = size.width / texSize.width;
     float heightRatio = size.height / texSize.height;
 
@@ -203,7 +203,7 @@ void CCRenderTexture::end()
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
 	// Restore the original matrix and viewport
 	glPopMatrix();
-	CGSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 //	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
     CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
     this->restoreGLstate();
@@ -238,10 +238,10 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 //@ todo CCRenderTexture::saveBuffer
 // 	UIImage *myImage = this->getUIImageFromBuffer(format);
 //     NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//     NSString *documentsDirectory	= [paths objectAtIndex:0];
-//     NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
+//     CCString *documentsDirectory	= [paths objectAtIndex:0];
+//     CCString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
 
-//     NSData * data = this->getUIImageAsDataFromBuffer(format);
+//     CCData * data = this->getUIImageAsDataFromBuffer(format);
 // 	if (data)
 // 	{
 //         bRet = data->writeToFile(path, true);
@@ -251,9 +251,9 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 	return bRet;
 }
 
-NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
+CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 {
-    NSData *  pData     = NULL;
+    CCData *  pData     = NULL;
 //@ todo CCRenderTexture::getUIImageAsDataFromBuffer
 
 // #include "Availability.h"
@@ -263,11 +263,11 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 //     GLubyte * pPixels   = NULL;
 //     do 
 //     {
-//         CCX_BREAK_IF(! m_pTexture);
+//         CC_BREAK_IF(! m_pTexture);
 // 
-//         NSAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
+//         CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 // 
-//         CGSize s = m_pTexture->getContentSizeInPixels();
+//         CCSize s = m_pTexture->getContentSizeInPixels();
 //         int tx = s.width;
 //         int ty = s.height;
 // 
@@ -277,8 +277,8 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 //         int bytesPerRow = (bitsPerPixel / 8) * tx;
 //         int myDataLength = bytesPerRow * ty;
 // 
-//         CCX_BREAK_IF(! (pBuffer = new GLubyte[tx * ty * 4]));
-//         CCX_BREAK_IF(! (pPixels = new GLubyte[tx * ty * 4]));
+//         CC_BREAK_IF(! (pBuffer = new GLubyte[tx * ty * 4]));
+//         CC_BREAK_IF(! (pPixels = new GLubyte[tx * ty * 4]));
 // 
 //         this->begin();
 //         glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
@@ -294,7 +294,7 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 // 
 //         if (format == kCCImageFormatRawData)
 //         {
-//             pData = NSData::dataWithBytesNoCopy(pPixels, myDataLength);
+//             pData = CCData::dataWithBytesNoCopy(pPixels, myDataLength);
 //             break;
 //         }
 
@@ -332,8 +332,8 @@ NSData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 //         [image release];
 //     } while (0);
 //     
-//     CCX_SAFE_DELETE_ARRAY(pBuffer);
-//     CCX_SAFE_DELETE_ARRAY(pPixels);
+//     CC_SAFE_DELETE_ARRAY(pBuffer);
+//     CC_SAFE_DELETE_ARRAY(pPixels);
 	return pData;
 }
 
