@@ -29,7 +29,7 @@ NS_CC_BEGIN
 
 typedef std::basic_string<TUChar> stdTUString;
 
-void ccxMessageBox(const ccxString& msg, const ccxString& title)
+void CCMessageBox(const ccxString& msg, const ccxString& title)
 {
     TUChar szText[256] = { 0 };
     TUString::StrUtf8ToStrUnicode(szText,(Char*)msg.c_str());
@@ -57,7 +57,7 @@ public:
         bool bRet = false;
         do 
         {
-            CCX_BREAK_IF(! m_hFont.Create(0, (Int32)nSize));
+            CC_BREAK_IF(! m_hFont.Create(0, (Int32)nSize));
             bRet = true;
         } while (0);
         return bRet;
@@ -68,7 +68,7 @@ public:
         bool bRet = false;
         do 
         {
-            CCX_BREAK_IF(! pszText);
+            CC_BREAK_IF(! pszText);
 
             if (tSize.Width() > 0 && tSize.Height() > 0)
             {
@@ -162,15 +162,15 @@ public:
         int nRet = 0;
         do 
         {
-            CCX_BREAK_IF(! pszText);
+            CC_BREAK_IF(! pszText);
 
             if (tSize.Width() <= 0 || tSize.Height() <= 0)
             {
-                CCX_BREAK_IF(! getTextExtentPoint(pszText, nLen, tSize));
+                CC_BREAK_IF(! getTextExtentPoint(pszText, nLen, tSize));
             }
-            CCX_BREAK_IF(tSize.Width() <= 0 || tSize.Height() <= 0);
+            CC_BREAK_IF(tSize.Width() <= 0 || tSize.Height() <= 0);
 
-            CCX_BREAK_IF(! prepareBitmap(tSize.Width(), tSize.Height()));
+            CC_BREAK_IF(! prepareBitmap(tSize.Width(), tSize.Height()));
 
             Int32 nWidth  = tSize.Width();
             Int32 nHeight = tSize.Height();
@@ -190,21 +190,21 @@ public:
             do 
             {
                 // if memory window is already break
-                CCX_BREAK_IF(m_pMemWnd);
+                CC_BREAK_IF(m_pMemWnd);
 
                 TApplication* pApp = TApplication::GetCurrentApplication();
-                CCX_BREAK_IF(! pApp || ! (m_pMemWnd = new TWindow(pApp)));
+                CC_BREAK_IF(! pApp || ! (m_pMemWnd = new TWindow(pApp)));
 
                 Coord nCurrentWidth = pApp->GetScreenWidth();
                 Coord nCurrentHeight = pApp->GetScreenHeight();
 
                 Coord nMemWndW = (nWidth >= nCurrentWidth) ? nWidth : nCurrentWidth;
                 Coord nMemWndH = (nHeight >= nCurrentHeight) ? nHeight : nCurrentHeight;
-                CCX_BREAK_IF(m_pMemWnd->CreateMemWindow(nMemWndW, nMemWndH,screenAlphaFormat));
+                CC_BREAK_IF(m_pMemWnd->CreateMemWindow(nMemWndW, nMemWndH,screenAlphaFormat));
                 delete m_pMemWnd;
                 m_pMemWnd = NULL;
             } while (0);
-            CCX_BREAK_IF(! m_pMemWnd);
+            CC_BREAK_IF(! m_pMemWnd);
 
             // create DC
             TDC dc(m_pMemWnd);
@@ -222,7 +222,7 @@ public:
         return nRet;
     }
 
-    CCX_SYNTHESIZE_READONLY(TBitmap*, m_pBmp, Bitmap);
+    CC_SYNTHESIZE_READONLY(TBitmap*, m_pBmp, Bitmap);
 
 private:
     TFont m_hFont;
@@ -235,7 +235,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool ccxImage::initWithString(
+bool CCImage::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
@@ -247,9 +247,9 @@ bool ccxImage::initWithString(
     TUChar* pWText = NULL;
     do 
     {
-        CCX_BREAK_IF(! pText);
+        CC_BREAK_IF(! pText);
         int nLen = strlen(pText) + 1;
-        CCX_BREAK_IF(! (pWText = new TUChar[nLen]));
+        CC_BREAK_IF(! (pWText = new TUChar[nLen]));
         TUString::StrGBToUnicode(pWText, (Char*)pText);
 
         BitmapDC& dc = sharedBitmapDC();
@@ -258,7 +258,7 @@ bool ccxImage::initWithString(
 
         TSize size(nWidth, nHeight);
         dc.getTextExtentPoint(pWText, nLen, size);
-        CCX_BREAK_IF(! size.Width() || ! size.Height());
+        CC_BREAK_IF(! size.Width() || ! size.Height());
 
         // set style
         UInt32 styles = GUI_API_STYLE_SPECIFY_FORE_COLOR |  GUI_API_STYLE_ROP_MODE_TRANSPARENT |
@@ -294,19 +294,19 @@ bool ccxImage::initWithString(
             styles |= GUI_API_STYLE_ALIGNMENT_LEFT | GUI_API_STYLE_ALIGNMENT_TOP;
         }
 
-        CCX_BREAK_IF(! dc.drawText(pWText, nLen, size, styles));
+        CC_BREAK_IF(! dc.drawText(pWText, nLen, size, styles));
 
         // init image information
         TBitmap * pBitmap = dc.getBitmap();
-        CCX_BREAK_IF(! pBitmap);
+        CC_BREAK_IF(! pBitmap);
 
         INT32 nWidth	= pBitmap->GetWidth();
         INT32 nHeight	= pBitmap->GetHeight();
-        CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+        CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 
         INT32 nDataLen = pBitmap->GetRowBytes() * nHeight;
         m_pData.reset(new ccxByte[nDataLen]);
-        CCX_BREAK_IF(! m_pData.get());
+        CC_BREAK_IF(! m_pData.get());
         memcpy((void*) m_pData.get(), pBitmap->GetDataPtr(), nDataLen);
 
         m_nWidth    = (ccxInt16)nWidth;

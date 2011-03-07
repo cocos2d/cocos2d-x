@@ -1,4 +1,4 @@
-#include "ccxApplication_uphone.h"
+#include "CCApplication_uphone.h"
 
 #include "ssBackLightControl.h"
 #include "ssKeyLockControl.h"
@@ -8,9 +8,9 @@
 NS_CC_BEGIN;
 
 // sharedApplication pointer
-ccxApplication * ccxApplication::sm_pSharedApplication = 0;
+CCApplication * CCApplication::sm_pSharedApplication = 0;
 
-static const Int32 CCX_ON_APPLICATION_IDLE = (EVENT_FirstUser + EVENT_LastUser) / 2;
+static const Int32 CC_ON_APPLICATION_IDLE = (EVENT_FirstUser + EVENT_LastUser) / 2;
 
 #ifdef _TRANZDA_VM_
 static  LARGE_INTEGER s_nAnimationInterval;
@@ -28,16 +28,16 @@ static long long getTimeOfDayMicroSecond()
 }
 #endif
 
-ccxApplication::ccxApplication()
+CCApplication::CCApplication()
 : m_bRunning(FALSE)
 , m_bNeedStop(FALSE)
 , m_bInBackground(FALSE)
 {
     memset(&m_tMsg, 0, sizeof(m_tMsg));
     SS_GetCurrentGTID(&m_tMsg.gtid);
-    m_tMsg.type = CCX_ON_APPLICATION_IDLE;
+    m_tMsg.type = CC_ON_APPLICATION_IDLE;
 
-    Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, ccxApplication::_OnAppIdle, (UInt32)this);
+    Sys_RegisterMessageCallBack(CC_ON_APPLICATION_IDLE, CCApplication::_OnAppIdle, (UInt32)this);
 
     memset(m_AppDataPath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
 
@@ -46,26 +46,26 @@ ccxApplication::ccxApplication()
         TUChar AppID[EOS_FILE_MAX_PATH] = {0};
         UInt32 nCmdType = 0;
         Int32  nRet = SS_AppRequest_GetAppName(AppID, &nCmdType);
-        CCX_BREAK_IF(nRet < 0);
+        CC_BREAK_IF(nRet < 0);
 
         TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
         SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_EXECUTABLE, AppPath);
         TUString::StrUnicodeToStrUtf8((Char*) m_AppDataPath, AppPath);
     } while (0);
 
-    CCX_ASSERT(! sm_pSharedApplication);
+    CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-ccxApplication::~ccxApplication()
+CCApplication::~CCApplication()
 {
-    Sys_RegisterMessageCallBack(CCX_ON_APPLICATION_IDLE, NULL, NULL);
+    Sys_RegisterMessageCallBack(CC_ON_APPLICATION_IDLE, NULL, NULL);
 
-    CCX_ASSERT(this == sm_pSharedApplication);
+    CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
 }
 
-Boolean  ccxApplication::EventHandler(EventType*  pEvent)
+Boolean  CCApplication::EventHandler(EventType*  pEvent)
 {
     Boolean     bHandled = FALSE;
 
@@ -132,7 +132,7 @@ Boolean  ccxApplication::EventHandler(EventType*  pEvent)
     return bHandled;
 }
 
-void ccxApplication::setAnimationInterval(double interval)
+void CCApplication::setAnimationInterval(double interval)
 {
 #ifdef _TRANZDA_VM_
     LARGE_INTEGER nFreq;
@@ -143,28 +143,28 @@ void ccxApplication::setAnimationInterval(double interval)
 #endif
 }
 
-ccxApplication::Orientation ccxApplication::setOrientation(ccxApplication::Orientation orientation)
+CCApplication::Orientation CCApplication::setOrientation(CCApplication::Orientation orientation)
 {
     return orientation;
 }
 
-void ccxApplication::statusBarFrame(CGRect * rect)
+void CCApplication::statusBarFrame(CCRect * rect)
 {
 }
 
-const char* ccxApplication::getAppDataPath()
+const char* CCApplication::getAppDataPath()
 {
     return m_AppDataPath;
 }
 
-void ccxApplication::switchNotify(int nTurnOn)
+void CCApplication::switchNotify(int nTurnOn)
 {
     bool bInBack = isInBackground();
 
     do 
     {
         // if the app have be in background,don't handle this message
-        CCX_BREAK_IF(bInBack);
+        CC_BREAK_IF(bInBack);
 
         if (! nTurnOn)  // turn off screen
         {
@@ -181,12 +181,12 @@ void ccxApplication::switchNotify(int nTurnOn)
     } while (0);
 }
 
-bool ccxApplication::isInBackground()
+bool CCApplication::isInBackground()
 {
     return m_bInBackground;
 }
 
-void ccxApplication::StartMainLoop()
+void CCApplication::StartMainLoop()
 {
     if (m_bRunning)
     {
@@ -197,15 +197,15 @@ void ccxApplication::StartMainLoop()
     m_bRunning = TRUE;
 }
 
-void ccxApplication::StopMainLoop()
+void CCApplication::StopMainLoop()
 {
     m_bNeedStop = TRUE;
 }
 
-Int32 ccxApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
+Int32 CCApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 {
-    ccxApplication& rThis = (ccxApplication&) ccxApplication::sharedApplication();
-    CCXEGLView *     pView = CCDirector::sharedDirector()->getOpenGLView();
+    CCApplication& rThis = (CCApplication&) CCApplication::sharedApplication();
+    CCEGLView *     pView = CCDirector::sharedDirector()->getOpenGLView();
     if (pView && rThis.m_bRunning)
     {
         if (rThis.m_bNeedStop)
@@ -244,9 +244,9 @@ Int32 ccxApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-ccxApplication& ccxApplication::sharedApplication()
+CCApplication& CCApplication::sharedApplication()
 {
-    CCX_ASSERT(sm_pSharedApplication);
+    CC_ASSERT(sm_pSharedApplication);
     return *sm_pSharedApplication;
 }
 

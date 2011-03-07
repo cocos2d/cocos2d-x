@@ -21,9 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_UIAccelerometer_H__
-#define __CC_UIAccelerometer_H__
+#ifndef __CC_CCAccelerometer_H__
+#define __CC_CCAccelerometer_H__
 
 #include "platform/CCAccelerometer_platform.h"
 
-#endif // __CC_UIAccelerometer_H__
+#endif // __CC_CCAccelerometer_H__

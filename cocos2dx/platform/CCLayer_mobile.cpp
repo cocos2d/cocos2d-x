@@ -197,11 +197,11 @@ void CCLayer::setIsAccelerometerEnabled(bool enabled)
         {
             if (enabled)
             {
-                UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+                CCAccelerometer::sharedAccelerometer()->addDelegate(this);
             }
             else
             {
-                UIAccelerometer::sharedAccelerometer()->removeDelegate(this);
+                CCAccelerometer::sharedAccelerometer()->removeDelegate(this);
             }
         }
     }
@@ -250,7 +250,7 @@ void CCLayer::onEnter()
     // add this layer to concern the Accelerometer Sensor
     if (m_bIsAccelerometerEnabled)
     {
-        UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+        CCAccelerometer::sharedAccelerometer()->addDelegate(this);
     }
 
     // add this layer to concern the kaypad msg
@@ -270,7 +270,7 @@ void CCLayer::onExit()
     // remove this layer from the delegates who concern Accelerometer Sensor
     if (m_bIsAccelerometerEnabled)
     {
-        UIAccelerometer::sharedAccelerometer()->removeDelegate(this);
+        CCAccelerometer::sharedAccelerometer()->removeDelegate(this);
     }
 
     // remove this layer from the delegates who concern the kaypad msg
@@ -286,7 +286,7 @@ void CCLayer::onEnterTransitionDidFinish()
 {
     if (m_bIsAccelerometerEnabled)
     {
-        UIAccelerometer::sharedAccelerometer()->addDelegate(this);
+        CCAccelerometer::sharedAccelerometer()->addDelegate(this);
     }
     
     CCNode::onEnterTransitionDidFinish();
