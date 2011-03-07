@@ -25,64 +25,64 @@ THE SOFTWARE.
 #ifndef __PLATFORM_UPHONE_UIACCELEROMETER_H__
 #define __PLATFORM_UPHONE_UIACCELEROMETER_H__
 
-#include "CCUIAccelerometerDelegate.h"
+#include "CCAccelerometerDelegate.h"
 #include "TG3.h"
-#include "NSMutableArray.h"
-#include "ccxCommon.h"
+#include "CCMutableArray.h"
+#include "CCCommon.h"
 #include "TCOM_Sensors_Interface.h"
 
 namespace   cocos2d {
 
 /**
 @brief
-UIAccelerometerHandler
-Object than contains the UIAccelerometerDelegate.
+CCAccelerometerHandler
+Object than contains the CCAccelerometerDelegate.
 */
-class CCX_DLL UIAccelerometerHandler : public NSObject
+class CC_DLL CCAccelerometerHandler : public CCObject
 {
 public:
-    virtual ~UIAccelerometerHandler(void);
+    virtual ~CCAccelerometerHandler(void);
 
     /** delegate */
-    UIAccelerometerDelegate* getDelegate();
-    void setDelegate(UIAccelerometerDelegate *pDelegate);
+    CCAccelerometerDelegate* getDelegate();
+    void setDelegate(CCAccelerometerDelegate *pDelegate);
 
-    /** initializes a UIAccelerometerHandler with a delegate */
-    virtual bool initWithDelegate(UIAccelerometerDelegate *pDelegate);
+    /** initializes a CCAccelerometerHandler with a delegate */
+    virtual bool initWithDelegate(CCAccelerometerDelegate *pDelegate);
 
 public:
     /** allocates a AccelerometerHandler with a delegate */
-    static UIAccelerometerHandler* handlerWithDelegate(UIAccelerometerDelegate *pDelegate);
+    static CCAccelerometerHandler* handlerWithDelegate(CCAccelerometerDelegate *pDelegate);
 
 protected:
-    UIAccelerometerDelegate* m_pDelegate;
+    CCAccelerometerDelegate* m_pDelegate;
 };
 
 /**
 @brief 
-The UIAccelerometer class lets you register to receive
+The CCAccelerometer class lets you register to receive
 acceleration-related data from the onboard hardware.
 */
-class CCX_DLL UIAccelerometer
+class CC_DLL CCAccelerometer
 {
 public:
-    UIAccelerometer();
-    ~UIAccelerometer();
+    CCAccelerometer();
+    ~CCAccelerometer();
 
     /**
     @brief Returns the shared accelerometer object for the system.
     */
-    static UIAccelerometer* sharedAccelerometer();
+    static CCAccelerometer* sharedAccelerometer();
 
     /**
     @brief add delegate to concern accelerometer sensor
     */
-    void addDelegate(UIAccelerometerDelegate* pDelegate);
+    void addDelegate(CCAccelerometerDelegate* pDelegate);
 
     /**
     @brief remove the delegate from the delegates who concern Accelerometer Sensor
     */
-    void removeDelegate(UIAccelerometerDelegate* pDelegate);
+    void removeDelegate(CCAccelerometerDelegate* pDelegate);
 
     /**
     @brief call delegates' didAccelerate function
@@ -90,7 +90,7 @@ public:
     void didAccelerate(UIAcceleration* pAccelerationValue);
 
 protected:
-    typedef NSMutableArray<UIAccelerometerHandler*> AccDelegateArray;
+    typedef CCMutableArray<CCAccelerometerHandler*> AccDelegateArray;
 
     AccDelegateArray*               m_pDelegates;
     TCOM_Sensors_DataType_Client*   m_pSensor;

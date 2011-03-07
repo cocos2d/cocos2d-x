@@ -127,7 +127,7 @@ namespace cocos2d {
 		m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFile);
 		m_pObjectGroups = new CCMutableArray<CCTMXObjectGroup*>();
 		m_pProperties = new CCStringToStringDictionary();
-		m_pTileProperties = new NSDictionary<int, CCStringToStringDictionary*>();
+		m_pTileProperties = new CCDictionary<int, CCStringToStringDictionary*>();
 
 		// tmp vars
 		m_sCurrentString = "";
@@ -198,11 +198,11 @@ namespace cocos2d {
 		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
-	NSDictionary<int, CCStringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
+	CCDictionary<int, CCStringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
 	{
 		return m_pTileProperties;
 	}
-	void CCTMXMapInfo::setTileProperties(NSDictionary<int, CCStringToStringDictionary*> * tileProperties)
+	void CCTMXMapInfo::setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties)
 	{
 		CC_SAFE_RETAIN(tileProperties);
 		CC_SAFE_RELEASE(m_pTileProperties);

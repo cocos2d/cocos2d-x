@@ -1,16 +1,16 @@
-#ifndef  __CCX_APPLICATION_UPHONE_H__
-#define  __CCX_APPLICATION_UPHONE_H__
+#ifndef  __CC_APPLICATION_UPHONE_H__
+#define  __CC_APPLICATION_UPHONE_H__
 
 #include "TG3.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN;
 
-class CCX_DLL ccxApplication : public  TApplication
+class CC_DLL CCApplication : public  TApplication
 {
 public:
-    ccxApplication();
-    virtual ~ccxApplication();
+    CCApplication();
+    virtual ~CCApplication();
 
     virtual Boolean EventHandler(EventType * pEvent);
 
@@ -67,13 +67,13 @@ public:
     /**
     @brief	Get status bar rectangle in EGLView window.
     */
-    void    statusBarFrame(CGRect * rect);
+    void    statusBarFrame(CCRect * rect);
 
     /**
     @brief	Get current applicaiton instance.
     @return Current application instance pointer.
     */
-    static ccxApplication& sharedApplication();
+    static CCApplication& sharedApplication();
 
     /**
     @brief Get the data path of the Application.
@@ -99,9 +99,9 @@ protected:
     bool        m_bInBackground;
     char        m_AppDataPath[EOS_FILE_MAX_PATH];
 
-    static ccxApplication * sm_pSharedApplication;
+    static CCApplication * sm_pSharedApplication;
 };
 
 NS_CC_END;
 
-#endif // __CCX_APPLICATION_UPHONE_H__
+#endif // __CC_APPLICATION_UPHONE_H__

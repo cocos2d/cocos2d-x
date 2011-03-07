@@ -351,10 +351,10 @@ public:
 	*/
 	bool initWithFile(const char *plistFile);
 
-	/** initializes a CCQuadParticleSystem from a NSDictionary.
+	/** initializes a CCQuadParticleSystem from a CCDictionary.
 	@since v0.99.3
 	*/
-	bool initWithDictionary(NSDictionary<std::string, CCObject*> *dictionary);
+	bool initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary);
 
 	//! Initializes a system with a fixed number of particles
 	virtual bool initWithTotalParticles(int numberOfParticles);
@@ -379,7 +379,7 @@ private:
 	/** Private method, return the string found by key in dict.
 	@return "" if not found; return the string if found.
 	*/
-	inline const char * valueForKey(const char *key, NSDictionary<std::string, CCObject*> *dict)
+	inline const char * valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict)
 	{
 		if (dict)
 		{

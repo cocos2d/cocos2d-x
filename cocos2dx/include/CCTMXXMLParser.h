@@ -157,8 +157,8 @@ namespace cocos2d {
 		/** initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
 	
-		NSDictionary<int, CCStringToStringDictionary*> * getTileProperties();
-		void setTileProperties(NSDictionary<int, CCStringToStringDictionary*> * tileProperties);
+		CCDictionary<int, CCStringToStringDictionary*> * getTileProperties();
+		void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
 
 		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
@@ -171,7 +171,7 @@ namespace cocos2d {
 		//! current string
 		std::string m_sCurrentString;
 		//! tile properties
-		NSDictionary<int, CCStringToStringDictionary*>* m_pTileProperties;
+		CCDictionary<int, CCStringToStringDictionary*>* m_pTileProperties;
 	};
 
 }// namespace cocos2d

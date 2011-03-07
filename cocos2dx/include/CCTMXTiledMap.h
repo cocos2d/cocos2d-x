@@ -135,7 +135,7 @@ namespace cocos2d {
 		CCString *propertyNamed(const char *propertyName);
 
 		/** return properties dictionary for tile GID */
-		NSDictionary<std::string, CCString*> *propertiesForGID(int GID);
+		CCDictionary<std::string, CCString*> *propertiesForGID(int GID);
 
 	private:
  		CCTMXLayer * parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo);
@@ -143,7 +143,7 @@ namespace cocos2d {
 
 	protected:
 		//! tile properties
-		NSDictionary<int, CCStringToStringDictionary*> *m_pTileProperties;
+		CCDictionary<int, CCStringToStringDictionary*> *m_pTileProperties;
 
 	};
 

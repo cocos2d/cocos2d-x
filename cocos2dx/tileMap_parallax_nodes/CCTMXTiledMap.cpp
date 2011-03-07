@@ -239,7 +239,7 @@ namespace cocos2d{
 	{
 		return m_pProperties->objectForKey(std::string(propertyName));
 	}
-	NSDictionary<std::string, CCString*> * CCTMXTiledMap::propertiesForGID(int GID)
+	CCDictionary<std::string, CCString*> * CCTMXTiledMap::propertiesForGID(int GID)
 	{
 		return m_pTileProperties->objectForKey(GID);
 	}

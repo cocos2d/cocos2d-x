@@ -62,7 +62,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 
 NS_CC_BEGIN;
 
-static void ccxMessageBox(const ccxString& msg, const ccxString& title);
+static void CCMessageBox(const ccxString& msg, const ccxString& title);
 
 //////////////////////////////////////////////////////////////////////////
 // Impliment CCImage
@@ -122,7 +122,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
         ccxString msg = "Load ";
         msg.append(strPath).append(" failed!");
     
-        ccxMessageBox(msg, title);
+        CCMessageBox(msg, title);
     }
     return bRet;
 }

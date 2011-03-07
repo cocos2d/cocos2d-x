@@ -28,16 +28,16 @@ THE SOFTWARE.
 #include "EGL/egl.h"
 #include "GLES/gl.h"
 
-#include "NSSet.h"
+#include "CCSet.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 
 #include "TCOM_Sensors_Interface.h"
-#include "CCXUIAccelerometer.h"
+#include "CCAccelerometer.h"
 #include "CCKeypadDispatcher.h"
 
-#include "ccxApplication.h"
+#include "CCApplication.h"
 #include "ccMacros.h"
 
 namespace cocos2d {
@@ -45,10 +45,10 @@ namespace cocos2d {
 #define MAX_TOUCHES         4
 static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 
-class CCXEGL
+class CCEGL
 {
 public:
-	~CCXEGL() 
+	~CCEGL() 
 	{
 		if (EGL_NO_DISPLAY == m_eglDisplay)
 		{
@@ -67,13 +67,13 @@ public:
 		eglTerminate(m_eglDisplay);
 	}
 
-	static CCXEGL * create(TWindow * pWindow)
+	static CCEGL * create(TWindow * pWindow)
 	{
-		CCXEGL * pEGL = new CCXEGL;
+		CCEGL * pEGL = new CCEGL;
 		Boolean bSuccess = FALSE;
 		do 
 		{
-			CCX_BREAK_IF(! pEGL);
+			CC_BREAK_IF(! pEGL);
 
 			TUChar szError[] = {'E','R','R','O','R',0};
 			TUChar szEglInitFailed[] = {'e','g','l','I','n','i','t','i','a','l','i','z','e',' ','f','a','i','l','e','d',0};
@@ -84,7 +84,7 @@ public:
 			pEGL->m_eglNativeWindow = pWindow;
 
 			EGLDisplay eglDisplay;
-			CCX_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
+			CC_BREAK_IF(EGL_NO_DISPLAY == (eglDisplay = eglGetDisplay(pEGL->m_eglNativeDisplay)));
 
 			EGLint nMajor, nMinor;
 			EGLBoolean bEglRet;
@@ -107,7 +107,7 @@ public:
 			};
 			EGLint iConfigs;
 			EGLConfig eglConfig;
-			CCX_BREAK_IF( EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) ||
+			CC_BREAK_IF( EGL_FALSE == eglChooseConfig(eglDisplay, aConfigAttribs, &eglConfig, 1, &iConfigs) ||
 						  (iConfigs != 1) );
 
 			EGLContext eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
@@ -141,7 +141,7 @@ public:
 
 		if (! bSuccess)
 		{
-			CCX_SAFE_DELETE(pEGL);   
+			CC_SAFE_DELETE(pEGL);   
 		}
 
 		return pEGL;
@@ -174,7 +174,7 @@ public:
 		}
 	}
 private:
-	CCXEGL() 
+	CCEGL() 
 		: m_eglNativeWindow(NULL)
 		, m_eglNativeDisplay(EGL_DEFAULT_DISPLAY)
 		, m_eglDisplay(EGL_NO_DISPLAY)
@@ -192,12 +192,12 @@ private:
 };
 
 //////////////////////////////////////////////////////////////////////////
-// impliment CCXEGLView
+// impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
 
-static CCXEGLView* s_pMainWindow = NULL;
+static CCEGLView* s_pMainWindow = NULL;
 
-CCXEGLView::CCXEGLView(TApplication * pApp)
+CCEGLView::CCEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
@@ -205,13 +205,13 @@ CCXEGLView::CCXEGLView(TApplication * pApp)
 {
 }
 
-CCXEGLView::~CCXEGLView()
+CCEGLView::~CCEGLView()
 {
-    CCX_SAFE_DELETE(m_pDelegate);
-    CCX_SAFE_DELETE(m_pEGL);
+    CC_SAFE_DELETE(m_pDelegate);
+    CC_SAFE_DELETE(m_pEGL);
 }
 
-Boolean CCXEGLView::Create(int nWidthInPoints, int nHeightInPoints)
+Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints)
 {
     // record the window size in points
     m_tSizeInPoints.SetWidth(nWidthInPoints);
@@ -241,12 +241,12 @@ Boolean CCXEGLView::Create(int nWidthInPoints, int nHeightInPoints)
     return bRet;
 }
 
-Boolean CCXEGLView::AfterCreate(void)
+Boolean CCEGLView::AfterCreate(void)
 {
-    return (m_pEGL = CCXEGL::create(this)) ? TRUE : FALSE;
+    return (m_pEGL = CCEGL::create(this)) ? TRUE : FALSE;
 }
 
-Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
+Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 {
     Boolean bHandled = FALSE;
 
@@ -316,7 +316,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
                 AccValue.timestamp = (double) TimGetTicks() / 100;
 
                 // call delegates' didAccelerate function
-                UIAccelerometer::sharedAccelerometer()->didAccelerate(&AccValue);
+                CCAccelerometer::sharedAccelerometer()->didAccelerate(&AccValue);
                 bHandled = TRUE;
             }
         }
@@ -330,7 +330,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
 
     case EVENT_ScreenSwitchNotify:
         {
-            ccxApplication::sharedApplication().switchNotify(pEvent->sParam1);
+            CCApplication::sharedApplication().switchNotify(pEvent->sParam1);
             break;
         }
 
@@ -375,7 +375,7 @@ Boolean CCXEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     return bHandled;
 }
 
-Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
@@ -388,7 +388,7 @@ Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
         pTouch->SetTouchInfo(0, (float)(pEvent->sParam1 - m_rcViewPort.X()) / m_fScreenScaleFactor,
                              (float)(pEvent->sParam2 - m_rcViewPort.Y()) / m_fScreenScaleFactor);
         s_pTouches[nIndex] = pTouch;
-        NSSet set;
+        CCSet set;
         set.addObject(pTouch);
         m_pDelegate->touchesBegan(&set, NULL);
     }
@@ -396,14 +396,14 @@ Boolean CCXEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCXEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
         CCTouch* pTouch = s_pTouches[nIndex];
         if (pTouch)
         {
-            NSSet set;
+            CCSet set;
             pTouch->SetTouchInfo(0, (float)(pEvent->sParam1 - m_rcViewPort.X()) / m_fScreenScaleFactor,
                                  (float)(pEvent->sParam2 - m_rcViewPort.Y()) / m_fScreenScaleFactor);
             set.addObject(pTouch);
@@ -427,21 +427,21 @@ Boolean CCXEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCXEGLView::OnPenMove(EventType* pEvent)
+Boolean CCEGLView::OnPenMove(EventType* pEvent)
 {
     do 
     {
-        CCX_BREAK_IF(!m_pDelegate);
+        CC_BREAK_IF(!m_pDelegate);
 
         Int32 nCount = EvtGetPenMultiPointCount(pEvent);
-        CCX_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
+        CC_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
 
-        NSSet set;
+        CCSet set;
         Int32 nPosX, nPosY;
         for (Int32 i = 0; i < nCount; ++i)
         {
             CCTouch* pTouch = s_pTouches[i];
-            CCX_BREAK_IF(!pTouch);
+            CC_BREAK_IF(!pTouch);
 
             EvtGetPenMultiPointXY(pEvent, i, &nPosX, &nPosY);
             pTouch->SetTouchInfo(0, (float) (nPosX - m_rcViewPort.X()) / m_fScreenScaleFactor,
@@ -455,34 +455,34 @@ Boolean CCXEGLView::OnPenMove(EventType* pEvent)
     return FALSE;
 }
 
-CGSize CCXEGLView::getSize()
+CCSize CCEGLView::getSize()
 {
-    return CGSize((float)m_tSizeInPoints.Width(), (float)m_tSizeInPoints.Height());
+    return CCSize((float)m_tSizeInPoints.Width(), (float)m_tSizeInPoints.Height());
 }
 
-CGRect CCXEGLView::getFrame()
+CCRect CCEGLView::getFrame()
 {
 	TRectangle rc;
 	GetClientBounds(&rc);
-	return (CGRect((float)rc.X(), (float)rc.Y(), (float)rc.Width(), (float)rc.Height()));
+	return (CCRect((float)rc.X(), (float)rc.Y(), (float)rc.Width(), (float)rc.Height()));
 }
 
-bool CCXEGLView::isOpenGLReady()
+bool CCEGLView::isOpenGLReady()
 {
     return (NULL != m_pEGL);
 }
 
-void CCXEGLView::release()
+void CCEGLView::release()
 {
     CloseWindow();
 }
 
-void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
     m_pDelegate = pDelegate;
 }
 
-void CCXEGLView::swapBuffers()
+void CCEGLView::swapBuffers()
 {
     if (m_pEGL)
     {
@@ -490,19 +490,19 @@ void CCXEGLView::swapBuffers()
     }
 }
 
-bool CCXEGLView::canSetContentScaleFactor()
+bool CCEGLView::canSetContentScaleFactor()
 {
 	// can scale content?
 	return false;
 }
 
-void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
 	// if it supports scaling content, set it
     m_fScreenScaleFactor = contentScaleFactor;
 }
 
-void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
+void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
     if (m_pEGL)
     {
@@ -514,9 +514,9 @@ void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
     }
 }
 
-CCXEGLView& CCXEGLView::sharedOpenGLView()
+CCEGLView& CCEGLView::sharedOpenGLView()
 {
-    CCX_ASSERT(s_pMainWindow);
+    CC_ASSERT(s_pMainWindow);
     return *s_pMainWindow;
 }
 

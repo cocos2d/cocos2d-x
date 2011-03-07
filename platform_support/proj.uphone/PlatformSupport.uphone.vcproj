@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="PlatformSupport"
 	ProjectGUID="{560E20BA-9562-4AFC-A222-6B7B1956D607}"
+	RootNamespace="PlatformSupport"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -186,27 +187,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\ccxCommon.cpp"
+				RelativePath="..\src\CCCommon.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\CCImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\CCStdC.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\CCThread.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\src\ccxGL.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\ccxImage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\ccxStdC.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\ccxThread.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\uphone\NewDeleteOp.cpp"
 				>
 			</File>
 		</Filter>
@@ -214,11 +211,31 @@
 			Name="include"
 			>
 			<File
-				RelativePath="..\include\ccxCommon.h"
+				RelativePath="..\include\CCCommon.h"
 				>
 			</File>
 			<File
-				RelativePath="..\include\ccxConfig.h"
+				RelativePath="..\include\CCImage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCLibxml2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCPlatformConfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCPlatformMacros.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCStdC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCThread.h"
 				>
 			</File>
 			<File
@@ -226,27 +243,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\ccxImage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxLibxml2.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxMacros.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxStdC.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\ccxString.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\ccxThread.h"
 				>
 			</File>
 		</Filter>
