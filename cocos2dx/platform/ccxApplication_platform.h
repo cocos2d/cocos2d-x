@@ -31,13 +31,10 @@ THE SOFTWARE.
     #include "win32/ccxApplication_win32.h"
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_ANDROID)
     #include "android/ccxApplication_android.h"
-<<<<<<< HEAD
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_IOS)
     # include "ios/ccxApplication_ios.h"
-=======
 #elif (CCX_TARGET_PLATFORM == CCX_PLATFORM_UPHONE)
     #include "uphone/ccxApplication_uphone.h"
->>>>>>> e08db45d46a9c7572480c307b6bbbaab71ba6330
 #else
     #error
 #endif
