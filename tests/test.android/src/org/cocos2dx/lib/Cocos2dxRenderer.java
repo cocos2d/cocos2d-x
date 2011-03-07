@@ -39,34 +39,34 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     	last = now;
     }
     
-    public void handleActionDown(float x, float y)
+    public void handleActionDown(int[] id, float[] x, float[] y)
     {
-    	nativeTouchesBegin(x, y);
+    	nativeTouchesBegin(id, x, y);
     }
     
-    public void handleActionUp(float x, float y)
+    public void handleActionUp(int[] id, float[] x, float[] y)
     {
-    	nativeTouchesEnd(x, y);
+    	nativeTouchesEnd(id, x, y);
     }
     
-    public void handleActionCancel(float x, float y)
+    public void handleActionCancel(int[] id, float[] x, float[] y)
     {
-    	nativeTouchesCancel(x, y);
+    	nativeTouchesCancel(id, x, y);
     }
     
-    public void handleActionMove(float x, float y)
+    public void handleActionMove(int[] id, float[] x, float[] y)
     {
-    	nativeTouchesMove(x, y);
+    	nativeTouchesMove(id, x, y);
     }
     
     public static void setAnimationInterval(double interval){
     	animationInterval = (long)(interval * NANOSECONDSPERSECOND);
     }
     
-    private static native void nativeTouchesBegin(float x, float y);
-    private static native void nativeTouchesEnd(float x, float y);
-    private static native void nativeTouchesMove(float x, float y);
-    private static native void nativeTouchesCancel(float x, float y);
+    private static native void nativeTouchesBegin(int[] id, float[] x, float[] y);
+    private static native void nativeTouchesEnd(int[] id, float[] x, float[] y);
+    private static native void nativeTouchesMove(int[] id, float[] x, float[] y);
+    private static native void nativeTouchesCancel(int[] id, float[] x, float[] y);
     private static native void nativeRender();
     private static native void nativeInit(int w, int h);
 }
