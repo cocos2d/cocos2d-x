@@ -47,7 +47,7 @@ public:
 	virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
 	virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
 	virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
-	//virtual void accelerometer(UIAccelerometer* accelerometer, UIAcceleration* acceleration);
+	//virtual void accelerometer(UIAccelerometer* accelerometer, CCAcceleration* acceleration);
 
 	static Box2DView* viewWithEntryID(int entryId);
 };

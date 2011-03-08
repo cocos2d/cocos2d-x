@@ -22,23 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_ANDROID_H__
-#define __CCX_EGLVIEW_ANDROID_H__
+#ifndef __CC_EGLVIEW_ANDROID_H__
+#define __CC_EGLVIEW_ANDROID_H__
 
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 
 namespace   cocos2d {
-class NSSet;
+class CCSet;
 class CCTouch;
 class EGLTouchDelegate;
 
-class CCX_DLL CCXEGLView
+class CC_DLL CCEGLView
 {
 public:
-    CCXEGLView();
-    virtual ~CCXEGLView();
+    CCEGLView();
+    virtual ~CCEGLView();
 
-    CGSize  getSize();
+    CCSize  getSize();
     bool    isOpenGLReady();
 	/**
 	 * the width and height is the real size of phone
@@ -58,19 +58,19 @@ public:
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor); 
 	void    setViewPortInPoints(float x, float y, float w, float h);
-	CGRect  getViewPort();
+	CCRect  getViewPort();
 	float   getScreenScaleFactor();
 
 	// static function
 	/**
 	@brief	get the shared main open gl window
 	*/
-	static CCXEGLView& sharedOpenGLView();
+	static CCEGLView& sharedOpenGLView();
     
 private:
-	CGSize m_sSizeInPixel;
-	CGSize m_sSizeInPoint;
-	CGRect m_rcViewPort;
+	CCSize m_sSizeInPixel;
+	CCSize m_sSizeInPoint;
+	CCRect m_rcViewPort;
 	bool   m_bNotHVGA;
 	
 	EGLTouchDelegate *m_pDelegate;
@@ -79,4 +79,4 @@ private:
 
 }   // end of namespace   cocos2d
 
-#endif	// end of __CCX_EGLVIEW_ANDROID_H__
+#endif	// end of __CC_EGLVIEW_ANDROID_H__

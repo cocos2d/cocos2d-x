@@ -21,13 +21,13 @@ actions/CCActionPageTurn3D.cpp \
 actions/CCActionProgressTimer.cpp \
 actions/CCActionTiledGrid.cpp \
 base_nodes/CCAtlasNode.cpp \
-cocoa/CGAffineTransform.cpp \
-cocoa/CGGeometry.cpp \
-cocoa/NSAutoreleasePool.cpp \
-cocoa/NSData.cpp \
-cocoa/NSObject.cpp \
-cocoa/NSSet.cpp \
-cocoa/NSZone.cpp \
+cocoa/CCAffineTransform.cpp \
+cocoa/CCGeometry.cpp \
+cocoa/CCAutoreleasePool.cpp \
+cocoa/CCData.cpp \
+cocoa/CCObject.cpp \
+cocoa/CCSet.cpp \
+cocoa/CCZone.cpp \
 cocos2d.cpp \
 effects/CCGrabber.cpp \
 event_dispatcher/CCEventDispatcher.cpp \
@@ -58,10 +58,10 @@ platform/CCParticleSystemPoint_mobile.cpp \
 platform/CCTransition_mobile.cpp \
 platform/platform.cpp \
 platform/android/CCNS_android.cpp \
-platform/android/CCXEGLView_android.cpp \
-platform/android/CCXFileUtils_android.cpp \
-platform/android/CCXUIAccelerometer_android.cpp \
-platform/android/ccxApplication_android.cpp \
+platform/android/CCEGLView_android.cpp \
+platform/android/CCFileUtils_android.cpp \
+platform/android/CCAccelerometer_android.cpp \
+platform/android/CCApplication_android.cpp \
 platform/android/Cocos2dJni.cpp \
 sprite_nodes/CCAnimation.cpp \
 sprite_nodes/CCAnimationCache.cpp \
@@ -71,7 +71,7 @@ sprite_nodes/CCSpriteFrame.cpp \
 sprite_nodes/CCSpriteFrameCache.cpp \
 sprite_nodes/CCSpriteSheet.cpp \
 support/CCProfiling.cpp \
-support/CGPointExtension.cpp \
+support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
@@ -94,10 +94,10 @@ touch_dispatcher/CCTouchHandler.cpp
 
 # platform_support
 LOCAL_SRC_FILES += ../platform_support/src/ccxGL.cpp \
-                   ../platform_support/src/ccxImage.cpp \
-                   ../platform_support/src/ccxStdC.cpp \
-                   ../platform_support/src/ccxThread.cpp \
-                   ../platform_support/src/ccxCommon.cpp
+                   ../platform_support/src/CCImage.cpp \
+                   ../platform_support/src/CCStdC.cpp \
+                   ../platform_support/src/CCThread.cpp \
+                   ../platform_support/src/CCCommon.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \

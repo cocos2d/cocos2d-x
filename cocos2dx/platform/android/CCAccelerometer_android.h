@@ -22,32 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_ANDROID_UIACCELEROMETER_H__
-#define __PLATFORM_ANDROID_UIACCELEROMETER_H__
+#ifndef __PLATFORM_ANDROID_CCACCELEROMETER_H__
+#define __PLATFORM_ANDROID_CCACCELEROMETER_H__
 
-#include "ccxCommon.h"
-#include "CCUIAccelerometerDelegate.h"
+#include "CCCommon.h"
+#include "CCAccelerometerDelegate.h"
 #include "Cocos2dJni.h"
 #include <list>
 
 namespace   cocos2d {
 
-class CCX_DLL UIAccelerometer
+class CC_DLL CCAccelerometer
 {
 public:
-	UIAccelerometer();
-    ~UIAccelerometer();
+	CCAccelerometer();
+    ~CCAccelerometer();
 
-    static UIAccelerometer* sharedAccelerometer();
+    static CCAccelerometer* sharedAccelerometer();
 
-    void removeDelegate(UIAccelerometerDelegate* pDelegate);
-    void addDelegate(UIAccelerometerDelegate* pDelegate);
+    void removeDelegate(CCAccelerometerDelegate* pDelegate);
+    void addDelegate(CCAccelerometerDelegate* pDelegate);
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:
-	static UIAccelerometer* m_spUIAccelerometer;
-	std::list<UIAccelerometerDelegate*>* m_pAccelDelegates;
-	UIAcceleration m_obAccelerationValue;
+	static CCAccelerometer* m_spCCAccelerometer;
+	std::list<CCAccelerometerDelegate*>* m_pAccelDelegates;
+	CCAcceleration m_obAccelerationValue;
 };
 
 }//namespace cocos2d

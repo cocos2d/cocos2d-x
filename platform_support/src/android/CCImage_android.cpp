@@ -43,7 +43,7 @@ static int sk_atomic_dec(int *value)
 NS_CC_BEGIN;
 
 // android not support
-void ccxMessageBox(const ccxString& msg, const ccxString& title)
+void CCMessageBox(const ccxString& msg, const ccxString& title)
 {
     
 }
@@ -59,8 +59,8 @@ public:
 
     ~BitmapDC(void)
     {
-		CCX_SAFE_DELETE(m_pPaint);
-		CCX_SAFE_DELETE(m_pBitmap);
+		CC_SAFE_DELETE(m_pPaint);
+		CC_SAFE_DELETE(m_pBitmap);
     }
 
 	bool setFont(const char * pFontName = NULL, int nSize = 0)
@@ -77,7 +77,7 @@ public:
 		{
 			/* init paint */
 			m_pPaint = new SkPaint();
-			CCX_BREAK_IF(! m_pPaint);
+			CC_BREAK_IF(! m_pPaint);
 			m_pPaint->setColor(SK_ColorWHITE);
 			m_pPaint->setTextSize(nSize);
 
@@ -85,7 +85,7 @@ public:
 			SkTypeface *pTypeFace = SkTypeface::CreateFromName(pFontName, SkTypeface::kNormal);
 			if (! pTypeFace)
 			{
-				CCX_SAFE_DELETE(m_pPaint);
+				CC_SAFE_DELETE(m_pPaint);
 				break;
 			}
 			m_pPaint->setTypeface( pTypeFace );
@@ -120,7 +120,7 @@ public:
             m_pBitmap->setConfig(SkBitmap::kARGB_8888_Config, nWidth, nHeight);
 			if (! m_pBitmap->allocPixels())
 			{
-				CCX_SAFE_DELETE(m_pBitmap);
+				CC_SAFE_DELETE(m_pBitmap);
 				return false;
 			}
 
@@ -131,15 +131,15 @@ public:
 		return true;
 	}
 
-	bool drawText(const char *pszText, int nWidth, int nHeight, ccxImage::ETextAlign eAlignMask)
+	bool drawText(const char *pszText, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask)
     {
         bool bRet = false;
 
         do 
         {
-            CCX_BREAK_IF(! pszText);
+            CC_BREAK_IF(! pszText);
 
-            CCX_BREAK_IF(! prepareBitmap(nWidth, nHeight));
+            CC_BREAK_IF(! prepareBitmap(nWidth, nHeight));
 
 			/* create canvas */
 			SkPaint::FontMetrics font;
@@ -163,7 +163,7 @@ public:
 
 		do 
 		{
-			CCX_BREAK_IF(!pszText || !pWidth || !pHeight);
+			CC_BREAK_IF(!pszText || !pWidth || !pHeight);
 
 			// get text width and height
 			if (m_pPaint)
@@ -196,7 +196,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool ccxImage::initWithString(
+bool CCImage::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
@@ -208,33 +208,33 @@ bool ccxImage::initWithString(
 
     do 
     {
-        CCX_BREAK_IF(! pText);
+        CC_BREAK_IF(! pText);
 		
         BitmapDC &dc = sharedBitmapDC();
 
 		/* init font with font name and size */
-		CCX_BREAK_IF(! dc.setFont(pFontName, nSize));
+		CC_BREAK_IF(! dc.setFont(pFontName, nSize));
 
 		/* compute text width and height */
 		if (nWidth <= 0 || nHeight <= 0)
 		{
 			dc.getTextExtentPoint(pText, &nWidth, &nHeight);
 		}
-		CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 
 		bRet = dc.drawText(pText, nWidth, nHeight, eAlignMask);
 
 		/*init image information */
 		SkBitmap *pBitmap = dc.getBitmap();
-		CCX_BREAK_IF(! pBitmap);
+		CC_BREAK_IF(! pBitmap);
 
 		int nWidth	= pBitmap->width();
 		int nHeight	= pBitmap->height();
-		CCX_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 
 		int nDataLen = pBitmap->rowBytes() * pBitmap->height();
 		m_pData.reset(new ccxByte[nDataLen]);
-		CCX_BREAK_IF(! m_pData.get());
+		CC_BREAK_IF(! m_pData.get());
 		memcpy((void*) m_pData.get(), pBitmap->getPixels(), nDataLen);
 
 		m_nWidth    = (ccxInt16)nWidth;

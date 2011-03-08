@@ -1,32 +1,32 @@
-#include "ccxApplication.h"
+#include "CCApplication.h"
 
 #include "CCDirector.h"
-#include "CCXEGLView.h"
+#include "CCEGLView.h"
 #include "Cocos2dJni.h"
 #include <android/log.h>
 #include <jni.h>
 
-#define  LOG_TAG    "ccxApplication_android Debug"
+#define  LOG_TAG    "CCApplication_android Debug"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 NS_CC_BEGIN;
 
 // sharedApplication pointer
-ccxApplication * ccxApplication::sm_pSharedApplication = 0;
+CCApplication * CCApplication::sm_pSharedApplication = 0;
 
-ccxApplication::ccxApplication()
+CCApplication::CCApplication()
 {
-    CCX_ASSERT(! sm_pSharedApplication);
+    CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-ccxApplication::~ccxApplication()
+CCApplication::~CCApplication()
 {
-    CCX_ASSERT(this == sm_pSharedApplication);
+    CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
 }
 
-int ccxApplication::run()
+int CCApplication::run()
 {
         // Initialize instance and cocos2d.
         if (! initInstance() || ! applicationDidFinishLaunching())
@@ -37,7 +37,7 @@ int ccxApplication::run()
 	return -1;
 }
 
-void ccxApplication::setAnimationInterval(double interval)
+void CCApplication::setAnimationInterval(double interval)
 {
     jmethodID ret = 0;
 	JNIEnv *env = 0;
@@ -80,26 +80,26 @@ void ccxApplication::setAnimationInterval(double interval)
 	}
 }
 
-ccxApplication::Orientation ccxApplication::setOrientation(Orientation orientation)
+CCApplication::Orientation CCApplication::setOrientation(Orientation orientation)
 {
     return orientation;
 }
 
-void ccxApplication::statusBarFrame(CGRect * rect)
+void CCApplication::statusBarFrame(CCRect * rect)
 {
     if (rect)
     {
         // android doesn't have status bar.
-        *rect = CGRectMake(0, 0, 0, 0);
+        *rect = CCRectMake(0, 0, 0, 0);
     }
 }
 
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-ccxApplication& ccxApplication::sharedApplication()
+CCApplication& CCApplication::sharedApplication()
 {
-    CCX_ASSERT(sm_pSharedApplication);
+    CC_ASSERT(sm_pSharedApplication);
     return *sm_pSharedApplication;
 }
 

@@ -17,7 +17,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
 {
     if (!cocos2d::CCDirector::sharedDirector()->getOpenGLView())
     {
-	cocos2d::CCXEGLView *view = &cocos2d::CCXEGLView::sharedOpenGLView();
+	cocos2d::CCEGLView *view = &cocos2d::CCEGLView::sharedOpenGLView();
         view->setFrameWitdAndHeight(w, h);
         // if you want to run in WVGA with HVGA resource, set it
         // view->create(320, 480);
@@ -26,7 +26,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         CCFileUtils::setRelativePath(IMG_PATH);
 
         AppDelegate *pAppDelegate = new AppDelegate();
-        cocos2d::ccxApplication::sharedApplication().run();
+        cocos2d::CCApplication::sharedApplication().run();
     }
     else
     {

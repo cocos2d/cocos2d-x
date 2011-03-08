@@ -247,7 +247,7 @@ void Box2DView::ccTouchEnded(CCTouch* touch, UIEvent* event)
 	m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
 }
 
-// void Box2DView::accelerometer(UIAccelerometer* accelerometer, UIAcceleration* acceleration)
+// void Box2DView::accelerometer(UIAccelerometer* accelerometer, CCAcceleration* acceleration)
 // {
 // 	//// Only run for valid values
 // 	//if (acceleration.y!=0 && acceleration.x!=0)

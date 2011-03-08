@@ -22,13 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "Cocos2dJni.h"
-#include "NSSet.h"
+#include "CCSet.h"
 #include "CCDirector.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
-#include "CCXFileUtils.h"
-#include "CGGeometry.h"
-#include "platform/android/CCXUIAccelerometer_android.h"
+#include "CCFileUtils.h"
+#include "CCGeometry.h"
+#include "platform/android/CCAccelerometer_android.h"
 #include <android/log.h>
 #define  LOG_TAG    "Cocos2dJni"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -43,16 +43,16 @@ extern "C"
 
 	#define MAX_TOUCHES         5
 	static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
-	static cocos2d::NSSet s_set;
+	static cocos2d::CCSet s_set;
 
 	// handle accelerometer changes
 
 	void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
 	{
 		// We need to invert to make it compatible with iOS.
-		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
-		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
-		cocos2d::UIAccelerometer::sharedAccelerometer()->update((x - rcRect.origin.x) / fScreenScaleFactor,
+		CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
+		cocos2d::CCAccelerometer::sharedAccelerometer()->update((x - rcRect.origin.x) / fScreenScaleFactor,
 		                                                        (y - rcRect.origin.y) / fScreenScaleFactor, 
 		                                                         z, 
 		                                                         timeStamp);
@@ -66,8 +66,8 @@ extern "C"
 		jint id[size];
 		jfloat x[size];
 		jfloat y[size];
-		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
-		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
 
 		env->GetIntArrayRegion(ids, 0, size, id);
 		env->GetFloatArrayRegion(xs, 0, size, x);
@@ -99,8 +99,8 @@ extern "C"
 		jint id[size];
 		jfloat x[size];
 		jfloat y[size];
-		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
-		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
 
 		env->GetIntArrayRegion(ids, 0, size, id);
 		env->GetFloatArrayRegion(xs, 0, size, x);
@@ -144,8 +144,8 @@ extern "C"
 		jint id[size];
 		jfloat x[size];
 		jfloat y[size];
-		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
-		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
 
 		env->GetIntArrayRegion(ids, 0, size, id);
 		env->GetFloatArrayRegion(xs, 0, size, x);
@@ -171,8 +171,8 @@ extern "C"
 		jint id[size];
 		jfloat x[size];
 		jfloat y[size];
-		CGRect rcRect = CCXEGLView::sharedOpenGLView().getViewPort();
-		float fScreenScaleFactor = CCXEGLView::sharedOpenGLView().getScreenScaleFactor();
+		CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
+		float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
 
 		env->GetIntArrayRegion(ids, 0, size, id);
 		env->GetFloatArrayRegion(xs, 0, size, x);
