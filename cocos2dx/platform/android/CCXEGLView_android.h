@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_UPHONE_H__
-#define __CCX_EGLVIEW_UPHONE_H__
+#ifndef __CCX_EGLVIEW_ANDROID_H__
+#define __CCX_EGLVIEW_ANDROID_H__
 
 #include "CGGeometry.h"
 
@@ -79,4 +79,4 @@ private:
 
 }   // end of namespace   cocos2d
 
-#endif	// end of __CCX_EGLVIEW_UPHONE_H__
+#endif	// end of __CCX_EGLVIEW_ANDROID_H__
