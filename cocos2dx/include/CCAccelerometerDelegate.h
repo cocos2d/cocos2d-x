@@ -38,7 +38,7 @@ typedef struct
     double z;
 
     double timestamp;
-} UIAcceleration;
+} CCAcceleration;
 
 /**
 @brief 
@@ -48,7 +48,7 @@ receiving acceleration-related data from the system.
 class CC_DLL CCAccelerometerDelegate
 {
 public:
-    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {}
 
     //! call the release() in child layer
     virtual void AccelerometerDestroy(void) {}

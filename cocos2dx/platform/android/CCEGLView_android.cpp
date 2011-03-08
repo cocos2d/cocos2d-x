@@ -21,10 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCXEGLView_android.h"
+#include "CCEGLView_android.h"
 #include "GLES/gl.h"
 
-#include "NSSet.h"
+#include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "CCTouchDispatcher.h"
@@ -33,20 +33,20 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-CCXEGLView::CCXEGLView()
+CCEGLView::CCEGLView()
 : m_pDelegate(NULL),
   m_fScreenScaleFactor(1.0),
   m_bNotHVGA(false)
 {
 }
 
-void CCXEGLView::setFrameWitdAndHeight(int width, int height)
+void CCEGLView::setFrameWitdAndHeight(int width, int height)
 {
 	m_sSizeInPixel.width = width;
 	m_sSizeInPixel.height = height;
 }
 
-void CCXEGLView::create(int width, int height)
+void CCEGLView::create(int width, int height)
 {
 	if (width == 0 || height == 0)
 	{
@@ -70,62 +70,62 @@ void CCXEGLView::create(int width, int height)
 	
 }
 
-CCXEGLView::~CCXEGLView()
+CCEGLView::~CCEGLView()
 {
-	CCX_SAFE_DELETE(m_pDelegate);
+	CC_SAFE_DELETE(m_pDelegate);
 }
 
-CGSize  CCXEGLView::getSize()
+CCSize  CCEGLView::getSize()
 {
         if (m_bNotHVGA)
         {
-                CGSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
+                CCSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
 	        return size;
         }
         else
         {
-                CGSize size(m_sSizeInPixel.width, m_sSizeInPixel.height);
+                CCSize size(m_sSizeInPixel.width, m_sSizeInPixel.height);
 	        return size;
         }
 	
 }
 
-bool CCXEGLView::isOpenGLReady()
+bool CCEGLView::isOpenGLReady()
 {
 	return (m_sSizeInPixel.width != 0 && m_sSizeInPixel.height != 0);
 }
 
-void CCXEGLView::release()
+void CCEGLView::release()
 {
 	exit(0);
 }
 
-void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
 	m_pDelegate = pDelegate;
 }
 
-EGLTouchDelegate* CCXEGLView::getDelegate(void)
+EGLTouchDelegate* CCEGLView::getDelegate(void)
 {
 	return m_pDelegate;
 }
 
-void CCXEGLView::swapBuffers()
+void CCEGLView::swapBuffers()
 {
 }
 
-bool CCXEGLView::canSetContentScaleFactor()
+bool CCEGLView::canSetContentScaleFactor()
 {
     // can scale content?
     return false;
 }
 
-void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
 	m_fScreenScaleFactor = contentScaleFactor;
 } 
 
-void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
+void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
         if (m_bNotHVGA)
         {
@@ -144,18 +144,18 @@ void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
         }		
 }
 
-CCXEGLView& CCXEGLView::sharedOpenGLView()
+CCEGLView& CCEGLView::sharedOpenGLView()
 {
-	static CCXEGLView instance;
+	static CCEGLView instance;
 	return instance;
 }
 
-float CCXEGLView::getScreenScaleFactor()
+float CCEGLView::getScreenScaleFactor()
 {
         return m_fScreenScaleFactor;
 }
 
-CGRect CCXEGLView::getViewPort()
+CCRect CCEGLView::getViewPort()
 {
         if (m_bNotHVGA)
         {
@@ -163,7 +163,7 @@ CGRect CCXEGLView::getViewPort()
         }
         else
         {
-                CGRect rect(0, 0, 0, 0);
+                CCRect rect(0, 0, 0, 0);
                 return rect;
         }
 }

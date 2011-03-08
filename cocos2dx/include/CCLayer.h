@@ -59,7 +59,7 @@ public:
 	virtual void destroy(void);
 	virtual void keep(void);
 	
-    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {}
     virtual void AccelerometerDestroy(void);
     virtual void AccelerometerKeep(void);
 
