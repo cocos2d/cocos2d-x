@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_UPHONE_CCFILE_UTILS_H__
-#define __PLATFORM_UPHONE_CCFILE_UTILS_H__
+#ifndef __PLATFORM_ANDROID_CCFILE_UTILS_H__
+#define __PLATFORM_ANDROID_CCFILE_UTILS_H__
 
 #include <string>
 #include "ccxCommon.h"
@@ -83,4 +83,4 @@ private:
 };
 }//namespace   cocos2d 
 
-#endif // __PLATFORM_UPHONE_CCFILE_UTILS_H__
+#endif // __PLATFORM_ANDROID_CCFILE_UTILS_H__
