@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\;.\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)chipmunk\include\chipmunk&quot;;&quot;$(SolutionDir)CocosDenshion\include&quot;;..\tests;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
