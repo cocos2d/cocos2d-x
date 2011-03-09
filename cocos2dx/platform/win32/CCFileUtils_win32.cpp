@@ -52,9 +52,9 @@ typedef enum
 class CCDictMaker
 {
 public:
-	NSDictionary<std::string, CCObject*> *m_pRootDict;
-	NSDictionary<std::string, CCObject*> *m_pCurDict;
-	std::stack<NSDictionary<std::string, CCObject*>*> m_tDictStack;
+	CCDictionary<std::string, CCObject*> *m_pRootDict;
+	CCDictionary<std::string, CCObject*> *m_pCurDict;
+	std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
 	std::string m_sCurKey;///< parsed key
 	CCSAXState m_tState;
 public:
@@ -67,7 +67,7 @@ public:
 	~CCDictMaker()
 	{
 	}
-	NSDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
+	CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
 	{
 		FILE *fp = NULL;
 		if( !(fp = fopen(pFileName, "r")) )
@@ -117,7 +117,7 @@ void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
 	std::string sName((char*)name);
 	if( sName == "dict" )
 	{
-		NSDictionary<std::string, CCObject*> *pNewDict = new NSDictionary<std::string, CCObject*>();
+		CCDictionary<std::string, CCObject*> *pNewDict = new CCDictionary<std::string, CCObject*>();
 		if(! pMaker->m_pRootDict)
 		{
 			pMaker->m_pRootDict = pNewDict;
@@ -164,7 +164,7 @@ void plist_endElement(void *ctx, const xmlChar *name)
 		pMaker->m_tDictStack.pop();
 		if ( !pMaker->m_tDictStack.empty() )
 		{
-			pMaker->m_pCurDict = (NSDictionary<std::string, CCObject*>*)(pMaker->m_tDictStack.top());
+			pMaker->m_pCurDict = (CCDictionary<std::string, CCObject*>*)(pMaker->m_tDictStack.top());
 		}
 	}
 	pMaker->m_tState = SAX_NONE;
@@ -285,7 +285,7 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 	return pRet->m_sString.c_str();
 }
 
-NSDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
 	CCDictMaker tMaker;
 	return tMaker.dictionaryWithContentsOfFile(pFileName);

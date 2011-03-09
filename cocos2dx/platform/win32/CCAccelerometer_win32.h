@@ -27,16 +27,16 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-class CC_DLL UIAccelerometer
+class CC_DLL CCAccelerometer
 {
 public:
-    UIAccelerometer();
-    ~UIAccelerometer();
+    CCAccelerometer();
+    ~CCAccelerometer();
 
-    static UIAccelerometer* sharedAccelerometer() { return NULL; }
+    static CCAccelerometer* sharedAccelerometer() { return NULL; }
 
-    void removeDelegate(UIAccelerometerDelegate* pDelegate) {}
-    void addDelegate(UIAccelerometerDelegate* pDelegate) {}
+    void removeDelegate(CCAccelerometerDelegate* pDelegate) {}
+    void addDelegate(CCAccelerometerDelegate* pDelegate) {}
 };
 
 }//namespace   cocos2d 
