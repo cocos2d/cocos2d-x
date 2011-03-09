@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_THREAD_H_YANGWS_20110114__
-#define __CC_THREAD_H_YANGWS_20110114__
+#ifndef __CC_PLATFORM_THREAD_H__
+#define __CC_PLATFORM_THREAD_H__
 
 #include "CCCommon.h"
 
@@ -35,26 +35,26 @@ NS_CC_BEGIN;
 
 @warning Don't enter a CCLock twice in the same thread.
 */
-class CC_DLL_PS ccxLock
+class CC_DLL CCLock
 {
 public:
-    ccxLock();
-    ~ccxLock();
+    CCLock();
+    ~CCLock();
 
     void lock();
     void unlock();
 
 private:
     class Impl;
-    ccxScopedPtr<ccxLock::Impl> m_pImp;
+    ccxScopedPtr<CCLock::Impl> m_pImp;
 };
 #else   // CC_SUPPORT_MULTITHREAD
 
-class CC_DLL_PS ccxLock
+class CC_DLL CCLock
 {
 public:
-    ccxLock() {}
-    ~ccxLock() {}
+    CCLock() {}
+    ~CCLock() {}
 
     void lock() {}
     void unlock() {}
@@ -64,4 +64,4 @@ public:
 
 NS_CC_END;
 
-#endif	// __CC_THREAD_H_YANGWS_20110114__
+#endif	// __CC_PLATFORM_THREAD_H__

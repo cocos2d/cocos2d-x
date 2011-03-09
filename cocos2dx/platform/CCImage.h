@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-class CC_DLL_PS CCImage
+class CC_DLL CCImage
 {
 public:
     CCImage();

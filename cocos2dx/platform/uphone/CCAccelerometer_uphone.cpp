@@ -175,7 +175,7 @@ void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
     }
 }
 
-void CCAccelerometer::didAccelerate(UIAcceleration* pAccelerationValue)
+void CCAccelerometer::didAccelerate(CCAcceleration* pAccelerationValue)
 {
     CCAccelerometerHandler  *pHandler;
     CCAccelerometerDelegate *pDelegate;

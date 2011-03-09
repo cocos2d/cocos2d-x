@@ -37,7 +37,7 @@ There are config below:
 // pre configure
 //////////////////////////////////////////////////////////////////////////
 
-// define supported target platform macro which ccx uses.
+// define supported target platform macro which CC uses.
 #define CC_PLATFORM_UNKNOWN            0
 #define CC_PLATFORM_IOS                1
 #define CC_PLATFORM_MAC                2

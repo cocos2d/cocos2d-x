@@ -42,8 +42,6 @@ public:
     static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
 };
 
-class NSLock : public ccxLock{};
-
 NS_CC_END;
 
 #endif // __PLATFORM_H__

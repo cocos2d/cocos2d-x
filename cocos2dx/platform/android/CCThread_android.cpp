@@ -25,11 +25,11 @@ THE SOFTWARE.
 #if CCX_SUPPORT_MULTITHREAD
 
 #include <semaphore.h>
-#include "ccxThread.h"
+#include "CCThread.h"
 
 NS_CC_BEGIN;
 
-class CCXLock::Impl
+class CCLock::Impl
 {
 public:
     Impl()
@@ -45,12 +45,12 @@ public:
 	sem_t m_sMutex;
 };
 
-CCXLock::CCXLock()
-: m_pImp(new CCXLock::Impl)
+CCLock::CCLock()
+: m_pImp(new CCLock::Impl)
 {
 }
 
-CCXLock::~CCXLock()
+CCLock::~CCLock()
 {
 	if (m_pImp)
 	{
@@ -58,7 +58,7 @@ CCXLock::~CCXLock()
 	}
 }
 
-void CCXLock::lock()
+void CCLock::lock()
 {
     if (m_pImp)
     {
@@ -66,7 +66,7 @@ void CCXLock::lock()
     }
 }
 
-void CCXLock::unlock()
+void CCLock::unlock()
 {
     if (m_pImp)
     {
