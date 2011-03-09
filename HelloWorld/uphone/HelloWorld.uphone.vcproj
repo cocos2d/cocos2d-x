@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="HelloWorld"
 	ProjectGUID="{74589012-5241-4918-997A-C0105ABD4DEC}"
+	RootNamespace="HelloWorld"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -40,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\cocos2dx\include;..\..\cocos2dx;..\..\..\PRJ_TG3\Include\OpenGL;..\uphone;..\;.\Res;..\..\platform_support\include"
+				AdditionalIncludeDirectories="..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\cocos2dx\include;..\..\cocos2dx;..\..\..\PRJ_TG3\Include\OpenGL;..\uphone;..\;.\Res;..\..\cocos2dx\platform"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib libPlatformSupport.lib"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib"
 				OutputFile="$(OutDir)/HelloWorld.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../../PRJ_TG3/Common/ICU/lib;../../../PRJ_TG3/Mtapi/Win32/lib;../../../PRJ_TG3/LIB/Win32Lib;../../../PRJ_TG3/Common/SoftSupport"

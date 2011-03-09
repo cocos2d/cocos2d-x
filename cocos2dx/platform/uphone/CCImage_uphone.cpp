@@ -29,7 +29,7 @@ NS_CC_BEGIN
 
 typedef std::basic_string<TUChar> stdTUString;
 
-void CCMessageBox(const ccxString& msg, const ccxString& title)
+void CCMessageBox(const std::string& msg, const std::string& title)
 {
     TUChar szText[256] = { 0 };
     TUString::StrUtf8ToStrUnicode(szText,(Char*)msg.c_str());

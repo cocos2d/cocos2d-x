@@ -32,7 +32,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 class CCTexture2D;
 class CCAsyncObject;
-class NSLock;
+class CCLock;
 class CCImage;
 
 typedef void (*fpAsyncCallback)(CCTexture2D*, void*);
@@ -45,8 +45,8 @@ class CC_DLL CCTextureCache : public CCObject
 {
 protected:
 	CCMutableDictionary<std::string, CCTexture2D*> * m_pTextures;
-	NSLock				*m_pDictLock;
-	NSLock				*m_pContextLock;
+	CCLock				*m_pDictLock;
+	CCLock				*m_pContextLock;
 
 private:
 	// @todo void addImageWithAsyncObject(CCAsyncObject* async);

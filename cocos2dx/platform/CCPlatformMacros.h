@@ -170,7 +170,4 @@ public: inline void set##funName(varType var){ varName = var; }
 
 #endif  // uphone VM
 
-// shared library declator for platform_support project
-#define CC_DLL_PS      CC_DLL
-
 #endif // __CC_PLATFORM_MACROS_H__

@@ -54,6 +54,11 @@ platform/CCGrid_mobile.cpp \
 platform/CCLayer_mobile.cpp \
 platform/CCMenu_mobile.cpp \
 platform/CCNode_mobile.cpp \
+platform/CCGL.cpp \
+platform/CCImage.cpp \
+platform/CCStdC.cpp \
+platform/CCThread.cpp \
+platform/CCCommon.cpp \
 platform/CCParticleSystemPoint_mobile.cpp \
 platform/CCTransition_mobile.cpp \
 platform/platform.cpp \
@@ -92,35 +97,28 @@ tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp
 
-# platform_support
-LOCAL_SRC_FILES += ../platform_support/src/ccxGL.cpp \
-                   ../platform_support/src/CCImage.cpp \
-                   ../platform_support/src/CCStdC.cpp \
-                   ../platform_support/src/CCThread.cpp \
-                   ../platform_support/src/CCCommon.cpp
-
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
-                    $(LOCAL_PATH)/../platform_support/include \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/iconv \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/libpng \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/libxml2 \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/libjpeg \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/core \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/animator \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/config \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/effects \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/images \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/pdf \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/ports \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/svg \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/text \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/utils \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/views \
-                    $(LOCAL_PATH)/../platform_support/third_party/android/skia/xml
+                    $(LOCAL_PATH)/platform \
+                    $(LOCAL_PATH)/platform/third_party/android/iconv \
+                    $(LOCAL_PATH)/platform/third_party/android/libpng \
+                    $(LOCAL_PATH)/platform/third_party/android/libxml2 \
+                    $(LOCAL_PATH)/platform/third_party/android/libjpeg \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/core \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/animator \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/config \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/effects \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/images \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/pdf \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/ports \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/svg \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/text \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/utils \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/views \
+                    $(LOCAL_PATH)/platform/third_party/android/skia/xml
                     
 #it is used for ndk-r4
-LOCAL_LDLIBS := -L$(LOCAL_PATH)/../platform_support/third_party/android/libraries \
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/third_party/android/libraries \
                 -lGLESv1_CM -llog -lz \
                 -lpng \
                 -lxml2 \
@@ -130,7 +128,7 @@ LOCAL_LDLIBS := -L$(LOCAL_PATH)/../platform_support/third_party/android/librarie
 # it is used for ndk-r5    
 # because the new Windows toolchain doesn't support Cygwin's drive
 # mapping (i.e /cygdrive/c/ instead of C:/)  
-#LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../platform_support/third_party/android/libraries) \
+#LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries) \
 #                -lGLESv1_CM -llog -lz \
 #                -lpng \
 #                -lxml2 \

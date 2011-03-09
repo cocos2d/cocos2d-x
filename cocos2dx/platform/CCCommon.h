@@ -45,7 +45,7 @@ static const int kMaxLogLen = 255;
 /**
 @brief	Output Debug message.
 */
-void CC_DLL_PS CCLog(const char * pszFormat, ...);
+void CC_DLL CCLog(const char * pszFormat, ...);
 
 struct ccxNullDeleter       { template< class TPTR > void operator()(TPTR ) {} };
 struct ccxNewDeleter        { template< class TPTR > void operator()(TPTR p) { delete p; } };
@@ -83,7 +83,7 @@ private:
 @brief	A simple scoped point for array.
 */
 template< class T, class D = ccxNewArrayDeleter >
-class CC_DLL_PS ccxScopedArray // noncopyable
+class CC_DLL ccxScopedArray // noncopyable
     : private D
 {
 public:

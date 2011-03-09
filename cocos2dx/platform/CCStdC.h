@@ -77,7 +77,7 @@ struct timezone
     int tz_dsttime;
 };
 
-int CC_DLL_PS gettimeofday(struct timeval *, struct timezone *);
+int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CC_PLATFORM_WIN32
 

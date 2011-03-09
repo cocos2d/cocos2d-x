@@ -25,11 +25,11 @@ THE SOFTWARE.
 #if CCX_SUPPORT_MULTITHREAD
 
 #include "TG3.h"
-#include "ccxThread.h"
+#include "CCThread.h"
 
 NS_CC_BEGIN;
 
-class CCXLock::Impl
+class CCLock::Impl
 {
 public:
     Impl()
@@ -51,16 +51,16 @@ public:
     SS_LOCK_t *m_pLock;
 };
 
-CCXLock::CCXLock()
-: m_pImp(new CCXLock::Impl)
+CCLock::CCLock()
+: m_pImp(new CCLock::Impl)
 {
 }
 
-CCXLock::~CCXLock()
+CCLock::~CCLock()
 {
 }
 
-void CCXLock::lock()
+void CCLock::lock()
 {
     if (m_pImp)
     {
@@ -68,7 +68,7 @@ void CCXLock::lock()
     }
 }
 
-void CCXLock::unlock()
+void CCLock::unlock()
 {
     if (m_pImp)
     {
