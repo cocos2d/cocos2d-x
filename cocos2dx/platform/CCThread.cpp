@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "win32/CCThread_win32.cpp"
 #endif // CC_PLATFORM_WIN32
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
-#include "uphone/CCThread_uphone.cpp"
-#endif // CC_PLATFORM_UPHONE
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
+#include "wophone/CCThread_wophone.cpp"
+#endif // CC_PLATFORM_WOPHONE
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCThread_android.cpp"

@@ -159,7 +159,7 @@ public: inline void set##funName(varType var){ varName = var; }
 
 #endif  // CC_PLATFORM_WIN32
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE && defined(_TRANZDA_VM_))
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
 
     #undef CC_DLL
     #if defined(SS_MAKEDLL)
@@ -168,6 +168,6 @@ public: inline void set##funName(varType var){ varName = var; }
         #define CC_DLL     __declspec(dllimport)
     #endif
 
-#endif  // uphone VM
+#endif  // wophone VM
 
 #endif // __CC_PLATFORM_MACROS_H__

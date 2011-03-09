@@ -42,7 +42,7 @@ There are config below:
 #define CC_PLATFORM_IOS                1
 #define CC_PLATFORM_MAC                2
 #define CC_PLATFORM_ANDROID            3
-#define CC_PLATFORM_UPHONE             4
+#define CC_PLATFORM_WOPHONE            4
 #define CC_PLATFORM_WIN32              5
 
 // Determine tartet platform by compile environment macro.
@@ -68,10 +68,10 @@ There are config below:
     #define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
 #endif
 
-// uphone
+// wophone
 #if ! CC_TARGET_PLATFORM && defined(_TRANZDA_VM_)
     #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_UPHONE
+    #define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
 #endif
 
 // win32
@@ -107,9 +107,9 @@ There are config below:
     #define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
 #endif
 
-#if defined(CC_UNDER_UPHONE)
+#if defined(CC_UNDER_WOPHONE)
     #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_UPHONE
+    #define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
 #endif
 
 #if defined(CC_UNDER_WIN32)

@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 #include "CCPlatformConfig.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
-    #include "uphone/CCFileUtils_uphone.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
+    #include "wophone/CCFileUtils_wophone.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #include "win32/CCFileUtils_win32.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
