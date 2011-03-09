@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\include;..\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\include;..\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -816,10 +816,6 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCTransition_mobile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\ccxString.h"
 				>
 			</File>
 			<File

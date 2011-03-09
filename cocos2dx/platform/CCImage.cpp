@@ -24,9 +24,10 @@ THE SOFTWARE.
 
 #include "CCImage.h"
 
-#include "ccxString.h"
+#include "CCCommon.h"
 #include "CCStdC.h"
 #include "png.h"
+#include <string>
 
 #define  QGLOBAL_H        // defined for uphone
 #include "jpeglib.h"
@@ -62,7 +63,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
 
 NS_CC_BEGIN;
 
-static void CCMessageBox(const ccxString& msg, const ccxString& title);
+static void CCMessageBox(const std::string& msg, const std::string& title);
 
 //////////////////////////////////////////////////////////////////////////
 // Impliment CCImage
@@ -118,8 +119,8 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     }
     if (! bRet && CCImage::getIsPopupNotify())
     {
-        ccxString title = "cocos2d-x error!";
-        ccxString msg = "Load ";
+        std::string title = "cocos2d-x error!";
+        std::string msg = "Load ";
         msg.append(strPath).append(" failed!");
     
         CCMessageBox(msg, title);

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-void CCMessageBox(const ccxString& msg, const ccxString& title)
+void CCMessageBox(const std::string& msg, const std::string& title)
 {
     MessageBoxA(NULL, msg.c_str(), title.c_str(), MB_OK);
 }

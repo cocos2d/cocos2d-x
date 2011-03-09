@@ -251,11 +251,11 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 #if (CC_IS_RETINA_DISPLAY_SUPPORTED)
     if (CC_CONTENT_SCALE_FACTOR() != 1.0f)
     {
-        ccxString hiRes = pRet->m_sString.c_str();
-        ccxString::size_type pos = hiRes.find_last_of("/\\");
-        ccxString::size_type dotPos = hiRes.find_last_of(".");
+        std::string hiRes = pRet->m_sString.c_str();
+        std::string::size_type pos = hiRes.find_last_of("/\\");
+        std::string::size_type dotPos = hiRes.find_last_of(".");
         
-        if (ccxString::npos != dotPos && dotPos > pos)
+        if (std::string::npos != dotPos && dotPos > pos)
         {
             hiRes.insert(dotPos, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
         }

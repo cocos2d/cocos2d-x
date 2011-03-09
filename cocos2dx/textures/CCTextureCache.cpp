@@ -181,7 +181,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	m_pDictLock->lock();
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-    ccxString pathKey = path;
+    std::string pathKey = path;
 	CCFileUtils::ccRemoveHDSuffixFromFile(pathKey);
 
 	texture = m_pTextures->objectForKey(pathKey);
