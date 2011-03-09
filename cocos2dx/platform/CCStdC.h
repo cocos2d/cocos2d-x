@@ -42,7 +42,7 @@ THE SOFTWARE.
 
 #endif  // CC_PLATFORM_WIN32
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE && defined(_TRANZDA_VM_))
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
 
     #if ! defined(_USE_MATH_DEFINES)
         #define _USE_MATH_DEFINES       // make M_PI can be use
@@ -52,7 +52,7 @@ THE SOFTWARE.
         #define isnan   _isnan
     #endif
 
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE && defined(_TRANZDA_VM_)
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_)
 
 #include <math.h>
 
@@ -81,11 +81,11 @@ int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CC_PLATFORM_WIN32
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 
 #include "TG3.h"
 
-#endif  // CC_PLATFORM_UPHONE
+#endif  // CC_PLATFORM_WOPHONE
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 

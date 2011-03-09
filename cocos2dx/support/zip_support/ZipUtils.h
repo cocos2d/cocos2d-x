@@ -78,5 +78,5 @@ namespace cocos2d
 	};
 
 } // end of namespace cocos2d
-#endif // __PLATFORM_UPHONE_ZIPUTILS_H__
+#endif // __PLATFORM_WOPHONE_ZIPUTILS_H__
 
