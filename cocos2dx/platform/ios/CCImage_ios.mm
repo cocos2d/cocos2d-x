@@ -23,7 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include <Foundation/Foundation.h>
 #include <UIKit/UIKit.h>
-#include "ccxImage.h"
+#include "CCImage.h"
+#include <string>
 
 typedef struct
 {
@@ -326,12 +327,12 @@ static bool _isValidFontName(const char *fontName)
     return ret;
 }
 
-static bool _initWithString(const char * pText, cocos2d::ccxImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
     do 
     {
-        CCX_BREAK_IF(! pText || ! pInfo);
+        CC_BREAK_IF(! pText || ! pInfo);
         
         NSString * string  = [NSString stringWithUTF8String:pText];
         
@@ -342,7 +343,7 @@ static bool _initWithString(const char * pText, cocos2d::ccxImage::ETextAlign eA
         {
             font = [UIFont systemFontOfSize:nSize];
         }
-        CCX_BREAK_IF(! font);
+        CC_BREAK_IF(! font);
         
         // measure text size with specified font and determine the rectangle to draw text in
         unsigned uHoriFlag = eAlign & 0x0f;
@@ -411,7 +412,7 @@ static bool _initWithString(const char * pText, cocos2d::ccxImage::ETextAlign eA
         size_t width  = (size_t)canvasSize.width;
         size_t height = (size_t)canvasSize.height;
         unsigned char* data = new unsigned char[width * height * 4];
-        CCX_BREAK_IF(! data);
+        CC_BREAK_IF(! data);
         memset(data, 0, height * width * 4);
         
         // draw text
@@ -449,7 +450,12 @@ NS_CC_BEGIN;
 
 static bool s_bPopupNotify = true;
 
-ccxImage::ccxImage()
+void CCMessageBox(const std::string& msg, const std::string& title)
+{
+    
+}
+
+CCImage::CCImage()
 : m_nWidth(0)
 , m_nHeight(0)
 , m_nBitsPerComponent(0)
@@ -459,7 +465,7 @@ ccxImage::ccxImage()
     
 }
 
-bool ccxImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
     bool bRet = false;
     tImageInfo info = {0};
@@ -487,13 +493,13 @@ bool ccxImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = 
     return bRet;
 }
 
-bool ccxImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
+bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
 {
     bool bRet = false;
     tImageInfo info = {0};
     do 
     {
-        CCX_BREAK_IF(! pData || nDataLen <= 0);
+        CC_BREAK_IF(! pData || nDataLen <= 0);
         bRet = _initWithData(pData, nDataLen, &info);
     } while (0);
     if (bRet)
@@ -508,7 +514,7 @@ bool ccxImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/*
     return bRet;
 }
 
-bool ccxImage::initWithString(
+bool CCImage::initWithString(
              const char * pText, 
              int         nWidth /* = 0 */, 
              int         nHeight /* = 0 */,
@@ -534,12 +540,12 @@ bool ccxImage::initWithString(
     return true;
 }
 
-void ccxImage::setIsPopupNotify(bool bNotify)
+void CCImage::setIsPopupNotify(bool bNotify)
 {
     s_bPopupNotify = bNotify;
 }
 
-bool ccxImage::getIsPopupNotify()
+bool CCImage::getIsPopupNotify()
 {
     return s_bPopupNotify;
 }

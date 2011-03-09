@@ -22,46 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_EGLVIEW_IPHONE_H__
-#define __CCX_EGLVIEW_IPHONE_H__
-
-//#include "CGGeometry.h"
-#include "ccxCommon.h"
+#ifndef __PLATFORM_IPHONE_PLATFORM_CCLOCK_H__
+#define __PLATFORM_IPHONE_PLATFORM_CCLOCK_H__
 
 namespace   cocos2d {
-class NSSet;
-class CCTouch;
-class EGLTouchDelegate;
-class CGSize;
 
-class CCX_DLL CCXEGLView
+class CCLock
 {
 public:
-    CCXEGLView();
-   ~CCXEGLView();
+	CCLock(void);
+	~CCLock(void);
 
-    CGSize  getSize();
-    bool    isOpenGLReady();
-    bool    canSetContentScaleFactor();
-    void    setContentScaleFactor(float contentScaleFactor);
-    
-    // keep compatible
-    void    release();
-    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
-    void    swapBuffers();
-    void    setViewPortInPoints(float x, float y, float w, float h);
-        
-    void touchesBegan(NSSet *set);
-    void touchesMoved(NSSet *set);
-    void touchesEnded(NSSet *set);
-    void touchesCancelled(NSSet *set);
-    
-    static CCXEGLView& sharedOpenGLView();
-        
-private:
-    EGLTouchDelegate *m_pDelegate;
+	void lock(void);
+	void unlock(void);
 };
+}//namespace   cocos2d 
 
-}   // end of namespace   cocos2d
-
-#endif	// end of __CCX_EGLVIEW_IPHONE_H__
+#endif // __PLATFORM_IPHONE_PLATFORM_CCLOCK_H__

@@ -23,46 +23,46 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "EAGLView.h"
 #include "CCDirectorCaller.h"
-#include "CCXEGLView_ios.h"
-#include "NSSet.h"
+#include "CCEGLView_ios.h"
+#include "CCSet.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 
 namespace cocos2d {
 
-CCXEGLView::CCXEGLView()
+CCEGLView::CCEGLView()
 : m_pDelegate(0)
 {
 
 }
 
-CCXEGLView::~CCXEGLView()
+CCEGLView::~CCEGLView()
 {
 
 }
 
-cocos2d::CGSize  CCXEGLView::getSize()
+cocos2d::CCSize  CCEGLView::getSize()
 {
-	cocos2d::CGSize size([[EAGLView sharedEGLView] getWidth], [[EAGLView sharedEGLView] getHeight]);
+	cocos2d::CCSize size([[EAGLView sharedEGLView] getWidth], [[EAGLView sharedEGLView] getHeight]);
 	return size;
 }
 
-bool CCXEGLView::isOpenGLReady()
+bool CCEGLView::isOpenGLReady()
 {
     return [EAGLView sharedEGLView] != NULL;
 }
     
-    bool CCXEGLView::canSetContentScaleFactor()
+    bool CCEGLView::canSetContentScaleFactor()
     {
        return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)];
     }
     
-    void CCXEGLView::setContentScaleFactor(float contentScaleFactor)
+    void CCEGLView::setContentScaleFactor(float contentScaleFactor)
     {
         [[EAGLView sharedEGLView] setContentScaleFactor:contentScaleFactor];
     }
 
-void CCXEGLView::release()
+void CCEGLView::release()
 {
 	[CCDirectorCaller destroy];
 	
@@ -70,52 +70,52 @@ void CCXEGLView::release()
 	[[EAGLView sharedEGLView] removeFromSuperview];
 }
 
-void CCXEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
 {
     m_pDelegate = pDelegate;
 }
 
-void CCXEGLView::swapBuffers()
+void CCEGLView::swapBuffers()
 {
 	[[EAGLView sharedEGLView] swapBuffers];
 }
 	
-void CCXEGLView::touchesBegan(NSSet *set)
+void CCEGLView::touchesBegan(CCSet *set)
 {
 	if (m_pDelegate) {
 		m_pDelegate->touchesBegan(set, NULL);
 	}
 }
 
-void CCXEGLView::touchesMoved(NSSet *set)
+void CCEGLView::touchesMoved(CCSet *set)
 {
 	if (m_pDelegate) {
 		m_pDelegate->touchesMoved(set, NULL);
 	}
 }
 
-void CCXEGLView::touchesEnded(NSSet *set)
+void CCEGLView::touchesEnded(CCSet *set)
 {
 	if (m_pDelegate) {
 		m_pDelegate->touchesEnded(set, NULL);
 	}
 }
 
-void CCXEGLView::touchesCancelled(NSSet *set)
+void CCEGLView::touchesCancelled(CCSet *set)
 {
 	if (m_pDelegate) {
 		m_pDelegate->touchesCancelled(set, NULL);
 	}
 }
 
-void CCXEGLView::setViewPortInPoints(float x, float y, float w, float h)
+void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
         glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
 }
 
-CCXEGLView& CCXEGLView::sharedOpenGLView()
+CCEGLView& CCEGLView::sharedOpenGLView()
 {
-        static CCXEGLView instance;
+        static CCEGLView instance;
         return instance;
 }
 
