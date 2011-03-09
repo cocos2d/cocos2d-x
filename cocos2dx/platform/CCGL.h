@@ -29,7 +29,6 @@ THE SOFTWARE.
 // Common layer for OpenGL stuff
 //
 
-#include "ccxGL.h"
 #include "CCEGLView.h"
 
 // iOS
@@ -67,6 +66,53 @@ THE SOFTWARE.
     #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
     #define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
     #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
+
+#endif
+
+#include "CCCommon.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "OpenGLES/ES1/gl.h"
+#include "OpenGLES/ES1/glext.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#endif
+
+#if defined(CC_PLATFORM_MOBILE)
+
+NS_CC_BEGIN;
+
+/*
+OpenGL GLU implementation
+*/
+
+/** OpenGL gluLookAt implementation */
+void CC_DLL_PS gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ, 
+               GLfloat fLookAtX, GLfloat fLookAtY, GLfloat fLookAtZ, 
+               GLfloat fUpX, GLfloat fUpY, GLfloat fUpZ);
+
+/** OpenGL gluPerspective implementation */
+void CC_DLL_PS gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
+
+NS_CC_END;
 
 #endif
 

@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\iconv&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\zlib&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libpng&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\include;..\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\include;..\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib libPlatformSupport.lib"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -719,6 +719,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCCommon.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCCommon.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCDirector_mobile.cpp"
 				>
 			</File>
@@ -731,6 +739,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCGL.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCGL.h"
 				>
 			</File>
@@ -739,7 +751,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCImage.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCLayer_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCLibxml2.h"
 				>
 			</File>
 			<File
@@ -767,11 +791,35 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCPlatformConfig.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCPlatformMacros.h"
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCStdC.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCStdC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCThread.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCThread.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCTransition_mobile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\ccxString.h"
 				>
 			</File>
 			<File
