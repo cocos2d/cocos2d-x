@@ -1,0 +1,7 @@
+VSWIZARD 7.0
+Wizard=VsWizard.VsWizardEngine
+
+Param="WIZARD_VERSION = "
+Param="WIZARD_NAME = Cocos2d-wophone"
+Param="ABSOLUTE_PATH = ."
+Param="FALLBACK_LCID = 1033"
