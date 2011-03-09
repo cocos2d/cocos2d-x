@@ -293,8 +293,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             {
                 bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
             }
-            else if (pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_UP ||
-                     pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_LONG)
+            else if (pEvent->sParam1 == KEY_COMMAND_MAINMENU)
             {
                 bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
             }
