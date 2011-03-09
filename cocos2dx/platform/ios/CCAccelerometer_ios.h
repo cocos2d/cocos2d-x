@@ -21,25 +21,29 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "NSLock.h"
+
+#ifndef __PLATFORM_IPHONE_CCACCELEROMETER_H__
+#define __PLATFORM_IPHONE_CCACCELEROMETER_H__
+
+#include "CCAccelerometerDelegate.h"
+
 namespace   cocos2d {
 
-NSLock::NSLock(void)
+class CC_DLL CCAccelerometer
 {
-}
+public:
+    CCAccelerometer();
+    ~CCAccelerometer();
 
-NSLock::~NSLock(void)
-{
+    static CCAccelerometer* sharedAccelerometer();
 
-}
+    void removeDelegate(CCAccelerometerDelegate* pDelegate);
+    void addDelegate(CCAccelerometerDelegate* pDelegate);
+    
+private:
+    static CCAccelerometer* m_spUIAccelerometer;
+};
 
-void NSLock::lock(void)
-{
-	
-}
-
-void NSLock::unlock(void)
-{
-	
-}
 }//namespace   cocos2d 
+
+#endif

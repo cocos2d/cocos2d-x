@@ -22,28 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_IPHONE_UIACCELEROMETER_H__
-#define __PLATFORM_IPHONE_UIACCELEROMETER_H__
+#ifndef __CC_EGLVIEW_IPHONE_H__
+#define __CC_EGLVIEW_IPHONE_H__
 
-#include "CCUIAccelerometerDelegate.h"
+#include "CCCommon.h"
 
 namespace   cocos2d {
+class CCSet;
+class CCTouch;
+class EGLTouchDelegate;
+class CCSize;
 
-class CCX_DLL UIAccelerometer
+class CC_DLL CCEGLView
 {
 public:
-    UIAccelerometer();
-    ~UIAccelerometer();
+    CCEGLView();
+   ~CCEGLView();
 
-    static UIAccelerometer* sharedAccelerometer();
-
-    void removeDelegate(UIAccelerometerDelegate* pDelegate);
-    void addDelegate(UIAccelerometerDelegate* pDelegate);
+    CCSize  getSize();
+    bool    isOpenGLReady();
+    bool    canSetContentScaleFactor();
+    void    setContentScaleFactor(float contentScaleFactor);
     
+    // keep compatible
+    void    release();
+    void    setTouchDelegate(EGLTouchDelegate * pDelegate);
+    void    swapBuffers();
+    void    setViewPortInPoints(float x, float y, float w, float h);
+        
+    void touchesBegan(CCSet *set);
+    void touchesMoved(CCSet *set);
+    void touchesEnded(CCSet *set);
+    void touchesCancelled(CCSet *set);
+    
+    static CCEGLView& sharedOpenGLView();
+        
 private:
-    static UIAccelerometer* m_spUIAccelerometer;
+    EGLTouchDelegate *m_pDelegate;
 };
 
-}//namespace   cocos2d 
+}   // end of namespace   cocos2d
 
-#endif
+#endif	// end of __CC_EGLVIEW_IPHONE_H__

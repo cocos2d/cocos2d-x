@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#import "CCUIAccelerometerDelegate.h"
+#import "CCAccelerometerDelegate.h"
 #import <UIKit/UIKit.h>
 
 @interface AccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
@@ -35,20 +35,20 @@
 
 + (id) sharedAccelerometerDispather;
 - (id) init;
-- (void) addDelegate: (cocos2d::UIAccelerometerDelegate *) delegate;
-- (void) removeDelegate: (cocos2d::UIAccelerometerDelegate *) delegate;
+- (void) addDelegate: (cocos2d::CCAccelerometerDelegate *) delegate;
+- (void) removeDelegate: (cocos2d::CCAccelerometerDelegate *) delegate;
 
 @end
 
 
 @interface AccelerometerDelegateWrapper : NSObject {
-    cocos2d::UIAccelerometerDelegate *delegate_;
+    cocos2d::CCAccelerometerDelegate *delegate_;
 }
 
-@property(readwrite) cocos2d::UIAccelerometerDelegate *delegate_;
+@property(readwrite) cocos2d::CCAccelerometerDelegate *delegate_;
 
-+ (id) delegateWrapperWithDelegate:(cocos2d::UIAccelerometerDelegate *)delegate;
-- (id) initWithDelegate: (cocos2d::UIAccelerometerDelegate *)delegate;
-- (void) didAccelerate: (cocos2d::UIAcceleration *)acceleration;
++ (id) delegateWrapperWithDelegate:(cocos2d::CCAccelerometerDelegate *)delegate;
+- (id) initWithDelegate: (cocos2d::CCAccelerometerDelegate *)delegate;
+- (void) didAccelerate: (cocos2d::CCAcceleration *)acceleration;
 
 @end

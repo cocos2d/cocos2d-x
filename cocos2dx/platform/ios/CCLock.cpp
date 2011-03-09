@@ -21,21 +21,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __PLATFORM_IPHONE_PLATFORM_NSLOCK_H__
-#define __PLATFORM_IPHONE_PLATFORM_NSLOCK_H__
-
+#include "CCLock.h"
 namespace   cocos2d {
 
-class NSLock
+CCLock::CCLock(void)
 {
-public:
-	NSLock(void);
-	~NSLock(void);
+}
 
-	void lock(void);
-	void unlock(void);
-};
+CCLock::~CCLock(void)
+{
+
+}
+
+void CCLock::lock(void)
+{
+	
+}
+
+void CCLock::unlock(void)
+{
+	
+}
 }//namespace   cocos2d 
-
-#endif // __PLATFORM_IPHONE_PLATFORM_NSLOCK_H__

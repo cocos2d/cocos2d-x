@@ -26,13 +26,13 @@ THE SOFTWARE.
 #define __PLATFORM_IPHONE_CCFILE_UTILS_H__
 
 #include <string>
-#include "ccxCommon.h"
-#include "NSMutableDictionary.h"
+#include "CCCommon.h"
+#include "CCMutableDictionary.h"
 #include "FileUtils.h"
 namespace   cocos2d {
 
 //! @brief  Helper class to handle file operations
-class CCX_DLL CCFileUtils : public FileUtils
+class CC_DLL CCFileUtils : public FileUtils
 {
 public:
 
@@ -55,7 +55,7 @@ public:
     @param   pFileName  The file name of *.plist file
     @return  The NSDictionary pointer generated from the file
     */
-    static NSDictionary<std::string, NSObject*> *dictionaryWithContentsOfFile(const char *pFileName);
+    static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 
     /**
     @brief  Set the ResourcePath,we will find resource in this path
@@ -76,7 +76,7 @@ public:
      @returns NSString * without the HD suffix
      @since v0.99.5
      */
-    static ccxString& ccRemoveHDSuffixFromFile(ccxString& path);
+    static std::string& ccRemoveHDSuffixFromFile(std::string& path);
 	
     static const char* getResourcePath(void);
 };

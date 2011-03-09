@@ -22,30 +22,30 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "ccxApplication_ios.h"
+#import "CCApplication_ios.h"
 
 #import <UIKit/UIKit.h>
 
-#import "CGGeometry.h"
+#import "CCGeometry.h"
 #import "CCDirectorCaller.h"
 
 NS_CC_BEGIN;
 
-ccxApplication* ccxApplication::sm_pSharedApplication = 0;
+CCApplication* CCApplication::sm_pSharedApplication = 0;
 
-ccxApplication::ccxApplication()
+CCApplication::CCApplication()
 {
-    CCX_ASSERT(! sm_pSharedApplication);
+    CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-ccxApplication::~ccxApplication()
+CCApplication::~CCApplication()
 {
-    CCX_ASSERT(this == sm_pSharedApplication);
+    CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = 0;
 }
 
-int ccxApplication::run()
+int CCApplication::run()
 {
     if (initInstance() && applicationDidFinishLaunching()) 
     {
@@ -54,12 +54,12 @@ int ccxApplication::run()
     return 0;
 }
 
-void ccxApplication::setAnimationInterval(double interval)
+void CCApplication::setAnimationInterval(double interval)
 {
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
-ccxApplication::Orientation ccxApplication::setOrientation(Orientation eOritation)
+CCApplication::Orientation CCApplication::setOrientation(Orientation eOritation)
 {
     UIApplication * app = [UIApplication sharedApplication];
     UIInterfaceOrientation newOrientation;
@@ -88,7 +88,7 @@ ccxApplication::Orientation ccxApplication::setOrientation(Orientation eOritatio
     return eOritation;
 }
 
-void ccxApplication::statusBarFrame(cocos2d::CGRect * rect)
+void CCApplication::statusBarFrame(cocos2d::CCRect * rect)
 {
     rect->origin.x = [[UIApplication sharedApplication] statusBarFrame].origin.x;
     rect->origin.y = [[UIApplication sharedApplication] statusBarFrame].origin.y;
@@ -100,9 +100,9 @@ void ccxApplication::statusBarFrame(cocos2d::CGRect * rect)
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-ccxApplication& ccxApplication::sharedApplication()
+CCApplication& CCApplication::sharedApplication()
 {
-    CCX_ASSERT(sm_pSharedApplication);
+    CC_ASSERT(sm_pSharedApplication);
     return *sm_pSharedApplication;
 }
 

@@ -22,20 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCX_APPLICATION_IOS_H__
-#define __CCX_APPLICATION_IOS_H__
+#ifndef __CC_APPLICATION_IOS_H__
+#define __CC_APPLICATION_IOS_H__
 
-#include "ccxCommon.h"
+#include "CCCommon.h"
 
 NS_CC_BEGIN;
 
-class CGRect;
+class CCRect;
 
-class CCX_DLL ccxApplication
+class CC_DLL CCApplication
 {
 public:
-        ccxApplication();
-        virtual ~ccxApplication();
+        CCApplication();
+        virtual ~CCApplication();
         
         /**
          @brief	Implement for initialize OpenGL instance, set source path, etc...
@@ -89,7 +89,7 @@ public:
         /**
          @brief	Get status bar rectangle in EGLView window.
          */
-        void    statusBarFrame(CGRect * rect);
+        void    statusBarFrame(CCRect * rect);
         
         /**
          @brief	Run the message loop.
@@ -100,12 +100,12 @@ public:
          @brief	Get current applicaiton instance.
          @return Current application instance pointer.
          */
-        static ccxApplication& sharedApplication();
+        static CCApplication& sharedApplication();
         
 protected:
-        static ccxApplication * sm_pSharedApplication;
+        static CCApplication * sm_pSharedApplication;
 };
 
 NS_CC_END;
 
-#endif	// end of __CCX_APPLICATION_IOS_H__
+#endif	// end of __CC_APPLICATION_IOS_H__
