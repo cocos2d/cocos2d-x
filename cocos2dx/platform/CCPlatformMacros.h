@@ -49,4 +49,128 @@ It's new in cocos2d-x since v0.99.5
     #define CC_ENABLE_CACHE_TEXTTURE_DATA       0
 #endif
 
+
+// generic macros
+
+// namespace cocos2d {}
+#define NS_CC_BEGIN                     namespace cocos2d {
+#define NS_CC_END                       }
+#define USING_NS_CC                     using namespace cocos2d
+
+/** CC_PROPERTY_READONLY is used to declare a protected variable.
+ We can use getter to read the variable.
+ @param varType : the type of variable.
+ @param varName : variable name.
+ @param funName : "get + funName" is the name of the getter.
+ @warning : The getter is a public virtual function, you should rewrite it first.
+ The variables and methods declared after CC_PROPERTY_READONLY are all public.
+ If you need protected or private, please declare.
+ */
+#define CC_PROPERTY_READONLY(varType, varName, funName)\
+protected: varType varName;\
+public: virtual varType get##funName(void);
+
+/** CC_PROPERTY is used to declare a protected variable.
+ We can use getter to read the variable, and use the setter to change the variable.
+ @param varType : the type of variable.
+ @param varName : variable name.
+ @param funName : "get + funName" is the name of the getter.
+ "set + funName" is the name of the setter.
+ @warning : The getter and setter are public virtual functions, you should rewrite them first.
+ The variables and methods declared after CC_PROPERTY are all public.
+ If you need protected or private, please declare.
+ */
+#define CC_PROPERTY(varType, varName, funName)\
+protected: varType varName;\
+public: virtual varType get##funName(void);\
+public: virtual void set##funName(varType var);
+
+/** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
+ We can use getter to read the variable.
+ @param varType : the type of variable.
+ @param varName : variable name.
+ @param funName : "get + funName" is the name of the getter.
+ @warning : The getter is a public inline function.
+ The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
+ If you need protected or private, please declare.
+ */
+#define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
+protected: varType varName;\
+public: inline varType get##funName(void) const { return varName; }
+
+/** CC_SYNTHESIZE is used to declare a protected variable.
+ We can use getter to read the variable, and use the setter to change the variable.
+ @param varType : the type of variable.
+ @param varName : variable name.
+ @param funName : "get + funName" is the name of the getter.
+ "set + funName" is the name of the setter.
+ @warning : The getter and setter are public  inline functions.
+ The variables and methods declared after CC_SYNTHESIZE are all public.
+ If you need protected or private, please declare.
+ */
+#define CC_SYNTHESIZE(varType, varName, funName)\
+protected: varType varName;\
+public: inline varType get##funName(void) const { return varName; }\
+public: inline void set##funName(varType var){ varName = var; }
+
+#define CC_SAFE_DELETE(p)			if(p) { delete p; p = 0; }
+#define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] p; p = 0; }
+#define CC_SAFE_FREE(p)			if(p) { free(p); p = 0; }
+#define CC_SAFE_RELEASE(p)			if(p) { p->release(); }
+#define CC_SAFE_RELEASE_NULL(p)	if(p) { p->release(); p = 0; }
+#define CC_SAFE_RETAIN(p)			if(p) { p->retain(); }
+#define CC_BREAK_IF(cond)			if(cond) break;
+
+
+// cocos2d debug
+#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
+#define CCLOG(...)              do {} while (0)
+#define CCLOGINFO(...)          do {} while (0)
+#define CCLOGERROR(...)         do {} while (0)
+
+#elif COCOS2D_DEBUG == 1
+#define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOGINFO(format,...)   do {} while (0)
+
+#elif COCOS2D_DEBUG > 1
+#define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOGINFO(format,...)   cocos2d::CCLog(format, ##__VA_ARGS__)
+#endif // COCOS2D_DEBUG
+
+// shared library declartor
+#define CC_DLL                 
+
+// assertion
+#include <assert.h>
+#define CC_ASSERT(cond)                assert(cond)
+
+// platform depended macros
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
+    #undef CC_DLL
+    #if defined(_USRDLL)
+        #define CC_DLL     __declspec(dllexport)
+    #else 		/* use a DLL library */
+        #define CC_DLL     __declspec(dllimport)
+    #endif
+
+#endif  // CC_PLATFORM_WIN32
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE && defined(_TRANZDA_VM_))
+
+    #undef CC_DLL
+    #if defined(SS_MAKEDLL)
+        #define CC_DLL     __declspec(dllexport)
+    #else 		/* use a DLL library */
+        #define CC_DLL     __declspec(dllimport)
+    #endif
+
+#endif  // uphone VM
+
+// shared library declator for platform_support project
+#define CC_DLL_PS      CC_DLL
+
 #endif // __CC_PLATFORM_MACROS_H__

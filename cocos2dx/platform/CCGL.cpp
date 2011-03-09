@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ccxGL.h"
+#include "CCGL.h"
 
 #if defined(CC_PLATFORM_MOBILE)
 
