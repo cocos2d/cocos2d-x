@@ -51,11 +51,11 @@ public:
 	/// @endcond
 
     /**
-    @brief   Generate a NSDictionary pointer by file
+    @brief   Generate a CCDictionary pointer by file
     @param   pFileName  The file name of *.plist file
-    @return  The NSDictionary pointer generated from the file
+    @return  The CCDictionary pointer generated from the file
     */
-	static NSDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName);
+	static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 
     /**
     @brief  Set the ResourcePath,we will find resource in this path
