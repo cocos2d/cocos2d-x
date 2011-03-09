@@ -293,8 +293,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             {
                 bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
             }
-            else if (pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_UP ||
-                     pEvent->sParam1 == SYS_KEY_SOFTKEY_LEFT_LONG)
+            else if (pEvent->sParam1 == KEY_COMMAND_MAINMENU)
             {
                 bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
             }
@@ -309,7 +308,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
                 TG3_SENSOR_TYPE_ACCELEROMETER == data.sensorMask)
             {
                 // convert the data to iphone format
-                UIAcceleration AccValue;
+                CCAcceleration AccValue;
                 AccValue.x = -(data.acceleration.x / TG3_GRAVITY_EARTH);
                 AccValue.y = -(data.acceleration.y / TG3_GRAVITY_EARTH);
                 AccValue.z = -(data.acceleration.z / TG3_GRAVITY_EARTH);
