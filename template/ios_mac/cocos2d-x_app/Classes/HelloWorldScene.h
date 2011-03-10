@@ -5,8 +5,9 @@
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
-#ifndef _HELLOWORLD_LAYER_H_
-#define _HELLOWORLD_LAYER_H_
+
+#ifndef __HELLOWORLD_SCENE_H__
+#define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
 
@@ -20,10 +21,10 @@ public:
 	static cocos2d::CCScene* scene();
 	
 	// a selector callback
-	virtual void menuCloseCallback(NSObject* pSender);
+	virtual void menuCloseCallback(CCObject* pSender);
 
 	// implement the "static node()" method manually
 	LAYER_NODE_FUNC(HelloWorld);
 };
 
-#endif // _HELLOWORLD_SCENE_H_
+#endif // __HELLOWORLD_SCENE_H__
