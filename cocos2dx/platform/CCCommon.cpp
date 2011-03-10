@@ -103,11 +103,22 @@ NS_CC_END;
  ***************************************************/
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
+#include <stdarg.h>
+#include <stdio.h>
+
 NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
 {
-                // todo
+    printf("Cocos2d: ");
+    char szBuf[MAX_LEN];
+    
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsprintf(szBuf, pszFormat, ap);
+    va_end(ap);
+    printf("%s", szBuf);
+    printf("\n");
 }
 
 NS_CC_END;
