@@ -25,6 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -41,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\include;..\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\include;.."
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
+				CommandLine="if not exist $(OutDir) mkdir $(OutDir)&#x0D;&#x0A;xcopy /Y /Q $(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.* $(OutDir)"
 			/>
 			<Tool
 				Name="VCLinkerTool"
@@ -68,7 +70,7 @@
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames="MSVCRT.lib;LIBCMTD.lib"
+				IgnoreDefaultLibraryNames=" "
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
@@ -106,6 +108,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -121,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)platform_support\include&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\iconv&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\zlib&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libpng&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)platform_support\third_party\win32\OGLES&quot;;..\include;..\"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\include;.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -138,13 +141,15 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
+				CommandLine="if not exist $(OutDir) mkdir $(OutDir)&#x0D;&#x0A;xcopy /Y /Q $(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.* $(OutDir)"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib libPlatformSupport.lib"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
+				IgnoreDefaultLibraryNames=" "
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

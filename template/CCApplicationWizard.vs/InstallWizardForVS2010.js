@@ -223,7 +223,5 @@ function main() {
         return;
     }
 
-    if (! bQuiet) {
-        WScript.Echo("App Wizard successfully installed!");
-    }
+    EchoError(bQuiet, "App Wizard successfully installed for VS2010!");
 }
