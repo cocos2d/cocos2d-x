@@ -181,7 +181,7 @@ function AddConfigurations(proj, strProjectName) {
 
             // Additional Inlcude Directories
             var strAddIncludeDir = '.;.\\win32;.\\Classes';
-            strAddIncludeDir += ';..\\cocos2dx\\include';
+            strAddIncludeDir += ';..\\cocos2dx;..\\cocos2dx\\include';
             strAddIncludeDir += ';..\\cocos2dx\\platform';
             strAddIncludeDir += ';..\\cocos2dx\\platform\\third_party\\win32\\OGLES';
             
