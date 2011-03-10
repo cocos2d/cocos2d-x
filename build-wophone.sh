@@ -8,11 +8,6 @@ make -f Makefile.ARM clean
 make -f Makefile.ARM all
 popd
 
-pushd ./platform_support/proj.wophone
-make -f Makefile.ARM clean
-make -f Makefile.ARM all
-popd
-
 pushd ./cocos2dx/proj.wophone
 make -f Makefile.ARM clean
 make -f Makefile.ARM all

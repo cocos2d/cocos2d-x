@@ -12,7 +12,7 @@ OUTPUT_FILENAME = libCocosDenshionStatic.a
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
 include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
 
-DEFINES += -DCCX_UNDER_WOPHONE \
+DEFINES += -DCC_UNDER_WOPHONE \
           -D__TG3_PURE_DLL__ \
           -DUSE_FILE32API
 INCLUDE_PATH += -I../ \

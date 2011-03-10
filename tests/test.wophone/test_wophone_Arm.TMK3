@@ -29,7 +29,7 @@ INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP_Arm.TMK3		;TOPS±ê×¼Ó¦ÓÃ£¬°üÀ
 ;PRE_DEFINE=USE_MTAPI=1			;Ê¹ÓÃ MTAPI ¿â£¬´ËÊ±Éú³ÉµÄ Makefile »á×Ô¶¯Á¬½ÓÓÐ¹ØµÄLIB
 
 ;C¡¢C++Ô¤¶¨Òåºê£¬¿ÉÒÔÊ¹ÓÃ¶à¸öDEFINES´®£¬Ò²¿ÉÒÔÊ¹ÓÃDEFINES1¡¢DEFINES2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
-DEFINES=-DCCX_UNDER_WOPHONE		;ÕâÀïÌîÈëÓ¦ÓÃµÄ×Ô¶¨Òåºê¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¶¨Òå»á×Ô¶¯°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄ¶¨Òå¼´¿É
+DEFINES=-DCC_UNDER_WOPHONE		;ÕâÀïÌîÈëÓ¦ÓÃµÄ×Ô¶¨Òåºê¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¶¨Òå»á×Ô¶¯°üº¬£¬¹Ê´ËÕâÀï½ö½ö°üº¬Ó¦ÓÃ×Ô¼ºÌØÓÐµÄ¶¨Òå¼´¿É
 ;DEFINES=-D__TG3_PURE_DLL__		;Éú³ÉµÄÊÇ´¿¶¯Ì¬¿â£¨ÒâË¼ÊÇ£º²»ÊÇTOPSÓ¦ÓÃ£¬µ«¿ÉÒÔÊÇTCOM×é¼þ£©
 ;DEFINES=-D__TCOM_SUPPORT__		;Éú³ÉµÄÊÇTCOM×é¼þ£¨×¢Òâ£ºTOPSÓ¦ÓÃÒ²¿ÉÒÔÍ¬Ê±ÊÇTCOM×é¼þ£©
 
@@ -37,8 +37,10 @@ DEFINES=-DCCX_UNDER_WOPHONE		;ÕâÀïÌîÈëÓ¦ÓÃµÄ×Ô¶¨Òåºê¡£×¢Òâ£ºITOPS×Ô¼ºµÄËùÐè¶¨Òå»
 INCLUDE_PATH =-I../ -I../Res \
 INCLUDE_PATH=-I../../cocos2dx \
 INCLUDE_PATH=-I../../cocos2dx/include \
+INCLUDE_PATH=-I../../cocos2dx/platform \
 INCLUDE_PATH=-I../../platform_support/include \
 INCLUDE_PATH=-I../../chipmunk/include/chipmunk \
+INCLUDE_PATH=-I../../CocosDenshion/include \
 INCLUDE_PATH=-I../../ \
 INCLUDE_PATH=-I../tests
 
@@ -60,5 +62,5 @@ INCLUDEFILE=
 ;¿ÉÒÔÊ¹ÓÃ¶à¸öEXCLUDEFILE´®£¬Ò²¿ÉÒÔÊ¹ÓÃEXCLUDEFILE1¡¢EXCLUDEFILE2µÈ·½Ê½£¬MakeFileÖÐÒÀ¾Ý³öÏÖË³Ðò(²»ÊÇÊý×Ö´óÐ¡)ÅÅÁÐ
 EXCLUDEFILE=./framework.win32
 EXCLUDEFILE=./test.android
-EXCLUDEFILE=./test.iphone
-EXCLUDEFILE=./proj.win32
+EXCLUDEFILE=./test.ios
+EXCLUDEFILE=./test.win32
