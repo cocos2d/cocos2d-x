@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "png.h"
 #include <string>
 
-#define  QGLOBAL_H        // defined for uphone
+#define  QGLOBAL_H        // defined for wophone
 #include "jpeglib.h"
 #undef   QGLOBAL_H
 
@@ -329,8 +329,8 @@ NS_CC_END;
 #include "win32/CCImage_win32.cpp"
 #endif 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
-#include "uphone/CCImage_uphone.cpp"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
+#include "wophone/CCImage_wophone.cpp"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

@@ -22,21 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_APPLICATION_PLATFORM_H__
-#define __CC_APPLICATION_PLATFORM_H__
+#ifndef __CCX_COMMON_WOPHONE__
+#define __CCX_COMMON_WOPHONE__
 
-#include "CCPlatformConfig.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "win32/CCApplication_win32.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "android/CCApplication_android.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    # include "ios/CCApplication_ios.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-    #include "wophone/CCApplication_wophone.h"
+#if defined(_WIN32)
+    #if defined(SS_MAKEDLL)
+    #define CCX_DLL     __declspec(dllexport)
+    #elif defined(SS_IGNORE_EXPORT)
+    #define CCX_DLL
+    #else 		/* use a DLL library */
+    #define CCX_DLL     __declspec(dllimport)
+    #endif
 #else
-    #error
-#endif
+    #if defined(SS_SHARED)
+    #define CCX_DLL     __attribute__((visibility("default")))
+    #elif defined(SS_IGNORE_EXPORT)
+    #define CCX_DLL
+    #else
+    #define CCX_DLL
+    #endif
+#endif 
 
-#endif	// __CC_APPLICATION_PLATFORM_H__
+#endif	// end of __CCX_COMMON_WOPHONE__

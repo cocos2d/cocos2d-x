@@ -1,0 +1,187 @@
+
+############################################################################
+#
+#   Makefile for building : Box2D_Arm.TMK3
+#   Created by TMK3_V2.3, please do not modify.
+#
+#############################################################################
+
+TO_PROJECT_ROOT = ../../../PRJ_TG3
+OUTPUT_FILENAME = libbox2d.so
+
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_DynamicLib.ARM
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
+
+DEFINES += -DCCX_UNDER_WOPHONE
+INCLUDE_PATH += -I../ -I../../
+
+CXX_FLAGS += -fvisibility=default
+
+OBJECTS_DIR = ./Debug-ARM
+DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
+TARGET = $(DESTDIR)/$(OUTPUT_FILENAME)
+
+DEL_FILE = rm -f
+MKDIR = mkdir -p
+
+first: all
+
+OBJECTS = \
+	$(OBJECTS_DIR)/b2BroadPhase.o \
+	$(OBJECTS_DIR)/b2CollideCircle.o \
+	$(OBJECTS_DIR)/b2CollidePolygon.o \
+	$(OBJECTS_DIR)/b2Collision.o \
+	$(OBJECTS_DIR)/b2Distance.o \
+	$(OBJECTS_DIR)/b2DynamicTree.o \
+	$(OBJECTS_DIR)/b2TimeOfImpact.o \
+	$(OBJECTS_DIR)/b2CircleShape.o \
+	$(OBJECTS_DIR)/b2PolygonShape.o \
+	$(OBJECTS_DIR)/b2BlockAllocator.o \
+	$(OBJECTS_DIR)/b2Math.o \
+	$(OBJECTS_DIR)/b2Settings.o \
+	$(OBJECTS_DIR)/b2StackAllocator.o \
+	$(OBJECTS_DIR)/b2Body.o \
+	$(OBJECTS_DIR)/b2ContactManager.o \
+	$(OBJECTS_DIR)/b2Fixture.o \
+	$(OBJECTS_DIR)/b2Island.o \
+	$(OBJECTS_DIR)/b2World.o \
+	$(OBJECTS_DIR)/b2WorldCallbacks.o \
+	$(OBJECTS_DIR)/b2CircleContact.o \
+	$(OBJECTS_DIR)/b2Contact.o \
+	$(OBJECTS_DIR)/b2ContactSolver.o \
+	$(OBJECTS_DIR)/b2PolygonAndCircleContact.o \
+	$(OBJECTS_DIR)/b2PolygonContact.o \
+	$(OBJECTS_DIR)/b2TOISolver.o \
+	$(OBJECTS_DIR)/b2DistanceJoint.o \
+	$(OBJECTS_DIR)/b2FrictionJoint.o \
+	$(OBJECTS_DIR)/b2GearJoint.o \
+	$(OBJECTS_DIR)/b2Joint.o \
+	$(OBJECTS_DIR)/b2LineJoint.o \
+	$(OBJECTS_DIR)/b2MouseJoint.o \
+	$(OBJECTS_DIR)/b2PrismaticJoint.o \
+	$(OBJECTS_DIR)/b2PulleyJoint.o \
+	$(OBJECTS_DIR)/b2RevoluteJoint.o \
+	$(OBJECTS_DIR)/b2WeldJoint.o
+
+ADD_OBJECTS += 
+
+$(OBJECTS_DIR) :
+	$(MKDIR) $(OBJECTS_DIR)
+
+$(DESTDIR) :
+	$(MKDIR) $(DESTDIR)
+
+all : $(OBJECTS_DIR) $(DESTDIR) $(TARGET)
+
+$(TARGET) : $(OBJECTS)
+	$(LINK) $(LINK_FLAGS) -o $(TARGET) $(SYS_OBJECTS) $(OBJECTS) $(ADD_OBJECTS) $(LIBS) $(SYS_LIBS)
+
+clean : 
+	-$(DEL_FILE) $(OBJECTS)
+	-$(DEL_FILE) $(TARGET)
+
+$(OBJECTS_DIR)/b2BroadPhase.o : ../Collision/b2BroadPhase.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2BroadPhase.o ../Collision/b2BroadPhase.cpp
+
+$(OBJECTS_DIR)/b2CollideCircle.o : ../Collision/b2CollideCircle.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2CollideCircle.o ../Collision/b2CollideCircle.cpp
+
+$(OBJECTS_DIR)/b2CollidePolygon.o : ../Collision/b2CollidePolygon.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2CollidePolygon.o ../Collision/b2CollidePolygon.cpp
+
+$(OBJECTS_DIR)/b2Collision.o : ../Collision/b2Collision.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Collision.o ../Collision/b2Collision.cpp
+
+$(OBJECTS_DIR)/b2Distance.o : ../Collision/b2Distance.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Distance.o ../Collision/b2Distance.cpp
+
+$(OBJECTS_DIR)/b2DynamicTree.o : ../Collision/b2DynamicTree.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2DynamicTree.o ../Collision/b2DynamicTree.cpp
+
+$(OBJECTS_DIR)/b2TimeOfImpact.o : ../Collision/b2TimeOfImpact.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2TimeOfImpact.o ../Collision/b2TimeOfImpact.cpp
+
+$(OBJECTS_DIR)/b2CircleShape.o : ../Collision/Shapes/b2CircleShape.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2CircleShape.o ../Collision/Shapes/b2CircleShape.cpp
+
+$(OBJECTS_DIR)/b2PolygonShape.o : ../Collision/Shapes/b2PolygonShape.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2PolygonShape.o ../Collision/Shapes/b2PolygonShape.cpp
+
+$(OBJECTS_DIR)/b2BlockAllocator.o : ../Common/b2BlockAllocator.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2BlockAllocator.o ../Common/b2BlockAllocator.cpp
+
+$(OBJECTS_DIR)/b2Math.o : ../Common/b2Math.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Math.o ../Common/b2Math.cpp
+
+$(OBJECTS_DIR)/b2Settings.o : ../Common/b2Settings.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Settings.o ../Common/b2Settings.cpp
+
+$(OBJECTS_DIR)/b2StackAllocator.o : ../Common/b2StackAllocator.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2StackAllocator.o ../Common/b2StackAllocator.cpp
+
+$(OBJECTS_DIR)/b2Body.o : ../Dynamics/b2Body.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Body.o ../Dynamics/b2Body.cpp
+
+$(OBJECTS_DIR)/b2ContactManager.o : ../Dynamics/b2ContactManager.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2ContactManager.o ../Dynamics/b2ContactManager.cpp
+
+$(OBJECTS_DIR)/b2Fixture.o : ../Dynamics/b2Fixture.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Fixture.o ../Dynamics/b2Fixture.cpp
+
+$(OBJECTS_DIR)/b2Island.o : ../Dynamics/b2Island.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Island.o ../Dynamics/b2Island.cpp
+
+$(OBJECTS_DIR)/b2World.o : ../Dynamics/b2World.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2World.o ../Dynamics/b2World.cpp
+
+$(OBJECTS_DIR)/b2WorldCallbacks.o : ../Dynamics/b2WorldCallbacks.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2WorldCallbacks.o ../Dynamics/b2WorldCallbacks.cpp
+
+$(OBJECTS_DIR)/b2CircleContact.o : ../Dynamics/Contacts/b2CircleContact.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2CircleContact.o ../Dynamics/Contacts/b2CircleContact.cpp
+
+$(OBJECTS_DIR)/b2Contact.o : ../Dynamics/Contacts/b2Contact.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Contact.o ../Dynamics/Contacts/b2Contact.cpp
+
+$(OBJECTS_DIR)/b2ContactSolver.o : ../Dynamics/Contacts/b2ContactSolver.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2ContactSolver.o ../Dynamics/Contacts/b2ContactSolver.cpp
+
+$(OBJECTS_DIR)/b2PolygonAndCircleContact.o : ../Dynamics/Contacts/b2PolygonAndCircleContact.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2PolygonAndCircleContact.o ../Dynamics/Contacts/b2PolygonAndCircleContact.cpp
+
+$(OBJECTS_DIR)/b2PolygonContact.o : ../Dynamics/Contacts/b2PolygonContact.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2PolygonContact.o ../Dynamics/Contacts/b2PolygonContact.cpp
+
+$(OBJECTS_DIR)/b2TOISolver.o : ../Dynamics/Contacts/b2TOISolver.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2TOISolver.o ../Dynamics/Contacts/b2TOISolver.cpp
+
+$(OBJECTS_DIR)/b2DistanceJoint.o : ../Dynamics/Joints/b2DistanceJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2DistanceJoint.o ../Dynamics/Joints/b2DistanceJoint.cpp
+
+$(OBJECTS_DIR)/b2FrictionJoint.o : ../Dynamics/Joints/b2FrictionJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2FrictionJoint.o ../Dynamics/Joints/b2FrictionJoint.cpp
+
+$(OBJECTS_DIR)/b2GearJoint.o : ../Dynamics/Joints/b2GearJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2GearJoint.o ../Dynamics/Joints/b2GearJoint.cpp
+
+$(OBJECTS_DIR)/b2Joint.o : ../Dynamics/Joints/b2Joint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2Joint.o ../Dynamics/Joints/b2Joint.cpp
+
+$(OBJECTS_DIR)/b2LineJoint.o : ../Dynamics/Joints/b2LineJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2LineJoint.o ../Dynamics/Joints/b2LineJoint.cpp
+
+$(OBJECTS_DIR)/b2MouseJoint.o : ../Dynamics/Joints/b2MouseJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2MouseJoint.o ../Dynamics/Joints/b2MouseJoint.cpp
+
+$(OBJECTS_DIR)/b2PrismaticJoint.o : ../Dynamics/Joints/b2PrismaticJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2PrismaticJoint.o ../Dynamics/Joints/b2PrismaticJoint.cpp
+
+$(OBJECTS_DIR)/b2PulleyJoint.o : ../Dynamics/Joints/b2PulleyJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2PulleyJoint.o ../Dynamics/Joints/b2PulleyJoint.cpp
+
+$(OBJECTS_DIR)/b2RevoluteJoint.o : ../Dynamics/Joints/b2RevoluteJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2RevoluteJoint.o ../Dynamics/Joints/b2RevoluteJoint.cpp
+
+$(OBJECTS_DIR)/b2WeldJoint.o : ../Dynamics/Joints/b2WeldJoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/b2WeldJoint.o ../Dynamics/Joints/b2WeldJoint.cpp
+

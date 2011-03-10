@@ -11,9 +11,9 @@ cocos2d-0.99.5-x-0.7.2 @ Jan.26,2011
     - add CocosDenshion::SimpleAudioEngine implement on android
     - the engine can adjust the apk filename automatically
     - the engine will not crash at surface recreate, especially at background-to-foreground switching
- [uphone]
+ [wophone]
     - switch the game to background, then press power key will not cause the background music play again
-    - remove the methods of using resouce map in cocos2d-uphone & SimpleAudioEngine. 
+    - remove the methods of using resouce map in cocos2d-wophone & SimpleAudioEngine. 
       Only zip resource is recommended and suppported.
     - can auto find the installed path of your game, and load zip resource file from the current folder. 
       No absolute path in code any more. Do this to support installing games to micro-SD card
@@ -21,7 +21,7 @@ cocos2d-0.99.5-x-0.7.2 @ Jan.26,2011
 
 cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
  [all platforms]
-    - add CCKeypadDelegate class, which enable CCLayer to respond "back" key in uphone & android
+    - add CCKeypadDelegate class, which enable CCLayer to respond "back" key in wophone & android
     - Add namespace for CocosDenshion
     - fix compile errors when enable CC_XXX_DEBUG_DRAW switchs in ccConfig.h
     - fix memory leaks on each platform
@@ -36,7 +36,7 @@ cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
     - Add support of loading textureImageData from the ParticleDesign plist file
     - Fix more then 3000 complie warnings
     - You can try to use this version to develop your iOS game now. It's much more stable than the previous version
- [uphone]  
+ [wophone]  
     - Games can easily read resources from zip file now. This will drastically reduce the memory usage
     - Add power management: pause the message loop when cocos2d-x game is switched to background or backlight down
     - Multi-touch support
@@ -47,12 +47,12 @@ cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
 cocos2d-0.99.4-x-0.7.0 @ Nov.29,2010
 * cocos2d-iphone-cpp port ready! include accelerometer & multi-touch
 * refactor the directory structure of HelloWorld & tests
-* cocos2d-uphone supports accelerometer
-* add cocos2d-x wizard for cocos2d-win32 & cocos2d-uphone for VisualStudio2008
-* jump out a message box when load texture failed (win32 & uphone)
+* cocos2d-wophone supports accelerometer
+* add cocos2d-x wizard for cocos2d-win32 & cocos2d-wophone for VisualStudio2008
+* jump out a message box when load texture failed (win32 & wophone)
 * more details: 	http://www.cocos2d-x.org/versions/show/4
 
-cocos2d-0.99.4-uphone-win32-stable-rc1
+cocos2d-0.99.4-wophone-win32-stable-rc1
 	http://www.cocos2d-x.org/versions/show/1
 	http://www.cocos2d-x.org/versions/show/2
 	http://www.cocos2d-x.org/versions/show/3

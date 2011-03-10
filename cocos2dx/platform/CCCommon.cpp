@@ -53,9 +53,9 @@ NS_CC_END;
 #endif  // CC_PLATFORM_WIN32
 
 /****************************************************
- * uphone
+ * wophone
  ***************************************************/
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 #include "TG3.h"
 
 #define LOG_FILE_PATH   "/NEWPLUS/TDA_DATA/UserData/Cocos2dLog.txt"
@@ -96,7 +96,7 @@ void CCLog(const char * pszFormat, ...)
 
 NS_CC_END;
 
-#endif  // CC_PLATFORM_UPHONE
+#endif  // CC_PLATFORM_WOPHONE
 
 /****************************************************
  * ios

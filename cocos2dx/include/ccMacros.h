@@ -167,7 +167,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
  @since v0.99.4
  */
 
-//---- todo: replace with uphone window
+//---- todo: replace with wophone window
 
 /*
 #define CC_DIRECTOR_INIT()																	\
@@ -201,7 +201,7 @@ do	{																							\
   @since v0.99.4
   */
 
-//---- todo: replace with uphone window
+//---- todo: replace with wophone window
 
 
 // #define CC_DIRECTOR_END()										\

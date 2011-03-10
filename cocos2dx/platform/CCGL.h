@@ -86,7 +86,7 @@ THE SOFTWARE.
 #include <GLES/glext.h>
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_UPHONE)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #endif
