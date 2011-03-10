@@ -45,7 +45,7 @@ unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMo
         *pSize = ftell(fp);
         fseek(fp,0,SEEK_SET);
         Buffer = new unsigned char[*pSize];
-        fread(Buffer,sizeof(unsigned char), *pSize,fp);
+        *pSize = fread(Buffer,sizeof(unsigned char), *pSize,fp);
         fclose(fp);
     } while (0);
 
