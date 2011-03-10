@@ -21,9 +21,9 @@ public:
     static cocos2d::CCScene* scene();
     
     // adds a new sprite at a given coordinate
-    void addNewSpriteWithCoords(cocos2d::CGPoint p);
+    void addNewSpriteWithCoords(cocos2d::CCPoint p);
     virtual void draw();
-    virtual void ccTouchesEnded(cocos2d::NSSet* touches, cocos2d::UIEvent* event);
+    virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::UIEvent* event);
     void tick(cocos2d::ccTime dt);
     
 private:
