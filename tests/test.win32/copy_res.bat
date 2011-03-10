@@ -1,2 +1,2 @@
 echo off
-xcopy /E /Y ..\Res\*.* %1 
+xcopy /E /Y /Q ..\Res\*.* %1 

@@ -7,10 +7,10 @@ echo.
 
 if defined VS90COMNTOOLS (
     set VSVARS="%VS90COMNTOOLS%vsvars32.bat"
-) else (
-    if defined VS100COMNTOOLS (
-        set VSVARS="%VS100COMNTOOLS%vsvars32.bat"
-    )
+    set VC_VER=90
+) else if defined VS100COMNTOOLS (
+    set VSVARS="%VS100COMNTOOLS%vsvars32.bat"
+    set VC_VER=100
 )
 
 if not defined VSVARS (
@@ -24,7 +24,14 @@ echo.*/
 echo.
 
 call %VSVARS%
-vcbuild cocos2d-win32.sln $ALL
+if %VC_VER%==90 (
+    vcbuild cocos2d-win32.vc2008.sln $ALL
+) else if %VC_VER%==100 (
+    msbuild cocos2d-win32.vc2010.sln /p:Configuration="Debug" /p:Configuration="Release"
+) else (
+    echo Script error.
+    goto ERROR
+)
 
 echo./*
 echo.* Check the cocos2d-win32 application "tests.exe" ...

@@ -69,8 +69,8 @@
       <DisableSpecificWarnings>4996;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreLinkEvent>
-      <Command>if not exist $(OutDir) mkdir $(OutDir)
-xcopy /Y /Q $(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.* $(OutDir)</Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -104,8 +104,8 @@ xcopy /Y /Q $(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.* $(Ou
       <DisableSpecificWarnings>4996;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreLinkEvent>
-      <Command>if not exist $(OutDir) mkdir $(OutDir)
-xcopy /Y /Q $(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.* $(OutDir)</Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
