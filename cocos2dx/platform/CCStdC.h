@@ -54,6 +54,12 @@ THE SOFTWARE.
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_)
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
+
+#include "TG3.h"
+
+#endif  // CC_PLATFORM_WOPHONE
+
 #include <math.h>
 
 #include <string.h>
@@ -80,12 +86,6 @@ struct timezone
 int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CC_PLATFORM_WIN32
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-
-#include "TG3.h"
-
-#endif  // CC_PLATFORM_WOPHONE
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
