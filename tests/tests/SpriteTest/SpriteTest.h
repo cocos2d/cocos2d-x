@@ -240,7 +240,7 @@ private:
 class SpriteFrameAliasNameTest : public SpriteTestDemo
 {
 public:
-    SpriteFrameAliasNameTest();
+    virtual void onEnter();
     ~SpriteFrameAliasNameTest();
     virtual std::string title();
     virtual std::string subtitle();
