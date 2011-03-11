@@ -143,6 +143,17 @@ void HiResDemo::backCallback(CCObject* pSender)
 ///////////////////////////////////
 void HiResTest1::onEnter()
 {
+    CCDirector::sharedDirector()->enableRetinaDisplay(false);
+    // Because BackToMainMenuLayer maybe addChild to scene again by HiResTest2,
+    // we add it again to make it in the right place.
+    // The right way is calling enableRetinaDisplay before all scene and layer.
+    CCScene * pScene = (CCScene*)getParent();
+    CCLayer*  pLayer = (CCLayer*)pScene->getChildByTag(54321);
+    pScene->removeChild(pLayer, true);
+    pLayer = new BackToMainMenuLayer;
+    pScene->addChild(pLayer, 1000, 54321);
+    pLayer->release();
+
     HiResDemo::onEnter();
 
     CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -169,6 +180,18 @@ std::string HiResTest1::subtitle()
 ///////////////////////////////////
 void HiResTest2::onEnter()
 {
+    CCDirector::sharedDirector()->enableRetinaDisplay(true);
+
+    // Because BackToMainMenuLayer has been addChild to scene,
+    // we must add it again.
+    // The right way is calling enableRetinaDisplay before all scene and layer.
+    CCScene * pScene = (CCScene*)getParent();
+    CCLayer*  pLayer = (CCLayer*)pScene->getChildByTag(54321);
+    pScene->removeChild(pLayer, true);
+    pLayer = new BackToMainMenuLayer;
+    pScene->addChild(pLayer, 1000, 54321);
+    pLayer->release();
+
     HiResDemo::onEnter();
 
     CCSize size = CCDirector::sharedDirector()->getWinSize();
