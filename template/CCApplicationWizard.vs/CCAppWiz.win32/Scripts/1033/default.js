@@ -276,7 +276,7 @@ function AddConfigurations(proj, strProjectName) {
             // Post-build settings
             var PostBuildTool = config.Tools("VCPostBuildEventTool");
             PostBuildTool.Description = "Performing copy resource from Resource to OutDir...";
-            PostBuildTool.CommandLine = "copy /Y \"$(ProjectDir)Resource\\*.*\" \"$(OutDir)\"";
+            PostBuildTool.CommandLine = "xcopy /E /Q /Y \"$(ProjectDir)Resource\\*.*\" \"$(OutDir)\"";
         }
     }
     catch (e) {
