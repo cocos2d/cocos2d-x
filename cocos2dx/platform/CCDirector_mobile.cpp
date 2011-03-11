@@ -790,12 +790,11 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
 		return false;
 	}
 
-	///@todo SD device iphone specific
-// 	if ([[UIScreen mainScreen] scale] == 1.0)
-// 		return NO;
-
 	float newScale = (float)(enabled ? 2 : 1);
 	setContentScaleFactor(newScale);
+
+    // release cached texture
+    CCTextureCache::purgeSharedTextureCache();
 
 #if CC_DIRECTOR_FAST_FPS
     if (m_pFPSLabel)

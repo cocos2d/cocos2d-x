@@ -184,9 +184,10 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     std::string pathKey = path;
 	CCFileUtils::ccRemoveHDSuffixFromFile(pathKey);
 
+    pathKey = CCFileUtils::fullPathFromRelativePath(pathKey.c_str());
 	texture = m_pTextures->objectForKey(pathKey);
 
-    std::string fullpath(CCFileUtils::fullPathFromRelativePath(path));
+    std::string fullpath = pathKey; // (CCFileUtils::fullPathFromRelativePath(path));
 	if( ! texture ) 
 	{
 		std::string lowerCase(path);
