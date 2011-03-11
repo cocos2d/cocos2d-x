@@ -279,7 +279,6 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             POINT pt = {LOWORD(lParam), HIWORD(lParam)};
             if (PtInRect(&m_rcViewPort, pt))
             {
-                CCLog("mlbd:(%d, %d)", pt.x, pt.y);
                 m_bCaptured = true;
                 m_pTouch->SetTouchInfo(0, (float)(pt.x - m_rcViewPort.left) / m_fScreenScaleFactor,
                     (float)(pt.y - m_rcViewPort.top) / m_fScreenScaleFactor);
@@ -506,7 +505,15 @@ bool CCEGLView::canSetContentScaleFactor()
 void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 {
     m_fScreenScaleFactor = contentScaleFactor;
-    resize((int)(m_tSizeInPoints.cx * contentScaleFactor), (int)(m_tSizeInPoints.cy * contentScaleFactor));
+    if (m_bOrientationReverted)
+    {
+        resize((int)(m_tSizeInPoints.cy * contentScaleFactor), (int)(m_tSizeInPoints.cx * contentScaleFactor));
+    }
+    else
+    {
+        resize((int)(m_tSizeInPoints.cx * contentScaleFactor), (int)(m_tSizeInPoints.cy * contentScaleFactor));
+    }
+    centerWindow();
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()

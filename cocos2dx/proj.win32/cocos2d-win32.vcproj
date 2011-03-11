@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist $(OutDir) mkdir $(OutDir)&#x0D;&#x0A;xcopy /Y /Q $(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.* $(OutDir)"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
@@ -141,7 +141,7 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist $(OutDir) mkdir $(OutDir)&#x0D;&#x0A;xcopy /Y /Q $(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.* $(OutDir)"
+				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
