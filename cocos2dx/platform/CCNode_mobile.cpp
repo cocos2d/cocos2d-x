@@ -458,7 +458,10 @@ CCRect CCNode::boundingBox()
 CCRect CCNode::boundingBoxInPixels()
 {
 	CCRect rect = CCRectMake(0, 0, m_tContentSizeInPixels.width, m_tContentSizeInPixels.height);
-	return CCRectApplyAffineTransform(rect, nodeToParentTransform());
+	rect = CCRectApplyAffineTransform(rect, nodeToParentTransform());
+    rect.origin.x *= CC_CONTENT_SCALE_FACTOR();
+    rect.origin.y *= CC_CONTENT_SCALE_FACTOR();
+    return rect;
 }
 
 
