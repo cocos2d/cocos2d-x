@@ -28,7 +28,7 @@ INCLUDE_TMK3=$(TO_PROJECT_ROOT)/MakeInclude/TG3_APP_Arm.TMK3    ;TOPS标准应�
 ;PRE_DEFINE=USE_MTAPI=1         ;使用 MTAPI 库，此时生成的 Makefile 会自动连接有关的LIB
 
 ;C、C++预定义宏，可以使用多个DEFINES串，也可以使用DEFINES1、DEFINES2等方式，MakeFile中依据出现顺序(不是数字大小)排列
-DEFINES=-DCC_UNDER_UPHONE      ;这里填入应用的自定义宏。注意：ITOPS自己的所需定义会自动包含，故此这里仅仅包含应用自己特有的定义即可
+DEFINES=-DCC_UNDER_WOPHONE      ;这里填入应用的自定义宏。注意：ITOPS自己的所需定义会自动包含，故此这里仅仅包含应用自己特有的定义即可
 ;DEFINES=-D__TG3_PURE_DLL__     ;生成的是纯动态库（意思是：不是TOPS应用，但可以是TCOM组件）
 [!if CC_USE_TCOM_SUPPORT]
 DEFINES=-D__TCOM_SUPPORT__      ;生成的是TCOM组件（注意：TOPS应用也可以同时是TCOM组件）
@@ -37,7 +37,7 @@ DEFINES=-D__TCOM_SUPPORT__      ;生成的是TCOM组件（注意：TOPS应用也
 [!endif]
 
 ;包含路径，可以使用多个INCLUDE_PATH串，也可以使用INCLUDE_PATH1、INCLUDE_PATH2等方式，MakeFile中依据出现顺序(不是数字大小)排列
-INCLUDE_PATH=-I ../../PRJ_TG3/Include/OpenGL -I../cocos2dx -I../cocos2dx/include
+INCLUDE_PATH=-I ../../PRJ_TG3/Include/OpenGL -I../cocos2dx -I../cocos2dx/include -I../cocos2dx/platform
 INCLUDE_PATH=-I. -I./Classes -I./wophone -I./wophone/Res                                ;默认本项目的路径
 [! if CC_USE_BOX2D]
 INCLUDE_PATH=-I../ -I../Box2D
