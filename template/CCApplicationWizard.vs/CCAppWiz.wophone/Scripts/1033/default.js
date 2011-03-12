@@ -103,7 +103,7 @@ function CreateCustomProject(strProjectName, strProjectPath) {
         if(WizardVersion >= 10.0)
             strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n  <PropertyGroup>\r\n    <ShowAllFiles>true</ShowAllFiles>\r\n  </PropertyGroup>\r\n</Project>";
         else
-            strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?><VisualStudioUserFile ProjectType=\"Visual C++\" Version=\"9.00\" ShowAllFiles=\"true\"></VisualStudioUserFile>";
+            strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?><VisualStudioUserFile ProjectType=\"Visual C++\" Version=\"9.00\" ShowAllFiles=\"true\"><Configurations><Configuration Name=\"Debug|Win32\"><DebugSettings Command=\"TG3_RunDLL.exe\" CommandArguments=\"$(TargetPath)\"/></Configuration></VisualStudioUserFile>";
         file.WriteLine(strUserValue);
         file.Close(); 
 
@@ -173,7 +173,7 @@ function AddConfigurations(proj, strProjectName) {
         // header files and libraries directories
         var strOutputDir = '../../PRJ_TG3/LIB/Win32Lib';
         var strCurIncludeDir = '..\\..\\PRJ_TG3\\Include;..\\..\\PRJ_TG3\\Include\\MTAPI;..\\..\\PRJ_TG3\\Include\\ThirdParty;..\\..\\PRJ_TG3\\Include\\TCOM;..\\..\\PRJ_TG3\\Include\\OpenGL';
-        strCurIncludeDir += ';.;.\\Classes;.\\wophone;.\\wophone\\Res;..\\cocos2dx;..\\cocos2dx\\include';
+        strCurIncludeDir += ';.;.\\Classes;.\\wophone;.\\wophone\\Res;..\\cocos2dx;..\\cocos2dx\\include;..\\cocos2dx\\platform';
 
         var strDefinitions = 'WIN32;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL';
         var strDependLibs = 'WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib';
