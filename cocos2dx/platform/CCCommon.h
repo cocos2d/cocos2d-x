@@ -55,7 +55,7 @@ struct ccxNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { d
 @brief	A simple scoped pointer.
 */
 template < class T, class D = ccxNewDeleter >
-class ccxScopedPtr   // noncopyable
+class CC_DLL ccxScopedPtr   // noncopyable
     : private D
 {
 public:
