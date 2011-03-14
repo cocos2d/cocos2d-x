@@ -224,9 +224,6 @@
 		BF31E3C212E979A200D4F513 /* Paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1B912E979A200D4F513 /* Paddle.cpp */; };
 		BF31E3C312E979A200D4F513 /* TouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1BB12E979A200D4F513 /* TouchesTest.cpp */; };
 		BF31E3C412E979A200D4F513 /* TransitionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1BE12E979A200D4F513 /* TransitionsTest.cpp */; };
-		BF31E3CA12E97A0600D4F513 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31E3C912E97A0600D4F513 /* AudioToolbox.framework */; };
-		BF31E3CC12E97A0600D4F513 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31E3CB12E97A0600D4F513 /* AVFoundation.framework */; };
-		BF31E3CE12E97A0600D4F513 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF31E3CD12E97A0600D4F513 /* OpenAL.framework */; };
 		BF835B2A13276C7900F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588A13276C7700F3C033 /* CCAction.cpp */; };
 		BF835B2B13276C7900F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588B13276C7700F3C033 /* CCActionCamera.cpp */; };
 		BF835B2C13276C7900F3C033 /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588C13276C7700F3C033 /* CCActionEase.cpp */; };
@@ -761,6 +758,12 @@
 		BF835D7A13276C7900F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B2713276C7900F3C033 /* CCTouchDispatcher.cpp */; };
 		BF835D7B13276C7900F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B2813276C7900F3C033 /* CCTouchHandler.cpp */; };
 		BF835D7C13276C7900F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835B2913276C7900F3C033 /* CCTouchHandler.h */; };
+		D44C6142132DFED60009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6141132DFED60009C878 /* OpenAL.framework */; };
+		D44C6146132DFF020009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6145132DFF020009C878 /* AVFoundation.framework */; };
+		D44C614A132DFF0F0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6149132DFF0F0009C878 /* AudioToolbox.framework */; };
+		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
+		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
+		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D4F9F37E12E545ED005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F37D12E545ED005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
@@ -1092,9 +1095,6 @@
 		BF31E1BC12E979A200D4F513 /* TouchesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchesTest.h; sourceTree = "<group>"; };
 		BF31E1BE12E979A200D4F513 /* TransitionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionsTest.cpp; sourceTree = "<group>"; };
 		BF31E1BF12E979A200D4F513 /* TransitionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionsTest.h; sourceTree = "<group>"; };
-		BF31E3C912E97A0600D4F513 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = iphoneos/System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<group>"; };
-		BF31E3CB12E97A0600D4F513 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = iphoneos/System/Library/Frameworks/AVFoundation.framework; sourceTree = "<group>"; };
-		BF31E3CD12E97A0600D4F513 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = iphoneos/System/Library/Frameworks/OpenAL.framework; sourceTree = "<group>"; };
 		BF83588A13276C7700F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		BF83588B13276C7700F3C033 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
 		BF83588C13276C7700F3C033 /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
@@ -1648,6 +1648,12 @@
 		BF835B2713276C7900F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF835B2813276C7900F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF835B2913276C7900F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
+		D44C6141132DFED60009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		D44C6145132DFF020009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D44C6149132DFF0F0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D4F9F37B12E54555005CA6D2 /* Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4F9F37D12E545ED005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Res/Images/Icon.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -1668,9 +1674,12 @@
 				BF1712E9129293C200B8313A /* libchipmunk.a in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				BF31DF0112E9784500D4F513 /* libCocosDenshion.a in Frameworks */,
-				BF31E3CA12E97A0600D4F513 /* AudioToolbox.framework in Frameworks */,
-				BF31E3CC12E97A0600D4F513 /* AVFoundation.framework in Frameworks */,
-				BF31E3CE12E97A0600D4F513 /* OpenAL.framework in Frameworks */,
+				D44C6142132DFED60009C878 /* OpenAL.framework in Frameworks */,
+				D44C6146132DFF020009C878 /* AVFoundation.framework in Frameworks */,
+				D44C614A132DFF0F0009C878 /* AudioToolbox.framework in Frameworks */,
+				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
+				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
+				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1746,6 +1755,9 @@
 				BF17118B12928FCB00B8313A /* Box2D */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				D44C6141132DFED60009C878 /* OpenAL.framework */,
+				D44C6145132DFF020009C878 /* AVFoundation.framework */,
+				D44C6149132DFF0F0009C878 /* AudioToolbox.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1753,9 +1765,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BF31E3CD12E97A0600D4F513 /* OpenAL.framework */,
-				BF31E3CB12E97A0600D4F513 /* AVFoundation.framework */,
-				BF31E3C912E97A0600D4F513 /* AudioToolbox.framework */,
 				BF170DB012928DE900B8313A /* OpenGLES.framework */,
 				BF170DB212928DE900B8313A /* libxml2.dylib */,
 				BF170DB412928DE900B8313A /* libz.dylib */,
@@ -1763,6 +1772,9 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				D44C620B132DFF330009C878 /* OpenAL.framework */,
+				D44C620D132DFF430009C878 /* AVFoundation.framework */,
+				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4017,9 +4029,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* test.iso */ = {
+		1D6058900D05DD3D006BFB54 /* test.ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "test.iso" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "test.ios" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -4033,7 +4045,7 @@
 				BF1712E8129293BD00B8313A /* PBXTargetDependency */,
 				BF31DF0012E9783F00D4F513 /* PBXTargetDependency */,
 			);
-			name = test.iso;
+			name = test.ios;
 			productName = iphone;
 			productReference = 1D6058910D05DD3D006BFB54 /* iphone.app */;
 			productType = "com.apple.product-type.application";
@@ -4125,7 +4137,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* test.iso */,
+				1D6058900D05DD3D006BFB54 /* test.ios */,
 				BF170DAA12928DAA00B8313A /* cocos2d */,
 				BF17118612928FA700B8313A /* box2d */,
 				BF1712621292931F00B8313A /* chipmunk */,
@@ -4686,7 +4698,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "test.iso" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "test.ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
