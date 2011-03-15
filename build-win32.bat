@@ -51,7 +51,7 @@ echo.*/
 echo.
 
 set SCRIPT_LOG=InstallWizardLog.txt
-set SCRIPT_DIR=.\template\CCApplicationWizard.vs\
+set SCRIPT_DIR=.\template\msvc\
 
 if exist %SCRIPT_LOG% del /Q %SCRIPT_LOG%
 cscript "%SCRIPT_DIR%InstallWizardForVC2008Express.js" /quiet
