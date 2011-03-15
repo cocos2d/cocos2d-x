@@ -11,9 +11,13 @@ CCLayer* createHiResLayer(int idx)
     switch (idx)
     {
     case 0:
-        pLayer = new HiResTest1(); break;
+        CCDirector::sharedDirector()->enableRetinaDisplay(false);
+        pLayer = new HiResTest1();
+        break;
     case 1:
-        pLayer = new HiResTest2(); break;
+        CCDirector::sharedDirector()->enableRetinaDisplay(true);
+        pLayer = new HiResTest2();
+        break;
     }
 
     return pLayer;
@@ -43,6 +47,25 @@ CCLayer* backHiResAction()
     CCLayer* pLayer = createHiResLayer(sceneIdx);
     return pLayer;
 }
+
+//////////////////////////////////////////////////////////////////////////
+// HiResTestBackToMainMenuLayer
+//////////////////////////////////////////////////////////////////////////
+class HiResTestBackToainMenuLayer : public BackToMainMenuLayer
+{
+public:
+    HiResTestBackToainMenuLayer() {}
+
+    // The CallBack for back to the main menu scene
+    virtual void MainMenuCallback(CCObject* pSender)
+    {
+        CCDirector::sharedDirector()->enableRetinaDisplay(sm_bRitinaDisplay);
+        BackToMainMenuLayer::MainMenuCallback(pSender);
+    }
+
+    static bool sm_bRitinaDisplay;
+};
+bool HiResTestBackToainMenuLayer::sm_bRitinaDisplay = false;
 
 ////////////////////////////////////
 //
@@ -143,16 +166,6 @@ void HiResDemo::backCallback(CCObject* pSender)
 ///////////////////////////////////
 void HiResTest1::onEnter()
 {
-    CCDirector::sharedDirector()->enableRetinaDisplay(false);
-    // Because BackToMainMenuLayer maybe addChild to scene again by HiResTest2,
-    // we add it again to make it in the right place.
-    // The right way is calling enableRetinaDisplay before all scene and layer.
-    CCScene * pScene = (CCScene*)getParent();
-    CCLayer*  pLayer = (CCLayer*)pScene->getChildByTag(54321);
-    pScene->removeChild(pLayer, true);
-    pLayer = new BackToMainMenuLayer;
-    pScene->addChild(pLayer, 1000, 54321);
-    pLayer->release();
 
     HiResDemo::onEnter();
 
@@ -180,17 +193,6 @@ std::string HiResTest1::subtitle()
 ///////////////////////////////////
 void HiResTest2::onEnter()
 {
-    CCDirector::sharedDirector()->enableRetinaDisplay(true);
-
-    // Because BackToMainMenuLayer has been addChild to scene,
-    // we must add it again.
-    // The right way is calling enableRetinaDisplay before all scene and layer.
-    CCScene * pScene = (CCScene*)getParent();
-    CCLayer*  pLayer = (CCLayer*)pScene->getChildByTag(54321);
-    pScene->removeChild(pLayer, true);
-    pLayer = new BackToMainMenuLayer;
-    pScene->addChild(pLayer, 1000, 54321);
-    pLayer->release();
 
     HiResDemo::onEnter();
 
@@ -218,9 +220,22 @@ std::string HiResTest2::subtitle()
 ///////////////////////////////////
 void HiResTestScene::runThisTest()
 {
+    HiResTestBackToainMenuLayer::sm_bRitinaDisplay = CCDirector::sharedDirector()->isRetinaDisplay();
+
     CCLayer* pLayer = nextHiResAction();
     addChild(pLayer);
 
     pLayer->release();
     CCDirector::sharedDirector()->replaceScene(this);
+}
+
+void HiResTestScene::onEnter()
+{
+    TestScene::onEnter();
+
+    CCLayer*  pLayer = (CCLayer*)getChildByTag(54321);
+    removeChild(pLayer, true);
+    pLayer = new HiResTestBackToainMenuLayer;
+    addChild(pLayer, 1000, 54321);
+    pLayer->release();
 }
