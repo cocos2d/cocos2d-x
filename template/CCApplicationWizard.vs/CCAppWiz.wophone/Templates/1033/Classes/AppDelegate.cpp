@@ -32,7 +32,13 @@ bool AppDelegate::initInstance()
         // Use GetScreenWidth() and GetScreenHeight() get screen width and height.
         CCEGLView * pMainWnd = new CCEGLView(this);
         CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(&TRectangle(0, 0, 320, 480)));
+            || ! pMainWnd->Create(320, 480));
+
+#if !defined(_TRANZDA_VM_)
+        // set the resource zip file
+        // on wophone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+        CCFileUtils::setResource("[!output PROJECT_NAME].zip");
+#endif
 
         bRet = true;
     } while (0);

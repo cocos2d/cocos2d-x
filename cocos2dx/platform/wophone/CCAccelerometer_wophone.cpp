@@ -147,6 +147,22 @@ void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate)
 
 void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
 {
+    CCAccelerometerHandler *pHandlerIter;
+    CCMutableArray<CCAccelerometerHandler*>::CCMutableArrayIterator  iter;
+
+    if (pDelegate)
+    {
+        for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
+        {
+            pHandlerIter = *iter;
+            if (pHandlerIter && pHandlerIter->getDelegate() == pDelegate)
+            {
+                // this delegate have existed
+                return;
+            }
+        }
+    }
+
     CCAccelerometerHandler* pHandler = CCAccelerometerHandler::handlerWithDelegate(pDelegate);
 
     if (pHandler)

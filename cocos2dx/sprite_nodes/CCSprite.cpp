@@ -978,11 +978,10 @@ void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 
 	CCTexture2D *pNewTexture = pNewFrame->getTexture();
 	// update texture before updating texture rect
-	if (!m_pobTexture ||
-		pNewTexture->getName() != m_pobTexture->getName())
-	{
+    if (pNewTexture != m_pobTexture)
+    {
         setTexture(pNewTexture);
-	}
+    }
 
 	// update rect
 	m_bRectRotated = pNewFrame->isRotated();
