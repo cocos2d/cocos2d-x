@@ -54,7 +54,12 @@ bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CCRect rect)
 bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize)
 {
 	m_pobTexture = pobTexture;
-	pobTexture->retain();
+
+    if (pobTexture)
+    {
+        pobTexture->retain();
+    }
+
 	m_obRectInPixels = rect;
 	m_obRect = CC_RECT_PIXELS_TO_POINTS(rect);
 	m_bRotated = rotated;

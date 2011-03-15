@@ -53,8 +53,8 @@ namespace cocos2d
 	}
 
 	CCAnimationCache::CCAnimationCache()
+    : m_pAnimations(NULL)
 	{
-		assert(m_pAnimations == NULL);
 	}
 
 	CCAnimationCache::~CCAnimationCache()

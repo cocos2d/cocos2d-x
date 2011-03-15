@@ -42,7 +42,12 @@ CCLayer* createSpriteTestLayer(int nIndex)
         case 0: return new Sprite1();
         case 1: return new SpriteBatchNode1();
         case 2: return new SpriteFrameTest();
+        /*
+        @todo should add this case after issue #391 is resolved
         case 3: return new SpriteFrameAliasNameTest();
+        */
+
+        case 3: return new AnimationCache();////----
         case 4: return new SpriteAnchorPoint();
         case 5: return new SpriteBatchNodeAnchorPoint();
         case 6: return new SpriteOffsetAnchorRotation();
@@ -80,7 +85,6 @@ CCLayer* createSpriteTestLayer(int nIndex)
         case 38: return new SpriteBatchNodeChildrenChildren();
         case 39: return new SpriteNilTexture();
         case 40: return new SpriteSubclass();
-        case 41: return new AnimationCache();
     }
 
     return NULL;
@@ -1729,8 +1733,9 @@ void SpriteFrameTest::flipSprites(ccTime dt)
 // SpriteFrameAliasNameTest
 //
 //------------------------------------------------------------------
-SpriteFrameAliasNameTest::SpriteFrameAliasNameTest()
+void SpriteFrameAliasNameTest::onEnter()
 {
+    SpriteTestDemo::onEnter();
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // IMPORTANT:
