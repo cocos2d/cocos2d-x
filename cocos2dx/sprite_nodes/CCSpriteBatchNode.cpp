@@ -302,7 +302,7 @@ namespace cocos2d
 				pSprite->updateTransform();
 
 
-#if CC_SPRITESHEET_DEBUG_DRAW
+#if CC_SPRITEBATCHNODE_DEBUG_DRAW
 				// issue #528
 				CCRect rect = pSprite->boundingBox();
 				CCPoint vertices[4]={
@@ -312,7 +312,7 @@ namespace cocos2d
 					ccp(rect.origin.x,rect.origin.y+rect.size.height),
 				};
 				ccDrawPoly(vertices, 4, true);
-#endif // CC_SPRITESHEET_DEBUG_DRAW
+#endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
 			}
 		}
 
