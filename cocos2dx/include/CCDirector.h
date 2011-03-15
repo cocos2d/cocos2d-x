@@ -392,6 +392,7 @@ public:
 	@since v0.99.5
 	*/
 	bool enableRetinaDisplay(bool enabled);
+    bool isRetinaDisplay() { return m_bRetinaDisplay; }
 
 	/** There are 4 types of Director.
 	- kCCDirectorTypeNSTimer (default)
@@ -548,6 +549,7 @@ protected:
 	* mac platforms specific members
 	**************************************************/
 	bool m_bIsFullScreen;
+    bool m_bRetinaDisplay;
 	int m_nResizeMode;
 	CCPoint m_winOffset;
 	CCSize m_originalWinSize;

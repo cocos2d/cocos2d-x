@@ -37,6 +37,7 @@ class HiResTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
+    virtual void onEnter();
 };
 
 #endif

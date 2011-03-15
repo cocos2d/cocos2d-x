@@ -17,8 +17,6 @@ BackToMainMenuLayer::BackToMainMenuLayer()
 
 void BackToMainMenuLayer::MainMenuCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->enableRetinaDisplay(false);
-
     CCScene* pScene = CCScene::node();
     CCLayer* pLayer = new TestController();
     pLayer->autorelease();
