@@ -675,7 +675,7 @@ void CCSprite::draw(void)
 	}
 
 #if CC_SPRITE_DEBUG_DRAW
-	CCSize s = m_tContentSizeInPixels;
+	CCSize s = m_tContentSize;
 	CCPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
