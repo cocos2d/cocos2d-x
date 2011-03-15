@@ -18,7 +18,6 @@
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
 		BF15712A12E3D611001F8977 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15712912E3D611001F8977 /* libxml2.dylib */; };
-		BF1571DC12E3F50B001F8977 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1571DB12E3F50B001F8977 /* main.m */; };
 		BF1915C412E04F70007DCFF1 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915BA12E04F70007DCFF1 /* CloseNormal.png */; };
 		BF1915C512E04F70007DCFF1 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915BB12E04F70007DCFF1 /* CloseSelected.png */; };
 		BF1915C612E04F70007DCFF1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915BC12E04F70007DCFF1 /* Default.png */; };
@@ -268,8 +267,9 @@
 		BF8362B41328687F00F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360611328687F00F3C033 /* CCTouchHandler.cpp */; };
 		BF8362B51328687F00F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8360621328687F00F3C033 /* CCTouchHandler.h */; };
 		BF83631F13286EF300F3C033 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83631B13286EF300F3C033 /* HelloWorldScene.cpp */; };
-		BF83638C132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF836389132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		BF83638D132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
+		D408234E132F3DD900F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D408234D132F3DD900F44E75 /* main.m */; };
+		D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -296,7 +296,6 @@
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		506EE05E10304ED200A389B3 /* libcocos2d libraries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d libraries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF15712912E3D611001F8977 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
-		BF1571DB12E3F50B001F8977 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BF1915BA12E04F70007DCFF1 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		BF1915BB12E04F70007DCFF1 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		BF1915BC12E04F70007DCFF1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -547,10 +546,11 @@
 		BF8360621328687F00F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BF83631B13286EF300F3C033 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
 		BF83631C13286EF300F3C033 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
-		BF836388132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
-		BF836389132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
 		BF83638B132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
+		D408234D132F3DD900F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
+		D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
+		D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -622,7 +622,9 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				BF1571DB12E3F50B001F8977 /* main.m */,
+				D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
+				D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
+				D408234D132F3DD900F44E75 /* main.m */,
 				1F3B9A820EF2151B00286867 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
 			);
 			name = "Other Sources";
@@ -648,8 +650,6 @@
 		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BF836388132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
-				BF836389132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
 				BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */,
 				BF83638B132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
 				BF83631B13286EF300F3C033 /* HelloWorldScene.cpp */,
@@ -1372,10 +1372,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF1571DC12E3F50B001F8977 /* main.m in Sources */,
 				BF83631F13286EF300F3C033 /* HelloWorldScene.cpp in Sources */,
-				BF83638C132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
 				BF83638D132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */,
+				D408234E132F3DD900F44E75 /* main.m in Sources */,
+				D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

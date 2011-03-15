@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		505574581045D68500A31725 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		505574591045D68500A31725 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		5055745A1045D68500A31725 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -85,10 +84,7 @@
 		BF1537EE12E16C0400703484 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C612E16C0400703484 /* SimpleAudioEngine.mm */; };
 		BF1537EF12E16C0400703484 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */; };
 		BF1537F012E16C0400703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */; };
-		BF15384F12E16ED600703484 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF15384D12E16ED600703484 /* HelloWorldScene.cpp */; };
 		BF15715C12E3D730001F8977 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15715B12E3D730001F8977 /* libxml2.dylib */; };
-		BF83696913287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF83696613287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
-		BF83696A13287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696713287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		BF836C0D13287D3600F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696D13287D3400F3C033 /* CCAction.cpp */; };
 		BF836C0E13287D3600F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696E13287D3400F3C033 /* CCActionCamera.cpp */; };
 		BF836C0F13287D3600F3C033 /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696F13287D3400F3C033 /* CCActionEase.cpp */; };
@@ -314,6 +310,10 @@
 		BF836E5D13287D3600F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF836C0A13287D3600F3C033 /* CCTouchDispatcher.cpp */; };
 		BF836E5E13287D3600F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF836C0B13287D3600F3C033 /* CCTouchHandler.cpp */; };
 		BF836E5F13287D3600F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF836C0C13287D3600F3C033 /* CCTouchHandler.h */; };
+		D40823D0132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
+		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
+		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
+		D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245D132F45C200F44E75 /* HelloWorldScene.cpp */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -340,8 +340,6 @@
 
 /* Begin PBXFileReference section */
 		1D6058910D05DD3D006BFB54 /* ___PROJECTNAME___.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "___PROJECTNAME___.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F3B9A820EF2151B00286867 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER____Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		506EE05E10304ED200A389B3 /* libcocos2d libraries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d libraries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -412,13 +410,7 @@
 		BF1537C612E16C0400703484 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		BF15384D12E16ED600703484 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		BF15384E12E16ED600703484 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		BF15715B12E3D730001F8977 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
-		BF83696513287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
-		BF83696613287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
-		BF83696713287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
-		BF83696813287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		BF83696D13287D3400F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		BF83696E13287D3400F3C033 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
 		BF83696F13287D3400F3C033 /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
@@ -644,6 +636,14 @@
 		BF836C0A13287D3600F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF836C0B13287D3600F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF836C0C13287D3600F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
+		D40823CD132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
+		D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
+		D40823CF132F41B600F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
+		D408241A132F439600F44E75 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER____Prefix.pch"; sourceTree = "<group>"; };
+		D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
+		D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
+		D408245D132F45C200F44E75 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
+		D408245E132F45C200F44E75 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -707,10 +707,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D408245A132F45B200F44E75 /* Classes */,
 				BF152AF112E16B4200703484 /* LICENSE.cocos2d-x */,
 				E0C5505A11FA3A8000B9E4CB /* LICENSE.chipmunk */,
 				506EDAA3102F461B00A389B3 /* cocos2d Sources */,
-				2D500B1D0D5A766B00DBA0E3 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				50F4144210692EE7002A0D5E /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -722,8 +722,10 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1F3B9A820EF2151B00286867 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
+				D408241A132F439600F44E75 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
+				D40823CD132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
+				D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
+				D40823CF132F41B600F44E75 /* main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -743,19 +745,6 @@
 				506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				BF83696513287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
-				BF83696613287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
-				BF83696713287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */,
-				BF83696813287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
-				BF15384D12E16ED600703484 /* HelloWorldScene.cpp */,
-				BF15384E12E16ED600703484 /* HelloWorldScene.h */,
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 		506EDAA3102F461B00A389B3 /* cocos2d Sources */ = {
@@ -1335,6 +1324,17 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
+		D408245A132F45B200F44E75 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */,
+				D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
+				D408245D132F45C200F44E75 /* HelloWorldScene.cpp */,
+				D408245E132F45C200F44E75 /* HelloWorldScene.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1596,10 +1596,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				BF15384F12E16ED600703484 /* HelloWorldScene.cpp in Sources */,
-				BF83696913287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
-				BF83696A13287D0E00F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */,
+				D40823D0132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
+				D40823D1132F41B600F44E75 /* main.m in Sources */,
+				D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */,
+				D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
