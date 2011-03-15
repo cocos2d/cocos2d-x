@@ -116,7 +116,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files template/ios_mac/cocos2d-x_app/ "$DST_DIR"
+	copy_files template/xcode3/cocos2d-x_app/ "$DST_DIR"
 
 	copy_base_files
 
@@ -130,7 +130,7 @@ copy_project_templates(){
                 check_dst_dir
         
                 echo ...copying template files
-	copy_files template/ios_mac/cocos2d-x_box2d_app/ "$DST_DIR"
+	copy_files template/xcode3/cocos2d-x_box2d_app/ "$DST_DIR"
     
                 copy_base_files
         
@@ -147,7 +147,7 @@ copy_project_templates(){
                 check_dst_dir
         
                 echo ...copying template files
-	copy_files template/ios_mac/cocos2d-x_chipmunk_app/ "$DST_DIR"
+	copy_files template/xcode3/cocos2d-x_chipmunk_app/ "$DST_DIR"
     
                 copy_base_files
         
