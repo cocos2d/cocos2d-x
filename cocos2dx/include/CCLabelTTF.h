@@ -37,8 +37,8 @@ namespace cocos2d{
 	class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 	{
 	public:
-		CCLabelTTF() {}
-		virtual ~CCLabelTTF(){}
+		CCLabelTTF();
+		virtual ~CCLabelTTF();
 		char * description();
 		/** creates a CCLabelTTF from a fontname, alignment, dimension and font size */
 		static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
@@ -59,9 +59,9 @@ namespace cocos2d{
 	protected:
 		CCSize m_tDimensions;
 		UITextAlignment m_eAlignment;
-        ccxScopedPtr<std::string> m_pFontName;
+        std::string * m_pFontName;
 		float m_fFontSize;
-        ccxScopedPtr<std::string> m_pString;
+        std::string * m_pString;
 	};
 
 } //namespace cocos2d
