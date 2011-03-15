@@ -119,6 +119,7 @@ bool CCDirector::init(void)
 
 	m_pobOpenGLView = NULL;
 
+    m_bRetinaDisplay = false;
     m_fContentScaleFactor = 1;	
 	m_bIsContentScaleSupported = false;
 
@@ -804,6 +805,16 @@ bool CCDirector::enableRetinaDisplay(bool enabled)
         m_pFPSLabel->retain();
     }
 #endif
+
+    if (m_fContentScaleFactor == 2)
+    {
+        m_bRetinaDisplay = true;
+    }
+    else
+    {
+        m_bRetinaDisplay = false;
+    }
+
 	return true;
 }
 
