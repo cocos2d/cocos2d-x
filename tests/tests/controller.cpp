@@ -77,6 +77,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new KeypadTestScene(); break;
 	case TEST_COCOSDENSHION:
 		pScene = new CocosDenshionTestScene(); break;
+    case TEST_PERFORMANCE:
+        pScene = new PerformanceTestScene(); break;
     default:
         break;
     }
