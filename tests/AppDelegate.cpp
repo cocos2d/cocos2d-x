@@ -30,9 +30,17 @@ bool AppDelegate::initInstance()
 #endif  // CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
         // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
+
 #endif  // CC_PLATFORM_IOS
-        
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
+        // Android doesn't need to do anything.
+
+#endif  // CC_PLATFORM_ANDROID
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 
         // Initialize OpenGLView instance, that release by CCDirector when application terminate.
