@@ -173,8 +173,14 @@ function AddConfigurations(proj, strProjectName) {
             //             else
             //                config.CharacterSet = charSetMBCS;
 
-            config.OutputDirectory = '$(SolutionDir)$(ConfigurationName).win32'
-            config.IntermediateDirectory = '$(ConfigurationName).win32';
+            var WizardVersion = wizard.FindSymbol('WIZARD_VERSION'); 
+            if(WizardVersion >= 10.0) {
+                config.OutputDirectory = '$(SolutionDir)$(Configuration).win32'
+                config.IntermediateDirectory = '$(Configuration).win32';
+            } else {
+                config.OutputDirectory = '$(SolutionDir)$(ConfigurationName).win32'
+                config.IntermediateDirectory = '$(ConfigurationName).win32';
+            }
 
             // Compiler settings
             var CLTool = config.Tools('VCCLCompilerTool');
