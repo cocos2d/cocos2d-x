@@ -93,9 +93,12 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
 	bool bRet = false;
 	const char *kSearchName = searchName.c_str();
 	
-	if (strstr(g_pGlExtensions, kSearchName))
+	if (g_pGlExtensions && 
+		strstr(g_pGlExtensions, kSearchName))
+	{
 		bRet = true;
-
+	}
+	
 	return bRet;
 }
 }//namespace   cocos2d 
