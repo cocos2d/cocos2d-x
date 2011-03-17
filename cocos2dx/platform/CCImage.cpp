@@ -252,8 +252,6 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(! info_ptr || setjmp(png_jmpbuf(png_ptr)));
 
-        bRet = true;
-
         // set the read call back function
         tImageSource imageSource;
         imageSource.data    = (unsigned char*)pData;
@@ -316,7 +314,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         bRet        = true;
     } while (0);
 
-    if (!png_ptr)
+    if (png_ptr)
     {
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
