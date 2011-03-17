@@ -27,6 +27,27 @@ bool AppDelegate::initInstance()
     bool bRet = false;
     do 
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
+        // The HelloWorld is designed as HVGA.
+        CCEGLView * pMainWnd = new CCEGLView();
+        CC_BREAK_IF(! pMainWnd
+            || ! pMainWnd->Create(TEXT("[!output PROJECT_NAME]"), 320, 480));
+#endif  // CC_PLATFORM_WIN32
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+        // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
+
+#endif  // CC_PLATFORM_IOS
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
+        // Android doesn't need to do anything.
+
+#endif  // CC_PLATFORM_ANDROID
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
         // Initialize OpenGLView instance, that release by CCDirector when application terminate.
         // The HelloWorld is designed as HVGA.
         // Use GetScreenWidth() and GetScreenHeight() get screen width and height.
@@ -39,6 +60,8 @@ bool AppDelegate::initInstance()
         // on wophone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
         CCFileUtils::setResource("[!output PROJECT_NAME].zip");
 #endif
+
+#endif  // CC_PLATFORM_WOPHONE
 
         bRet = true;
     } while (0);
