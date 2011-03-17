@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -35,7 +35,7 @@ struct b2FrictionJointDef : public b2JointDef
 
 	/// Initialize the bodies, anchors, axis, and reference angle using the world
 	/// anchor and world axis.
-	void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor);
+	void Initialize(b2Body* bodyA, b2Body* bodyB, coCCEventt b2Vec2& anchor);
 
 	/// The local anchor point relative to bodyA's origin.
 	b2Vec2 localAnchorA;
@@ -51,37 +51,37 @@ struct b2FrictionJointDef : public b2JointDef
 };
 
 /// Friction joint. This is used for top-down friction.
-/// It provides 2D translational friction and angular friction.
+/// It provides 2D traCCEventlational friction and angular friction.
 class b2FrictionJoint : public b2Joint
 {
 public:
-	b2Vec2 GetAnchorA() const;
-	b2Vec2 GetAnchorB() const;
+	b2Vec2 GetAnchorA() coCCEventt;
+	b2Vec2 GetAnchorB() coCCEventt;
 
-	b2Vec2 GetReactionForce(float32 inv_dt) const;
-	float32 GetReactionTorque(float32 inv_dt) const;
+	b2Vec2 GetReactionForce(float32 inv_dt) coCCEventt;
+	float32 GetReactionTorque(float32 inv_dt) coCCEventt;
 
 	/// Set the maximum friction force in N.
 	void SetMaxForce(float32 force);
 
 	/// Get the maximum friction force in N.
-	float32 GetMaxForce() const;
+	float32 GetMaxForce() coCCEventt;
 
 	/// Set the maximum friction torque in N*m.
 	void SetMaxTorque(float32 torque);
 
 	/// Get the maximum friction torque in N*m.
-	float32 GetMaxTorque() const;
+	float32 GetMaxTorque() coCCEventt;
 
 protected:
 
 	friend class b2Joint;
 
-	b2FrictionJoint(const b2FrictionJointDef* def);
+	b2FrictionJoint(coCCEventt b2FrictionJointDef* def);
 
-	void InitVelocityConstraints(const b2TimeStep& step);
-	void SolveVelocityConstraints(const b2TimeStep& step);
-	bool SolvePositionConstraints(float32 baumgarte);
+	void InitVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	void SolveVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	bool SolvePositionCoCCEventtraints(float32 baumgarte);
 
 	b2Vec2 m_localAnchorA;
 	b2Vec2 m_localAnchorB;

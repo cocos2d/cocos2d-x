@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -27,7 +27,7 @@ class b2Contact;
 class b2Body;
 class b2StackAllocator;
 
-struct b2ContactConstraintPoint
+struct b2ContactCoCCEventtraintPoint
 {
 	b2Vec2 localPoint;
 	b2Vec2 rA;
@@ -39,9 +39,9 @@ struct b2ContactConstraintPoint
 	float32 velocityBias;
 };
 
-struct b2ContactConstraint
+struct b2ContactCoCCEventtraint
 {
-	b2ContactConstraintPoint points[b2_maxManifoldPoints];
+	b2ContactCoCCEventtraintPoint points[b2_maxManifoldPoints];
 	b2Vec2 localNormal;
 	b2Vec2 localPoint;
 	b2Vec2 normal;
@@ -65,14 +65,14 @@ public:
 	~b2ContactSolver();
 
 	void WarmStart();
-	void SolveVelocityConstraints();
+	void SolveVelocityCoCCEventtraints();
 	void StoreImpulses();
 
-	bool SolvePositionConstraints(float32 baumgarte);
+	bool SolvePositionCoCCEventtraints(float32 baumgarte);
 
 	b2StackAllocator* m_allocator;
-	b2ContactConstraint* m_constraints;
-	int m_constraintCount;
+	b2ContactCoCCEventtraint* m_coCCEventtraints;
+	int m_coCCEventtraintCount;
 };
 
 #endif

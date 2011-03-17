@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -27,7 +27,7 @@ class b2Contact;
 class b2Joint;
 class b2StackAllocator;
 class b2ContactListener;
-struct b2ContactConstraint;
+struct b2ContactCoCCEventtraint;
 
 /// This is an internal structure.
 struct b2Position
@@ -58,7 +58,7 @@ public:
 		m_jointCount = 0;
 	}
 
-	void Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSleep);
+	void Solve(coCCEventt b2TimeStep& step, coCCEventt b2Vec2& gravity, bool allowSleep);
 
 	void Add(b2Body* body)
 	{
@@ -79,7 +79,7 @@ public:
 		m_joints[m_jointCount++] = joint;
 	}
 
-	void Report(const b2ContactConstraint* constraints);
+	void Report(coCCEventt b2ContactCoCCEventtraint* coCCEventtraints);
 
 	b2StackAllocator* m_allocator;
 	b2ContactListener* m_listener;
@@ -88,7 +88,7 @@ public:
 	b2Contact** m_contacts;
 	b2Joint** m_joints;
 
-	b2Position* m_positions;
+	b2Position* m_positioCCEvent;
 	b2Velocity* m_velocities;
 
 	int32 m_bodyCount;

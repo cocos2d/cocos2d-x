@@ -6,13 +6,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -33,21 +33,21 @@ struct b2DistanceProxy
 
 	/// Initialize the proxy using the given shape. The shape
 	/// must remain in scope while the proxy is in use.
-	void Set(const b2Shape* shape);
+	void Set(coCCEventt b2Shape* shape);
 
 	/// Get the supporting vertex index in the given direction.
-	int32 GetSupport(const b2Vec2& d) const;
+	int32 GetSupport(coCCEventt b2Vec2& d) coCCEventt;
 
 	/// Get the supporting vertex in the given direction.
-	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
+	coCCEventt b2Vec2& GetSupportVertex(coCCEventt b2Vec2& d) coCCEventt;
 
 	/// Get the vertex count.
-	int32 GetVertexCount() const;
+	int32 GetVertexCount() coCCEventt;
 
 	/// Get a vertex by index. Used by b2Distance.
-	const b2Vec2& GetVertex(int32 index) const;
+	coCCEventt b2Vec2& GetVertex(int32 index) coCCEventt;
 
-	const b2Vec2* m_vertices;
+	coCCEventt b2Vec2* m_vertices;
 	int32 m_count;
 	float32 m_radius;
 };
@@ -69,8 +69,8 @@ struct b2DistanceInput
 {
 	b2DistanceProxy proxyA;
 	b2DistanceProxy proxyB;
-	b2Transform transformA;
-	b2Transform transformB;
+	b2TraCCEventform traCCEventformA;
+	b2TraCCEventform traCCEventformB;
 	bool useRadii;
 };
 
@@ -80,31 +80,31 @@ struct b2DistanceOutput
 	b2Vec2 pointA;		///< closest point on shapeA
 	b2Vec2 pointB;		///< closest point on shapeB
 	float32 distance;
-	int32 iterations;	///< number of GJK iterations used
+	int32 iteratioCCEvent;	///< number of GJK iteratioCCEvent used
 };
 
 /// Compute the closest points between two shapes. Supports any combination of:
-/// b2CircleShape, b2PolygonShape, b2EdgeShape. The simplex cache is input/output.
+/// b2CircleShape, b2PolygoCCEventhape, b2EdgeShape. The simplex cache is input/output.
 /// On the first call set b2SimplexCache.count to zero.
 void b2Distance(b2DistanceOutput* output,
 				b2SimplexCache* cache, 
-				const b2DistanceInput* input);
+				coCCEventt b2DistanceInput* input);
 
 
 //////////////////////////////////////////////////////////////////////////
 
-inline int32 b2DistanceProxy::GetVertexCount() const
+inline int32 b2DistanceProxy::GetVertexCount() coCCEventt
 {
 	return m_count;
 }
 
-inline const b2Vec2& b2DistanceProxy::GetVertex(int32 index) const
+inline coCCEventt b2Vec2& b2DistanceProxy::GetVertex(int32 index) coCCEventt
 {
 	b2Assert(0 <= index && index < m_count);
 	return m_vertices[index];
 }
 
-inline int32 b2DistanceProxy::GetSupport(const b2Vec2& d) const
+inline int32 b2DistanceProxy::GetSupport(coCCEventt b2Vec2& d) coCCEventt
 {
 	int32 bestIndex = 0;
 	float32 bestValue = b2Dot(m_vertices[0], d);
@@ -121,7 +121,7 @@ inline int32 b2DistanceProxy::GetSupport(const b2Vec2& d) const
 	return bestIndex;
 }
 
-inline const b2Vec2& b2DistanceProxy::GetSupportVertex(const b2Vec2& d) const
+inline coCCEventt b2Vec2& b2DistanceProxy::GetSupportVertex(coCCEventt b2Vec2& d) coCCEventt
 {
 	int32 bestIndex = 0;
 	float32 bestValue = b2Dot(m_vertices[0], d);

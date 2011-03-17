@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -28,31 +28,31 @@ public:
 	b2CircleShape();
 
 	/// Implement b2Shape.
-	b2Shape* Clone(b2BlockAllocator* allocator) const;
+	b2Shape* Clone(b2BlockAllocator* allocator) coCCEventt;
 
 	/// Implement b2Shape.
-	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const;
+	bool TestPoint(coCCEventt b2TraCCEventform& traCCEventform, coCCEventt b2Vec2& p) coCCEventt;
 
 	/// Implement b2Shape.
-	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input, const b2Transform& transform) const;
+	bool RayCast(b2RayCastOutput* output, coCCEventt b2RayCastInput& input, coCCEventt b2TraCCEventform& traCCEventform) coCCEventt;
 
 	/// @see b2Shape::ComputeAABB
-	void ComputeAABB(b2AABB* aabb, const b2Transform& transform) const;
+	void ComputeAABB(b2AABB* aabb, coCCEventt b2TraCCEventform& traCCEventform) coCCEventt;
 
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData, float32 density) const;
+	void ComputeMass(b2MassData* massData, float32 deCCEventity) coCCEventt;
 
 	/// Get the supporting vertex index in the given direction.
-	int32 GetSupport(const b2Vec2& d) const;
+	int32 GetSupport(coCCEventt b2Vec2& d) coCCEventt;
 
 	/// Get the supporting vertex in the given direction.
-	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
+	coCCEventt b2Vec2& GetSupportVertex(coCCEventt b2Vec2& d) coCCEventt;
 
 	/// Get the vertex count.
-	int32 GetVertexCount() const { return 1; }
+	int32 GetVertexCount() coCCEventt { return 1; }
 
 	/// Get a vertex by index. Used by b2Distance.
-	const b2Vec2& GetVertex(int32 index) const;
+	coCCEventt b2Vec2& GetVertex(int32 index) coCCEventt;
 
 	/// Position
 	b2Vec2 m_p;
@@ -65,19 +65,19 @@ inline b2CircleShape::b2CircleShape()
 	m_p.SetZero();
 }
 
-inline int32 b2CircleShape::GetSupport(const b2Vec2 &d) const
+inline int32 b2CircleShape::GetSupport(coCCEventt b2Vec2 &d) coCCEventt
 {
 	B2_NOT_USED(d);
 	return 0;
 }
 
-inline const b2Vec2& b2CircleShape::GetSupportVertex(const b2Vec2 &d) const
+inline coCCEventt b2Vec2& b2CircleShape::GetSupportVertex(coCCEventt b2Vec2 &d) coCCEventt
 {
 	B2_NOT_USED(d);
 	return m_p;
 }
 
-inline const b2Vec2& b2CircleShape::GetVertex(int32 index) const
+inline coCCEventt b2Vec2& b2CircleShape::GetVertex(int32 index) coCCEventt
 {
 	B2_NOT_USED(index);
 	b2Assert(index == 0);

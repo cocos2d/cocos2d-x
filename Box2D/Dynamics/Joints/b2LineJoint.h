@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -24,7 +24,7 @@
 /// Line joint definition. This requires defining a line of
 /// motion using an axis and an anchor point. The definition uses local
 /// anchor points and a local axis so that the initial configuration
-/// can violate the constraint slightly. The joint translation is zero
+/// can violate the coCCEventtraint slightly. The joint traCCEventlation is zero
 /// when the local anchor points coincide in world space. Using local
 /// anchors and a local axis helps when saving and loading a game.
 struct b2LineJointDef : public b2JointDef
@@ -36,8 +36,8 @@ struct b2LineJointDef : public b2JointDef
 		localAnchorB.SetZero();
 		localAxisA.Set(1.0f, 0.0f);
 		enableLimit = false;
-		lowerTranslation = 0.0f;
-		upperTranslation = 0.0f;
+		lowerTraCCEventlation = 0.0f;
+		upperTraCCEventlation = 0.0f;
 		enableMotor = false;
 		maxMotorForce = 0.0f;
 		motorSpeed = 0.0f;
@@ -45,7 +45,7 @@ struct b2LineJointDef : public b2JointDef
 
 	/// Initialize the bodies, anchors, axis, and reference angle using the world
 	/// anchor and world axis.
-	void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor, const b2Vec2& axis);
+	void Initialize(b2Body* bodyA, b2Body* bodyB, coCCEventt b2Vec2& anchor, coCCEventt b2Vec2& axis);
 
 	/// The local anchor point relative to body1's origin.
 	b2Vec2 localAnchorA;
@@ -53,17 +53,17 @@ struct b2LineJointDef : public b2JointDef
 	/// The local anchor point relative to body2's origin.
 	b2Vec2 localAnchorB;
 
-	/// The local translation axis in body1.
+	/// The local traCCEventlation axis in body1.
 	b2Vec2 localAxisA;
 
 	/// Enable/disable the joint limit.
 	bool enableLimit;
 
-	/// The lower translation limit, usually in meters.
-	float32 lowerTranslation;
+	/// The lower traCCEventlation limit, usually in meters.
+	float32 lowerTraCCEventlation;
 
-	/// The upper translation limit, usually in meters.
-	float32 upperTranslation;
+	/// The upper traCCEventlation limit, usually in meters.
+	float32 upperTraCCEventlation;
 
 	/// Enable/disable the joint motor.
 	bool enableMotor;
@@ -71,46 +71,46 @@ struct b2LineJointDef : public b2JointDef
 	/// The maximum motor torque, usually in N-m.
 	float32 maxMotorForce;
 
-	/// The desired motor speed in radians per second.
+	/// The desired motor speed in radiaCCEvent per second.
 	float32 motorSpeed;
 };
 
-/// A line joint. This joint provides two degrees of freedom: translation
+/// A line joint. This joint provides two degrees of freedom: traCCEventlation
 /// along an axis fixed in body1 and rotation in the plane. You can use a
 /// joint limit to restrict the range of motion and a joint motor to drive
 /// the motion or to model joint friction.
 class b2LineJoint : public b2Joint
 {
 public:
-	b2Vec2 GetAnchorA() const;
-	b2Vec2 GetAnchorB() const;
+	b2Vec2 GetAnchorA() coCCEventt;
+	b2Vec2 GetAnchorB() coCCEventt;
 
-	b2Vec2 GetReactionForce(float32 inv_dt) const;
-	float32 GetReactionTorque(float32 inv_dt) const;
+	b2Vec2 GetReactionForce(float32 inv_dt) coCCEventt;
+	float32 GetReactionTorque(float32 inv_dt) coCCEventt;
 
-	/// Get the current joint translation, usually in meters.
-	float32 GetJointTranslation() const;
+	/// Get the current joint traCCEventlation, usually in meters.
+	float32 GetJointTraCCEventlation() coCCEventt;
 
-	/// Get the current joint translation speed, usually in meters per second.
-	float32 GetJointSpeed() const;
+	/// Get the current joint traCCEventlation speed, usually in meters per second.
+	float32 GetJointSpeed() coCCEventt;
 
 	/// Is the joint limit enabled?
-	bool IsLimitEnabled() const;
+	bool IsLimitEnabled() coCCEventt;
 
 	/// Enable/disable the joint limit.
 	void EnableLimit(bool flag);
 
 	/// Get the lower joint limit, usually in meters.
-	float32 GetLowerLimit() const;
+	float32 GetLowerLimit() coCCEventt;
 
 	/// Get the upper joint limit, usually in meters.
-	float32 GetUpperLimit() const;
+	float32 GetUpperLimit() coCCEventt;
 
 	/// Set the joint limits, usually in meters.
 	void SetLimits(float32 lower, float32 upper);
 
 	/// Is the joint motor enabled?
-	bool IsMotorEnabled() const;
+	bool IsMotorEnabled() coCCEventt;
 
 	/// Enable/disable the joint motor.
 	void EnableMotor(bool flag);
@@ -119,23 +119,23 @@ public:
 	void SetMotorSpeed(float32 speed);
 
 	/// Get the motor speed, usually in meters per second.
-	float32 GetMotorSpeed() const;
+	float32 GetMotorSpeed() coCCEventt;
 
 	/// Set/Get the maximum motor force, usually in N.
 	void SetMaxMotorForce(float32 force);
-	float32 GetMaxMotorForce() const;
+	float32 GetMaxMotorForce() coCCEventt;
 
 	/// Get the current motor force, usually in N.
-	float32 GetMotorForce() const;
+	float32 GetMotorForce() coCCEventt;
 
 protected:
 
 	friend class b2Joint;
-	b2LineJoint(const b2LineJointDef* def);
+	b2LineJoint(coCCEventt b2LineJointDef* def);
 
-	void InitVelocityConstraints(const b2TimeStep& step);
-	void SolveVelocityConstraints(const b2TimeStep& step);
-	bool SolvePositionConstraints(float32 baumgarte);
+	void InitVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	void SolveVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	bool SolvePositionCoCCEventtraints(float32 baumgarte);
 
 	b2Vec2 m_localAnchor1;
 	b2Vec2 m_localAnchor2;
@@ -149,11 +149,11 @@ protected:
 	b2Mat22 m_K;
 	b2Vec2 m_impulse;
 
-	float32 m_motorMass;			// effective mass for motor/limit translational constraint.
+	float32 m_motorMass;			// effective mass for motor/limit traCCEventlational coCCEventtraint.
 	float32 m_motorImpulse;
 
-	float32 m_lowerTranslation;
-	float32 m_upperTranslation;
+	float32 m_lowerTraCCEventlation;
+	float32 m_upperTraCCEventlation;
 	float32 m_maxMotorForce;
 	float32 m_motorSpeed;
 
@@ -162,7 +162,7 @@ protected:
 	b2LimitState m_limitState;
 };
 
-inline float32 b2LineJoint::GetMotorSpeed() const
+inline float32 b2LineJoint::GetMotorSpeed() coCCEventt
 {
 	return m_motorSpeed;
 }

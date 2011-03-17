@@ -392,10 +392,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCEvent.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCEventDispatcher.h"
 				>
 			</File>

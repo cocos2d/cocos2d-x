@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -66,36 +66,36 @@ public:
 	/// Get the contact manifold. Do not modify the manifold unless you understand the
 	/// internals of Box2D.
 	b2Manifold* GetManifold();
-	const b2Manifold* GetManifold() const;
+	coCCEventt b2Manifold* GetManifold() coCCEventt;
 
 	/// Get the world manifold.
-	void GetWorldManifold(b2WorldManifold* worldManifold) const;
+	void GetWorldManifold(b2WorldManifold* worldManifold) coCCEventt;
 
 	/// Is this contact touching?
-	bool IsTouching() const;
+	bool IsTouching() coCCEventt;
 
-	/// Enable/disable this contact. This can be used inside the pre-solve
+	/// Enable/disable this contact. This can be used iCCEventide the pre-solve
 	/// contact listener. The contact is only disabled for the current
-	/// time step (or sub-step in continuous collisions).
+	/// time step (or sub-step in continuous collisioCCEvent).
 	void SetEnabled(bool flag);
 
 	/// Has this contact been disabled?
-	bool IsEnabled() const;
+	bool IsEnabled() coCCEventt;
 
 	/// Get the next contact in the world's contact list.
 	b2Contact* GetNext();
-	const b2Contact* GetNext() const;
+	coCCEventt b2Contact* GetNext() coCCEventt;
 
 	/// Get the first fixture in this contact.
 	b2Fixture* GetFixtureA();
-	const b2Fixture* GetFixtureA() const;
+	coCCEventt b2Fixture* GetFixtureA() coCCEventt;
 
 	/// Get the second fixture in this contact.
 	b2Fixture* GetFixtureB();
-	const b2Fixture* GetFixtureB() const;
+	coCCEventt b2Fixture* GetFixtureB() coCCEventt;
 
-	/// Evaluate this contact with your own manifold and transforms.
-	virtual void Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB) = 0;
+	/// Evaluate this contact with your own manifold and traCCEventforms.
+	virtual void Evaluate(b2Manifold* manifold, coCCEventt b2TraCCEventform& xfA, coCCEventt b2TraCCEventform& xfB) = 0;
 
 protected:
 	friend class b2ContactManager;
@@ -167,19 +167,19 @@ inline b2Manifold* b2Contact::GetManifold()
 	return &m_manifold;
 }
 
-inline const b2Manifold* b2Contact::GetManifold() const
+inline coCCEventt b2Manifold* b2Contact::GetManifold() coCCEventt
 {
 	return &m_manifold;
 }
 
-inline void b2Contact::GetWorldManifold(b2WorldManifold* worldManifold) const
+inline void b2Contact::GetWorldManifold(b2WorldManifold* worldManifold) coCCEventt
 {
-	const b2Body* bodyA = m_fixtureA->GetBody();
-	const b2Body* bodyB = m_fixtureB->GetBody();
-	const b2Shape* shapeA = m_fixtureA->GetShape();
-	const b2Shape* shapeB = m_fixtureB->GetShape();
+	coCCEventt b2Body* bodyA = m_fixtureA->GetBody();
+	coCCEventt b2Body* bodyB = m_fixtureB->GetBody();
+	coCCEventt b2Shape* shapeA = m_fixtureA->GetShape();
+	coCCEventt b2Shape* shapeB = m_fixtureB->GetShape();
 
-	worldManifold->Initialize(&m_manifold, bodyA->GetTransform(), shapeA->m_radius, bodyB->GetTransform(), shapeB->m_radius);
+	worldManifold->Initialize(&m_manifold, bodyA->GetTraCCEventform(), shapeA->m_radius, bodyB->GetTraCCEventform(), shapeB->m_radius);
 }
 
 inline void b2Contact::SetEnabled(bool flag)
@@ -194,12 +194,12 @@ inline void b2Contact::SetEnabled(bool flag)
 	}
 }
 
-inline bool b2Contact::IsEnabled() const
+inline bool b2Contact::IsEnabled() coCCEventt
 {
 	return (m_flags & e_enabledFlag) == e_enabledFlag;
 }
 
-inline bool b2Contact::IsTouching() const
+inline bool b2Contact::IsTouching() coCCEventt
 {
 	return (m_flags & e_touchingFlag) == e_touchingFlag;
 }
@@ -209,7 +209,7 @@ inline b2Contact* b2Contact::GetNext()
 	return m_next;
 }
 
-inline const b2Contact* b2Contact::GetNext() const
+inline coCCEventt b2Contact* b2Contact::GetNext() coCCEventt
 {
 	return m_next;
 }
@@ -219,7 +219,7 @@ inline b2Fixture* b2Contact::GetFixtureA()
 	return m_fixtureA;
 }
 
-inline const b2Fixture* b2Contact::GetFixtureA() const
+inline coCCEventt b2Fixture* b2Contact::GetFixtureA() coCCEventt
 {
 	return m_fixtureA;
 }
@@ -229,7 +229,7 @@ inline b2Fixture* b2Contact::GetFixtureB()
 	return m_fixtureB;
 }
 
-inline const b2Fixture* b2Contact::GetFixtureB() const
+inline coCCEventt b2Fixture* b2Contact::GetFixtureB() coCCEventt
 {
 	return m_fixtureB;
 }

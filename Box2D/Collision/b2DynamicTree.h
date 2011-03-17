@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -21,14 +21,14 @@
 
 #include <Box2D/Collision/b2Collision.h>
 
-/// A dynamic AABB tree broad-phase, inspired by Nathanael Presson's btDbvt.
+/// A dynamic AABB tree broad-phase, iCCEventpired by Nathanael Presson's btDbvt.
 
 #define b2_nullNode (-1)
 
 /// A node in the dynamic tree. The client does not interact with this directly.
 struct b2DynamicTreeNode
 {
-	bool IsLeaf() const
+	bool IsLeaf() coCCEventt
 	{
 		return child1 == b2_nullNode;
 	}
@@ -60,61 +60,61 @@ class b2DynamicTree
 {
 public:
 
-	/// Constructing the tree initializes the node pool.
+	/// CoCCEventtructing the tree initializes the node pool.
 	b2DynamicTree();
 
 	/// Destroy the tree, freeing the node pool.
 	~b2DynamicTree();
 
 	/// Create a proxy. Provide a tight fitting AABB and a userData pointer.
-	int32 CreateProxy(const b2AABB& aabb, void* userData);
+	int32 CreateProxy(coCCEventt b2AABB& aabb, void* userData);
 
 	/// Destroy a proxy. This asserts if the id is invalid.
 	void DestroyProxy(int32 proxyId);
 
 	/// Move a proxy with a swepted AABB. If the proxy has moved outside of its fattened AABB,
-	/// then the proxy is removed from the tree and re-inserted. Otherwise
-	/// the function returns immediately.
-	/// @return true if the proxy was re-inserted.
-	bool MoveProxy(int32 proxyId, const b2AABB& aabb1, const b2Vec2& displacement);
+	/// then the proxy is removed from the tree and re-iCCEventerted. Otherwise
+	/// the function returCCEvent immediately.
+	/// @return true if the proxy was re-iCCEventerted.
+	bool MoveProxy(int32 proxyId, coCCEventt b2AABB& aabb1, coCCEventt b2Vec2& displacement);
 
-	/// Perform some iterations to re-balance the tree.
-	void Rebalance(int32 iterations);
+	/// Perform some iteratioCCEvent to re-balance the tree.
+	void Rebalance(int32 iteratioCCEvent);
 
 	/// Get proxy user data.
 	/// @return the proxy user data or 0 if the id is invalid.
-	void* GetUserData(int32 proxyId) const;
+	void* GetUserData(int32 proxyId) coCCEventt;
 
 	/// Get the fat AABB for a proxy.
-	const b2AABB& GetFatAABB(int32 proxyId) const;
+	coCCEventt b2AABB& GetFatAABB(int32 proxyId) coCCEventt;
 
 	/// Compute the height of the tree.
-	int32 ComputeHeight() const;
+	int32 ComputeHeight() coCCEventt;
 
 	/// Query an AABB for overlapping proxies. The callback class
 	/// is called for each proxy that overlaps the supplied AABB.
 	template <typename T>
-	void Query(T* callback, const b2AABB& aabb) const;
+	void Query(T* callback, coCCEventt b2AABB& aabb) coCCEventt;
 
-	/// Ray-cast against the proxies in the tree. This relies on the callback
-	/// to perform a exact ray-cast in the case were the proxy contains a shape.
+	/// Ray-cast agaiCCEventt the proxies in the tree. This relies on the callback
+	/// to perform a exact ray-cast in the case were the proxy contaiCCEvent a shape.
 	/// The callback also performs the any collision filtering. This has performance
-	/// roughly equal to k * log(n), where k is the number of collisions and n is the
+	/// roughly equal to k * log(n), where k is the number of collisioCCEvent and n is the
 	/// number of proxies in the tree.
 	/// @param input the ray-cast input data. The ray extends from p1 to p1 + maxFraction * (p2 - p1).
 	/// @param callback a callback class that is called for each proxy that is hit by the ray.
 	template <typename T>
-	void RayCast(T* callback, const b2RayCastInput& input) const;
+	void RayCast(T* callback, coCCEventt b2RayCastInput& input) coCCEventt;
 
 private:
 
 	int32 AllocateNode();
 	void FreeNode(int32 node);
 
-	void InsertLeaf(int32 node);
+	void ICCEventertLeaf(int32 node);
 	void RemoveLeaf(int32 node);
 
-	int32 ComputeHeight(int32 nodeId) const;
+	int32 ComputeHeight(int32 nodeId) coCCEventt;
 
 	int32 m_root;
 
@@ -127,25 +127,25 @@ private:
 	/// This is used incrementally traverse the tree for re-balancing.
 	uint32 m_path;
 
-	int32 m_insertionCount;
+	int32 m_iCCEventertionCount;
 };
 
-inline void* b2DynamicTree::GetUserData(int32 proxyId) const
+inline void* b2DynamicTree::GetUserData(int32 proxyId) coCCEventt
 {
 	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	return m_nodes[proxyId].userData;
 }
 
-inline const b2AABB& b2DynamicTree::GetFatAABB(int32 proxyId) const
+inline coCCEventt b2AABB& b2DynamicTree::GetFatAABB(int32 proxyId) coCCEventt
 {
 	b2Assert(0 <= proxyId && proxyId < m_nodeCapacity);
 	return m_nodes[proxyId].aabb;
 }
 
 template <typename T>
-inline void b2DynamicTree::Query(T* callback, const b2AABB& aabb) const
+inline void b2DynamicTree::Query(T* callback, coCCEventt b2AABB& aabb) coCCEventt
 {
-	const int32 k_stackSize = 128;
+	coCCEventt int32 k_stackSize = 128;
 	int32 stack[k_stackSize];
 
 	int32 count = 0;
@@ -159,7 +159,7 @@ inline void b2DynamicTree::Query(T* callback, const b2AABB& aabb) const
 			continue;
 		}
 
-		const b2DynamicTreeNode* node = m_nodes + nodeId;
+		coCCEventt b2DynamicTreeNode* node = m_nodes + nodeId;
 
 		if (b2TestOverlap(node->aabb, aabb))
 		{
@@ -188,7 +188,7 @@ inline void b2DynamicTree::Query(T* callback, const b2AABB& aabb) const
 }
 
 template <typename T>
-inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) const
+inline void b2DynamicTree::RayCast(T* callback, coCCEventt b2RayCastInput& input) coCCEventt
 {
 	b2Vec2 p1 = input.p1;
 	b2Vec2 p2 = input.p2;
@@ -213,7 +213,7 @@ inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) con
 		segmentAABB.upperBound = b2Max(p1, t);
 	}
 
-	const int32 k_stackSize = 128;
+	coCCEventt int32 k_stackSize = 128;
 	int32 stack[k_stackSize];
 
 	int32 count = 0;
@@ -227,7 +227,7 @@ inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) con
 			continue;
 		}
 
-		const b2DynamicTreeNode* node = m_nodes + nodeId;
+		coCCEventt b2DynamicTreeNode* node = m_nodes + nodeId;
 
 		if (b2TestOverlap(node->aabb, segmentAABB) == false)
 		{

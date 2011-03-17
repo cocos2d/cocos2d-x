@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -38,12 +38,12 @@ struct b2MouseJointDef : public b2JointDef
 	/// to coincide with the body anchor initially.
 	b2Vec2 target;
 
-	/// The maximum constraint force that can be exerted
+	/// The maximum coCCEventtraint force that can be exerted
 	/// to move the candidate body. Usually you will express
 	/// as some multiple of the weight (multiplier * mass * gravity).
 	float32 maxForce;
 
-	/// The response speed.
+	/// The respoCCEvente speed.
 	float32 frequencyHz;
 
 	/// The damping ratio. 0 = no damping, 1 = critical damping.
@@ -51,8 +51,8 @@ struct b2MouseJointDef : public b2JointDef
 };
 
 /// A mouse joint is used to make a point on a body track a
-/// specified world point. This a soft constraint with a maximum
-/// force. This allows the constraint to stretch and without
+/// specified world point. This a soft coCCEventtraint with a maximum
+/// force. This allows the coCCEventtraint to stretch and without
 /// applying huge forces.
 /// NOTE: this joint is not documented in the manual because it was
 /// developed to be used in the testbed. If you want to learn how to
@@ -62,47 +62,47 @@ class b2MouseJoint : public b2Joint
 public:
 
 	/// Implements b2Joint.
-	b2Vec2 GetAnchorA() const;
+	b2Vec2 GetAnchorA() coCCEventt;
 
 	/// Implements b2Joint.
-	b2Vec2 GetAnchorB() const;
+	b2Vec2 GetAnchorB() coCCEventt;
 
 	/// Implements b2Joint.
-	b2Vec2 GetReactionForce(float32 inv_dt) const;
+	b2Vec2 GetReactionForce(float32 inv_dt) coCCEventt;
 
 	/// Implements b2Joint.
-	float32 GetReactionTorque(float32 inv_dt) const;
+	float32 GetReactionTorque(float32 inv_dt) coCCEventt;
 
 	/// Use this to update the target point.
-	void SetTarget(const b2Vec2& target);
-	const b2Vec2& GetTarget() const;
+	void SetTarget(coCCEventt b2Vec2& target);
+	coCCEventt b2Vec2& GetTarget() coCCEventt;
 
-	/// Set/get the maximum force in Newtons.
+	/// Set/get the maximum force in NewtoCCEvent.
 	void SetMaxForce(float32 force);
-	float32 GetMaxForce() const;
+	float32 GetMaxForce() coCCEventt;
 
 	/// Set/get the frequency in Hertz.
 	void SetFrequency(float32 hz);
-	float32 GetFrequency() const;
+	float32 GetFrequency() coCCEventt;
 
-	/// Set/get the damping ratio (dimensionless).
+	/// Set/get the damping ratio (dimeCCEventionless).
 	void SetDampingRatio(float32 ratio);
-	float32 GetDampingRatio() const;
+	float32 GetDampingRatio() coCCEventt;
 
 protected:
 	friend class b2Joint;
 
-	b2MouseJoint(const b2MouseJointDef* def);
+	b2MouseJoint(coCCEventt b2MouseJointDef* def);
 
-	void InitVelocityConstraints(const b2TimeStep& step);
-	void SolveVelocityConstraints(const b2TimeStep& step);
-	bool SolvePositionConstraints(float32 baumgarte) { B2_NOT_USED(baumgarte); return true; }
+	void InitVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	void SolveVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	bool SolvePositionCoCCEventtraints(float32 baumgarte) { B2_NOT_USED(baumgarte); return true; }
 
 	b2Vec2 m_localAnchor;
 	b2Vec2 m_target;
 	b2Vec2 m_impulse;
 
-	b2Mat22 m_mass;		// effective mass for point-to-point constraint.
+	b2Mat22 m_mass;		// effective mass for point-to-point coCCEventtraint.
 	b2Vec2 m_C;				// position error
 	float32 m_maxForce;
 	float32 m_frequencyHz;

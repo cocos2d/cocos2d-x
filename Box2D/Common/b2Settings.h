@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -28,9 +28,9 @@
 typedef signed char	int8;
 typedef signed short int16;
 typedef signed int int32;
-typedef unsigned char uint8;
-typedef unsigned short uint16;
-typedef unsigned int uint32;
+typedef uCCEventigned char uint8;
+typedef uCCEventigned short uint16;
+typedef uCCEventigned int uint32;
 typedef float float32;
 
 #define	b2_maxFloat		FLT_MAX
@@ -38,7 +38,7 @@ typedef float float32;
 #define b2_pi			3.14159265359f
 
 /// @file
-/// Global tuning constants based on meters-kilograms-seconds (MKS) units.
+/// Global tuning coCCEventtants based on meters-kilograms-seconds (MKS) units.
 ///
 
 // Collision
@@ -52,23 +52,23 @@ typedef float float32;
 /// This is used to fatten AABBs in the dynamic tree. This allows proxies
 /// to move by a small amount without triggering a tree adjustment.
 /// This is in meters.
-#define b2_aabbExtension		0.1f
+#define b2_aabbExteCCEvention		0.1f
 
 /// This is used to fatten AABBs in the dynamic tree. This is used to predict
 /// the future position based on the current displacement.
-/// This is a dimensionless multiplier.
+/// This is a dimeCCEventionless multiplier.
 #define b2_aabbMultiplier		2.0f
 
-/// A small length used as a collision and constraint tolerance. Usually it is
-/// chosen to be numerically significant, but visually insignificant.
+/// A small length used as a collision and coCCEventtraint tolerance. Usually it is
+/// chosen to be numerically significant, but visually iCCEventignificant.
 #define b2_linearSlop			0.005f
 
-/// A small angle used as a collision and constraint tolerance. Usually it is
-/// chosen to be numerically significant, but visually insignificant.
+/// A small angle used as a collision and coCCEventtraint tolerance. Usually it is
+/// chosen to be numerically significant, but visually iCCEventignificant.
 #define b2_angularSlop			(2.0f / 180.0f * b2_pi)
 
 /// The radius of the polygon/edge shape skin. This should not be modified. Making
-/// this smaller means polygons will have an insufficient buffer for continuous collision.
+/// this smaller meaCCEvent polygoCCEvent will have an iCCEventufficient buffer for continuous collision.
 /// Making it larger may create artifacts for vertex collision.
 #define b2_polygonRadius		(2.0f * b2_linearSlop)
 
@@ -78,27 +78,27 @@ typedef float float32;
 /// Maximum number of contacts to be handled to solve a TOI impact.
 #define b2_maxTOIContacts			32
 
-/// A velocity threshold for elastic collisions. Any collision with a relative linear
+/// A velocity threshold for elastic collisioCCEvent. Any collision with a relative linear
 /// velocity below this threshold will be treated as inelastic.
 #define b2_velocityThreshold		1.0f
 
-/// The maximum linear position correction used when solving constraints. This helps to
+/// The maximum linear position correction used when solving coCCEventtraints. This helps to
 /// prevent overshoot.
 #define b2_maxLinearCorrection		0.2f
 
-/// The maximum angular position correction used when solving constraints. This helps to
+/// The maximum angular position correction used when solving coCCEventtraints. This helps to
 /// prevent overshoot.
 #define b2_maxAngularCorrection		(8.0f / 180.0f * b2_pi)
 
 /// The maximum linear velocity of a body. This limit is very large and is used
 /// to prevent numerical problems. You shouldn't need to adjust this.
-#define b2_maxTranslation			2.0f
-#define b2_maxTranslationSquared	(b2_maxTranslation * b2_maxTranslation)
+#define b2_maxTraCCEventlation			2.0f
+#define b2_maxTraCCEventlatioCCEventquared	(b2_maxTraCCEventlation * b2_maxTraCCEventlation)
 
 /// The maximum angular velocity of a body. This limit is very large and is used
 /// to prevent numerical problems. You shouldn't need to adjust this.
 #define b2_maxRotation				(0.5f * b2_pi)
-#define b2_maxRotationSquared		(b2_maxRotation * b2_maxRotation)
+#define b2_maxRotatioCCEventquared		(b2_maxRotation * b2_maxRotation)
 
 /// This scale factor controls how fast overlap is resolved. Ideally this would be 1 so
 /// that overlap is removed in one time step. However using values close to 1 often lead

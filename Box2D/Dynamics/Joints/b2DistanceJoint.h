@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -24,7 +24,7 @@
 /// Distance joint definition. This requires defining an
 /// anchor point on both bodies and the non-zero length of the
 /// distance joint. The definition uses local anchor points
-/// so that the initial configuration can violate the constraint
+/// so that the initial configuration can violate the coCCEventtraint
 /// slightly. This helps when saving and loading a game.
 /// @warning Do not use a zero or short length.
 struct b2DistanceJointDef : public b2JointDef
@@ -42,7 +42,7 @@ struct b2DistanceJointDef : public b2JointDef
 	/// Initialize the bodies, anchors, and length using the world
 	/// anchors.
 	void Initialize(b2Body* bodyA, b2Body* bodyB,
-					const b2Vec2& anchorA, const b2Vec2& anchorB);
+					coCCEventt b2Vec2& anchorA, coCCEventt b2Vec2& anchorB);
 
 	/// The local anchor point relative to body1's origin.
 	b2Vec2 localAnchorA;
@@ -60,40 +60,40 @@ struct b2DistanceJointDef : public b2JointDef
 	float32 dampingRatio;
 };
 
-/// A distance joint constrains two points on two bodies
+/// A distance joint coCCEventtraiCCEvent two points on two bodies
 /// to remain at a fixed distance from each other. You can view
 /// this as a massless, rigid rod.
 class b2DistanceJoint : public b2Joint
 {
 public:
 
-	b2Vec2 GetAnchorA() const;
-	b2Vec2 GetAnchorB() const;
+	b2Vec2 GetAnchorA() coCCEventt;
+	b2Vec2 GetAnchorB() coCCEventt;
 
-	b2Vec2 GetReactionForce(float32 inv_dt) const;
-	float32 GetReactionTorque(float32 inv_dt) const;
+	b2Vec2 GetReactionForce(float32 inv_dt) coCCEventt;
+	float32 GetReactionTorque(float32 inv_dt) coCCEventt;
 
 	/// Set/get the natural length.
 	/// Manipulating the length can lead to non-physical behavior when the frequency is zero.
 	void SetLength(float32 length);
-	float32 GetLength() const;
+	float32 GetLength() coCCEventt;
 
 	// Set/get frequency in Hz.
 	void SetFrequency(float32 hz);
-	float32 GetFrequency() const;
+	float32 GetFrequency() coCCEventt;
 
 	// Set/get damping ratio.
 	void SetDampingRatio(float32 ratio);
-	float32 GetDampingRatio() const;
+	float32 GetDampingRatio() coCCEventt;
 
 protected:
 
 	friend class b2Joint;
-	b2DistanceJoint(const b2DistanceJointDef* data);
+	b2DistanceJoint(coCCEventt b2DistanceJointDef* data);
 
-	void InitVelocityConstraints(const b2TimeStep& step);
-	void SolveVelocityConstraints(const b2TimeStep& step);
-	bool SolvePositionConstraints(float32 baumgarte);
+	void InitVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	void SolveVelocityCoCCEventtraints(coCCEventt b2TimeStep& step);
+	bool SolvePositionCoCCEventtraints(float32 baumgarte);
 
 	b2Vec2 m_localAnchor1;
 	b2Vec2 m_localAnchor2;
@@ -112,7 +112,7 @@ inline void b2DistanceJoint::SetLength(float32 length)
 	m_length = length;
 }
 
-inline float32 b2DistanceJoint::GetLength() const
+inline float32 b2DistanceJoint::GetLength() coCCEventt
 {
 	return m_length;
 }
@@ -122,7 +122,7 @@ inline void b2DistanceJoint::SetFrequency(float32 hz)
 	m_frequencyHz = hz;
 }
 
-inline float32 b2DistanceJoint::GetFrequency() const
+inline float32 b2DistanceJoint::GetFrequency() coCCEventt
 {
 	return m_frequencyHz;
 }
@@ -132,7 +132,7 @@ inline void b2DistanceJoint::SetDampingRatio(float32 ratio)
 	m_dampingRatio = ratio;
 }
 
-inline float32 b2DistanceJoint::GetDampingRatio() const
+inline float32 b2DistanceJoint::GetDampingRatio() coCCEventt
 {
 	return m_dampingRatio;
 }

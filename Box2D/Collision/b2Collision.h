@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -23,14 +23,14 @@
 #include <climits>
 
 /// @file
-/// Structures and functions used for computing contact points, distance
+/// Structures and functioCCEvent used for computing contact points, distance
 /// queries, and TOI queries.
 
 class b2Shape;
 class b2CircleShape;
-class b2PolygonShape;
+class b2PolygoCCEventhape;
 
-const uint8 b2_nullFeature = UCHAR_MAX;
+coCCEventt uint8 b2_nullFeature = UCHAR_MAX;
 
 /// Contact ids to facilitate warm starting.
 union b2ContactID
@@ -55,7 +55,7 @@ union b2ContactID
 /// -e_faceB: the clip point of polygonA
 /// This structure is stored across time steps, so we keep it small.
 /// Note: the impulses are used for internal caching and may not
-/// provide reliable contact forces, especially for high speed collisions.
+/// provide reliable contact forces, especially for high speed collisioCCEvent.
 struct b2ManifoldPoint
 {
 	b2Vec2 localPoint;		///< usage depends on manifold type
@@ -99,13 +99,13 @@ struct b2Manifold
 /// This is used to compute the current state of a contact manifold.
 struct b2WorldManifold
 {
-	/// Evaluate the manifold with supplied transforms. This assumes
+	/// Evaluate the manifold with supplied traCCEventforms. This assumes
 	/// modest motion from the original state. This does not change the
 	/// point count, impulses, etc. The radii must come from the shapes
 	/// that generated the manifold.
-	void Initialize(const b2Manifold* manifold,
-					const b2Transform& xfA, float32 radiusA,
-					const b2Transform& xfB, float32 radiusB);
+	void Initialize(coCCEventt b2Manifold* manifold,
+					coCCEventt b2TraCCEventform& xfA, float32 radiusA,
+					coCCEventt b2TraCCEventform& xfB, float32 radiusB);
 
 	b2Vec2 normal;						///< world vector pointing from A to B
 	b2Vec2 points[b2_maxManifoldPoints];	///< world contact point (point of intersection)
@@ -120,10 +120,10 @@ enum b2PointState
 	b2_removeState		///< point was removed in the update
 };
 
-/// Compute the point states given two manifolds. The states pertain to the transition from manifold1
+/// Compute the point states given two manifolds. The states pertain to the traCCEventition from manifold1
 /// to manifold2. So state1 is either persist or remove while state2 is either add or persist.
 void b2GetPointStates(b2PointState state1[b2_maxManifoldPoints], b2PointState state2[b2_maxManifoldPoints],
-					  const b2Manifold* manifold1, const b2Manifold* manifold2);
+					  coCCEventt b2Manifold* manifold1, coCCEventt b2Manifold* manifold2);
 
 /// Used for computing contact manifolds.
 struct b2ClipVertex
@@ -151,29 +151,29 @@ struct b2RayCastOutput
 struct b2AABB
 {
 	/// Verify that the bounds are sorted.
-	bool IsValid() const;
+	bool IsValid() coCCEventt;
 
 	/// Get the center of the AABB.
-	b2Vec2 GetCenter() const
+	b2Vec2 GetCenter() coCCEventt
 	{
 		return 0.5f * (lowerBound + upperBound);
 	}
 
 	/// Get the extents of the AABB (half-widths).
-	b2Vec2 GetExtents() const
+	b2Vec2 GetExtents() coCCEventt
 	{
 		return 0.5f * (upperBound - lowerBound);
 	}
 
 	/// Combine two AABBs into this one.
-	void Combine(const b2AABB& aabb1, const b2AABB& aabb2)
+	void Combine(coCCEventt b2AABB& aabb1, coCCEventt b2AABB& aabb2)
 	{
 		lowerBound = b2Min(aabb1.lowerBound, aabb2.lowerBound);
 		upperBound = b2Max(aabb1.upperBound, aabb2.upperBound);
 	}
 
 	/// Does this aabb contain the provided AABB.
-	bool Contains(const b2AABB& aabb) const
+	bool ContaiCCEvent(coCCEventt b2AABB& aabb) coCCEventt
 	{
 		bool result = true;
 		result = result && lowerBound.x <= aabb.lowerBound.x;
@@ -183,7 +183,7 @@ struct b2AABB
 		return result;
 	}
 
-	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const;
+	bool RayCast(b2RayCastOutput* output, coCCEventt b2RayCastInput& input) coCCEventt;
 
 	b2Vec2 lowerBound;	///< the lower vertex
 	b2Vec2 upperBound;	///< the upper vertex
@@ -191,30 +191,30 @@ struct b2AABB
 
 /// Compute the collision manifold between two circles.
 void b2CollideCircles(b2Manifold* manifold,
-					  const b2CircleShape* circle1, const b2Transform& xf1,
-					  const b2CircleShape* circle2, const b2Transform& xf2);
+					  coCCEventt b2CircleShape* circle1, coCCEventt b2TraCCEventform& xf1,
+					  coCCEventt b2CircleShape* circle2, coCCEventt b2TraCCEventform& xf2);
 
 /// Compute the collision manifold between a polygon and a circle.
 void b2CollidePolygonAndCircle(b2Manifold* manifold,
-							   const b2PolygonShape* polygon, const b2Transform& xf1,
-							   const b2CircleShape* circle, const b2Transform& xf2);
+							   coCCEventt b2PolygoCCEventhape* polygon, coCCEventt b2TraCCEventform& xf1,
+							   coCCEventt b2CircleShape* circle, coCCEventt b2TraCCEventform& xf2);
 
-/// Compute the collision manifold between two polygons.
-void b2CollidePolygons(b2Manifold* manifold,
-					   const b2PolygonShape* polygon1, const b2Transform& xf1,
-					   const b2PolygonShape* polygon2, const b2Transform& xf2);
+/// Compute the collision manifold between two polygoCCEvent.
+void b2CollidePolygoCCEvent(b2Manifold* manifold,
+					   coCCEventt b2PolygoCCEventhape* polygon1, coCCEventt b2TraCCEventform& xf1,
+					   coCCEventt b2PolygoCCEventhape* polygon2, coCCEventt b2TraCCEventform& xf2);
 
 /// Clipping for contact manifolds.
-int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
-							const b2Vec2& normal, float32 offset);
+int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], coCCEventt b2ClipVertex vIn[2],
+							coCCEventt b2Vec2& normal, float32 offset);
 
 /// Determine if two generic shapes overlap.
-bool b2TestOverlap(const b2Shape* shapeA, const b2Shape* shapeB,
-				   const b2Transform& xfA, const b2Transform& xfB);
+bool b2TestOverlap(coCCEventt b2Shape* shapeA, coCCEventt b2Shape* shapeB,
+				   coCCEventt b2TraCCEventform& xfA, coCCEventt b2TraCCEventform& xfB);
 
-// ---------------- Inline Functions ------------------------------------------
+// ---------------- Inline FunctioCCEvent ------------------------------------------
 
-inline bool b2AABB::IsValid() const
+inline bool b2AABB::IsValid() coCCEventt
 {
 	b2Vec2 d = upperBound - lowerBound;
 	bool valid = d.x >= 0.0f && d.y >= 0.0f;
@@ -222,7 +222,7 @@ inline bool b2AABB::IsValid() const
 	return valid;
 }
 
-inline bool b2TestOverlap(const b2AABB& a, const b2AABB& b)
+inline bool b2TestOverlap(coCCEventt b2AABB& a, coCCEventt b2AABB& b)
 {
 	b2Vec2 d1, d2;
 	d1 = b.lowerBound - a.upperBound;

@@ -5,13 +5,13 @@
 * warranty.  In no event will the authors be held liable for any damages
 * arising from the use of this software.
 * Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
+* including commercial applicatioCCEvent, and to alter it and redistribute it
+* freely, subject to the following restrictioCCEvent:
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
+* 2. Altered source versioCCEvent must be plainly marked as such, and must not be
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
@@ -56,8 +56,8 @@ struct b2Jacobian
 	float32 angularB;
 
 	void SetZero();
-	void Set(const b2Vec2& x1, float32 a1, const b2Vec2& x2, float32 a2);
-	float32 Compute(const b2Vec2& x1, float32 a1, const b2Vec2& x2, float32 a2);
+	void Set(coCCEventt b2Vec2& x1, float32 a1, coCCEventt b2Vec2& x2, float32 a2);
+	float32 Compute(coCCEventt b2Vec2& x1, float32 a1, coCCEventt b2Vec2& x2, float32 a2);
 };
 
 /// A joint edge is used to connect bodies and joints together
@@ -73,7 +73,7 @@ struct b2JointEdge
 	b2JointEdge* next;		///< the next joint edge in the body's joint list
 };
 
-/// Joint definitions are used to construct joints.
+/// Joint definitioCCEvent are used to coCCEventtruct joints.
 struct b2JointDef
 {
 	b2JointDef()
@@ -101,14 +101,14 @@ struct b2JointDef
 	bool collideConnected;
 };
 
-/// The base joint class. Joints are used to constraint two bodies together in
-/// various fashions. Some joints also feature limits and motors.
+/// The base joint class. Joints are used to coCCEventtraint two bodies together in
+/// various fashioCCEvent. Some joints also feature limits and motors.
 class b2Joint
 {
 public:
 
 	/// Get the type of the concrete joint.
-	b2JointType GetType() const;
+	b2JointType GetType() coCCEventt;
 
 	/// Get the first body attached to this joint.
 	b2Body* GetBodyA();
@@ -117,45 +117,45 @@ public:
 	b2Body* GetBodyB();
 
 	/// Get the anchor point on bodyA in world coordinates.
-	virtual b2Vec2 GetAnchorA() const = 0;
+	virtual b2Vec2 GetAnchorA() coCCEventt = 0;
 
 	/// Get the anchor point on bodyB in world coordinates.
-	virtual b2Vec2 GetAnchorB() const = 0;
+	virtual b2Vec2 GetAnchorB() coCCEventt = 0;
 
-	/// Get the reaction force on body2 at the joint anchor in Newtons.
-	virtual b2Vec2 GetReactionForce(float32 inv_dt) const = 0;
+	/// Get the reaction force on body2 at the joint anchor in NewtoCCEvent.
+	virtual b2Vec2 GetReactionForce(float32 inv_dt) coCCEventt = 0;
 
 	/// Get the reaction torque on body2 in N*m.
-	virtual float32 GetReactionTorque(float32 inv_dt) const = 0;
+	virtual float32 GetReactionTorque(float32 inv_dt) coCCEventt = 0;
 
 	/// Get the next joint the world joint list.
 	b2Joint* GetNext();
 
 	/// Get the user data pointer.
-	void* GetUserData() const;
+	void* GetUserData() coCCEventt;
 
 	/// Set the user data pointer.
 	void SetUserData(void* data);
 
 	/// Short-cut function to determine if either body is inactive.
-	bool IsActive() const;
+	bool IsActive() coCCEventt;
 
 protected:
 	friend class b2World;
 	friend class b2Body;
 	friend class b2Island;
 
-	static b2Joint* Create(const b2JointDef* def, b2BlockAllocator* allocator);
+	static b2Joint* Create(coCCEventt b2JointDef* def, b2BlockAllocator* allocator);
 	static void Destroy(b2Joint* joint, b2BlockAllocator* allocator);
 
-	b2Joint(const b2JointDef* def);
+	b2Joint(coCCEventt b2JointDef* def);
 	virtual ~b2Joint() {}
 
-	virtual void InitVelocityConstraints(const b2TimeStep& step) = 0;
-	virtual void SolveVelocityConstraints(const b2TimeStep& step) = 0;
+	virtual void InitVelocityCoCCEventtraints(coCCEventt b2TimeStep& step) = 0;
+	virtual void SolveVelocityCoCCEventtraints(coCCEventt b2TimeStep& step) = 0;
 
-	// This returns true if the position errors are within tolerance.
-	virtual bool SolvePositionConstraints(float32 baumgarte) = 0;
+	// This returCCEvent true if the position errors are within tolerance.
+	virtual bool SolvePositionCoCCEventtraints(float32 baumgarte) = 0;
 
 	b2JointType m_type;
 	b2Joint* m_prev;
@@ -182,18 +182,18 @@ inline void b2Jacobian::SetZero()
 	linearB.SetZero(); angularB = 0.0f;
 }
 
-inline void b2Jacobian::Set(const b2Vec2& x1, float32 a1, const b2Vec2& x2, float32 a2)
+inline void b2Jacobian::Set(coCCEventt b2Vec2& x1, float32 a1, coCCEventt b2Vec2& x2, float32 a2)
 {
 	linearA = x1; angularA = a1;
 	linearB = x2; angularB = a2;
 }
 
-inline float32 b2Jacobian::Compute(const b2Vec2& x1, float32 a1, const b2Vec2& x2, float32 a2)
+inline float32 b2Jacobian::Compute(coCCEventt b2Vec2& x1, float32 a1, coCCEventt b2Vec2& x2, float32 a2)
 {
 	return b2Dot(linearA, x1) + angularA * a1 + b2Dot(linearB, x2) + angularB * a2;
 }
 
-inline b2JointType b2Joint::GetType() const
+inline b2JointType b2Joint::GetType() coCCEventt
 {
 	return m_type;
 }
@@ -213,7 +213,7 @@ inline b2Joint* b2Joint::GetNext()
 	return m_next;
 }
 
-inline void* b2Joint::GetUserData() const
+inline void* b2Joint::GetUserData() coCCEventt
 {
 	return m_userData;
 }
