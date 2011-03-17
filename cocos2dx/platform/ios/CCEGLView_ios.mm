@@ -54,7 +54,8 @@ bool CCEGLView::isOpenGLReady()
     
     bool CCEGLView::canSetContentScaleFactor()
     {
-       return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)];
+       return [[EAGLView sharedEGLView] respondsToSelector:@selector(setContentScaleFactor:)]
+               && [[UIScreen mainScreen] scale] != 1.0;
     }
     
     void CCEGLView::setContentScaleFactor(float contentScaleFactor)
