@@ -24,7 +24,7 @@ public:
         void step(cocos2d::ccTime dt);
         void addNewSpriteX(float x, float y);
         virtual void onEnter();
-        virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::UIEvent *event);
+        virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent *event);
         
         LAYER_NODE_FUNC(HelloWorld);
     

@@ -15,8 +15,8 @@ public:
     void menuCallback(CCObject * pSender);
     void closeCallback(CCObject * pSender);
 
-    virtual void ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent);
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 private:
 

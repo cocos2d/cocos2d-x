@@ -141,7 +141,7 @@ RenderTextureTest::~RenderTextureTest()
     m_brush->release();
 }
 
-void RenderTextureTest::ccTouchesMoved(CCSet* touches, UIEvent* event)
+void RenderTextureTest::ccTouchesMoved(CCSet* touches, CCEvent* event)
 {
     CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);

@@ -55,7 +55,7 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
     virtual void onEnterTransitionDidFinish();
-	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void destroy(void);
 	virtual void keep(void);
 	
