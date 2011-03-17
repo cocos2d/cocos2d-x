@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCCamera.h"
 //#include "CCDirector.h"
-#include "ccGL.h"
+#include "CCGL.h"
 
 #include "CCDrawingPrimitives.h"
 
