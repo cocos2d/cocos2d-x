@@ -8,7 +8,7 @@ LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
 CCDrawingPrimitives.cpp \
 CCScheduler.cpp \
-CCamera.cpp \
+CCCamera.cpp \
 actions/CCAction.cpp \
 actions/CCActionCamera.cpp \
 actions/CCActionEase.cpp \

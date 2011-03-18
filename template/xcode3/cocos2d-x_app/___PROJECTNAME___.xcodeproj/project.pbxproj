@@ -53,7 +53,7 @@
 		BF83606C1328687F00F3C033 /* CCActionProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DCC1328687E00F3C033 /* CCActionProgressTimer.cpp */; };
 		BF83606D1328687F00F3C033 /* CCActionTiledGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DCD1328687E00F3C033 /* CCActionTiledGrid.cpp */; };
 		BF83606E1328687F00F3C033 /* CCAtlasNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD01328687E00F3C033 /* CCAtlasNode.cpp */; };
-		BF83606F1328687F00F3C033 /* CCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD11328687E00F3C033 /* CCamera.cpp */; };
+		BF83606F1328687F00F3C033 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD11328687E00F3C033 /* CCCamera.cpp */; };
 		BF8360701328687F00F3C033 /* CCConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD21328687E00F3C033 /* CCConfiguration.cpp */; };
 		BF8360711328687F00F3C033 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835DD31328687E00F3C033 /* CCConfiguration.h */; };
 		BF8360721328687F00F3C033 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD41328687E00F3C033 /* CCDrawingPrimitives.cpp */; };
@@ -332,7 +332,7 @@
 		BF835DCC1328687E00F3C033 /* CCActionProgressTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionProgressTimer.cpp; sourceTree = "<group>"; };
 		BF835DCD1328687E00F3C033 /* CCActionTiledGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTiledGrid.cpp; sourceTree = "<group>"; };
 		BF835DD01328687E00F3C033 /* CCAtlasNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAtlasNode.cpp; sourceTree = "<group>"; };
-		BF835DD11328687E00F3C033 /* CCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCamera.cpp; sourceTree = "<group>"; };
+		BF835DD11328687E00F3C033 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF835DD21328687E00F3C033 /* CCConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCConfiguration.cpp; sourceTree = "<group>"; };
 		BF835DD31328687E00F3C033 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		BF835DD41328687E00F3C033 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
@@ -728,7 +728,7 @@
 			children = (
 				BF835DC21328687E00F3C033 /* actions */,
 				BF835DCF1328687E00F3C033 /* base_nodes */,
-				BF835DD11328687E00F3C033 /* CCamera.cpp */,
+				BF835DD11328687E00F3C033 /* CCCamera.cpp */,
 				BF835DD21328687E00F3C033 /* CCConfiguration.cpp */,
 				BF835DD31328687E00F3C033 /* CCConfiguration.h */,
 				BF835DD41328687E00F3C033 /* CCDrawingPrimitives.cpp */,
@@ -1404,7 +1404,7 @@
 				BF83606C1328687F00F3C033 /* CCActionProgressTimer.cpp in Sources */,
 				BF83606D1328687F00F3C033 /* CCActionTiledGrid.cpp in Sources */,
 				BF83606E1328687F00F3C033 /* CCAtlasNode.cpp in Sources */,
-				BF83606F1328687F00F3C033 /* CCamera.cpp in Sources */,
+				BF83606F1328687F00F3C033 /* CCCamera.cpp in Sources */,
 				BF8360701328687F00F3C033 /* CCConfiguration.cpp in Sources */,
 				BF8360721328687F00F3C033 /* CCDrawingPrimitives.cpp in Sources */,
 				BF8360731328687F00F3C033 /* CCScheduler.cpp in Sources */,
