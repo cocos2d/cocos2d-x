@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __NSDATA_H__
-#define __NSDATA_H__
+#ifndef __CCDATA_H__
+#define __CCDATA_H__
 
 #include "CCObject.h"
 #include <string>
@@ -47,4 +47,4 @@ private:
 };
 }//namespace   cocos2d 
 
-#endif //__NSDATA_H__
+#endif //__CCDATA_H__

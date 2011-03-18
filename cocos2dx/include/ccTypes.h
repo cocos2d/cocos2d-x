@@ -278,10 +278,10 @@ typedef float ccTime;
 
 typedef enum 
 {
-	UITextAlignmentLeft,
-	UITextAlignmentCenter,
-	UITextAlignmentRight,
-} UITextAlignment;
+	CCTextAlignmentLeft,
+	CCTextAlignmentCenter,
+	CCTextAlignmentRight,
+} CCTextAlignment;
 
 }//namespace   cocos2d 
 

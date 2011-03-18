@@ -41,15 +41,15 @@ public:
 	void clear();
 };
 
-class CC_DLL NSPoolManager
+class CC_DLL CCPoolManager
 {
 	CCMutableArray<CCAutoreleasePool*>*	m_pReleasePoolStack;	
 	CCAutoreleasePool*					m_pCurReleasePool;
 
 	CCAutoreleasePool* getCurReleasePool();
 public:
-	NSPoolManager();
-	~NSPoolManager();
+	CCPoolManager();
+	~CCPoolManager();
 	void finalize();
 	void push();
 	void pop();
@@ -57,7 +57,7 @@ public:
 	void removeObject(CCObject* pObject);
 	void addObject(CCObject* pObject);
 
-	static NSPoolManager* getInstance();
+	static CCPoolManager* getInstance();
 
 	friend class CCAutoreleasePool;
 };
