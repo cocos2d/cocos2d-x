@@ -1101,7 +1101,7 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\CCamera.cpp"
+			RelativePath="..\CCCamera.cpp"
 			>
 		</File>
 		<File
