@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __UIACCELEROMETER_DELEGATE_H__
-#define __UIACCELEROMETER_DELEGATE_H__
+#ifndef __CCACCELEROMETER_DELEGATE_H__
+#define __CCACCELEROMETER_DELEGATE_H__
 
 #include "CCCommon.h"
 

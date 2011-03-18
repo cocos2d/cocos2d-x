@@ -52,7 +52,7 @@ CCObject::~CCObject(void)
 	// from pool manager
 	if (m_bManaged)
 	{
-		NSPoolManager::getInstance()->removeObject(this);
+		CCPoolManager::getInstance()->removeObject(this);
 	}
 }
 
@@ -81,7 +81,7 @@ void CCObject::retain(void)
 
 CCObject* CCObject::autorelease(void)
 {
-	NSPoolManager::getInstance()->addObject(this);
+	CCPoolManager::getInstance()->addObject(this);
 
 	m_bManaged = true;
 	return this;

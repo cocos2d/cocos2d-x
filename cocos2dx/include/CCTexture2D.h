@@ -141,7 +141,7 @@ public:
 	Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	bool initWithString(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+	bool initWithString(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
 	bool initWithString(const char *text, const char *fontName, float fontSize);
 
