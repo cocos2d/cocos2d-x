@@ -313,7 +313,7 @@ namespace cocos2d{
 		//	CCAssert(!kerningDictionary, @"dictionary already initialized");
 		//	
 		//	// Break the values for this line up using =
-		//	NSArray *values = [line componentsSeparatedByString:@"="];
+		//	CCMutableArray *values = [line componentsSeparatedByString:@"="];
 		//	NSEnumerator *nse = [values objectEnumerator];	
 		//	CCString *propertyValue;
 		//	

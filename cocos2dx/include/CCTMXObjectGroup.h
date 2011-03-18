@@ -41,7 +41,7 @@ namespace cocos2d {
 		/** list of properties stored in a dictionary */
 		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 		/** array of the objects */
-		CC_PROPERTY(NSArray<CCStringToStringDictionary*>*, m_pObjects, Objects);
+		CC_PROPERTY(CCMutableArray<CCStringToStringDictionary*>*, m_pObjects, Objects);
 	public:
 		CCTMXObjectGroup();
 		virtual ~CCTMXObjectGroup();
