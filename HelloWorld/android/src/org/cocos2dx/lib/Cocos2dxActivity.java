@@ -153,6 +153,9 @@ public class Cocos2dxActivity extends Activity{
     	if (accelerometerEnabled) {
     	    accelerometer.enable();
     	}
+    	
+    	// resume background music
+    	resumeBackgroundMusic();
     }
 
     @Override
@@ -161,6 +164,9 @@ public class Cocos2dxActivity extends Activity{
     	if (accelerometerEnabled) {
     	    accelerometer.disable();
     	}
+    	
+    	// pause background music
+    	pauseBackgroundMusic();
     }
 
     protected void setPackgeName(String packageName) {
