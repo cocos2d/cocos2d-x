@@ -119,20 +119,20 @@ void MenuLayer::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool MenuLayer::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool MenuLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	return true;
 }
 
-//-(void) MenuLayer::ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+//-(void) MenuLayer::ccTouchEnded:(UITouch *)touch withEvent:(CCEvent *)event
 //{
 //}
 //
-//-(void) MenuLayer::ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+//-(void) MenuLayer::ccTouchCancelled:(UITouch *)touch withEvent:(CCEvent *)event
 //{
 //}
 
-void MenuLayer::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void MenuLayer::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	
@@ -218,7 +218,7 @@ void Box2DView::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, -10, true);
 }
 
-bool Box2DView::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool Box2DView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
@@ -229,7 +229,7 @@ bool Box2DView::ccTouchBegan(CCTouch* touch, UIEvent* event)
 	return m_test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));	
 }
 
-void Box2DView::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void Box2DView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
@@ -238,7 +238,7 @@ void Box2DView::ccTouchMoved(CCTouch* touch, UIEvent* event)
 	m_test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));		
 }
 
-void Box2DView::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void Box2DView::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );

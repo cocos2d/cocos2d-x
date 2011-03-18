@@ -23,7 +23,7 @@ public:
     // adds a new sprite at a given coordinate
     void addNewSpriteWithCoords(cocos2d::CCPoint p);
     virtual void draw();
-    virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::UIEvent* event);
+    virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
     void tick(cocos2d::ccTime dt);
     
 private:

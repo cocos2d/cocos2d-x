@@ -72,7 +72,7 @@ public:
     virtual void onExit();
     void update(ccTime dt);
     void draw();
-    void ccTouchesEnded(CCSet* touches, UIEvent *event);
+    void ccTouchesEnded(CCSet* touches, CCEvent *event);
         
 	// void restartCallback(CCObject* pSender);
 	// void nextCallback(CCObject* pSender);

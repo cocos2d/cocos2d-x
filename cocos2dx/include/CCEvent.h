@@ -22,18 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __NSEVENT_H__
-#define __NSEVENT_H__
+#ifndef __CCEvent_H__
+#define __CCEvent_H__
 
-#include "CCObject.h"
-
-namespace cocos2d {
-
-class CCEvent : public CCObject
-{
-
-};
-
-}
 
 #endif

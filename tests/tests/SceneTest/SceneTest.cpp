@@ -185,7 +185,7 @@ void SceneTestLayer3::testDealloc(ccTime dt)
 
 }
 
-void SceneTestLayer3::ccTouchesEnded(CCSet* touches, UIEvent* event)
+void SceneTestLayer3::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 //	static int i = 0;
 	//UXLOG("SceneTestLayer3::ccTouchesEnded(%d)", ++i);

@@ -10,8 +10,8 @@ public:
 	~CocosDenshionTest(void);
 
 	void menuCallback(CCObject * pSender);
-	virtual void ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent);
-	virtual void ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent);
+	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
 	virtual void onExit();
 
 private:
