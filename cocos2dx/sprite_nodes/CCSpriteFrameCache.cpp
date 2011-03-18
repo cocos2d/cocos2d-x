@@ -164,7 +164,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 			bool textureRotated = atoi(valueForKey("textureRotated", frameDict)) == 0;
 
 			// get aliases
-			NSArray<CCString*> *aliases = NSArray<CCString*>dictionary->objectForKey(std::string("aliases"));
+			CCMutableArray<CCString*> *aliases = CCMutableArray<CCString*>dictionary->objectForKey(std::string("aliases"));
 
 			while( alias = (CCDictionary<std::string, CCObject*>*)aliases->next(&key) )
 			{

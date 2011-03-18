@@ -41,11 +41,11 @@ namespace cocos2d{
 		virtual ~CCLabelTTF();
 		char * description();
 		/** creates a CCLabelTTF from a fontname, alignment, dimension and font size */
-		static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+		static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 		/** creates a CCLabelTTF from a fontname and font size */
 		static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
 		/** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-		bool initWithString(const char *label, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+		bool initWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 		/** initializes the CCLabelTTF with a font name and font size */
 		bool initWithString(const char *label, const char *fontName, float fontSize);
 
@@ -58,7 +58,7 @@ namespace cocos2d{
 		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 	protected:
 		CCSize m_tDimensions;
-		UITextAlignment m_eAlignment;
+		CCTextAlignment m_eAlignment;
         std::string * m_pFontName;
 		float m_fFontSize;
         std::string * m_pString;

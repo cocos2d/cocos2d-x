@@ -549,13 +549,13 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 // implementation CCTexture2D (Text)
 bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize)
 {
-	return initWithString(text, CCSizeMake(0,0), UITextAlignmentCenter, fontName, fontSize);
+	return initWithString(text, CCSizeMake(0,0), CCTextAlignmentCenter, fontName, fontSize);
 }
-bool CCTexture2D::initWithString(const char *text, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+bool CCTexture2D::initWithString(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
 	CCImage image;
-    CCImage::ETextAlign eAlign = (UITextAlignmentCenter == alignment) ? CCImage::kAlignCenter
-        : (UITextAlignmentLeft == alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+    CCImage::ETextAlign eAlign = (CCTextAlignmentCenter == alignment) ? CCImage::kAlignCenter
+        : (CCTextAlignmentLeft == alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
     
     if (! image.initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize))
     {

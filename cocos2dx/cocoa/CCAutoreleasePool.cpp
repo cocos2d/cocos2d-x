@@ -26,7 +26,7 @@ THE SOFTWARE.
 namespace cocos2d 
 {
 
-NSPoolManager	g_PoolManager;
+CCPoolManager	g_PoolManager;
 
 CCAutoreleasePool::CCAutoreleasePool(void)
 {
@@ -81,22 +81,22 @@ void CCAutoreleasePool::clear()
 
 //--------------------------------------------------------------------
 //
-// NSPoolManager
+// CCPoolManager
 //
 //--------------------------------------------------------------------
 
-NSPoolManager* NSPoolManager::getInstance()
+CCPoolManager* CCPoolManager::getInstance()
 {
 	return &g_PoolManager;
 }
 
-NSPoolManager::NSPoolManager()
+CCPoolManager::CCPoolManager()
 {
 	m_pReleasePoolStack = new CCMutableArray<CCAutoreleasePool*>();	
 	m_pCurReleasePool = NULL;
 }
 
-NSPoolManager::~NSPoolManager()
+CCPoolManager::~CCPoolManager()
 {
 	
 	finalize();
@@ -108,7 +108,7 @@ NSPoolManager::~NSPoolManager()
 	delete m_pReleasePoolStack;
 }
 
-void NSPoolManager::finalize()
+void CCPoolManager::finalize()
 {
 	if(m_pReleasePoolStack->count() > 0)
 	{
@@ -124,7 +124,7 @@ void NSPoolManager::finalize()
 	}
 }
 
-void NSPoolManager::push()
+void CCPoolManager::push()
 {
 	CCAutoreleasePool* pPool = new CCAutoreleasePool();	   //ref = 1
 	m_pCurReleasePool = pPool;
@@ -134,7 +134,7 @@ void NSPoolManager::push()
 	pPool->release();									   //ref = 1
 }
 
-void NSPoolManager::pop()
+void CCPoolManager::pop()
 {
     if (! m_pCurReleasePool)
     {
@@ -160,20 +160,20 @@ void NSPoolManager::pop()
 	/*m_pCurReleasePool = NULL;*/
 }
 
-void NSPoolManager::removeObject(CCObject* pObject)
+void CCPoolManager::removeObject(CCObject* pObject)
 {
 	assert(m_pCurReleasePool);
 
 	m_pCurReleasePool->removeObject(pObject);
 }
 
-void NSPoolManager::addObject(CCObject* pObject)
+void CCPoolManager::addObject(CCObject* pObject)
 {
 	getCurReleasePool()->addObject(pObject);
 }
 
 
-CCAutoreleasePool* NSPoolManager::getCurReleasePool()
+CCAutoreleasePool* CCPoolManager::getCurReleasePool()
 {
 	if(!m_pCurReleasePool)
 		push();

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __NS_ZONE_H__
-#define __NS_ZONE_H__
+#ifndef __CC_ZONE_H__
+#define __CC_ZONE_H__
 #include <stdio.h>
 
 namespace   cocos2d {
@@ -40,5 +40,5 @@ public:
 };
 }//namespace   cocos2d 
 
-#endif // __NS_ZONE_H__
+#endif // __CC_ZONE_H__
 

@@ -69,7 +69,7 @@ namespace cocos2d
 			}
 		}
 
-		inline NSArray<CCSprite*>* getDescendants(void) { return m_pobDescendants; }
+		inline CCMutableArray<CCSprite*>* getDescendants(void) { return m_pobDescendants; }
 
 		/** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
 		The capacity will be increased in 33% in runtime if it run out of space.
@@ -180,7 +180,7 @@ namespace cocos2d
 		ccBlendFunc m_blendFunc;
 
 		// all descendants: chlidren, gran children, etc...
-		NSArray<CCSprite*>* m_pobDescendants;
+		CCMutableArray<CCSprite*>* m_pobDescendants;
 	};
 }
 

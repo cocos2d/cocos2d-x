@@ -21,8 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __NSMUTABLE_DICTIONARY_H__
-#define __NSMUTABLE_DICTIONARY_H__
+#ifndef __CCMUTABLE_DICTIONARY_H__
+#define __CCMUTABLE_DICTIONARY_H__
 
 #include <map>
 #include <vector>
@@ -228,4 +228,4 @@ typedef CCDictionary<std::string, CCString*> CCStringToStringDictionary;
 }//namespace   cocos2d 
 
 
-#endif //__NSMUTABLE_DICTIONARY_H__
+#endif //__CCMUTABLE_DICTIONARY_H__
