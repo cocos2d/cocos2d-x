@@ -85,6 +85,7 @@
 		BF1537EF12E16C0400703484 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */; };
 		BF1537F012E16C0400703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */; };
 		BF15715C12E3D730001F8977 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15715B12E3D730001F8977 /* libxml2.dylib */; };
+		BF76377813338AE6009E0E50 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF76377713338AE6009E0E50 /* CCCamera.cpp */; };
 		BF836C0D13287D3600F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696D13287D3400F3C033 /* CCAction.cpp */; };
 		BF836C0E13287D3600F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696E13287D3400F3C033 /* CCActionCamera.cpp */; };
 		BF836C0F13287D3600F3C033 /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696F13287D3400F3C033 /* CCActionEase.cpp */; };
@@ -97,7 +98,6 @@
 		BF836C1613287D3600F3C033 /* CCActionProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83697613287D3500F3C033 /* CCActionProgressTimer.cpp */; };
 		BF836C1713287D3600F3C033 /* CCActionTiledGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83697713287D3500F3C033 /* CCActionTiledGrid.cpp */; };
 		BF836C1813287D3600F3C033 /* CCAtlasNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83697A13287D3500F3C033 /* CCAtlasNode.cpp */; };
-		BF836C1913287D3600F3C033 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83697B13287D3500F3C033 /* CCCamera.cpp */; };
 		BF836C1A13287D3600F3C033 /* CCConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83697C13287D3500F3C033 /* CCConfiguration.cpp */; };
 		BF836C1B13287D3600F3C033 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83697D13287D3500F3C033 /* CCConfiguration.h */; };
 		BF836C1C13287D3600F3C033 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83697E13287D3500F3C033 /* CCDrawingPrimitives.cpp */; };
@@ -314,7 +314,6 @@
 		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
 		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245D132F45C200F44E75 /* HelloWorldScene.cpp */; };
-		D4595C161333119300F56420 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4595C151333119300F56420 /* Info.plist */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -412,6 +411,7 @@
 		BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		BF15715B12E3D730001F8977 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
+		BF76377713338AE6009E0E50 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF83696D13287D3400F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		BF83696E13287D3400F3C033 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
 		BF83696F13287D3400F3C033 /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
@@ -424,7 +424,6 @@
 		BF83697613287D3500F3C033 /* CCActionProgressTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionProgressTimer.cpp; sourceTree = "<group>"; };
 		BF83697713287D3500F3C033 /* CCActionTiledGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTiledGrid.cpp; sourceTree = "<group>"; };
 		BF83697A13287D3500F3C033 /* CCAtlasNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAtlasNode.cpp; sourceTree = "<group>"; };
-		BF83697B13287D3500F3C033 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF83697C13287D3500F3C033 /* CCConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCConfiguration.cpp; sourceTree = "<group>"; };
 		BF83697D13287D3500F3C033 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		BF83697E13287D3500F3C033 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
@@ -645,7 +644,6 @@
 		D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		D408245D132F45C200F44E75 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
 		D408245E132F45C200F44E75 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
-		D4595C151333119300F56420 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -762,7 +760,6 @@
 		50F4144210692EE7002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D4595C151333119300F56420 /* Info.plist */,
 				E02BB51B126CA588006E46A2 /* Icon@2x.png */,
 				E02BB51C126CA588006E46A2 /* Icon-Small@2x.png */,
 				E02BB51D126CA588006E46A2 /* Icon-Small.png */,
@@ -913,9 +910,9 @@
 		BF83696B13287D3400F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				BF76377713338AE6009E0E50 /* CCCamera.cpp */,
 				BF83696C13287D3400F3C033 /* actions */,
 				BF83697913287D3500F3C033 /* base_nodes */,
-				BF83697B13287D3500F3C033 /* CCCamera.cpp */,
 				BF83697C13287D3500F3C033 /* CCConfiguration.cpp */,
 				BF83697D13287D3500F3C033 /* CCConfiguration.h */,
 				BF83697E13287D3500F3C033 /* CCDrawingPrimitives.cpp */,
@@ -1589,7 +1586,6 @@
 				E02BB524126CA588006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB525126CA588006E46A2 /* Icon-72.png in Resources */,
 				BF152AF212E16B4200703484 /* LICENSE.cocos2d-x in Resources */,
-				D4595C161333119300F56420 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1651,7 +1647,6 @@
 				BF836C1613287D3600F3C033 /* CCActionProgressTimer.cpp in Sources */,
 				BF836C1713287D3600F3C033 /* CCActionTiledGrid.cpp in Sources */,
 				BF836C1813287D3600F3C033 /* CCAtlasNode.cpp in Sources */,
-				BF836C1913287D3600F3C033 /* CCCamera.cpp in Sources */,
 				BF836C1A13287D3600F3C033 /* CCConfiguration.cpp in Sources */,
 				BF836C1C13287D3600F3C033 /* CCDrawingPrimitives.cpp in Sources */,
 				BF836C1D13287D3600F3C033 /* CCScheduler.cpp in Sources */,
@@ -1735,6 +1730,7 @@
 				BF836E5C13287D3600F3C033 /* CCTMXXMLParser.cpp in Sources */,
 				BF836E5D13287D3600F3C033 /* CCTouchDispatcher.cpp in Sources */,
 				BF836E5E13287D3600F3C033 /* CCTouchHandler.cpp in Sources */,
+				BF76377813338AE6009E0E50 /* CCCamera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1769,10 +1765,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = (
+					libs/chipmunk,
 					libs/cocos2dx,
-					libs/CocosDenshion/include,
-					libs/chipmunk/include/constraints,
-					libs/chipmunk/include/chipmunk,
+					"$(SDKROOT)/usr/include/libxml2",
+					libs/cocos2dx/platform,
 					libs,
 				);
 				INFOPLIST_FILE = Info.plist;
@@ -1805,10 +1801,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = (
+					libs/chipmunk,
 					libs/cocos2dx,
-					libs/CocosDenshion/include,
-					libs/chipmunk/include/constraints,
-					libs/chipmunk/include/chipmunk,
+					libs/cocos2dx/platform/iphone/third_party/libxml2,
+					libs/cocos2dx/platform/iphone/third_party/opengles,
 					libs,
 				);
 				INFOPLIST_FILE = Info.plist;
@@ -1836,13 +1832,17 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/chipmunk/include/constraints,
-					libs/chipmunk/include/chipmunk,
+					libs/Chipmunk/include/chipmunk,
+					libs,
 					libs/cocos2dx,
-					libs/CocosDenshion/include,
+					libs/cocos2dx/platform,
 					"$(SDKROOT)/usr/include/libxml2",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;
@@ -1862,13 +1862,17 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/chipmunk/include/constraints,
-					libs/chipmunk/include/chipmunk,
+					libs/Chipmunk/include/chipmunk,
+					libs,
 					libs/cocos2dx,
-					libs/CocosDenshion/include,
-					"$(SDKROOT)/usr/include/libxml2",
+					libs/cocos2dx/platform/iphone/third_party/opengles,
+					libs/cocos2dx/platform/iphone/third_party/libxml2,
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
+				);
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
