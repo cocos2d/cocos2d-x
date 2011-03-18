@@ -32,9 +32,9 @@ public:
 	void toggleCallback(CCObject* pSender);
 
 	virtual void registerWithTouchDispatcher();
-	virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
+	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
 
 	void step(ccTime dt);
 	void setEmitterPosition();

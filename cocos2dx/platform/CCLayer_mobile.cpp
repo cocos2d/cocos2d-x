@@ -292,7 +292,7 @@ void CCLayer::onEnterTransitionDidFinish()
     CCNode::onEnterTransitionDidFinish();
 }
 
-bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
+bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
 	CCAssert(false, "Layer#ccTouchBegan override me");
 	return true;
