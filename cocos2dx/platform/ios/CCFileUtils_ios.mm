@@ -47,7 +47,7 @@ static const char *static_ccRemoveHDSuffixFromFile( const char *pszPath)
                         // check if path already has the suffix.
                 if( [name rangeOfString: suffix].location != NSNotFound ) {
 			
-                        CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+                        CCLOG("cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
             
                         NSString *newLastname = [name stringByReplacingOccurrencesOfString: suffix withString:@""];
 			
@@ -75,7 +75,7 @@ static NSString* getDoubleResolutionImage(NSString* path)
 		// check if path already has the suffix.
 		if( [name rangeOfString: suffix].location != NSNotFound ) {
             
-			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+			CCLOG("cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
 			return path;
 		}
         
@@ -98,7 +98,7 @@ static NSString* getDoubleResolutionImage(NSString* path)
 		if( [fileManager fileExistsAtPath:retinaName] )
 			return retinaName;
         
-		CCLOG(@"cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
+		CCLOG("cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
 	}
 	
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED
