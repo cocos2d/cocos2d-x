@@ -314,6 +314,7 @@
 		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
 		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245D132F45C200F44E75 /* HelloWorldScene.cpp */; };
+		D4595C161333119300F56420 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4595C151333119300F56420 /* Info.plist */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -644,6 +645,7 @@
 		D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		D408245D132F45C200F44E75 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
 		D408245E132F45C200F44E75 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
+		D4595C151333119300F56420 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -760,6 +762,7 @@
 		50F4144210692EE7002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D4595C151333119300F56420 /* Info.plist */,
 				E02BB51B126CA588006E46A2 /* Icon@2x.png */,
 				E02BB51C126CA588006E46A2 /* Icon-Small@2x.png */,
 				E02BB51D126CA588006E46A2 /* Icon-Small.png */,
@@ -1586,6 +1589,7 @@
 				E02BB524126CA588006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB525126CA588006E46A2 /* Icon-72.png in Resources */,
 				BF152AF212E16B4200703484 /* LICENSE.cocos2d-x in Resources */,
+				D4595C161333119300F56420 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1765,10 +1769,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = (
-					libs/chipmunk,
 					libs/cocos2dx,
-					"$(SDKROOT)/usr/include/libxml2",
-					libs/cocos2dx/platform,
+					libs/CocosDenshion/include,
+					libs/chipmunk/include/constraints,
+					libs/chipmunk/include/chipmunk,
 					libs,
 				);
 				INFOPLIST_FILE = Info.plist;
@@ -1801,10 +1805,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = (
-					libs/chipmunk,
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
-					libs/cocos2dx/platform/iphone/third_party/opengles,
+					libs/CocosDenshion/include,
+					libs/chipmunk/include/constraints,
+					libs/chipmunk/include/chipmunk,
 					libs,
 				);
 				INFOPLIST_FILE = Info.plist;
@@ -1832,17 +1836,13 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/Chipmunk/include/chipmunk,
-					libs,
+					libs/chipmunk/include/constraints,
+					libs/chipmunk/include/chipmunk,
 					libs/cocos2dx,
-					libs/cocos2dx/platform,
+					libs/CocosDenshion/include,
 					"$(SDKROOT)/usr/include/libxml2",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;
@@ -1862,17 +1862,13 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/Chipmunk/include/chipmunk,
-					libs,
+					libs/chipmunk/include/constraints,
+					libs/chipmunk/include/chipmunk,
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/opengles,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
+					libs/CocosDenshion/include,
+					"$(SDKROOT)/usr/include/libxml2",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
