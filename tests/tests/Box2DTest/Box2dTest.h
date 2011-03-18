@@ -18,7 +18,7 @@ public:
 
 	void addNewSpriteWithCoords(CCPoint p);
 	void update(ccTime dt);
-	virtual void ccTouchesEnded(CCSet* touches, UIEvent* event);
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
 	//CREATE_NODE(Box2DTestLayer);
 } ;

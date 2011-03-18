@@ -30,9 +30,9 @@ public:
 	void registerWithTouchDispatcher();
 	void updateSize(CCTouch*touch);
 
-	virtual bool ccTouchBegan(CCTouch* touche, UIEvent* event);
-	virtual void ccTouchMoved(CCTouch* touche, UIEvent* event);
-	virtual void ccTouchEnded(CCTouch* touche, UIEvent* event);
+	virtual bool ccTouchBegan(CCTouch* touche, CCEvent* event);
+	virtual void ccTouchMoved(CCTouch* touche, CCEvent* event);
+	virtual void ccTouchEnded(CCTouch* touche, CCEvent* event);
 };
 
 class LayerTest2 : public LayerTest
@@ -55,7 +55,7 @@ class LayerGradient : public LayerTest
 {
 public:
     LayerGradient();
-    virtual void ccTouchesMoved(CCSet * touches, UIEvent *event);
+    virtual void ccTouchesMoved(CCSet * touches, CCEvent *event);
     virtual std::string title();
 };
 

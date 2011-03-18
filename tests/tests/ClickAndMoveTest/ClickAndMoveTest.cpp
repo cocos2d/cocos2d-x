@@ -37,7 +37,7 @@ MainLayer::MainLayer()
 														) ); 
 }
 
-void MainLayer::ccTouchesEnded(CCSet *pTouches, UIEvent *pEvent)
+void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
 	CCTouch* touch = (CCTouch*)(*it);

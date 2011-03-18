@@ -40,6 +40,10 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
 #endif  // CC_PLATFORM_IOS
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+		// android does not do anything
+#endif
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 

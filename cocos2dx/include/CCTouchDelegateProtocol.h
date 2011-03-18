@@ -37,7 +37,7 @@ typedef enum
 } ccTouchDelegateFlag;
 
 class CCTouch;
-class UIEvent;
+class CCEvent;
 class CCSet;
 class CC_DLL CCTouchDelegate
 {
@@ -51,18 +51,18 @@ public:
 	//! call the retain() in child (layer or menu)
 	virtual void keep(void) {}
 
-	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { return false;};
 
 	// optional
-	virtual void ccTouchMoved(CCTouch *pTouch, UIEvent *pEvent) {}
-	virtual void ccTouchEnded(CCTouch *pTouch, UIEvent *pEvent) {}
-	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
+	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {}
+	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {}
+	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {}
 
 	// optional
- 	virtual void ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesEnded(CCSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
 };
 /**
  @brief
@@ -85,12 +85,12 @@ public:
  	/** Return YES to claim the touch.
  	 @since v0
 	 */
- 	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent) { return false;};
+ 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { return false;};
  
  	// optional
- 	virtual void ccTouchMoved(CCTouch *pTouch, UIEvent *pEvent) {}
- 	virtual void ccTouchEnded(CCTouch *pTouch, UIEvent *pEvent) {}
- 	virtual void ccTouchCancelled(CCTouch *pTouch, UIEvent *pEvent) {}
+ 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {}
+ 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {}
+ 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {}
  };
  
 /** @brief
@@ -102,10 +102,10 @@ public:
  public:
  	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }
  	// optional
- 	virtual void ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesEnded(CCSet *pTouches, UIEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(CCSet *pTouches, UIEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
  };
 
 }//namespace   cocos2d 

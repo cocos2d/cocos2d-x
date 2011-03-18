@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "CCKeypadDispatcher.h"
 #include "CCGL.h"
 #include "CCAnimationCache.h"
-#include "CCEvent.h"
+#include "CCTouch.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"

@@ -68,7 +68,7 @@ void MotionStreakTest2::onEnter()
 	m_streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
 }
 
-void MotionStreakTest2::ccTouchesMoved(CCSet* touches, UIEvent* event)
+void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
 {
     CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);

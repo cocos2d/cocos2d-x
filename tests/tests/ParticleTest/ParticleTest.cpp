@@ -1120,17 +1120,17 @@ void ParticleDemo::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
-bool ParticleDemo::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool ParticleDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	return true;
 }
 
-void ParticleDemo::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void ParticleDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	return ccTouchEnded(touch, event);
 }
 
-void ParticleDemo::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 	CCPoint location = touch->locationInView( touch->view() );
 	CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);

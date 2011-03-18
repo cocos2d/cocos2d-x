@@ -161,19 +161,19 @@ void LayerTest1::updateSize(CCTouch*touch)
 	l->setContentSize( newSize );
 }
 
-bool LayerTest1::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool LayerTest1::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	updateSize(touch);
 
 	return true;
 }
 
-void LayerTest1::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void LayerTest1::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	updateSize(touch);
 }
 
-void LayerTest1::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void LayerTest1::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 	updateSize(touch);
 }
@@ -285,7 +285,7 @@ LayerGradient::LayerGradient()
     setIsTouchEnabled(true);
 }
 
-void LayerGradient::ccTouchesMoved(CCSet * touches, UIEvent *event)
+void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
