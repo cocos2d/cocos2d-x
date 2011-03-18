@@ -32,7 +32,7 @@ MKDIR = mkdir -p
 first: all
 
 OBJECTS = \
-	$(OBJECTS_DIR)/CCamera.o \
+	$(OBJECTS_DIR)/CCCamera.o \
 	$(OBJECTS_DIR)/CCConfiguration.o \
 	$(OBJECTS_DIR)/CCDrawingPrimitives.o \
 	$(OBJECTS_DIR)/CCScheduler.o \
@@ -141,8 +141,8 @@ clean :
 	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) $(TARGET)
 
-$(OBJECTS_DIR)/CCamera.o : ../CCamera.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCamera.o ../CCamera.cpp
+$(OBJECTS_DIR)/CCCamera.o : ../CCCamera.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCCamera.o ../CCCamera.cpp
 
 $(OBJECTS_DIR)/CCConfiguration.o : ../CCConfiguration.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCConfiguration.o ../CCConfiguration.cpp
