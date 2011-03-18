@@ -42,7 +42,7 @@ protected:
 
 public:
 	virtual void onEnter();
-	void ccTouchesMoved(CCSet* touches, UIEvent* event);
+	void ccTouchesMoved(CCSet* touches, CCEvent* event);
 	virtual std::string title();
 };
 

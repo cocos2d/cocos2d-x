@@ -180,7 +180,7 @@ void HelloWorld::tick(ccTime dt)
 	}
 }
 
-void HelloWorld::ccTouchesEnded(CCSet* touches, UIEvent* event)
+void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 	//Add a new body/atlas sprite at the touched location
 	CCSetIterator it;

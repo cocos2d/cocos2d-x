@@ -172,7 +172,7 @@ void Box2DTestLayer::update(ccTime dt)
 	}
 }
 
-void Box2DTestLayer::ccTouchesEnded(CCSet* touches, UIEvent* event)
+void Box2DTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 	//Add a new body/atlas sprite at the touched location
 	CCSetIterator it;

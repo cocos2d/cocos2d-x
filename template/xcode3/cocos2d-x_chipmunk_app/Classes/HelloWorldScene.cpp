@@ -167,7 +167,7 @@ void HelloWorld::step(ccTime delta)
 }
 
 
-void HelloWorld::ccTouchesEnded(CCSet *touches, UIEvent *event)
+void HelloWorld::ccTouchesEnded(CCSet *touches, CCEvent *event)
 {
         CCSetIterator it;
         CCTouch *touch;
