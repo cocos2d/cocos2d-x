@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (C) 2009      Matt Oswald
 
 http://www.cocos2d-x.org
 
