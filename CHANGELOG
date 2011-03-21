@@ -11,6 +11,7 @@ cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
  [ios]
     404     Bug         HiResTest isnot prerfect on HVGA/Retina yet
 	410     Bug         xcode3 template, cannot find libxml from header searh paths in release build
+	419     Bug         test case TMXIsoVertexZ in TileMapTst has wrong effect on ios
  [android]
     399     Bug         HelloWorld crashes when the screen is touched
     405     Bug         CocosDenshion test, BGM isn't paused after HOME key tapped
