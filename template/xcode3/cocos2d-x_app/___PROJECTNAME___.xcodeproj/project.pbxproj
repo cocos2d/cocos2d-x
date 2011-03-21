@@ -1520,9 +1520,12 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				HEADER_SEARCH_PATHS = libs/cocos2dx;
+				HEADER_SEARCH_PATHS = (
+					libs/cocos2dx,
+					libs/CocosDenshion/include,
+				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1559,11 +1562,10 @@
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
 				HEADER_SEARCH_PATHS = (
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
-					libs/cocos2dx/platform/iphone/third_party/opengles,
+					libs/CocosDenshion/include,
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1593,13 +1595,10 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
 					libs/cocos2dx,
-					libs/cocos2dx/platform,
+					libs/CocosDenshion/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;
@@ -1619,15 +1618,12 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/cocos2dx/platform/iphone/third_party/opengles,
+					"$(SDKROOT)/usr/include/libxml2",
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
+					libs/CocosDenshion/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;

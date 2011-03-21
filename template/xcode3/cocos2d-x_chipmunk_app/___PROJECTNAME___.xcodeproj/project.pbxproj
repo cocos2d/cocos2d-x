@@ -1765,13 +1765,13 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = (
-					libs/chipmunk,
 					libs/cocos2dx,
-					"$(SDKROOT)/usr/include/libxml2",
-					libs/cocos2dx/platform,
-					libs,
+					libs/chipmunk/include/chipmunk,
+					libs/chipmunk/include/constraints,
+					libs/CocosDenshion/include,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -1779,6 +1779,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = "___PROJECTNAME___";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "";
 			};
 			name = Debug;
@@ -1801,13 +1802,13 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = (
-					libs/chipmunk,
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
-					libs/cocos2dx/platform/iphone/third_party/opengles,
-					libs,
+					libs/chipmunk/include/chipmunk,
+					libs/chipmunk/include/constraints,
+					libs/CocosDenshion/include,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -1815,6 +1816,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = "___PROJECTNAME___";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "";
 			};
 			name = Release;
@@ -1832,17 +1834,14 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/Chipmunk/include/chipmunk,
-					libs,
 					libs/cocos2dx,
-					libs/cocos2dx/platform,
+					libs/Chipmunk/include/chipmunk,
+					libs/CocosDenshion/include,
+					libs,
 					"$(SDKROOT)/usr/include/libxml2",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;
@@ -1862,17 +1861,14 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/Chipmunk/include/chipmunk,
-					libs,
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/opengles,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
+					libs/Chipmunk/include/chipmunk,
+					libs/CocosDenshion/include,
+					libs,
+					"$(SDKROOT)/usr/include/libxml2",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";

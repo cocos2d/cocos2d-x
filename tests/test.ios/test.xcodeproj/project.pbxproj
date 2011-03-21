@@ -4467,7 +4467,6 @@
 					"\"$(SRCROOT)/../..\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
 					"\"$(SRCROOT)/../../cocos2dx/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -4503,7 +4502,6 @@
 					"\"$(SRCROOT)/../..\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
 					"\"$(SRCROOT)/../../cocos2dx/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
