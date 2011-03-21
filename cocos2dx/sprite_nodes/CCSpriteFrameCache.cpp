@@ -257,7 +257,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 		// append .png
 		texturePath = texturePath.append(".png");
 
-		CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath);
+		CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
 	}
 
 	CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());

@@ -184,7 +184,7 @@ namespace cocos2d{
 		}
 
 		// If all the tiles are 0, return empty tileset
-		CCLOG("cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo->m_sName);
+		CCLOG("cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo->m_sName.c_str());
 		return tileset;
 	}
 
