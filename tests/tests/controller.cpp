@@ -77,6 +77,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new KeypadTestScene(); break;
 	case TEST_COCOSDENSHION:
 		pScene = new CocosDenshionTestScene(); break;
+    case TEST_ZWOPTEX:
+        pScene = new ZwoptexTestScene(); break;
     default:
         break;
     }

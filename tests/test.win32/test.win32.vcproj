@@ -859,6 +859,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="ZwoptexTest"
+					>
+					<File
+						RelativePath="..\tests\ZwoptexTest\ZwoptexTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ZwoptexTest\ZwoptexTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

@@ -32,6 +32,7 @@
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
+#include "ZwoptexTest/ZwoptexTest.h"
 
 enum
 {
@@ -66,6 +67,7 @@ enum
     TEST_ACCELEROMRTER,
     TEST_KEYPAD,
 	TEST_COCOSDENSHION,
+    TEST_ZWOPTEX,
 
     TESTS_COUNT,
 };
@@ -101,7 +103,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "HiResTest",
     "Accelerometer",
     "KeypadTest",
-	"CocosDenshionTest"
+	"CocosDenshionTest",
+    "ZwoptexTest"
 };
 
 #endif
