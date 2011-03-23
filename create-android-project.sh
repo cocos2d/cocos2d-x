@@ -10,9 +10,9 @@ check_run_path(){
     fi
 }
 
-if [ $3 == "windows" ];then
+if [ $4 == "windows" ];then
     # called by .bat file
-    sh $1/template/android/copy_files.sh $1 $2
+    sh $1/template/android/copy_files.sh $1 $2 $3
     exit 0
 fi
 
