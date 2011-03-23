@@ -210,7 +210,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\event_dispatcher\CCEventDispatcher.cpp" />
     <ClCompile Include="..\event_dispatcher\CCKeyboardEventDelegate.cpp" />
     <ClCompile Include="..\event_dispatcher\CCMouseEventDelegate.cpp" />
-    <ClCompile Include="..\CCamera.cpp" />
+    <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />

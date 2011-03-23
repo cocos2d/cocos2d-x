@@ -327,11 +327,11 @@
     <ClCompile Include="..\event_dispatcher\CCMouseEventDelegate.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\CCCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\effects\CCGrabber.h">
