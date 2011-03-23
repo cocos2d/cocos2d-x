@@ -146,8 +146,33 @@ void CCLog(const char * pszFormat, ...)
 
 	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
 }
+#endif // CC_PLATFORM_ANDROID
+/****************************************************
+ * airplay
+ ***************************************************/
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 
+#include <s3e.h>
+#include "IwUtil.h"
+#include "IwUtilInitTerm.h"
+#include <IwMemBucketHelpers.h>
+#include <stdio.h>
+
+NS_CC_BEGIN;
+
+void CCLog(const char * pszFormat, ...)
+{
+	char buf[MAX_LEN];
+	
+	va_list args;
+	va_start(args, pszFormat);    	
+	vsprintf(buf, pszFormat, args);
+	va_end(args);
+	
+	IwTrace(GAME, (buf));
+}
 NS_CC_END;
 
-#endif // CC_PLATFORM_ANDROID
+#endif // CC_PLATFORM_AIRPLAY
+
 

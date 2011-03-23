@@ -34,6 +34,8 @@ THE SOFTWARE.
     #include "android/CCFileUtils_android.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "ios/CCFileUtils_ios.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+	#include "airplay/CCFileUtils_airplay.h"
 #else
     #error
 #endif // __CC_FILEUTILS_PLATFORM_H__
