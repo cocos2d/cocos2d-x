@@ -1,19 +1,26 @@
 @echo off
+:: This script is used to create an android project.
+:: You should modify _ANDROIDTOOLS _CYGBIN _NDKROOT to work under your environment.
+:: Don't change it until you know what you do.
+
 setlocal
-	 
-if not exist "%~dpn0.sh" echo Script "%~dpn0.sh" not found & exit 2
+
+:: Check if it was run under cocos2d-x root
+if not exist "%cd%\create-android-project.bat" echo Error!!! You should run it under cocos2dx root & pause & exit 2	
+
+if not exist "%~dpn0.sh" echo Script "%~dpn0.sh" not found & pause & exit 3
 
 :: modify it to work under your environment	 
 set _CYGBIN=f:\cygwin\bin
-if not exist "%_CYGBIN%" echo Couldn't find Cygwin at "%_CYGBIN%" & exit 3
+if not exist "%_CYGBIN%" echo Couldn't find Cygwin at "%_CYGBIN%" & pause & exit 4
 
 :: modify it to work under your environment
 set _ANDROIDTOOLS=d:\android-sdk\tools
-if not exist "%_ANDROIDTOOLS%" echo Couldn't find android sdk tools at "%_ANDROIDTOOLS%" & exit 4
+if not exist "%_ANDROIDTOOLS%" echo Couldn't find android sdk tools at "%_ANDROIDTOOLS%" & pause & exit 5
 
 :: modify it to work under your environment
 set _NDKROOT=e:\android-ndk-r4-crystax
-if not exist "%_NDKROOT%" echo Couldn't find ndk at "%_NDKROOT%" & exit 5
+if not exist "%_NDKROOT%" echo Couldn't find ndk at "%_NDKROOT%" & pause & exit 6
 
 :: create android project
 set _TARGETID=3
