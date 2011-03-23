@@ -3,13 +3,17 @@ setlocal
 	 
 if not exist "%~dpn0.sh" echo Script "%~dpn0.sh" not found & exit 2
 
-:: modify it to work in your environment	 
+:: modify it to work under your environment	 
 set _CYGBIN=f:\cygwin\bin
 if not exist "%_CYGBIN%" echo Couldn't find Cygwin at "%_CYGBIN%" & exit 3
 
-:: modify it to work in your environment
+:: modify it to work under your environment
 set _ANDROIDTOOLS=d:\android-sdk\tools
-if not exist "%_ANDROIDTOOLS%" echo Couldn't find Cygwin at "%_ANDROIDTOOLS%" & exit 4
+if not exist "%_ANDROIDTOOLS%" echo Couldn't find android sdk tools at "%_ANDROIDTOOLS%" & exit 4
+
+:: modify it to work under your environment
+set _NDKROOT=e:\android-ndk-r4-crystax
+if not exist "%_NDKROOT%" echo Couldn't find ndk at "%_NDKROOT%" & exit 5
 
 :: create android project
 set _TARGETID=3
@@ -26,6 +30,8 @@ for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%~dpn0.sh"') do set _CYGSCRIPT=
 :: Resolve current dir to cygwin path
 for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%cd%"') do set _CURRENTDIR=%%A
 
+:: Resolve ndk dir to cygwin path
+for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%_NDKROOT%"') do set _NDKROOT=%%A
 	 
 :: Throw away temporary env vars and invoke script, passing any args that were passed to us
-endlocal & %_CYGBIN%\bash --login "%_CYGSCRIPT%" %_CURRENTDIR% %_PROJECTNAME% "windows"
+endlocal & %_CYGBIN%\bash --login "%_CYGSCRIPT%" %_CURRENTDIR% %_PROJECTNAME% %_NDKROOT% "windows"
