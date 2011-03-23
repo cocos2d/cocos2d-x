@@ -19,7 +19,9 @@
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
 #include "TileMapTest/TileMapTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "ChipmunkTest/cocos2dChipmunkDemo.h"
+#endif
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
 #include "SpriteTest/SpriteTest.h"
@@ -31,8 +33,9 @@
 #include "HiResTest/HiResTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "CocosDenshionTest/CocosDenshionTest.h"
-
+#endif
 enum
 {
     TEST_ACTIONS = 0,

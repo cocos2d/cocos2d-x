@@ -35,6 +35,8 @@ THE SOFTWARE.
     # include "ios/CCApplication_ios.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
     #include "wophone/CCApplication_wophone.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+	#include "airplay/CCApplication_airplay.h"
 #else
     #error
 #endif

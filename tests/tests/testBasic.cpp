@@ -4,7 +4,11 @@
 BackToMainMenuLayer::BackToMainMenuLayer()
 {
     //add the menu item for back to main menu
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+	CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("MainMenu",  "fonts/arial16.fnt");
+#else
     CCLabelTTF* label = CCLabelTTF::labelWithString("MainMenu", "Arial", 20);
+#endif
     CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(BackToMainMenuLayer::MainMenuCallback));
 
     CCMenu* pMenu =CCMenu::menuWithItems(pMenuItem, NULL);
