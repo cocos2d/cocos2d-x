@@ -129,9 +129,9 @@ void TextureTest::performTestsPNG(const char* filename)
 
 void TextureTest::performTests()
 {
-    CCTexture2D *texture;
-    struct timeval now;
-    CCTextureCache *cache = CCTextureCache::sharedTextureCache();
+//     CCTexture2D *texture;
+//     struct timeval now;
+//     CCTextureCache *cache = CCTextureCache::sharedTextureCache();
 
     CCLog("\n\n--------\n\n");
 

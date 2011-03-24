@@ -224,6 +224,12 @@
 		BF31E3C212E979A200D4F513 /* Paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1B912E979A200D4F513 /* Paddle.cpp */; };
 		BF31E3C312E979A200D4F513 /* TouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1BB12E979A200D4F513 /* TouchesTest.cpp */; };
 		BF31E3C412E979A200D4F513 /* TransitionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1BE12E979A200D4F513 /* TransitionsTest.cpp */; };
+		BF340BEB133B26A70035A4D1 /* PerformanceParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BDF133B26A70035A4D1 /* PerformanceParticleTest.cpp */; };
+		BF340BEC133B26A70035A4D1 /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE1133B26A70035A4D1 /* PerformanceSpriteTest.cpp */; };
+		BF340BED133B26A70035A4D1 /* PerformanceTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE3133B26A70035A4D1 /* PerformanceTest.cpp */; };
+		BF340BEE133B26A70035A4D1 /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE5133B26A70035A4D1 /* PerformanceTextureTest.cpp */; };
+		BF340BEF133B26A70035A4D1 /* PerformanceTouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE7133B26A70035A4D1 /* PerformanceTouchesTest.cpp */; };
+		BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */; };
 		BF835B2A13276C7900F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588A13276C7700F3C033 /* CCAction.cpp */; };
 		BF835B2B13276C7900F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588B13276C7700F3C033 /* CCActionCamera.cpp */; };
 		BF835B2C13276C7900F3C033 /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588C13276C7700F3C033 /* CCActionEase.cpp */; };
@@ -1095,6 +1101,18 @@
 		BF31E1BC12E979A200D4F513 /* TouchesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchesTest.h; sourceTree = "<group>"; };
 		BF31E1BE12E979A200D4F513 /* TransitionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionsTest.cpp; sourceTree = "<group>"; };
 		BF31E1BF12E979A200D4F513 /* TransitionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionsTest.h; sourceTree = "<group>"; };
+		BF340BDF133B26A70035A4D1 /* PerformanceParticleTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticleTest.cpp; sourceTree = "<group>"; };
+		BF340BE0133B26A70035A4D1 /* PerformanceParticleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceParticleTest.h; sourceTree = "<group>"; };
+		BF340BE1133B26A70035A4D1 /* PerformanceSpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceSpriteTest.cpp; sourceTree = "<group>"; };
+		BF340BE2133B26A70035A4D1 /* PerformanceSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceSpriteTest.h; sourceTree = "<group>"; };
+		BF340BE3133B26A70035A4D1 /* PerformanceTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTest.cpp; sourceTree = "<group>"; };
+		BF340BE4133B26A70035A4D1 /* PerformanceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTest.h; sourceTree = "<group>"; };
+		BF340BE5133B26A70035A4D1 /* PerformanceTextureTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTextureTest.cpp; sourceTree = "<group>"; };
+		BF340BE6133B26A70035A4D1 /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
+		BF340BE7133B26A70035A4D1 /* PerformanceTouchesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTouchesTest.cpp; sourceTree = "<group>"; };
+		BF340BE8133B26A70035A4D1 /* PerformanceTouchesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTouchesTest.h; sourceTree = "<group>"; };
+		BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceNodeChildrenTest.cpp; sourceTree = "<group>"; };
+		BF340BEA133B26A70035A4D1 /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
 		BF83588A13276C7700F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		BF83588B13276C7700F3C033 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
 		BF83588C13276C7700F3C033 /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
@@ -2081,6 +2099,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF340BDE133B26A70035A4D1 /* PerformanceTest */,
 				BF137F45131E3A7B000F7B64 /* LabelTest */,
 				BF31E11912E979A100D4F513 /* AccelerometerTest */,
 				BF31E11C12E979A100D4F513 /* ActionManagerTest */,
@@ -2465,6 +2484,25 @@
 				BF31E1BF12E979A200D4F513 /* TransitionsTest.h */,
 			);
 			path = TransitionsTest;
+			sourceTree = "<group>";
+		};
+		BF340BDE133B26A70035A4D1 /* PerformanceTest */ = {
+			isa = PBXGroup;
+			children = (
+				BF340BDF133B26A70035A4D1 /* PerformanceParticleTest.cpp */,
+				BF340BE0133B26A70035A4D1 /* PerformanceParticleTest.h */,
+				BF340BE1133B26A70035A4D1 /* PerformanceSpriteTest.cpp */,
+				BF340BE2133B26A70035A4D1 /* PerformanceSpriteTest.h */,
+				BF340BE3133B26A70035A4D1 /* PerformanceTest.cpp */,
+				BF340BE4133B26A70035A4D1 /* PerformanceTest.h */,
+				BF340BE5133B26A70035A4D1 /* PerformanceTextureTest.cpp */,
+				BF340BE6133B26A70035A4D1 /* PerformanceTextureTest.h */,
+				BF340BE7133B26A70035A4D1 /* PerformanceTouchesTest.cpp */,
+				BF340BE8133B26A70035A4D1 /* PerformanceTouchesTest.h */,
+				BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */,
+				BF340BEA133B26A70035A4D1 /* PerformanceNodeChildrenTest.h */,
+			);
+			path = PerformanceTest;
 			sourceTree = "<group>";
 		};
 		BF83588813276C7700F3C033 /* cocos2dx */ = {
@@ -4228,6 +4266,12 @@
 				BF31E3C312E979A200D4F513 /* TouchesTest.cpp in Sources */,
 				BF31E3C412E979A200D4F513 /* TransitionsTest.cpp in Sources */,
 				BF137F48131E3A7B000F7B64 /* LabelTest.cpp in Sources */,
+				BF340BEB133B26A70035A4D1 /* PerformanceParticleTest.cpp in Sources */,
+				BF340BEC133B26A70035A4D1 /* PerformanceSpriteTest.cpp in Sources */,
+				BF340BED133B26A70035A4D1 /* PerformanceTest.cpp in Sources */,
+				BF340BEE133B26A70035A4D1 /* PerformanceTextureTest.cpp in Sources */,
+				BF340BEF133B26A70035A4D1 /* PerformanceTouchesTest.cpp in Sources */,
+				BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4476,7 +4520,7 @@
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = iphone;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -4534,7 +4578,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -4573,7 +4617,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../..\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -4607,7 +4651,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = chipmunk;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -4643,7 +4687,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

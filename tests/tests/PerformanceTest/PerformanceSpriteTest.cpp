@@ -53,8 +53,8 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
     switch ( subtestNumber)
     {
         case 1:
-        case 5:
-        case 9:
+        case 4:
+        case 7:
             break;
             ///
         case 2:
@@ -67,40 +67,28 @@ void SubTest::initWithSubTest(int nSubTest, CCNode* p)
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
-        case 4:
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossinis_sister1.pvr", 100);
-            p->addChild(batchNode, 0);
-            break;
 
             ///
+        case 5:
+            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
+            p->addChild(batchNode, 0);
+            break;				
         case 6:
-            CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
-            p->addChild(batchNode, 0);
-            break;				
-        case 7:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.png", 100);
-            p->addChild(batchNode, 0);
-            break;								
-        case 8:
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/grossini_dance_atlas.pvr", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
-        case 10:
+        case 8:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
-        case 11:
+        case 9:
             CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
             batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.png", 100);
-            p->addChild(batchNode, 0);
-            break;				
-        case 12:
-            batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.pvr", 100);
             p->addChild(batchNode, 0);
             break;
 
@@ -132,13 +120,12 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
             }
         case 2:
         case 3: 
-        case 4:
             {
                 sprite = CCSprite::spriteWithBatchNode(batchNode, CCRectMake(0, 0, 52, 139));
                 batchNode->addChild(sprite, 0, tag+100);
                 break;
             }
-        case 5:
+        case 4:
             {
                 int idx = (CCRANDOM_0_1() * 1400 / 100) + 1;
                 char str[32] = {0};
@@ -147,9 +134,8 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
+        case 5:
         case 6:
-        case 7:
-        case 8:
             {
                 int y,x;
                 int r = (CCRANDOM_0_1() * 1400 / 100);
@@ -164,7 +150,7 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
                 break;
             }
 
-        case 9:
+        case 7:
             {
                 int y,x;
                 int r = (CCRANDOM_0_1() * 6400 / 100);
@@ -172,16 +158,15 @@ CCSprite* SubTest::createSpriteWithTag(int tag)
                 y = r / 8;
                 x = r % 8;
 
-                char str[32] = {0};
+                char str[40] = {0};
                 sprintf(str, "Images/sprites_test/sprite-%d-%d.png", x, y);
                 sprite = CCSprite::spriteWithFile(str);
                 parent->addChild(sprite, 0, tag+100);
                 break;
             }
 
-        case 10:
-        case 11:
-        case 12:
+        case 8:
+        case 9:
             {
                 int y,x;
                 int r = (CCRANDOM_0_1() * 6400 / 100);
@@ -210,19 +195,16 @@ void SubTest::removeByTag(int tag)
     switch (subtestNumber)
     {
         case 1:
-        case 5:
-        case 9:
+        case 4:
+        case 7:
             parent->removeChildByTag(tag+100, true);
             break;
         case 2:
         case 3:
-        case 4:
+        case 5:
         case 6:
-        case 7:
         case 8:
-        case 10:
-        case 11:
-        case 12:
+        case 9:
             batchNode->removeChildAtIndex(tag, true);
             //			[batchNode removeChildByTag:tag+100 cleanup:YES];
             break;
@@ -319,7 +301,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     // Sub Tests
     CCMenuItemFont::setFontSize(32);
     CCMenu* pSubMenu = CCMenu::menuWithItems(NULL);
-    for (int i = 1; i <= 12; ++i)
+    for (int i = 1; i <= 9; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
@@ -327,9 +309,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
-        if( i<= 4)
+        if( i<= 3)
             itemFont->setColor(ccc3(200,20,20));
-        else if(i <= 8)
+        else if(i <= 6)
             itemFont->setColor(ccc3(0,200,20));
         else
             itemFont->setColor(ccc3(0,20,200));

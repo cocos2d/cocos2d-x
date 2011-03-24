@@ -47,6 +47,12 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/MotionStreakTest/MotionStreakTest.cpp \
 ../../../tests/ParallaxTest/ParallaxTest.cpp \
 ../../../tests/ParticleTest/ParticleTest.cpp \
+../../../tests/PerformanceTest/PerformanceNodeChildrenTest.cpp \
+../../../tests/PerformanceTest/PerformanceParticleTest.cpp \
+../../../tests/PerformanceTest/PerformanceSpriteTest.cpp \
+../../../tests/PerformanceTest/PerformanceTest.cpp \
+../../../tests/PerformanceTest/PerformanceTextureTest.cpp \
+../../../tests/PerformanceTest/PerformanceTouchesTest.cpp \
 ../../../tests/ProgressActionsTest/ProgressActionsTest.cpp \
 ../../../tests/RenderTextureTest/RenderTextureTest.cpp \
 ../../../tests/RotateWorldTest/RotateWorldTest.cpp \

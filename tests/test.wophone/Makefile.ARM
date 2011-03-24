@@ -84,6 +84,12 @@ OBJECTS = \
 	$(OBJECTS_DIR)/MotionStreakTest.o \
 	$(OBJECTS_DIR)/ParallaxTest.o \
 	$(OBJECTS_DIR)/ParticleTest.o \
+	$(OBJECTS_DIR)/PerformanceNodeChildrenTest.o \
+	$(OBJECTS_DIR)/PerformanceParticleTest.o \
+	$(OBJECTS_DIR)/PerformanceSpriteTest.o \
+	$(OBJECTS_DIR)/PerformanceTest.o \
+	$(OBJECTS_DIR)/PerformanceTextureTest.o \
+	$(OBJECTS_DIR)/PerformanceTouchesTest.o \
 	$(OBJECTS_DIR)/ProgressActionsTest.o \
 	$(OBJECTS_DIR)/RenderTextureTest.o \
 	$(OBJECTS_DIR)/RotateWorldTest.o \
@@ -260,6 +266,24 @@ $(OBJECTS_DIR)/ParallaxTest.o : ../tests/ParallaxTest/ParallaxTest.cpp
 
 $(OBJECTS_DIR)/ParticleTest.o : ../tests/ParticleTest/ParticleTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ParticleTest.o ../tests/ParticleTest/ParticleTest.cpp
+
+$(OBJECTS_DIR)/PerformanceNodeChildrenTest.o : ../tests/PerformanceTest/PerformanceNodeChildrenTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PerformanceNodeChildrenTest.o ../tests/PerformanceTest/PerformanceNodeChildrenTest.cpp
+
+$(OBJECTS_DIR)/PerformanceParticleTest.o : ../tests/PerformanceTest/PerformanceParticleTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PerformanceParticleTest.o ../tests/PerformanceTest/PerformanceParticleTest.cpp
+
+$(OBJECTS_DIR)/PerformanceSpriteTest.o : ../tests/PerformanceTest/PerformanceSpriteTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PerformanceSpriteTest.o ../tests/PerformanceTest/PerformanceSpriteTest.cpp
+
+$(OBJECTS_DIR)/PerformanceTest.o : ../tests/PerformanceTest/PerformanceTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PerformanceTest.o ../tests/PerformanceTest/PerformanceTest.cpp
+
+$(OBJECTS_DIR)/PerformanceTextureTest.o : ../tests/PerformanceTest/PerformanceTextureTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PerformanceTextureTest.o ../tests/PerformanceTest/PerformanceTextureTest.cpp
+
+$(OBJECTS_DIR)/PerformanceTouchesTest.o : ../tests/PerformanceTest/PerformanceTouchesTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/PerformanceTouchesTest.o ../tests/PerformanceTest/PerformanceTouchesTest.cpp
 
 $(OBJECTS_DIR)/ProgressActionsTest.o : ../tests/ProgressActionsTest/ProgressActionsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ProgressActionsTest.o ../tests/ProgressActionsTest/ProgressActionsTest.cpp

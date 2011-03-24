@@ -8,7 +8,7 @@ enum {
     kTagLabelAtlas = 4,
     kTagMenuLayer = 1000,
 
-    TEST_COUNT = 5,
+    TEST_COUNT = 4,
 };
 
 enum {

@@ -35,19 +35,19 @@ void NodeChildrenMenuLayer::showCurrentTest()
 
     switch (m_nCurCase)
     {
+//     case 0:
+//         pScene = new IterateSpriteSheetFastEnum();
+//         break;
     case 0:
-        pScene = new IterateSpriteSheetFastEnum();
+        pScene = new IterateSpriteSheetCArray();
         break;
     case 1:
-         pScene = new IterateSpriteSheetCArray();
-        break;
-    case 2:
         pScene = new AddSpriteSheet();
         break;
-    case 3:
+    case 2:
         pScene = new RemoveSpriteSheet();
         break;
-    case 4:
+    case 3:
         pScene = new ReorderSpriteSheet();
         break;
     }
@@ -238,7 +238,14 @@ std::string IterateSpriteSheetFastEnum::subtitle()
 ////////////////////////////////////////////////////////
 void IterateSpriteSheetCArray::update(ccTime dt)
 {
-}
+    // iterate using fast enumeration protocol
+    CCMutableArray<CCNode*>* pChildren = batchNode->getChildren();
+    CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
+    for(iter = pChildren->begin(); iter != pChildren->end(); ++iter)
+    {
+        CCSprite* pSprite = (CCSprite*)(*iter);
+        pSprite->setIsVisible(false);
+    }}
 
 std::string IterateSpriteSheetCArray::title()
 {
