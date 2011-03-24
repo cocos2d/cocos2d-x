@@ -901,6 +901,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCNS.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCNS.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCObject.cpp"
 				>
 			</File>
@@ -985,10 +993,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCNS.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
 				>
 			</File>
@@ -1065,10 +1069,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\wophone\CCFileUtils_wophone.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\wophone\CCNS_wophone.cpp"
 					>
 				</File>
 				<File

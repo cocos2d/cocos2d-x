@@ -25,6 +25,7 @@ cocoa/CCAffineTransform.cpp \
 cocoa/CCGeometry.cpp \
 cocoa/CCAutoreleasePool.cpp \
 cocoa/CCData.cpp \
+cocoa/CCNS.cpp \
 cocoa/CCObject.cpp \
 cocoa/CCSet.cpp \
 cocoa/CCZone.cpp \
@@ -62,7 +63,6 @@ platform/CCCommon.cpp \
 platform/CCParticleSystemPoint_mobile.cpp \
 platform/CCTransition_mobile.cpp \
 platform/platform.cpp \
-platform/android/CCNS_android.cpp \
 platform/android/CCEGLView_android.cpp \
 platform/android/CCFileUtils_android.cpp \
 platform/android/CCAccelerometer_android.cpp \

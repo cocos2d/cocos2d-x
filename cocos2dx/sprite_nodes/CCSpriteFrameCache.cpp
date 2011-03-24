@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "platform/CCNS.h"
+#include "cocoa/CCNS.h"
 #include "ccMacros.h"
 #include "CCTextureCache.h"
 #include "CCSpriteFrameCache.h"
