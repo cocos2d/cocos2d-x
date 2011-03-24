@@ -4,6 +4,10 @@ options
 
 }
 
+includepaths
+{
+	..
+}
 subprojects
 {
 	IwGL

@@ -24,6 +24,7 @@ includepaths
 
 	"./cocos2dx/"
 	"./cocos2dx/include"
+	"./cocos2dx/platform"
 }
 
 files
