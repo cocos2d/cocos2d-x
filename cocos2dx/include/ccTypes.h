@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -278,10 +279,10 @@ typedef float ccTime;
 
 typedef enum 
 {
-	UITextAlignmentLeft,
-	UITextAlignmentCenter,
-	UITextAlignmentRight,
-} UITextAlignment;
+	CCTextAlignmentLeft,
+	CCTextAlignmentCenter,
+	CCTextAlignmentRight,
+} CCTextAlignment;
 
 }//namespace   cocos2d 
 

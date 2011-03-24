@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CCMOUSE_EVENT_DELEGATE_H__
 #define __CCMOUSE_EVENT_DELEGATE_H__
 
-#include "CCEvent.h"
+#include "CCTouch.h"
 #include "CCObject.h"
 
 namespace   cocos2d {

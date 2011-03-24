@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __COCOA_NS_MUTATLE_ARRAY_H__
-#define __COCOA_NS_MUTATLE_ARRAY_H__
+#ifndef __COCOA_CC_MUTATLE_ARRAY_H__
+#define __COCOA_CC_MUTATLE_ARRAY_H__
 
 #include "CCObject.h"
 #include <vector>
@@ -386,7 +386,6 @@ private:
 	std::vector<T> m_array;
 };
 
-#define NSArray CCMutableArray
 }//namespace   cocos2d 
 
-#endif // __COCOA_NS_MUTATLE_ARRAY_H__
+#endif // __COCOA_CC_MUTATLE_ARRAY_H__

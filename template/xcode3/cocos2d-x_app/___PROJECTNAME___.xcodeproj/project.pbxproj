@@ -29,6 +29,7 @@
 		BF1915CC12E04F70007DCFF1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915C212E04F70007DCFF1 /* Icon.png */; };
 		BF1915CD12E04F70007DCFF1 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915C312E04F70007DCFF1 /* Icon@2x.png */; };
 		BF19164212E052E1007DCFF1 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF19164112E052E1007DCFF1 /* LICENSE.cocos2d-x */; };
+		BF76372C133389F4009E0E50 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF76372B133389F4009E0E50 /* CCCamera.cpp */; };
 		BF776BF112DFEFA800358B43 /* Export.h in Headers */ = {isa = PBXBuildFile; fileRef = BF776BC812DFEFA800358B43 /* Export.h */; };
 		BF776BF212DFEFA800358B43 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = BF776BC912DFEFA800358B43 /* SimpleAudioEngine.h */; };
 		BF776BF312DFEFA800358B43 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BF776BCB12DFEFA800358B43 /* CDAudioManager.h */; };
@@ -53,7 +54,6 @@
 		BF83606C1328687F00F3C033 /* CCActionProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DCC1328687E00F3C033 /* CCActionProgressTimer.cpp */; };
 		BF83606D1328687F00F3C033 /* CCActionTiledGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DCD1328687E00F3C033 /* CCActionTiledGrid.cpp */; };
 		BF83606E1328687F00F3C033 /* CCAtlasNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD01328687E00F3C033 /* CCAtlasNode.cpp */; };
-		BF83606F1328687F00F3C033 /* CCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD11328687E00F3C033 /* CCamera.cpp */; };
 		BF8360701328687F00F3C033 /* CCConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD21328687E00F3C033 /* CCConfiguration.cpp */; };
 		BF8360711328687F00F3C033 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835DD31328687E00F3C033 /* CCConfiguration.h */; };
 		BF8360721328687F00F3C033 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835DD41328687E00F3C033 /* CCDrawingPrimitives.cpp */; };
@@ -307,6 +307,7 @@
 		BF1915C212E04F70007DCFF1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		BF1915C312E04F70007DCFF1 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		BF19164112E052E1007DCFF1 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
+		BF76372B133389F4009E0E50 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF776BC812DFEFA800358B43 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		BF776BC912DFEFA800358B43 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
 		BF776BCB12DFEFA800358B43 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
@@ -331,7 +332,6 @@
 		BF835DCC1328687E00F3C033 /* CCActionProgressTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionProgressTimer.cpp; sourceTree = "<group>"; };
 		BF835DCD1328687E00F3C033 /* CCActionTiledGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTiledGrid.cpp; sourceTree = "<group>"; };
 		BF835DD01328687E00F3C033 /* CCAtlasNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAtlasNode.cpp; sourceTree = "<group>"; };
-		BF835DD11328687E00F3C033 /* CCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCamera.cpp; sourceTree = "<group>"; };
 		BF835DD21328687E00F3C033 /* CCConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCConfiguration.cpp; sourceTree = "<group>"; };
 		BF835DD31328687E00F3C033 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		BF835DD41328687E00F3C033 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
@@ -723,9 +723,9 @@
 		BF835DC11328687E00F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				BF76372B133389F4009E0E50 /* CCCamera.cpp */,
 				BF835DC21328687E00F3C033 /* actions */,
 				BF835DCF1328687E00F3C033 /* base_nodes */,
-				BF835DD11328687E00F3C033 /* CCamera.cpp */,
 				BF835DD21328687E00F3C033 /* CCConfiguration.cpp */,
 				BF835DD31328687E00F3C033 /* CCConfiguration.h */,
 				BF835DD41328687E00F3C033 /* CCDrawingPrimitives.cpp */,
@@ -1400,7 +1400,6 @@
 				BF83606C1328687F00F3C033 /* CCActionProgressTimer.cpp in Sources */,
 				BF83606D1328687F00F3C033 /* CCActionTiledGrid.cpp in Sources */,
 				BF83606E1328687F00F3C033 /* CCAtlasNode.cpp in Sources */,
-				BF83606F1328687F00F3C033 /* CCamera.cpp in Sources */,
 				BF8360701328687F00F3C033 /* CCConfiguration.cpp in Sources */,
 				BF8360721328687F00F3C033 /* CCDrawingPrimitives.cpp in Sources */,
 				BF8360731328687F00F3C033 /* CCScheduler.cpp in Sources */,
@@ -1484,6 +1483,7 @@
 				BF8362B21328687F00F3C033 /* CCTMXXMLParser.cpp in Sources */,
 				BF8362B31328687F00F3C033 /* CCTouchDispatcher.cpp in Sources */,
 				BF8362B41328687F00F3C033 /* CCTouchHandler.cpp in Sources */,
+				BF76372C133389F4009E0E50 /* CCCamera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1520,9 +1520,12 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = 4.2;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				HEADER_SEARCH_PATHS = libs/cocos2dx;
+				HEADER_SEARCH_PATHS = (
+					libs/cocos2dx,
+					libs/CocosDenshion/include,
+				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1559,11 +1562,10 @@
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
 				HEADER_SEARCH_PATHS = (
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
-					libs/cocos2dx/platform/iphone/third_party/opengles,
+					libs/CocosDenshion/include,
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1593,13 +1595,10 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
 					libs/cocos2dx,
-					libs/cocos2dx/platform,
+					libs/CocosDenshion/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;
@@ -1619,15 +1618,12 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/cocos2dx/platform/iphone/third_party/opengles,
+					"$(SDKROOT)/usr/include/libxml2",
 					libs/cocos2dx,
-					libs/cocos2dx/platform/iphone/third_party/libxml2,
+					libs/CocosDenshion/include,
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;

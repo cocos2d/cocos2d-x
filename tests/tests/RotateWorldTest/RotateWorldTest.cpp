@@ -16,7 +16,7 @@ void TestLayer::onEnter()
 	x = size.width;
 	y = size.height;
 
-	//NSArray *array = [UIFont familyNames];
+	//CCMutableArray *array = [UIFont familyNames];
 	//for( CCString *s in array )
 	//	NSLog( s );
 	CCLabelTTF* label = CCLabelTTF::labelWithString("cocos2d", "Tahoma", 64);

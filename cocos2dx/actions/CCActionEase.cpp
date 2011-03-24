@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2009 Jason Booth
 
 http://www.cocos2d-x.org
 
@@ -22,15 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionEase.h"
-#include "CCObject.h"
-
 /*
  * Elastic, Back and Bounce actions based on code from:
  * http://github.com/NikhilK/silverlightfx/
  *
  * by http://github.com/NikhilK
  */
+
+#include "CCActionEase.h"
+#include "CCObject.h"
+
 namespace cocos2d {
 
 #ifndef M_PI_X_2

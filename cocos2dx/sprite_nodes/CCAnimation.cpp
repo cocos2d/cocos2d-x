@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -45,7 +46,7 @@ namespace cocos2d
 		return initWithFrames(NULL, 0);
 	}
 
-	CCAnimation* CCAnimation::animationWithFrames(NSArray<CCSpriteFrame*> *frames)
+	CCAnimation* CCAnimation::animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames)
 	{
 		CCAnimation *pAnimation = new CCAnimation();
 		pAnimation->initWithFrames(frames);
@@ -54,7 +55,7 @@ namespace cocos2d
 		return pAnimation;
 	}
 
-	CCAnimation* CCAnimation::animationWithFrames(NSArray<CCSpriteFrame*> *frames, float delay)
+	CCAnimation* CCAnimation::animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay)
 	{
 		CCAnimation *pAnimation = new CCAnimation();
 		pAnimation->initWithFrames(frames, delay);
@@ -99,7 +100,7 @@ namespace cocos2d
 		return pAnimation;
 	}
 
-	bool CCAnimation::initWithFrames(NSArray<CCSpriteFrame*> *pFrames, float delay)
+	bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay)
 	{
         m_fDelay = delay;
 		m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
@@ -107,7 +108,7 @@ namespace cocos2d
 		return true;
 	}
 
-	bool CCAnimation::initWithFrames(NSArray<CCSpriteFrame*> *pFrames)
+	bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
 	{
         return initWithFrames(pFrames, 0);
 	}

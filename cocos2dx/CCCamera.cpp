@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -24,7 +25,7 @@ THE SOFTWARE.
 
 #include "CCCamera.h"
 //#include "CCDirector.h"
-#include "ccGL.h"
+#include "CCGL.h"
 
 #include "CCDrawingPrimitives.h"
 

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -87,10 +88,10 @@ namespace cocos2d{
         /**
         @brief For phone event handle functions
         */
-		virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-		virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
-		virtual void ccTouchCancelled(CCTouch *touch, UIEvent* event);
-		virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
+		virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+		virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+		virtual void ccTouchCancelled(CCTouch *touch, CCEvent* event);
+		virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 
         /**
         @brief For PC event handle functions

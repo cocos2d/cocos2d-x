@@ -1,5 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2009      Jason Booth
+Copyright (c) 2009      Robert J Payne
 
 http://www.cocos2d-x.org
 
@@ -164,7 +167,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 			bool textureRotated = atoi(valueForKey("textureRotated", frameDict)) == 0;
 
 			// get aliases
-			NSArray<CCString*> *aliases = NSArray<CCString*>dictionary->objectForKey(std::string("aliases"));
+			CCMutableArray<CCString*> *aliases = CCMutableArray<CCString*>dictionary->objectForKey(std::string("aliases"));
 
 			while( alias = (CCDictionary<std::string, CCObject*>*)aliases->next(&key) )
 			{
@@ -254,7 +257,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 		// append .png
 		texturePath = texturePath.append(".png");
 
-		CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath);
+		CCLOG("cocos2d: CCSpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
 	}
 
 	CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(texturePath.c_str());

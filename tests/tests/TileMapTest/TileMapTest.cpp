@@ -611,10 +611,10 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 	
 	////----UXLOG("----> Iterating over all the group objets");
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
-	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
 
 	CCStringToStringDictionary* dict;
-	NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
+	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
 		dict = (*it);//dynamic_cast<CCStringToStringDictionary*>(*it);
@@ -635,9 +635,9 @@ void TMXOrthoObjectsTest::draw()
 	CCTMXTiledMap* map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
-	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
 	CCStringToStringDictionary* dict;
-	NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
+	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -693,11 +693,11 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 	CCTMXObjectGroup* group = map->objectGroupNamed("Object Group 1");
 
     //UxMutableArray* objects = group->objects();
-	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
 	//UxMutableDictionary<std::string>* dict;
     CCStringToStringDictionary* dict;
 	//CCMutableArray<CCObject*>::CCMutableArrayIterator it;
-    NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
+    CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -715,9 +715,9 @@ void TMXIsoObjectsTest::draw()
 	CCTMXTiledMap *map = (CCTMXTiledMap*) getChildByTag(kTagTileMap);
 	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
 
-	NSArray<CCStringToStringDictionary*> * objects = group->getObjects();
+	CCMutableArray<CCStringToStringDictionary*> * objects = group->getObjects();
 	CCStringToStringDictionary* dict;
-	NSArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
+	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 
 	for( it = objects->begin(); it != objects->end(); it++) 
 	{
@@ -1344,20 +1344,20 @@ void TileDemo::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
-bool TileDemo::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool TileDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	return true;
 }
 
-void TileDemo::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void TileDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
 }
 
-void TileDemo::ccTouchCancelled(CCTouch* touch, UIEvent* event)
+void TileDemo::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 {
 }
 
-void TileDemo::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void TileDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	CCPoint prevLocation = touch->previousLocationInView( touch->view() );	

@@ -236,7 +236,7 @@
 		BF835B3313276C7900F3C033 /* CCActionProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83589313276C7700F3C033 /* CCActionProgressTimer.cpp */; };
 		BF835B3413276C7900F3C033 /* CCActionTiledGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83589413276C7700F3C033 /* CCActionTiledGrid.cpp */; };
 		BF835B3513276C7900F3C033 /* CCAtlasNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83589713276C7700F3C033 /* CCAtlasNode.cpp */; };
-		BF835B3613276C7900F3C033 /* CCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83589813276C7700F3C033 /* CCamera.cpp */; };
+		BF835B3613276C7900F3C033 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83589813276C7700F3C033 /* CCCamera.cpp */; };
 		BF835B3713276C7900F3C033 /* CCConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83589913276C7700F3C033 /* CCConfiguration.cpp */; };
 		BF835B3813276C7900F3C033 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83589A13276C7700F3C033 /* CCConfiguration.h */; };
 		BF835B3913276C7900F3C033 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83589B13276C7700F3C033 /* CCDrawingPrimitives.cpp */; };
@@ -1107,7 +1107,7 @@
 		BF83589313276C7700F3C033 /* CCActionProgressTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionProgressTimer.cpp; sourceTree = "<group>"; };
 		BF83589413276C7700F3C033 /* CCActionTiledGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTiledGrid.cpp; sourceTree = "<group>"; };
 		BF83589713276C7700F3C033 /* CCAtlasNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAtlasNode.cpp; sourceTree = "<group>"; };
-		BF83589813276C7700F3C033 /* CCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCamera.cpp; sourceTree = "<group>"; };
+		BF83589813276C7700F3C033 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF83589913276C7700F3C033 /* CCConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCConfiguration.cpp; sourceTree = "<group>"; };
 		BF83589A13276C7700F3C033 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		BF83589B13276C7700F3C033 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
@@ -2472,7 +2472,7 @@
 			children = (
 				BF83588913276C7700F3C033 /* actions */,
 				BF83589613276C7700F3C033 /* base_nodes */,
-				BF83589813276C7700F3C033 /* CCamera.cpp */,
+				BF83589813276C7700F3C033 /* CCCamera.cpp */,
 				BF83589913276C7700F3C033 /* CCConfiguration.cpp */,
 				BF83589A13276C7700F3C033 /* CCConfiguration.h */,
 				BF83589B13276C7700F3C033 /* CCDrawingPrimitives.cpp */,
@@ -4247,7 +4247,7 @@
 				BF835B3313276C7900F3C033 /* CCActionProgressTimer.cpp in Sources */,
 				BF835B3413276C7900F3C033 /* CCActionTiledGrid.cpp in Sources */,
 				BF835B3513276C7900F3C033 /* CCAtlasNode.cpp in Sources */,
-				BF835B3613276C7900F3C033 /* CCamera.cpp in Sources */,
+				BF835B3613276C7900F3C033 /* CCCamera.cpp in Sources */,
 				BF835B3713276C7900F3C033 /* CCConfiguration.cpp in Sources */,
 				BF835B3913276C7900F3C033 /* CCDrawingPrimitives.cpp in Sources */,
 				BF835B3A13276C7900F3C033 /* CCScheduler.cpp in Sources */,
@@ -4448,7 +4448,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -4467,7 +4467,6 @@
 					"\"$(SRCROOT)/../..\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
 					"\"$(SRCROOT)/../../cocos2dx/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -4477,7 +4476,8 @@
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = iphone;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4485,6 +4485,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4501,7 +4502,6 @@
 					"\"$(SRCROOT)/../..\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
 					"\"$(SRCROOT)/../../cocos2dx/include\"",
-					"\"$(SDKROOT)/usr/include/libxml2\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -4509,7 +4509,9 @@
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
 				PRODUCT_NAME = iphone;
-				SDKROOT = iphonesimulator4.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4526,20 +4528,14 @@
 					TARGET_OS_IPHONE,
 				);
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../cocos2dx/platform\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4558,16 +4554,11 @@
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../../cocos2dx\"",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -4582,7 +4573,8 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../..\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4596,7 +4588,8 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../..\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = box2d;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -4614,7 +4607,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = chipmunk;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4631,7 +4625,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = chipmunk;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -4648,7 +4643,8 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -4663,7 +4659,8 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};
 			name = Release;

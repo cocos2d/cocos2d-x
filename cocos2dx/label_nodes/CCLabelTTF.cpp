@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -49,7 +50,7 @@ namespace cocos2d{
         
     }
 
-	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{
 		CCLabelTTF *pRet = new CCLabelTTF();
 		if(pRet && pRet->initWithString(label, dimensions, alignment, fontName, fontSize))
@@ -72,7 +73,7 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	bool CCLabelTTF::initWithString(const char *label, CCSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize)
+	bool CCLabelTTF::initWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 	{
 		assert(label != NULL);
 		if (CCSprite::init())

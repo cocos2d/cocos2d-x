@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -55,7 +56,7 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
     virtual void onEnterTransitionDidFinish();
-	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void destroy(void);
 	virtual void keep(void);
 	

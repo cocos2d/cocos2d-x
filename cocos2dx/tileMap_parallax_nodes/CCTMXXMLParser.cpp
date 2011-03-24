@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -272,7 +273,7 @@ namespace cocos2d {
 			std::string version = valueForKey("version", attributeDict);
 			if ( version != "1.0")
 			{
-				CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %@", version);
+				CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %@", version.c_str());
 			}
 			std::string orientationStr = valueForKey("orientation", attributeDict);
 			if( orientationStr == "orthogonal")

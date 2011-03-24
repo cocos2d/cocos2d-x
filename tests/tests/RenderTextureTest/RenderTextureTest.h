@@ -24,7 +24,7 @@ class RenderTextureTest : public RenderTextureTestDemo
 public:
     RenderTextureTest();
     ~RenderTextureTest();
-    virtual void ccTouchesMoved(CCSet* touches, UIEvent* event);
+    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
 
 private:
     CCRenderTexture*	m_target;

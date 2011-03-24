@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -183,7 +184,7 @@ namespace cocos2d{
 		}
 
 		// If all the tiles are 0, return empty tileset
-		CCLOG("cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo->m_sName);
+		CCLOG("cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo->m_sName.c_str());
 		return tileset;
 	}
 

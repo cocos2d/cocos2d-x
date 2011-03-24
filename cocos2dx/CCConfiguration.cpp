@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -93,9 +94,12 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
 	bool bRet = false;
 	const char *kSearchName = searchName.c_str();
 	
-	if (strstr(g_pGlExtensions, kSearchName))
+	if (g_pGlExtensions && 
+		strstr(g_pGlExtensions, kSearchName))
+	{
 		bRet = true;
-
+	}
+	
 	return bRet;
 }
 }//namespace   cocos2d 

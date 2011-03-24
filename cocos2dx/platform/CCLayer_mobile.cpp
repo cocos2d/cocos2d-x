@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -292,7 +293,7 @@ void CCLayer::onEnterTransitionDidFinish()
     CCNode::onEnterTransitionDidFinish();
 }
 
-bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
+bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
 	CCAssert(false, "Layer#ccTouchBegan override me");
 	return true;

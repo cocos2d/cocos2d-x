@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      Jason Booth
 
 http://www.cocos2d-x.org
 
@@ -237,7 +238,7 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 	bool bRet = false;
 //@ todo CCRenderTexture::saveBuffer
 // 	UIImage *myImage = this->getUIImageFromBuffer(format);
-//     NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//     CCMutableArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //     CCString *documentsDirectory	= [paths objectAtIndex:0];
 //     CCString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
 

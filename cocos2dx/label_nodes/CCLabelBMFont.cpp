@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -313,7 +314,7 @@ namespace cocos2d{
 		//	CCAssert(!kerningDictionary, @"dictionary already initialized");
 		//	
 		//	// Break the values for this line up using =
-		//	NSArray *values = [line componentsSeparatedByString:@"="];
+		//	CCMutableArray *values = [line componentsSeparatedByString:@"="];
 		//	NSEnumerator *nse = [values objectEnumerator];	
 		//	CCString *propertyValue;
 		//	

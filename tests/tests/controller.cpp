@@ -146,7 +146,7 @@ void TestController::closeCallback(CCObject * pSender)
     CCDirector::sharedDirector()->end();
 }
 
-void TestController::ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent)
+void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);
@@ -155,7 +155,7 @@ void TestController::ccTouchesBegan(CCSet *pTouches, UIEvent *pEvent)
     m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
-void TestController::ccTouchesMoved(CCSet *pTouches, UIEvent *pEvent)
+void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     CCSetIterator it = pTouches->begin();
     CCTouch* touch = (CCTouch*)(*it);

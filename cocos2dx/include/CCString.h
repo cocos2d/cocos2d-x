@@ -21,8 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __NSSTRING_H__
-#define __NSSTRING_H__
+#ifndef __CCSTRING_H__
+#define __CCSTRING_H__
 #include <string>
 #include <stdlib.h>
 #include "CCObject.h"
@@ -60,4 +60,4 @@ namespace cocos2d {
 		}
 	};
 }// namespace cocos2d
-#endif //__NSSTRING_H__
+#endif //__CCSTRING_H__

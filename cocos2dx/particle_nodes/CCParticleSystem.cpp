@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -21,6 +22,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+// ideas taken from:
+//	 . The ocean spray in your face [Jeff Lander]
+//		http://www.double.co.nz/dust/col0798.pdf
+//	 . Building an Advanced Particle System [John van der Burg]
+//		http://www.gamasutra.com/features/20000623/vanderburg_01.htm
+//   . LOVE game engine
+//		http://love2d.org/
+//
+//
+// Radius mode support, from 71 squared
+//		http://particledesigner.71squared.com/
+//
+// IMPORTANT: Particle Designer is supported by cocos2d, but
+// 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
+//  cocos2d uses a another approach, but the results are almost identical. 
+//
+
 #include "CCParticleSystem.h"
 #include "ccTypes.h"
 #include "CCTextureCache.h"

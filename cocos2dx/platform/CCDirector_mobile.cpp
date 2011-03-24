@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -44,7 +45,7 @@ THE SOFTWARE.
 #include "CCKeypadDispatcher.h"
 #include "CCGL.h"
 #include "CCAnimationCache.h"
-#include "CCEvent.h"
+#include "CCTouch.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -124,7 +125,7 @@ bool CCDirector::init(void)
 	m_bIsContentScaleSupported = false;
 
 	// create autorelease pool
-	NSPoolManager::getInstance()->push();
+	CCPoolManager::getInstance()->push();
 
 	return true;
 }
@@ -142,7 +143,7 @@ CCDirector::~CCDirector(void)
 	CC_SAFE_RELEASE(m_pobScenesStack);
 
 	// pop the autorelease pool
-	NSPoolManager::getInstance()->pop();
+	CCPoolManager::getInstance()->pop();
 
 	// delete m_pLastUpdate
 	CC_SAFE_DELETE(m_pLastUpdate);
@@ -968,7 +969,7 @@ void CCDisplayLinkDirector::mainLoop(void)
  		drawScene();
 	 
  		// release the objects
- 		NSPoolManager::getInstance()->pop();		
+ 		CCPoolManager::getInstance()->pop();		
  	}
 }
 

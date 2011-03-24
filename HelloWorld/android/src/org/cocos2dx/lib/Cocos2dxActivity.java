@@ -51,6 +51,14 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 public class Cocos2dxActivity extends Activity{
+	public static int screenWidth;
+    public static int screenHeight;
+    private static Cocos2dxMusic backgroundMusicPlayer;
+    private static Cocos2dxSound soundPlayer;
+    private static Cocos2dxAccelerometer accelerometer;
+    private static boolean accelerometerEnabled = false;
+
+    private static native void nativeSetPaths(String apkPath);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +66,109 @@ public class Cocos2dxActivity extends Activity{
         
         // get frame size
         DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);      
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
+        accelerometer = new Cocos2dxAccelerometer(this);
+
+        // init media player and sound player
+        backgroundMusicPlayer = new Cocos2dxMusic(this);
+        soundPlayer = new Cocos2dxSound(this);
+    }
+
+    public static void enableAccelerometer() {
+        accelerometerEnabled = true;
+        accelerometer.enable();
+    }
+
+    public static void disableAccelerometer() {
+        accelerometerEnabled = false;
+        accelerometer.disable();
+    }
+
+    public static void playBackgroundMusic(String path, boolean isLoop){
+    	backgroundMusicPlayer.playBackgroundMusic(path, isLoop);
     }
     
+    public static void stopBackgroundMusic(){
+    	backgroundMusicPlayer.stopBackgroundMusic();
+    }
+    
+    public static void pauseBackgroundMusic(){
+    	backgroundMusicPlayer.pauseBackgroundMusic();
+    }
+    
+    public static void resumeBackgroundMusic(){
+    	backgroundMusicPlayer.resumeBackgroundMusic();
+    }
+    
+    public static void rewindBackgroundMusic(){
+    	backgroundMusicPlayer.rewindBackgroundMusic();
+    }
+    
+    public static boolean isBackgroundMusicPlaying(){
+    	return backgroundMusicPlayer.isBackgroundMusicPlaying();
+    }
+    
+    public static float getBackgroundMusicVolume(){
+    	return backgroundMusicPlayer.getBackgroundVolume();
+    }
+    
+    public static void setBackgroundMusicVolume(float volume){
+    	backgroundMusicPlayer.setBackgroundVolume(volume);
+    }
+    
+    public static int playEffect(String path){
+    	return soundPlayer.playEffect(path);
+    }
+    
+    public static void stopEffect(int soundId){
+    	soundPlayer.stopEffect(soundId);
+    }
+    
+    public static float getEffectsVolume(){
+    	return soundPlayer.getEffectsVolume();
+    }
+    
+    public static void setEffectsVolume(float volume){
+    	soundPlayer.setEffectsVolume(volume);
+    }
+    
+    public static void preloadEffect(String path){
+    	soundPlayer.preloadEffect(path);
+    }
+    
+    public static void unloadEffect(String path){
+    	soundPlayer.unloadEffect(path);
+    }
+    
+    public static void end(){
+    	backgroundMusicPlayer.end();
+    	soundPlayer.end();
+    }
+
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	if (accelerometerEnabled) {
+    	    accelerometer.enable();
+    	}
+    	
+    	// resume background music
+    	resumeBackgroundMusic();
+    }
+
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	if (accelerometerEnabled) {
+    	    accelerometer.disable();
+    	}
+    	
+    	// pause background music
+    	pauseBackgroundMusic();
+    }
+
     protected void setPackgeName(String packageName) {
     	String apkFilePath = "";
         ApplicationInfo appInfo = null;
@@ -79,8 +185,4 @@ public class Cocos2dxActivity extends Activity{
         // add this link at the renderer class
         nativeSetPaths(apkFilePath);
     }
-    
-    public static int screenWidth;
-    public static int screenHeight;
-    private static native void nativeSetPaths(String apkPath);
 }

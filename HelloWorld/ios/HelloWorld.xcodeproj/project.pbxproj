@@ -38,7 +38,7 @@
 		BF83542113275F5600F3C033 /* CCActionProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83518113275F5500F3C033 /* CCActionProgressTimer.cpp */; };
 		BF83542213275F5600F3C033 /* CCActionTiledGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83518213275F5500F3C033 /* CCActionTiledGrid.cpp */; };
 		BF83542313275F5600F3C033 /* CCAtlasNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83518513275F5500F3C033 /* CCAtlasNode.cpp */; };
-		BF83542413275F5600F3C033 /* CCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83518613275F5500F3C033 /* CCamera.cpp */; };
+		BF83542413275F5600F3C033 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83518613275F5500F3C033 /* CCCamera.cpp */; };
 		BF83542513275F5600F3C033 /* CCConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83518713275F5500F3C033 /* CCConfiguration.cpp */; };
 		BF83542613275F5600F3C033 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83518813275F5500F3C033 /* CCConfiguration.h */; };
 		BF83542713275F5600F3C033 /* CCDrawingPrimitives.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83518913275F5500F3C033 /* CCDrawingPrimitives.cpp */; };
@@ -605,7 +605,7 @@
 		BF83518113275F5500F3C033 /* CCActionProgressTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionProgressTimer.cpp; sourceTree = "<group>"; };
 		BF83518213275F5500F3C033 /* CCActionTiledGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTiledGrid.cpp; sourceTree = "<group>"; };
 		BF83518513275F5500F3C033 /* CCAtlasNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAtlasNode.cpp; sourceTree = "<group>"; };
-		BF83518613275F5500F3C033 /* CCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCamera.cpp; sourceTree = "<group>"; };
+		BF83518613275F5500F3C033 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF83518713275F5500F3C033 /* CCConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCConfiguration.cpp; sourceTree = "<group>"; };
 		BF83518813275F5500F3C033 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		BF83518913275F5500F3C033 /* CCDrawingPrimitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawingPrimitives.cpp; sourceTree = "<group>"; };
@@ -1264,7 +1264,7 @@
 			children = (
 				BF83517713275F5500F3C033 /* actions */,
 				BF83518413275F5500F3C033 /* base_nodes */,
-				BF83518613275F5500F3C033 /* CCamera.cpp */,
+				BF83518613275F5500F3C033 /* CCCamera.cpp */,
 				BF83518713275F5500F3C033 /* CCConfiguration.cpp */,
 				BF83518813275F5500F3C033 /* CCConfiguration.h */,
 				BF83518913275F5500F3C033 /* CCDrawingPrimitives.cpp */,
@@ -2828,7 +2828,7 @@
 				BF83542113275F5600F3C033 /* CCActionProgressTimer.cpp in Sources */,
 				BF83542213275F5600F3C033 /* CCActionTiledGrid.cpp in Sources */,
 				BF83542313275F5600F3C033 /* CCAtlasNode.cpp in Sources */,
-				BF83542413275F5600F3C033 /* CCamera.cpp in Sources */,
+				BF83542413275F5600F3C033 /* CCCamera.cpp in Sources */,
 				BF83542513275F5600F3C033 /* CCConfiguration.cpp in Sources */,
 				BF83542713275F5600F3C033 /* CCDrawingPrimitives.cpp in Sources */,
 				BF83542813275F5600F3C033 /* CCScheduler.cpp in Sources */,
@@ -2945,7 +2945,7 @@
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2967,7 +2967,7 @@
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2989,23 +2989,15 @@
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../cocos2dx/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 					"\"$(SRCROOT)/../../cocos2dx/\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform\"",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include /usr/local/include/libxml2";
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -3027,21 +3019,11 @@
 					"\"$(SRCROOT)/../../cocos2dx/\"",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/cocos2d/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/cocos2d/platform/win32/third_party/libraries\"",
-					"\"$(SRCROOT)/../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../cocos2dx/platform/win32/third_party/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/android/third_party/libs\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/win32/third_party/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/win32/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include /usr/local/include/libxml2";
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
