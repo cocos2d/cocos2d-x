@@ -47,9 +47,9 @@ check_environment_variable(){
 }
 
 create_android_project(){
-    echo "Use android list targets to obtain a list of available targets before your inputting."
     echo "Now cocos2d-x suppurts Android 2.1-update1 and Android 2.2"
-    echo "Other target id may support, but have not tested."
+    echo "Other versions have not tested."
+    $ANDROID_SDK_ROOT/tools/android list targets
     echo "input target id:"
     read TARGET_ID
     PACHAGE_PATH="org.cocos2dx.application"

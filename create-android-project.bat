@@ -25,11 +25,10 @@ if not exist "%_NDKROOT%" echo Couldn't find ndk at "%_NDKROOT%" & pause & exit 
 :: create android project
 set _PACKAGEPATH=org.cocos2dx.application
 set /P _PROJECTNAME=Please enter your project name:
-echo "Use android.bat list targets to obtain a list of available targets before your inputting."
 echo "Now cocos2d-x suppurts Android 2.1-update1 and Android 2.2"
-echo "Other target id may support, but have not tested."
-echo "input target id:"
-set /P _TARGETID=Please enter target id:
+echo "Other versions have not tested."
+call %_ANDROIDTOOLS%\android.bat list targets
+set /P _TARGETID=Please input target id:
 set _PROJECTDIR=%CD%\%_PROJECTNAME%
 
 echo Create android project
