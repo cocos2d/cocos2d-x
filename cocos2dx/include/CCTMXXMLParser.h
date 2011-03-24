@@ -165,9 +165,9 @@ namespace cocos2d {
 		void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
 
 		// implement pure virtual methods of CCSAXDelegator
-		void startElement(void *ctx, const XML_Char *name, const XML_Char **atts);
-		void endElement(void *ctx, const XML_Char *name);
-		void textHandler(void *ctx, const XML_Char *ch, int len);
+		void startElement(void *ctx, const char *name, const char **atts);
+		void endElement(void *ctx, const char *name);
+		void textHandler(void *ctx, const char *ch, int len);
 		
 		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
