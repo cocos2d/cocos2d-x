@@ -25,7 +25,5 @@ do
 done
 
 # build
-pushd $ANDROID_NDK_ROOT
-./ndk-build -C $HELLOWORLD_ANDROID_ROOT $*
-popd
+$ANDROID_NDK_ROOT/ndk-build -C $HELLOWORLD_ANDROID_ROOT $*
 
