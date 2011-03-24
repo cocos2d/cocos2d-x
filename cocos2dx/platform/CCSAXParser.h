@@ -13,7 +13,7 @@ NS_CC_BEGIN;
 	(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 typedef unsigned char CC_XML_CHAR;
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-typedef char CC_XML_CHAR
+typedef char CC_XML_CHAR;
 #else
 #error
 #endif

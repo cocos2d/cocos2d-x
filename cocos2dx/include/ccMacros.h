@@ -204,15 +204,15 @@ do	{																							\
 
 //---- todo: replace with wophone window
 
-
-// #define CC_DIRECTOR_END()										\
-// do {															\
-// 	CCDirector *__director = [CCDirector sharedDirector];		\
-// 	CC_GLVIEW *__view = [__director openGLView];					\
-// 	[__view removeFromSuperview];								\
-// 	[__director end];											\
-// } while(0)
-
+/*
+#define CC_DIRECTOR_END()									\
+do {														\
+  CCDirector *__director = [CCDirector sharedDirector];		\
+  CC_GLVIEW *__view = [__director openGLView];				\
+  [__view removeFromSuperview];								\
+  [__director end];											\
+} while(0)
+*/
 
 #ifndef FLT_EPSILON
 #define FLT_EPSILON     1.192092896e-07F
