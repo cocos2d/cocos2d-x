@@ -33,10 +33,11 @@ bool CCSAXParser::parse(const char *pszFile)
 {
 	bool bRet = false;
 	char* buf = NULL;
+	s3eFile* file = NULL;
 	
 	do
 	{
-		s3eFile* file = s3eFileOpen(pszFile, "r");
+		file = s3eFileOpen(pszFile, "r");
 		
 		if (!file)
 		{
@@ -75,16 +76,16 @@ bool CCSAXParser::parse(const char *pszFile)
 }
 void CCSAXParser::startElement(void *ctx, const char *name, const char **atts)
 {
-	((CCSAXParser*)(ctx))->m_pDelegator->startElement(ctx, (XML_Char)name, atts);
+	((CCSAXParser*)(ctx))->m_pDelegator->startElement(ctx, (const char*)name, (const char**)atts);
 }
 
 void CCSAXParser::endElement(void *ctx, const char *name)
 {
-	((CCSAXParser*)(ctx))->m_pDelegator->endElement(ctx, (XML_Char)name);
+	((CCSAXParser*)(ctx))->m_pDelegator->endElement(ctx, (const char*)name);
 }
 void CCSAXParser::textHandler(void *ctx, const char *name, int len)
 {
-	((CCSAXParser*)(ctx))->m_pDelegator->textHandler(ctx, (XML_Char)name, len);
+	((CCSAXParser*)(ctx))->m_pDelegator->textHandler(ctx, (const char*)name, len);
 }
 void CCSAXParser::setDelegator(CCSAXDelegator* pDelegator)
 {
