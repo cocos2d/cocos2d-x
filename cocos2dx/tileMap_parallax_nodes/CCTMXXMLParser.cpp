@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "support/base64.h"
 #include "platform/platform.h"
 
+/*
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 	#include "expat.h"
 #else
@@ -41,6 +42,7 @@ THE SOFTWARE.
 	#include <libxml/xmlmemory.h>
 	#include "CCLibxml2.h"
 #endf
+*/
 
 namespace cocos2d {
 
@@ -220,57 +222,21 @@ namespace cocos2d {
 
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 	{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 		CCSAXParser parser;
-		parser.init("UTF-8");
-		parser.setDelegator(this);
-		parser.parse(xmlFilename);
-		return true;
-#else
-        FileData data;
-        unsigned long size = 0;
-        char *pBuffer = (char*) data.getFileData(xmlFilename, "r", &size);
-
-        if (!pBuffer)
-        {
-            return false;
-        }
-
-		/*
-		* this initialize the library and check potential ABI mismatches
-		* between the version it was compiled for and the actual shared
-		* library used.
-		*/
-		LIBXML_TEST_VERSION
-			xmlSAXHandler saxHandler;
-		memset( &saxHandler, 0, sizeof(saxHandler) );
-		// Using xmlSAXVersion( &saxHandler, 2 ) generate crash as it sets plenty of other pointers...
-		saxHandler.initialized = XML_SAX2_MAGIC;  // so we do this to force parsing as SAX2.
-		saxHandler.startElement = &tmx_startElement;
-		saxHandler.endElement = &tmx_endElement;
-		saxHandler.characters = &tmx_characters;
 		
-		int result = xmlSAXUserParseMemory( &saxHandler, this, pBuffer, size );
-		if ( result != 0 )
+		if (false == parser.init("UTF-8") )
 		{
 			return false;
 		}
-		/*
-		* Cleanup function for the XML library.
-		*/
-		xmlCleanupParser();
-		/*
-		* this is to debug memory for regression tests
-		*/
-		xmlMemoryDump();
+		
+		parser.setDelegator(this);
 
-		return true;
-#endif		
+		return parser.parse(xmlFilename);;	
 	}
 
 
 	// the XML parser calls here with all the elements
-	void CCTMXMapInfo::startElement(const char *name, const char **atts)
+	void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 	{	
 		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
@@ -550,7 +516,7 @@ namespace cocos2d {
 		}
 	}
 
-	void CCTMXMapInfo::endElement(const char *name)
+	void CCTMXMapInfo::endElement(void *ctx, const char *name)
 	{
 		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
@@ -617,7 +583,7 @@ namespace cocos2d {
 		}
 	}
 	
-	void CCTMXMapInfo::textHandler(const char *ch, int len)
+	void CCTMXMapInfo::textHandler(void *ctx, const char *ch, int len)
 	{
 		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string pText((char*)ch,0,len);
@@ -631,5 +597,3 @@ namespace cocos2d {
 	}
 
 }//namespace cocos2d
-
-#endif
