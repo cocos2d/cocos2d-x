@@ -53,6 +53,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCAutoreleasePool.o \
 	$(OBJECTS_DIR)/CCData.o \
 	$(OBJECTS_DIR)/CCGeometry.o \
+	$(OBJECTS_DIR)/CCNS.o \
 	$(OBJECTS_DIR)/CCObject.o \
 	$(OBJECTS_DIR)/CCSet.o \
 	$(OBJECTS_DIR)/CCZone.o \
@@ -94,7 +95,6 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCApplication_wophone.o \
 	$(OBJECTS_DIR)/CCEGLView_wophone.o \
 	$(OBJECTS_DIR)/CCFileUtils_wophone.o \
-	$(OBJECTS_DIR)/CCNS_wophone.o \
 	$(OBJECTS_DIR)/CCAnimation.o \
 	$(OBJECTS_DIR)/CCAnimationCache.o \
 	$(OBJECTS_DIR)/CCSprite.o \
@@ -203,6 +203,9 @@ $(OBJECTS_DIR)/CCData.o : ../cocoa/CCData.cpp
 
 $(OBJECTS_DIR)/CCGeometry.o : ../cocoa/CCGeometry.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGeometry.o ../cocoa/CCGeometry.cpp
+
+$(OBJECTS_DIR)/CCNS.o : ../cocoa/CCNS.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNS.o ../cocoa/CCNS.cpp
 
 $(OBJECTS_DIR)/CCObject.o : ../cocoa/CCObject.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCObject.o ../cocoa/CCObject.cpp
@@ -326,9 +329,6 @@ $(OBJECTS_DIR)/CCEGLView_wophone.o : ../platform/wophone/CCEGLView_wophone.cpp
 
 $(OBJECTS_DIR)/CCFileUtils_wophone.o : ../platform/wophone/CCFileUtils_wophone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCFileUtils_wophone.o ../platform/wophone/CCFileUtils_wophone.cpp
-
-$(OBJECTS_DIR)/CCNS_wophone.o : ../platform/wophone/CCNS_wophone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNS_wophone.o ../platform/wophone/CCNS_wophone.cpp
 
 $(OBJECTS_DIR)/CCAnimation.o : ../sprite_nodes/CCAnimation.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAnimation.o ../sprite_nodes/CCAnimation.cpp
