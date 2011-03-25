@@ -57,6 +57,7 @@ platform/CCNode_mobile.cpp \
 platform/CCGL.cpp \
 platform/CCImage.cpp \
 platform/CCStdC.cpp \
+platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCCommon.cpp \
 platform/CCParticleSystemPoint_mobile.cpp \
@@ -118,22 +119,22 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/third_party/android/skia/xml
                     
 #it is used for ndk-r4
-LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/third_party/android/libraries \
-                -lGLESv1_CM -llog -lz \
-                -lpng \
-                -lxml2 \
-                -ljpeg \
-                -lskia
-
-# it is used for ndk-r5    
-# because the new Windows toolchain doesn't support Cygwin's drive
-# mapping (i.e /cygdrive/c/ instead of C:/)  
-#LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries) \
+# LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/third_party/android/libraries \
 #                -lGLESv1_CM -llog -lz \
 #                -lpng \
 #                -lxml2 \
 #                -ljpeg \
 #                -lskia
+
+# it is used for ndk-r5    
+# because the new Windows toolchain doesn't support Cygwin's drive
+# mapping (i.e /cygdrive/c/ instead of C:/)  
+LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries) \
+                -lGLESv1_CM -llog -lz \
+                -lpng \
+                -lxml2 \
+                -ljpeg \
+                -lskia
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
