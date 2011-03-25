@@ -804,6 +804,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\CCSAXParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCSAXParser.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\CCStdC.cpp"
 				>
 			</File>
