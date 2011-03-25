@@ -764,6 +764,8 @@
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D4F1A270133B2FE700937FFA /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F1A26F133B2FE700937FFA /* CCSAXParser.h */; };
+		D4F1A50B133B3F5F00937FFA /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */; };
 		D4F9F37E12E545ED005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F37D12E545ED005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
@@ -1654,6 +1656,8 @@
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D4F1A26F133B2FE700937FFA /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
+		D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4F9F37D12E545ED005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Res/Images/Icon.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -2712,6 +2716,8 @@
 		BF83591A13276C7700F3C033 /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */,
+				D4F1A26F133B2FE700937FFA /* CCSAXParser.h */,
 				BF83592913276C7700F3C033 /* CCAccelerometer_platform.h */,
 				BF83592A13276C7700F3C033 /* CCApplication_platform.h */,
 				BF83592B13276C7700F3C033 /* CCArchOptimalParticleSystem.h */,
@@ -3929,6 +3935,7 @@
 				BF835D6D13276C7900F3C033 /* unzip.h in Headers */,
 				BF835D6F13276C7900F3C033 /* ZipUtils.h in Headers */,
 				BF835D7C13276C7900F3C033 /* CCTouchHandler.h in Headers */,
+				D4F1A270133B2FE700937FFA /* CCSAXParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4331,6 +4338,7 @@
 				BF835D7913276C7900F3C033 /* CCTMXXMLParser.cpp in Sources */,
 				BF835D7A13276C7900F3C033 /* CCTouchDispatcher.cpp in Sources */,
 				BF835D7B13276C7900F3C033 /* CCTouchHandler.cpp in Sources */,
+				D4F1A50B133B3F5F00937FFA /* CCSAXParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

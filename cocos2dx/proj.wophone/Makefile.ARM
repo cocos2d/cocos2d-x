@@ -121,6 +121,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCTMXObjectGroup.o \
 	$(OBJECTS_DIR)/CCTMXTiledMap.o \
 	$(OBJECTS_DIR)/CCTMXXMLParser.o \
+	$(OBJECTS_DIR)/CCSAXParser.o \
 	$(OBJECTS_DIR)/CCTouchDispatcher.o \
 	$(OBJECTS_DIR)/CCTouchHandler.o
 
@@ -302,6 +303,9 @@ $(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o : ../platform/CCParticleSystemPoin
 
 $(OBJECTS_DIR)/CCStdC.o : ../platform/CCStdC.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCStdC.o ../platform/CCStdC.cpp
+
+$(OBJECTS_DIR)/CCSAXParser.o : ../platform/CCSAXParser.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSAXParser.o ../platform/CCSAXParser.cpp
 
 $(OBJECTS_DIR)/CCThread.o : ../platform/CCThread.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCThread.o ../platform/CCThread.cpp

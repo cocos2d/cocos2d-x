@@ -6,7 +6,7 @@
 
 #include "support/file_support/FileData.h"
 #include "support/zip_support/unzip.h"
-#include "CCSAXParser_airplay.h"
+#include "../CCSAXParser.h"
 #include "CCApplication.h"
 #include "CCMutableArray.h"
 
