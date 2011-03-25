@@ -148,6 +148,11 @@ files
 	"*.h"
 	"*.cpp"
 
+	[Tests/PerformanceTest]
+	("../tests/PerformanceTest")
+	"*.h"
+	"*.cpp"
+
 	[Tests/ProgressActionsTest]
 	("../tests/ProgressActionsTest")
 	"*.h"
