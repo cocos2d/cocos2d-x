@@ -146,6 +146,9 @@ void CCLog(const char * pszFormat, ...)
 
 	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
 }
+
+NS_CC_END;
+
 #endif // CC_PLATFORM_ANDROID
 /****************************************************
  * airplay
