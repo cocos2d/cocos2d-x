@@ -81,6 +81,8 @@ static TestScene* CreateTestScene(int nIdx)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 		pScene = new CocosDenshionTestScene(); break;
 #endif
+    case TEST_PERFORMANCE:
+        pScene = new PerformanceTestScene(); break;
     default:
         break;
     }
