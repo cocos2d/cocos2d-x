@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2011		Максим Аксенов 
 Copyright (c) 2009-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -24,7 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include <map>
-#include "CCTMXXMLParser.h"
+#incl
+ude "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
 #include "support/file_support/FileData.h"
