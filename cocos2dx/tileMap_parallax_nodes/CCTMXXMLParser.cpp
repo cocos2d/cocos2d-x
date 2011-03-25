@@ -25,8 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include <map>
-#incl
-ude "CCTMXXMLParser.h"
+#include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
 #include "support/file_support/FileData.h"
