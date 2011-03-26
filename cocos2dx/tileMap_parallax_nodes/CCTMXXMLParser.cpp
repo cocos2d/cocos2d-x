@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
-#include "support/file_support/FileData.h"
+#include "CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCPointExtension.h"
 #include "support/base64.h"
