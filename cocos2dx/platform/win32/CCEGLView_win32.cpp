@@ -280,6 +280,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             if (PtInRect(&m_rcViewPort, pt))
             {
                 m_bCaptured = true;
+                SetCapture(m_hWnd);
                 m_pTouch->SetTouchInfo(0, (float)(pt.x - m_rcViewPort.left) / m_fScreenScaleFactor,
                     (float)(pt.y - m_rcViewPort.top) / m_fScreenScaleFactor);
                 m_pSet->addObject(m_pTouch);
@@ -304,6 +305,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 (float)(HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
 			m_pDelegate->touchesEnded(m_pSet, NULL);
 			m_pSet->removeObject(m_pTouch);
+            ReleaseCapture();
 			m_bCaptured = false;
 		}
 		break;
