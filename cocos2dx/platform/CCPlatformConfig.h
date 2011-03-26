@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_CONFIG_H_YANGWS_20100110__
-#define __CC_CONFIG_H_YANGWS_20100110__
+#ifndef __CC_PLATFORM_CONFIG_H__
+#define __CC_PLATFORM_CONFIG_H__
 
 /**
 @file
@@ -172,8 +172,10 @@ There are config below:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 #endif  // CC_PLATFORM_WIN32
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #error cofnig
-#endif
-#endif  // __CC_CONFIG_H_YANGWS_20100110__
+#endif // CC_PLATFORM_MAC
+
+#endif  // __CC_PLATFORM_CONFIG_H__
 
