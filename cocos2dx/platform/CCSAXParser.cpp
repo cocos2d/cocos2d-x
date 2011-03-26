@@ -4,7 +4,7 @@
 #include <libxml/tree.h>
 #include <libxml/xmlmemory.h>
 #include "CCLibxml2.h"
-#include "../support/file_support/FileData.h"
+#include "CCFileUtils.h"
 
 NS_CC_BEGIN;
 

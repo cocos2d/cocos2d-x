@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCFileUtils.h"
 #include "CCImage.h"
-#include "support/file_support/FileData.h"
 
 namespace   cocos2d {
 

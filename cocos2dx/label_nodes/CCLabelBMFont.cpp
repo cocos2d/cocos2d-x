@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCPointExtension.h"
 
-#include "support/file_support/FileData.h"
+#include "CCFileUtils.h"
 #include "support/data_support/uthash.h"
 
 namespace cocos2d{
