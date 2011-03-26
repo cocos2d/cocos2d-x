@@ -50,6 +50,7 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
 platform/CCDirector_mobile.cpp \
+platform/CCFileUtils.cpp \
 platform/CCGrid_mobile.cpp \
 platform/CCLayer_mobile.cpp \
 platform/CCMenu_mobile.cpp \
@@ -65,7 +66,6 @@ platform/CCTransition_mobile.cpp \
 platform/platform.cpp \
 platform/android/CCNS_android.cpp \
 platform/android/CCEGLView_android.cpp \
-platform/android/CCFileUtils_android.cpp \
 platform/android/CCAccelerometer_android.cpp \
 platform/android/CCApplication_android.cpp \
 platform/android/Cocos2dJni.cpp \
@@ -81,7 +81,6 @@ support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
-support/file_support/FileUtils.cpp \
 support/image_support/TGAlib.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
@@ -119,22 +118,22 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/third_party/android/skia/xml
                     
 #it is used for ndk-r4
-# LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/third_party/android/libraries \
-#                -lGLESv1_CM -llog -lz \
-#                -lpng \
-#                -lxml2 \
-#                -ljpeg \
-#                -lskia
-
-# it is used for ndk-r5    
-# because the new Windows toolchain doesn't support Cygwin's drive
-# mapping (i.e /cygdrive/c/ instead of C:/)  
-LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries) \
+LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/third_party/android/libraries \
                 -lGLESv1_CM -llog -lz \
                 -lpng \
                 -lxml2 \
                 -ljpeg \
                 -lskia
+
+# it is used for ndk-r5    
+# because the new Windows toolchain doesn't support Cygwin's drive
+# mapping (i.e /cygdrive/c/ instead of C:/)  
+# LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries) \
+#                 -lGLESv1_CM -llog -lz \
+#                 -lpng \
+#                 -lxml2 \
+#                 -ljpeg \
+#                 -lskia
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API

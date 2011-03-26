@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include "CCSAXParser.h"
 #include "support/zip_support/unzip.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+
 NS_CC_BEGIN;
 
 typedef enum 
@@ -245,3 +247,5 @@ NS_CC_END;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtils_android.cpp"
 #endif
+
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)

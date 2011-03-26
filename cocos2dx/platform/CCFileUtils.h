@@ -76,7 +76,6 @@ public:
     /**
     @brief  Set the ResourcePath,we will find resource in this path
     @param pszResourcePath  The absolute resource path
-    @warning it's only implement on win32 and android
     */
     static void setResourcePath(const char *pszResourcePath);
 
@@ -102,6 +101,11 @@ public:
     ///////////////////////////////////////////////////
     static const char* getResourcePath(void);
     static void setRelativePath(const char* pszRelativePath);
+
+    ///////////////////////////////////////////////////
+    // interfaces on ios
+    ///////////////////////////////////////////////////
+    int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 };
 
 class FileData
