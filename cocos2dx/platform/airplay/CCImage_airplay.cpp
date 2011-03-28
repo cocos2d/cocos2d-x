@@ -47,10 +47,16 @@ CCImage::CCImage()
 : m_nWidth(0)
 , m_nHeight(0)
 , m_nBitsPerComponent(0)
+, m_pData(0)
 , m_bHasAlpha(false)
 , m_bPreMulti(false)
 {
 	
+}
+
+CCImage::~CCImage()
+{
+    CC_SAFE_DELETE_ARRAY(m_pData);
 }
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
@@ -175,7 +181,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 	imageSource.size    = nDatalen;
 	imageSource.offset  = 0;
 	
-	m_pData.reset(new ccxByte[m_nHeight * m_nWidth * bytesPerComponent]);
+	m_pData = new unsigned char[m_nHeight * m_nWidth * bytesPerComponent];
 	
 	unsigned int bytesPerRow = m_nWidth * bytesPerComponent;
 
@@ -184,7 +190,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 		unsigned char *src = NULL;
 		src = (unsigned char *)image->GetTexels();
 		
-		unsigned char *tmp = (unsigned char *) m_pData.get();
+		unsigned char *tmp = (unsigned char *) m_pData;
 		
 		for(unsigned int i = 0; i < m_nHeight*bytesPerRow; i += bytesPerComponent)
 		{
@@ -199,7 +205,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 	{
 		for (int j = 0; j < (m_nHeight); ++j)
 		{
-			memcpy(m_pData.get() + j * bytesPerRow, image->GetTexels()+j * bytesPerRow, bytesPerRow);
+			memcpy(m_pData + j * bytesPerRow, image->GetTexels()+j * bytesPerRow, bytesPerRow);
 			
 		}
 	}
