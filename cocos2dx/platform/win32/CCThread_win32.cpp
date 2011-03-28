@@ -46,6 +46,7 @@ CCXLock::CCXLock()
 
 CCXLock::~CCXLock()
 {
+    CC_SAFE_DELETE(m_pImp);
 }
 
 void CCXLock::lock()
