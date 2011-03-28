@@ -128,11 +128,11 @@ namespace   cocos2d {
     case kCCTexture2DPixelFormat_RGB5A1:
     case kCCTexture2DPixelFormat_RGB565:
     case kCCTexture2DPixelFormat_A8:
-        vt->data = new ccxByte[w * h * 4];
+        vt->data = new unsigned char[w * h * 4];
         memcpy(vt->data, d, w * h * 4);
         break;    
     case kCCTexture2DPixelFormat_RGB888:
-        vt->data = new ccxByte[w * h * 3];
+        vt->data = new unsigned char[w * h * 3];
         memcpy(vt->data, d, w * h * 3);
         break;
             }
