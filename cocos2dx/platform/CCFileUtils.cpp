@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "CCFileUtils.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+
 #include <stack>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
@@ -32,8 +34,6 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "CCSAXParser.h"
 #include "support/zip_support/unzip.h"
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 
 NS_CC_BEGIN;
 

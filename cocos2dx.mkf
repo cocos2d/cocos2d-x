@@ -116,11 +116,6 @@ files
 	("cocos2dx/support/data_support")
 	[support/data_support]
 	"*.h"
-
-	("cocos2dx/support/file_support")
-	[support/file_support]
-	"*.h"
-	"*.cpp"
 	
 	("cocos2dx/support/image_support")
 	[support/image_support]
