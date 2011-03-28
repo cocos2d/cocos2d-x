@@ -15,7 +15,6 @@
 #endif
 
 #include "ioapi.h"
-#include "CCCommon.h"
 
 namespace cocos2d {
 

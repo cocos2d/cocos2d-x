@@ -4,7 +4,6 @@
 #include "expat.h"
 #include "CCString.h"
 
-#include "support/file_support/FileData.h"
 #include "support/zip_support/unzip.h"
 #include "../CCSAXParser.h"
 #include "CCApplication.h"
@@ -219,5 +218,28 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 	
 	return (unsigned char*)pDataToBeReadBinary;
 }
+
+std::string& CCFileUtils::ccRemoveHDSuffixFromFile(std::string& path)
+{
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+    if( CC_CONTENT_SCALE_FACTOR() == 2 )
+    {
+        std::string::size_type pos = path.rfind("/") + 1; // the begin index of last part of path
+
+        std::string::size_type suffixPos = path.rfind(CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+        if (std::string::npos != suffixPos && suffixPos > pos)
+        {
+            CCLog("cocos2d: FilePath(%s) contains suffix(%s), remove it.", path.c_str(),
+                CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+            path.replace(suffixPos, strlen(CC_RETINA_DISPLAY_FILENAME_SUFFIX), "");
+        }
+    }
+
+#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
+
+    return path;
+}
+
 NS_CC_END; 
 
