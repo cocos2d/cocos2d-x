@@ -103,6 +103,9 @@
     <Filter Include="classes\tests\CocosDenshionTest">
       <UniqueIdentifier>{5c7f2b12-3faa-4f4e-abef-eb69ea6ff064}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\PerformanceTest">
+      <UniqueIdentifier>{631af586-68bb-471f-9a8d-d9314cf221db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -278,6 +281,24 @@
     </ClCompile>
     <ClCompile Include="..\tests\CocosDenshionTest\CocosDenshionTest.cpp">
       <Filter>classes\tests\CocosDenshionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.cpp">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceParticleTest.cpp">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceSpriteTest.cpp">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTest.cpp">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTextureTest.cpp">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTouchesTest.cpp">
+      <Filter>classes\tests\PerformanceTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -517,6 +538,24 @@
     </ClInclude>
     <ClInclude Include="..\tests\CocosDenshionTest\CocosDenshionTest.h">
       <Filter>classes\tests\CocosDenshionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.h">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceParticleTest.h">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceSpriteTest.h">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTest.h">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTextureTest.h">
+      <Filter>classes\tests\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTouchesTest.h">
+      <Filter>classes\tests\PerformanceTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

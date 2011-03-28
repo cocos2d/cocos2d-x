@@ -332,6 +332,9 @@
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
+    <ClCompile Include="..\platform\CCSAXParser.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\effects\CCGrabber.h">
@@ -698,5 +701,8 @@
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\CCConfiguration.h" />
+    <ClInclude Include="..\platform\CCSAXParser.h">
+      <Filter>platform</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
