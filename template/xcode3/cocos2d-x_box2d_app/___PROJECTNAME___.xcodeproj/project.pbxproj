@@ -336,6 +336,8 @@
 		BF83694413287BFE00F3C033 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF83694313287BFE00F3C033 /* libxml2.dylib */; };
 		D40823C0132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40823BE132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		D40823C1132F415F00F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823BF132F415F00F44E75 /* main.m */; };
+		D45ADFFF133F71B50099BA19 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D45ADFFD133F71B50099BA19 /* CCSAXParser.cpp */; };
+		D45AE000133F71B50099BA19 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D45ADFFE133F71B50099BA19 /* CCSAXParser.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -688,6 +690,8 @@
 		D40823BE132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		D40823BF132F415F00F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
 		D408240F132F437D00F44E75 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER____Prefix.pch"; sourceTree = "<group>"; };
+		D45ADFFD133F71B50099BA19 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
+		D45ADFFE133F71B50099BA19 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1257,6 +1261,8 @@
 				BF8364C1132878B500F3C033 /* CCParticleSystemPoint_platform.h */,
 				BF8364C2132878B500F3C033 /* CCPlatformConfig.h */,
 				BF8364C3132878B500F3C033 /* CCPlatformMacros.h */,
+				D45ADFFD133F71B50099BA19 /* CCSAXParser.cpp */,
+				D45ADFFE133F71B50099BA19 /* CCSAXParser.h */,
 				BF8364C4132878B500F3C033 /* CCStdC.cpp */,
 				BF8364C5132878B500F3C033 /* CCStdC.h */,
 				BF8364C6132878B500F3C033 /* CCThread.cpp */,
@@ -1587,6 +1593,7 @@
 				BF8368F1132878B700F3C033 /* unzip.h in Headers */,
 				BF8368F3132878B700F3C033 /* ZipUtils.h in Headers */,
 				BF836900132878B700F3C033 /* CCTouchHandler.h in Headers */,
+				D45AE000133F71B50099BA19 /* CCSAXParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1825,6 +1832,7 @@
 				BF8368FE132878B700F3C033 /* CCTouchDispatcher.cpp in Sources */,
 				BF8368FF132878B700F3C033 /* CCTouchHandler.cpp in Sources */,
 				BF76375F13338AA9009E0E50 /* CCCamera.cpp in Sources */,
+				D45ADFFF133F71B50099BA19 /* CCSAXParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
