@@ -34,10 +34,10 @@ THE SOFTWARE.
 #undef   QGLOBAL_H
 
 #define CC_RGB_PREMULTIPLY_APLHA(vr, vg, vb, va) \
-    (unsigned)(((unsigned)((ccxByte)(vr) * ((ccxByte)(va) + 1)) >> 8) | \
-    ((unsigned)((ccxByte)(vg) * ((ccxByte)(va) + 1) >> 8) << 8) | \
-    ((unsigned)((ccxByte)(vb) * ((ccxByte)(va) + 1) >> 8) << 16) | \
-    ((unsigned)(ccxByte)(va) << 24))
+    (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
+    ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
+    ((unsigned)((unsigned char)(vb) * ((unsigned char)(va) + 1) >> 8) << 16) | \
+    ((unsigned)(unsigned char)(va) << 24))
 
 typedef struct 
 {
@@ -73,10 +73,16 @@ CCImage::CCImage()
 : m_nWidth(0)
 , m_nHeight(0)
 , m_nBitsPerComponent(0)
+, m_pData(0)
 , m_bHasAlpha(false)
 , m_bPreMulti(false)
 {
 
+}
+
+CCImage::~CCImage()
+{
+    CC_SAFE_DELETE_ARRAY(m_pData);
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
@@ -167,73 +173,79 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
     struct jpeg_decompress_struct cinfo;
     struct jpeg_error_mgr jerr;
     /* libjpeg data structure for storing one row, that is, scanline of an image */
-    JSAMPROW row_pointer[1];
-
+    JSAMPROW row_pointer[1] = {0};
     unsigned long location = 0;
     unsigned int i = 0;
 
-    /* here we set up the standard libjpeg error handler */
-    cinfo.err = jpeg_std_error( &jerr );
-
-    /* setup decompression process and source, then read JPEG header */
-    jpeg_create_decompress( &cinfo );
-
-    /* this makes the library read from infile */
-    jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
-
-    /* reading the image header which contains image information */
-    jpeg_read_header( &cinfo, true );
-
-    // we only support RGB or grayscale
-    if (cinfo.jpeg_color_space != JCS_RGB)
+    bool bRet = false;
+    do 
     {
-        if (cinfo.jpeg_color_space == JCS_GRAYSCALE || cinfo.jpeg_color_space == JCS_YCbCr)
+        /* here we set up the standard libjpeg error handler */
+        cinfo.err = jpeg_std_error( &jerr );
+
+        /* setup decompression process and source, then read JPEG header */
+        jpeg_create_decompress( &cinfo );
+
+        /* this makes the library read from infile */
+        jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
+
+        /* reading the image header which contains image information */
+        jpeg_read_header( &cinfo, true );
+
+        // we only support RGB or grayscale
+        if (cinfo.jpeg_color_space != JCS_RGB)
         {
-            cinfo.out_color_space = JCS_RGB;
+            if (cinfo.jpeg_color_space == JCS_GRAYSCALE || cinfo.jpeg_color_space == JCS_YCbCr)
+            {
+                cinfo.out_color_space = JCS_RGB;
+            }
         }
-    }
-    else
-    {
-        return false;
-    }
+        else
+        {
+            break;
+        }
 
-    /* Start decompression jpeg here */
-    jpeg_start_decompress( &cinfo );
+        /* Start decompression jpeg here */
+        jpeg_start_decompress( &cinfo );
 
-    /* init image info */
-    m_nWidth  = cinfo.image_width;
-    m_nHeight = cinfo.image_height;
-    m_bHasAlpha = false;
-    m_bPreMulti = false;
-    m_nBitsPerComponent = 8;
-    m_pData.reset(new ccxByte[cinfo.output_width*cinfo.output_height*cinfo.output_components]);
-    ccxByte * pData = m_pData.get();
+        /* init image info */
+        m_nWidth  = cinfo.image_width;
+        m_nHeight = cinfo.image_height;
+        m_bHasAlpha = false;
+        m_bPreMulti = false;
+        m_nBitsPerComponent = 8;
+        row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
+        CC_BREAK_IF(! row_pointer[0]);
 
-    /* now actually read the jpeg into the raw buffer */
-    row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
+        m_pData = new unsigned char[cinfo.output_width*cinfo.output_height*cinfo.output_components];
+        CC_BREAK_IF(! m_pData);
 
-    /* read one scan line at a time */
-    while( cinfo.output_scanline < cinfo.image_height )
-    {
-        jpeg_read_scanlines( &cinfo, row_pointer, 1 );
-        for( i=0; i<cinfo.image_width*cinfo.num_components;i++) 
-            pData[location++] = row_pointer[0][i];
-    }
+        /* now actually read the jpeg into the raw buffer */
+        /* read one scan line at a time */
+        while( cinfo.output_scanline < cinfo.image_height )
+        {
+            jpeg_read_scanlines( &cinfo, row_pointer, 1 );
+            for( i=0; i<cinfo.image_width*cinfo.num_components;i++) 
+                m_pData[location++] = row_pointer[0][i];
+        }
 
-    /* wrap up decompression, destroy objects, free pointers and close open files */
-    jpeg_finish_decompress( &cinfo );
-    jpeg_destroy_decompress( &cinfo );
-    delete row_pointer[0];
+        jpeg_finish_decompress( &cinfo );
+        jpeg_destroy_decompress( &cinfo );
+        /* wrap up decompression, destroy objects, free pointers and close open files */        
+        bRet = true;
+    } while (0);
 
-    return true;
+    CC_SAFE_DELETE_ARRAY(row_pointer[0]);
+    return bRet;
 }
 
 bool CCImage::_initWithPngData(void * pData, int nDatalen)
 {
     bool bRet = false;
     png_byte        header[8]   = {0}; 
-    png_structp     png_ptr =   0;
+    png_structp     png_ptr     =   0;
     png_infop       info_ptr    = 0;
+    unsigned char * pImateData  = 0;
 
     do 
     {
@@ -283,14 +295,16 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         {
             bytesPerComponent = 4;
         }
-        m_pData.reset(new ccxByte[nHeight * nWidth * bytesPerComponent]);
+        pImateData = new unsigned char[nHeight * nWidth * bytesPerComponent];
+        CC_BREAK_IF(! pImateData);
+
         png_bytep * rowPointers = png_get_rows(png_ptr, info_ptr);
 
         // copy data to image info
         int bytesPerRow = nWidth * bytesPerComponent;
         if(m_bHasAlpha)
         {
-            unsigned int *tmp = (unsigned int *)m_pData.get();
+            unsigned int *tmp = (unsigned int *)pImateData;
             for(unsigned int i = 0; i < nHeight; i++)
             {
                 for(int j = 0; j < bytesPerRow; j += 4)
@@ -304,15 +318,19 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         {
             for (unsigned int j = 0; j < nHeight; ++j)
             {
-                memcpy(m_pData.get() + j * bytesPerRow, rowPointers[j], bytesPerRow);
+                memcpy(pImateData + j * bytesPerRow, rowPointers[j], bytesPerRow);
             }
         }
 
-        m_nHeight   = (ccxInt16)nHeight;
-        m_nWidth    = (ccxInt16)nWidth;
-        m_nBitsPerComponent      = nBitsPerComponent;
+        m_nBitsPerComponent = nBitsPerComponent;
+        m_nHeight   = (short)nHeight;
+        m_nWidth    = (short)nWidth;
+        m_pData     = pImateData;
+        pImateData  = 0;
         bRet        = true;
     } while (0);
+
+    CC_SAFE_DELETE_ARRAY(pImateData);
 
     if (png_ptr)
     {
