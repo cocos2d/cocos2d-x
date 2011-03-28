@@ -311,6 +311,8 @@
 		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
 		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245D132F45C200F44E75 /* HelloWorldScene.cpp */; };
+		D45AE024133F71EB0099BA19 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D45AE022133F71EB0099BA19 /* CCSAXParser.cpp */; };
+		D45AE025133F71EB0099BA19 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D45AE023133F71EB0099BA19 /* CCSAXParser.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -638,6 +640,8 @@
 		D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		D408245D132F45C200F44E75 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
 		D408245E132F45C200F44E75 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
+		D45AE022133F71EB0099BA19 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
+		D45AE023133F71EB0099BA19 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1169,6 +1173,8 @@
 				BF836A2113287D3500F3C033 /* CCPlatformConfig.h */,
 				BF836A2213287D3500F3C033 /* CCPlatformMacros.h */,
 				BF836A2313287D3500F3C033 /* CCStdC.cpp */,
+				D45AE022133F71EB0099BA19 /* CCSAXParser.cpp */,
+				D45AE023133F71EB0099BA19 /* CCSAXParser.h */,
 				BF836A2413287D3500F3C033 /* CCStdC.h */,
 				BF836A2513287D3500F3C033 /* CCThread.cpp */,
 				BF836A2613287D3500F3C033 /* CCThread.h */,

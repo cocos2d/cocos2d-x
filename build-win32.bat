@@ -28,7 +28,7 @@ if %VC_VER%==90 (
     vcbuild cocos2d-win32.vc2008.sln $ALL
 ) else if %VC_VER%==100 (
     msbuild cocos2d-win32.vc2010.sln /p:Configuration="Debug" 
-    msbuild cocos2d-win32.vs2010.sln /p:Configuration="Release"
+    msbuild cocos2d-win32.vc2010.sln /p:Configuration="Release"
 ) else (
     echo Script error.
     goto ERROR

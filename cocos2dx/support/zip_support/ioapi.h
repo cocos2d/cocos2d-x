@@ -21,6 +21,8 @@
 #ifndef _ZLIBIOAPI64_H
 #define _ZLIBIOAPI64_H
 
+#include "CCPlatformConfig.h"
+
 #if (!defined(_WIN32)) && (!defined(WIN32))
 
   // Linux needs this to support file operation on files larger then 4+GB

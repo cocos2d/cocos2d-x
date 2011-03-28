@@ -110,8 +110,9 @@ void CCAtlasNode::draw()
 	// Unneeded states: GL_COLOR_ARRAY
 	glDisableClientState(GL_COLOR_ARRAY);
 
-	glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity);
-
+    // glColor4ub isn't implement on some android devices
+	// glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity); 
+    glColor4f(((GLfloat)m_tColor.r) / 255, ((GLfloat)m_tColor.g) / 255, ((GLfloat)m_tColor.b) / 255, ((GLfloat)m_cOpacity) / 255);
 	bool newBlend = m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST;
 	if(newBlend) 
 	{
