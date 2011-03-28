@@ -2945,7 +2945,7 @@
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3037,7 +3037,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 			};
 			name = Debug;
 		};
