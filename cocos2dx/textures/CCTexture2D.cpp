@@ -128,11 +128,11 @@ namespace   cocos2d {
     case kCCTexture2DPixelFormat_RGB5A1:
     case kCCTexture2DPixelFormat_RGB565:
     case kCCTexture2DPixelFormat_A8:
-        vt->data = new ccxByte[w * h * 4];
+        vt->data = new unsigned char[w * h * 4];
         memcpy(vt->data, d, w * h * 4);
         break;    
     case kCCTexture2DPixelFormat_RGB888:
-        vt->data = new ccxByte[w * h * 3];
+        vt->data = new unsigned char[w * h * 3];
         memcpy(vt->data, d, w * h * 3);
         break;
             }
@@ -432,21 +432,21 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 // 			info = kCGImageAlphaOnly; 
 // 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
 
-			tempData = (ccxByte*)(image->getData());
+			tempData = (unsigned char*)(image->getData());
 			CCAssert(tempData != NULL, "NULL image data.");
 
 			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
 			{
-				data = new ccxByte[POTHigh * POTWide * 4];
+				data = new unsigned char[POTHigh * POTWide * 4];
 				memcpy(data, tempData, POTHigh * POTWide * 4);
 			}
 			else
 			{
-				data = new ccxByte[POTHigh * POTWide * 4];
+				data = new unsigned char[POTHigh * POTWide * 4];
 				memset(data, 0, POTHigh * POTWide * 4);
 
-				ccxByte* pPixelData = (ccxByte*) tempData;
-				ccxByte* pTargetData = (ccxByte*) data;
+				unsigned char* pPixelData = (unsigned char*) tempData;
+				unsigned char* pTargetData = (unsigned char*) data;
 
 				for(int y=0; y<image->getHeight(); ++y)
 				{
@@ -456,20 +456,20 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 
 			break;    
 		case kCCTexture2DPixelFormat_RGB888:
-			tempData = (ccxByte*)(image->getData());
+			tempData = (unsigned char*)(image->getData());
 			CCAssert(tempData != NULL, "NULL image data.");
 			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
 			{
-				data = new ccxByte[POTHigh * POTWide * 3];
+				data = new unsigned char[POTHigh * POTWide * 3];
 				memcpy(data, tempData, POTHigh * POTWide * 3);
 			}
 			else
 			{
-				data = new ccxByte[POTHigh * POTWide * 3];
+				data = new unsigned char[POTHigh * POTWide * 3];
 				memset(data, 0, POTHigh * POTWide * 3);
 
-				ccxByte* pPixelData = (ccxByte*) tempData;
-				ccxByte* pTargetData = (ccxByte*) data;
+				unsigned char* pPixelData = (unsigned char*) tempData;
+				unsigned char* pTargetData = (unsigned char*) data;
 
 				for(int y=0; y<image->getHeight(); ++y)
 				{

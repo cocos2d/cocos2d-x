@@ -58,6 +58,7 @@ CCLock::CCLock()
 
 CCLock::~CCLock()
 {
+    CC_SAFE_DELETE(m_pImp);
 }
 
 void CCLock::lock()
