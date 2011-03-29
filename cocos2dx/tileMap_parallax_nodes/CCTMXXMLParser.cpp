@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2011		Максим Аксенов 
 Copyright (c) 2009-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
@@ -23,25 +24,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <libxml/parser.h>
-#include <libxml/tree.h>
-#include <libxml/xmlmemory.h>
-#include "CCLibxml2.h"
 #include <map>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
-#include "support/file_support/FileData.h"
+#include "CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCPointExtension.h"
 #include "support/base64.h"
 #include "platform/platform.h"
 
+/*
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+	#include "expat.h"
+#else
+	#include <libxml/parser.h>
+	#include <libxml/tree.h>
+	#include <libxml/xmlmemory.h>
+	#include "CCLibxml2.h"
+#endf
+*/
+
 namespace cocos2d {
 
+	/*
 	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
 	void tmx_endElement(void *ctx, const xmlChar *name);
 	void tmx_characters(void *ctx, const xmlChar *ch, int len);
+	*/
+	
 	const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
 	{
 		if (dict)
@@ -212,51 +223,23 @@ namespace cocos2d {
 
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 	{
-        FileData data;
-        unsigned long size = 0;
-        char *pBuffer = (char*) data.getFileData(xmlFilename, "r", &size);
-
-        if (!pBuffer)
-        {
-            return false;
-        }
-
-		/*
-		* this initialize the library and check potential ABI mismatches
-		* between the version it was compiled for and the actual shared
-		* library used.
-		*/
-		LIBXML_TEST_VERSION
-			xmlSAXHandler saxHandler;
-		memset( &saxHandler, 0, sizeof(saxHandler) );
-		// Using xmlSAXVersion( &saxHandler, 2 ) generate crash as it sets plenty of other pointers...
-		saxHandler.initialized = XML_SAX2_MAGIC;  // so we do this to force parsing as SAX2.
-		saxHandler.startElement = &tmx_startElement;
-		saxHandler.endElement = &tmx_endElement;
-		saxHandler.characters = &tmx_characters;
+		CCSAXParser parser;
 		
-		int result = xmlSAXUserParseMemory( &saxHandler, this, pBuffer, size );
-		if ( result != 0 )
+		if (false == parser.init("UTF-8") )
 		{
 			return false;
 		}
-		/*
-		* Cleanup function for the XML library.
-		*/
-		xmlCleanupParser();
-		/*
-		* this is to debug memory for regression tests
-		*/
-		xmlMemoryDump();
+		
+		parser.setDelegator(this);
 
-		return true;
+		return parser.parse(xmlFilename);;	
 	}
 
 
 	// the XML parser calls here with all the elements
-	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
+	void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 	{	
-		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
+		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
 		std::map<std::string, std::string> *attributeDict = new std::map<std::string, std::string>();
 		if(atts && atts[0])
@@ -534,9 +517,9 @@ namespace cocos2d {
 		}
 	}
 
-	void tmx_endElement(void *ctx, const xmlChar *name)
+	void CCTMXMapInfo::endElement(void *ctx, const char *name)
 	{
-		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
+		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
 
 		int len = 0;
@@ -600,9 +583,10 @@ namespace cocos2d {
 			pTMXMapInfo->setParentElement(TMXPropertyNone);
 		}
 	}
-	void tmx_characters(void *ctx, const xmlChar *ch, int len)
+	
+	void CCTMXMapInfo::textHandler(void *ctx, const char *ch, int len)
 	{
-		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
+		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string pText((char*)ch,0,len);
 
 		if (pTMXMapInfo->getStoringCharacters())

@@ -106,6 +106,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceParticleTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceSpriteTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTextureTest.cpp" />
+    <ClCompile Include="..\tests\PerformanceTest\PerformanceTouchesTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\AppDelegate.cpp" />
     <ClCompile Include="..\tests\controller.cpp" />
@@ -166,6 +172,12 @@
     <ClCompile Include="..\tests\CocosDenshionTest\CocosDenshionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceNodeChildrenTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceParticleTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceSpriteTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTextureTest.h" />
+    <ClInclude Include="..\tests\PerformanceTest\PerformanceTouchesTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\AppDelegate.h" />
     <ClInclude Include="..\tests\controller.h" />

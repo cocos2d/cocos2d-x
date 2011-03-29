@@ -79,6 +79,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCParticleSystemQuad.o \
 	$(OBJECTS_DIR)/CCCommon.o \
 	$(OBJECTS_DIR)/CCDirector_mobile.o \
+	$(OBJECTS_DIR)/CCFileUtils.o \
 	$(OBJECTS_DIR)/CCGL.o \
 	$(OBJECTS_DIR)/CCGrid_mobile.o \
 	$(OBJECTS_DIR)/CCImage.o \
@@ -86,6 +87,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCMenu_mobile.o \
 	$(OBJECTS_DIR)/CCNode_mobile.o \
 	$(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o \
+	$(OBJECTS_DIR)/CCSAXParser.o \
 	$(OBJECTS_DIR)/CCStdC.o \
 	$(OBJECTS_DIR)/CCThread.o \
 	$(OBJECTS_DIR)/CCTransition_mobile.o \
@@ -94,7 +96,6 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCAccelerometer_wophone.o \
 	$(OBJECTS_DIR)/CCApplication_wophone.o \
 	$(OBJECTS_DIR)/CCEGLView_wophone.o \
-	$(OBJECTS_DIR)/CCFileUtils_wophone.o \
 	$(OBJECTS_DIR)/CCAnimation.o \
 	$(OBJECTS_DIR)/CCAnimationCache.o \
 	$(OBJECTS_DIR)/CCSprite.o \
@@ -107,7 +108,6 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCProfiling.o \
 	$(OBJECTS_DIR)/ccUtils.o \
 	$(OBJECTS_DIR)/TransformUtils.o \
-	$(OBJECTS_DIR)/FileUtils.o \
 	$(OBJECTS_DIR)/TGAlib.o \
 	$(OBJECTS_DIR)/ioapi.o \
 	$(OBJECTS_DIR)/unzip.o \
@@ -282,6 +282,9 @@ $(OBJECTS_DIR)/CCCommon.o : ../platform/CCCommon.cpp
 $(OBJECTS_DIR)/CCDirector_mobile.o : ../platform/CCDirector_mobile.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCDirector_mobile.o ../platform/CCDirector_mobile.cpp
 
+$(OBJECTS_DIR)/CCFileUtils.o : ../platform/CCFileUtils.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCFileUtils.o ../platform/CCFileUtils.cpp
+
 $(OBJECTS_DIR)/CCGL.o : ../platform/CCGL.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGL.o ../platform/CCGL.cpp
 
@@ -306,6 +309,9 @@ $(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o : ../platform/CCParticleSystemPoin
 $(OBJECTS_DIR)/CCStdC.o : ../platform/CCStdC.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCStdC.o ../platform/CCStdC.cpp
 
+$(OBJECTS_DIR)/CCSAXParser.o : ../platform/CCSAXParser.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSAXParser.o ../platform/CCSAXParser.cpp
+
 $(OBJECTS_DIR)/CCThread.o : ../platform/CCThread.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCThread.o ../platform/CCThread.cpp
 
@@ -326,9 +332,6 @@ $(OBJECTS_DIR)/CCApplication_wophone.o : ../platform/wophone/CCApplication_wopho
 
 $(OBJECTS_DIR)/CCEGLView_wophone.o : ../platform/wophone/CCEGLView_wophone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCEGLView_wophone.o ../platform/wophone/CCEGLView_wophone.cpp
-
-$(OBJECTS_DIR)/CCFileUtils_wophone.o : ../platform/wophone/CCFileUtils_wophone.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCFileUtils_wophone.o ../platform/wophone/CCFileUtils_wophone.cpp
 
 $(OBJECTS_DIR)/CCAnimation.o : ../sprite_nodes/CCAnimation.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAnimation.o ../sprite_nodes/CCAnimation.cpp
@@ -365,9 +368,6 @@ $(OBJECTS_DIR)/ccUtils.o : ../support/ccUtils.cpp
 
 $(OBJECTS_DIR)/TransformUtils.o : ../support/TransformUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TransformUtils.o ../support/TransformUtils.cpp
-
-$(OBJECTS_DIR)/FileUtils.o : ../support/file_support/FileUtils.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/FileUtils.o ../support/file_support/FileUtils.cpp
 
 $(OBJECTS_DIR)/TGAlib.o : ../support/image_support/TGAlib.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TGAlib.o ../support/image_support/TGAlib.cpp
