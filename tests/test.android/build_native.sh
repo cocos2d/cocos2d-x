@@ -1,6 +1,6 @@
 # set params
-ANDROID_NDK_ROOT=/cygdrive/e/android-ndk-r4-crystax
-COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
+ANDROID_NDK_ROOT=$ANDROID_NDK_ROOT
+COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x.yangws
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
 # make sure assets is exist

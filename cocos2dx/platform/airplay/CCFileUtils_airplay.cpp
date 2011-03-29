@@ -226,8 +226,10 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 	s3eFile* pFile = s3eFileOpen(pszFileName, pszMode);
 	
-
-	IwAssertMsg(GAME, pFile, ("Open file %s Failed. s3eFileError Code : %i", pszFileName, s3eFileGetError()));
+    if (! pFile && getIsPopupNotify())
+    {    
+        IwAssertMsg(GAME, pFile, ("Open file %s Failed. s3eFileError Code : %i", pszFileName, s3eFileGetError()));
+    }
 	
 	int32 fileSize = s3eFileGetSize(pFile);
 	*pSize=fileSize;
@@ -262,6 +264,21 @@ std::string& CCFileUtils::ccRemoveHDSuffixFromFile(std::string& path)
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED
 
     return path;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Notification support when getFileData from a invalid file
+///////////////////////////////////////////////////////////////////////////////
+static bool s_bPopupNotify = true;
+
+void CCFileUtils::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool CCFileUtils::getIsPopupNotify()
+{
+    return s_bPopupNotify;
 }
 
 NS_CC_END; 
