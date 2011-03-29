@@ -109,7 +109,7 @@ public:
 	inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
 	/** returns whether or not the texture rectangle is rotated */
-	inline bool isTextureRectTotated(void) { return m_bRectRotated; }
+	inline bool isTextureRectRotated(void) { return m_bRectRotated; }
 	
 	/** Set the index used on the TextureAtlas. */
 	inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }

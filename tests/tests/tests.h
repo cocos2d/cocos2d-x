@@ -19,7 +19,6 @@
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
 #include "TileMapTest/TileMapTest.h"
-#include "ChipmunkTest/cocos2dChipmunkDemo.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
 #include "SpriteTest/SpriteTest.h"
@@ -31,8 +30,13 @@
 #include "HiResTest/HiResTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
-#include "CocosDenshionTest/CocosDenshionTest.h"
+#include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#include "ChipmunkTest/cocos2dChipmunkDemo.h"
+#include "CocosDenshionTest/CocosDenshionTest.h"
+#endif
 
 enum
 {
@@ -67,6 +71,7 @@ enum
     TEST_ACCELEROMRTER,
     TEST_KEYPAD,
 	TEST_COCOSDENSHION,
+    TEST_PERFORMANCE,
     TEST_ZWOPTEX,
 
     TESTS_COUNT,
@@ -104,6 +109,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "Accelerometer",
     "KeypadTest",
 	"CocosDenshionTest",
+    "PerformanceTest",
     "ZwoptexTest"
 };
 

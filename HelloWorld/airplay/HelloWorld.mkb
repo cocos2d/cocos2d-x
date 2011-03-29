@@ -1,0 +1,32 @@
+options
+{
+	s3e-data-dir="../Resource"
+
+}
+
+includepaths
+{
+	..
+}
+subprojects
+{
+	IwGL
+	Box2D
+	cocos2dx
+}
+
+
+files
+{
+	[Main]
+	
+	Main.h
+	Main.cpp
+	(../)
+	AppDelegate.h
+	AppDelegate.cpp
+	HelloWorldScene.h
+	HelloWorldScene.cpp
+}
+
+

@@ -1,54 +1,54 @@
 cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
  [all platforms]
-    400     Bug         typo, rename CCamera.cpp to CCCamera
-	403     Feature     rename cocos2d::UIEvent to cocos2d::CCEvent, to avoid class name conflict on ios
-	405		Bug         CCConfiguration::checkForGLExtension(const string&) sometimes may crashes
-	407     Bug         replace "CCGL.h" with "CCGL.h" in CCCamera.cpp, for case-sensitive systems
-	408     Bug         memory leak in CCImage::_initWithPngData
-    409     Feature     rename cocos2d::NSArray to cocos2d::CCArray, to avoid the conflict on ios
-    418     Feature     add copyright of cocos2d-iphone original authors to each file
-	423     Bug         fix compilation warnings when COCOS2D_DEBUG == 2
+    400    Bug        typo, rename CCamera.cpp to CCCamera
+    403    Feature    rename cocos2d::UIEvent to cocos2d::CCEvent, to avoid class name conflict on ios
+    405	   Bug        CCConfiguration::checkForGLExtension(const string&) sometimes may crashes
+    407    Bug        replace "CCGL.h" with "CCGL.h" in CCCamera.cpp, for case-sensitive systems
+    408    Bug        memory leak in CCImage::_initWithPngData
+    409    Feature    rename cocos2d::NSArray to cocos2d::CCArray, to avoid the conflict on ios
+    418    Feature    add copyright of cocos2d-iphone original authors to each file
+    423    Bug        fix compilation warnings when COCOS2D_DEBUG == 2
  [ios]
-    404     Bug         HiResTest isnot prerfect on HVGA/Retina yet
-	410     Bug         xcode3 template, cannot find libxml from header searh paths in release build
-	419     Bug         test case TMXIsoVertexZ in TileMapTst has wrong effect on ios
+    404    Bug        HiResTest isnot prerfect on HVGA/Retina yet
+    410    Bug        xcode3 template, cannot find libxml from header searh paths in release build
+    419    Bug        test case TMXIsoVertexZ in TileMapTst has wrong effect on ios
  [android]
-    399     Bug         HelloWorld crashes when the screen is touched
-    405     Bug         CocosDenshion test, BGM isn't paused after HOME key tapped
+    399    Bug        HelloWorld crashes when the screen is touched
+    405    Bug        CocosDenshion test, BGM isn't paused after HOME key tapped
  [win32]
-	395     Bug         make AppDelegate.cpp created by VS wizard portable without any modification
-    401     Bug         VisualStudio template for 2010 OutputDir errors
+    395    Bug        make AppDelegate.cpp created by VS wizard portable without any modification
+    401    Bug        VisualStudio template for 2010 OutputDir errors
 
 cocos2d-0.99.5-x-0.8.0 @ Mar.15,2011
  [all platforms]
-	316 	Feature		Resolution auto adjustment, auto scale HVGA resource to WVGA or any other resolutions
-	336 	Refactor	refactor platform porting layer
-	253 	Bug         xml parser sometimes crashes
-	375 	Feature		Rename NS,CG,UI prefix classes/definitions to CC prefix, avoid the crash at ios dev
-	332 	Feature		upgrade tests from 0.99.4 to 0.99.5
+    316    Feature    Resolution auto adjustment, auto scale HVGA resource to WVGA or any other resolutions
+    336    Refactor   refactor platform porting layer
+    253    Bug        xml parser sometimes crashes
+    375    Feature    Rename NS,CG,UI prefix classes/definitions to CC prefix, avoid the crash at ios dev
+    332    Feature    upgrade tests from 0.99.4 to 0.99.5
  [ios]
- 	363 	Bug         CCLabelTTF can't treat line breaks and wrapping correctly.
-	351 	Feature		CCLabelTTF cannot automatic line break on iphone
-	352 	Bug         ccRemoveHDSuffixFromFile & CCFileUtils::getDoubleResolutionImage isnot work
-	392 	Bug         border of sprite debug draw isn't scaled if enableRetinaDisplay(true)
-	385 	Feature		implement ccos2d::CCLog
-	388 	Feature		update the template for iOS
+    363    Bug        CCLabelTTF can't treat line breaks and wrapping correctly.
+    351    Feature    CCLabelTTF cannot automatic line break on iphone
+    352    Bug        ccRemoveHDSuffixFromFile & CCFileUtils::getDoubleResolutionImage isnot work
+    392    Bug        border of sprite debug draw isn't scaled if enableRetinaDisplay(true)
+    385    Feature    implement ccos2d::CCLog
+    388    Feature    update the template for iOS
  [android]
-	247 	Feature		support multitouch
-	242 	Feature		support accelerometer on android
- 	353 	Feature		support jpg on android
-	344 	Feature		add APP_ABI := armeabi armeabi-v7a to improve the performance on some devices
-	356 	Bug         CCLabelTTF::initWithString crashed
+    247    Feature    support multitouch
+    242    Feature    support accelerometer on android
+    353    Feature    support jpg on android
+    344    Feature    add APP_ABI := armeabi armeabi-v7a to improve the performance on some devices
+    356    Bug        CCLabelTTF::initWithString crashed
  [wophone]
-	386 	Bug         resolve the compile conflict on wophone sdk
-	383 	Bug         The approach which handle left soft-key clicked is not work
-	377 	Feature		Replace the word "uphone" with "wophone"
-	357 	Bug         CCLabelTTF doesn't support words contain line breaks.
-	348 	Bug         CCLabelTTF blur if color = white and fontSize < 24
+    386    Bug        resolve the compile conflict on wophone sdk
+    383    Bug        The approach which handle left soft-key clicked is not work
+    377    Feature    Replace the word "uphone" with "wophone"
+    357    Bug        CCLabelTTF doesn't support words contain line breaks.
+    348    Bug        CCLabelTTF blur if color = white and fontSize < 24
  [win32]
-	373 	Feature		Disable PVRFrame window when cocos2d running
-	355 	Bug         CCLabelTTF doesn't support line breaks and wrapping words
-	300 	Feature		wizard for Visual C++ 2008 Express & VS2010 Express/Professional
+    373    Feature    Disable PVRFrame window when cocos2d running
+    355    Bug        CCLabelTTF doesn't support line breaks and wrapping words
+    300    Feature    wizard for Visual C++ 2008 Express & VS2010 Express/Professional
 	
 
 

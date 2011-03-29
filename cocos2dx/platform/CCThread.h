@@ -46,7 +46,7 @@ public:
 
 private:
     class Impl;
-    ccxScopedPtr<CCLock::Impl> m_pImp;
+    CCLock::Impl * m_pImp;
 };
 #else   // CC_SUPPORT_MULTITHREAD
 

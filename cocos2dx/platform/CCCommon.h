@@ -29,16 +29,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-// [u]int[8|16|32|64]
-// char
-typedef unsigned char       ccxByte;
-typedef signed short        ccxInt16;
-typedef unsigned short      ccxUInt16;
-// int
-// unsigned
-typedef long long           ccxInt64;
-typedef unsigned long long  ccxUInt64;	
-
 /// The max length of CCLog message.
 static const int kMaxLogLen = 255;
 
@@ -46,66 +36,6 @@ static const int kMaxLogLen = 255;
 @brief	Output Debug message.
 */
 void CC_DLL CCLog(const char * pszFormat, ...);
-
-struct ccxNullDeleter       { template< class TPTR > void operator()(TPTR ) {} };
-struct ccxNewDeleter        { template< class TPTR > void operator()(TPTR p) { delete p; } };
-struct ccxNewArrayDeleter   { template< class TPTR > void operator()(TPTR p) { delete[] p; } };
-
-/**
-@brief	A simple scoped pointer.
-*/
-template < class T, class D = ccxNewDeleter >
-class CC_DLL ccxScopedPtr   // noncopyable
-    : private D
-{
-public:
-    explicit ccxScopedPtr(T * p = 0): m_ptr(p) {}
-    ~ccxScopedPtr()                     { if (m_ptr) (*static_cast<D*>(this))(m_ptr); }
-
-    void reset(T * p = 0)               { ccxScopedPtr< T >(p).swap(*this); }
-    T *  get() const                    { return m_ptr; }
-    void swap(ccxScopedPtr & b)         { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr   = tmp; }
-
-    T & operator*() const               { return * m_ptr; }
-    T * operator->() const              { return m_ptr; }
-    operator bool () const              { return m_ptr != 0; }
-
-private:
-    ccxScopedPtr(const ccxScopedPtr&);
-    ccxScopedPtr & operator=(const ccxScopedPtr&);
-
-    void operator==(const ccxScopedPtr& ) const;
-    void operator!=(const ccxScopedPtr& ) const;
-
-    T * m_ptr;
-};
-/**
-@brief	A simple scoped point for array.
-*/
-template< class T, class D = ccxNewArrayDeleter >
-class CC_DLL ccxScopedArray // noncopyable
-    : private D
-{
-public:
-    explicit ccxScopedArray( T * p = 0 ) : m_ptr( p ) {}
-    ~ccxScopedArray()                   { if (m_ptr) (*static_cast<D*>(this))(m_ptr); }
-
-    void reset(T * p = 0)               { ccxScopedArray<T>(p).swap(*this); }
-    T *  get() const                    { return m_ptr; }
-    void swap(ccxScopedArray & b)       { T * tmp = b.m_ptr; b.m_ptr = m_ptr; m_ptr = tmp; }
-
-    T & operator[](int i) const         { CC_ASSERT(m_ptr && i >= 0); return m_ptr[i]; }
-   operator bool () const              { return m_ptr != 0; }
-
-private:
-    ccxScopedArray(ccxScopedArray const &);
-    ccxScopedArray & operator=(ccxScopedArray const &);
-
-    void operator==( ccxScopedArray const& ) const;
-    void operator!=( ccxScopedArray const& ) const;
-
-    T * m_ptr;
-};
 
 NS_CC_END;
 

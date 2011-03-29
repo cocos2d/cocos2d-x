@@ -376,7 +376,9 @@ void CCRibbonSegment::draw(float curTime, float fadeTime, ccColor4B color)
 		if (curTime == 0)
 		{
 			// no alpha over time, so just set the color
-			glColor4ub(r,g,b,a);
+            // glColor4ub isn't implement on some android devices
+			// glColor4ub(r,g,b,a);
+            glColor4f(((GLfloat)r) / 255, ((GLfloat)g) / 255, ((GLfloat)b) / 255, ((GLfloat)a) / 255);
 		}
 		else
 		{

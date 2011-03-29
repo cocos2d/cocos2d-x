@@ -127,7 +127,11 @@ Disabled by default on iPhone with ARMv6 processors.
 
 @since v0.99.5
 */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#define CC_USES_VBO 0
+#else
 #define CC_USES_VBO 1
+#endif
 
 /** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
  If enabled, CCNode will transform the nodes using a cached Affine matrix.

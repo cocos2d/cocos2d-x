@@ -168,6 +168,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\platform\CCMenu_mobile.cpp" />
     <ClCompile Include="..\platform\CCNode_mobile.cpp" />
     <ClCompile Include="..\platform\CCParticleSystemPoint_mobile.cpp" />
+    <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCStdC.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
     <ClCompile Include="..\platform\CCTransition_mobile.cpp" />
@@ -210,7 +211,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\event_dispatcher\CCEventDispatcher.cpp" />
     <ClCompile Include="..\event_dispatcher\CCKeyboardEventDelegate.cpp" />
     <ClCompile Include="..\event_dispatcher\CCMouseEventDelegate.cpp" />
-    <ClCompile Include="..\CCamera.cpp" />
+    <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />
@@ -318,6 +319,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\CCParticleSystemPoint_platform.h" />
     <ClInclude Include="..\platform\CCPlatformConfig.h" />
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
+    <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCStdC.h" />
     <ClInclude Include="..\platform\CCThread.h" />
     <ClInclude Include="..\platform\platform.h" />

@@ -212,6 +212,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCNS.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCNS.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCObject.cpp"
 				>
 			</File>
@@ -397,10 +405,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCEventDispatcher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCFileUtils.h"
 				>
 			</File>
 			<File
@@ -624,10 +628,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\FileUtils.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\selector_protocol.h"
 				>
 			</File>
@@ -740,7 +740,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCFileUtils_platform.h"
+				RelativePath="..\platform\CCFileUtils.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCFileUtils.h"
 				>
 			</File>
 			<File
@@ -780,10 +784,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCNS.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
 				>
 			</File>
@@ -801,6 +801,14 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCPlatformMacros.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCSAXParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCSAXParser.h"
 				>
 			</File>
 			<File
@@ -852,18 +860,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\win32\CCEGLView_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCFileUtils_win32.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCFileUtils_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCNS_win32.cpp"
 					>
 				</File>
 			</Filter>
@@ -992,18 +988,6 @@
 				</File>
 				<File
 					RelativePath="..\support\zip_support\ZipUtils.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="file_support"
-				>
-				<File
-					RelativePath="..\support\file_support\FileData.h"
-					>
-				</File>
-				<File
-					RelativePath="..\support\file_support\FileUtils.cpp"
 					>
 				</File>
 			</Filter>

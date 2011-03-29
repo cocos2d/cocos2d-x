@@ -22,179 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <string>
-#include <stack>
-#include <libxml/parser.h>
-#include <libxml/tree.h>
-#include <libxml/xmlmemory.h>
+
 #include <TG3.h>
-#include "CCString.h"
-#include "CCFileUtils_wophone.h"
 #include "CCApplication.h"
 
-#include "support/file_support/FileData.h"
-#include "support/zip_support/unzip.h"
-
-namespace cocos2d {
-
-void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
-void plist_endElement(void *ctx, const xmlChar *name);
-void plist_characters(void *ctx, const xmlChar *ch, int len);
-
-typedef enum 
-{
-	SAX_NONE = 0,
-	SAX_KEY,
-	SAX_DICT,
-	SAX_INT,
-	SAX_REAL,
-	SAX_STRING
-}CCSAXState;
-
-class CCDictMaker
-{
-public:
-	CCDictionary<std::string, CCObject*> *m_pRootDict;
-	CCDictionary<std::string, CCObject*> *m_pCurDict;
-	std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
-	std::string m_sCurKey;///< parsed key
-	CCSAXState m_tState;
-public:
-	CCDictMaker()
-	{
-		m_pRootDict = NULL;
-		m_pCurDict = NULL;
-		m_tState = SAX_NONE;
-	}
-	~CCDictMaker()
-	{
-	}
-	CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
-	{
-        FileData data;
-        unsigned long size = 0;
-        char *pBuffer = (char *) data.getFileData(pFileName, "r", &size);
-
-        if (!pBuffer)
-        {
-            return NULL;
-        }
-
-		/*
-		* this initialize the library and check potential ABI mismatches
-		* between the version it was compiled for and the actual shared
-		* library used.
-		*/
-		LIBXML_TEST_VERSION
-		xmlSAXHandler saxHandler;
-		memset( &saxHandler, 0, sizeof(saxHandler) );
-		// Using xmlSAXVersion( &saxHandler, 2 ) generate crash as it sets plenty of other pointers...
-		saxHandler.initialized = XML_SAX2_MAGIC;  // so we do this to force parsing as SAX2.
- 		saxHandler.startElement = &plist_startElement;
- 		saxHandler.endElement = &plist_endElement;
- 		saxHandler.characters = &plist_characters;
-
-		int result = xmlSAXUserParseMemory( &saxHandler, this, pBuffer, size );
-		if ( result != 0 )
-		{
-			return NULL;
-		}
-		/*
-		* Cleanup function for the XML library.
-		*/
-		xmlCleanupParser();
-		/*
-		* this is to debug memory for regression tests
-		*/
-		xmlMemoryDump();
-
-		return m_pRootDict;
-	}
-};
-void plist_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
-{
-	CCDictMaker *pMaker = (CCDictMaker*)(ctx);
-	std::string sName((char*)name);
-	if( sName == "dict" )
-	{
-		CCDictionary<std::string, CCObject*> *pNewDict = new CCDictionary<std::string, CCObject*>();
-		if(! pMaker->m_pRootDict)
-		{
-			pMaker->m_pRootDict = pNewDict;
-			pNewDict->autorelease();
-		}
-		else
-		{
-			CCAssert(pMaker->m_pCurDict && !pMaker->m_sCurKey.empty(), "");
-			pMaker->m_pCurDict->setObject(pNewDict, pMaker->m_sCurKey);
-			pNewDict->release();
-			pMaker->m_sCurKey.clear();
-		}
-		pMaker->m_pCurDict = pNewDict;
-		pMaker->m_tDictStack.push(pMaker->m_pCurDict);
-		pMaker->m_tState = SAX_DICT;
-	}
-	else if(sName == "key")
-	{
-		pMaker->m_tState = SAX_KEY;
-	}
-	else if(sName == "integer")
-	{
-		pMaker->m_tState = SAX_INT;
-	}
-	else if(sName == "real")
-	{
-		pMaker->m_tState = SAX_REAL;
-	}
-	else if(sName == "string")
-	{
-		pMaker->m_tState = SAX_STRING;
-	}
-	else
-	{
-		pMaker->m_tState = SAX_NONE;
-	}
-}
-void plist_endElement(void *ctx, const xmlChar *name)
-{
-	CCDictMaker * pMaker = (CCDictMaker*)(ctx);
-	std::string sName((char*)name);
-	if( sName == "dict" )
-	{
-		pMaker->m_tDictStack.pop();
-		if ( !pMaker->m_tDictStack.empty() )
-		{
-			pMaker->m_pCurDict = (CCDictionary<std::string, CCObject*>*)(pMaker->m_tDictStack.top());
-		}
-	}
-	pMaker->m_tState = SAX_NONE;
-}
-void plist_characters(void *ctx, const xmlChar *ch, int len)
-{
- 	CCDictMaker * pMaker = (CCDictMaker*)(ctx);
-	if (pMaker->m_tState == SAX_NONE)
-	{
-		return;
-	}
- 	CCString *pText = new CCString();
-	pText->m_sString = std::string((char*)ch,0,len);
-
- 	switch(pMaker->m_tState)
- 	{
- 	case SAX_KEY:
- 		pMaker->m_sCurKey = pText->m_sString;
- 		break;
- 	case SAX_INT:
- 	case SAX_REAL:
- 	case SAX_STRING:
- 		{
- 			CCAssert(!pMaker->m_sCurKey.empty(), "not found key : <integet/real>");
- 			pMaker->m_pCurDict->setObject(pText, pMaker->m_sCurKey);
- 			break;
- 		}
- 	}
-	pText->release();
-}
+NS_CC_BEGIN;
 
 // record the resource path
 static char s_pszResourcePath[EOS_FILE_MAX_PATH] = {0};
@@ -277,87 +109,42 @@ void setZipFilePath(const char* pZipFileName)
     strcat(s_pszZipFilePath, fullPath);
 }
 
-void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
+
+bool isResourceExist(const char* pszResName)
 {
-    if (pszResPath != NULL && pszZipFileName != NULL)
-    {
-        // record the resource path
-        strcpy(s_pszResourcePath, pszResPath);
+    bool bRet = false;
 
-        // record the zip file path
-        setZipFilePath(pszZipFileName);
-    }
-    else if (pszResPath != NULL)
-    {
-        // update the zip file path
-        updateZipFilePath(pszResPath);
+    TUChar FilePath[EOS_FILE_MAX_PATH] = {0};
+    TUString::StrGBToUnicode(FilePath, (const Char *) pszResName);
 
-        // record the resource path
-        strcpy(s_pszResourcePath, pszResPath);
-    }
-    else if (pszZipFileName != NULL)
-    {
-        // record the zip file path
-        setZipFilePath(pszZipFileName);
-    }
-}
-
-const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
-{
-    // if have set the zip file path,return the relative path of zip file
     if (strlen(s_pszZipFilePath) != 0)
     {
-        return CCFileUtils::getDiffResolutionPath(pszRelativePath);
-    }
+        // if have set the zip file path,find the resource in the zip file
+        unzFile pZipFile = unzOpen(s_pszZipFilePath);
+        do 
+        {
+            CC_BREAK_IF(!pZipFile);
 
-    // get the user data path and append relative path to it
-    if (strlen(s_pszResourcePath) == 0)
-    {
-        const char* pAppDataPath = CCApplication::sharedApplication().getAppDataPath();
-        strcpy(s_pszResourcePath, pAppDataPath);
-    }
+            Int32 nPos = unzLocateFile(pZipFile, pszResName, 1);
+            CC_BREAK_IF(nPos != UNZ_OK);
 
-#ifndef _TRANZDA_VM_
-    char *pszDriver = "";
-#else
-    char *pszDriver = "D:/Work7";
-#endif
-
-    CCString * pRet = new CCString();
-    pRet->autorelease();
-    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
-    {
-        pRet->m_sString = pszRelativePath;
-    }
-    else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
-    {
-        pRet->m_sString = pszDriver;
-        pRet->m_sString += pszRelativePath;
+            bRet = true;
+            unzClose(pZipFile);
+        } while (0);
     }
     else
     {
-        pRet->m_sString = pszDriver;
-        pRet->m_sString += s_pszResourcePath;
-        pRet->m_sString += pszRelativePath;
+        // find in the hardware
+        if (EOS_IsFileExist(FilePath))
+        {
+            bRet = true;
+        }
     }
-    return CCFileUtils::getDiffResolutionPath(pRet->m_sString.c_str());
-}
-const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
-{
-	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
-	CCString *pRet = new CCString();
-	pRet->autorelease();
-	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
-	pRet->m_sString += pszFilename;
-	return CCFileUtils::getDiffResolutionPath(pRet->m_sString.c_str());
-}
-CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
-{
-	CCDictMaker tMaker;
-	return tMaker.dictionaryWithContentsOfFile(pFileName);
+
+    return bRet;
 }
 
-const char* CCFileUtils::getDiffResolutionPath(const char *pszPath)
+const char* getDiffResolutionPath(const char *pszPath)
 {
     CCString *pRet = new CCString(pszPath);
     pRet->autorelease();
@@ -394,7 +181,7 @@ const char* CCFileUtils::getDiffResolutionPath(const char *pszPath)
             pRet->m_sString = filePathWithoutExtension + "@WVGA" + extension;
 
             // not find the resource of new path,use the original path
-            if (! CCFileUtils::isResourceExist(pRet->m_sString.c_str()))
+            if (! isResourceExist(pRet->m_sString.c_str()))
             {
                 pRet->m_sString = filePath;
             }
@@ -409,38 +196,79 @@ const char* CCFileUtils::getDiffResolutionPath(const char *pszPath)
     return pRet->m_sString.c_str();
 }
 
-bool CCFileUtils::isResourceExist(const char* pszResName)
+void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
 {
-    bool bRet = false;
+    if (pszResPath != NULL && pszZipFileName != NULL)
+    {
+        // record the resource path
+        strcpy(s_pszResourcePath, pszResPath);
 
-    TUChar FilePath[EOS_FILE_MAX_PATH] = {0};
-    TUString::StrGBToUnicode(FilePath, (const Char *) pszResName);
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
+    }
+    else if (pszResPath != NULL)
+    {
+        // update the zip file path
+        updateZipFilePath(pszResPath);
 
+        // record the resource path
+        strcpy(s_pszResourcePath, pszResPath);
+    }
+    else if (pszZipFileName != NULL)
+    {
+        // record the zip file path
+        setZipFilePath(pszZipFileName);
+    }
+}
+
+const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
+{
+    // if have set the zip file path,return the relative path of zip file
     if (strlen(s_pszZipFilePath) != 0)
     {
-        // if have set the zip file path,find the resource in the zip file
-        unzFile pZipFile = unzOpen(s_pszZipFilePath);
-        do 
-        {
-            CC_BREAK_IF(!pZipFile);
+        return getDiffResolutionPath(pszRelativePath);
+    }
 
-            Int32 nPos = unzLocateFile(pZipFile, pszResName, 1);
-            CC_BREAK_IF(nPos != UNZ_OK);
+    // get the user data path and append relative path to it
+    if (strlen(s_pszResourcePath) == 0)
+    {
+        const char* pAppDataPath = CCApplication::sharedApplication().getAppDataPath();
+        strcpy(s_pszResourcePath, pAppDataPath);
+    }
 
-            bRet = true;
-            unzClose(pZipFile);
-        } while (0);
+#ifndef _TRANZDA_VM_
+    char *pszDriver = "";
+#else
+    char *pszDriver = "D:/Work7";
+#endif
+
+    CCString * pRet = new CCString();
+    pRet->autorelease();
+    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
+    {
+        pRet->m_sString = pszRelativePath;
+    }
+    else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
+    {
+        pRet->m_sString = pszDriver;
+        pRet->m_sString += pszRelativePath;
     }
     else
     {
-        // find in the hardware
-        if (EOS_IsFileExist(FilePath))
-        {
-            bRet = true;
-        }
+        pRet->m_sString = pszDriver;
+        pRet->m_sString += s_pszResourcePath;
+        pRet->m_sString += pszRelativePath;
     }
-
-    return bRet;
+    return getDiffResolutionPath(pRet->m_sString.c_str());
+}
+const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+{
+	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+	CCString *pRet = new CCString();
+	pRet->autorelease();
+	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
+	pRet->m_sString += pszFilename;
+	return getDiffResolutionPath(pRet->m_sString.c_str());
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
@@ -452,7 +280,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         if (strlen(s_pszZipFilePath) != 0)
         {
             // if specify the zip file,load from it first
-            pBuffer = FileUtils::getFileDataFromZip(s_pszZipFilePath, pszFileName, pSize);
+            pBuffer = getFileDataFromZip(s_pszZipFilePath, pszFileName, pSize);
             CC_BREAK_IF(pBuffer);
         }
 
@@ -471,10 +299,20 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pBuffer;
 }
 
-int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
+void CCFileUtils::setResourcePath(const char *pszResourcePath)
 {
-	///@todo
-	return 0;
+    CCAssert(0, "Have not implement!");
 }
 
-}//namespace   cocos2d 
+const char* CCFileUtils::getResourcePath(void)
+{
+    CCAssert(0, "Have not implement!");
+    return NULL;
+}
+
+void CCFileUtils::setRelativePath(const char* pszRelativePath)
+{
+    CCAssert(0, "Have not implement!");
+}
+
+NS_CC_END;

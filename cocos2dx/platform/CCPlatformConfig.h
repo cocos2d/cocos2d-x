@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_CONFIG_H_YANGWS_20100110__
-#define __CC_CONFIG_H_YANGWS_20100110__
+#ifndef __CC_PLATFORM_CONFIG_H__
+#define __CC_PLATFORM_CONFIG_H__
 
 /**
 @file
@@ -44,6 +44,7 @@ There are config below:
 #define CC_PLATFORM_ANDROID            3
 #define CC_PLATFORM_WOPHONE            4
 #define CC_PLATFORM_WIN32              5
+#define CC_PLATFORM_AIRPLAY            6
 
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -86,7 +87,11 @@ There are config below:
         #define CC_SUPPORT_UNICODE     0
     #endif
 #endif
-
+// airplay
+#if ! CC_TARGET_PLATFORM && defined(AIRPLAY)
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_AIRPLAY
+#endif
 //////////////////////////////////////////////////////////////////////////
 // user configure
 //////////////////////////////////////////////////////////////////////////
@@ -117,6 +122,10 @@ There are config below:
     #define CC_TARGET_PLATFORM         CC_PLATFORM_WIN32
 #endif
 
+#if defined(CC_UNDER_AIRPLAY)
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM			   CC_PLATFORM_AIRPLAY
+#endif
 // Check user assigned supportive of multi-thread
 #if defined(CC_ENABLE_MULTITHREAD)
     #undef  CC_SUPPORT_MULTITHREAD
@@ -163,8 +172,10 @@ There are config below:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 #endif  // CC_PLATFORM_WIN32
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #error cofnig
-#endif
-#endif  // __CC_CONFIG_H_YANGWS_20100110__
+#endif // CC_PLATFORM_MAC
+
+#endif  // __CC_PLATFORM_CONFIG_H__
 

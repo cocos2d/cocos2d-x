@@ -77,7 +77,9 @@ glColor_from_pointer(void *ptr)
 	g = (g*mult)/max + add;
 	b = (b*mult)/max + add;
 	
-	glColor4ub(r, g, b, 255);
+    // glColor4ub isn't implement on some android devices
+	// glColor4ub(r, g, b, 255);
+    glColor4f(((GLfloat)r) / 255, ((GLfloat)g) / 255, ((GLfloat)b) / 255, 1.0f);
 }
 
 static const GLfloat circleVAR[] = {

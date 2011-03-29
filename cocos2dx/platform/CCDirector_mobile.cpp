@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "platform/CCNS.h"
+#include "cocoa/CCNS.h"
 #include "CCDirector.h"
 #include "CCScene.h"
 #include "CCMutableArray.h"
@@ -266,7 +266,7 @@ void CCDirector::calculateDeltaTime(void)
 void CCDirector::setAnimationInterval(double dValue)
 {
 	CCLOG("cocos2d: Director#setAnimationInterval. Overrride me");
-	assert(0);
+	// assert(0);
 }
 
 

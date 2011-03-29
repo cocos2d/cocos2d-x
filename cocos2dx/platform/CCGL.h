@@ -96,6 +96,10 @@ THE SOFTWARE.
 #include <GLES/glext.h>
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#include <IwGL.h>
+#endif
+
 #if defined(CC_PLATFORM_MOBILE)
 
 NS_CC_BEGIN;
