@@ -459,10 +459,16 @@ CCImage::CCImage()
 : m_nWidth(0)
 , m_nHeight(0)
 , m_nBitsPerComponent(0)
+, m_pData(0)
 , m_bHasAlpha(false)
 , m_bPreMulti(false)
 {
     
+}
+
+CCImage::~CCImage()
+{
+    CC_SAFE_DELETE_ARRAY(m_pData);
 }
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
@@ -483,12 +489,12 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     }
     if (bRet)
     {
-        m_nHeight = (ccxInt16)info.height;
-        m_nWidth = (ccxInt16)info.width;
+        m_nHeight = (short)info.height;
+        m_nWidth = (short)info.width;
         m_nBitsPerComponent = info.bitsPerComponent;
         m_bHasAlpha = info.hasAlpha;
         m_bPreMulti = info.isPremultipliedAlpha;
-        m_pData.reset(info.data);
+        m_pData = info.data;
     }
     return bRet;
 }
@@ -504,12 +510,12 @@ bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* 
     } while (0);
     if (bRet)
     {
-        m_nHeight = (ccxInt16)info.height;
-        m_nWidth = (ccxInt16)info.width;
+        m_nHeight = (short)info.height;
+        m_nWidth = (short)info.width;
         m_nBitsPerComponent = info.bitsPerComponent;
         m_bHasAlpha = info.hasAlpha;
         m_bPreMulti = info.isPremultipliedAlpha;
-        m_pData.reset(info.data);
+        m_pData = info.data;
     }
     return bRet;
 }
@@ -530,12 +536,12 @@ bool CCImage::initWithString(
     {
         return false;
     }
-    m_nHeight = (ccxInt16)info.height;
-    m_nWidth = (ccxInt16)info.width;
+    m_nHeight = (short)info.height;
+    m_nWidth = (short)info.width;
     m_nBitsPerComponent = info.bitsPerComponent;
     m_bHasAlpha = info.hasAlpha;
     m_bPreMulti = info.isPremultipliedAlpha;
-    m_pData.reset(info.data);
+    m_pData = info.data;
 
     return true;
 }

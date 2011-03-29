@@ -101,4 +101,19 @@ int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+
+#include <s3e.h>
+#include <sys/time.h>
+
+#ifndef MIN
+#define MIN(x,y) (((x) > (y)) ? (y) : (x))
+#endif  // MIN
+
+#ifndef MAX
+#define MAX(x,y) (((x) < (y)) ? (y) : (x))
+#endif  // MAX
+
+#endif  // CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY
+
 #endif  // __CC_STD_C_H__

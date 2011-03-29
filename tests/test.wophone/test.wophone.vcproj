@@ -899,6 +899,58 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="PerformanceTest"
+				>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceNodeChildrenTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceNodeChildrenTest.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceParticleTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceParticleTest.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceSpriteTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceSpriteTest.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceTest.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceTextureTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceTextureTest.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceTouchesTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\PerformanceTest\PerformanceTouchesTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

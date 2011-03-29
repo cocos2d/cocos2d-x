@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 
 #include "CCData.h"
-#include "support/file_support/FileData.h"
+#include "CCFileUtils.h"
 
 #include <stdio.h>
 

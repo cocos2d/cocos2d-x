@@ -369,10 +369,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCFileUtils.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCGeometry.h"
 				>
 			</File>
@@ -593,10 +589,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\FileUtils.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\selector_protocol.h"
 				>
 			</File>
@@ -808,18 +800,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="file_support"
-				>
-				<File
-					RelativePath="..\support\file_support\FileData.h"
-					>
-				</File>
-				<File
-					RelativePath="..\support\file_support\FileUtils.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="textures"
@@ -901,6 +881,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCNS.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCNS.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCObject.cpp"
 				>
 			</File>
@@ -945,7 +933,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCFileUtils_platform.h"
+				RelativePath="..\platform\CCFileUtils.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCFileUtils.h"
 				>
 			</File>
 			<File
@@ -985,10 +977,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCNS.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
 				>
 			</File>
@@ -1002,6 +990,14 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCPlatformMacros.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCSAXParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCSAXParser.h"
 				>
 			</File>
 			<File
@@ -1057,18 +1053,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\wophone\CCEGLView_wophone.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\wophone\CCFileUtils_wophone.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\wophone\CCFileUtils_wophone.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\wophone\CCNS_wophone.cpp"
 					>
 				</File>
 				<File

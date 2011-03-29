@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCPointExtension.h"
 
-#include "support/file_support/FileData.h"
+#include "CCFileUtils.h"
 #include "support/data_support/uthash.h"
 
 namespace cocos2d{
@@ -433,7 +433,7 @@ namespace cocos2d{
 	{
 		int nextFontPositionX = 0;
         int nextFontPositionY = 0;
-		ccxInt16 prev = -1;
+		unsigned short prev = -1;
 		int kerningAmount = 0;
 
 		CCSize tmpSize = CCSizeZero;
@@ -452,7 +452,7 @@ namespace cocos2d{
 
         for (int i = 0; i < len - 1; ++i)
         {
-            ccxInt16 c = m_sString[i];
+            unsigned short c = m_sString[i];
             if (c == '\n')
             {
                 quantityOfLines++;
@@ -464,7 +464,7 @@ namespace cocos2d{
 
 		for(int i=0; i<len; i++)
 		{
-			ccxInt16 c = m_sString[i];
+			unsigned short c = m_sString[i];
 			CCAssert( c < kCCBMFontMaxChars, "BitmapFontAtlas: character outside bounds");
 
             if (c == '\n')

@@ -22,12 +22,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
-
 #include "CCMutableArray.h"
 #include "CCMutableDictionary.h"
 #include "CCGeometry.h"
+
+#include "../platform/CCSAXParser.h"
 
 namespace cocos2d {
 
@@ -123,7 +126,7 @@ namespace cocos2d {
 	This information is obtained from the TMX file.
 
 	*/
-	class CC_DLL CCTMXMapInfo : public CCObject
+	class CC_DLL CCTMXMapInfo : public CCObject, public CCSAXDelegator
 	{	
 	public:	
 		/// map orientation
@@ -157,10 +160,15 @@ namespace cocos2d {
 		bool initWithTMXFile(const char *tmxFile);
 		/** initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 		bool parseXMLFile(const char *xmlFilename);
-	
+		
 		CCDictionary<int, CCStringToStringDictionary*> * getTileProperties();
 		void setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties);
 
+		// implement pure virtual methods of CCSAXDelegator
+		void startElement(void *ctx, const char *name, const char **atts);
+		void endElement(void *ctx, const char *name);
+		void textHandler(void *ctx, const char *ch, int len);
+		
 		inline const char* getCurrentString(){ return m_sCurrentString.c_str(); }
 		inline void setCurrentString(const char *currentString){ m_sCurrentString = currentString; }
 		inline const char* getTMXFileName(){ return m_sTMXFileName.c_str(); }
@@ -176,7 +184,6 @@ namespace cocos2d {
 	};
 
 }// namespace cocos2d
-#endif //__CC_TM_XML_PARSER__
 
-
+#endif
 

@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "platform/CCNS.h"
+#include "cocoa/CCNS.h"
 #include "ccMacros.h"
 #include "CCTextureCache.h"
 #include "CCSpriteFrameCache.h"
@@ -58,7 +58,7 @@ void CCSpriteFrameCache::purgeSharedSpriteFrameCache(void)
 bool CCSpriteFrameCache::init(void)
 {
 	m_pSpriteFrames= new CCDictionary<std::string, CCSpriteFrame*>();
-	m_pSpriteFramesAliases = new CCDictionary<std::string, CCSpriteFrame*>();
+	m_pSpriteFramesAliases = new CCDictionary<std::string, CCString*>();
 	return true;
 }
 
@@ -155,10 +155,6 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 		} else
 		if (format == 3)
 		{
-			/// @todo what's the format look like?
-			assert(false);
-			return;
-			/*
 			// get values
 			CCSize spriteSize = CCSizeFromString(valueForKey("spriteSize", frameDict));
 			CCPoint spriteOffset = CCPointFromString(valueForKey("spriteOffset", frameDict));
@@ -167,19 +163,28 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 			bool textureRotated = atoi(valueForKey("textureRotated", frameDict)) == 0;
 
 			// get aliases
-			CCMutableArray<CCString*> *aliases = CCMutableArray<CCString*>dictionary->objectForKey(std::string("aliases"));
+			CCMutableArray<CCString*> *aliases = (CCMutableArray<CCString*> *) (frameDict->objectForKey(std::string("aliases")));
+            CCMutableArray<CCString*>::CCMutableArrayIterator iter;
 
-			while( alias = (CCDictionary<std::string, CCObject*>*)aliases->next(&key) )
-			{
-				std::string value = ((CCString*)alias->objectForKey(key))->m_sString();
-				if (m_pSpriteFramesAliases->objectForKey(value))
-				{
-					CCLOG("cocos2d: WARNING: an alias with name %s already exists", value.c_str());
-				}
+            CCString * frameKey = new CCString(key.c_str());
+            for (iter = aliases->begin(); iter != aliases->end(); iter++)
+            {
+                std::string oneAlias = ((CCString*) (*iter))->m_sString;
+                if (m_pSpriteFramesAliases->objectForKey(oneAlias))
+                {
+                    CCLOG("cocos2d: WARNING: an alias with name %s already exists", oneAlias.c_str());
+                }
 
-				m_pSpriteFramesAliases->setObject(frameDict, value);
-			}
-			*/
+                m_pSpriteFramesAliases->setObject(frameKey, oneAlias);
+            }
+            frameKey->release();
+            // create frame
+            spriteFrame = new CCSpriteFrame();
+            spriteFrame->initWithTexture(pobTexture,
+                            CCRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
+                            textureRotated,
+                            spriteOffset,
+                            spriteSourceSize);
 		}
 
 		// add sprite frame
