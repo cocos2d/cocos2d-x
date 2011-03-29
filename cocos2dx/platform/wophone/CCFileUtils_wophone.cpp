@@ -277,7 +277,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
     do 
     {
-        if (strlen(s_pszZipFilePath) != 0)
+        if (0 != s_pszZipFilePath[0])
         {
             // if specify the zip file,load from it first
             pBuffer = getFileDataFromZip(s_pszZipFilePath, pszFileName, pSize);
@@ -295,6 +295,20 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         fread(pBuffer,sizeof(unsigned char), *pSize,fp);
         fclose(fp);
     } while (0);
+
+    if (! pBuffer && getIsPopupNotify())
+    {
+        std::string title = "Notification";
+        std::string msg = "Get data from file(";
+        msg.append(pszFileName);
+        if (0 != s_pszZipFilePath[0])
+        {
+            msg.append(") in zip archive(").append(s_pszZipFilePath);
+        }
+        msg.append(") failed!");
+
+        CCMessageBox(msg.c_str(), title.c_str());
+    }
 
     return pBuffer;
 }

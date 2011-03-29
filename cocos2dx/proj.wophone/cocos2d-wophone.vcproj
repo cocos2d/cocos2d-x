@@ -1065,11 +1065,15 @@
 			Name="makefile"
 			>
 			<File
-				RelativePath="..\Lib_Cocos2d_Arm_Wophone.TMK3"
+				RelativePath=".\cocos2d-wophone.TMK3"
 				>
 			</File>
 			<File
-				RelativePath="..\Makefile.ARM"
+				RelativePath=".\Makefile-dynamic.ARM"
+				>
+			</File>
+			<File
+				RelativePath=".\Makefile.ARM"
 				>
 			</File>
 		</Filter>
