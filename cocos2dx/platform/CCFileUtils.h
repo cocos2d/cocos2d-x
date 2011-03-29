@@ -86,6 +86,12 @@ public:
     */
     static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 
+    /**
+    @brief Set/Get whether pop-up a message box when the image load failed
+    */
+    static void setIsPopupNotify(bool bNotify);
+    static bool getIsPopupNotify();
+
     ///////////////////////////////////////////////////
     // interfaces on wophone
     ///////////////////////////////////////////////////
@@ -108,33 +114,30 @@ public:
     int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 };
 
-class FileData
+class CCFileData
 {
 public:
-    FileData() : m_pBuffer(NULL) {}
-    ~FileData()
+    CCFileData(const char* pszFileName, const char* pszMode)
+        : m_pBuffer(0)
+        , m_uSize(0)
     {
-        if (m_pBuffer)
-        {
-            delete [] m_pBuffer;
-            m_pBuffer = NULL;
-        }
+        m_pBuffer = CCFileUtils::getFileData(pszFileName, pszMode, &m_uSize);
+    }
+    ~CCFileData()
+    {
+        CC_SAFE_DELETE_ARRAY(m_pBuffer);
     }
 
-    unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+    bool reset(const char* pszFileName, const char* pszMode)
     {
-        if (m_pBuffer)
-        {
-            delete [] m_pBuffer;
-            m_pBuffer = NULL;
-        }
-
-        m_pBuffer = CCFileUtils::getFileData(pszFileName, pszMode, pSize);
-        return m_pBuffer;
+        CC_SAFE_DELETE_ARRAY(m_pBuffer);
+        m_uSize = 0;
+        m_pBuffer = CCFileUtils::getFileData(pszFileName, pszMode, &m_uSize);
+        return (m_pBuffer) ? true : false;
     }
 
-protected:
-    unsigned char* m_pBuffer;
+    CC_SYNTHESIZE_READONLY(unsigned char *, m_pBuffer, Buffer);
+    CC_SYNTHESIZE_READONLY(unsigned long ,  m_uSize,   Size);
 };
 
 NS_CC_END;

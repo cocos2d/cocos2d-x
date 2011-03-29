@@ -131,6 +131,14 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         fclose(fp);
     } while (0);
 
+    if (! Buffer && getIsPopupNotify())
+    {
+        std::string title = "Notification";
+        std::string msg = "Get data from file(";
+        msg.append(pszFileName).append(") failed!");
+
+        CCMessageBox(msg.c_str(), title.c_str());
+    }
     return Buffer;
 }
 

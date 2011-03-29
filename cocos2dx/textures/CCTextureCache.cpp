@@ -209,9 +209,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
 				CCImage * image = new CCImage();
-                FileData data;
-                unsigned long nSize  = 0;
-                unsigned char* pBuffer = data.getFileData(fullpath.c_str(), "rb", &nSize);
+                CCFileData data(fullpath.c_str(), "rb");
+                unsigned long nSize  = data.getSize();
+                unsigned char* pBuffer = data.getBuffer();
                 if(! image->initWithImageData((void*)pBuffer, nSize, CCImage::kFmtJpg))
 				{
 					delete image;
@@ -240,9 +240,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #else
 				// prevents overloading the autorelease pool
 				CCImage * image = new CCImage();
-                FileData data;
-                unsigned long nSize  = 0;
-                unsigned char* pBuffer = data.getFileData(fullpath.c_str(), "rb", &nSize);
+                CCFileData data(fullpath.c_str(), "rb");
+                unsigned long nSize  = data.getSize();
+                unsigned char* pBuffer = data.getBuffer();
                 if(! image->initWithImageData((void*)pBuffer, nSize, CCImage::kFmtPng))
 				{
 					delete image;

@@ -194,9 +194,9 @@ tImageTGA * tgaLoad(const char *pszFilename)
 {
     int mode,total;
     tImageTGA *info = NULL;
-    FileData data;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = data.getFileData(pszFilename, "rb", &nSize);
+    CCFileData data(pszFilename, "rb");
+    unsigned long nSize = data.getSize();
+    unsigned char* pBuffer = data.getBuffer();
 
     do
     {
