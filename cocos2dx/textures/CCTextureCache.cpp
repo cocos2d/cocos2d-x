@@ -208,18 +208,14 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
 			{
-				CCImage * image = new CCImage();
+				CCImage image;
                 CCFileData data(fullpath.c_str(), "rb");
                 unsigned long nSize  = data.getSize();
                 unsigned char* pBuffer = data.getBuffer();
-                if(! image->initWithImageData((void*)pBuffer, nSize, CCImage::kFmtJpg))
-				{
-					delete image;
-					break;
-				}
+                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtJpg));
+
 				texture = new CCTexture2D();
-				texture->initWithImage(image);
-				CC_SAFE_DELETE(image);// image->release();
+				texture->initWithImage(&image);
 
 				if( texture )
 				{
@@ -239,18 +235,14 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 				tex = [ [CCTexture2D alloc] initWithImage: image ];
 #else
 				// prevents overloading the autorelease pool
-				CCImage * image = new CCImage();
+				CCImage image;
                 CCFileData data(fullpath.c_str(), "rb");
                 unsigned long nSize  = data.getSize();
                 unsigned char* pBuffer = data.getBuffer();
-                if(! image->initWithImageData((void*)pBuffer, nSize, CCImage::kFmtPng))
-				{
-					delete image;
-					break;
-				}
+                CC_BREAK_IF(! image.initWithImageData((void*)pBuffer, nSize, CCImage::kFmtPng));
+
 				texture = new CCTexture2D();
-				texture->initWithImage(image);
-				CC_SAFE_DELETE(image);// image->release();
+				texture->initWithImage(&image);
 #endif
 				if( texture )
 				{
