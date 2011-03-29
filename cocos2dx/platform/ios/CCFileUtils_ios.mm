@@ -155,12 +155,18 @@ public:
     std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
     std::string m_sCurKey;///< parsed key
     CCSAXState m_tState;
+    bool    m_bInArray;
+    CCMutableArray<CCObject*> *m_pArray;
+
 public:
     CCDictMaker()
     {
         m_pRootDict = NULL;
         m_pCurDict = NULL;
         m_tState = SAX_NONE;
+
+        m_pArray = NULL;
+        m_bInArray = false;
     }
     ~CCDictMaker()
     {
@@ -219,6 +225,11 @@ public:
         }
         else
         {
+            if (sName == "array")
+            {
+                m_bInArray = true;
+                m_pArray = new CCMutableArray<CCObject*>();
+            }
             m_tState = SAX_NONE;
         }
     }
@@ -233,6 +244,14 @@ public:
             {
                 m_pCurDict = (CCDictionary<std::string, CCObject*>*)(m_tDictStack.top());
             }
+        }
+        else if (sName == "array")
+        {
+            CCAssert(m_bInArray, "The plist file is wrong!");
+            m_pCurDict->setObject(m_pArray, m_sCurKey);
+            m_pArray->release();
+            m_pArray = NULL;
+            m_bInArray = false;
         }
         m_tState = SAX_NONE;
     }
@@ -256,7 +275,15 @@ public:
         case SAX_STRING:
             {
                 CCAssert(!m_sCurKey.empty(), "not found key : <integet/real>");
-                m_pCurDict->setObject(pText, m_sCurKey);
+
+                if (m_bInArray)
+                {
+                    m_pArray->addObject(pText);
+                }
+                else
+                {
+                    m_pCurDict->setObject(pText, m_sCurKey);
+                }
                 break;
             }
         }
