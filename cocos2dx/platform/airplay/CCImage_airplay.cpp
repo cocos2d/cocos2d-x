@@ -24,7 +24,6 @@
 #include "CCImage.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
-#include "CCFileUtils.h"
 #include "s3eFile.h"
 #include "IwImage.h"
 #include "IwUtil.h"
@@ -62,8 +61,52 @@ CCImage::~CCImage()
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
 	IW_CALLSTACK("UIImage::initWithImageFile");
-    CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
+
+    bool bRet = false;
+    FILE *fp = 0;
+    unsigned char *buffer = NULL;
+    do 
+    {
+        // open file
+        fp = fopen(strPath, "rb");
+        CC_BREAK_IF(! fp);
+		
+        // compute the length of file
+        fseek(fp,0,SEEK_END);
+        int size = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+		
+        // allocate enough memory to save the data of file
+        buffer = new unsigned char[size];
+        CC_BREAK_IF(! buffer);
+		
+        // read data
+        size = fread(buffer, sizeof(unsigned char), size, fp);
+		
+        if (kFmtJpg == eImgFmt)
+        {
+            bRet = _initWithJpgData(buffer, size);
+        }
+        else
+        {
+            bRet = _initWithPngData(buffer, size);
+        }
+    } while (0);
+	
+    CC_SAFE_DELETE_ARRAY(buffer);
+    if (fp)
+    {
+        fclose(fp);
+    }
+    if (! bRet && CCImage::getIsPopupNotify())
+    {
+        std::string title = "cocos2d-x error!";
+        std::string msg = "Load ";
+        msg.append(strPath).append(" failed!");
+		
+        IwError(("cocos2d-x error! Load %s failed", strPath));
+    }
+    return bRet;
 }
 
 bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
@@ -85,6 +128,16 @@ bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* 
         }
     } while (0);
     return bRet;
+}
+static bool s_bPopupNotify = true;
+void CCImage::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool CCImage::getIsPopupNotify()
+{
+    return s_bPopupNotify;
 }
 
 bool CCImage::_initWithJpgData(void * data, int nSize)

@@ -336,7 +336,7 @@ public:
     }
     unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
     {
-        unsigned char * pBuffer = NULL;
+        unsigned char * Buffer = NULL;
 
         do 
         {
@@ -347,20 +347,12 @@ public:
             fseek(fp,0,SEEK_END);
             *pSize = ftell(fp);
             fseek(fp,0,SEEK_SET);
-            pBuffer = new unsigned char[*pSize];
-            *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
+            Buffer = new unsigned char[*pSize];
+            *pSize = fread(Buffer,sizeof(unsigned char), *pSize,fp);
             fclose(fp);
         } while (0);
 
-        if (! pBuffer && getIsPopupNotify()) 
-        {
-            std::string title = "Notification";
-            std::string msg = "Get data from file(";
-            msg.append(pszFileName).append(") failed!");
-            
-            CCMessageBox(msg.c_str(), title.c_str());
-        }
-        return pBuffer;
+        return Buffer;
     }
     void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
     {
@@ -370,18 +362,4 @@ public:
     {
         CCAssert(0, "Have not implement!");
     }
-    
-    // notification support when getFileData from a invalid file
-    static bool s_bPopupNotify = true;
-    
-    void CCFileUtils::setIsPopupNotify(bool bNotify)
-    {
-        s_bPopupNotify = bNotify;
-    }
-    
-    bool CCFileUtils::getIsPopupNotify()
-    {
-        return s_bPopupNotify;
-    }
-    
 }//namespace   cocos2d 

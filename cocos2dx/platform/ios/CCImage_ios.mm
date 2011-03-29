@@ -24,7 +24,6 @@ THE SOFTWARE.
 #include <Foundation/Foundation.h>
 #include <UIKit/UIKit.h>
 #include "CCImage.h"
-#include "CCFileUtils.h"
 #include <string>
 
 typedef struct
@@ -449,6 +448,13 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 
 NS_CC_BEGIN;
 
+static bool s_bPopupNotify = true;
+
+void CCMessageBox(const std::string& msg, const std::string& title)
+{
+    
+}
+
 CCImage::CCImage()
 : m_nWidth(0)
 , m_nHeight(0)
@@ -467,8 +473,30 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
-    CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
-    return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
+    bool bRet = false;
+    tImageInfo info = {0};
+    
+    switch (eImgFmt)
+    {
+        case kFmtPng:
+        case kFmtJpg:
+                bRet = _initWithFile(strPath, &info);
+            break;
+        default:
+                // unsupported image type
+            bRet = false;
+        break;
+    }
+    if (bRet)
+    {
+        m_nHeight = (short)info.height;
+        m_nWidth = (short)info.width;
+        m_nBitsPerComponent = info.bitsPerComponent;
+        m_bHasAlpha = info.hasAlpha;
+        m_bPreMulti = info.isPremultipliedAlpha;
+        m_pData = info.data;
+    }
+    return bRet;
 }
 
 bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
@@ -516,6 +544,16 @@ bool CCImage::initWithString(
     m_pData = info.data;
 
     return true;
+}
+
+void CCImage::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool CCImage::getIsPopupNotify()
+{
+    return s_bPopupNotify;
 }
 
 NS_CC_END;
