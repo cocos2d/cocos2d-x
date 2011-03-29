@@ -51,8 +51,10 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         pScene = new ChipmunkTestScene(); break;
+#endif
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
     case TEST_SPRITE:
@@ -76,7 +78,11 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
 	case TEST_COCOSDENSHION:
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 		pScene = new CocosDenshionTestScene(); break;
+#endif
+    case TEST_PERFORMANCE:
+        pScene = new PerformanceTestScene(); break;
     default:
         break;
     }
@@ -101,7 +107,11 @@ TestController::TestController()
     m_pItmeMenu = CCMenu::menuWithItems(NULL);
     for (int i = 0; i < TESTS_COUNT; ++i)
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+		CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+#else
         CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
+#endif		
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
 
         m_pItmeMenu->addChild(pMenuItem, i + 10000);

@@ -273,6 +273,7 @@ bool CCImage::initWithString(
                                int             nSize/* = 0*/)
 {
     bool bRet = false;
+    unsigned char * pImageData = 0;
     do 
     {
         CC_BREAK_IF(! pText);
@@ -289,8 +290,8 @@ bool CCImage::initWithString(
         SIZE size = {nWidth, nHeight};
         CC_BREAK_IF(! dc.drawText(pText, size, eAlignMask));
 
-        m_pData.reset(new ccxByte[size.cx * size.cy * 4]);
-        CC_BREAK_IF(! m_pData.get());
+        pImageData = new unsigned char[size.cx * size.cy * 4];
+        CC_BREAK_IF(! pImageData);
 
         struct
         {
@@ -301,23 +302,24 @@ bool CCImage::initWithString(
         CC_BREAK_IF(! GetDIBits(dc.getDC(), dc.getBitmap(), 0, 0, 
             NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS));
 
-        m_nWidth    = (ccxInt16)size.cx;
-        m_nHeight   = (ccxInt16)size.cy;
+        m_nWidth    = (short)size.cx;
+        m_nHeight   = (short)size.cy;
         m_bHasAlpha = true;
         m_bPreMulti = false;
+        m_pData     = pImageData;
+        pImageData  = 0;
         m_nBitsPerComponent = 8;
-
         // copy pixed data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
            ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
-        GetDIBits(dc.getDC(), dc.getBitmap(), 0, m_nHeight, m_pData.get(), 
+        GetDIBits(dc.getDC(), dc.getBitmap(), 0, m_nHeight, m_pData, 
             (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
         // change pixel's alpha value to 255, when it's RGB != 0
         COLORREF * pPixel = NULL;
         for (int y = 0; y < m_nHeight; ++y)
         {
-            pPixel = (COLORREF *)m_pData.get() + y * m_nWidth;
+            pPixel = (COLORREF *)m_pData + y * m_nWidth;
             for (int x = 0; x < m_nWidth; ++x)
             {
                 COLORREF& clr = *pPixel;

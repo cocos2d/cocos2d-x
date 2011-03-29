@@ -266,7 +266,7 @@ void CCDirector::calculateDeltaTime(void)
 void CCDirector::setAnimationInterval(double dValue)
 {
 	CCLOG("cocos2d: Director#setAnimationInterval. Overrride me");
-	assert(0);
+	// assert(0);
 }
 
 

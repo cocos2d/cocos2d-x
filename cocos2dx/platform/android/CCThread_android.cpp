@@ -52,10 +52,7 @@ CCLock::CCLock()
 
 CCLock::~CCLock()
 {
-	if (m_pImp)
-	{
-		delete m_pImp;
-	}
+    CC_SAFE_DELETE(m_pImp);
 }
 
 void CCLock::lock()

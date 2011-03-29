@@ -1,0 +1,38 @@
+defines
+{
+TARGET_OS_IPHONE=1
+}
+
+
+includepaths
+{
+	.
+
+	"./chipmunk"
+	"./chipmunk/include/chipmunk"
+
+}
+
+files
+{
+
+
+	("chipmunk/include/chipmunk")
+	[include]
+	"*.h"
+
+	("chipmunk/include/chipmunk/constraints")
+
+	[include/constraints]
+	"*.h"
+
+	("chipmunk/src")
+	[src]
+	"*.c"
+
+	("chipmunk/src/constraints")
+	[src/constraints]
+	"*.c"
+	
+}
+
