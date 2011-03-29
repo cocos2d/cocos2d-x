@@ -136,7 +136,7 @@ private:
 	
 protected:
 	CCDictionary<std::string, CCSpriteFrame*> *m_pSpriteFrames;
-	CCDictionary<std::string, CCSpriteFrame*> *m_pSpriteFramesAliases;
+	CCDictionary<std::string, CCString*> *m_pSpriteFramesAliases;
 };
 }//namespace   cocos2d 
 
