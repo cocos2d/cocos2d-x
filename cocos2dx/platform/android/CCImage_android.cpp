@@ -42,12 +42,6 @@ static int sk_atomic_dec(int *value)
 
 NS_CC_BEGIN;
 
-// android not support
-void CCMessageBox(const std::string& msg, const std::string& title)
-{
-    
-}
-
 class BitmapDC
 {
 public:
