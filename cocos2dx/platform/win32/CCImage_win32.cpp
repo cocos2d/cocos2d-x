@@ -24,11 +24,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-void CCMessageBox(const std::string& msg, const std::string& title)
-{
-    MessageBoxA(NULL, msg.c_str(), title.c_str(), MB_OK);
-}
-
 /**
 @brief	A memory DC which uses to draw text on bitmap.
 */

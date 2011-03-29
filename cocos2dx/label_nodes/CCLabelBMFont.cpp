@@ -125,9 +125,9 @@ namespace cocos2d{
 	{	
 		std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
 
-        FileData data;
-        unsigned long nBufSize = 0;
-        char* pBuffer = (char*) data.getFileData(fullpath.c_str(), "r", &nBufSize);
+        CCFileData data(controlFile, "rb");
+        unsigned long nBufSize = data.getSize();
+        char* pBuffer = (char*) data.getBuffer();
 
         CCAssert(pBuffer, "CCBMFontConfiguration::parseConfigFile | Open file error.");
 

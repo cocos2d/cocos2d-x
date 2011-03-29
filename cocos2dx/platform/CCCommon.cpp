@@ -48,6 +48,11 @@ void CCLog(const char * pszFormat, ...)
     OutputDebugStringA("\n");
 }
 
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
+}
+
 NS_CC_END;
 
 #endif  // CC_PLATFORM_WIN32
