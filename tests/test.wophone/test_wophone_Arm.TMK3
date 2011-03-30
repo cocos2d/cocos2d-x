@@ -64,3 +64,4 @@ EXCLUDEFILE=./framework.win32
 EXCLUDEFILE=./test.android
 EXCLUDEFILE=./test.ios
 EXCLUDEFILE=./test.win32
+EXCLUDEFILE=./test.airplay
