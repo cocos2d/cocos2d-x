@@ -233,6 +233,8 @@
 		BF340BEE133B26A70035A4D1 /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE5133B26A70035A4D1 /* PerformanceTextureTest.cpp */; };
 		BF340BEF133B26A70035A4D1 /* PerformanceTouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE7133B26A70035A4D1 /* PerformanceTouchesTest.cpp */; };
 		BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */; };
+		BF5FD88F13430DD300F22186 /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF5FD88D13430DD300F22186 /* ZwoptexTest.cpp */; };
+		BF5FD89F13430E2B00F22186 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = BF5FD89913430E2B00F22186 /* zwoptex */; };
 		BF835B2A13276C7900F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588A13276C7700F3C033 /* CCAction.cpp */; };
 		BF835B2B13276C7900F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588B13276C7700F3C033 /* CCActionCamera.cpp */; };
 		BF835B2C13276C7900F3C033 /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588C13276C7700F3C033 /* CCActionEase.cpp */; };
@@ -1114,6 +1116,9 @@
 		BF340BE8133B26A70035A4D1 /* PerformanceTouchesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTouchesTest.h; sourceTree = "<group>"; };
 		BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceNodeChildrenTest.cpp; sourceTree = "<group>"; };
 		BF340BEA133B26A70035A4D1 /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
+		BF5FD88D13430DD300F22186 /* ZwoptexTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZwoptexTest.cpp; sourceTree = "<group>"; };
+		BF5FD88E13430DD300F22186 /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZwoptexTest.h; sourceTree = "<group>"; };
+		BF5FD89913430E2B00F22186 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../Res/zwoptex; sourceTree = SOURCE_ROOT; };
 		BF83588A13276C7700F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		BF83588B13276C7700F3C033 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
 		BF83588C13276C7700F3C033 /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
@@ -2034,6 +2039,7 @@
 		BF1B1A7512951B5800E99D96 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BF5FD89913430E2B00F22186 /* zwoptex */,
 				BF31DE9812E9779300D4F513 /* background.mp3 */,
 				BF31DE9912E9779300D4F513 /* effect1.wav */,
 				D4F9F37D12E545ED005CA6D2 /* Icon.png */,
@@ -2095,6 +2101,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF5FD88C13430DD300F22186 /* ZwoptexTest */,
 				BF340BDE133B26A70035A4D1 /* PerformanceTest */,
 				BF137F45131E3A7B000F7B64 /* LabelTest */,
 				BF31E11912E979A100D4F513 /* AccelerometerTest */,
@@ -2499,6 +2506,15 @@
 				BF340BEA133B26A70035A4D1 /* PerformanceNodeChildrenTest.h */,
 			);
 			path = PerformanceTest;
+			sourceTree = "<group>";
+		};
+		BF5FD88C13430DD300F22186 /* ZwoptexTest */ = {
+			isa = PBXGroup;
+			children = (
+				BF5FD88D13430DD300F22186 /* ZwoptexTest.cpp */,
+				BF5FD88E13430DD300F22186 /* ZwoptexTest.h */,
+			);
+			path = ZwoptexTest;
 			sourceTree = "<group>";
 		};
 		BF83588813276C7700F3C033 /* cocos2dx */ = {
@@ -4180,6 +4196,7 @@
 				D4F9F37E12E545ED005CA6D2 /* Icon.png in Resources */,
 				BF31DE9A12E9779300D4F513 /* background.mp3 in Resources */,
 				BF31DE9B12E9779300D4F513 /* effect1.wav in Resources */,
+				BF5FD89F13430E2B00F22186 /* zwoptex in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4256,6 +4273,7 @@
 				BF340BEE133B26A70035A4D1 /* PerformanceTextureTest.cpp in Sources */,
 				BF340BEF133B26A70035A4D1 /* PerformanceTouchesTest.cpp in Sources */,
 				BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */,
+				BF5FD88F13430DD300F22186 /* ZwoptexTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
