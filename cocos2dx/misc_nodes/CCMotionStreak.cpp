@@ -59,11 +59,11 @@ bool CCMotionStreak::initWithFade(float fade, float seg, const char *imagePath, 
 	this->addChild(m_pRibbon);
 
 	// update ribbon position
-	this->schedule(schedule_selector(CCMotionStreak::update), 0);
+	this->schedule(schedule_selector(CCMotionStreak::updateMotion), 0);
 	return true;
 }
 
-void CCMotionStreak::update(ccTime delta)
+void CCMotionStreak::updateMotion(ccTime delta)
 {
 	CCPoint location = this->convertToWorldSpace(CCPointZero);
 	m_pRibbon->setPosition(ccp(-1*location.x, -1*location.y));
