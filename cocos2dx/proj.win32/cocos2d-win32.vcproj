@@ -212,6 +212,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\cocoa\CCNS.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\cocoa\CCNS.h"
+				>
+			</File>
+			<File
 				RelativePath="..\cocoa\CCObject.cpp"
 				>
 			</File>
@@ -776,10 +784,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCNS.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
 				>
 			</File>
@@ -856,10 +860,6 @@
 				</File>
 				<File
 					RelativePath="..\platform\win32\CCEGLView_win32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\platform\win32\CCNS_win32.cpp"
 					>
 				</File>
 			</Filter>

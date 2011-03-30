@@ -107,6 +107,8 @@
 		BF15292512E13C8200703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1528FD12E13C8200703484 /* SimpleAudioEngine_objc.m */; };
 		BF152AD012E16ADD00703484 /* LICENSE.box2d in Resources */ = {isa = PBXBuildFile; fileRef = BF152ACE12E16ADD00703484 /* LICENSE.box2d */; };
 		BF152AD112E16ADD00703484 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */; };
+		BF340A63133AE4610035A4D1 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340A61133AE4610035A4D1 /* CCNS.cpp */; };
+		BF340A64133AE4610035A4D1 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = BF340A62133AE4610035A4D1 /* CCNS.h */; };
 		BF3160C4133DE37B00E0532D /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3160C3133DE37B00E0532D /* CCFileUtils.h */; };
 		BF3160C7133DE39600E0532D /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3160C5133DE39600E0532D /* CCSAXParser.cpp */; };
 		BF3160C8133DE39600E0532D /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3160C6133DE39600E0532D /* CCSAXParser.h */; };
@@ -256,7 +258,6 @@
 		BF83674D132878B700F3C033 /* CCLibxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364BB132878B500F3C033 /* CCLibxml2.h */; };
 		BF83674E132878B700F3C033 /* CCMenu_mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8364BC132878B500F3C033 /* CCMenu_mobile.cpp */; };
 		BF83674F132878B700F3C033 /* CCNode_mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8364BD132878B500F3C033 /* CCNode_mobile.cpp */; };
-		BF836750132878B700F3C033 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364BE132878B500F3C033 /* CCNS.h */; };
 		BF836751132878B700F3C033 /* CCParticleSystemPoint_mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8364BF132878B500F3C033 /* CCParticleSystemPoint_mobile.cpp */; };
 		BF836752132878B700F3C033 /* CCParticleSystemPoint_mobile.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364C0132878B500F3C033 /* CCParticleSystemPoint_mobile.h */; };
 		BF836753132878B700F3C033 /* CCParticleSystemPoint_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364C1132878B500F3C033 /* CCParticleSystemPoint_platform.h */; };
@@ -281,7 +282,6 @@
 		BF836767132878B700F3C033 /* CCImage_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8364D6132878B500F3C033 /* CCImage_ios.mm */; };
 		BF836768132878B700F3C033 /* CCLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8364D7132878B500F3C033 /* CCLock.cpp */; };
 		BF836769132878B700F3C033 /* CCLock.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364D8132878B500F3C033 /* CCLock.h */; };
-		BF83676A132878B700F3C033 /* CCNS_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8364D9132878B500F3C033 /* CCNS_ios.mm */; };
 		BF83676B132878B700F3C033 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364DA132878B500F3C033 /* EAGLView.h */; };
 		BF83676C132878B700F3C033 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8364DB132878B500F3C033 /* EAGLView.mm */; };
 		BF83676D132878B700F3C033 /* ES1Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364DC132878B500F3C033 /* ES1Renderer.h */; };
@@ -455,6 +455,8 @@
 		BF1528FD12E13C8200703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		BF152ACE12E16ADD00703484 /* LICENSE.box2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.box2d; sourceTree = "<group>"; };
 		BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
+		BF340A61133AE4610035A4D1 /* CCNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNS.cpp; sourceTree = "<group>"; };
+		BF340A62133AE4610035A4D1 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 		BF3160C3133DE37B00E0532D /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		BF3160C5133DE39600E0532D /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		BF3160C6133DE39600E0532D /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
@@ -605,7 +607,6 @@
 		BF8364BB132878B500F3C033 /* CCLibxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLibxml2.h; sourceTree = "<group>"; };
 		BF8364BC132878B500F3C033 /* CCMenu_mobile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenu_mobile.cpp; sourceTree = "<group>"; };
 		BF8364BD132878B500F3C033 /* CCNode_mobile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNode_mobile.cpp; sourceTree = "<group>"; };
-		BF8364BE132878B500F3C033 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 		BF8364BF132878B500F3C033 /* CCParticleSystemPoint_mobile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParticleSystemPoint_mobile.cpp; sourceTree = "<group>"; };
 		BF8364C0132878B500F3C033 /* CCParticleSystemPoint_mobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemPoint_mobile.h; sourceTree = "<group>"; };
 		BF8364C1132878B500F3C033 /* CCParticleSystemPoint_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemPoint_platform.h; sourceTree = "<group>"; };
@@ -630,7 +631,6 @@
 		BF8364D6132878B500F3C033 /* CCImage_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage_ios.mm; sourceTree = "<group>"; };
 		BF8364D7132878B500F3C033 /* CCLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLock.cpp; sourceTree = "<group>"; };
 		BF8364D8132878B500F3C033 /* CCLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLock.h; sourceTree = "<group>"; };
-		BF8364D9132878B500F3C033 /* CCNS_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCNS_ios.mm; sourceTree = "<group>"; };
 		BF8364DA132878B500F3C033 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		BF8364DB132878B500F3C033 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		BF8364DC132878B500F3C033 /* ES1Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES1Renderer.h; sourceTree = "<group>"; };
@@ -1049,6 +1049,8 @@
 		BF836421132878B500F3C033 /* cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				BF340A61133AE4610035A4D1 /* CCNS.cpp */,
+				BF340A62133AE4610035A4D1 /* CCNS.h */,
 				BF836422132878B500F3C033 /* CCAffineTransform.cpp */,
 				BF836423132878B500F3C033 /* CCAutoreleasePool.cpp */,
 				BF836424132878B500F3C033 /* CCData.cpp */,
@@ -1249,7 +1251,6 @@
 				BF8364BB132878B500F3C033 /* CCLibxml2.h */,
 				BF8364BC132878B500F3C033 /* CCMenu_mobile.cpp */,
 				BF8364BD132878B500F3C033 /* CCNode_mobile.cpp */,
-				BF8364BE132878B500F3C033 /* CCNS.h */,
 				BF8364BF132878B500F3C033 /* CCParticleSystemPoint_mobile.cpp */,
 				BF8364C0132878B500F3C033 /* CCParticleSystemPoint_mobile.h */,
 				BF8364C1132878B500F3C033 /* CCParticleSystemPoint_platform.h */,
@@ -1286,7 +1287,6 @@
 				BF8364D6132878B500F3C033 /* CCImage_ios.mm */,
 				BF8364D7132878B500F3C033 /* CCLock.cpp */,
 				BF8364D8132878B500F3C033 /* CCLock.h */,
-				BF8364D9132878B500F3C033 /* CCNS_ios.mm */,
 				BF8364DA132878B500F3C033 /* EAGLView.h */,
 				BF8364DB132878B500F3C033 /* EAGLView.mm */,
 				BF8364DC132878B500F3C033 /* ES1Renderer.h */,
@@ -1541,7 +1541,6 @@
 				BF836748132878B700F3C033 /* CCGL.h in Headers */,
 				BF83674B132878B700F3C033 /* CCImage.h in Headers */,
 				BF83674D132878B700F3C033 /* CCLibxml2.h in Headers */,
-				BF836750132878B700F3C033 /* CCNS.h in Headers */,
 				BF836752132878B700F3C033 /* CCParticleSystemPoint_mobile.h in Headers */,
 				BF836753132878B700F3C033 /* CCParticleSystemPoint_platform.h in Headers */,
 				BF836754132878B700F3C033 /* CCPlatformConfig.h in Headers */,
@@ -1571,6 +1570,7 @@
 				BF8368F1132878B700F3C033 /* unzip.h in Headers */,
 				BF8368F3132878B700F3C033 /* ZipUtils.h in Headers */,
 				BF836900132878B700F3C033 /* CCTouchHandler.h in Headers */,
+				BF340A64133AE4610035A4D1 /* CCNS.h in Headers */,
 				BF3160C4133DE37B00E0532D /* CCFileUtils.h in Headers */,
 				BF3160C8133DE39600E0532D /* CCSAXParser.h in Headers */,
 			);
@@ -1777,7 +1777,6 @@
 				BF836766132878B700F3C033 /* CCFileUtils_ios.mm in Sources */,
 				BF836767132878B700F3C033 /* CCImage_ios.mm in Sources */,
 				BF836768132878B700F3C033 /* CCLock.cpp in Sources */,
-				BF83676A132878B700F3C033 /* CCNS_ios.mm in Sources */,
 				BF83676C132878B700F3C033 /* EAGLView.mm in Sources */,
 				BF83676E132878B700F3C033 /* ES1Renderer.m in Sources */,
 				BF836780132878B700F3C033 /* platform.cpp in Sources */,
@@ -1810,6 +1809,7 @@
 				BF8368FE132878B700F3C033 /* CCTouchDispatcher.cpp in Sources */,
 				BF8368FF132878B700F3C033 /* CCTouchHandler.cpp in Sources */,
 				BF76375F13338AA9009E0E50 /* CCCamera.cpp in Sources */,
+				BF340A63133AE4610035A4D1 /* CCNS.cpp in Sources */,
 				BF3160C4133DE37B00E0532D /* CCFileUtils.h in Headers */,
 				BF3160C8133DE39600E0532D /* CCSAXParser.h in Headers */,
 			);

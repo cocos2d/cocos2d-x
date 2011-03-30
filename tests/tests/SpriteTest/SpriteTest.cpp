@@ -32,7 +32,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    41
+#define MAX_LAYER    42
 
 CCLayer* createSpriteTestLayer(int nIndex)
 {
@@ -42,12 +42,7 @@ CCLayer* createSpriteTestLayer(int nIndex)
         case 0: return new Sprite1();
         case 1: return new SpriteBatchNode1();
         case 2: return new SpriteFrameTest();
-        /*
-        @todo should add this case after issue #391 is resolved
         case 3: return new SpriteFrameAliasNameTest();
-        */
-
-        case 3: return new AnimationCache();////----
         case 4: return new SpriteAnchorPoint();
         case 5: return new SpriteBatchNodeAnchorPoint();
         case 6: return new SpriteOffsetAnchorRotation();
@@ -85,6 +80,7 @@ CCLayer* createSpriteTestLayer(int nIndex)
         case 38: return new SpriteBatchNodeChildrenChildren();
         case 39: return new SpriteNilTexture();
         case 40: return new SpriteSubclass();
+        case 41: return new AnimationCache();
     }
 
     return NULL;
@@ -1774,7 +1770,7 @@ void SpriteFrameAliasNameTest::onEnter()
     for(int i = 1; i < 15; i++)
     {
         // Obtain frames by alias name
-        sprintf(str, "grossini_dance_%02d.png", i);
+        sprintf(str, "dance_%02d", i);
         CCSpriteFrame *frame = cache->spriteFrameByName(str);
         animFrames->addObject(frame);
     }
