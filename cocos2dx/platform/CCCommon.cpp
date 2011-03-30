@@ -48,6 +48,11 @@ void CCLog(const char * pszFormat, ...)
     OutputDebugStringA("\n");
 }
 
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
+}
+
 NS_CC_END;
 
 #endif  // CC_PLATFORM_WIN32
@@ -94,6 +99,16 @@ void CCLog(const char * pszFormat, ...)
 #endif
 }
 
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    TUChar tszMsg[MAX_LEN] = { 0 };
+    TUChar tszTitle[MAX_LEN] = { 0 };
+    TUString::StrUtf8ToStrUnicode(tszMsg,(Char*)pszMsg);
+    TUString::StrUtf8ToStrUnicode(tszTitle,(Char*)pszTitle);
+    TMessageBox box(tszMsg, tszTitle, WMB_OK);
+    box.Show();
+}
+
 NS_CC_END;
 
 #endif  // CC_PLATFORM_WOPHONE
@@ -121,6 +136,12 @@ void CCLog(const char * pszFormat, ...)
     printf("\n");
 }
 
+// ios no MessageBox, use CCLog instead
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    CCLog("%s: %s", pszTitle, pszMsg);
+}
+
 NS_CC_END;
 
 #endif  // CC_PLATFORM_IOS
@@ -145,6 +166,12 @@ void CCLog(const char * pszFormat, ...)
 	va_end(args);
 
 	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+}
+
+// android no MessageBox, use CCLog instead
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    CCLog("%s: %s", pszTitle, pszMsg);
 }
 
 NS_CC_END;
@@ -174,8 +201,13 @@ void CCLog(const char * pszFormat, ...)
 	
 	IwTrace(GAME, (buf));
 }
+
+// airplay no MessageBox, use CCLog instead
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    CCLog("%s: %s", pszTitle, pszMsg);
+}
+
 NS_CC_END;
 
 #endif // CC_PLATFORM_AIRPLAY
-
-
