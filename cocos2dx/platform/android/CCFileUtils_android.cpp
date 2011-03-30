@@ -82,7 +82,15 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {	
 	string fullPath = s_strRelativePath + pszFileName;
-	return CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+	unsigned char * pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+    if (! pData && getIsPopupNotify())
+    {
+        std::string title = "Notification";
+        std::string msg = "Get data from file(";
+        msg.append(pszFileName).append(") failed!");
+        CCMessageBox(msg.c_str(), title.c_str());
+    }
+    return pData;
 }
 
 void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)

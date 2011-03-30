@@ -36,6 +36,7 @@ static const int kMaxLogLen = 255;
 @brief	Output Debug message.
 */
 void CC_DLL CCLog(const char * pszFormat, ...);
+void CC_DLL CCMessageBox(const char * pszMsg, const char * pszTitle);
 
 NS_CC_END;
 

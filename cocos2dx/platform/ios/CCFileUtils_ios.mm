@@ -38,83 +38,83 @@ THE SOFTWARE.
 static const char *static_ccRemoveHDSuffixFromFile( const char *pszPath)
 {
 #if CC_IS_RETINA_DISPLAY_SUPPORTED
-    
-        if(cocos2d::CC_CONTENT_SCALE_FACTOR() == 2 ) {
-                NSString *path = [NSString stringWithUTF8String: pszPath];
-                NSString *name = [path lastPathComponent];
-                NSString *suffix = [NSString stringWithUTF8String: CC_RETINA_DISPLAY_FILENAME_SUFFIX];
-                
-                        // check if path already has the suffix.
-                if( [name rangeOfString: suffix].location != NSNotFound ) {
-			
-                        CCLOG("cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
-            
-                        NSString *newLastname = [name stringByReplacingOccurrencesOfString: suffix withString:@""];
-			
-                        NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
-                        return [[pathWithoutLastname stringByAppendingPathComponent:newLastname] UTF8String];
-                }		
-        }
-    
+
+    if(cocos2d::CC_CONTENT_SCALE_FACTOR() == 2 ) {
+        NSString *path = [NSString stringWithUTF8String: pszPath];
+        NSString *name = [path lastPathComponent];
+        NSString *suffix = [NSString stringWithUTF8String: CC_RETINA_DISPLAY_FILENAME_SUFFIX];
+
+        // check if path already has the suffix.
+        if( [name rangeOfString: suffix].location != NSNotFound ) {
+
+            CCLOG("cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+
+            NSString *newLastname = [name stringByReplacingOccurrencesOfString: suffix withString:@""];
+
+            NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
+            return [[pathWithoutLastname stringByAppendingPathComponent:newLastname] UTF8String];
+        }		
+    }
+
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED
-    
-        return pszPath;
+
+    return pszPath;
 }
 
 static NSString* getDoubleResolutionImage(NSString* path)
 {
 #if CC_IS_RETINA_DISPLAY_SUPPORTED
-    
-	if( cocos2d::CC_CONTENT_SCALE_FACTOR() == 2 )
-	{
-		
-		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
-		NSString *name = [pathWithoutExtension lastPathComponent];
-		NSString *suffix = [NSString stringWithUTF8String: CC_RETINA_DISPLAY_FILENAME_SUFFIX];
-                
-		// check if path already has the suffix.
-		if( [name rangeOfString: suffix].location != NSNotFound ) {
-            
-			CCLOG("cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
-			return path;
-		}
-        
-		
-		NSString *extension = [path pathExtension];
-		
-		if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
-		{
-			// All ccz / gz files should be in the format filename.xxx.ccz
-			// so we need to pull off the .xxx part of the extension as well
-			extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
-			pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
-		}
-		
-		
-		NSString *retinaName = [pathWithoutExtension stringByAppendingString: suffix];
-		retinaName = [retinaName stringByAppendingPathExtension:extension];
-        
-                NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-		if( [fileManager fileExistsAtPath:retinaName] )
-			return retinaName;
-        
-		CCLOG("cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
-	}
-	
+
+    if( cocos2d::CC_CONTENT_SCALE_FACTOR() == 2 )
+    {
+
+        NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
+        NSString *name = [pathWithoutExtension lastPathComponent];
+        NSString *suffix = [NSString stringWithUTF8String: CC_RETINA_DISPLAY_FILENAME_SUFFIX];
+
+        // check if path already has the suffix.
+        if( [name rangeOfString: suffix].location != NSNotFound ) {
+
+            CCLOG("cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+            return path;
+        }
+
+
+        NSString *extension = [path pathExtension];
+
+        if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
+        {
+            // All ccz / gz files should be in the format filename.xxx.ccz
+            // so we need to pull off the .xxx part of the extension as well
+            extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
+            pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
+        }
+
+
+        NSString *retinaName = [pathWithoutExtension stringByAppendingString: suffix];
+        retinaName = [retinaName stringByAppendingPathExtension:extension];
+
+        NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+        if( [fileManager fileExistsAtPath:retinaName] )
+            return retinaName;
+
+        CCLOG("cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
+    }
+
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED
-	
-	return path;
+
+    return path;
 }
 
 static const char* static_fullPathFromRelativePath(const char *pszRelativePath)
 
 {
-    
-                // NSAssert(pszRelativePath != nil, @"CCFileUtils: Invalid path");
-    
-        // do not convert an absolute path (starting with '/')
-	NSString *relPath = [NSString stringWithUTF8String: pszRelativePath];
-	NSString *fullpath = nil;
+
+    // NSAssert(pszRelativePath != nil, @"CCFileUtils: Invalid path");
+
+    // do not convert an absolute path (starting with '/')
+    NSString *relPath = [NSString stringWithUTF8String: pszRelativePath];
+    NSString *fullpath = nil;
 	
 	// only if it is not an absolute path
 	if( ! [relPath isAbsolutePath] )
@@ -319,15 +319,15 @@ public:
     
     // record the resource path
     static char s_pszResourcePath[MAX_PATH] = {0};
-    
+
     void CCFileUtils::setResourcePath(const char *pszResourcePath)
     {
-                    // NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-                    // NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
-        
+        // NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
+        // NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
+
         strcpy(s_pszResourcePath, pszResourcePath);
     }
-    
+
     const char* CCFileUtils::getResourcePath()
     {
         return s_pszResourcePath;
@@ -337,18 +337,18 @@ public:
     {
         assert( out );
         assert( &*out );
-        
+
         int size = 0;
         FILE *f = fopen(filename, "rb");
         if( !f ) { 
             *out = NULL;
             return -1;
         } 
-        
+
         fseek(f, 0, SEEK_END);
         size = ftell(f);
         fseek(f, 0, SEEK_SET);
-        
+
         *out = (unsigned char*)malloc(size);
         int read = fread(*out, 1, size, f);
         if( read != size ) { 
@@ -356,23 +356,23 @@ public:
             *out = NULL;
             return -1;
         }
-        
+
         fclose(f);
-        
+
         return size;
     }
-    
+
     std::string& CCFileUtils::ccRemoveHDSuffixFromFile(std::string& path )
     {
         path = static_ccRemoveHDSuffixFromFile(path.c_str());
         return path;
     }
-    
+
     const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     {
         return static_fullPathFromRelativePath(pszRelativePath);
     }
-    
+
     const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
     {
         std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
@@ -389,7 +389,7 @@ public:
     }
     unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
     {
-        unsigned char * Buffer = NULL;
+        unsigned char * pBuffer = NULL;
 
         do 
         {
@@ -400,12 +400,20 @@ public:
             fseek(fp,0,SEEK_END);
             *pSize = ftell(fp);
             fseek(fp,0,SEEK_SET);
-            Buffer = new unsigned char[*pSize];
-            *pSize = fread(Buffer,sizeof(unsigned char), *pSize,fp);
+            pBuffer = new unsigned char[*pSize];
+            *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
             fclose(fp);
         } while (0);
 
-        return Buffer;
+        if (! pBuffer && getIsPopupNotify()) 
+        {
+            std::string title = "Notification";
+            std::string msg = "Get data from file(";
+            msg.append(pszFileName).append(") failed!");
+
+            CCMessageBox(msg.c_str(), title.c_str());
+        }
+        return pBuffer;
     }
     void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
     {
@@ -415,4 +423,19 @@ public:
     {
         CCAssert(0, "Have not implement!");
     }
-}//namespace   cocos2d 
+
+    // notification support when getFileData from a invalid file
+    static bool s_bPopupNotify = true;
+
+    void CCFileUtils::setIsPopupNotify(bool bNotify)
+    {
+        s_bPopupNotify = bNotify;
+    }
+
+    bool CCFileUtils::getIsPopupNotify()
+    {
+        return s_bPopupNotify;
+    }
+
+}//namespace cocos2d
+

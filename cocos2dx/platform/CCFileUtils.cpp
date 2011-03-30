@@ -287,6 +287,21 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
     return pBuffer;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Notification support when getFileData from invalid file path.
+//////////////////////////////////////////////////////////////////////////
+static bool s_bPopupNotify = true;
+
+void CCFileUtils::setIsPopupNotify(bool bNotify)
+{
+    s_bPopupNotify = bNotify;
+}
+
+bool CCFileUtils::getIsPopupNotify()
+{
+    return s_bPopupNotify;
+}
+
 NS_CC_END;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -301,4 +316,4 @@ NS_CC_END;
 #include "android/CCFileUtils_android.cpp"
 #endif
 
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
