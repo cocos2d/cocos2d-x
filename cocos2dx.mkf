@@ -45,6 +45,7 @@ files
 	("cocos2dx/cocoa")
 	[cocoa]
 	"*.cpp"
+	"*.h"
 	
 	("cocos2dx/effects")
 	[effects]
