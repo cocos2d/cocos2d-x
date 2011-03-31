@@ -48,9 +48,13 @@ m_nSoundId(0)
 
 	for (int i = 0; i < m_nTestCount; ++i)
 	{
-		CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
-		CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(CocosDenshionTest::menuCallback));
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+		CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(testItems[i].c_str(),  "fonts/arial16.fnt");
+#else
+        CCLabelTTF* label = CCLabelTTF::labelWithString(testItems[i].c_str(), "Arial", 24);
+#endif		
+        CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(CocosDenshionTest::menuCallback));
+		
 		m_pItmeMenu->addChild(pMenuItem, i + 10000);
 		pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
 	}

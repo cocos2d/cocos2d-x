@@ -14,6 +14,7 @@ subprojects
 	Box2D
 	cocos2dx
 #	chipmunk
+	CocosDenshion
 }
 
 
@@ -80,8 +81,8 @@ files
 
 	[Tests/CocosDenshionTest]
 	("../tests/CocosDenshionTest")
-#	"*.h"
-#	"*.cpp"
+	"*.h"
+	"*.cpp"
 
 	[Tests/CocosNodeTest]
 	("../tests/CocosNodeTest")
@@ -199,8 +200,10 @@ files
 	"*.h"
 	"*.cpp"
 
-
-
+	[Tests/ZwoptexTest]
+	("../tests/ZwoptexTest")
+	"*.h"
+	"*.cpp"
 }
 
 
