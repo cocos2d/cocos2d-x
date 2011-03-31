@@ -70,6 +70,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/Tumble.o \
 	$(OBJECTS_DIR)/UnsafeOps.o \
 	$(OBJECTS_DIR)/ClickAndMoveTest.o \
+	$(OBJECTS_DIR)/CocosDenshionTest.o \
 	$(OBJECTS_DIR)/CocosNodeTest.o \
 	$(OBJECTS_DIR)/DrawPrimitivesTest.o \
 	$(OBJECTS_DIR)/EaseActionsTest.o \
@@ -101,7 +102,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/Paddle.o \
 	$(OBJECTS_DIR)/TouchesTest.o \
 	$(OBJECTS_DIR)/TransitionsTest.o \
-	$(OBJECTS_DIR)/CocosDenshionTest.o
+	$(OBJECTS_DIR)/ZwoptexTest.o
 
 ADD_OBJECTS += 
 
@@ -225,6 +226,9 @@ $(OBJECTS_DIR)/UnsafeOps.o : ../tests/ChipmunkTest/UnsafeOps.cpp
 $(OBJECTS_DIR)/ClickAndMoveTest.o : ../tests/ClickAndMoveTest/ClickAndMoveTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ClickAndMoveTest.o ../tests/ClickAndMoveTest/ClickAndMoveTest.cpp
 
+$(OBJECTS_DIR)/CocosDenshionTest.o : ../tests/CocosDenshionTest/CocosDenshionTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CocosDenshionTest.o ../tests/CocosDenshionTest/CocosDenshionTest.cpp
+
 $(OBJECTS_DIR)/CocosNodeTest.o : ../tests/CocosNodeTest/CocosNodeTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CocosNodeTest.o ../tests/CocosNodeTest/CocosNodeTest.cpp
 
@@ -318,7 +322,6 @@ $(OBJECTS_DIR)/TouchesTest.o : ../tests/TouchesTest/TouchesTest.cpp
 $(OBJECTS_DIR)/TransitionsTest.o : ../tests/TransitionsTest/TransitionsTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TransitionsTest.o ../tests/TransitionsTest/TransitionsTest.cpp
 
-
-$(OBJECTS_DIR)/CocosDenshionTest.o : ../tests/CocosDenshionTest/CocosDenshionTest.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CocosDenshionTest.o ../tests/CocosDenshionTest/CocosDenshionTest.cpp
+$(OBJECTS_DIR)/ZwoptexTest.o : ../tests/ZwoptexTest/ZwoptexTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ZwoptexTest.o ../tests/ZwoptexTest/ZwoptexTest.cpp
 
