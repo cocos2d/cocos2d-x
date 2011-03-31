@@ -153,6 +153,32 @@ public:
             m_pArray = NULL;
             m_bInArray = false;
         }
+        else if (sName == "true")
+        {
+            CCString *str = new CCString("1");
+            if (m_bInArray)
+            {
+                m_pArray->addObject(str);
+            }
+            else
+            {
+                m_pCurDict->setObject(str, m_sCurKey);
+            }
+            str->release();
+        }
+        else if (sName == "false")
+        {
+            CCString *str = new CCString("0");
+            if (m_bInArray)
+            {
+                m_pArray->addObject(str);
+            }
+            else
+            {
+                m_pCurDict->setObject(str, m_sCurKey);
+            }
+            str->release();
+        }
         m_tState = SAX_NONE;
     }
 

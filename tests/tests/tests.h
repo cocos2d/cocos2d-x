@@ -31,6 +31,7 @@
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
 #include "PerformanceTest/PerformanceTest.h"
+#include "ZwoptexTest/ZwoptexTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -71,6 +72,7 @@ enum
     TEST_KEYPAD,
 	TEST_COCOSDENSHION,
     TEST_PERFORMANCE,
+    TEST_ZWOPTEX,
 
     TESTS_COUNT,
 };
@@ -107,7 +109,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "Accelerometer",
     "KeypadTest",
 	"CocosDenshionTest",
-    "PerformanceTest"
+    "PerformanceTest",
+    "ZwoptexTest"
 };
 
 #endif

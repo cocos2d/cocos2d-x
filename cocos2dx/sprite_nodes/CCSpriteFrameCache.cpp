@@ -160,7 +160,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 			CCPoint spriteOffset = CCPointFromString(valueForKey("spriteOffset", frameDict));
 			CCSize spriteSourceSize = CCSizeFromString(valueForKey("spriteSourceSize", frameDict));
 			CCRect textureRect = CCRectFromString(valueForKey("textureRect", frameDict));
-			bool textureRotated = atoi(valueForKey("textureRotated", frameDict)) == 0;
+            bool textureRotated = atoi(valueForKey("textureRotated", frameDict)) == 0 ? false : true;
 
 			// get aliases
 			CCMutableArray<CCString*> *aliases = (CCMutableArray<CCString*> *) (frameDict->objectForKey(std::string("aliases")));

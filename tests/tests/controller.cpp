@@ -83,6 +83,8 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
     case TEST_PERFORMANCE:
         pScene = new PerformanceTestScene(); break;
+    case TEST_ZWOPTEX:
+        pScene = new ZwoptexTestScene(); break;
     default:
         break;
     }
