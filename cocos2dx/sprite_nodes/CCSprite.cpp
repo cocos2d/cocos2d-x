@@ -61,52 +61,58 @@ struct transformValues_ {
 CCSprite* CCSprite::spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect)
 {
 	CCSprite *pobSprite = new CCSprite();
-	if (pobSprite->initWithBatchNode(batchNode, rect))
+	if (pobSprite && pobSprite->initWithBatchNode(batchNode, rect))
 	{
         pobSprite->autorelease();
-	}
-	else
-	{
-		delete pobSprite;
-		pobSprite = NULL;
-	}	
-
-	return pobSprite;
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 bool CCSprite::initWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect)
 {
-	bool ret = initWithTexture(batchNode->getTexture(), rect);
-	useBatchNode(batchNode);
-
-	return ret;
+	if (initWithTexture(batchNode->getTexture(), rect))
+    {
+	    useBatchNode(batchNode);
+        return true;
+    }
+	return false;
 }
 
 bool CCSprite::initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, CCRect rect)
 {
-	bool ret = initWithTexture(batchNode->getTexture());
-	setTextureRectInPixels(rect, false, rect.size);
-	useBatchNode(batchNode);
-
-	return ret;
+	if (initWithTexture(batchNode->getTexture()))
+    {
+	    setTextureRectInPixels(rect, false, rect.size);
+	    useBatchNode(batchNode);
+        return true;
+    }
+	return false;
 }
 
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
 {
 	CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithTexture(pTexture);
-	pobSprite->autorelease();
-
-	return pobSprite;
+	if (pobSprite && pobSprite->initWithTexture(pTexture))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CCRect rect)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithTexture(pTexture, rect);
-	pobSprite->autorelease();
-
-	return pobSprite;
+	if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset)
@@ -119,28 +125,37 @@ CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoin
 CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithFile(pszFileName);
-	pobSprite->autorelease();
-
-	return pobSprite;
+    if (pobSprite && pobSprite->initWithFile(pszFileName))
+    {
+        pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 CCSprite* CCSprite::spriteWithFile(const char *pszFileName, CCRect rect)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithFile(pszFileName, rect);
-	pobSprite->autorelease();
-
-	return pobSprite;
+	if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithSpriteFrame(pSpriteFrame);
-	pobSprite->autorelease();
-
-	return pobSprite;
+    if (pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
