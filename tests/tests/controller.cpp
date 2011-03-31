@@ -78,9 +78,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
 	case TEST_COCOSDENSHION:
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 		pScene = new CocosDenshionTestScene(); break;
-#endif
     case TEST_PERFORMANCE:
         pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:

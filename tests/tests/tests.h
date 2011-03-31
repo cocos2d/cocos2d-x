@@ -32,10 +32,10 @@
 #include "KeypadTest/KeypadTest.h"
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
+#include "CocosDenshionTest/CocosDenshionTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "ChipmunkTest/cocos2dChipmunkDemo.h"
-#include "CocosDenshionTest/CocosDenshionTest.h"
 #endif
 
 enum
