@@ -760,6 +760,8 @@
 		BF835D7A13276C7900F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B2713276C7900F3C033 /* CCTouchDispatcher.cpp */; };
 		BF835D7B13276C7900F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B2813276C7900F3C033 /* CCTouchHandler.cpp */; };
 		BF835D7C13276C7900F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835B2913276C7900F3C033 /* CCTouchHandler.h */; };
+		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
+		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		D44C6142132DFED60009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6141132DFED60009C878 /* OpenAL.framework */; };
 		D44C6146132DFF020009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6145132DFF020009C878 /* AVFoundation.framework */; };
 		D44C614A132DFF0F0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6149132DFF0F0009C878 /* AudioToolbox.framework */; };
@@ -1662,6 +1664,7 @@
 		BF835B2713276C7900F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF835B2813276C7900F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF835B2913276C7900F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
+		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		D44C6141132DFED60009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C6145132DFF020009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C6149132DFF0F0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -2792,6 +2795,7 @@
 		BF83594513276C7700F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */,
 				BF83594613276C7700F3C033 /* AccelerometerDelegateWrapper.h */,
 				BF83594713276C7700F3C033 /* AccelerometerDelegateWrapper.mm */,
 				BF83594813276C7700F3C033 /* CCAccelerometer_ios.h */,
@@ -4274,6 +4278,7 @@
 				BF340BEF133B26A70035A4D1 /* PerformanceTouchesTest.cpp in Sources */,
 				BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				D4E39D321342E23F00EBA039 /* ZwoptexTest.cpp in Sources */,
+				BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4377,6 +4382,7 @@
 				BF835D7B13276C7900F3C033 /* CCTouchHandler.cpp in Sources */,
 				BF340A47133AE3250035A4D1 /* CCNS.cpp in Sources */,
 				D4F1A50B133B3F5F00937FFA /* CCSAXParser.cpp in Sources */,
+				BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
