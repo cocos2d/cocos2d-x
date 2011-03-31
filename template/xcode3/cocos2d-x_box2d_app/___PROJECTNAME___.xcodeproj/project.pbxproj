@@ -109,9 +109,9 @@
 		BF152AD112E16ADD00703484 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */; };
 		BF340A63133AE4610035A4D1 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340A61133AE4610035A4D1 /* CCNS.cpp */; };
 		BF340A64133AE4610035A4D1 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = BF340A62133AE4610035A4D1 /* CCNS.h */; };
-		BF3160C4133DE37B00E0532D /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3160C3133DE37B00E0532D /* CCFileUtils.h */; };
-		BF3160C7133DE39600E0532D /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3160C5133DE39600E0532D /* CCSAXParser.cpp */; };
-		BF3160C8133DE39600E0532D /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3160C6133DE39600E0532D /* CCSAXParser.h */; };
+		BF5FD6FF13430AD000F22186 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF5FD6FC13430AD000F22186 /* CCFileUtils.h */; };
+		BF5FD70013430AD000F22186 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF5FD6FD13430AD000F22186 /* CCSAXParser.cpp */; };
+		BF5FD70113430AD000F22186 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF5FD6FE13430AD000F22186 /* CCSAXParser.h */; };
 		BF76375F13338AA9009E0E50 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF76375E13338AA9009E0E50 /* CCCamera.cpp */; };
 		BF83640B1328789500F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8364081328789500F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		BF8366AE132878B700F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83640E132878B500F3C033 /* CCAction.cpp */; };
@@ -333,8 +333,6 @@
 		BF83694413287BFE00F3C033 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF83694313287BFE00F3C033 /* libxml2.dylib */; };
 		D40823C0132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40823BE132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		D40823C1132F415F00F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823BF132F415F00F44E75 /* main.m */; };
-		D45ADFFF133F71B50099BA19 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D45ADFFD133F71B50099BA19 /* CCSAXParser.cpp */; };
-		D45AE000133F71B50099BA19 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D45ADFFE133F71B50099BA19 /* CCSAXParser.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -457,9 +455,9 @@
 		BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
 		BF340A61133AE4610035A4D1 /* CCNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNS.cpp; sourceTree = "<group>"; };
 		BF340A62133AE4610035A4D1 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
-		BF3160C3133DE37B00E0532D /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
-		BF3160C5133DE39600E0532D /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
-		BF3160C6133DE39600E0532D /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
+		BF5FD6FC13430AD000F22186 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
+		BF5FD6FD13430AD000F22186 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
+		BF5FD6FE13430AD000F22186 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		BF76375E13338AA9009E0E50 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF8364081328789500F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
 		BF8364091328789500F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
@@ -684,8 +682,6 @@
 		D40823BE132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		D40823BF132F415F00F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
 		D408240F132F437D00F44E75 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER____Prefix.pch"; sourceTree = "<group>"; };
-		D45ADFFD133F71B50099BA19 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
-		D45ADFFE133F71B50099BA19 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1233,9 +1229,9 @@
 		BF83649E132878B500F3C033 /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				BF3160C5133DE39600E0532D /* CCSAXParser.cpp */,
-				BF3160C6133DE39600E0532D /* CCSAXParser.h */,
-				BF3160C3133DE37B00E0532D /* CCFileUtils.h */,
+				BF5FD6FC13430AD000F22186 /* CCFileUtils.h */,
+				BF5FD6FD13430AD000F22186 /* CCSAXParser.cpp */,
+				BF5FD6FE13430AD000F22186 /* CCSAXParser.h */,
 				BF8364AD132878B500F3C033 /* CCAccelerometer_platform.h */,
 				BF8364AE132878B500F3C033 /* CCApplication_platform.h */,
 				BF8364AF132878B500F3C033 /* CCArchOptimalParticleSystem.h */,
@@ -1256,8 +1252,6 @@
 				BF8364C1132878B500F3C033 /* CCParticleSystemPoint_platform.h */,
 				BF8364C2132878B500F3C033 /* CCPlatformConfig.h */,
 				BF8364C3132878B500F3C033 /* CCPlatformMacros.h */,
-				D45ADFFD133F71B50099BA19 /* CCSAXParser.cpp */,
-				D45ADFFE133F71B50099BA19 /* CCSAXParser.h */,
 				BF8364C4132878B500F3C033 /* CCStdC.cpp */,
 				BF8364C5132878B500F3C033 /* CCStdC.h */,
 				BF8364C6132878B500F3C033 /* CCThread.cpp */,
@@ -1571,8 +1565,8 @@
 				BF8368F3132878B700F3C033 /* ZipUtils.h in Headers */,
 				BF836900132878B700F3C033 /* CCTouchHandler.h in Headers */,
 				BF340A64133AE4610035A4D1 /* CCNS.h in Headers */,
-				BF3160C4133DE37B00E0532D /* CCFileUtils.h in Headers */,
-				BF3160C8133DE39600E0532D /* CCSAXParser.h in Headers */,
+				BF5FD6FF13430AD000F22186 /* CCFileUtils.h in Headers */,
+				BF5FD70113430AD000F22186 /* CCSAXParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1810,8 +1804,7 @@
 				BF8368FF132878B700F3C033 /* CCTouchHandler.cpp in Sources */,
 				BF76375F13338AA9009E0E50 /* CCCamera.cpp in Sources */,
 				BF340A63133AE4610035A4D1 /* CCNS.cpp in Sources */,
-				BF3160C4133DE37B00E0532D /* CCFileUtils.h in Headers */,
-				BF3160C8133DE39600E0532D /* CCSAXParser.h in Headers */,
+				BF5FD70013430AD000F22186 /* CCSAXParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1972,7 +1965,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-fvisibility=hidden";
 				PREBINDING = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1994,7 +1987,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "-fvisibility=hidden";
 				PREBINDING = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

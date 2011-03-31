@@ -65,7 +65,7 @@ public:
 	bool initWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
 
 	/** polling function */
-	void update(ccTime delta);
+	void updateMotion(ccTime delta);
 protected:
 	float		m_fSegThreshold;
 	float		m_fWidth;

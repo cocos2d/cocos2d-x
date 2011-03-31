@@ -766,6 +766,8 @@
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D4E39D2E1342E22700EBA039 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = D4E39D2D1342E22700EBA039 /* zwoptex */; };
+		D4E39D321342E23F00EBA039 /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E39D301342E23F00EBA039 /* ZwoptexTest.cpp */; };
 		D4F1A270133B2FE700937FFA /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F1A26F133B2FE700937FFA /* CCSAXParser.h */; };
 		D4F1A50B133B3F5F00937FFA /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */; };
 		D4F9F37E12E545ED005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F37D12E545ED005CA6D2 /* Icon.png */; };
@@ -1666,6 +1668,9 @@
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D4E39D2D1342E22700EBA039 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../Res/zwoptex; sourceTree = SOURCE_ROOT; };
+		D4E39D301342E23F00EBA039 /* ZwoptexTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZwoptexTest.cpp; path = ZwoptexTest/ZwoptexTest.cpp; sourceTree = "<group>"; };
+		D4E39D311342E23F00EBA039 /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZwoptexTest.h; path = ZwoptexTest/ZwoptexTest.h; sourceTree = "<group>"; };
 		D4F1A26F133B2FE700937FFA /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -2034,6 +2039,7 @@
 		BF1B1A7512951B5800E99D96 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D4E39D2D1342E22700EBA039 /* zwoptex */,
 				BF31DE9812E9779300D4F513 /* background.mp3 */,
 				BF31DE9912E9779300D4F513 /* effect1.wav */,
 				D4F9F37D12E545ED005CA6D2 /* Icon.png */,
@@ -2095,6 +2101,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				D4E39D2F1342E22F00EBA039 /* ZwoptexTest */,
 				BF340BDE133B26A70035A4D1 /* PerformanceTest */,
 				BF137F45131E3A7B000F7B64 /* LabelTest */,
 				BF31E11912E979A100D4F513 /* AccelerometerTest */,
@@ -3508,6 +3515,15 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
+		D4E39D2F1342E22F00EBA039 /* ZwoptexTest */ = {
+			isa = PBXGroup;
+			children = (
+				D4E39D301342E23F00EBA039 /* ZwoptexTest.cpp */,
+				D4E39D311342E23F00EBA039 /* ZwoptexTest.h */,
+			);
+			name = ZwoptexTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4180,6 +4196,7 @@
 				D4F9F37E12E545ED005CA6D2 /* Icon.png in Resources */,
 				BF31DE9A12E9779300D4F513 /* background.mp3 in Resources */,
 				BF31DE9B12E9779300D4F513 /* effect1.wav in Resources */,
+				D4E39D2E1342E22700EBA039 /* zwoptex in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4256,6 +4273,7 @@
 				BF340BEE133B26A70035A4D1 /* PerformanceTextureTest.cpp in Sources */,
 				BF340BEF133B26A70035A4D1 /* PerformanceTouchesTest.cpp in Sources */,
 				BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */,
+				D4E39D321342E23F00EBA039 /* ZwoptexTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4476,7 +4494,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhe Wang (P3QKHC24KY)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -4503,7 +4521,6 @@
 				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = iphone;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -4513,7 +4530,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhe Wang (P3QKHC24KY)";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4537,7 +4554,6 @@
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
 				PRODUCT_NAME = iphone;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
