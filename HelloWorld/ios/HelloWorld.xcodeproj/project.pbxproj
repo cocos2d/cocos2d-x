@@ -558,6 +558,8 @@
 		BF8356A91327611D00F3C033 /* ESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8356931327611D00F3C033 /* ESRenderer.h */; };
 		BF8356AA1327611D00F3C033 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8356941327611D00F3C033 /* OpenGL_Internal.h */; };
 		BF8357B813276BCA00F3C033 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
+		BFA008F81344267700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008F71344267700289DC3 /* CCCommon_ios.mm */; };
+		BFA008F91344267700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008F71344267700289DC3 /* CCCommon_ios.mm */; };
 		D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F25D12E53386005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
@@ -1140,6 +1142,7 @@
 		BF8356921327611D00F3C033 /* ES1Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES1Renderer.m; sourceTree = "<group>"; };
 		BF8356931327611D00F3C033 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
 		BF8356941327611D00F3C033 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
+		BFA008F71344267700289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloWorld-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4F9F25D12E53386005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2235,6 +2238,7 @@
 		BF83567E1327611D00F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BFA008F71344267700289DC3 /* CCCommon_ios.mm */,
 				BF83567F1327611D00F3C033 /* AccelerometerDelegateWrapper.h */,
 				BF8356801327611D00F3C033 /* AccelerometerDelegateWrapper.mm */,
 				BF8356811327611D00F3C033 /* CCAccelerometer_ios.h */,
@@ -2789,6 +2793,7 @@
 				BF755FAA12A1013F00450234 /* AppDelegate.cpp in Sources */,
 				BF755FAB12A1013F00450234 /* HelloWorldScene.cpp in Sources */,
 				BF365AA812A103F70050DCF4 /* AppController.mm in Sources */,
+				BFA008F81344267700289DC3 /* CCCommon_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2892,6 +2897,7 @@
 				BF8356A81327611D00F3C033 /* ES1Renderer.m in Sources */,
 				BF315F91133DDEB000E0532D /* CCSAXParser.cpp in Sources */,
 				BF233C2E1341748900494987 /* CCNS.cpp in Sources */,
+				BFA008F91344267700289DC3 /* CCCommon_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

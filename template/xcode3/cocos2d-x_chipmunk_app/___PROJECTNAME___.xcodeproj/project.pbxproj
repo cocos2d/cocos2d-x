@@ -87,9 +87,9 @@
 		BF15715C12E3D730001F8977 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15715B12E3D730001F8977 /* libxml2.dylib */; };
 		BF340A7E133AE4AE0035A4D1 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340A7C133AE4AE0035A4D1 /* CCNS.cpp */; };
 		BF340A7F133AE4AE0035A4D1 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = BF340A7D133AE4AE0035A4D1 /* CCNS.h */; };
-		BF3160E3133DE3F700E0532D /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3160E0133DE3F700E0532D /* CCFileUtils.h */; };
-		BF3160E4133DE3F700E0532D /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3160E1133DE3F700E0532D /* CCSAXParser.cpp */; };
-		BF3160E5133DE3F700E0532D /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3160E2133DE3F700E0532D /* CCSAXParser.h */; };
+		BF5FD72413430B1900F22186 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF5FD72113430B1900F22186 /* CCFileUtils.h */; };
+		BF5FD72513430B1900F22186 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF5FD72213430B1900F22186 /* CCSAXParser.cpp */; };
+		BF5FD72613430B1900F22186 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF5FD72313430B1900F22186 /* CCSAXParser.h */; };
 		BF76377813338AE6009E0E50 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF76377713338AE6009E0E50 /* CCCamera.cpp */; };
 		BF836C0D13287D3600F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696D13287D3400F3C033 /* CCAction.cpp */; };
 		BF836C0E13287D3600F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83696E13287D3400F3C033 /* CCActionCamera.cpp */; };
@@ -307,12 +307,11 @@
 		BF836E5D13287D3600F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF836C0A13287D3600F3C033 /* CCTouchDispatcher.cpp */; };
 		BF836E5E13287D3600F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF836C0B13287D3600F3C033 /* CCTouchHandler.cpp */; };
 		BF836E5F13287D3600F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF836C0C13287D3600F3C033 /* CCTouchHandler.h */; };
+		BFA008E61344246700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008E51344246700289DC3 /* CCCommon_ios.mm */; };
 		D40823D0132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
 		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245D132F45C200F44E75 /* HelloWorldScene.cpp */; };
-		D45AE024133F71EB0099BA19 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D45AE022133F71EB0099BA19 /* CCSAXParser.cpp */; };
-		D45AE025133F71EB0099BA19 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D45AE023133F71EB0099BA19 /* CCSAXParser.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -412,9 +411,9 @@
 		BF15715B12E3D730001F8977 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
 		BF340A7C133AE4AE0035A4D1 /* CCNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNS.cpp; sourceTree = "<group>"; };
 		BF340A7D133AE4AE0035A4D1 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
-		BF3160E0133DE3F700E0532D /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
-		BF3160E1133DE3F700E0532D /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
-		BF3160E2133DE3F700E0532D /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
+		BF5FD72113430B1900F22186 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
+		BF5FD72213430B1900F22186 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
+		BF5FD72313430B1900F22186 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		BF76377713338AE6009E0E50 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCamera.cpp; sourceTree = "<group>"; };
 		BF83696D13287D3400F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		BF83696E13287D3400F3C033 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -632,6 +631,7 @@
 		BF836C0A13287D3600F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF836C0B13287D3600F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF836C0C13287D3600F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
+		BFA008E51344246700289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		D40823CD132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
 		D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		D40823CF132F41B600F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
@@ -640,8 +640,6 @@
 		D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		D408245D132F45C200F44E75 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
 		D408245E132F45C200F44E75 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
-		D45AE022133F71EB0099BA19 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
-		D45AE023133F71EB0099BA19 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1150,9 +1148,9 @@
 		BF8369FD13287D3500F3C033 /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				BF3160E0133DE3F700E0532D /* CCFileUtils.h */,
-				BF3160E1133DE3F700E0532D /* CCSAXParser.cpp */,
-				BF3160E2133DE3F700E0532D /* CCSAXParser.h */,
+				BF5FD72113430B1900F22186 /* CCFileUtils.h */,
+				BF5FD72213430B1900F22186 /* CCSAXParser.cpp */,
+				BF5FD72313430B1900F22186 /* CCSAXParser.h */,
 				BF836A0C13287D3500F3C033 /* CCAccelerometer_platform.h */,
 				BF836A0D13287D3500F3C033 /* CCApplication_platform.h */,
 				BF836A0E13287D3500F3C033 /* CCArchOptimalParticleSystem.h */,
@@ -1174,8 +1172,6 @@
 				BF836A2113287D3500F3C033 /* CCPlatformConfig.h */,
 				BF836A2213287D3500F3C033 /* CCPlatformMacros.h */,
 				BF836A2313287D3500F3C033 /* CCStdC.cpp */,
-				D45AE022133F71EB0099BA19 /* CCSAXParser.cpp */,
-				D45AE023133F71EB0099BA19 /* CCSAXParser.h */,
 				BF836A2413287D3500F3C033 /* CCStdC.h */,
 				BF836A2513287D3500F3C033 /* CCThread.cpp */,
 				BF836A2613287D3500F3C033 /* CCThread.h */,
@@ -1190,6 +1186,7 @@
 		BF836A2813287D3500F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BFA008E51344246700289DC3 /* CCCommon_ios.mm */,
 				BF836A2913287D3500F3C033 /* AccelerometerDelegateWrapper.h */,
 				BF836A2A13287D3500F3C033 /* AccelerometerDelegateWrapper.mm */,
 				BF836A2B13287D3500F3C033 /* CCAccelerometer_ios.h */,
@@ -1490,8 +1487,8 @@
 				BF836E5213287D3600F3C033 /* ZipUtils.h in Headers */,
 				BF836E5F13287D3600F3C033 /* CCTouchHandler.h in Headers */,
 				BF340A7F133AE4AE0035A4D1 /* CCNS.h in Headers */,
-				BF3160E3133DE3F700E0532D /* CCFileUtils.h in Headers */,
-				BF3160E5133DE3F700E0532D /* CCSAXParser.h in Headers */,
+				BF5FD72413430B1900F22186 /* CCFileUtils.h in Headers */,
+				BF5FD72613430B1900F22186 /* CCSAXParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1716,7 +1713,8 @@
 				BF836E5E13287D3600F3C033 /* CCTouchHandler.cpp in Sources */,
 				BF76377813338AE6009E0E50 /* CCCamera.cpp in Sources */,
 				BF340A7E133AE4AE0035A4D1 /* CCNS.cpp in Sources */,
-				BF3160E4133DE3F700E0532D /* CCSAXParser.cpp in Sources */,
+				BF5FD72513430B1900F22186 /* CCSAXParser.cpp in Sources */,
+				BFA008E61344246700289DC3 /* CCCommon_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1883,7 +1881,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1903,7 +1901,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PREBINDING = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

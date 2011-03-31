@@ -118,31 +118,7 @@ NS_CC_END;
  ***************************************************/
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include <stdarg.h>
-#include <stdio.h>
-
-NS_CC_BEGIN;
-
-void CCLog(const char * pszFormat, ...)
-{
-    printf("Cocos2d: ");
-    char szBuf[MAX_LEN];
-    
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsprintf(szBuf, pszFormat, ap);
-    va_end(ap);
-    printf("%s", szBuf);
-    printf("\n");
-}
-
-// ios no MessageBox, use CCLog instead
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
-{
-    CCLog("%s: %s", pszTitle, pszMsg);
-}
-
-NS_CC_END;
+// implement in CCCommon_iso.mm
 
 #endif  // CC_PLATFORM_IOS
 
