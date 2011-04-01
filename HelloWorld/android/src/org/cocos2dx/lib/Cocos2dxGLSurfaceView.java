@@ -3,6 +3,7 @@ package org.cocos2dx.lib;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 public class Cocos2dxGLSurfaceView extends GLSurfaceView{
@@ -14,6 +15,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView{
     public Cocos2dxGLSurfaceView(Context context) {
         super(context);
         mRenderer = new Cocos2dxRenderer();
+        setFocusableInTouchMode(true);
         setRenderer(mRenderer);
     }
 
@@ -110,7 +112,21 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView{
         return true;
     }
     
-    /** Show an event in the LogCat view, for debugging */
+ @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	final int kc = keyCode;
+    	if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_MENU) {
+    		queueEvent(new Runnable() {
+	            @Override
+	            public void run() {
+	                mRenderer.handleKeyDown(kc);
+	            }
+    		});
+    		return true;
+    	}
+        return super.onKeyDown(keyCode, event);
+    }
+    // Show an event in the LogCat view, for debugging
     private void dumpEvent(MotionEvent event) {
        String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,
           "POINTER_DOWN" , "POINTER_UP" , "7?" , "8?" , "9?" };
