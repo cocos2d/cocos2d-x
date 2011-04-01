@@ -64,8 +64,8 @@ bool CCSpriteFrameCache::init(void)
 
 CCSpriteFrameCache::~CCSpriteFrameCache(void)
 {
-	m_pSpriteFrames->release();
-	m_pSpriteFramesAliases->release();
+	CC_SAFE_RELEASE(m_pSpriteFrames);
+	CC_SAFE_RELEASE(m_pSpriteFramesAliases);
 }
 
 void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string, CCObject*> *dictionary, CCTexture2D *pobTexture)

@@ -326,10 +326,10 @@ namespace cocos2d
 
 	CCGrid3D::~CCGrid3D(void)
 	{
-		free(m_pTexCoordinates);
-		free(m_pVertices);
-		free(m_pIndices);
-		free(m_pOriginalVertices);
+		CC_SAFE_FREE(m_pTexCoordinates);
+        CC_SAFE_FREE(m_pVertices);
+		CC_SAFE_FREE(m_pIndices);
+		CC_SAFE_FREE(m_pOriginalVertices);
 	}
 
 	void CCGrid3D::blit(void)
@@ -461,10 +461,10 @@ namespace cocos2d
 
 	CCTiledGrid3D::~CCTiledGrid3D(void)
 	{
-		free(m_pTexCoordinates);
-		free(m_pVertices);
-		free(m_pOriginalVertices);
-		free(m_pIndices);
+		CC_SAFE_FREE(m_pTexCoordinates);
+		CC_SAFE_FREE(m_pVertices);
+		CC_SAFE_FREE(m_pOriginalVertices);
+		CC_SAFE_FREE(m_pIndices);
 	}
 
 	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(cocos2d::ccGridSize gridSize, cocos2d::CCTexture2D *pTexture, bool bFlipped)

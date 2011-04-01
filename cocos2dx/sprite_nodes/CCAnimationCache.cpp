@@ -61,7 +61,7 @@ namespace cocos2d
 	CCAnimationCache::~CCAnimationCache()
 	{
 		CCLOGINFO("cocos2d: deallocing %p", this);
-		m_pAnimations->release();
+		CC_SAFE_RELEASE(m_pAnimations);
 	}
 
 	void CCAnimationCache::addAnimation(CCAnimation *animation, const char * name)

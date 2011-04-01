@@ -32,16 +32,13 @@ using namespace std;
 namespace   cocos2d {
 
 CCData::CCData(void)
+: m_pData(NULL)
 {
-	m_pData = NULL;
 }
 
 CCData::~CCData(void)
 {
-	if (m_pData)
-	{
-		delete[] m_pData;
-	}
+	CC_SAFE_DELETE_ARRAY(m_pData);
 }
 
 CCData* CCData::dataWithContentsOfFile(const string &strPath)

@@ -40,11 +40,7 @@ CCSet::CCSet(const CCSet &rSetObject)
 
 CCSet::~CCSet(void)
 {
-    if (m_pSet)
-    {
-        delete m_pSet;
-        m_pSet = NULL;
-    }
+	CC_SAFE_DELETE(m_pSet);
 }
 
 CCSet* CCSet::copy(void)

@@ -56,7 +56,12 @@ class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol
 	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 public:
-	CCMotionStreak(){}
+	CCMotionStreak()
+		: m_fSegThreshold(0.0)
+		, m_fWidth(0.0)
+		, m_pRibbon(NULL)
+		, m_pTexture(NULL)
+	{}
 	virtual ~CCMotionStreak(){}
 	/** creates the a MotionStreak. The image will be loaded using the TextureMgr. */
 	static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);

@@ -88,12 +88,8 @@ bool CCProgressTimer::initWithTexture(cocos2d::CCTexture2D *pTexture)
 
 CCProgressTimer::~CCProgressTimer(void)
 {
-	if (m_pVertexData)
-	{
-		delete[] m_pVertexData;
-	}
-
-	m_pSprite->release();
+	CC_SAFE_DELETE_ARRAY(m_pVertexData);
+	CC_SAFE_RELEASE(m_pSprite);
 }
 
 void CCProgressTimer::setPercentage(float fPercentage)
