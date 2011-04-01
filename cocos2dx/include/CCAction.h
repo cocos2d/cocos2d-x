@@ -119,7 +119,9 @@ protected:
 class CC_DLL CCFiniteTimeAction : public CCAction
 {
 public:
-	CCFiniteTimeAction(){}
+	CCFiniteTimeAction()
+		: m_fDuration(0)
+	{}
 	virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
 	inline ccTime getDuration(void) { return m_fDuration; }
@@ -145,7 +147,10 @@ class CCRepeatForever;
 class CC_DLL CCSpeed : public CCAction
 {
 public:
-	CCSpeed(){}
+	CCSpeed()
+		: m_fSpeed(0.0)
+		, m_pOther(NULL)
+	{}
 	virtual ~CCSpeed(void);
 
 	inline float getSpeed(void) { return m_fSpeed; }
@@ -187,7 +192,15 @@ Instead of using CCCamera as a "follower", use this action instead.
 class CC_DLL CCFollow : public CCAction
 {
 public:
-	CCFollow(){}
+	CCFollow()
+		: m_pobFollowedNode(NULL)
+		, m_bBoundaryFullyCovered(false)
+		, m_bBoundarySet(false)
+		, m_fBottomBoundary(0.0)
+		, m_fLeftBoundary(0.0)
+		, m_fRightBoundary(0.0)
+		, m_fTopBoundary(0.0)
+	{}
 	virtual ~CCFollow(void);
 	
 	inline bool isBoundarySet(void) { return m_bBoundarySet; }

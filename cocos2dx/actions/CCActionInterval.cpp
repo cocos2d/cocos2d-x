@@ -225,8 +225,8 @@ CCObject* CCSequence::copyWithZone(CCZone *pZone)
 
 CCSequence::~CCSequence(void)
 {
-	m_pActions[0]->release();
-	m_pActions[1]->release();
+	CC_SAFE_RELEASE(m_pActions[0]);
+	CC_SAFE_RELEASE(m_pActions[1]);
 }
 
 void CCSequence::startWithTarget(CCNode *pTarget)
@@ -356,7 +356,7 @@ CCObject* CCRepeat::copyWithZone(cocos2d::CCZone *pZone)
 
 CCRepeat::~CCRepeat(void)
 {
-	m_pOther->release();
+	CC_SAFE_RELEASE(m_pOther);
 }
 
 void CCRepeat::startWithTarget(CCNode *pTarget)
@@ -429,7 +429,7 @@ CCActionInterval* CCRepeat::reverse(void)
 //
 CCRepeatForever::~CCRepeatForever()
 {
-	m_pOther->release();
+	CC_SAFE_RELEASE(m_pOther);
 }
 CCRepeatForever *CCRepeatForever::actionWithAction(CCActionInterval *pAction)
 {
@@ -591,8 +591,8 @@ CCObject* CCSpawn::copyWithZone(cocos2d::CCZone *pZone)
 
 CCSpawn::~CCSpawn(void)
 {
-	m_pOne->release();
-	m_pTwo->release();
+	CC_SAFE_RELEASE(m_pOne);
+	CC_SAFE_RELEASE(m_pTwo);
 }
 
 void CCSpawn::startWithTarget(CCNode *pTarget)
@@ -1769,7 +1769,7 @@ CCObject* CCReverseTime::copyWithZone(cocos2d::CCZone *pZone)
 
 CCReverseTime::~CCReverseTime(void)
 {
-	m_pOther->release();
+	CC_SAFE_RELEASE(m_pOther);
 }
 
 void CCReverseTime::startWithTarget(CCNode *pTarget)

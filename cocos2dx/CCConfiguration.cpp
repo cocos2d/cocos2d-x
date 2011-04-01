@@ -36,6 +36,14 @@ static CCConfiguration g_SharedConfiguration;
 static char *g_pGlExtensions;
 
 CCConfiguration::CCConfiguration(void)
+: m_bSupportsBGRA8888(false)
+, m_bSupportsDiscardFramebuffer(false)
+, m_bSupportsNPOT(false)
+, m_bSupportsPVRTC(false)
+, m_nMaxModelviewStackDepth(0)
+, m_nMaxSamplesAllowed(0)
+, m_nMaxTextureSize(0)
+, m_uOSVersion(0)
 {
 }
 

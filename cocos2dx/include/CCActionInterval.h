@@ -146,7 +146,9 @@ To repeat the an action for a limited number of times use the Repeat action.
 class CC_DLL CCRepeatForever : public CCActionInterval
 {
 public:
-	CCRepeatForever(){}
+	CCRepeatForever()
+		: m_pOther(NULL)
+	{}
 	virtual ~CCRepeatForever();
 
 	/** initializes the action */

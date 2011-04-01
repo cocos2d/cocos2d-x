@@ -39,7 +39,10 @@ namespace   cocos2d {
 
     CCKeyboardEventHandle::~CCKeyboardEventHandle()
     {
-        m_pDelegate->KeyboardDestroy();
+		if (m_pDelegate)
+		{
+			m_pDelegate->KeyboardDestroy();
+		}        
     }
 
     void CCKeyboardEventHandle::setDelegate(CCKeyboardEventDelegate *pDelegate)

@@ -39,7 +39,10 @@ namespace   cocos2d {
 
     CCMouseEventHandle::~CCMouseEventHandle()
     {
-        m_pDelegate->MouseDestroy();
+		if (m_pDelegate)
+		{
+			m_pDelegate->MouseDestroy();
+		}        
     }
 
     void CCMouseEventHandle::setDelegate(CCMouseEventDelegate *pDelegate)

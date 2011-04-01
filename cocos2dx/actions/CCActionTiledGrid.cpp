@@ -288,15 +288,8 @@ namespace cocos2d
 
 	CCShuffleTiles::~CCShuffleTiles(void)
 	{
-		if (m_pTilesOrder)
-		{
-			delete[] m_pTilesOrder;
-		}
-
-		if (m_pTiles)
-		{
-			delete[] m_pTiles;
-		}
+		CC_SAFE_DELETE_ARRAY(m_pTilesOrder);
+		CC_SAFE_DELETE_ARRAY(m_pTiles);
 	}
 
 	void CCShuffleTiles::shuffle(int *pArray, int nLen)
@@ -662,10 +655,7 @@ namespace cocos2d
 
 	CCTurnOffTiles::~CCTurnOffTiles(void)
 	{
-		if (m_pTilesOrder)
-		{
-			delete[] m_pTilesOrder;
-		}
+		CC_SAFE_DELETE_ARRAY(m_pTilesOrder);
 	}
 
 	void CCTurnOffTiles::shuffle(int *pArray, int nLen)

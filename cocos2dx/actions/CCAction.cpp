@@ -194,7 +194,7 @@ CCActionInterval *CCSpeed::reverse()
 //
 CCFollow::~CCFollow()
 {
-	m_pobFollowedNode->release();
+	CC_SAFE_RELEASE(m_pobFollowedNode);
 }
 
 CCFollow *CCFollow::actionWithTarget(CCNode *pFollowedNode)

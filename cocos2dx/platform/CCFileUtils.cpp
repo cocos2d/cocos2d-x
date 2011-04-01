@@ -60,17 +60,18 @@ public:
 
 public:
     CCDictMaker()
+		: m_pRootDict(NULL),
+		  m_pCurDict(NULL),
+          m_tState(SAX_NONE),
+          m_pArray(NULL),
+		  m_bInArray(false)
     {
-        m_pRootDict = NULL;
-        m_pCurDict = NULL;
-        m_tState = SAX_NONE;
-
-        m_pArray = NULL;
-        m_bInArray = false;
     }
+
     ~CCDictMaker()
     {
     }
+
     CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
     {
         CCSAXParser parser;

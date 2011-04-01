@@ -51,7 +51,10 @@ namespace cocos2d{
 		CC_PROPERTY(bool, m_bIsEnabled, IsEnabled);
 	public:
 		CCMenuItem()
-			:m_pListener(NULL)
+			: m_pListener(NULL)
+			, m_bIsEnabled(false)
+			, m_bIsSelected(false)
+			, m_pfnSelector(NULL)
 		{}
 		virtual ~CCMenuItem(){}
 		/** Creates a CCMenuItem with a target/selector */
@@ -86,7 +89,8 @@ namespace cocos2d{
 		CC_PROPERTY(CCNode*, m_pLabel, Label);
 	public:
 		CCMenuItemLabel()
-			:m_pLabel(NULL)
+			: m_pLabel(NULL)
+			, m_fOriginalScale(0.0)
 		{}
 		virtual ~CCMenuItemLabel();
 		/** creates a CCMenuItemLabel with a Label, target and selector */
@@ -247,7 +251,11 @@ namespace cocos2d{
 		*/
 		CC_PROPERTY(CCMutableArray<CCMenuItem*>*, m_pSubItems, SubItems);
 	public:
-		CCMenuItemToggle(){}
+		CCMenuItemToggle()
+			: m_cOpacity(0)
+			, m_pSubItems(NULL)
+			, m_uSelectedIndex(0)
+		{}
 		virtual ~CCMenuItemToggle();
 		/** creates a menu item from a list of items with a target/selector */
 		static CCMenuItemToggle* itemWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, ...);
