@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "Cocos2dJni.h"
 #include "CCSet.h"
 #include "CCDirector.h"
+#include "CCKeypadDispatcher.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 #include "CCFileUtils.h"
@@ -170,6 +171,29 @@ extern "C"
 		}
 
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesCancelled(&set, NULL);
+	}
+
+#define KEYCODE_BACK 0x04
+#define KEYCODE_MENU 0x52
+	
+	// handle keydown event
+
+	jboolean Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyDown(JNIEnv*  env, jobject thiz, jint keyCode)
+	{
+		switch (keyCode)
+		{
+		case KEYCODE_BACK:
+			if (CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeBackClicked))
+				return JNI_TRUE;
+			break;
+		case KEYCODE_MENU:
+			if (CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked))
+				return JNI_TRUE;
+			break;
+		default:
+			return JNI_FALSE;
+		}
+		return JNI_FALSE;
 	}
 
     void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
