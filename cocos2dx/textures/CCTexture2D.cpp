@@ -179,8 +179,13 @@ namespace   cocos2d {
 static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelFormat_Default;
 
 CCTexture2D::CCTexture2D()
+: m_uName(0)
+, m_bHasPremultipliedAlpha(false)
+, m_fMaxS(0.0)
+, m_fMaxT(0.0)
+, m_uPixelsHigh(0)
+, m_uPixelsWide(0)
 {
-    m_uName = 0;
 }
 
 CCTexture2D::~CCTexture2D()

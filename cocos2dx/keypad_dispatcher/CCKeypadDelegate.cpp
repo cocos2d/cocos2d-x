@@ -39,7 +39,10 @@ CCKeypadDelegate* CCKeypadHandler::getDelegate()
 
 CCKeypadHandler::~CCKeypadHandler()
 {
-    m_pDelegate->KeypadDestroy();
+	if (m_pDelegate)
+	{
+		m_pDelegate->KeypadDestroy();
+	}  
 }
 
 void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)

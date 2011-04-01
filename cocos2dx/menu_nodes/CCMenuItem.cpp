@@ -577,7 +577,7 @@ namespace cocos2d{
 	}
 	CCMenuItemToggle::~CCMenuItemToggle()
 	{
-		m_pSubItems->release();
+		CC_SAFE_RELEASE(m_pSubItems);
 	}
 	void CCMenuItemToggle::setSelectedIndex(unsigned int index)
 	{

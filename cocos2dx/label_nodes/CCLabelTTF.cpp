@@ -31,23 +31,15 @@ namespace cocos2d{
     CCLabelTTF::CCLabelTTF()
         : m_pFontName(NULL)
         , m_pString(NULL)
+		, m_fFontSize(0.0)
+		, m_eAlignment(CCTextAlignmentCenter)
     {
     }
 
     CCLabelTTF::~CCLabelTTF()
     {
-        if (m_pFontName)
-        {
-            delete m_pFontName;
-            m_pFontName = NULL;
-        }
-
-        if (m_pString)
-        {
-            delete m_pString;
-            m_pString = NULL;
-        }
-        
+		CC_SAFE_DELETE(m_pFontName);
+		CC_SAFE_DELETE(m_pString);        
     }
 
 	CCLabelTTF * CCLabelTTF::labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)

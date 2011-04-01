@@ -128,6 +128,14 @@ void CCTimer::update(ccTime dt)
 static CCScheduler *pSharedScheduler;
 
 CCScheduler::CCScheduler(void)
+: m_bCurrentTargetSalvaged(false)
+, m_fTimeScale(0.0)
+, m_pCurrentTarget(NULL)
+, m_pHashForSelectors(NULL)
+, m_pHashForUpdates(NULL)
+, m_pUpdates0List(NULL)
+, m_pUpdatesNegList(NULL)
+, m_pUpdatesPosList(NULL)
 {
 	assert(pSharedScheduler == NULL);
 }

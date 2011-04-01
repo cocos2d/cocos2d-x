@@ -412,7 +412,7 @@ namespace cocos2d{
 	CCLabelBMFont::~CCLabelBMFont()
 	{
 		m_sString.clear();
-		m_pConfiguration->release();
+		CC_SAFE_RELEASE(m_pConfiguration);
 	}
 
 	// BitmapFontAtlas - Atlas generation

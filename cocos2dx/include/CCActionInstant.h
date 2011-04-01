@@ -104,7 +104,9 @@ namespace cocos2d {
 	class CC_DLL CCFlipX : public CCActionInstant
 	{
 	public:
-		CCFlipX(){}
+		CCFlipX()
+			:m_bFlipX(false)
+		{}
 		virtual ~CCFlipX(){}
 
 		/** create the action */
@@ -127,7 +129,9 @@ namespace cocos2d {
 	class CC_DLL CCFlipY : public CCActionInstant
 	{
 	public:
-		CCFlipY(){}
+		CCFlipY()
+			:m_bFlipY(false)
+		{}
 		virtual ~CCFlipY(){}
 		
 		/** create the action */
@@ -167,9 +171,9 @@ namespace cocos2d {
 	{
 	public:
 		CCCallFunc()
+			: m_pCallFunc(NULL)
+            , m_pSelectorTarget(NULL)
 		{
-			m_pCallFunc = NULL;
-			m_pSelectorTarget = NULL;
 		}
 		virtual ~CCCallFunc()
 		{

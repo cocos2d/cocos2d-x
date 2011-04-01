@@ -578,7 +578,9 @@ protected:
 class CCDisplayLinkDirector : public CCDirector
 {
 public:
-	CCDisplayLinkDirector(void) {}
+	CCDisplayLinkDirector(void) 
+		: m_bInvalid(false)
+	{}
 
 	virtual void mainLoop(void);
 	virtual void setAnimationInterval(double dValue);

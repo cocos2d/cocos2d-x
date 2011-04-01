@@ -50,7 +50,10 @@ namespace cocos2d{
 	class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
 	{
 	public:
-		CCMenu(){}
+		CCMenu()
+			: m_cOpacity(0)
+			, m_pSelectedItem(NULL)
+		{}
 		virtual ~CCMenu(){}
 		/** creates a CCMenu with it's items */
 		static CCMenu* menuWithItems(CCMenuItem* item, ...);

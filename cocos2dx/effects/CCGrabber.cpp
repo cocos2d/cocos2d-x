@@ -30,10 +30,9 @@ THE SOFTWARE.
 namespace cocos2d
 {
 	CCGrabber::CCGrabber(void)
+		: m_fbo(0)
+		, m_oldFBO(0)
 	{
-		m_fbo = 0;
-		m_oldFBO = 0;
-
 		// generate FBO
 		ccglGenFramebuffers(1, &m_fbo);
 	}

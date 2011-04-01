@@ -131,7 +131,7 @@ public:
 	static void purgeSharedSpriteFrameCache(void);
 
 private:
-	CCSpriteFrameCache(void) {}
+	CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
 	const char * valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict);
 	
 protected:

@@ -93,15 +93,12 @@ bool CCTouchDispatcher::init(void)
 
 CCTouchDispatcher::~CCTouchDispatcher(void)
 {
- 	m_pTargetedHandlers->release();
- 	m_pStandardHandlers->release();
- 	m_pHandlersToAdd->release();
-	ccCArrayFree(m_pHandlersToRemove);
+	CC_SAFE_RELEASE(m_pTargetedHandlers);
+	CC_SAFE_RELEASE(m_pStandardHandlers);
+	CC_SAFE_RELEASE(m_pHandlersToAdd);
 
-    m_pTargetedHandlers = NULL;
-    m_pStandardHandlers = NULL;
-    m_pHandlersToAdd = NULL;
-	m_pHandlersToRemove = NULL;
+	ccCArrayFree(m_pHandlersToRemove);
+	m_pHandlersToRemove = NULL;	
 }
 
 //
