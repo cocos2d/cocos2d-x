@@ -113,11 +113,7 @@ namespace cocos2d {
 			m_pAtlasIndexArray = NULL;
 		}
 
-		if( m_pTiles )
-		{
-			delete [] m_pTiles;
-			m_pTiles = NULL;
-		}
+		CC_SAFE_DELETE_ARRAY(m_pTiles);
 	}
 	CCTMXTilesetInfo * CCTMXLayer::getTileSet()
 	{

@@ -127,8 +127,8 @@ namespace cocos2d
 
 	CCSpriteBatchNode::~CCSpriteBatchNode()
 	{
-		m_pobTextureAtlas->release();
-		m_pobDescendants->release();
+		CC_SAFE_RELEASE(m_pobTextureAtlas);
+		CC_SAFE_RELEASE(m_pobDescendants);
 	}
 
 	// override visit

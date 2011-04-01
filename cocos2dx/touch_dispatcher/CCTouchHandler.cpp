@@ -99,7 +99,10 @@ bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 
 CCTouchHandler::~CCTouchHandler(void)
 {
-    m_pDelegate->destroy();
+	if (m_pDelegate)
+	{
+		m_pDelegate->destroy();
+	}   
 }
 
 // implementation of CCStandardTouchHandler
@@ -204,6 +207,6 @@ bool CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nP
 
 CCTargetedTouchHandler::~CCTargetedTouchHandler(void)
 {
-	m_pClaimedTouches->release();
+	CC_SAFE_RELEASE(m_pClaimedTouches);
 }
 }//namespace   cocos2d 

@@ -32,9 +32,7 @@ namespace cocos2d {
 	// InstantAction
 	//
 	CCActionInstant::CCActionInstant()
-	{
-		m_fDuration = 0;
-	}
+	{}
 
 	CCObject * CCActionInstant::copyWithZone(cocos2d::CCZone *pZone)
 	{
@@ -412,13 +410,13 @@ namespace cocos2d {
     // CCCallFuncO
     //
     CCCallFuncO::CCCallFuncO()
+		: m_pObject(NULL)
     {
-        m_pTarget = NULL;
     }
 
     CCCallFuncO::~CCCallFuncO()
     {
-        m_pTarget->release();
+		CC_SAFE_RELEASE(m_pObject);
     }
 
     void CCCallFuncO::execute()

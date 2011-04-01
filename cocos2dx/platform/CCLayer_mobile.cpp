@@ -303,6 +303,7 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 
 CCLayerColor::CCLayerColor()
+: m_cOpacity(0)
 {
 }
 CCLayerColor::~CCLayerColor()
@@ -619,11 +620,13 @@ CCPoint CCLayerGradient::getVector()
 /// MultiplexLayer
 
 CCMultiplexLayer::CCMultiplexLayer()
+: m_nEnabledLayer(0)
+, m_pLayers(NULL)
 {
 }
 CCMultiplexLayer::~CCMultiplexLayer()
 {
-	m_pLayers->release();
+	CC_SAFE_RELEASE(m_pLayers);
 }
 
 CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)

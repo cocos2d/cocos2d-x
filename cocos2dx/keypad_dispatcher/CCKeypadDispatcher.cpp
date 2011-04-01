@@ -46,9 +46,16 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 
 CCKeypadDispatcher::~CCKeypadDispatcher()
 {
-    m_pDelegates->release();
-    ccCArrayFree(m_pHandlersToAdd);
-    ccCArrayFree(m_pHandlersToRemove);
+	CC_SAFE_RELEASE(m_pDelegates);
+	if (m_pHandlersToAdd)
+	{
+		ccCArrayFree(m_pHandlersToAdd);
+	}
+    
+	if (m_pHandlersToRemove)
+	{
+		ccCArrayFree(m_pHandlersToRemove);
+	}    
 }
 
 CCKeypadDispatcher* CCKeypadDispatcher::sharedDispatcher()
