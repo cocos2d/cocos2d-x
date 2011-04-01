@@ -8,10 +8,6 @@ KeypadTest::KeypadTest()
 	addChild(label, 0);
 	label->setPosition( ccp(s.width/2, s.height-50) );
 
-    CCLabelTTF* subtitle = CCLabelTTF::labelWithString("only goes well in cocos2d-wophone now!", "Arial", 18);
-    addChild(subtitle, 0);
-    subtitle->setPosition( ccp(s.width/2, s.height-100) );
-
     setIsKeypadEnabled(true);
 
     // create a label to display the tip string
