@@ -43,10 +43,15 @@
 package org.cocos2dx.lib;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -57,6 +62,8 @@ public class Cocos2dxActivity extends Activity{
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
     private static boolean accelerometerEnabled = false;
+    private static Handler handler;
+    private final static int HANDLER_SHOW_DIALOG = 1;
 
     private static native void nativeSetPaths(String apkPath);
 
@@ -74,7 +81,25 @@ public class Cocos2dxActivity extends Activity{
         // init media player and sound player
         backgroundMusicPlayer = new Cocos2dxMusic(this);
         soundPlayer = new Cocos2dxSound(this);
+        
+        handler = new Handler(){
+        	public void handleMessage(Message msg){
+        		switch(msg.what){
+        		case HANDLER_SHOW_DIALOG:
+        			showDialog(((DialogMessage)msg.obj).title, ((DialogMessage)msg.obj).message);
+        			break;
+        		}
+        	}
+        };
     }
+    
+    public static void showMessageBox(String title, String message){
+    	Message msg = new Message();
+    	msg.what = HANDLER_SHOW_DIALOG;
+    	msg.obj = new DialogMessage(title, message);
+    	
+    	handler.sendMessage(msg);
+    } 
 
     public static void enableAccelerometer() {
         accelerometerEnabled = true;
@@ -185,4 +210,29 @@ public class Cocos2dxActivity extends Activity{
         // add this link at the renderer class
         nativeSetPaths(apkFilePath);
     }
+    
+    private void showDialog(String title, String message){
+    	Dialog dialog = new AlertDialog.Builder(this)
+	    .setTitle(title)
+	    .setMessage(message)
+	    .setPositiveButton("Ok", 
+	    new DialogInterface.OnClickListener()
+	    {
+	    	public void onClick(DialogInterface dialog, int whichButton){
+	    		
+	    	}
+	    }).create();
+
+	    dialog.show();
+    }
+}
+
+class DialogMessage {
+	public String title;
+	public String message;
+	
+	public DialogMessage(String title, String message){
+		this.message = message;
+		this.title = title;
+	}
 }

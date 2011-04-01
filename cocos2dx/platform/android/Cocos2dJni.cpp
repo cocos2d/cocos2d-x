@@ -217,7 +217,7 @@ extern "C"
 		{
 			LOGD("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
 			return 0;
-		}
+		}		
 
 		if (env != 0 && classOfCocos2dxActivity != 0)
 		{
@@ -234,7 +234,6 @@ extern "C"
 
 	void enableAccelerometerJNI()
 	{
-		// void stopBackgroundMusic()
 		jmethodID methodID = getMethodID("enableAccelerometer", "()V");
 
 		if (methodID)
@@ -245,12 +244,38 @@ extern "C"
 
 	void disableAccelerometerJNI()
 	{
-		// void stopBackgroundMusic()
 		jmethodID methodID = getMethodID("disableAccelerometer", "()V");
 
 		if (methodID)
 		{
 			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID);
+		}
+	}
+
+	void showMessageBoxJNI(const char * pszMsg, const char * pszTitle)
+	{
+		if (! pszMsg)
+		{
+			return;
+		}
+
+		jmethodID methodID = getMethodID("showMessageBox", "(Ljava/lang/String;Ljava/lang/String;)V");
+
+		if (methodID)
+		{
+			jstring StringArg1;
+
+			if (! pszTitle)
+			{
+				StringArg1 = env->NewStringUTF("");
+			}
+			else
+			{
+				StringArg1 = env->NewStringUTF(pszTitle);
+			}
+
+			jstring StringArg2 = env->NewStringUTF(pszMsg);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID, StringArg1, StringArg2);
 		}
 	}
 
