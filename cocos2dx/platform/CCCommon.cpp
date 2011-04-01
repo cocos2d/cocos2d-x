@@ -130,6 +130,8 @@ NS_CC_END;
 #include <android/log.h>
 #include <stdio.h>
 
+#include "android/Cocos2dJni.h"
+
 NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
@@ -144,10 +146,9 @@ void CCLog(const char * pszFormat, ...)
 	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
 }
 
-// android no MessageBox, use CCLog instead
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-    CCLog("%s: %s", pszTitle, pszMsg);
+	showMessageBoxJNI(pszMsg, pszTitle);
 }
 
 NS_CC_END;

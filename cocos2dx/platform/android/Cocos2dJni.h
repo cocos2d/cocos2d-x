@@ -32,6 +32,7 @@ extern "C"
 	extern JavaVM *gJavaVM;
 	void enableAccelerometerJNI();
 	void disableAccelerometerJNI();
+	void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
 }
 
 #endif // __ANDROID_COCOS2D_JNI_H__
