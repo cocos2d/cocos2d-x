@@ -35,6 +35,8 @@ THE SOFTWARE.
 
 #define MAX_PATH 260
 
+using namespace cocos2d;
+
 static const char *static_ccRemoveHDSuffixFromFile( const char *pszPath)
 {
 #if CC_IS_RETINA_DISPLAY_SUPPORTED
@@ -135,188 +137,79 @@ static const char* static_fullPathFromRelativePath(const char *pszRelativePath)
 	return [fullpath UTF8String];	
 }
 
+static void static_addItemToCCArray(id item, CCMutableArray<CCObject*> *pArray)
+{
+	// add string value into array
+    if ([item isKindOfClass:[NSString class]]) {
+        CCString* pValue = new CCString([item UTF8String]);
+        
+        pArray->addObject(pValue);
+        pValue->release();
+        return;
+    }
+
+	// add number value into array(such as int, float, bool and so on)
+    if ([item isKindOfClass:[NSNumber class]]) {
+        NSString* pStr = [item stringValue];
+        CCString* pValue = new CCString([pStr UTF8String]);
+        
+        pArray->addObject(pValue);
+        pValue->release();
+        return;
+    }
+}
+
+static void static_addValueToCCDict(id key, id value, CCDictionary<std::string, CCObject*>* pDict)
+{
+	// the key must be a string
+    CCAssert([key isKindOfClass:[NSString class]], "The key should be a string!");
+    std::string pKey = [key UTF8String];
+
+	// the value is a new dictionary
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        CCDictionary<std::string, CCObject*>* pSubDict = new CCDictionary<std::string, CCObject*>();
+        for (id subKey in [value allKeys]) {
+            id subValue = [value objectForKey:subKey];
+            static_addValueToCCDict(subKey, subValue, pSubDict);
+        }
+        pDict->setObject(pSubDict, pKey);
+        pSubDict->release();
+        return;
+    }
+
+	// the value is a string
+    if ([value isKindOfClass:[NSString class]]) {
+        CCString* pValue = new CCString([value UTF8String]);
+
+        pDict->setObject(pValue, pKey);
+        pValue->release();
+        return;
+    }
+
+	// the value is a number
+    if ([value isKindOfClass:[NSNumber class]]) {
+        NSString* pStr = [value stringValue];
+        CCString* pValue = new CCString([pStr UTF8String]);
+        
+        pDict->setObject(pValue, pKey);
+        pValue->release();
+        return;
+    }
+
+	// the value is a array
+    if ([value isKindOfClass:[NSArray class]]) {
+        CCMutableArray<CCObject*> *pArray = new CCMutableArray<CCObject*>();
+        for (id item in value) {
+            static_addItemToCCArray(item, pArray);
+        }
+        pDict->setObject(pArray, pKey);
+        pArray->release();
+        return;
+    }
+}
+
 namespace cocos2d {
 
-typedef enum 
-{
-    SAX_NONE = 0,
-    SAX_KEY,
-    SAX_DICT,
-    SAX_INT,
-    SAX_REAL,
-    SAX_STRING
-}CCSAXState;
-
-class CCDictMaker : public CCSAXDelegator
-{
-public:
-    CCDictionary<std::string, CCObject*> *m_pRootDict;
-    CCDictionary<std::string, CCObject*> *m_pCurDict;
-    std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
-    std::string m_sCurKey;///< parsed key
-    CCSAXState m_tState;
-    bool    m_bInArray;
-    CCMutableArray<CCObject*> *m_pArray;
-
-public:
-    CCDictMaker()
-    {
-        m_pRootDict = NULL;
-        m_pCurDict = NULL;
-        m_tState = SAX_NONE;
-
-        m_pArray = NULL;
-        m_bInArray = false;
-    }
-    ~CCDictMaker()
-    {
-    }
-    CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
-    {
-        CCSAXParser parser;
-
-        if (false == parser.init("UTF-8"))
-        {
-            return NULL;
-        }
-        parser.setDelegator(this);
-
-        parser.parse(pFileName);
-        return m_pRootDict;
-    }
-
-    void startElement(void *ctx, const char *name, const char **atts)
-    {
-        std::string sName((char*)name);
-        if( sName == "dict" )
-        {
-            CCDictionary<std::string, CCObject*> *pNewDict = new CCDictionary<std::string, CCObject*>();
-            if(! m_pRootDict)
-            {
-                m_pRootDict = pNewDict;
-                pNewDict->autorelease();
-            }
-            else
-            {
-                CCAssert(m_pCurDict && !m_sCurKey.empty(), "");
-                m_pCurDict->setObject(pNewDict, m_sCurKey);
-                pNewDict->release();
-                m_sCurKey.clear();
-            }
-            m_pCurDict = pNewDict;
-            m_tDictStack.push(m_pCurDict);
-            m_tState = SAX_DICT;
-        }
-        else if(sName == "key")
-        {
-            m_tState = SAX_KEY;
-        }
-        else if(sName == "integer")
-        {
-            m_tState = SAX_INT;
-        }
-        else if(sName == "real")
-        {
-            m_tState = SAX_REAL;
-        }
-        else if(sName == "string")
-        {
-            m_tState = SAX_STRING;
-        }
-        else
-        {
-            if (sName == "array")
-            {
-                m_bInArray = true;
-                m_pArray = new CCMutableArray<CCObject*>();
-            }
-            m_tState = SAX_NONE;
-        }
-    }
-
-    void endElement(void *ctx, const char *name)
-    {
-        std::string sName((char*)name);
-        if( sName == "dict" )
-        {
-            m_tDictStack.pop();
-            if ( !m_tDictStack.empty() )
-            {
-                m_pCurDict = (CCDictionary<std::string, CCObject*>*)(m_tDictStack.top());
-            }
-        }
-        else if (sName == "array")
-        {
-            CCAssert(m_bInArray, "The plist file is wrong!");
-            m_pCurDict->setObject(m_pArray, m_sCurKey);
-            m_pArray->release();
-            m_pArray = NULL;
-            m_bInArray = false;
-        }
-        else if (sName == "true")
-        {
-            CCString *str = new CCString("1");
-            if (m_bInArray)
-            {
-                m_pArray->addObject(str);
-            }
-            else
-            {
-                m_pCurDict->setObject(str, m_sCurKey);
-            }
-            str->release();
-        }
-        else if (sName == "false")
-        {
-            CCString *str = new CCString("0");
-            if (m_bInArray)
-            {
-                m_pArray->addObject(str);
-            }
-            else
-            {
-                m_pCurDict->setObject(str, m_sCurKey);
-            }
-            str->release();
-        }
-        m_tState = SAX_NONE;
-    }
-
-    void textHandler(void *ctx, const char *ch, int len)
-    {
-        if (m_tState == SAX_NONE)
-        {
-            return;
-        }
-        CCString *pText = new CCString();
-        pText->m_sString = std::string((char*)ch,0,len);
-
-        switch(m_tState)
-        {
-        case SAX_KEY:
-            m_sCurKey = pText->m_sString;
-            break;
-        case SAX_INT:
-        case SAX_REAL:
-        case SAX_STRING:
-            {
-                CCAssert(!m_sCurKey.empty(), "not found key : <integet/real>");
-
-                if (m_bInArray)
-                {
-                    m_pArray->addObject(pText);
-                }
-                else
-                {
-                    m_pCurDict->setObject(pText, m_sCurKey);
-                }
-                break;
-            }
-        }
-        pText->release();
-    }
-};
-    
     // record the resource path
     static char s_pszResourcePath[MAX_PATH] = {0};
 
@@ -384,8 +277,16 @@ public:
     }
     CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
     {
-        CCDictMaker tMaker;
-        return tMaker.dictionaryWithContentsOfFile(pFileName);
+        NSString* pPath = [NSString stringWithUTF8String:pFileName];
+        NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
+        
+        CCDictionary<std::string, CCObject*>* pRet = new CCDictionary<std::string, CCObject*>();
+        for (id key in [pDict allKeys]) {
+            id value = [pDict objectForKey:key];
+            static_addValueToCCDict(key, value, pRet);
+        }
+        pRet->autorelease();
+        return pRet;
     }
     unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
     {
