@@ -1048,6 +1048,7 @@ bool CCTransitionFade::initWithDuration(ccTime duration, CCScene *scene, ccColor
 		m_tColor.r = color.r;
 		m_tColor.g = color.g;
 		m_tColor.b = color.b;
+		m_tColor.a = 0;
 	}
 	return true;
 }
