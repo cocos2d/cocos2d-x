@@ -2,7 +2,9 @@
 #define _CHIPMUNK_TYPES_H_
 
 #ifdef __APPLE__
-   #import "TargetConditionals.h"
+#ifndef AIRPLAYUSECHIPMUNK
+	#import "TargetConditionals.h"
+#endif
 #endif
 
 // Use single precision floats on the iPhone.
