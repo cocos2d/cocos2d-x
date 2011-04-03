@@ -452,9 +452,6 @@
 		BF835D7C13276C7900F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835B2913276C7900F3C033 /* CCTouchHandler.h */; };
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
-		D44C6142132DFED60009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6141132DFED60009C878 /* OpenAL.framework */; };
-		D44C6146132DFF020009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6145132DFF020009C878 /* AVFoundation.framework */; };
-		D44C614A132DFF0F0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C6149132DFF0F0009C878 /* AudioToolbox.framework */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -1026,9 +1023,6 @@
 		BF835B2813276C7900F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF835B2913276C7900F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
-		D44C6141132DFED60009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		D44C6145132DFF020009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		D44C6149132DFF0F0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1057,9 +1051,6 @@
 				BF1712E9129293C200B8313A /* libchipmunk.a in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				BF31DF0112E9784500D4F513 /* libCocosDenshion.a in Frameworks */,
-				D44C6142132DFED60009C878 /* OpenAL.framework in Frameworks */,
-				D44C6146132DFF020009C878 /* AVFoundation.framework in Frameworks */,
-				D44C614A132DFF0F0009C878 /* AudioToolbox.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
@@ -1138,9 +1129,6 @@
 				BF17118B12928FCB00B8313A /* Box2D */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				D44C6141132DFED60009C878 /* OpenAL.framework */,
-				D44C6145132DFF020009C878 /* AVFoundation.framework */,
-				D44C6149132DFF0F0009C878 /* AudioToolbox.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
