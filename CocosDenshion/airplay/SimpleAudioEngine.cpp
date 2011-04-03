@@ -24,14 +24,18 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "s3e.h"
+#include "IwUtil.h"
 #include <set>
 
 namespace CocosDenshion
 {
 	static int16*   g_SoundBuffer = 0;
+	static int16*   g_AudioBuffer = 0;
 	static int32    g_SoundFileSize = 0;
+	static int32    g_AudioFileSize = 0;
 	static int      g_SoundChannel = 0;
 	static bool     g_SoundIsPlaying = false;
+	static s3eBool  g_MP3Support = S3E_FALSE;
 	
 	
 	static SimpleAudioEngine *s_pEngine;
@@ -60,6 +64,7 @@ namespace CocosDenshion
 	void SimpleAudioEngine::end()
 	{
 		s3eAudioStop();
+		s3eFreeBase(g_AudioBuffer);
 	}
 
 	void SimpleAudioEngine::setResource(const char* pszZipFileName, const char* pszResPath)
@@ -69,17 +74,51 @@ namespace CocosDenshion
 
     void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 	{
-
+		
+			s3eFile *fileHandle = s3eFileOpen(pszFilePath, "rb");
+		
+			IwAssertMsg(GAME, fileHandle, ("Open file %s Failed. s3eFileError Code : %i", pszFilePath, s3eFileGetError()));
+		
+			g_AudioFileSize = s3eFileGetSize(fileHandle);
+			g_AudioBuffer = (int16*)s3eMallocBase(g_AudioFileSize);
+			memset(g_AudioBuffer, 0, g_AudioFileSize);
+			s3eFileRead(g_AudioBuffer, g_AudioFileSize, 1, fileHandle);
+			s3eFileClose(fileHandle);
 	}
 
 	void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 	{
-		s3eAudioPlay(pszFilePath, bLoop);
+		s3eResult result;
+		
+		result = s3eAudioPlayFromBuffer(g_AudioBuffer, g_AudioFileSize, bLoop);
+		
+		if ( result == S3E_RESULT_ERROR)
+		{
+			if (bLoop)
+			{
+				result = s3eAudioPlay(pszFilePath, 1000000);
+			}
+			else
+			{
+				result = s3eAudioPlay(pszFilePath, 0);
+			}
+		}
+		
+		if ( result == S3E_RESULT_ERROR) 
+		{
+			IwAssert(GAME, ("Play music %s Failed. Error Code : %s", pszFilePath, s3eAudioGetErrorString()));
+		}
 	}
 
 	void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 	{
 		s3eAudioStop();
+		
+		if (bReleaseData)
+		{
+			s3eFreeBase(g_AudioBuffer);
+		}
+
 	}
 
 	void SimpleAudioEngine::pauseBackgroundMusic()
@@ -136,6 +175,11 @@ namespace CocosDenshion
 		int channel = s3eSoundGetFreeChannel();
 		
 		s3eSoundChannelPlay(channel, g_SoundBuffer, g_SoundFileSize/2, 1, 0);
+		
+		if (s3eSoundGetError()!= S3E_SOUND_ERR_NONE)
+		{
+			IwAssertMsg(GAME, this, ("Play sound %s Failed. Error Code : %s", pszFilePath, s3eSoundGetErrorString()));	
+		}
 
 		return channel;
 
@@ -149,6 +193,9 @@ namespace CocosDenshion
 	void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 	{
 		s3eFile *fileHandle = s3eFileOpen(pszFilePath, "rb");
+		
+		IwAssertMsg(GAME, fileHandle, ("Open file %s Failed. s3eFileError Code : %i", pszFilePath, s3eFileGetError()));
+		
 		g_SoundFileSize = s3eFileGetSize(fileHandle);
 		g_SoundBuffer = (int16*)s3eMallocBase(g_SoundFileSize);
 		memset(g_SoundBuffer, 0, g_SoundFileSize);

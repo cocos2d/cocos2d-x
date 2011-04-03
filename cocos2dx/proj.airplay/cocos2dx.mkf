@@ -3,14 +3,13 @@ debug_define _DEBUG = 1
 
 defines
 {	
-GL_GLEXT_PROTOTYPES = 1
 AIRPLAY = 1
 CC_UNDER_AIRPLAY = 1
 }
 
 options
 {
-	module_path="cocos2dx/platform/third_party/airplay/"
+	module_path="../platform/third_party/airplay/"
 }
 
 subprojects
@@ -22,69 +21,68 @@ includepaths
 {
 	.
 
-	"./cocos2dx/"
-	"./cocos2dx/include"
-	"./cocos2dx/platform"
+	"../"
+	"../include"
+	"../platform"
 }
 
 files
 {
 
-	("cocos2dx")
+	("../")
 	"*.h"
 	"*.cpp"
 
-	("cocos2dx/actions")
+	("../actions")
 	[actions]
 	"*.cpp"
 
-	("cocos2dx/base_nodes")
+	("../base_nodes")
 	[base_nodes]
 	"*.cpp"
 	
-	("cocos2dx/cocoa")
+	("../cocoa")
 	[cocoa]
 	"*.cpp"
-	"*.h"
 	
-	("cocos2dx/effects")
+	("../effects")
 	[effects]
 	"*.h"
 	"*.cpp"
 
-	("cocos2dx/event_dispatcher")
+	("../event_dispatcher")
 	[event_dispatcher]
 	"*.cpp"
 	
-	("cocos2dx/include")
+	("../include")
 	[include]
 	"*.h"
 
-	("cocos2dx/keypad_dispatcher")
+	("../keypad_dispatcher")
 	[keypad_dispatcher]
 	"*.cpp"
 	
-	("cocos2dx/label_nodes")
+	("../label_nodes")
 	[label_nodes]
 	"*.cpp"
 	
-	("cocos2dx/layers_scenes_transitions_nodes")
+	("../layers_scenes_transitions_nodes")
 	[layers_scenes_transitions_nodes]
 	"*.cpp"
 	
-	("cocos2dx/menu_nodes")
+	("../menu_nodes")
 	[menu_nodes]
 	"*.cpp"
 	
-	("cocos2dx/misc_nodes")
+	("../misc_nodes")
 	[misc_nodes]
 	"*.cpp"
 	
-	("cocos2dx/particle_nodes")
+	("../particle_nodes")
 	[particle_nodes]
 	"*.cpp"
 	
-	("cocos2dx/platform")
+	("../platform")
 	[platforms]
 	"*.h"
 	"platform.cpp"
@@ -100,49 +98,49 @@ files
 	"CCDirector_mobile.cpp"
 	"CCCommon.cpp"
 
-	("cocos2dx/platform/airplay")
+	("../platform/airplay")
 	[platforms/airplay]
 	"*.h"
 	"*.cpp"
 	
-	("cocos2dx/sprite_nodes")
+	("../sprite_nodes")
 	[sprite_nodes]
 	"*.cpp"
 	
-	("cocos2dx/support")
+	("../support")
 	[support]
 	"*.h"
 	"*.cpp"
 	
-	("cocos2dx/support/data_support")
+	("../support/data_support")
 	[support/data_support]
 	"*.h"
 	
-	("cocos2dx/support/image_support")
+	("../support/image_support")
 	[support/image_support]
 	"*.h"
 	"*.cpp"
 	
-	("cocos2dx/support/opengl_support")
+	("../support/opengl_support")
 	[support/opengl_support]
 #	"*.h"
 #	"*.cpp"
 
 
-	("cocos2dx/support/zip_support")
+	("../support/zip_support")
 	[support/zip_support]
 	"*.cpp"
 	"*.h"
 	
-	("cocos2dx/textures")
+	("../textures")
 	[textures]
 	"*.cpp"
 	
-	("cocos2dx/tileMap_parallax_nodes")
+	("../tileMap_parallax_nodes")
 	[tileMap_parallax_nodes]
 	"*.cpp"
 	
-	("cocos2dx/touch_dispatcher")
+	("../touch_dispatcher")
 	[touch_dispatcher]
 	"*.cpp"
 }

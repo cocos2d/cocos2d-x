@@ -54,6 +54,13 @@ static TestScene* CreateTestScene(int nIdx)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         pScene = new ChipmunkTestScene(); break;
+#else
+#ifdef AIRPLAYUSECHIPMUNK
+#if	(AIRPLAYUSECHIPMUNK == 1)
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+        pScene = new ChipmunkTestScene(); break;
+#endif
+#endif
 #endif
     case TEST_ATLAS:
         pScene = new AtlasTestScene(); break;
