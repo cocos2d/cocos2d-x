@@ -66,7 +66,7 @@ CCEGLView::CCEGLView()
 	s3eKeyboardRegister(S3E_KEYBOARD_KEY_EVENT, &KeyEventHandler, this);
 }
 
-void CCEGLView::setFrameWitdAndHeight(int width, int height)
+void CCEGLView::setFrameWidthAndHeight(int width, int height)
 {
 	m_sSizeInPixel.width = width;
 	m_sSizeInPixel.height = height;
@@ -144,11 +144,12 @@ void CCEGLView::setTouch(void* systemData)
 		break;
 	}
 }
-void CCEGLView::setMotionTouch()
+void CCEGLView::setMotionTouch(void* systemData)
 {
+		s3ePointerMotionEvent* event =(s3ePointerMotionEvent*)systemData;
 		if (m_bCaptured)
 		{
-            m_pTouch->SetTouchInfo(0, (float)s3ePointerGetX(), (float)s3ePointerGetY());
+            m_pTouch->SetTouchInfo(0, (float)event->m_x, (float)event->m_y);
             m_pDelegate->touchesMoved(m_pSet, NULL);
 
 		}
@@ -255,4 +256,3 @@ CCRect CCEGLView::getViewPort()
 }
 	
 NS_CC_END;
-
