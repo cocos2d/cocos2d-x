@@ -47,7 +47,7 @@ public:
 	/**
 	 * the width and height is the real size of phone
 	 */
-    void    setFrameWitdAndHeight(int width, int height);
+    void    setFrameWidthAndHeight(int width, int height);
 	/**
 	 * create a drawing rect, 
 	 * the width and heiht is the resource size match best
@@ -88,7 +88,7 @@ private:
     CCTouch *           m_pTouch;
 	
 	void setTouch(void* systemData);
-	void setMotionTouch();
+	void setMotionTouch(void* systemData);
 	void setKeyTouch(void* systemData);
 
 	static int32 TouchEventHandler(void* systemData, void* userData)
@@ -98,7 +98,7 @@ private:
 	}
 	static int32 MotionEventHandler(void* systemData, void* userData)
 	{
-		((CCEGLView*)userData)->setMotionTouch();
+		((CCEGLView*)userData)->setMotionTouch(systemData);
 		return 0;
 	}
 	static int32 KeyEventHandler(void* systemData, void* userData)
