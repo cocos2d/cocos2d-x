@@ -30,7 +30,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
     }
     else
     {
-        cocos2d::CCTexture2D::reloadAllTextures();
+        cocos2d::CCTextureCache::reloadAllTextures();
         cocos2d::CCDirector::sharedDirector()->setGLDefaultValues();
     }
 }

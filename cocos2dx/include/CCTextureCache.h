@@ -30,6 +30,11 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCMutableDictionary.h"
 
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    #include "CCImage.h"
+    #include <list>
+#endif
+
 namespace   cocos2d {
 class CCTexture2D;
 class CCAsyncObject;
@@ -146,7 +151,48 @@ public:
 	*/
 	CCTexture2D* addPVRTCImage(const char* fileimage);
 #endif
+
+    /** Reload all textures
+    It's only useful when the value of CC_ENABLE_CACHE_TEXTTURE_DATA is 1
+    */
+    static void reloadAllTextures();
 };
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+
+class VolatileTexture
+{
+public:
+    VolatileTexture(CCTexture2D *t);
+    ~VolatileTexture();
+
+    static void addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format);
+    static void addStringTexture(CCTexture2D *tt, const char* text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+
+    static void removeTexture(CCTexture2D *t);
+    static void reloadAllTextures();
+
+public:
+    static std::list<VolatileTexture*> textures;
+    static bool isReloading;
+
+protected:
+    CCTexture2D *texture;
+
+    bool m_bIsString;
+
+    std::string m_strFileName;
+    CCImage::EImageFormat m_FmtImage;
+
+    CCSize          m_size;
+    CCTextAlignment m_alignment;
+    std::string     m_strFontName;
+    std::string     m_strText;
+    float           m_fFontSize;
+};
+
+#endif
+
 }//namespace   cocos2d 
 
 #endif //__CCTEXTURE_CACHE_H__
