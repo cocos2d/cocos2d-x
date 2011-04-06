@@ -125,7 +125,7 @@ namespace cocos2d{
 	{	
 		std::string fullpath = CCFileUtils::fullPathFromRelativePath(controlFile);
 
-        CCFileData data(controlFile, "rb");
+        CCFileData data(fullpath.c_str(), "rb");
         unsigned long nBufSize = data.getSize();
         char* pBuffer = (char*) data.getBuffer();
 
