@@ -219,6 +219,11 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 				if( texture )
 				{
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+                    // cache the texture file name
+                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtJpg);
+#endif
+
 					m_pTextures->setObject(texture, pathKey);
 					texture->release();
 				}
@@ -229,11 +234,6 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			}
 			else
 			{
-				//# work around for issue #910
-#if 0
-				UIImage *image = [UIImage imageNamed:path];
-				tex = [ [CCTexture2D alloc] initWithImage: image ];
-#else
 				// prevents overloading the autorelease pool
 				CCImage image;
                 CCFileData data(fullpath.c_str(), "rb");
@@ -243,9 +243,14 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 
 				texture = new CCTexture2D();
 				texture->initWithImage(&image);
-#endif
+
 				if( texture )
 				{
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+                    // cache the texture file name
+                    VolatileTexture::addImageTexture(texture, fullpath.c_str(), CCImage::kFmtPng);
+#endif
+
 					m_pTextures->setObject(texture, pathKey);
 					texture->release();
 				}
@@ -433,6 +438,138 @@ CCTexture2D* CCTextureCache::textureForKey(const char* key)
 {
 	return m_pTextures->objectForKey(string(key));
 }
+
+void CCTextureCache::reloadAllTextures()
+{
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    VolatileTexture::reloadAllTextures();
+#endif
+}
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+
+std::list<VolatileTexture*> VolatileTexture::textures;
+bool VolatileTexture::isReloading = false;
+
+VolatileTexture::VolatileTexture(CCTexture2D *t)
+: texture(t)
+, m_bIsString(false)
+, m_strFileName("")
+, m_FmtImage(CCImage::kFmtPng)
+, m_strFontName("")
+, m_strText("")
+, m_fFontSize(0.0f)
+, m_alignment(CCTextAlignmentCenter)
+{
+    m_size = CCSizeMake(0, 0);
+    textures.push_back(this);
+}
+
+VolatileTexture::~VolatileTexture()
+{
+    textures.remove(this);
+}
+
+void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format)
+{
+    if (isReloading)
+        return;
+
+    VolatileTexture *vt = 0;
+    std::list<VolatileTexture *>::iterator i = textures.begin();
+    while( i != textures.end() )
+    {
+        VolatileTexture *v = *i++;
+        if (v->texture == tt) {
+            vt = v;
+            break;
+        }
+    }
+
+    if (!vt)
+        vt = new VolatileTexture(tt);
+
+    vt->m_bIsString   = false;
+    vt->m_strFileName = imageFileName;
+    vt->m_FmtImage    = format;
+}
+
+void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+{
+    if (isReloading)
+        return;
+
+    VolatileTexture *vt = 0;
+    std::list<VolatileTexture *>::iterator i = textures.begin();
+    while( i != textures.end() )
+    {
+        VolatileTexture *v = *i++;
+        if (v->texture == tt) {
+            vt = v;
+            break;
+        }
+    }
+
+    if (!vt)
+        vt = new VolatileTexture(tt);
+
+    vt->m_bIsString = true;
+    vt->m_size      = dimensions;
+    vt->m_strFontName = fontName;
+    vt->m_alignment   = alignment;
+    vt->m_fFontSize   = fontSize;
+    vt->m_strText     = text;
+}
+
+void VolatileTexture::removeTexture(CCTexture2D *t) {
+
+    std::list<VolatileTexture *>::iterator i = textures.begin();
+    while( i != textures.end() )
+    {
+        VolatileTexture *vt = *i++;
+        if (vt->texture == t) {
+            delete vt;
+            break;
+        }
+    }
+}
+
+void VolatileTexture::reloadAllTextures()
+{
+    isReloading = true;
+
+    CCLOG("reload all texture");
+    std::list<VolatileTexture *>::iterator i = textures.begin();
+
+    while( i != textures.end() )
+    {
+        VolatileTexture *vt = *i++;
+        if (vt->m_bIsString)
+        {
+            vt->texture->initWithString(vt->m_strText.c_str(),
+                                        vt->m_size,
+                                        vt->m_alignment,
+                                        vt->m_strFontName.c_str(),
+                                        vt->m_fFontSize);
+        }
+        else
+        {
+            CCImage image;
+            CCFileData data(vt->m_strFileName.c_str(), "rb");
+            unsigned long nSize  = data.getSize();
+            unsigned char* pBuffer = data.getBuffer();
+
+            if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
+            {
+                vt->texture->initWithImage(&image);
+            }
+        }
+    }
+
+    isReloading = false;
+}
+
+#endif // CC_ENABLE_CACHE_TEXTTURE_DATA
 
 }//namespace   cocos2d 
 
