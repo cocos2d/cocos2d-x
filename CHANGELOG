@@ -1,3 +1,39 @@
+cocos2d-0.99.5-x-0.8.2 @ Apr.7,2011
+ [all platforms]
+    390    Feature    Implement performance test
+	411    Feature    support .plist format outputed by the last version of Zwoptex 
+    415    Feature    Make all xxxFromFile methods can accept relative path
+	439    Feature    all file reading must pass though CCFileUtils::getFileData
+	441    Feature    Initialize pointers in construction & detect them in destruction
+	427    Refactor   refactor CCTMXXMLParser with multi-platform CCSAXParser design
+	434    Refactor   refactor class CCFileUtils
+	396    Refactor   remove ccxScopedPtr & ccxScopedArray, use STL instead
+	350    Bug        TransitionFade flickers
+	391    Bug        CCSpriteFrameCache doesn't support .plist files which format isn't equal to 0
+    420    Bug        CCSprite::spriteWithFile() returns a valid object when the image file isn't present
+    440    Bug        Can't show MessageBox when imageFromFile can't find the image
+ [ios]
+    349    Bug        deal with plist files in binary format
+	435    Bug        CocosDenshion crashes at foreground/background switching
+	438    Bug        MotionStreak Test crashes on device
+ [android]
+    421    Feature    Add a template & new project script for android
+	443    Feature    implement CCKeypadDelegate on android
+    367    Bug        Android.mk of HelloWorld and Tests depends on alphabet order
+	422    Bug        the 2nd point in multi-touch isn't located to the correct coordinate
+	430    Bug        replace glColor4ub with glColor4f to avoid "called unimplement OpenGL ES API" on some android devices
+	431    Bug        ParticleFlower on G3 can't show the particles correctly
+ [win32]
+    417    Bug        No touchEnd when the mouse move out from the window
+	424    Bug        open vs2010.sln says cannot open CCamera.cpp
+ [airplay]
+    379    Feature    integrate airplay sdk port
+	442    feature    implement CocosDenshion on airplay port
+	
+ 
+	
+	
+
 cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
  [all platforms]
     400    Bug        typo, rename CCamera.cpp to CCCamera
