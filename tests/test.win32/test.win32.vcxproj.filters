@@ -106,6 +106,9 @@
     <Filter Include="classes\tests\PerformanceTest">
       <UniqueIdentifier>{631af586-68bb-471f-9a8d-d9314cf221db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\ZwoptexTest">
+      <UniqueIdentifier>{d84b2f0f-e3c2-46e9-8f5a-c953ced5778a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -299,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="..\tests\PerformanceTest\PerformanceTouchesTest.cpp">
       <Filter>classes\tests\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\ZwoptexTest\ZwoptexTest.cpp">
+      <Filter>classes\tests\ZwoptexTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -556,6 +562,9 @@
     </ClInclude>
     <ClInclude Include="..\tests\PerformanceTest\PerformanceTouchesTest.h">
       <Filter>classes\tests\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\ZwoptexTest\ZwoptexTest.h">
+      <Filter>classes\tests\ZwoptexTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

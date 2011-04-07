@@ -130,6 +130,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
     <ClCompile Include="..\cocoa\CCData.cpp" />
     <ClCompile Include="..\cocoa\CCGeometry.cpp" />
+    <ClCompile Include="..\cocoa\CCNS.cpp" />
     <ClCompile Include="..\cocoa\CCObject.cpp" />
     <ClCompile Include="..\cocoa\CCSet.cpp" />
     <ClCompile Include="..\cocoa\CCZone.cpp" />
@@ -161,6 +162,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
     <ClCompile Include="..\platform\CCCommon.cpp" />
     <ClCompile Include="..\platform\CCDirector_mobile.cpp" />
+    <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCGL.cpp" />
     <ClCompile Include="..\platform\CCGrid_mobile.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
@@ -175,8 +177,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\platform\platform.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication_win32.cpp" />
     <ClCompile Include="..\platform\win32\CCEGLView_win32.cpp" />
-    <ClCompile Include="..\platform\win32\CCFileUtils_win32.cpp" />
-    <ClCompile Include="..\platform\win32\CCNS_win32.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp" />
     <ClCompile Include="..\sprite_nodes\CCAnimationCache.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSprite.cpp" />
@@ -193,7 +193,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
     <ClCompile Include="..\support\zip_support\unzip.cpp" />
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
-    <ClCompile Include="..\support\file_support\FileUtils.cpp" />
     <ClCompile Include="..\textures\CCPVRTexture.cpp" />
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
     <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
@@ -218,6 +217,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\cocos2d.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\cocoa\CCNS.h" />
     <ClInclude Include="..\effects\CCGrabber.h" />
     <ClInclude Include="..\effects\CCGrid.h" />
     <ClInclude Include="..\include\CCAccelerometer.h" />
@@ -310,6 +310,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\CCArchOptimalParticleSystem.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCEGLView_platform.h" />
+    <ClInclude Include="..\platform\CCFileUtils.h" />
     <ClInclude Include="..\platform\CCFileUtils_platform.h" />
     <ClInclude Include="..\platform\CCGL.h" />
     <ClInclude Include="..\platform\CCImage.h" />
@@ -326,7 +327,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\win32\CCAccelerometer_win32.h" />
     <ClInclude Include="..\platform\win32\CCApplication_win32.h" />
     <ClInclude Include="..\platform\win32\CCEGLView_win32.h" />
-    <ClInclude Include="..\platform\win32\CCFileUtils_win32.h" />
     <ClInclude Include="..\support\base64.h" />
     <ClInclude Include="..\support\CCProfiling.h" />
     <ClInclude Include="..\support\ccUtils.h" />
@@ -338,7 +338,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\support\zip_support\ioapi.h" />
     <ClInclude Include="..\support\zip_support\unzip.h" />
     <ClInclude Include="..\support\zip_support\ZipUtils.h" />
-    <ClInclude Include="..\support\file_support\FileData.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
     <ClInclude Include="..\CCConfiguration.h" />
   </ItemGroup>
