@@ -33,12 +33,13 @@ public class Cocos2dxMusic {
 			Log.e(TAG, "playBackgroundMusic: background media player is null");
 		} else{		
 			// if the music is playing or paused, stop it
-			mBackgroundMediaPlayer.stop();
+			mBackgroundMediaPlayer.stop();			
 			
 			mBackgroundMediaPlayer.setLooping(isLoop);
 			
 			try {
 				mBackgroundMediaPlayer.prepare();
+				mBackgroundMediaPlayer.seekTo(0);
 				mBackgroundMediaPlayer.start();
 			} catch (Exception e){
 				Log.e(TAG, "playBackgroundMusic: error state");
@@ -49,6 +50,10 @@ public class Cocos2dxMusic {
 	public void stopBackgroundMusic(){
 		if (mBackgroundMediaPlayer != null){
 			mBackgroundMediaPlayer.stop();
+			
+			// should set the state, if not , the following sequence will be error
+			// play -> pause -> stop -> resume
+			this.mIsPaused = false;
 		}
 	}
 	
@@ -67,10 +72,11 @@ public class Cocos2dxMusic {
 	
 	public void rewindBackgroundMusic(){		
 		if (mBackgroundMediaPlayer != null){
-			mBackgroundMediaPlayer.stop();
+			mBackgroundMediaPlayer.stop();			
 			
 			try {
 				mBackgroundMediaPlayer.prepare();
+				mBackgroundMediaPlayer.seekTo(0);
 				mBackgroundMediaPlayer.start();
 			} catch (Exception e){
 				Log.e(TAG, "rewindBackgroundMusic: error state");
@@ -116,8 +122,8 @@ public class Cocos2dxMusic {
 	}
 	
 	private void initData(){
-		mLeftVolume =1.0f;
-		mRightVolume = 1.0f;
+		mLeftVolume =0.5f;
+		mRightVolume = 0.5f;
 		mBackgroundMediaPlayer = null;
 		mIsPaused = false;
 	}
