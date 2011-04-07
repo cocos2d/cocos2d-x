@@ -6,6 +6,7 @@
 class SubTest
 {
 public:
+    ~SubTest();
     void removeByTag(int tag);
     CCSprite* createSpriteWithTag(int tag);
     void initWithSubTest(int nSubTest, CCNode* parent);

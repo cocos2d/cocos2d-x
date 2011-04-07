@@ -26,6 +26,8 @@ THE SOFTWARE.
 #ifndef __CCCONFIG_H__
 #define __CCCONFIG_H__
 
+#include "CCPlatformConfig.h"
+
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 If enabled, the texture coordinates will be calculated by using this formula:
 - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);

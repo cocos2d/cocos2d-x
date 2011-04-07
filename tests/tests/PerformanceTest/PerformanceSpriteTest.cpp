@@ -20,6 +20,15 @@ static int s_nSpriteCurCase = 0;
 // SubTest
 //
 ////////////////////////////////////////////////////////
+SubTest::~SubTest()
+{
+    if (batchNode)
+    {
+        batchNode->release();
+        batchNode = NULL;
+    }
+}
+
 void SubTest::initWithSubTest(int nSubTest, CCNode* p)
 {
     subtestNumber = nSubTest;
