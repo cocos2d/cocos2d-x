@@ -81,7 +81,7 @@ void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
 
 std::string MotionStreakTest2::title()
 {
-	return "MotionStreak test (tap screen)";
+	return "MotionStreak test";
 }
 
 //------------------------------------------------------------------

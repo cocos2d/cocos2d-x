@@ -317,9 +317,9 @@ void TextureTest::performTests()
     // RGBA444
     //
 
-
-    CCLog("\n\n--- PNG 2048x2048 ---\n");
-    performTestsPNG("Images/texture2048x2048.png");
+// most platform don't support texture with width/height is 2048
+//     CCLog("\n\n--- PNG 2048x2048 ---\n");
+//     performTestsPNG("Images/texture2048x2048.png");
 
 //     CCLog("--- PVR 2048x2048 ---\n");
 //     CCLog("RGBA 4444");
