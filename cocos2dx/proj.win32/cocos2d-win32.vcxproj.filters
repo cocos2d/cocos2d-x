@@ -52,9 +52,6 @@
     <Filter Include="support\zip_support">
       <UniqueIdentifier>{3e1780b2-6a4d-48f0-90ca-e4e0d2613978}</UniqueIdentifier>
     </Filter>
-    <Filter Include="support\file_support">
-      <UniqueIdentifier>{e1d45f64-9be7-41c5-a657-194780e1b9ea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="textures">
       <UniqueIdentifier>{022561bf-a9f5-4d03-b3d3-5178fe3ed572}</UniqueIdentifier>
     </Filter>
@@ -219,12 +216,6 @@
     <ClCompile Include="..\platform\win32\CCEGLView_win32.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\win32\CCFileUtils_win32.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\win32\CCNS_win32.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\sprite_nodes\CCAnimation.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
@@ -272,9 +263,6 @@
     </ClCompile>
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp">
       <Filter>support\zip_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\file_support\FileUtils.cpp">
-      <Filter>support\file_support</Filter>
     </ClCompile>
     <ClCompile Include="..\textures\CCPVRTexture.cpp">
       <Filter>textures</Filter>
@@ -334,6 +322,12 @@
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocoa\CCNS.cpp">
+      <Filter>cocoa</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -658,9 +652,6 @@
     <ClInclude Include="..\platform\win32\CCEGLView_win32.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\win32\CCFileUtils_win32.h">
-      <Filter>platform\win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\support\base64.h">
       <Filter>support</Filter>
     </ClInclude>
@@ -694,15 +685,18 @@
     <ClInclude Include="..\support\zip_support\ZipUtils.h">
       <Filter>support\zip_support</Filter>
     </ClInclude>
-    <ClInclude Include="..\support\file_support\FileData.h">
-      <Filter>support\file_support</Filter>
-    </ClInclude>
     <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h">
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\platform\CCSAXParser.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCFileUtils.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocoa\CCNS.h">
+      <Filter>cocoa</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
