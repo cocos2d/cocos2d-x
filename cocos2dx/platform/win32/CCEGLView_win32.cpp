@@ -276,7 +276,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_LBUTTONDOWN:
 		if (m_pDelegate && m_pTouch && MK_LBUTTON == wParam)
 		{
-            POINT pt = {LOWORD(lParam), HIWORD(lParam)};
+            POINT pt = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
             if (PtInRect(&m_rcViewPort, pt))
             {
                 m_bCaptured = true;
@@ -292,8 +292,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		if (MK_LBUTTON == wParam && m_bCaptured)
 		{
-            m_pTouch->SetTouchInfo(0, (float)(LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
-                (float)(HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
+            m_pTouch->SetTouchInfo(0, (float)((short)LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
+                (float)((short)HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
             m_pDelegate->touchesMoved(m_pSet, NULL);
 		}
 		break;
@@ -301,8 +301,8 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_LBUTTONUP:
 		if (m_bCaptured)
 		{
-			m_pTouch->SetTouchInfo(0, (float)(LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
-                (float)(HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
+			m_pTouch->SetTouchInfo(0, (float)((short)LOWORD(lParam)- m_rcViewPort.left) / m_fScreenScaleFactor,
+                (float)((short)HIWORD(lParam) - m_rcViewPort.top) / m_fScreenScaleFactor);
 			m_pDelegate->touchesEnded(m_pSet, NULL);
 			m_pSet->removeObject(m_pTouch);
             ReleaseCapture();
