@@ -112,6 +112,7 @@
     <ClCompile Include="..\tests\PerformanceTest\PerformanceTest.cpp" />
     <ClCompile Include="..\tests\PerformanceTest\PerformanceTextureTest.cpp" />
     <ClCompile Include="..\tests\PerformanceTest\PerformanceTouchesTest.cpp" />
+    <ClCompile Include="..\tests\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\AppDelegate.cpp" />
     <ClCompile Include="..\tests\controller.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="..\tests\PerformanceTest\PerformanceTest.h" />
     <ClInclude Include="..\tests\PerformanceTest\PerformanceTextureTest.h" />
     <ClInclude Include="..\tests\PerformanceTest\PerformanceTouchesTest.h" />
+    <ClInclude Include="..\tests\ZwoptexTest\ZwoptexTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\AppDelegate.h" />
     <ClInclude Include="..\tests\controller.h" />
