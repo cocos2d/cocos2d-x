@@ -10,8 +10,9 @@ This project is based on the famous <A HREF="http://www.cocos2d-iphone.org">"coc
 
 - website: 							http://www.cocos2d-x.org/
 - forum:                            http://forum.cocos2d-x.org/
-- sina mini-blog(CHN): 	            http://t.sina.com/cocos2dx/
-- WIKI: 							http://wiki.cocos2d-x.org/
+- twitter:                          http://twitter.com/cocos2dx/
+- weibo:                            http://weibo.com/cocos2dx/
+- wiki: 							http://wiki.cocos2d-x.org/
 - <A HREF="http://www.cocos2d-x.org/projects/cocos2d-x/wiki/%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91">DEVELOP FAQ (CHN)</A>
 \n
 
