@@ -15,8 +15,7 @@ public class TestsDemo extends Cocos2dxActivity{
 		String packageName = getApplication().getPackageName();
 		super.setPackgeName(packageName);
 
-        mGLView = new Cocos2dxGLSurfaceView(this);
-        setContentView(mGLView);
+        setContentView(R.layout.test_demo);
 	}	
 	
 	 @Override
@@ -35,9 +34,7 @@ public class TestsDemo extends Cocos2dxActivity{
 		 
 		 android.os.Process.killProcess(android.os.Process.myPid());
 	 }
-	  
-	 private GLSurfaceView mGLView;
-	
+
      static {
     	 System.loadLibrary("cocosdenshion");
     	 System.loadLibrary("chipmunk");
