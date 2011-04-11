@@ -652,6 +652,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCTransition.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp"
 				>
 			</File>
@@ -797,10 +801,6 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCThread.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCTransition_mobile.cpp"
 				>
 			</File>
 			<File
