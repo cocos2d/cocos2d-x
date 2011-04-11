@@ -31,54 +31,27 @@ THE SOFTWARE.
 
 #include "CCEGLView.h"
 
-// iOS
-#if defined(CC_PLATFORM_MOBILE)
-    #define CC_GLVIEW                   cocos2d::CCEGLView
-    #define ccglOrtho					glOrthof
-    #define	ccglClearDepth				glClearDepthf
-    #define ccglGenerateMipmap			glGenerateMipmapOES
-    #define ccglGenFramebuffers			glGenFramebuffersOES
-    #define ccglBindFramebuffer			glBindFramebufferOES
-    #define ccglFramebufferTexture2D	glFramebufferTexture2DOES
-    #define ccglDeleteFramebuffers		glDeleteFramebuffersOES
-    #define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
-    #define ccglTranslate				glTranslatef
+#define CC_GLVIEW                   cocos2d::CCEGLView
+#define ccglOrtho					glOrthof
+#define	ccglClearDepth				glClearDepthf
+#define ccglGenerateMipmap			glGenerateMipmapOES
+#define ccglGenFramebuffers			glGenFramebuffersOES
+#define ccglBindFramebuffer			glBindFramebufferOES
+#define ccglFramebufferTexture2D	glFramebufferTexture2DOES
+#define ccglDeleteFramebuffers		glDeleteFramebuffersOES
+#define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
+#define ccglTranslate				glTranslatef
 
-    #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
-    #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
-    #define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
-    #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
-
-// Mac
-#elif defined(CC_PLATFORM_PC)
-    #define CC_GLVIEW                   MacGLView
-    #define ccglOrtho					glOrtho
-    #define	ccglClearDepth				glClearDepth
-    #define ccglGenerateMipmap			glGenerateMipmap
-    #define ccglGenFramebuffers			glGenFramebuffers
-    #define ccglBindFramebuffer			glBindFramebuffer
-    #define ccglFramebufferTexture2D	glFramebufferTexture2D
-    #define ccglDeleteFramebuffers		glDeleteFramebuffers
-    #define ccglCheckFramebufferStatus	glCheckFramebufferStatus
-    #define ccglTranslate				glTranslated
-
-    #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
-    #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
-    #define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
-    #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
-
-#endif
+#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
+#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
+#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
+#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
 
 #include "CCCommon.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "OpenGLES/ES1/gl.h"
 #include "OpenGLES/ES1/glext.h"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -100,8 +73,6 @@ THE SOFTWARE.
 #include <IwGL.h>
 #endif
 
-#if defined(CC_PLATFORM_MOBILE)
-
 NS_CC_BEGIN;
 
 /*
@@ -117,7 +88,5 @@ void CC_DLL gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ,
 void CC_DLL gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
 
 NS_CC_END;
-
-#endif
 
 #endif // __PLATFOMR_CCGL_H__

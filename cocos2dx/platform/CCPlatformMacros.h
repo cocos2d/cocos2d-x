@@ -30,12 +30,8 @@
 #include "ccConfig.h"
 #include "CCPlatformConfig.h"
 
-#if defined(CC_PLATFORM_MOBILE)
-    #define MacGLView					void
-    #define NSWindow					        void
-#elif defined(CC_PLATFORM_PC)
-    #include "platform/MacGLView.h"
-#endif
+#define MacGLView					void
+#define NSWindow					        void
 
 /** @def CC_ENABLE_CACHE_TEXTTURE_DATA
 Enable it if you want to cache the texture data.

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -24,10 +25,11 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 #include "CCLayer.h"
-#include "CCEventDispatcher.h"
+#include "CCTouchDispatcher.h"
 #include "CCKeypadDispatcher.h"
+#include "CCAccelerometer.h"
 #include "CCDirector.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 namespace   cocos2d {
 
 // CCLayer
@@ -35,8 +37,6 @@ CCLayer::CCLayer()
 :m_bIsTouchEnabled(false)
 ,m_bIsAccelerometerEnabled(false)
 ,m_bIsKeypadEnabled(false)
-,m_bIsMouseEnabled(false)
-,m_bIsKeyboardEnabled(false)
 {
 	m_eTouchDelegateType = ccTouchDeletateAllBit;
 	m_tAnchorPoint = ccp(0.5f, 0.5f);
@@ -53,7 +53,7 @@ bool CCLayer::init()
 	do 
 	{
 		CCDirector * pDirector;
-		CCX_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
 		this->setContentSize(pDirector->getWinSize());
 		// success
 		bRet = true;
@@ -71,7 +71,7 @@ CCLayer *CCLayer::node()
 	}
     else
     {
-	    CCX_SAFE_DELETE(pRet)
+	    CC_SAFE_DELETE(pRet)
 	    return NULL;
     }
 }
@@ -80,7 +80,7 @@ CCLayer *CCLayer::node()
 
 void CCLayer::registerWithTouchDispatcher()
 {
-    CCLOG("cocos2d: CCLayer: unsupported!");
+	CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0);
 }
 
 void CCLayer::destroy(void)
@@ -113,76 +113,6 @@ void CCLayer::KeypadKeep()
     this->retain();
 }
 
-void CCLayer::KeyboardDestroy(void)
-{
-    this->release();
-}
-
-void CCLayer::KeyboardKeep(void)
-{
-    this->retain();
-}
-
-void CCLayer::MouseDestroy()
-{
-    this->release();
-}
-
-void CCLayer::MouseKeep()
-{
-    this->retain();
-}
-
-bool CCLayer::getIsMouseEnabled()
-{
-    return m_bIsMouseEnabled;
-}
-
-void CCLayer::setIsMouseEnabled(bool enabled)
-{
-    if( m_bIsMouseEnabled != enabled )
-    {
-        m_bIsMouseEnabled = enabled;
-
-        if( m_bIsRunning )
-        {
-            if( enabled )
-            {
-                CCEventDispatcher::sharedDispatcher()->addMouseDelegate(this, mouseDelegatePriority());
-            }
-            else
-            {
-                CCEventDispatcher::sharedDispatcher()->removeMouseDelegate(this);
-            }
-        }
-    }
-}
-
-bool CCLayer::getIsKeyboardEnabled()
-{
-    return m_bIsKeyboardEnabled;
-}
-
-void CCLayer::setIsKeyboardEnabled(bool enabled)
-{
-    if( m_bIsKeyboardEnabled != enabled )
-    {
-        m_bIsKeyboardEnabled = enabled;
-
-        if( m_bIsRunning )
-        {
-            if( enabled )
-            {
-                CCEventDispatcher::sharedDispatcher()->addKeyboardDelegate(this, keyboardDelegatePriority());
-            }
-            else
-            {
-                CCEventDispatcher::sharedDispatcher()->removeKeyboardDelegate(this);
-            }
-        }
-    }
-}
-
 /// isTouchEnabled getter
 bool CCLayer::getIsTouchEnabled()
 {
@@ -191,7 +121,22 @@ bool CCLayer::getIsTouchEnabled()
 /// isTouchEnabled setter
 void CCLayer::setIsTouchEnabled(bool enabled)
 {
-	CCLOG("cocos2d: CCLayer: unsupported!");
+	if (m_bIsTouchEnabled != enabled)
+	{
+		m_bIsTouchEnabled = enabled;
+		if (m_bIsRunning)
+		{
+			if (enabled)
+			{
+				this->registerWithTouchDispatcher();
+			}
+			else
+			{
+				// have problems?
+				CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+			}
+		}
+	}
 }
 
 /// isAccelerometerEnabled getter
@@ -202,7 +147,22 @@ bool CCLayer::getIsAccelerometerEnabled()
 /// isAccelerometerEnabled setter
 void CCLayer::setIsAccelerometerEnabled(bool enabled)
 {
-    CCLOG("cocos2d: CCLayer: unsupported!");
+    if (enabled != m_bIsAccelerometerEnabled)
+    {
+        m_bIsAccelerometerEnabled = enabled;
+
+        if (m_bIsRunning)
+        {
+            if (enabled)
+            {
+                CCAccelerometer::sharedAccelerometer()->addDelegate(this);
+            }
+            else
+            {
+                CCAccelerometer::sharedAccelerometer()->removeDelegate(this);
+            }
+        }
+    }
 }
 
 /// isKeypadEnabled getter
@@ -231,22 +191,24 @@ void CCLayer::setIsKeypadEnabled(bool enabled)
     }
 }
 
-
 /// Callbacks
 void CCLayer::onEnter()
 {
-    if(m_bIsMouseEnabled)
-    {
-        CCEventDispatcher::sharedDispatcher()->addMouseDelegate(this, mouseDelegatePriority());
-    }
-
-    if( m_bIsKeyboardEnabled)
-    {
-        CCEventDispatcher::sharedDispatcher()->addKeyboardDelegate(this, keyboardDelegatePriority());
-    }
+	// register 'parent' nodes first
+	// since events are propagated in reverse order
+	if (m_bIsTouchEnabled)
+	{
+		this->registerWithTouchDispatcher();
+	}
 
 	// then iterate over all the children
 	CCNode::onEnter();
+
+    // add this layer to concern the Accelerometer Sensor
+    if (m_bIsAccelerometerEnabled)
+    {
+        CCAccelerometer::sharedAccelerometer()->addDelegate(this);
+    }
 
     // add this layer to concern the kaypad msg
     if (m_bIsKeypadEnabled)
@@ -257,14 +219,15 @@ void CCLayer::onEnter()
 
 void CCLayer::onExit()
 {
-    if(m_bIsMouseEnabled)
-    {
-        CCEventDispatcher::sharedDispatcher()->removeMouseDelegate(this, mouseDelegatePriority());
-    }
+	if( m_bIsTouchEnabled )
+	{
+		CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+	}
 
-    if( m_bIsKeyboardEnabled)
+    // remove this layer from the delegates who concern Accelerometer Sensor
+    if (m_bIsAccelerometerEnabled)
     {
-        CCEventDispatcher::sharedDispatcher()->removeKeyboardDelegate(this, keyboardDelegatePriority());
+        CCAccelerometer::sharedAccelerometer()->removeDelegate(this);
     }
 
     // remove this layer from the delegates who concern the kaypad msg
@@ -278,19 +241,25 @@ void CCLayer::onExit()
 
 void CCLayer::onEnterTransitionDidFinish()
 {
+    if (m_bIsAccelerometerEnabled)
+    {
+        CCAccelerometer::sharedAccelerometer()->addDelegate(this);
+    }
+    
     CCNode::onEnterTransitionDidFinish();
 }
 
-bool CCLayer::ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent)
+bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    CCLOG("cocos2d: CCLayer: unsupported!");
-	return false;
+	CCAssert(false, "Layer#ccTouchBegan override me");
+	return true;
 }
 
-//
-// ColorLayer
-//
+/// ColorLayer
+
+
 CCLayerColor::CCLayerColor()
+: m_cOpacity(0)
 {
 }
 CCLayerColor::~CCLayerColor()
@@ -344,7 +313,7 @@ CCLayerColor * CCLayerColor::layerWithColorWidthHeight(ccColor4B color, GLfloat 
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
@@ -355,7 +324,7 @@ CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
 		pLayer->autorelease();
 		return pLayer;
 	}
-	CCX_SAFE_DELETE(pLayer);
+	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
 
@@ -376,19 +345,19 @@ bool CCLayerColor::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfl
 	}
 
 	this->updateColor();
-	this->setContentSize(CGSizeMake(width,height));
+	this->setContentSize(CCSizeMake(width,height));
 	return true;
 }
 
 bool CCLayerColor::initWithColor(ccColor4B color)
 {
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	this->initWithColorWidthHeight(color, s.width, s.height);
 	return true;
 }
 
 /// override contentSize
-void CCLayerColor::setContentSize(CGSize size)
+void CCLayerColor::setContentSize(CCSize size)
 {
 	m_pSquareVertices[2] = size.width * CC_CONTENT_SCALE_FACTOR();
 	m_pSquareVertices[5] = size.height * CC_CONTENT_SCALE_FACTOR();
@@ -400,17 +369,17 @@ void CCLayerColor::setContentSize(CGSize size)
 
 void CCLayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
 {
-	this->setContentSize(CGSizeMake(w, h));
+	this->setContentSize(CCSizeMake(w, h));
 }
 
 void CCLayerColor::changeWidth(GLfloat w)
 {
-	this->setContentSize(CGSizeMake(w, m_tContentSize.height));
+	this->setContentSize(CCSizeMake(w, m_tContentSize.height));
 }
 
 void CCLayerColor::changeHeight(GLfloat h)
 {
-	this->setContentSize(CGSizeMake(m_tContentSize.width, h));
+	this->setContentSize(CCSizeMake(m_tContentSize.width, h));
 }
 
 void CCLayerColor::updateColor()
@@ -466,11 +435,11 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
-CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end, CGPoint v)
+CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end, CCPoint v)
 {
     CCLayerGradient * pLayer = new CCLayerGradient();
     if( pLayer && pLayer->initWithColor(start, end, v))
@@ -478,7 +447,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end,
         pLayer->autorelease();
         return pLayer;
     }
-    CCX_SAFE_DELETE(pLayer);
+    CC_SAFE_DELETE(pLayer);
     return NULL;
 }
 
@@ -487,7 +456,7 @@ bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end)
     return initWithColor(start, end, ccp(0, -1));
 }
 
-bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CGPoint v)
+bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CCPoint v)
 {
     m_endColor.r  = end.r;
     m_endColor.g  = end.g;
@@ -510,7 +479,7 @@ void CCLayerGradient::updateColor()
         return;
 
     double c = sqrt(2.0);
-    CGPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
+    CCPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
 
     float opacityf = (float)m_cOpacity / 255.0f;
 
@@ -593,13 +562,13 @@ GLubyte CCLayerGradient::getEndOpacity()
     return m_cEndOpacity;
 }
 
-void CCLayerGradient::setAlongVector(CGPoint var)
+void CCLayerGradient::setVector(CCPoint var)
 {
     m_AlongVector = var;
     updateColor();
 }
 
-CGPoint CCLayerGradient::getAlongVector()
+CCPoint CCLayerGradient::getVector()
 {
     return m_AlongVector;
 }
@@ -607,11 +576,13 @@ CGPoint CCLayerGradient::getAlongVector()
 /// MultiplexLayer
 
 CCMultiplexLayer::CCMultiplexLayer()
+: m_nEnabledLayer(0)
+, m_pLayers(NULL)
 {
 }
 CCMultiplexLayer::~CCMultiplexLayer()
 {
-	m_pLayers->release();
+	CC_SAFE_RELEASE(m_pLayers);
 }
 
 CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
@@ -627,13 +598,13 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 		return pMultiplexLayer;
 	}
 	va_end(args);
-	CCX_SAFE_DELETE(pMultiplexLayer);
+	CC_SAFE_DELETE(pMultiplexLayer);
 	return NULL;
 }
 
 bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 {
-	m_pLayers = new NSMutableArray<CCLayer*>(5);
+	m_pLayers = new CCMutableArray<CCLayer*>(5);
 	//m_pLayers->retain();
 
 	m_pLayers->addObject(layer);
@@ -653,7 +624,7 @@ bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 
 void CCMultiplexLayer::switchTo(unsigned int n)
 {
-	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
 	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 
@@ -664,7 +635,7 @@ void CCMultiplexLayer::switchTo(unsigned int n)
 
 void CCMultiplexLayer::switchToAndReleaseMe(unsigned int n)
 {
-	NSAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
+	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
 	this->removeChild(m_pLayers->getObjectAtIndex(m_nEnabledLayer), true);
 

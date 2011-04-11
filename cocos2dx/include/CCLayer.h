@@ -31,8 +31,6 @@ THE SOFTWARE.
 #include "CCTouchDelegateProtocol.h"
 #include "CCAccelerometerDelegate.h"
 #include "CCKeypadDelegate.h"
-#include "CCMouseEventDelegate.h"
-#include "CCKeyboardEventDelegate.h"
 
 namespace   cocos2d {
 
@@ -45,7 +43,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate, public CCKeyboardEventDelegate, public CCMouseEventDelegate
+class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 public:
 	CCLayer();
@@ -67,12 +65,6 @@ public:
     virtual void KeypadDestroy();
     virtual void KeypadKeep();
 
-    virtual void KeyboardDestroy(void);
-    virtual void KeyboardKeep(void);
-
-    virtual void MouseDestroy();
-    virtual void MouseKeep();
-
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
 	( Default: CCTouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
@@ -85,20 +77,6 @@ public:
 	*/
 	virtual void registerWithTouchDispatcher(void);
 
-    /** priority of the mouse event delegate.
-    Default 0.
-    Override this method to set another priority.
-    @since v0.99.5
-    */
-    virtual int mouseDelegatePriority() { return 0; }
-
-    /** priority of the keyboard event delegate.
-    Default 0.
-    Override this method to set another priority.
-    @since v0.99.5
-    */
-    virtual int keyboardDelegatePriority() { return 0; }
-
 	/** whether or not it will receive Touch events.
 	You can enable / disable touch events with this property.
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
@@ -110,16 +88,6 @@ public:
 	@since v0.8.1
 	*/
 	CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
-    /** whether or not it will receive Keyboard events
-    You can enable / disable Keyboard events with this property.
-    @since v0.99.5
-    */
-    CC_PROPERTY(bool, m_bIsKeyboardEnabled, IsKeyboardEnabled)
-    /** whether or not it will receive mouse events
-    You can enable / disable mouse events with this property.
-    @since v0.99.5
-    */
-    CC_PROPERTY(bool, m_bIsMouseEnabled, IsMouseEnabled)
     /** whether or not it will receive keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x

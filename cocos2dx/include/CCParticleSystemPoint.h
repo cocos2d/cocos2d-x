@@ -22,9 +22,55 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_PARTICLE_SYSTEM_POINT_H__
-#define __CC_PARTICLE_SYSTEM_POINT_H__
+#ifndef __CC_PARTICLE_SYSTEM_POINT_MOBILE_H__
+#define __CC_PARTICLE_SYSTEM_POINT_MOBILE_H__
 
-#include "platform/CCParticleSystemPoint_platform.h"
+/*#include "Availability.h"*/
+#include "CCParticleSystem.h"
 
-#endif //__CC_PARTICLE_SYSTEM_POINT_H__
+namespace cocos2d {
+
+#define CC_MAX_PARTICLE_SIZE 64
+
+/** @brief CCParticleSystemPoint is a subclass of CCParticleSystem
+Attributes of a Particle System:
+* All the attributes of Particle System
+
+Features:
+* consumes small memory: uses 1 vertex (x,y) per particle, no need to assign tex coordinates
+* size can't be bigger than 64
+* the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
+
+Limitations:
+* On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCParticleSystemQuad.
+*/
+class CC_DLL CCParticleSystemPoint : public CCParticleSystem
+{	
+public:
+	CCParticleSystemPoint()
+		:m_pVertices(NULL)	
+	{}
+	virtual ~CCParticleSystemPoint();
+	// super methods
+	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
+	virtual void postStep();
+	virtual void draw();
+	virtual void setStartSpin(float var);
+	virtual void setStartSpinVar(float var);
+	virtual void setEndSpin(float var);
+	virtual void setEndSpinVar(float var);
+	virtual void setStartSize(float var);
+	virtual void setEndSize(float var);
+protected:
+	//! Array of (x,y,size) 
+	ccPointSprite *m_pVertices;
+	//! vertices buffer id
+# if CC_USES_VBO
+	GLuint	m_uVerticesID;	
+#endif
+};
+
+}// namespace cocos2d
+
+#endif //__CC_PARTICLE_SYSTEM_POINT_MOBILE_H__

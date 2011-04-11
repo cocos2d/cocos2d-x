@@ -361,23 +361,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCEvent.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCEventDispatcher.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCGeometry.h"
 				>
 			</File>
 			<File
 				RelativePath="..\include\CCGL.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCKeyboardEventDelegate.h"
 				>
 			</File>
 			<File
@@ -418,10 +406,6 @@
 			</File>
 			<File
 				RelativePath="..\include\CCMotionStreak.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\CCMouseEventDelegate.h"
 				>
 			</File>
 			<File
@@ -613,6 +597,10 @@
 			Name="layers_scenes_transition_nodes"
 			>
 			<File
+				RelativePath="..\layers_scenes_transitions_nodes\CCLayer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\layers_scenes_transitions_nodes\CCScene.cpp"
 				>
 			</File>
@@ -628,6 +616,10 @@
 		<Filter
 			Name="menu_nodes"
 			>
+			<File
+				RelativePath="..\menu_nodes\CCMenu.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\menu_nodes\CCMenuItem.cpp"
 				>
@@ -665,7 +657,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCParticleSystemPoint_mobile.cpp"
+				RelativePath="..\particle_nodes\CCParticleSystemPoint.cpp"
 				>
 			</File>
 			<File
@@ -961,27 +953,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCLayer_mobile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCLibxml2.h"
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCMenu_mobile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCNode_mobile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCParticleSystemPoint_mobile.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCParticleSystemPoint_platform.h"
 				>
 			</File>
 			<File
@@ -1086,22 +1062,6 @@
 			</File>
 			<File
 				RelativePath="..\keypad_dispatcher\CCKeypadDispatcher.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="event_dispatcher"
-			>
-			<File
-				RelativePath="..\event_dispatcher\CCEventDispatcher.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\event_dispatcher\CCKeyboardEventDelegate.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\event_dispatcher\CCMouseEventDelegate.cpp"
 				>
 			</File>
 		</Filter>
