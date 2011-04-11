@@ -262,14 +262,6 @@ void CCDirector::calculateDeltaTime(void)
 }
 
 
-// m_dAnimationInterval
-void CCDirector::setAnimationInterval(double dValue)
-{
-	CCLOG("cocos2d: Director#setAnimationInterval. Overrride me");
-	// assert(0);
-}
-
-
 // m_pobOpenGLView
 
 void CCDirector::setOpenGLView(CC_GLVIEW *pobOpenGLView)
@@ -411,11 +403,6 @@ CCPoint CCDirector::convertToGL(CCPoint obPoint)
 		ret.y = newX;
 		break;
 	}
-
-// 	if (m_fContentScaleFactor != 1 && m_bIsContentScaleSupported)
-// 	{
-//         ret = ccpMult(ret, m_fContentScaleFactor);
-// 	}
 	
 	return ret;
 }
@@ -662,24 +649,6 @@ void CCDirector::resume(void)
 	m_fDeltaTime = 0;
 }
 
-void CCDirector::startAnimation(void)
-{
-	CCLOG("cocos2d: Director#startAnimation. Overrride me");
-	assert(0);
-}
-
-void CCDirector::stopAnimation(void)
-{
-	CCLOG("cocos2d: Director#stopAnimation. Overrride me");
-	assert(0);
-}
-
-void CCDirector::mainLoop(void)
-{
-    CCLOG("cocos2d: Director#preMainLoop. Overrride me");
-	assert(0);
-}
-
 #if CC_DIRECTOR_FAST_FPS
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
@@ -899,45 +868,6 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
         setProjection(m_eProjection);
     }
 }
-
-/***************************************************
-* PC platforms specific functions, such as mac
-**************************************************/
-
-CCPoint CCDirector::convertEventToGL(CCEvent *event)
-{
-    assert(false);
-	return CCPointZero;
-}
-
-bool CCDirector::isFullScreen(void)
-{
-    assert(false);
-	return false;
-}
-
-void CCDirector::setResizeMode(int resizeMode)
-{
-    assert(false);
-}
-
-int CCDirector::getResizeMode(void)
-{
-    assert(false);
-	return -1;
-}
-
-void CCDirector::setFullScreen(bool fullscreen)
-{
-    assert(false);
-}
-
-CCPoint CCDirector::convertToLogicalCoordinates(CCPoint coordinates)
-{
-    assert(false);
-	return CCPointZero;
-}
-
 
 /***************************************************
 * implementation of DisplayLinkDirector

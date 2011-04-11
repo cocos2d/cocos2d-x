@@ -21,6 +21,7 @@ actions/CCActionPageTurn3D.cpp \
 actions/CCActionProgressTimer.cpp \
 actions/CCActionTiledGrid.cpp \
 base_nodes/CCAtlasNode.cpp \
+base_nodes/CCNode.cpp \
 cocoa/CCAffineTransform.cpp \
 cocoa/CCGeometry.cpp \
 cocoa/CCAutoreleasePool.cpp \
@@ -30,7 +31,9 @@ cocoa/CCObject.cpp \
 cocoa/CCSet.cpp \
 cocoa/CCZone.cpp \
 cocos2d.cpp \
+CCDirector.cpp \
 effects/CCGrabber.cpp \
+effects/CCGrid.cpp \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
 label_nodes/CCLabelAtlas.cpp \
@@ -50,10 +53,7 @@ particle_nodes/CCParticleExamples.cpp \
 particle_nodes/CCParticleSystem.cpp \
 particle_nodes/CCParticleSystemPoint.cpp \
 particle_nodes/CCParticleSystemQuad.cpp \
-platform/CCDirector_mobile.cpp \
 platform/CCFileUtils.cpp \
-platform/CCGrid_mobile.cpp \
-platform/CCNode_mobile.cpp \
 platform/CCGL.cpp \
 platform/CCImage.cpp \
 platform/CCStdC.cpp \
