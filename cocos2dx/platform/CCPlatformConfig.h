@@ -40,11 +40,10 @@ There are config below:
 // define supported target platform macro which CC uses.
 #define CC_PLATFORM_UNKNOWN            0
 #define CC_PLATFORM_IOS                1
-#define CC_PLATFORM_MAC                2
-#define CC_PLATFORM_ANDROID            3
-#define CC_PLATFORM_WOPHONE            4
-#define CC_PLATFORM_WIN32              5
-#define CC_PLATFORM_AIRPLAY            6
+#define CC_PLATFORM_ANDROID            2
+#define CC_PLATFORM_WOPHONE            3
+#define CC_PLATFORM_WIN32              4
+#define CC_PLATFORM_AIRPLAY            5
 
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -55,12 +54,6 @@ There are config below:
     #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
     #define CC_SUPPORT_MULTITHREAD 0
     #define CC_SUPPORT_UNICODE 0
-#endif
-
-// mac
-#if ! CC_TARGET_PLATFORM && defined(TARGET_OS_MAC)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_MAC
 #endif
 
 // android
@@ -100,11 +93,6 @@ There are config below:
 #if defined(CC_UNDER_IOS)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
-#endif
-
-#if defined(CC_UNDER_MAC)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_MAC
 #endif
 
 #if defined(CC_UNDER_ANDROID)
@@ -153,13 +141,6 @@ There are config below:
     #error  "Can not recognize the target platform, compling under a unsupported platform?"
 #endif 
 
-// distinguish mobile platforms and pc platforms
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    #define CC_PLATFORM_PC
-#else
-    #define CC_PLATFORM_MOBILE
-#endif
-
 // cocos2d-x havn't support multi-thread yet
 #undef  CC_SUPPORT_MULTITHREAD
 #define CC_SUPPORT_MULTITHREAD         0
@@ -172,10 +153,6 @@ There are config below:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 #endif  // CC_PLATFORM_WIN32
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#error cofnig
-#endif // CC_PLATFORM_MAC
 
 #endif  // __CC_PLATFORM_CONFIG_H__
 

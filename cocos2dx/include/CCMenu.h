@@ -96,16 +96,6 @@ namespace cocos2d{
 		virtual void ccTouchCancelled(CCTouch *touch, CCEvent* event);
 		virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
 
-        /**
-        @brief For PC event handle functions
-        @since v0.99.5
-        */
-        virtual int mouseDelegatePriority();
-        virtual CCMenuItem* itemForMouseEvent(CCEvent * pEvent);
-        virtual bool ccMouseDown(CCEvent * pEvent);
-        virtual bool ccMouseDragged(CCEvent * pEvent);
-        virtual bool ccMouseUp(CCEvent * pEvent);
-
 		virtual void destroy(void);
 		virtual void keep(void);
 

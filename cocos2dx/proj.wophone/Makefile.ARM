@@ -58,17 +58,16 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCSet.o \
 	$(OBJECTS_DIR)/CCZone.o \
 	$(OBJECTS_DIR)/CCGrabber.o \
-	$(OBJECTS_DIR)/CCEventDispatcher.o \
-	$(OBJECTS_DIR)/CCKeyboardEventDelegate.o \
-	$(OBJECTS_DIR)/CCMouseEventDelegate.o \
 	$(OBJECTS_DIR)/CCKeypadDelegate.o \
 	$(OBJECTS_DIR)/CCKeypadDispatcher.o \
 	$(OBJECTS_DIR)/CCLabelAtlas.o \
 	$(OBJECTS_DIR)/CCLabelBMFont.o \
 	$(OBJECTS_DIR)/CCLabelTTF.o \
+	$(OBJECTS_DIR)/CCLayer.o \
 	$(OBJECTS_DIR)/CCScene.o \
 	$(OBJECTS_DIR)/CCTransitionPageTurn.o \
 	$(OBJECTS_DIR)/CCTransitionRadial.o \
+	$(OBJECTS_DIR)/CCMenu.o \
 	$(OBJECTS_DIR)/CCMenuItem.o \
 	$(OBJECTS_DIR)/CCMotionStreak.o \
 	$(OBJECTS_DIR)/CCProgressTimer.o \
@@ -76,6 +75,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCRibbon.o \
 	$(OBJECTS_DIR)/CCParticleExamples.o \
 	$(OBJECTS_DIR)/CCParticleSystem.o \
+	$(OBJECTS_DIR)/CCParticleSystemPoint.o \
 	$(OBJECTS_DIR)/CCParticleSystemQuad.o \
 	$(OBJECTS_DIR)/CCCommon.o \
 	$(OBJECTS_DIR)/CCDirector_mobile.o \
@@ -83,10 +83,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCGL.o \
 	$(OBJECTS_DIR)/CCGrid_mobile.o \
 	$(OBJECTS_DIR)/CCImage.o \
-	$(OBJECTS_DIR)/CCLayer_mobile.o \
-	$(OBJECTS_DIR)/CCMenu_mobile.o \
 	$(OBJECTS_DIR)/CCNode_mobile.o \
-	$(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o \
 	$(OBJECTS_DIR)/CCSAXParser.o \
 	$(OBJECTS_DIR)/CCStdC.o \
 	$(OBJECTS_DIR)/CCThread.o \
@@ -219,15 +216,6 @@ $(OBJECTS_DIR)/CCZone.o : ../cocoa/CCZone.cpp
 $(OBJECTS_DIR)/CCGrabber.o : ../effects/CCGrabber.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrabber.o ../effects/CCGrabber.cpp
 
-$(OBJECTS_DIR)/CCEventDispatcher.o : ../event_dispatcher/CCEventDispatcher.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCEventDispatcher.o ../event_dispatcher/CCEventDispatcher.cpp
-
-$(OBJECTS_DIR)/CCKeyboardEventDelegate.o : ../event_dispatcher/CCKeyboardEventDelegate.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeyboardEventDelegate.o ../event_dispatcher/CCKeyboardEventDelegate.cpp
-
-$(OBJECTS_DIR)/CCMouseEventDelegate.o : ../event_dispatcher/CCMouseEventDelegate.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCMouseEventDelegate.o ../event_dispatcher/CCMouseEventDelegate.cpp
-
 $(OBJECTS_DIR)/CCKeypadDelegate.o : ../keypad_dispatcher/CCKeypadDelegate.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDelegate.o ../keypad_dispatcher/CCKeypadDelegate.cpp
 
@@ -243,6 +231,9 @@ $(OBJECTS_DIR)/CCLabelBMFont.o : ../label_nodes/CCLabelBMFont.cpp
 $(OBJECTS_DIR)/CCLabelTTF.o : ../label_nodes/CCLabelTTF.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLabelTTF.o ../label_nodes/CCLabelTTF.cpp
 
+$(OBJECTS_DIR)/CCLayer.o : ../layers_scenes_transitions_nodes/CCLayer.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLayer.o ../layers_scenes_transitions_nodes/CCLayer.cpp
+
 $(OBJECTS_DIR)/CCScene.o : ../layers_scenes_transitions_nodes/CCScene.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScene.o ../layers_scenes_transitions_nodes/CCScene.cpp
 
@@ -251,6 +242,9 @@ $(OBJECTS_DIR)/CCTransitionPageTurn.o : ../layers_scenes_transitions_nodes/CCTra
 
 $(OBJECTS_DIR)/CCTransitionRadial.o : ../layers_scenes_transitions_nodes/CCTransitionRadial.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransitionRadial.o ../layers_scenes_transitions_nodes/CCTransitionRadial.cpp
+
+$(OBJECTS_DIR)/CCMenu.o : ../menu_nodes/CCMenu.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCMenu.o ../menu_nodes/CCMenu.cpp
 
 $(OBJECTS_DIR)/CCMenuItem.o : ../menu_nodes/CCMenuItem.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCMenuItem.o ../menu_nodes/CCMenuItem.cpp
@@ -273,6 +267,9 @@ $(OBJECTS_DIR)/CCParticleExamples.o : ../particle_nodes/CCParticleExamples.cpp
 $(OBJECTS_DIR)/CCParticleSystem.o : ../particle_nodes/CCParticleSystem.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleSystem.o ../particle_nodes/CCParticleSystem.cpp
 
+$(OBJECTS_DIR)/CCParticleSystemPoint.o : ../particle_nodes/CCParticleSystemPoint.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleSystemPoint.o ../particle_nodes/CCParticleSystemPoint.cpp
+
 $(OBJECTS_DIR)/CCParticleSystemQuad.o : ../particle_nodes/CCParticleSystemQuad.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleSystemQuad.o ../particle_nodes/CCParticleSystemQuad.cpp
 
@@ -294,23 +291,14 @@ $(OBJECTS_DIR)/CCGrid_mobile.o : ../platform/CCGrid_mobile.cpp
 $(OBJECTS_DIR)/CCImage.o : ../platform/CCImage.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCImage.o ../platform/CCImage.cpp
 
-$(OBJECTS_DIR)/CCLayer_mobile.o : ../platform/CCLayer_mobile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCLayer_mobile.o ../platform/CCLayer_mobile.cpp
-
-$(OBJECTS_DIR)/CCMenu_mobile.o : ../platform/CCMenu_mobile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCMenu_mobile.o ../platform/CCMenu_mobile.cpp
-
 $(OBJECTS_DIR)/CCNode_mobile.o : ../platform/CCNode_mobile.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNode_mobile.o ../platform/CCNode_mobile.cpp
 
-$(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o : ../platform/CCParticleSystemPoint_mobile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParticleSystemPoint_mobile.o ../platform/CCParticleSystemPoint_mobile.cpp
+$(OBJECTS_DIR)/CCSAXParser.o : ../platform/CCSAXParser.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSAXParser.o ../platform/CCSAXParser.cpp
 
 $(OBJECTS_DIR)/CCStdC.o : ../platform/CCStdC.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCStdC.o ../platform/CCStdC.cpp
-
-$(OBJECTS_DIR)/CCSAXParser.o : ../platform/CCSAXParser.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSAXParser.o ../platform/CCSAXParser.cpp
 
 $(OBJECTS_DIR)/CCThread.o : ../platform/CCThread.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCThread.o ../platform/CCThread.cpp
