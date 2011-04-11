@@ -43,6 +43,7 @@ layers_scenes_transitions_nodes/CCLayer.cpp \
 layers_scenes_transitions_nodes/CCScene.cpp \
 layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp \
 layers_scenes_transitions_nodes/CCTransitionRadial.cpp \
+layers_scenes_transitions_nodes/CCTransition.cpp \
 menu_nodes/CCMenu.cpp \
 menu_nodes/CCMenuItem.cpp \
 misc_nodes/CCMotionStreak.cpp \
@@ -60,7 +61,6 @@ platform/CCStdC.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCCommon.cpp \
-platform/CCTransition_mobile.cpp \
 platform/platform.cpp \
 platform/android/CCEGLView_android.cpp \
 platform/android/CCAccelerometer_android.cpp \
