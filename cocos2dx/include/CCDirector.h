@@ -178,7 +178,6 @@ typedef enum {
 class CCLabelTTF;
 class CCScene;
 class CCEGLView;
-class CCEvent;
 class CCNode;
 class CCProjectionProtocol;
 
@@ -217,7 +216,7 @@ public:
 	/** Get the FPS value */
 	inline double getAnimationInterval(void) { return m_dAnimationInterval; }
 	/** Set the FPS value. */
-	virtual void setAnimationInterval(double dValue);
+	virtual void setAnimationInterval(double dValue) = 0;
 
 	/** Whether or not to display the FPS on the bottom-left corner */
 	inline bool isDisplayFPS(void) { return m_bDisplayFPS; }
@@ -329,13 +328,13 @@ public:
 	/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
 	 If you don't want to pause your animation call [pause] instead.
 	 */
-	virtual void stopAnimation(void);
+	virtual void stopAnimation(void) = 0;
 
 	/** The main loop is triggered again.
 	 Call this function only if [stopAnimation] was called earlier
 	 @warning Don't call this function to start the main loop. To run the main loop call runWithScene
 	 */
-	virtual void startAnimation(void);
+	virtual void startAnimation(void) = 0;
 
 	/** Draw the scene.
 	This method is called every frame. Don't call it manually.
@@ -361,15 +360,10 @@ public:
 	/** enables/disables OpenGL depth test */
 	void setDepthTest(bool bOn);
 
-	virtual void mainLoop(void);
+	virtual void mainLoop(void) = 0;
 
 	// Profiler
 	void showProfilers(void);
-
-
-	/***************************************************
-     * mobile platforms specific functions
-	 **************************************************/
 
 	/** rotates the screen if an orientation different than Portrait is used */
 	void applyOrientation(void);
@@ -431,31 +425,12 @@ public:
 	/** detach the cocos2d view from the view/window */
 	bool detach(void);
 
-	/***************************************************
-	* PC platforms specific functions, such as mac
-	**************************************************/
-	CCPoint convertEventToGL(CCEvent *event);
-	// whether or not the view is in fullscreen mode
-	bool isFullScreen(void);
-	// resize mode: with or without scaling
-	void setResizeMode(int resizeMode);
-	int getResizeMode(void);
-	/** Sets the view in fullscreen or window mode */
-    void setFullScreen(bool fullscreen);
-	/** Converts window size coordiantes to logical coordinates.
-	Useful only if resizeMode is kCCDirectorResize_Scale.
-	If resizeMode is kCCDirectorResize_NoScale, then no conversion will be done.
-	*/
-	CCPoint convertToLogicalCoordinates(CCPoint coordinates);
-
 public:
 	/** returns a shared instance of the director */
 	static CCDirector* sharedDirector(void);
 
 protected:
-	/***************************************************
-	* mobile platforms specific functions
-	**************************************************/
+
 	void purgeDirector();
 	bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
 	
@@ -535,9 +510,6 @@ protected:
 	/* Projection protocol delegate */
 	CCProjectionProtocol *m_pProjectionDelegate;
 
-	/***************************************************
-	* mobile platforms specific members
-	**************************************************/
 	/* The device orientation */
 	ccDeviceOrientation	m_eDeviceOrientation;
 	/* contentScaleFactor could be simulated */
@@ -546,20 +518,7 @@ protected:
 	tPixelFormat m_ePixelFormat;
 	tDepthBufferFormat m_eDepthBufferFormat;
 
-	/***************************************************
-	* mac platforms specific members
-	**************************************************/
-	bool m_bIsFullScreen;
-    bool m_bRetinaDisplay;
-	int m_nResizeMode;
-	CCPoint m_winOffset;
-	CCSize m_originalWinSize;
-
-	MacGLView *m_pFullScreenGLView;
-	NSWindow  *m_pFullScreenWindow;
-
-	// cache
-	MacGLView *m_pWindowGLView;
+	bool m_bRetinaDisplay;
 	
 #if CC_ENABLE_PROFILERS
 	ccTime m_fAccumDtForProfiler;

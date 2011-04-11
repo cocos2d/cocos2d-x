@@ -191,6 +191,10 @@
 				RelativePath="..\base_nodes\CCAtlasNode.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\base_nodes\CCNode.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="cocoa"
@@ -241,6 +245,10 @@
 			</File>
 			<File
 				RelativePath="..\effects\CCGrabber.h"
+				>
+			</File>
+			<File
+				RelativePath="..\effects\CCGrid.cpp"
 				>
 			</File>
 			<File
@@ -728,10 +736,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCDirector_mobile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCEGLView_platform.h"
 				>
 			</File>
@@ -752,10 +756,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\CCGrid_mobile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\CCImage.cpp"
 				>
 			</File>
@@ -765,10 +765,6 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCLibxml2.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\CCNode_mobile.cpp"
 				>
 			</File>
 			<File
@@ -1054,6 +1050,10 @@
 		</File>
 		<File
 			RelativePath="..\CCConfiguration.h"
+			>
+		</File>
+		<File
+			RelativePath="..\CCDirector.cpp"
 			>
 		</File>
 		<File
