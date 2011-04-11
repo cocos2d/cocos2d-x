@@ -80,6 +80,15 @@ namespace cocos2d{
 					CCTMXLayer *child = parseLayer(layerInfo, mapInfo);
 					addChild((CCNode*)child, idx, idx);
 
+                    // record the CCTMXLayer object by it's name
+                    if (NULL == m_pTMXLayers)
+                    {
+                        m_pTMXLayers = new CCDictionary<std::string, CCTMXLayer*>();
+                    }
+                    CCAssert(m_pTMXLayers, "Allocate memory filed!");
+                    std::string layerName = child->getLayerName();
+                    m_pTMXLayers->setObject(child, layerName);
+
 					// update content size with the max size
 					CCSize childSize = child->getContentSize();
 					CCSize currentSize = this->getContentSize();
@@ -99,6 +108,7 @@ namespace cocos2d{
 		,m_pObjectGroups(NULL)
 		,m_pProperties(NULL)
 		,m_pTileProperties(NULL)
+        ,m_pTMXLayers(NULL)
 	{
 	}
 	CCTMXTiledMap::~CCTMXTiledMap()
@@ -106,6 +116,7 @@ namespace cocos2d{
 		CC_SAFE_RELEASE(m_pProperties);
 		CC_SAFE_RELEASE(m_pObjectGroups);
 		CC_SAFE_RELEASE(m_pTileProperties);
+        CC_SAFE_RELEASE(m_pTMXLayers);
 	}
 	CCMutableArray<CCTMXObjectGroup*> * CCTMXTiledMap::getObjectGroups()
 	{
@@ -193,22 +204,8 @@ namespace cocos2d{
 	CCTMXLayer * CCTMXTiledMap::layerNamed(const char *layerName)
 	{
 		std::string sLayerName = layerName;
-		if (m_pChildren && m_pChildren->count()>0)
-		{
-			CCTMXLayer *layer;
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				layer = (CCTMXLayer*)(*it);
-				if (layer && layer->getLayerName() == sLayerName)
-				{
-					return layer;
-				}
-			}
-		}
-		
-		// layer not found
-		return NULL;
+        CCTMXLayer * pRet = m_pTMXLayers->objectForKey(sLayerName);
+		return pRet;
 	}
 	CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
 	{
