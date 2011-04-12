@@ -2,11 +2,12 @@ package org.cocos2dx.lib;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-public class Cocos2dxGLSurfaceView extends GLSurfaceView{
+public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     private static final String TAG = Cocos2dxGLSurfaceView.class
             .getCanonicalName();
     private Cocos2dxRenderer mRenderer;
@@ -14,6 +15,15 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView{
 
     public Cocos2dxGLSurfaceView(Context context) {
         super(context);
+        initView();
+    }
+
+    public Cocos2dxGLSurfaceView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initView();
+    }
+
+    private void initView() {
         mRenderer = new Cocos2dxRenderer();
         setFocusableInTouchMode(true);
         setRenderer(mRenderer);
@@ -29,12 +39,12 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView{
     	for (int i = 0; i < pointerNumber; i++) {
             ids[i] = event.getPointerId(i);
             xs[i] = event.getX(i);
-            ys[i] = event.getY(i);                          
+            ys[i] = event.getY(i);
         }
         
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
-        case MotionEvent.ACTION_POINTER_DOWN:           	
-        	final int idPointerDown = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;                        
+        case MotionEvent.ACTION_POINTER_DOWN:
+        	final int idPointerDown = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
             final float xPointerDown = event.getX(idPointerDown);
             final float yPointerDown = event.getY(idPointerDown);
 
@@ -46,9 +56,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView{
             });
             break;
             
-        case MotionEvent.ACTION_DOWN:     
+        case MotionEvent.ACTION_DOWN:
         	// there are only one finger on the screen
-        	final int idDown = event.getPointerId(0);                            
+        	final int idDown = event.getPointerId(0);
             final float xDown = event.getX(idDown);
             final float yDown = event.getY(idDown);
             
@@ -60,7 +70,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView{
             });
             break;
 
-        case MotionEvent.ACTION_MOVE:                        
+        case MotionEvent.ACTION_MOVE:
             queueEvent(new Runnable() {
                 @Override
                 public void run() {
@@ -69,8 +79,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView{
             });
             break;
 
-        case MotionEvent.ACTION_POINTER_UP:           	            	
-        	final int idPointerUp = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;                        
+        case MotionEvent.ACTION_POINTER_UP:
+        	final int idPointerUp = event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
             final float xPointerUp = event.getX(idPointerUp);
             final float yPointerUp = event.getY(idPointerUp);
             
