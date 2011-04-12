@@ -70,6 +70,12 @@ namespace cocos2d{
 		CCMutableArray<CCTMXLayerInfo*>* layers = mapInfo->getLayers();
 		if (layers && layers->count()>0)
 		{
+            if (NULL == m_pTMXLayers)
+            {
+                m_pTMXLayers = new CCDictionary<std::string, CCTMXLayer*>();
+                CCAssert(m_pTMXLayers, "Allocate memory failed!");
+            }
+
 			CCTMXLayerInfo *layerInfo = NULL;
 			CCMutableArray<CCTMXLayerInfo*>::CCMutableArrayIterator it;
 			for (it = layers->begin(); it != layers->end(); ++it)
@@ -81,11 +87,6 @@ namespace cocos2d{
 					addChild((CCNode*)child, idx, idx);
 
                     // record the CCTMXLayer object by it's name
-                    if (NULL == m_pTMXLayers)
-                    {
-                        m_pTMXLayers = new CCDictionary<std::string, CCTMXLayer*>();
-                    }
-                    CCAssert(m_pTMXLayers, "Allocate memory filed!");
                     std::string layerName = child->getLayerName();
                     m_pTMXLayers->setObject(child, layerName);
 
