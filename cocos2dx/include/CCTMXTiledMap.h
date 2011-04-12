@@ -144,7 +144,8 @@ namespace cocos2d {
 
 	protected:
 		//! tile properties
-		CCDictionary<int, CCStringToStringDictionary*> *m_pTileProperties;
+        CCDictionary<int, CCStringToStringDictionary*> *m_pTileProperties;
+        CCDictionary<std::string, CCTMXLayer*> *m_pTMXLayers;
 
 	};
 
