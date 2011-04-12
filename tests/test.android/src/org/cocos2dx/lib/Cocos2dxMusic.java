@@ -18,6 +18,7 @@ public class Cocos2dxMusic {
 	private Context mContext;
 	private MediaPlayer mBackgroundMediaPlayer;
 	private boolean mIsPaused;
+	private String mCurrentPath;
 	
 	public Cocos2dxMusic(Context context){
 		this.mContext = context;
@@ -25,13 +26,30 @@ public class Cocos2dxMusic {
 	}
 	
 	public void playBackgroundMusic(String path, boolean isLoop){
-		if (mBackgroundMediaPlayer == null){
-			mBackgroundMediaPlayer = createMediaplayerFromAssets(path);
+		if (mCurrentPath == null){
+			// it is the first time to play background music
+			// or end() was called
+			mBackgroundMediaPlayer = createMediaplayerFromAssets(path);	
+			mCurrentPath = path;
+		} 
+		else {
+			if (! mCurrentPath.equals(path)){
+				// play new background music
+				
+				// release old resource and create a new one
+				if (mBackgroundMediaPlayer != null){
+					mBackgroundMediaPlayer.release();				
+				}				
+				mBackgroundMediaPlayer = createMediaplayerFromAssets(path);
+				
+				// record the path
+				mCurrentPath = path;
+			}
 		}
 		
 		if (mBackgroundMediaPlayer == null){
 			Log.e(TAG, "playBackgroundMusic: background media player is null");
-		} else{		
+		} else {		
 			// if the music is playing or paused, stop it
 			mBackgroundMediaPlayer.stop();			
 			
@@ -41,6 +59,8 @@ public class Cocos2dxMusic {
 				mBackgroundMediaPlayer.prepare();
 				mBackgroundMediaPlayer.seekTo(0);
 				mBackgroundMediaPlayer.start();
+				
+				this.mIsPaused = false;
 			} catch (Exception e){
 				Log.e(TAG, "playBackgroundMusic: error state");
 			}			
@@ -67,6 +87,7 @@ public class Cocos2dxMusic {
 	public void resumeBackgroundMusic(){
 		if (mBackgroundMediaPlayer != null && this.mIsPaused){
 			mBackgroundMediaPlayer.start();
+			this.mIsPaused = false;
 		}
 	}
 	
@@ -78,9 +99,11 @@ public class Cocos2dxMusic {
 				mBackgroundMediaPlayer.prepare();
 				mBackgroundMediaPlayer.seekTo(0);
 				mBackgroundMediaPlayer.start();
+				
+				this.mIsPaused = false;
 			} catch (Exception e){
 				Log.e(TAG, "rewindBackgroundMusic: error state");
-			}
+			}			
 		}
 	}
 	
@@ -97,15 +120,13 @@ public class Cocos2dxMusic {
 	}
 	
 	public void end(){
-		if (mBackgroundMediaPlayer != null)
-		{
+		if (mBackgroundMediaPlayer != null){
 			mBackgroundMediaPlayer.release();
 		}
 
 		initData();
 	}
 	
-
 	public float getBackgroundVolume(){
 		if (this.mBackgroundMediaPlayer != null){
 			return (this.mLeftVolume + this.mRightVolume) / 2;
@@ -126,6 +147,7 @@ public class Cocos2dxMusic {
 		mRightVolume = 0.5f;
 		mBackgroundMediaPlayer = null;
 		mIsPaused = false;
+		mCurrentPath = null;
 	}
 	
 	/**
@@ -146,6 +168,7 @@ public class Cocos2dxMusic {
 	        
 	        mediaPlayer.setVolume(mLeftVolume, mRightVolume);
 		}catch (Exception e) {
+			mediaPlayer = null;
             Log.e(TAG, "error: " + e.getMessage(), e);
         }
 		
