@@ -46,6 +46,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -66,6 +67,9 @@ public class Cocos2dxActivity extends Activity{
     private final static int HANDLER_SHOW_DIALOG = 1;
 
     private static native void nativeSetPaths(String apkPath);
+    
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor sharedPreferencesEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,9 @@ public class Cocos2dxActivity extends Activity{
         		}
         	}
         };
+        
+        sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        sharedPreferencesEditor = sharedPreferences.edit(); 
     }
     
     public static void showMessageBox(String title, String message){
@@ -224,6 +231,67 @@ public class Cocos2dxActivity extends Activity{
 	    }).create();
 
 	    dialog.show();
+    }
+    
+    public static void sharedPreferencesPutBoolean(String key, boolean value){
+    	sharedPreferencesEditor.putBoolean(key, value);
+    }
+    
+    public static void sharedPreferencesPutInteger(String key, int value){
+    	sharedPreferencesEditor.putInt(key, value);
+    }
+    
+    public static void sharedPreferencesPutFloat(String key, float value){
+    	sharedPreferencesEditor.putFloat(key, value);
+    }
+    
+    public static void sharedPreferencesPutString(String key, String value){
+    	sharedPreferencesEditor.putString(key, value);
+    }
+    
+    public static boolean sharedPreferencesGetBoolean(String key, boolean defaultValue){
+    	try {
+    		return sharedPreferences.getBoolean(key, defaultValue);
+	    }
+		catch (ClassCastException e)
+		{    		
+		}
+		return defaultValue;
+    }
+    
+    public static int sharedPreferencesGetInteger(String key, int defaultValue){
+    	try {
+    		return sharedPreferences.getInt(key, defaultValue);
+	    }
+		catch (ClassCastException e)
+		{    		
+		}
+		return defaultValue;
+    }
+    
+    public static float sharedPreferencesGetFloat(String key, float defaultValue){
+    	try {
+    		return sharedPreferences.getFloat(key, defaultValue);
+	    }
+		catch (ClassCastException e)
+		{    		
+		}
+		return defaultValue;
+    }
+    
+    public static String sharedPreferencesGetString(String key, String defaultValue){
+    	try {
+    		return sharedPreferences.getString(key, defaultValue);	
+    	}
+    	catch (ClassCastException e)
+    	{    		
+    	}
+    	return defaultValue;
+    }
+    
+    private static void sharedPreferencesCommit(){
+    	sharedPreferencesEditor.commit();
+    	sharedPreferencesEditor = sharedPreferences.edit();
     }
 }
 

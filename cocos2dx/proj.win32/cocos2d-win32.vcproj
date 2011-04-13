@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="libcocos2d"
 	ProjectGUID="{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
 	RootNamespace="cocos2d-x.win32"
@@ -612,6 +612,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCUserPreferences.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCZone.h"
 				>
 			</File>
@@ -801,6 +805,10 @@
 			</File>
 			<File
 				RelativePath="..\platform\CCThread.h"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\CCUserPreferences_platform.h"
 				>
 			</File>
 			<File

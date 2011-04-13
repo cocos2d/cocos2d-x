@@ -301,6 +301,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\include\CCTransitionPageTurn.h" />
     <ClInclude Include="..\include\CCTransitionRadial.h" />
     <ClInclude Include="..\include\ccTypes.h" />
+    <ClInclude Include="..\include\CCUserPreferences.h" />
     <ClInclude Include="..\include\CCZone.h" />
     <ClInclude Include="..\include\cocos2d.h" />
     <ClInclude Include="..\include\FileUtils.h" />
@@ -323,6 +324,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCStdC.h" />
     <ClInclude Include="..\platform\CCThread.h" />
+    <ClInclude Include="..\platform\CCUserPreferences_platform.h" />
     <ClInclude Include="..\platform\platform.h" />
     <ClInclude Include="..\platform\win32\CCAccelerometer_win32.h" />
     <ClInclude Include="..\platform\win32\CCApplication_win32.h" />

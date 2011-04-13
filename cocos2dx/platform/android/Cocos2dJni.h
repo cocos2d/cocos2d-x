@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __ANDROID_COCOS2D_JNI_H__
 
 #include <jni.h>
+#include <string>
 
 extern "C"
 
@@ -33,6 +34,18 @@ extern "C"
 	void enableAccelerometerJNI();
 	void disableAccelerometerJNI();
 	void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
+	
+	void sharedPreferencesPutBooleanJNI(const std::string& key, bool value);
+	void sharedPreferencesPutIntegerJNI(const std::string& key, int value);
+	void sharedPreferencesPutFloatJNI(const std::string& key, float value);
+	void sharedPreferencesPutStringJNI(const std::string& key, const std::string& value);
+
+	bool sharedPreferencesGetBooleanJNI(const std::string& key, bool defaultValue);
+	int sharedPreferencesGetIntegerJNI(const std::string& key, int defaultValue);
+	float sharedPreferencesGetFloatJNI(const std::string& key, float defaultValue);
+	std::string sharedPreferencesGetStringJNI(const std::string& key, const std::string& defaultValue);
+
+	void sharedPreferencesCommitJNI();
 }
 
 #endif // __ANDROID_COCOS2D_JNI_H__

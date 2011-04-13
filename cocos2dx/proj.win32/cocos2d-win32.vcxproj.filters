@@ -698,5 +698,11 @@
     <ClInclude Include="..\cocoa\CCNS.h">
       <Filter>cocoa</Filter>
     </ClInclude>
+    <ClInclude Include="..\platform\CCUserPreferences_platform.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCUserPreferences.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

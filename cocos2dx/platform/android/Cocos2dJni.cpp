@@ -303,6 +303,125 @@ extern "C"
 		}
 	}
 
+	void sharedPreferencesPutBooleanJNI(const std::string& key, bool value)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesPutBoolean", "(Ljava/lang/String;Z)V");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jboolean arg2 = value ? JNI_TRUE : JNI_FALSE;
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+		}
+	}
+
+	void sharedPreferencesPutIntegerJNI(const std::string& key, int value)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesPutInteger", "(Ljava/lang/String;I)V");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jint arg2 = value;
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+		}
+	}
+
+	void sharedPreferencesPutFloatJNI(const std::string& key, float value)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesPutFloat", "(Ljava/lang/String;F)V");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jfloat arg2 = value;
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+		}
+	}
+
+	void sharedPreferencesPutStringJNI(const std::string& key, const std::string& value)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesPutString", "(Ljava/lang/String;Ljava/lang/String;)V");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jstring arg2 =  env->NewStringUTF(value.c_str());
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+		}
+	}
+
+
+	bool sharedPreferencesGetBooleanJNI(const std::string& key, bool defaultValue)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesGetBoolean", "(Ljava/lang/String;Z)Z");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jboolean arg2 = defaultValue ? JNI_TRUE : JNI_FALSE;
+			jboolean ret = env->CallStaticBooleanMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+			return ret == JNI_TRUE ? true : false;
+		}
+
+		return defaultValue;
+	}
+
+	int sharedPreferencesGetIntegerJNI(const std::string& key, int defaultValue)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesGetInteger", "(Ljava/lang/String;I)I");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jint arg2 = defaultValue;
+			return env->CallStaticIntMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+		}
+
+		return defaultValue;
+	}
+
+	float sharedPreferencesGetFloatJNI(const std::string& key, float defaultValue)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesGetFloat", "(Ljava/lang/String;F)F");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jfloat arg2 = defaultValue;
+			return env->CallStaticFloatMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+		}
+
+		return defaultValue;
+	}
+
+	std::string sharedPreferencesGetStringJNI(const std::string& key, const std::string& defaultValue)
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesGetString", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
+
+		if (methodID)
+		{
+			jstring arg1 = env->NewStringUTF(key.c_str());
+			jstring arg2 = env->NewStringUTF(defaultValue.c_str());
+			jstring ret = (jstring)env->CallStaticObjectMethod(classOfCocos2dxActivity, methodID, arg1, arg2);
+			
+			const char *nativeString = env->GetStringUTFChars(ret, JNI_FALSE);
+			std::string retStr(nativeString);
+			env->ReleaseStringUTFChars(ret, nativeString);
+			return retStr;
+		}
+
+		return defaultValue;
+	}
+
+	void sharedPreferencesCommitJNI()
+	{
+		jmethodID methodID = getMethodID("sharedPreferencesCommit", "()V");
+
+		if (methodID)
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID);
+	}
+
 	// native renderer
 
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env)

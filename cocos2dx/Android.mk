@@ -65,6 +65,7 @@ platform/platform.cpp \
 platform/android/CCEGLView_android.cpp \
 platform/android/CCAccelerometer_android.cpp \
 platform/android/CCApplication_android.cpp \
+platform/android/CCUserPreferences_android.cpp \
 platform/android/Cocos2dJni.cpp \
 sprite_nodes/CCAnimation.cpp \
 sprite_nodes/CCAnimationCache.cpp \
