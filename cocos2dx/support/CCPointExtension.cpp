@@ -32,19 +32,19 @@ namespace   cocos2d {
 #define kCCPointEpsilon FLT_EPSILON
 
 CGFloat
-ccpLength(const CCPoint v)
+ccpLength(const CCPoint& v)
 {
 	return sqrtf(ccpLengthSQ(v));
 }
 
 CGFloat
-ccpDistance(const CCPoint v1, const CCPoint v2)
+ccpDistance(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccpLength(ccpSub(v1, v2));
 }
 
 CCPoint
-ccpNormalize(const CCPoint v)
+ccpNormalize(const CCPoint& v)
 {
 	return ccpMult(v, 1.0f/ccpLength(v));
 }
@@ -56,12 +56,12 @@ ccpForAngle(const CGFloat a)
 }
 
 CGFloat
-ccpToAngle(const CCPoint v)
+ccpToAngle(const CCPoint& v)
 {
 	return atan2f(v.y, v.x);
 }
 
-CCPoint ccpLerp(CCPoint a, CCPoint b, float alpha)
+CCPoint ccpLerp(const CCPoint& a, const CCPoint& b, float alpha)
 {
 	return ccpAdd(ccpMult(a, 1.f - alpha), ccpMult(b, alpha));
 }
@@ -77,21 +77,21 @@ float clampf(float value, float min_inclusive, float max_inclusive)
 	return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
 
-CCPoint ccpClamp(CCPoint p, CCPoint min_inclusive, CCPoint max_inclusive)
+CCPoint ccpClamp(const CCPoint& p, const CCPoint& min_inclusive, const CCPoint& max_inclusive)
 {
 	return ccp(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
 }
 
-CCPoint ccpFromSize(CCSize s)
+CCPoint ccpFromSize(const CCSize& s)
 {
 	return ccp(s.width, s.height);
 }
 
-CCPoint ccpCompOp(CCPoint p, float (*opFunc)(float)){
+CCPoint ccpCompOp(const CCPoint& p, float (*opFunc)(float)){
 	return ccp(opFunc(p.x), opFunc(p.y));
 }
 
-bool ccpFuzzyEqual(CCPoint a, CCPoint b, float var)
+bool ccpFuzzyEqual(const CCPoint& a, const CCPoint& b, float var)
 {
 	if(a.x - var <= b.x && b.x <= a.x + var)
 		if(a.y - var <= b.y && b.y <= a.y + var)
@@ -99,12 +99,12 @@ bool ccpFuzzyEqual(CCPoint a, CCPoint b, float var)
 	return false;
 }
 
-CCPoint ccpCompMult(CCPoint a, CCPoint b)
+CCPoint ccpCompMult(const CCPoint& a, const CCPoint& b)
 {
 	return ccp(a.x * b.x, a.y * b.y);
 }
 
-float ccpAngleSigned(CCPoint a, CCPoint b)
+float ccpAngleSigned(const CCPoint& a, const CCPoint& b)
 {
 	CCPoint a2 = ccpNormalize(a);	CCPoint b2 = ccpNormalize(b);
 	float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
@@ -112,7 +112,7 @@ float ccpAngleSigned(CCPoint a, CCPoint b)
 	return angle;
 }
 
-CCPoint ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle) {
+CCPoint ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle) {
 	CCPoint r = ccpSub(v, pivot);
 	float t = r.x;
 	float cosa = cosf(angle), sina = sinf(angle);
@@ -122,8 +122,8 @@ CCPoint ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle) {
 	return r;
 }
 
-bool ccpLineIntersect(CCPoint p1, CCPoint p2, 
-					  CCPoint p3, CCPoint p4,
+bool ccpLineIntersect(const CCPoint& p1, const CCPoint& p2, 
+					  const CCPoint& p3, const CCPoint& p4,
 					  float *s, float *t){
 	CCPoint p13, p43, p21;
 	float d1343, d4321, d1321, d4343, d2121;
@@ -161,7 +161,7 @@ bool ccpLineIntersect(CCPoint p1, CCPoint p2,
 	return true;
 }
 
-float ccpAngle(CCPoint a, CCPoint b)
+float ccpAngle(const CCPoint& a, const CCPoint& b)
 {
 	float angle = acosf(ccpDot(ccpNormalize(a), ccpNormalize(b)));
 	if( fabs(angle) < kCCPointEpsilon ) return 0.f;
