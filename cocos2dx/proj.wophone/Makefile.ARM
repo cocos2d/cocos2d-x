@@ -34,6 +34,7 @@ first: all
 OBJECTS = \
 	$(OBJECTS_DIR)/CCCamera.o \
 	$(OBJECTS_DIR)/CCConfiguration.o \
+	$(OBJECTS_DIR)/CCDirector.o \
 	$(OBJECTS_DIR)/CCDrawingPrimitives.o \
 	$(OBJECTS_DIR)/CCScheduler.o \
 	$(OBJECTS_DIR)/cocos2d.o \
@@ -49,6 +50,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCActionProgressTimer.o \
 	$(OBJECTS_DIR)/CCActionTiledGrid.o \
 	$(OBJECTS_DIR)/CCAtlasNode.o \
+	$(OBJECTS_DIR)/CCNode.o \
 	$(OBJECTS_DIR)/CCAffineTransform.o \
 	$(OBJECTS_DIR)/CCAutoreleasePool.o \
 	$(OBJECTS_DIR)/CCData.o \
@@ -58,6 +60,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCSet.o \
 	$(OBJECTS_DIR)/CCZone.o \
 	$(OBJECTS_DIR)/CCGrabber.o \
+	$(OBJECTS_DIR)/CCGrid.o \
 	$(OBJECTS_DIR)/CCKeypadDelegate.o \
 	$(OBJECTS_DIR)/CCKeypadDispatcher.o \
 	$(OBJECTS_DIR)/CCLabelAtlas.o \
@@ -65,6 +68,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCLabelTTF.o \
 	$(OBJECTS_DIR)/CCLayer.o \
 	$(OBJECTS_DIR)/CCScene.o \
+	$(OBJECTS_DIR)/CCTransition.o \
 	$(OBJECTS_DIR)/CCTransitionPageTurn.o \
 	$(OBJECTS_DIR)/CCTransitionRadial.o \
 	$(OBJECTS_DIR)/CCMenu.o \
@@ -78,16 +82,12 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCParticleSystemPoint.o \
 	$(OBJECTS_DIR)/CCParticleSystemQuad.o \
 	$(OBJECTS_DIR)/CCCommon.o \
-	$(OBJECTS_DIR)/CCDirector_mobile.o \
 	$(OBJECTS_DIR)/CCFileUtils.o \
 	$(OBJECTS_DIR)/CCGL.o \
-	$(OBJECTS_DIR)/CCGrid_mobile.o \
 	$(OBJECTS_DIR)/CCImage.o \
-	$(OBJECTS_DIR)/CCNode_mobile.o \
 	$(OBJECTS_DIR)/CCSAXParser.o \
 	$(OBJECTS_DIR)/CCStdC.o \
 	$(OBJECTS_DIR)/CCThread.o \
-	$(OBJECTS_DIR)/CCTransition_mobile.o \
 	$(OBJECTS_DIR)/platform.o \
 	$(OBJECTS_DIR)/CCLock.o \
 	$(OBJECTS_DIR)/CCAccelerometer_wophone.o \
@@ -144,6 +144,9 @@ $(OBJECTS_DIR)/CCCamera.o : ../CCCamera.cpp
 $(OBJECTS_DIR)/CCConfiguration.o : ../CCConfiguration.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCConfiguration.o ../CCConfiguration.cpp
 
+$(OBJECTS_DIR)/CCDirector.o : ../CCDirector.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCDirector.o ../CCDirector.cpp
+
 $(OBJECTS_DIR)/CCDrawingPrimitives.o : ../CCDrawingPrimitives.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCDrawingPrimitives.o ../CCDrawingPrimitives.cpp
 
@@ -189,6 +192,9 @@ $(OBJECTS_DIR)/CCActionTiledGrid.o : ../actions/CCActionTiledGrid.cpp
 $(OBJECTS_DIR)/CCAtlasNode.o : ../base_nodes/CCAtlasNode.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAtlasNode.o ../base_nodes/CCAtlasNode.cpp
 
+$(OBJECTS_DIR)/CCNode.o : ../base_nodes/CCNode.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNode.o ../base_nodes/CCNode.cpp
+
 $(OBJECTS_DIR)/CCAffineTransform.o : ../cocoa/CCAffineTransform.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAffineTransform.o ../cocoa/CCAffineTransform.cpp
 
@@ -216,6 +222,9 @@ $(OBJECTS_DIR)/CCZone.o : ../cocoa/CCZone.cpp
 $(OBJECTS_DIR)/CCGrabber.o : ../effects/CCGrabber.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrabber.o ../effects/CCGrabber.cpp
 
+$(OBJECTS_DIR)/CCGrid.o : ../effects/CCGrid.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrid.o ../effects/CCGrid.cpp
+
 $(OBJECTS_DIR)/CCKeypadDelegate.o : ../keypad_dispatcher/CCKeypadDelegate.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCKeypadDelegate.o ../keypad_dispatcher/CCKeypadDelegate.cpp
 
@@ -236,6 +245,9 @@ $(OBJECTS_DIR)/CCLayer.o : ../layers_scenes_transitions_nodes/CCLayer.cpp
 
 $(OBJECTS_DIR)/CCScene.o : ../layers_scenes_transitions_nodes/CCScene.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScene.o ../layers_scenes_transitions_nodes/CCScene.cpp
+
+$(OBJECTS_DIR)/CCTransition.o : ../layers_scenes_transitions_nodes/CCTransition.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransition.o ../layers_scenes_transitions_nodes/CCTransition.cpp
 
 $(OBJECTS_DIR)/CCTransitionPageTurn.o : ../layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransitionPageTurn.o ../layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp
@@ -276,23 +288,14 @@ $(OBJECTS_DIR)/CCParticleSystemQuad.o : ../particle_nodes/CCParticleSystemQuad.c
 $(OBJECTS_DIR)/CCCommon.o : ../platform/CCCommon.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCCommon.o ../platform/CCCommon.cpp
 
-$(OBJECTS_DIR)/CCDirector_mobile.o : ../platform/CCDirector_mobile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCDirector_mobile.o ../platform/CCDirector_mobile.cpp
-
 $(OBJECTS_DIR)/CCFileUtils.o : ../platform/CCFileUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCFileUtils.o ../platform/CCFileUtils.cpp
 
 $(OBJECTS_DIR)/CCGL.o : ../platform/CCGL.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGL.o ../platform/CCGL.cpp
 
-$(OBJECTS_DIR)/CCGrid_mobile.o : ../platform/CCGrid_mobile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCGrid_mobile.o ../platform/CCGrid_mobile.cpp
-
 $(OBJECTS_DIR)/CCImage.o : ../platform/CCImage.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCImage.o ../platform/CCImage.cpp
-
-$(OBJECTS_DIR)/CCNode_mobile.o : ../platform/CCNode_mobile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCNode_mobile.o ../platform/CCNode_mobile.cpp
 
 $(OBJECTS_DIR)/CCSAXParser.o : ../platform/CCSAXParser.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSAXParser.o ../platform/CCSAXParser.cpp
@@ -302,9 +305,6 @@ $(OBJECTS_DIR)/CCStdC.o : ../platform/CCStdC.cpp
 
 $(OBJECTS_DIR)/CCThread.o : ../platform/CCThread.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCThread.o ../platform/CCThread.cpp
-
-$(OBJECTS_DIR)/CCTransition_mobile.o : ../platform/CCTransition_mobile.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTransition_mobile.o ../platform/CCTransition_mobile.cpp
 
 $(OBJECTS_DIR)/platform.o : ../platform/platform.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/platform.o ../platform/platform.cpp
