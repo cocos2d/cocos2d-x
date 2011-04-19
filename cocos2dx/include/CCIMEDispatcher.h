@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_IME_DISPATCHER_H__
 #define __CC_IME_DISPATCHER_H__
 
-#include "CCCommon.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN;
 
@@ -58,6 +58,14 @@ public:
     @brief	dispatch the delete backward operation
     */
     void dispatchDeleteBackward();
+
+    //////////////////////////////////////////////////////////////////////////
+    // dispatch keyboard notification
+    //////////////////////////////////////////////////////////////////////////
+    void dispatchKeyboardWillShow(CCRect& begin, CCRect& end);
+    void dispatchKeyboardDidShow(CCRect& begin, CCRect& end);
+    void dispatchKeyboardWillHide(CCRect& begin, CCRect& end);
+    void dispatchKeyboardDidHide(CCRect& begin, CCRect& end);
 
 protected:
     friend class CCIMEDelegate;

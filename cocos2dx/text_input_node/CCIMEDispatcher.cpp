@@ -176,6 +176,10 @@ void CCIMEDispatcher::removeDelegate(CCIMEDelegate* pDelegate)
     } while (0);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// dispatch text message
+//////////////////////////////////////////////////////////////////////////
+
 void CCIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
 {
     do 
@@ -202,6 +206,78 @@ void CCIMEDispatcher::dispatchDeleteBackward()
         CCIMEDelegate * pDelegate = *(m_pImpl->m_DelegateWithIme);
         pDelegate->deleteBackward();
     } while (0);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// dispatch keyboard message
+//////////////////////////////////////////////////////////////////////////
+
+void CCIMEDispatcher::dispatchKeyboardWillShow(CCRect& begin, CCRect& end)
+{
+    if (m_pImpl)
+    {
+        CCIMEDelegate * pDelegate = 0;
+        DelegateIter last = m_pImpl->m_DelegateList.end();
+        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        {
+            pDelegate = *(first);
+            if (pDelegate)
+            {
+                pDelegate->keyboardWillShow(begin, end);
+            }
+        }
+    }
+}
+
+void CCIMEDispatcher::dispatchKeyboardDidShow(CCRect& begin, CCRect& end)
+{
+    if (m_pImpl)
+    {
+        CCIMEDelegate * pDelegate = 0;
+        DelegateIter last = m_pImpl->m_DelegateList.end();
+        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        {
+            pDelegate = *(first);
+            if (pDelegate)
+            {
+                pDelegate->keyboardDidShow(begin, end);
+            }
+        }
+    }
+}
+
+void CCIMEDispatcher::dispatchKeyboardWillHide(CCRect& begin, CCRect& end)
+{
+    if (m_pImpl)
+    {
+        CCIMEDelegate * pDelegate = 0;
+        DelegateIter last = m_pImpl->m_DelegateList.end();
+        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        {
+            pDelegate = *(first);
+            if (pDelegate)
+            {
+                pDelegate->keyboardWillHide(begin, end);
+            }
+        }
+    }
+}
+
+void CCIMEDispatcher::dispatchKeyboardDidHide(CCRect& begin, CCRect& end)
+{
+    if (m_pImpl)
+    {
+        CCIMEDelegate * pDelegate = 0;
+        DelegateIter last = m_pImpl->m_DelegateList.end();
+        for (DelegateIter first = m_pImpl->m_DelegateList.begin(); first != last; ++first)
+        {
+            pDelegate = *(first);
+            if (pDelegate)
+            {
+                pDelegate->keyboardDidHide(begin, end);
+            }
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
