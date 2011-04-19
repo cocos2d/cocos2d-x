@@ -55,15 +55,19 @@ public:
 	unsigned int count(void)
 	{
 		unsigned int uCount = 0;
-		CCMutableArrayIterator it;
-		for (it = m_array.begin(); it != m_array.end(); ++it)
+		
+		if (!m_array.empty())
 		{
-			if (*it == NULL)
+			CCMutableArrayIterator it;
+			for (it = m_array.begin(); it != m_array.end(); ++it)
 			{
-				break;
-			}
+				if (*it == NULL)
+				{
+					break;
+				}
 
-			++uCount;
+				++uCount;
+			}
 		}
 
 		return uCount;
