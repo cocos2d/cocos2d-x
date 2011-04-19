@@ -69,6 +69,14 @@ protected:
     */
     virtual void deleteBackward() = 0;
 
+    //////////////////////////////////////////////////////////////////////////
+    // keyboard show/hide notification
+    //////////////////////////////////////////////////////////////////////////
+    virtual void keyboardWillShow(CCRect& begin, CCRect& end)   {}
+    virtual void keyboardDidShow(CCRect& begin, CCRect& end)    {}
+    virtual void keyboardWillHide(CCRect& begin, CCRect& end)   {}
+    virtual void keyboardDidHide(CCRect& begin, CCRect& end)    {}
+
 protected:
     CCIMEDelegate();
 };

@@ -68,6 +68,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCDirector.h"
 #import "CCSet.h"
 #import "CCTouch.h"
+#import "CCIMEDispatcher.h"
 #import "OpenGL_Internal.h"
 
 //CLASS IMPLEMENTATIONS:
@@ -489,6 +490,205 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 	}
 	
 	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);
+}
+
+#pragma mark -
+#pragma mark UIView - Responder
+
+- (BOOL)canBecomeFirstResponder
+{
+    markedText_ = nil;
+    return YES;
+}
+
+#pragma mark -
+#pragma mark EAGLView - UIKeyInput
+
+- (BOOL)hasText
+{
+    return NO;
+}
+
+- (void)insertText:(NSString *)text
+{
+    const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+}
+
+- (void)deleteBackward
+{
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+}
+
+#pragma mark -
+#pragma mark UITextInput protocol
+
+#pragma mark UITextInput - properties
+
+@synthesize beginningOfDocument;
+@synthesize endOfDocument;
+@synthesize inputDelegate;
+@synthesize markedTextRange;
+@synthesize markedTextStyle;
+// @synthesize selectedTextRange;       // must implement
+@synthesize tokenizer;
+
+/* Text may have a selection, either zero-length (a caret) or ranged.  Editing operations are
+ * always performed on the text from this selection.  nil corresponds to no selection. */
+- (void)setSelectedTextRange:(UITextRange *)aSelectedTextRange;
+{
+    CCLOG("UITextRange:setSelectedTextRange");
+}
+- (UITextRange *)selectedTextRange;
+{
+	return [[[UITextRange alloc] init] autorelease];
+}
+
+#pragma mark UITextInput - Replacing and Returning Text
+
+- (NSString *)textInRange:(UITextRange *)range;
+{
+    CCLOG("textInRange");
+	return nil;
+}
+- (void)replaceRange:(UITextRange *)range withText:(NSString *)theText;
+{
+    CCLOG("replaceRange");
+}
+
+#pragma mark UITextInput - Working with Marked and Selected Text
+
+
+
+/* If text can be selected, it can be marked. Marked text represents provisionally
+ * inserted text that has yet to be confirmed by the user.  It requires unique visual
+ * treatment in its display.  If there is any marked text, the selection, whether a
+ * caret or an extended range, always resides witihin.
+ *
+ * Setting marked text either replaces the existing marked text or, if none is present,
+ * inserts it from the current selection. */ 
+
+- (void)setMarkedTextRange:(UITextRange *)markedTextRange;
+{
+    CCLOG("setMarkedTextRange");
+}
+
+- (UITextRange *)markedTextRange;
+{
+    CCLOG("markedTextRange");
+	return nil; // Nil if no marked text.
+}
+- (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle;
+{
+    CCLOG("setMarkedTextStyle");
+    
+}
+- (NSDictionary *)markedTextStyle;
+{
+    CCLOG("markedTextStyle");
+	return nil;
+}
+- (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
+{
+    CCLOG("setMarkedText");
+    markedText_ = markedText;
+}
+- (void)unmarkText;
+{
+    CCLOG("unmarkText");
+    if (nil == markedText_)
+    {
+        return;
+    }
+    const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+    markedText_ = nil;
+}
+
+#pragma mark Methods for creating ranges and positions.
+
+- (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition;
+{
+    CCLOG("textRangeFromPosition");
+	return nil;
+}
+- (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset;
+{
+    CCLOG("positionFromPosition");
+	return nil;
+}
+- (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset;
+{
+    CCLOG("positionFromPosition");
+	return nil;
+}
+
+/* Simple evaluation of positions */
+- (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
+{
+    CCLOG("comparePosition");
+	return 0;
+}
+- (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
+{
+    CCLOG("offsetFromPosition");
+	return 0;
+}
+
+- (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction;
+{
+    CCLOG("positionWithinRange");
+	return nil;
+}
+- (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction;
+{
+    CCLOG("characterRangeByExtendingPosition");
+	return nil;
+}
+
+#pragma mark Writing direction
+
+- (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction;
+{
+    CCLOG("baseWritingDirectionForPosition");
+	return UITextWritingDirectionNatural;
+}
+- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range;
+{
+    CCLOG("setBaseWritingDirection");
+}
+
+#pragma mark Geometry
+
+/* Geometry used to provide, for example, a correction rect. */
+- (CGRect)firstRectForRange:(UITextRange *)range;
+{
+    CCLOG("firstRectForRange");
+	return CGRectNull;
+}
+- (CGRect)caretRectForPosition:(UITextPosition *)position;
+{
+	CCLOG("caretRectForPosition");
+	return CGRectMake(0, 0, 0, 0);
+}
+
+#pragma mark Hit testing
+
+/* JS - Find the closest position to a given point */
+- (UITextPosition *)closestPositionToPoint:(CGPoint)point;
+{
+    CCLOG(@"closestPositionToPoint");
+	return nil;
+}
+- (UITextPosition *)closestPositionToPoint:(CGPoint)point withinRange:(UITextRange *)range;
+{
+    CCLOG("closestPositionToPoint");
+	return nil;
+}
+- (UITextRange *)characterRangeAtPoint:(CGPoint)point;
+{
+    CCLOG("characterRangeAtPoint");
+	return nil;
 }
 
 @end
