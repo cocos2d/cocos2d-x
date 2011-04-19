@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Res;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\OpenGL;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\cocos2dx\include;..\..\cocos2dx;..\..\chipmunk\include\chipmunk;..\..\;..\..\chipmunk\Demo;..\tests;..\..\CocosDenshion\include;..\..\cocos2dx\platform"
+				AdditionalIncludeDirectories="..\Res;..\..\..\PRJ_TG3\Include;..\..\..\PRJ_TG3\Include\MTAPI;..\..\..\PRJ_TG3\Include\ThirdParty;..\..\..\PRJ_TG3\Include\OpenGL;..\..\..\PRJ_TG3\Include\TCOM;..\..\..\PRJ_TG3\TG3\Include;..\..\..\PRJ_TG3\TG3\TG3_Implement;..\..\..\PRJ_TG3\EOS_SYS;..\..\..\PRJ_TG3\Common\SoftSupport;..\..\..\PRJ_TG3\Common\ICU\Include;..\..\cocos2dx\include;..\..\cocos2dx;..\..\chipmunk\include\chipmunk;..\..\;..\..\chipmunk\Demo;..\tests;..\..\CocosDenshion\include;..\..\cocos2dx\platform"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_TRANZDA_VM_;SS_MAKEDLL;_USE_MATH_DEFINES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -66,7 +66,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib libEGL.lib libgles_cm.lib libBox2d.lib libCocosDenshion.lib"
+				AdditionalDependencies="WS2_32.Lib EosConfig.lib SoftSupport.lib TG3_DLL.lib libcocos2d.lib libEGL.lib libgles_cm.lib libBox2d.lib libCocosDenshion.lib libcurl_imp.lib"
 				OutputFile="$(OutDir)/libCocos2dTests.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../../PRJ_TG3/Common/ICU/lib;../../../PRJ_TG3/Mtapi/Win32/lib;../../../PRJ_TG3/LIB/Win32Lib;../../../PRJ_TG3/Common/SoftSupport;&quot;$(OutDir)&quot;"
@@ -960,6 +960,18 @@
 				</File>
 				<File
 					RelativePath="..\tests\ZwoptexTest\ZwoptexTest.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="CurlTest"
+				>
+				<File
+					RelativePath="..\tests\CurlTest\CurlTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\CurlTest\CurlTest.h"
 					>
 				</File>
 			</Filter>
