@@ -52,22 +52,11 @@ extern "C" {
  *    ...
  */
 
-/*
- * xmlC14NMode:
- * 
- * Predefined values for C14N modes
- *
- */
-typedef enum {
-    XML_C14N_1_0            = 0,    /* Origianal C14N 1.0 spec */
-    XML_C14N_EXCLUSIVE_1_0  = 1,    /* Exclusive C14N 1.0 spec */
-    XML_C14N_1_1            = 2     /* C14N 1.1 spec */
-} xmlC14NMode;
 
 XMLPUBFUN int XMLCALL
 		xmlC14NDocSaveTo	(xmlDocPtr doc,
 					 xmlNodeSetPtr nodes,
-					 int mode, /* a xmlC14NMode */
+					 int exclusive,
 					 xmlChar **inclusive_ns_prefixes,
 					 int with_comments,
 					 xmlOutputBufferPtr buf);
@@ -75,7 +64,7 @@ XMLPUBFUN int XMLCALL
 XMLPUBFUN int XMLCALL
 		xmlC14NDocDumpMemory	(xmlDocPtr doc,
 					 xmlNodeSetPtr nodes,
-					 int mode, /* a xmlC14NMode */
+					 int exclusive,
 					 xmlChar **inclusive_ns_prefixes,
 					 int with_comments,
 					 xmlChar **doc_txt_ptr);
@@ -83,7 +72,7 @@ XMLPUBFUN int XMLCALL
 XMLPUBFUN int XMLCALL
 		xmlC14NDocSave		(xmlDocPtr doc,
 					 xmlNodeSetPtr nodes,
-					 int mode, /* a xmlC14NMode */
+					 int exclusive,
 					 xmlChar **inclusive_ns_prefixes,
 					 int with_comments,
 					 const char* filename,
@@ -111,7 +100,7 @@ XMLPUBFUN int XMLCALL
 		xmlC14NExecute		(xmlDocPtr doc,
 					 xmlC14NIsVisibleCallback is_visible_callback,
 					 void* user_data,
-					 int mode, /* a xmlC14NMode */
+					 int exclusive,
 					 xmlChar **inclusive_ns_prefixes,
 					 int with_comments,
 					 xmlOutputBufferPtr buf);
