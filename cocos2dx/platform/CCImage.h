@@ -91,7 +91,6 @@ public:
 
     unsigned char *   getData()               { return m_pData; }
     int         getDataLen()            { return m_nWidth * m_nHeight; }
-    int         getColorSpace()         { return 1; }
 
     bool hasAlpha()                     { return m_bHasAlpha; }
     bool isPremultipliedAlpha()         { return m_bPreMulti; }
