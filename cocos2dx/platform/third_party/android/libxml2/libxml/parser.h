@@ -190,10 +190,7 @@ struct _xmlParserCtxt {
     const xmlChar    *version;        /* the XML version string */
     const xmlChar   *encoding;        /* the declared encoding, if any */
     int            standalone;        /* standalone document */
-    int                  html;        /* an HTML(1)/Docbook(2) document
-                                       * 3 is HTML after <head>
-                                       * 10 is HTML after <body>
-                                       */
+    int                  html;        /* an HTML(1)/Docbook(2) document */
 
     /* Input stream stack */
     xmlParserInputPtr  input;         /* Current input stream */
@@ -597,7 +594,7 @@ typedef void (*cdataBlockSAXFunc) (
  * Display and format a warning messages, callback.
  */
 typedef void (XMLCDECL *warningSAXFunc) (void *ctx,
-				const char *msg, ...) LIBXML_ATTR_FORMAT(2,3);
+				const char *msg, ...) ATTRIBUTE_PRINTF(2,3);
 /**
  * errorSAXFunc:
  * @ctx:  an XML parser context
@@ -607,7 +604,7 @@ typedef void (XMLCDECL *warningSAXFunc) (void *ctx,
  * Display and format an error messages, callback.
  */
 typedef void (XMLCDECL *errorSAXFunc) (void *ctx,
-				const char *msg, ...) LIBXML_ATTR_FORMAT(2,3);
+				const char *msg, ...) ATTRIBUTE_PRINTF(2,3);
 /**
  * fatalErrorSAXFunc:
  * @ctx:  an XML parser context
@@ -619,7 +616,7 @@ typedef void (XMLCDECL *errorSAXFunc) (void *ctx,
  *       get all the callbacks for errors.
  */
 typedef void (XMLCDECL *fatalErrorSAXFunc) (void *ctx,
-				const char *msg, ...) LIBXML_ATTR_FORMAT(2,3);
+				const char *msg, ...) ATTRIBUTE_PRINTF(2,3);
 /**
  * isStandaloneSAXFunc:
  * @ctx:  the user data (XML parser context)
@@ -853,7 +850,7 @@ XMLPUBFUN int XMLCALL
  * Recovery mode 
  */
 XMLPUBFUN xmlDocPtr XMLCALL	
-		xmlRecoverDoc		(const xmlChar *cur);
+		xmlRecoverDoc		(xmlChar *cur);
 XMLPUBFUN xmlDocPtr XMLCALL	
 		xmlRecoverMemory	(const char *buffer,
 					 int size);
