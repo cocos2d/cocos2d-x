@@ -63,7 +63,7 @@ typedef void (XMLCALL *xmlFreeFunc)(void *mem);
  *
  * Returns a pointer to the newly allocated block or NULL in case of error.
  */
-typedef void *(LIBXML_ATTR_ALLOC_SIZE(1) XMLCALL *xmlMallocFunc)(size_t size);
+typedef void *(ATTRIBUTE_ALLOC_SIZE(1) XMLCALL *xmlMallocFunc)(size_t size);
 
 /**
  * xmlReallocFunc:
@@ -88,11 +88,11 @@ typedef char *(XMLCALL *xmlStrdupFunc)(const char *str);
 
 /*
  * The 4 interfaces used for all memory handling within libxml.
-LIBXML_DLL_IMPORT xmlFreeFunc xmlFree;
-LIBXML_DLL_IMPORT xmlMallocFunc xmlMalloc;
-LIBXML_DLL_IMPORT xmlMallocFunc xmlMallocAtomic;
-LIBXML_DLL_IMPORT xmlReallocFunc xmlRealloc;
-LIBXML_DLL_IMPORT xmlStrdupFunc xmlMemStrdup;
+LIBXML_DLL_IMPORT extern xmlFreeFunc xmlFree;
+LIBXML_DLL_IMPORT extern xmlMallocFunc xmlMalloc;
+LIBXML_DLL_IMPORT extern xmlMallocFunc xmlMallocAtomic;
+LIBXML_DLL_IMPORT extern xmlReallocFunc xmlRealloc;
+LIBXML_DLL_IMPORT extern xmlStrdupFunc xmlMemStrdup;
  */
 
 /*
@@ -150,7 +150,7 @@ XMLPUBFUN void XMLCALL
 XMLPUBFUN void XMLCALL
 	xmlMemoryDump	(void);
 XMLPUBFUN void * XMLCALL
-	xmlMemMalloc	(size_t size) LIBXML_ATTR_ALLOC_SIZE(1);
+	xmlMemMalloc	(size_t size) ATTRIBUTE_ALLOC_SIZE(1);
 XMLPUBFUN void * XMLCALL
 	xmlMemRealloc	(void *ptr,size_t size);
 XMLPUBFUN void XMLCALL
@@ -158,11 +158,11 @@ XMLPUBFUN void XMLCALL
 XMLPUBFUN char * XMLCALL
 	xmlMemoryStrdup	(const char *str);
 XMLPUBFUN void * XMLCALL
-	xmlMallocLoc	(size_t size, const char *file, int line) LIBXML_ATTR_ALLOC_SIZE(1);
+	xmlMallocLoc	(size_t size, const char *file, int line) ATTRIBUTE_ALLOC_SIZE(1);
 XMLPUBFUN void * XMLCALL
 	xmlReallocLoc	(void *ptr, size_t size, const char *file, int line);
 XMLPUBFUN void * XMLCALL
-	xmlMallocAtomicLoc (size_t size, const char *file, int line) LIBXML_ATTR_ALLOC_SIZE(1);
+	xmlMallocAtomicLoc (size_t size, const char *file, int line) ATTRIBUTE_ALLOC_SIZE(1);
 XMLPUBFUN char * XMLCALL
 	xmlMemStrdupLoc	(const char *str, const char *file, int line);
 

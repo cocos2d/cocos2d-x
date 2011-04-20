@@ -76,7 +76,6 @@ XMLCALL xmlOutputBufferCreateFilenameDefault (xmlOutputBufferCreateFilenameFunc 
 #undef	xmlGenericError
 #undef	xmlStructuredError
 #undef	xmlGenericErrorContext
-#undef	xmlStructuredErrorContext
 #undef	xmlGetWarningsDefaultValue
 #undef	xmlIndentTreeOutput
 #undef  xmlTreeIndentString
@@ -159,8 +158,6 @@ struct _xmlGlobalState
 
 	xmlParserInputBufferCreateFilenameFunc xmlParserInputBufferCreateFilenameValue;
 	xmlOutputBufferCreateFilenameFunc xmlOutputBufferCreateFilenameValue;
-
-	void *xmlStructuredErrorContext;
 };
 
 #ifdef __cplusplus
@@ -355,14 +352,6 @@ XMLPUBFUN void * * XMLCALL __xmlGenericErrorContext(void);
 (*(__xmlGenericErrorContext()))
 #else
 XMLPUBVAR void * xmlGenericErrorContext;
-#endif
-
-XMLPUBFUN void * * XMLCALL __xmlStructuredErrorContext(void);
-#ifdef LIBXML_THREAD_ENABLED
-#define xmlStructuredErrorContext \
-(*(__xmlStructuredErrorContext()))
-#else
-XMLPUBVAR void * xmlStructuredErrorContext;
 #endif
 
 XMLPUBFUN int * XMLCALL __xmlGetWarningsDefaultValue(void);
