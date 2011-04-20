@@ -59,7 +59,7 @@ XMLPUBFUN const xmlChar * XMLCALL
                                          const xmlChar *val);
 XMLPUBFUN const xmlChar * XMLCALL
                 xmlStrcasestr            (const xmlChar *str,
-                                         const xmlChar *val);
+                                         xmlChar *val);
 XMLPUBFUN int XMLCALL
                 xmlStrcmp                (const xmlChar *str1,
                                          const xmlChar *str2);
