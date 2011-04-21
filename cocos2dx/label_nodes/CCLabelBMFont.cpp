@@ -542,12 +542,15 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				(*it)->setIsVisible(false);
-			}
-		}
+            CCObject* child;
+            CCARRAY_FOREACH(m_pChildren, child)
+            {
+                CCNode* pNode = (CCNode*) child;
+                if (pNode)
+                {
+                    pNode->setIsVisible(false);
+                }
+            }		}
 		this->createFontChars();
 	}
 
@@ -567,12 +570,15 @@ namespace cocos2d{
 		m_tColor = var;
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				((CCSprite*)(*it))->setColor(m_tColor);
-			}
-		}
+            CCObject* child;
+            CCARRAY_FOREACH(m_pChildren, child)
+            {
+                CCSprite* pNode = (CCSprite*) child;
+                if (pNode)
+                {
+                    pNode->setColor(m_tColor);
+                }
+            }		}
 	}
 	ccColor3B CCLabelBMFont::getColor()
 	{
@@ -584,16 +590,19 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-                    pRGBAProtocol->setOpacity(m_cOpacity);
-				}
-			}
-		}
+            CCObject* child;
+            CCARRAY_FOREACH(m_pChildren, child)
+            {
+                CCNode* pNode = (CCNode*) child;
+                if (pNode)
+                {
+                    CCRGBAProtocol *pRGBAProtocol = pNode->convertToRGBAProtocol();
+                    if (pRGBAProtocol)
+                    {
+                        pRGBAProtocol->setOpacity(m_cOpacity);
+                    }
+                }
+            }		}
 	}
 	GLubyte CCLabelBMFont::getOpacity()
 	{
@@ -604,16 +613,19 @@ namespace cocos2d{
 		m_bIsOpacityModifyRGB = var;
 		if (m_pChildren && m_pChildren->count() != 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for(it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-					pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
-				}
-			}
-		}
+            CCObject* child;
+            CCARRAY_FOREACH(m_pChildren, child)
+            {
+                CCNode* pNode = (CCNode*) child;
+                if (pNode)
+                {
+                    CCRGBAProtocol *pRGBAProtocol = pNode->convertToRGBAProtocol();
+                    if (pRGBAProtocol)
+                    {
+                        pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+                    }
+                }
+            }		}
 	}
 	bool CCLabelBMFont::getIsOpacityModifyRGB()
 	{

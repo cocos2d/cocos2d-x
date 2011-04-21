@@ -41,8 +41,8 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 
-#include "CCMutableArray.h"
 #include "CCObject.h"
+#include "ccMacros.h"
 
 namespace cocos2d {
 
@@ -158,6 +158,21 @@ static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 	ccArrayAppendArray(arr, plusArr);
 }
 
+static inline void ccArrayInsertObjectAtIndex(ccArray *arr, CCObject* object, unsigned int index)
+{
+    CCAssert(index<=arr->num, "Invalid index. Out of bounds");
+
+    ccArrayEnsureExtraCapacity(arr, 1);
+
+    int remaining = arr->num - index;
+    if( remaining > 0)
+        memmove(&arr->arr[index+1], &arr->arr[index], sizeof(CCObject*) * remaining );
+
+    object->retain();
+    arr->arr[index] = object;
+    arr->num++;
+}
+
 /** Removes all objects from arr */
 static inline void ccArrayRemoveAllObjects(ccArray *arr)
 {
@@ -190,6 +205,13 @@ static inline void ccArrayFastRemoveObjectAtIndex(ccArray *arr, unsigned int ind
 
 	unsigned int last = --arr->num;
 	arr->arr[index] = arr->arr[last];
+}
+
+static inline void ccArrayFastRemoveObject(ccArray *arr, CCObject* object)
+{
+    unsigned int index = ccArrayGetIndexOfObject(arr, object);
+    if (index != -1)
+        ccArrayFastRemoveObjectAtIndex(arr, index);
 }
 
 /** Searches for the first occurance of object and removes it. If object is not

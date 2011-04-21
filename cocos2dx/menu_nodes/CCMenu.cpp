@@ -220,32 +220,30 @@ namespace cocos2d{
 		float height = -padding;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    height += pChild->getContentSize().height * pChild->getScaleY() + padding;
                 }
-                
-				height += (*it)->getContentSize().height * (*it)->getScaleY() + padding;
-			}
+            }
 		}
 
 		float y = height / 2.0f;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    pChild->setPosition(ccp(0, y - pChild->getContentSize().height * pChild->getScaleY() / 2.0f));
+                    y -= pChild->getContentSize().height * pChild->getScaleY() + padding;
                 }
-                
-				(*it)->setPosition(ccp(0, y - (*it)->getContentSize().height * (*it)->getScaleY() / 2.0f));
-				y -= (*it)->getContentSize().height * (*it)->getScaleY() + padding;
-			}
+            }
 		}
 	}
 
@@ -260,32 +258,30 @@ namespace cocos2d{
 		float width = -padding;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-            CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    width += pChild->getContentSize().width * pChild->getScaleX() + padding;
                 }
-
-				width += (*it)->getContentSize().width * (*it)->getScaleX() + padding;
-			}
+            }
 		}
 
 		float x = -width / 2.0f;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-            CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    pChild->setPosition(ccp(x + pChild->getContentSize().width * pChild->getScaleX() / 2.0f, 0));
+     				x += pChild->getContentSize().width * pChild->getScaleX() + padding;
                 }
-
-				(*it)->setPosition(ccp(x + (*it)->getContentSize().width * (*it)->getScaleX() / 2.0f, 0));
-				x += (*it)->getContentSize().width * (*it)->getScaleX() + padding;
-			}
+            }
 		}
 	}
 
@@ -316,34 +312,32 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				// if it has no value, break
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    assert(row < rows.size());
 
-                assert(row < rows.size());
+				    rowColumns = rows[row];
+				    // can not have zero columns on a row
+				    assert(rowColumns);
 
-				rowColumns = rows[row];
-				// can not have zero columns on a row
-				assert(rowColumns);
+				    float tmp = pChild->getContentSize().height;
+				    rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
-				float tmp = (*it)->getContentSize().height;
-				rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
+				    ++columnsOccupied;
+				    if (columnsOccupied >= rowColumns)
+				    {
+					    height += rowHeight + 5;
 
-				++columnsOccupied;
-				if (columnsOccupied >= rowColumns)
-				{
-					height += rowHeight + 5;
-
-					columnsOccupied = 0;
-					rowHeight = 0;
-					++row;
-				}
-			}
+					    columnsOccupied = 0;
+					    rowHeight = 0;
+					    ++row;
+				    }
+                }
+            }
 		}	
 
 		// check if too many rows/columns for available menu items
@@ -360,40 +354,39 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+				    if (rowColumns == 0)
+				    {
+					    rowColumns = rows[row];
+					    w = winSize.width / (1 + rowColumns);
+					    x = w;
+				    }
 
-				if (rowColumns == 0)
-				{
-					rowColumns = rows[row];
-					w = winSize.width / (1 + rowColumns);
-					x = w;
-				}
+				    float tmp = pChild->getContentSize().height;
+				    rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
-				float tmp = (*it)->getContentSize().height;
-				rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
+				    pChild->setPosition(ccp(x - winSize.width / 2,
+					                       y - pChild->getContentSize().height / 2));
 
-				(*it)->setPosition(ccp(x - winSize.width / 2,
-					                   y - (*it)->getContentSize().height / 2));
+				    x += w + 10;
+				    ++columnsOccupied;
 
-				x += w + 10;
-				++columnsOccupied;
+				    if (columnsOccupied >= rowColumns)
+				    {
+					    y -= rowHeight + 5;
 
-				if (columnsOccupied >= rowColumns)
-				{
-					y -= rowHeight + 5;
-
-					columnsOccupied = 0;
-					rowColumns = 0;
-					rowHeight = 0;
-					++row;
-				}
-			}
+					    columnsOccupied = 0;
+					    rowColumns = 0;
+					    rowHeight = 0;
+					    ++row;
+				    }
+                }
+            }
 		}	
 	}
 
@@ -428,40 +421,39 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    // check if too many menu items for the amount of rows/columns
+				    assert(column < columns.size());
 
-				// check if too many menu items for the amount of rows/columns
-				assert(column < columns.size());
+				    columnRows = columns[column];
+				    // can't have zero rows on a column
+				    assert(columnRows);
 
-				columnRows = columns[column];
-				// can't have zero rows on a column
-				assert(columnRows);
+				    // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+				    float tmp = pChild->getContentSize().width;
+				    columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-				// columnWidth = fmaxf(columnWidth, [item contentSize].width);
-				float tmp = (*it)->getContentSize().width;
-				columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
+				    columnHeight += (int)(pChild->getContentSize().height + 5);
+				    ++rowsOccupied;
 
-				columnHeight += (int)((*it)->getContentSize().height + 5);
-				++rowsOccupied;
+				    if (rowsOccupied >= columnRows)
+				    {
+					    columnWidths.push_back(columnWidth);
+					    columnHeights.push_back(columnHeight);
+					    width += columnWidth + 10;
 
-				if (rowsOccupied >= columnRows)
-				{
-					columnWidths.push_back(columnWidth);
-					columnHeights.push_back(columnHeight);
-					width += columnWidth + 10;
-
-					rowsOccupied = 0;
-					columnWidth = 0;
-					columnHeight = -5;
-					++column;
-				}
-			}
+					    rowsOccupied = 0;
+					    columnWidth = 0;
+					    columnHeight = -5;
+					    ++column;
+				    }
+                }
+            }
 		}
 
 		// check if too many rows/columns for available menu items.
@@ -477,39 +469,38 @@ namespace cocos2d{
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    if (columnRows == 0)
+				    {
+					    columnRows = columns[column];
+					    y = (float) columnHeights[column];
+				    }
 
-				if (columnRows == 0)
-				{
-					columnRows = columns[column];
-					y = (float) columnHeights[column];
-				}
+				    // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+				    float tmp = pChild->getContentSize().width;
+				    columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-				// columnWidth = fmaxf(columnWidth, [item contentSize].width);
-				float tmp = (*it)->getContentSize().width;
-				columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
+				    pChild->setPosition(ccp(x + columnWidths[column] / 2,
+					                       y - winSize.height / 2));
 
-				(*it)->setPosition(ccp(x + columnWidths[column] / 2,
-					                   y - winSize.height / 2));
+				    y -= pChild->getContentSize().height + 10;
+				    ++rowsOccupied;
 
-				y -= (*it)->getContentSize().height + 10;
-				++rowsOccupied;
-
-				if (rowsOccupied >= columnRows)
-				{
-					x += columnWidth + 5;
-					rowsOccupied = 0;
-					columnRows = 0;
-					columnWidth = 0;
-					++column;
-				}
-			}
+				    if (rowsOccupied >= columnRows)
+				    {
+					    x += columnWidth + 5;
+					    rowsOccupied = 0;
+					    columnRows = 0;
+					    columnWidth = 0;
+					    ++column;
+				    }
+                }
+            }
 		}
 	}
 
@@ -522,20 +513,19 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
-                
-				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-					pRGBAProtocol->setOpacity(m_cOpacity);
-				}
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    CCRGBAProtocol *pRGBAProtocol = pChild->convertToRGBAProtocol();
+				    if (pRGBAProtocol)
+				    {
+					    pRGBAProtocol->setOpacity(m_cOpacity);
+				    }
+                }
+            }
 		}
 	}
 
@@ -550,20 +540,19 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
-
-				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-					pRGBAProtocol->setColor(m_tColor);
-				}
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    CCRGBAProtocol *pRGBAProtocol = pChild->convertToRGBAProtocol();
+                    if (pRGBAProtocol)
+                    {
+                    	pRGBAProtocol->setColor(m_tColor);
+                    }
+                }
+            }
 		}
 	}
 
@@ -579,28 +568,22 @@ namespace cocos2d{
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
-
-				// ignore invisible and disabled items: issue #779, #866
-				if ((*it)->getIsVisible() && ((CCMenuItem*)(*it))->getIsEnabled())
-				{
-					CCPoint local = (*it)->convertToNodeSpace(touchLocation);
-
-					CCRect r = ((CCMenuItem*)(*it))->rect();
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild && pChild->getIsVisible() && ((CCMenuItem*)pChild)->getIsEnabled())
+                {
+                    CCPoint local = pChild->convertToNodeSpace(touchLocation);
+					CCRect r = ((CCMenuItem*)pChild)->rect();
 					r.origin = CCPointZero;
 
 					if (CCRect::CCRectContainsPoint(r, local))
 					{
-						return (CCMenuItem*)(*it);
+						return (CCMenuItem*)pChild;
 					}
-				}
-			}
+                }
+            }
 			
 		}
 

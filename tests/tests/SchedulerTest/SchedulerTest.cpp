@@ -446,13 +446,12 @@ void SchedulerUpdate::onEnter()
 
 void SchedulerUpdate::removeUpdates(ccTime dt)
 {
-    CCMutableArray<CCNode*> * children = getChildren();
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-
+    CCArray* children = getChildren();
     CCNode* pNode;
-    for (it = children->begin(); it != children->end(); it++)
+    CCObject* pObject;
+    CCARRAY_FOREACH(children, pObject)
     {
-        pNode = (CCNode*)(*it);
+        pNode = (CCNode*)pObject;
 
         if (! pNode)
         {

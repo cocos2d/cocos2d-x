@@ -84,17 +84,17 @@ CCNode::~CCNode()
 
 	CC_SAFE_RELEASE(m_pGrid);
 
-
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
-		CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-		{
-			if (*it)
-			{
-				(*it)->m_pParent = NULL;
-			}		
-		}
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCNode* pChild = (CCNode*) child;
+            if (pChild)
+            {
+                pChild->m_pParent = NULL;
+            }
+        }
 	}
 
 	// children
@@ -102,21 +102,19 @@ CCNode::~CCNode()
 
 }
 
-void CCNode::arrayMakeObjectsPerformSelector(CCMutableArray<CCNode*> * pArray, callbackFunc func)
+void CCNode::arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func)
 {
 	if(pArray && pArray->count() > 0)
 	{
-		CCNode* pNode;
-		CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-		for( it = pArray->begin(); it != pArray->end(); it++)
-		{
-			pNode = (*it);
-
-			if(pNode && func)
-			{
-				(pNode->*func)();
-			}
-		}
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCNode* pNode = (CCNode*) child;
+            if(pNode && func)
+            {
+                (pNode->*func)();
+            }
+        }
 	}
 }
 
@@ -264,7 +262,7 @@ CCPoint CCNode::getPositionInPixels()
 }
 
 /// children getter
-CCMutableArray<CCNode*> * CCNode::getChildren()
+CCArray* CCNode::getChildren()
 {
 	return m_pChildren;
 }
@@ -493,7 +491,8 @@ char * CCNode::description()
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-	m_pChildren = new CCMutableArray<CCNode*>(4);
+    m_pChildren = CCArray::arrayWithCapacity(4);
+    m_pChildren->retain();
 }
 
 CCNode* CCNode::getChildByTag(int aTag)
@@ -502,11 +501,10 @@ CCNode* CCNode::getChildByTag(int aTag)
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
-		CCNode* pNode;
-		CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
-		{
-			pNode = (*it);
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCNode* pNode = (CCNode*) child;
 			if(pNode && pNode->m_nTag == aTag)
 				return pNode;
 		}
@@ -597,11 +595,10 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 	// not using detachChild improves speed here
 	if ( m_pChildren && m_pChildren->count() > 0 )
 	{
-		CCNode * pNode;
-		CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-		for ( it = m_pChildren->begin(); it!= m_pChildren->end(); it++ )
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
 		{
-			pNode = *it;
+            CCNode* pNode = (CCNode*) child;
 			if (pNode)
 			{
 				// IMPORTANT:
@@ -654,22 +651,20 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 void CCNode::insertChild(CCNode* child, int z)
 {
     unsigned int index = 0;
-    CCNode* a = m_pChildren->getLastObject();
+    CCNode* a = (CCNode*) m_pChildren->lastObject();
     if (!a || a->getZOrder() <= z)
     {
         m_pChildren->addObject(child);
     }
     else
     {
-        CCNode* pNode;
-        CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-        for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
+        CCObject* pObject;
+        CCARRAY_FOREACH(m_pChildren, pObject)
         {
-            pNode = (*it);
-
-            if ( pNode && pNode->m_nZOrder > z ) 
+            CCNode* pNode = (CCNode*) pObject;
+            if ( pNode && (pNode->m_nZOrder > z ))
             {
-                m_pChildren->insertObjectAtIndex(child, index);
+                m_pChildren->insertObject(child, index);
                 break;
             }
             index++;
@@ -715,15 +710,16 @@ void CCNode::visit()
 
 	this->transform();
 
-    CCNode* pNode;
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
+    CCNode* pNode = NULL;
+    unsigned int i = 0;
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
 		// draw children zOrder < 0
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
-		{
-			pNode = (*it);
+        ccArray *arrayData = m_pChildren->data;
+        for( ; i < arrayData->num; i++ )
+        {
+            pNode = (CCNode*) arrayData->arr[i];
 
 			if ( pNode && pNode->m_nZOrder < 0 ) 
 			{
@@ -742,9 +738,10 @@ void CCNode::visit()
 	// draw children zOrder >= 0
     if (m_pChildren && m_pChildren->count() > 0)
     {
-		for ( ; it!=m_pChildren->end(); it++ )
-		{
-			pNode = (*it);
+        ccArray *arrayData = m_pChildren->data;
+        for( ; i < arrayData->num; i++ )
+        {
+            pNode = (CCNode*) arrayData->arr[i];
             if (pNode)
             {
                 pNode->visit();

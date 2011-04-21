@@ -101,6 +101,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCSpriteFrameCache.o \
 	$(OBJECTS_DIR)/CCSpriteSheet.o \
 	$(OBJECTS_DIR)/base64.o \
+	$(OBJECTS_DIR)/CCArray.o \
 	$(OBJECTS_DIR)/CCPointExtension.o \
 	$(OBJECTS_DIR)/CCProfiling.o \
 	$(OBJECTS_DIR)/ccUtils.o \
@@ -344,6 +345,9 @@ $(OBJECTS_DIR)/CCSpriteSheet.o : ../sprite_nodes/CCSpriteSheet.cpp
 
 $(OBJECTS_DIR)/base64.o : ../support/base64.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/base64.o ../support/base64.cpp
+
+$(OBJECTS_DIR)/CCArray.o : ../support/CCArray.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCArray.o ../support/CCArray.cpp
 
 $(OBJECTS_DIR)/CCPointExtension.o : ../support/CCPointExtension.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCPointExtension.o ../support/CCPointExtension.cpp

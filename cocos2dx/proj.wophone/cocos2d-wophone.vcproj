@@ -337,6 +337,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCArray.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCAtlasNode.h"
 				>
 			</File>
@@ -718,6 +722,10 @@
 			</File>
 			<File
 				RelativePath="..\support\base64.h"
+				>
+			</File>
+			<File
+				RelativePath="..\support\CCArray.cpp"
 				>
 			</File>
 			<File
