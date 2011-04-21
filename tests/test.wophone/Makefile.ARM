@@ -21,9 +21,10 @@ INCLUDE_PATH += -I../ -I../Res \
                 -I../../chipmunk/include/chipmunk \
                 -I../../CocosDenshion/include \
                 -I../../ \
-                -I../tests
+                -I../tests \
+                -I$(TO_PROJECT_ROOT)/Include/ThirdParty
 
-LIBS += -lCocos2dStatic -lCocosDenshionStatic -lTSoundPlayer -lChipmunkStatic -lBox2dStatic -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg
+LIBS += -lCocos2dStatic -lCocosDenshionStatic -lTSoundPlayer -lChipmunkStatic -lBox2dStatic -lTG3_GLESv1_CM -lTG3_EGL -lz -lxml2 -lpng14 -lImageToolKit -ljpeg -lcurl_imp
 
 OBJECTS_DIR = ./Debug-ARM
 DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
@@ -50,6 +51,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/Test.o \
 	$(OBJECTS_DIR)/TestEntries.o \
 	$(OBJECTS_DIR)/Bounce.o \
+	$(OBJECTS_DIR)/CurlTest.o \
 	$(OBJECTS_DIR)/cocos2dChipmunkDemo.o \
 	$(OBJECTS_DIR)/drawSpace.o \
 	$(OBJECTS_DIR)/Joints.o \
@@ -324,4 +326,7 @@ $(OBJECTS_DIR)/TransitionsTest.o : ../tests/TransitionsTest/TransitionsTest.cpp
 
 $(OBJECTS_DIR)/ZwoptexTest.o : ../tests/ZwoptexTest/ZwoptexTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ZwoptexTest.o ../tests/ZwoptexTest/ZwoptexTest.cpp
+	
+$(OBJECTS_DIR)/CurlTest.o : ../tests/CurlTest/CurlTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CurlTest.o ../tests/ZwoptexTest/CurlTest.cpp
 

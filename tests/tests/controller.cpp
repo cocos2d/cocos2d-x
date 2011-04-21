@@ -90,6 +90,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
+	case TEST_CURL:
+		pScene = new CurlTestScene(); break;
     default:
         break;
     }
@@ -105,8 +107,8 @@ TestController::TestController()
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
-
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+
     pMenu->setPosition( CCPointZero );
     pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
 

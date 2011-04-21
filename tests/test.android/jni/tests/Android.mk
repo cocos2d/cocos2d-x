@@ -34,6 +34,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/ClickAndMoveTest/ClickAndMoveTest.cpp \
 ../../../tests/CocosDenshionTest/CocosDenshionTest.cpp \
 ../../../tests/CocosNodeTest/CocosNodeTest.cpp \
+../../../tests/CurlTest/CurlTest.cpp \
 ../../../tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 ../../../tests/EaseActionsTest/EaseActionsTest.cpp \
 ../../../tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
@@ -72,17 +73,20 @@ LOCAL_SRC_FILES := main.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                    $(LOCAL_PATH)/../../../../cocos2dx/include \
                    $(LOCAL_PATH)/../../../../cocos2dx/platform \
+                   $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/ \
                    $(LOCAL_PATH)/../../../tests \
                    $(LOCAL_PATH)/../../../.. \
                    $(LOCAL_PATH)/../../.. \
                    $(LOCAL_PATH)/../../../../chipmunk/include/chipmunk \
-                   $(LOCAL_PATH)/../../../../CocosDenshion/include 
+                   $(LOCAL_PATH)/../../../../CocosDenshion/include
                    
 # it is used for ndk-r4
 LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \
                 -lGLESv1_CM \
                 -lcocos2d -lcocosdenshion -llog \
-                -lbox2d -lchipmunk
+                -lbox2d -lchipmunk \
+                -L$(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries -lcurl
+                
 
 # it is used for ndk-r5    
 # because the new Windows toolchain doesn't support Cygwin's drive
@@ -90,7 +94,8 @@ LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \
 #LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
 #                -lGLESv1_CM \
 #                -lcocos2d -llog -lcocosdenshion \
-#                -lbox2d -lchipmunk
+#                -lbox2d -lchipmunk \
+#                -L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl
             
 include $(BUILD_SHARED_LIBRARY)
                    
