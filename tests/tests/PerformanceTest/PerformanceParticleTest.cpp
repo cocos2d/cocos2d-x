@@ -236,6 +236,9 @@ void ParticleMainScene::createParticleSystem()
     particleSystem->release();
 
     doTest();
+
+	// restore the default pixel format
+	CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
 }
 
 void ParticleMainScene::testNCallback(CCObject* pSender)
