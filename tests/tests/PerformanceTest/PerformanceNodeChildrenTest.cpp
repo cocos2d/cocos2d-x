@@ -7,7 +7,7 @@ enum {
 
     kTagBase = 20000,
 
-    TEST_COUNT = 5,
+    TEST_COUNT = 4,
 };
 
 enum {
@@ -210,11 +210,11 @@ void IterateSpriteSheetFastEnum::update(ccTime dt)
     //CCProfilingBeginTimingBlock(_profilingTimer);
 
     // iterate using fast enumeration protocol
-    CCMutableArray<CCNode*>* pChildren = batchNode->getChildren();
-    CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-    for(iter = pChildren->begin(); iter != pChildren->end(); ++iter)
+    CCArray* pChildren = batchNode->getChildren();
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(pChildren, pObject)
     {
-        CCSprite* pSprite = (CCSprite*)(*iter);
+        CCSprite* pSprite = (CCSprite*) pObject;
         pSprite->setIsVisible(false);
     }
 
@@ -239,11 +239,11 @@ std::string IterateSpriteSheetFastEnum::subtitle()
 void IterateSpriteSheetCArray::update(ccTime dt)
 {
     // iterate using fast enumeration protocol
-    CCMutableArray<CCNode*>* pChildren = batchNode->getChildren();
-    CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-    for(iter = pChildren->begin(); iter != pChildren->end(); ++iter)
+    CCArray* pChildren = batchNode->getChildren();
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(pChildren, pObject)
     {
-        CCSprite* pSprite = (CCSprite*)(*iter);
+        CCSprite* pSprite = (CCSprite*)pObject;
         pSprite->setIsVisible(false);
     }}
 
@@ -314,14 +314,14 @@ void AddSpriteSheet::update(ccTime dt)
 
     if( totalToAdd > 0 )
     {
-        std::vector<CCSprite *> sprites;
+        CCArray* sprites = CCArray::arrayWithCapacity(totalToAdd);
         int		 *zs      = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
             CCSprite* pSprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
-            sprites.push_back(pSprite);
+            sprites->addObject(pSprite);
             zs[i]      = CCRANDOM_MINUS1_1() * 50;
         }
 
@@ -329,7 +329,7 @@ void AddSpriteSheet::update(ccTime dt)
         // CCProfilingBeginTimingBlock(_profilingTimer);
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((CCSprite *)(sprites[i]), zs[i], kTagBase+i);
+            batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), zs[i], kTagBase+i);
         }
         //		[batchNode sortAllChildren];
         // CCProfilingEndTimingBlock(_profilingTimer);
@@ -369,19 +369,19 @@ void RemoveSpriteSheet::update(ccTime dt)
 
     if( totalToAdd > 0 )
     {
-        std::vector<CCSprite *> sprites;
+        CCArray* sprites = CCArray::arrayWithCapacity(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
             CCSprite* pSprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
-            sprites.push_back(pSprite);
+            sprites->addObject(pSprite);
         }
 
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((CCSprite *)(sprites[i]), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         // remove them
@@ -418,19 +418,19 @@ void ReorderSpriteSheet::update(ccTime dt)
 
     if( totalToAdd > 0 )
     {
-        std::vector<CCSprite *> sprites;
+        CCArray* sprites = CCArray::arrayWithCapacity(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
             CCSprite* pSprite = CCSprite::spriteWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
-            sprites.push_back(pSprite);
+            sprites->addObject(pSprite);
         }
 
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((CCSprite *)(sprites[i]), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         //		[batchNode sortAllChildren];
@@ -439,7 +439,8 @@ void ReorderSpriteSheet::update(ccTime dt)
         //CCProfilingBeginTimingBlock(_profilingTimer);
         for( int i=0;i <  totalToAdd;i++)
         {
-            batchNode->reorderChild(batchNode->getChildren()->getObjectAtIndex(i), CCRANDOM_MINUS1_1() * 50);
+            CCNode* pNode = (CCNode*) (batchNode->getChildren()->objectAtIndex(i));
+            batchNode->reorderChild(pNode, CCRANDOM_MINUS1_1() * 50);
         }
         //		[batchNode sortAllChildren];
         //CCProfilingEndTimingBlock(_profilingTimer);
@@ -464,7 +465,7 @@ std::string ReorderSpriteSheet::subtitle()
 
 void runNodeChildrenTest()
 {
-    IterateSpriteSheet* pScene = new IterateSpriteSheetFastEnum();
+    IterateSpriteSheet* pScene = new IterateSpriteSheetCArray();
     pScene->initWithQuantityOfNodes(kNodesIncrease);
 
     CCDirector::sharedDirector()->replaceScene(pScene);

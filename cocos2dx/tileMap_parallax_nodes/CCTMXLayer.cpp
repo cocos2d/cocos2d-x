@@ -291,20 +291,19 @@ namespace cocos2d {
 		// update possible children
 		if (m_pChildren && m_pChildren->count()>0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-			CCSprite *pSprite = NULL;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				pSprite = (CCSprite*)(*it);
-				if (pSprite)
-				{
-					unsigned int ai = pSprite->getAtlasIndex();
-					if ( ai >= indexForZ )
-					{
-						pSprite->setAtlasIndex(ai+1);
-					}
-				}
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild)
+                {
+                    unsigned int ai = pChild->getAtlasIndex();
+                    if ( ai >= indexForZ )
+                    {
+                        pChild->setAtlasIndex(ai+1);
+                    }
+                }
+            }
 		}
 		m_pTiles[z] = gid;
 		return m_pReusedTile;
@@ -495,20 +494,19 @@ namespace cocos2d {
 				// update possible children
 				if (m_pChildren && m_pChildren->count()>0)
 				{
-					CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-					CCSprite *pSprite = NULL;
-					for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-					{
-						pSprite = (CCSprite*)(*it);
-						if (pSprite)
-						{
-							unsigned int ai = pSprite->getAtlasIndex();
-							if ( ai >= atlasIndex )
-							{
-								pSprite->setAtlasIndex(ai-1);
-							}
-						}
-					}
+                    CCObject* pObject = NULL;
+                    CCARRAY_FOREACH(m_pChildren, pObject)
+                    {
+                        CCSprite* pChild = (CCSprite*) pObject;
+                        if (pChild)
+                        {
+                            unsigned int ai = pChild->getAtlasIndex();
+                            if ( ai >= atlasIndex )
+                            {
+                                pChild->setAtlasIndex(ai-1);
+                            }
+                        }
+                    }
 				}
 			}
 		}

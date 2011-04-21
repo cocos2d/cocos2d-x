@@ -124,12 +124,12 @@ TMXOrthoTest::TMXOrthoTest()
 	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
-	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCArray * pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
+    CCObject* pObject = NULL;
+	CCARRAY_FOREACH(pChildrenArray, pObject)
 	{
-		child = (CCSpriteBatchNode*)(*it);
+		child = (CCSpriteBatchNode*)pObject;
 
 		if(!child)
 			break;
@@ -173,12 +173,12 @@ TMXOrthoTest2::TMXOrthoTest2()
 	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 
-	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCArray* pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
+    CCObject* pObject = NULL;
+	CCARRAY_FOREACH(pChildrenArray, pObject)
 	{
-		child = (CCSpriteBatchNode*)(*it);
+		child = (CCSpriteBatchNode*)pObject;
 
 		if(!child)
 			break;
@@ -207,12 +207,12 @@ TMXOrthoTest3::TMXOrthoTest3()
 	CCSize s = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s.width,s.height);
 	
-	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCArray* pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
+	CCObject* pObject = NULL;
+	CCARRAY_FOREACH(pChildrenArray, pObject)
 	{
-		child = (CCSpriteBatchNode*)(*it);
+		child = (CCSpriteBatchNode*)pObject;
 
 		if(!child)
 			break;
@@ -242,12 +242,12 @@ TMXOrthoTest4::TMXOrthoTest4()
 	CCSize s1 = map->getContentSize();
 	////----UXLOG("ContentSize: %f, %f", s1.width,s1.height);
 	
-	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCArray* pChildrenArray = map->getChildren();
 	CCSpriteBatchNode* child = NULL;
-	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
+	CCObject* pObject = NULL;
+	CCARRAY_FOREACH(pChildrenArray, pObject)
 	{
-		child = (CCSpriteBatchNode*)(*it);
+		child = (CCSpriteBatchNode*)pObject;
 
 		if(!child)
 			break;
@@ -547,12 +547,12 @@ TMXUncompressedTest::TMXUncompressedTest()
 	map->runAction(CCMoveTo::actionWithDuration(1.0f, ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
 	
 	// testing release map
-	CCMutableArray<CCNode*> * pChildrenArray = map->getChildren();
+	CCArray* pChildrenArray = map->getChildren();
 	CCTMXLayer* layer;
-	CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-	for( it = pChildrenArray->begin(); it != pChildrenArray->end(); it++) 
+    CCObject* pObject = NULL;
+	CCARRAY_FOREACH(pChildrenArray, pObject)
 	{
-		layer= (CCTMXLayer*)(*it);
+		layer= (CCTMXLayer*)pObject;
 
 		if(!layer)
 			break;
@@ -1122,13 +1122,12 @@ TMXBug987::TMXBug987()
     CCSize s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
-    CCMutableArray<CCNode*>* childs = map->getChildren();
+    CCArray* childs = map->getChildren();
     CCTMXLayer* pNode;
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-
-    for(it = childs->begin(); it != childs->end(); it++)
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(childs, pObject)
     {
-        pNode = (CCTMXLayer*)(*it);
+        pNode = (CCTMXLayer*) pObject;
         CC_BREAK_IF(!pNode);
         pNode->getTexture()->setAntiAliasTexParameters();
     }

@@ -146,6 +146,8 @@
 		BF1712DC1292933300B8313A /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = BF1712A81292933300B8313A /* cpVect.c */; };
 		BF1712DD1292933300B8313A /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1712A91292933300B8313A /* prime.h */; };
 		BF1712E9129293C200B8313A /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1712631292931F00B8313A /* libchipmunk.a */; };
+		BF193EDC13600549002463D2 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = BF193EDB13600549002463D2 /* CCArray.h */; };
+		BF193EDE1360055A002463D2 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF193EDD1360055A002463D2 /* CCArray.cpp */; };
 		BF1B1A7A12951B7600E99D96 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7612951B7600E99D96 /* animations */; };
 		BF1B1A7B12951B7600E99D96 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7712951B7600E99D96 /* fonts */; };
 		BF1B1A7C12951B7600E99D96 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = BF1B1A7812951B7600E99D96 /* Images */; };
@@ -630,6 +632,8 @@
 		BF1712A71292933300B8313A /* cpSpaceHash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceHash.c; sourceTree = "<group>"; };
 		BF1712A81292933300B8313A /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		BF1712A91292933300B8313A /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
+		BF193EDB13600549002463D2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
+		BF193EDD1360055A002463D2 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		BF1B1A7612951B7600E99D96 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../Res/animations; sourceTree = SOURCE_ROOT; };
 		BF1B1A7712951B7600E99D96 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../Res/fonts; sourceTree = SOURCE_ROOT; };
 		BF1B1A7812951B7600E99D96 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../Res/Images; sourceTree = SOURCE_ROOT; };
@@ -1939,6 +1943,7 @@
 		BF8358AE13276C7700F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF193EDB13600549002463D2 /* CCArray.h */,
 				BF8358AF13276C7700F3C033 /* CCAccelerometer.h */,
 				BF8358B013276C7700F3C033 /* CCAccelerometerDelegate.h */,
 				BF8358B113276C7700F3C033 /* CCAction.h */,
@@ -2162,6 +2167,7 @@
 		BF835AFF13276C7900F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF193EDD1360055A002463D2 /* CCArray.cpp */,
 				BF835B0013276C7900F3C033 /* base64.cpp */,
 				BF835B0113276C7900F3C033 /* base64.h */,
 				BF835B0213276C7900F3C033 /* CCPointExtension.cpp */,
@@ -2384,6 +2390,7 @@
 				BF340A48133AE3250035A4D1 /* CCNS.h in Headers */,
 				D4F1A270133B2FE700937FFA /* CCSAXParser.h in Headers */,
 				BF316085133DE0A500E0532D /* CCFileUtils.h in Headers */,
+				BF193EDC13600549002463D2 /* CCArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2793,6 +2800,7 @@
 				BF1FAFD11352F74A007553D9 /* CCMenu.cpp in Sources */,
 				BF1FAFD31352F765007553D9 /* CCNode.cpp in Sources */,
 				BF1FAFD51352F788007553D9 /* CCParticleSystemPoint.cpp in Sources */,
+				BF193EDE1360055A002463D2 /* CCArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ enum {
 enum {
     kTagInfoLayer = 1,
     kTagMainLayer = 2,
-    kTagMenuLayer = 1000,
+    kTagMenuLayer = (kMaxNodes + 1000),
 };
 
 static int s_nSpriteCurCase = 0;

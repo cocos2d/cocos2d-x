@@ -75,15 +75,14 @@ MenuLayer1::MenuLayer1()
 	
 	int i=0;
 	CCNode* child;
-	CCMutableArray<CCNode*> * pArray = menu->getChildren();
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-
-	for(it = pArray->begin(); it != pArray->end(); it++)
+	CCArray * pArray = menu->getChildren();
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(pArray, pObject)
 	{
-		if(*it == NULL)
+		if(pObject == NULL)
 			break;
 
-		child = (CCNode*)(*it);
+		child = (CCNode*)pObject;
 
 		CCPoint dstPoint = child->getPosition();
 		int offset = (int) (s.width/2 + 50);

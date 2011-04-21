@@ -16,6 +16,8 @@
 		BF1373F1128A899E00D9F789 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
 		BF137427128A8E4600D9F789 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF137426128A8E4600D9F789 /* QuartzCore.framework */; };
 		BF13742F128A8E6A00D9F789 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF137426128A8E4600D9F789 /* QuartzCore.framework */; };
+		BF193EFC136007BC002463D2 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = BF193EFB136007BC002463D2 /* CCArray.h */; };
+		BF193F00136007D3002463D2 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF193EFF136007D3002463D2 /* CCArray.cpp */; };
 		BF1B034B128BCCE300373CD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		BF1B034C128BCCF800373CD4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		BF1B034D128BCD0800373CD4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -574,6 +576,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BF193EFB136007BC002463D2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
+		BF193EFF136007D3002463D2 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		BF1FAE951352F52F007553D9 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDirector.cpp; sourceTree = "<group>"; };
 		BF1FAE971352F550007553D9 /* CCGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGrid.cpp; sourceTree = "<group>"; };
 		BF1FAE991352F571007553D9 /* CCLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLayer.cpp; sourceTree = "<group>"; };
@@ -1335,6 +1339,7 @@
 		BF83519C13275F5500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF193EFB136007BC002463D2 /* CCArray.h */,
 				BF83519D13275F5500F3C033 /* CCAccelerometer.h */,
 				BF83519E13275F5500F3C033 /* CCAccelerometerDelegate.h */,
 				BF83519F13275F5500F3C033 /* CCAction.h */,
@@ -2130,6 +2135,7 @@
 		BF8353ED13275F5600F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF193EFF136007D3002463D2 /* CCArray.cpp */,
 				BF8353EE13275F5600F3C033 /* base64.cpp */,
 				BF8353EF13275F5600F3C033 /* base64.h */,
 				BF8353F013275F5600F3C033 /* CCPointExtension.cpp */,
@@ -2680,6 +2686,7 @@
 				BF315F90133DDEB000E0532D /* CCFileUtils.h in Headers */,
 				BF315F92133DDEB000E0532D /* CCSAXParser.h in Headers */,
 				BF233C2F1341748900494987 /* CCNS.h in Headers */,
+				BF193EFC136007BC002463D2 /* CCArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2870,6 +2877,7 @@
 				BF1FAE9E1352F590007553D9 /* CCMenu.cpp in Sources */,
 				BF1FAEA01352F5A8007553D9 /* CCNode.cpp in Sources */,
 				BF1FAEA21352F5FA007553D9 /* CCParticleSystemPoint.cpp in Sources */,
+				BF193F00136007D3002463D2 /* CCArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
