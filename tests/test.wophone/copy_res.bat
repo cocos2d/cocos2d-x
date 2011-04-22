@@ -1,2 +1,2 @@
-mkdir ..\..\..\NEWPLUS\TG3\APP
-xcopy /E /Y ..\Res\*.* ..\..\..\NEWPLUS\TG3\APP\
+mkdir ..\..\..\NEWPLUS\TDA_DATA\Data
+xcopy /E /Y ..\Res\*.* ..\..\..\NEWPLUS\TDA_DATA\Data

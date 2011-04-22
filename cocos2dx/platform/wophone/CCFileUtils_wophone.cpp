@@ -32,84 +32,6 @@ NS_CC_BEGIN;
 static char s_pszResourcePath[EOS_FILE_MAX_PATH] = {0};
 static char s_pszZipFilePath[EOS_FILE_MAX_PATH]  = {0};
 
-void updateZipFilePath(const char* pResPath)
-{
-    if (! strlen(s_pszZipFilePath))
-    {
-        return;
-    }
-
-    std::string strTemp = s_pszZipFilePath;
-    int nPos = std::string::npos;
-
-    // find the path need br replaced
-    std::string ResPath;
-    if (strlen(s_pszResourcePath))
-    {
-        ResPath = s_pszResourcePath;
-    }
-    else
-    {
-        ResPath = CCApplication::sharedApplication().getAppDataPath();
-    }
-
-    // replace the resource path in s_pszZipFilePath
-    nPos = strTemp.find(ResPath.c_str());
-    if (nPos != std::string::npos)
-    {
-        strTemp.replace(nPos, ResPath.length(), pResPath);
-        memset(s_pszZipFilePath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
-        strcpy(s_pszZipFilePath, strTemp.c_str());
-    }
-}
-
-void setZipFilePath(const char* pZipFileName)
-{
-    CCAssert(pZipFileName != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
-
-    // get the full path of zip file
-    char fullPath[EOS_FILE_MAX_PATH] = {0};
-
-    if (strlen(s_pszResourcePath))
-    {
-        strcpy(fullPath, s_pszResourcePath);
-    }
-    else
-    {
-        const char* pAppDataPath = CCApplication::sharedApplication().getAppDataPath();
-        strcpy(fullPath, pAppDataPath);
-    }
-    strcat(fullPath, pZipFileName);
-
-    // if the zip file not exist,use message box to warn developer
-    TUChar pszTmp[EOS_FILE_MAX_PATH] = {0};
-    TUString::StrGBToUnicode(pszTmp, (const Char*) fullPath);
-    Boolean bExist = EOS_IsFileExist(pszTmp);
-    if (!bExist)
-    {
-        std::string strErr = "zip file ";
-        strErr += fullPath;
-        strErr += " not exist!";
-        TUChar szText[EOS_FILE_MAX_PATH] = { 0 };
-        TUString::StrUtf8ToStrUnicode(szText,(Char*)strErr.c_str());
-		TMessageBox box(szText, NULL, WMB_OK);
-        box.Show();
-        return;
-    }
-
-#ifndef _TRANZDA_VM_
-    char *pszDriver = "";
-#else
-    char *pszDriver = "D:/Work7";
-#endif
-    CCAssert((strlen(pszDriver) + strlen(fullPath)) <= EOS_FILE_MAX_PATH, "[FileUtils setResourceZipFile] -- zip file path too long");
-
-    // record the zip file path
-    strcpy(s_pszZipFilePath, pszDriver);
-    strcat(s_pszZipFilePath, fullPath);
-}
-
-
 bool isResourceExist(const char* pszResName)
 {
     bool bRet = false;
@@ -196,29 +118,39 @@ const char* getDiffResolutionPath(const char *pszPath)
     return pRet->m_sString.c_str();
 }
 
-void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
+void CCFileUtils::setResource(const char* pZipFileName)
 {
-    if (pszResPath != NULL && pszZipFileName != NULL)
-    {
-        // record the resource path
-        strcpy(s_pszResourcePath, pszResPath);
+    CCAssert(pZipFileName != NULL, "[FileUtils setResourceZipFile] -- wrong zip file path");
 
-        // record the zip file path
-        setZipFilePath(pszZipFileName);
-    }
-    else if (pszResPath != NULL)
+    // get the full path of zip file
+    char fullPath[EOS_FILE_MAX_PATH] = {0};
+    if (strlen(s_pszResourcePath))
     {
-        // update the zip file path
-        updateZipFilePath(pszResPath);
+        strcpy(fullPath, s_pszResourcePath);
+    }
+    else
+    {
+        const char* pAppDataPath = CCApplication::sharedApplication().getAppDataPath();
+        strcpy(fullPath, pAppDataPath);
+    }
+    strcat(fullPath, pZipFileName);
 
-        // record the resource path
-        strcpy(s_pszResourcePath, pszResPath);
-    }
-    else if (pszZipFileName != NULL)
+    // if the zip file not exist,use message box to warn developer
+    TUChar pszTmp[EOS_FILE_MAX_PATH] = {0};
+    TUString::StrGBToUnicode(pszTmp, (const Char*) fullPath);
+    Boolean bExist = EOS_IsFileExist(pszTmp);
+    if (!bExist)
     {
-        // record the zip file path
-        setZipFilePath(pszZipFileName);
+        std::string strErr = "zip file ";
+        strErr += fullPath;
+        strErr += " not exist!";
+        CCMessageBox(strErr.c_str(), "Error");
+        return;
     }
+
+    // clear the zip file path recorded before and record the new path
+    memset(s_pszZipFilePath, 0, sizeof(char) * EOS_FILE_MAX_PATH);
+    strcpy(s_pszZipFilePath, fullPath);
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
@@ -236,27 +168,16 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
         strcpy(s_pszResourcePath, pAppDataPath);
     }
 
-#ifndef _TRANZDA_VM_
-    char *pszDriver = "";
-#else
-    char *pszDriver = "D:/Work7";
-#endif
-
     CCString * pRet = new CCString();
     pRet->autorelease();
-    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
+    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':') ||
+        (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/'))
     {
         pRet->m_sString = pszRelativePath;
     }
-    else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
-    {
-        pRet->m_sString = pszDriver;
-        pRet->m_sString += pszRelativePath;
-    }
     else
     {
-        pRet->m_sString = pszDriver;
-        pRet->m_sString += s_pszResourcePath;
+        pRet->m_sString = s_pszResourcePath;
         pRet->m_sString += pszRelativePath;
     }
     return getDiffResolutionPath(pRet->m_sString.c_str());
