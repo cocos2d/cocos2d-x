@@ -67,12 +67,26 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     public static void setAnimationInterval(double interval){
     	animationInterval = (long)(interval * NANOSECONDSPERSECOND);
     }
-    
     private static native void nativeTouchesBegin(int id, float x, float y);
     private static native void nativeTouchesEnd(int id, float x, float y);
     private static native void nativeTouchesMove(int[] id, float[] x, float[] y);
     private static native void nativeTouchesCancel(int[] id, float[] x, float[] y);
-private static native boolean nativeKeyDown(int keyCode);
+    private static native boolean nativeKeyDown(int keyCode);
     private static native void nativeRender();
     private static native void nativeInit(int w, int h);
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    // handle input method edit message
+    /////////////////////////////////////////////////////////////////////////////////
+    
+    public void handleInsertText(final String text) {
+    	nativeInsertText(text);
+    }
+    
+    public void handleDeleteBackward() {
+    	nativeDeleteBackward();
+    }
+    
+    private static native void nativeInsertText(String text);
+    private static native void nativeDeleteBackward();
 }

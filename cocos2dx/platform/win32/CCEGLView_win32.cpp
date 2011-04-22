@@ -319,6 +319,10 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
                 }
+                else if (VK_RETURN == wParam)
+                {
+                    CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+                }
                 else if (VK_TAB == wParam)
                 {
                     // tab input
@@ -327,13 +331,19 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     // ESC input
                 }
-
-                break;
             }
-            char szUtf8[8] = {0};
-            int nLen = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
+            else if (wParam < 128)
+            {
+                // ascii char
+                CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&wParam, 1);
+            }
+            else
+            {
+                char szUtf8[8] = {0};
+                int nLen = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
 
-            CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
+                CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
+            }
         }
         break;
 
