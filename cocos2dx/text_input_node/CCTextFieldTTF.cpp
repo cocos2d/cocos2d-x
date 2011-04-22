@@ -155,9 +155,29 @@ void CCTextFieldTTF::detatchWithIME()
 
 void CCTextFieldTTF::insertText(const char * text, int len)
 {
+    std::string sInsert(text, len);
+
+    // insert \n means input end
+    int nPos = sInsert.find('\n');
+    if (sInsert.npos != nPos)
+    {
+        len = nPos;
+        sInsert.erase(nPos);
+    }
+    if (len <= 0)
+    {
+        // close keyboard
+        CCEGLView * pGlView = CCDirector::sharedDirector()->getOpenGLView();
+        if (pGlView)
+        {
+            pGlView->setIMEKeyboardState(false);
+        }
+        return;
+    }
+
     m_bLock = true;
     std::string sText(*m_pInputText);
-    sText.append(text, len);
+    sText.append(sInsert);
     m_pLens->push_back((unsigned short)len);
     setString(sText.c_str());
     m_bLock = false;

@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCFileUtils.h"
 #include "CCGeometry.h"
+#include "CCIMEDispatcher.h"
 #include "platform/android/CCAccelerometer_android.h"
 #include <android/log.h>
 
@@ -43,24 +44,73 @@ using namespace cocos2d;
 
 extern "C"
 {
+    //////////////////////////////////////////////////////////////////////////
+    // java vm helper function
+    //////////////////////////////////////////////////////////////////////////
 
-	#define MAX_TOUCHES         5
-	static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
+    JavaVM *gJavaVM = NULL;
 
-	// handle accelerometer changes
+    jint JNI_OnLoad(JavaVM *vm, void *reserved)
+    {
+        gJavaVM = vm;
+        return JNI_VERSION_1_4;
+    }
 
-	void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
-	{
-		// We need to invert to make it compatible with iOS.
-		CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
-		float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
-		cocos2d::CCAccelerometer::sharedAccelerometer()->update((x - rcRect.origin.x) / fScreenScaleFactor,
-		                                                        (y - rcRect.origin.y) / fScreenScaleFactor, 
-		                                                         z, 
-		                                                         timeStamp);
-	}
+    struct TMethodJNI
+    {
+        JNIEnv *    env;
+        jclass      classID;
+        jmethodID   methodID;
+    };
+    static bool getMethodID(struct TMethodJNI& t, const char *className, const char *methodName, const char *paramCode)
+    {
+        bool ret = 0;
+        do 
+        {
+            if (gJavaVM->GetEnv((void**)&t.env, JNI_VERSION_1_4) != JNI_OK)
+            {
+                LOGD("Failed to get the environment using GetEnv()");
+                break;
+            }
 
-	// handle touch event	
+            if (gJavaVM->AttachCurrentThread(&t.env, 0) < 0)
+            {
+                LOGD("Failed to get the environment using AttachCurrentThread()");
+                break;
+            }
+
+            t.classID = t.env->FindClass(className);
+            if (! t.classID)
+            {
+                LOGD("Failed to find class of %s", className);
+                break;
+            }
+
+            t.methodID = t.env->GetStaticMethodID(t.classID, methodName, paramCode);
+            if (! t.methodID)
+            {
+                LOGD("Failed to find method id of %s", methodName);
+                break;
+            }
+            ret = true;
+        } while (0);
+
+        return ret;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // native renderer
+    //////////////////////////////////////////////////////////////////////////
+
+    #define MAX_TOUCHES         5
+    static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
+
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env)
+    {
+        cocos2d::CCDirector::sharedDirector()->mainLoop();
+    }
+
+    // handle touch event	
 	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv*  env, jobject thiz, jint id, jfloat x, jfloat y)
 	{
 		CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
@@ -196,6 +246,21 @@ extern "C"
 		return JNI_FALSE;
 	}
 
+    //////////////////////////////////////////////////////////////////////////
+    // handle accelerometer changes
+    //////////////////////////////////////////////////////////////////////////
+
+    void Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged(JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jfloat z, jlong timeStamp)
+    {
+        // We need to invert to make it compatible with iOS.
+        CCRect rcRect = CCEGLView::sharedOpenGLView().getViewPort();
+        float fScreenScaleFactor = CCEGLView::sharedOpenGLView().getScreenScaleFactor();
+        cocos2d::CCAccelerometer::sharedAccelerometer()->update((x - rcRect.origin.x) / fScreenScaleFactor,
+            (y - rcRect.origin.y) / fScreenScaleFactor, 
+            z, 
+            timeStamp);
+    }
+
     void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
     {
         const char* str;
@@ -207,72 +272,29 @@ extern "C"
         }
     }
 	
-	// record the java vm
-	
-	JavaVM *gJavaVM = NULL;
-	jclass classOfCocos2dxActivity = 0;
-	JNIEnv *env = 0;
-
-	jint JNI_OnLoad(JavaVM *vm, void *reserved)
-	{
-		gJavaVM = vm;
-		return JNI_VERSION_1_4;
-	}
-
-	static jmethodID getMethodID(const char *methodName, const char *paramCode)
-	{
-		jmethodID ret = 0;
-
-		// get jni environment and java class for Cocos2dxActivity
-		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
-		{
-			LOGD("Failed to get the environment using GetEnv()");
-			return 0;
-		}
-
-		if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
-		{
-			LOGD("Failed to get the environment using AttachCurrentThread()");
-			return 0;
-		}
-
-		classOfCocos2dxActivity = env->FindClass("org/cocos2dx/lib/Cocos2dxActivity");
-		if (! classOfCocos2dxActivity)
-		{
-			LOGD("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
-			return 0;
-		}		
-
-		if (env != 0 && classOfCocos2dxActivity != 0)
-		{
-			ret = env->GetStaticMethodID(classOfCocos2dxActivity, methodName, paramCode);
-		}
-
-		if (! ret)
-		{
-			LOGD("get method id of %s error", methodName);
-		}
-
-		return ret;
-	}
 
 	void enableAccelerometerJNI()
 	{
-		jmethodID methodID = getMethodID("enableAccelerometer", "()V");
-
-		if (methodID)
+		TMethodJNI t;
+        if (getMethodID(t
+            , "org/cocos2dx/lib/Cocos2dxActivity"
+            , "enableAccelerometer"
+            , "()V"))
 		{
-			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID);
+			t.env->CallStaticVoidMethod(t.classID, t.methodID);
 		}
 	}
 
 	void disableAccelerometerJNI()
 	{
-		jmethodID methodID = getMethodID("disableAccelerometer", "()V");
+        TMethodJNI t;
 
-		if (methodID)
+        if (getMethodID(t
+            , "org/cocos2dx/lib/Cocos2dxActivity"
+            , "disableAccelerometer"
+            , "()V"))
 		{
-			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID);
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
 		}
 	}
 
@@ -283,30 +305,58 @@ extern "C"
 			return;
 		}
 
-		jmethodID methodID = getMethodID("showMessageBox", "(Ljava/lang/String;Ljava/lang/String;)V");
-
-		if (methodID)
+        TMethodJNI t;
+        if (getMethodID(t
+            , "org/cocos2dx/lib/Cocos2dxActivity"
+            , "showMessageBox"
+            , "(Ljava/lang/String;Ljava/lang/String;)V"))
 		{
 			jstring StringArg1;
 
 			if (! pszTitle)
 			{
-				StringArg1 = env->NewStringUTF("");
+				StringArg1 = t.env->NewStringUTF("");
 			}
 			else
 			{
-				StringArg1 = env->NewStringUTF(pszTitle);
+				StringArg1 = t.env->NewStringUTF(pszTitle);
 			}
 
-			jstring StringArg2 = env->NewStringUTF(pszMsg);
-			env->CallStaticVoidMethod(classOfCocos2dxActivity, methodID, StringArg1, StringArg2);
+			jstring StringArg2 = t.env->NewStringUTF(pszMsg);
+			t.env->CallStaticVoidMethod(t.classID, t.methodID, StringArg1, StringArg2);
 		}
 	}
 
-	// native renderer
+    //////////////////////////////////////////////////////////////////////////
+    // handle IME message
+    //////////////////////////////////////////////////////////////////////////
 
-	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender(JNIEnv* env)
-	{
-		cocos2d::CCDirector::sharedDirector()->mainLoop();
-	}
+    void setKeyboardStateJNI(int bOpen)
+    {
+        TMethodJNI t;
+        jint open = bOpen;
+        if (getMethodID(t
+            , "org/cocos2dx/lib/Cocos2dxGLSurfaceView"
+            , (bOpen) ? "openIMEKeyboard" : "closeIMEKeyboard"
+            , "()V"))
+        {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        }
+    }
+
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text)
+    {
+        jboolean isCopy = 0;
+        const char* pszText = env->GetStringUTFChars(text, &isCopy);
+        if (isCopy) 
+        {
+            cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+            env->ReleaseStringUTFChars(text, pszText);
+        }
+    }
+
+    void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz)
+    {
+        cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    }
 }
