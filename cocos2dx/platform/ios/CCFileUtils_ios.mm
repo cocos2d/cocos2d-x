@@ -316,7 +316,7 @@ namespace cocos2d {
         }
         return pBuffer;
     }
-    void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
+    void CCFileUtils::setResource(const char* pszZipFileName)
     {
         CCAssert(0, "Have not implement!");
     }
