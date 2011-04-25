@@ -163,6 +163,14 @@ void NodeChildrenMainScene::updateQuantityLabel()
 // IterateSpriteSheet
 //
 ////////////////////////////////////////////////////////
+IterateSpriteSheet::~IterateSpriteSheet()
+{
+#if CC_ENABLE_PROFILERS
+    CCProfiler::releaseTimer(_profilingTimer);
+    _profilingTimer = NULL;
+#endif
+}
+
 void IterateSpriteSheet::updateQuantityOfNodes()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -197,7 +205,17 @@ void IterateSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
     addChild(batchNode);
 
     NodeChildrenMainScene::initWithQuantityOfNodes(nNodes);
+
+#if CC_ENABLE_PROFILERS
+    _profilingTimer = CCProfiler::timerWithName(profilerName().c_str(), this);
+#endif
+
     scheduleUpdate();
+}
+
+std::string IterateSpriteSheet::profilerName()
+{
+    return "none";
 }
 
 ////////////////////////////////////////////////////////
@@ -207,18 +225,23 @@ void IterateSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
 ////////////////////////////////////////////////////////
 void IterateSpriteSheetFastEnum::update(ccTime dt)
 {
-    //CCProfilingBeginTimingBlock(_profilingTimer);
-
     // iterate using fast enumeration protocol
     CCArray* pChildren = batchNode->getChildren();
     CCObject* pObject = NULL;
+
+#if CC_ENABLE_PROFILERS
+    CCProfilingBeginTimingBlock(_profilingTimer);
+#endif
+
     CCARRAY_FOREACH(pChildren, pObject)
     {
         CCSprite* pSprite = (CCSprite*) pObject;
         pSprite->setIsVisible(false);
     }
 
-    //CCProfilingEndTimingBlock(_profilingTimer);
+#if CC_ENABLE_PROFILERS
+    CCProfilingEndTimingBlock(_profilingTimer);
+#endif
 }
 
 std::string IterateSpriteSheetFastEnum::title()
@@ -227,6 +250,11 @@ std::string IterateSpriteSheetFastEnum::title()
 }
 
 std::string IterateSpriteSheetFastEnum::subtitle()
+{
+    return "Iterate children using Fast Enum API. See console";
+}
+
+std::string IterateSpriteSheetFastEnum::profilerName()
 {
     return "iter fast enum";
 }
@@ -241,11 +269,20 @@ void IterateSpriteSheetCArray::update(ccTime dt)
     // iterate using fast enumeration protocol
     CCArray* pChildren = batchNode->getChildren();
     CCObject* pObject = NULL;
+
+#if CC_ENABLE_PROFILERS
+    CCProfilingBeginTimingBlock(_profilingTimer);
+#endif
+
     CCARRAY_FOREACH(pChildren, pObject)
     {
         CCSprite* pSprite = (CCSprite*)pObject;
-        pSprite->setIsVisible(false);
-    }}
+        pSprite->setIsVisible(false);    }
+
+#if CC_ENABLE_PROFILERS
+    CCProfilingEndTimingBlock(_profilingTimer);
+#endif
+}
 
 std::string IterateSpriteSheetCArray::title()
 {
@@ -257,17 +294,35 @@ std::string IterateSpriteSheetCArray::subtitle()
     return "Iterate children using C Array API. See console";
 }
 
+std::string IterateSpriteSheetCArray::profilerName()
+{
+    return "iter c-array";
+}
+
 ////////////////////////////////////////////////////////
 //
 // AddRemoveSpriteSheet
 //
 ////////////////////////////////////////////////////////
+AddRemoveSpriteSheet::~AddRemoveSpriteSheet()
+{
+#if CC_ENABLE_PROFILERS
+    CCProfiler::releaseTimer(_profilingTimer);
+    _profilingTimer = NULL;
+#endif
+}
+
 void AddRemoveSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
 {
     batchNode = CCSpriteBatchNode::batchNodeWithFile("Images/spritesheet1.png");
     addChild(batchNode);
 
     NodeChildrenMainScene::initWithQuantityOfNodes(nNodes);
+
+#if CC_ENABLE_PROFILERS
+    _profilingTimer = CCProfiler::timerWithName(profilerName().c_str(), this);
+#endif
+
     scheduleUpdate();
 }
 
@@ -299,6 +354,11 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
     currentQuantityOfNodes = quantityOfNodes;
 }
 
+std::string AddRemoveSpriteSheet::profilerName()
+{
+    return "none";
+}
+
 ////////////////////////////////////////////////////////
 //
 // AddSpriteSheet
@@ -326,13 +386,18 @@ void AddSpriteSheet::update(ccTime dt)
         }
 
         // add them with random Z (very important!)
-        // CCProfilingBeginTimingBlock(_profilingTimer);
+#if CC_ENABLE_PROFILERS
+        CCProfilingBeginTimingBlock(_profilingTimer);
+#endif
+
         for( int i=0; i < totalToAdd;i++ )
         {
             batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), zs[i], kTagBase+i);
         }
-        //		[batchNode sortAllChildren];
-        // CCProfilingEndTimingBlock(_profilingTimer);
+
+#if CC_ENABLE_PROFILERS
+        CCProfilingEndTimingBlock(_profilingTimer);
+#endif
 
         // remove them
         for( int i=0;i <  totalToAdd;i++)
@@ -354,6 +419,10 @@ std::string AddSpriteSheet::subtitle()
     return "Adds %10 of total sprites with random z. See console";
 }
 
+std::string AddSpriteSheet::profilerName()
+{
+    return "add sprites";
+}
 
 ////////////////////////////////////////////////////////
 //
@@ -385,12 +454,18 @@ void RemoveSpriteSheet::update(ccTime dt)
         }
 
         // remove them
-        // CCProfilingBeginTimingBlock(_profilingTimer);
+#if CC_ENABLE_PROFILERS
+        CCProfilingBeginTimingBlock(_profilingTimer);
+#endif
+
         for( int i=0;i <  totalToAdd;i++)
         {
             batchNode->removeChildByTag(kTagBase+i, true);
         }
-        // CCProfilingEndTimingBlock(_profilingTimer);
+
+#if CC_ENABLE_PROFILERS
+        CCProfilingEndTimingBlock(_profilingTimer);
+#endif
     }
 }
 
@@ -402,6 +477,11 @@ std::string RemoveSpriteSheet::title()
 std::string RemoveSpriteSheet::subtitle()
 {
     return "Remove %10 of total sprites placed randomly. See console";
+}
+
+std::string RemoveSpriteSheet::profilerName()
+{
+    return "remove sprites";
 }
 
 ////////////////////////////////////////////////////////
@@ -436,14 +516,19 @@ void ReorderSpriteSheet::update(ccTime dt)
         //		[batchNode sortAllChildren];
 
         // reorder them
-        //CCProfilingBeginTimingBlock(_profilingTimer);
+#if CC_ENABLE_PROFILERS
+        CCProfilingBeginTimingBlock(_profilingTimer);
+#endif
+
         for( int i=0;i <  totalToAdd;i++)
         {
             CCNode* pNode = (CCNode*) (batchNode->getChildren()->objectAtIndex(i));
             batchNode->reorderChild(pNode, CCRANDOM_MINUS1_1() * 50);
         }
-        //		[batchNode sortAllChildren];
-        //CCProfilingEndTimingBlock(_profilingTimer);
+
+#if CC_ENABLE_PROFILERS
+        CCProfilingEndTimingBlock(_profilingTimer);
+#endif
 
         // remove them
         for( int i=0;i <  totalToAdd;i++)
@@ -461,6 +546,11 @@ std::string ReorderSpriteSheet::title()
 std::string ReorderSpriteSheet::subtitle()
 {
     return "Reorder %10 of total sprites placed randomly. See console";
+}
+
+std::string ReorderSpriteSheet::profilerName()
+{
+    return "reorder sprites";
 }
 
 void runNodeChildrenTest()
