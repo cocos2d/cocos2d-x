@@ -33,13 +33,13 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "platform/platform.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 
 namespace cocos2d
 {
 	class CCProfilingTimer;
 
-	class CCProfiler : public CCObject
+	class CC_DLL CCProfiler : public CCObject
 	{
 	public:
 		~CCProfiler(void);
@@ -52,7 +52,7 @@ namespace cocos2d
 		static void releaseTimer(CCProfilingTimer *pTimer);
 
 	protected:
-		CCMutableArray<CCProfilingTimer*> *m_pActiveTimers;
+		CCArray *m_pActiveTimers;
 	};
 
 	class CCProfilingTimer : public CCObject
@@ -61,7 +61,7 @@ namespace cocos2d
 		bool initWithName(const char* pszTimerName, CCObject *pInstance);
 		~CCProfilingTimer(void);
 		char* description(void);
-		inline struct cc_timeval getStartTime(void) { return m_sStartTime; };
+		inline struct cc_timeval * getStartTime(void) { return &m_sStartTime; };
 		inline void setAverageTime(double value) { m_dAverageTime = value; }
 		inline double getAverageTime(void) { return m_dAverageTime; }
 
@@ -71,8 +71,8 @@ namespace cocos2d
 		double m_dAverageTime;
 	};
 
-	void CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer);
-	void CCProfilingEndTimingBlock(CCProfilingTimer *pTimer);
+	void CC_DLL CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer);
+	void CC_DLL CCProfilingEndTimingBlock(CCProfilingTimer *pTimer);
 
 } // end of namespace cocos2d
 
