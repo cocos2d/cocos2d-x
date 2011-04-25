@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #if CC_ENABLE_PROFILERS
 
-#include <string.h>
+#include <string>
 
 #include "CCObject.h"
 #include "platform/platform.h"
