@@ -64,6 +64,14 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     	nativeKeyDown(keyCode);
     }
     
+    public void handleOnPause(){
+    	nativeOnPause();
+    }
+    
+    public void handleOnResume(){
+    	nativeOnResume();
+    }
+    
     public static void setAnimationInterval(double interval){
     	animationInterval = (long)(interval * NANOSECONDSPERSECOND);
     }
@@ -72,7 +80,9 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     private static native void nativeTouchesEnd(int id, float x, float y);
     private static native void nativeTouchesMove(int[] id, float[] x, float[] y);
     private static native void nativeTouchesCancel(int[] id, float[] x, float[] y);
-private static native boolean nativeKeyDown(int keyCode);
+    private static native boolean nativeKeyDown(int keyCode);
     private static native void nativeRender();
     private static native void nativeInit(int w, int h);
+    private static native void nativeOnPause();
+    private static native void nativeOnResume();
 }
