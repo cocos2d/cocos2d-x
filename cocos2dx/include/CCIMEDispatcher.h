@@ -25,11 +25,9 @@ THE SOFTWARE.
 #ifndef __CC_IME_DISPATCHER_H__
 #define __CC_IME_DISPATCHER_H__
 
-#include "CCGeometry.h"
+#include "CCIMEDelegate.h"
 
 NS_CC_BEGIN;
-
-class CCIMEDelegate;
 
 /**
 @brief	Input Method Edit Message Dispatcher.
@@ -62,10 +60,10 @@ public:
     //////////////////////////////////////////////////////////////////////////
     // dispatch keyboard notification
     //////////////////////////////////////////////////////////////////////////
-    void dispatchKeyboardWillShow(CCRect& begin, CCRect& end);
-    void dispatchKeyboardDidShow(CCRect& begin, CCRect& end);
-    void dispatchKeyboardWillHide(CCRect& begin, CCRect& end);
-    void dispatchKeyboardDidHide(CCRect& begin, CCRect& end);
+    void dispatchKeyboardWillShow(CCIMEKeyboardNotificationInfo& info);
+    void dispatchKeyboardDidShow(CCIMEKeyboardNotificationInfo& info);
+    void dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+    void dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& info);
 
 protected:
     friend class CCIMEDelegate;
@@ -81,6 +79,7 @@ protected:
             can attach with ime, return true, otherwise return false.
     */
     bool attachDelegateWithIME(CCIMEDelegate * pDelegate);
+    bool detachDelegateWithIME(CCIMEDelegate * pDelegate);
 
     /**
     @brief remove the delegate from the delegates who concern ime msg

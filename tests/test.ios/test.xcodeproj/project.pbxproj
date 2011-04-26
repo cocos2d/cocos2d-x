@@ -159,6 +159,14 @@
 		BF1FAFD11352F74A007553D9 /* CCMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FAFD01352F74A007553D9 /* CCMenu.cpp */; };
 		BF1FAFD31352F765007553D9 /* CCNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FAFD21352F765007553D9 /* CCNode.cpp */; };
 		BF1FAFD51352F788007553D9 /* CCParticleSystemPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FAFD41352F788007553D9 /* CCParticleSystemPoint.cpp */; };
+		BF2CE33113666AA8006DCA18 /* TextInputTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2CE32F13666AA8006DCA18 /* TextInputTest.cpp */; };
+		BF2CE34213666B01006DCA18 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2CE34013666B01006DCA18 /* CCIMEDelegate.h */; };
+		BF2CE34313666B01006DCA18 /* CCIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2CE34113666B01006DCA18 /* CCIMEDispatcher.h */; };
+		BF2CE34713666B43006DCA18 /* CCIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2CE34513666B43006DCA18 /* CCIMEDispatcher.cpp */; };
+		BF2CE34813666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2CE34613666B43006DCA18 /* CCTextFieldTTF.cpp */; };
+		BF2CE34913666B43006DCA18 /* CCIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2CE34513666B43006DCA18 /* CCIMEDispatcher.cpp */; };
+		BF2CE34A13666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF2CE34613666B43006DCA18 /* CCTextFieldTTF.cpp */; };
+		BF2CE35D13666BD0006DCA18 /* CCTextFieldTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = BF2CE35C13666BD0006DCA18 /* CCTextFieldTTF.h */; };
 		BF316085133DE0A500E0532D /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF316084133DE0A500E0532D /* CCFileUtils.h */; };
 		BF31DE9A12E9779300D4F513 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BF31DE9812E9779300D4F513 /* background.mp3 */; };
 		BF31DE9B12E9779300D4F513 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF31DE9912E9779300D4F513 /* effect1.wav */; };
@@ -642,6 +650,13 @@
 		BF1FAFD01352F74A007553D9 /* CCMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenu.cpp; sourceTree = "<group>"; };
 		BF1FAFD21352F765007553D9 /* CCNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNode.cpp; sourceTree = "<group>"; };
 		BF1FAFD41352F788007553D9 /* CCParticleSystemPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParticleSystemPoint.cpp; sourceTree = "<group>"; };
+		BF2CE32F13666AA8006DCA18 /* TextInputTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextInputTest.cpp; path = TextInputTest/TextInputTest.cpp; sourceTree = "<group>"; };
+		BF2CE33013666AA8006DCA18 /* TextInputTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextInputTest.h; path = TextInputTest/TextInputTest.h; sourceTree = "<group>"; };
+		BF2CE34013666B01006DCA18 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
+		BF2CE34113666B01006DCA18 /* CCIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDispatcher.h; sourceTree = "<group>"; };
+		BF2CE34513666B43006DCA18 /* CCIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCIMEDispatcher.cpp; path = text_input_node/CCIMEDispatcher.cpp; sourceTree = "<group>"; };
+		BF2CE34613666B43006DCA18 /* CCTextFieldTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCTextFieldTTF.cpp; path = text_input_node/CCTextFieldTTF.cpp; sourceTree = "<group>"; };
+		BF2CE35C13666BD0006DCA18 /* CCTextFieldTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextFieldTTF.h; sourceTree = "<group>"; };
 		BF316084133DE0A500E0532D /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		BF31DE9812E9779300D4F513 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../Res/background.mp3; sourceTree = SOURCE_ROOT; };
 		BF31DE9912E9779300D4F513 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../Res/effect1.wav; sourceTree = SOURCE_ROOT; };
@@ -1393,6 +1408,24 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		BF2CE32E13666A78006DCA18 /* TextInputTest */ = {
+			isa = PBXGroup;
+			children = (
+				BF2CE32F13666AA8006DCA18 /* TextInputTest.cpp */,
+				BF2CE33013666AA8006DCA18 /* TextInputTest.h */,
+			);
+			name = TextInputTest;
+			sourceTree = "<group>";
+		};
+		BF2CE34413666B0D006DCA18 /* text_input_node */ = {
+			isa = PBXGroup;
+			children = (
+				BF2CE34513666B43006DCA18 /* CCIMEDispatcher.cpp */,
+				BF2CE34613666B43006DCA18 /* CCTextFieldTTF.cpp */,
+			);
+			name = text_input_node;
+			sourceTree = "<group>";
+		};
 		BF31DEB212E9782200D4F513 /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
@@ -1443,6 +1476,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF2CE32E13666A78006DCA18 /* TextInputTest */,
 				D4E39D2F1342E22F00EBA039 /* ZwoptexTest */,
 				BF340BDE133B26A70035A4D1 /* PerformanceTest */,
 				BF137F45131E3A7B000F7B64 /* LabelTest */,
@@ -1874,6 +1908,7 @@
 				BF83591A13276C7700F3C033 /* platform */,
 				BF835AF713276C7900F3C033 /* sprite_nodes */,
 				BF835AFF13276C7900F3C033 /* support */,
+				BF2CE34413666B0D006DCA18 /* text_input_node */,
 				BF835B1A13276C7900F3C033 /* textures */,
 				BF835B1F13276C7900F3C033 /* tileMap_parallax_nodes */,
 				BF835B2613276C7900F3C033 /* touch_dispatcher */,
@@ -1939,6 +1974,9 @@
 		BF8358AE13276C7700F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF2CE35C13666BD0006DCA18 /* CCTextFieldTTF.h */,
+				BF2CE34013666B01006DCA18 /* CCIMEDelegate.h */,
+				BF2CE34113666B01006DCA18 /* CCIMEDispatcher.h */,
 				BF8358AF13276C7700F3C033 /* CCAccelerometer.h */,
 				BF8358B013276C7700F3C033 /* CCAccelerometerDelegate.h */,
 				BF8358B113276C7700F3C033 /* CCAction.h */,
@@ -2384,6 +2422,9 @@
 				BF340A48133AE3250035A4D1 /* CCNS.h in Headers */,
 				D4F1A270133B2FE700937FFA /* CCSAXParser.h in Headers */,
 				BF316085133DE0A500E0532D /* CCFileUtils.h in Headers */,
+				BF2CE34213666B01006DCA18 /* CCIMEDelegate.h in Headers */,
+				BF2CE34313666B01006DCA18 /* CCIMEDispatcher.h in Headers */,
+				BF2CE35D13666BD0006DCA18 /* CCTextFieldTTF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2692,6 +2733,9 @@
 				BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				D4E39D321342E23F00EBA039 /* ZwoptexTest.cpp in Sources */,
 				BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */,
+				BF2CE33113666AA8006DCA18 /* TextInputTest.cpp in Sources */,
+				BF2CE34713666B43006DCA18 /* CCIMEDispatcher.cpp in Sources */,
+				BF2CE34813666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2793,6 +2837,8 @@
 				BF1FAFD11352F74A007553D9 /* CCMenu.cpp in Sources */,
 				BF1FAFD31352F765007553D9 /* CCNode.cpp in Sources */,
 				BF1FAFD51352F788007553D9 /* CCParticleSystemPoint.cpp in Sources */,
+				BF2CE34913666B43006DCA18 /* CCIMEDispatcher.cpp in Sources */,
+				BF2CE34A13666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

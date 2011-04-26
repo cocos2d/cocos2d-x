@@ -21,6 +21,7 @@
 #include "TileMapTest/TileMapTest.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
+#include "TextInputTest/TextInputTest.h"
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
@@ -66,7 +67,8 @@ enum
     TEST_TILE_MAP,
     TEST_INTERVAL,
     TEST_CHIPMUNK,
-    TEST_ATLAS,
+    TEST_LABEL,
+    TEST_TEXT_INPUT,
     TEST_SPRITE,
     TEST_SCHEDULER,
     TEST_RENDERTEXTURE,
@@ -105,6 +107,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "IntervalTest",
     "ChipmunkTest",
     "LabelTest",
+    "TextInputTest",
     "SpriteTest",
     "SchdulerTest",
     "RenderTextureTest",

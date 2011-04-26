@@ -923,6 +923,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="TextInputTest"
+					>
+					<File
+						RelativePath="..\tests\TextInputTest\TextInputTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\TextInputTest\TextInputTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
