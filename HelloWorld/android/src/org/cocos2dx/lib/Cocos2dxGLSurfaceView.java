@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
@@ -170,12 +171,12 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         if (imm == null) {
         	return;
         }
-        imm.showSoftInput(mainView, InputMethodManager.SHOW_IMPLICIT);
+        imm.showSoftInput(mainView, 0);
     }
     
     public static void closeIMEKeyboard() {
-    	if (null != mainView) {
-        	Log.d("Cocos2dxGLSurfaceView", "closeIMEKeyboard");
+    	if (null == mainView) {
+        	return;
     	}
     	InputMethodManager imm = (InputMethodManager)mainView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm == null) {
