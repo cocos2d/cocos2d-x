@@ -174,8 +174,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     }
     
     public static void closeIMEKeyboard() {
-    	if (null != mainView) {
-        	Log.d("Cocos2dxGLSurfaceView", "closeIMEKeyboard");
+    	if (null == mainView) {
+        	return;
     	}
     	InputMethodManager imm = (InputMethodManager)mainView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm == null) {
