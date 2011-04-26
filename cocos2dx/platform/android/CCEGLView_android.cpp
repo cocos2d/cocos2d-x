@@ -41,7 +41,7 @@ CCEGLView::CCEGLView()
 {
 }
 
-void CCEGLView::setFrameWitdAndHeight(int width, int height)
+void CCEGLView::setFrameWidthAndHeight(int width, int height)
 {
 	m_sSizeInPixel.width = width;
 	m_sSizeInPixel.height = height;

@@ -49,8 +49,19 @@ CCApplication::CCApplication()
         CC_BREAK_IF(nRet < 0);
 
         TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
-        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_EXECUTABLE, AppPath);
-        TUString::StrUnicodeToStrUtf8((Char*) m_AppDataPath, AppPath);
+        char   DataPath[EOS_FILE_MAX_PATH] = {0};
+        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_DATA, AppPath);
+        TUString::StrUnicodeToStrUtf8((Char*) DataPath, AppPath);
+
+#ifndef _TRANZDA_VM_
+        char *pszDriver = "";
+#else
+        char *pszDriver = "D:/Work7";
+#endif
+
+        // record the data path
+        strcpy(m_AppDataPath, pszDriver);
+        strcat(m_AppDataPath, DataPath);
     } while (0);
 
     CC_ASSERT(! sm_pSharedApplication);

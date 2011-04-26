@@ -34,7 +34,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
-        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -52,12 +52,12 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #endif
 #endif
@@ -92,6 +92,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
+	case TEST_CURL:
+		pScene = new CurlTestScene(); break;
     default:
         break;
     }
@@ -102,13 +104,13 @@ static TestScene* CreateTestScene(int nIdx)
 TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
 
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
-
     CCSize s = CCDirector::sharedDirector()->getWinSize();
+
     pMenu->setPosition( CCPointZero );
     pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
 

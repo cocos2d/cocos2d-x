@@ -49,7 +49,7 @@ bool AppDelegate::initInstance()
         CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
 
 #ifndef _TRANZDA_VM_  
-        // on wophone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
+        // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data/ folder instead of zip file
         cocos2d::CCFileUtils::setResource("HelloWorld.zip");
 #endif
 
@@ -69,7 +69,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
 //     pDirector->enableRetinaDisplay(true);
 
-	// sets landscape mode
+	// sets opengl landscape mode
 	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	// turn on display FPS

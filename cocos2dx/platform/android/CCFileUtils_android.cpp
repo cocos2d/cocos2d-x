@@ -93,7 +93,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pData;
 }
 
-void CCFileUtils::setResource(const char* pszZipFileName, const char* pszResPath)
+void CCFileUtils::setResource(const char* pszZipFileName)
 {
     CCAssert(0, "Have not implement!");
 }

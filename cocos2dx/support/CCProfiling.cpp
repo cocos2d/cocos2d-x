@@ -26,9 +26,6 @@ THE SOFTWARE.
 
 #if CC_ENABLE_PROFILERS
 
-#include <stdio.h>
-#include <iostream>
-
 namespace cocos2d
 {
 	using namespace std;
@@ -60,11 +57,17 @@ namespace cocos2d
 	{
 		CCProfiler *p = CCProfiler::sharedProfiler();
 		p->m_pActiveTimers->removeObject(pTimer);
+
+        if (0 == (p->m_pActiveTimers->count()))
+        {
+            CC_SAFE_DELETE(g_sSharedProfiler);
+        }
 	}
 
 	bool CCProfiler::init()
 	{
-		m_pActiveTimers = new CCMutableArray<CCProfilingTimer*>();
+        m_pActiveTimers = CCArray::array();
+        m_pActiveTimers->retain();
 
 		return true;
 	}
@@ -76,11 +79,13 @@ namespace cocos2d
 
 	void CCProfiler::displayTimers()
 	{
-		CCMutableArray<CCProfilingTimer*>::CCMutableArrayIterator it;
-		for (it = m_pActiveTimers->begin(); it != m_pActiveTimers->end(); ++it)
+        CCObject* pObject = NULL;
+        CCProfilingTimer* pTimer = NULL;
+        CCARRAY_FOREACH(m_pActiveTimers, pObject)
 		{
-			char *pszDescription = (*it)->description();
-			cout << pszDescription << endl;
+            pTimer = (CCProfilingTimer*) pObject;
+			char *pszDescription = pTimer->description();
+			CCLog(pszDescription);
 			delete pszDescription;
 		}
 	}
@@ -89,9 +94,10 @@ namespace cocos2d
 
 	bool CCProfilingTimer::initWithName(const char* pszTimerName, CCObject *pInstance)
 	{
-		char tmp[100];
+		char tmp[160];
 		sprintf(tmp, "%s (0x%.8x)", pszTimerName, pInstance);
 		m_NameStr = string(tmp);
+        m_dAverageTime = 0.0;
 
 		return true;
 	}
@@ -103,21 +109,21 @@ namespace cocos2d
 
 	char* CCProfilingTimer::description()
 	{
-        char *pszDes = new char[m_NameStr.length() + sizeof(double) + 20];
+        char *pszDes = new char[m_NameStr.length() + sizeof(double) + 32];
 		sprintf(pszDes, "%s: avg time, %fms", m_NameStr.c_str(), m_dAverageTime);
 		return pszDes;
 	}
 
 	void CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer)
 	{
-		CCTime::gettimeofdayCocos2d(&pTimer->getStartTime(), NULL);
+		CCTime::gettimeofdayCocos2d(pTimer->getStartTime(), NULL);
 	}
 
 	void CCProfilingEndTimingBlock(CCProfilingTimer *pTimer)
 	{
         struct cc_timeval currentTime;
 		CCTime::gettimeofdayCocos2d(&currentTime, NULL);
-		CCTime::timersubCocos2d(&currentTime, &pTimer->getStartTime(), &currentTime);
+		CCTime::timersubCocos2d(&currentTime, pTimer->getStartTime(), &currentTime);
 		double duration = currentTime.tv_sec * 1000.0 + currentTime.tv_usec / 1000.0;
 
 		// return in milliseconds

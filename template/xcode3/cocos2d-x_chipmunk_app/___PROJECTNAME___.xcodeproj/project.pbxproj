@@ -84,7 +84,8 @@
 		BF1537EE12E16C0400703484 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C612E16C0400703484 /* SimpleAudioEngine.mm */; };
 		BF1537EF12E16C0400703484 /* SimpleAudioEngine_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */; };
 		BF1537F012E16C0400703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */; };
-		BF15715C12E3D730001F8977 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF15715B12E3D730001F8977 /* libxml2.dylib */; };
+		BF193F62136008DB002463D2 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = BF193F61136008DB002463D2 /* CCArray.h */; };
+		BF193F66136008E6002463D2 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF193F65136008E6002463D2 /* CCArray.cpp */; };
 		BF1FB06C1352FB17007553D9 /* CCDirector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB06B1352FB17007553D9 /* CCDirector.cpp */; };
 		BF1FB06E1352FB28007553D9 /* CCGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB06D1352FB28007553D9 /* CCGrid.cpp */; };
 		BF1FB0711352FB42007553D9 /* CCLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB06F1352FB42007553D9 /* CCLayer.cpp */; };
@@ -303,6 +304,7 @@
 		BF836E5E13287D3600F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF836C0B13287D3600F3C033 /* CCTouchHandler.cpp */; };
 		BF836E5F13287D3600F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF836C0C13287D3600F3C033 /* CCTouchHandler.h */; };
 		BFA008E61344246700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008E51344246700289DC3 /* CCCommon_ios.mm */; };
+		D403B5B8135D1ADD004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5B7135D1ADD004B518D /* libxml2.dylib */; };
 		D40823D0132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
 		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
@@ -403,7 +405,8 @@
 		BF1537C612E16C0400703484 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		BF1537C712E16C0400703484 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		BF15715B12E3D730001F8977 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
+		BF193F61136008DB002463D2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
+		BF193F65136008E6002463D2 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		BF1FB06B1352FB17007553D9 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDirector.cpp; sourceTree = "<group>"; };
 		BF1FB06D1352FB28007553D9 /* CCGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGrid.cpp; sourceTree = "<group>"; };
 		BF1FB06F1352FB42007553D9 /* CCLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLayer.cpp; sourceTree = "<group>"; };
@@ -622,6 +625,7 @@
 		BF836C0B13287D3600F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF836C0C13287D3600F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BFA008E51344246700289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		D403B5B7135D1ADD004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D40823CD132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
 		D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		D40823CF132F41B600F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
@@ -660,7 +664,7 @@
 				506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */,
 				506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */,
 				506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */,
-				BF15715C12E3D730001F8977 /* libxml2.dylib in Frameworks */,
+				D403B5B8135D1ADD004B518D /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,7 +723,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BF15715B12E3D730001F8977 /* libxml2.dylib */,
 				DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */,
 				DCCBF1B80F6022AE0040855A /* Foundation.framework */,
 				DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */,
@@ -729,6 +732,7 @@
 				DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */,
 				506EDB87102F4C4000A389B3 /* libz.dylib */,
 				506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */,
+				D403B5B7135D1ADD004B518D /* libxml2.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -982,6 +986,7 @@
 		BF83699113287D3500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF193F61136008DB002463D2 /* CCArray.h */,
 				BF83699213287D3500F3C033 /* CCAccelerometer.h */,
 				BF83699313287D3500F3C033 /* CCAccelerometerDelegate.h */,
 				BF83699413287D3500F3C033 /* CCAction.h */,
@@ -1205,6 +1210,7 @@
 		BF836BE213287D3600F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF193F65136008E6002463D2 /* CCArray.cpp */,
 				BF836BE313287D3600F3C033 /* base64.cpp */,
 				BF836BE413287D3600F3C033 /* base64.h */,
 				BF836BE513287D3600F3C033 /* CCPointExtension.cpp */,
@@ -1464,6 +1470,7 @@
 				BF340A7F133AE4AE0035A4D1 /* CCNS.h in Headers */,
 				BF5FD72413430B1900F22186 /* CCFileUtils.h in Headers */,
 				BF5FD72613430B1900F22186 /* CCSAXParser.h in Headers */,
+				BF193F62136008DB002463D2 /* CCArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1687,6 +1694,7 @@
 				BF1FB0741352FB56007553D9 /* CCMenu.cpp in Sources */,
 				BF1FB0761352FB6B007553D9 /* CCNode.cpp in Sources */,
 				BF1FB0781352FB84007553D9 /* CCParticleSystemPoint.cpp in Sources */,
+				BF193F66136008E6002463D2 /* CCArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

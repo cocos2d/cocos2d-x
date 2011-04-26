@@ -52,14 +52,14 @@ namespace   cocos2d {
  @return CCPoint
  @since v0.7.2
  */
-#define ccp(__X__,__Y__) CCPointMake((float)__X__, (float)__Y__)
+#define ccp(__X__,__Y__) cocos2d::CCPointMake((float)__X__, (float)__Y__)
 
 /** Returns opposite of point.
  @return CCPoint
  @since v0.7.2
  */
 static inline CCPoint
-ccpNeg(const CCPoint v)
+ccpNeg(const CCPoint& v)
 {
 	return ccp(-v.x, -v.y);
 }
@@ -69,7 +69,7 @@ ccpNeg(const CCPoint v)
  @since v0.7.2
  */
 static inline CCPoint
-ccpAdd(const CCPoint v1, const CCPoint v2)
+ccpAdd(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccp(v1.x + v2.x, v1.y + v2.y);
 }
@@ -79,7 +79,7 @@ ccpAdd(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CCPoint
-ccpSub(const CCPoint v1, const CCPoint v2)
+ccpSub(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccp(v1.x - v2.x, v1.y - v2.y);
 }
@@ -89,7 +89,7 @@ ccpSub(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CCPoint
-ccpMult(const CCPoint v, const CGFloat s)
+ccpMult(const CCPoint& v, const CGFloat s)
 {
 	return ccp(v.x*s, v.y*s);
 }
@@ -99,7 +99,7 @@ ccpMult(const CCPoint v, const CGFloat s)
  @since v0.7.2
  */
 static inline CCPoint
-ccpMidpoint(const CCPoint v1, const CCPoint v2)
+ccpMidpoint(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccpMult(ccpAdd(v1, v2), 0.5f);
 }
@@ -109,7 +109,7 @@ ccpMidpoint(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CGFloat
-ccpDot(const CCPoint v1, const CCPoint v2)
+ccpDot(const CCPoint& v1, const CCPoint& v2)
 {
 	return v1.x*v2.x + v1.y*v2.y;
 }
@@ -119,7 +119,7 @@ ccpDot(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CGFloat
-ccpCross(const CCPoint v1, const CCPoint v2)
+ccpCross(const CCPoint& v1, const CCPoint& v2)
 {
 	return v1.x*v2.y - v1.y*v2.x;
 }
@@ -129,7 +129,7 @@ ccpCross(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CCPoint
-ccpPerp(const CCPoint v)
+ccpPerp(const CCPoint& v)
 {
 	return ccp(-v.y, v.x);
 }
@@ -139,7 +139,7 @@ ccpPerp(const CCPoint v)
  @since v0.7.2
  */
 static inline CCPoint
-ccpRPerp(const CCPoint v)
+ccpRPerp(const CCPoint& v)
 {
 	return ccp(v.y, -v.x);
 }
@@ -149,7 +149,7 @@ ccpRPerp(const CCPoint v)
  @since v0.7.2
  */
 static inline CCPoint
-ccpProject(const CCPoint v1, const CCPoint v2)
+ccpProject(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccpMult(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
 }
@@ -159,7 +159,7 @@ ccpProject(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CCPoint
-ccpRotate(const CCPoint v1, const CCPoint v2)
+ccpRotate(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccp(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
 }
@@ -169,7 +169,7 @@ ccpRotate(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CCPoint
-ccpUnrotate(const CCPoint v1, const CCPoint v2)
+ccpUnrotate(const CCPoint& v1, const CCPoint& v2)
 {
 	return ccp(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
 }
@@ -179,7 +179,7 @@ ccpUnrotate(const CCPoint v1, const CCPoint v2)
  @since v0.7.2
  */
 static inline CGFloat
-ccpLengthSQ(const CCPoint v)
+ccpLengthSQ(const CCPoint& v)
 {
 	return ccpDot(v, v);
 }
@@ -188,19 +188,19 @@ ccpLengthSQ(const CCPoint v)
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CC_DLL ccpLength(const CCPoint v);
+CGFloat CC_DLL ccpLength(const CCPoint& v);
 
 /** Calculates the distance between two points
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CC_DLL ccpDistance(const CCPoint v1, const CCPoint v2);
+CGFloat CC_DLL ccpDistance(const CCPoint& v1, const CCPoint& v2);
 
 /** Returns point multiplied to a length of 1.
  @return CCPoint
  @since v0.7.2
  */
-CCPoint CC_DLL ccpNormalize(const CCPoint v);
+CCPoint CC_DLL ccpNormalize(const CCPoint& v);
 
 /** Converts radians to a normalized vector.
  @return CCPoint
@@ -212,7 +212,7 @@ CCPoint CC_DLL ccpForAngle(const CGFloat a);
  @return CGFloat
  @since v0.7.2
  */
-CGFloat CC_DLL ccpToAngle(const CCPoint v);
+CGFloat CC_DLL ccpToAngle(const CCPoint& v);
 
 
 /** Clamp a value between from and to.
@@ -223,12 +223,12 @@ float CC_DLL clampf(float value, float min_inclusive, float max_inclusive);
 /** Clamp a point between from and to.
  @since v0.99.1
  */
-CCPoint CC_DLL ccpClamp(CCPoint p, CCPoint from, CCPoint to);
+CCPoint CC_DLL ccpClamp(const CCPoint& p, const CCPoint& from, const CCPoint& to);
 
 /** Quickly convert CCSize to a CCPoint
  @since v0.99.1
  */
-CCPoint CC_DLL ccpFromSize(CCSize s);
+CCPoint CC_DLL ccpFromSize(const CCSize& s);
 
 /** Run a math operation function on each point component
  * absf, fllorf, ceilf, roundf
@@ -237,7 +237,7 @@ CCPoint CC_DLL ccpFromSize(CCSize s);
  * ccpCompOp(p,floorf);
  @since v0.99.1
  */
-CCPoint CC_DLL ccpCompOp(CCPoint p, float (*opFunc)(float));
+CCPoint CC_DLL ccpCompOp(const CCPoint& p, float (*opFunc)(float));
 
 /** Linear Interpolation between two points a and b
  @returns
@@ -246,30 +246,30 @@ CCPoint CC_DLL ccpCompOp(CCPoint p, float (*opFunc)(float));
 	otherwise a value between a..b
  @since v0.99.1
  */
-CCPoint CC_DLL ccpLerp(CCPoint a, CCPoint b, float alpha);
+CCPoint CC_DLL ccpLerp(const CCPoint& a, const CCPoint& b, float alpha);
 
 
 /** @returns if points have fuzzy equality which means equal with some degree of variance.
  @since v0.99.1
  */
-bool CC_DLL ccpFuzzyEqual(CCPoint a, CCPoint b, float variance);
+bool CC_DLL ccpFuzzyEqual(const CCPoint& a, const CCPoint& b, float variance);
 
 
 /** Multiplies a nd b components, a.x*b.x, a.y*b.y
  @returns a component-wise multiplication
  @since v0.99.1
  */
-CCPoint CC_DLL ccpCompMult(CCPoint a, CCPoint b);
+CCPoint CC_DLL ccpCompMult(const CCPoint& a, const CCPoint& b);
 
 /** @returns the signed angle in radians between two vector directions
  @since v0.99.1
  */
-float CC_DLL ccpAngleSigned(CCPoint a, CCPoint b);
+float CC_DLL ccpAngleSigned(const CCPoint& a, const CCPoint& b);
 
 /** @returns the angle in radians between two vector directions
  @since v0.99.1
 */
-float CC_DLL ccpAngle(CCPoint a, CCPoint b);
+float CC_DLL ccpAngle(const CCPoint& a, const CCPoint& b);
 
 /** Rotates a point counter clockwise by the angle around a pivot
  @param v is the point to rotate
@@ -278,7 +278,7 @@ float CC_DLL ccpAngle(CCPoint a, CCPoint b);
  @returns the rotated point
  @since v0.99.1
  */
-CCPoint CC_DLL ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle);
+CCPoint CC_DLL ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle);
 
 /** A general line-line intersection test
  @param p1 
@@ -301,8 +301,8 @@ CCPoint CC_DLL ccpRotateByAngle(CCPoint v, CCPoint pivot, float angle);
 	the hit point also is	p1 + s * (p2 - p1);
  @since v0.99.1
  */
-bool CC_DLL ccpLineIntersect(CCPoint p1, CCPoint p2, 
-					  CCPoint p3, CCPoint p4,
+bool CC_DLL ccpLineIntersect(const CCPoint& p1, const CCPoint& p2, 
+					  const CCPoint& p3, const CCPoint& p4,
 					  float *s, float *t);
 
 }//namespace   cocos2d 

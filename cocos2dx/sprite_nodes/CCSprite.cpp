@@ -766,14 +766,15 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 {
 	if (m_bUsesBatchNode)
 	{
-		CCSprite *pChild;
-		CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
-		{
-			pChild = (CCSprite*)(*iter);
-            CC_BREAK_IF(! pChild);
-			m_pobBatchNode->removeSpriteFromAtlas(pChild);
-		}
+        CCObject* pObject = NULL;
+        CCARRAY_FOREACH(m_pChildren, pObject)
+        {
+            CCSprite* pChild = (CCSprite*) pObject;
+            if (pChild)
+            {
+                m_pobBatchNode->removeSpriteFromAtlas(pChild);
+            }
+        }
 	}
 
 	CCNode::removeAllChildrenWithCleanup(bCleanup);
@@ -792,14 +793,15 @@ void CCSprite::setDirtyRecursively(bool bValue)
 	// recursively set dirty
 	if (m_bHasChildren)
 	{
-		CCSprite *pChild;
-		CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
-		{
-			pChild = (CCSprite*)(*iter);
-            CC_BREAK_IF(! pChild);
-			pChild->setDirtyRecursively(true);
-		}
+        CCObject* pObject = NULL;
+        CCARRAY_FOREACH(m_pChildren, pObject)
+        {
+            CCSprite* pChild = (CCSprite*) pObject;
+            if (pChild)
+            {
+                pChild->setDirtyRecursively(true);
+            }
+        }
 	}
 }
 

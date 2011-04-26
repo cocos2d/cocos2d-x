@@ -40,13 +40,17 @@ typedef enum
 class CCTouch;
 class CCEvent;
 class CCSet;
+class CCTouchDispatcher;
+	
 class CC_DLL CCTouchDelegate
 {
 protected:
 	ccTouchDelegateFlag m_eTouchDelegateType;
 
 public:
+	friend class CCTouchDispatcher; // only CCTouchDispatcher & children can change m_eTouchDelegateType
 	inline ccTouchDelegateFlag getTouchDelegateType(void) { return m_eTouchDelegateType; }
+	
 	//! call the release() in child(layer or menu)
 	virtual void destroy(void) {}
 	//! call the retain() in child (layer or menu)

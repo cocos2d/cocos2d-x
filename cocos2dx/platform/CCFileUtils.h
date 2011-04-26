@@ -96,11 +96,10 @@ public:
     // interfaces on wophone
     ///////////////////////////////////////////////////
     /**
-    @brief  Set the ResourcePath and(or) the zip file name
-    @param pszResPath  The absolute resource path
+    @brief  Set the resource zip file name
     @param pszZipFileName The relative path of the .zip file
     */
-    static void setResource(const char* pszZipFileName, const char* pszResPath = NULL);
+    static void setResource(const char* pszZipFileName);
 
     ///////////////////////////////////////////////////
     // interfaces on android

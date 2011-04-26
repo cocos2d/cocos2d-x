@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "ccMacros.h"
 #include "CCAffineTransform.h"
-#include "CCMutableArray.h"
+#include "CCArray.h"
 #include "selector_protocol.h"
 
 #include "CCGL.h"
@@ -140,7 +140,7 @@ namespace   cocos2d {
 			CC_PROPERTY(CCPoint, m_tPosition, Position)
 			CC_PROPERTY(CCPoint, m_tPositionInPixels, PositionInPixels)
 
-			CC_PROPERTY_READONLY(CCMutableArray<CCNode *> *, m_pChildren, Children)
+			CC_PROPERTY_READONLY(CCArray*, m_pChildren, Children)
 
 			/** A CCCamera object that lets you move the node using a gluLookAt
 			*/
@@ -229,7 +229,7 @@ namespace   cocos2d {
 
 		typedef void (CCNode::*callbackFunc)(void);
 
-		void arrayMakeObjectsPerformSelector(CCMutableArray<CCNode*> * pArray, callbackFunc func);
+		void arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func);
 
 		CCPoint convertToWindowSpace(CCPoint nodePoint);
 

@@ -107,6 +107,8 @@
 		BF15292512E13C8200703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1528FD12E13C8200703484 /* SimpleAudioEngine_objc.m */; };
 		BF152AD012E16ADD00703484 /* LICENSE.box2d in Resources */ = {isa = PBXBuildFile; fileRef = BF152ACE12E16ADD00703484 /* LICENSE.box2d */; };
 		BF152AD112E16ADD00703484 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */; };
+		BF193F49136008AA002463D2 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = BF193F48136008AA002463D2 /* CCArray.h */; };
+		BF193F4D136008B5002463D2 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF193F4C136008B5002463D2 /* CCArray.cpp */; };
 		BF1FB03F1352F9E2007553D9 /* CCDirector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB03E1352F9E2007553D9 /* CCDirector.cpp */; };
 		BF1FB0411352F9F5007553D9 /* CCGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB0401352F9F5007553D9 /* CCGrid.cpp */; };
 		BF1FB0441352FA0F007553D9 /* CCLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB0421352FA0F007553D9 /* CCLayer.cpp */; };
@@ -325,8 +327,8 @@
 		BF8368FE132878B700F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8366AB132878B700F3C033 /* CCTouchDispatcher.cpp */; };
 		BF8368FF132878B700F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8366AC132878B700F3C033 /* CCTouchHandler.cpp */; };
 		BF836900132878B700F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8366AD132878B700F3C033 /* CCTouchHandler.h */; };
-		BF83694413287BFE00F3C033 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF83694313287BFE00F3C033 /* libxml2.dylib */; };
 		BFA008C31344242B00289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008C21344242B00289DC3 /* CCCommon_ios.mm */; };
+		D403B4DC135D183C004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B4DB135D183C004B518D /* libxml2.dylib */; };
 		D40823C0132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40823BE132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		D40823C1132F415F00F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823BF132F415F00F44E75 /* main.m */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
@@ -449,6 +451,8 @@
 		BF1528FD12E13C8200703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		BF152ACE12E16ADD00703484 /* LICENSE.box2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.box2d; sourceTree = "<group>"; };
 		BF152ACF12E16ADD00703484 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
+		BF193F48136008AA002463D2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
+		BF193F4C136008B5002463D2 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		BF1FB03E1352F9E2007553D9 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDirector.cpp; sourceTree = "<group>"; };
 		BF1FB0401352F9F5007553D9 /* CCGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGrid.cpp; sourceTree = "<group>"; };
 		BF1FB0421352FA0F007553D9 /* CCLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLayer.cpp; sourceTree = "<group>"; };
@@ -668,8 +672,8 @@
 		BF8366AB132878B700F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF8366AC132878B700F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF8366AD132878B700F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
-		BF83694313287BFE00F3C033 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = iphoneos/usr/lib/libxml2.dylib; sourceTree = "<group>"; };
 		BFA008C21344242B00289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		D403B4DB135D183C004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D40823BD132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
 		D40823BE132F415F00F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		D40823BF132F415F00F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
@@ -703,7 +707,7 @@
 				506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */,
 				506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */,
 				506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */,
-				BF83694413287BFE00F3C033 /* libxml2.dylib in Frameworks */,
+				D403B4DC135D183C004B518D /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,7 +766,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BF83694313287BFE00F3C033 /* libxml2.dylib */,
 				DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */,
 				DCCBF1B80F6022AE0040855A /* Foundation.framework */,
 				DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */,
@@ -772,6 +775,7 @@
 				DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */,
 				506EDB87102F4C4000A389B3 /* libz.dylib */,
 				506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */,
+				D403B4DB135D183C004B518D /* libxml2.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1065,6 +1069,7 @@
 		BF836432132878B500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF193F48136008AA002463D2 /* CCArray.h */,
 				BF836433132878B500F3C033 /* CCAccelerometer.h */,
 				BF836434132878B500F3C033 /* CCAccelerometerDelegate.h */,
 				BF836435132878B500F3C033 /* CCAction.h */,
@@ -1288,6 +1293,7 @@
 		BF836683132878B600F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF193F4C136008B5002463D2 /* CCArray.cpp */,
 				BF836684132878B600F3C033 /* base64.cpp */,
 				BF836685132878B600F3C033 /* base64.h */,
 				BF836686132878B600F3C033 /* CCPointExtension.cpp */,
@@ -1545,6 +1551,7 @@
 				BF340A64133AE4610035A4D1 /* CCNS.h in Headers */,
 				BF5FD6FF13430AD000F22186 /* CCFileUtils.h in Headers */,
 				BF5FD70113430AD000F22186 /* CCSAXParser.h in Headers */,
+				BF193F49136008AA002463D2 /* CCArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1781,6 +1788,7 @@
 				BF1FB0471352FA23007553D9 /* CCMenu.cpp in Sources */,
 				BF1FB0491352FA35007553D9 /* CCNode.cpp in Sources */,
 				BF1FB04B1352FA4A007553D9 /* CCParticleSystemPoint.cpp in Sources */,
+				BF193F4D136008B5002463D2 /* CCArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

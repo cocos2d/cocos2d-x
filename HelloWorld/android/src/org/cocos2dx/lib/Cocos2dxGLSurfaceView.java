@@ -158,6 +158,28 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         setRenderer(mRenderer);
         mainView = this;
     }
+    
+    public void onPause(){    	
+    	queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mRenderer.handleOnPause();
+            }
+        });
+    	
+    	super.onPause();
+    }
+    
+    public void onResume(){
+    	super.onResume();
+    	
+    	queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mRenderer.handleOnResume();
+            }
+        });
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // for text input

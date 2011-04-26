@@ -668,11 +668,12 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     CCMutableArray<CCNode*>::CCMutableArrayIterator it;
 
     int prev = -1;
-    CCMutableArray<CCNode*>* children = asmtest->getChildren();
+    CCArray* children = asmtest->getChildren();
     CCSprite* child;
-    for(it = children->begin(); it != children->end(); it++)
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(children, pObject)
     {
-        child = (CCSprite*)(*it);
+        child = (CCSprite*)pObject;
         if(! child )
             break;
 
@@ -683,11 +684,10 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     }
     
     prev = -1;
-    CCMutableArray<CCSprite*>::CCMutableArrayIterator itChild;
-    CCMutableArray<CCSprite*>* sChildren = asmtest->getDescendants();
-    for(itChild = sChildren->begin(); itChild != sChildren->end(); itChild++)
+    CCArray* sChildren = asmtest->getDescendants();
+    CCARRAY_FOREACH(sChildren, pObject)
     {
-        child = (CCSprite*)(*itChild);
+        child = (CCSprite*)pObject;
         if(! child )
             break;
 
@@ -1457,16 +1457,16 @@ void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 
     CCNode *node = getChildByTag( kTagSpriteBatchNode );
-    
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-    CCMutableArray<CCNode*>* children = node->getChildren();
+
+    CCArray* children = node->getChildren();
     CCSprite* sprite;
+    CCObject* pObject;
 
     if( m_usingTexture1 )                          //--> win32 : Let's it make just simple sentence
     {
-        for(it = children->begin(); it != children->end(); it++)
+        CCARRAY_FOREACH(children, pObject)
         {
-            sprite = (CCSprite*)(*it);
+            sprite = (CCSprite*)pObject;
             if(! sprite)
                 break;
 
@@ -1477,9 +1477,9 @@ void SpriteNewTexture::ccTouchesEnded(CCSet* touches, CCEvent* event)
     } 
     else 
     {
-        for(it = children->begin(); it != children->end(); it++)
+        CCARRAY_FOREACH(children, pObject)
         {
-            sprite = (CCSprite*)(*it);
+            sprite = (CCSprite*)pObject;
             if(! sprite)
                 break;
 
@@ -2221,7 +2221,7 @@ void SpriteHybrid::reparentSprite(ccTime dt)
     CCNode *p1 = getChildByTag(kTagNode);
     CCNode *p2 = getChildByTag( kTagSpriteBatchNode );
     
-    CCMutableArray<CCNode*>* retArray = new CCMutableArray<CCNode*>(250);
+    CCArray* retArray = CCArray::arrayWithCapacity(250);
 
     if( m_usingSpriteBatchNode )
         CC_SWAP(p1,p2, CCNode*);
@@ -2229,11 +2229,11 @@ void SpriteHybrid::reparentSprite(ccTime dt)
     ////----UXLOG("New parent is: %x", p2);
     
     CCNode* node;
-    CCMutableArray<CCNode*>::CCMutableArrayIterator it;
-    CCMutableArray<CCNode*>* children = p1->getChildren();
-    for(it = children->begin(); it != children->end(); it++)
+    CCObject* pObject;
+    CCArray* children = p1->getChildren();
+    CCARRAY_FOREACH(children, pObject)
     {
-        node = (CCNode*)(*it);
+        node = (CCNode*)pObject;
         if(! node )
             break;
 
@@ -2243,9 +2243,9 @@ void SpriteHybrid::reparentSprite(ccTime dt)
     int i=0;
     p1->removeAllChildrenWithCleanup(false);
 
-    for(it = retArray->begin(); it != retArray->end(); it++)
+    CCARRAY_FOREACH(retArray, pObject)
     {
-        node = (CCNode*)(*it);
+        node = (CCNode*)pObject;
         if(! node)
             break;
 
@@ -2254,8 +2254,6 @@ void SpriteHybrid::reparentSprite(ccTime dt)
     }
 
     m_usingSpriteBatchNode = ! m_usingSpriteBatchNode;
-
-    retArray->release();
 }
 
 void SpriteHybrid::onExit()

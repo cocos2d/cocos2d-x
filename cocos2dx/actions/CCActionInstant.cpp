@@ -423,7 +423,7 @@ namespace cocos2d {
     {
         if(m_pCallFuncO)
         {
-            (m_pSelectorTarget->*m_pCallFuncO)(m_pTarget);
+            (m_pSelectorTarget->*m_pCallFuncO)(m_pObject);
         }
     }
     CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)
