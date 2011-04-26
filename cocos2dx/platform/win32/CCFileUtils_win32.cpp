@@ -105,7 +105,8 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
 	_CheckPath();
-	std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+	// std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
+	std::string relativeFile = pszRelativeFile;
 	CCString *pRet = new CCString();
 	pRet->autorelease();
 	pRet->m_sString = relativeFile.substr(0, relativeFile.rfind('/')+1);
