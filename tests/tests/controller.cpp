@@ -62,8 +62,10 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
 #endif
 #endif
-    case TEST_ATLAS:
+    case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
+    case TEST_TEXT_INPUT:
+        pScene = new TextInputTestScene(); break;
     case TEST_SPRITE:
         pScene = new SpriteTestScene(); break;
     case TEST_SCHEDULER:

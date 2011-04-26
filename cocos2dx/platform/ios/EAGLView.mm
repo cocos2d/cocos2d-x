@@ -177,6 +177,25 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     return self;
 }
 
+- (void)didMoveToWindow;
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardDidHideNotification object:nil];
+    
+}
+
 -(int) getWidth
 {
 	CGSize bound = [self bounds].size;
@@ -502,7 +521,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 }
 
 #pragma mark -
-#pragma mark EAGLView - UIKeyInput
+#pragma mark UIKeyInput protocol
 
 - (BOOL)hasText
 {
@@ -518,6 +537,14 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (void)deleteBackward
 {
     cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+}
+
+#pragma mark -
+#pragma mark UITextInputTrait protocol
+
+-(UITextAutocapitalizationType) autocapitalizationType
+{
+    return UITextAutocapitalizationTypeNone;
 }
 
 #pragma mark -
@@ -689,6 +716,101 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 {
     CCLOG("characterRangeAtPoint");
 	return nil;
+}
+
+#pragma mark -
+#pragma mark UIKeyboard notification
+
+- (void)onUIKeyboardNotification:(NSNotification *)notif;
+{
+    NSString * type = notif.name;
+    
+    NSDictionary* info = [notif userInfo];
+    CGRect begin = [self convertRect: 
+                    [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue]
+                            fromView:self];
+    CGRect end = [self convertRect: 
+                  [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue]
+                          fromView:self];
+    double aniDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    CGSize viewSize = self.frame.size;
+    CGFloat tmp;
+    
+    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    {
+        case UIInterfaceOrientationPortrait:
+            begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
+            end.origin.y = viewSize.height - end.origin.y - end.size.height;
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            begin.origin.x = viewSize.width - (begin.origin.x + begin.size.width);
+            end.origin.x = viewSize.width - (end.origin.x + end.size.width);
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            tmp = begin.size.width;
+            begin.size.width = begin.size.height;
+            begin.size.height = tmp;
+            tmp = end.size.width;
+            end.size.width = end.size.height;
+            end.size.height = tmp;
+            
+            tmp = begin.origin.x;
+            begin.origin.x = begin.origin.y;
+            begin.origin.y = viewSize.width - tmp - begin.size.height;
+            tmp = end.origin.x;
+            end.origin.x = end.origin.y;
+            end.origin.y = viewSize.width - tmp - end.size.height;
+            break;
+            
+        case UIInterfaceOrientationLandscapeRight:
+            tmp = begin.size.width;
+            begin.size.width = begin.size.height;
+            begin.size.height = tmp;
+            tmp = end.size.width;
+            end.size.width = end.size.height;
+            end.size.height = tmp;
+            
+            tmp = begin.origin.x;
+            begin.origin.x = begin.origin.y;
+            begin.origin.y = tmp;
+            tmp = end.origin.x;
+            end.origin.x = end.origin.y;
+            end.origin.y = tmp;
+            break;
+            
+        default:
+            break;
+    }
+    cocos2d::CCIMEKeyboardNotificationInfo notiInfo;
+    notiInfo.begin = cocos2d::CCRect(begin.origin.x,
+                                     begin.origin.y,
+                                     begin.size.width, 
+                                     begin.size.height);
+    notiInfo.end = cocos2d::CCRect(end.origin.x,
+                                   end.origin.y,
+                                   end.size.width, 
+                                   end.size.height);
+    notiInfo.duration = (float)aniDuration;
+    cocos2d::CCIMEDispatcher* dispatcher = cocos2d::CCIMEDispatcher::sharedDispatcher();
+    if (UIKeyboardWillShowNotification == type) 
+    {
+        dispatcher->dispatchKeyboardWillShow(notiInfo);
+    }
+    else if (UIKeyboardDidShowNotification == type)
+    {
+        dispatcher->dispatchKeyboardDidShow(notiInfo);
+    }
+    else if (UIKeyboardWillHideNotification == type)
+    {
+        dispatcher->dispatchKeyboardWillHide(notiInfo);
+    }
+    else if (UIKeyboardDidHideNotification == type)
+    {
+        dispatcher->dispatchKeyboardDidHide(notiInfo);
+    }
 }
 
 @end

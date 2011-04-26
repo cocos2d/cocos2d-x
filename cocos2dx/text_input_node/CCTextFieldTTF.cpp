@@ -134,23 +134,29 @@ bool CCTextFieldTTF::attachWithIME()
     return bRet;
 }
 
+bool CCTextFieldTTF::detachWithIME()
+{
+    bool bRet = CCIMEDelegate::detachWithIME();
+    if (bRet)
+    {
+        // close keyboard
+        CCEGLView * pGlView = CCDirector::sharedDirector()->getOpenGLView();
+        if (pGlView)
+        {
+            pGlView->setIMEKeyboardState(false);
+        }
+    }
+    return bRet;
+}
+
 bool CCTextFieldTTF::canAttachWithIME()
 {
     return true;
 }
 
-bool CCTextFieldTTF::canDetatchWithIME()
+bool CCTextFieldTTF::canDetachWithIME()
 {
     return true;
-}
-
-void CCTextFieldTTF::detatchWithIME()
-{
-    CCEGLView * pGlView = CCDirector::sharedDirector()->getOpenGLView();
-    if (pGlView)
-    {
-        pGlView->setIMEKeyboardState(false);
-    }
 }
 
 void CCTextFieldTTF::insertText(const char * text, int len)

@@ -26,8 +26,6 @@ THE SOFTWARE.
 
 #include <list>
 
-#include "CCIMEDelegate.h"
-
 NS_CC_BEGIN;
 
 //////////////////////////////////////////////////////////////////////////
@@ -47,6 +45,11 @@ CCIMEDelegate::~CCIMEDelegate()
 bool CCIMEDelegate::attachWithIME()
 {
     return CCIMEDispatcher::sharedDispatcher()->attachDelegateWithIME(this);
+}
+
+bool CCIMEDelegate::detachWithIME()
+{
+    return CCIMEDispatcher::sharedDispatcher()->detachDelegateWithIME(this);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -72,7 +75,7 @@ public:
 
     void init()
     {
-        m_DelegateWithIme = m_DelegateList.end();
+        m_DelegateWithIme = 0;
     }
 
     DelegateIter findDelegate(CCIMEDelegate* pDelegate)
@@ -88,8 +91,8 @@ public:
         return end;
     }
 
-    DelegateList m_DelegateList;
-    DelegateIter m_DelegateWithIme;
+    DelegateList    m_DelegateList;
+    CCIMEDelegate*  m_DelegateWithIme;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -138,20 +141,40 @@ bool CCIMEDispatcher::attachDelegateWithIME(CCIMEDelegate * pDelegate)
         // if pDelegate is not in delegate list, return
         CC_BREAK_IF(end == iter);
 
-        if (m_pImpl->m_DelegateWithIme != end)
+        if (m_pImpl->m_DelegateWithIme)
         {
-            // if old delegate canDetatchWithIME return false 
+            // if old delegate canDetachWithIME return false 
             // or pDelegate canAttachWithIME return false,
             // do nothing.
-            CC_BREAK_IF(! (*(m_pImpl->m_DelegateWithIme))->canDetatchWithIME()
+            CC_BREAK_IF(! m_pImpl->m_DelegateWithIme->canDetachWithIME()
                 || ! pDelegate->canAttachWithIME());
 
             // detach first
-            CCIMEDelegate * pOldDelegate = *(m_pImpl->m_DelegateWithIme);
-            m_pImpl->m_DelegateWithIme = end;
-            pOldDelegate->detatchWithIME();
+            CCIMEDelegate * pOldDelegate = m_pImpl->m_DelegateWithIme;
+            m_pImpl->m_DelegateWithIme = 0;
+            pOldDelegate->didDetachWithIME();
         }
-        m_pImpl->m_DelegateWithIme = iter;
+        m_pImpl->m_DelegateWithIme = *iter;
+        pDelegate->didAttachWithIME();
+        bRet = true;
+    } while (0);
+    return bRet;
+}
+
+bool CCIMEDispatcher::detachDelegateWithIME(CCIMEDelegate * pDelegate)
+{
+    bool bRet = false;
+    do
+    {
+        CC_BREAK_IF(! m_pImpl || ! pDelegate);
+
+        // if pDelegate is not the current delegate attached with ime, return
+        CC_BREAK_IF(m_pImpl->m_DelegateWithIme != pDelegate);
+
+        CC_BREAK_IF(! pDelegate->canDetachWithIME());
+
+        m_pImpl->m_DelegateWithIme = 0;
+        pDelegate->didDetachWithIME();
         bRet = true;
     } while (0);
     return bRet;
@@ -167,10 +190,11 @@ void CCIMEDispatcher::removeDelegate(CCIMEDelegate* pDelegate)
         DelegateIter end  = m_pImpl->m_DelegateList.end();
         CC_BREAK_IF(end == iter);
 
-        if (m_pImpl->m_DelegateWithIme != end
-            &&*iter == *(m_pImpl->m_DelegateWithIme))
+        if (m_pImpl->m_DelegateWithIme)
+
+        if (*iter == m_pImpl->m_DelegateWithIme)
         {
-            m_pImpl->m_DelegateWithIme == end;
+            m_pImpl->m_DelegateWithIme = 0;
         }
         m_pImpl->m_DelegateList.erase(iter);
     } while (0);
@@ -187,10 +211,9 @@ void CCIMEDispatcher::dispatchInsertText(const char * pText, int nLen)
         CC_BREAK_IF(! m_pImpl || ! pText || nLen <= 0);
 
         // there is no delegate attach with ime
-        CC_BREAK_IF(m_pImpl->m_DelegateWithIme == m_pImpl->m_DelegateList.end());
+        CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
 
-        CCIMEDelegate * pDelegate = *(m_pImpl->m_DelegateWithIme);
-        pDelegate->insertText(pText, nLen);
+        m_pImpl->m_DelegateWithIme->insertText(pText, nLen);
     } while (0);
 }
 
@@ -201,10 +224,9 @@ void CCIMEDispatcher::dispatchDeleteBackward()
         CC_BREAK_IF(! m_pImpl);
 
         // there is no delegate attach with ime
-        CC_BREAK_IF(m_pImpl->m_DelegateWithIme == m_pImpl->m_DelegateList.end());
+        CC_BREAK_IF(! m_pImpl->m_DelegateWithIme);
 
-        CCIMEDelegate * pDelegate = *(m_pImpl->m_DelegateWithIme);
-        pDelegate->deleteBackward();
+        m_pImpl->m_DelegateWithIme->deleteBackward();
     } while (0);
 }
 
@@ -212,7 +234,7 @@ void CCIMEDispatcher::dispatchDeleteBackward()
 // dispatch keyboard message
 //////////////////////////////////////////////////////////////////////////
 
-void CCIMEDispatcher::dispatchKeyboardWillShow(CCRect& begin, CCRect& end)
+void CCIMEDispatcher::dispatchKeyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 {
     if (m_pImpl)
     {
@@ -223,13 +245,13 @@ void CCIMEDispatcher::dispatchKeyboardWillShow(CCRect& begin, CCRect& end)
             pDelegate = *(first);
             if (pDelegate)
             {
-                pDelegate->keyboardWillShow(begin, end);
+                pDelegate->keyboardWillShow(info);
             }
         }
     }
 }
 
-void CCIMEDispatcher::dispatchKeyboardDidShow(CCRect& begin, CCRect& end)
+void CCIMEDispatcher::dispatchKeyboardDidShow(CCIMEKeyboardNotificationInfo& info)
 {
     if (m_pImpl)
     {
@@ -240,13 +262,13 @@ void CCIMEDispatcher::dispatchKeyboardDidShow(CCRect& begin, CCRect& end)
             pDelegate = *(first);
             if (pDelegate)
             {
-                pDelegate->keyboardDidShow(begin, end);
+                pDelegate->keyboardDidShow(info);
             }
         }
     }
 }
 
-void CCIMEDispatcher::dispatchKeyboardWillHide(CCRect& begin, CCRect& end)
+void CCIMEDispatcher::dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& info)
 {
     if (m_pImpl)
     {
@@ -257,13 +279,13 @@ void CCIMEDispatcher::dispatchKeyboardWillHide(CCRect& begin, CCRect& end)
             pDelegate = *(first);
             if (pDelegate)
             {
-                pDelegate->keyboardWillHide(begin, end);
+                pDelegate->keyboardWillHide(info);
             }
         }
     }
 }
 
-void CCIMEDispatcher::dispatchKeyboardDidHide(CCRect& begin, CCRect& end)
+void CCIMEDispatcher::dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 {
     if (m_pImpl)
     {
@@ -274,7 +296,7 @@ void CCIMEDispatcher::dispatchKeyboardDidHide(CCRect& begin, CCRect& end)
             pDelegate = *(first);
             if (pDelegate)
             {
-                pDelegate->keyboardDidHide(begin, end);
+                pDelegate->keyboardDidHide(info);
             }
         }
     }

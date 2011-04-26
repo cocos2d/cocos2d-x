@@ -25,19 +25,27 @@ THE SOFTWARE.
 #ifndef __CC_IME_DELEGATE_H__
 #define __CC_IME_DELEGATE_H__
 
-#include "CCCommon.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN;
 
+typedef struct
+{
+    CCRect  begin;              // the soft keyboard rectangle when animatin begin
+    CCRect  end;                // the soft keyboard rectangle when animatin end
+    float     duration;           // the soft keyboard animation duration
+} CCIMEKeyboardNotificationInfo;
+
 /**
-@brief	Input method editor protocol.
+@brief	Input method editor delegate.
 */
 class CC_DLL CCIMEDelegate
 {
 public:
     virtual ~CCIMEDelegate();
 
-    bool attachWithIME();
+    virtual bool attachWithIME();
+    virtual bool detachWithIME();
 
 protected:
     friend class CCIMEDispatcher;
@@ -47,35 +55,39 @@ protected:
 
     Called by CCIMEDispatcher.
     */
-    virtual bool canAttachWithIME() = 0;
+    virtual bool canAttachWithIME() { return false; }
+    /**
+    @brief	When the delegate detach with IME, this method call by CCIMEDispatcher.
+    */
+    virtual void didAttachWithIME() {}
 
     /**
     @brief	Decide the delegate instance can stop receive ime message or not.
     */
-    virtual bool canDetatchWithIME() = 0;
+    virtual bool canDetachWithIME() { return false; }
 
     /**
-    @brief	Input end and release keyboard.
+    @brief	When the delegate detach with IME, this method call by CCIMEDispatcher.
     */
-    virtual void detatchWithIME() = 0;
+    virtual void didDetachWithIME() {}
 
     /**
     @brief	Called by CCIMEDispatcher when some text input from IME.
     */
-    virtual void insertText(const char * text, int len) = 0;
+    virtual void insertText(const char * text, int len) {}
 
     /**
     @brief	Called by CCIMEDispatcher when user clicked the backward key.
     */
-    virtual void deleteBackward() = 0;
+    virtual void deleteBackward() {}
 
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
-    virtual void keyboardWillShow(CCRect& begin, CCRect& end)   {}
-    virtual void keyboardDidShow(CCRect& begin, CCRect& end)    {}
-    virtual void keyboardWillHide(CCRect& begin, CCRect& end)   {}
-    virtual void keyboardDidHide(CCRect& begin, CCRect& end)    {}
+    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info)   {}
+    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info)    {}
+    virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info)   {}
+    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info)    {}
 
 protected:
     CCIMEDelegate();

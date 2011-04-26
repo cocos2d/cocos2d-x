@@ -53,9 +53,14 @@ public:
     bool initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
 
     /**
-    @brief	Get keyboard ready and waiting for input.
+    @brief	Open keyboard and receive input text.
     */
-    bool attachWithIME();
+    virtual bool attachWithIME();
+
+    /**
+    @brief	End text input  and close keyboard.
+    */
+    virtual bool detachWithIME();
 
     //////////////////////////////////////////////////////////////////////////
     // properties
@@ -83,8 +88,7 @@ protected:
     //////////////////////////////////////////////////////////////////////////
 
     virtual bool canAttachWithIME();
-    virtual bool canDetatchWithIME();
-    virtual void detatchWithIME();
+    virtual bool canDetachWithIME();
     virtual void insertText(const char * text, int len);
     virtual void deleteBackward();
 
