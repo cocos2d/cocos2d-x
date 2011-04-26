@@ -32,7 +32,7 @@ typedef xmlRelaxNG *xmlRelaxNGPtr;
  *
  * Signature of an error callback from a Relax-NG validation
  */
-typedef void (XMLCDECL *xmlRelaxNGValidityErrorFunc) (void *ctx, const char *msg, ...) LIBXML_ATTR_FORMAT(2,3);
+typedef void (XMLCDECL *xmlRelaxNGValidityErrorFunc) (void *ctx, const char *msg, ...) ATTRIBUTE_PRINTF(2,3);
 
 /**
  * xmlRelaxNGValidityWarningFunc:
@@ -42,7 +42,7 @@ typedef void (XMLCDECL *xmlRelaxNGValidityErrorFunc) (void *ctx, const char *msg
  *
  * Signature of a warning callback from a Relax-NG validation
  */
-typedef void (XMLCDECL *xmlRelaxNGValidityWarningFunc) (void *ctx, const char *msg, ...) LIBXML_ATTR_FORMAT(2,3);
+typedef void (XMLCDECL *xmlRelaxNGValidityWarningFunc) (void *ctx, const char *msg, ...) ATTRIBUTE_PRINTF(2,3);
 
 /**
  * A schemas validation context

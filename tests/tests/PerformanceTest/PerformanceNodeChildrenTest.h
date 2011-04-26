@@ -2,6 +2,7 @@
 #define __PERFORMANCE_NODE_CHILDREN_TEST_H__
 
 #include "PerformanceTest.h"
+#include "support/CCProfiling.h"
 
 class NodeChildrenMenuLayer : public PerformBasicLayer
 {
@@ -33,13 +34,18 @@ protected:
 class IterateSpriteSheet : public NodeChildrenMainScene
 {
 public:
+    ~IterateSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(ccTime dt) = 0;
+    virtual std::string profilerName();
 
 protected:
     CCSpriteBatchNode	*batchNode;
-    //CCProfilingTimer    *_profilingTimer;
+
+#if CC_ENABLE_PROFILERS
+    CCProfilingTimer    *_profilingTimer;
+#endif
 };
 
 class IterateSpriteSheetFastEnum : public IterateSpriteSheet
@@ -49,6 +55,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
+    virtual std::string profilerName();
 };
 
 class IterateSpriteSheetCArray : public IterateSpriteSheet
@@ -58,18 +65,24 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
+    virtual std::string profilerName();
 };
 
 class AddRemoveSpriteSheet : public NodeChildrenMainScene
 {
 public:
+    ~AddRemoveSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(ccTime dt) = 0;
+    virtual std::string profilerName();
 
 protected:
     CCSpriteBatchNode	*batchNode;
-    //CCProfilingTimer* _profilingTimer;
+
+#if CC_ENABLE_PROFILERS
+    CCProfilingTimer* _profilingTimer;
+#endif
 };
 
 class AddSpriteSheet : public AddRemoveSpriteSheet
@@ -79,6 +92,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
+    virtual std::string profilerName();
 };
 
 class RemoveSpriteSheet : public AddRemoveSpriteSheet
@@ -88,6 +102,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
+    virtual std::string profilerName();
 };
 
 class ReorderSpriteSheet : public AddRemoveSpriteSheet
@@ -97,6 +112,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
+    virtual std::string profilerName();
 };
 
 void runNodeChildrenTest();

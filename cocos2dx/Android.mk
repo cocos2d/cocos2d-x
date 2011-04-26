@@ -73,6 +73,7 @@ sprite_nodes/CCSpriteBatchNode.cpp \
 sprite_nodes/CCSpriteFrame.cpp \
 sprite_nodes/CCSpriteFrameCache.cpp \
 sprite_nodes/CCSpriteSheet.cpp \
+support/CCArray.cpp \
 support/CCProfiling.cpp \
 support/CCPointExtension.cpp \
 support/TransformUtils.cpp \

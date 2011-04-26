@@ -30,13 +30,17 @@ public class TestsDemo extends Cocos2dxActivity{
 	}
 
 	 @Override
-	 protected void onPause() {
+	 protected void onPause() {		 
 	     super.onPause();
+	     
+	     mGLView.onPause();
 	 }
 
 	 @Override
 	 protected void onResume() {
 	     super.onResume();
+	     
+	     mGLView.onResume();
 	 }
 	 
 	 protected void onDestroy()

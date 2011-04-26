@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCFileUtils.h"
 #include "CCGeometry.h"
+#include "CCAccelerometer.h"
+#include "CCApplication.h"
 #include "CCIMEDispatcher.h"
 #include "platform/android/CCAccelerometer_android.h"
 #include <android/log.h>
@@ -221,6 +223,20 @@ extern "C"
 		}
 
 		cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getDelegate()->touchesCancelled(&set, NULL);
+	}
+	
+	// handle onPause and onResume
+	
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause()
+	{
+	        CCApplication::sharedApplication().applicationDidEnterBackground();
+	}
+	
+	void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume()
+	{
+	        // Shared OpenGL View instance doesn't exist yet when Activity.onResume is first called
+	        if (CCDirector::sharedDirector()->getOpenGLView())
+	            CCApplication::sharedApplication().applicationWillEnterForeground();
 	}
 
 #define KEYCODE_BACK 0x04

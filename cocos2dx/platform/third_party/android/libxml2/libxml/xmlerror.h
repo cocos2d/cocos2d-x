@@ -843,7 +843,7 @@ typedef enum {
  */
 typedef void (XMLCDECL *xmlGenericErrorFunc) (void *ctx,
 				 const char *msg,
-				 ...) LIBXML_ATTR_FORMAT(2,3);
+				 ...) ATTRIBUTE_PRINTF(2,3);
 /**
  * xmlStructuredErrorFunc:
  * @userData:  user provided data for the error callback
@@ -874,19 +874,19 @@ XMLPUBFUN void XMLCALL
 XMLPUBFUN void XMLCDECL
     xmlParserError		(void *ctx,
 				 const char *msg,
-				 ...) LIBXML_ATTR_FORMAT(2,3);
+				 ...) ATTRIBUTE_PRINTF(2,3);
 XMLPUBFUN void XMLCDECL
     xmlParserWarning		(void *ctx,
 				 const char *msg,
-				 ...) LIBXML_ATTR_FORMAT(2,3);
+				 ...) ATTRIBUTE_PRINTF(2,3);
 XMLPUBFUN void XMLCDECL
     xmlParserValidityError	(void *ctx,
 				 const char *msg,
-				 ...) LIBXML_ATTR_FORMAT(2,3);
+				 ...) ATTRIBUTE_PRINTF(2,3);
 XMLPUBFUN void XMLCDECL
     xmlParserValidityWarning	(void *ctx,
 				 const char *msg,
-				 ...) LIBXML_ATTR_FORMAT(2,3);
+				 ...) ATTRIBUTE_PRINTF(2,3);
 XMLPUBFUN void XMLCALL
     xmlParserPrintFileInfo	(xmlParserInputPtr input);
 XMLPUBFUN void XMLCALL
@@ -930,7 +930,7 @@ XMLPUBFUN void XMLCALL
 				 int int1,
 				 int col,
 				 const char *msg,
-				 ...) LIBXML_ATTR_FORMAT(16,17);
+				 ...) ATTRIBUTE_PRINTF(16,17);
 XMLPUBFUN void XMLCALL
     __xmlSimpleError		(int domain,
 				 int code,

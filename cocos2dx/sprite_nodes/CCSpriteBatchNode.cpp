@@ -110,8 +110,10 @@ namespace cocos2d
 		updateBlendFunc();
 
 		// no lazy alloc in this node
-		m_pChildren = new CCMutableArray<CCNode*>();
-		m_pobDescendants = new CCMutableArray<CCSprite*>();
+        m_pChildren = CCArray::array();
+		m_pobDescendants = CCArray::array();
+        m_pChildren->retain();
+        m_pobDescendants->retain();
 
 		return true;
 	}
@@ -249,7 +251,7 @@ namespace cocos2d
 
 	void CCSpriteBatchNode::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 	{
-		removeChild((CCSprite*)(m_pChildren->getObjectAtIndex(uIndex)), bDoCleanup);
+		removeChild((CCSprite*)(m_pChildren->objectAtIndex(uIndex)), bDoCleanup);
 	}
 
 	void CCSpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
@@ -257,19 +259,15 @@ namespace cocos2d
 		// Invalidate atlas index. issue #569
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			CCSprite *pSprite;
-			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-			for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
-			{
-				pSprite = (CCSprite*)(*iter);
-
-				if (! pSprite)
-				{
-					break;
-				}
-
-				pSprite->useSelfRender();
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild)
+                {
+                    pChild->useSelfRender();
+                }
+            }
 		}
 
 		CCNode::removeAllChildrenWithCleanup(bCleanup);
@@ -289,33 +287,29 @@ namespace cocos2d
 
 		if (m_pobDescendants && m_pobDescendants->count() > 0)
 		{
-			CCSprite *pSprite;
-			CCMutableArray<CCSprite*>::CCMutableArrayIterator iter;
-			for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
-			{
-				pSprite = *iter;
-
-				if (! pSprite)
-				{
-					break;
-				}
-
-                // fast dispatch
-				pSprite->updateTransform();
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild)
+                {
+                    // fast dispatch
+                    pChild->updateTransform();
 
 
 #if CC_SPRITEBATCHNODE_DEBUG_DRAW
-				// issue #528
-				CCRect rect = pSprite->boundingBox();
-				CCPoint vertices[4]={
-					ccp(rect.origin.x,rect.origin.y),
-					ccp(rect.origin.x+rect.size.width,rect.origin.y),
-					ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
-					ccp(rect.origin.x,rect.origin.y+rect.size.height),
-				};
-				ccDrawPoly(vertices, 4, true);
+                    // issue #528
+                    CCRect rect = pChild->boundingBox();
+                    CCPoint vertices[4]={
+                        ccp(rect.origin.x,rect.origin.y),
+                        ccp(rect.origin.x+rect.size.width,rect.origin.y),
+                        ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
+                        ccp(rect.origin.x,rect.origin.y+rect.size.height),
+                    };
+                    ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
-			}
+                }
+            }
 		}
 
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -354,26 +348,19 @@ namespace cocos2d
 
 	unsigned int CCSpriteBatchNode::rebuildIndexInOrder(CCSprite *pobParent, unsigned int uIndex)
 	{
-		CCMutableArray<CCNode*> *pChildren = pobParent->getChildren();
+		CCArray *pChildren = pobParent->getChildren();
 
 		if (pChildren && pChildren->count() > 0)
 		{
-			CCSprite *pSprite;
-			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-			for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
-			{
-				pSprite = (CCSprite*)(*iter);
-
-				if (! pSprite)
-				{
-					break;
-				}
-
-				if (pSprite->getZOrder() < 0)
-				{
-					uIndex = rebuildIndexInOrder(pSprite, uIndex);
-				}
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild && (pChild->getZOrder() < 0))
+                {
+                    uIndex = rebuildIndexInOrder(pChild, uIndex);
+                }
+            }
 		}	
 
 		// ignore self (batch node)
@@ -385,22 +372,15 @@ namespace cocos2d
 
 		if (pChildren && pChildren->count() > 0)
 		{
-			CCSprite *pSprite;
-			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-			for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
-			{
-				pSprite = (CCSprite*)(*iter);
-
-				if (! pSprite)
-				{
-					break;
-				}
-
-				if (pSprite->getZOrder() >= 0)
-				{
-					uIndex = rebuildIndexInOrder(pSprite, uIndex);
-				}
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild && (pChild->getZOrder() >= 0))
+                {
+                    uIndex = rebuildIndexInOrder(pChild, uIndex);
+                }
+            }
 		}
 
 		return uIndex;
@@ -408,7 +388,7 @@ namespace cocos2d
 
 	unsigned int CCSpriteBatchNode::highestAtlasIndexInChild(CCSprite *pSprite)
 	{
-		CCMutableArray<CCNode*> *pChildren = pSprite->getChildren();
+		CCArray *pChildren = pSprite->getChildren();
 
 		if (! pChildren || pChildren->count() == 0)
 		{
@@ -416,13 +396,13 @@ namespace cocos2d
 		}
 		else
 		{
-			return highestAtlasIndexInChild((CCSprite*)(pChildren->getLastObject()));
+			return highestAtlasIndexInChild((CCSprite*)(pChildren->lastObject()));
 		}
 	}
 
 	unsigned int CCSpriteBatchNode::lowestAtlasIndexInChild(CCSprite *pSprite)
 	{
-		CCMutableArray<CCNode*> *pChildren = pSprite->getChildren();
+		CCArray *pChildren = pSprite->getChildren();
 
 		if (! pChildren || pChildren->count() == 0)
 		{
@@ -430,21 +410,21 @@ namespace cocos2d
 		}
 		else
 		{
-			return lowestAtlasIndexInChild((CCSprite*)(pChildren->getObjectAtIndex(0)));
+			return lowestAtlasIndexInChild((CCSprite*)(pChildren->objectAtIndex(0)));
 		}
 	}
 
 	unsigned int CCSpriteBatchNode::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 	{
-		CCMutableArray<CCNode*> *pBrothers = pobSprite->getParent()->getChildren();
-		unsigned int uChildIndex = pBrothers->getIndexOfObject(pobSprite);
+		CCArray *pBrothers = pobSprite->getParent()->getChildren();
+		unsigned int uChildIndex = pBrothers->indexOfObject(pobSprite);
 
 		// ignore parent Z if parent is spriteSheet
 		bool bIgnoreParent = (CCSpriteBatchNode*)(pobSprite->getParent()) == this;
 		CCSprite *pPrevious = NULL;
 		if (uChildIndex > 0)
 		{
-			pPrevious = (CCSprite*)(pBrothers->getObjectAtIndex(uChildIndex - 1));
+			pPrevious = (CCSprite*)(pBrothers->objectAtIndex(uChildIndex - 1));
 		}
 
 		// first child of the sprite sheet
@@ -509,47 +489,42 @@ namespace cocos2d
 		ccV3F_C4B_T2F_Quad quad = pobSprite->getQuad();
 		m_pobTextureAtlas->insertQuad(&quad, uIndex);
 
-		m_pobDescendants->insertObjectAtIndex(pobSprite, uIndex);
+		m_pobDescendants->insertObject(pobSprite, uIndex);
 
 		// update indices
 		unsigned int i = 0;
 		if (m_pobDescendants && m_pobDescendants->count() > 0)
 		{
-			CCMutableArray<CCSprite*>::CCMutableArrayIterator iter;
-			for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
-			{
-				if (! *iter)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild)
+                {
+                    if (i > uIndex)
+                    {
+                        pChild->setAtlasIndex(pChild->getAtlasIndex() + 1);
+                    }
 
-				if (i > uIndex)
-				{
-					(*iter)->setAtlasIndex((*iter)->getAtlasIndex() + 1);
-				}
-
-				++i;
-			}
+                    ++i;
+                }
+            }
 		}	
 
 		// add children recursively
-		CCMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
+		CCArray *pChildren = pobSprite->getChildren();
 		if (pChildren && pChildren->count() > 0)
 		{
-			CCMutableArray<CCNode*>::CCMutableArrayIterator iterNode;
-			CCSprite *pSprite;
-			for (iterNode = pChildren->begin(); iterNode != pChildren->end(); ++iterNode)
-			{
-				pSprite = (CCSprite*)(*iterNode);
-
-				if (! pSprite)
-				{
-					break;
-				}
-
-				unsigned int uIndex = atlasIndexForChild(pSprite, pSprite->getZOrder());
-				insertChild(pSprite, uIndex);
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild)
+                {
+                    unsigned int uIndex = atlasIndexForChild(pChild, pChild->getZOrder());
+                    insertChild(pChild, uIndex);
+                }
+            }
 		}
 	}
 
@@ -561,7 +536,7 @@ namespace cocos2d
 		// Cleanup sprite. It might be reused (issue #569)
 		pobSprite->useSelfRender();
 
-		unsigned int uIndex = m_pobDescendants->getIndexOfObject(pobSprite);
+		unsigned int uIndex = m_pobDescendants->indexOfObject(pobSprite);
 		if (uIndex != -1)
 		{
 			m_pobDescendants->removeObjectAtIndex(uIndex);
@@ -571,28 +546,24 @@ namespace cocos2d
 
 			for(; uIndex < count; ++uIndex)
 			{
-				CCSprite* s = (CCSprite*)(m_pobDescendants->getObjectAtIndex(uIndex));
+				CCSprite* s = (CCSprite*)(m_pobDescendants->objectAtIndex(uIndex));
 				s->setAtlasIndex( s->getAtlasIndex() - 1 );
 			}
 		}
 
 		// remove children recursively
-		CCMutableArray<CCNode*> *pChildren = pobSprite->getChildren();
+		CCArray *pChildren = pobSprite->getChildren();
 		if (pChildren && pChildren->count() > 0)
 		{
-			CCSprite *pSprite;
-			CCMutableArray<CCNode*>::CCMutableArrayIterator iter;
-			for (iter = pChildren->begin(); iter != pChildren->end(); ++iter)
-			{
-				pSprite = (CCSprite*)(*iter);
-
-				if (! pSprite)
-				{
-					break;
-				}
-
-				removeSpriteFromAtlas(pSprite);
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild)
+                {
+                    removeSpriteFromAtlas(pChild);
+                }
+            }
 		}
 	}
 
@@ -667,18 +638,17 @@ namespace cocos2d
         int i=0;
         if (m_pobDescendants && m_pobDescendants->count() > 0)
         {
-            CCMutableArray<CCSprite*>::CCMutableArrayIterator iter;
-            for (iter = m_pobDescendants->begin(); iter != m_pobDescendants->end(); ++iter)
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
             {
-                // fast dispatch
-                if (!(*iter) || (*iter)->getAtlasIndex() >=z)
+                CCSprite* pChild = (CCSprite*) pObject;
+                if (pChild && (pChild->getAtlasIndex() >= z))
                 {
-                    break;
+                    ++i;
                 }
-                ++i;
             }
         }
-        m_pobDescendants->insertObjectAtIndex(child, i);
+        m_pobDescendants->insertObject(child, i);
 
         // IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
         CCNode::addChild(child, z, aTag);
