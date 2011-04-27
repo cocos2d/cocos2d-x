@@ -24,19 +24,10 @@ THE SOFTWARE.
 
 #include "CCTextFieldTTF.h"
 
-#include <vector>
-
 #include "CCDirector.h"
 #include "CCEGLView.h"
 
 NS_CC_BEGIN;
-
-/**
-@brief	Use std::vector store every input text length.
-*/
-class CCTextFieldTTF::LengthStack : public std::vector< unsigned short >
-{
-};
 
 //////////////////////////////////////////////////////////////////////////
 // constructor and destructor
@@ -45,7 +36,6 @@ class CCTextFieldTTF::LengthStack : public std::vector< unsigned short >
 CCTextFieldTTF::CCTextFieldTTF()
 : m_pInputText(new std::string)
 , m_pPlaceHolder(new std::string)   // prevent CCLabelTTF initWithString assertion
-, m_pLens(new LengthStack)
 , m_bLock(false)
 {
 }
@@ -184,7 +174,6 @@ void CCTextFieldTTF::insertText(const char * text, int len)
     m_bLock = true;
     std::string sText(*m_pInputText);
     sText.append(sInsert);
-    m_pLens->push_back((unsigned short)len);
     setString(sText.c_str());
     m_bLock = false;
 }
@@ -201,17 +190,14 @@ void CCTextFieldTTF::deleteBackward()
     m_bLock = true;
 
     // get the delete byte number
-    int nStackSize = m_pLens->size();
-    unsigned short uDeleteLen = 1;    // default, erase 1 byte
-    if (nStackSize) 
-    {
-        // get the last input text size
-        uDeleteLen = m_pLens->at(nStackSize - 1);
-        m_pLens->pop_back();
-    }
+    int nDeleteLen = 1;    // default, erase 1 byte
 
+    while(0x80 == (0xC0 & m_pInputText->at(nStrLen - nDeleteLen)))
+    {
+        ++nDeleteLen;
+    }
     // if delete all text, show space holder string
-    if (nStrLen <= uDeleteLen)
+    if (nStrLen <= nDeleteLen)
     {
         CC_SAFE_DELETE(m_pInputText);
         m_pInputText = new std::string;
@@ -220,7 +206,7 @@ void CCTextFieldTTF::deleteBackward()
     }
 
     // set new input text
-    std::string sText(m_pInputText->c_str(), nStrLen - uDeleteLen);
+    std::string sText(m_pInputText->c_str(), nStrLen - nDeleteLen);
     setString(sText.c_str());
     m_bLock = false;
 }
@@ -233,11 +219,7 @@ void CCTextFieldTTF::deleteBackward()
 void CCTextFieldTTF::setString(const char *text)
 {
     CC_SAFE_DELETE(m_pInputText);
-    if (false == m_bLock)
-    {
-        // user use this function to set string value, clear lenStack
-        m_pLens->clear();
-    }
+
     if (text)
     {
         m_pInputText = new std::string(text);
