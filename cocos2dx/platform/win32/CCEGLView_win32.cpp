@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
+#include "CCIMEDispatcher.h"
 
 NS_CC_BEGIN;
 
@@ -310,6 +311,42 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
+    case WM_CHAR:
+        {
+            if (wParam < 0x20)
+            {
+                if (VK_BACK == wParam)
+                {
+                    CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+                }
+                else if (VK_RETURN == wParam)
+                {
+                    CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+                }
+                else if (VK_TAB == wParam)
+                {
+                    // tab input
+                }
+                else if (VK_ESCAPE == wParam)
+                {
+                    // ESC input
+                }
+            }
+            else if (wParam < 128)
+            {
+                // ascii char
+                CCIMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&wParam, 1);
+            }
+            else
+            {
+                char szUtf8[8] = {0};
+                int nLen = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
+
+                CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
+            }
+        }
+        break;
+
 	case WM_PAINT:
 		BeginPaint(m_hWnd, &ps);
 		EndPaint(m_hWnd, &ps);
@@ -405,6 +442,10 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
+}
+
+void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
+{
 }
 
 HWND CCEGLView::getHWnd()

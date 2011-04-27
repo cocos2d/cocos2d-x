@@ -34,7 +34,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
-        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -52,18 +52,20 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #endif
 #endif
 #endif
-    case TEST_ATLAS:
+    case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
+    case TEST_TEXT_INPUT:
+        pScene = new TextInputTestScene(); break;
     case TEST_SPRITE:
         pScene = new SpriteTestScene(); break;
     case TEST_SCHEDULER:
@@ -102,7 +104,7 @@ static TestScene* CreateTestScene(int nIdx)
 TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
 
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );

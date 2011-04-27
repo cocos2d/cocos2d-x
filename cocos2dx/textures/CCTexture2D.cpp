@@ -253,7 +253,6 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 	unsigned char*			tempData =NULL;
 	unsigned int*			inPixel32 = NULL;
 	unsigned short*			outPixel16 = NULL;
-	unsigned char*          outPixel8 = NULL;
 	bool					hasAlpha;
 	CCSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
