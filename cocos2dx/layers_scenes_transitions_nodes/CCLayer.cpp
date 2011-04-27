@@ -38,7 +38,7 @@ CCLayer::CCLayer()
 ,m_bIsAccelerometerEnabled(false)
 ,m_bIsKeypadEnabled(false)
 {
-	m_eTouchDelegateType = ccTouchDeletateAllBit;
+	m_eTouchDelegateType = ccTouchDelegateAllBit;
 	m_tAnchorPoint = ccp(0.5f, 0.5f);
 	m_bIsRelativeAnchorPoint = false;
 }
