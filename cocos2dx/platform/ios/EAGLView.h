@@ -77,7 +77,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * The view content is basically an EAGL surface you render your OpenGL scene into.
  * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
-@interface EAGLView : UIView
+@interface EAGLView : UIView <UIKeyInput, UITextInput>
 {
     id						<ESRenderer> renderer_;	
 	EAGLContext				*context_; // weak ref
@@ -91,11 +91,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	//fsaa addition
 	BOOL					multisampling_;
-	unsigned int			requestedSamples_;
+	unsigned int               requestedSamples_;
 @private
-        CFMutableDictionaryRef    touchesIntergerDict;
-        unsigned int                           indexBitsUsed;
+    CFMutableDictionaryRef  touchesIntergerDict;
+    unsigned int               indexBitsUsed;
+    NSString *              markedText_;
 }
+
+@property(nonatomic, readonly) UITextPosition *beginningOfDocument;
+@property(nonatomic, readonly) UITextPosition *endOfDocument;
+@property(nonatomic, assign) id<UITextInputDelegate> inputDelegate;
+@property(nonatomic, readonly) UITextRange *markedTextRange;
+@property (nonatomic, copy) NSDictionary *markedTextStyle;
+@property(readwrite, copy) UITextRange *selectedTextRange;
+@property(nonatomic, readonly) id<UITextInputTokenizer> tokenizer;
 
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 + (id) viewWithFrame:(CGRect)frame;
@@ -142,4 +151,5 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(int) getHeight;
 -(int) getUnUsedIndex;
 -(void) removeUsedIndexBit:(int) index;
+
 @end
