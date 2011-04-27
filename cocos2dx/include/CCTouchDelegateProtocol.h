@@ -34,7 +34,7 @@ typedef enum
 {
 	ccTouchDelegateStandardBit = 1 << 0,
 	ccTouchDelegateTargetedBit = 1 << 1,
-	ccTouchDeletateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
+	ccTouchDelegateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
 } ccTouchDelegateFlag;
 
 class CCTouch;
