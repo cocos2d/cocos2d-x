@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
@@ -17,18 +16,34 @@ import android.view.inputmethod.InputMethodManager;
 
 class Cocos2dxInputConnection implements InputConnection {
 
+	private boolean 				mDebug = false;
+	void LogD(String msg) {
+		if (mDebug) {
+			Log.d("Cocos2dxInputConnection", msg);
+		}
+	}
+	
+    private Cocos2dxGLSurfaceView 	mView;
+    
+    Cocos2dxInputConnection(Cocos2dxGLSurfaceView view) {
+    	mView = view;
+    }
+    
 	@Override
 	public boolean beginBatchEdit() {
+		LogD("beginBatchEdit");
 		return false;
 	}
 
 	@Override
 	public boolean clearMetaKeyStates(int states) {
+		LogD("clearMetaKeyStates: " + states);
 		return false;
 	}
 
 	@Override
 	public boolean commitCompletion(CompletionInfo text) {
+		LogD("commitCompletion: " + text.getText().toString());
 		return false;
 	}
 
@@ -37,53 +52,63 @@ class Cocos2dxInputConnection implements InputConnection {
 		if (null != mView) {
 			final String insertText = text.toString();
 			mView.insertText(insertText);
+			LogD("commitText: " + insertText);
 		}
         return false;
 	}
 
 	@Override
 	public boolean deleteSurroundingText(int leftLength, int rightLength) {
+		LogD("deleteSurroundingText: " + leftLength + "," + rightLength);
 		return false;
 	}
 
 	@Override
 	public boolean endBatchEdit() {
+		LogD("endBatchEdit");
 		return false;
 	}
 
 	@Override
 	public boolean finishComposingText() {
+		LogD("finishComposingText");
 		return false;
 	}
 
 	@Override
 	public int getCursorCapsMode(int reqModes) {
+		LogD("getCursorCapsMode: " + reqModes);
 		return 0;
 	}
 
 	@Override
 	public ExtractedText getExtractedText(ExtractedTextRequest request,
 			int flags) {
-		return null;
+		LogD("getExtractedText: " + request.toString() + "," + flags);
+		return new ExtractedText();
 	}
 
 	@Override
 	public CharSequence getTextAfterCursor(int n, int flags) {
+		LogD("getTextAfterCursor: " + n + "," + flags);
 		return null;
 	}
 
 	@Override
 	public CharSequence getTextBeforeCursor(int n, int flags) {
+		LogD("getTextBeforeCursor: " + n + "," + flags);
 		return null;
 	}
 
 	@Override
 	public boolean performContextMenuAction(int id) {
+		Log.d("Cocos2dxInputConnection", "performContextMenuAction");
 		return false;
 	}
 
 	@Override
 	public boolean performEditorAction(int editorAction) {
+		LogD("performEditorAction: " + editorAction);
 		if (null != mView) {
 			final String insertText = "\n";
 			mView.insertText(insertText);
@@ -93,16 +118,19 @@ class Cocos2dxInputConnection implements InputConnection {
 
 	@Override
 	public boolean performPrivateCommand(String action, Bundle data) {
+		LogD("performPrivateCommand: " + action + "," + data.toString());
 		return false;
 	}
 
 	@Override
 	public boolean reportFullscreenMode(boolean enabled) {
+		LogD("reportFullscreenMode: " + enabled);
 		return false;
 	}
 
 	@Override
 	public boolean sendKeyEvent(KeyEvent event) {
+		LogD("sendKeyEvent: " + event.toString());
 		if (null != mView) {
 			switch (event.getKeyCode()) {
 			
@@ -116,19 +144,15 @@ class Cocos2dxInputConnection implements InputConnection {
 
 	@Override
 	public boolean setComposingText(CharSequence text, int newCursorPosition) {
+		LogD("setComposingText: " + text.toString() + "," + newCursorPosition);
 		return false;
 	}
 
 	@Override
 	public boolean setSelection(int start, int end) {
+		LogD("setSelection: " + start + "," + end);
 		return false;
 	}
-	
-	public void setGLSurfaceView(Cocos2dxGLSurfaceView view) {
-		mView = view;
-	}
-	
-    private Cocos2dxGLSurfaceView mView;
 }
 
 public class Cocos2dxGLSurfaceView extends GLSurfaceView {
@@ -193,7 +217,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         if (imm == null) {
         	return;
         }
-        imm.showSoftInput(mainView, 0);
+        boolean ret = imm.showSoftInput(mainView, 0);
+        Log.d("openIMEKeboard", (ret)? "true" : "false");
     }
     
     public static void closeIMEKeyboard() {
@@ -222,15 +247,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         if (onCheckIsTextEditor()) {
 
             outAttrs.inputType = EditorInfo.TYPE_CLASS_TEXT;
-            outAttrs.imeOptions = EditorInfo.IME_NULL;
+            outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI;
             outAttrs.initialSelStart = -1;
             outAttrs.initialSelEnd = -1;
-            outAttrs.initialCapsMode = 0;
+            outAttrs.initialCapsMode = 1;
 
         	if (null == ic)
         	{
-        		ic = new Cocos2dxInputConnection();
-        		ic.setGLSurfaceView(this);
+        		ic = new Cocos2dxInputConnection(this);
         	}
             return ic;
         }
@@ -254,6 +278,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             }
         });
     }
+
 	///////////////////////////////////////////////////////////////////////////
     // for touch event
     ///////////////////////////////////////////////////////////////////////////
