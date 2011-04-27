@@ -25,7 +25,7 @@ bool AppDelegate::initInstance()
         // The tests is designed as HVGA.
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("cocos2d: tests"), 320, 480));
+            || ! pMainWnd->Create(TEXT("cocos2d: tests"), 480, 320));
 
 #endif  // CC_PLATFORM_WIN32
 
