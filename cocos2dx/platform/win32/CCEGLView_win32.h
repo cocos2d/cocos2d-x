@@ -59,6 +59,8 @@ public:
     int setDeviceOrientation(int eOritation);
     void setViewPortInPoints(float x, float y, float w, float h);
 
+    void setIMEKeyboardState(bool bOpen);
+
     // win32 platform function
     HWND getHWnd();
     void resize(int width, int height);

@@ -57,8 +57,8 @@ public:
 	virtual void keep(void) {}
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { return false;};
-
 	// optional
+
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {}
 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {}
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {}
