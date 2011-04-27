@@ -44,6 +44,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/KeypadTest/KeypadTest.cpp \
 ../../../tests/LabelTest/LabelTest.cpp \
 ../../../tests/LayerTest/LayerTest.cpp \
+../../../tests/TextInputTest/TextInputTest.cpp \
 ../../../tests/MenuTest/MenuTest.cpp \
 ../../../tests/MotionStreakTest/MotionStreakTest.cpp \
 ../../../tests/ParallaxTest/ParallaxTest.cpp \

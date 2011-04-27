@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "CCTouchDispatcher.h"
+#include "Cocos2dJni.h"
 
 #include <stdlib.h>
 
@@ -127,21 +128,21 @@ void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
-        if (m_bNotHVGA)
-        {
-                float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-	        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
-		(GLint)(y * factor) + m_rcViewPort.origin.y,
-		(GLint)(w * factor),
-		(GLint)(h * factor));
-        }
-        else
-        {
-                glViewport((GLint)x,
-		(GLint)y,
-		(GLint)w,
-		(GLint)h);
-        }		
+    if (m_bNotHVGA)
+    {
+        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
+            (GLint)(y * factor) + m_rcViewPort.origin.y,
+            (GLint)(w * factor),
+            (GLint)(h * factor));
+    }
+    else
+    {
+        glViewport((GLint)x,
+            (GLint)y,
+            (GLint)w,
+            (GLint)h);
+    }		
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
@@ -157,15 +158,21 @@ float CCEGLView::getScreenScaleFactor()
 
 CCRect CCEGLView::getViewPort()
 {
-        if (m_bNotHVGA)
-        {
-                return m_rcViewPort;
-        }
-        else
-        {
-                CCRect rect(0, 0, 0, 0);
-                return rect;
-        }
+    if (m_bNotHVGA)
+    {
+        return m_rcViewPort;
+    }
+    else
+    {
+        CCRect rect(0, 0, 0, 0);
+        return rect;
+    }
+}
+
+void CCEGLView::setIMEKeyboardState(bool bOpen)
+{
+
+    setKeyboardStateJNI((int)bOpen);
 }
 
 }       // end of namespace cocos2d
