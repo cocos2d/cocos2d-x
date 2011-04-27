@@ -60,6 +60,7 @@ public:
 	void    setViewPortInPoints(float x, float y, float w, float h);
 	CCRect  getViewPort();
 	float   getScreenScaleFactor();
+    void    setIMEKeyboardState(bool bOpen);
 
 	// static function
 	/**

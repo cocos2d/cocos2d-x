@@ -111,13 +111,25 @@ void CCEGLView::touchesCancelled(CCSet *set)
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
-        glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
+    glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
+}
+
+void CCEGLView::setIMEKeyboardState(bool bOpen)
+{
+    if (bOpen)
+    {
+        [[EAGLView sharedEGLView] becomeFirstResponder];
+    }
+    else
+    {
+        [[EAGLView sharedEGLView] resignFirstResponder];
+    }
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
-        static CCEGLView instance;
-        return instance;
+    static CCEGLView instance;
+    return instance;
 }
 
 } // end of namespace cocos2d;

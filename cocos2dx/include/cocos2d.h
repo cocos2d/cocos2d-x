@@ -83,6 +83,7 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
+#include "CCTextFieldTTF.h"
 
 //
 // cocoa includes
