@@ -696,7 +696,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (CGRect)caretRectForPosition:(UITextPosition *)position;
 {
 	CCLOG("caretRectForPosition");
-	return CGRectMake(0, 0, 0, 0);
+	return caretRect_;
 }
 
 #pragma mark Hit testing
@@ -756,13 +756,16 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
             tmp = end.size.width;
             end.size.width = end.size.height;
             end.size.height = tmp;
+            tmp = viewSize.width;
+            viewSize.width = viewSize.height;
+            viewSize.height = tmp;
             
             tmp = begin.origin.x;
             begin.origin.x = begin.origin.y;
-            begin.origin.y = viewSize.width - tmp - begin.size.height;
+            begin.origin.y = viewSize.height - tmp - begin.size.height;
             tmp = end.origin.x;
             end.origin.x = end.origin.y;
-            end.origin.y = viewSize.width - tmp - end.size.height;
+            end.origin.y = viewSize.height - tmp - end.size.height;
             break;
             
         case UIInterfaceOrientationLandscapeRight:
@@ -772,6 +775,9 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
             tmp = end.size.width;
             end.size.width = end.size.height;
             end.size.height = tmp;
+            tmp = viewSize.width;
+            viewSize.width = viewSize.height;
+            viewSize.height = tmp;
             
             tmp = begin.origin.x;
             begin.origin.x = begin.origin.y;
@@ -802,6 +808,9 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     else if (UIKeyboardDidShowNotification == type)
     {
         dispatcher->dispatchKeyboardDidShow(notiInfo);
+        caretRect_ = end;
+        caretRect_.origin.y = caretRect_.origin.y + caretRect_.size.height;
+        caretRect_.size.height = 0;
     }
     else if (UIKeyboardWillHideNotification == type)
     {
@@ -809,6 +818,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     }
     else if (UIKeyboardDidHideNotification == type)
     {
+        caretRect_ = CGRectZero;
         dispatcher->dispatchKeyboardDidHide(notiInfo);
     }
 }
