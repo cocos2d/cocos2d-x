@@ -288,7 +288,7 @@ namespace cocos2d
 		if (m_pobDescendants && m_pobDescendants->count() > 0)
 		{
             CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH(m_pobDescendants, pObject)
             {
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild)
@@ -353,7 +353,7 @@ namespace cocos2d
 		if (pChildren && pChildren->count() > 0)
 		{
             CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH(pChildren, pObject)
             {
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild && (pChild->getZOrder() < 0))
@@ -373,7 +373,7 @@ namespace cocos2d
 		if (pChildren && pChildren->count() > 0)
 		{
             CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH(pChildren, pObject)
             {
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild && (pChild->getZOrder() >= 0))
@@ -496,7 +496,7 @@ namespace cocos2d
 		if (m_pobDescendants && m_pobDescendants->count() > 0)
 		{
             CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH(m_pobDescendants, pObject)
             {
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild)
@@ -516,7 +516,7 @@ namespace cocos2d
 		if (pChildren && pChildren->count() > 0)
 		{
             CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH(pChildren, pObject)
             {
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild)
@@ -556,7 +556,7 @@ namespace cocos2d
 		if (pChildren && pChildren->count() > 0)
 		{
             CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH(pChildren, pObject)
             {
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild)
@@ -639,7 +639,7 @@ namespace cocos2d
         if (m_pobDescendants && m_pobDescendants->count() > 0)
         {
             CCObject* pObject = NULL;
-            CCARRAY_FOREACH(m_pChildren, pObject)
+            CCARRAY_FOREACH(m_pobDescendants, pObject)
             {
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild && (pChild->getAtlasIndex() >= z))
