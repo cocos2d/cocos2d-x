@@ -1,3 +1,5 @@
+//#define COCOS2D_DEBUG   1
+
 #include "TextInputTest.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -150,19 +152,29 @@ void KeyboardNotificationLayer::registerWithTouchDispatcher()
 
 void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& info)
 {
+    CCLOG("TextInputTest:keyboardWillShowAt(origin:%f,%f, size:%f,%f)",
+        info.end.origin.x, info.end.origin.y, info.end.size.width, info.end.size.height);
+
     if (! m_pTrackNode)
     {
         return;
     }
 
     CCRect rectTracked = getRect(m_pTrackNode);
+    CCLOG("TextInputTest:trackingNodeAt(origin:%f,%f, size:%f,%f)",
+        rectTracked.origin.x, rectTracked.origin.y, rectTracked.size.width, rectTracked.size.height);
+
+    // if the keyboard area doesn't intersect with the tracking node area, nothing need to do.
     if (! CCRect::CCRectIntersectsRect(rectTracked, info.end))
     {
         return;
     }
 
+    // assume keyboard at the bottom of screen, calculate the vertical adjustment.
     float adjustVert = CCRect::CCRectGetMaxY(info.end) - CCRect::CCRectGetMinY(rectTracked);
+    CCLOG("TextInputTest:needAdjustVerticalPosition(%f)", adjustVert);
 
+    // move all the children node of KeyboardNotificationLayer
     CCArray * children = getChildren();
     CCNode * node = 0;
     int count = children->count();
@@ -226,26 +238,45 @@ void TextFieldTTFTest::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         return;
     }
 
+    // decide the index of CCTextFieldTTF which is clicked.
     int index = 0;
+    CCRect rect;
+    CCPoint point = convertTouchToNodeSpaceAR(pTouch);
+    CCLOG("TextFieldTTFTest:clickedAt(%f,%f)", point.x, point.y);
+
     for (; index < sizeof(m_pTextField) / sizeof(CCTextFieldTTF *); ++index)
     {
-        if (CCRect::CCRectContainsPoint(getRect(m_pTextField[index]), convertTouchToNodeSpaceAR(pTouch)))
+        rect = getRect(m_pTextField[index]);
+        CCLOG("TextFieldTTFTest:CCTextFieldTTF[%d]at(origin:%f,%f, size:%f,%f)",
+            index, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+
+        if (CCRect::CCRectContainsPoint(rect, point))
         {
             break;
         }
     }
 
-    if (index < sizeof(m_pTextField) / sizeof(CCTextFieldTTF *))
+    if (index == m_nSelected)
     {
-        m_nSelected = index;
-        m_pTrackNode = m_pTextField[index];
-        m_pTextField[index]->attachWithIME();
+        CCLOG("TextFieldTTFTest:noCCTextFieldTTFClicked.");
+        return;
     }
-    else if (m_nSelected >= 0)
+    
+    if (m_nSelected >= 0)
     {
+        // hide the keyboard
+        CCLOG("TextFieldTTFTest:CCTextFieldTTF[%d]detachWithIME", m_nSelected);
         m_pTextField[m_nSelected]->detachWithIME();
         m_nSelected = -1;
         m_pTrackNode = 0;
+    }
+
+    if (index < sizeof(m_pTextField) / sizeof(CCTextFieldTTF *))
+    {
+        CCLOG("TextFieldTTFTest:CCTextFieldTTF[%d]attachWithIME", index);
+        m_nSelected = index;
+        m_pTrackNode = m_pTextField[index];
+        m_pTextField[index]->attachWithIME();
     }
 }
 
