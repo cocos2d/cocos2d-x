@@ -340,7 +340,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
             else
             {
                 char szUtf8[8] = {0};
-                int nLen = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
+                int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
 
                 CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
             }
