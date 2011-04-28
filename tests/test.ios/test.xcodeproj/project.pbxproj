@@ -242,6 +242,7 @@
 		BF31E3C212E979A200D4F513 /* Paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1B912E979A200D4F513 /* Paddle.cpp */; };
 		BF31E3C312E979A200D4F513 /* TouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1BB12E979A200D4F513 /* TouchesTest.cpp */; };
 		BF31E3C412E979A200D4F513 /* TransitionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF31E1BE12E979A200D4F513 /* TransitionsTest.cpp */; };
+		BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF3326F313690DA4007CAA22 /* RootViewController.mm */; };
 		BF340A47133AE3250035A4D1 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340A45133AE3250035A4D1 /* CCNS.cpp */; };
 		BF340A48133AE3250035A4D1 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = BF340A46133AE3250035A4D1 /* CCNS.h */; };
 		BF340BEB133B26A70035A4D1 /* PerformanceParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BDF133B26A70035A4D1 /* PerformanceParticleTest.cpp */; };
@@ -814,6 +815,8 @@
 		BF31E1BC12E979A200D4F513 /* TouchesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchesTest.h; sourceTree = "<group>"; };
 		BF31E1BE12E979A200D4F513 /* TransitionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionsTest.cpp; sourceTree = "<group>"; };
 		BF31E1BF12E979A200D4F513 /* TransitionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionsTest.h; sourceTree = "<group>"; };
+		BF3326F213690DA4007CAA22 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		BF3326F313690DA4007CAA22 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		BF340A45133AE3250035A4D1 /* CCNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNS.cpp; sourceTree = "<group>"; };
 		BF340A46133AE3250035A4D1 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 		BF340BDF133B26A70035A4D1 /* PerformanceParticleTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticleTest.cpp; sourceTree = "<group>"; };
@@ -1115,6 +1118,8 @@
 				1D3623240D0F684500981E51 /* testsAppDelegate.h */,
 				32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */,
 				1D3623250D0F684500981E51 /* testsAppDelegate.mm */,
+				BF3326F213690DA4007CAA22 /* RootViewController.h */,
+				BF3326F313690DA4007CAA22 /* RootViewController.mm */,
 			);
 			name = ios;
 			path = Classes;
@@ -2761,6 +2766,7 @@
 				BF2CE33113666AA8006DCA18 /* TextInputTest.cpp in Sources */,
 				BF2CE34713666B43006DCA18 /* CCIMEDispatcher.cpp in Sources */,
 				BF2CE34813666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */,
+				BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

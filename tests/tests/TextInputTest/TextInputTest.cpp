@@ -14,7 +14,7 @@ enum
 
 static int testIdx = -1; 
 
-CCLayer* createTextInputTest(int nIndex)
+KeyboardNotificationLayer* createTextInputTest(int nIndex)
 {
     switch(nIndex)
     {
@@ -26,13 +26,12 @@ CCLayer* createTextInputTest(int nIndex)
 
 CCLayer* restartTextInputTest()
 {
-    CCLayer* pContainerLayer = new TextInputTest;
+    TextInputTest* pContainerLayer = new TextInputTest;
     pContainerLayer->autorelease();
 
-    CCLayer* pTestLayer = createTextInputTest(testIdx);
+    KeyboardNotificationLayer* pTestLayer = createTextInputTest(testIdx);
     pTestLayer->autorelease();
-
-    pContainerLayer->addChild(pTestLayer);
+    pContainerLayer->addKeyboardNotificationLayer(pTestLayer);
 
     return pContainerLayer;
 }
@@ -69,6 +68,12 @@ CCRect getRect(CCNode * pNode)
 // implement TextInputTest
 //////////////////////////////////////////////////////////////////////////
 
+TextInputTest::TextInputTest()
+: m_pNotificationLayer(0)
+{
+    
+}
+
 void TextInputTest::restartCallback(CCObject* pSender)
 {
     CCScene* s = new TextInputTestScene();
@@ -94,6 +99,18 @@ void TextInputTest::backCallback(CCObject* pSender)
     s->release();
 }
 
+void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * pLayer)
+{
+    m_pNotificationLayer = pLayer;
+    m_pNotificationLayer->retain();
+    addChild(pLayer);
+}
+
+std::string TextInputTest::title()
+{
+    return "text input test";
+}
+
 void TextInputTest::onEnter()
 {
     CCLayer::onEnter();
@@ -104,7 +121,7 @@ void TextInputTest::onEnter()
     addChild(label);
     label->setPosition(ccp(s.width/2, s.height-50));
 
-    std::string subTitle = subtitle();
+    std::string subTitle = m_pNotificationLayer->subtitle();
     if(! subTitle.empty())
     {
         CCLabelTTF* l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
@@ -125,14 +142,12 @@ void TextInputTest::onEnter()
     addChild(menu, 1);
 }
 
-std::string TextInputTest::title()
+void TextInputTest::onExit()
 {
-    return "text input test";
-}
-
-std::string TextInputTest::subtitle()
-{
-    return "";
+    if (m_pNotificationLayer)
+    {
+        m_pNotificationLayer->release();
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -143,6 +158,11 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 : m_pTrackNode(0)
 {
     setIsTouchEnabled(true);
+}
+
+std::string KeyboardNotificationLayer::subtitle()
+{
+    return "";
 }
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
@@ -256,12 +276,6 @@ void TextFieldTTFTest::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         }
     }
 
-    if (index == m_nSelected)
-    {
-        CCLOG("TextFieldTTFTest:noCCTextFieldTTFClicked.");
-        return;
-    }
-    
     if (m_nSelected >= 0)
     {
         // hide the keyboard
