@@ -83,7 +83,11 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
+
+// havn't implement on wophone and airplay
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "CCTextFieldTTF.h"
+#endif
 
 //
 // cocoa includes

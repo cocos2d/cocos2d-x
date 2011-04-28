@@ -150,6 +150,7 @@ public:
     int drawText(const char * pszText, SIZE& tSize, CCImage::ETextAlign eAlign)
     {
         int nRet = 0;
+        wchar_t * pwszBuffer = 0;
         do 
         {
             CC_BREAK_IF(! pszText);
@@ -238,11 +239,21 @@ public:
             RECT rc = {0, 0, tSize.cx, tSize.cy};
             SetBkMode(m_hDC, TRANSPARENT);
             SetTextColor(m_hDC, RGB(255, 255, 255)); // white color
-            nRet = DrawTextA(m_hDC, pszText, nLen, &rcText, dwFmt);
+
+            // utf-8 to utf-16
+            int nBufLen  = nLen + 1;
+            pwszBuffer = new wchar_t[nBufLen];
+            CC_BREAK_IF(! pwszBuffer);
+            nLen = MultiByteToWideChar(CP_UTF8, 0, pszText, nLen, pwszBuffer, nBufLen);
+
+            // draw text
+            nRet = DrawTextW(m_hDC, pwszBuffer, nLen, &rcText, dwFmt);
+            //DrawTextA(m_hDC, pszText, nLen, &rcText, dwFmt);
 
             SelectObject(m_hDC, hOldBmp);
             SelectObject(m_hDC, hOldFont);
         } while (0);
+        CC_SAFE_DELETE_ARRAY(pwszBuffer);
         return nRet;
     }
 

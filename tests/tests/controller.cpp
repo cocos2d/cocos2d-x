@@ -64,8 +64,10 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
     case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     case TEST_TEXT_INPUT:
         pScene = new TextInputTestScene(); break;
+#endif
     case TEST_SPRITE:
         pScene = new SpriteTestScene(); break;
     case TEST_SCHEDULER:
