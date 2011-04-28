@@ -96,6 +96,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     CFMutableDictionaryRef  touchesIntergerDict;
     unsigned int               indexBitsUsed;
     NSString *              markedText_;
+    CGRect                  caretRect_;
 }
 
 @property(nonatomic, readonly) UITextPosition *beginningOfDocument;
