@@ -107,7 +107,7 @@ void CCNode::arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func)
 	if(pArray && pArray->count() > 0)
 	{
         CCObject* child;
-        CCARRAY_FOREACH(m_pChildren, child)
+        CCARRAY_FOREACH(pArray, child)
         {
             CCNode* pNode = (CCNode*) child;
             if(pNode && func)
