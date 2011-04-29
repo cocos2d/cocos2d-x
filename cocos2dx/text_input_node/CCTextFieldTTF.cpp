@@ -165,7 +165,7 @@ bool CCTextFieldTTF::canAttachWithIME()
 
 bool CCTextFieldTTF::canDetachWithIME()
 {
-    return (m_pDelegate) ? (! m_pDelegate->onTextFieldAttachWithIME(this)) : true;
+    return (m_pDelegate) ? (! m_pDelegate->onTextFieldDetachWithIME(this)) : true;
 }
 
 void CCTextFieldTTF::insertText(const char * text, int len)

@@ -39,7 +39,7 @@ public:
     /**
     @brief	If the sender doesn't want to attach with IME, return true;
     */
-    bool onTextFieldAttachWithIME(CCTextFieldTTF * sender)
+    virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender)
     { 
         return false;
     }
@@ -47,7 +47,7 @@ public:
     /**
     @brief	If the sender doesn't want to detach with IME, return true;
     */
-    bool onTextFieldDetachWithIME(CCTextFieldTTF * sender)
+    virtual bool onTextFieldDetachWithIME(CCTextFieldTTF * sender)
     {
         return false;
     }
@@ -55,7 +55,7 @@ public:
     /**
     @brief	If the sender doesn't want to insert the text, return true;
     */
-    bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen)
+    virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen)
     {
         return false;
     }
@@ -63,7 +63,7 @@ public:
     /**
     @brief	If the sender doesn't want to delete the delText, return true;
     */
-    bool onTextFieldDeleteBackward(CCTextFieldTTF * sender, const char * delText, int nLen)
+    virtual bool onTextFieldDeleteBackward(CCTextFieldTTF * sender, const char * delText, int nLen)
     {
         return false;
     }
@@ -71,7 +71,7 @@ public:
     /**
     @brief	If doesn't want draw sender as default, return true.
     */
-    bool onDraw(CCTextFieldTTF * sender)
+    virtual bool onDraw(CCTextFieldTTF * sender)
     {
         return false;
     }
