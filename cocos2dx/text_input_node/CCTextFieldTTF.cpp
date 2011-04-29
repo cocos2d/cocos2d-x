@@ -230,6 +230,7 @@ void CCTextFieldTTF::deleteBackward()
     {
         CC_SAFE_DELETE(m_pInputText);
         m_pInputText = new std::string;
+        m_nCharCount = 0;
         CCLabelTTF::setString(m_pPlaceHolder->c_str());
         return;
     }
@@ -276,7 +277,12 @@ void CCTextFieldTTF::setString(const char *text)
         m_pInputText = new std::string;
     }
 
-    // if there is no input text, display placeholder instead    if (! m_pInputText->length())    {        CCLabelTTF::setString(m_pPlaceHolder->c_str());    }    else
+    // if there is no input text, display placeholder instead
+    if (! m_pInputText->length())
+    {
+        CCLabelTTF::setString(m_pPlaceHolder->c_str());
+    }
+    else
     {
         CCLabelTTF::setString(m_pInputText->c_str());
     }

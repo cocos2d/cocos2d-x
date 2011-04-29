@@ -246,13 +246,13 @@ void TextFieldTTFTest::onEnter()
     addChild(m_pTextField[0]);
 
     m_pTextField[0]->setDelegate(this);
-    m_pTextField[0]->setPosition(ccp(s.width/2, s.height/2 + 16));
+    m_pTextField[0]->setPosition(ccp(s.width/2, s.height/2 + 20));
 
     m_pTextField[1] = CCTextFieldTTF::textFieldWithPlaceHolder("<CCTextFieldTTF as default>",
         FONT_NAME,
         FONT_SIZE);
     addChild(m_pTextField[1]);
-    m_pTextField[1]->setPosition(ccp(s.width/2, s.height/2 - 16));
+    m_pTextField[1]->setPosition(ccp(s.width/2, s.height/2 - 20));
 }
 
 void TextFieldTTFTest::onExit()
@@ -366,11 +366,11 @@ bool TextFieldTTFTest::onTextFieldInsertText(CCTextFieldTTF * pSender, const cha
         endPos.x += pSender->getContentSize().width / 2;
     }
     CCSize  inputTextSize = label->getContentSize();
-    CCPoint beginPos(endPos.x, CCDirector::sharedDirector()->getWinSize().height + inputTextSize.height * 2); 
+    CCPoint beginPos(endPos.x, CCDirector::sharedDirector()->getWinSize().height - inputTextSize.height * 2); 
 
     ccTime duration = 0.5;
     label->setPosition(beginPos);
-    label->setScale(4);
+    label->setScale(8);
 
     CCAction * seq = CCSequence::actions(
         CCSpawn::actions(
@@ -392,16 +392,12 @@ bool TextFieldTTFTest::onTextFieldDeleteBackward(CCTextFieldTTF * pSender, const
 
     // move the sprite to fly out
     CCPoint beginPos = pSender->getPosition();
-    if (pSender->getCharCount())
-    {
-        beginPos.x += pSender->getContentSize().width / 2;
-    }
-    else
-    {
-        beginPos.x -= label->getContentSize().width / 2;
-    }
+    CCSize textfieldSize = pSender->getContentSize();
+    CCSize labelSize = label->getContentSize();
+    beginPos.x += (textfieldSize.width - labelSize.width) / 2.0f;
+    
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    CCPoint endPos(- winSize.width / 4, winSize.height * (0.5 + (float)rand() / (2 * RAND_MAX))); 
+    CCPoint endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
 
     ccTime duration = 1;
     ccTime rotateDuration = 0.2f;
