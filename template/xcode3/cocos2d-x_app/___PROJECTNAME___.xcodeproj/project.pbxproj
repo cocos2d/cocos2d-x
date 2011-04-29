@@ -107,11 +107,8 @@
 		BF8360981328687F00F3C033 /* CCDirector.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835DFE1328687E00F3C033 /* CCDirector.h */; };
 		BF8360991328687F00F3C033 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835DFF1328687E00F3C033 /* CCDrawingPrimitives.h */; };
 		BF83609A1328687F00F3C033 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E001328687E00F3C033 /* CCEGLView.h */; };
-		BF83609B1328687F00F3C033 /* CCEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E011328687E00F3C033 /* CCEvent.h */; };
-		BF83609C1328687F00F3C033 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E021328687E00F3C033 /* CCEventDispatcher.h */; };
 		BF83609E1328687F00F3C033 /* CCGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E041328687E00F3C033 /* CCGeometry.h */; };
 		BF83609F1328687F00F3C033 /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E051328687E00F3C033 /* CCGL.h */; };
-		BF8360A01328687F00F3C033 /* CCKeyboardEventDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E061328687E00F3C033 /* CCKeyboardEventDelegate.h */; };
 		BF8360A11328687F00F3C033 /* CCKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E071328687E00F3C033 /* CCKeypadDelegate.h */; };
 		BF8360A21328687F00F3C033 /* CCKeypadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E081328687E00F3C033 /* CCKeypadDispatcher.h */; };
 		BF8360A31328687F00F3C033 /* CCLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E091328687E00F3C033 /* CCLabelAtlas.h */; };
@@ -122,7 +119,6 @@
 		BF8360A81328687F00F3C033 /* CCMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E0E1328687E00F3C033 /* CCMenu.h */; };
 		BF8360A91328687F00F3C033 /* CCMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E0F1328687E00F3C033 /* CCMenuItem.h */; };
 		BF8360AA1328687F00F3C033 /* CCMotionStreak.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E101328687E00F3C033 /* CCMotionStreak.h */; };
-		BF8360AB1328687F00F3C033 /* CCMouseEventDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E111328687E00F3C033 /* CCMouseEventDelegate.h */; };
 		BF8360AC1328687F00F3C033 /* CCMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E121328687E00F3C033 /* CCMutableArray.h */; };
 		BF8360AD1328687F00F3C033 /* CCMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E131328687E00F3C033 /* CCMutableDictionary.h */; };
 		BF8360AE1328687F00F3C033 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E141328687E00F3C033 /* CCNode.h */; };
@@ -262,6 +258,11 @@
 		BF83631F13286EF300F3C033 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83631B13286EF300F3C033 /* HelloWorldScene.cpp */; };
 		BF83638D132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		BFA008A6134423F500289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008A5134423F500289DC3 /* CCCommon_ios.mm */; };
+		BFA70A1E136AB06C00ABC725 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */; };
+		BFA70A1F136AB06C00ABC725 /* CCIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA70A1C136AB06C00ABC725 /* CCIMEDispatcher.h */; };
+		BFA70A20136AB06C00ABC725 /* CCTextFieldTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA70A1D136AB06C00ABC725 /* CCTextFieldTTF.h */; };
+		BFA70A24136AB08700ABC725 /* CCIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFA70A22136AB08700ABC725 /* CCIMEDispatcher.cpp */; };
+		BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D408234E132F3DD900F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D408234D132F3DD900F44E75 /* main.m */; };
 		D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
@@ -380,11 +381,8 @@
 		BF835DFE1328687E00F3C033 /* CCDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirector.h; sourceTree = "<group>"; };
 		BF835DFF1328687E00F3C033 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		BF835E001328687E00F3C033 /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
-		BF835E011328687E00F3C033 /* CCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEvent.h; sourceTree = "<group>"; };
-		BF835E021328687E00F3C033 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
 		BF835E041328687E00F3C033 /* CCGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGeometry.h; sourceTree = "<group>"; };
 		BF835E051328687E00F3C033 /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		BF835E061328687E00F3C033 /* CCKeyboardEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeyboardEventDelegate.h; sourceTree = "<group>"; };
 		BF835E071328687E00F3C033 /* CCKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDelegate.h; sourceTree = "<group>"; };
 		BF835E081328687E00F3C033 /* CCKeypadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCKeypadDispatcher.h; sourceTree = "<group>"; };
 		BF835E091328687E00F3C033 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
@@ -395,7 +393,6 @@
 		BF835E0E1328687E00F3C033 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenu.h; sourceTree = "<group>"; };
 		BF835E0F1328687E00F3C033 /* CCMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItem.h; sourceTree = "<group>"; };
 		BF835E101328687E00F3C033 /* CCMotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMotionStreak.h; sourceTree = "<group>"; };
-		BF835E111328687E00F3C033 /* CCMouseEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMouseEventDelegate.h; sourceTree = "<group>"; };
 		BF835E121328687E00F3C033 /* CCMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMutableArray.h; sourceTree = "<group>"; };
 		BF835E131328687E00F3C033 /* CCMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMutableDictionary.h; sourceTree = "<group>"; };
 		BF835E141328687E00F3C033 /* CCNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode.h; sourceTree = "<group>"; };
@@ -537,6 +534,11 @@
 		BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
 		BF83638B132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		BFA008A5134423F500289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
+		BFA70A1C136AB06C00ABC725 /* CCIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDispatcher.h; sourceTree = "<group>"; };
+		BFA70A1D136AB06C00ABC725 /* CCTextFieldTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextFieldTTF.h; sourceTree = "<group>"; };
+		BFA70A22136AB08700ABC725 /* CCIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCIMEDispatcher.cpp; sourceTree = "<group>"; };
+		BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextFieldTTF.cpp; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D408234D132F3DD900F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
 		D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
@@ -713,6 +715,7 @@
 		BF835DC11328687E00F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				BFA70A21136AB08700ABC725 /* text_input_node */,
 				BF1FB0111352F91A007553D9 /* CCDirector.cpp */,
 				BF76372B133389F4009E0E50 /* CCCamera.cpp */,
 				BF835DC21328687E00F3C033 /* actions */,
@@ -799,6 +802,9 @@
 		BF835DE71328687E00F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */,
+				BFA70A1C136AB06C00ABC725 /* CCIMEDispatcher.h */,
+				BFA70A1D136AB06C00ABC725 /* CCTextFieldTTF.h */,
 				BF193F3313600871002463D2 /* CCArray.h */,
 				BF835DE81328687E00F3C033 /* CCAccelerometer.h */,
 				BF835DE91328687E00F3C033 /* CCAccelerometerDelegate.h */,
@@ -825,11 +831,8 @@
 				BF835DFE1328687E00F3C033 /* CCDirector.h */,
 				BF835DFF1328687E00F3C033 /* CCDrawingPrimitives.h */,
 				BF835E001328687E00F3C033 /* CCEGLView.h */,
-				BF835E011328687E00F3C033 /* CCEvent.h */,
-				BF835E021328687E00F3C033 /* CCEventDispatcher.h */,
 				BF835E041328687E00F3C033 /* CCGeometry.h */,
 				BF835E051328687E00F3C033 /* CCGL.h */,
-				BF835E061328687E00F3C033 /* CCKeyboardEventDelegate.h */,
 				BF835E071328687E00F3C033 /* CCKeypadDelegate.h */,
 				BF835E081328687E00F3C033 /* CCKeypadDispatcher.h */,
 				BF835E091328687E00F3C033 /* CCLabelAtlas.h */,
@@ -840,7 +843,6 @@
 				BF835E0E1328687E00F3C033 /* CCMenu.h */,
 				BF835E0F1328687E00F3C033 /* CCMenuItem.h */,
 				BF835E101328687E00F3C033 /* CCMotionStreak.h */,
-				BF835E111328687E00F3C033 /* CCMouseEventDelegate.h */,
 				BF835E121328687E00F3C033 /* CCMutableArray.h */,
 				BF835E131328687E00F3C033 /* CCMutableDictionary.h */,
 				BF835E141328687E00F3C033 /* CCNode.h */,
@@ -1106,6 +1108,15 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
+		BFA70A21136AB08700ABC725 /* text_input_node */ = {
+			isa = PBXGroup;
+			children = (
+				BFA70A22136AB08700ABC725 /* CCIMEDispatcher.cpp */,
+				BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */,
+			);
+			path = text_input_node;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1148,11 +1159,8 @@
 				BF8360981328687F00F3C033 /* CCDirector.h in Headers */,
 				BF8360991328687F00F3C033 /* CCDrawingPrimitives.h in Headers */,
 				BF83609A1328687F00F3C033 /* CCEGLView.h in Headers */,
-				BF83609B1328687F00F3C033 /* CCEvent.h in Headers */,
-				BF83609C1328687F00F3C033 /* CCEventDispatcher.h in Headers */,
 				BF83609E1328687F00F3C033 /* CCGeometry.h in Headers */,
 				BF83609F1328687F00F3C033 /* CCGL.h in Headers */,
-				BF8360A01328687F00F3C033 /* CCKeyboardEventDelegate.h in Headers */,
 				BF8360A11328687F00F3C033 /* CCKeypadDelegate.h in Headers */,
 				BF8360A21328687F00F3C033 /* CCKeypadDispatcher.h in Headers */,
 				BF8360A31328687F00F3C033 /* CCLabelAtlas.h in Headers */,
@@ -1163,7 +1171,6 @@
 				BF8360A81328687F00F3C033 /* CCMenu.h in Headers */,
 				BF8360A91328687F00F3C033 /* CCMenuItem.h in Headers */,
 				BF8360AA1328687F00F3C033 /* CCMotionStreak.h in Headers */,
-				BF8360AB1328687F00F3C033 /* CCMouseEventDelegate.h in Headers */,
 				BF8360AC1328687F00F3C033 /* CCMutableArray.h in Headers */,
 				BF8360AD1328687F00F3C033 /* CCMutableDictionary.h in Headers */,
 				BF8360AE1328687F00F3C033 /* CCNode.h in Headers */,
@@ -1245,6 +1252,9 @@
 				BF7D66A51342C3F300DEED39 /* CCFileUtils.h in Headers */,
 				BF7D66A71342C3F300DEED39 /* CCSAXParser.h in Headers */,
 				BF193F3413600871002463D2 /* CCArray.h in Headers */,
+				BFA70A1E136AB06C00ABC725 /* CCIMEDelegate.h in Headers */,
+				BFA70A1F136AB06C00ABC725 /* CCIMEDispatcher.h in Headers */,
+				BFA70A20136AB06C00ABC725 /* CCTextFieldTTF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1448,6 +1458,8 @@
 				BF1FB01C1352F971007553D9 /* CCNode.cpp in Sources */,
 				BF1FB01E1352F98C007553D9 /* CCParticleSystemPoint.cpp in Sources */,
 				BF193F361360087D002463D2 /* CCArray.cpp in Sources */,
+				BFA70A24136AB08700ABC725 /* CCIMEDispatcher.cpp in Sources */,
+				BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
