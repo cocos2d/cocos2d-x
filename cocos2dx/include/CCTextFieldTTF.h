@@ -31,11 +31,56 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-/**
-@brief	A simple text input field with system TTF font.
-*/
+class CCTextFieldTTF;
 
-class CC_DLL CCTextFieldTTF : public CCLabelTTF, public CCIMEDelegate//, public CCTargetedTouchDelegate
+class CC_DLL CCTextFieldDelegate
+{
+public:
+    /**
+    @brief	If the sender doesn't want to attach with IME, return true;
+    */
+    virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender)
+    { 
+        return false;
+    }
+
+    /**
+    @brief	If the sender doesn't want to detach with IME, return true;
+    */
+    virtual bool onTextFieldDetachWithIME(CCTextFieldTTF * sender)
+    {
+        return false;
+    }
+
+    /**
+    @brief	If the sender doesn't want to insert the text, return true;
+    */
+    virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen)
+    {
+        return false;
+    }
+
+    /**
+    @brief	If the sender doesn't want to delete the delText, return true;
+    */
+    virtual bool onTextFieldDeleteBackward(CCTextFieldTTF * sender, const char * delText, int nLen)
+    {
+        return false;
+    }
+
+    /**
+    @brief	If doesn't want draw sender as default, return true.
+    */
+    virtual bool onDraw(CCTextFieldTTF * sender)
+    {
+        return false;
+    }
+};
+
+/**
+@brief	A simple text input field with TTF font.
+*/
+class CC_DLL CCTextFieldTTF : public CCLabelTTF, public CCIMEDelegate
 {
 public:
     CCTextFieldTTF();
@@ -66,6 +111,10 @@ public:
     // properties
     //////////////////////////////////////////////////////////////////////////
     
+    CC_SYNTHESIZE(CCTextFieldDelegate *, m_pDelegate, Delegate);
+    CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
+    CC_SYNTHESIZE(ccColor3B, m_ColorSpaceHolder, ColorSpaceHolder);
+
     // input text property
 public:
     virtual void setString(const char *text);
@@ -80,8 +129,9 @@ public:
     virtual const char * getPlaceHolder(void);
 protected:
     std::string * m_pPlaceHolder;
-    bool          m_bLock;          // when insertText or deleteBackward called, m_bLock is true
 protected:
+
+    virtual void draw();
 
     //////////////////////////////////////////////////////////////////////////
     // CCIMEDelegate interface

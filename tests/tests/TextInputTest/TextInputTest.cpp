@@ -54,7 +54,7 @@ CCLayer* backTextInputTest()
     return restartTextInputTest();
 }
 
-CCRect getRect(CCNode * pNode)
+static CCRect getRect(CCNode * pNode)
 {
     CCRect rc;
     rc.origin = pNode->getPosition();
@@ -128,7 +128,7 @@ void TextInputTest::onEnter()
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
-
+#if 0
     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(TextInputTest::backCallback));
     CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage("Images/r1.png","Images/r2.png", this, menu_selector(TextInputTest::restartCallback) );
     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(TextInputTest::nextCallback) );
@@ -140,6 +140,7 @@ void TextInputTest::onEnter()
     item3->setPosition(ccp( s.width/2 + 100,30));
 
     addChild(menu, 1);
+#endif
 }
 
 void TextInputTest::onExit()
@@ -212,29 +213,51 @@ void KeyboardNotificationLayer::keyboardWillShow(CCIMEKeyboardNotificationInfo& 
 // implement TextFieldTTFTest
 //////////////////////////////////////////////////////////////////////////
 
-TextFieldTTFTest::TextFieldTTFTest()
-: m_nSelected(-1)
-{
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-
-    m_pTextField[0] = CCTextFieldTTF::textFieldWithPlaceHolder("<click here>", 
-                                                               CCSizeMake(240, 28),
-                                                               CCTextAlignmentCenter,
-                                                               "Thonburi",
-                                                               24);
-    addChild(m_pTextField[0]);
-    m_pTextField[0]->setPosition(ccp(s.width/2, s.height/2 + 16));
-
-    m_pTextField[1] = CCTextFieldTTF::textFieldWithPlaceHolder("<click here>",
-                                                               "Thonburi",
-                                                               24);
-    addChild(m_pTextField[1]);
-    m_pTextField[1]->setPosition(ccp(s.width/2, s.height/2 - 16));
-}
+#define FONT_NAME                       "Thonburi"
+#define FONT_SIZE                       24
 
 std::string TextFieldTTFTest::subtitle()
 {
     return "CCTextFieldTTF test";
+}
+
+void TextFieldTTFTest::onEnter()
+{
+    KeyboardNotificationLayer::onEnter();
+
+    m_nSelected = -1;
+    m_nCharLimit = 10;
+
+    m_pTextFieldAction = CCRepeatForever::actionWithAction(
+        (CCActionInterval*)CCSequence::actions(
+            CCFadeOut::actionWithDuration(0.25),
+            CCFadeIn::actionWithDuration(0.25),
+            0
+        ));
+    m_pTextFieldAction->retain();
+    m_bAction = false;
+
+    // add CCTextFieldTTF
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+    m_pTextField[0] = CCTextFieldTTF::textFieldWithPlaceHolder("<CCTextFieldTTF with action>",
+        FONT_NAME,
+        FONT_SIZE);
+    addChild(m_pTextField[0]);
+
+    m_pTextField[0]->setDelegate(this);
+    m_pTextField[0]->setPosition(ccp(s.width/2, s.height/2 + 20));
+
+    m_pTextField[1] = CCTextFieldTTF::textFieldWithPlaceHolder("<CCTextFieldTTF as default>",
+        FONT_NAME,
+        FONT_SIZE);
+    addChild(m_pTextField[1]);
+    m_pTextField[1]->setPosition(ccp(s.width/2, s.height/2 - 20));
+}
+
+void TextFieldTTFTest::onExit()
+{
+    m_pTextFieldAction->release();
 }
 
 bool TextFieldTTFTest::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
@@ -292,6 +315,117 @@ void TextFieldTTFTest::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         m_pTrackNode = m_pTextField[index];
         m_pTextField[index]->attachWithIME();
     }
+}
+
+// CCTextFieldDelegate protocol
+bool TextFieldTTFTest::onTextFieldAttachWithIME(CCTextFieldTTF * pSender)
+{
+    if (! m_bAction)
+    {
+        m_pTextField[0]->runAction(m_pTextFieldAction);
+        m_bAction = true;
+    }
+    return false;
+}
+
+bool TextFieldTTFTest::onTextFieldDetachWithIME(CCTextFieldTTF * pSender)
+{
+    if (m_bAction)
+    {
+        m_pTextField[0]->stopAction(m_pTextFieldAction);
+        m_pTextField[0]->setOpacity(255);
+        m_bAction = false;
+    }
+    return false;
+}
+
+bool TextFieldTTFTest::onTextFieldInsertText(CCTextFieldTTF * pSender, const char * text, int nLen)
+{
+    // if the textfield's char count more than m_nCharLimit, doesn't insert text anymore.
+    if (pSender->getCharCount() >= m_nCharLimit)
+    {
+        return true;
+    }
+
+    // if insert enter, treat as default
+    if ('\n' == *text)
+    {
+        return false;
+    }
+
+    // create a insert text sprite and do some action
+    CCLabelTTF * label = CCLabelTTF::labelWithString(text, FONT_NAME, FONT_SIZE);
+    this->addChild(label);
+    ccColor3B color = { 226, 121, 7};
+    label->setColor(color);
+
+    // move the sprite from top to position
+    CCPoint endPos = pSender->getPosition();
+    if (pSender->getCharCount())
+    {
+        endPos.x += pSender->getContentSize().width / 2;
+    }
+    CCSize  inputTextSize = label->getContentSize();
+    CCPoint beginPos(endPos.x, CCDirector::sharedDirector()->getWinSize().height - inputTextSize.height * 2); 
+
+    ccTime duration = 0.5;
+    label->setPosition(beginPos);
+    label->setScale(8);
+
+    CCAction * seq = CCSequence::actions(
+        CCSpawn::actions(
+            CCMoveTo::actionWithDuration(duration, endPos),
+            CCScaleTo::actionWithDuration(duration, 1),
+            CCFadeOut::actionWithDuration(duration),
+        0),
+        CCCallFuncN::actionWithTarget(this, callfuncN_selector(TextFieldTTFTest::callbackRemoveNodeWhenDidAction)),
+        0);
+    label->runAction(seq);
+    return false;
+}
+
+bool TextFieldTTFTest::onTextFieldDeleteBackward(CCTextFieldTTF * pSender, const char * delText, int nLen)
+{
+    // create a delete text sprite and do some action
+    CCLabelTTF * label = CCLabelTTF::labelWithString(delText, FONT_NAME, FONT_SIZE);
+    this->addChild(label);
+
+    // move the sprite to fly out
+    CCPoint beginPos = pSender->getPosition();
+    CCSize textfieldSize = pSender->getContentSize();
+    CCSize labelSize = label->getContentSize();
+    beginPos.x += (textfieldSize.width - labelSize.width) / 2.0f;
+    
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    CCPoint endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
+
+    ccTime duration = 1;
+    ccTime rotateDuration = 0.2f;
+    int repeatTime = 5; 
+    label->setPosition(beginPos);
+
+    CCAction * seq = CCSequence::actions(
+        CCSpawn::actions(
+            CCMoveTo::actionWithDuration(duration, endPos),
+            CCRepeat::actionWithAction(
+                CCRotateBy::actionWithDuration(rotateDuration, (rand()%2) ? 360 : -360),
+                repeatTime),
+            CCFadeOut::actionWithDuration(duration),
+        0),
+        CCCallFuncN::actionWithTarget(this, callfuncN_selector(TextFieldTTFTest::callbackRemoveNodeWhenDidAction)),
+        0);
+    label->runAction(seq);
+    return false;
+}
+
+bool TextFieldTTFTest::onDraw(CCTextFieldTTF * pSender)
+{
+    return false;
+}
+
+void TextFieldTTFTest::callbackRemoveNodeWhenDidAction(CCNode * pNode)
+{
+    this->removeChild(pNode, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
