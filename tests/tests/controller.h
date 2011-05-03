@@ -19,7 +19,6 @@ public:
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 private:
-
     CCPoint m_tBeginPos;
     CCMenuItemLabel * m_pMenuItems[TESTS_COUNT];
     CCMenu* m_pItmeMenu;
