@@ -70,6 +70,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // pDirector->enableRetinaDisplay(true);
 
     // sets opengl landscape mode
+    // tests set device orientation in RootViewController.mm
     // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	// turn on display FPS

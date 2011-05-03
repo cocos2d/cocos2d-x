@@ -5,8 +5,21 @@
 
 static CCPoint s_tCurPos = CCPointZero;
 
+static ccDeviceOrientation s_eOrientation = CCDeviceOrientationPortrait;
+static void ChangeOrientation(ccDeviceOrientation eOrientation)
+{
+    if (s_eOrientation != eOrientation)
+    {
+        s_eOrientation = eOrientation;
+        CCDirector::sharedDirector()->setDeviceOrientation(eOrientation);
+    }
+}
+
 static TestScene* CreateTestScene(int nIdx)
 {
+    // change to default orientation
+    ChangeOrientation(CCDeviceOrientationPortrait);
+
     TestScene* pScene = NULL;
 
     switch (nIdx)
@@ -34,7 +47,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
-        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+        ChangeOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -52,12 +65,12 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+		ChangeOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+		ChangeOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #endif
 #endif
@@ -106,8 +119,6 @@ static TestScene* CreateTestScene(int nIdx)
 TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
-
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
