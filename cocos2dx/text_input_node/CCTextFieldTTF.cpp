@@ -29,15 +29,34 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
+static int _calcCharCount(const char * pszText)
+{
+    int n = 0;
+    char ch = 0;
+    while (ch = *pszText)
+    {
+        CC_BREAK_IF(! ch);
+        
+        if (0x80 != (0xC0 & ch))
+        {
+            ++n;
+        }
+        ++pszText;
+    }
+    return n;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // constructor and destructor
 //////////////////////////////////////////////////////////////////////////
 
 CCTextFieldTTF::CCTextFieldTTF()
-: m_pInputText(new std::string)
+: m_pDelegate(0)
+, m_nCharCount(0)
+, m_pInputText(new std::string)
 , m_pPlaceHolder(new std::string)   // prevent CCLabelTTF initWithString assertion
-, m_bLock(false)
 {
+    m_ColorSpaceHolder.r = m_ColorSpaceHolder.g = m_ColorSpaceHolder.b = 127;
 }
 
 CCTextFieldTTF::~CCTextFieldTTF()
@@ -141,12 +160,12 @@ bool CCTextFieldTTF::detachWithIME()
 
 bool CCTextFieldTTF::canAttachWithIME()
 {
-    return true;
+    return (m_pDelegate) ? (! m_pDelegate->onTextFieldAttachWithIME(this)) : true;
 }
 
 bool CCTextFieldTTF::canDetachWithIME()
 {
-    return true;
+    return (m_pDelegate) ? (! m_pDelegate->onTextFieldDetachWithIME(this)) : true;
 }
 
 void CCTextFieldTTF::insertText(const char * text, int len)
@@ -171,11 +190,16 @@ void CCTextFieldTTF::insertText(const char * text, int len)
         return;
     }
 
-    m_bLock = true;
+    if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, sInsert.c_str(), len))
+    {
+        // delegate doesn't want insert text
+        return;
+    }
+
+    m_nCharCount += _calcCharCount(sInsert.c_str());
     std::string sText(*m_pInputText);
     sText.append(sInsert);
     setString(sText.c_str());
-    m_bLock = false;
 }
 
 void CCTextFieldTTF::deleteBackward()
@@ -187,8 +211,6 @@ void CCTextFieldTTF::deleteBackward()
         return;
     }
 
-    m_bLock = true;
-
     // get the delete byte number
     int nDeleteLen = 1;    // default, erase 1 byte
 
@@ -196,11 +218,19 @@ void CCTextFieldTTF::deleteBackward()
     {
         ++nDeleteLen;
     }
+
+    if (m_pDelegate && m_pDelegate->onTextFieldDeleteBackward(this, m_pInputText->c_str() + nStrLen - nDeleteLen, nDeleteLen))
+    {
+        // delegate don't wan't delete backward
+        return;
+    }
+
     // if delete all text, show space holder string
     if (nStrLen <= nDeleteLen)
     {
         CC_SAFE_DELETE(m_pInputText);
         m_pInputText = new std::string;
+        m_nCharCount = 0;
         CCLabelTTF::setString(m_pPlaceHolder->c_str());
         return;
     }
@@ -208,7 +238,25 @@ void CCTextFieldTTF::deleteBackward()
     // set new input text
     std::string sText(m_pInputText->c_str(), nStrLen - nDeleteLen);
     setString(sText.c_str());
-    m_bLock = false;
+}
+
+void CCTextFieldTTF::draw()
+{
+    if (m_pDelegate && m_pDelegate->onDraw(this))
+    {
+        return;
+    }
+    if (m_pInputText->length())
+    {
+        CCLabelTTF::draw();
+        return;
+    }
+
+    // draw placeholder
+    ccColor3B color = getColor();
+    setColor(m_ColorSpaceHolder);
+    CCLabelTTF::draw();
+    setColor(color);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -229,10 +277,16 @@ void CCTextFieldTTF::setString(const char *text)
         m_pInputText = new std::string;
     }
 
-    // if there is no input text, display placeholder instead    if (! m_pInputText->length())    {        CCLabelTTF::setString(m_pPlaceHolder->c_str());    }    else
+    // if there is no input text, display placeholder instead
+    if (! m_pInputText->length())
+    {
+        CCLabelTTF::setString(m_pPlaceHolder->c_str());
+    }
+    else
     {
         CCLabelTTF::setString(m_pInputText->c_str());
     }
+    m_nCharCount = _calcCharCount(m_pInputText->c_str());
 }
 
 const char* CCTextFieldTTF::getString(void)

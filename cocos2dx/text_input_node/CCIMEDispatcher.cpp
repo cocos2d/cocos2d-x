@@ -153,7 +153,16 @@ bool CCIMEDispatcher::attachDelegateWithIME(CCIMEDelegate * pDelegate)
             CCIMEDelegate * pOldDelegate = m_pImpl->m_DelegateWithIme;
             m_pImpl->m_DelegateWithIme = 0;
             pOldDelegate->didDetachWithIME();
+
+            m_pImpl->m_DelegateWithIme = *iter;
+            pDelegate->didAttachWithIME();
+            bRet = true;
+            break;
         }
+
+        // havn't delegate attached with IME yet
+        CC_BREAK_IF(! pDelegate->canAttachWithIME());
+
         m_pImpl->m_DelegateWithIme = *iter;
         pDelegate->didAttachWithIME();
         bRet = true;
