@@ -2,6 +2,19 @@
 
 main();
 
+function EchoInfo(bQuiet, strMsg) {
+    if (! bQuiet) {
+        WScript.Echo(strMsg);
+    }
+    else {
+        var FileSys = new ActiveXObject("Scripting.FileSystemObject");
+        var strLogPath = "InstallWizardLog.txt"
+        var file = FileSys.OpenTextFile(strLogPath, 8, true);
+        file.WriteLine(strMsg);
+        file.Close(); 
+    }
+}
+
 function EchoError(bQuiet, strMsg) {
     strMsg = "Error: " + strMsg;
     if (! bQuiet) {
@@ -223,5 +236,5 @@ function main() {
         return;
     }
 
-    EchoError(bQuiet, "App Wizard successfully installed for VS2010!");
+    EchoInfo(bQuiet, "App Wizard successfully installed for VS2010!");
 }
