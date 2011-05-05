@@ -126,6 +126,8 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp" />
+    <ClCompile Include="..\base_nodes\CCNode.cpp" />
+    <ClCompile Include="..\CCDirector.cpp" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
     <ClCompile Include="..\cocoa\CCAutoreleasePool.cpp" />
     <ClCompile Include="..\cocoa\CCData.cpp" />
@@ -146,12 +148,16 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\actions\CCActionPageTurn3D.cpp" />
     <ClCompile Include="..\actions\CCActionProgressTimer.cpp" />
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
+    <ClCompile Include="..\effects\CCGrid.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp" />
+    <ClCompile Include="..\menu_nodes\CCMenu.cpp" />
     <ClCompile Include="..\menu_nodes\CCMenuItem.cpp" />
     <ClCompile Include="..\misc_nodes\CCMotionStreak.cpp" />
     <ClCompile Include="..\misc_nodes\CCProgressTimer.cpp" />
@@ -159,21 +165,15 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\misc_nodes\CCRibbon.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleExamples.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp" />
+    <ClCompile Include="..\particle_nodes\CCParticleSystemPoint.cpp" />
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
     <ClCompile Include="..\platform\CCCommon.cpp" />
-    <ClCompile Include="..\platform\CCDirector_mobile.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCGL.cpp" />
-    <ClCompile Include="..\platform\CCGrid_mobile.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
-    <ClCompile Include="..\platform\CCLayer_mobile.cpp" />
-    <ClCompile Include="..\platform\CCMenu_mobile.cpp" />
-    <ClCompile Include="..\platform\CCNode_mobile.cpp" />
-    <ClCompile Include="..\platform\CCParticleSystemPoint_mobile.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCStdC.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
-    <ClCompile Include="..\platform\CCTransition_mobile.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication_win32.cpp" />
     <ClCompile Include="..\platform\win32\CCEGLView_win32.cpp" />
@@ -185,6 +185,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteSheet.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
+    <ClCompile Include="..\support\CCArray.cpp" />
     <ClCompile Include="..\support\CCPointExtension.cpp" />
     <ClCompile Include="..\support\CCProfiling.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
@@ -197,6 +198,8 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
     <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
+    <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp" />
+    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
@@ -207,9 +210,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp" />
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp" />
-    <ClCompile Include="..\event_dispatcher\CCEventDispatcher.cpp" />
-    <ClCompile Include="..\event_dispatcher\CCKeyboardEventDelegate.cpp" />
-    <ClCompile Include="..\event_dispatcher\CCMouseEventDelegate.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
@@ -250,6 +250,8 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\include\CCFileUtils.h" />
     <ClInclude Include="..\include\CCGeometry.h" />
     <ClInclude Include="..\include\CCGL.h" />
+    <ClInclude Include="..\include\CCIMEDelegate.h" />
+    <ClInclude Include="..\include\CCIMEDispatcher.h" />
     <ClInclude Include="..\include\CCKeyboardEventDelegate.h" />
     <ClInclude Include="..\include\CCKeypadDelegate.h" />
     <ClInclude Include="..\include\CCKeypadDispatcher.h" />
@@ -286,6 +288,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\include\CCSpriteFrameCache.h" />
     <ClInclude Include="..\include\CCSpriteSheet.h" />
     <ClInclude Include="..\include\CCString.h" />
+    <ClInclude Include="..\include\CCTextFieldTTF.h" />
     <ClInclude Include="..\include\CCTexture2D.h" />
     <ClInclude Include="..\include\CCTextureAtlas.h" />
     <ClInclude Include="..\include\CCTextureCache.h" />
@@ -316,8 +319,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCLibxml2.h" />
     <ClInclude Include="..\platform\CCNS.h" />
-    <ClInclude Include="..\platform\CCParticleSystemPoint_mobile.h" />
-    <ClInclude Include="..\platform\CCParticleSystemPoint_platform.h" />
     <ClInclude Include="..\platform\CCPlatformConfig.h" />
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
