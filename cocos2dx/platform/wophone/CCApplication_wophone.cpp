@@ -3,7 +3,7 @@
 #include "CCApplication_wophone.h"
 
 #include "ssBackLightControl.h"
-#include "ssKeyLockControl.h"
+//#include "ssKeyLockControl.h"
 
 #include "CCScheduler.h"
 
@@ -123,8 +123,8 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
                 CCLOG("AppActiveNotify::TurnOnBackLight:MODE_TIME_LONG");
             }
 
-            EnableKeyLock();
-            CCLOG("AppActiveNotify::InBackground");
+//             EnableKeyLock();
+//             CCLOG("AppActiveNotify::InBackground");
         }
         else if (pEvent->sParam1 > 0)
         {
@@ -144,11 +144,11 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
             }
 
             // if KeyLock disactived, disable it.
-            if (! CfgKeyLock_GetActive())
-            {
-                DisableKeyLock();
-                CCLOG("AppActiveNotify::DisableKeyLock");
-            }
+//             if (! CfgKeyLock_GetActive())
+//             {
+//                 DisableKeyLock();
+//                 CCLOG("AppActiveNotify::DisableKeyLock");
+//             }
         }
         break;
     }
@@ -202,8 +202,8 @@ void CCApplication::switchNotify(int nTurnOn)
             applicationDidEnterBackground();
             StopMainLoop();
 
-            EnableKeyLock();
-            CCLOG("BLswitchNotify::EnableKeyLock");
+//             EnableKeyLock();
+//             CCLOG("BLswitchNotify::EnableKeyLock");
         }
         else
         {
@@ -211,13 +211,13 @@ void CCApplication::switchNotify(int nTurnOn)
             CfgTurnOnBackLightDelay(0x7fffffff);
             CCLOG("AppActiveNotify::TurnOnBackLight:0x7fffffff");
 
-            // if KeyLock disactived, disable it.
-            if (! CfgKeyLock_GetActive())
-            {
-                DisableKeyLock();
-                CCLOG("BLswitchNotify::DisableKeyLock");
-            }
-
+//             // if KeyLock disactived, disable it.
+//             if (! CfgKeyLock_GetActive())
+//             {
+//                 DisableKeyLock();
+//                 CCLOG("BLswitchNotify::DisableKeyLock");
+//             }
+// 
             // CCDirector::sharedDirector()->resume();
             applicationWillEnterForeground();
             StartMainLoop();
