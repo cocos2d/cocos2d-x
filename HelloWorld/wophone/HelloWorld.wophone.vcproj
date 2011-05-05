@@ -97,7 +97,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir D:\Work7\NEWPLUS\TDA_DATA\Data&#x0D;&#x0A;copy ..\Resource\*.*  D:\Work7\NEWPLUS\TDA_DATA\Data&#x0D;&#x0A;"
+				CommandLine="mkdir D:\Work7\NEWPLUS\TDA_DATA\Data&#x0D;&#x0A;mkdir D:\Work7\NEWPLUS\TDA_DATA\Data\Data&#x0D;&#x0A;copy ..\Resource\*.*  D:\Work7\NEWPLUS\TDA_DATA\Data\Data&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration

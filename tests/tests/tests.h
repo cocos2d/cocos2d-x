@@ -21,8 +21,8 @@
 #include "TileMapTest/TileMapTest.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
-// havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+// havn't implement on airplay
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "TextInputTest/TextInputTest.h"
 #endif
 #include "SpriteTest/SpriteTest.h"
@@ -72,8 +72,8 @@ enum
     TEST_INTERVAL,
     TEST_CHIPMUNK,
     TEST_LABEL,
-    // havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+    // havn't implement on airplay
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     TEST_TEXT_INPUT,
 #endif
     TEST_SPRITE,
@@ -115,8 +115,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "IntervalTest",
     "ChipmunkTest",
     "LabelTest",
-    // havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+    // havn't implement on airplay
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     "TextInputTest",
 #endif
     "SpriteTest",
