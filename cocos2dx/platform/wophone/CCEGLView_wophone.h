@@ -61,7 +61,7 @@ public:
 	void    setContentScaleFactor(float contentScaleFactor);
 	void    setAnimationInterval(double interval) {};
     void    setViewPortInPoints(float x, float y, float w, float h);
-
+    void    setIMEKeyboardState(bool bOpen);
     // static function
     /**
     @brief	get the shared main open gl window
@@ -82,6 +82,8 @@ private:
     TSize               m_tSizeInPoints;
     float               m_fScreenScaleFactor;
     TRectangle          m_rcViewPort;
+    TEdit *             m_pTextField;
+    int                 m_nTextLen;
 };
 
 }   // end of namespace   cocos2d

@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "TCOM_Sensors_Interface.h"
 #include "CCAccelerometer.h"
 #include "CCKeypadDispatcher.h"
+#include "CCIMEDispatcher.h"
 
 #include "CCApplication.h"
 #include "ccMacros.h"
@@ -202,6 +203,8 @@ CCEGLView::CCEGLView(TApplication * pApp)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
 , m_fScreenScaleFactor(1.0f)
+, m_pTextField(NULL)
+, m_nTextLen(0)
 {
 }
 
@@ -253,8 +256,15 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     switch(pEvent->eType)
     {
     case EVENT_WinInit:
-        CfgRegisterScreenSwitchNotify(GetWindowHwndId(), 0);
-        bHandled = TRUE;
+        if ((m_pTextField = new TEdit)
+            && m_pTextField->Create(this))
+        {
+            TRectangle rc(0, pApp->GetScreenHeight(), pApp->GetScreenWidth(), 50);
+            m_pTextField->SetBounds(&rc);
+            m_pTextField->HideCursor();
+            CfgRegisterScreenSwitchNotify(GetWindowHwndId(), 0);
+            bHandled = TRUE;
+        }
         break;
 
     case EVENT_WinPaint:
@@ -300,6 +310,39 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         }
         break;
 
+    case EVENT_FieldChanged:
+        do 
+        {
+            CC_BREAK_IF(pEvent->sParam1 != m_pTextField->GetId());
+
+            const TUChar * ptszText = m_pTextField->GetCaption();
+            CC_BREAK_IF(! ptszText);
+
+            int nLen = TUString::StrLen(ptszText);
+            if (nLen > m_nTextLen)
+            {
+                char szText[MAX_PATH] = {0};
+                CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szText
+                    , TUString::StrUnicodeToStrUtf8((Char *)szText, ptszText + m_nTextLen));
+                m_nTextLen = nLen;
+            }
+            else if (nLen < m_nTextLen)
+            {
+                for (int i = m_nTextLen - nLen; i > 0; --i)
+                {
+                    CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+                }
+                m_nTextLen = nLen;
+            }
+            else
+            {
+                const char * pszReturn = "\n";
+                CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszReturn, 1);
+            }
+        } while (0);
+
+        break;
+
     case MESSAGE_SENSORS_DATA:
         {
             TG3SensorsDataType	data;
@@ -322,6 +365,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_WinClose:
+        ImeCloseIme();
         CfgUnRegisterScreenSwitchNotify(GetWindowHwndId(), 0);
         // Stop the application since the main form has been closed
         pApp->SendStopEvent();
@@ -334,38 +378,6 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         }
 
     }
-//     {
-//         char szType[32];
-//         sprintf(szType, "%d", pEvent->eType);
-//         const char * pszType = szType;
-//         switch (pEvent->eType)
-//         {
-//         case EVENT_ScreenSwitchNotify:
-//             pszType = "EVENT_ScreenSwitchNotify";
-//             break;
-// 
-//         case EVENT_GlesUpdateNotify:
-//             pszType = "EVENT_GlesUpdateNotify";
-//             break;
-// 
-//         case EVENT_WinPaint:
-//             pszType = "EVENT_GlesUpdateNotify";
-//             break;
-//         }
-//         if (pszType)
-//         {
-//             char szMsg[256];
-//             sprintf(szMsg, "%d: %s: %d \r\n", TimGetTicks(), pszType, pEvent->sParam1);
-// #if defined (_TRANZDA_VM_)
-// #define LOG_FILE_NAME "d:/Work7/NEWPLUS/TDA_DATA/UserData/mesagelog.txt"
-// #else
-// #define LOG_FILE_NAME "/NEWPLUS/TDA_DATA/UserData/mesagelog.txt"
-// #endif
-//             FILE * pf = fopen(LOG_FILE_NAME, "a+");
-//             fwrite(szMsg, 1, strlen(szMsg), pf);
-//             fclose(pf);
-//         }
-//     }
 
     if (! bHandled)
     {
@@ -510,6 +522,24 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
             (GLint)(y * factor) + m_rcViewPort.Y(),
             (GLint)(w * factor),
             (GLint)(h * factor));
+    }
+}
+
+void CCEGLView::setIMEKeyboardState(bool bOpen)
+{
+    if (bOpen)
+    {
+        m_nTextLen = 0;
+        TUChar tszEmpty[1] = {0};
+        m_pTextField->SetTitle(tszEmpty, FALSE);
+        m_pTextField->SetFocusStatus(TRUE);
+        ImeOpenIme(IME_MODE_STATIC, IME_CLASS_UNDEFINED);
+
+    }
+    else
+    {
+        ImeCloseIme();
+        m_pTextField->SetFocusStatus(FALSE);
     }
 }
 

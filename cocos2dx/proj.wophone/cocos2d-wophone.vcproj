@@ -381,6 +381,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCIMEDelegate.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCIMEDispatcher.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCKeypadDelegate.h"
 				>
 			</File>
@@ -514,6 +522,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCString.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTextFieldTTF.h"
 				>
 			</File>
 			<File
@@ -1066,6 +1078,18 @@
 			</File>
 			<File
 				RelativePath="..\keypad_dispatcher\CCKeypadDispatcher.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="test_input_node"
+			>
+			<File
+				RelativePath="..\text_input_node\CCIMEDispatcher.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\text_input_node\CCTextFieldTTF.cpp"
 				>
 			</File>
 		</Filter>
