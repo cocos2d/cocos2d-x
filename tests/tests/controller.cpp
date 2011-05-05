@@ -17,6 +17,8 @@ static void ChangeOrientation(ccDeviceOrientation eOrientation)
 
 static TestScene* CreateTestScene(int nIdx)
 {
+    CCDirector::sharedDirector()->purgeCachedData();
+
     // change to default orientation
     ChangeOrientation(CCDeviceOrientationPortrait);
 

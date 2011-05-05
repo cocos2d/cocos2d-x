@@ -1,7 +1,9 @@
+// #define COCOS2D_DEBUG   1
+
 #include "CCApplication_wophone.h"
 
 #include "ssBackLightControl.h"
-#include "ssKeyLockControl.h"
+//#include "ssKeyLockControl.h"
 
 #include "CCScheduler.h"
 
@@ -113,8 +115,16 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
             {
                 StopMainLoop();
             }
-            CfgTurnOnBackLight();
-            EnableKeyLock();
+
+            // restore back light open mode
+            if (CfgGetBackLightStatus())
+            {
+                CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_LONG);
+                CCLOG("AppActiveNotify::TurnOnBackLight:MODE_TIME_LONG");
+            }
+
+//             EnableKeyLock();
+//             CCLOG("AppActiveNotify::InBackground");
         }
         else if (pEvent->sParam1 > 0)
         {
@@ -126,12 +136,19 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
 
             StartMainLoop();
 
-            CfgTurnOnBackLightDelay(0x7fffffff);
-            // if KeyLock disactived, disable it.
-            if (! CfgKeyLock_GetActive())
+            // modify back light open mode
+            if (CfgGetBackLightStatus())
             {
-                DisableKeyLock();
+                CfgTurnOnBackLightDelay(0x7fffffff);
+                CCLOG("AppActiveNotify::TurnOnBackLight:0x7fffffff");
             }
+
+            // if KeyLock disactived, disable it.
+//             if (! CfgKeyLock_GetActive())
+//             {
+//                 DisableKeyLock();
+//                 CCLOG("AppActiveNotify::DisableKeyLock");
+//             }
         }
         break;
     }
@@ -172,6 +189,8 @@ void CCApplication::switchNotify(int nTurnOn)
 {
     bool bInBack = isInBackground();
 
+    // set the auto close screen and auto key lock status
+
     do 
     {
         // if the app have be in background,don't handle this message
@@ -182,9 +201,23 @@ void CCApplication::switchNotify(int nTurnOn)
             // CCDirector::sharedDirector()->pause();
             applicationDidEnterBackground();
             StopMainLoop();
+
+//             EnableKeyLock();
+//             CCLOG("BLswitchNotify::EnableKeyLock");
         }
         else
         {
+            // modify back light open mode
+            CfgTurnOnBackLightDelay(0x7fffffff);
+            CCLOG("AppActiveNotify::TurnOnBackLight:0x7fffffff");
+
+//             // if KeyLock disactived, disable it.
+//             if (! CfgKeyLock_GetActive())
+//             {
+//                 DisableKeyLock();
+//                 CCLOG("BLswitchNotify::DisableKeyLock");
+//             }
+// 
             // CCDirector::sharedDirector()->resume();
             applicationWillEnterForeground();
             StartMainLoop();
