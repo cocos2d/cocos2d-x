@@ -64,8 +64,8 @@
     <Filter Include="keypad_dispatcher">
       <UniqueIdentifier>{b7e6a4ee-f78a-4399-8f56-526294bf8580}</UniqueIdentifier>
     </Filter>
-    <Filter Include="event_dispatcher">
-      <UniqueIdentifier>{1b2d8814-d294-4657-be38-4f6d904ad475}</UniqueIdentifier>
+    <Filter Include="test_input_node">
+      <UniqueIdentifier>{2bb0e4ec-d798-44ec-bc81-c7f7bfc90391}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -174,37 +174,16 @@
     <ClCompile Include="..\platform\CCCommon.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCDirector_mobile.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCGL.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCGrid_mobile.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCImage.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCLayer_mobile.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCMenu_mobile.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCNode_mobile.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCParticleSystemPoint_mobile.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCStdC.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCThread.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCTransition_mobile.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\platform.cpp">
@@ -306,15 +285,6 @@
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp">
       <Filter>keypad_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCEventDispatcher.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCKeyboardEventDelegate.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event_dispatcher\CCMouseEventDelegate.cpp">
-      <Filter>event_dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCConfiguration.cpp" />
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />
@@ -328,6 +298,34 @@
     </ClCompile>
     <ClCompile Include="..\cocoa\CCNS.cpp">
       <Filter>cocoa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp">
+      <Filter>test_input_node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp">
+      <Filter>test_input_node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base_nodes\CCNode.cpp">
+      <Filter>base_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCDirector.cpp" />
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\particle_nodes\CCParticleSystemPoint.cpp">
+      <Filter>particle_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CCArray.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\effects\CCGrid.cpp">
+      <Filter>effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\menu_nodes\CCMenu.cpp">
+      <Filter>menu_nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -622,12 +620,6 @@
     <ClInclude Include="..\platform\CCNS.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCParticleSystemPoint_mobile.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCParticleSystemPoint_platform.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCPlatformConfig.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -697,6 +689,15 @@
     </ClInclude>
     <ClInclude Include="..\cocoa\CCNS.h">
       <Filter>cocoa</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCTextFieldTTF.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCIMEDelegate.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCIMEDispatcher.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

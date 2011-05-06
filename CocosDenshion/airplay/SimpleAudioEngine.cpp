@@ -67,7 +67,7 @@ namespace CocosDenshion
 		s3eFreeBase(g_AudioBuffer);
 	}
 
-	void SimpleAudioEngine::setResource(const char* pszZipFileName, const char* pszResPath)
+	void SimpleAudioEngine::setResource(const char* pszZipFileName)
 	{
 
 	}

@@ -63,12 +63,39 @@ NS_CC_END;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 #include "TG3.h"
 
-#define LOG_FILE_PATH   "/NEWPLUS/TDA_DATA/UserData/Cocos2dLog.txt"
+static char s_szLogFilePath[EOS_FILE_MAX_PATH] = {0};
 
 NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
 {
+    if (! s_szLogFilePath[0])
+    {
+        // save the log file named "Cocos2dxLog.txt" to the directory which the app.so in.
+        TUChar AppID[EOS_FILE_MAX_PATH] = {0};
+        UInt32 nCmdType = 0;
+        Int32  nRet = SS_AppRequest_GetAppName(AppID, &nCmdType);
+        if (nRet < 0)
+        {
+            return;
+        }
+
+        TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
+        if (SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_EXECUTABLE, AppPath) < 0)
+        {
+            return;
+        }
+        char szAppPath[EOS_FILE_MAX_PATH] = {0};
+        TUString::StrUnicodeToStrUtf8((Char*) szAppPath, AppPath);
+#ifndef _TRANZDA_VM_
+        strcpy(s_szLogFilePath, "");
+#else
+        strcpy(s_szLogFilePath, "D:/Work7");
+#endif
+        strcat(s_szLogFilePath, szAppPath);
+        strcat(s_szLogFilePath, "Cocos2dxLog.txt");
+    }
+
     SS_printf("Cocos2d: ");
     char szBuf[MAX_LEN];
 
@@ -86,7 +113,7 @@ void CCLog(const char * pszFormat, ...)
     SS_printf("\n");
 #else
     SS_printf("\r\n");
-    FILE * pf = fopen(LOG_FILE_PATH, "a+");
+    FILE * pf = fopen(s_szLogFilePath, "a+");
     if (! pf)
     {
         return;
