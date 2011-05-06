@@ -17,6 +17,7 @@
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
+		BF126CE71373EE2800C4ABC5 /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF126CE61373EE2800C4ABC5 /* CCUserDefault.cpp */; };
 		BF1915C412E04F70007DCFF1 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915BA12E04F70007DCFF1 /* CloseNormal.png */; };
 		BF1915C512E04F70007DCFF1 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915BB12E04F70007DCFF1 /* CloseSelected.png */; };
 		BF1915C612E04F70007DCFF1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1915BC12E04F70007DCFF1 /* Default.png */; };
@@ -257,6 +258,7 @@
 		BF8362B51328687F00F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8360621328687F00F3C033 /* CCTouchHandler.h */; };
 		BF83631F13286EF300F3C033 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83631B13286EF300F3C033 /* HelloWorldScene.cpp */; };
 		BF83638D132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
+		BF9935F21373ED1200197D1B /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF9935F11373ED1200197D1B /* CCUserDefault.h */; };
 		BFA008A6134423F500289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008A5134423F500289DC3 /* CCCommon_ios.mm */; };
 		BFA70A1E136AB06C00ABC725 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */; };
 		BFA70A1F136AB06C00ABC725 /* CCIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA70A1C136AB06C00ABC725 /* CCIMEDispatcher.h */; };
@@ -291,6 +293,7 @@
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		506EE05E10304ED200A389B3 /* libcocos2d libraries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d libraries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF126CE61373EE2800C4ABC5 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
 		BF1915BA12E04F70007DCFF1 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		BF1915BB12E04F70007DCFF1 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		BF1915BC12E04F70007DCFF1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -533,6 +536,7 @@
 		BF83631C13286EF300F3C033 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
 		BF83638B132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
+		BF9935F11373ED1200197D1B /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		BFA008A5134423F500289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
 		BFA70A1C136AB06C00ABC725 /* CCIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDispatcher.h; sourceTree = "<group>"; };
@@ -802,6 +806,7 @@
 		BF835DE71328687E00F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF9935F11373ED1200197D1B /* CCUserDefault.h */,
 				BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */,
 				BFA70A1C136AB06C00ABC725 /* CCIMEDispatcher.h */,
 				BFA70A1D136AB06C00ABC725 /* CCTextFieldTTF.h */,
@@ -1025,6 +1030,7 @@
 		BF8360381328687F00F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF126CE61373EE2800C4ABC5 /* CCUserDefault.cpp */,
 				BF193F351360087D002463D2 /* CCArray.cpp */,
 				BF8360391328687F00F3C033 /* base64.cpp */,
 				BF83603A1328687F00F3C033 /* base64.h */,
@@ -1255,6 +1261,7 @@
 				BFA70A1E136AB06C00ABC725 /* CCIMEDelegate.h in Headers */,
 				BFA70A1F136AB06C00ABC725 /* CCIMEDispatcher.h in Headers */,
 				BFA70A20136AB06C00ABC725 /* CCTextFieldTTF.h in Headers */,
+				BF9935F21373ED1200197D1B /* CCUserDefault.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,6 +1467,7 @@
 				BF193F361360087D002463D2 /* CCArray.cpp in Sources */,
 				BFA70A24136AB08700ABC725 /* CCIMEDispatcher.cpp in Sources */,
 				BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */,
+				BF126CE71373EE2800C4ABC5 /* CCUserDefault.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

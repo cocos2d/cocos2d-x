@@ -460,6 +460,7 @@
 		BF835D7C13276C7900F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835B2913276C7900F3C033 /* CCTouchHandler.h */; };
 		BF99347E1373E6CE00197D1B /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF99347D1373E6CE00197D1B /* CCUserDefault.h */; };
 		BF9934801373E6E600197D1B /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF99347F1373E6E600197D1B /* CCUserDefault.cpp */; };
+		BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */; };
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
@@ -1043,6 +1044,8 @@
 		BF835B2913276C7900F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BF99347D1373E6CE00197D1B /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		BF99347F1373E6E600197D1B /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
+		BF9935D91373EBF500197D1B /* UserDefaultTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultTest.h; sourceTree = "<group>"; };
+		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1536,6 +1539,7 @@
 				BF31E1B612E979A200D4F513 /* TouchesTest */,
 				BF31E1BD12E979A200D4F513 /* TransitionsTest */,
 				BF2CE32E13666A78006DCA18 /* TextInputTest */,
+				BF9935D81373EBF500197D1B /* UserDefaultTest */,
 				D4E39D2F1342E22F00EBA039 /* ZwoptexTest */,
 			);
 			path = tests;
@@ -2316,6 +2320,15 @@
 			path = touch_dispatcher;
 			sourceTree = "<group>";
 		};
+		BF9935D81373EBF500197D1B /* UserDefaultTest */ = {
+			isa = PBXGroup;
+			children = (
+				BF9935D91373EBF500197D1B /* UserDefaultTest.h */,
+				BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */,
+			);
+			path = UserDefaultTest;
+			sourceTree = "<group>";
+		};
 		D4E39D2F1342E22F00EBA039 /* ZwoptexTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2774,6 +2787,7 @@
 				BF2CE34713666B43006DCA18 /* CCIMEDispatcher.cpp in Sources */,
 				BF2CE34813666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */,
 				BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */,
+				BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3025,7 +3039,7 @@
 				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = iphone;
-				SDKROOT = iphoneos;
+				SDKROOT = iphonesimulator4.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
