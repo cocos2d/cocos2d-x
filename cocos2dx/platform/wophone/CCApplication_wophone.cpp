@@ -277,7 +277,7 @@ Int32 CCApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 #endif
             else
             {
-                Sys_Sleep(0);
+                Sys_SchedYield();
             }
             Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &rThis.m_tMsg);
         }
