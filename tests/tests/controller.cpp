@@ -67,12 +67,10 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-		ChangeOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)
-		ChangeOrientation(CCDeviceOrientationLandscapeLeft);
         pScene = new ChipmunkTestScene(); break;
 #endif
 #endif

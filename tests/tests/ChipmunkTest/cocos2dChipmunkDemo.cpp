@@ -444,9 +444,9 @@ void ChipmunkTestLayer::onEnter()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 	// portraint
-    glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
+    // glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
 	// landscape
-	// glOrthof(-480/factor, 480/factor, -320/factor, 320/factor, 1.0f, -1.0f);   
+	glOrthof(-480/factor, 480/factor, -320/factor, 320/factor, 1.0f, -1.0f);   
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

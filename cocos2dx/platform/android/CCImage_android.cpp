@@ -216,7 +216,7 @@ bool CCImage::initWithString(
 		}
 		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 
-		bRet = dc.drawText(pText, nWidth, nHeight, eAlignMask);
+		CC_BREAK_IF( false == dc.drawText(pText, nWidth, nHeight, eAlignMask) );
 
 		/*init image information */
 		SkBitmap *pBitmap = dc.getBitmap();
