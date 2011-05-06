@@ -141,7 +141,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 		multiSampling_ = sampling;
 		requestedSamples_ = nSamples;
 		preserveBackbuffer_ = retained;
-		
+		markedText_ = nil;
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
 			return nil;
@@ -166,7 +166,8 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 		multiSampling_= NO;
 		requestedSamples_ = 0;
 		size_ = [eaglLayer bounds].size;
-
+		markedText_ = nil;
+		
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			[self release];
 			return nil;
@@ -193,7 +194,6 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardDidHideNotification object:nil];
-    
 }
 
 -(int) getWidth
@@ -516,6 +516,9 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (BOOL)canBecomeFirstResponder
 {
+	if (nil != markedText_) {
+		[markedText_ release];
+	}
     markedText_ = nil;
     return YES;
 }
@@ -530,12 +533,20 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 
 - (void)insertText:(NSString *)text
 {
+	if (nil != markedText_) {
+		[markedText_ release];
+		markedText_ = nil;
+	}
     const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
     cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
 }
 
 - (void)deleteBackward
 {
+	if (nil != markedText_) {
+		[markedText_ release];
+		markedText_ = nil;
+	}
     cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
@@ -576,7 +587,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (NSString *)textInRange:(UITextRange *)range;
 {
     CCLOG("textInRange");
-	return nil;
+	return @"";
 }
 - (void)replaceRange:(UITextRange *)range withText:(NSString *)theText;
 {
@@ -618,7 +629,14 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 - (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
 {
     CCLOG("setMarkedText");
+	if (markedText == markedText_) {
+		return;
+	}
+	if (nil != markedText_) {
+		[markedText_ release];
+	}
     markedText_ = markedText;
+	[markedText_ retain];
 }
 - (void)unmarkText;
 {
@@ -629,6 +647,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     }
     const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
     cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+	[markedText_ release];
     markedText_ = nil;
 }
 
@@ -704,7 +723,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 /* JS - Find the closest position to a given point */
 - (UITextPosition *)closestPositionToPoint:(CGPoint)point;
 {
-    CCLOG(@"closestPositionToPoint");
+    CCLOG("closestPositionToPoint");
 	return nil;
 }
 - (UITextPosition *)closestPositionToPoint:(CGPoint)point withinRange:(UITextRange *)range;
@@ -807,9 +826,10 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     }
     else if (UIKeyboardDidShowNotification == type)
     {
+		CGSize screenSize = self.window.screen.bounds.size;
         dispatcher->dispatchKeyboardDidShow(notiInfo);
         caretRect_ = end;
-        caretRect_.origin.y = caretRect_.origin.y + caretRect_.size.height;
+        caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + [UIFont smallSystemFontSize]);
         caretRect_.size.height = 0;
     }
     else if (UIKeyboardWillHideNotification == type)
@@ -822,5 +842,4 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
         dispatcher->dispatchKeyboardDidHide(notiInfo);
     }
 }
-
 @end
