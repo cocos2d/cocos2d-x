@@ -152,6 +152,10 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
 		CC_SAFE_FREE(m_pQuads)
 		CC_SAFE_FREE(m_pIndices)
+
+		// release texture, should set it to null, because the destruction will
+		// release it too. see cocos2d-x issue #484
+		CC_SAFE_RELEASE_NULL(m_pTexture);
 		return false;
 	}
 
