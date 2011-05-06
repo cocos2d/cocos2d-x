@@ -458,6 +458,8 @@
 		BF835D7A13276C7900F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B2713276C7900F3C033 /* CCTouchDispatcher.cpp */; };
 		BF835D7B13276C7900F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B2813276C7900F3C033 /* CCTouchHandler.cpp */; };
 		BF835D7C13276C7900F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835B2913276C7900F3C033 /* CCTouchHandler.h */; };
+		BF99347E1373E6CE00197D1B /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF99347D1373E6CE00197D1B /* CCUserDefault.h */; };
+		BF9934801373E6E600197D1B /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF99347F1373E6E600197D1B /* CCUserDefault.cpp */; };
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
@@ -1039,6 +1041,8 @@
 		BF835B2713276C7900F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF835B2813276C7900F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF835B2913276C7900F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
+		BF99347D1373E6CE00197D1B /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
+		BF99347F1373E6E600197D1B /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -2000,6 +2004,7 @@
 		BF8358AE13276C7700F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF99347D1373E6CE00197D1B /* CCUserDefault.h */,
 				BF193EDB13600549002463D2 /* CCArray.h */,
 				BF2CE35C13666BD0006DCA18 /* CCTextFieldTTF.h */,
 				BF2CE34013666B01006DCA18 /* CCIMEDelegate.h */,
@@ -2227,6 +2232,7 @@
 		BF835AFF13276C7900F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF99347F1373E6E600197D1B /* CCUserDefault.cpp */,
 				BF193EDD1360055A002463D2 /* CCArray.cpp */,
 				BF835B0013276C7900F3C033 /* base64.cpp */,
 				BF835B0113276C7900F3C033 /* base64.h */,
@@ -2454,6 +2460,7 @@
 				BF2CE34213666B01006DCA18 /* CCIMEDelegate.h in Headers */,
 				BF2CE34313666B01006DCA18 /* CCIMEDispatcher.h in Headers */,
 				BF2CE35D13666BD0006DCA18 /* CCTextFieldTTF.h in Headers */,
+				BF99347E1373E6CE00197D1B /* CCUserDefault.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2871,6 +2878,7 @@
 				BF193EDE1360055A002463D2 /* CCArray.cpp in Sources */,
 				BF2CE34913666B43006DCA18 /* CCIMEDispatcher.cpp in Sources */,
 				BF2CE34A13666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */,
+				BF9934801373E6E600197D1B /* CCUserDefault.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

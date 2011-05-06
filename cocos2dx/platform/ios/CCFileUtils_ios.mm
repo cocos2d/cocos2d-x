@@ -337,6 +337,14 @@ namespace cocos2d {
     {
         return s_bPopupNotify;
     }
+    
+    std::string CCFileUtils::getWriteablePath()
+    {
+        // save to document folder
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        return [documentsDirectory UTF8String];        
+    }
 
 }//namespace cocos2d
 
