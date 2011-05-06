@@ -109,6 +109,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ZwoptexTestScene(); break;
 	case TEST_CURL:
 		pScene = new CurlTestScene(); break;
+	case TEST_USERDEFAULT:
+		pScene = new UserDefaultTestScene(); break;
     default:
         break;
     }

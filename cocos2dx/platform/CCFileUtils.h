@@ -86,6 +86,12 @@ public:
     */
     static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 
+	/**
+	@brief   Get the writeable path
+	@return  The path that can write/read file
+	*/
+	static const std::string getWriteablePath();
+
     /**
     @brief Set/Get whether pop-up a message box when the image load failed
     */

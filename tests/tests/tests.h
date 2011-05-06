@@ -21,10 +21,12 @@
 #include "TileMapTest/TileMapTest.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
+
 // havn't implement on wophone and airplay
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "TextInputTest/TextInputTest.h"
-#endif
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
@@ -38,6 +40,7 @@
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
 #include "CurlTest/CurlTest.h"
+#include "UserDefaultTest/UserDefaultTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -47,7 +50,7 @@
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
 #endif
 #endif
-#endif
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 
 enum
 {
@@ -89,6 +92,7 @@ enum
     TEST_PERFORMANCE,
     TEST_ZWOPTEX,
 	TEST_CURL,
+	TEST_USERDEFAULT,
 
     TESTS_COUNT,
 };
@@ -131,7 +135,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"CocosDenshionTest",
     "PerformanceTest",
     "ZwoptexTest",
-	"CurlTest"
+	"CurlTest",
+	"UserDefaultTest"
 };
 
 #endif
