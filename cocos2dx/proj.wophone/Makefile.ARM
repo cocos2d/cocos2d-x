@@ -110,6 +110,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/ioapi.o \
 	$(OBJECTS_DIR)/unzip.o \
 	$(OBJECTS_DIR)/ZipUtils.o \
+	$(OBJECTS_DIR)/CCIMEDispatcher.o \
+	$(OBJECTS_DIR)/CCTextFieldTTF.o \
 	$(OBJECTS_DIR)/CCTexture2D.o \
 	$(OBJECTS_DIR)/CCTextureAtlas.o \
 	$(OBJECTS_DIR)/CCTextureCache.o \
@@ -372,6 +374,12 @@ $(OBJECTS_DIR)/unzip.o : ../support/zip_support/unzip.cpp
 
 $(OBJECTS_DIR)/ZipUtils.o : ../support/zip_support/ZipUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ZipUtils.o ../support/zip_support/ZipUtils.cpp
+
+$(OBJECTS_DIR)/CCIMEDispatcher.o : ../text_input_node/CCIMEDispatcher.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCIMEDispatcher.o ../text_input_node/CCIMEDispatcher.cpp
+
+$(OBJECTS_DIR)/CCTextFieldTTF.o : ../text_input_node/CCTextFieldTTF.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTextFieldTTF.o ../text_input_node/CCTextFieldTTF.cpp
 
 $(OBJECTS_DIR)/CCTexture2D.o : ../textures/CCTexture2D.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTexture2D.o ../textures/CCTexture2D.cpp

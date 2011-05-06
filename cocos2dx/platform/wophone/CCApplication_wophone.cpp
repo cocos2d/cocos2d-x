@@ -52,7 +52,7 @@ CCApplication::CCApplication()
 
         TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
         char   DataPath[EOS_FILE_MAX_PATH] = {0};
-        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_DATA, AppPath);
+        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_CONST, AppPath);
         TUString::StrUnicodeToStrUtf8((Char*) DataPath, AppPath);
 
 #ifndef _TRANZDA_VM_

@@ -95,7 +95,7 @@ namespace cocos2d
 	bool CCProfilingTimer::initWithName(const char* pszTimerName, CCObject *pInstance)
 	{
 		char tmp[160];
-		sprintf(tmp, "%s (0x%.8x)", pszTimerName, pInstance);
+		sprintf(tmp, "%s (0x%.8x)", pszTimerName, (unsigned int)pInstance);
 		m_NameStr = string(tmp);
         m_dAverageTime = 0.0;
 

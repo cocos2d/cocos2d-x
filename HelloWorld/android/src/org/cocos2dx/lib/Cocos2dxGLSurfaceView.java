@@ -176,14 +176,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         mRenderer = new Cocos2dxRenderer();
         setFocusableInTouchMode(true);
         setRenderer(mRenderer);
         mainView = this;
     }
     
-    public void onPause(){    	
+    public void onPause(){
     	queueEvent(new Runnable() {
             @Override
             public void run() {
