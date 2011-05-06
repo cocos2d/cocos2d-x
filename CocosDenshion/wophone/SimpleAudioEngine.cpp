@@ -80,9 +80,9 @@ void SimpleAudioEngine::end()
 	}
 }
 
-void SimpleAudioEngine::setResource(const char* pszZipFileName, const char* pszResPath)
+void SimpleAudioEngine::setResource(const char* pszZipFileName)
 {
-    FileUtils::setResource(pszResPath, pszZipFileName);
+    FileUtils::setResource(pszZipFileName);
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
