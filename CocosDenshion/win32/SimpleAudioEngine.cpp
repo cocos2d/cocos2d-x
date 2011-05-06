@@ -54,7 +54,7 @@ void SimpleAudioEngine::end()
     return;
 }
 
-void SimpleAudioEngine::setResource(const char* pszZipFileName, const char* pszResPath)
+void SimpleAudioEngine::setResource(const char* pszZipFileName)
 {
 }
 

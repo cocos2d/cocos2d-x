@@ -24,7 +24,7 @@ public:
     @param pszResPath  The absolute resource path
     @param pszZipFileName The relative path of the .zip file
     */
-    static void setResource(const char* pszResPath, const char* pszZipFileName);
+    static void setResource(const char* pszZipFileName);
 
     /**
     @brief Get resource file data

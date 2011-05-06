@@ -264,7 +264,7 @@ function AddConfigurations(proj, strProjectName) {
 
             var PostBuildTool = config.Tools("VCPostBuildEventTool");
             PostBuildTool.Description = "Performing registration...";
-            var strResDir = "..\\..\\NEWPLUS\\TDA_DATA\\Data\\";
+            var strResDir = "..\\..\\NEWPLUS\\TG3\\ConstData\\";
             var strPostCmd = "mkdir " + strResDir;
             strPostCmd += "\r\nxcopy /E /Y .\\Resource\\*.* " + strResDir;
             PostBuildTool.CommandLine = strPostCmd;
