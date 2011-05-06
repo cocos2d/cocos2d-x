@@ -340,5 +340,11 @@ bool CCFileUtils::getIsPopupNotify()
     return s_bPopupNotify;
 }
 
+std::string CCFileUtils::getWriteablePath()
+{
+	// fixed me, what path can airplay can write
+	return string("");
+}
+
 NS_CC_END; 
 
