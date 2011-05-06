@@ -947,6 +947,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="UserDefaultTest"
+					>
+					<File
+						RelativePath="..\tests\UserDefaultTest\UserDefaultTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\UserDefaultTest\UserDefaultTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

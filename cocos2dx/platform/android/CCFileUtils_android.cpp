@@ -104,4 +104,12 @@ int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     return 0;
 }
 
+const string CCFileUtils::getWriteablePath()
+{
+	// the path is: /data/data/ + package name
+	string dir("/data/data");
+	size_t length = s_strResourcePath.rfind(".") - s_strResourcePath.rfind("/");
+	return dir + s_strResourcePath.substr(s_strResourcePath.rfind("/"), length) + "/" ;
+}
+
 NS_CC_END;
