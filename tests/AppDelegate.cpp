@@ -46,7 +46,7 @@ bool AppDelegate::initInstance()
         // Initialize OpenGLView instance, that release by CCDirector when application terminate.
         // The tests is designed as HVGA.
         CCEGLView* pMainWnd = new CCEGLView(this);
-        CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
+        CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320 ,480, WM_WINDOW_ROTATE_MODE_CW));
 
 #ifndef _TRANZDA_VM_  
         // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data folder instead of zip file

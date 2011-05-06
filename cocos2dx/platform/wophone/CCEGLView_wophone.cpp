@@ -206,6 +206,7 @@ CCEGLView::CCEGLView(TApplication * pApp)
 , m_pTextField(NULL)
 , m_nTextLen(0)
 {
+    memset(&m_rcKeyboard, 0, sizeof(m_rcKeyboard));
 }
 
 CCEGLView::~CCEGLView()
@@ -214,7 +215,7 @@ CCEGLView::~CCEGLView()
     CC_SAFE_DELETE(m_pEGL);
 }
 
-Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints)
+Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints, UInt32 eRotateMode)
 {
     // record the window size in points
     m_tSizeInPoints.SetWidth(nWidthInPoints);
@@ -236,6 +237,23 @@ Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints)
 
     Boolean bRet = TWindow::Create(&TRectangle(0, 0, nWidth, nHeight));
 
+    Coord temp;
+    Int32 tmp;
+    if (WM_WINDOW_ROTATE_MODE_CW == eRotateMode
+        || WM_WINDOW_ROTATE_MODE_CCW == eRotateMode)
+    {
+        temp = m_rcViewPort.X();
+        m_rcViewPort.SetX(m_rcViewPort.Y());
+        m_rcViewPort.SetY(temp);
+        temp = m_rcViewPort.Width();
+        m_rcViewPort.SetWidth(m_rcViewPort.Height());
+        m_rcViewPort.SetHeight(temp);
+
+        tmp = m_tSizeInPoints.Width();
+        m_tSizeInPoints.SetWidth(m_tSizeInPoints.Height());
+        m_tSizeInPoints.SetHeight(tmp);
+    }
+    this->RotateWindow(eRotateMode);
     if (bRet)
     {
         s_pMainWindow = this;
@@ -307,6 +325,46 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
             {
                 bHandled = CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
             }
+        }
+        break;
+
+    case EVENT_WinImeStatusNotify:
+        {
+            EosImeNotifyEventType * pNotify = (EosImeNotifyEventType*)pEvent;
+            if (IME_NOTIFY_TYPE_KEYBOARD_SIZE == pNotify->notifyType)
+            {
+                m_rcKeyboard = pNotify->rtKeyboard;
+
+                //keyboard open
+                CCIMEKeyboardNotificationInfo info;
+                info.begin = CCRectMake((float)0
+                    , (float)0 - m_rcKeyboard.extent.Y
+                    , (float)m_rcKeyboard.extent.X
+                    , (float)m_rcKeyboard.extent.Y);
+                info.end = CCRectMake((float)0
+                    , (float)0
+                    , (float)m_rcKeyboard.extent.X
+                    , (float)m_rcKeyboard.extent.Y);
+                info.duration = 0;
+                CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
+                CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
+            }
+            else if (IME_NOTIFY_TYPE_IME_CLOSE == pNotify->notifyType)
+            {
+                CCIMEKeyboardNotificationInfo info;
+                info.begin = CCRectMake((float)0
+                    , (float)0
+                    , (float)m_rcKeyboard.extent.X
+                    , (float)m_rcKeyboard.extent.Y);
+                info.end = CCRectMake((float)0
+                    , (float)0 - m_rcKeyboard.extent.Y
+                    , (float)m_rcKeyboard.extent.X
+                    , (float)m_rcKeyboard.extent.Y);
+                info.duration = 0;
+                CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillHide(info);
+                CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidHide(info);
+            }
+            pEvent->sParam1 = pEvent->sParam1;
         }
         break;
 

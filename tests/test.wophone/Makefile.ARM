@@ -83,6 +83,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/KeypadTest.o \
 	$(OBJECTS_DIR)/LabelTest.o \
 	$(OBJECTS_DIR)/LayerTest.o \
+	$(OBJECTS_DIR)/TextInputTest.o \
 	$(OBJECTS_DIR)/MenuTest.o \
 	$(OBJECTS_DIR)/MotionStreakTest.o \
 	$(OBJECTS_DIR)/ParallaxTest.o \
@@ -257,6 +258,9 @@ $(OBJECTS_DIR)/KeypadTest.o : ../tests/KeypadTest/KeypadTest.cpp
 
 $(OBJECTS_DIR)/LabelTest.o : ../tests/LabelTest/LabelTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/LabelTest.o ../tests/LabelTest/LabelTest.cpp
+
+$(OBJECTS_DIR)/TextInputTest.o : ../tests/TextInputTest/TextInputTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TextInputTest.o ../tests/TextInputTest/TextInputTest.cpp
 
 $(OBJECTS_DIR)/LayerTest.o : ../tests/LayerTest/LayerTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/LayerTest.o ../tests/LayerTest/LayerTest.cpp

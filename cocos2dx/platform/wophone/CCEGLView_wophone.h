@@ -47,7 +47,7 @@ public:
     CCEGLView(TApplication * pApp);
     virtual ~CCEGLView();
 
-    virtual Boolean Create(int nWidthInPoints, int nHeightInPoints);
+    virtual Boolean Create(int nWidthInPoints, int nHeightInPoints, UInt32 eRotateMode = WM_WINDOW_ROTATE_MODE_NORMAL);
     virtual Boolean AfterCreate(void);
     virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
 
@@ -84,6 +84,7 @@ private:
     TRectangle          m_rcViewPort;
     TEdit *             m_pTextField;
     int                 m_nTextLen;
+    RectangleType       m_rcKeyboard;
 };
 
 }   // end of namespace   cocos2d
