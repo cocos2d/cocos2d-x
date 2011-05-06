@@ -163,7 +163,7 @@ void CCFileUtils::setRelativePath(const char* pszRelativePath)
     CCAssert(0, "Have not implement!");
 }
 
-const string CCFileUtils::getWriteablePath()
+string CCFileUtils::getWriteablePath()
 {
 	// return the path that the exe file saved in
 

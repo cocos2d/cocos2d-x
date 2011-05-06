@@ -133,6 +133,21 @@ CCUserDefault* CCUserDefault::m_spUserDefault = 0;
 string CCUserDefault::m_sFilePath = string("");
 bool CCUserDefault::m_sbIsFilePathInitialized = false;
 
+/**
+ * If the user invoke delete CCUserDefault::sharedUserDefault(), should set m_spUserDefault
+ * to null to avoid error when he invoke CCUserDefault::sharedUserDefault() later.
+ */
+CCUserDefault::~CCUserDefault()
+{
+	m_spUserDefault = NULL;
+}
+
+void CCUserDefault::purgeSharedUserDefault()
+{
+	CC_SAFE_DELETE(m_spUserDefault);
+	m_spUserDefault = NULL;
+}
+
 bool CCUserDefault::getBoolForKey(const char* pKey)
 {
 	const char* value = getValueForKey(pKey);

@@ -35,7 +35,7 @@ NS_CC_BEGIN;
 class CC_DLL CCUserDefault
 {
 public:
-	~CCUserDefault() {}
+	~CCUserDefault();
 
 	// get value methods
 	bool	getBoolForKey(const char* pKey);
@@ -52,6 +52,7 @@ public:
 	void	setStringForKey(const char* pKey, std::string value);
 
 	static CCUserDefault* sharedUserDefault();
+	static void purgeSharedUserDefault();
 	const static std::string& getXMLFilePath();
 
 private:

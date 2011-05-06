@@ -104,7 +104,7 @@ int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     return 0;
 }
 
-const string CCFileUtils::getWriteablePath()
+string CCFileUtils::getWriteablePath()
 {
 	// the path is: /data/data/ + package name
 	string dir("/data/data");
