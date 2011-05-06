@@ -298,7 +298,6 @@ void CCUserDefault::initXMLFilePath()
 	if (! m_sbIsFilePathInitialized)
 	{
 		m_sFilePath += CCFileUtils::getWriteablePath() + XML_FILE_NAME;
-		CCLog(m_sFilePath.c_str());
 		m_sbIsFilePathInitialized = true;
 	}	
 }
