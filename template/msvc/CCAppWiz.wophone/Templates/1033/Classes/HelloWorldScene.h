@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 [! if CC_USE_BOX2D]
 
-#include "Box2D.h"
+#include "Box2D/Box2D.h"
 [! endif]
 [! if CC_USE_CHIPMUNK]
 
