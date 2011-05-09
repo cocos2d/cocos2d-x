@@ -67,12 +67,22 @@ modify_androidmanifest(){
     sed "s/ApplicationDemo/$APP_NAME/" $HELLOWORLD_ROOT/android/AndroidManifest.xml > $APP_DIR/android/AndroidManifest.xml
 }
 
-# rename APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java 
-# and change some content
+# modify ApplicationDemo.java
 modify_applicationdemo(){
-    sed "s/ApplicationDemo/$APP_NAME/" $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/android/src/org/cocos2dx/application/tempfile.java
+    # rename APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java to 
+    # APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java, change helloworld to game
+    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/" $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/android/src/org/cocos2dx/application/tempfile.java    
     rm -f $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java
     mv $APP_DIR/android/src/org/cocos2dx/application/tempfile.java $APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java
+    
+    
+}
+
+modify_layout(){
+    cp $HELLOWORLD_ROOT/android/res/layout/helloworld_demo.xml $APP_DIR/android/res/layout
+    sed "s/helloworld_gl_surfaceview/game_gl_surfaceview/" $APP_DIR/android/res/layout/helloworld_demo.xml > $APP_DIR/android/res/layout/game_demo.xml
+    rm -f $APP_DIR/android/res/layout/main.xml
+    rm -f $APP_DIR/android/res/layout/helloworld_demo.xml
 }
 
 move_files_into_android
@@ -82,3 +92,4 @@ copy_src_and_jni
 copy_build_native
 modify_androidmanifest
 modify_applicationdemo
+modify_layout
