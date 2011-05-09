@@ -26,6 +26,10 @@ THE SOFTWARE.
 #include <TG3.h>
 #include "CCApplication.h"
 
+#include <string>
+
+using namespace std;
+
 NS_CC_BEGIN;
 
 // record the resource path
@@ -248,6 +252,11 @@ const char* CCFileUtils::getResourcePath(void)
 void CCFileUtils::setRelativePath(const char* pszRelativePath)
 {
     CCAssert(0, "Have not implement!");
+}
+
+string CCFileUtils::getWriteablePath()
+{
+	return string(CCApplication::sharedApplication().getAppDataPath());
 }
 
 NS_CC_END;
