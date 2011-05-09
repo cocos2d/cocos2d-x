@@ -256,7 +256,7 @@ void CCFileUtils::setRelativePath(const char* pszRelativePath)
 
 string CCFileUtils::getWriteablePath()
 {
-	return string(CCApplication::sharedApplication().getAppDataPath());
+	return string(CCApplication::sharedApplication().getAppWritablePath());
 }
 
 NS_CC_END;
