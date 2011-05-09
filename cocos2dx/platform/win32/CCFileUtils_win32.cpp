@@ -22,6 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "windows.h"
+
+using namespace std;
+
 NS_CC_BEGIN;
 
 // record the resource path
@@ -157,6 +161,21 @@ const char* CCFileUtils::getResourcePath(void)
 void CCFileUtils::setRelativePath(const char* pszRelativePath)
 {
     CCAssert(0, "Have not implement!");
+}
+
+string CCFileUtils::getWriteablePath()
+{
+	// return the path that the exe file saved in
+
+	char full_path[_MAX_PATH + 1];
+	::GetModuleFileNameA(NULL, full_path, _MAX_PATH + 1);
+
+	string ret((char*)full_path);
+
+	// remove xxx.exe
+	ret =  ret.substr(0, ret.rfind("\\") + 1);
+
+	return ret;
 }
 
 NS_CC_END;

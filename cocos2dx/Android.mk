@@ -77,6 +77,7 @@ support/CCArray.cpp \
 support/CCProfiling.cpp \
 support/CCPointExtension.cpp \
 support/TransformUtils.cpp \
+support/CCUserDefault.cpp \
 support/base64.cpp \
 support/ccUtils.cpp \
 support/image_support/TGAlib.cpp \
