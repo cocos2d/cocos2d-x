@@ -82,9 +82,7 @@ private:
     TSize               m_tSizeInPoints;
     float               m_fScreenScaleFactor;
     TRectangle          m_rcViewPort;
-    TEdit *             m_pTextField;
-    int                 m_nTextLen;
-    RectangleType       m_rcKeyboard;
+    TWindow *           m_pInputView;
 };
 
 }   // end of namespace   cocos2d

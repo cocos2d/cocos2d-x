@@ -82,8 +82,13 @@ public:
     */
     const char* getAppDataPath();
 
-
     void switchNotify(int nTurnOn);
+
+    /**
+    @brief	Wophone hasn't support window rotate orientation with EGL, so use orientation table instead.
+    */
+    static void  setDesignOrientation(UInt32 uOrientation);
+    static UInt32 getDesignOrientation();
 
 protected:
     bool isInBackground();
@@ -99,7 +104,9 @@ protected:
     bool        m_bInBackground;
     char        m_AppDataPath[EOS_FILE_MAX_PATH];
 
-    static CCApplication * sm_pSharedApplication;
+    static CCApplication *  sm_pSharedApplication;
+    static UInt32           sm_uDesignOrientation;
+    static const CCApplication::Orientation * const CCApplication::sm_OrientationTable[];
 };
 
 NS_CC_END;

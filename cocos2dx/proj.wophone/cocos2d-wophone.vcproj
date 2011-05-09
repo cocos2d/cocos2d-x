@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="cocos2d-wophone"
+	Name="cocos2d"
 	ProjectGUID="{6AC43F51-A036-4653-B910-BDDC346D15E7}"
 	RootNamespace="cocos2d-wophone"
 	Keyword="woPhoneProj"
