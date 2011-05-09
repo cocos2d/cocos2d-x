@@ -1,29 +1,29 @@
 # set params
 ANDROID_NDK_ROOT=__ndkroot__
 COCOS2DX_ROOT=__cocos2dxroot__
-HELLOWORLD_ROOT=$COCOS2DX_ROOT/__projectname__
-HELLOWORLD_ANDROID_ROOT=$HELLOWORLD_ROOT/android
-RESOURCE_ROOT=$HELLOWORLD_ROOT/Resource
+GAME_ROOT=$COCOS2DX_ROOT/__projectname__
+GAME_ANDROID_ROOT=$GAME_ROOT/android
+RESOURCE_ROOT=$GAME_ROOT/Resource
 
 # make sure assets is exist
-if [ -d $HELLOWORLD_ANDROID_ROOT/assets ]; then
-    rm -rf $HELLOWORLD_ANDROID_ROOT/assets
+if [ -d $GAME_ANDROID_ROOT/assets ]; then
+    rm -rf $GAME_ANDROID_ROOT/assets
 fi
 
-mkdir $HELLOWORLD_ANDROID_ROOT/assets
+mkdir $GAME_ANDROID_ROOT/assets
 
 # copy resources
 for file in $RESOURCE_ROOT/*
 do
     if [ -d $file ]; then
-        cp -rf $file $HELLOWORLD_ANDROID_ROOT/assets
+        cp -rf $file $GAME_ANDROID_ROOT/assets
     fi
 
     if [ -f $file ]; then
-        cp $file $HELLOWORLD_ANDROID_ROOT/assets
+        cp $file $GAME_ANDROID_ROOT/assets
     fi
 done
 
 # build
-$ANDROID_NDK_ROOT/ndk-build -C $HELLOWORLD_ANDROID_ROOT $*
+$ANDROID_NDK_ROOT/ndk-build -C $GAME_ANDROID_ROOT $*
 
