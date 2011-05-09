@@ -182,7 +182,7 @@ function AddConfigurations(proj, strProjectName) {
         var strOutputFile = '$(OutDir)/' + wizard.FindSymbol("PROJECT_NAME") + '.dll';
         
         if (wizard.FindSymbol('CC_USE_BOX2D')) {
-            strCurIncludeDir += ';..\\;..\\Box2D';
+            strCurIncludeDir += ';..\\';
             strDependLibs += ' libBox2d.lib';
         }
         if (wizard.FindSymbol('CC_USE_CHIPMUNK')) {

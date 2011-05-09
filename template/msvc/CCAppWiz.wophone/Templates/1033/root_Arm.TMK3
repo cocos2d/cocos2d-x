@@ -40,7 +40,7 @@ DEFINES=-D__TCOM_SUPPORT__      ;生成的是TCOM组件（注意：TOPS应用也
 INCLUDE_PATH=-I ../../PRJ_TG3/Include/OpenGL -I../cocos2dx -I../cocos2dx/include -I../cocos2dx/platform
 INCLUDE_PATH=-I. -I./Classes -I./wophone -I./wophone/Res                                ;默认本项目的路径
 [! if CC_USE_BOX2D]
-INCLUDE_PATH=-I../ -I../Box2D
+INCLUDE_PATH=-I../
 [! endif]
 [! if CC_USE_CHIPMUNK]
 INCLUDE_PATH=-I../chipmunk/include/chipmunk
