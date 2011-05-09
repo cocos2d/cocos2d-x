@@ -46,6 +46,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
+#include "CCUserDefault.h"
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -569,6 +570,7 @@ void CCDirector::purgeDirector()
 	CCActionManager::sharedManager()->purgeSharedManager();
 	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
+	CCUserDefault::purgeSharedUserDefault();
 
 	// OpenGL view
 	m_pobOpenGLView->release();

@@ -577,6 +577,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCUserDefault.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCZone.h"
 				>
 			</File>
@@ -738,6 +742,10 @@
 			</File>
 			<File
 				RelativePath="..\support\CCProfiling.h"
+				>
+			</File>
+			<File
+				RelativePath="..\support\CCUserDefault.cpp"
 				>
 			</File>
 			<File

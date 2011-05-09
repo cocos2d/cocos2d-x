@@ -66,6 +66,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/TouchesTest/Paddle.cpp \
 ../../../tests/TouchesTest/TouchesTest.cpp \
 ../../../tests/TransitionsTest/TransitionsTest.cpp \
+../../../tests/UserDefaultTest/UserDefaultTest.cpp \
 ../../../tests/ZwoptexTest/ZwoptexTest.cpp \
 ../../../tests/controller.cpp \
 ../../../tests/testBasic.cpp \

@@ -104,7 +104,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/Paddle.o \
 	$(OBJECTS_DIR)/TouchesTest.o \
 	$(OBJECTS_DIR)/TransitionsTest.o \
-	$(OBJECTS_DIR)/ZwoptexTest.o
+	$(OBJECTS_DIR)/ZwoptexTest.o \
+	$(OBJECTS_DIR)/UserDefaultTest.o
 
 ADD_OBJECTS += 
 
@@ -329,4 +330,7 @@ $(OBJECTS_DIR)/ZwoptexTest.o : ../tests/ZwoptexTest/ZwoptexTest.cpp
 	
 $(OBJECTS_DIR)/CurlTest.o : ../tests/CurlTest/CurlTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CurlTest.o ../tests/CurlTest/CurlTest.cpp
+	
+$(OBJECTS_DIR)/UserDefaultTest.o : ../tests/UserDefaultTest/UserDefaultTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/UserDefaultTest.o ../tests/UserDefaultTest/UserDefaultTest.cpp
 
