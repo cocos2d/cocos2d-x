@@ -189,13 +189,17 @@ private:
 	EGLContext              m_eglContext;
 };
 
+// We add a space character in the TEdit box.
+// If not do like this, once the IME closed, the chars inputted will can't be deleted.
+static const TUChar s_BaseStr[] = { ' ', '\0'};
+
 class CCInputView : public TWindow
 {
 public:
     CCInputView(TApplication * pApp)
     : TWindow(pApp)
     , m_pTextField(NULL)
-    , m_nTextLen(0)
+    , m_nTextLen(1)
     {
     }
 
@@ -216,6 +220,10 @@ public:
                     m_pTextField = 0;
                     break;
                 }
+
+                // add a space character into the TEdit and update the insert point
+                m_pTextField->SetCaption(s_BaseStr, FALSE);
+                m_pTextField->SetInsertPoint(1);
 
                 this->SetWindowMovieMode(TG3_WINDOW_MOVIE_MODE_NONE, TG3_WINDOW_MOVIE_MODE_NONE);
 
@@ -311,6 +319,14 @@ public:
                 {
                     const char * pszReturn = "\n";
                     CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszReturn, 1);
+                }
+
+                if (0 == nLen)
+                {
+                    // add a space character into the TEdit and update the insert point
+                    m_pTextField->SetCaption(s_BaseStr, FALSE);
+                    m_pTextField->SetInsertPoint(1);
+                    m_nTextLen = 1;
                 }
             } while (0);
             break;
