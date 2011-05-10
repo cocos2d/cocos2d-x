@@ -69,9 +69,9 @@ public:
     static CCEGLView& sharedOpenGLView();
 
 protected:
-    Boolean OnPenDown(EventType* pEvent, Int32 nIndex);
-    Boolean OnPenUp(EventType* pEvent, Int32 nIndex);
-    Boolean OnPenMove(EventType* pEvent);
+    Boolean onPenDown(EventType* pEvent, Int32 nIndex);
+    Boolean onPenUp(EventType* pEvent, Int32 nIndex);
+    Boolean onPenMove(EventType* pEvent);
 
 private:
 

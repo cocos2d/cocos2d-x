@@ -197,34 +197,6 @@ public:
     , m_pTextField(NULL)
     , m_nTextLen(0)
     {
-        if (this->CreateMemWindow(1,1)
-            && (m_pTextField = new TEdit)
-            && m_pTextField->Create(this))
-        {
-            m_pTextField->HideCursor();
-        }
-    }
-
-    virtual ~CCInputView()
-    {
-        this->CloseWindow();
-    }
-
-    void setIMEKeyboardState(bool bOpen)
-    {
-        if (bOpen)
-        {
-            m_nTextLen = 0;
-            TUChar tszEmpty[1] = {0};
-            m_pTextField->SetTitle(tszEmpty, FALSE);
-            m_pTextField->SetFocusStatus(TRUE);
-            ImeOpenIme(IME_MODE_STATIC, IME_CLASS_UNDEFINED);
-        }
-        else
-        {
-            ImeCloseIme();
-            m_pTextField->SetFocusStatus(FALSE);
-        }
     }
 
     virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent)
@@ -232,6 +204,30 @@ public:
         Boolean bRet = FALSE;
         switch (pEvent->eType)
         {
+        case EVENT_WinInit:
+            do 
+            {
+                m_pTextField = new TEdit;
+                CC_BREAK_IF(! m_pTextField);
+
+                if (! m_pTextField->Create(this))
+                {
+                    delete m_pTextField;
+                    m_pTextField = 0;
+                    break;
+                }
+
+                this->SetWindowMovieMode(TG3_WINDOW_MOVIE_MODE_NONE, TG3_WINDOW_MOVIE_MODE_NONE);
+
+                m_pTextField->SetFocusStatus(TRUE);
+
+                TRectangle rcTextField(0, 0, 1, 1);
+                m_pTextField->SetBounds(&rcTextField);
+                ImeOpenIme(IME_MODE_STATIC, IME_CLASS_UNDEFINED);
+                bRet = TRUE;
+            } while (0);
+            break;
+
         case EVENT_WinClose:
             ImeCloseIme();
             break;
@@ -242,64 +238,32 @@ public:
                 if (IME_NOTIFY_TYPE_KEYBOARD_SIZE == pNotify->notifyType)
                 {
                     RectangleType rcKbd = pNotify->rtKeyboard;
+
+                    // let text field out of window
+                    TRectangle rcTextField(
+                        rcKbd.topLeft.X + rcKbd.extent.X, 
+                        rcKbd.topLeft.Y + rcKbd.extent.Y, 
+                        rcKbd.extent.X, rcKbd.extent.Y);
+                    m_pTextField->SetBounds(&rcTextField);
+
+                    // let input view rectangle same as keyboard
+                    TRectangle rcWnd(rcKbd);
+                    this->SetBounds(&rcWnd);
+
+                    // calculate the keyboard coordination in EGLView.
                     Int32 nScrWidth = TApplication::GetCurrentApplication()->GetScreenWidth();
                     Int32 nScrHeight = TApplication::GetCurrentApplication()->GetScreenHeight();
-                    Coord temp;
-
-                    switch (CCApplication::getDesignOrientation())
-                    {
-                    case WM_WINDOW_ROTATE_MODE_NORMAL:
-                        rcKbd.topLeft.Y = nScrHeight - (rcKbd.topLeft.Y + rcKbd.extent.Y);
-
-                        m_rcEnd = CCRectMake((float)rcKbd.topLeft.X, (float)rcKbd.topLeft.Y, (float)rcKbd.extent.X, (float)rcKbd.extent.Y);
-                        m_rcBegin = m_rcEnd;
-                        m_rcBegin.origin.y -= m_rcBegin.size.height;
-                        break;
-
-                    case WM_WINDOW_ROTATE_MODE_CW:
-                        rcKbd.topLeft.X += rcKbd.extent.X;
-
-                        temp = rcKbd.topLeft.X;
-                        rcKbd.topLeft.X = rcKbd.topLeft.Y;
-                        rcKbd.topLeft.Y = temp;
-                        temp = rcKbd.extent.X;
-                        rcKbd.extent.X = rcKbd.extent.Y;
-                        rcKbd.extent.Y = temp;
-
-                        rcKbd.topLeft.Y = nScrWidth - rcKbd.topLeft.Y;
-
-                        m_rcEnd = CCRectMake((float)rcKbd.topLeft.X, (float)rcKbd.topLeft.Y, (float)rcKbd.extent.X, (float)rcKbd.extent.Y);
-                        m_rcBegin = m_rcEnd;
-                        m_rcBegin.origin.x += m_rcBegin.size.width;
-                        break;
-
-                    case WM_WINDOW_ROTATE_MODE_UD:
-                        m_rcEnd = CCRectMake((float)rcKbd.topLeft.X, (float)rcKbd.topLeft.Y, (float)rcKbd.extent.X, (float)rcKbd.extent.Y);
-                        m_rcBegin = m_rcEnd;
-                        m_rcBegin.origin.y += m_rcBegin.size.height;
-                        break;
-
-                    case WM_WINDOW_ROTATE_MODE_CCW:
-                        rcKbd.topLeft.X += rcKbd.extent.X;
-                        rcKbd.topLeft.Y += rcKbd.extent.Y;
-
-                        temp = rcKbd.topLeft.X;
-                        rcKbd.topLeft.X = rcKbd.topLeft.Y;
-                        rcKbd.topLeft.Y = temp;
-                        temp = rcKbd.extent.X;
-                        rcKbd.extent.X = rcKbd.extent.Y;
-                        rcKbd.extent.Y = temp;
-
-                        rcKbd.topLeft.X = nScrWidth - rcKbd.topLeft.X;
-                        rcKbd.topLeft.Y = nScrHeight - rcKbd.topLeft.Y;
-
-                        m_rcEnd = CCRectMake((float)rcKbd.topLeft.X, (float)rcKbd.topLeft.Y, (float)rcKbd.extent.X, (float)rcKbd.extent.Y);
-                        m_rcBegin = m_rcEnd;
-                        m_rcBegin.origin.x -= m_rcBegin.size.width;
-                        break;
-                    }
 
                     //keyboard open
+                    m_rcBegin = CCRectMake((float)0
+                        , (float)0 - rcKbd.extent.Y
+                        , (float)rcKbd.extent.X
+                        , (float)rcKbd.extent.Y);
+                    m_rcEnd = CCRectMake((float)0
+                        , (float)0
+                        , (float)rcKbd.extent.X
+                        , (float)rcKbd.extent.Y);
+
                     CCIMEKeyboardNotificationInfo info;
                     info.begin = m_rcBegin;
                     info.end = m_rcEnd;
@@ -316,7 +280,6 @@ public:
                     CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillHide(info);
                     CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidHide(info);
                 }
-                pEvent->sParam1 = pEvent->sParam1;
             }
             break;
 
@@ -350,6 +313,19 @@ public:
                     CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszReturn, 1);
                 }
             } while (0);
+            break;
+
+        case EVENT_PenDown:
+        case EVENT_PenMove:
+        case EVENT_PenUp:
+            // if input view doesn't process the pen event,
+            // means the pen event out of input view,
+            // let CCEGLView process 
+            if (! TWindow::EventHandler(pApp, pEvent))
+            {
+                CCEGLView::sharedOpenGLView().EventHandler(pApp, pEvent);
+                bRet = TRUE;
+            }
             break;
         }
 
@@ -413,29 +389,12 @@ Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints, UInt32 eRotat
 
     Boolean bRet = TWindow::Create(&TRectangle(0, 0, nWidth, nHeight));
 
-//     Coord temp;
-//     Int32 tmp;
-//     if (WM_WINDOW_ROTATE_MODE_CW == eRotateMode
-//         || WM_WINDOW_ROTATE_MODE_CCW == eRotateMode)
-//     {
-//         temp = m_rcViewPort.X();
-//         m_rcViewPort.SetX(m_rcViewPort.Y());
-//         m_rcViewPort.SetY(temp);
-//         temp = m_rcViewPort.Width();
-//         m_rcViewPort.SetWidth(m_rcViewPort.Height());
-//         m_rcViewPort.SetHeight(temp);
-// 
-//         tmp = m_tSizeInPoints.Width();
-//         m_tSizeInPoints.SetWidth(m_tSizeInPoints.Height());
-//         m_tSizeInPoints.SetHeight(tmp);
-//     }
-    if (bRet && (m_pInputView = new CCInputView(TApplication::GetCurrentApplication())))
+    if (bRet)
     {
         s_pMainWindow = this;
         if (WM_WINDOW_ROTATE_MODE_NORMAL != eRotateMode)
         {
             CCApplication::setDesignOrientation(eRotateMode);
-            //Boolean bRtn = m_pInputView->RotateWindow(eRotateMode); // memory window doesn't support rotate yet
             CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         }
     }
@@ -469,23 +428,23 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_PenDown:
-        bHandled = OnPenDown(pEvent, 0);
+        bHandled = onPenDown(pEvent, 0);
         break;
 
     case EVENT_PenMove:
-        bHandled = OnPenMove(pEvent);
+        bHandled = onPenMove(pEvent);
         break;
 
     case EVENT_PenUp:
-        bHandled = OnPenUp(pEvent, 0);
+        bHandled = onPenUp(pEvent, 0);
         break;
 
     case EVENT_MultiTouchDown:
-        bHandled = OnPenDown(pEvent, pEvent->lParam3);
+        bHandled = onPenDown(pEvent, pEvent->lParam3);
         break;
 
     case EVENT_MultiTouchUp:
-        bHandled = OnPenUp(pEvent, pEvent->lParam3);
+        bHandled = onPenUp(pEvent, pEvent->lParam3);
         break;
 
     case EVENT_KeyCommand:
@@ -544,7 +503,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     return bHandled;
 }
 
-Boolean CCEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::onPenDown(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
@@ -565,7 +524,7 @@ Boolean CCEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::onPenUp(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
@@ -596,7 +555,7 @@ Boolean CCEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCEGLView::OnPenMove(EventType* pEvent)
+Boolean CCEGLView::onPenMove(EventType* pEvent)
 {
     do 
     {
@@ -685,7 +644,36 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-    ((CCInputView *)m_pInputView)->setIMEKeyboardState(bOpen);
+    do 
+    {
+        // if input view opened, close it first
+        if (m_pInputView)
+        {
+            m_pInputView->CloseWindow();
+            m_pInputView = 0;
+        }
+
+        CC_BREAK_IF(! bOpen);
+
+        // open input view
+        m_pInputView = new CCInputView(TApplication::GetCurrentApplication());
+        CC_BREAK_IF(! m_pInputView);
+
+        TRectangle rcInputView(0, 0, 1, 1);
+        if (! m_pInputView->Create(&rcInputView))
+        {
+            delete m_pInputView;
+            m_pInputView = 0;
+            break;
+        }
+
+        UInt32 eOritation = CCApplication::getDesignOrientation();
+
+        if (WM_WINDOW_ROTATE_MODE_NORMAL != eOritation)
+        {
+            m_pInputView->RotateWindow(eOritation);
+        }
+    } while (0);
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
