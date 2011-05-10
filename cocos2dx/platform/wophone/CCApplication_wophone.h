@@ -106,7 +106,7 @@ protected:
 
     static CCApplication *  sm_pSharedApplication;
     static UInt32           sm_uDesignOrientation;
-    static const CCApplication::Orientation * const CCApplication::sm_OrientationTable[];
+    static const Orientation * const sm_OrientationTable[];
 };
 
 NS_CC_END;
