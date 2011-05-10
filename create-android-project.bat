@@ -19,7 +19,7 @@ set _ANDROIDTOOLS=d:\android-sdk\tools
 if not exist "%_ANDROIDTOOLS%" echo Couldn't find android sdk tools at "%_ANDROIDTOOLS%" & pause & exit 5
 
 :: modify it to work under your environment
-set _NDKROOT=e:\android-ndk-r4-crystax
+set _NDKROOT=e:\android-ndk-r5
 if not exist "%_NDKROOT%" echo Couldn't find ndk at "%_NDKROOT%" & pause & exit 6
 
 :: create android project
@@ -45,3 +45,5 @@ for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%_NDKROOT%"') do set _NDKROOT=%
 	 
 :: Throw away temporary env vars and invoke script, passing any args that were passed to us
 endlocal & %_CYGBIN%\bash --login "%_CYGSCRIPT%" %_CURRENTDIR% %_PROJECTNAME% %_NDKROOT% "windows"
+
+pause

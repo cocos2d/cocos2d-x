@@ -104,6 +104,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCArray.o \
 	$(OBJECTS_DIR)/CCPointExtension.o \
 	$(OBJECTS_DIR)/CCProfiling.o \
+	$(OBJECTS_DIR)/CCUserDefault.o \
 	$(OBJECTS_DIR)/ccUtils.o \
 	$(OBJECTS_DIR)/TransformUtils.o \
 	$(OBJECTS_DIR)/TGAlib.o \
@@ -356,6 +357,9 @@ $(OBJECTS_DIR)/CCPointExtension.o : ../support/CCPointExtension.cpp
 
 $(OBJECTS_DIR)/CCProfiling.o : ../support/CCProfiling.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCProfiling.o ../support/CCProfiling.cpp
+
+$(OBJECTS_DIR)/CCUserDefault.o : ../support/CCUserDefault.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCUserDefault.o ../support/CCUserDefault.cpp
 
 $(OBJECTS_DIR)/ccUtils.o : ../support/ccUtils.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ccUtils.o ../support/ccUtils.cpp

@@ -192,7 +192,7 @@ function AddConfigurations(proj, strProjectName) {
             strAddIncludeDir += ';..\\cocos2dx\\platform\\third_party\\win32\\OGLES';
             
             if (wizard.FindSymbol('CC_USE_BOX2D')) {
-                strAddIncludeDir += ';..\\;..\\Box2D';
+                strAddIncludeDir += ';..\\';
             }
             if (wizard.FindSymbol('CC_USE_CHIPMUNK')) {
                 strAddIncludeDir += ';..\\chipmunk\\include\\chipmunk';

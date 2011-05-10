@@ -38,6 +38,7 @@
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
 #include "CurlTest/CurlTest.h"
+#include "UserDefaultTest/UserDefaultTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -47,7 +48,7 @@
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
 #endif
 #endif
-#endif
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 
 enum
 {
@@ -72,10 +73,7 @@ enum
     TEST_INTERVAL,
     TEST_CHIPMUNK,
     TEST_LABEL,
-    // havn't implement on airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     TEST_TEXT_INPUT,
-#endif
     TEST_SPRITE,
     TEST_SCHEDULER,
     TEST_RENDERTEXTURE,
@@ -89,6 +87,7 @@ enum
     TEST_PERFORMANCE,
     TEST_ZWOPTEX,
 	TEST_CURL,
+	TEST_USERDEFAULT,
 
     TESTS_COUNT,
 };
@@ -115,10 +114,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "IntervalTest",
     "ChipmunkTest",
     "LabelTest",
-    // havn't implement on airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     "TextInputTest",
-#endif
     "SpriteTest",
     "SchdulerTest",
     "RenderTextureTest",
@@ -131,7 +127,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"CocosDenshionTest",
     "PerformanceTest",
     "ZwoptexTest",
-	"CurlTest"
+	"CurlTest",
+	"UserDefaultTest"
 };
 
 #endif
