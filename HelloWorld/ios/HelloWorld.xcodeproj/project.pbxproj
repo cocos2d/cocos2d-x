@@ -10,6 +10,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		BF126D191373F24200C4ABC5 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF126D181373F24200C4ABC5 /* CCUserDefault.h */; };
+		BF126D1B1373F25400C4ABC5 /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF126D1A1373F25400C4ABC5 /* CCUserDefault.cpp */; };
 		BF1373D3128A849B00D9F789 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4927C41289199700A09262 /* libcocos2d.a */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -576,6 +578,8 @@
 		1D6058910D05DD3D006BFB54 /* HelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BF126D181373F24200C4ABC5 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
+		BF126D1A1373F25400C4ABC5 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF193EFB136007BC002463D2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		BF193EFF136007D3002463D2 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
@@ -1351,6 +1355,7 @@
 		BF83519C13275F5500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF126D181373F24200C4ABC5 /* CCUserDefault.h */,
 				BF193EFB136007BC002463D2 /* CCArray.h */,
 				BF1E5340135D245500FD0934 /* CCTextFieldTTF.h */,
 				BF1E5336135D23FC00FD0934 /* CCIMEDelegate.h */,
@@ -2146,6 +2151,7 @@
 		BF8353ED13275F5600F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF126D1A1373F25400C4ABC5 /* CCUserDefault.cpp */,
 				BF193EFF136007D3002463D2 /* CCArray.cpp */,
 				BF8353EE13275F5600F3C033 /* base64.cpp */,
 				BF8353EF13275F5600F3C033 /* base64.h */,
@@ -2697,6 +2703,7 @@
 				BF1E5338135D23FC00FD0934 /* CCIMEDelegate.h in Headers */,
 				BF1E5339135D23FC00FD0934 /* CCIMEDispatcher.h in Headers */,
 				BF1E5341135D245500FD0934 /* CCTextFieldTTF.h in Headers */,
+				BF126D191373F24200C4ABC5 /* CCUserDefault.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2890,6 +2897,7 @@
 				BF193F00136007D3002463D2 /* CCArray.cpp in Sources */,
 				BF1E5334135D23E100FD0934 /* CCIMEDispatcher.cpp in Sources */,
 				BF1E5335135D23E100FD0934 /* CCTextFieldTTF.cpp in Sources */,
+				BF126D1B1373F25400C4ABC5 /* CCUserDefault.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,6 +20,8 @@
 		50F4144810692EE7002A0D5E /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144310692EE7002A0D5E /* blocks.png */; };
 		50F4144910692EE7002A0D5E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144410692EE7002A0D5E /* Default.png */; };
 		50F4144B10692EE7002A0D5E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144610692EE7002A0D5E /* Icon.png */; };
+		BF126CF31373EEFC00C4ABC5 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF126CF21373EEFC00C4ABC5 /* CCUserDefault.h */; };
+		BF126CF51373EF0A00C4ABC5 /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF126CF41373EF0A00C4ABC5 /* CCUserDefault.cpp */; };
 		BF151BD612E13A1A00703484 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF151BD512E13A1A00703484 /* HelloWorldScene.cpp */; };
 		BF151C3412E13C4800703484 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = BF151BDF12E13C4800703484 /* Box2D.h */; };
 		BF151C3512E13C4800703484 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF151BE112E13C4800703484 /* b2BroadPhase.cpp */; };
@@ -364,6 +366,8 @@
 		50F4144310692EE7002A0D5E /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		50F4144410692EE7002A0D5E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		50F4144610692EE7002A0D5E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		BF126CF21373EEFC00C4ABC5 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
+		BF126CF41373EF0A00C4ABC5 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
 		BF151BD412E1372A00703484 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		BF151BD512E13A1A00703484 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
 		BF151BDF12E13C4800703484 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
@@ -1072,6 +1076,7 @@
 		BF836432132878B500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF126CF21373EEFC00C4ABC5 /* CCUserDefault.h */,
 				BFA70A35136AB0DB00ABC725 /* CCIMEDelegate.h */,
 				BFA70A36136AB0DB00ABC725 /* CCIMEDispatcher.h */,
 				BFA70A37136AB0DB00ABC725 /* CCTextFieldTTF.h */,
@@ -1295,6 +1300,7 @@
 		BF836683132878B600F3C033 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				BF126CF41373EF0A00C4ABC5 /* CCUserDefault.cpp */,
 				BF193F4C136008B5002463D2 /* CCArray.cpp */,
 				BF836684132878B600F3C033 /* base64.cpp */,
 				BF836685132878B600F3C033 /* base64.h */,
@@ -1562,6 +1568,7 @@
 				BFA70A38136AB0DB00ABC725 /* CCIMEDelegate.h in Headers */,
 				BFA70A39136AB0DB00ABC725 /* CCIMEDispatcher.h in Headers */,
 				BFA70A3A136AB0DB00ABC725 /* CCTextFieldTTF.h in Headers */,
+				BF126CF31373EEFC00C4ABC5 /* CCUserDefault.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1801,6 +1808,7 @@
 				BF193F4D136008B5002463D2 /* CCArray.cpp in Sources */,
 				BFA70A3E136AB0EC00ABC725 /* CCIMEDispatcher.cpp in Sources */,
 				BFA70A3F136AB0EC00ABC725 /* CCTextFieldTTF.cpp in Sources */,
+				BF126CF51373EF0A00C4ABC5 /* CCUserDefault.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

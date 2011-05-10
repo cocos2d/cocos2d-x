@@ -47,20 +47,26 @@ CCApplication::CCApplication()
         Int32  nRet = SS_AppRequest_GetAppName(AppID, &nCmdType);
         CC_BREAK_IF(nRet < 0);
 
-        TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
-        char   DataPath[EOS_FILE_MAX_PATH] = {0};
-        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_CONST, AppPath);
-        TUString::StrUnicodeToStrUtf8((Char*) DataPath, AppPath);
-
 #ifndef _TRANZDA_VM_
         char *pszDriver = "";
 #else
         char *pszDriver = "D:/Work7";
 #endif
 
-        // record the data path
+        TUChar AppPath[EOS_FILE_MAX_PATH] = {0};
+        char   DataPath[EOS_FILE_MAX_PATH] = {0};
+
+        // get the const data path of the application and record it
+        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_CONST, AppPath);
+        TUString::StrUnicodeToStrUtf8((Char*) DataPath, AppPath);
         strcpy(m_AppDataPath, pszDriver);
         strcat(m_AppDataPath, DataPath);
+
+        // get the writable data path of the application and record it
+        SS_GetApplicationPath(AppID, SS_APP_PATH_TYPE_DATA, AppPath);
+        TUString::StrUnicodeToStrUtf8((Char*) DataPath, AppPath);
+        strcpy(m_AppWritablePath, pszDriver);
+        strcat(m_AppWritablePath, DataPath);
     } while (0);
 
     CC_ASSERT(! sm_pSharedApplication);
@@ -184,6 +190,11 @@ const char* CCApplication::getAppDataPath()
     return m_AppDataPath;
 }
 
+const char* CCApplication::getAppWritablePath()
+{
+    return m_AppWritablePath;
+}
+
 void CCApplication::switchNotify(int nTurnOn)
 {
     bool bInBack = isInBackground();
@@ -278,7 +289,7 @@ Int32 CCApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 #endif
             else
             {
-                Sys_Sleep(0);
+                Sys_SchedYield();
             }
             Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &rThis.m_tMsg);
         }
