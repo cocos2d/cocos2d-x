@@ -14,7 +14,7 @@ enum
 }; 
 
 #define FONT_NAME                       "Thonburi"
-#define FONT_SIZE                       24
+#define FONT_SIZE                       36
 
 static int testIdx = -1; 
 
@@ -121,16 +121,16 @@ void TextInputTest::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 24);
     addChild(label);
-    label->setPosition(ccp(s.width/2, s.height-50));
+    label->setPosition(ccp(s.width/2, s.height-20));
 
     std::string subTitle = m_pNotificationLayer->subtitle();
     if(! subTitle.empty())
     {
         CCLabelTTF* l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-80));
+        l->setPosition(ccp(s.width/2, s.height-40));
     }
 
     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(TextInputTest::backCallback));
@@ -279,7 +279,7 @@ void TextFieldTTFDefaultTest::onEnter()
         FONT_SIZE);
     addChild(pTextField);
 
-    pTextField->setPosition(ccp(s.width/2, s.height/2));
+    pTextField->setPosition(ccp(s.width/2, s.height - 80));
 
     m_pTrackNode = pTextField;
 }
@@ -334,7 +334,7 @@ void TextFieldTTFActionTest::onEnter()
     addChild(m_pTextField);
 
     m_pTextField->setDelegate(this);
-    m_pTextField->setPosition(ccp(s.width/2, s.height/2 + 20));
+    m_pTextField->setPosition(ccp(s.width/2, s.height - 80));
 
     m_pTrackNode = m_pTextField;
 }
