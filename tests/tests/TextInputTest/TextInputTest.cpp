@@ -368,16 +368,16 @@ bool TextFieldTTFActionTest::onTextFieldDetachWithIME(CCTextFieldTTF * pSender)
 
 bool TextFieldTTFActionTest::onTextFieldInsertText(CCTextFieldTTF * pSender, const char * text, int nLen)
 {
+    // if insert enter, treat as default to detach with ime
+    if ('\n' == *text)
+    {
+        return false;
+    }
+    
     // if the textfield's char count more than m_nCharLimit, doesn't insert text anymore.
     if (pSender->getCharCount() >= m_nCharLimit)
     {
         return true;
-    }
-
-    // if insert enter, treat as default
-    if ('\n' == *text)
-    {
-        return false;
     }
 
     // create a insert text sprite and do some action

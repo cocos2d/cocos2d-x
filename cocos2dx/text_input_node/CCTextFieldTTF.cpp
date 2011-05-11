@@ -179,27 +179,33 @@ void CCTextFieldTTF::insertText(const char * text, int len)
         len = nPos;
         sInsert.erase(nPos);
     }
-    if (len <= 0)
+    
+    if (len > 0)
     {
-        // close keyboard
-        CCEGLView * pGlView = CCDirector::sharedDirector()->getOpenGLView();
-        if (pGlView)
+        if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, sInsert.c_str(), len))
         {
-            pGlView->setIMEKeyboardState(false);
+            // delegate doesn't want insert text
+            return;
         }
-        return;
+        
+        m_nCharCount += _calcCharCount(sInsert.c_str());
+        std::string sText(*m_pInputText);
+        sText.append(sInsert);
+        setString(sText.c_str());
     }
 
-    if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, sInsert.c_str(), len))
+    if (sInsert.npos == nPos) {
+        return;
+    }
+    
+    // '\n' has inserted,  let delegate process first
+    if (m_pDelegate && m_pDelegate->onTextFieldInsertText(this, "\n", 1))
     {
-        // delegate doesn't want insert text
         return;
     }
-
-    m_nCharCount += _calcCharCount(sInsert.c_str());
-    std::string sText(*m_pInputText);
-    sText.append(sInsert);
-    setString(sText.c_str());
+    
+    // if lelegate hasn't process, detach with ime as default
+    detachWithIME();
 }
 
 void CCTextFieldTTF::deleteBackward()
