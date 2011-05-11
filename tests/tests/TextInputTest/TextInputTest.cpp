@@ -341,6 +341,7 @@ void TextFieldTTFActionTest::onEnter()
 
 void TextFieldTTFActionTest::onExit()
 {
+    KeyboardNotificationLayer::onExit();
     m_pTextFieldAction->release();
 }
 
