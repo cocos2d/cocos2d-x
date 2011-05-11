@@ -242,7 +242,7 @@ bool CCImage::initWithString(
         CC_BREAK_IF(! pText);
         int nLen = strlen(pText) + 1;
         CC_BREAK_IF(! (pWText = new TUChar[nLen]));
-        TUString::StrGBToUnicode(pWText, (Char*)pText);
+        TUString::StrUtf8ToStrUnicode(pWText, (Char*)pText);
 
         BitmapDC& dc = sharedBitmapDC();
 

@@ -9,9 +9,6 @@
 
 NS_CC_BEGIN;
 
-// sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
-
 static const Int32 CC_ON_APPLICATION_IDLE = (EVENT_FirstUser + EVENT_LastUser) / 2;
 
 #ifdef _TRANZDA_VM_
@@ -145,6 +142,8 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
             // modify back light open mode
             if (CfgGetBackLightStatus())
             {
+                // Why doesn't use CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_ALWAYS)?
+                // MODE_TIME_ALWAYS cause phone can't sleep when power button pressed.
                 CfgTurnOnBackLightDelay(0x7fffffff);
                 CCLOG("AppActiveNotify::TurnOnBackLight:0x7fffffff");
             }
@@ -179,7 +178,7 @@ void CCApplication::setAnimationInterval(double interval)
 
 CCApplication::Orientation CCApplication::setOrientation(CCApplication::Orientation orientation)
 {
-    return orientation;
+    return sm_OrientationTable[sm_uDesignOrientation][orientation];
 }
 
 void CCApplication::statusBarFrame(CCRect * rect)
@@ -219,6 +218,8 @@ void CCApplication::switchNotify(int nTurnOn)
         else
         {
             // modify back light open mode
+            // Why doesn't use CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_ALWAYS)?
+            // MODE_TIME_ALWAYS cause phone can't sleep when power button pressed.
             CfgTurnOnBackLightDelay(0x7fffffff);
             CCLOG("AppActiveNotify::TurnOnBackLight:0x7fffffff");
 
@@ -299,10 +300,67 @@ Int32 CCApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
+
+// shared application
+CCApplication * CCApplication::sm_pSharedApplication = 0;
+
 CCApplication& CCApplication::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
     return *sm_pSharedApplication;
+}
+
+// rotate device support
+static const CCApplication::Orientation s_OrientationModeNormal[] = 
+{
+    CCApplication::kOrientationPortrait,
+    CCApplication::kOrientationPortraitUpsideDown,
+    CCApplication::kOrientationLandscapeLeft,
+    CCApplication::kOrientationLandscapeRight,
+};
+
+static const CCApplication::Orientation s_OrientationModeCW[] = 
+{
+    CCApplication::kOrientationLandscapeLeft,
+    CCApplication::kOrientationLandscapeRight,
+    CCApplication::kOrientationPortraitUpsideDown,
+    CCApplication::kOrientationPortrait,
+};
+
+static const CCApplication::Orientation s_OrientationModeUD[] = 
+{
+    CCApplication::kOrientationPortraitUpsideDown,
+    CCApplication::kOrientationPortrait,
+    CCApplication::kOrientationLandscapeRight,
+    CCApplication::kOrientationLandscapeLeft,
+};
+
+static const CCApplication::Orientation s_OrientationModeCCW[] = 
+{
+    CCApplication::kOrientationLandscapeRight,
+    CCApplication::kOrientationLandscapeLeft,
+    CCApplication::kOrientationPortrait,
+    CCApplication::kOrientationPortraitUpsideDown,
+};
+
+const CCApplication::Orientation * const CCApplication::sm_OrientationTable[] = 
+{
+    s_OrientationModeNormal,
+    s_OrientationModeCW,
+    s_OrientationModeUD,
+    s_OrientationModeCCW,
+};
+
+UInt32 CCApplication::sm_uDesignOrientation = WM_WINDOW_ROTATE_MODE_NORMAL;
+
+void  CCApplication::setDesignOrientation(UInt32 uOrientation)
+{
+    sm_uDesignOrientation = uOrientation;
+}
+
+UInt32 CCApplication::getDesignOrientation()
+{
+    return sm_uDesignOrientation;
 }
 
 NS_CC_END;

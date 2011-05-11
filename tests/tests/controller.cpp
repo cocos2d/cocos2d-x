@@ -77,7 +77,7 @@ static TestScene* CreateTestScene(int nIdx)
 #endif
     case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     case TEST_TEXT_INPUT:
         pScene = new TextInputTestScene(); break;
 #endif
@@ -95,7 +95,7 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
         pScene = new HiResTestScene(); break;
-#ifndef _WIN32
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 	case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
 #endif

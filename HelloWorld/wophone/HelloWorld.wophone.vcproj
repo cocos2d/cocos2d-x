@@ -97,7 +97,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir D:\Work7\NEWPLUS\TG3\ConstData&#x0D;&#x0A;copy ..\Resource\*.*  D:\Work7\NEWPLUS\TG3\ConstData"
+				CommandLine="mkdir D:\Work7\NEWPLUS\TG3\ConstData&#x0D;&#x0A;copy ..\Resource\*.*  D:\Work7\NEWPLUS\TG3\ConstData&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -181,7 +181,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="source"
+			Name="Classes"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
@@ -203,19 +203,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Makefiles"
-			>
-			<File
-				RelativePath=".\HelloWorld.TMK3"
-				>
-			</File>
-			<File
-				RelativePath=".\Makefile.ARM"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Framework"
+			Name="wophone"
 			>
 			<File
 				RelativePath=".\HelloWorldUnicodeScript.h"
@@ -251,22 +239,18 @@
 				RelativePath=".\TG3AppDllEntry.h"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource"
-			>
-			<File
-				RelativePath="..\Resource\CloseNormal.png"
+			<Filter
+				Name="Makefiles"
 				>
-			</File>
-			<File
-				RelativePath="..\Resource\CloseSelected.png"
-				>
-			</File>
-			<File
-				RelativePath="..\Resource\HelloWorld.png"
-				>
-			</File>
+				<File
+					RelativePath=".\HelloWorld.TMK3"
+					>
+				</File>
+				<File
+					RelativePath=".\Makefile.ARM"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
