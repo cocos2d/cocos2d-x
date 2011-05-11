@@ -47,7 +47,7 @@ public:
     CCEGLView(TApplication * pApp);
     virtual ~CCEGLView();
 
-    virtual Boolean Create(int nWidthInPoints, int nHeightInPoints);
+    virtual Boolean Create(int nWidthInPoints, int nHeightInPoints, UInt32 eRotateMode = WM_WINDOW_ROTATE_MODE_NORMAL);
     virtual Boolean AfterCreate(void);
     virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent);
 
@@ -61,7 +61,7 @@ public:
 	void    setContentScaleFactor(float contentScaleFactor);
 	void    setAnimationInterval(double interval) {};
     void    setViewPortInPoints(float x, float y, float w, float h);
-
+    void    setIMEKeyboardState(bool bOpen);
     // static function
     /**
     @brief	get the shared main open gl window
@@ -69,9 +69,9 @@ public:
     static CCEGLView& sharedOpenGLView();
 
 protected:
-    Boolean OnPenDown(EventType* pEvent, Int32 nIndex);
-    Boolean OnPenUp(EventType* pEvent, Int32 nIndex);
-    Boolean OnPenMove(EventType* pEvent);
+    Boolean onPenDown(EventType* pEvent, Int32 nIndex);
+    Boolean onPenUp(EventType* pEvent, Int32 nIndex);
+    Boolean onPenMove(EventType* pEvent);
 
 private:
 
@@ -82,6 +82,7 @@ private:
     TSize               m_tSizeInPoints;
     float               m_fScreenScaleFactor;
     TRectangle          m_rcViewPort;
+    TWindow *           m_pInputView;
 };
 
 }   // end of namespace   cocos2d

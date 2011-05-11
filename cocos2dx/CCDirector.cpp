@@ -858,7 +858,7 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 
 	if (m_eDeviceOrientation != eNewOrientation)
 	{
-		m_eDeviceOrientation = kDeviceOrientation;
+		m_eDeviceOrientation = eNewOrientation;
 	}
     else
     {

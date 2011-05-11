@@ -21,12 +21,10 @@
 #include "TileMapTest/TileMapTest.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
-
-// havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+// havn't implement on airplay
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "TextInputTest/TextInputTest.h"
-#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-
+#endif
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
@@ -75,10 +73,7 @@ enum
     TEST_INTERVAL,
     TEST_CHIPMUNK,
     TEST_LABEL,
-    // havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     TEST_TEXT_INPUT,
-#endif
     TEST_SPRITE,
     TEST_SCHEDULER,
     TEST_RENDERTEXTURE,
@@ -119,10 +114,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "IntervalTest",
     "ChipmunkTest",
     "LabelTest",
-    // havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
     "TextInputTest",
-#endif
     "SpriteTest",
     "SchdulerTest",
     "RenderTextureTest",
