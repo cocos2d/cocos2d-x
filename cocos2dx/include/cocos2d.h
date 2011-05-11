@@ -84,7 +84,7 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 
 // havn't implement on wophone and airplay
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WOPHONE) && (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "CCTextFieldTTF.h"
 #endif
 

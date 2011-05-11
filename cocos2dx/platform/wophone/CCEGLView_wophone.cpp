@@ -36,14 +36,12 @@ THE SOFTWARE.
 #include "TCOM_Sensors_Interface.h"
 #include "CCAccelerometer.h"
 #include "CCKeypadDispatcher.h"
+#include "CCIMEDispatcher.h"
 
 #include "CCApplication.h"
 #include "ccMacros.h"
 
 namespace cocos2d {
-
-#define MAX_TOUCHES         4
-static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 
 class CCEGL
 {
@@ -191,17 +189,191 @@ private:
 	EGLContext              m_eglContext;
 };
 
+// We add a space character in the TEdit box.
+// If not do like this, once the IME closed, the chars inputted will can't be deleted.
+static const TUChar s_BaseStr[] = { ' ', '\0'};
+
+class CCInputView : public TWindow
+{
+public:
+    CCInputView(TApplication * pApp)
+    : TWindow(pApp)
+    , m_pTextField(NULL)
+    , m_nTextLen(1)
+    {
+    }
+
+    virtual Boolean EventHandler(TApplication * pApp, EventType * pEvent)
+    {
+        Boolean bRet = FALSE;
+        switch (pEvent->eType)
+        {
+        case EVENT_WinInit:
+            do 
+            {
+                m_pTextField = new TEdit;
+                CC_BREAK_IF(! m_pTextField);
+
+                if (! m_pTextField->Create(this))
+                {
+                    delete m_pTextField;
+                    m_pTextField = 0;
+                    break;
+                }
+
+                // add a space character into the TEdit and update the insert point
+                m_pTextField->SetCaption(s_BaseStr, FALSE);
+                m_pTextField->SetInsertPoint(1);
+
+                this->SetWindowMovieMode(TG3_WINDOW_MOVIE_MODE_NONE, TG3_WINDOW_MOVIE_MODE_NONE);
+
+                m_pTextField->SetFocusStatus(TRUE);
+
+                TRectangle rcTextField(0, 0, 1, 1);
+                m_pTextField->SetBounds(&rcTextField);
+                ImeOpenIme(IME_MODE_STATIC, IME_CLASS_UNDEFINED);
+                bRet = TRUE;
+            } while (0);
+            break;
+
+        case EVENT_WinClose:
+            ImeCloseIme();
+            break;
+
+        case EVENT_WinImeStatusNotify:
+            {
+                EosImeNotifyEventType * pNotify = (EosImeNotifyEventType*)pEvent;
+                if (IME_NOTIFY_TYPE_KEYBOARD_SIZE == pNotify->notifyType)
+                {
+                    RectangleType rcKbd = pNotify->rtKeyboard;
+
+                    // let text field out of window
+                    TRectangle rcTextField(
+                        rcKbd.topLeft.X + rcKbd.extent.X, 
+                        rcKbd.topLeft.Y + rcKbd.extent.Y, 
+                        rcKbd.extent.X, rcKbd.extent.Y);
+                    m_pTextField->SetBounds(&rcTextField);
+
+                    // let input view rectangle same as keyboard
+                    TRectangle rcWnd(rcKbd);
+                    this->SetBounds(&rcWnd);
+
+                    // calculate the keyboard coordination in EGLView.
+                    Int32 nScrWidth = TApplication::GetCurrentApplication()->GetScreenWidth();
+                    Int32 nScrHeight = TApplication::GetCurrentApplication()->GetScreenHeight();
+
+                    //keyboard open
+                    m_rcBegin = CCRectMake((float)0
+                        , (float)0 - rcKbd.extent.Y
+                        , (float)rcKbd.extent.X
+                        , (float)rcKbd.extent.Y);
+                    m_rcEnd = CCRectMake((float)0
+                        , (float)0
+                        , (float)rcKbd.extent.X
+                        , (float)rcKbd.extent.Y);
+
+                    CCIMEKeyboardNotificationInfo info;
+                    info.begin = m_rcBegin;
+                    info.end = m_rcEnd;
+                    info.duration = 0;
+                    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
+                    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
+                }
+                else if (IME_NOTIFY_TYPE_IME_CLOSE == pNotify->notifyType)
+                {
+                    CCIMEKeyboardNotificationInfo info;
+                    info.begin = m_rcEnd;
+                    info.end = m_rcBegin;
+                    info.duration = 0;
+                    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillHide(info);
+                    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidHide(info);
+                }
+            }
+            break;
+
+        case EVENT_FieldChanged:
+            do 
+            {
+                CC_BREAK_IF(pEvent->sParam1 != m_pTextField->GetId());
+
+                const TUChar * ptszText = m_pTextField->GetCaption();
+                CC_BREAK_IF(! ptszText);
+
+                int nLen = TUString::StrLen(ptszText);
+                if (nLen > m_nTextLen)
+                {
+                    char szText[MAX_PATH] = {0};
+                    CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szText
+                        , TUString::StrUnicodeToStrUtf8((Char *)szText, ptszText + m_nTextLen));
+                    m_nTextLen = nLen;
+                }
+                else if (nLen < m_nTextLen)
+                {
+                    for (int i = m_nTextLen - nLen; i > 0; --i)
+                    {
+                        CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+                    }
+                    m_nTextLen = nLen;
+                }
+                else
+                {
+                    const char * pszReturn = "\n";
+                    CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszReturn, 1);
+                }
+
+                if (0 == nLen)
+                {
+                    // add a space character into the TEdit and update the insert point
+                    m_pTextField->SetCaption(s_BaseStr, FALSE);
+                    m_pTextField->SetInsertPoint(1);
+                    m_nTextLen = 1;
+                }
+            } while (0);
+            break;
+
+        case EVENT_PenDown:
+        case EVENT_PenMove:
+        case EVENT_PenUp:
+            // if input view doesn't process the pen event,
+            // means the pen event out of input view,
+            // let CCEGLView process 
+            if (! TWindow::EventHandler(pApp, pEvent))
+            {
+                CCEGLView::sharedOpenGLView().EventHandler(pApp, pEvent);
+                bRet = TRUE;
+            }
+            break;
+        }
+
+        if (! bRet)
+        {
+            return TWindow::EventHandler(pApp, pEvent);
+        }
+        return bRet;
+    }
+
+private:
+    TEdit *             m_pTextField;
+    int                 m_nTextLen;
+    CCRect              m_rcBegin;
+    CCRect              m_rcEnd;
+};
+
 //////////////////////////////////////////////////////////////////////////
-// impliment CCEGLView
+// implement CCEGLView
 //////////////////////////////////////////////////////////////////////////
 
 static CCEGLView* s_pMainWindow = NULL;
+
+#define MAX_TOUCHES         4
+static CCTouch *s_pTouches[MAX_TOUCHES] = { NULL };
 
 CCEGLView::CCEGLView(TApplication * pApp)
 : TWindow(pApp)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
 , m_fScreenScaleFactor(1.0f)
+, m_pInputView(0)
 {
 }
 
@@ -211,7 +383,7 @@ CCEGLView::~CCEGLView()
     CC_SAFE_DELETE(m_pEGL);
 }
 
-Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints)
+Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints, UInt32 eRotateMode)
 {
     // record the window size in points
     m_tSizeInPoints.SetWidth(nWidthInPoints);
@@ -222,7 +394,7 @@ Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints)
     Int32 nWidth  = pApp->GetScreenWidth();
     Int32 nHeight = pApp->GetScreenHeight();
 
-    // calculate the factor and the rect of viewport
+    // calculate the factor and the rect of view port
     m_fScreenScaleFactor =  MIN((float)nWidth / nWidthInPoints, (float)nHeight / nHeightInPoints);
     int viewPortW = (int)(m_tSizeInPoints.Width() * m_fScreenScaleFactor);
     int viewPortH = (int)(m_tSizeInPoints.Height() * m_fScreenScaleFactor);
@@ -236,6 +408,11 @@ Boolean CCEGLView::Create(int nWidthInPoints, int nHeightInPoints)
     if (bRet)
     {
         s_pMainWindow = this;
+        if (WM_WINDOW_ROTATE_MODE_NORMAL != eRotateMode)
+        {
+            CCApplication::setDesignOrientation(eRotateMode);
+            CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+        }
     }
 
     return bRet;
@@ -267,23 +444,23 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         break;
 
     case EVENT_PenDown:
-        bHandled = OnPenDown(pEvent, 0);
+        bHandled = onPenDown(pEvent, 0);
         break;
 
     case EVENT_PenMove:
-        bHandled = OnPenMove(pEvent);
+        bHandled = onPenMove(pEvent);
         break;
 
     case EVENT_PenUp:
-        bHandled = OnPenUp(pEvent, 0);
+        bHandled = onPenUp(pEvent, 0);
         break;
 
     case EVENT_MultiTouchDown:
-        bHandled = OnPenDown(pEvent, pEvent->lParam3);
+        bHandled = onPenDown(pEvent, pEvent->lParam3);
         break;
 
     case EVENT_MultiTouchUp:
-        bHandled = OnPenUp(pEvent, pEvent->lParam3);
+        bHandled = onPenUp(pEvent, pEvent->lParam3);
         break;
 
     case EVENT_KeyCommand:
@@ -334,38 +511,6 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
         }
 
     }
-//     {
-//         char szType[32];
-//         sprintf(szType, "%d", pEvent->eType);
-//         const char * pszType = szType;
-//         switch (pEvent->eType)
-//         {
-//         case EVENT_ScreenSwitchNotify:
-//             pszType = "EVENT_ScreenSwitchNotify";
-//             break;
-// 
-//         case EVENT_GlesUpdateNotify:
-//             pszType = "EVENT_GlesUpdateNotify";
-//             break;
-// 
-//         case EVENT_WinPaint:
-//             pszType = "EVENT_GlesUpdateNotify";
-//             break;
-//         }
-//         if (pszType)
-//         {
-//             char szMsg[256];
-//             sprintf(szMsg, "%d: %s: %d \r\n", TimGetTicks(), pszType, pEvent->sParam1);
-// #if defined (_TRANZDA_VM_)
-// #define LOG_FILE_NAME "d:/Work7/NEWPLUS/TDA_DATA/UserData/mesagelog.txt"
-// #else
-// #define LOG_FILE_NAME "/NEWPLUS/TDA_DATA/UserData/mesagelog.txt"
-// #endif
-//             FILE * pf = fopen(LOG_FILE_NAME, "a+");
-//             fwrite(szMsg, 1, strlen(szMsg), pf);
-//             fclose(pf);
-//         }
-//     }
 
     if (! bHandled)
     {
@@ -374,7 +519,7 @@ Boolean CCEGLView::EventHandler(TApplication * pApp, EventType * pEvent)
     return bHandled;
 }
 
-Boolean CCEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::onPenDown(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
@@ -395,7 +540,7 @@ Boolean CCEGLView::OnPenDown(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
+Boolean CCEGLView::onPenUp(EventType* pEvent, Int32 nIndex)
 {
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
@@ -426,7 +571,7 @@ Boolean CCEGLView::OnPenUp(EventType* pEvent, Int32 nIndex)
     return FALSE;
 }
 
-Boolean CCEGLView::OnPenMove(EventType* pEvent)
+Boolean CCEGLView::onPenMove(EventType* pEvent)
 {
     do 
     {
@@ -511,6 +656,40 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
+}
+
+void CCEGLView::setIMEKeyboardState(bool bOpen)
+{
+    do 
+    {
+        // if input view opened, close it first
+        if (m_pInputView)
+        {
+            m_pInputView->CloseWindow();
+            m_pInputView = 0;
+        }
+
+        CC_BREAK_IF(! bOpen);
+
+        // open input view
+        m_pInputView = new CCInputView(TApplication::GetCurrentApplication());
+        CC_BREAK_IF(! m_pInputView);
+
+        TRectangle rcInputView(0, 0, 1, 1);
+        if (! m_pInputView->Create(&rcInputView))
+        {
+            delete m_pInputView;
+            m_pInputView = 0;
+            break;
+        }
+
+        UInt32 eOritation = CCApplication::getDesignOrientation();
+
+        if (WM_WINDOW_ROTATE_MODE_NORMAL != eOritation)
+        {
+            m_pInputView->RotateWindow(eOritation);
+        }
+    } while (0);
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
