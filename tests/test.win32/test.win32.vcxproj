@@ -106,6 +106,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\AppDelegate.cpp" />
     <ClCompile Include="..\tests\controller.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="..\tests\TextInputTest\TextInputTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\UserDefaultTest\UserDefaultTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\AppDelegate.h" />
     <ClInclude Include="..\tests\controller.h" />
