@@ -237,6 +237,9 @@ void TransitionsTestScene::runThisTest()
     CCLayer * pLayer = new TestLayer1();
     addChild(pLayer);
     pLayer->release();
+	
+	// fix bug #486, without setDepthTest(false), FlipX,Y will flickers
+	CCDirector::sharedDirector()->setDepthTest(false);
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
