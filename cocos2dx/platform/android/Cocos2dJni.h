@@ -34,6 +34,7 @@ extern "C"
 	void disableAccelerometerJNI();
 	void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
     void setKeyboardStateJNI(int bOpen);
+	const char* getPackageNameJNI();
 }
 
 #endif // __ANDROID_COCOS2D_JNI_H__
