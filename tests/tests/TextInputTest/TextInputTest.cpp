@@ -106,7 +106,6 @@ void TextInputTest::backCallback(CCObject* pSender)
 void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * pLayer)
 {
     m_pNotificationLayer = pLayer;
-    m_pNotificationLayer->retain();
     addChild(pLayer);
 }
 
