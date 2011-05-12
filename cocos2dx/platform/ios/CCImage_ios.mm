@@ -421,6 +421,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         CGContextRef context = CGBitmapContextCreate(data, width, height, 8, width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
         CGColorSpaceRelease(colorSpace);
+		CC_BREAK_IF(!context);
         
         CGContextSetRGBFillColor(context, 1, 1, 1, 1);
         CGContextTranslateCTM(context, 0.0f, height);
