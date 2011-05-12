@@ -122,14 +122,14 @@ void TextInputTest::onEnter()
 
     CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 24);
     addChild(label);
-    label->setPosition(ccp(s.width/2, s.height-20));
+    label->setPosition(ccp(s.width/2, s.height-50));
 
     std::string subTitle = m_pNotificationLayer->subtitle();
     if(! subTitle.empty())
     {
         CCLabelTTF* l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
-        l->setPosition(ccp(s.width/2, s.height-40));
+        l->setPosition(ccp(s.width/2, s.height-80));
     }
 
     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage("Images/b1.png", "Images/b2.png", this, menu_selector(TextInputTest::backCallback));
@@ -278,7 +278,7 @@ void TextFieldTTFDefaultTest::onEnter()
         FONT_SIZE);
     addChild(pTextField);
 
-    pTextField->setPosition(ccp(s.width/2, s.height - 80));
+    pTextField->setPosition(ccp(s.width / 2, s.height / 2));
 
     m_pTrackNode = pTextField;
 }
@@ -313,7 +313,7 @@ void TextFieldTTFActionTest::onEnter()
 {
     KeyboardNotificationLayer::onEnter();
 
-    m_nCharLimit = 10;
+    m_nCharLimit = 12;
 
     m_pTextFieldAction = CCRepeatForever::actionWithAction(
         (CCActionInterval*)CCSequence::actions(
@@ -333,7 +333,7 @@ void TextFieldTTFActionTest::onEnter()
     addChild(m_pTextField);
 
     m_pTextField->setDelegate(this);
-    m_pTextField->setPosition(ccp(s.width/2, s.height - 80));
+    m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
 
     m_pTrackNode = m_pTextField;
 }
