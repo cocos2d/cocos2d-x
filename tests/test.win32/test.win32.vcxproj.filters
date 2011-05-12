@@ -115,6 +115,9 @@
     <Filter Include="classes\tests\TextInputTest">
       <UniqueIdentifier>{3cbe9845-8408-4456-8928-00452f1e7cce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\UserDefaultTest">
+      <UniqueIdentifier>{f9810289-ecfc-4775-81f1-06ccf227b715}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="..\tests\TextInputTest\TextInputTest.cpp">
       <Filter>classes\tests\TextInputTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp">
+      <Filter>classes\tests\UserDefaultTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -583,6 +589,9 @@
     </ClInclude>
     <ClInclude Include="..\tests\TextInputTest\TextInputTest.h">
       <Filter>classes\tests\TextInputTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\UserDefaultTest\UserDefaultTest.h">
+      <Filter>classes\tests\UserDefaultTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
