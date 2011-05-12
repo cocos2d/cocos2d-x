@@ -190,10 +190,10 @@ namespace cocos2d{
 
 	/** Free function that parses a FNT file a place it on the cache
 	*/
-	CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
+	CC_DLL CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
 	/** Purges the FNT config cache
 	*/
-	void FNTConfigRemoveCache( void );
+	CC_DLL void FNTConfigRemoveCache( void );
 
     /** CCBitmapFontAtlas
     @deprecated Use CCLabelBMFont instead. Will be removed 1.0.1
