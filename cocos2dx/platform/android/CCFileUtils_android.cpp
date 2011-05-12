@@ -109,7 +109,13 @@ string CCFileUtils::getWriteablePath()
 {
 	// the path is: /data/data/ + package name
 	string dir("/data/data/");
-	return dir + getPackageNameJNI() + "/" ;
+	char* tmp = getPackageNameJNI();
+	dir += tmp + "/" ;
+
+	// release memory
+	delete tmp;
+
+	return dir;
 }
 
 NS_CC_END;

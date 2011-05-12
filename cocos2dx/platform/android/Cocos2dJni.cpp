@@ -404,10 +404,10 @@ extern "C"
 		return rtn;
 	}
 
-	const char* getPackageNameJNI()
+	char* getPackageNameJNI()
 	{
 		TMethodJNI t;
-		const char* ret = NULL;
+		char* ret = NULL;
 
 		if (getMethodID(t
 			, "org/cocos2dx/lib/Cocos2dxActivity"
