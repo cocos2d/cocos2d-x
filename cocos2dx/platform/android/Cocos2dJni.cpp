@@ -409,10 +409,10 @@ extern "C"
 		TMethodJNI t;
 		char* ret = NULL;
 
-		if (getMethodID(t
-			, "org/cocos2dx/lib/Cocos2dxActivity"
-			, "getCocos2dxPackageName"
-			, "()Ljava/lang/String;"))
+		if (getMethodID(t, 
+						"org/cocos2dx/lib/Cocos2dxActivity",
+						"getCocos2dxPackageName",
+						"()Ljava/lang/String;"))
 		{
 			jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
 			ret = jstringTostring(t.env, str);
