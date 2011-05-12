@@ -1,3 +1,47 @@
+cocos2d-0.99.5-x-0.8.3 @ May.12,2011
+ [all platforms]
+    Feature  #317  wrap input box for game dev, CCTextFieldTTF. (Highlight!)
+    Feature  #455  implement CCUserDefault for data persistence (Highlight!)
+    Feature  #456  integrate libcurl for network access (Highlight!)
+    Feature  #468  implement CCProfiler & CCProfilingTimer
+    Feature  #450  can set default pixel format other than RGBA888
+    Feature  #449  Remove the sources for mac platform. We plan to focus on mobile platforms & reduce the complexity
+    Refactor #451  Remove the event dispatcher and refactor CCLayer & CCMenu & CCParticleSystemPoint.
+    Refactor #452  Refactor CCDirector CCGrid CCNode, reduce the complexity
+    Refactor #472  Refactor duplicated modules under cocos2dx/platform, reduce the complexity
+    Bug      #341  CCTMXFiledMap crashed when a child is not the obj of CCTMXLayer
+    Bug      #371  A layer can't registered as a StandardTouchDelegate when touch event is handling
+    Bug      #428  Function addChild low efficiency
+    Bug      #448  CCCallFuncO crashes
+    Bug      #467  CCLayer:m_eTouchDelegateType = ccTouchDeletateAllBit all the time
+    Bug      #471  invoke CCFileUtils::setResourcePath may cause loading texture for ParticleSystem failed
+    Bug      #484  CCTextureAtlas::initWithTexture() may cause memory leak
+    Bug      #486  transition test FlipX, FlipY, FlipAngular, ZoomFlipXxx flickers on ios simulator & device
+ [ios]
+    Bug      #447  really exit application when "x" button is clicked
+    Bug      #460  cocos2dx + box2d template cannot find libxml2.dylib
+ [android]
+    Feature  #393  use full version of libxml2, with xmlXPath.. serial methods
+    Feature  #477  Set compilation default ndk version to r5
+    Bug      #374  replace the method for EGL rendering context lost
+    Bug      #453  Android Cocosdenshion can't replace background music
+    Bug      #462  no applicationDidEnterBackground / applicationWillEnterBackground on Android
+    Bug      #470  use GAME_ROOT or other words instead of HELLOWORLD_ROOT in anroid new projects
+    Bug      #475  CCImage::initWithString return true even if the bitmap hasn't been initialized
+ [win32]
+    Feature  #454  Modify the including path of Box2D genereated by win32 template
+    Bug      #459  the project create by template for vs use the RuntimeLibrary MTd, different with other project
+ [wophone] 
+    Feature  #482  Modify the resource data path for the new WoPhone SDK
+    Feature  #487  Implement the function CCFiltUtils::getWriteablePath() on wophone
+    Refactor #466  Refactor CCFileUtils for the new packing approach on wophone
+    Bug      #481  After power down & up, backlight will turn off automaticlly if there's no operation
+    Bug      #485  reduce the CPU occupation, modify the approach of FPS control on wophone
+ [airplay]
+    Feature  #480  add template for airplay
+
+
+
 cocos2d-0.99.5-x-0.8.2 @ Apr.7,2011
  [all platforms]
     390    Feature    Implement performance test
@@ -30,10 +74,8 @@ cocos2d-0.99.5-x-0.8.2 @ Apr.7,2011
     379    Feature    integrate airplay sdk port
     442    feature    implement CocosDenshion on airplay port
 	
- 
 	
 	
-
 cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
  [all platforms]
     400    Bug        typo, rename CCamera.cpp to CCCamera
@@ -54,6 +96,8 @@ cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
  [win32]
     395    Bug        make AppDelegate.cpp created by VS wizard portable without any modification
     401    Bug        VisualStudio template for 2010 OutputDir errors
+
+
 
 cocos2d-0.99.5-x-0.8.0 @ Mar.15,2011
  [all platforms]
@@ -108,6 +152,7 @@ cocos2d-0.99.5-x-0.7.2 @ Jan.26,2011
     - can auto find the installed path of your game, and load zip resource file from the current folder. 
       No absolute path in code any more. Do this to support installing games to micro-SD card
       
+      
 
 cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
  [all platforms]
@@ -133,6 +178,7 @@ cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
  [win32]
     - SimpleAudioEngine can play background musci with repeating now
   
+
 
 cocos2d-0.99.4-x-0.7.0 @ Nov.29,2010
 * cocos2d-iphone-cpp port ready! include accelerometer & multi-touch
