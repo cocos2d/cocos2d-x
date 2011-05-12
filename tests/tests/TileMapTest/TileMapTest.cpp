@@ -1376,5 +1376,10 @@ void TileMapTestScene::runThisTest()
     CCLayer* pLayer = nextTileMapAction();
     addChild(pLayer);
 
+	// fix bug #486, #419. 
+	// "test" is the default value in CCDirector::setGLDefaultValues()
+	// but TransitionTest may setDepthTest(false), we should revert it here
+	CCDirector::sharedDirector()->setDepthTest(true);
+	
     CCDirector::sharedDirector()->replaceScene(this);
 }
