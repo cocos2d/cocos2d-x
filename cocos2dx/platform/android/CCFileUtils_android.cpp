@@ -110,7 +110,8 @@ string CCFileUtils::getWriteablePath()
 	// the path is: /data/data/ + package name
 	string dir("/data/data/");
 	char* tmp = getPackageNameJNI();
-	dir += tmp + "/" ;
+	dir += tmp;
+	dir += "/";
 
 	// release memory
 	delete tmp;
