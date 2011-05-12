@@ -375,4 +375,51 @@ extern "C"
     {
         cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
     }
+
+	//////////////////////////////////////////////////////////////////////////
+	// get package name
+	//////////////////////////////////////////////////////////////////////////
+
+	static char* jstringTostring(JNIEnv* env, jstring jstr)
+	{
+		char* rtn = NULL;
+
+		// convert jstring to byte array
+		jclass clsstring = env->FindClass("java/lang/String");
+		jstring strencode = env->NewStringUTF("utf-8");
+		jmethodID mid = env->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
+		jbyteArray barr= (jbyteArray)env->CallObjectMethod(jstr, mid, strencode);
+		jsize alen =  env->GetArrayLength(barr);
+		jbyte* ba = env->GetByteArrayElements(barr, JNI_FALSE);
+
+		// copy byte array into char[]
+		if (alen > 0)
+		{
+			rtn = (char*)malloc(alen + 1);
+			memcpy(rtn, ba, alen);
+			rtn[alen] = 0;
+		}
+		env->ReleaseByteArrayElements(barr, ba, 0);
+
+		return rtn;
+	}
+
+	const char* getPackageNameJNI()
+	{
+		TMethodJNI t;
+		const char* ret = NULL;
+
+		if (getMethodID(t
+			, "org/cocos2dx/lib/Cocos2dxActivity"
+			, "getCocos2dxPackageName"
+			, "()Ljava/lang/String;"))
+		{
+			jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+			ret = jstringTostring(t.env, str);
+
+			LOGD("package name %s", ret);
+		}
+
+		return ret;
+	}
 }

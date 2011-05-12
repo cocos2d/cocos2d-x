@@ -25,6 +25,7 @@ THE SOFTWARE.
 NS_CC_BEGIN;
 
 #include "CCCommon.h"
+#include "Cocos2dJni.h"
 
 #define  MAX_PATH 256
 
@@ -107,9 +108,8 @@ int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 string CCFileUtils::getWriteablePath()
 {
 	// the path is: /data/data/ + package name
-	string dir("/data/data");
-	size_t length = s_strResourcePath.rfind(".") - s_strResourcePath.rfind("/");
-	return dir + s_strResourcePath.substr(s_strResourcePath.rfind("/"), length) + "/" ;
+	string dir("/data/data/");
+	return dir + getPackageNameJNI() + "/" ;
 }
 
 NS_CC_END;
