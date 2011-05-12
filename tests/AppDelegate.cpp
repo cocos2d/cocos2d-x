@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "tests/controller.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -51,6 +52,7 @@ bool AppDelegate::initInstance()
 #ifndef _TRANZDA_VM_  
         // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data folder instead of zip file
         cocos2d::CCFileUtils::setResource("TestCocos2dx.zip");
+        CocosDenshion::SimpleAudioEngine::setResource("TestCocos2dx.zip");
 #endif
 
 #endif
