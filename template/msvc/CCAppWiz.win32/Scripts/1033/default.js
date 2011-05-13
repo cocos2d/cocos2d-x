@@ -99,9 +99,40 @@ function CreateCustomProject(strProjectName, strProjectPath) {
         var file = FileSys.OpenTextFile(strUserPath, 2, true);
         var strUserValue = "";
         if(WizardVersion >= 10.0)
-            strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n  <PropertyGroup>\r\n    <ShowAllFiles>true</ShowAllFiles>\r\n  </PropertyGroup>\r\n</Project>";
+            strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n"
+                 + "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n"
+                 + "  <PropertyGroup>\r\n"
+                 + "    <ShowAllFiles>true</ShowAllFiles>\r\n"
+                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">$(ProjectDir)Resource</LocalDebuggerWorkingDirectory>\r\n"
+                 + "    <LocalDebuggerWorkingDirectory Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">$(ProjectDir)Resource</LocalDebuggerWorkingDirectory>\r\n"
+                 + "    <DebuggerFlavor Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">WindowsLocalDebugger</DebuggerFlavor>\r\n"
+                 + "    <DebuggerFlavor Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">WindowsLocalDebugger</DebuggerFlavor>\r\n"
+                 + "  </PropertyGroup>\r\n"
+                 + "</Project>";
         else
-            strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?><VisualStudioUserFile ProjectType=\"Visual C++\" Version=\"9.00\" ShowAllFiles=\"true\"></VisualStudioUserFile>";
+            strUserValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n"
+                 + "<VisualStudioUserFile\r\n"
+                 + "	ProjectType=\"Visual C++\"\r\n"
+                 + "	Version=\"9.00\"\r\n"
+                 + "	ShowAllFiles=\"true\"\r\n"
+                 + "	>\r\n"
+                 + "	<Configurations>\r\n"
+                 + "		<Configuration\r\n"
+			     + "			Name=\"Debug|Win32\"\r\n"
+			     + "			>\r\n"
+			     + "			<DebugSettings\r\n"
+			     + "				WorkingDirectory=\"$(ProjectDir)Resource\\\"\r\n"
+			     + "			/>\r\n"
+		         + "		</Configuration>\r\n"
+		         + "		<Configuration\r\n"
+			     + "			Name=\"Release|Win32\"\r\n"
+			     + "			>\r\n"
+			     + "			<DebugSettings\r\n"
+			     + "				WorkingDirectory=\"$(ProjectDir)Resource\\\"\r\n"
+			     + "			/>\r\n"
+		         + "		</Configuration>\r\n"
+			     + "    </Configurations>\r\n"
+                 + "</VisualStudioUserFile>";
         file.WriteLine(strUserValue);
         file.Close(); 
 
@@ -280,9 +311,9 @@ function AddConfigurations(proj, strProjectName) {
             MidlTool.DLLDataFileName = "";
 
             // Post-build settings
-            var PostBuildTool = config.Tools("VCPostBuildEventTool");
-            PostBuildTool.Description = "Performing copy resource from Resource to OutDir...";
-            PostBuildTool.CommandLine = "xcopy /E /Q /Y \"$(ProjectDir)Resource\\*.*\" \"$(OutDir)\"";
+//            var PostBuildTool = config.Tools("VCPostBuildEventTool");
+//            PostBuildTool.Description = "Performing copy resource from Resource to OutDir...";
+//            PostBuildTool.CommandLine = "xcopy /E /Q /Y \"$(ProjectDir)Resource\\*.*\" \"$(OutDir)\"";
         }
     }
     catch (e) {

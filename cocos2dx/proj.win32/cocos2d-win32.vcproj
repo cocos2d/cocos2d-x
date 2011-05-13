@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\include;.."
+				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;.."
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -124,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\iconv&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libpng&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libjpeg&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libxml2&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\include;.."
+				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
