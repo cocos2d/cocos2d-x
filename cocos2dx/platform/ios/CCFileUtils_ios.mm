@@ -343,7 +343,9 @@ namespace cocos2d {
         // save to document folder
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
-        return [documentsDirectory UTF8String];        
+        std::string strRet = [documentsDirectory UTF8String];
+        strRet.append("/");
+        return strRet;
     }
 
 }//namespace cocos2d
