@@ -22,6 +22,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\test.win32\t
 		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6} = {F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceParticleTest", "PerformanceTest\PerformanceParticleTest\proj.win32\PerformanceParticleTest.win32.vcproj", "{790DD5F8-E513-4C8C-A98D-AA026915E3A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceSpriteTest", "PerformanceTest\PerformanceSpriteTest\proj.win32\PerformanceSpriteTest.win32.vcproj", "{9930AA64-A68E-4236-A896-A7E8FCB64191}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceNodeChildrenTest", "PerformanceTest\PerformanceNodeChildrenTest\proj.win32\PerformanceNodeChildrenTest.win32.vcproj", "{381AC847-D5F3-4B7F-8AA6-CAD06048E458}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -52,6 +67,18 @@ Global
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Debug|Win32.Build.0 = Debug|Win32
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.ActiveCfg = Release|Win32
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.Build.0 = Release|Win32
+		{790DD5F8-E513-4C8C-A98D-AA026915E3A7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{790DD5F8-E513-4C8C-A98D-AA026915E3A7}.Debug|Win32.Build.0 = Debug|Win32
+		{790DD5F8-E513-4C8C-A98D-AA026915E3A7}.Release|Win32.ActiveCfg = Release|Win32
+		{790DD5F8-E513-4C8C-A98D-AA026915E3A7}.Release|Win32.Build.0 = Release|Win32
+		{9930AA64-A68E-4236-A896-A7E8FCB64191}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9930AA64-A68E-4236-A896-A7E8FCB64191}.Debug|Win32.Build.0 = Debug|Win32
+		{9930AA64-A68E-4236-A896-A7E8FCB64191}.Release|Win32.ActiveCfg = Release|Win32
+		{9930AA64-A68E-4236-A896-A7E8FCB64191}.Release|Win32.Build.0 = Release|Win32
+		{381AC847-D5F3-4B7F-8AA6-CAD06048E458}.Debug|Win32.ActiveCfg = Debug|Win32
+		{381AC847-D5F3-4B7F-8AA6-CAD06048E458}.Debug|Win32.Build.0 = Debug|Win32
+		{381AC847-D5F3-4B7F-8AA6-CAD06048E458}.Release|Win32.ActiveCfg = Release|Win32
+		{381AC847-D5F3-4B7F-8AA6-CAD06048E458}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

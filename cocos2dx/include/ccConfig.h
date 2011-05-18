@@ -254,7 +254,7 @@ To enable set it to a value different than 0. Disabled by default.
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_ENABLE_PROFILERS 0
+#define CC_ENABLE_PROFILERS 1
 
 /** @def CC_COMPATIBILITY_WITH_0_8
  Enable it if you want to support v0.8 compatbility.
