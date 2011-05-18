@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "CCApplication.h"
 #include "CCIMEDispatcher.h"
-#include "platform/android/CCAccelerometer_android.h"
+#include "CCAccelerometer_android.h"
 #include <android/log.h>
 
 #if 0
@@ -395,7 +395,7 @@ extern "C"
 		// copy byte array into char[]
 		if (alen > 0)
 		{
-			rtn = (char*)malloc(alen + 1);
+			rtn = new char[alen + 1];
 			memcpy(rtn, ba, alen);
 			rtn[alen] = 0;
 		}
