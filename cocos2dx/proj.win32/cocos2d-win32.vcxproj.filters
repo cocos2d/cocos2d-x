@@ -327,6 +327,9 @@
     <ClCompile Include="..\menu_nodes\CCMenu.cpp">
       <Filter>menu_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\CCUserDefault.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\effects\CCGrabber.h">
@@ -697,6 +700,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCIMEDispatcher.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCUserDefault.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
