@@ -108,10 +108,12 @@ void CCLog(const char * pszFormat, ...)
 #endif
     va_end(ap);
 
-    SS_printf("%s", szBuf);
 #ifdef _TRANZDA_VM_
-    SS_printf("\n");
+    WCHAR wszBuf[MAX_LEN + 2] = {0};
+    wszBuf[MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf))] = '\n';
+    OutputDebugStringW(wszBuf);
 #else
+    SS_printf("%s", szBuf);
     SS_printf("\r\n");
     FILE * pf = fopen(s_szLogFilePath, "a+");
     if (! pf)

@@ -109,6 +109,7 @@ protected:
     bool        m_bRunning;
     bool        m_bNeedStop;
     bool        m_bInBackground;
+    bool        m_bEnterBackgroundCalled;
     char        m_AppDataPath[EOS_FILE_MAX_PATH];
     char        m_AppWritablePath[EOS_FILE_MAX_PATH];
 
