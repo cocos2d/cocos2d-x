@@ -199,7 +199,7 @@ public class Cocos2dxActivity extends Activity{
     	pauseBackgroundMusic();
     }
 
-    protected void setPackgeName(String packageName) {
+    protected void setPackageName(String packageName) {
     	Cocos2dxActivity.packageName = packageName;
     	
     	String apkFilePath = "";
