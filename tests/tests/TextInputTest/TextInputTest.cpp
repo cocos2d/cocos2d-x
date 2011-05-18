@@ -278,7 +278,13 @@ void TextFieldTTFDefaultTest::onEnter()
         FONT_SIZE);
     addChild(pTextField);
 
-    pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)	
+	// on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+	// so we had to set a higher position to make it visable
+	pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+#else
+	pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+#endif
 
     m_pTrackNode = pTextField;
 }
@@ -333,7 +339,14 @@ void TextFieldTTFActionTest::onEnter()
     addChild(m_pTextField);
 
     m_pTextField->setDelegate(this);
-    m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+	
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)	
+	// on android, CCTextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+	// so we had to set a higher position
+	m_pTextField->setPosition(ccp(s.width / 2, s.height/2 + 50));
+#else
+	m_pTextField->setPosition(ccp(s.width / 2, s.height / 2));
+#endif
 
     m_pTrackNode = m_pTextField;
 }

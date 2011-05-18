@@ -46,7 +46,10 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 #include "CCUserDefault.h"
+#endif
 
 #if CC_ENABLE_PROFILERS
 #include "support/CCProfiling.h"
@@ -570,8 +573,10 @@ void CCDirector::purgeDirector()
 	CCActionManager::sharedManager()->purgeSharedManager();
 	CCScheduler::purgeSharedScheduler();
 	CCTextureCache::purgeSharedTextureCache();
+	
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)	
 	CCUserDefault::purgeSharedUserDefault();
-
+#endif
 	// OpenGL view
 	m_pobOpenGLView->release();
 	m_pobOpenGLView = NULL;
