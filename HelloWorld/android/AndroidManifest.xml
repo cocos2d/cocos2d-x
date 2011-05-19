@@ -6,7 +6,7 @@
     <application android:label="@string/app_name" android:debuggable="true">
         <activity android:name=".ApplicationDemo"
                   android:label="@string/app_name"
-                  android:screenOrientation="portrait"
+                  android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -14,4 +14,8 @@
             </intent-filter>
         </activity>
     </application>
+    <supports-screens android:largeScreens="true"
+                      android:smallScreens="true"
+                      android:anyDensity="true"
+                      android:normalScreens="true"/>
 </manifest> 
