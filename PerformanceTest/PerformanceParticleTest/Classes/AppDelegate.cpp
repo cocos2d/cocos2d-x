@@ -24,7 +24,7 @@ bool AppDelegate::initInstance()
         // The HelloWorld is designed as HVGA.
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("PerformanceTest"), 320, 480));
+            || ! pMainWnd->Create(TEXT("PerformanceParticleTest"), 320, 480));
 #endif  // CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -50,7 +50,7 @@ bool AppDelegate::initInstance()
 #if !defined(_TRANZDA_VM_)
         // set the resource zip file
         // on wophone emulator, we copy resources files to Work7/TG3/APP/ folder instead of zip file
-        CCFileUtils::setResource("PerformanceTest.zip");
+        CCFileUtils::setResource("PerformanceParticleTest.zip");
 #endif
 
 #endif  // CC_PLATFORM_WOPHONE

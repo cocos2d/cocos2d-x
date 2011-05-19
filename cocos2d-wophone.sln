@@ -5,7 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "Box2D\proj.wophone
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk", "chipmunk\proj.wophone\chipmunk.wophone.vcproj", "{BA00DDF7-0F25-4C1E-B012-FA230C1F6463}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocos2d-wophone", "cocos2dx\proj.wophone\cocos2d-wophone.vcproj", "{6AC43F51-A036-4653-B910-BDDC346D15E7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocos2d", "cocos2dx\proj.wophone\cocos2d-wophone.vcproj", "{6AC43F51-A036-4653-B910-BDDC346D15E7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion", "CocosDenshion\proj.wophone\CocosDenshion.wophone.vcproj", "{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}"
 EndProject
@@ -20,6 +20,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\test.wophone
 		{AB17438B-7848-4FD6-AF6E-A6A91F82C6F0} = {AB17438B-7848-4FD6-AF6E-A6A91F82C6F0}
 		{83C75293-906B-432E-80B9-A0041043E380} = {83C75293-906B-432E-80B9-A0041043E380}
 		{BA00DDF7-0F25-4C1E-B012-FA230C1F6463} = {BA00DDF7-0F25-4C1E-B012-FA230C1F6463}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceParticleTest", "PerformanceTest\PerformanceParticleTest\proj.wophone\PerformanceParticleTest.wophone.vcproj", "{B6A6ECEC-30D4-4034-A27C-4A05D19F62F0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceSpriteTest", "PerformanceTest\PerformanceSpriteTest\proj.wophone\PerformanceSpriteTest.wophone.vcproj", "{9135E421-BBBA-4CB6-8654-F6A10DE11186}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceNodeChildrenTest", "PerformanceTest\PerformanceNodeChildrenTest\proj.wophone\PerformanceNodeChildrenTest.wophone.vcproj", "{E25D6654-D7B7-4473-A6D5-F0EB699241C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6AC43F51-A036-4653-B910-BDDC346D15E7} = {6AC43F51-A036-4653-B910-BDDC346D15E7}
 	EndProjectSection
 EndProject
 Global
@@ -52,6 +67,18 @@ Global
 		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Debug|Win32.Build.0 = Debug|Win32
 		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Release|Win32.ActiveCfg = Release|Win32
 		{33819ACD-9774-4E68-AFBE-7A88BBA7B19D}.Release|Win32.Build.0 = Release|Win32
+		{B6A6ECEC-30D4-4034-A27C-4A05D19F62F0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B6A6ECEC-30D4-4034-A27C-4A05D19F62F0}.Debug|Win32.Build.0 = Debug|Win32
+		{B6A6ECEC-30D4-4034-A27C-4A05D19F62F0}.Release|Win32.ActiveCfg = Release|Win32
+		{B6A6ECEC-30D4-4034-A27C-4A05D19F62F0}.Release|Win32.Build.0 = Release|Win32
+		{9135E421-BBBA-4CB6-8654-F6A10DE11186}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9135E421-BBBA-4CB6-8654-F6A10DE11186}.Debug|Win32.Build.0 = Debug|Win32
+		{9135E421-BBBA-4CB6-8654-F6A10DE11186}.Release|Win32.ActiveCfg = Release|Win32
+		{9135E421-BBBA-4CB6-8654-F6A10DE11186}.Release|Win32.Build.0 = Release|Win32
+		{E25D6654-D7B7-4473-A6D5-F0EB699241C8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E25D6654-D7B7-4473-A6D5-F0EB699241C8}.Debug|Win32.Build.0 = Debug|Win32
+		{E25D6654-D7B7-4473-A6D5-F0EB699241C8}.Release|Win32.ActiveCfg = Release|Win32
+		{E25D6654-D7B7-4473-A6D5-F0EB699241C8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
