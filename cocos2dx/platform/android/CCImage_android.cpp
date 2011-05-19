@@ -46,9 +46,9 @@ class BitmapDC
 {
 public:
     BitmapDC()
-	: m_pBitmap(NULL),
-	  m_pPaint(NULL)
+		:m_pPaint(NULL)
     {
+		m_pBitmap = new SkBitmap();
     }
 
     ~BitmapDC(void)
@@ -94,27 +94,15 @@ public:
 
 	bool prepareBitmap(int nWidth, int nHeight)
 	{
-		// release bitmap
-		if (m_pBitmap)
-		{
-			delete m_pBitmap;
-			m_pBitmap = NULL;
-		}
+		m_pBitmap->reset();
 		
 		if (nWidth > 0 && nHeight > 0)
 		{
-			/* create and init bitmap */
-			m_pBitmap = new SkBitmap();
-			if (! m_pBitmap)
-			{
-				return false;
-			}
-
 			/* use rgba8888 and alloc memory */
             m_pBitmap->setConfig(SkBitmap::kARGB_8888_Config, nWidth, nHeight);
+
 			if (! m_pBitmap->allocPixels())
 			{
-				CC_SAFE_DELETE(m_pBitmap);
 				return false;
 			}
 
