@@ -5,6 +5,7 @@
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
@@ -95,10 +96,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->pause();
+    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();   
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();   
 }

@@ -28,9 +28,10 @@ static long long getTimeOfDayMicroSecond()
 #endif
 
 CCApplication::CCApplication()
-: m_bRunning(FALSE)
-, m_bNeedStop(FALSE)
-, m_bInBackground(FALSE)
+: m_bRunning(false)
+, m_bNeedStop(false)
+, m_bInBackground(false)
+, m_bEnterBackgroundCalled(false)
 {
     memset(&m_tMsg, 0, sizeof(m_tMsg));
     SS_GetCurrentGTID(&m_tMsg.gtid);
@@ -108,9 +109,14 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
     case EVENT_AppActiveNotify:
         if (pEvent->sParam1 == 0)
         {
+            CCLOG("EVENT_AppActiveNotify false");
             if (!m_bInBackground)
             {
-                applicationDidEnterBackground();
+                if (! m_bEnterBackgroundCalled)
+                {
+                    applicationDidEnterBackground();
+                    m_bEnterBackgroundCalled = true;
+                }
                 m_bInBackground = true;
             }
 
@@ -125,15 +131,17 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
                 CfgTurnOnBackLightEx(SYS_BACK_LIGHT_MODE_TIME_LONG);
                 CCLOG("AppActiveNotify::TurnOnBackLight:MODE_TIME_LONG");
             }
-
-//             EnableKeyLock();
-//             CCLOG("AppActiveNotify::InBackground");
         }
         else if (pEvent->sParam1 > 0)
         {
+            CCLOG("EVENT_AppActiveNotify true");
             if (m_bInBackground)
             {
-                applicationWillEnterForeground();
+                if (m_bEnterBackgroundCalled)
+                {
+                    applicationWillEnterForeground();
+                    m_bEnterBackgroundCalled = false;
+                }
                 m_bInBackground = false;
             }
 
@@ -147,13 +155,6 @@ Boolean  CCApplication::EventHandler(EventType*  pEvent)
                 CfgTurnOnBackLightDelay(0x7fffffff);
                 CCLOG("AppActiveNotify::TurnOnBackLight:0x7fffffff");
             }
-
-            // if KeyLock disactived, disable it.
-//             if (! CfgKeyLock_GetActive())
-//             {
-//                 DisableKeyLock();
-//                 CCLOG("AppActiveNotify::DisableKeyLock");
-//             }
         }
         break;
     }
@@ -208,12 +209,12 @@ void CCApplication::switchNotify(int nTurnOn)
 
         if (! nTurnOn)  // turn off screen
         {
-            // CCDirector::sharedDirector()->pause();
-            applicationDidEnterBackground();
+            if (! m_bEnterBackgroundCalled)
+            {
+                applicationDidEnterBackground();
+                m_bEnterBackgroundCalled = true;
+            }
             StopMainLoop();
-
-//             EnableKeyLock();
-//             CCLOG("BLswitchNotify::EnableKeyLock");
         }
         else
         {
@@ -223,15 +224,11 @@ void CCApplication::switchNotify(int nTurnOn)
             CfgTurnOnBackLightDelay(0x7fffffff);
             CCLOG("AppActiveNotify::TurnOnBackLight:0x7fffffff");
 
-//             // if KeyLock disactived, disable it.
-//             if (! CfgKeyLock_GetActive())
-//             {
-//                 DisableKeyLock();
-//                 CCLOG("BLswitchNotify::DisableKeyLock");
-//             }
-// 
-            // CCDirector::sharedDirector()->resume();
-            applicationWillEnterForeground();
+            if (m_bEnterBackgroundCalled)
+            {
+                applicationWillEnterForeground();
+                m_bEnterBackgroundCalled = false;
+            }
             StartMainLoop();
         }
     } while (0);
@@ -244,13 +241,13 @@ bool CCApplication::isInBackground()
 
 void CCApplication::StartMainLoop()
 {
+    m_bNeedStop = FALSE;
     if (m_bRunning)
     {
-        m_bNeedStop = FALSE;
         return;
     }
+    CCLOG("Post StartMainLoop");
     Sys_PostMessage2(MESSAGE_PRIOR_LOWEST, &m_tMsg);
-    m_bRunning = TRUE;
 }
 
 void CCApplication::StopMainLoop()
@@ -262,15 +259,17 @@ Int32 CCApplication::_OnAppIdle(MESSAGE_t * pMsg, UInt32 uData)
 {
     CCApplication& rThis = (CCApplication&) CCApplication::sharedApplication();
     CCEGLView *     pView = CCDirector::sharedDirector()->getOpenGLView();
-    if (pView && rThis.m_bRunning)
+    if (pView)
     {
         if (rThis.m_bNeedStop)
         {
+            CCLOG("_OnAppIdle: Stop");
             rThis.m_bNeedStop = FALSE;
             rThis.m_bRunning  = FALSE;
         }
         else
         {
+            rThis.m_bRunning  = TRUE;
 #ifdef _TRANZDA_VM_
             LARGE_INTEGER nNow;
             QueryPerformanceCounter(&nNow);
