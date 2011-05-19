@@ -37,7 +37,7 @@ void _CheckPath()
 	{
 		WCHAR  wszPath[MAX_PATH];
 		int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath, 
-			GetCurrentDirectory(sizeof(wszPath), wszPath), 
+			GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
 			s_pszResourcePath, MAX_PATH, NULL, NULL);
         s_pszResourcePath[nNum] = '\\';
 	}
@@ -59,10 +59,13 @@ const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
     pRet->autorelease();
     if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':'))
     {
+        // path start with "x:", is absolute path
         pRet->m_sString = pszRelativePath;
     }
-    else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
+    else if (strlen(pszRelativePath) > 0 
+        && ('/' == pszRelativePath[0] || '\\' == pszRelativePath[0]))
     {
+        // path start with '/' or '\', is absolute path without driver name
 		char szDriver[3] = {s_pszResourcePath[0], s_pszResourcePath[1], 0};
         pRet->m_sString = szDriver;
         pRet->m_sString += pszRelativePath;
