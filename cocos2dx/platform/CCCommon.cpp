@@ -44,7 +44,10 @@ void CCLog(const char * pszFormat, ...)
     va_start(ap, pszFormat);
     vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
     va_end(ap);
-    OutputDebugStringA(szBuf);
+
+    WCHAR wszBuf[MAX_LEN] = {0};
+    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
+    OutputDebugStringW(wszBuf);
     OutputDebugStringA("\n");
 }
 
@@ -96,7 +99,6 @@ void CCLog(const char * pszFormat, ...)
         strcat(s_szLogFilePath, "Cocos2dxLog.txt");
     }
 
-    SS_printf("Cocos2d: ");
     char szBuf[MAX_LEN];
 
     va_list ap;
@@ -108,11 +110,12 @@ void CCLog(const char * pszFormat, ...)
 #endif
     va_end(ap);
 
-    SS_printf("%s", szBuf);
 #ifdef _TRANZDA_VM_
-    SS_printf("\n");
+    WCHAR wszBuf[MAX_LEN] = {0};
+    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
+    OutputDebugStringW(wszBuf);
+    OutputDebugStringA("\n");
 #else
-    SS_printf("\r\n");
     FILE * pf = fopen(s_szLogFilePath, "a+");
     if (! pf)
     {

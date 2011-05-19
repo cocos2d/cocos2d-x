@@ -13,7 +13,7 @@ public class TestsDemo extends Cocos2dxActivity{
 		
 		// get the packageName,it's used to set the resource path
 		String packageName = getApplication().getPackageName();
-		super.setPackgeName(packageName);
+		super.setPackageName(packageName);
 
         setContentView(R.layout.test_demo);
         mGLView = (Cocos2dxGLSurfaceView) findViewById(R.id.test_demo_gl_surfaceview);
