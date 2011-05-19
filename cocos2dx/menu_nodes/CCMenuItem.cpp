@@ -359,6 +359,37 @@ namespace cocos2d{
 
         m_pDisabledImage = var;
 	}
+    //
+    //CCMenuItemSprite - CCRGBAProtocol protocol
+    //
+    void CCMenuItemSprite::setOpacity(GLubyte opacity)
+    {
+        m_pNormalImage->convertToRGBAProtocol()->setOpacity(opacity);
+        m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->convertToRGBAProtocol()->setOpacity(opacity);
+        }
+    }
+    void CCMenuItemSprite::setColor(ccColor3B color)
+    {
+        m_pNormalImage->convertToRGBAProtocol()->setColor(color);
+        m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->convertToRGBAProtocol()->setColor(color);
+        }
+    }
+    GLubyte CCMenuItemSprite::getOpacity()
+    {
+        return m_pNormalImage->convertToRGBAProtocol()->getOpacity();
+    }
+    ccColor3B CCMenuItemSprite::getColor()
+    {
+        return m_pNormalImage->convertToRGBAProtocol()->getColor();
+    }
 	CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite)
 	{
 		return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, NULL, NULL, NULL);
@@ -458,37 +489,6 @@ namespace cocos2d{
         }
     }
 
-	//
-	//CCMenuItemImage - CCRGBAProtocol protocol
-	//
-	void CCMenuItemImage::setOpacity(GLubyte opacity)
-	{
-		m_pNormalImage->convertToRGBAProtocol()->setOpacity(opacity);
-		m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
-
-		if (m_pDisabledImage)
-		{
-			m_pDisabledImage->convertToRGBAProtocol()->setOpacity(opacity);
-		}
-	}
-	void CCMenuItemImage::setColor(ccColor3B color)
-	{
-		m_pNormalImage->convertToRGBAProtocol()->setColor(color);
-		m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
-
-		if (m_pDisabledImage)
-		{
-			m_pDisabledImage->convertToRGBAProtocol()->setColor(color);
-		}
-	}
-	GLubyte CCMenuItemImage::getOpacity()
-	{
-		return m_pNormalImage->convertToRGBAProtocol()->getOpacity();
-	}
-	ccColor3B CCMenuItemImage::getColor()
-	{
-		return m_pNormalImage->convertToRGBAProtocol()->getColor();
-	}
 	CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage)
 	{
 		return CCMenuItemImage::itemFromNormalImage(normalImage, selectedImage, NULL, NULL, NULL);
