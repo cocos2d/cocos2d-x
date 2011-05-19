@@ -151,34 +151,22 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         }
         imm.hideSoftInputFromWindow(mainView.getWindowToken(), 0);
     }
-	
-    @Override 
-    public boolean onCheckIsTextEditor() {
-    	if (null == mainView)
-    	{
-    		return false;
-    	}
-        return true;
-    }
     
     private Cocos2dxInputConnection ic;
     @Override 
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        if (onCheckIsTextEditor()) {
+    	outAttrs.inputType = EditorInfo.TYPE_CLASS_TEXT;
+        outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI; //IME_ACTION_DONE
+        outAttrs.initialSelStart = -1;
+        outAttrs.initialSelEnd = -1;
+        outAttrs.initialCapsMode = 1;
 
-            outAttrs.inputType = EditorInfo.TYPE_CLASS_TEXT;
-            outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI; //IME_ACTION_DONE
-            outAttrs.initialSelStart = -1;
-            outAttrs.initialSelEnd = -1;
-            outAttrs.initialCapsMode = 1;
-
-        	if (null == ic)
-        	{
-        		ic = new Cocos2dxInputConnection(this);
-        	}
-            return ic;
-        }
-        return null;
+    	if (null == ic)
+    	{
+    		ic = new Cocos2dxInputConnection(this);
+    	}
+    	
+        return ic;
     }
 
     public void insertText(final String text) {
