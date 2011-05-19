@@ -121,7 +121,7 @@ void SoundPlayer::Release()
 
 void SoundPlayer::Pause()
 {
-    if (m_pPlayer && PLAYER_STATUS_PAUSED != m_pPlayer->GetCurrentStatus())
+    if (m_pPlayer && PLAYER_STATUS_PLAYING == m_pPlayer->GetCurrentStatus())
     {
         m_pPlayer->Pause();
     }
@@ -129,7 +129,7 @@ void SoundPlayer::Pause()
 
 void SoundPlayer::Resume()
 {
-    if (m_pPlayer && PLAYER_STATUS_PLAYING != m_pPlayer->GetCurrentStatus())
+    if (m_pPlayer)
     {
         m_pPlayer->Resume();
     }
