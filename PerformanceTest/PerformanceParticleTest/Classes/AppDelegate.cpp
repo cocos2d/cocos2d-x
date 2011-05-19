@@ -76,7 +76,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     ParticleMainScene* pScene = new ParticlePerformTest1;
-    pScene->initWithSubTest(1, 5000);
+    pScene->initWithSubTest(1, kNodesIncrease);
 
     CCDirector::sharedDirector()->runWithScene(pScene);
     pScene->release();

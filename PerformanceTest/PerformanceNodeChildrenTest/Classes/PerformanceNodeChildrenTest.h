@@ -30,6 +30,9 @@ public:
     void backCallback(cocos2d::CCObject* pSender);
     void showCurrentTest();
 
+    // a selector callback
+    virtual void menuCloseCallback(CCObject* pSender);
+
 protected:
     int	lastRenderedCount;
     int	quantityOfNodes;

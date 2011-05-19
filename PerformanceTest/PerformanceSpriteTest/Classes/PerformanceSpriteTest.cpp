@@ -265,6 +265,13 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     pMenu->alignItemsHorizontally();
     pMenu-> setPosition(ccp(s.width/2, 30));
 
+    // close menu item
+    CCMenuItemImage* pCloseItem = CCMenuItemImage::itemFromNormalImage("CloseNormal.png", "CloseSelected.png", this, menu_selector(SpriteMainScene::menuCloseCallback));
+    CCMenu* pCloseMenu = CCMenu::menuWithItems(pCloseItem, NULL);
+    addChild(pCloseMenu, 1);
+    pCloseMenu->setPosition( CCPointZero );
+    pCloseItem->setPosition(CCPointMake( s.width - 30, 30));
+
     // Sub Tests
     CCMenuItemFont::setFontSize(32);
     CCMenu* pSubMenu = CCMenu::menuWithItems(NULL);
@@ -318,6 +325,11 @@ void SpriteMainScene::backCallback(CCObject* pSender)
         s_nSpriteCurCase += TEST_COUNT;
 
     showCurrentTest();
+}
+
+void SpriteMainScene::menuCloseCallback(CCObject* pSender)
+{
+    CCDirector::sharedDirector()->end();
 }
 
 void SpriteMainScene::showCurrentTest()

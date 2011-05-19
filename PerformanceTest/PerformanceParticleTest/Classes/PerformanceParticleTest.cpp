@@ -57,6 +57,13 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pMenu->alignItemsHorizontally();
     pMenu-> setPosition(ccp(s.width/2, 30));
 
+    // close menu item
+    CCMenuItemImage* pCloseItem = CCMenuItemImage::itemFromNormalImage("CloseNormal.png", "CloseSelected.png", this, menu_selector(ParticleMainScene::menuCloseCallback));
+    CCMenu* pCloseMenu = CCMenu::menuWithItems(pCloseItem, NULL);
+    addChild(pCloseMenu, 1);
+    pCloseMenu->setPosition( CCPointZero );
+    pCloseItem->setPosition(CCPointMake( s.width - 30, 30));
+
     // Sub Tests
     CCMenuItemFont::setFontSize(40);
     CCMenu* pSubMenu = CCMenu::menuWithItems(NULL);
@@ -112,6 +119,11 @@ void ParticleMainScene::backCallback(CCObject* pSender)
         s_nParCurIdx += TEST_COUNT;
 
     showCurrentTest();
+}
+
+void ParticleMainScene::menuCloseCallback(CCObject* pSender)
+{
+    CCDirector::sharedDirector()->end();
 }
 
 void ParticleMainScene::showCurrentTest()

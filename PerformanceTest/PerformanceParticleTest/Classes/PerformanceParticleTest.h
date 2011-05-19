@@ -26,6 +26,9 @@ public:
     void backCallback(cocos2d::CCObject* pSender);
     void showCurrentTest();
 
+    // a selector callback
+    virtual void menuCloseCallback(CCObject* pSender);
+
     virtual void doTest() = 0;
 
 protected:
