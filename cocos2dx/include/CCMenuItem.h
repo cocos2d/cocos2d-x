@@ -189,10 +189,10 @@ namespace cocos2d{
 		/** initializes a menu item with a normal, selected  and disabled image with target/selector */
 		bool initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
 		// super methods
-		virtual void setColor(ccColor3B color){}
-		virtual ccColor3B getColor(){return ccBLACK;}
-		virtual void setOpacity(GLubyte opacity){}
-		virtual GLubyte getOpacity(){return 0;}
+        virtual void setColor(ccColor3B color);
+        virtual ccColor3B getColor();
+        virtual void setOpacity(GLubyte opacity);
+        virtual GLubyte getOpacity();
 
         /**
         @since v0.99.5
@@ -227,11 +227,6 @@ namespace cocos2d{
 		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
 		/** initializes a menu item with a normal, selected  and disabled image with target/selector */
 		bool initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
-		// super methods
-		virtual void setColor(ccColor3B color);
-		virtual ccColor3B getColor();
-		virtual void setOpacity(GLubyte opacity);
-		virtual GLubyte getOpacity();
 	};
 
 	/** @brief A CCMenuItemToggle
