@@ -23,7 +23,7 @@ set _NDKROOT=e:\android-ndk-r5
 if not exist "%_NDKROOT%" echo Couldn't find ndk at "%_NDKROOT%" & pause & exit 6
 
 :: create android project
-set _PACKAGEPATH=org.cocos2dx.application
+set /P _PACKAGEPATH=Please enter your package path:
 set /P _PROJECTNAME=Please enter your project name:
 echo "Now cocos2d-x suppurts Android 2.1-update1 and Android 2.2"
 echo "Other versions have not tested."
@@ -44,6 +44,6 @@ for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%cd%"') do set _CURRENTDIR=%%A
 for /f "delims=" %%A in ('%_CYGBIN%\cygpath.exe "%_NDKROOT%"') do set _NDKROOT=%%A
 	 
 :: Throw away temporary env vars and invoke script, passing any args that were passed to us
-endlocal & %_CYGBIN%\bash --login "%_CYGSCRIPT%" %_CURRENTDIR% %_PROJECTNAME% %_NDKROOT% "windows"
+endlocal & %_CYGBIN%\bash --login "%_CYGSCRIPT%" %_CURRENTDIR% %_PROJECTNAME% %_NDKROOT% %_PACKAGEPATH% "windows" 
 
 pause
