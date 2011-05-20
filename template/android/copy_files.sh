@@ -70,7 +70,7 @@ copy_build_native(){
 # replace AndroidManifext.xml and change the activity name
 # use sed to replace the specified line
 modify_androidmanifest(){
-    sed "s/ApplicationDemo/$APP_NAME/;;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $HELLOWORLD_ROOT/android/AndroidManifest.xml > $APP_DIR/android/AndroidManifest.xml
+    sed "s/ApplicationDemo/$APP_NAME/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $HELLOWORLD_ROOT/android/AndroidManifest.xml > $APP_DIR/android/AndroidManifest.xml
 }
 
 # modify ApplicationDemo.java
