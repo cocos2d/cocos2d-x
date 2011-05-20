@@ -15,7 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 
 class Cocos2dxInputConnection extends BaseInputConnection {
 
-	private static final boolean	mDebug = false;
+	private static final boolean	mDebug = true;
 	void LogD(String msg) {
 		if (mDebug) {
 			Log.d("Cocos2dxInputConnection", msg);
@@ -64,6 +64,66 @@ class Cocos2dxInputConnection extends BaseInputConnection {
 		if (null != mView) {
 			switch (event.getKeyCode()) {
 			
+			case KeyEvent.KEYCODE_0:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "0";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_1:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "1";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_2:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "2";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_3:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "3";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_4:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "4";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_5:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "5";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_6:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "6";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_7:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "7";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_8:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "8";
+					mView.insertText(insertText);
+				}
+				break;
+			case KeyEvent.KEYCODE_9:
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					final String insertText = "9";
+					mView.insertText(insertText);
+				}
+				break;
 			case KeyEvent.KEYCODE_DEL:
 				if (KeyEvent.ACTION_UP == event.getAction()) {
 					mView.deleteBackward();
@@ -156,7 +216,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     @Override 
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
     	outAttrs.inputType = EditorInfo.TYPE_CLASS_TEXT;
-        outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI; //IME_ACTION_DONE
+        outAttrs.imeOptions = (android.os.Build.VERSION.SDK_INT > 9)
+        							? EditorInfo.IME_FLAG_NO_EXTRACT_UI
+        							: EditorInfo.IME_ACTION_NONE;
         outAttrs.initialSelStart = -1;
         outAttrs.initialSelEnd = -1;
         outAttrs.initialCapsMode = 1;
