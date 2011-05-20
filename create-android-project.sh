@@ -39,7 +39,7 @@ check_path(){
 
 create_android_project(){
     echo "input package path"
-    read PACHAGE_PATH
+    read PACKAGE_PATH
     echo "Now cocos2d-x suppurts Android 2.1-update1 and Android 2.2"
     echo "Other versions have not tested."
     $ANDROID_SDK_ROOT/tools/android list targets
@@ -49,11 +49,11 @@ create_android_project(){
     read PROJECT_NAME
     PROJECT_DIR=`pwd`/$PROJECT_NAME
 
-    $ANDROID_SDK_ROOT/tools/android create project -n $PROJECT_NAME -t $TARGET_ID -k $PACHAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR
+    $ANDROID_SDK_ROOT/tools/android create project -n $PROJECT_NAME -t $TARGET_ID -k $PACKAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR
 }
 
 check_path
 create_android_project
 
 # invoke template/android/copy_files.sh
-sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT $PACHAGE_PATH
+sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH
