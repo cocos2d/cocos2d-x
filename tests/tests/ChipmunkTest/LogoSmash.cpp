@@ -103,6 +103,7 @@ init(void)
 {
 	space = cpSpaceNew();
 	cpSpaceResizeActiveHash(space, 2.0f, 10000);
+	cpSpaceResizeStaticHash(space, 2.0f, 10000);
 	space->iterations = 1;
 	
 	cpBody *body;
