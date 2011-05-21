@@ -31,19 +31,19 @@ cpBBNew(const cpFloat l, const cpFloat b,
 	return bb;
 }
 
-static inline int
+static inline cpBool
 cpBBintersects(const cpBB a, const cpBB b)
 {
 	return (a.l<=b.r && b.l<=a.r && a.b<=b.t && b.b<=a.t);
 }
 
-static inline int
+static inline cpBool
 cpBBcontainsBB(const cpBB bb, const cpBB other)
 {
 	return (bb.l < other.l && bb.r > other.r && bb.b < other.b && bb.t > other.t);
 }
 
-static inline int
+static inline cpBool
 cpBBcontainsVect(const cpBB bb, const cpVect v)
 {
 	return (bb.l < v.x && bb.r > v.x && bb.b < v.y && bb.t > v.y);

@@ -9,7 +9,7 @@ if(BUILD_SHARED)
     ${chipmunk_source_files}
   )
   # set the lib's version number
-  set_target_properties(chipmunk PROPERTIES VERSION 5.1)
+  set_target_properties(chipmunk PROPERTIES VERSION 5.3.4)
   install(TARGETS chipmunk RUNTIME DESTINATION lib LIBRARY DESTINATION lib)
 endif(BUILD_SHARED)
 
