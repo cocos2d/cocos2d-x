@@ -21,7 +21,7 @@
 
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 // TODO: Comment me!
