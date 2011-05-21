@@ -26,6 +26,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/ChipmunkTest/Sensors.cpp \
 ../../../tests/ChipmunkTest/Simple.cpp \
 ../../../tests/ChipmunkTest/Springies.cpp \
+../../../tests/ChipmunkTest/Tank.cpp \
 ../../../tests/ChipmunkTest/TheoJansen.cpp \
 ../../../tests/ChipmunkTest/Tumble.cpp \
 ../../../tests/ChipmunkTest/UnsafeOps.cpp \
