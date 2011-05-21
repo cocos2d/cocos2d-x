@@ -1,11 +1,17 @@
 # check the args
-# $1: root of cocos2dx $2: app name $3: ndk root
+# $1: root of cocos2dx $2: app name $3: ndk root $4:pakcage path
 
 APP_NAME=$2
 COCOS2DX_ROOT=$1
 APP_DIR=$COCOS2DX_ROOT/$APP_NAME
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld
 NDK_ROOT=$3
+PACKAGE_PATH=$4
+
+# xxx.yyy.zzz -> xxx/yyy/zzz
+convert_package_path_to_dir(){
+    PACKAGE_PATH_DIR=`echo $1 | sed -e "s/\./\//g"`
+}
 
 # make director andorid and copy all files and directories into it
 move_files_into_android(){
@@ -64,16 +70,18 @@ copy_build_native(){
 # replace AndroidManifext.xml and change the activity name
 # use sed to replace the specified line
 modify_androidmanifest(){
-    sed "s/ApplicationDemo/$APP_NAME/" $HELLOWORLD_ROOT/android/AndroidManifest.xml > $APP_DIR/android/AndroidManifest.xml
+    sed "s/ApplicationDemo/$APP_NAME/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $HELLOWORLD_ROOT/android/AndroidManifest.xml > $APP_DIR/android/AndroidManifest.xml
 }
 
 # modify ApplicationDemo.java
 modify_applicationdemo(){
+    convert_package_path_to_dir $PACKAGE_PATH
+    
     # rename APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java to 
     # APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java, change helloworld to game
-    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/" $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/android/src/org/cocos2dx/application/tempfile.java    
-    rm -f $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java
-    mv $APP_DIR/android/src/org/cocos2dx/application/tempfile.java $APP_DIR/android/src/org/cocos2dx/application/$APP_NAME.java
+    sed "s/ApplicationDemo/$APP_NAME/;s/helloworld/game/;s/org\.cocos2dx\.application/$PACKAGE_PATH/" $APP_DIR/android/src/org/cocos2dx/application/ApplicationDemo.java > $APP_DIR/android/src/$PACKAGE_PATH_DIR/tempfile.java    
+    rm -fr $APP_DIR/android/src/org/cocos2dx/application
+    mv $APP_DIR/android/src/$PACKAGE_PATH_DIR/tempfile.java $APP_DIR/android/src/$PACKAGE_PATH_DIR/$APP_NAME.java
     
     
 }
@@ -84,6 +92,7 @@ modify_layout(){
     rm -f $APP_DIR/android/res/layout/main.xml
     rm -f $APP_DIR/android/res/layout/helloworld_demo.xml
 }
+
 
 move_files_into_android
 copy_cpp_h_from_helloworld
