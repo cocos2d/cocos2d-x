@@ -29,7 +29,6 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 
 static cpFloat
 springForce(cpConstraint *spring, cpFloat dist)
@@ -77,9 +76,8 @@ add_bar(cpVect a, cpVect b, int group)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	space = cpSpaceNew();
+	cpBody *staticBody = &space->staticBody;
 	
 	cpBody *body1  = add_bar(cpv(-240,  160), cpv(-160,   80), 1);
 	cpBody *body2  = add_bar(cpv(-160,   80), cpv( -80,  160), 1);
@@ -161,7 +159,6 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 }

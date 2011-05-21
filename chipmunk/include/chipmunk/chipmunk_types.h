@@ -5,8 +5,9 @@
 #ifndef AIRPLAYUSECHIPMUNK
    #import "TargetConditionals.h"
 #endif
+#endif
 
-// dont' use CGPoints in cocos2d-x to make your code multi-platform
+// cocos2d-x: dont' use CGPoints to make your code multi-platform
 // #if (defined TARGET_OS_IPHONE) && (!defined CP_USE_CGPOINTS)
 //	#define CP_USE_CGPOINTS
 // #endif
@@ -27,7 +28,8 @@
 
 #ifndef CP_USE_DOUBLES
 	// use doubles by default for higher precision
-	#define CP_USE_DOUBLES 1
+	// cocos2d-x: GL_DOUBLE isn't support on all platforms
+	// #define CP_USE_DOUBLES 1
 #endif
 
 #if CP_USE_DOUBLES

@@ -28,7 +28,6 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 static cpConstraint *motor;
 
 #define numBalls 5
@@ -39,8 +38,9 @@ update(int ticks)
 {
 	cpFloat coef = (2.0f + arrowDirection.y)/3.0f;
 	cpFloat rate = arrowDirection.x*30.0f*coef;
+	
 	cpSimpleMotorSetRate(motor, rate);
-	motor->maxForce = (rate) ? 1000000.0f : 0.0f;
+	motor->maxForce = (rate ? 1000000.0f : 0.0f);
 
 	int steps = 2;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
@@ -73,39 +73,38 @@ add_ball(cpVect pos)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	space = cpSpaceNew();
 	space->gravity = cpv(0, -600);
 	
+	cpBody *staticBody = &space->staticBody;
 	cpShape *shape;
 	
-	// beveling all of the line segments helps prevent things from getting stuck on cracks
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-256,16), cpv(-256,240), 2.0f));
+	// beveling all of the line segments slightly helps prevent things from getting stuck on cracks
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-256,16), cpv(-256,300), 2.0f));
 	shape->e = 0.0f; shape->u = 0.5f; shape->layers = 1;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-256,16), cpv(-192,0), 2.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-256,16), cpv(-192,0), 2.0f));
 	shape->e = 0.0f; shape->u = 0.5f; shape->layers = 1;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-192,0), cpv(-192, -64), 2.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-192,0), cpv(-192, -64), 2.0f));
 	shape->e = 0.0f; shape->u = 0.5f; shape->layers = 1;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-128,-64), cpv(-128,144), 2.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-128,-64), cpv(-128,144), 2.0f));
 	shape->e = 0.0f; shape->u = 0.5f; shape->layers = 1;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-192,80), cpv(-192,176), 2.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-192,80), cpv(-192,176), 2.0f));
 	shape->e = 0.0f; shape->u = 0.5f; shape->layers = 1;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-192,176), cpv(-128,240), 2.0f));
-	shape->e = 0.0f; shape->u = 0.5f; shape->layers = 1;
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-192,176), cpv(-128,240), 2.0f));
+	shape->e = 0.0f; shape->u = 0.0f; shape->layers = 1;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-128,144), cpv(192,64), 2.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-128,144), cpv(192,64), 2.0f));
 	shape->e = 0.0f; shape->u = 0.5f; shape->layers = 1;
 	shape->layers = NOT_GRABABLE_MASK;
 
@@ -124,7 +123,7 @@ init(void)
 	
 	// add balls to hopper
 	for(int i=0; i<numBalls; i++)
-		balls[i] = add_ball(cpv(-224,80 + 64*i));
+		balls[i] = add_ball(cpv(-224 + i,80 + 64*i));
 	
 	// add small gear
 	cpBody *smallGear = cpSpaceAddBody(space, cpBodyNew(10.0f, cpMomentForCircle(10.0f, 80, 0, cpvzero)));
@@ -174,7 +173,6 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 }
