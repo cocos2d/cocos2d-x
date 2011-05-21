@@ -463,6 +463,7 @@
 		BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */; };
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
+		D4236C351387F6E600F75A88 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D4236C341387F6E600F75A88 /* chipmunk_private.h */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -1051,6 +1052,7 @@
 		BF9935D91373EBF500197D1B /* UserDefaultTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultTest.h; sourceTree = "<group>"; };
 		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		D4236C341387F6E600F75A88 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1345,6 +1347,7 @@
 		BF17126E1292933300B8313A /* chipmunk */ = {
 			isa = PBXGroup;
 			children = (
+				D4236C341387F6E600F75A88 /* chipmunk_private.h */,
 				BF17126F1292933300B8313A /* chipmunk.h */,
 				BF1712701292933300B8313A /* chipmunk_ffi.h */,
 				BF1712711292933300B8313A /* chipmunk_types.h */,
@@ -2566,6 +2569,7 @@
 				BF1712C41292933300B8313A /* cpSpaceHash.h in Headers */,
 				BF1712C51292933300B8313A /* cpVect.h in Headers */,
 				BF1712DD1292933300B8313A /* prime.h in Headers */,
+				D4236C351387F6E600F75A88 /* chipmunk_private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
