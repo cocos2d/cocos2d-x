@@ -15,7 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 
 class Cocos2dxInputConnection extends BaseInputConnection {
 
-	private static final boolean	mDebug = true;
+	private static final boolean	mDebug = false;
 	void LogD(String msg) {
 		if (mDebug) {
 			Log.d("Cocos2dxInputConnection", msg);
@@ -216,9 +216,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     @Override 
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
     	outAttrs.inputType = EditorInfo.TYPE_CLASS_TEXT;
-        outAttrs.imeOptions = (android.os.Build.VERSION.SDK_INT > 9)
-        							? EditorInfo.IME_FLAG_NO_EXTRACT_UI
-        							: EditorInfo.IME_ACTION_NONE;
+        outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI;
         outAttrs.initialSelStart = -1;
         outAttrs.initialSelEnd = -1;
         outAttrs.initialCapsMode = 1;
