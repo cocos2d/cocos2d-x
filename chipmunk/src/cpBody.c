@@ -21,8 +21,12 @@
  
 #include <stdlib.h>
 #include <float.h>
+#include <stdarg.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
+
+// initialized in cpInitChipmunk()
+cpBody cpStaticBodySingleton;
 
 cpBody*
 cpBodyAlloc(void)
@@ -56,8 +60,13 @@ cpBodyInit(cpBody *body, cpFloat m, cpFloat i)
 	body->data = NULL;
 	body->v_limit = (cpFloat)INFINITY;
 	body->w_limit = (cpFloat)INFINITY;
-//	body->active = 1;
-
+	
+	body->space = NULL;
+	body->shapesList = NULL;
+	
+	cpComponentNode node = {NULL, NULL, 0, 0.0f};
+	body->node = node;
+	
 	return body;
 }
 
@@ -65,6 +74,21 @@ cpBody*
 cpBodyNew(cpFloat m, cpFloat i)
 {
 	return cpBodyInit(cpBodyAlloc(), m, i);
+}
+
+cpBody *
+cpBodyInitStatic(cpBody *body)
+{
+	cpBodyInit(body, (cpFloat)INFINITY, (cpFloat)INFINITY);
+	body->node.idleTime = (cpFloat)INFINITY;
+	
+	return body;
+}
+
+cpBody *
+cpBodyNewStatic()
+{
+	return cpBodyInitStatic(cpBodyAlloc());
 }
 
 void cpBodyDestroy(cpBody *body){}
@@ -166,23 +190,3 @@ cpApplyDampedSpring(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2, cpFloat 
 	cpBodyApplyForce(a, f, r1);
 	cpBodyApplyForce(b, cpvneg(f), r2);
 }
-
-//int
-//cpBodyMarkLowEnergy(cpBody *body, cpFloat dvsq, int max)
-//{
-//	cpFloat ke = body->m*cpvdot(body->v, body->v);
-//	cpFloat re = body->i*body->w*body->w;
-//	
-//	if(ke + re > body->m*dvsq)
-//		body->active = 1;
-//	else if(body->active)
-//		body->active = (body->active + 1)%(max + 1);
-//	else {
-//		body->v = cpvzero;
-//		body->v_bias = cpvzero;
-//		body->w = 0.0f;
-//		body->w_bias = 0.0f;
-//	}
-//	
-//	return body->active;
-//}

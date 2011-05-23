@@ -19,36 +19,37 @@
  * SOFTWARE.
  */
 
-#include <stdlib.h>
+#ifndef _CHIPMUNK_PRIVATE_H_
+#define _CHIPMUNK_PRIVATE_H_
 
-#include "chipmunk_private.h"
-#include "constraints/util.h"
+#define CP_ALLOW_PRIVATE_ACCESS 1
+#include "chipmunk.h"
 
-// TODO: Comment me!
+void *cpSpaceGetPostStepData(cpSpace *space, void *obj);
 
-cpFloat cp_constraint_bias_coef = 0.1f;
+void cpSpaceActivateBody(cpSpace *space, cpBody *body);
 
-void cpConstraintDestroy(cpConstraint *constraint){}
-
-void
-cpConstraintFree(cpConstraint *constraint)
+static inline void
+cpSpaceLock(cpSpace *space)
 {
-	if(constraint){
-		cpConstraintDestroy(constraint);
-		cpfree(constraint);
+	space->locked++;
+}
+
+static inline void
+cpSpaceUnlock(cpSpace *space)
+{
+	space->locked--;
+	cpAssert(space->locked >= 0, "Internal error:Space lock underflow.");
+	
+	if(!space->locked){
+		cpArray *waking = space->rousedBodies;
+		for(int i=0, count=waking->num; i<count; i++){
+			cpSpaceActivateBody(space, (cpBody *)waking->arr[i]);
+		}
+		
+		waking->num = 0;
 	}
 }
 
-// *** defined in util.h
+#endif
 
-void
-cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, cpBody *a, cpBody *b)
-{
-	constraint->klass = klass;
-	constraint->a = a;
-	constraint->b = b;
-	
-	constraint->maxForce = (cpFloat)INFINITY;
-	constraint->biasCoef = cp_constraint_bias_coef;
-	constraint->maxBias = (cpFloat)INFINITY;
-}

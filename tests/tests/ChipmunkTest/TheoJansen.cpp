@@ -34,7 +34,6 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 
 static cpConstraint *motor;
 
@@ -89,7 +88,7 @@ make_leg(cpFloat side, cpFloat offset, cpBody *chassis, cpBody *crank, cpVect an
 	cpSpaceAddConstraint(space, cpGearJointNew(upper_leg, lower_leg, 0.0f, 1.0f));
 	
 	cpConstraint *constraint;
-	cpFloat diag = sqrtf(side*side + offset*offset);
+	cpFloat diag = cpfsqrt(side*side + offset*offset);
 	
 	constraint = cpPinJointNew(crank, upper_leg, anchor, cpv(0.0f, side));
 	cpPinJointSetDist(constraint, diag);
@@ -103,7 +102,6 @@ static cpSpace *
 init(void)
 {
 	space = cpSpaceNew();
-	staticBody = cpBodyNew(INFINITY, INFINITY);
 	
 	cpResetShapeIdCounter();
 	
@@ -111,6 +109,7 @@ init(void)
 	space->iterations = 20;
 	space->gravity = cpv(0,-500);
 	
+	cpBody *staticBody = &space->staticBody;
 	cpShape *shape;
 	cpVect a, b;
 	
@@ -118,17 +117,17 @@ init(void)
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
-	cpSpaceAddStaticShape(space, shape);
+	cpSpaceAddShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
-	cpSpaceAddStaticShape(space, shape);
+	cpSpaceAddShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
-	cpSpaceAddStaticShape(space, shape);
+	cpSpaceAddShape(space, shape);
 	
 	cpFloat offset = 30.0f;
 
@@ -155,8 +154,8 @@ init(void)
 	
 	int num_legs = 2;
 	for(int i=0; i<num_legs; i++){
-		make_leg(side,  offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+0)/(cpFloat)num_legs*(cpFloat)M_PI), crank_radius));
-		make_leg(side, -offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+1)/(cpFloat)num_legs*(cpFloat)M_PI), crank_radius));
+		make_leg(side,  offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+0)/num_legs*(cpFloat)M_PI), crank_radius));
+		make_leg(side, -offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+1)/num_legs*(cpFloat)M_PI), crank_radius));
 	}
 	
 	motor = cpSimpleMotorNew(chassis, crank, 6.0f);

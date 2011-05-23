@@ -22,8 +22,9 @@
 // NOTE: cpArray is rarely used and will probably go away.
 
 typedef struct cpArray{
-	int num, max;
-	void **arr;
+	CP_PRIVATE(int num);
+	CP_PRIVATE(int max);
+	CP_PRIVATE(void **arr);
 } cpArray;
 
 typedef void (*cpArrayIter)(void *ptr, void *data);
@@ -42,5 +43,7 @@ void *cpArrayPop(cpArray *arr);
 void cpArrayDeleteIndex(cpArray *arr, int idx);
 void cpArrayDeleteObj(cpArray *arr, void *obj);
 
+void cpArrayAppend(cpArray *arr, cpArray *other);
+
 void cpArrayEach(cpArray *arr, cpArrayIter iterFunc, void *data);
-int cpArrayContains(cpArray *arr, void *ptr);
+cpBool cpArrayContains(cpArray *arr, void *ptr);

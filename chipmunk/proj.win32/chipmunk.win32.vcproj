@@ -358,7 +358,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\cpSpaceComponent.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\cpSpaceHash.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\cpSpaceQuery.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\cpSpaceStep.c"
 				>
 			</File>
 			<File
@@ -366,10 +378,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\chipmunk-docs.html"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -25,6 +25,17 @@ void cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, 
 
 #define J_MAX(constraint, dt) (((cpConstraint *)constraint)->maxForce*(dt))
 
+// Get valid body pointers and exit early if the bodies are idle
+#define CONSTRAINT_BEGIN(constraint, a_var, b_var) \
+cpBody *a_var, *b_var; { \
+	a_var = ((cpConstraint *)constraint)->a; \
+	b_var = ((cpConstraint *)constraint)->b; \
+	if( \
+		(cpBodyIsSleeping(a_var) || cpBodyIsStatic(a_var)) && \
+		(cpBodyIsSleeping(b_var) || cpBodyIsStatic(b_var)) \
+	) return; \
+}
+
 static inline cpVect
 relative_velocity(cpBody *a, cpBody *b, cpVect r1, cpVect r2){
 	cpVect v1_sum = cpvadd(a->v, cpvmult(cpvperp(r1), a->w));
@@ -46,10 +57,17 @@ apply_impulses(cpBody *a , cpBody *b, cpVect r1, cpVect r2, cpVect j)
 }
 
 static inline void
+apply_bias_impulse(cpBody *body, cpVect j, cpVect r)
+{
+	body->v_bias = cpvadd(body->v_bias, cpvmult(j, body->m_inv));
+	body->w_bias += body->i_inv*cpvcross(r, j);
+}
+
+static inline void
 apply_bias_impulses(cpBody *a , cpBody *b, cpVect r1, cpVect r2, cpVect j)
 {
-	cpBodyApplyBiasImpulse(a, cpvneg(j), r1);
-	cpBodyApplyBiasImpulse(b, j, r2);
+	apply_bias_impulse(a, cpvneg(j), r1);
+	apply_bias_impulse(b, j, r2);
 }
 
 static inline cpVect

@@ -89,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y &quot;$(ProjectDir)..\Resource\*.*&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -168,7 +168,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y &quot;$(ProjectDir)..\Resource\*.*&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

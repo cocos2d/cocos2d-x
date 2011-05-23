@@ -39,8 +39,11 @@ echo.* Check the cocos2d-win32 application "tests.exe" ...
 echo.*/
 echo.
 
-set CC_TEST_PATH=".\Release.win32\tests.exe"
-if not exist %CC_TEST_PATH% (
+cd ".\Release.win32\"
+set CC_TEST_BIN="tests.exe"
+set CC_TEST_RES="..\tests\Res\*.*"
+
+if not exist %CC_TEST_BIN% (
     echo Can't find the binary "tests.exe", is there build error?
     goto ERROR
 )
@@ -49,7 +52,8 @@ echo./*
 echo.* Run cocos2d-win32 tests.exe and view Cocos2d-x Application Wizard for Visual Studio User Guide.
 echo.*/
 echo.
-call %CC_TEST_PATH%
+xcopy  /E /Y /Q %CC_TEST_RES% .
+call %CC_TEST_BIN%
 start http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-x_Application_Wizard_for_Visual_Studio_User_Guide
 goto EOF
 
