@@ -306,7 +306,10 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 	{
 	case kCCDirectorProjection2D:
 // 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)size.width, (GLsizei)size.height);
-        CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+        if (m_pobOpenGLView) 
+        {
+            m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
+        }
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		ccglOrtho(0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 
@@ -317,7 +320,10 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 
 	case kCCDirectorProjection3D:
 // 		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
-        CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+        if (m_pobOpenGLView) 
+        {
+            m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
+        }
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
