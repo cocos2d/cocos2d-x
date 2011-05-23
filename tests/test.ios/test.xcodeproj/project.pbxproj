@@ -463,9 +463,14 @@
 		BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */; };
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
+		D4236C351387F6E600F75A88 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D4236C341387F6E600F75A88 /* chipmunk_private.h */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D4AFAB6C1387A96E00C88086 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AFAB691387A96E00C88086 /* cpSpaceStep.c */; };
+		D4AFAB6D1387A96E00C88086 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AFAB6A1387A96E00C88086 /* cpSpaceQuery.c */; };
+		D4AFAB6E1387A96E00C88086 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = D4AFAB6B1387A96E00C88086 /* cpSpaceComponent.c */; };
+		D4AFAB701387A98600C88086 /* Tank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4AFAB6F1387A98600C88086 /* Tank.cpp */; };
 		D4E39D2E1342E22700EBA039 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = D4E39D2D1342E22700EBA039 /* zwoptex */; };
 		D4E39D321342E23F00EBA039 /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E39D301342E23F00EBA039 /* ZwoptexTest.cpp */; };
 		D4F1A270133B2FE700937FFA /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F1A26F133B2FE700937FFA /* CCSAXParser.h */; };
@@ -1047,9 +1052,14 @@
 		BF9935D91373EBF500197D1B /* UserDefaultTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultTest.h; sourceTree = "<group>"; };
 		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		D4236C341387F6E600F75A88 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D4AFAB691387A96E00C88086 /* cpSpaceStep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceStep.c; sourceTree = "<group>"; };
+		D4AFAB6A1387A96E00C88086 /* cpSpaceQuery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceQuery.c; sourceTree = "<group>"; };
+		D4AFAB6B1387A96E00C88086 /* cpSpaceComponent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceComponent.c; sourceTree = "<group>"; };
+		D4AFAB6F1387A98600C88086 /* Tank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tank.cpp; sourceTree = "<group>"; };
 		D4E39D2D1342E22700EBA039 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../Res/zwoptex; sourceTree = SOURCE_ROOT; };
 		D4E39D301342E23F00EBA039 /* ZwoptexTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZwoptexTest.cpp; path = ZwoptexTest/ZwoptexTest.cpp; sourceTree = "<group>"; };
 		D4E39D311342E23F00EBA039 /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZwoptexTest.h; path = ZwoptexTest/ZwoptexTest.h; sourceTree = "<group>"; };
@@ -1337,6 +1347,7 @@
 		BF17126E1292933300B8313A /* chipmunk */ = {
 			isa = PBXGroup;
 			children = (
+				D4236C341387F6E600F75A88 /* chipmunk_private.h */,
 				BF17126F1292933300B8313A /* chipmunk.h */,
 				BF1712701292933300B8313A /* chipmunk_ffi.h */,
 				BF1712711292933300B8313A /* chipmunk_types.h */,
@@ -1379,6 +1390,9 @@
 		BF17128F1292933300B8313A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				D4AFAB691387A96E00C88086 /* cpSpaceStep.c */,
+				D4AFAB6A1387A96E00C88086 /* cpSpaceQuery.c */,
+				D4AFAB6B1387A96E00C88086 /* cpSpaceComponent.c */,
 				BF1712901292933300B8313A /* chipmunk.c */,
 				BF1712911292933300B8313A /* CMakeLists.txt */,
 				BF1712921292933300B8313A /* constraints */,
@@ -1643,6 +1657,7 @@
 		BF31E15612E979A100D4F513 /* ChipmunkTest */ = {
 			isa = PBXGroup;
 			children = (
+				D4AFAB6F1387A98600C88086 /* Tank.cpp */,
 				BF31E15712E979A100D4F513 /* Bounce.cpp */,
 				BF31E15812E979A100D4F513 /* ChipmunkDemo.h */,
 				BF31E15912E979A100D4F513 /* cocos2dChipmunkDemo.cpp */,
@@ -2554,6 +2569,7 @@
 				BF1712C41292933300B8313A /* cpSpaceHash.h in Headers */,
 				BF1712C51292933300B8313A /* cpVect.h in Headers */,
 				BF1712DD1292933300B8313A /* prime.h in Headers */,
+				D4236C351387F6E600F75A88 /* chipmunk_private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2788,6 +2804,7 @@
 				BF2CE34813666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */,
 				BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */,
 				BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */,
+				D4AFAB701387A98600C88086 /* Tank.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2965,6 +2982,9 @@
 				BF1712DA1292933300B8313A /* cpSpace.c in Sources */,
 				BF1712DB1292933300B8313A /* cpSpaceHash.c in Sources */,
 				BF1712DC1292933300B8313A /* cpVect.c in Sources */,
+				D4AFAB6C1387A96E00C88086 /* cpSpaceStep.c in Sources */,
+				D4AFAB6D1387A96E00C88086 /* cpSpaceQuery.c in Sources */,
+				D4AFAB6E1387A96E00C88086 /* cpSpaceComponent.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

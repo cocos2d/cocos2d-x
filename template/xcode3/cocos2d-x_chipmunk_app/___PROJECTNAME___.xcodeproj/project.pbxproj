@@ -309,6 +309,10 @@
 		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
 		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245D132F45C200F44E75 /* HelloWorldScene.cpp */; };
+		D4236B1A1387F5BB00F75A88 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B171387F5BB00F75A88 /* cpSpaceStep.c */; };
+		D4236B1B1387F5BB00F75A88 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B181387F5BB00F75A88 /* cpSpaceQuery.c */; };
+		D4236B1C1387F5BB00F75A88 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B191387F5BB00F75A88 /* cpSpaceComponent.c */; };
+		D4236B1E1387F5DA00F75A88 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D4236B1D1387F5DA00F75A88 /* chipmunk_private.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -637,6 +641,10 @@
 		D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		D408245D132F45C200F44E75 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
 		D408245E132F45C200F44E75 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
+		D4236B171387F5BB00F75A88 /* cpSpaceStep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceStep.c; sourceTree = "<group>"; };
+		D4236B181387F5BB00F75A88 /* cpSpaceQuery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceQuery.c; sourceTree = "<group>"; };
+		D4236B191387F5BB00F75A88 /* cpSpaceComponent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceComponent.c; sourceTree = "<group>"; };
+		D4236B1D1387F5DA00F75A88 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -786,6 +794,7 @@
 		BF152AF812E16B6F00703484 /* chipmunk */ = {
 			isa = PBXGroup;
 			children = (
+				D4236B1D1387F5DA00F75A88 /* chipmunk_private.h */,
 				BF152AF912E16B6F00703484 /* chipmunk.h */,
 				BF152AFA12E16B6F00703484 /* chipmunk_ffi.h */,
 				BF152AFB12E16B6F00703484 /* chipmunk_types.h */,
@@ -828,6 +837,9 @@
 		BF152B1F12E16B6F00703484 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				D4236B171387F5BB00F75A88 /* cpSpaceStep.c */,
+				D4236B181387F5BB00F75A88 /* cpSpaceQuery.c */,
+				D4236B191387F5BB00F75A88 /* cpSpaceComponent.c */,
 				BF152B2012E16B6F00703484 /* chipmunk.c */,
 				BF152B2212E16B6F00703484 /* constraints */,
 				BF152B2E12E16B6F00703484 /* cpArbiter.c */,
@@ -1482,6 +1494,7 @@
 				BF5FD72613430B1900F22186 /* CCSAXParser.h in Headers */,
 				BF193F62136008DB002463D2 /* CCArray.h in Headers */,
 				BF126D011373EF1F00C4ABC5 /* CCUserDefault.h in Headers */,
+				D4236B1E1387F5DA00F75A88 /* chipmunk_private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1709,6 +1722,9 @@
 				BF1FB0781352FB84007553D9 /* CCParticleSystemPoint.cpp in Sources */,
 				BF193F66136008E6002463D2 /* CCArray.cpp in Sources */,
 				BF126D031373EF2A00C4ABC5 /* CCUserDefault.cpp in Sources */,
+				D4236B1A1387F5BB00F75A88 /* cpSpaceStep.c in Sources */,
+				D4236B1B1387F5BB00F75A88 /* cpSpaceQuery.c in Sources */,
+				D4236B1C1387F5BB00F75A88 /* cpSpaceComponent.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

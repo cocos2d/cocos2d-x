@@ -30,8 +30,8 @@ typedef struct cpDampedRotarySpring {
 	cpFloat damping;
 	cpDampedRotarySpringTorqueFunc springTorqueFunc;
 	
-	cpFloat dt;
 	cpFloat target_wrn;
+	cpFloat w_coef;
 	
 	cpFloat iSum;
 } cpDampedRotarySpring;

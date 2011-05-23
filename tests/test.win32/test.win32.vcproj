@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy_res.bat &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy_res.bat &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
@@ -600,6 +600,10 @@
 					</File>
 					<File
 						RelativePath="..\tests\ChipmunkTest\Springies.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\ChipmunkTest\Tank.cpp"
 						>
 					</File>
 					<File
