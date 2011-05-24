@@ -60,7 +60,9 @@ bool CCEGLView::isOpenGLReady()
     
     void CCEGLView::setContentScaleFactor(float contentScaleFactor)
     {
-        [[EAGLView sharedEGLView] setContentScaleFactor:contentScaleFactor];
+        UIView * view = [EAGLView sharedEGLView];
+        view.contentScaleFactor = contentScaleFactor;
+        [view setNeedsLayout];
     }
 
 void CCEGLView::release()
