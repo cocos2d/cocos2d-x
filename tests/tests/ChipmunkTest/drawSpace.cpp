@@ -293,7 +293,8 @@ drawObject(cpShape *shape, cpSpace *space)
 			drawPolyShape(body, (cpPolyShape *)shape, space);
 			break;
 		default:
-			printf("Bad enumeration in drawObject().\n");
+			CCLOG("Bad enumeration in drawObject().\n");
+            break;
 	}
 }
 

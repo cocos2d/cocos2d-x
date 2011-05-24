@@ -598,6 +598,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\tests\ChipmunkTest\Tank.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\tests\ChipmunkTest\TheoJansen.cpp"
 						>
 					</File>
