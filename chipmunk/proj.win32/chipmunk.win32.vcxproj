@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="..\include\chipmunk\chipmunk.h" />
     <ClInclude Include="..\include\chipmunk\chipmunk_ffi.h" />
+    <ClInclude Include="..\include\chipmunk\chipmunk_private.h" />
     <ClInclude Include="..\include\chipmunk\chipmunk_types.h" />
     <ClInclude Include="..\include\chipmunk\chipmunk_unsafe.h" />
     <ClInclude Include="..\include\chipmunk\cpArbiter.h" />
@@ -136,7 +137,10 @@
     <ClCompile Include="..\src\constraints\cpSimpleMotor.c" />
     <ClCompile Include="..\src\constraints\cpSlideJoint.c" />
     <ClCompile Include="..\src\cpSpace.c" />
+    <ClCompile Include="..\src\cpSpaceComponent.c" />
     <ClCompile Include="..\src\cpSpaceHash.c" />
+    <ClCompile Include="..\src\cpSpaceQuery.c" />
+    <ClCompile Include="..\src\cpSpaceStep.c" />
     <ClCompile Include="..\src\cpVect.c" />
   </ItemGroup>
   <ItemGroup>
