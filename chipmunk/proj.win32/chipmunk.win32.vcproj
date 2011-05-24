@@ -164,6 +164,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\chipmunk\chipmunk_private.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\chipmunk\chipmunk_types.h"
 				>
 			</File>
