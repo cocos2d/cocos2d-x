@@ -324,6 +324,9 @@
     <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp">
       <Filter>classes\tests\UserDefaultTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp">
+      <Filter>classes\tests\ChipmunkTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
