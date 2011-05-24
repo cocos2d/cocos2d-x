@@ -25,7 +25,7 @@ bool AppDelegate::initInstance()
         // The HelloWorld is designed as HVGA.
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 320, 480));
+            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 480, 320));
 
 #endif  // CC_PLATFORM_WIN32
         
@@ -46,7 +46,7 @@ bool AppDelegate::initInstance()
         // Initialize OpenGLView instance, that release by CCDirector when application terminate.
         // The HelloWorld is designed as HVGA.
         CCEGLView* pMainWnd = new CCEGLView(this);
-        CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480));
+        CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320,480, WM_WINDOW_ROTATE_MODE_CW));
 
 #ifndef _TRANZDA_VM_  
         // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data/ folder instead of zip file
@@ -71,6 +71,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	// turn on display FPS
 	pDirector->setDisplayFPS(true);
+
+	// pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
