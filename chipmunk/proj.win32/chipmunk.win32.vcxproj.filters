@@ -95,6 +95,9 @@
     <ClInclude Include="..\include\chipmunk\constraints\util.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\chipmunk\chipmunk_private.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\chipmunk.c">
@@ -164,6 +167,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpVect.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpSpaceComponent.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpSpaceQuery.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpSpaceStep.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
