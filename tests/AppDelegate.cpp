@@ -14,6 +14,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
+    SimpleAudioEngine::end();
 }
 
 bool AppDelegate::initInstance()

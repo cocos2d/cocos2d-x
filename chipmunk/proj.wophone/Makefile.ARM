@@ -103,17 +103,17 @@ $(OBJECTS_DIR)/cpShape.o : ../src/cpShape.c
 $(OBJECTS_DIR)/cpSpace.o : ../src/cpSpace.c
 	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpace.o ../src/cpSpace.c
 
-$(OBJECTS_DIR)/cpSpace.o : ../src/cpSpaceComponent.c
-	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpace.o ../src/cpSpaceComponent.c
+$(OBJECTS_DIR)/cpSpaceComponent.o : ../src/cpSpaceComponent.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceComponent.o ../src/cpSpaceComponent.c
 
 $(OBJECTS_DIR)/cpSpaceHash.o : ../src/cpSpaceHash.c
 	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceHash.o ../src/cpSpaceHash.c
 
-$(OBJECTS_DIR)/cpSpace.o : ../src/cpSpaceQuery.c
-	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpace.o ../src/cpSpaceQuery.c
+$(OBJECTS_DIR)/cpSpaceQuery.o : ../src/cpSpaceQuery.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceQuery.o ../src/cpSpaceQuery.c
 
-$(OBJECTS_DIR)/cpSpace.o : ../src/cpSpaceStep.c
-	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpace.o ../src/cpSpaceStep.c
+$(OBJECTS_DIR)/cpSpaceStep.o : ../src/cpSpaceStep.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceStep.o ../src/cpSpaceStep.c
 
 $(OBJECTS_DIR)/cpVect.o : ../src/cpVect.c
 	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpVect.o ../src/cpVect.c
