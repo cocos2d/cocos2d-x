@@ -42,6 +42,7 @@
 		BF315F92133DDEB000E0532D /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF315F8F133DDEAF00E0532D /* CCSAXParser.h */; };
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF492D4C1289302400A09262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
+		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
 		BF755FAA12A1013F00450234 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755FA612A1013F00450234 /* AppDelegate.cpp */; };
 		BF755FAB12A1013F00450234 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755FA812A1013F00450234 /* HelloWorldScene.cpp */; };
 		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
@@ -606,6 +607,8 @@
 		BF492B6912891AC600A09262 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF492C21128924A800A09262 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF492D4B1289302400A09262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		BF755FA612A1013F00450234 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF755FA712A1013F00450234 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF755FA812A1013F00450234 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = ../HelloWorldScene.cpp; sourceTree = SOURCE_ROOT; };
@@ -1191,6 +1194,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				BF4DE6AB138BB89600CF907D /* RootViewController.h */,
+				BF4DE6AC138BB89600CF907D /* RootViewController.mm */,
 				BF83517613275F5500F3C033 /* cocos2dx */,
 				BF5681CC1313A84D0055EEAC /* ios */,
 				BF755FA512A1012300450234 /* Classes */,
@@ -2793,6 +2798,7 @@
 				BF755FAB12A1013F00450234 /* HelloWorldScene.cpp in Sources */,
 				BF365AA812A103F70050DCF4 /* AppController.mm in Sources */,
 				BFA008F81344267700289DC3 /* CCCommon_ios.mm in Sources */,
+				BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
