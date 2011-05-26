@@ -204,7 +204,7 @@ void CCTextFieldTTF::insertText(const char * text, int len)
         return;
     }
     
-    // if lelegate hasn't process, detach with ime as default
+    // if delegate hasn't process, detach with ime as default
     detachWithIME();
 }
 
