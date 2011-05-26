@@ -2,7 +2,7 @@
 
 echo 'cocos2d-x template installer'
 
-COCOS2D_VER='cocos2d-0.99.5-x-0.8.3'
+COCOS2D_VER='cocos2d-0.99.5-x-0.8.4'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 
