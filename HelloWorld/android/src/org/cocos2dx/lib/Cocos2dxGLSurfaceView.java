@@ -2,6 +2,7 @@ package org.cocos2dx.lib;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.os.Build.VERSION;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,10 +24,16 @@ class Cocos2dxInputConnection extends BaseInputConnection {
 	}
 	
     private Cocos2dxGLSurfaceView 	mView;
+    private String mLastCommit;
     
     Cocos2dxInputConnection(Cocos2dxGLSurfaceView view) {
     	super(view, false);
     	mView = view;
+    	mLastCommit = "";
+    	LogD("SDK Version(" + VERSION.SDK_INT + "):\n    "
+    			+ "Release: " + VERSION.RELEASE + "\n    "
+    			+ "Incremental: " + VERSION.INCREMENTAL + "\n    "
+    			+ "CodeName: " + VERSION.CODENAME);
     }
 
 	@Override
@@ -34,6 +41,7 @@ class Cocos2dxInputConnection extends BaseInputConnection {
 		super.commitText(text, newCursorPosition);
 		if (null != mView) {
 			final String insertText = text.toString();
+			mLastCommit = insertText;
 			mView.insertText(insertText);
 			LogD("commitText: " + insertText);
 		}
@@ -52,6 +60,7 @@ class Cocos2dxInputConnection extends BaseInputConnection {
 		LogD("performEditorAction: " + editorAction);
 		if (null != mView) {
 			final String insertText = "\n";
+			mLastCommit = insertText;
 			mView.insertText(insertText);
 		}
 		return true;
@@ -64,66 +73,6 @@ class Cocos2dxInputConnection extends BaseInputConnection {
 		if (null != mView) {
 			switch (event.getKeyCode()) {
 			
-			case KeyEvent.KEYCODE_0:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "0";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_1:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "1";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_2:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "2";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_3:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "3";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_4:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "4";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_5:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "5";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_6:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "6";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_7:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "7";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_8:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "8";
-					mView.insertText(insertText);
-				}
-				break;
-			case KeyEvent.KEYCODE_9:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					final String insertText = "9";
-					mView.insertText(insertText);
-				}
-				break;
 			case KeyEvent.KEYCODE_DEL:
 				if (KeyEvent.ACTION_UP == event.getAction()) {
 					mView.deleteBackward();
@@ -132,6 +81,20 @@ class Cocos2dxInputConnection extends BaseInputConnection {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public boolean finishComposingText() {
+		LogD("finishComposingText");
+		mLastCommit = "";
+		return super.finishComposingText();
+	}
+
+
+	@Override
+	public CharSequence getTextBeforeCursor(int n, int flags) {
+		LogD("getTextBeforeCursor");
+		return mLastCommit;
 	}
 }
 
@@ -197,8 +160,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         if (imm == null) {
         	return;
         }
-        boolean ret = imm.showSoftInput(mainView, 0);
-        Log.d("openIMEKeboard", (ret)? "true" : "false");
+        imm.showSoftInput(mainView, 0);
     }
     
     public static void closeIMEKeyboard() {
