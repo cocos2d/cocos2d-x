@@ -329,7 +329,7 @@ CCActionInterval* getAction()
 void EffectTestScene::runThisTest()
 {
     addChild(TextLayer::node());
-
+	CCDirector::sharedDirector()->setDepthTest(false);
     CCDirector::sharedDirector()->replaceScene(this);
 }
 
