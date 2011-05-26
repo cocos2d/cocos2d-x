@@ -37,7 +37,9 @@ bool AppDelegate::initInstance()
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-        // Android doesn't need to do anything.
+		// OpenGLView initialized in HelloWorld/android/jni/helloworld/main.cpp
+		// the default setting is to create a fullscreen view
+		// if you want to use auto-scale, please enable view->create(320,480) in main.cpp
 
 #endif  // CC_PLATFORM_ANDROID
 
