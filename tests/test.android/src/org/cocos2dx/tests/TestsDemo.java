@@ -42,13 +42,6 @@ public class TestsDemo extends Cocos2dxActivity{
 	     
 	     mGLView.onResume();
 	 }
-	 
-	 protected void onDestroy()
-	 {
-		 super.onDestroy();
-		 
-		 android.os.Process.killProcess(android.os.Process.myPid());
-	 }
 
      static {
     	 System.loadLibrary("cocosdenshion");
