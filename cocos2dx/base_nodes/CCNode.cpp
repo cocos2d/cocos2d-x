@@ -110,7 +110,7 @@ void CCNode::arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func)
         CCARRAY_FOREACH(pArray, child)
         {
             CCNode* pNode = (CCNode*) child;
-            if(pNode && func)
+            if(pNode && (NULL != func))
             {
                 (pNode->*func)();
             }
