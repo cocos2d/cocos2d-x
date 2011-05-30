@@ -96,7 +96,12 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     public void handleDeleteBackward() {
     	nativeDeleteBackward();
     }
-    
+
+	public String getContentText() {
+		return nativeGetContentText();
+	}
+	
     private static native void nativeInsertText(String text);
     private static native void nativeDeleteBackward();
+    private static native String nativeGetContentText();
 }

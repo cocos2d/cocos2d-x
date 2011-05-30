@@ -2,99 +2,93 @@ package org.cocos2dx.lib;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.os.Build.VERSION;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.inputmethod.BaseInputConnection;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.ExtractedText;
-import android.view.inputmethod.ExtractedTextRequest;
-import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
-class Cocos2dxInputConnection extends BaseInputConnection {
-
-	private static final boolean	mDebug = false;
-	void LogD(String msg) {
-		if (mDebug) {
-			Log.d("Cocos2dxInputConnection", msg);
-		}
+class TextInputWraper implements TextWatcher, OnEditorActionListener {
+	
+	private static final Boolean debug = false;
+	private void LogD(String msg) {
+		if (debug) Log.d("TextInputFilter", msg);
 	}
 	
-    private Cocos2dxGLSurfaceView 	mView;
-    private String mLastCommit;
-    
-    Cocos2dxInputConnection(Cocos2dxGLSurfaceView view) {
-    	super(view, false);
-    	mView = view;
-    	mLastCommit = "";
-    	LogD("SDK Version(" + VERSION.SDK_INT + "):\n    "
-    			+ "Release: " + VERSION.RELEASE + "\n    "
-    			+ "Incremental: " + VERSION.INCREMENTAL + "\n    "
-    			+ "CodeName: " + VERSION.CODENAME);
-    }
+	private Cocos2dxGLSurfaceView mMainView;
+	private String mText;
+	private String mOriginText;
+	
+	private Boolean isFullScreenEdit() {
+		InputMethodManager imm = (InputMethodManager)mMainView.getTextField().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		return imm.isFullscreenMode();
+	}
 
+	public TextInputWraper(Cocos2dxGLSurfaceView view) {
+		mMainView = view;
+	}
+	
+	public void setOriginText(String text) {
+		mOriginText = text;
+	}
+	
 	@Override
-	public boolean commitText(CharSequence text, int newCursorPosition) {
-		super.commitText(text, newCursorPosition);
-		if (null != mView) {
-			final String insertText = text.toString();
-			mLastCommit = insertText;
-			mView.insertText(insertText);
-			LogD("commitText: " + insertText);
+	public void afterTextChanged(Editable s) {
+		if (isFullScreenEdit()) {
+			return;
 		}
-        return true;
-	}
-
-	@Override
-	public ExtractedText getExtractedText(ExtractedTextRequest request,
-			int flags) {
-		LogD("getExtractedText: " + request.toString() + "," + flags);
-		return new ExtractedText();
-	}
-
-	@Override
-	public boolean performEditorAction(int editorAction) {
-		LogD("performEditorAction: " + editorAction);
-		if (null != mView) {
-			final String insertText = "\n";
-			mLastCommit = insertText;
-			mView.insertText(insertText);
+		
+		LogD("afterTextChanged: " + s);
+		int nModified = s.length() - mText.length();
+		if (nModified > 0) {
+			final String insertText = s.subSequence(mText.length(), s.length()).toString();
+			mMainView.insertText(insertText);
+			LogD("insertText(" + insertText + ")");
 		}
-		return true;
-	}
-
-	@Override
-	public boolean sendKeyEvent(KeyEvent event) {
-		LogD("sendKeyEvent: " + event.toString());
-		super.sendKeyEvent(event);
-		if (null != mView) {
-			switch (event.getKeyCode()) {
-			
-			case KeyEvent.KEYCODE_DEL:
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					mView.deleteBackward();
-				}
-				break;
+		else {
+			for (; nModified < 0; ++nModified) {
+				mMainView.deleteBackward();
+				LogD("deleteBackward");
 			}
 		}
-		return true;
+		mText = s.toString();
 	}
 
 	@Override
-	public boolean finishComposingText() {
-		LogD("finishComposingText");
-		mLastCommit = "";
-		return super.finishComposingText();
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		LogD("beforeTextChanged(" + s + ")start: " + start + ",count: " + count + ",after: " + after);
+		mText = s.toString();
 	}
 
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+	}
 
 	@Override
-	public CharSequence getTextBeforeCursor(int n, int flags) {
-		LogD("getTextBeforeCursor");
-		return mLastCommit;
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		if (mMainView.getTextField() == v && isFullScreenEdit()) {
+			// user press the action button, delete all old text and insert new text
+			for (int i = mOriginText.length(); i > 0; --i) {
+				mMainView.deleteBackward();
+				LogD("deleteBackward");
+			}
+			String text = v.getText().toString();
+			if ('\n' != text.charAt(text.length() - 1)) {
+				text += '\n';
+			}
+			final String insertText = text;
+			mMainView.insertText(insertText);
+			LogD("insertText(" + insertText + ")");
+		}
+		return false;
 	}
 }
 
@@ -104,8 +98,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     private static final String TAG = Cocos2dxGLSurfaceView.class.getCanonicalName();
     private Cocos2dxRenderer mRenderer;
-    private final boolean debug = false;
-
+    
+    private static final boolean debug = false;
+	
     ///////////////////////////////////////////////////////////////////////////
     // for initialize
 	///////////////////////////////////////////////////////////////////////////
@@ -123,6 +118,38 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         mRenderer = new Cocos2dxRenderer();
         setFocusableInTouchMode(true);
         setRenderer(mRenderer);
+        
+        textInputWraper = new TextInputWraper(this);
+
+        handler = new Handler(){
+        	public void handleMessage(Message msg){
+        		switch(msg.what){
+        		case HANDLER_OPEN_IME_KEYBOARD:
+        			if (null != mTextField && mTextField.requestFocus()) {
+        				mTextField.removeTextChangedListener(textInputWraper);
+        				mTextField.setText("");
+        				String text = (String)msg.obj;
+        				mTextField.append(text);
+        				textInputWraper.setOriginText(text);
+        				mTextField.addTextChangedListener(textInputWraper);
+                        InputMethodManager imm = (InputMethodManager)mainView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(mTextField, 0);
+                        Log.d("GLSurfaceView", "showSoftInput");
+        			}
+        			break;
+        			
+        		case HANDLER_CLOSE_IME_KEYBOARD:
+        			if (null != mTextField) {
+        				mTextField.removeTextChangedListener(textInputWraper);
+                        InputMethodManager imm = (InputMethodManager)mainView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(mTextField.getWindowToken(), 0);
+                        Log.d("GLSurfaceView", "HideSoftInput");
+        			}
+        			break;
+        		}
+        	}
+        };
+
         mainView = this;
     }
     
@@ -151,46 +178,44 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     ///////////////////////////////////////////////////////////////////////////
     // for text input
 	///////////////////////////////////////////////////////////////////////////
-
+    private final static int HANDLER_OPEN_IME_KEYBOARD = 2;
+    private final static int HANDLER_CLOSE_IME_KEYBOARD = 3;
+    private static Handler handler;
+    private static TextInputWraper textInputWraper;
+    private TextView mTextField;
+    
+    public TextView getTextField() {
+    	return mTextField;
+    }
+    
+    public void setTextField(TextView view) {
+    	mTextField = view;
+    	if (null != mTextField && null != textInputWraper) {
+    		LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mTextField.getLayoutParams();
+    		linearParams.height = 0;
+    		mTextField.setLayoutParams(linearParams);
+    		mTextField.setOnEditorActionListener(textInputWraper);
+    	}
+    }
+    
     public static void openIMEKeyboard() {
-    	if (null == mainView) {
-    		return;
-    	}
-    	InputMethodManager imm = (InputMethodManager)mainView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) {
-        	return;
-        }
-        imm.showSoftInput(mainView, 0);
-    }
-    
-    public static void closeIMEKeyboard() {
-    	if (null == mainView) {
-        	return;
-    	}
-    	InputMethodManager imm = (InputMethodManager)mainView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) {
-        	return;
-        }
-        imm.hideSoftInputFromWindow(mainView.getWindowToken(), 0);
-    }
-    
-    private Cocos2dxInputConnection ic;
-    @Override 
-    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-    	outAttrs.inputType = EditorInfo.TYPE_CLASS_TEXT;
-        outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-        outAttrs.initialSelStart = -1;
-        outAttrs.initialSelEnd = -1;
-        outAttrs.initialCapsMode = 1;
-
-    	if (null == ic)
-    	{
-    		ic = new Cocos2dxInputConnection(this);
-    	}
+    	Message msg = new Message();
+    	msg.what = HANDLER_OPEN_IME_KEYBOARD;
+    	msg.obj = mainView.getContentText();
+    	handler.sendMessage(msg);
     	
-        return ic;
     }
+    
+    private String getContentText() {
+		return mRenderer.getContentText();
+	}
 
+	public static void closeIMEKeyboard() {
+    	Message msg = new Message();
+    	msg.what = HANDLER_CLOSE_IME_KEYBOARD;
+    	handler.sendMessage(msg);
+    }
+    
     public void insertText(final String text) {
         queueEvent(new Runnable() {
             @Override

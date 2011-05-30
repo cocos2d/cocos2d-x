@@ -81,6 +81,11 @@ protected:
     */
     virtual void deleteBackward() {}
 
+    /**
+    @brief	Called by CCIMEDispatcher for get text which delegate already has.
+    */
+    virtual const char * getContentText() { return 0; }
+
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////

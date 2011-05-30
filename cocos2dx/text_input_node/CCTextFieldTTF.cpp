@@ -246,6 +246,11 @@ void CCTextFieldTTF::deleteBackward()
     setString(sText.c_str());
 }
 
+const char * CCTextFieldTTF::getContentText()
+{
+    return m_pInputText->c_str();
+}
+
 void CCTextFieldTTF::draw()
 {
     if (m_pDelegate && m_pDelegate->onDraw(this))
