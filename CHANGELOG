@@ -1,3 +1,22 @@
+cocos2d-0.99.5-x-0.8.4 @ May.26,2011
+ [android]
+    Feature  #496  SUPPORT ANDROID 3.0! We test it on both Motorola XOOM & Samsung Galaxy Tab 10.1 (Highlight!!!!!)
+    Bug      #494  typo fixed, Cocos2dxActivity::setPackgeName() to setPackageName()
+    Bug      #495  Memory leak of CCFileUtils::getWriteablePath()
+    Bug      #497  soft keyboard stays shown on some devices while the project includes CCTextFieldTTF
+    Bug      #501  projects creaed by android template have the same package name
+    Bug      #510  Tests progress is killed at the power down phase
+ [all platforms]
+    Feature  #503  upgrade chipmunk from 5.1 to 5.3.4, keep sync with cocos2d-iphone (Highlight!)
+    Feature  #509  For integrting IME, we had to rotate UI to landscape by default
+    Bug      #499  CCRGBAProtocol isn't inherited and implemented in CCMenuItemSprite
+ [ios]
+    Bug      #493  the return value of CCileUtils::getWriteablePath() is not end with '/'
+    Bug      #508  Problem in runnint Tests in Retina resolution since 0.8.2
+ [win32]
+    Bug      #492  CCFileUtils::fullPathFromRelativeFile forget to consider the path separated by '\'
+    Feature  #489  Use GetCurrentDirectory instead of GetModuleFileName in CCFileUtils_win32.cpp
+
 cocos2d-0.99.5-x-0.8.3 @ May.12,2011
  [all platforms]
     Feature  #317  wrap input box for game dev, CCTextFieldTTF. (Highlight!)
