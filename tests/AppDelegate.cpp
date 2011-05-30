@@ -58,6 +58,10 @@ bool AppDelegate::initInstance()
 #endif
 
 #endif
+	
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+#endif
 
         bRet = true;
     } while (0);
