@@ -1194,11 +1194,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				BF4DE6AB138BB89600CF907D /* RootViewController.h */,
-				BF4DE6AC138BB89600CF907D /* RootViewController.mm */,
-				BF83517613275F5500F3C033 /* cocos2dx */,
 				BF5681CC1313A84D0055EEAC /* ios */,
 				BF755FA512A1012300450234 /* Classes */,
+				BF83517613275F5500F3C033 /* cocos2dx */,
 				BF755FAC12A1015E00450234 /* Resource */,
 				BF163FB9128E671C0010DC04 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1242,6 +1240,8 @@
 			children = (
 				BF365AA612A103F70050DCF4 /* AppController.h */,
 				BF365AA712A103F70050DCF4 /* AppController.mm */,
+				BF4DE6AB138BB89600CF907D /* RootViewController.h */,
+				BF4DE6AC138BB89600CF907D /* RootViewController.mm */,
 			);
 			name = ios;
 			sourceTree = "<group>";
