@@ -141,7 +141,7 @@ protected:
     virtual bool canDetachWithIME();
     virtual void insertText(const char * text, int len);
     virtual void deleteBackward();
-
+    virtual const char * getContentText();
 private:
     class LengthStack;
     LengthStack * m_pLens;
