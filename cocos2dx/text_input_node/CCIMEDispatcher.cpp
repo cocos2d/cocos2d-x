@@ -239,6 +239,16 @@ void CCIMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
+const char * CCIMEDispatcher::getContentText()
+{
+    const char * pszContentText = 0;
+    if (m_pImpl && m_pImpl->m_DelegateWithIme)
+    {
+        pszContentText = m_pImpl->m_DelegateWithIme->getContentText();
+    }
+    return (pszContentText) ? pszContentText : "";
+}
+
 //////////////////////////////////////////////////////////////////////////
 // dispatch keyboard message
 //////////////////////////////////////////////////////////////////////////

@@ -57,6 +57,11 @@ public:
     */
     void dispatchDeleteBackward();
 
+    /**
+    @brief	get the content text, which current CCIMEDelegate which attached with IME has.
+    */
+    const char * getContentText();
+
     //////////////////////////////////////////////////////////////////////////
     // dispatch keyboard notification
     //////////////////////////////////////////////////////////////////////////
