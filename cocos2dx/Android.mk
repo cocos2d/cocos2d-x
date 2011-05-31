@@ -96,7 +96,10 @@ tileMap_parallax_nodes/CCTMXTiledMap.cpp \
 tileMap_parallax_nodes/CCTMXXMLParser.cpp \
 tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp
+touch_dispatcher/CCTouchHandler.cpp \
+luascript/CCLuaSrcipt.cpp \
+../HelloWorld/LuaCocos2d.cpp
+
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
@@ -116,7 +119,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/third_party/android/skia/text \
                     $(LOCAL_PATH)/platform/third_party/android/skia/utils \
                     $(LOCAL_PATH)/platform/third_party/android/skia/views \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/xml
+                    $(LOCAL_PATH)/platform/third_party/android/skia/xml \
+		    $(LOCAL_PATH)/luascript \
+		    $(LOCAL_PATH)/../lua/src \
+		    $(LOCAL_PATH)/../lua/tolua
                     
 # it is used for ndk-r4
 # if you build with nkd-r4, uncomment it   
@@ -137,6 +143,7 @@ LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/l
                  -lxml2 \
                  -ljpeg \
                  -lskia
+		 -llua
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API

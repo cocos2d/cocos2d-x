@@ -57,7 +57,9 @@ namespace cocos2d{
 		virtual ~CCMenu(){}
 		/** creates a CCMenu with it's items */
 		static CCMenu* menuWithItems(CCMenuItem* item, ...);
-
+#if CC_ENABLE_LUA
+		static CCMenu*menuWithItem(CCMenuItem* item);
+#endif
 		/** initializes a CCMenu with it's items */
 		bool initWithItems(CCMenuItem* item, va_list args);
 

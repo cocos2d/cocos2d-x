@@ -27,14 +27,72 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCObject.h"
+#include <string>
+
+#if CC_ENABLE_LUA
+#include "../Ndscript/CCLuaSrcipt.h"
+#endif
+
 
 namespace   cocos2d {
 class CCNode;
 class CCEvent;
 
-class CC_DLL SelectorProtocol
+#if CC_ENABLE_LUA
+enum ccScriptFuncType
+{
+	ccSEL_Update,
+	ccSEL_Tick,
+	ccSEL_CallFunc,
+	ccSEL_CallFuncN,
+	ccSEL_CallFuncND,
+	ccSEL_MenuHandler,
+	ccSEL_EventHandler,
+	ccSEL_Max,
+};
+class CC_DLL CCScriptSelector
 {
 public:
+	std::string m_scriptFunc[ccSEL_Max];
+	inline bool registerScriptSelector(const char* szType, const char* szSeletor)
+	{
+		if (szType == NULL || szSeletor == NULL || strlen(szType) == 0 || strlen(szSeletor) == 0)
+		{
+			CCLog("registerScriptSelector input parameter error");
+			return false;
+		}
+		std::string strType[] ={"SEL_Update", "SEL_Tick", "SEL_CallFunc", "SEL_CallFuncN", \
+			"SEL_CallFuncND", "SEL_CallFuncO", "SEL_MenuHandler", "SEL_EventHandler"};
+		int nType = -1;
+		for (int i = 0; i < sizeof(strType); i++)
+		{
+			if (strcmp(strType[i].c_str(), szType) == 0)
+			{
+				nType = i;
+				break;
+			}
+		}
+		if (nType == -1)
+		{
+			CCLog("registerScriptSelector function type error");
+			return false;
+		}
+		else
+		{
+			m_scriptFunc[nType] = szSeletor;
+		}
+		return true;
+	}
+};
+#endif
+#if CC_ENABLE_LUA
+class CC_DLL SelectorProtocol:public CCScriptSelector
+#else
+class CC_DLL SelectorProtocol
+#endif
+{
+public:
+	SelectorProtocol(){};
 	virtual void update(ccTime dt) {};
 	virtual void tick(ccTime dt){};
 	virtual void callfunc(){};
@@ -71,6 +129,101 @@ typedef void (SelectorProtocol::*SEL_EventHandler)(CCEvent*);
   #define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
   #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
   #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
+
+
+inline void schedule_SCHEDULE(SelectorProtocol* pSel,SEL_SCHEDULE pfn, ccTime cc, std::string & strluafnc) 
+{
+	if (pSel && pfn)
+	{
+		(pSel->*pfn)(cc);
+	}
+	else
+	{
+#if CC_ENABLE_LUA
+		CCLuaScriptModule::sharedLuaScriptModule()->executeSchedule(strluafnc, cc);
+#endif
+
+	}
+}
+
+inline void schedule_CallFunc(SelectorProtocol* pSel,SEL_CallFunc pfn, std::string & strluafnc)
+{
+	if (pSel && pfn)
+	{
+		(pSel->*pfn)();
+	}
+	else
+	{
+#if CC_ENABLE_LUA
+		CCLuaScriptModule::sharedLuaScriptModule()->executeCallFunc(strluafnc);
+#endif
+
+	}
+}
+inline void schedule_CallFuncN(SelectorProtocol* pSel,SEL_CallFuncN pfn, CCNode* pNode, std::string & strluafnc)
+{
+	if (pSel && pfn)
+	{
+		(pSel->*pfn)(pNode);
+	}
+	else
+	{
+#if CC_ENABLE_LUA
+		CCLuaScriptModule::sharedLuaScriptModule()->executeCallFuncN(strluafnc, pNode);
+#endif
+	}
+}
+
+inline void schedule_CallFuncND(SelectorProtocol* pSel,SEL_CallFuncND pfn, CCNode* pNode, void* pdata, std::string & strluafnc)
+{
+	if (pSel && pfn)
+	{
+		(pSel->*pfn)(pNode, pdata);
+	}
+	else
+	{
+#if CC_ENABLE_LUA
+		CCLuaScriptModule::sharedLuaScriptModule()->executeCallFuncND(strluafnc, pNode, pdata);
+#endif
+	}
+}
+
+inline void schedule_MenuHandler(SelectorProtocol* pSel,SEL_MenuHandler pfn, CCObject* pobj, std::string & strluafnc)
+{
+	if (pSel && pfn)
+	{
+		(pSel->*pfn)(pobj);
+	}
+	else
+	{
+#if CC_ENABLE_LUA
+		CCLuaScriptModule::sharedLuaScriptModule()->executeMenuHandler(strluafnc.c_str(), pobj);
+#endif
+	}
+}
+inline void schedule_CallFuncO(SelectorProtocol* pSel,SEL_MenuHandler pfn, CCObject* pobj, std::string & strluafnc)
+{
+	schedule_MenuHandler(pSel, pfn, pobj, strluafnc);
+}
+
+
+inline void schedule_EventHandler(SelectorProtocol* pSel,SEL_EventHandler pfn, CCEvent* pEvent, std::string & strluafnc)
+{
+	if (pSel && pfn)
+	{
+		(pSel->*pfn)(pEvent);
+	}
+	else
+	{
+#if CC_ENABLE_LUA
+		CCLuaScriptModule::sharedLuaScriptModule()->executeEventHandler(strluafnc, pEvent);
+#endif
+
+	}
+}
+
+
+
 }//namespace   cocos2d 
 
 #endif // __COCOA_SELECTOR_PROTOCOL_H__

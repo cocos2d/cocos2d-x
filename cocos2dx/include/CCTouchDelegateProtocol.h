@@ -27,7 +27,12 @@ THE SOFTWARE.
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
 #include "CCObject.h"
-
+#include "ccConfig.h"
+#if CC_ENABLE_LUA
+#include "CCMutableDictionary.h"
+#include "CCString.h"
+#include "../Ndscript/CCLuaSrcipt.h"
+#endif
 namespace   cocos2d {
 
 typedef enum
@@ -46,7 +51,9 @@ class CC_DLL CCTouchDelegate
 {
 protected:
 	ccTouchDelegateFlag m_eTouchDelegateType;
-
+#if CC_ENABLE_LUA
+	CCMutableDictionary<int, cocos2d::CCString*> *m_pEventDictionary;
+#endif
 public:
 	friend class CCTouchDispatcher; // only CCTouchDispatcher & children can change m_eTouchDelegateType
 	inline ccTouchDelegateFlag getTouchDelegateType(void) { return m_eTouchDelegateType; }
@@ -68,6 +75,90 @@ public:
  	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {}
  	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
  	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
+
+#if CC_ENABLE_LUA
+	//use for lua register event 
+	/*
+	szEventName must be one of follow value 
+	{ "ccTouchBegan" "ccTouchMoved" "ccTouchEnded" "ccTouchCancelled" }
+	*/
+	
+
+	void registerLuaTouchEvent(const char* szEventName, const char* fn)
+	{
+		if (szEventName == NULL || strlen(szEventName) == 0 || fn == NULL || strlen(fn) == 0)
+		{
+			CCLog("registerEvent input parameter error ");
+			return ;
+		}
+
+		std::string strEventType[] = {"ccTouchBegan", "ccTouchMoved", "ccTouchEnded", "ccTouchCancelled", 
+		"ccMulTouchBegan", "ccMulTouchMoved", "ccMulTouchEnded", "ccMulTouchCancelled"};
+		int nSize = sizeof(strEventType);
+		int nType = -1;
+		for(int i = 0; i < nSize; i++)
+		{
+			if (strcmp(strEventType[i].c_str(), szEventName) == 0)
+			{
+				nType = i;
+				break;
+			}
+		}
+		if(nType != -1)
+		{
+			if (m_pEventDictionary == NULL)
+			{
+				m_pEventDictionary = new CCMutableDictionary<int, cocos2d::CCString*>();
+			}
+
+			if (m_pEventDictionary->objectForKey(nType) == NULL)
+			{
+				CCString *pStr = new CCString(fn);
+				m_pEventDictionary->setObject(pStr, nType);
+			}
+			else
+			{
+				CCLog("registerEvent %s already exist", szEventName);
+			}
+		}
+	}
+	CCString* getLuaEvent(int nType)
+	{
+		if (m_pEventDictionary == NULL)
+		{
+			return NULL;
+		}
+		CCString *pfn = NULL;
+		pfn = m_pEventDictionary->objectForKey(nType);
+		return pfn;
+
+	}
+	void excuteLuaTouchEvent(CCString* pLuafn, CCTouch *pTouch)
+	{
+		if (pLuafn)
+		{
+			CCLuaScriptModule::sharedLuaScriptModule()->executeTouch(pLuafn->m_sString.c_str(), pTouch);
+		}
+	}
+
+	void excuteLuaTouchesEvent(CCString* pLuafn, CCSet *pTouches)
+	{
+		if (pLuafn)
+		{
+			CCLuaScriptModule::sharedLuaScriptModule()->executeTouchesEvent(pLuafn->m_sString.c_str(), pTouches);
+		}
+	}
+	CCTouchDelegate(){m_pEventDictionary = NULL;}
+	~CCTouchDelegate()
+	{
+		if (m_pEventDictionary)
+		{
+			delete m_pEventDictionary;
+			m_pEventDictionary = NULL;
+		}
+
+	}
+#endif
 };
 /**
  @brief

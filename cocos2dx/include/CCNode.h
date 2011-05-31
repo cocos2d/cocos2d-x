@@ -450,6 +450,14 @@ namespace   cocos2d {
 		/** unschedules a custom selector.*/
 		void unschedule(SEL_SCHEDULE selector);
 
+		/*
+		ad for lua script
+		*/
+#if CC_ENABLE_LUA
+		void schedule(const char* selector);
+		void schedule(const char*  selector, ccTime interval);
+		void unschedule(const char* selector);
+#endif
 		/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
 		Actions are not affected by this method.
 		@since v0.99.3
@@ -525,6 +533,9 @@ namespace   cocos2d {
 		@since v0.7.1
 		*/
 		CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+#if CC_ENABLE_LUA
+		bool registerScriptSelector(const char* szType, const char* szSeletor);
+#endif
 
 	};
 }//namespace   cocos2d 

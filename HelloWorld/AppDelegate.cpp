@@ -83,11 +83,23 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
+	
+
+#if CC_ENABLE_LUA
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("/sdcard/hello.lua");
+#else
+	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloWorld/Resource/hello.lua");
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
+#else
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();
 
 	// run
 	pDirector->runWithScene(pScene);
+#endif // CC_ENABLE_LUA
 
 	return true;
 }

@@ -191,6 +191,11 @@ namespace cocos2d {
 		
 		typedef void (SelectorProtocol::*SEL_CallFunc)();
 		*/
+#if CC_ENABLE_LUA
+		static CCCallFunc * actionWithLua(const char * pszfunc);
+		virtual bool initWithLua(const char* pszfn);
+#endif
+
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget);
 		/** executes the callback */
 		virtual void execute();
@@ -200,6 +205,9 @@ namespace cocos2d {
 
 	protected:
 		SelectorProtocol*   m_pSelectorTarget;
+#if CC_ENABLE_LUA
+		std::string m_pLuaCallFun;
+#endif
 		union
 		{
 			SEL_CallFunc	m_pCallFunc;
@@ -227,6 +235,9 @@ namespace cocos2d {
 
 		typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
 		*/
+#if CC_ENABLE_LUA
+		static CCCallFuncN * actionWithLua(const char * pszfunc);
+#endif
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
 		// super methods
 		virtual CCObject* copyWithZone(CCZone *pZone);
@@ -244,6 +255,9 @@ namespace cocos2d {
 
 		/** creates the action with the callback and the data to pass as an argument */
 		static CCCallFuncND * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
+#if CC_ENABLE_LUA
+		static CCCallFuncND * actionWithLua(const char * pszfunc);
+#endif
 		/** initializes the action with the callback and the data to pass as an argument */
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
 		// super methods
@@ -274,6 +288,9 @@ namespace cocos2d {
 
         typedef void (SelectorProtocol::*SEL_CallFuncO)(CCObject*);
         */
+#if CC_ENABLE_LUA
+		static CCCallFuncO * actionWithLua(const char * pszfunc);
+#endif
         virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
         // super methods
         virtual CCObject* copyWithZone(CCZone *pZone);
