@@ -12,6 +12,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "HelloWorld\win32\HelloWorld.win32.vcproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
+		{A9376AC9-4D65-498F-885D-EEC3B41DD6E8} = {A9376AC9-4D65-498F-885D-EEC3B41DD6E8}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\test.win32\test.win32.vcproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
@@ -21,6 +22,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\test.win32\t
 		{929480E7-23C0-4DF6-8456-096D71547116} = {929480E7-23C0-4DF6-8456-096D71547116}
 		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6} = {F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "lua\lua.vcproj", "{A9376AC9-4D65-498F-885D-EEC3B41DD6E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +55,10 @@ Global
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Debug|Win32.Build.0 = Debug|Win32
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.ActiveCfg = Release|Win32
 		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.Build.0 = Release|Win32
+		{A9376AC9-4D65-498F-885D-EEC3B41DD6E8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A9376AC9-4D65-498F-885D-EEC3B41DD6E8}.Debug|Win32.Build.0 = Debug|Win32
+		{A9376AC9-4D65-498F-885D-EEC3B41DD6E8}.Release|Win32.ActiveCfg = Release|Win32
+		{A9376AC9-4D65-498F-885D-EEC3B41DD6E8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

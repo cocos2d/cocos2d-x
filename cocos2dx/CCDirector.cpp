@@ -882,6 +882,20 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
     }
 }
 
+
+#if CC_ENABLE_LUA
+void CCDirector::registerTick(const char* szfn)
+{
+	if (szfn == NULL || strlen(szfn) == 0)
+	{
+		CCLOG("error registerTick");
+		return ;
+	}
+	m_luatick = szfn;
+}
+#endif
+
+
 /***************************************************
 * implementation of DisplayLinkDirector
 **************************************************/

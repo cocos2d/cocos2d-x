@@ -325,6 +325,12 @@ public:
 		return m_array.rbegin();
 	}
 
+#if CC_ENABLE_LUA
+	CCMutableArrayIterator endToLua(void)
+	{
+		return m_array.end();
+	}
+#endif
 	CCMutableArrayIterator end(void)
 	{
 		return m_array.end();

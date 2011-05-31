@@ -182,6 +182,12 @@ public:
 		return pObject;
 	}
 
+#if CC_ENABLE_LUA
+	void endToLua()
+	{
+		end();
+	} 
+#endif
 	void end()
 	{
 		m_bBegin = false;

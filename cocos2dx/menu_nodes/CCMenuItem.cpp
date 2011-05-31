@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-
+#if CC_ENABLE_LUA
+#include "CCTouchDispatcher.h"
+#endif
 #include <stdarg.h>
 
 namespace cocos2d{
@@ -64,6 +66,16 @@ namespace cocos2d{
 		m_bIsSelected = false;
 		return true;
 	}
+#if CC_ENABLE_LUA
+	void CCMenuItem::registerMenuHandler(const char* fn)
+	{
+		if (fn && strlen(fn))
+		{
+			//SelectorProtocol is not a child of CCObject  Obj->autorelease function can not be use
+			m_strScriptFunc = fn;
+		}
+	}
+#endif
 	void CCMenuItem::selected()
 	{
 		m_bIsSelected = true;
@@ -74,9 +86,18 @@ namespace cocos2d{
 	}
 	void CCMenuItem::activate()
 	{
-		if (m_bIsEnabled && m_pListener)
+		if (m_bIsEnabled)
 		{
-			(m_pListener->*m_pfnSelector)(this);
+			if (m_pListener)
+			{
+				(m_pListener->*m_pfnSelector)(this);
+			}
+#if CC_ENABLE_LUA
+			else if(m_strScriptFunc.size())
+			{
+				schedule_MenuHandler(m_pListener, m_pfnSelector, this, m_strScriptFunc); 
+			}
+#endif
 		}
 	}
 	void CCMenuItem::setIsEnabled(bool enabled)

@@ -75,6 +75,9 @@ public:
     void beginWithClear(float r, float g, float b, float a);
 
     /** ends grabbing */
+#if CC_ENABLE_LUA
+	inline void endToLua(){ end();};
+#endif
     void end();
 
     /** clears the texture with a color */

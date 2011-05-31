@@ -933,7 +933,33 @@ void CCNode::unschedule(SEL_SCHEDULE selector)
 
 	CCScheduler::sharedScheduler()->unscheduleSelector(selector, this);
 }
+#if CC_ENABLE_LUA
+void CCNode::schedule(const char* selector)
+{
+	if (selector == NULL || strlen(selector) == 0)
+	{
+		CCLog(" schedule Argument must be non-nil");
+	}
+	this->schedule(selector, 0);
+	
+}
+void CCNode::schedule(const char*  selector, ccTime interval)
+{
+	if (selector == NULL || strlen(selector) == 0)
+	{
+		CCLog(" schedule Argument must be non-nil");
+	}
+	CCScheduler::sharedScheduler()->scheduleSelector(NULL, this, interval, !m_bIsRunning, selector);
+}
+void CCNode::unschedule(const char* selector)
+{
+	if (selector == 0)
+		return;
 
+	CCScheduler::sharedScheduler()->unscheduleSelector(NULL, this, selector);
+
+}
+#endif
 void CCNode::unscheduleAllSelectors()
 {
 	CCScheduler::sharedScheduler()->unscheduleAllSelectorsForTarget(this);
@@ -1095,5 +1121,11 @@ CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
 	point = CCDirector::sharedDirector()->convertToGL(point);
 	return this->convertToNodeSpaceAR(point);
 }
+#if CC_ENABLE_LUA
+bool CCNode::registerScriptSelector(const char* szType, const char* szSeletor)
+{
+	return SelectorProtocol::registerScriptSelector(szType, szSeletor);
+}
+#endif
 
 }//namespace   cocos2d 
