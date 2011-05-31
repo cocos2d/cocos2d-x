@@ -188,6 +188,12 @@ void CCDirector::drawScene(void)
 	//tick before glClear: issue #533
 	if (! m_bPaused)
 	{
+#if CC_ENABLE_LUA
+		if (m_luatick.size())
+		{
+			schedule_SCHEDULE(NULL, NULL, m_fDeltaTime, m_luatick);
+		}
+#endif
 		CCScheduler::sharedScheduler()->tick(m_fDeltaTime);
 	}
 
