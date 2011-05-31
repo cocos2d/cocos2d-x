@@ -89,9 +89,16 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("/sdcard/hello.lua");
-#else
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloWorld/Resource/hello.lua");
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+    CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile(path.c_str());
+#endif 
 
 #else
 	// create a scene. it's an autorelease object
