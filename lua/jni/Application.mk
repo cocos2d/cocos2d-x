@@ -1,1 +1,0 @@
-APP_MODULES := liblua

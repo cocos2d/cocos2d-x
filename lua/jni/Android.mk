@@ -57,6 +57,6 @@ LOCAL_SRC_FILES :=../src/lapi.c \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/../src \
                     $(LOCAL_PATH)/../tolua
-LOCAL_PRELINK_MODULE := false
+#LOCAL_PRELINK_MODULE := false
 
 include $(BUILD_STATIC_LIBRARY)
