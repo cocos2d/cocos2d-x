@@ -9,6 +9,7 @@ LOCAL_SRC_FILES := main.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                     $(LOCAL_PATH)/../../../../cocos2dx/platform \
                     $(LOCAL_PATH)/../../../../cocos2dx/include \
+                    $(LOCAL_PATH)/../../../../cocos2dx/lua_support \
                     $(LOCAL_PATH)/../../../../CocosDenshion/include \
                     $(LOCAL_PATH)/../../.. \
                     $(LOCAL_PATH)/../../../../lua/src \
@@ -35,5 +36,7 @@ LOCAL_LDLIBS := -llog -lGLESv1_CM -llog -lz \
                 -lskia
                 
 LOCAL_STATIC_LIBRARIES := libcocos2d libcocosdenshion liblua
+
+LOCAL_CFLAGS := -DENABLE_LUA
             
 include $(BUILD_SHARED_LIBRARY)
