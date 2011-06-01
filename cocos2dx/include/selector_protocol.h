@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <string>
 
 #ifdef  ENABLE_LUA
-#include "../Ndscript/CCLuaSrcipt.h"
+#include "../lua_support/CCLuaSrcipt.h"
 #endif
 
 

@@ -271,6 +271,4 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_IS_RETINA_DISPLAY_SUPPORTED 0
 #endif
 
-#define  CC_ENABLE_LUA 1
-
 #endif // __CCCONFIG_H__

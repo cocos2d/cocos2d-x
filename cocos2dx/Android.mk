@@ -99,13 +99,14 @@ touch_dispatcher/CCTouchDispatcher.cpp \
 touch_dispatcher/CCTouchHandler.cpp 
 
 ifeq ($(ENABLE_LUA), true)
-    LOCAL_SRC_FILES += Ndscript/CCLuaSrcipt.cpp \
-                       Ndscript/LuaCocos2d.cpp \
+    LOCAL_SRC_FILES += lua_support/CCLuaSrcipt.cpp \
+                       lua_support/LuaCocos2d.cpp \
                        NdControls/NdCxList.cpp \
                        NdControls/NdCxListItem.cpp
                        
     LOCAL_CFLAGS := -DENABLE_LUA -DUSE_FILE32API
 else
+    # define the macro to compile through support/zip_support/ioapi.c                
     LOCAL_CFLAGS := -DUSE_FILE32API
 endif
 
@@ -132,7 +133,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
 		    $(LOCAL_PATH)/../lua/src \
 		    $(LOCAL_PATH)/../lua/tolua                    
 
-# define the macro to compile through support/zip_support/ioapi.c                
-LOCAL_CFLAGS := -DUSE_FILE32API
+
                                  
 include $(BUILD_STATIC_LIBRARY)

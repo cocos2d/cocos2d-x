@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\lua\tolua;..\..\lua\src;..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;ENABLE_LUA"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -1081,22 +1081,22 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="NDScript"
+			Name="lua_support"
 			>
 			<File
-				RelativePath="..\Ndscript\CCLuaSrcipt.cpp"
+				RelativePath="..\lua_support\CCLuaSrcipt.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\Ndscript\CCLuaSrcipt.h"
+				RelativePath="..\lua_support\CCLuaSrcipt.h"
 				>
 			</File>
 			<File
-				RelativePath="..\Ndscript\LuaCocos2d.cpp"
+				RelativePath="..\lua_support\LuaCocos2d.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\Ndscript\LuaCocos2d.h"
+				RelativePath="..\lua_support\LuaCocos2d.h"
 				>
 			</File>
 		</Filter>

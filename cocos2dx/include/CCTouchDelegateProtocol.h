@@ -31,7 +31,7 @@ THE SOFTWARE.
 #ifdef  ENABLE_LUA
 #include "CCMutableDictionary.h"
 #include "CCString.h"
-#include "../Ndscript/CCLuaSrcipt.h"
+#include "../lua_support/CCLuaSrcipt.h"
 #endif
 namespace   cocos2d {
 
