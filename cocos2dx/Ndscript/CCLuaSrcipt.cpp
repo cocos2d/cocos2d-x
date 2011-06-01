@@ -498,7 +498,7 @@ bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int ind
 void CCLuaScriptModule::executeString(const std::string& str)
 {
 	// load code into lua and call it
-	int error =	luaL_loadbuffer(d_state, str.c_str(), str.length(), str.c_str()) || lua_pcall(d_state,0,0,0);
+	int error =	luaL_dostring(d_state, str.c_str());
 
 	// handle errors
 	if ( error )
