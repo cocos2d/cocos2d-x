@@ -2,7 +2,7 @@
 #define _CCLUASRCIPT_H
 #include "ccConfig.h"
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 #include "CCCommon.h"
 #include "CCObject.h"
 #include <string>

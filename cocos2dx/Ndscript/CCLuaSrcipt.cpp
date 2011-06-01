@@ -1,5 +1,5 @@
 #include "CCLuaSrcipt.h"
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 
 extern "C" {
 #include "lualib.h"

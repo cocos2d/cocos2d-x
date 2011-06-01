@@ -200,7 +200,7 @@ namespace NdCxControl
                     item_click_listener_->onClick(
                         inner_panel_->getChildren()->indexOfObject(sel_item_), sel_item_);
                 }
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 				else if (m_scriptSeletor.size())
 				{
 					CCLuaScriptModule::sharedLuaScriptModule()->executeListItem(m_scriptSeletor,
@@ -423,11 +423,11 @@ namespace NdCxControl
     {
         item_click_listener_ = NULL;
 		
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		m_scriptSeletor.clear();
 #endif
     }
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	void NdCxList::registerItemClickListener(const char* szSeletor)
 	{
 		if (szSeletor)

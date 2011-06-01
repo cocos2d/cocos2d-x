@@ -69,7 +69,7 @@ namespace cocos2d{
 		virtual void selected();
 		/** The item was unselected */
 		virtual void unselected();
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		virtual void registerMenuHandler(const char* fn);
 		std::string m_strScriptFunc;
 #endif

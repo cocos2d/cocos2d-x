@@ -188,7 +188,7 @@ void CCDirector::drawScene(void)
 	//tick before glClear: issue #533
 	if (! m_bPaused)
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		if (m_luatick.size())
 		{
 			schedule_SCHEDULE(NULL, NULL, m_fDeltaTime, m_luatick);
@@ -889,7 +889,7 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
 }
 
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 void CCDirector::registerTick(const char* szfn)
 {
 	if (szfn == NULL || strlen(szfn) == 0)

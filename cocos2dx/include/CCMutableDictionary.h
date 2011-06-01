@@ -182,7 +182,7 @@ public:
 		return pObject;
 	}
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	void endToLua()
 	{
 		end();

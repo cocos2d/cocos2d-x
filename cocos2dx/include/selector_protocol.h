@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include <string>
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 #include "../Ndscript/CCLuaSrcipt.h"
 #endif
 
@@ -38,7 +38,7 @@ namespace   cocos2d {
 class CCNode;
 class CCEvent;
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 enum ccScriptFuncType
 {
 	ccSEL_Update,
@@ -85,7 +85,7 @@ public:
 	}
 };
 #endif
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 class CC_DLL SelectorProtocol:public CCScriptSelector
 #else
 class CC_DLL SelectorProtocol
@@ -139,7 +139,7 @@ inline void schedule_SCHEDULE(SelectorProtocol* pSel,SEL_SCHEDULE pfn, ccTime cc
 	}
 	else
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		CCLuaScriptModule::sharedLuaScriptModule()->executeSchedule(strluafnc, cc);
 #endif
 
@@ -154,7 +154,7 @@ inline void schedule_CallFunc(SelectorProtocol* pSel,SEL_CallFunc pfn, std::stri
 	}
 	else
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		CCLuaScriptModule::sharedLuaScriptModule()->executeCallFunc(strluafnc);
 #endif
 
@@ -168,7 +168,7 @@ inline void schedule_CallFuncN(SelectorProtocol* pSel,SEL_CallFuncN pfn, CCNode*
 	}
 	else
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		CCLuaScriptModule::sharedLuaScriptModule()->executeCallFuncN(strluafnc, pNode);
 #endif
 	}
@@ -182,7 +182,7 @@ inline void schedule_CallFuncND(SelectorProtocol* pSel,SEL_CallFuncND pfn, CCNod
 	}
 	else
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		CCLuaScriptModule::sharedLuaScriptModule()->executeCallFuncND(strluafnc, pNode, pdata);
 #endif
 	}
@@ -196,7 +196,7 @@ inline void schedule_MenuHandler(SelectorProtocol* pSel,SEL_MenuHandler pfn, CCO
 	}
 	else
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		CCLuaScriptModule::sharedLuaScriptModule()->executeMenuHandler(strluafnc.c_str(), pobj);
 #endif
 	}
@@ -215,7 +215,7 @@ inline void schedule_EventHandler(SelectorProtocol* pSel,SEL_EventHandler pfn, C
 	}
 	else
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		CCLuaScriptModule::sharedLuaScriptModule()->executeEventHandler(strluafnc, pEvent);
 #endif
 

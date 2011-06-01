@@ -85,7 +85,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	// CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("/sdcard/hello.lua");

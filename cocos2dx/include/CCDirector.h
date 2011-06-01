@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCEGLView.h"
 #include "CCGL.h"
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 #include <string>
 #endif
 namespace   cocos2d {
@@ -313,7 +313,7 @@ public:
 	/** Ends the execution, releases the running scene.
 	 It doesn't remove the OpenGL view from its parent. You have to do it manually.
 	 */
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	inline void endToLua(void){end();}
 #endif
 	void end(void);
@@ -430,7 +430,7 @@ public:
 	/** detach the cocos2d view from the view/window */
 	bool detach(void);
 
-#if CC_ENABLE_LUA 
+#ifdef  ENABLE_LUA 
 	std::string m_luatick;
 	void registerTick(const char* szfn);
 #endif

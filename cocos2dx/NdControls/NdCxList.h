@@ -58,7 +58,7 @@ namespace NdCxControl
 
         virtual void registerItemClickListener(NdCxListItemClickListener *listener);
         virtual void unregisterItemClickListener(void);
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		virtual void registerItemClickListener(const char* szSeletor);
 #endif
 
@@ -100,7 +100,7 @@ namespace NdCxControl
         ccColor3B sel_item_end_color_;
 
         NdCxListItemClickListener *item_click_listener_;
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		std::string m_scriptSeletor;
 #endif
     };
