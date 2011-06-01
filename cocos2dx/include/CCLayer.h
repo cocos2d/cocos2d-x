@@ -226,7 +226,7 @@ public:
 	/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
 	static CCMultiplexLayer * layerWithLayers(CCLayer* layer, ... );
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	static CCMultiplexLayer * layerWithLayer(CCLayer* layer);
 	void addLayer(CCLayer* layer);
 	bool initWithLayer(CCLayer* layer);

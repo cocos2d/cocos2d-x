@@ -1,4 +1,5 @@
 #include "SimpleAudioEngineJni.h"
+#include "platform/android/Cocos2dJni.h"
 #include <android/log.h>
 
 #define  LOG_TAG    "libSimpleAudioEngine"
@@ -7,16 +8,8 @@
 
 extern "C"
 {
-	static JavaVM *gJavaVM = 0;
 	static jclass classOfCocos2dxActivity = 0;
 	JNIEnv *env = 0;
-
-	jint JNI_OnLoad(JavaVM *vm, void *reserved)
-	{
-		gJavaVM = vm;
-
-		return JNI_VERSION_1_4;
-	}
 
 	static jmethodID getMethodID(const char *methodName, const char *paramCode)
 	{

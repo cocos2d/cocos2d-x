@@ -3,7 +3,7 @@
 ** Generated automatically by tolua++-1.0.92 on 05/24/11 17:22:20.
 */
 #include "LuaCocos2d.h"
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 #ifndef __cplusplus
 #include "stdlib.h"
 #endif

@@ -60,7 +60,7 @@ namespace cocos2d{
 		return NULL;
 	}
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
 	{
 		return menuWithItems(item, NULL);

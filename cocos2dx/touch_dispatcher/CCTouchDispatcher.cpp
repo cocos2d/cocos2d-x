@@ -277,7 +277,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 				bool bClaimed = false;
 				if (uIndex == ccTouchBegan)
 				{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 					CCString*pLuaFn = pHandler->getDelegate()->getLuaEvent(ccTouchBegan);
 					if (pLuaFn)
 					{
@@ -300,7 +300,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 				{
 					// moved ended cancelled
 					bClaimed = true;
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 					CCString*pLuaFn = pHandler->getDelegate()->getLuaEvent(sHelper.m_type);
 
 					switch (sHelper.m_type)
@@ -384,7 +384,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
             {
 			    break;
             }
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 			CCString*pLuaTouchesfn = pHandler->getDelegate()->getLuaEvent(sHelper.m_type);
 			if (pLuaTouchesfn)
 			{

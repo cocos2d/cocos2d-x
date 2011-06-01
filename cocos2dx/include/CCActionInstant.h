@@ -191,7 +191,7 @@ namespace cocos2d {
 		
 		typedef void (SelectorProtocol::*SEL_CallFunc)();
 		*/
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		static CCCallFunc * actionWithLua(const char * pszfunc);
 		virtual bool initWithLua(const char* pszfn);
 #endif
@@ -205,7 +205,7 @@ namespace cocos2d {
 
 	protected:
 		SelectorProtocol*   m_pSelectorTarget;
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		std::string m_pLuaCallFun;
 #endif
 		union
@@ -235,7 +235,7 @@ namespace cocos2d {
 
 		typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
 		*/
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		static CCCallFuncN * actionWithLua(const char * pszfunc);
 #endif
 		virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector);
@@ -255,7 +255,7 @@ namespace cocos2d {
 
 		/** creates the action with the callback and the data to pass as an argument */
 		static CCCallFuncND * actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d);
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		static CCCallFuncND * actionWithLua(const char * pszfunc);
 #endif
 		/** initializes the action with the callback and the data to pass as an argument */
@@ -288,7 +288,7 @@ namespace cocos2d {
 
         typedef void (SelectorProtocol::*SEL_CallFuncO)(CCObject*);
         */
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		static CCCallFuncO * actionWithLua(const char * pszfunc);
 #endif
         virtual bool initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);

@@ -266,7 +266,7 @@ namespace cocos2d {
 
 		return pCallFunc;
 	}
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	CCCallFunc * CCCallFunc::actionWithLua(const char * pszfunc)
 	{
 		if (pszfunc)
@@ -327,7 +327,7 @@ namespace cocos2d {
 	}
 	void CCCallFunc::execute()
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		schedule_CallFunc(m_pSelectorTarget, m_pCallFunc, m_pLuaCallFun);	
 #else
 		if(m_pCallFunc)
@@ -341,7 +341,7 @@ namespace cocos2d {
 	//
 	void CCCallFuncN::execute()
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		schedule_CallFuncN(m_pSelectorTarget, m_pCallFuncN, m_pTarget, m_pLuaCallFun);
 #else
 		if(m_pCallFuncN)
@@ -361,7 +361,7 @@ namespace cocos2d {
 		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	CCCallFuncN * CCCallFuncN::actionWithLua(const char * pszfunc)
 	{
 		
@@ -415,7 +415,7 @@ namespace cocos2d {
 		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	CCCallFuncND * CCCallFuncND::actionWithLua(const char * pszfunc)
 	{
 		if (pszfunc)
@@ -460,7 +460,7 @@ namespace cocos2d {
 
 	void CCCallFuncND::execute()
 	{
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		 schedule_CallFuncND(m_pSelectorTarget,m_pCallFuncND, m_pTarget, m_pData, m_pLuaCallFun);
 #else
 		if(m_pCallFuncND)
@@ -485,7 +485,7 @@ namespace cocos2d {
 
     void CCCallFuncO::execute()
     {
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		schedule_CallFuncO(m_pSelectorTarget, m_pCallFuncO, m_pObject, m_pLuaCallFun);
 #else
         if(m_pCallFuncO)
@@ -505,7 +505,7 @@ namespace cocos2d {
         CC_SAFE_DELETE(pRet);
         return NULL;
     }
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	CCCallFuncO * CCCallFuncO::actionWithLua(const char * pszfunc)
 	{
 		if (pszfunc)

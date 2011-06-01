@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "ccConfig.h"
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 #include "CCMutableDictionary.h"
 #include "CCString.h"
 #include "../Ndscript/CCLuaSrcipt.h"
@@ -51,7 +51,7 @@ class CC_DLL CCTouchDelegate
 {
 protected:
 	ccTouchDelegateFlag m_eTouchDelegateType;
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	CCMutableDictionary<int, cocos2d::CCString*> *m_pEventDictionary;
 #endif
 public:
@@ -76,7 +76,7 @@ public:
  	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
  	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	//use for lua register event 
 	/*
 	szEventName must be one of follow value 

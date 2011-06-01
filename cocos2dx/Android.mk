@@ -96,11 +96,18 @@ tileMap_parallax_nodes/CCTMXTiledMap.cpp \
 tileMap_parallax_nodes/CCTMXXMLParser.cpp \
 tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp \
-Ndscript/CCLuaSrcipt.cpp \
-Ndscript/LuaCocos2d.cpp \
-NdControls/NdCxList.cpp \
-NdControls/NdCxListItem.cpp
+touch_dispatcher/CCTouchHandler.cpp 
+
+ifeq ($(ENABLE_LUA), true)
+    LOCAL_SRC_FILES += Ndscript/CCLuaSrcipt.cpp \
+                       Ndscript/LuaCocos2d.cpp \
+                       NdControls/NdCxList.cpp \
+                       NdControls/NdCxListItem.cpp
+                       
+    LOCAL_CFLAGS := -DENABLE_LUA -DUSE_FILE32API
+else
+    LOCAL_CFLAGS := -DUSE_FILE32API
+endif
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \

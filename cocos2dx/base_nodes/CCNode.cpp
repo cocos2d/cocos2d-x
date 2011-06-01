@@ -933,7 +933,7 @@ void CCNode::unschedule(SEL_SCHEDULE selector)
 
 	CCScheduler::sharedScheduler()->unscheduleSelector(selector, this);
 }
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 void CCNode::schedule(const char* selector)
 {
 	if (selector == NULL || strlen(selector) == 0)
@@ -1121,7 +1121,7 @@ CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
 	point = CCDirector::sharedDirector()->convertToGL(point);
 	return this->convertToNodeSpaceAR(point);
 }
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 bool CCNode::registerScriptSelector(const char* szType, const char* szSeletor)
 {
 	return SelectorProtocol::registerScriptSelector(szType, szSeletor);

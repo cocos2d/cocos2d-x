@@ -602,7 +602,7 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 	return NULL;
 }
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 CCMultiplexLayer * CCMultiplexLayer::layerWithLayer(CCLayer* layer)
 {
 	CCMultiplexLayer * pMultiplexLayer = new CCMultiplexLayer();

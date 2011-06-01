@@ -1,7 +1,7 @@
 #ifndef LUACOCOS2D_H
 #define LUACOCOS2D_H
 #include "cocos2d.h"
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 #include <stdio.h>
 #include "lua.h"
 #include "CCKeypadDispatcher.h"

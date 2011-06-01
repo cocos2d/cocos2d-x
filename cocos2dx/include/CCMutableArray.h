@@ -325,7 +325,7 @@ public:
 		return m_array.rbegin();
 	}
 
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 	CCMutableArrayIterator endToLua(void)
 	{
 		return m_array.end();

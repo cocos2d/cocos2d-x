@@ -453,7 +453,7 @@ namespace   cocos2d {
 		/*
 		ad for lua script
 		*/
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		void schedule(const char* selector);
 		void schedule(const char*  selector, ccTime interval);
 		void unschedule(const char* selector);
@@ -533,7 +533,7 @@ namespace   cocos2d {
 		@since v0.7.1
 		*/
 		CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
-#if CC_ENABLE_LUA
+#ifdef  ENABLE_LUA
 		bool registerScriptSelector(const char* szType, const char* szSeletor);
 #endif
 
