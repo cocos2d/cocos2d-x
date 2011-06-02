@@ -439,8 +439,9 @@ void CCScheduler::unscheduleAllSelectors(void)
     tHashSelectorEntry *pElement;
 	for (pElement = m_pHashForSelectors; pElement != NULL;)
 	{
-		unscheduleAllSelectorsForTarget(pElement->target);
-        pElement = (tHashSelectorEntry *)pElement->hh.next;
+		SelectorProtocol* pTarget = pElement->target;
+		pElement = (tHashSelectorEntry *)pElement->hh.next;
+		unscheduleAllSelectorsForTarget(pTarget);        
 	}
 
 	// Updates selectors
