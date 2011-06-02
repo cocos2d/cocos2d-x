@@ -110,7 +110,7 @@ void CCNode::arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func)
         CCARRAY_FOREACH(pArray, child)
         {
             CCNode* pNode = (CCNode*) child;
-            if(pNode && (NULL != func))
+            if(pNode && (0 != func))
             {
                 (pNode->*func)();
             }
@@ -919,7 +919,7 @@ void CCNode::schedule(SEL_SCHEDULE selector)
 
 void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 {
-	CCAssert( selector != NULL, "Argument must be non-nil");
+	CCAssert( selector, "Argument must be non-nil");
 	CCAssert( interval >=0, "Argument must be positive");
 
 	CCScheduler::sharedScheduler()->scheduleSelector(selector, this, interval, !m_bIsRunning);
