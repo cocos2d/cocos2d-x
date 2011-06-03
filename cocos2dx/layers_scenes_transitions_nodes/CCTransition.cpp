@@ -1114,6 +1114,12 @@ void CCTransitionCrossFade::onEnter()
 
 	// create the first render texture for inScene
 	CCRenderTexture* inTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
+
+	if (NULL == inTexture)
+	{
+		return;
+	}
+
 	inTexture->getSprite()->setAnchorPoint( ccp(0.5f,0.5f) );
 	inTexture->setPosition( ccp(size.width/2, size.height/2) );
 	inTexture->setAnchorPoint( ccp(0.5f,0.5f) );
