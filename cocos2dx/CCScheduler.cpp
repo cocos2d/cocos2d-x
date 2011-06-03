@@ -436,11 +436,15 @@ void CCScheduler::unscheduleUpdateForTarget(const SelectorProtocol *pTarget)
 void CCScheduler::unscheduleAllSelectors(void)
 {
 	// Custom Selectors
-    tHashSelectorEntry *pElement;
+    tHashSelectorEntry *pElement = NULL;
+	tHashSelectorEntry *pNextElement = NULL;
 	for (pElement = m_pHashForSelectors; pElement != NULL;)
 	{
+		// pElement may be removed in unscheduleAllSelectorsForTarget
+		pNextElement = (tHashSelectorEntry *)pElement->hh.next;
 		unscheduleAllSelectorsForTarget(pElement->target);
-        pElement = (tHashSelectorEntry *)pElement->hh.next;
+
+        pElement = pNextElement;
 	}
 
 	// Updates selectors
