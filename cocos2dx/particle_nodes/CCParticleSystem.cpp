@@ -381,6 +381,9 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 {
 	// timeToLive
 	// no negative life. prevent division by 0
+    particle->pElaspeTime = CCRANDOM_MINUS1_1();
+    particle->pTexPos. width = 0;
+    particle->pTexPos. height = 0;
 	particle->timeToLive = MAX(0, m_fLife + m_fLifeVar * CCRANDOM_MINUS1_1() );
 
 	// position
@@ -621,7 +624,7 @@ void CCParticleSystem::update(ccTime dt)
 				newPos = p->pos;
 			}
 
-			updateQuadWithParticle(p, newPos);
+			updateQuadWithParticle(p, newPos, dt);
 			//updateParticleImp(self, updateParticleSel, p, newPos);
 
 			// update particle counter
@@ -654,7 +657,7 @@ void CCParticleSystem::update(ccTime dt)
 	this->postStep();
 //#endif
 }
-void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
+void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition, ccTime dt)
 {
 	// should be overriden
 }

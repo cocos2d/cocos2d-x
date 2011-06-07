@@ -88,6 +88,8 @@ enum {
 Structure that contains the values of each particle
 */
 typedef struct sCCParticle {
+    
+    int         frameInd;
 	CCPoint     pos;
 	CCPoint     startPos;
 
@@ -101,7 +103,10 @@ typedef struct sCCParticle {
 	float		deltaRotation;
 
 	ccTime		timeToLive;
-
+    
+    CCSize       pTexPos;     // Origin for texture in Sprite sheet.
+    ccTime       pElaspeTime;  //Frame rate for each particle.
+    
 	//! Mode A: gravity, direction, radial accel, tangential accel
 	struct {
 		CCPoint		dir;
@@ -371,7 +376,7 @@ public:
 	bool isFull();
 
 	//! should be overriden by subclasses
-	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition, ccTime dt);
 	//! should be overriden by subclasses
 	virtual void postStep();
 
