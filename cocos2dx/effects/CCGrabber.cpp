@@ -33,7 +33,7 @@ namespace cocos2d
 		: m_fbo(0)
 		, m_oldFBO(0)
 	{
-		m_eGlesVersion = getGlesVersion();
+		m_eGlesVersion = CCConfiguration::sharedConfiguration()->getGlesVersion();
 
 		// If the gles version is lower than GLES_VER_1_0, 
 		// all the functions in CCGrabber return directly.

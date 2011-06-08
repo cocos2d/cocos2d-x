@@ -84,7 +84,26 @@ bool CCConfiguration::init(void)
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 
 	return true;
+}
 
+CCGlesVersion CCConfiguration::getGlesVersion()
+{
+	// To get the Opengl ES version
+	std::string strVersion((char *)glGetString(GL_VERSION));
+	if (strVersion.find("1.0") != -1)
+	{
+		return GLES_VER_1_0;
+	}
+	else if (strVersion.find("1.1") != -1)
+	{
+		return GLES_VER_1_1;
+	}
+	else if (strVersion.find("2.0") != -1)
+	{
+		return GLES_VER_2_0;
+	}
+
+	return GLES_VER_INVALID;
 }
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
