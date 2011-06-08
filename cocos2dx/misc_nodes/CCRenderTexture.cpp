@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocos2d.h"
+#include "CCConfiguration.h"
 #include "CCRenderTexture.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
@@ -90,7 +90,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 {
 	// If the gles version is lower than GLES_VER_1_0, 
 	// some extended gles functions can't be implemented, so return false directly.
-	if (getGlesVersion() <= GLES_VER_1_0)
+	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
 	{
 		return false;
 	}

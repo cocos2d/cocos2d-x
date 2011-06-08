@@ -1,4 +1,4 @@
-#include "cocos2d.h"
+#include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 
 static int sceneIdx = -1; 
@@ -118,7 +118,7 @@ std::string RenderTextureTestDemo::subtitle()
 RenderTextureTest::RenderTextureTest()
 : m_brush(NULL)
 {
-	if (cocos2d::getGlesVersion() <= GLES_VER_1_0)
+	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
 	{
 		CCMessageBox("The Opengl ES version is lower than 1.1, and the test may not run correctly.", "Cocos2d-x Hint");
 		return;

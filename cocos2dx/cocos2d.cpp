@@ -31,25 +31,4 @@ const char* cocos2dVersion()
 	return "cocos2d v0.99.5";
 }
 
-eGLESVersion getGlesVersion()
-{
-	std::string strVersion((char *)glGetString(GL_VERSION));
-
-	if (strVersion.find("1.0") != -1)
-	{
-		return GLES_VER_1_0;
-	}
-	else if (strVersion.find("1.1") != -1)
-	{
-		return GLES_VER_1_1;
-	}
-	else if (strVersion.find("2.0") != -1)
-	{
-		return GLES_VER_2_0;
-	}
-
-	return GLES_VER_INVALID;
-}
-
-
 }//namespace   cocos2d 

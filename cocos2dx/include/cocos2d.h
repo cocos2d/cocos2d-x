@@ -121,16 +121,6 @@ namespace   cocos2d {
 
 const char* cocos2dVersion();
 
-enum eGLESVersion
-{
-	GLES_VER_INVALID,
-	GLES_VER_1_0,
-	GLES_VER_1_1,
-	GLES_VER_2_0
-};
-
-eGLESVersion CC_DLL getGlesVersion();
-
 }//namespace   cocos2d 
 
 #endif // __COCOS2D_H__
