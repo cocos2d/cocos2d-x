@@ -51,11 +51,19 @@ namespace   cocos2d {
 		kCCMacVersion_10_7  = 0x0a070000,
 	};
 
+	typedef enum 
+	{
+		GLES_VER_INVALID,
+		GLES_VER_1_0,
+		GLES_VER_1_1,
+		GLES_VER_2_0
+	} CCGlesVersion;
+
 /**
  @brief CCConfiguration contains some openGL variables
  @since v0.99.0
  */
-class CCConfiguration : public CCObject
+class CC_DLL CCConfiguration : public CCObject
 {
 protected:
 	GLint			m_nMaxTextureSize;
@@ -69,6 +77,8 @@ protected:
 
 public:
 	CCConfiguration(void);
+
+	CCGlesVersion getGlesVersion();
 	
 	/** OpenGL Max texture size. */
 	inline int getMaxTextureSize(void)
@@ -131,7 +141,7 @@ public:
 
 public:
 	/** returns a shared instance of the CCConfiguration */
-	static CCConfiguration* sharedConfiguration(void);
+	static CCConfiguration *sharedConfiguration(void);
 };
 }//namespace   cocos2d 
 

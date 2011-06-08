@@ -62,6 +62,12 @@ void CCTransitionRadialCCW::onEnter()
 
 	// create the second render texture for outScene
 	CCRenderTexture *outTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
+
+	if (NULL == outTexture)
+	{
+		return;
+	}
+	
 	outTexture->getSprite()->setAnchorPoint(ccp(0.5f,0.5f));
 	outTexture->setPosition(ccp(size.width/2, size.height/2));
 	outTexture->setAnchorPoint(ccp(0.5f,0.5f));

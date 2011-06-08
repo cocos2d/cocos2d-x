@@ -1,3 +1,4 @@
+#include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 
 static int sceneIdx = -1; 
@@ -115,11 +116,24 @@ std::string RenderTextureTestDemo::subtitle()
 }
 
 RenderTextureTest::RenderTextureTest()
+: m_brush(NULL)
 {
+	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+	{
+		CCMessageBox("The Opengl ES version is lower than 1.1, and the test may not run correctly.", "Cocos2d-x Hint");
+		return;
+	}
+
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     // create a render texture, this is what we're going to draw into
     m_target = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height);
+
+	if (NULL == m_target)
+	{
+		return;
+	}
+	
     m_target->setPosition(ccp(s.width/2, s.height/2));
 
     // note that the render texture is a cocosnode, and contains a sprite of it's texture for convience,
@@ -138,7 +152,11 @@ RenderTextureTest::RenderTextureTest()
 
 RenderTextureTest::~RenderTextureTest()
 {
-    m_brush->release();
+	if (NULL != m_brush)
+	{
+		m_brush->release();
+		m_brush = NULL;
+	}
 }
 
 void RenderTextureTest::ccTouchesMoved(CCSet* touches, CCEvent* event)
@@ -202,6 +220,11 @@ RenderTextureIssue937::RenderTextureIssue937()
 
     /* A2 & B2 setup */
     CCRenderTexture *rend = CCRenderTexture::renderTextureWithWidthAndHeight(32, 64);
+
+	if (NULL == rend)
+	{
+		return;
+	}
 
     // It's possible to modify the RenderTexture blending function by
     //		[[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
