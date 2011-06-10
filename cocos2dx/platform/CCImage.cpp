@@ -86,6 +86,7 @@ CCImage::~CCImage()
 
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
+    CC_UNUSED_PARAM(eImgFmt);
     CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
     return initWithImageData(data.getBuffer(), data.getSize());
 }
@@ -153,8 +154,8 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         jpeg_start_decompress( &cinfo );
 
         /* init image info */
-        m_nWidth  = cinfo.image_width;
-        m_nHeight = cinfo.image_height;
+        m_nWidth  = (short)(cinfo.image_width);
+        m_nHeight = (short)(cinfo.image_height);
         m_bHasAlpha = false;
         m_bPreMulti = false;
         m_nBitsPerComponent = 8;
@@ -206,7 +207,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 
         // init png_info
         info_ptr = png_create_info_struct(png_ptr);
-        CC_BREAK_IF(! info_ptr || setjmp(png_jmpbuf(png_ptr)));
+        CC_BREAK_IF(!info_ptr || setjmp(png_jmpbuf(png_ptr)));
 
         // set the read call back function
         tImageSource imageSource;

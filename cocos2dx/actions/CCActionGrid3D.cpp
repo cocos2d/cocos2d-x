@@ -411,6 +411,7 @@ namespace cocos2d
 
 	void CCLens3D::update(cocos2d::ccTime time)
 	{
+        CC_UNUSED_PARAM(time);
 		if (m_bDirty)
 		{
 			int i, j;
@@ -601,6 +602,7 @@ namespace cocos2d
 
 	void CCShaky3D::update(cocos2d::ccTime time)
 	{
+        CC_UNUSED_PARAM(time);
 		int i, j;
 	
 		for (i = 0; i < (m_sGridSize.x+1); ++i)

@@ -71,6 +71,9 @@ namespace cocos2d {
 	}
 	void CCParallaxNode::addChild(CCNode * child, int zOrder, int tag)
 	{
+        CC_UNUSED_PARAM(zOrder);
+        CC_UNUSED_PARAM(child);
+        CC_UNUSED_PARAM(tag);
 		CCAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 	}
 	void CCParallaxNode::addChild(CCNode *child, int z, CCPoint ratio, CCPoint offset)

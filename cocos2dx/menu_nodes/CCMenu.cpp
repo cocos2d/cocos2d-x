@@ -146,6 +146,7 @@ namespace cocos2d{
 
 	bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
 	{
+        CC_UNUSED_PARAM(event);
 		if (m_eState != kCCMenuStateWaiting || ! m_bIsVisible)
 		{
 			return false;
@@ -162,6 +163,8 @@ namespace cocos2d{
 
 	void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
 	{
+        CC_UNUSED_PARAM(touch);
+        CC_UNUSED_PARAM(event);
 		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
 		if (m_pSelectedItem)
 		{
@@ -173,6 +176,8 @@ namespace cocos2d{
 
 	void CCMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
 	{
+        CC_UNUSED_PARAM(touch);
+        CC_UNUSED_PARAM(event);
 		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
 		if (m_pSelectedItem)
 		{
@@ -183,6 +188,7 @@ namespace cocos2d{
 
 	void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
 	{
+        CC_UNUSED_PARAM(event);
 		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
 		CCMenuItem *currentItem = this->itemForTouch(touch);
 		if (currentItem != m_pSelectedItem) 
@@ -348,8 +354,8 @@ namespace cocos2d{
 		row = 0;
 		rowHeight = 0;
 		rowColumns = 0;
-		float w;
-		float x;
+		float w = 0.0;
+		float x = 0.0;
 		float y = (float)(height / 2);
 
 		if (m_pChildren && m_pChildren->count() > 0)
@@ -465,7 +471,7 @@ namespace cocos2d{
 		columnWidth = 0;
 		columnRows = 0;
 		float x = (float)(-width / 2);
-		float y;
+		float y = 0.0;
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
