@@ -182,8 +182,8 @@ static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 CCEGLView::CCEGLView()
 : m_bCaptured(false)
-, m_bOrientationInitVertical(false)
 , m_bOrientationReverted(false)
+, m_bOrientationInitVertical(false)
 , m_pDelegate(NULL)
 , m_pEGL(NULL)
 , m_hWnd(NULL)

@@ -377,10 +377,10 @@ namespace cocos2d
 				float y1 = y * m_obStep.y;
 				float y2= y1 + m_obStep.y;
 
-				GLushort a = x * (m_sGridSize.y + 1) + y;
-				GLushort b = (x + 1) * (m_sGridSize.y + 1) + y;
-				GLushort c = (x + 1) * (m_sGridSize.y + 1) + (y + 1);
-				GLushort d = x * (m_sGridSize.y + 1) + (y + 1);
+				GLushort a = (GLushort)(x * (m_sGridSize.y + 1) + y);
+				GLushort b = (GLushort)((x + 1) * (m_sGridSize.y + 1) + y);
+				GLushort c = (GLushort)((x + 1) * (m_sGridSize.y + 1) + (y + 1));
+				GLushort d = (GLushort)(x * (m_sGridSize.y + 1) + (y + 1));
 
 				GLushort tempidx[6] = {a, b, d, b, c, d};
 
@@ -587,13 +587,13 @@ namespace cocos2d
 		
 		for (x = 0; x < numQuads; x++)
 		{
-			idxArray[x*6+0] = x * 4 + 0;
-			idxArray[x*6+1] = x * 4 + 1;
-			idxArray[x*6+2] = x * 4 + 2;
+			idxArray[x*6+0] = (GLushort)(x * 4 + 0);
+			idxArray[x*6+1] = (GLushort)(x * 4 + 1);
+			idxArray[x*6+2] = (GLushort)(x * 4 + 2);
 			
-			idxArray[x*6+3] = x * 4 + 1;
-			idxArray[x*6+4] = x * 4 + 2;
-			idxArray[x*6+5] = x * 4 + 3;
+			idxArray[x*6+3] = (GLushort)(x * 4 + 1);
+			idxArray[x*6+4] = (GLushort)(x * 4 + 2);
+			idxArray[x*6+5] = (GLushort)(x * 4 + 3);
 		}
 		
 		memcpy(m_pOriginalVertices, m_pVertices, numQuads * 12 * sizeof(GLfloat));

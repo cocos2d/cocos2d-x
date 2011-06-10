@@ -94,11 +94,13 @@ bool CCAction::isDone()
 
 void CCAction::step(ccTime dt)
 {
+    CC_UNUSED_PARAM(dt);
 	CCLOG("[Action step]. override me");
 }
 
 void CCAction::update(ccTime time)
 {
+    CC_UNUSED_PARAM(time);
 	CCLOG("[Action update]. override me");
 }
 
@@ -291,6 +293,7 @@ CCObject *CCFollow::copyWithZone(CCZone *pZone)
 }
 void CCFollow::step(ccTime dt)
 {
+    CC_UNUSED_PARAM(dt);
 #define CLAMP(x,y,z) MIN(MAX(x,y),z)
 
 	if(m_bBoundarySet)

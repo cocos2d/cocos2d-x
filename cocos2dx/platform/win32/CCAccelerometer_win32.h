@@ -35,8 +35,8 @@ public:
 
     static CCAccelerometer* sharedAccelerometer() { return NULL; }
 
-    void removeDelegate(CCAccelerometerDelegate* pDelegate) {}
-    void addDelegate(CCAccelerometerDelegate* pDelegate) {}
+    void removeDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);}
+    void addDelegate(CCAccelerometerDelegate* pDelegate) {CC_UNUSED_PARAM(pDelegate);}
 };
 
 }//namespace   cocos2d 

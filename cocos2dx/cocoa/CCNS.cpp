@@ -64,7 +64,7 @@ bool splitWithForm(const char* pStr, strArray& strs)
         int nPosRight = content.find('}');
 
         // don't have '{' and '}'
-        CC_BREAK_IF(nPosLeft == std::string::npos || nPosRight == std::string::npos);
+        CC_BREAK_IF(nPosLeft == (int)std::string::npos || nPosRight == (int)std::string::npos);
         // '}' is before '{'
         CC_BREAK_IF(nPosLeft > nPosRight);
 
@@ -75,7 +75,7 @@ bool splitWithForm(const char* pStr, strArray& strs)
         int nPos1 = pointStr.find('{');
         int nPos2 = pointStr.find('}');
         // contain '{' or '}' 
-        CC_BREAK_IF(nPos1 != std::string::npos || nPos2 != std::string::npos);
+        CC_BREAK_IF(nPos1 != (int)std::string::npos || nPos2 != (int)std::string::npos);
 
         split(pointStr, ",", strs);
         if (strs.size() != 2 || strs[0].length() == 0 || strs[1].length() == 0)
@@ -107,19 +107,19 @@ namespace cocos2d
             int nPosRight = content.find('}');
             for (int i = 1; i < 3; ++i)
             {
-                if (nPosRight == std::string::npos)
+                if (nPosRight == (int)std::string::npos)
                 {
                     break;
                 }
                 nPosRight = content.find('}', nPosRight + 1);
             }
-            CC_BREAK_IF(nPosLeft == std::string::npos || nPosRight == std::string::npos);
+            CC_BREAK_IF(nPosLeft == (int)std::string::npos || nPosRight == (int)std::string::npos);
 
             content = content.substr(nPosLeft + 1, nPosRight - nPosLeft - 1);
             int nPointEnd = content.find('}');
-            CC_BREAK_IF(nPointEnd == std::string::npos);
+            CC_BREAK_IF(nPointEnd == (int)std::string::npos);
             nPointEnd = content.find(',', nPointEnd);
-            CC_BREAK_IF(nPointEnd == std::string::npos);
+            CC_BREAK_IF(nPointEnd == (int)std::string::npos);
 
             // get the point string and size string
             std::string pointStr = content.substr(0, nPointEnd);

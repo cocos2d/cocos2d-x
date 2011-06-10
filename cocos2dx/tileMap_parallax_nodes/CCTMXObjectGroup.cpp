@@ -30,8 +30,8 @@ namespace cocos2d {
 	//implementation CCTMXObjectGroup
 
 	CCTMXObjectGroup::CCTMXObjectGroup()
-		:m_sGroupName("")
-		,m_tPositionOffset(CCPointZero)
+        :m_tPositionOffset(CCPointZero)
+		,m_sGroupName("")		
 	{
 		m_pObjects = new CCMutableArray<CCStringToStringDictionary*>();
 		m_pProperties = new CCStringToStringDictionary();
