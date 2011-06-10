@@ -74,7 +74,7 @@ protected:
     /**
     @brief	Called by CCIMEDispatcher when some text input from IME.
     */
-    virtual void insertText(const char * text, int len) {}
+    virtual void insertText(const char * text, int len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
     /**
     @brief	Called by CCIMEDispatcher when user clicked the backward key.
@@ -89,10 +89,10 @@ protected:
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
-    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info)   {}
-    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info)    {}
-    virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info)   {}
-    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info)    {}
+    virtual void keyboardWillShow(CCIMEKeyboardNotificationInfo& info)   {CC_UNUSED_PARAM(info);}
+    virtual void keyboardDidShow(CCIMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
+    virtual void keyboardWillHide(CCIMEKeyboardNotificationInfo& info)   {CC_UNUSED_PARAM(info);}
+    virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info)    {CC_UNUSED_PARAM(info);}
 
 protected:
     CCIMEDelegate();

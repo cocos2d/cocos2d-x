@@ -537,7 +537,7 @@ namespace cocos2d
 		pobSprite->useSelfRender();
 
 		unsigned int uIndex = m_pobDescendants->indexOfObject(pobSprite);
-		if (uIndex != -1)
+		if ((int)uIndex != -1)
 		{
 			m_pobDescendants->removeObjectAtIndex(uIndex);
 

@@ -350,7 +350,7 @@ extern "C"
     void setKeyboardStateJNI(int bOpen)
     {
         TMethodJNI t;
-        jint open = bOpen;
+        //jint open = bOpen;
         if (getMethodID(t
             , "org/cocos2dx/lib/Cocos2dxGLSurfaceView"
             , (bOpen) ? "openIMEKeyboard" : "closeIMEKeyboard"

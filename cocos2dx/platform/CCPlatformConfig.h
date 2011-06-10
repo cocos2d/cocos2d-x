@@ -151,7 +151,7 @@ There are config below:
 
 // Check the supportive of platform
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
+#pragma warning (disable:4127)  
 #endif  // CC_PLATFORM_WIN32
 
 #endif  // __CC_PLATFORM_CONFIG_H__

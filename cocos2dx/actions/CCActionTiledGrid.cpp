@@ -98,6 +98,7 @@ namespace cocos2d
 
 	void CCShakyTiles3D::update(cocos2d::ccTime time)
 	{
+        CC_UNUSED_PARAM(time);
 		int i, j;
 	
 		for (i = 0; i < m_sGridSize.x; ++i)
@@ -191,6 +192,7 @@ namespace cocos2d
 
 	void CCShatteredTiles3D::update(cocos2d::ccTime time)
 	{
+        CC_UNUSED_PARAM(time);
 		int i, j;
 	
 		if (m_bOnce == false)

@@ -363,7 +363,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 	do 
 	{
 		// If key is nil, then create a new texture each time
-		if(texture = m_pTextures->objectForKey(forKey))
+		if((texture = m_pTextures->objectForKey(forKey)))
 		{
 			break;
 		}
@@ -456,10 +456,10 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 , m_bIsString(false)
 , m_strFileName("")
 , m_FmtImage(CCImage::kFmtPng)
+, m_alignment(CCTextAlignmentCenter)
 , m_strFontName("")
 , m_strText("")
 , m_fFontSize(0.0f)
-, m_alignment(CCTextAlignmentCenter)
 {
     m_size = CCSizeMake(0, 0);
     textures.push_back(this);
