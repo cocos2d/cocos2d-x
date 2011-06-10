@@ -67,6 +67,8 @@ void* CCData::bytes(void)
 //@todo implement
 CCData* CCData::dataWithBytes(unsigned char *pBytes, int size)
 {
+    CC_UNUSED_PARAM(pBytes);
+    CC_UNUSED_PARAM(size);
 	return NULL;
 }
 }//namespace   cocos2d 

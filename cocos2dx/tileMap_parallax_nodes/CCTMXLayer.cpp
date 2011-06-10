@@ -92,14 +92,14 @@ namespace cocos2d {
 		return false;
 	}
 	CCTMXLayer::CCTMXLayer()
-		:m_pTiles(NULL)
+        :m_tLayerSize(CCSizeZero)
+        ,m_tMapTileSize(CCSizeZero)
+        ,m_pTiles(NULL)
 		,m_pTileSet(NULL)
 		,m_pProperties(NULL)
+        ,m_sLayerName("")
 		,m_pReusedTile(NULL)
-		,m_pAtlasIndexArray(NULL)
-		,m_tLayerSize(CCSizeZero)
-		,m_tMapTileSize(CCSizeZero)
-		,m_sLayerName("")
+		,m_pAtlasIndexArray(NULL)	
 	{}
 	CCTMXLayer::~CCTMXLayer()
 	{
@@ -446,6 +446,9 @@ namespace cocos2d {
 	}
 	void CCTMXLayer::addChild(CCNode * child, int zOrder, int tag)
 	{
+        CC_UNUSED_PARAM(child);
+        CC_UNUSED_PARAM(zOrder);
+        CC_UNUSED_PARAM(tag);
 		CCAssert(0, "addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
 	}
 	void CCTMXLayer::removeChild(CCNode* node, bool cleanup)

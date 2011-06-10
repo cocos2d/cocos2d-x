@@ -76,6 +76,7 @@ namespace cocos2d
 	
 	void CCGrabber::beforeRender(cocos2d::CCTexture2D *pTexture)
 	{
+        CC_UNUSED_PARAM(pTexture);
 		// If the gles version is lower than GLES_VER_1_0, 
 		// all the functions in CCGrabber return directly.
 		if (m_eGlesVersion <= GLES_VER_1_0)
@@ -101,6 +102,7 @@ namespace cocos2d
 
 	void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
 	{
+        CC_UNUSED_PARAM(pTexture);
 		// If the gles version is lower than GLES_VER_1_0, 
 		// all the functions in CCGrabber return directly.
 		if (m_eGlesVersion <= GLES_VER_1_0)
