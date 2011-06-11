@@ -244,6 +244,8 @@ bool CCRenderTexture::saveBuffer(const char *name)
 }
 bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 {
+    CC_UNUSED_PARAM(fileName);
+    CC_UNUSED_PARAM(format);
 	bool bRet = false;
 //@ todo CCRenderTexture::saveBuffer
 // 	UIImage *myImage = this->getUIImageFromBuffer(format);
@@ -263,6 +265,7 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 
 CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 {
+    CC_UNUSED_PARAM(format);
     CCData *  pData     = NULL;
 //@ todo CCRenderTexture::getUIImageAsDataFromBuffer
 

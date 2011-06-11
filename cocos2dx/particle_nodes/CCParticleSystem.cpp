@@ -656,6 +656,8 @@ void CCParticleSystem::update(ccTime dt)
 }
 void CCParticleSystem::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(newPosition);
 	// should be overriden
 }
 void CCParticleSystem::postStep()

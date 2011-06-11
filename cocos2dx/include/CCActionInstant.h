@@ -171,9 +171,9 @@ namespace cocos2d {
 	{
 	public:
 		CCCallFunc()
-			: m_pCallFunc(NULL)
-            , m_pSelectorTarget(NULL)
-		{
+            : m_pSelectorTarget(NULL)
+            , m_pCallFunc(NULL)
+        {
 		}
 		virtual ~CCCallFunc()
 		{
