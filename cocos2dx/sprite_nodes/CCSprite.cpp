@@ -117,6 +117,9 @@ CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CCRect rect)
 
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CCRect rect, CCPoint offset)
 {
+    CC_UNUSED_PARAM(pTexture);
+    CC_UNUSED_PARAM(rect);
+    CC_UNUSED_PARAM(offset);
 	// not implement
 	assert(0);
 	return NULL;

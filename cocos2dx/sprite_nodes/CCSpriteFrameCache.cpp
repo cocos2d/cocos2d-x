@@ -95,7 +95,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
 	framesDict->begin();
 	std::string key = "";
 	CCDictionary<std::string, CCObject*> *frameDict = NULL;
-	while( frameDict = (CCDictionary<std::string, CCObject*>*)framesDict->next(&key) )
+	while( (frameDict = (CCDictionary<std::string, CCObject*>*)framesDict->next(&key)) )
 	{
 		CCSpriteFrame *spriteFrame = m_pSpriteFrames->objectForKey(key);
 		if (spriteFrame)
@@ -237,7 +237,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 		// stringByDeletingLastPathComponent
 		string textureBase(pszPath);
 		int indexOfLastSeperator = textureBase.find_last_of('/');
-        if (indexOfLastSeperator == textureBase.length() - 1)
+        if (indexOfLastSeperator == (int)textureBase.length() - 1)
 		{
 			textureBase.erase(indexOfLastSeperator, 1);
 			indexOfLastSeperator = textureBase.find_last_of('/');
@@ -293,7 +293,7 @@ void CCSpriteFrameCache::removeUnusedSpriteFrames(void)
 	m_pSpriteFrames->begin();
 	std::string key = "";
 	CCSpriteFrame *spriteFrame = NULL;
-	while( spriteFrame = m_pSpriteFrames->next(&key) )
+	while( (spriteFrame = m_pSpriteFrames->next(&key)) )
 	{
 		if( spriteFrame->retainCount() == 1 ) 
 		{
@@ -343,7 +343,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary<std::stri
 	framesDict->begin();
 	std::string key = "";
 	CCDictionary<std::string, CCObject*> *frameDict = NULL;
-	while( frameDict = (CCDictionary<std::string, CCObject*>*)framesDict->next(&key) )
+	while( (frameDict = (CCDictionary<std::string, CCObject*>*)framesDict->next(&key)) )
 	{
 		if (m_pSpriteFrames->objectForKey(key))
 		{
@@ -366,7 +366,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
 	m_pSpriteFrames->begin();
 	std::string key = "";
 	CCDictionary<std::string, CCObject*> *frameDict = NULL;
-	while( frameDict = (CCDictionary<std::string, CCObject*>*)m_pSpriteFrames->next(&key) )
+	while( (frameDict = (CCDictionary<std::string, CCObject*>*)m_pSpriteFrames->next(&key)) )
 	{
 		CCSpriteFrame *frame = m_pSpriteFrames->objectForKey(key);
 		if (frame && (frame->getTexture() == texture))

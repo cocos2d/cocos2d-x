@@ -33,7 +33,7 @@ static int _calcCharCount(const char * pszText)
 {
     int n = 0;
     char ch = 0;
-    while (ch = *pszText)
+    while ((ch = *pszText))
     {
         CC_BREAK_IF(! ch);
         
@@ -174,7 +174,7 @@ void CCTextFieldTTF::insertText(const char * text, int len)
 
     // insert \n means input end
     int nPos = sInsert.find('\n');
-    if (sInsert.npos != nPos)
+    if ((int)sInsert.npos != nPos)
     {
         len = nPos;
         sInsert.erase(nPos);
@@ -194,7 +194,7 @@ void CCTextFieldTTF::insertText(const char * text, int len)
         setString(sText.c_str());
     }
 
-    if (sInsert.npos == nPos) {
+    if ((int)sInsert.npos == nPos) {
         return;
     }
     

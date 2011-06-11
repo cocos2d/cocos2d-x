@@ -104,8 +104,8 @@ namespace cocos2d{
 		return true;
 	}
 	CCTMXTiledMap::CCTMXTiledMap()
-		:m_tTileSize(CCSizeZero)
-		,m_tMapSize(CCSizeZero)
+        :m_tMapSize(CCSizeZero)
+		,m_tTileSize(CCSizeZero)		
 		,m_pObjectGroups(NULL)
 		,m_pProperties(NULL)
 		,m_pTileProperties(NULL)
