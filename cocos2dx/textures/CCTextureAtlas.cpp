@@ -40,8 +40,8 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 CCTextureAtlas::CCTextureAtlas()
-	:m_pTexture(NULL)
-	,m_pIndices(NULL)
+    :m_pIndices(NULL)
+	,m_pTexture(NULL)	
 	,m_pQuads(NULL)
 {}
 
@@ -189,14 +189,14 @@ void CCTextureAtlas::initIndices()
 		m_pIndices[i*6+4] = i*4+3;
 		m_pIndices[i*6+5] = i*4+3;
 #else
-		m_pIndices[i*6+0] = i*4+0;
-		m_pIndices[i*6+1] = i*4+1;
-		m_pIndices[i*6+2] = i*4+2;
+		m_pIndices[i*6+0] = (GLushort)(i*4+0);
+		m_pIndices[i*6+1] = (GLushort)(i*4+1);
+		m_pIndices[i*6+2] = (GLushort)(i*4+2);
 
 		// inverted index. issue #179
-		m_pIndices[i*6+3] = i*4+3;
-		m_pIndices[i*6+4] = i*4+2;
-		m_pIndices[i*6+5] = i*4+1;		
+		m_pIndices[i*6+3] = (GLushort)(i*4+3);
+		m_pIndices[i*6+4] = (GLushort)(i*4+2);
+		m_pIndices[i*6+5] = (GLushort)(i*4+1);		
 		//		m_pIndices[i*6+3] = i*4+2;
 		//		m_pIndices[i*6+4] = i*4+3;
 		//		m_pIndices[i*6+5] = i*4+1;	

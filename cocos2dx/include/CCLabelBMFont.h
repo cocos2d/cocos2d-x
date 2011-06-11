@@ -85,8 +85,8 @@ namespace cocos2d{
 		struct _KerningHashElement	*m_pKerningDictionary;
 	public:
 		CCBMFontConfiguration()
-			: m_pKerningDictionary(NULL)
-			, m_uCommonHeight(0)
+			: m_uCommonHeight(0)
+            , m_pKerningDictionary(NULL)
 		{}
 		virtual ~CCBMFontConfiguration();
 		char * description();
@@ -148,10 +148,10 @@ namespace cocos2d{
 		CCBMFontConfiguration *m_pConfiguration;
 	public:
 		CCLabelBMFont()
-			: m_pConfiguration(NULL)
+			: m_cOpacity(0)           
 			, m_bIsOpacityModifyRGB(false)
-			, m_cOpacity(0)
 			, m_sString("")
+             , m_pConfiguration(NULL)
 		{}
 		virtual ~CCLabelBMFont();
 		/** Purges the cached data.

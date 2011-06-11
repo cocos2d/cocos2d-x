@@ -114,6 +114,7 @@ void CCActionInterval::step(ccTime dt)
 
 void CCActionInterval::setAmplitudeRate(CGFloat amp)
 {
+    CC_UNUSED_PARAM(amp);
 	// Abstract class needs implementation
 	assert(0);
 }
@@ -1710,6 +1711,7 @@ CCObject* CCDelayTime::copyWithZone(cocos2d::CCZone *pZone)
 
 void CCDelayTime::update(cocos2d::ccTime time)
 {
+    CC_UNUSED_PARAM(time);
 	return;
 }
 

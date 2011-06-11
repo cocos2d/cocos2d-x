@@ -84,8 +84,8 @@ void CCActionManager::selectorProtocolRelease()
 }
 
 CCActionManager::CCActionManager(void)
-: m_pCurrentTarget(NULL),
-  m_pTargets(NULL),
+: m_pTargets(NULL), 
+  m_pCurrentTarget(NULL),
   m_bCurrentTargetSalvaged(false)
 {
 	assert(gSharedManager == NULL);
@@ -286,7 +286,7 @@ void CCActionManager::removeAction(cocos2d::CCAction *pAction)
 	if (pElement)
 	{
 		unsigned int i = ccArrayGetIndexOfObject(pElement->actions, pAction);
-		if (i != -1)
+		if ((int)i != -1)
 		{
 			removeActionAtIndex(i, pElement);
 		}

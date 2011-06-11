@@ -64,12 +64,12 @@ namespace cocos2d {
 	}
 	// implementation CCTMXLayerInfo
 	CCTMXLayerInfo::CCTMXLayerInfo()
-		:m_bOwnTiles(true)
-		,m_uMinGID(100000)
-		,m_uMaxGID(0)
-		,m_sName("")
-		,m_pTiles(NULL)
-		,m_tOffset(CCPointZero)
+        : m_sName("")
+        , m_pTiles(NULL)
+		, m_bOwnTiles(true)
+		, m_uMinGID(100000)
+		, m_uMaxGID(0)		
+		, m_tOffset(CCPointZero)
 	{
 		m_pProperties= new CCStringToStringDictionary();;
 	}
@@ -150,13 +150,13 @@ namespace cocos2d {
 		return parseXMLFile(m_sTMXFileName.c_str());
 	}
 	CCTMXMapInfo::CCTMXMapInfo()
-		:m_bStoringCharacters(false)
-		,m_nLayerAttribs(0)
-		,m_tMapSize(CCSizeZero)
-		,m_tTileSize(CCSizeZero)
-		,m_pLayers(NULL)
-		,m_pTilesets(NULL)
-		,m_pObjectGroups(NULL)
+        :m_tMapSize(CCSizeZero)	
+        ,m_tTileSize(CCSizeZero)
+        ,m_pLayers(NULL)
+        ,m_pTilesets(NULL)
+        ,m_pObjectGroups(NULL)
+        ,m_nLayerAttribs(0)
+        ,m_bStoringCharacters(false)		
 		,m_pProperties(NULL)
 		,m_pTileProperties(NULL)
 	{
@@ -239,6 +239,7 @@ namespace cocos2d {
 	// the XML parser calls here with all the elements
 	void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 	{	
+        CC_UNUSED_PARAM(ctx);
 		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
 		std::map<std::string, std::string> *attributeDict = new std::map<std::string, std::string>();
@@ -519,6 +520,7 @@ namespace cocos2d {
 
 	void CCTMXMapInfo::endElement(void *ctx, const char *name)
 	{
+        CC_UNUSED_PARAM(ctx);
 		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
 
@@ -586,6 +588,7 @@ namespace cocos2d {
 	
 	void CCTMXMapInfo::textHandler(void *ctx, const char *ch, int len)
 	{
+        CC_UNUSED_PARAM(ctx);
 		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string pText((char*)ch,0,len);
 
