@@ -100,7 +100,7 @@ public:
     /**
     @brief	Save the CCImage data to specified file with specified format.
     */
-    bool saveToFile(const char * pszFilePath) { return false; }
+    bool saveToFile(const char * pszFilePath) { CC_UNUSED_PARAM(pszFilePath);return false; }
 
     CC_SYNTHESIZE_READONLY(short,   m_nWidth,       Width);
     CC_SYNTHESIZE_READONLY(short,   m_nHeight,      Height);

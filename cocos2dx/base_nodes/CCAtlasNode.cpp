@@ -33,13 +33,13 @@ namespace   cocos2d {
 // CCAtlasNode - Creation & Init
 
 CCAtlasNode::CCAtlasNode()
-: m_pTextureAtlas(NULL)
-, m_bIsOpacityModifyRGB(false)
+: m_nItemsPerRow(0)
+, m_nItemsPerColumn(0)
 , m_nItemWidth(0)
 , m_nItemHeight(0)
+, m_pTextureAtlas(NULL)
+, m_bIsOpacityModifyRGB(false)
 , m_cOpacity(0)
-, m_nItemsPerRow(0)
-, m_nItemsPerColumn(0)
 {
 }
 

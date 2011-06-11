@@ -41,6 +41,7 @@ public:
     */
     virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender)
     { 
+        CC_UNUSED_PARAM(sender);
         return false;
     }
 
@@ -49,6 +50,7 @@ public:
     */
     virtual bool onTextFieldDetachWithIME(CCTextFieldTTF * sender)
     {
+        CC_UNUSED_PARAM(sender);
         return false;
     }
 
@@ -57,6 +59,9 @@ public:
     */
     virtual bool onTextFieldInsertText(CCTextFieldTTF * sender, const char * text, int nLen)
     {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(text);
+        CC_UNUSED_PARAM(nLen);
         return false;
     }
 
@@ -65,6 +70,9 @@ public:
     */
     virtual bool onTextFieldDeleteBackward(CCTextFieldTTF * sender, const char * delText, int nLen)
     {
+        CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(delText);
+        CC_UNUSED_PARAM(nLen);
         return false;
     }
 
@@ -73,6 +81,7 @@ public:
     */
     virtual bool onDraw(CCTextFieldTTF * sender)
     {
+        CC_UNUSED_PARAM(sender);
         return false;
     }
 };

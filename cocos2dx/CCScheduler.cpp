@@ -128,14 +128,14 @@ void CCTimer::update(ccTime dt)
 static CCScheduler *pSharedScheduler;
 
 CCScheduler::CCScheduler(void)
-: m_bCurrentTargetSalvaged(false)
-, m_fTimeScale(0.0)
-, m_pCurrentTarget(NULL)
-, m_pHashForSelectors(NULL)
-, m_pHashForUpdates(NULL)
-, m_pUpdates0List(NULL)
+: m_fTimeScale(0.0)
 , m_pUpdatesNegList(NULL)
+, m_pUpdates0List(NULL)
 , m_pUpdatesPosList(NULL)
+, m_pHashForUpdates(NULL)
+, m_pHashForSelectors(NULL)
+, m_pCurrentTarget(NULL)
+, m_bCurrentTargetSalvaged(false)
 {
 	assert(pSharedScheduler == NULL);
 }
@@ -191,12 +191,15 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 
 void CCScheduler::scheduleTimer(CCTimer *pTimer)
 {
+    CC_UNUSED_PARAM(pTimer);
 	assert(false);
 }
 
 void CCScheduler::unscheduleTimer(CCTimer *pTimer)
 {
-	assert(false);
+    //CC_UNUSED_PARAM(pTimer);
+	pTimer = NULL;
+    assert(false);
 }
 
 void CCScheduler::unscheduleAllTimers()
