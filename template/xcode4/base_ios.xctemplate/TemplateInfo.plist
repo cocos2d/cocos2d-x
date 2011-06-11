@@ -143,6 +143,8 @@
 				<string>UIKit</string>
 				<string>Foundation</string>
 				<string>CoreGraphics</string>
+                <string>libz.dylib</string>
+                <string>libxml2.dylib</string>
 			</array>
 			<key>SharedSettings</key>
 			<dict>

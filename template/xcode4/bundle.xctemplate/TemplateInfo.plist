@@ -4,7 +4,7 @@
 <dict>
 	<key>Ancestors</key>
 	<array>
-		<string>com.cocos2d.base</string>
+		<string>org.cocos2d-x.base</string>
 	</array>
 	<key>Identifier</key>
 	<string>org.cocos2d-x.bundlebase</string>
