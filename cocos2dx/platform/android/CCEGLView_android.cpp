@@ -35,9 +35,9 @@ THE SOFTWARE.
 namespace cocos2d {
 
 CCEGLView::CCEGLView()
-: m_pDelegate(NULL),
-  m_fScreenScaleFactor(1.0),
-  m_bNotHVGA(false)
+    : m_bNotHVGA(false), 
+      m_pDelegate(NULL),
+      m_fScreenScaleFactor(1.0)  
 {
 }
 
