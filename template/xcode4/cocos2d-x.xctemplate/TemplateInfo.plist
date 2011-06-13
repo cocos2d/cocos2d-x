@@ -33,14 +33,14 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/HelloWorldLayer.cpp</string>
+			<string>Classes/HelloWorldScene.cpp</string>
 		</dict>
 		<key>Classes/HelloWorldScene.h</key>
 		<dict>
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/HelloWorldLayer.h</string>
+			<string>Classes/HelloWorldScene.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>

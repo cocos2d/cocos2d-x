@@ -54,8 +54,6 @@
 				</array>
 				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
 				<string>NO</string>
-				<key>HEADER_SEARCH_PATHS</key>
-				<string>___PACKAGENAME___/libs/cocos2dx</string>
 			</dict>
 			<key>Release</key>
 			<dict>
@@ -65,8 +63,6 @@
 					<string>USE_FILE32API</string>
 					<string>TARGET_OS_IPHONE</string>
 				</array>
-				<key>HEADER_SEARCH_PATHS</key>
-				<string>___PACKAGENAME___/libs/cocos2dx</string>
 			</dict>
 		</dict>
 		<key>SharedSettings</key>
@@ -77,6 +73,11 @@
 			<string>YES</string>
 			<key>GCC_WARN_UNUSED_VARIABLE</key>
 			<string>YES</string>
+            <key>HEADER_SEARCH_PATHS</key>
+            <array>
+            <string>"$(PROJECT_NAME)/libs/cocos2dx"</string>
+            <string>"$(SDKROOT)/usr/include/libxml2"</string>
+            </array>
 		</dict>
 	</dict>
 	<key>Targets</key>
