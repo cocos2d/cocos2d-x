@@ -6,10 +6,10 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-#import "___PROJECTNAMEASIDENTIFIER___AppController.h"
+#import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
-#import "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___AppController
 
