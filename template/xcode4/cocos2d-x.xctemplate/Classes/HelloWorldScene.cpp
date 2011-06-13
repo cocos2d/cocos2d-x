@@ -1,6 +1,8 @@
 #include "HelloWorldScene.h"
+#include "SimpleAudioEngine.h"
 
-USING_NS_CC;
+using namespace cocos2d;
+using namespace CocosDenshion;
 
 CCScene* HelloWorld::scene()
 {
