@@ -76,6 +76,7 @@
             <key>HEADER_SEARCH_PATHS</key>
             <array>
             <string>"$(PROJECT_NAME)/libs/cocos2dx"</string>
+            <string>"$(PROJECT_NAME)/libs/CocosDenshion/include"</string>
             <string>"$(SDKROOT)/usr/include/libxml2"</string>
             </array>
 		</dict>

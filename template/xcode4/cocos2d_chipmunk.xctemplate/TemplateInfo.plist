@@ -7,7 +7,8 @@
 		<string>org.cocos2d-x.bundlebase</string>
 		<string>org.cocos2d-x.iosbase</string>
 		<string>org.cocos2d-x.libcocos2dx</string>
-        <string>org.cocos2d-x.libcocosdenshion</string>
+		<string>org.cocos2d-x.libcocosdenshion</string>
+		<string>org.cocos2d-x.libchipmunk</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
@@ -77,11 +78,18 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+	  <key>Resources/grossini_dance_atlas.png</key>
+	  <dict>
+		<key>Group</key>
+		<string>Resources</string>
+		<key>Path</key>
+		<string>Resources/grossini_dance_atlas.png</string>
+	  </dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d-x for iOS, including CocosDenshion </string>
+	<string>This template provides a starting point for an application that uses cocos2d and Chipmunk for iOS. It includes CocosDenshion, FontLabel and cocosLive.</string>
 	<key>Identifier</key>
-	<string>org.cocos2d-x.cocos2dxOnlyIOSTemplate</string>
+	<string>com.cocos2d.cocos2dChipmunkIOSTemplate</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
@@ -94,6 +102,7 @@
 		<string>Classes/AppDelegate.cpp</string>
 		<string>Classes/HelloWorldScene.h</string>
 		<string>Classes/HelloWorldScene.cpp</string>
+		<string>Resources/grossini_dance_atlas.png</string>
 	</array>
 	<key>Options</key>
 	<array>
@@ -105,13 +114,27 @@
 				<key>iPad</key>
 				<dict>
 					<key>Definitions</key>
-					<dict/>
+					<dict>
+					</dict>
 				</dict>
 				<key>iPhone</key>
 				<dict>
 					<key>Definitions</key>
-					<dict/>
+					<dict>
+					</dict>
 				</dict>
+			</dict>
+		</dict>
+	</array>
+	<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>"___PACKAGENAME___/libs/Chipmunk/include/chipmunk"</string>
 			</dict>
 		</dict>
 	</array>
