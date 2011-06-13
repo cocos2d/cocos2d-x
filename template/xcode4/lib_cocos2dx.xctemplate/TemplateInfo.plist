@@ -1044,6 +1044,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+        <key>libs/cocos2dx/include/CCPVRTexture.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>include</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/include/CCPVRTexture.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2dx/include/CCRenderTexture.h</key>
 		<dict>
 			<key>Group</key>
@@ -1790,17 +1803,6 @@
 			<string>libs/cocos2dx/platform/CCGL.h</string>
 			<key>TargetIndices</key>
 			<array/>
-		</dict>
-		<key>libs/cocos2dx/platform/CCImage.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>platform</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/platform/CCImage.cpp</string>
 		</dict>
 		<key>libs/cocos2dx/platform/CCImage.h</key>
 		<dict>
@@ -2839,6 +2841,7 @@
 		<string>libs/cocos2dx/include/CCPointExtension.h</string>
 		<string>libs/cocos2dx/include/CCProgressTimer.h</string>
 		<string>libs/cocos2dx/include/CCProtocols.h</string>
+        	<string>libs/cocos2dx/include/CCPVRTexture.h</string>
 		<string>libs/cocos2dx/include/CCRenderTexture.h</string>
 		<string>libs/cocos2dx/include/CCRibbon.h</string>
 		<string>libs/cocos2dx/include/CCScene.h</string>
@@ -2900,7 +2903,6 @@
 		<string>libs/cocos2dx/platform/CCFileUtils.h</string>
 		<string>libs/cocos2dx/platform/CCGL.cpp</string>
 		<string>libs/cocos2dx/platform/CCGL.h</string>
-		<string>libs/cocos2dx/platform/CCImage.cpp</string>
 		<string>libs/cocos2dx/platform/CCImage.h</string>
 		<string>libs/cocos2dx/platform/CCLibxml2.h</string>
 		<string>libs/cocos2dx/platform/CCPlatformConfig.h</string>

@@ -4,6 +4,21 @@
 <dict>
 	<key>Definitions</key>
 	<dict>
+        <key>Resources/CloseNormal.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/CloseNormal.png</string>
+		</dict>
+        
+        <key>Resources/CloseSelected.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/CloseSelected.png</string>
+		</dict>
 		<key>Resources/Default.png</key>
 		<dict>
 			<key>Group</key>
@@ -11,12 +26,12 @@
 			<key>Path</key>
 			<string>Resources/Default.png</string>
 		</dict>
-		<key>Resources/fps_images.png</key>
+		<key>Resources/HelloWorld.png</key>
 		<dict>
 			<key>Group</key>
 			<string>Resources</string>
 			<key>Path</key>
-			<string>Resources/fps_images.png</string>
+			<string>Resources/HelloWorld.png</string>
 		</dict>
 		<key>Resources/Icon-72.png</key>
 		<dict>
@@ -83,8 +98,10 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
 	<array>
+        <string>Resources/CloseNormal.png</string>
+        <string>Resources/CloseSelected.png</string>
 		<string>Resources/Default.png</string>
-		<string>Resources/fps_images.png</string>
+		<string>Resources/HelloWorld.png</string>
 		<string>Resources/Icon-72.png</string>
 		<string>Resources/Icon-Small-50.png</string>
 		<string>Resources/Icon-Small.png</string>
@@ -143,15 +160,13 @@
 				<string>UIKit</string>
 				<string>Foundation</string>
 				<string>CoreGraphics</string>
-                <string>libz.dylib</string>
-                <string>libxml2.dylib</string>
 			</array>
 			<key>SharedSettings</key>
 			<dict>
 				<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
 				<string></string>
 				<key>OTHER_LDFLAGS</key>
-				<string>-lz</string>
+				<string>-lxml2 -lz</string>
 			</dict>
 		</dict>
 	</array>
