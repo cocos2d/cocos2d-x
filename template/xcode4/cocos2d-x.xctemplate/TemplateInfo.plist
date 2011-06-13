@@ -6,7 +6,7 @@
 	<array>
 		<string>org.cocos2d-x.bundlebase</string>
 		<string>org.cocos2d-x.iosbase</string>
-		<string>org.cocos2d-x.cocos2dxlib</string>
+		<string>org.cocos2d-x.libcocos2dx</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
