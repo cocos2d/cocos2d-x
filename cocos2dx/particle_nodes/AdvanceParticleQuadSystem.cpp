@@ -219,13 +219,20 @@ namespace cocos2d {
             m_pIndices[i6+3] = (GLushort) i4+3;
         }
     }
-    void AdvanceParticleQuadSystem::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition, ccTime dt)
+    
+    void AdvanceParticleQuadSystem::update(ccTime dt)
+    {
+        m_dt = dt;
+        CCParticleSystem::update(dt);
+    }
+    
+    void AdvanceParticleQuadSystem::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
     {
         //Texture
         
         if(m_nItemWidth > 0 && m_nItemHeight > 0 && m_FrameRate > 0)
         {
-            particle->pElaspeTime += dt;
+            particle->pElaspeTime += m_dt;
             
             while (particle->pElaspeTime >= m_FrameRate) 
             {

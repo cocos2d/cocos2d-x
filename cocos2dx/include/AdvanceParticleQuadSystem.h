@@ -33,7 +33,7 @@ namespace cocos2d {
     protected:
         ccV2F_C4F_T2F_Quad	*m_pQuads;		// quads to be rendered
         GLushort			*m_pIndices;	// indices
-        
+        ccTime m_dt;
         //! chars per row
         int m_nItemsPerRow;
         //! chars per column
@@ -92,8 +92,9 @@ namespace cocos2d {
         // super methods
         virtual bool initWithTotalParticles(int numberOfParticles);
         virtual void setTexture(CCTexture2D* var);
-        virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition, ccTime dt);
+        virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
         virtual void postStep();
+        virtual void update(ccTime dt);
         virtual void draw();
         //
         

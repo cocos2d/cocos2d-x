@@ -84,45 +84,45 @@ enum {
 	kPositionTypeGrouped = kCCPositionTypeGrouped,
 }; 
 
-/**
-Structure that contains the values of each particle
-*/
-typedef struct sCCParticle {
-    
-    int         frameInd;
-	CCPoint     pos;
-	CCPoint     startPos;
-
-	ccColor4F	color;
-	ccColor4F	deltaColor;
-
-	float		size;
-	float		deltaSize;
-
-	float		rotation;
-	float		deltaRotation;
-
-	ccTime		timeToLive;
-    
-    CCSize       pTexPos;     // Origin for texture in Sprite sheet.
-    ccTime       pElaspeTime;  //Frame rate for each particle.
-    
-	//! Mode A: gravity, direction, radial accel, tangential accel
-	struct {
-		CCPoint		dir;
-		float		radialAccel;
-		float		tangentialAccel;
-	} modeA;
-
-	//! Mode B: radius mode
-	struct {
-		float		angle;
-		float		degreesPerSecond;
-		float		radius;
-		float		deltaRadius;
-	} modeB;
-
-}tCCParticle;
+    /**
+     Structure that contains the values of each particle
+     */
+    typedef struct sCCParticle {
+        
+        int         frameInd;
+        CCPoint     pos;
+        CCPoint     startPos;
+        
+        ccColor4F	color;
+        ccColor4F	deltaColor;
+        
+        float		size;
+        float		deltaSize;
+        
+        float		rotation;
+        float		deltaRotation;
+        
+        ccTime		timeToLive;
+        
+        CCSize       pTexPos;     // Origin for texture in Sprite sheet.
+        ccTime       pElaspeTime;  //Frame rate for each particle.
+        
+        //! Mode A: gravity, direction, radial accel, tangential accel
+        struct {
+            CCPoint		dir;
+            float		radialAccel;
+            float		tangentialAccel;
+        } modeA;
+        
+        //! Mode B: radius mode
+        struct {
+            float		angle;
+            float		degreesPerSecond;
+            float		radius;
+            float		deltaRadius;
+        } modeB;
+        
+    }tCCParticle;
 
 //typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CCPoint);
 
@@ -376,7 +376,7 @@ public:
 	bool isFull();
 
 	//! should be overriden by subclasses
-	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition, ccTime dt);
+	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	//! should be overriden by subclasses
 	virtual void postStep();
 
