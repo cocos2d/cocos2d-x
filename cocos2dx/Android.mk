@@ -100,9 +100,7 @@ touch_dispatcher/CCTouchHandler.cpp
 
 ifeq ($(ENABLE_LUA), true)
     LOCAL_SRC_FILES += lua_support/CCLuaSrcipt.cpp \
-                       lua_support/LuaCocos2d.cpp \
-                       NdControls/NdCxList.cpp \
-                       NdControls/NdCxListItem.cpp
+                       lua_support/LuaCocos2d.cpp
                        
     LOCAL_CFLAGS := -DENABLE_LUA -DUSE_FILE32API
 else
