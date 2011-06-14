@@ -118,13 +118,13 @@ static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, CCObject* objec
 		}
 	}
 
-	return -1; 
+	return UINT_MAX; 
 }
 
 /** Returns a Boolean value that indicates whether object is present in array. */
 static inline bool ccArrayContainsObject(ccArray *arr, CCObject* object)
 {
-	return ccArrayGetIndexOfObject(arr, object) != -1;
+	return ccArrayGetIndexOfObject(arr, object) != UINT_MAX;
 }
 
 /** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
@@ -210,7 +210,7 @@ static inline void ccArrayFastRemoveObjectAtIndex(ccArray *arr, unsigned int ind
 static inline void ccArrayFastRemoveObject(ccArray *arr, CCObject* object)
 {
     unsigned int index = ccArrayGetIndexOfObject(arr, object);
-    if (index != -1)
+    if (index != UINT_MAX)
         ccArrayFastRemoveObjectAtIndex(arr, index);
 }
 
@@ -220,7 +220,7 @@ static inline void ccArrayRemoveObject(ccArray *arr, CCObject* object)
 {
 	unsigned int index = ccArrayGetIndexOfObject(arr, object);
 
-	if (index != -1)
+	if (index != UINT_MAX)
 	{
 		ccArrayRemoveObjectAtIndex(arr, index);
 	}
@@ -422,7 +422,7 @@ static inline void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, unsigned int in
 static inline void ccCArrayRemoveValue(ccCArray *arr, void* value)
 {
 	unsigned int index = ccCArrayGetIndexOfValue(arr, value);
-	if (index != -1)
+	if (index != UINT_MAX)
 	{
 		ccCArrayRemoveValueAtIndex(arr, index);
 	}
