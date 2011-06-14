@@ -57,10 +57,12 @@ namespace cocos2d {
 	}
 	void CCActionInstant::step(ccTime dt)
 	{
+        CC_UNUSED_PARAM(dt);
 		update(1);
 	}
 	void CCActionInstant::update(ccTime time)
 	{
+        CC_UNUSED_PARAM(time);
 		// ignore
 	}
 	CCFiniteTimeAction * CCActionInstant::reverse()

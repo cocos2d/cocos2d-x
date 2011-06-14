@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCConfiguration.h"
 #include "CCRenderTexture.h"
 #include "CCDirector.h"
 #include "platform/platform.h"
@@ -84,8 +85,16 @@ CCRenderTexture * CCRenderTexture::renderTextureWithWidthAndHeight(int w, int h)
 	CC_SAFE_DELETE(pRet)
 	return NULL;
 }
+
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
 {
+	// If the gles version is lower than GLES_VER_1_0, 
+	// some extended gles functions can't be implemented, so return false directly.
+	if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+	{
+		return false;
+	}
+
     bool bRet = false;
     do 
     {
@@ -235,6 +244,8 @@ bool CCRenderTexture::saveBuffer(const char *name)
 }
 bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 {
+    CC_UNUSED_PARAM(fileName);
+    CC_UNUSED_PARAM(format);
 	bool bRet = false;
 //@ todo CCRenderTexture::saveBuffer
 // 	UIImage *myImage = this->getUIImageFromBuffer(format);
@@ -254,6 +265,7 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 
 CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 {
+    CC_UNUSED_PARAM(format);
     CCData *  pData     = NULL;
 //@ todo CCRenderTexture::getUIImageAsDataFromBuffer
 

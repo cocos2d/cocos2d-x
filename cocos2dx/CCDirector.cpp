@@ -485,6 +485,7 @@ CCSize CCDirector::getDisplaySizeInPixels(void)
 
 void CCDirector::reshapeProjection(CCSize newWindowSize)
 {
+    CC_UNUSED_PARAM(newWindowSize);
     m_obWinSizeInPoints = m_pobOpenGLView->getSize();
 	m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
 		                             m_obWinSizeInPoints.height * m_fContentScaleFactor);
@@ -754,6 +755,7 @@ tPixelFormat CCDirector::getPiexFormat(void)
 
 bool CCDirector::setDirectorType(ccDirectorType obDirectorType)
 {
+    CC_UNUSED_PARAM(obDirectorType);
 	// we only support CCDisplayLinkDirector
 	CCDirector::sharedDirector();
 

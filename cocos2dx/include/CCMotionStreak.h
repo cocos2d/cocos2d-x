@@ -57,10 +57,10 @@ class CC_DLL CCMotionStreak : public CCNode, public CCTextureProtocol
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 public:
 	CCMotionStreak()
-		: m_fSegThreshold(0.0)
-		, m_fWidth(0.0)
-		, m_pRibbon(NULL)
-		, m_pTexture(NULL)
+		: m_pRibbon(NULL)
+        , m_pTexture(NULL)
+        , m_fSegThreshold(0.0)
+		, m_fWidth(0.0)		
 	{}
 	virtual ~CCMotionStreak(){}
 	/** creates the a MotionStreak. The image will be loaded using the TextureMgr. */

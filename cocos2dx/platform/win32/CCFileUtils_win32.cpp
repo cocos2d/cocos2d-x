@@ -144,6 +144,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 void CCFileUtils::setResource(const char* pszZipFileName)
 {
+    CC_UNUSED_PARAM(pszZipFileName);
     CCAssert(0, "Have not implement!");
 }
 
@@ -155,6 +156,7 @@ const char* CCFileUtils::getResourcePath(void)
 
 void CCFileUtils::setRelativePath(const char* pszRelativePath)
 {
+    CC_UNUSED_PARAM(pszRelativePath);
     CCAssert(0, "Have not implement!");
 }
 

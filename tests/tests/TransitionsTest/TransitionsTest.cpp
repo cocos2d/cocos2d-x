@@ -1,5 +1,6 @@
 #include "TransitionsTest.h"
 #include "../testResource.h"
+#include "CCConfiguration.h"
 
 #define TRANSITION_DURATION (1.2f)
 
@@ -212,10 +213,45 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     case 22: return CCTransitionSlideInR::transitionWithDuration(t, s);
     case 23: return CCTransitionSlideInT::transitionWithDuration(t, s);
     case 24: return CCTransitionSlideInB::transitionWithDuration(t, s);
-
-    case 25: return CCTransitionCrossFade::transitionWithDuration(t,s);
-    case 26: return CCTransitionRadialCCW::transitionWithDuration(t,s);
-    case 27: return CCTransitionRadialCW::transitionWithDuration(t,s);
+    case 25: 
+		{
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			{
+				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionCrossFade may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				return NULL;
+			}
+			else
+			{
+				return CCTransitionCrossFade::transitionWithDuration(t,s);
+			}
+		}
+		break;
+    case 26: 
+		{
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			{
+				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionRadialCCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				return NULL;
+			}
+			else
+			{
+				return CCTransitionRadialCCW::transitionWithDuration(t,s);
+			}
+		}
+		break;
+    case 27: 
+		{
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			{
+				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionRadialCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				return NULL;
+			}
+			else
+			{
+				return CCTransitionRadialCW::transitionWithDuration(t,s);
+			}
+		}
+		break;
     case 28: return PageTransitionForward::transitionWithDuration(t, s);
     case 29: return PageTransitionBackward::transitionWithDuration(t, s);
     case 30: return CCTransitionFadeTR::transitionWithDuration(t, s);

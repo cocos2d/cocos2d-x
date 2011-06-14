@@ -11,8 +11,8 @@ cocos2d-0.99.5-x-0.8.4 @ May.26,2011
     Feature  #509  For integrting IME, we had to rotate UI to landscape by default
     Bug      #499  CCRGBAProtocol isn't inherited and implemented in CCMenuItemSprite
  [ios]
-    Bug      #493  the return value of CCileUtils::getWriteablePath() is not end with '/'
-    Bug      #508  Problem in runnint Tests in Retina resolution since 0.8.2
+    Bug      #493  the return value of CCFileUtils::getWriteablePath() is not end with '/'
+    Bug      #508  Problem in running Tests in Retina resolution since 0.8.2
  [win32]
     Bug      #492  CCFileUtils::fullPathFromRelativeFile forget to consider the path separated by '\'
     Feature  #489  Use GetCurrentDirectory instead of GetModuleFileName in CCFileUtils_win32.cpp

@@ -92,14 +92,16 @@ class CC_DLL SelectorProtocol
 #endif
 {
 public:
+	virtual void update(ccTime dt) {CC_UNUSED_PARAM(dt);};
+	virtual void tick(ccTime dt){CC_UNUSED_PARAM(dt);};
 	SelectorProtocol(){};
 	virtual void update(ccTime dt) {};
 	virtual void tick(ccTime dt){};
 	virtual void callfunc(){};
-	virtual void callfunc(CCNode* pSender){};
-	virtual void callfunc(CCNode* pSender, void* pData){};
-	virtual void menuHandler(CCObject* pSender){};
-    virtual void eventHandler(CCEvent* pEvent) {};
+	virtual void callfunc(CCNode* pSender){CC_UNUSED_PARAM(pSender);};
+	virtual void callfunc(CCNode* pSender, void* pData){CC_UNUSED_PARAM(pSender);CC_UNUSED_PARAM(pData);};
+	virtual void menuHandler(CCObject* pSender){CC_UNUSED_PARAM(pSender);};
+    virtual void eventHandler(CCEvent* pEvent) {CC_UNUSED_PARAM(pEvent);};
 
 	// the child call responding retain/release function
 	virtual void selectorProtocolRetain(void) {};

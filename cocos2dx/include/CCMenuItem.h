@@ -51,9 +51,9 @@ namespace cocos2d{
 		CC_PROPERTY(bool, m_bIsEnabled, IsEnabled);
 	public:
 		CCMenuItem()
-			: m_pListener(NULL)
-			, m_bIsEnabled(false)
-			, m_bIsSelected(false)
+			: m_bIsSelected(false)
+            , m_bIsEnabled(false)            
+            , m_pListener(NULL)			
 			, m_pfnSelector(NULL)
 		{}
 		virtual ~CCMenuItem(){}
@@ -252,8 +252,8 @@ namespace cocos2d{
 	public:
 		CCMenuItemToggle()
 			: m_cOpacity(0)
-			, m_pSubItems(NULL)
-			, m_uSelectedIndex(0)
+            , m_uSelectedIndex(0)
+			, m_pSubItems(NULL)			
 		{}
 		virtual ~CCMenuItemToggle();
 		/** creates a menu item from a list of items with a target/selector */

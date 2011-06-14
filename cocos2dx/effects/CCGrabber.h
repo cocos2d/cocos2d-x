@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRABBER_H__
 #define __EFFECTS_CCGRABBER_H__
 
+#include "CCConfiguration.h"
 #include "CCObject.h"
 #include "CCGL.h"
 
@@ -46,6 +47,7 @@ namespace cocos2d
 	protected:
 		GLuint m_fbo;
 		GLint m_oldFBO;
+		CCGlesVersion m_eGlesVersion;
 	};
 
 } // end of namespace cocos2d

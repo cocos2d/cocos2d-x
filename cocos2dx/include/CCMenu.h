@@ -119,8 +119,8 @@ namespace cocos2d{
 
 	protected:
 		tCCMenuState m_eState;
-		CCMenuItem *m_pSelectedItem;
-		GLubyte m_cOpacity;
+        GLubyte m_cOpacity;
+		CCMenuItem *m_pSelectedItem;		
 		ccColor3B m_tColor;
 	};
 }

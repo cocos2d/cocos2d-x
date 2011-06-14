@@ -62,12 +62,12 @@ namespace   cocos2d {
 static CCTexture2DPixelFormat g_defaultAlphaPixelFormat = kCCTexture2DPixelFormat_Default;
 
 CCTexture2D::CCTexture2D()
-: m_uName(0)
-, m_bHasPremultipliedAlpha(false)
+: m_uPixelsWide(0)
+, m_uPixelsHigh(0)
+, m_uName(0)
 , m_fMaxS(0.0)
 , m_fMaxT(0.0)
-, m_uPixelsHigh(0)
-, m_uPixelsWide(0)
+, m_bHasPremultipliedAlpha(false)
 {
 }
 
@@ -145,6 +145,7 @@ void CCTexture2D::releaseData(void *data)
 
 void* CCTexture2D::keepData(void *data, unsigned int length)
 {
+    CC_UNUSED_PARAM(length);
 	//The texture data mustn't be saved becuase it isn't a mutable texture.
 	return data;
 }
@@ -291,7 +292,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 			tempData = (unsigned char*)(image->getData());
 			CCAssert(tempData != NULL, "NULL image data.");
 
-			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
+			if(image->getWidth() == (short)POTWide && image->getHeight() == (short)POTHigh)
 			{
 				data = new unsigned char[POTHigh * POTWide * 4];
 				memcpy(data, tempData, POTHigh * POTWide * 4);
@@ -315,7 +316,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
 		case kCCTexture2DPixelFormat_RGB888:
 			tempData = (unsigned char*)(image->getData());
 			CCAssert(tempData != NULL, "NULL image data.");
-			if(image->getWidth() == POTWide && image->getHeight() == POTHigh)
+			if(image->getWidth() == (short)POTWide && image->getHeight() == (short)POTHigh)
 			{
 				data = new unsigned char[POTHigh * POTWide * 3];
 				memcpy(data, tempData, POTHigh * POTWide * 3);
