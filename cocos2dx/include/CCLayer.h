@@ -58,7 +58,7 @@ public:
 	virtual void destroy(void);
 	virtual void keep(void);
 	
-    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {}
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
     virtual void AccelerometerDestroy(void);
     virtual void AccelerometerKeep(void);
 

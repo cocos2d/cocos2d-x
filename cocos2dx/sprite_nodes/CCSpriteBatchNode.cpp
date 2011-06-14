@@ -422,7 +422,8 @@ namespace cocos2d
 		// ignore parent Z if parent is spriteSheet
 		bool bIgnoreParent = (CCSpriteBatchNode*)(pobSprite->getParent()) == this;
 		CCSprite *pPrevious = NULL;
-		if (uChildIndex > 0)
+		if (uChildIndex > 0 &&
+            uChildIndex < UINT_MAX)
 		{
 			pPrevious = (CCSprite*)(pBrothers->objectAtIndex(uChildIndex - 1));
 		}
@@ -537,7 +538,7 @@ namespace cocos2d
 		pobSprite->useSelfRender();
 
 		unsigned int uIndex = m_pobDescendants->indexOfObject(pobSprite);
-		if (uIndex != -1)
+		if (uIndex != UINT_MAX)
 		{
 			m_pobDescendants->removeObjectAtIndex(uIndex);
 

@@ -63,18 +63,18 @@ public:
 	//! call the retain() in child (layer or menu)
 	virtual void keep(void) {}
 
-	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { return false;};
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
 	// optional
 
-	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {}
-	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {}
-	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {}
+	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
 
 	// optional
- 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {}
- 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {}
- 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+ 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
 
 #ifdef  ENABLE_LUA
 	//use for lua register event 
@@ -181,12 +181,12 @@ public:
  	/** Return YES to claim the touch.
  	 @since v0
 	 */
- 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { return false;};
+ 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);return false;};
  
  	// optional
- 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {}
- 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {}
- 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {}
+ 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+ 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+ 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
  };
  
 /** @brief
@@ -198,10 +198,10 @@ public:
  public:
  	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }
  	// optional
- 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {}
- 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {}
- 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {}
- 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {}
+ 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+ 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+ 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  };
 
 }//namespace   cocos2d 

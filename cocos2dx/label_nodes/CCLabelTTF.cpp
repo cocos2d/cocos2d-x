@@ -29,10 +29,10 @@ namespace cocos2d{
 	//CCLabelTTF
 	//
     CCLabelTTF::CCLabelTTF()
-        : m_pFontName(NULL)
+        : m_eAlignment(CCTextAlignmentCenter)
+        , m_pFontName(NULL)
+        , m_fFontSize(0.0)
         , m_pString(NULL)
-		, m_fFontSize(0.0)
-		, m_eAlignment(CCTextAlignmentCenter)
     {
     }
 

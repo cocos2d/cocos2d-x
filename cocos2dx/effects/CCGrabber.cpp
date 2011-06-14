@@ -33,12 +33,28 @@ namespace cocos2d
 		: m_fbo(0)
 		, m_oldFBO(0)
 	{
+		m_eGlesVersion = CCConfiguration::sharedConfiguration()->getGlesVersion();
+
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
 		// generate FBO
 		ccglGenFramebuffers(1, &m_fbo);
 	}
 
 	void CCGrabber::grab(cocos2d::CCTexture2D *pTexture)
 	{
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
 		// bind
@@ -60,6 +76,14 @@ namespace cocos2d
 	
 	void CCGrabber::beforeRender(cocos2d::CCTexture2D *pTexture)
 	{
+        CC_UNUSED_PARAM(pTexture);
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
 
@@ -78,12 +102,27 @@ namespace cocos2d
 
 	void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
 	{
+        CC_UNUSED_PARAM(pTexture);
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
 		glColorMask(true, true, true, true);	// #631
 	}
 
 	CCGrabber::~CCGrabber()
 	{
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
 		CCLOGINFO("cocos2d: deallocing %p", this);
 		ccglDeleteFramebuffers(1, &m_fbo);
 	}

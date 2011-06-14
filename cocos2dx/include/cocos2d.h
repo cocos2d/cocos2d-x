@@ -120,6 +120,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 const char* cocos2dVersion();
+
 }//namespace   cocos2d 
 
 #endif // __COCOS2D_H__

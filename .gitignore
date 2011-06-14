@@ -43,5 +43,10 @@ build_*_xcode/
 # Ignore files build by xcode
 *.mode*v*
 *.pbxuser
+*.xcbkptlist
+*.xcscheme
+*.xcworkspacedata
+*.xcuserstate
+xcschememanagement.plist
 build/
 .DS_Store

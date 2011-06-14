@@ -59,8 +59,8 @@ namespace cocos2d {
 		return false;
 	}
 	CCTileMapAtlas::CCTileMapAtlas()
-		:m_pPosToAtlasIndex(NULL)
-		,m_pTGAInfo(NULL)
+        :m_pTGAInfo(NULL)
+		,m_pPosToAtlasIndex(NULL)
 		,m_nItemsToRender(0)
 	{
 	}

@@ -53,11 +53,11 @@ bool CCLayer::init()
 	do 
 	{
 		CCDirector * pDirector;
-		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+		CC_BREAK_IF(!(pDirector = CCDirector::sharedDirector()));
 		this->setContentSize(pDirector->getWinSize());
 		// success
 		bRet = true;
-	} while (0);
+	} while(0);
 	return bRet;
 }
 
@@ -251,6 +251,8 @@ void CCLayer::onEnterTransitionDidFinish()
 
 bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
 	CCAssert(false, "Layer#ccTouchBegan override me");
 	return true;
 }

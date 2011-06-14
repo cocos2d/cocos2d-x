@@ -36,14 +36,14 @@ static CCConfiguration g_SharedConfiguration;
 static char *g_pGlExtensions;
 
 CCConfiguration::CCConfiguration(void)
-: m_bSupportsBGRA8888(false)
-, m_bSupportsDiscardFramebuffer(false)
-, m_bSupportsNPOT(false)
-, m_bSupportsPVRTC(false)
+:m_nMaxTextureSize(0) 
 , m_nMaxModelviewStackDepth(0)
-, m_nMaxSamplesAllowed(0)
-, m_nMaxTextureSize(0)
+, m_bSupportsPVRTC(false)
+, m_bSupportsNPOT(false)
+, m_bSupportsBGRA8888(false)
+, m_bSupportsDiscardFramebuffer(false)
 , m_uOSVersion(0)
+, m_nMaxSamplesAllowed(0)
 {
 }
 
@@ -84,7 +84,26 @@ bool CCConfiguration::init(void)
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 
 	return true;
+}
 
+CCGlesVersion CCConfiguration::getGlesVersion()
+{
+	// To get the Opengl ES version
+	std::string strVersion((char *)glGetString(GL_VERSION));
+	if ((int)strVersion.find("1.0") != -1)
+	{
+		return GLES_VER_1_0;
+	}
+	else if ((int)strVersion.find("1.1") != -1)
+	{
+		return GLES_VER_1_1;
+	}
+	else if ((int)strVersion.find("2.0") != -1)
+	{
+		return GLES_VER_2_0;
+	}
+
+	return GLES_VER_INVALID;
 }
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)

@@ -134,5 +134,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
 		    $(LOCAL_PATH)/../lua/tolua                    
 
 
+# define the macro to compile through support/zip_support/ioapi.c                
+LOCAL_CFLAGS := -DUSE_FILE32API  -Wno-unused-value
                                  
 include $(BUILD_STATIC_LIBRARY)

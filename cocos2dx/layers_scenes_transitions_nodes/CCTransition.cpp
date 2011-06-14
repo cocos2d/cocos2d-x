@@ -143,6 +143,7 @@ void CCTransitionScene::finish()
 
 void CCTransitionScene::setNewScene(ccTime dt)
 {	
+    CC_UNUSED_PARAM(dt);
 	// [self unschedule:_cmd]; 
 	// "_cmd" is a local variable automatically defined in a method 
 	// that contains the selector for the method
@@ -1114,6 +1115,12 @@ void CCTransitionCrossFade::onEnter()
 
 	// create the first render texture for inScene
 	CCRenderTexture* inTexture = CCRenderTexture::renderTextureWithWidthAndHeight((int)size.width, (int)size.height);
+
+	if (NULL == inTexture)
+	{
+		return;
+	}
+
 	inTexture->getSprite()->setAnchorPoint( ccp(0.5f,0.5f) );
 	inTexture->setPosition( ccp(size.width/2, size.height/2) );
 	inTexture->setAnchorPoint( ccp(0.5f,0.5f) );

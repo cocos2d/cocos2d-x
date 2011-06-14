@@ -43,6 +43,7 @@ CCSAXParser::~CCSAXParser(void)
 
 bool CCSAXParser::init(const char *pszEncoding)
 {
+    CC_UNUSED_PARAM(pszEncoding);
 	// nothing to do
 	return true;
 }
