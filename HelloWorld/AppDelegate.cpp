@@ -88,8 +88,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 #ifdef ENABLE_LUA
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	// CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("/sdcard/hello.lua");
-
 	unsigned long size;
 	char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
 	if (pFileContent)
