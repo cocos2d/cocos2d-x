@@ -286,7 +286,7 @@ void CCActionManager::removeAction(cocos2d::CCAction *pAction)
 	if (pElement)
 	{
 		unsigned int i = ccArrayGetIndexOfObject(pElement->actions, pAction);
-		if ((int)i != -1)
+		if (UINT_MAX == i)
 		{
 			removeActionAtIndex(i, pElement);
 		}
