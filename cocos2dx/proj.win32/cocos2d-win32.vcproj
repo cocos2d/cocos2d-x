@@ -1100,30 +1100,6 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="NDControllers"
-			>
-			<File
-				RelativePath="..\NdControls\ControlDefine.h"
-				>
-			</File>
-			<File
-				RelativePath="..\NdControls\NdCxList.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\NdControls\NdCxList.h"
-				>
-			</File>
-			<File
-				RelativePath="..\NdControls\NdCxListItem.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\NdControls\NdCxListItem.h"
-				>
-			</File>
-		</Filter>
 		<File
 			RelativePath="..\CCCamera.cpp"
 			>
