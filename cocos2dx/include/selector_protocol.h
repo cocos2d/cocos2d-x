@@ -95,8 +95,6 @@ public:
 	virtual void update(ccTime dt) {CC_UNUSED_PARAM(dt);};
 	virtual void tick(ccTime dt){CC_UNUSED_PARAM(dt);};
 	SelectorProtocol(){};
-	virtual void update(ccTime dt) {};
-	virtual void tick(ccTime dt){};
 	virtual void callfunc(){};
 	virtual void callfunc(CCNode* pSender){CC_UNUSED_PARAM(pSender);};
 	virtual void callfunc(CCNode* pSender, void* pData){CC_UNUSED_PARAM(pSender);CC_UNUSED_PARAM(pData);};
