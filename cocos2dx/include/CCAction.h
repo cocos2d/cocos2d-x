@@ -194,12 +194,12 @@ class CC_DLL CCFollow : public CCAction
 public:
 	CCFollow()
 		: m_pobFollowedNode(NULL)
-		, m_bBoundaryFullyCovered(false)
-		, m_bBoundarySet(false)
-		, m_fBottomBoundary(0.0)
+        , m_bBoundarySet(false)
+		, m_bBoundaryFullyCovered(false)		
 		, m_fLeftBoundary(0.0)
 		, m_fRightBoundary(0.0)
 		, m_fTopBoundary(0.0)
+        , m_fBottomBoundary(0.0)
 	{}
 	virtual ~CCFollow(void);
 	

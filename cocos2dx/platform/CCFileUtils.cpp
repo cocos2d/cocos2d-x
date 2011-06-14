@@ -90,6 +90,8 @@ public:
 
     void startElement(void *ctx, const char *name, const char **atts)
     {
+        CC_UNUSED_PARAM(ctx);
+        CC_UNUSED_PARAM(atts);
         std::string sName((char*)name);
         if( sName == "dict" )
         {
@@ -169,6 +171,7 @@ public:
 
     void endElement(void *ctx, const char *name)
     {
+        CC_UNUSED_PARAM(ctx);
         CCSAXState curState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
         std::string sName((char*)name);
         if( sName == "dict" )
@@ -220,6 +223,7 @@ public:
 
     void textHandler(void *ctx, const char *ch, int len)
     {
+        CC_UNUSED_PARAM(ctx);
         if (m_tState == SAX_NONE)
         {
             return;
@@ -250,6 +254,8 @@ public:
                 }
                 break;
             }
+        default:
+            break;
         }
         pText->release();
     }
@@ -311,7 +317,7 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
         pBuffer = new unsigned char[FileInfo.uncompressed_size];
         int nSize = 0;
         nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
-        CCAssert(nSize == 0 || nSize == FileInfo.uncompressed_size, "the file size is wrong");
+        CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 
         *pSize = FileInfo.uncompressed_size;
         unzCloseCurrentFile(pFile);

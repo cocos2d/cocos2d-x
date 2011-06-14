@@ -48,7 +48,7 @@ receiving acceleration-related data from the system.
 class CC_DLL CCAccelerometerDelegate
 {
 public:
-    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {}
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
 
     //! call the release() in child layer
     virtual void AccelerometerDestroy(void) {}

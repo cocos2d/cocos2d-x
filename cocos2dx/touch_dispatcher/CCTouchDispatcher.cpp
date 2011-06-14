@@ -231,6 +231,8 @@ void CCTouchDispatcher::removeAllDelegates(void)
 
 void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 {
+    CC_UNUSED_PARAM(nPriority);
+    CC_UNUSED_PARAM(pDelegate);
 	assert(0);
 }
 

@@ -108,8 +108,8 @@ public:
 public:
 	CCRibbonSegment()
 		: m_bFinished(false)
-		, m_uBegin(0)
-		, m_uEnd(0)
+        , m_uEnd(0)
+		, m_uBegin(0)		
 	{}
 	virtual ~CCRibbonSegment();
 	char * description();

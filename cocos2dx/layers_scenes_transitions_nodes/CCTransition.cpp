@@ -143,6 +143,7 @@ void CCTransitionScene::finish()
 
 void CCTransitionScene::setNewScene(ccTime dt)
 {	
+    CC_UNUSED_PARAM(dt);
 	// [self unschedule:_cmd]; 
 	// "_cmd" is a local variable automatically defined in a method 
 	// that contains the selector for the method

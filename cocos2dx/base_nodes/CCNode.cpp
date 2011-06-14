@@ -43,35 +43,35 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 CCNode::CCNode(void)
-:m_bIsRunning(false)
-,m_fRotation(0.0f)
-,m_fScaleX(1.0f)
-,m_fScaleY(1.0f)
-,m_tPosition(CCPointZero)
-,m_tPositionInPixels(CCPointZero)
-,m_tAnchorPointInPixels(CCPointZero)
-,m_tAnchorPoint(CCPointZero)
-,m_tContentSize(CCSizeZero)
-,m_tContentSizeInPixels(CCSizeZero)
-// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
-,m_bIsRelativeAnchorPoint(true)
-,m_bIsTransformDirty(true)
-,m_bIsInverseDirty(true)
-#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-,m_bIsTransformGLDirty(true)
-#endif
-,m_fVertexZ(0.0f)
-,m_pGrid(NULL)
-,m_bIsVisible(true)
-,m_nTag(kCCNodeTagInvalid)
-,m_nZOrder(0)
-// lazy alloc
-,m_pCamera(NULL)
+: m_nZOrder(0)
+, m_fVertexZ(0.0f)
+, m_fRotation(0.0f)
+, m_fScaleX(1.0f)
+, m_fScaleY(1.0f)
+, m_tPosition(CCPointZero)
+, m_tPositionInPixels(CCPointZero)
 // children (lazy allocs)
-,m_pChildren(NULL)
+, m_pChildren(NULL)
+// lazy alloc
+, m_pCamera(NULL)
+, m_pGrid(NULL)
+, m_bIsVisible(true)
+, m_tAnchorPoint(CCPointZero)
+, m_tAnchorPointInPixels(CCPointZero)
+, m_tContentSize(CCSizeZero)
+, m_tContentSizeInPixels(CCSizeZero)
+, m_bIsRunning(false)
+, m_pParent(NULL)
+// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
+, m_bIsRelativeAnchorPoint(true)
+, m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
-,m_pUserData(NULL)
-,m_pParent(NULL)
+, m_pUserData(NULL)
+, m_bIsTransformDirty(true)
+, m_bIsInverseDirty(true)
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+, m_bIsTransformGLDirty(true)
+#endif
 {
     // nothing
 }
