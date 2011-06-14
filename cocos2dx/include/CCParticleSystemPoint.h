@@ -51,6 +51,12 @@ public:
 		:m_pVertices(NULL)	
 	{}
 	virtual ~CCParticleSystemPoint();
+
+    /** creates an initializes a CCParticleSystemPoint from a plist file.
+    This plist files can be creted manually or with Particle Designer:  
+    */
+    static CCParticleSystemPoint * particleWithFile(const char *plistFile);
+
 	// super methods
 	virtual bool initWithTotalParticles(int numberOfParticles);
 	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
