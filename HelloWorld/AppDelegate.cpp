@@ -83,64 +83,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
-	
-
-#ifdef ENABLE_LUA
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	unsigned long size;
-	char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
-	if (pFileContent)
-	{
-	    // copy the file contents and add '\0' at the end, or the lua parser can not parse it
-	    char *pTmp = new char[size + 1];
-	    pTmp[size] = '\0';
-	    memcpy(pTmp, pFileContent, size);
-	    delete[] pFileContent;
-
-	    string code(pTmp);
-	    CCLuaScriptModule::sharedLuaScriptModule()->executeString(code);
-	    delete []pTmp;
-	}
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloWorld/Resource/hello.lua");
-
-	/*
-	 * Another way to run lua script.
-	 * Load the file into memory and run it.
-	 *
-	unsigned long size;
-	char *pFileContent = (char*)CCFileUtils::getFileData("./../../HelloWorld/Resource/hello.lua", "r", &size);
-	if (pFileContent)
-	{
-		// copy the file contents and add '\0' at the end, or the lua parser can not parse it
-		char *pTmp = new char[size + 1];
-		pTmp[size] = '\0';
-		memcpy(pTmp, pFileContent, size);
-		delete[] pFileContent;
-
-		string code(pTmp);
-		CCLuaScriptModule::sharedLuaScriptModule()->executeString(code);
-		delete []pTmp;
-	}
-	*/
-	
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
-    CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile(path.c_str());
-#endif 
-
-#else
 	// create a scene. it's an autorelease object
 	CCScene *pScene = HelloWorld::scene();
 
 	// run
 	pDirector->runWithScene(pScene);
-#endif // 1
 
 	return true;
 }
