@@ -36,195 +36,226 @@ NS_CC_BEGIN;
 
 typedef enum 
 {
-	SAX_NONE = 0,
-	SAX_KEY,
-	SAX_DICT,
-	SAX_INT,
-	SAX_REAL,
-	SAX_STRING
+    SAX_NONE = 0,
+    SAX_KEY,
+    SAX_DICT,
+    SAX_INT,
+    SAX_REAL,
+    SAX_STRING,
+    SAX_ARRAY
 }CCSAXState;
-
 
 class CCDictMaker : public CCSAXDelegator
 {
 public:
-	CCDictionary<std::string, CCObject*> *m_pRootDict;
-	CCDictionary<std::string, CCObject*> *m_pCurDict;
-	std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
-	std::string m_sCurKey;///< parsed key
-	CCSAXState m_tState;
-    bool    m_bInArray;
+    CCDictionary<std::string, CCObject*> *m_pRootDict;
+    CCDictionary<std::string, CCObject*> *m_pCurDict;
+    std::stack<CCDictionary<std::string, CCObject*>*> m_tDictStack;
+    std::string m_sCurKey;///< parsed key
+    CCSAXState m_tState;
     CCMutableArray<CCObject*> *m_pArray;
 
+    std::stack<CCMutableArray<CCObject*>*> m_tArrayStack;
+    std::stack<CCSAXState>  m_tStateStack;
+
 public:
-	CCDictMaker()
-	{
+    CCDictMaker()
+    {
 		m_pRootDict = NULL;
 		m_pCurDict = NULL;
 		m_tState = SAX_NONE;
-
         m_pArray = NULL;
-        m_bInArray = false;
-	}
-	~CCDictMaker()
-	{
+    }
 
-	}
-	CCDictionary<std::string, CCObject*> *getDict()
-	{
-		return m_pRootDict;
-	}
-	CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
-	{
-		CCSAXParser parser;
-		parser.init(NULL);
-		parser.setDelegator(this);
-		parser.parse(pFileName);
-		return m_pRootDict;
-	}
+    ~CCDictMaker()
+    {
+    }
 
-void startElement(void *ctx, const XML_Char *name, const XML_Char **atts)
-{
-	std::string sName((char*)name);
-	if( sName == "dict" )
-	{
-		CCDictionary<std::string, CCObject*> *pNewDict = new CCDictionary<std::string, CCObject*>();
-		if(! m_pRootDict)
-		{
-			m_pRootDict = pNewDict;
-			pNewDict->autorelease();
-		}
-		else
-		{
-			CCAssert(m_pCurDict && !m_sCurKey.empty(), "");
-			m_pCurDict->setObject(pNewDict, m_sCurKey);
-			pNewDict->release();
-			m_sCurKey.clear();
-		}
-		m_pCurDict = pNewDict;
-		m_tDictStack.push(m_pCurDict);
-		m_tState = SAX_DICT;
-	}
-	else if(sName == "key")
-	{
-		m_tState = SAX_KEY;
-	}
-	else if(sName == "integer")
-	{
-		m_tState = SAX_INT;
-	}
-	else if(sName == "real")
-	{
-		m_tState = SAX_REAL;
-	}
-	else if(sName == "string")
-	{
-		m_tState = SAX_STRING;
-	}
-	else
-	{
-        if (sName == "array")
+    CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName)
+    {
+        CCSAXParser parser;
+
+        if (false == parser.init("UTF-8"))
         {
-            m_bInArray = true;
+            return NULL;
+        }
+        parser.setDelegator(this);
+
+        parser.parse(pFileName);
+        return m_pRootDict;
+    }
+
+    void startElement(void *ctx, const char *name, const char **atts)
+    {
+        CC_UNUSED_PARAM(ctx);
+        CC_UNUSED_PARAM(atts);
+        std::string sName((char*)name);
+        if( sName == "dict" )
+        {
+            m_pCurDict = new CCDictionary<std::string, CCObject*>();
+            if(! m_pRootDict)
+            {
+                m_pRootDict = m_pCurDict;
+            }
+            m_tState = SAX_DICT;
+
+            CCSAXState preState = SAX_NONE;
+            if (! m_tStateStack.empty())
+            {
+                preState = m_tStateStack.top();
+            }
+
+            if (SAX_ARRAY == preState)
+            {
+                // add the dictionary into the array
+                m_pArray->addObject(m_pCurDict);
+            }
+            else if (SAX_DICT == preState)
+            {
+                // add the dictionary into the pre dictionary
+                CCAssert(! m_tDictStack.empty(), "The state is wrong!");
+                CCDictionary<std::string, CCObject*>* pPreDict = m_tDictStack.top();
+                pPreDict->setObject(m_pCurDict, m_sCurKey);
+            }
+            m_pCurDict->autorelease();
+
+            // record the dict state
+            m_tStateStack.push(m_tState);
+            m_tDictStack.push(m_pCurDict);
+        }
+        else if(sName == "key")
+        {
+            m_tState = SAX_KEY;
+        }
+        else if(sName == "integer")
+        {
+            m_tState = SAX_INT;
+        }
+        else if(sName == "real")
+        {
+            m_tState = SAX_REAL;
+        }
+        else if(sName == "string")
+        {
+            m_tState = SAX_STRING;
+        }
+        else if (sName == "array")
+        {
+            m_tState = SAX_ARRAY;
             m_pArray = new CCMutableArray<CCObject*>();
-        }
-		m_tState = SAX_NONE;
-	}	
-}
-void endElement(void *ctx, const XML_Char *name)
-{
-	std::string sName((char*)name);
-	if( sName == "dict" )
-	{
-		m_tDictStack.pop();
-		if ( !m_tDictStack.empty() )
-		{
-			m_pCurDict = (CCDictionary<std::string, CCObject*>*)(m_tDictStack.top());
-		}
-	}
-    else if (sName == "array")
-    {
-        CCAssert(m_bInArray, "The plist file is wrong!");
-        m_pCurDict->setObject(m_pArray, m_sCurKey);
-        m_pArray->release();
-        m_pArray = NULL;
-        m_bInArray = false;
-    }
-    else if (sName == "true")
-    {
-        CCString *str = new CCString("1");
-        if (m_bInArray)
-        {
-            m_pArray->addObject(str);
+
+            CCSAXState preState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
+            if (preState == SAX_DICT)
+            {
+                m_pCurDict->setObject(m_pArray, m_sCurKey);
+            }
+            else if (preState == SAX_ARRAY)
+            {
+                CCAssert(! m_tArrayStack.empty(), "The state is worng!");
+                CCMutableArray<CCObject*>* pPreArray = m_tArrayStack.top();
+                pPreArray->addObject(m_pArray);
+            }
+            m_pArray->release();
+            // record the array state
+            m_tStateStack.push(m_tState);
+            m_tArrayStack.push(m_pArray);
         }
         else
         {
-            m_pCurDict->setObject(str, m_sCurKey);
+            m_tState = SAX_NONE;
         }
-        str->release();
     }
-    else if (sName == "false")
+
+    void endElement(void *ctx, const char *name)
     {
-        CCString *str = new CCString("0");
-        if (m_bInArray)
+        CC_UNUSED_PARAM(ctx);
+        CCSAXState curState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
+        std::string sName((char*)name);
+        if( sName == "dict" )
         {
-            m_pArray->addObject(str);
+            m_tStateStack.pop();
+            m_tDictStack.pop();
+            if ( !m_tDictStack.empty())
+            {
+                m_pCurDict = m_tDictStack.top();
+            }
         }
-        else
+        else if (sName == "array")
         {
-            m_pCurDict->setObject(str, m_sCurKey);
+            m_tStateStack.pop();
+            m_tArrayStack.pop();
+            if (! m_tArrayStack.empty())
+            {
+                m_pArray = m_tArrayStack.top();
+            }
         }
-        str->release();
+        else if (sName == "true")
+        {
+            CCString *str = new CCString("1");
+            if (SAX_ARRAY == curState)
+            {
+                m_pArray->addObject(str);
+            }
+            else if (SAX_DICT == curState)
+            {
+                m_pCurDict->setObject(str, m_sCurKey);
+            }
+            str->release();
+        }
+        else if (sName == "false")
+        {
+            CCString *str = new CCString("0");
+            if (SAX_ARRAY == curState)
+            {
+                m_pArray->addObject(str);
+            }
+            else if (SAX_DICT == curState)
+            {
+                m_pCurDict->setObject(str, m_sCurKey);
+            }
+            str->release();
+        }
+        m_tState = SAX_NONE;
     }
-	m_tState = SAX_NONE;
-}
 
-void textHandler(void *ctx, const XML_Char *ch, int len)
-{
-	if (m_tState == SAX_NONE)
-	{
-		return;
-	}
- 	CCString *pText = new CCString();
-	pText->m_sString = std::string((char*)ch,0,len);
+    void textHandler(void *ctx, const char *ch, int len)
+    {
+        CC_UNUSED_PARAM(ctx);
+        if (m_tState == SAX_NONE)
+        {
+            return;
+        }
 
- 	switch(m_tState)
- 	{
- 	case SAX_KEY:
-		{
-			m_sCurKey = pText->m_sString;
-		}
- 		break;
- 	case SAX_INT:
- 	case SAX_REAL:
- 		{
- 			CCAssert(!m_sCurKey.empty(), "not found real : <integet/real>");
-            if (m_bInArray)
+        CCSAXState curState = m_tStateStack.empty() ? SAX_DICT : m_tStateStack.top();
+        CCString *pText = new CCString();
+        pText->m_sString = std::string((char*)ch,0,len);
+
+        switch(m_tState)
+        {
+        case SAX_KEY:
+            m_sCurKey = pText->m_sString;
+            break;
+        case SAX_INT:
+        case SAX_REAL:
+        case SAX_STRING:
             {
-                m_pArray->addObject(pText);
+                CCAssert(!m_sCurKey.empty(), "not found key : <integet/real>");
+
+                if (SAX_ARRAY == curState)
+                {
+                    m_pArray->addObject(pText);
+                }
+                else if (SAX_DICT == curState)
+                {
+                    m_pCurDict->setObject(pText, m_sCurKey);
+                }
+                break;
             }
-            else
-            {
-                m_pCurDict->setObject(pText, m_sCurKey);
-            }
- 			break;
- 		}
- 	case SAX_STRING:
- 		{
- 			CCAssert(!m_sCurKey.empty(), "not found string");
-            if (m_bInArray)
-            {
-                m_pArray->addObject(pText);
-            }
-            else
-            {
-                m_pCurDict->setObject(pText, m_sCurKey);
-            }
- 			break;
- 		}
- 	}
-	pText->release();
-}
+        default:
+            break;
+        }
+        pText->release();
+    }
 };
 
 
