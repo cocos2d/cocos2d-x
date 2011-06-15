@@ -85,6 +85,33 @@ CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSel
 
 	return pTimer;
 }
+#ifdef  ENABLE_LUA
+CCTimer* CCTimer::timerWithScript(SelectorProtocol* pTarget, const char* szFuncName, ccTime fSeconds)
+{
+	CCTimer *pTimer = new CCTimer();
+	pTimer->initWithScript(pTarget, szFuncName, fSeconds);
+	pTimer->autorelease();
+	return pTimer;
+}
+
+bool CCTimer::initWithScript(SelectorProtocol* pTarget,  const char* szFuncName, ccTime fSeconds)
+{
+	m_pTarget= pTarget;
+	m_scriptFunc = szFuncName;
+	m_fElapsed = -1;
+	m_fInterval = fSeconds;
+	m_pfnSelector = NULL;
+	return true;
+}
+bool CCTimer::isScriptFuncExist( const char* szFuncName)
+{
+	if (m_pTarget&& szFuncName)
+	{
+		return strcmp(m_scriptFunc.c_str(), szFuncName)== 0? true: false;
+	}
+	return false;
+}
+#endif
 
 bool CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector)
 {
@@ -119,6 +146,13 @@ void CCTimer::update(ccTime dt)
 			(m_pTarget->*m_pfnSelector)(m_fElapsed);
 			m_fElapsed = 0;
 		}
+#ifdef  ENABLE_LUA
+		else if (m_scriptFunc.size())
+		{
+			schedule_SCHEDULE(m_pTarget, m_pfnSelector, m_fElapsed, m_scriptFunc);
+			m_fElapsed = 0;
+		}
+#endif
 	}
 }
 
@@ -206,10 +240,13 @@ void CCScheduler::unscheduleAllTimers()
 {
 	assert(false);
 }
-
+#ifdef  ENABLE_LUA
+void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused, const char* szScriptFunc)
+#else
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused)
+#endif
 {
-	assert(pfnSelector);
+	//assert(pfnSelector);
 	assert(pTarget);
 
 	tHashSelectorEntry *pElement = NULL;
@@ -242,32 +279,66 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 		for (unsigned int i = 0; i < pElement->timers->num; ++i)
 		{
 			CCTimer *timer = (CCTimer*)pElement->timers->arr[i];
+#ifdef  ENABLE_LUA
+			if ((timer->m_pfnSelector &&pfnSelector == timer->m_pfnSelector) 
+				|| (szScriptFunc && timer->isScriptFuncExist(szScriptFunc)))
+			{
+				CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
+				timer->m_fInterval = fInterval;
+				return;
+			}
+#else
 			if (pfnSelector == timer->m_pfnSelector)
 			{
 				CCLOG("CCSheduler#scheduleSelector. Selector already scheduled.");
 				timer->m_fInterval = fInterval;
 				return;
 			}
+
+#endif
+			
 		}
 		ccArrayEnsureExtraCapacity(pElement->timers, 1);
 	}
 
 	CCTimer *pTimer = new CCTimer();
+#ifdef  ENABLE_LUA
+	if (szScriptFunc)
+	{
+		pTimer->initWithScript(pTarget, szScriptFunc, fInterval);
+	}
+	else
+	{
+		pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
+	}
+	
+#else
 	pTimer->initWithTarget(pTarget, pfnSelector, fInterval);
+#endif
 	ccArrayAppendObject(pElement->timers, pTimer);
 	pTimer->release();	
 }
-
+#ifdef  ENABLE_LUA
+void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, const char* szScriptFunc)
+#else
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget)
+#endif
 {
 	// explicity handle nil arguments when removing an object
+#ifdef  ENABLE_LUA
+	if (pTarget == 0 || (pfnSelector == 0 && szScriptFunc == 0))
+	{
+		return;
+	}
+#else
 	if (pTarget == 0 || pfnSelector == 0)
 	{
 		return;
 	}
+#endif
 
-	assert(pTarget);
-	assert(pfnSelector);
+	//assert(pTarget);
+	//assert(pfnSelector);
 
 	tHashSelectorEntry *pElement = NULL;
 	HASH_FIND_INT(m_pHashForSelectors, &pTarget, pElement);
@@ -278,7 +349,12 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 		{
 			CCTimer *pTimer = (CCTimer*)(pElement->timers->arr[i]);
 
+#ifdef  ENABLE_LUA
+			if ((pTimer->m_pfnSelector&& pfnSelector == pTimer->m_pfnSelector) ||
+				 pTimer->isScriptFuncExist(szScriptFunc))
+#else
 			if (pfnSelector == pTimer->m_pfnSelector)
+#endif
 			{
 				if (pTimer == pElement->currentTimer && (! pElement->currentTimerSalvaged))
 				{
@@ -562,7 +638,18 @@ void CCScheduler::tick(ccTime dt)
 	{
 		if (! pEntry->paused)
 		{
+#ifdef  ENABLE_LUA
+			if (pEntry->target->m_scriptFunc[ccSEL_Update].size())
+			{
+				schedule_SCHEDULE(NULL, NULL, dt, pEntry->target->m_scriptFunc[ccSEL_Update]);
+			}
+			else
+			{
+				pEntry->target->update(dt);
+			}
+#else
 			pEntry->target->update(dt);
+#endif
 		}
 	}
 
@@ -571,7 +658,19 @@ void CCScheduler::tick(ccTime dt)
 	{
 		if (! pEntry->paused)
 		{
+#ifdef  ENABLE_LUA
+			if (pEntry->target->m_scriptFunc[ccSEL_Update].size())
+			{
+				schedule_SCHEDULE(NULL, NULL,dt,  pEntry->target->m_scriptFunc[ccSEL_Update]);
+			}
+			else
+			{
+				pEntry->target->update(dt);
+			}
+#else
 			pEntry->target->update(dt);
+#endif
+			
 		}
 	}
 
@@ -580,7 +679,19 @@ void CCScheduler::tick(ccTime dt)
 	{
 		if (! pEntry->paused)
 		{
+#ifdef  ENABLE_LUA
+			if (pEntry->target->m_scriptFunc[ccSEL_Update].size())
+			{
+				schedule_SCHEDULE(NULL, NULL,dt,  pEntry->target->m_scriptFunc[ccSEL_Update]);
+			}
+			else
+			{
+				pEntry->target->update(dt);
+			}
+#else
 			pEntry->target->update(dt);
+#endif
+			
 		}
 	}
 

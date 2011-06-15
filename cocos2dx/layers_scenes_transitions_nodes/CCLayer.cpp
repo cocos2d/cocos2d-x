@@ -604,6 +604,29 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 	return NULL;
 }
 
+#ifdef  ENABLE_LUA
+CCMultiplexLayer * CCMultiplexLayer::layerWithLayer(CCLayer* layer)
+{
+	CCMultiplexLayer * pMultiplexLayer = new CCMultiplexLayer();
+	pMultiplexLayer->initWithLayer(layer);
+	pMultiplexLayer->autorelease();
+	return pMultiplexLayer;
+}
+void CCMultiplexLayer::addLayer(CCLayer* layer)
+{
+	assert(m_pLayers);
+	m_pLayers->addObject(layer);
+}
+
+bool CCMultiplexLayer::initWithLayer(CCLayer* layer)
+{
+	m_pLayers = new CCMutableArray<CCLayer*>(1);
+	m_pLayers->addObject(layer);
+	m_nEnabledLayer = 0;
+	this->addChild(layer);
+	return true;
+}
+#endif
 bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 {
 	m_pLayers = new CCMutableArray<CCLayer*>(5);

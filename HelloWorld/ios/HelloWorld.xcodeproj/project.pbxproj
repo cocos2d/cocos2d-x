@@ -43,6 +43,10 @@
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF492D4C1289302400A09262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
+		BF69BA461396450A003A7781 /* LuaCocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = BF69BA421396450A003A7781 /* LuaCocos2d.h */; };
+		BF69BA471396450A003A7781 /* LuaCocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF69BA431396450A003A7781 /* LuaCocos2d.cpp */; };
+		BF69BA481396450A003A7781 /* CCLuaSrcipt.h in Headers */ = {isa = PBXBuildFile; fileRef = BF69BA441396450A003A7781 /* CCLuaSrcipt.h */; };
+		BF69BA491396450A003A7781 /* CCLuaSrcipt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF69BA451396450A003A7781 /* CCLuaSrcipt.cpp */; };
 		BF755FAA12A1013F00450234 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755FA612A1013F00450234 /* AppDelegate.cpp */; };
 		BF755FAB12A1013F00450234 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755FA812A1013F00450234 /* HelloWorldScene.cpp */; };
 		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
@@ -609,6 +613,10 @@
 		BF492D4B1289302400A09262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		BF69BA421396450A003A7781 /* LuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocos2d.h; sourceTree = "<group>"; };
+		BF69BA431396450A003A7781 /* LuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCocos2d.cpp; sourceTree = "<group>"; };
+		BF69BA441396450A003A7781 /* CCLuaSrcipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaSrcipt.h; sourceTree = "<group>"; };
+		BF69BA451396450A003A7781 /* CCLuaSrcipt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaSrcipt.cpp; sourceTree = "<group>"; };
 		BF755FA612A1013F00450234 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF755FA712A1013F00450234 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF755FA812A1013F00450234 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = ../HelloWorldScene.cpp; sourceTree = SOURCE_ROOT; };
@@ -1246,6 +1254,17 @@
 			name = ios;
 			sourceTree = "<group>";
 		};
+		BF69BA411396450A003A7781 /* lua_support */ = {
+			isa = PBXGroup;
+			children = (
+				BF69BA421396450A003A7781 /* LuaCocos2d.h */,
+				BF69BA431396450A003A7781 /* LuaCocos2d.cpp */,
+				BF69BA441396450A003A7781 /* CCLuaSrcipt.h */,
+				BF69BA451396450A003A7781 /* CCLuaSrcipt.cpp */,
+			);
+			path = lua_support;
+			sourceTree = "<group>";
+		};
 		BF755FA512A1012300450234 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1273,6 +1292,7 @@
 		BF83517613275F5500F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				BF69BA411396450A003A7781 /* lua_support */,
 				BF1E5331135D23A100FD0934 /* text_input_node */,
 				BF1FAE951352F52F007553D9 /* CCDirector.cpp */,
 				BF83517713275F5500F3C033 /* actions */,
@@ -2709,6 +2729,8 @@
 				BF1E5339135D23FC00FD0934 /* CCIMEDispatcher.h in Headers */,
 				BF1E5341135D245500FD0934 /* CCTextFieldTTF.h in Headers */,
 				BF126D191373F24200C4ABC5 /* CCUserDefault.h in Headers */,
+				BF69BA461396450A003A7781 /* LuaCocos2d.h in Headers */,
+				BF69BA481396450A003A7781 /* CCLuaSrcipt.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2904,6 +2926,8 @@
 				BF1E5334135D23E100FD0934 /* CCIMEDispatcher.cpp in Sources */,
 				BF1E5335135D23E100FD0934 /* CCTextFieldTTF.cpp in Sources */,
 				BF126D1B1373F25400C4ABC5 /* CCUserDefault.cpp in Sources */,
+				BF69BA471396450A003A7781 /* LuaCocos2d.cpp in Sources */,
+				BF69BA491396450A003A7781 /* CCLuaSrcipt.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
