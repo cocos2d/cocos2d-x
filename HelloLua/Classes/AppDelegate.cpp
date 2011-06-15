@@ -82,10 +82,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
-	
-
-#ifdef ENABLE_LUA
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         CCLog("1");
 	unsigned long size;
@@ -131,17 +127,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile(path.c_str());
 #endif 
-
-#else
-	// create a scene. it's an autorelease object
-	CCScene *pScene = HelloWorld::scene();
-
-	// run
-	pDirector->runWithScene(pScene);
-#endif // 1
 
 	return true;
 }
