@@ -22,10 +22,6 @@ do
     fi
 done
 
-# to enable lua
-ENABLE_LUA=true
-export ENABLE_LUA
-
 # build
 pushd $ANDROID_NDK_ROOT
 ./ndk-build -C $HELLOWORLD_ROOT $*
