@@ -32,7 +32,6 @@ THE SOFTWARE.
 namespace cocos2d {
 
 //implementation CCParticleSystemQuad
-
 // overriding the init method
 bool CCParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 {
@@ -86,6 +85,19 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 #if CC_USES_VBO
     glDeleteBuffers(1, &m_uQuadsID);
 #endif
+}
+
+// implementation CCParticleSystemQuad
+CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistFile)
+{
+    CCParticleSystemQuad *pRet = new CCParticleSystemQuad();
+    if (pRet && pRet->initWithFile(plistFile))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet)
+        return pRet;
 }
 
 // rect should be in Texture coordinates, not pixel coordinates
