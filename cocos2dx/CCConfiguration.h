@@ -72,11 +72,16 @@ protected:
 	bool			m_bSupportsNPOT;
 	bool			m_bSupportsBGRA8888;
 	bool			m_bSupportsDiscardFramebuffer;
+    bool            m_bInited;
 	unsigned int	m_uOSVersion;
 	GLint           m_nMaxSamplesAllowed;
+    char *          m_pGlExtensions;
 
-public:
-	CCConfiguration(void);
+private:
+
+    CCConfiguration(void);
+
+public:	
 
 	CCGlesVersion getGlesVersion();
 	
