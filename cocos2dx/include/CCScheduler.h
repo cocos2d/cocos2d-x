@@ -60,6 +60,14 @@ public:
 
 	/** Allocates a timer with a target, a selector and an interval in seconds. */
 	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
+	
+#ifdef  ENABLE_LUA
+	//CCTimer init from Script
+	static CCTimer* timerWithScript(SelectorProtocol* pTarget, const char* szFuncName, ccTime fSeconds);
+	bool initWithScript(SelectorProtocol* pTarget,  const char* szFuncName, ccTime fSeconds);
+	bool isScriptFuncExist( const char* szFuncName);
+	std::string m_scriptFunc;
+#endif
 
 public:
 	SEL_SCHEDULE m_pfnSelector;
@@ -115,8 +123,11 @@ public:
 
 	 @since v0.99.3
 	 */
+#ifdef  ENABLE_LUA 
+	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused, const char* szScriptFunc = NULL);
+#else
 	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
-
+#endif
 	/** Schedules the 'update' selector for a given target with a given priority.
 	 The 'update' selector will be called every frame.
 	 The lower the priority, the earlier it is called.
@@ -128,7 +139,11 @@ public:
 	 If you want to unschedule the "update", use unscheudleUpdateForTarget.
 	 @since v0.99.3
 	 */
+#ifdef  ENABLE_LUA
+	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, const char* szScriptFunc = NULL);
+#else
 	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
+#endif
 
 	/** Unschedules the update selector for a given target
 	 @since v0.99.3
