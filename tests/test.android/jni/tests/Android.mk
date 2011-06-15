@@ -81,26 +81,34 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                    $(LOCAL_PATH)/../../../.. \
                    $(LOCAL_PATH)/../../.. \
                    $(LOCAL_PATH)/../../../../chipmunk/include/chipmunk \
-                   $(LOCAL_PATH)/../../../../CocosDenshion/include
+                   $(LOCAL_PATH)/../../../../CocosDenshion/include 
                    
 # it is used for ndk-r4
 # if you build with nkd-r4, uncomment it   
-# LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \
-#                -lGLESv1_CM \
-#                -lcocos2d -lcocosdenshion -llog \
-#                -lbox2d -lchipmunk \
-#                -L$(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries -lcurl
+# LOCAL_LDLIBS := -lGLESv1_CM \
+#                 -llog \
+#                 -lz
+#                 -L$(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries -lcurl \
+#                -lpng \
+#                -lxml2 \
+#                -ljpeg \
+#                -lskia
                 
 
 # it is used for ndk-r5    
 # if you build with ndk-r4, comment it   
 # because the new Windows toolchain doesn't support Cygwin's drive
 # mapping (i.e /cygdrive/c/ instead of C:/)    
-LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
-                -lGLESv1_CM \
-                -lcocos2d -llog -lcocosdenshion \
-                -lbox2d -lchipmunk \
-                -L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl
+LOCAL_LDLIBS := -lGLESv1_CM \
+                -llog  \
+                -lz \
+                -L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl \
+                -lpng \
+                -lxml2 \
+                -ljpeg \
+                -lskia
+                
+LOCAL_STATIC_LIBRARIES := libcocos2d libcocosdenshion libbox2d libchipmunk
             
 include $(BUILD_SHARED_LIBRARY)
                    

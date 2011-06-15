@@ -44,8 +44,6 @@ public class ApplicationDemo extends Cocos2dxActivity{
 	 private GLSurfaceView mGLView;
 	
      static {
-    	 System.loadLibrary("cocos2d");
-    	 System.loadLibrary("cocosdenshion");
          System.loadLibrary("helloworld");
      }
 }

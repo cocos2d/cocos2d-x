@@ -279,7 +279,20 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 				bool bClaimed = false;
 				if (uIndex == ccTouchBegan)
 				{
+#ifdef  ENABLE_LUA
+					CCString*pLuaFn = pHandler->getDelegate()->getLuaEvent(ccTouchBegan);
+					if (pLuaFn)
+					{
+						bClaimed = true;
+						pHandler->getDelegate()->excuteLuaTouchEvent(pLuaFn, pTouch);
+					}
+					else
+					{
+						bClaimed = pHandler->getDelegate()->ccTouchBegan(pTouch, pEvent);
+					}
+#else
 					bClaimed = pHandler->getDelegate()->ccTouchBegan(pTouch, pEvent);
+#endif
 					if (bClaimed)
 					{
 						pHandler->getClaimedTouches()->addObject(pTouch);
@@ -289,7 +302,45 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 				{
 					// moved ended cancelled
 					bClaimed = true;
+#ifdef  ENABLE_LUA
+					CCString*pLuaFn = pHandler->getDelegate()->getLuaEvent(sHelper.m_type);
 
+					switch (sHelper.m_type)
+					{
+					case ccTouchMoved:
+						if (pLuaFn)
+						{
+							pHandler->getDelegate()->excuteLuaTouchEvent(pLuaFn, pTouch);
+						}
+						else
+						{
+							pHandler->getDelegate()->ccTouchMoved(pTouch, pEvent);
+						}
+						break;
+					case ccTouchEnded:
+						if (pLuaFn)
+						{
+							pHandler->getDelegate()->excuteLuaTouchEvent(pLuaFn, pTouch);
+						}
+						else
+						{
+							pHandler->getDelegate()->ccTouchEnded(pTouch, pEvent);
+						}
+						pHandler->getClaimedTouches()->removeObject(pTouch);
+						break;
+					case ccTouchCancelled:
+						if (pLuaFn)
+						{
+							pHandler->getDelegate()->excuteLuaTouchEvent(pLuaFn, pTouch);
+						}
+						else
+						{
+							pHandler->getDelegate()->ccTouchCancelled(pTouch, pEvent);
+						}
+						pHandler->getClaimedTouches()->removeObject(pTouch);
+						break;
+					}
+#else
 					switch (sHelper.m_type)
 					{
 					case ccTouchMoved:
@@ -304,6 +355,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 						pHandler->getClaimedTouches()->removeObject(pTouch);
 						break;
 					}
+#endif
 				}
 
 				if (bClaimed && pHandler->isSwallowsTouches())
@@ -334,7 +386,34 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
             {
 			    break;
             }
+#ifdef  ENABLE_LUA
+			CCString*pLuaTouchesfn = pHandler->getDelegate()->getLuaEvent(sHelper.m_type);
+			if (pLuaTouchesfn)
+			{
+				pHandler->getDelegate()->excuteLuaTouchesEvent(pLuaTouchesfn, pMutableTouches);
+			}
+			else
+			{
 
+				switch (sHelper.m_type)
+				{
+				case ccTouchBegan:
+					pHandler->getDelegate()->ccTouchesBegan(pMutableTouches, pEvent);
+					break;
+				case ccTouchMoved:
+					pHandler->getDelegate()->ccTouchesMoved(pMutableTouches, pEvent);
+					break;
+				case ccTouchEnded:
+					pHandler->getDelegate()->ccTouchesEnded(pMutableTouches, pEvent);
+					break;
+				case ccTouchCancelled:
+					pHandler->getDelegate()->ccTouchesCancelled(pMutableTouches, pEvent);
+					break;
+				}
+
+			}
+	
+#else
 			switch (sHelper.m_type)
 			{
 			case ccTouchBegan:
@@ -350,6 +429,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 				pHandler->getDelegate()->ccTouchesCancelled(pMutableTouches, pEvent);
 				break;
 			}
+#endif
 		}
 	}
 

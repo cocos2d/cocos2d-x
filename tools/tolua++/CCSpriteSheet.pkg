@@ -1,0 +1,14 @@
+namespace   cocos2d {
+	
+	class CCSpriteSheetInternalOnly : public CCSpriteBatchNode
+	{
+	};
+
+	
+	class CCSpriteSheet: public CCSpriteSheetInternalOnly
+	{
+	};
+
+}//namespace   cocos2d 
+
+

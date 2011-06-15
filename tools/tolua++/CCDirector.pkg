@@ -1,0 +1,200 @@
+#include "platform/CCPlatformMacros.h"
+#include "CCObject.h"
+#include "ccTypes.h"
+#include "CCGeometry.h"
+#include "CCMutableArray.h"
+#include "CCGeometry.h"
+#include "CCEGLView.h"
+#include "CCGL.h"
+
+namespace   cocos2d {
+
+	enum  {
+		/// If the window is resized, it won't be autoscaled
+		kCCDirectorResize_NoScale,
+		/// If the window is resized, it will be autoscaled (default behavior)
+		kCCDirectorResize_AutoScale,
+	};
+
+	/** @typedef tPixelFormat
+	Possible Pixel Formats for the CCEGLView
+	*/
+	typedef enum {
+		/** RGB565 pixel format. No alpha. 16-bit. (Default) */
+		kCCPixelFormatRGB565,
+		/** RGBA format. 32-bit. Needed for some 3D effects. It is not as fast as the RGB565 format. */
+		kCCPixelFormatRGBA8888,
+		/** default pixel format */
+		kCCPixelFormatDefault = kCCPixelFormatRGB565,
+
+		// backward compatibility stuff
+		kPixelFormatRGB565 = kCCPixelFormatRGB565,
+		kRGB565 = kCCPixelFormatRGB565,
+		kPixelFormatRGBA8888 = kCCPixelFormatRGBA8888,
+		kRGBA8 = kCCPixelFormatRGBA8888,
+	} tPixelFormat;
+
+
+	typedef enum {
+		/// A Depth Buffer of 0 bits will be used (default)
+		kCCDepthBufferNone,
+		/// A depth buffer of 16 bits will be used
+		kCCDepthBuffer16,
+		/// A depth buffer of 24 bits will be used
+		kCCDepthBuffer24,
+
+		// backward compatibility stuff
+		kDepthBuffer16 = kCCDepthBuffer16,
+		kDepthBuffer24 = kCCDepthBuffer24,
+	} tDepthBufferFormat;
+
+	typedef enum {
+		/// sets a 2D projection (orthogonal projection)
+		kCCDirectorProjection2D,
+
+		/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+		kCCDirectorProjection3D,
+
+		/// it calls "updateProjection" on the projection delegate.
+		kCCDirectorProjectionCustom,
+
+		/// Detault projection is 3D projection
+		kCCDirectorProjectionDefault = kCCDirectorProjection3D,
+
+		// backward compatibility stuff
+		CCDirectorProjection2D = kCCDirectorProjection2D,
+		CCDirectorProjection3D = kCCDirectorProjection3D,
+		CCDirectorProjectionCustom = kCCDirectorProjectionCustom,
+	} ccDirectorProjection;
+
+	
+		typedef enum {	
+			kCCDirectorTypeNSTimer,
+			kCCDirectorTypeMainLoop,	
+			kCCDirectorTypeThreadMainLoop,
+			kCCDirectorTypeDisplayLink,
+			kCCDirectorTypeDefault = kCCDirectorTypeNSTimer,
+			CCDirectorTypeNSTimer = kCCDirectorTypeNSTimer,
+			CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
+			CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
+			CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
+			CCDirectorTypeDefault =kCCDirectorTypeDefault,
+	} ccDirectorType;
+
+	typedef enum {
+		/// Device oriented vertically, home button on the bottom
+		kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,	
+		/// Device oriented vertically, home button on the top
+		kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
+		/// Device oriented horizontally, home button on the right
+		kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
+		/// Device oriented horizontally, home button on the left
+		kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
+
+		// Backward compatibility stuff
+		CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
+		CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
+		CCDeviceOrientationLandscapeLeft = kCCDeviceOrientationLandscapeLeft,
+		CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
+	} ccDeviceOrientation;
+
+	class CCLabelTTF;
+	class CCScene;
+	class CCEGLView;
+	class CCNode;
+	class CCProjectionProtocol;
+
+	class  CCDirector : public CCObject
+	{
+	public: 
+		bool init(void);	
+		CCDirector(void);
+
+
+		CCScene* getRunningScene(void);
+
+
+		double getAnimationInterval(void);
+		void setAnimationInterval(double dValue);
+		bool isDisplayFPS(void);
+		void setDisplayFPS(bool bDisplayFPS);
+		CC_GLVIEW* getOpenGLView(void);
+		void setOpenGLView(CC_GLVIEW *pobOpenGLView);
+		bool isNextDeltaTimeZero(void);
+		void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
+		bool isPaused(void);
+		ccDirectorProjection getProjection(void);
+		void setProjection(ccDirectorProjection kProjection);
+		bool isSendCleanupToScene(void);
+		CCSize getWinSize(void);	
+		CCSize getWinSizeInPixels(void);
+		CCSize getDisplaySizeInPixels(void);
+		void reshapeProjection(CCSize newWindowSize);
+		CCPoint convertToGL(CCPoint obPoint);
+		CCPoint convertToUI(CCPoint obPoint);
+		float getZEye(void);
+		void runWithScene(CCScene *pScene);
+		void pushScene(CCScene *pScene);
+		void popScene(void);
+		void replaceScene(CCScene *pScene);
+		void endToLua(void);
+		void pause(void);
+		void resume(void);
+		void drawScene(void);
+		void purgeCachedData(void);
+		void setGLDefaultValues(void);
+
+		/** enables/disables OpenGL alpha blending */
+		void setAlphaBlending(bool bOn);
+
+		/** enables/disables OpenGL depth test */
+		void setDepthTest(bool bOn);
+
+		virtual void mainLoop(void) = 0;
+
+		// Profiler
+		void showProfilers(void);
+
+		/** rotates the screen if an orientation different than Portrait is used */
+		void applyOrientation(void);
+
+		ccDeviceOrientation getDeviceOrientation(void);
+		void setDeviceOrientation(ccDeviceOrientation kDeviceOrientation);
+
+		void setContentScaleFactor(CGFloat scaleFactor);
+		CGFloat getContentScaleFactor(void);
+
+		bool enableRetinaDisplay(bool enabled);
+		bool isRetinaDisplay() { return m_bRetinaDisplay; }
+
+		static bool setDirectorType(ccDirectorType obDirectorType);
+
+
+		void setPixelFormat(tPixelFormat kPixelFormat);
+		/** Pixel format used to create the context */
+		tPixelFormat getPiexFormat(void);
+
+
+		void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat);
+
+
+		bool detach(void);
+		void registerTick(const char* szfn);
+
+		static CCDirector* sharedDirector(void);
+	};
+
+/*
+	class CCDisplayLinkDirector : public CCDirector
+	{
+
+		CCDisplayLinkDirector(void);
+		void mainLoop(void);
+		void setAnimationInterval(double dValue);
+		void startAnimation(void);
+		void stopAnimation();
+	};
+*/
+}//namespace   cocos2d 
+
+
