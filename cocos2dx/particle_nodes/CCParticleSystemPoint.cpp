@@ -60,6 +60,20 @@ CCParticleSystemPoint::~CCParticleSystemPoint()
 	glDeleteBuffers(1, &m_uVerticesID);
 #endif
 }
+
+// implementation CCParticleSystemPoint
+CCParticleSystemPoint * CCParticleSystemPoint::particleWithFile(const char *plistFile)
+{
+    CCParticleSystemPoint *pRet = new CCParticleSystemPoint();
+    if (pRet && pRet->initWithFile(plistFile))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet)
+        return pRet;
+}
+
 void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// place vertices and colos in array

@@ -60,6 +60,12 @@ public:
 		,m_pIndices(NULL)
 	{}
 	virtual ~CCParticleSystemQuad();
+
+    /** creates an initializes a CCParticleSystemQuad from a plist file.
+    This plist files can be creted manually or with Particle Designer:  
+    */
+    static CCParticleSystemQuad * particleWithFile(const char *plistFile);
+
 	/** initialices the indices for the vertices*/
 	void initIndices();
 
