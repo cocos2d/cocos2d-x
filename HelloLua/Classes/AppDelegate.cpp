@@ -102,14 +102,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloWorld/Resource/hello.lua");
+	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloLua/Resource/hello.lua");
 
 	/*
 	 * Another way to run lua script.
 	 * Load the file into memory and run it.
 	 *
 	unsigned long size;
-	char *pFileContent = (char*)CCFileUtils::getFileData("./../../HelloWorld/Resource/hello.lua", "r", &size);
+	char *pFileContent = (char*)CCFileUtils::getFileData("./../../HelloLua/Resource/hello.lua", "r", &size);
 	if (pFileContent)
 	{
 		// copy the file contents and add '\0' at the end, or the lua parser can not parse it
