@@ -96,7 +96,18 @@ tileMap_parallax_nodes/CCTMXTiledMap.cpp \
 tileMap_parallax_nodes/CCTMXXMLParser.cpp \
 tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp
+touch_dispatcher/CCTouchHandler.cpp 
+
+ifeq ($(ENABLE_LUA), true)
+    LOCAL_SRC_FILES += lua_support/CCLuaSrcipt.cpp \
+                       lua_support/LuaCocos2d.cpp
+                       
+    LOCAL_CFLAGS := -DENABLE_LUA -DUSE_FILE32API
+else
+    # define the macro to compile through support/zip_support/ioapi.c                
+    LOCAL_CFLAGS := -DUSE_FILE32API
+endif
+
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
@@ -116,29 +127,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/third_party/android/skia/text \
                     $(LOCAL_PATH)/platform/third_party/android/skia/utils \
                     $(LOCAL_PATH)/platform/third_party/android/skia/views \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/xml
-                    
-# it is used for ndk-r4
-# if you build with nkd-r4, uncomment it   
-# LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/third_party/android/libraries \
-#                -lGLESv1_CM -llog -lz \
-#                -lpng \
-#                -lxml2 \
-#                -ljpeg \
-#                -lskia
+                    $(LOCAL_PATH)/platform/third_party/android/skia/xml \
+		    $(LOCAL_PATH)/../lua/src \
+		    $(LOCAL_PATH)/../lua/tolua                    
 
-# it is used for ndk-r5  
-# if you build with ndk-r4, comment it   
-# because the new Windows toolchain doesn't support Cygwin's drive
-# mapping (i.e /cygdrive/c/ instead of C:/)  
-LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries) \
-                 -lGLESv1_CM -llog -lz \
-                 -lpng \
-                 -lxml2 \
-                 -ljpeg \
-                 -lskia
-
-# define the macro to compile through support/zip_support/ioapi.c                
-LOCAL_CFLAGS := -DUSE_FILE32API  -Wno-unused-value
                                  
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
