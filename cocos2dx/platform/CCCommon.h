@@ -37,6 +37,13 @@ static const int kMaxLogLen = 255;
 */
 void CC_DLL CCLog(const char * pszFormat, ...);
 
+#ifdef  ENABLE_LUA 
+inline void CC_DLL CCLuaLog(const char * pszFormat)
+{
+	CCLog(pszFormat);
+}
+#endif
+
 /**
 @brief Pop out a message box
 */
