@@ -98,7 +98,7 @@ public:
 		return tRet;
 	}
 
-	_ValueT objectForKey(_T key)			///< 
+	_ValueT objectForKey(const _T& key)			///< 
 	{
 		CCObjectMapIter it;
 
@@ -111,7 +111,7 @@ public:
 	}
 
 
-	bool setObject(_ValueT pObject, _T key)
+	bool setObject(_ValueT pObject, const _T& key)
 	{
 		pair<CCObjectMapIter, bool > pr;
 
@@ -126,7 +126,7 @@ public:
 		return false;
 	}
 
-	void removeObjectForKey(_T key)
+	void removeObjectForKey(const _T& key)
 	{
 		CCObjectMapIter it;
 
