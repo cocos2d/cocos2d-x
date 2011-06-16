@@ -47,6 +47,12 @@ public:
         {
             DeleteDC(m_hDC);
         }
+        HFONT hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+        if (hDefFont != m_hFont)
+        {
+            DeleteObject(m_hFont);
+            m_hFont = hDefFont;
+        }
     }
 
     bool setFont(const char * pFontName = NULL, int nSize = 0)
