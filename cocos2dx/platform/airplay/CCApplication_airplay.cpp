@@ -130,4 +130,9 @@ CCApplication& CCApplication::sharedApplication()
 	return *sm_pSharedApplication;
 }
 
+ccLanguageType CCApplication::getCurrentLanguage()
+{
+    return kLanguageEnglish;
+}
+
 NS_CC_END;

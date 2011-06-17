@@ -49,6 +49,15 @@ inline void CC_DLL CCLuaLog(const char * pszFormat)
 */
 void CC_DLL CCMessageBox(const char * pszMsg, const char * pszTitle);
 
+/**
+@brief Enum the language type supportted now
+*/
+typedef enum LanguageType
+{
+    kLanguageEnglish = 0,
+    kLanguageChinese,
+} ccLanguageType;
+
 NS_CC_END;
 
 #endif	// __CC_COMMON_H__

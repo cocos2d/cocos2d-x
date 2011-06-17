@@ -1,6 +1,7 @@
 #include "CCApplication.h"
 
 #include "CCDirector.h"
+#include <map>
 
 /**
 @brief	This function change the PVRFrame show/hide setting in register.
@@ -123,6 +124,30 @@ CCApplication& CCApplication::sharedApplication()
 {
     CC_ASSERT(sm_pSharedApplication);
     return *sm_pSharedApplication;
+}
+
+static std::map<LCID, ccLanguageType>::value_type s_MapValues[] =
+{
+    std::map<LCID, ccLanguageType>::value_type(2052,    kLanguageChinese),
+    std::map<LCID, ccLanguageType>::value_type(4100,    kLanguageChinese),
+    std::map<LCID, ccLanguageType>::value_type(1028,    kLanguageChinese),
+    std::map<LCID, ccLanguageType>::value_type(3076,    kLanguageChinese),
+    std::map<LCID, ccLanguageType>::value_type(5124,    kLanguageChinese),
+};
+static std::map<LCID, ccLanguageType> s_LanguageMap(s_MapValues, s_MapValues + 5);
+
+ccLanguageType CCApplication::getCurrentLanguage()
+{
+    LCID LanguageID = GetUserDefaultLCID();
+    ccLanguageType ret = kLanguageEnglish;
+
+    std::map<LCID, ccLanguageType>::iterator it = s_LanguageMap.find(LanguageID);
+    if (it != s_LanguageMap.end())
+    {
+        ret = it->second;
+    }
+
+    return ret;
 }
 
 NS_CC_END;

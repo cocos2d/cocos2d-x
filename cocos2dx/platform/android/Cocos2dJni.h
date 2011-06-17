@@ -34,6 +34,7 @@ extern "C"
 	void disableAccelerometerJNI();
 	void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
     void setKeyboardStateJNI(int bOpen);
+    char* getCurrentLanguageJNI();
 	char* getPackageNameJNI();
 }
 
