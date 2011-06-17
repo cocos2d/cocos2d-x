@@ -94,6 +94,11 @@ public class Cocos2dxActivity extends Activity{
         };
     }
     
+    public static String getCurrentLanguage() {
+    	String languageName = java.util.Locale.getDefault().getLanguage();
+    	return languageName;
+    }
+    
     public static void showMessageBox(String title, String message){
     	Message msg = new Message();
     	msg.what = HANDLER_SHOW_DIALOG;
