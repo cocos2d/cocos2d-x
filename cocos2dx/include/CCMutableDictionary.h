@@ -182,12 +182,15 @@ public:
 		return pObject;
 	}
 
-#ifdef  ENABLE_LUA
+	/*
+	* end is a keyword of lua, so should use other name
+	* to export to lua
+	*/
 	void endToLua()
 	{
 		end();
 	} 
-#endif
+
 	void end()
 	{
 		m_bBegin = false;

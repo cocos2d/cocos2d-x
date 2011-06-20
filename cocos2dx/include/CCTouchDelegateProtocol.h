@@ -26,13 +26,12 @@ THE SOFTWARE.
 #ifndef __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 #define __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__
 
+#include <string>
+#include <map>
 #include "CCObject.h"
 #include "ccConfig.h"
-#ifdef  ENABLE_LUA
-#include "CCMutableDictionary.h"
-#include "CCString.h"
-#include "../lua_support/CCLuaSrcipt.h"
-#endif
+#include "CCScriptSupport.h"
+
 namespace   cocos2d {
 
 typedef enum
@@ -51,12 +50,18 @@ class CC_DLL CCTouchDelegate
 {
 protected:
 	ccTouchDelegateFlag m_eTouchDelegateType;
-#ifdef  ENABLE_LUA
-	CCMutableDictionary<int, cocos2d::CCString*> *m_pEventDictionary;
-#endif
+	std::map<int, std::string> *m_pEventTypeFuncMap;
+
 public:
 	friend class CCTouchDispatcher; // only CCTouchDispatcher & children can change m_eTouchDelegateType
 	inline ccTouchDelegateFlag getTouchDelegateType(void) { return m_eTouchDelegateType; }
+
+	CCTouchDelegate() : m_pEventTypeFuncMap(NULL) {}
+
+	virtual ~CCTouchDelegate()
+	{
+		CC_SAFE_DELETE(m_pEventTypeFuncMap);
+	}
 	
 	//! call the release() in child(layer or menu)
 	virtual void destroy(void) {}
@@ -76,89 +81,45 @@ public:
  	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
 
-#ifdef  ENABLE_LUA
-	//use for lua register event 
-	/*
-	szEventName must be one of follow value 
-	{ "ccTouchBegan" "ccTouchMoved" "ccTouchEnded" "ccTouchCancelled" }
-	*/
-	
-
-	void registerLuaTouchEvent(const char* szEventName, const char* fn)
+	// functions for script call back
+	inline void registerScriptTouchHandler(int eventType, const char* pszScriptFunctionName)
 	{
-		if (szEventName == NULL || strlen(szEventName) == 0 || fn == NULL || strlen(fn) == 0)
+		if (m_pEventTypeFuncMap == NULL)
 		{
-			CCLog("registerEvent input parameter error ");
-			return ;
+			m_pEventTypeFuncMap = new std::map<int, std::string>();
 		}
 
-		std::string strEventType[] = {"ccTouchBegan", "ccTouchMoved", "ccTouchEnded", "ccTouchCancelled", 
-		"ccMulTouchBegan", "ccMulTouchMoved", "ccMulTouchEnded", "ccMulTouchCancelled"};
-		int nSize = sizeof(strEventType);
-		int nType = -1;
-		for(int i = 0; i < nSize; i++)
-		{
-			if (strcmp(strEventType[i].c_str(), szEventName) == 0)
-			{
-				nType = i;
-				break;
-			}
-		}
-		if(nType != -1)
-		{
-			if (m_pEventDictionary == NULL)
-			{
-				m_pEventDictionary = new CCMutableDictionary<int, cocos2d::CCString*>();
-			}
-
-			if (m_pEventDictionary->objectForKey(nType) == NULL)
-			{
-				CCString *pStr = new CCString(fn);
-				m_pEventDictionary->setObject(pStr, nType);
-			}
-			else
-			{
-				CCLog("registerEvent %s already exist", szEventName);
-			}
-		}
-	}
-	CCString* getLuaEvent(int nType)
-	{
-		if (m_pEventDictionary == NULL)
-		{
-			return NULL;
-		}
-		CCString *pfn = NULL;
-		pfn = m_pEventDictionary->objectForKey(nType);
-		return pfn;
-
-	}
-	void excuteLuaTouchEvent(CCString* pLuafn, CCTouch *pTouch)
-	{
-		if (pLuafn)
-		{
-			CCLuaScriptModule::sharedLuaScriptModule()->executeTouch(pLuafn->m_sString.c_str(), pTouch);
-		}
+		(*m_pEventTypeFuncMap)[eventType] = pszScriptFunctionName;
 	}
 
-	void excuteLuaTouchesEvent(CCString* pLuafn, CCSet *pTouches)
+	inline bool isScriptHandlerExist(int eventType)
 	{
-		if (pLuafn)
+		if (m_pEventTypeFuncMap)
 		{
-			CCLuaScriptModule::sharedLuaScriptModule()->executeTouchesEvent(pLuafn->m_sString.c_str(), pTouches);
-		}
-	}
-	CCTouchDelegate(){m_pEventDictionary = NULL;}
-	~CCTouchDelegate()
-	{
-		if (m_pEventDictionary)
-		{
-			delete m_pEventDictionary;
-			m_pEventDictionary = NULL;
+			return (*m_pEventTypeFuncMap)[eventType].size() != 0;
 		}
 
+		return false;
 	}
-#endif
+
+	inline void excuteScriptTouchHandler(int eventType, CCTouch *pTouch)
+	{
+		if (m_pEventTypeFuncMap)
+		{
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
+				                                                                                     pTouch);
+		}
+		
+	}
+
+	inline void excuteScriptTouchesHandler(int eventType, CCSet *pTouches)
+	{
+		if (m_pEventTypeFuncMap)
+		{
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteTouchesEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
+				pTouches);
+		}
+	}
 };
 /**
  @brief

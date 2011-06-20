@@ -26,9 +26,11 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
+#include <string>
 #include "CCObject.h"
 #include "selector_protocol.h"
 #include "support/data_support/uthash.h"
+
 namespace   cocos2d {
 
 //
@@ -38,7 +40,7 @@ namespace   cocos2d {
 class CC_DLL CCTimer : public CCObject
 {
 public:
-	CCTimer(void) {}
+	CCTimer(void);
 
 	/** get interval in seconds */
 	inline ccTime getInterval(void) { return m_fInterval; }
@@ -51,6 +53,8 @@ public:
 	/** Initializes a timer with a target, a selector and an interval in seconds. */
     bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
 
+	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
+
 	/** triggers the timer */
 	void update(ccTime dt);
 
@@ -58,24 +62,20 @@ public:
 	/** Allocates a timer with a target and a selector. */
 	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
+	/** Allocates a timer with a script function name. */
+	static CCTimer* timerWithScriptFuncName(const char* pszFuncName, ccTime fSeconds);
+
 	/** Allocates a timer with a target, a selector and an interval in seconds. */
 	static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-	
-#ifdef  ENABLE_LUA
-	//CCTimer init from Script
-	static CCTimer* timerWithScript(SelectorProtocol* pTarget, const char* szFuncName, ccTime fSeconds);
-	bool initWithScript(SelectorProtocol* pTarget,  const char* szFuncName, ccTime fSeconds);
-	bool isScriptFuncExist( const char* szFuncName);
-	std::string m_scriptFunc;
-#endif
 
 public:
 	SEL_SCHEDULE m_pfnSelector;
 	ccTime m_fInterval;
+	std::string m_scriptFunc;
 
 protected:
 	SelectorProtocol *m_pTarget;	
-	ccTime m_fElapsed;
+	ccTime m_fElapsed;	
 };
 
 //
@@ -84,6 +84,7 @@ protected:
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
+struct _hashScriptFuncEntry;
 
 /** @brief Scheduler is responsible of triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
@@ -123,11 +124,10 @@ public:
 
 	 @since v0.99.3
 	 */
-#ifdef  ENABLE_LUA 
-	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused, const char* szScriptFunc = NULL);
-#else
 	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
-#endif
+	/** Schedule the script function
+	 */
+	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
 	/** Schedules the 'update' selector for a given target with a given priority.
 	 The 'update' selector will be called every frame.
 	 The lower the priority, the earlier it is called.
@@ -139,11 +139,10 @@ public:
 	 If you want to unschedule the "update", use unscheudleUpdateForTarget.
 	 @since v0.99.3
 	 */
-#ifdef  ENABLE_LUA
-	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, const char* szScriptFunc = NULL);
-#else
 	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
-#endif
+	/** Unschedule the script function
+	*/
+	void unscheduleScriptFunc(const char *pfzFuncName);
 
 	/** Unschedules the update selector for a given target
 	 @since v0.99.3
@@ -232,6 +231,9 @@ protected:
 	struct _hashSelectorEntry *m_pHashForSelectors;
 	struct _hashSelectorEntry *m_pCurrentTarget;
 	bool m_bCurrentTargetSalvaged;
+
+	// Used for "script function call back with interval"
+	struct _hashScriptFuncEntry *m_pHashForScriptFunctions;
 };
 }//namespace   cocos2d 
 

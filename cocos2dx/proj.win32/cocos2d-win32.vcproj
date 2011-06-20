@@ -42,8 +42,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\lua\tolua;..\..\lua\src;..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;ENABLE_LUA"
+				AdditionalIncludeDirectories="..\platform;..\platform\third_party\win32\iconv;..\platform\third_party\win32\zlib;..\platform\third_party\win32\libpng;..\platform\third_party\win32\libjpeg;..\platform\third_party\win32\libxml2;..\platform\third_party\win32\OGLES;..\include;.."
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib liblua.lib"
+				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
@@ -533,6 +533,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCScheduler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCScriptSupport.h"
 				>
 			</File>
 			<File
@@ -1081,22 +1085,10 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="lua_support"
+			Name="script_support"
 			>
 			<File
-				RelativePath="..\lua_support\CCLuaSrcipt.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lua_support\CCLuaSrcipt.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lua_support\LuaCocos2d.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\lua_support\LuaCocos2d.h"
+				RelativePath="..\script_support\CCScriptSupport.cpp"
 				>
 			</File>
 		</Filter>
