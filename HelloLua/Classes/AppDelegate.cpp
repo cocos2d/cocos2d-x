@@ -1,4 +1,5 @@
 #include "AppDelegate.h"
+#include "LuaEngine.h"
 
 #include "cocos2d.h"
 
@@ -82,6 +83,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// set FPS. the default value is 1.0/60 if you don't call this
 	pDirector->setAnimationInterval(1.0 / 60);
 
+	// register lua engine
+	CCScriptEngineManager::sharedScriptEngineManager()->registerScriptEngine(new LuaEngine());
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         CCLog("1");
 	unsigned long size;
@@ -96,13 +100,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 	    delete[] pFileContent;
 
 	    string code(pTmp);
-	    CCLuaScriptModule::sharedLuaScriptModule()->executeString(code);
+	    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeString(code);
 	    delete []pTmp;
 	}
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloLua/Resource/hello.lua");
+	// CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloLua/Resource/hello.lua");
+	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteScriptFile("./../../HelloLua/Resource/hello.lua");
 
 	/*
 	 * Another way to run lua script.
@@ -119,7 +124,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 		delete[] pFileContent;
 
 		string code(pTmp);
-		CCLuaScriptModule::sharedLuaScriptModule()->executeString(code);
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteScriptFile(code);
 		delete []pTmp;
 	}
 	*/
@@ -129,7 +134,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
-    CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile(path.c_str());
+    CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteScriptFile(path.c_str());
 #endif 
 
 	return true;

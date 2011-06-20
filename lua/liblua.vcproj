@@ -3,8 +3,8 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="liblua"
-	ProjectGUID="{A9376AC9-4D65-498F-885D-EEC3B41DD6E8}"
-	RootNamespace="lua"
+	ProjectGUID="{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
+	RootNamespace="liblua"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -20,8 +20,8 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="2"
+			ConfigurationType="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -41,12 +41,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="lua/tolua;./src"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\lua\tolua&quot;;&quot;$(SolutionDir)\lua\src&quot;;&quot;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)\cocos2dx\platform&quot;;&quot;$(SolutionDir)\cocos2dx\include&quot;;&quot;$(SolutionDir)\cocos2dx&quot;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough=""
+				PrecompiledHeaderFile=""
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -60,10 +62,19 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="libcocos2d.lib"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -75,6 +86,9 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -82,7 +96,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -105,10 +119,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBLUA_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -125,7 +139,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
@@ -157,16 +171,22 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="src"
 			>
 			<File
 				RelativePath=".\src\lapi.c"
 				>
 			</File>
 			<File
+				RelativePath=".\src\lapi.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lauxlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\src\lauxlib.h"
 				>
 			</File>
 			<File
@@ -178,6 +198,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\lcode.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ldblib.c"
 				>
 			</File>
@@ -186,7 +210,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ldebug.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ldo.c"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ldo.h"
 				>
 			</File>
 			<File
@@ -198,7 +230,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\lfunc.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lgc.c"
+				>
+			</File>
+			<File
+				RelativePath=".\src\lgc.h"
 				>
 			</File>
 			<File
@@ -214,11 +254,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\llex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\llimits.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lmathlib.c"
 				>
 			</File>
 			<File
 				RelativePath=".\src\lmem.c"
+				>
+			</File>
+			<File
+				RelativePath=".\src\lmem.h"
 				>
 			</File>
 			<File
@@ -230,7 +282,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\lobject.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lopcodes.c"
+				>
+			</File>
+			<File
+				RelativePath=".\src\lopcodes.h"
 				>
 			</File>
 			<File
@@ -242,11 +302,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\lparser.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lstate.c"
 				>
 			</File>
 			<File
+				RelativePath=".\src\lstate.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lstring.c"
+				>
+			</File>
+			<File
+				RelativePath=".\src\lstring.h"
 				>
 			</File>
 			<File
@@ -258,6 +330,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ltable.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ltablib.c"
 				>
 			</File>
@@ -266,105 +342,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\lua.c"
-				>
-			</File>
-			<File
-				RelativePath=".\src\luac.c"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lundump.c"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lvm.c"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lzio.c"
-				>
-			</File>
-			<File
-				RelativePath=".\src\print.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath=".\src\lapi.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lauxlib.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lcode.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ldebug.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ldo.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lfunc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lgc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\llex.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\llimits.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lmem.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lobject.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lopcodes.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lparser.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lstate.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\lstring.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ltable.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ltm.h"
 				>
 			</File>
 			<File
+				RelativePath=".\src\lua.c"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lua.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\luac.c"
 				>
 			</File>
 			<File
@@ -376,7 +366,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\lundump.c"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lundump.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\lvm.c"
 				>
 			</File>
 			<File
@@ -384,19 +382,53 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\lzio.c"
+				>
+			</File>
+			<File
 				RelativePath=".\src\lzio.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\print.c"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			Name="cocos2dx_support"
 			>
+			<File
+				RelativePath=".\cocos2dx_support\CCLuaSrcipt.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocos2dx_support\CCLuaSrcipt.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cocos2dx_support\LuaCocos2d.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocos2dx_support\LuaCocos2d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cocos2dx_support\LuaEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocos2dx_support\LuaEngine.h"
+				>
+			</File>
 		</Filter>
 		<Filter
-			Name="toLua"
+			Name="tolua"
 			>
+			<File
+				RelativePath=".\tolua\tolua++.h"
+				>
+			</File>
 			<File
 				RelativePath=".\tolua\tolua_event.c"
 				>

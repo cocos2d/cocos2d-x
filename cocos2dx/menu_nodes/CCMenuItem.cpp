@@ -29,9 +29,8 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-#ifdef  ENABLE_LUA
-#include "CCTouchDispatcher.h"
-#endif
+#include "CCScriptSupport.h"
+
 #include <stdarg.h>
 
 namespace cocos2d{
@@ -66,24 +65,29 @@ namespace cocos2d{
 		m_bIsSelected = false;
 		return true;
 	}
-#ifdef  ENABLE_LUA
-	void CCMenuItem::registerMenuHandler(const char* fn)
-	{
-		if (fn && strlen(fn))
-		{
-			//SelectorProtocol is not a child of CCObject  Obj->autorelease function can not be use
-			m_strScriptFunc = fn;
-		}
-	}
-#endif
+
 	void CCMenuItem::selected()
 	{
 		m_bIsSelected = true;
 	}
+
 	void CCMenuItem::unselected()
 	{
 		m_bIsSelected = false;
 	}
+
+	void CCMenuItem::registerScriptHandler(const char* pszFunctionName)
+	{
+		if (pszFunctionName)
+		{
+			this->m_functionName = string(pszFunctionName);
+		}
+		else
+		{
+			this->m_functionName.clear();
+		}
+	}
+
 	void CCMenuItem::activate()
 	{
 		if (m_bIsEnabled)
@@ -92,32 +96,36 @@ namespace cocos2d{
 			{
 				(m_pListener->*m_pfnSelector)(this);
 			}
-#ifdef  ENABLE_LUA
-			else if(m_strScriptFunc.size())
+
+			if (m_functionName.size())
 			{
-				schedule_MenuHandler(m_pListener, m_pfnSelector, this, m_strScriptFunc); 
+				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteCallFunc(m_functionName.c_str());
 			}
-#endif
 		}
 	}
+
 	void CCMenuItem::setIsEnabled(bool enabled)
 	{
 		m_bIsEnabled = enabled;
 	}
+
 	bool CCMenuItem::getIsEnabled()
 	{
 		return m_bIsEnabled;
 	}
+
 	CCRect CCMenuItem::rect()
 	{
 		return CCRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
 						m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
 						m_tContentSize.width, m_tContentSize.height);
 	}
+
 	bool CCMenuItem::getIsSelected()
 	{
 		return m_bIsSelected;
 	}
+
 	//
 	//CCMenuItemLabel
 	//

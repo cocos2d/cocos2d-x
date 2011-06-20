@@ -73,9 +73,7 @@ class CCNode : public CCObject, public SelectorProtocol
 	//void	schedule(SEL_SCHEDULE selector);
 	//void	schedule(SEL_SCHEDULE selector, ccTime interval);
 	//void	unschedule(SEL_SCHEDULE selector);
-	void schedule(const char* selector);
-	void schedule(const char*  selector, ccTime interval);
-	void unschedule(const char* selector);
+	
 	void	unscheduleAllSelectors(void);
 	void	resumeSchedulerAndActions(void);
 	void	pauseSchedulerAndActions(void);
@@ -92,7 +90,6 @@ class CCNode : public CCObject, public SelectorProtocol
 	void	removeFromParentAndCleanup(bool cleanup);
 	void	removeChildByTag(int tag, bool cleanup);
 
-	bool registerScriptSelector(const char* szType, const char* szSeletor);
 	static CCNode * node(void);
 	
 

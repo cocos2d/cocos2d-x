@@ -3,13 +3,6 @@
 namespace cocos2d
 {
 
-
-
-/**
-@brief Output Debug message.
-*/
-void  CCLog(const char * pszFormat, ...);
-
 void CCLuaLog(const char * pszFormat);
 /**
 @brief Pop out a message box
