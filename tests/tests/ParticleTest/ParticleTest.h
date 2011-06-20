@@ -40,6 +40,13 @@ public:
 	void setEmitterPosition();
 };
 
+class ParticleAnimation : public ParticleDemo
+{
+public:
+    virtual void onEnter();
+	virtual std::string title();
+};
+
 class DemoFirework : public ParticleDemo
 {
 public:

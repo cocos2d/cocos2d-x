@@ -128,6 +128,44 @@ std::string DemoFlower::title()
 {
 	return "ParticleFlower";
 }
+//------------------------------------------------------------------
+//
+//Advance Particle Animation
+//
+//------------------------------------------------------------------
+void ParticleAnimation::onEnter()
+{
+    ParticleDemo::onEnter();
+    
+    CCSprite *tSprite = CCSprite::spriteWithFile("Images/spritesheet1.png");
+    m_emitter = CCParticleAniamtion::node();
+    m_emitter->retain();
+    m_background->addChild(m_emitter, 10);
+    
+    m_emitter->setLife(3.0f);
+    m_emitter->setLifeVar(2.5f);
+    
+    // angle
+	m_emitter->setAngle(90);
+	m_emitter->setAngleVar(360);
+    
+    // speed of particles
+	m_emitter->setSpeed(50);
+	m_emitter->setSpeedVar(35);
+    
+    ((AdvanceParticleQuadSystem *)m_emitter)->setDisplayFrameForAnimation(tSprite->displayedFrame(), 32, 32, 10, false);
+    
+    m_emitter->setEmissionRate(10000);
+    
+    ((AdvanceParticleQuadSystem *)m_emitter)->setStartSize(32.0f);
+    ((AdvanceParticleQuadSystem *)m_emitter)->setEndSize(32.0);
+    setEmitterPosition();
+}
+
+std::string ParticleAnimation::title()
+{
+    return "Advance Particle Animaiton";
+}
 
 //------------------------------------------------------------------
 //
@@ -963,7 +1001,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	32
+#define MAX_LAYER	33
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -1001,6 +1039,7 @@ CCLayer* createParticleLayer(int nIndex)
         case 29: return new RadiusMode2();
         case 30: return new Issue704();
         case 31: return new Issue870();
+        case 32: return new ParticleAnimation();
 	}
 
 	return NULL;

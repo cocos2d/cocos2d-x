@@ -7,7 +7,11 @@
 //
 
 #include "AdvanceSprite.h"
+#include "CCSpriteFrameCache.h"
+#include "CCFileUtils.h"
+#include "CCString.h"
 
+namespace   cocos2d {
 AdvanceSprite::AdvanceSprite()
 :m_pfnSelectorDelegate(0)
 ,m_pTarget(0)
@@ -31,6 +35,7 @@ void AdvanceSprite::addFrames(const char *pList)
     m_AnimationFrames = new CCMutableArray<CCSpriteFrame *>;
     
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(pList);
+    
     const char *pszPath = CCFileUtils::fullPathFromRelativePath(pList);
 	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
     CCDictionary<std::string, CCObject*> *framesDict = (CCDictionary<std::string, CCObject*>*)dict->objectForKey(std::string("frames"));
@@ -42,6 +47,26 @@ void AdvanceSprite::addFrames(const char *pList)
         m_AnimationFrames->addObject(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(key.c_str()));
     }
     setDisplayFrame(m_AnimationFrames->getObjectAtIndex(0));
+}
+
+void AdvanceSprite::addFrames(const char *pList, const char *textureFileName)
+{
+    m_isPlistLoaded = true;
+    m_AnimationFrames = new CCMutableArray<CCSpriteFrame *>;
+    
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(pList, textureFileName);
+    
+    const char *pszPath = CCFileUtils::fullPathFromRelativePath(pList);
+	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
+    CCDictionary<std::string, CCObject*> *framesDict = (CCDictionary<std::string, CCObject*>*)dict->objectForKey(std::string("frames"));
+    
+    framesDict->begin();
+	std::string key = "";
+	while((CCDictionary<std::string, CCObject*>*)framesDict->next(&key))
+	{
+        m_AnimationFrames->addObject(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(key.c_str()));
+    }
+    setDisplayFrame(m_AnimationFrames->getObjectAtIndex(0));    
 }
 
 void AdvanceSprite::addFrames(CCMutableArray<cocos2d::CCSpriteFrame *> *frames)
@@ -176,3 +201,4 @@ void AdvanceSprite::removeObjectItself()
     this->removeFromParentAndCleanup(true);
     delete (this);
 }
+}//namespace   cocos2d 

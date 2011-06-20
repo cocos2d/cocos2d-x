@@ -463,6 +463,9 @@
 		BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */; };
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
+		C61F93E213A72568001F2E24 /* AdvanceParticleQuadSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C61F93E113A72568001F2E24 /* AdvanceParticleQuadSystem.cpp */; };
+		C61F93E613A7265A001F2E24 /* AdvanceSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C61F93E513A7265A001F2E24 /* AdvanceSprite.cpp */; };
+		C6E5843A13A9C9BF008725A1 /* AdvanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6E5843813A9C9BF008725A1 /* AdvanceSpriteTest.cpp */; };
 		D4236C351387F6E600F75A88 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D4236C341387F6E600F75A88 /* chipmunk_private.h */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -1052,6 +1055,12 @@
 		BF9935D91373EBF500197D1B /* UserDefaultTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultTest.h; sourceTree = "<group>"; };
 		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		C61F93E113A72568001F2E24 /* AdvanceParticleQuadSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AdvanceParticleQuadSystem.cpp; sourceTree = "<group>"; };
+		C61F93E313A72577001F2E24 /* AdvanceParticleQuadSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvanceParticleQuadSystem.h; sourceTree = "<group>"; };
+		C61F93E413A72577001F2E24 /* AdvanceSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvanceSprite.h; sourceTree = "<group>"; };
+		C61F93E513A7265A001F2E24 /* AdvanceSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AdvanceSprite.cpp; sourceTree = "<group>"; };
+		C6E5843813A9C9BF008725A1 /* AdvanceSpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AdvanceSpriteTest.cpp; sourceTree = "<group>"; };
+		C6E5843913A9C9BF008725A1 /* AdvanceSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvanceSpriteTest.h; sourceTree = "<group>"; };
 		D4236C341387F6E600F75A88 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1513,6 +1522,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				C6E5843713A9C9BF008725A1 /* AdvanceSprite */,
 				BF31E11912E979A100D4F513 /* AccelerometerTest */,
 				BF31E11C12E979A100D4F513 /* ActionManagerTest */,
 				BF31E11F12E979A100D4F513 /* ActionsTest */,
@@ -2023,6 +2033,8 @@
 		BF8358AE13276C7700F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				C61F93E313A72577001F2E24 /* AdvanceParticleQuadSystem.h */,
+				C61F93E413A72577001F2E24 /* AdvanceSprite.h */,
 				BF99347D1373E6CE00197D1B /* CCUserDefault.h */,
 				BF193EDB13600549002463D2 /* CCArray.h */,
 				BF2CE35C13666BD0006DCA18 /* CCTextFieldTTF.h */,
@@ -2169,6 +2181,7 @@
 		BF83591613276C7700F3C033 /* particle_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				C61F93E113A72568001F2E24 /* AdvanceParticleQuadSystem.cpp */,
 				BF1FAFD41352F788007553D9 /* CCParticleSystemPoint.cpp */,
 				BF83591713276C7700F3C033 /* CCParticleExamples.cpp */,
 				BF83591813276C7700F3C033 /* CCParticleSystem.cpp */,
@@ -2237,6 +2250,7 @@
 		BF835AF713276C7900F3C033 /* sprite_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				C61F93E513A7265A001F2E24 /* AdvanceSprite.cpp */,
 				BF835AF813276C7900F3C033 /* CCAnimation.cpp */,
 				BF835AF913276C7900F3C033 /* CCAnimationCache.cpp */,
 				BF835AFA13276C7900F3C033 /* CCSprite.cpp */,
@@ -2342,6 +2356,15 @@
 				BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */,
 			);
 			path = UserDefaultTest;
+			sourceTree = "<group>";
+		};
+		C6E5843713A9C9BF008725A1 /* AdvanceSprite */ = {
+			isa = PBXGroup;
+			children = (
+				C6E5843813A9C9BF008725A1 /* AdvanceSpriteTest.cpp */,
+				C6E5843913A9C9BF008725A1 /* AdvanceSpriteTest.h */,
+			);
+			path = AdvanceSprite;
 			sourceTree = "<group>";
 		};
 		D4E39D2F1342E22F00EBA039 /* ZwoptexTest */ = {
@@ -2805,6 +2828,9 @@
 				BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */,
 				BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */,
 				D4AFAB701387A98600C88086 /* Tank.cpp in Sources */,
+				C61F93E213A72568001F2E24 /* AdvanceParticleQuadSystem.cpp in Sources */,
+				C61F93E613A7265A001F2E24 /* AdvanceSprite.cpp in Sources */,
+				C6E5843A13A9C9BF008725A1 /* AdvanceSpriteTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

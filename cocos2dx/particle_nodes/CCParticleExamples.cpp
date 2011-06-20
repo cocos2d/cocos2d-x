@@ -752,7 +752,7 @@ bool CCParticleSnow::initWithTotalParticles(int numberOfParticles)
 //
 bool CCParticleRain::initWithTotalParticles(int numberOfParticles)
 {
-	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
+	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles))
 	{
 		// duration
 		m_fDuration = kCCParticleDurationInfinity;
@@ -821,4 +821,65 @@ bool CCParticleRain::initWithTotalParticles(int numberOfParticles)
 	return false;
 }
 
+    //
+    // CCParticleAniamtion
+    //
+    bool CCParticleAniamtion::initWithTotalParticles(int numberOfParticles)
+    {
+        if( AdvanceParticleQuadSystem::initWithTotalParticles(numberOfParticles) )
+        {
+            // duration
+            m_fDuration = kCCParticleDurationInfinity;
+            
+            m_nEmitterMode = kCCParticleModeGravity;
+            
+            // Gravity Mode: gravity
+            modeA.gravity = ccp(10,-10);
+            
+            // Gravity Mode: radial
+            modeA.radialAccel = 0;
+            modeA.radialAccelVar = 1;
+            
+            // Gravity Mode: tagential
+            modeA.tangentialAccel = 0;
+            modeA.tangentialAccelVar = 1;
+            
+            // Gravity Mode: speed of particles
+            modeA.speed = 130;
+            modeA.speedVar = 30;
+            
+            // angle
+            m_fAngle = -90;
+            m_fAngleVar = 5;
+            
+            
+            // emitter position
+            CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+            m_tPosition = ccp(winSize.width/2, winSize.height);
+            
+            // life of particles
+            m_fLife = 4.5f;
+            m_fLifeVar = 0;
+            
+            // size, in pixels
+            m_fStartSize = 4.0f;
+            m_fStartSizeVar = 2.0f;
+            m_fEndSize = kCCParticleStartSizeEqualToEndSize;
+            
+            // emits per second
+            m_fEmissionRate = 20;
+            
+            // color of particles
+            ccColor4F m_Color = {1.0f,1.0f,1.0f,1.0f};
+            m_tEndColor = m_tStartColor = m_Color;
+            
+            ccColor4F m_ColorVar = {0.0f,0.0f,0.0f,0.0f};
+            m_tEndColorVar = m_tStartColorVar = m_ColorVar;
+            
+            // additive
+            this->setIsBlendAdditive(false);
+            return true;
+        }
+        return false;
+    }
 }//namespace cocos2d

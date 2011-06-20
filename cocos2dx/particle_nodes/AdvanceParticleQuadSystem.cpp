@@ -74,7 +74,6 @@ namespace cocos2d {
     
     void AdvanceParticleQuadSystem::setDisplayFrameForAnimation(cocos2d::CCSpriteFrame *spriteFrame, int tileWidth, int tileHeight, int number_Frames_per_Second, bool NeedsToRemoveParticleAfterAniamtion)
     {
-        printf("Set Texture\n");
         m_nItemWidth = tileWidth;
         m_nItemHeight = tileHeight;
         m_bNeedsToRemoveParticleAfterAniamtion = NeedsToRemoveParticleAfterAniamtion;
@@ -95,7 +94,6 @@ namespace cocos2d {
     
     void AdvanceParticleQuadSystem::setTextureWithRectForAnimation(cocos2d::CCTexture2D *texture, cocos2d::CCRect rect, int tileWidth, int tileHeight, int number_Frames_per_Second, bool NeedsToRemoveParticleAfterAniamtion)
     {
-        printf("Set Texture\n");
         m_nItemWidth = tileWidth;
         m_nItemHeight = tileHeight;
         m_bNeedsToRemoveParticleAfterAniamtion = NeedsToRemoveParticleAfterAniamtion;
