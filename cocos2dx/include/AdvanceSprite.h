@@ -6,12 +6,16 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#include "cocos2d.h"
-using namespace cocos2d;
+//#include "cocos2d.h"
+//using namespace cocos2d;
 
 #ifndef _AdvanceSprite_H
 #define _AdvanceSprite_H
 
+#include "CCSprite.h"
+#include "CCMutableArray.h"
+namespace   cocos2d {
+    
 class AdvanceSprite : public CCSprite
 {
     CCMutableArray<CCSpriteFrame *> *m_AnimationFrames;
@@ -48,7 +52,8 @@ public:
     ~AdvanceSprite();
     
     //Add Frames to run Animation.
-    void addFrames(const char* pList);
+    void addFrames(const char* pList); // Has Texture file name in pList.
+    void addFrames(const char* pList, const char* textureFileName);
     void addFrames(CCMutableArray<CCSpriteFrame*> *frames);
     void addFrames(CCMutableArray<CCSpriteFrame*> *frames, int displayTextureIndex);
     
@@ -79,5 +84,6 @@ public:
     void resumeAnimation(){resumeSchedulerAndActions(); }
     void stopAnimaiton();
 };
+}//namespace   cocos2d 
 
 #endif
