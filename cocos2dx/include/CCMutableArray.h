@@ -325,12 +325,15 @@ public:
 		return m_array.rbegin();
 	}
 
-#ifdef  ENABLE_LUA
+	/*
+	 * end is a keyword of lua, so should use other name
+	 * to export to lua
+	*/
 	CCMutableArrayIterator endToLua(void)
 	{
 		return m_array.end();
 	}
-#endif
+
 	CCMutableArrayIterator end(void)
 	{
 		return m_array.end();

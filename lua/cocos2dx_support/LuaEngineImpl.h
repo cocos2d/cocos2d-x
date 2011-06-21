@@ -1,26 +1,16 @@
-#ifndef _CCLUASRCIPT_H
-#define _CCLUASRCIPT_H
-#include "ccConfig.h"
+#ifndef _LUA_ENGINE_IMPL_H
+#define _LUA_ENGINE_IMPL_H
 
-#ifdef  ENABLE_LUA
-#include "CCCommon.h"
-#include "CCObject.h"
 #include <string>
-#include "ccTypes.h"
+
+#include "cocos2d.h"
+
 // include Lua
 extern "C" {
 #include "lua.h"
 }
 
-
-
-namespace cocos2d
-{
-	class CCEvent;
-	class CCNode;
-	class CCObject;
-
-class CC_DLL CCLuaScriptModule :  public CCObject
+class CCLuaScriptModule :  public cocos2d::CCObject
 {
 public:
 	/*************************************************************************
@@ -60,7 +50,7 @@ public:
 		String object holding the filename of the script file that is to be executed
 		
 	*/
-	void executeScriptFile(const std::string& filename);
+	bool executeScriptFile(const std::string& filename);
 
 
 	/*!
@@ -93,15 +83,16 @@ public:
 		- true if the event was handled.
 		- false if the event was not handled.
 	*/
-	bool executeSchedule(const std::string& handler_name, ccTime cc);
+	bool executeSchedule(const std::string& handler_name, cocos2d::ccTime cc);
 	bool executeCallFunc(const std::string& handler_name);
-	bool executeCallFuncN(const std::string& handler_name, CCNode* pNode);
-	bool executeCallFuncND(const std::string& handler_name, CCNode* pNode,  void*pData);
-	bool executeMenuHandler(const std::string& handler_name, CCObject* pobj);
-	bool executeEventHandler(const std::string& handler_name, CCEvent* pEvent);
-	bool executeTouchesEvent(const std::string& handler_name, CCSet *pobj);
-	bool executeTouch(const std::string& handler_name, CCTouch *pobj);
-	bool executeListItem(const std::string& handler_name, int index, CCObject* pobj);
+	bool executeCallFuncN(const std::string& handler_name, cocos2d::CCNode* pNode);
+	bool executeCallFuncND(const std::string& handler_name, cocos2d::CCNode* pNode,  void*pData);
+	bool executeCallFuncO(const std::string& handler_name, cocos2d::CCObject* pObject);
+	bool executeMenuHandler(const std::string& handler_name, cocos2d::CCObject* pobj);
+	bool executeEventHandler(const std::string& handler_name, cocos2d::CCEvent* pEvent);
+	bool executeTouchesEvent(const std::string& handler_name, cocos2d::CCSet *pobj);
+	bool executeTouch(const std::string& handler_name, cocos2d::CCTouch *pobj);
+	bool executeListItem(const std::string& handler_name, int index, cocos2d::CCObject* pobj);
 	/*!
     \brief
         Execute script code contained in the given CEGUI::String object.
@@ -110,9 +101,10 @@ public:
         String object holding the valid script code that should be executed.
 
     \return
-        Nothing.
+	- true if the string is excuted correctly.
+	- false if the string is excuted wrongly.
     */
-	void executeString(const std::string& str);
+	bool executeString(const std::string& str);
 
 
 	/*************************************************************************
@@ -169,7 +161,5 @@ private:
 
 };
 
-} // namespace cocos2d
 
-#endif //CC_ENABLE_LUA
-#endif // end of guard _CCLUASRCIPT_H
+#endif // end of guard _LUA_ENGINE_IMPL_H

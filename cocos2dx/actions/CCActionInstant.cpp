@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCActionInstant.h"
 #include "CCNode.h"
 #include "CCSprite.h"
+#include "CCScriptSupport.h"
 
 namespace cocos2d {
 	//
@@ -260,37 +261,35 @@ namespace cocos2d {
 
 	CCCallFunc * CCCallFunc::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFunc selector)
 	{
-		CCCallFunc* pCallFunc = new CCCallFunc();
-		pCallFunc->autorelease();
-
-		pCallFunc->initWithTarget(pSelectorTarget);
-		pCallFunc->m_pCallFunc = selector;
-
-		return pCallFunc;
-	}
-#ifdef  ENABLE_LUA
-	CCCallFunc * CCCallFunc::actionWithLua(const char * pszfunc)
-	{
-		if (pszfunc)
+		CCCallFunc *pRet = new CCCallFunc();
+		if(pRet->initWithTarget(pSelectorTarget))
 		{
-			
-			CCCallFunc* pCallFunc = new CCCallFunc();
-			pCallFunc->initWithLua(pszfunc);
-			pCallFunc->autorelease();
-			return pCallFunc;
+			pRet->m_pCallFunc = selector;
+			pRet->autorelease();
+			return pRet;
 		}
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
-	bool CCCallFunc::initWithLua(const char* pszfn)
+
+	CCCallFunc* CCCallFunc::actionWithScriptFuncName(const char* pszFuncName)
 	{
-		if (pszfn)
+		CCCallFunc *pRet = new CCCallFunc();
+		if(pRet->initWithScriptFuncName(pszFuncName))
 		{
-			m_pLuaCallFun = pszfn;
-			return true;
+			pRet->autorelease();
+			return pRet;
 		}
-		return false;
+		CC_SAFE_DELETE(pRet);
+		return NULL;
 	}
-#endif
+
+	bool CCCallFunc::initWithScriptFuncName(const char *pszFuncName)
+	{
+		this->m_scriptFuncName = string(pszFuncName);
+		return true;
+	}
+
 	bool CCCallFunc::initWithTarget(SelectorProtocol* pSelectorTarget)
 	{
 		if (pSelectorTarget)
@@ -319,6 +318,7 @@ namespace cocos2d {
 		CCActionInstant::copyWithZone(pZone);
 		pRet->initWithTarget(m_pSelectorTarget);
 		pRet->m_pCallFunc = m_pCallFunc;
+		pRet->m_scriptFuncName = m_scriptFuncName;
 		CC_SAFE_DELETE(pNewZone);
 		return pRet;
 	}
@@ -329,28 +329,25 @@ namespace cocos2d {
 	}
 	void CCCallFunc::execute()
 	{
-#ifdef  ENABLE_LUA
-		schedule_CallFunc(m_pSelectorTarget, m_pCallFunc, m_pLuaCallFun);	
-#else
 		if(m_pCallFunc)
 		{
 			(m_pSelectorTarget->*m_pCallFunc)();
 		}
-#endif
+
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_scriptFuncName.c_str());
 	}
 	//
 	// CallFuncN
 	//
 	void CCCallFuncN::execute()
 	{
-#ifdef  ENABLE_LUA
-		schedule_CallFuncN(m_pSelectorTarget, m_pCallFuncN, m_pTarget, m_pLuaCallFun);
-#else
 		if(m_pCallFuncN)
 		{
 			(m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
 		}
-#endif
+
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_scriptFuncName.c_str(),
+			                                                                                   m_pTarget);
 	}
 	CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
 	{
@@ -363,20 +360,19 @@ namespace cocos2d {
 		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
-#ifdef  ENABLE_LUA
-	CCCallFuncN * CCCallFuncN::actionWithLua(const char * pszfunc)
+
+	CCCallFuncN* CCCallFuncN::actionWithScriptFuncName(const char *pszFuncName)
 	{
-		
-		if (pszfunc)
+		CCCallFuncN *pRet = new CCCallFuncN();
+		if(pRet->initWithScriptFuncName(pszFuncName))
 		{
-			CCCallFuncN *pRet = new CCCallFuncN();
-			pRet->initWithLua(pszfunc);
 			pRet->autorelease();
 			return pRet;
 		}
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
-#endif
+
 	bool CCCallFuncN::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
 	{
 		if( CCCallFunc::initWithTarget(pSelectorTarget) ) 
@@ -417,20 +413,19 @@ namespace cocos2d {
 		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
-#ifdef  ENABLE_LUA
-	CCCallFuncND * CCCallFuncND::actionWithLua(const char * pszfunc)
+
+	CCCallFuncND* CCCallFuncND::actionWithScriptFuncName(const char* pszFuncName, void *d)
 	{
-		if (pszfunc)
+		CCCallFuncND* pRet = new CCCallFuncND();
+		if (pRet->initWithScriptFuncName(pszFuncName))
 		{
-			CCCallFuncND* pRet = new CCCallFuncND();
 			pRet->autorelease();
-			pRet->initWithLua(pszfunc);
+			pRet->m_pData = d;
 			return pRet;
 		}
+		CC_SAFE_DELETE(pRet);
 		return NULL;
-		
 	}
-#endif
 
 	bool CCCallFuncND::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncND selector, void* d)
 	{
@@ -462,14 +457,14 @@ namespace cocos2d {
 
 	void CCCallFuncND::execute()
 	{
-#ifdef  ENABLE_LUA
-		 schedule_CallFuncND(m_pSelectorTarget,m_pCallFuncND, m_pTarget, m_pData, m_pLuaCallFun);
-#else
 		if(m_pCallFuncND)
 		{
 			(m_pSelectorTarget->*m_pCallFuncND)(m_pTarget, m_pData);
 		}
-#endif
+
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncND(m_scriptFuncName.c_str(), 
+			                                                                                    m_pTarget,
+			                                                                                    m_pData);
 	}
 	
     //
@@ -487,14 +482,13 @@ namespace cocos2d {
 
     void CCCallFuncO::execute()
     {
-#ifdef  ENABLE_LUA
-		schedule_CallFuncO(m_pSelectorTarget, m_pCallFuncO, m_pObject, m_pLuaCallFun);
-#else
         if(m_pCallFuncO)
         {
             (m_pSelectorTarget->*m_pCallFuncO)(m_pObject);
         }
-#endif
+
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc0(m_scriptFuncName.c_str(),
+			                                                                                   m_pObject);
     }
     CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)
     {
@@ -507,20 +501,19 @@ namespace cocos2d {
         CC_SAFE_DELETE(pRet);
         return NULL;
     }
-#ifdef  ENABLE_LUA
-	CCCallFuncO * CCCallFuncO::actionWithLua(const char * pszfunc)
-	{
-		if (pszfunc)
-		{
-			 CCCallFuncO *pRet = new CCCallFuncO();
-			 pRet->autorelease();
-			 pRet->initWithLua(pszfunc);
-			 return pRet;
-		}
-		return NULL;
 
+	CCCallFuncO* CCCallFuncO::actionWithScriptFuncName(const char *pszFuncName)
+	{
+		CCCallFuncO *pRet = new CCCallFuncO();
+		if(pRet->initWithScriptFuncName(pszFuncName))
+		{
+			pRet->autorelease();
+			return pRet;
+		}
+		CC_SAFE_DELETE(pRet);
+		return NULL;
 	}
-#endif
+
     bool CCCallFuncO::initWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)
     {
         if( CCCallFunc::initWithTarget(pSelectorTarget) ) 
@@ -549,85 +542,5 @@ namespace cocos2d {
         CC_SAFE_DELETE(pNewZone);
         return pRet;
     }
-
-
-#if NS_BLOCKS_AVAILABLE
-
-#pragma mark CCCallBlock
-
-		@implementation CCCallBlock
-
-		+(id) actionWithBlock:(void(^)())block {
-			return [[[self alloc] initWithBlock:block] autorelease];
-	}
-
-	-(id) initWithBlock:(void(^)())block {
-		if ((self = [super init])) {
-
-			block_ = [block retain];
-		}
-		return self;
-	}
-
-	-(id) copyWithZone: (CCZone*) zone {
-		CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
-		return copy;
-	}
-
-	-(void) startWithTarget:(id)aTarget {
-		[super startWithTarget:aTarget];
-		[self execute];
-	}
-
-	-(void) execute {
-		block_();
-	}
-
-	-(void) dealloc {
-		[block_ release];
-		[super dealloc];
-	}
-
-	@end
-
-#pragma mark CCCallBlockN
-
-		@implementation CCCallBlockN
-
-		+(id) actionWithBlock:(void(^)(CCNode *node))block {
-			return [[[self alloc] initWithBlock:block] autorelease];
-	}
-
-	-(id) initWithBlock:(void(^)(CCNode *node))block {
-		if ((self = [super init])) {
-
-			block_ = [block retain];
-		}
-		return self;
-	}
-
-	-(id) copyWithZone: (CCZone*) zone {
-		CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
-		return copy;
-	}
-
-	-(void) startWithTarget:(id)aTarget {
-		[super startWithTarget:aTarget];
-		[self execute];
-	}
-
-	-(void) execute {
-		block_(target);
-	}
-
-	-(void) dealloc {
-		[block_ release];
-		[super dealloc];
-	}
-
-	@end
-
-
-#endif // NS_BLOCKS_AVAILABLE
 
 }

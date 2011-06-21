@@ -23,7 +23,7 @@ namespace cocos2d{
 		void selected();		
 		void unselected();
 		
-		void registerMenuHandler(const char* fn);
+		void registerScriptHandler(const char* pszFunctionName);
 
 	};
 
@@ -123,9 +123,7 @@ namespace cocos2d{
 	{
 
 		CCMenuItemToggle();
-
-		//	static CCMenuItemToggle* itemWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, ...);		
-		//	bool initWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);		
+		
 		CCMenuItem* selectedItem();
 		// super methods
 		virtual void activate();
