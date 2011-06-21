@@ -256,7 +256,7 @@ public:
 		if(pDeleteArray && pDeleteArray->count())
 		{
 			CCMutableArrayIterator it;
-			for( it = pDeleteArray->m_array.begin(); it != pDeleteArray->m_array.end(); it++)
+			for( it = pDeleteArray->m_array.begin(); it != pDeleteArray->m_array.end(); ++it)
 			{
 				removeObject(*it);
 			}
@@ -350,7 +350,7 @@ public:
 		if(pArray->count() > 0)
 		{
 			CCMutableArrayIterator it;
-			for(it = pArray->begin(); it != pArray->end(); it++)
+			for(it = pArray->begin(); it != pArray->end(); ++it)
 			{
 				if(*it)
 				{
