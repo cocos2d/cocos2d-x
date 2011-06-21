@@ -2,15 +2,8 @@ namespace   cocos2d {
 class CCNode;
 class CCEvent;
 
-class  CCScriptSelector
-{
-	std::string m_scriptFunc[ccSEL_Max];
-	//szType ={"SEL_Update", "SEL_Tick", "SEL_CallFunc", "SEL_CallFuncN", \
-	//		"SEL_CallFuncND", "SEL_CallFuncO", "SEL_MenuHandler", "SEL_EventHandler"};
 
-	bool registerScriptSelector(const char* szType, const char* szSeletor);
-};
-class  SelectorProtocol:public CCScriptSelector
+class  SelectorProtocol
 {
 public:
 	SelectorProtocol();
@@ -20,7 +13,7 @@ public:
 	void callfunc(CCNode* pSender);
 	void callfunc(CCNode* pSender, void* pData);
 	void menuHandler(CCObject* pSender);
-  void eventHandler(CCEvent* pEvent);
+        void eventHandler(CCEvent* pEvent);
 
 	// the child call responding retain/release function
 	void selectorProtocolRetain(void);

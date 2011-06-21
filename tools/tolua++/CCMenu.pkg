@@ -29,11 +29,11 @@ namespace cocos2d{
 		void alignItemsHorizontallyWithPadding(float padding);
 
 
-		void alignItemsInRows(unsigned int rows, ...);
+		// void alignItemsInRows(unsigned int rows, ...);
 		void alignItemsInColumns(unsigned int columns, va_list args);
 
 		/** align items in columns of rows */
-		void alignItemsInColumns(unsigned int columns, ...);
+		// void alignItemsInColumns(unsigned int columns, ...);
 		void alignItemsInRows(unsigned int rows, va_list args);
 
 		//super methods

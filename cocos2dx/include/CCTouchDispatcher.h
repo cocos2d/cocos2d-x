@@ -42,10 +42,10 @@ typedef enum
 
 
 enum {
-	ccTouchBegan,
-	ccTouchMoved,
-	ccTouchEnded,
-	ccTouchCancelled,
+	CCTOUCHBEGAN,
+	CCTOUCHMOVED,
+	CCTOUCHENDED,
+	CCTOUCHCANCELLED,
 	
 	ccTouchMax,
 };
