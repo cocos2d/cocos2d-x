@@ -476,7 +476,7 @@ namespace cocos2d{
             
 			kerningAmount = this->kerningAmountForFirst(prev, c);
 
-			ccBMFontDef fontDef = m_pConfiguration->m_pBitmapFontArray[c];
+			const ccBMFontDef& fontDef = m_pConfiguration->m_pBitmapFontArray[c];
 
 			CCRect rect = fontDef.rect;
 
