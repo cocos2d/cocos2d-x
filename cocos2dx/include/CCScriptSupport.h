@@ -31,11 +31,14 @@ public:
 	virtual bool executeCallFunc0(const char *pszFuncName, CCObject *pObject) = 0;
 
 	// excute a script function without params
-	virtual bool executeFuction(const char *pszFuncName) = 0;
+	virtual int executeFuction(const char *pszFuncName) = 0;
 	// excute a script file
 	virtual bool executeScriptFile(const char* pszFileName) = 0;
 	// excute script from string
 	virtual bool executeString(const char* pszCodes) = 0;
+
+	// execute a schedule function
+	virtual bool executeSchedule(const char* pszFuncName, ccTime t) = 0;
 };
 
 class CC_DLL CCScriptEngineManager

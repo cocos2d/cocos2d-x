@@ -133,6 +133,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+    printf("%s", path.c_str());
     CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
 #endif 
 
