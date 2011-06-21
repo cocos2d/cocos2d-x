@@ -101,6 +101,24 @@ public:
     */
     CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
 };
+    
+// for the subclass of CCLayer, each has to implement the static "node" method 
+#define LAYER_NODE_FUNC(layer) \
+static layer* node() \
+{ \
+layer *pRet = new layer(); \
+if (pRet && pRet->init()) \
+{ \
+pRet->autorelease(); \
+return pRet; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}; 
 
 //
 // CCLayerColor
@@ -152,7 +170,8 @@ public:
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
 	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
-
+    LAYER_NODE_FUNC(CCLayerColor);
+    
 protected:
 	virtual void updateColor();
 };
@@ -211,6 +230,7 @@ public:
     CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
     CC_PROPERTY(CCPoint, m_AlongVector, Vector)
 
+    LAYER_NODE_FUNC(CCLayerGradient);
 protected:
     virtual void updateColor();
 };
@@ -251,26 +271,10 @@ public:
 	The current (old) layer will be removed from it's parent with 'cleanup:YES'.
 	*/
 	void switchToAndReleaseMe(unsigned int n);
+    
+    LAYER_NODE_FUNC(CCMultiplexLayer);
 };
 }//namespace   cocos2d 
-
-// for the subclass of CCLayer, each has to implement the static "node" method 
-#define LAYER_NODE_FUNC(layer) \
-static layer* node() \
-{ \
-	layer *pRet = new layer(); \
-	if (pRet && pRet->init()) \
-	{ \
-		pRet->autorelease(); \
-		return pRet; \
-	} \
-	else \
-	{ \
-		delete pRet; \
-		pRet = NULL; \
-		return NULL; \
-	} \
-}; 
 
 #endif // __CCLAYER_H__
 
