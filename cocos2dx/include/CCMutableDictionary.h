@@ -171,7 +171,7 @@ public:
 				*key = m_MapIter->first;
 			}
 
-			m_MapIter++;
+			++m_MapIter;
 
 			if(m_MapIter == m_Map.end())
 			{
