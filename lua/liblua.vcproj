@@ -398,14 +398,6 @@
 			Name="cocos2dx_support"
 			>
 			<File
-				RelativePath=".\cocos2dx_support\CCLuaSrcipt.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cocos2dx_support\CCLuaSrcipt.h"
-				>
-			</File>
-			<File
 				RelativePath=".\cocos2dx_support\LuaCocos2d.cpp"
 				>
 			</File>
@@ -419,6 +411,14 @@
 			</File>
 			<File
 				RelativePath=".\cocos2dx_support\LuaEngine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cocos2dx_support\LuaEngineImpl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cocos2dx_support\LuaEngineImpl.h"
 				>
 			</File>
 		</Filter>

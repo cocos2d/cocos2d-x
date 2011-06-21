@@ -21,21 +21,21 @@ class CC_DLL CCScriptEngineProtocol
 {
 public:
 	// functions for excute touch event
-	virtual bool excuteTouchEvent(const char *pszFuncName, CCTouch *pTouch) = 0;
-	virtual bool excuteTouchesEvent(const char *pszFuncName, CCSet *pTouches) = 0;
+	virtual bool executeTouchEvent(const char *pszFuncName, CCTouch *pTouch) = 0;
+	virtual bool executeTouchesEvent(const char *pszFuncName, CCSet *pTouches) = 0;
 
 	// functions for CCCallFuncX
-	virtual bool excuteCallFunc(const char *pszFuncName) = 0;
-	virtual bool excuteCallFuncN(const char *pszFuncName, CCNode *pNode) = 0;
-	virtual bool excuteCallFuncND(const char *pszFuncName, CCNode *pNode, void *pData) = 0;
-	virtual bool excuteCallFunc0(const char *pszFuncName, CCObject *pObject) = 0;
+	virtual bool executeCallFunc(const char *pszFuncName) = 0;
+	virtual bool executeCallFuncN(const char *pszFuncName, CCNode *pNode) = 0;
+	virtual bool executeCallFuncND(const char *pszFuncName, CCNode *pNode, void *pData) = 0;
+	virtual bool executeCallFunc0(const char *pszFuncName, CCObject *pObject) = 0;
 
 	// excute a script function without params
-	virtual bool excuteFuction(const char *pszFuncName) = 0;
+	virtual bool executeFuction(const char *pszFuncName) = 0;
 	// excute a script file
-	virtual bool excuteScriptFile(const char* pszFileName) = 0;
+	virtual bool executeScriptFile(const char* pszFileName) = 0;
 	// excute script from string
-	virtual bool excuteString(const char* pszCodes) = 0;
+	virtual bool executeString(const char* pszCodes) = 0;
 };
 
 class CC_DLL CCScriptEngineManager

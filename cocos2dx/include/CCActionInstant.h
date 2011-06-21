@@ -26,6 +26,7 @@ THE SOFTWARE.
 #ifndef __CCINSTANT_ACTION_H__
 #define __CCINSTANT_ACTION_H__
 
+#include <string>
 #include "CCAction.h"
 #include "selector_protocol.h"
 

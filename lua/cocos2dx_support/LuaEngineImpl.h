@@ -1,5 +1,5 @@
-#ifndef _CCLUASRCIPT_H
-#define _CCLUASRCIPT_H
+#ifndef _LUA_ENGINE_IMPL_H
+#define _LUA_ENGINE_IMPL_H
 
 #include <string>
 
@@ -162,4 +162,4 @@ private:
 };
 
 
-#endif // end of guard _CCLUASRCIPT_H
+#endif // end of guard _LUA_ENGINE_IMPL_H

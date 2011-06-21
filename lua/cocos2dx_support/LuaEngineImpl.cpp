@@ -1,4 +1,4 @@
-#include "CCLuaSrcipt.h"
+#include "LuaEngineImpl.h"
 
 extern "C" {
 #include "lualib.h"

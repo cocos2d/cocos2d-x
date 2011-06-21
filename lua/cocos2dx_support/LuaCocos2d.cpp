@@ -17732,7 +17732,7 @@ static int tolua_Cocos2d_cocos2d_CCTMXLayer_getTiles00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTiles'", NULL);
 #endif
   {
-   unsigned void* tolua_ret = (unsigned void*)  self->getTiles();
+   void* tolua_ret = (void*)  self->getTiles();
    tolua_pushuserdata(tolua_S,(void*)tolua_ret);
   }
  }

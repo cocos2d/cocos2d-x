@@ -165,7 +165,7 @@ void CCTimer::update(ccTime dt)
 		else if (m_scriptFunc.size())
 		{
 			// call script function
-			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteFuction(m_scriptFunc.c_str());
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeFuction(m_scriptFunc.c_str());
 			m_fElapsed = 0;
 		}
 	}
