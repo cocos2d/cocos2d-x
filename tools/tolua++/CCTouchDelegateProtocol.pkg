@@ -38,7 +38,11 @@ public:
  	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
  	
  	CCTouchDelegate();
- 	void registerLuaTouchEvent(const char* szEventName, const char* fn);
+ 	
+ 	void registerScriptTouchHandler(int eventType, const char* pszScriptFunctionName);
+	bool isScriptHandlerExist(int eventType);
+	void excuteScriptTouchHandler(int eventType, CCTouch *pTouch);
+	void excuteScriptTouchesHandler(int eventType, CCSet *pTouches);
 };
 /**
  @brief

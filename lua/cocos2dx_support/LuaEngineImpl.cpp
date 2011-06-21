@@ -1,19 +1,17 @@
-#include "CCLuaSrcipt.h"
-#ifdef  ENABLE_LUA
+#include "LuaEngineImpl.h"
 
 extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 }
 
-
 #include "tolua++.h"
 #include "CCTouch.h"
 #include "CCNode.h"
 #include "CCObject.h"
 #include "LuaCocos2d.h"
-namespace cocos2d
-{
+
+using namespace cocos2d;
 
 CCLuaScriptModule* CCLuaScriptModule::s_luaScriptModule = NULL;
 
@@ -79,13 +77,16 @@ CCLuaScriptModule::~CCLuaScriptModule()
 /*************************************************************************
 	Execute script file
 *************************************************************************/
-void CCLuaScriptModule::executeScriptFile(const std::string& filename)
+bool CCLuaScriptModule::executeScriptFile(const std::string& filename)
 {
 	int nRet = luaL_dofile(d_state,filename.c_str());
 	if (nRet != 0)
 	{
 		CCLog("executeScriptFile Error nRet = %d", nRet);
+		return false;
 	}
+
+	return true;
 }
 
 
@@ -259,6 +260,44 @@ bool CCLuaScriptModule::executeCallFuncN(const std::string& handler_name, CCNode
 	return true;
 
 }
+
+bool CCLuaScriptModule::executeCallFuncO(const std::string &handler_name, cocos2d::CCObject *pObject)
+{
+	if (handler_name.size() == 0)
+	{
+		std::string msg = "(executeCallFuncO) Unable to execute scripted event handler: handler_name == NULL\n";
+		CCLog("%s  %d ", msg.c_str(), __LINE__);
+		return false;
+	}
+	lua_getglobal(d_state, handler_name.c_str());
+
+
+	// is it a function
+	if ( !lua_isfunction(d_state,-1) )
+	{
+		lua_settop( d_state, 0 );
+		std::string msg = "(executeCallFuncO) Unable to execute scripted event handler: "+handler_name +"name does not represent a Lua function"+"\n";
+		CCLog("%s  %d", msg.c_str(), __LINE__);
+		return false;
+	}
+	// push EventArgs as the first parameter
+	tolua_pushusertype(d_state,(void*)pObject,"cocos2d::CCObject");
+	// call it
+	int error = lua_pcall(d_state,1,0,0);
+	// handle errors
+	if ( error )
+	{
+		std::string msg = lua_tostring(d_state,-1);
+		lua_pop(d_state,1);
+		lua_settop( d_state, 0 );
+		std::string msgerror = "(executeCallFuncO) Unable to execute scripted event handler: "+handler_name +msg+"\n";
+		CCLog("%s %d", msgerror.c_str(),  __LINE__);
+		return false;
+	}
+	// return it
+	return true;
+}
+
 bool CCLuaScriptModule::executeCallFuncND(const std::string& handler_name, CCNode* pNode,  void*pData)
 {
 
@@ -495,7 +534,7 @@ bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int ind
 /*************************************************************************
 	Execute script code string
 *************************************************************************/
-void CCLuaScriptModule::executeString(const std::string& str)
+bool CCLuaScriptModule::executeString(const std::string& str)
 {
 	// load code into lua and call it
 	int error =	luaL_dostring(d_state, str.c_str());
@@ -504,8 +543,10 @@ void CCLuaScriptModule::executeString(const std::string& str)
 	if ( error )
 	{
 		CCLog("executeString %d", error);
+		return false;
 	}
 
+	return true;
 }
 	
 
@@ -528,8 +569,3 @@ void CCLuaScriptModule::destroyBindings(void)
 	lua_pushnil(d_state);
 	lua_setglobal(d_state,"cocos2d");
 }
-
-
-} // namespace CEGUI
-
-#endif //CC_ENABLE_LUA

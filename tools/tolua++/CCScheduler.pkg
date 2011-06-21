@@ -19,10 +19,9 @@ class CCTimer : public CCObject
 	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
 	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-
-	static CCTimer* timerWithScript(SelectorProtocol* pTarget, const char* szFuncName, ccTime fSeconds);
-	bool initWithScript(SelectorProtocol* pTarget,  const char* szFuncName, ccTime fSeconds);
-	bool isScriptFuncExist( const char* szFuncName);
+	
+	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
+	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
 
 	//SEL_SCHEDULE m_pfnSelector;
 	ccTime m_fInterval;
@@ -42,10 +41,9 @@ class CCScheduler : public CCObject
 
 	void tick(ccTime dt);
 
-	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused, const char* szScriptFunc);
+	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
+	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
 	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
-
-	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, const char* szScriptFunc);
 
 	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
 
