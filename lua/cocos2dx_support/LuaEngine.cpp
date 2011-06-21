@@ -37,7 +37,7 @@ bool LuaEngine::executeCallFunc0(const char *pszFuncName, CCObject *pObject)
 }
 
 // excute a script function without params
-bool LuaEngine::executeFuction(const char *pszFuncName)
+int LuaEngine::executeFuction(const char *pszFuncName)
 {
 	return CCLuaScriptModule::sharedLuaScriptModule()->executeScriptGlobal(pszFuncName);
 }
@@ -52,4 +52,9 @@ bool LuaEngine::executeScriptFile(const char* pszFileName)
 bool LuaEngine::executeString(const char* pszCodes)
 {
 	return CCLuaScriptModule::sharedLuaScriptModule()->executeString(pszCodes);
+}
+
+bool LuaEngine::executeSchedule(const char* pszFuncName, ccTime t)
+{
+	return CCLuaScriptModule::sharedLuaScriptModule()->executeSchedule(pszFuncName, t);
 }

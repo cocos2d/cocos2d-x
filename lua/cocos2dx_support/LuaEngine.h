@@ -34,11 +34,14 @@ public:
 	virtual bool executeCallFunc0(const char *pszFuncName, cocos2d::CCObject *pObject);
 
 	// excute a script function without params
-	virtual bool executeFuction(const char *pszFuncName);
+	virtual int executeFuction(const char *pszFuncName);
 	// excute a script file
 	virtual bool executeScriptFile(const char* pszFileName);
 	// excute script from string
 	virtual bool executeString(const char* pszCodes);
+
+	// execute a schedule function
+	virtual bool executeSchedule(const char* pszFuncName, cocos2d::ccTime t);
 };
 
 #endif // __LUA_ENGINE_H__
