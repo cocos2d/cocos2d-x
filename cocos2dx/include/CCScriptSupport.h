@@ -65,18 +65,24 @@ public:
 	virtual bool executeSchedule(const char* pszFuncName, ccTime t) = 0;
 };
 
+/**
+ CCScriptEngineManager is a singleton which holds an object instance of CCScriptEngineProtocl
+ It helps cocos2d-x and the user code to find back LuaEngine object
+ @since v0.99.5-x-0.8.5
+ */
 class CC_DLL CCScriptEngineManager
 {
 public:
-	CCScriptEngineManager();
-	virtual ~CCScriptEngineManager();
-
-	void registerScriptEngine(CCScriptEngineProtocol *pScriptEngine);
+    static CCScriptEngineManager* sharedScriptEngineManager();
+    
+	void setScriptEngine(CCScriptEngineProtocol *pScriptEngine);
 	CCScriptEngineProtocol* getScriptEngine();
-
-	static CCScriptEngineManager* sharedScriptEngineManager();
-
+    void removeScriptEngine();
+    
 private:
+    CCScriptEngineManager();
+	virtual ~CCScriptEngineManager();
+    
 	CCScriptEngineProtocol *m_pScriptEngine;
 };
 
