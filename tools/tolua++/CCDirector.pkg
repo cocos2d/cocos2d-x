@@ -179,7 +179,6 @@ namespace   cocos2d {
 
 
 		bool detach(void);
-		void registerTick(const char* szfn);
 
 		static CCDirector* sharedDirector(void);
 	};

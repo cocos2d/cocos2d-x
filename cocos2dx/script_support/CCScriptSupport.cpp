@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,45 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CC_COMMON_H__
-#define __CC_COMMON_H__
-
-#include "CCPlatformMacros.h"
+#include "CCScriptSupport.h"
 
 NS_CC_BEGIN;
 
-/// The max length of CCLog message.
-static const int kMaxLogLen = 255;
+CCScriptEngineManager::CCScriptEngineManager() : m_pScriptEngine(NULL) {}
 
-/**
-@brief Output Debug message.
-*/
-void CC_DLL CCLog(const char * pszFormat, ...);
-
-/**
- * lua can not deal with ...
- */
-inline void CC_DLL CCLuaLog(const char * pszFormat)
+CCScriptEngineManager::~CCScriptEngineManager() 
 {
-	CCLog(pszFormat);
+	CC_SAFE_DELETE(m_pScriptEngine);
 }
 
-
-/**
-@brief Pop out a message box
-*/
-void CC_DLL CCMessageBox(const char * pszMsg, const char * pszTitle);
-
-/**
-@brief Enum the language type supportted now
-*/
-typedef enum LanguageType
+void CCScriptEngineManager::registerScriptEngine(CCScriptEngineProtocol *pScriptEngine)
 {
-    kLanguageEnglish = 0,
-    kLanguageChinese,
-} ccLanguageType;
+	this->m_pScriptEngine = pScriptEngine;
+}
+
+CCScriptEngineProtocol* CCScriptEngineManager::getScriptEngine()
+{
+	return m_pScriptEngine;
+}
+
+CCScriptEngineManager* CCScriptEngineManager::sharedScriptEngineManager()
+{
+	static CCScriptEngineManager scriptEngineManager;
+
+	return &scriptEngineManager;
+}
 
 NS_CC_END;
-
-#endif	// __CC_COMMON_H__
