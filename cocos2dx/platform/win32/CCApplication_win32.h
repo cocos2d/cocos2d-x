@@ -80,6 +80,12 @@ public:
     */
     static CCApplication& sharedApplication();
 
+    /**
+    @brief Get current language config
+    @return Current language config
+    */
+    static ccLanguageType getCurrentLanguage();
+
 protected:
     HINSTANCE           m_hInstance;
     HACCEL              m_hAccelTable;

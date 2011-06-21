@@ -434,4 +434,26 @@ extern "C"
 
 		return ret;
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+    // handle get current language
+    //////////////////////////////////////////////////////////////////////////
+    char* getCurrentLanguageJNI()
+    {
+        TMethodJNI t;
+        char* ret = NULL;
+
+        if (getMethodID(t
+            , "org/cocos2dx/lib/Cocos2dxActivity"
+            , "getCurrentLanguage"
+            , "()Ljava/lang/String;"))
+        {
+            jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+			ret = jstringTostring(t.env, str);
+
+			LOGD("language name %s", ret);
+        }
+
+        return ret;
+    }
 }
