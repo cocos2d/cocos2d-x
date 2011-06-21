@@ -103,4 +103,21 @@ CCApplication& CCApplication::sharedApplication()
     return *sm_pSharedApplication;
 }
 
+ccLanguageType CCApplication::getCurrentLanguage()
+{
+    char* pLanguageName = getCurrentLanguageJNI();
+    ccLanguageType ret = kLanguageEnglish;
+
+    if (0 == strcmp("zh", pLanguageName))
+    {
+        ret = kLanguageChinese;
+    }
+    else if (0 == strcmp("en", pLanguageName))
+    {
+        ret = kLanguageEnglish;
+    }
+
+    return ret;
+}
+
 NS_CC_END;

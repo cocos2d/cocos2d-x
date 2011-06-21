@@ -106,4 +106,28 @@ CCApplication& CCApplication::sharedApplication()
     return *sm_pSharedApplication;
 }
 
+ccLanguageType CCApplication::getCurrentLanguage()
+{
+    // get the current language and country config
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+    NSString *currentLanguage = [languages objectAtIndex:0];
+
+    // get the current language code.(such as English is "en", Chinese is "zh" and so on)
+    NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
+    NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
+
+    ccLanguageType ret = kLanguageEnglish;
+    if ([languageCode isEqualToString:@"zh"])
+    {
+        ret = kLanguageChinese;
+    }
+    else if ([languageCode isEqualToString:@"en"])
+    {
+        ret = kLanguageEnglish;
+    }
+
+    return ret;
+}
+
 NS_CC_END;
