@@ -309,6 +309,11 @@ CCApplication& CCApplication::sharedApplication()
     return *sm_pSharedApplication;
 }
 
+ccLanguageType CCApplication::getCurrentLanguage()
+{
+    return kLanguageChinese;
+}
+
 // rotate device support
 static const CCApplication::Orientation s_OrientationModeNormal[] = 
 {
