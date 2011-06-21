@@ -334,7 +334,7 @@ namespace cocos2d {
 			(m_pSelectorTarget->*m_pCallFunc)();
 		}
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteCallFunc(m_scriptFuncName.c_str());
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_scriptFuncName.c_str());
 	}
 	//
 	// CallFuncN
@@ -346,7 +346,7 @@ namespace cocos2d {
 			(m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
 		}
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteCallFuncN(m_scriptFuncName.c_str(),
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_scriptFuncName.c_str(),
 			                                                                                   m_pTarget);
 	}
 	CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
@@ -462,7 +462,7 @@ namespace cocos2d {
 			(m_pSelectorTarget->*m_pCallFuncND)(m_pTarget, m_pData);
 		}
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteCallFuncND(m_scriptFuncName.c_str(), 
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncND(m_scriptFuncName.c_str(), 
 			                                                                                    m_pTarget,
 			                                                                                    m_pData);
 	}
@@ -487,7 +487,7 @@ namespace cocos2d {
             (m_pSelectorTarget->*m_pCallFuncO)(m_pObject);
         }
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteCallFunc0(m_scriptFuncName.c_str(),
+		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc0(m_scriptFuncName.c_str(),
 			                                                                                   m_pObject);
     }
     CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)

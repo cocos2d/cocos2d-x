@@ -106,7 +106,7 @@ public:
 	{
 		if (m_pEventTypeFuncMap)
 		{
-			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
 				                                                                                     pTouch);
 		}
 		
@@ -116,7 +116,7 @@ public:
 	{
 		if (m_pEventTypeFuncMap)
 		{
-			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteTouchesEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchesEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
 				pTouches);
 		}
 	}
