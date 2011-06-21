@@ -162,7 +162,7 @@ void CCTimer::update(ccTime dt)
 			(m_pTarget->*m_pfnSelector)(m_fElapsed);
 			m_fElapsed = 0;
 		}
-		else if (m_scriptFunc.size())
+		else if (m_scriptFunc.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
 		{
 			// call script function
 			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeSchedule(m_scriptFunc.c_str(), m_fElapsed);
