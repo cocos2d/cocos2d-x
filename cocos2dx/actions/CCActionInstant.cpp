@@ -334,7 +334,10 @@ namespace cocos2d {
 			(m_pSelectorTarget->*m_pCallFunc)();
 		}
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_scriptFuncName.c_str());
+		if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
+		{
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_scriptFuncName.c_str());
+		}
 	}
 	//
 	// CallFuncN
@@ -346,8 +349,10 @@ namespace cocos2d {
 			(m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
 		}
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_scriptFuncName.c_str(),
-			                                                                                   m_pTarget);
+		if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
+		{
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_scriptFuncName.c_str(),
+		}			                                                                                m_pTarget);
 	}
 	CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
 	{
@@ -462,9 +467,13 @@ namespace cocos2d {
 			(m_pSelectorTarget->*m_pCallFuncND)(m_pTarget, m_pData);
 		}
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncND(m_scriptFuncName.c_str(), 
-			                                                                                    m_pTarget,
-			                                                                                    m_pData);
+		if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
+		{
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncND(m_scriptFuncName.c_str(), 
+				                                                                                     m_pTarget,
+				                                                                                     m_pData);
+		}
+		
 	}
 	
     //
@@ -487,8 +496,11 @@ namespace cocos2d {
             (m_pSelectorTarget->*m_pCallFuncO)(m_pObject);
         }
 
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc0(m_scriptFuncName.c_str(),
-			                                                                                   m_pObject);
+		if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
+		{
+			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc0(m_scriptFuncName.c_str(),
+				                                                                                    m_pObject);
+		}
     }
     CCCallFuncO * CCCallFuncO::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)
     {

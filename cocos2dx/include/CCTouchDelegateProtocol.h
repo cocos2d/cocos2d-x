@@ -104,7 +104,7 @@ public:
 
 	inline void excuteScriptTouchHandler(int eventType, CCTouch *pTouch)
 	{
-		if (m_pEventTypeFuncMap)
+		if (m_pEventTypeFuncMap && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
 		{
 			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
 				                                                                                     pTouch);
@@ -114,10 +114,10 @@ public:
 
 	inline void excuteScriptTouchesHandler(int eventType, CCSet *pTouches)
 	{
-		if (m_pEventTypeFuncMap)
+		if (m_pEventTypeFuncMap && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
 		{
 			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchesEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
-				pTouches);
+				                                                                                        pTouches);
 		}
 	}
 };
