@@ -94,7 +94,7 @@ CCObject* CCSet::anyObject()
     
     CCSetIterator it;
 
-    for( it = m_pSet->begin(); it != m_pSet->end(); it++)
+    for( it = m_pSet->begin(); it != m_pSet->end(); ++it)
     {
         if (*it)
         {
