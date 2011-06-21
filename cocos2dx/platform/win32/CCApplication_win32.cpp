@@ -1,7 +1,6 @@
 #include "CCApplication.h"
 
 #include "CCDirector.h"
-#include <map>
 
 /**
 @brief	This function change the PVRFrame show/hide setting in register.
