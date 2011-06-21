@@ -97,7 +97,7 @@ namespace cocos2d{
 				(m_pListener->*m_pfnSelector)(this);
 			}
 
-			if (m_functionName.size())
+			if (m_functionName.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
 			{
 				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_functionName.c_str());
 			}
