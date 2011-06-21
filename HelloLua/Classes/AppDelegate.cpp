@@ -1,17 +1,18 @@
 #include "AppDelegate.h"
-#include "LuaEngine.h"
 
 #include "cocos2d.h"
 
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
+:m_pLuaEngine(NULL)
 {
-
 }
 
 AppDelegate::~AppDelegate()
 {
+    CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
+    CC_SAFE_DELETE(m_pLuaEngine);
 }
 
 bool AppDelegate::initInstance()
@@ -84,10 +85,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setAnimationInterval(1.0 / 60);
 
 	// register lua engine
-	CCScriptEngineManager::sharedScriptEngineManager()->registerScriptEngine(new LuaEngine());
+    m_pLuaEngine = new LuaEngine; 
+	CCScriptEngineManager::sharedScriptEngineManager()->setScriptEngine(m_pLuaEngine);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        CCLog("1");
 	unsigned long size;
 	char *pFileContent = (char*)CCFileUtils::getFileData("hello.lua", "r", &size);
 

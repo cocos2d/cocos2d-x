@@ -25,14 +25,17 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
-CCScriptEngineManager::CCScriptEngineManager() : m_pScriptEngine(NULL) {}
+CCScriptEngineManager::CCScriptEngineManager() 
+:m_pScriptEngine(NULL) 
+{
+}
 
 CCScriptEngineManager::~CCScriptEngineManager() 
 {
-	CC_SAFE_DELETE(m_pScriptEngine);
+    m_pScriptEngine = NULL;
 }
 
-void CCScriptEngineManager::registerScriptEngine(CCScriptEngineProtocol *pScriptEngine)
+void CCScriptEngineManager::setScriptEngine(CCScriptEngineProtocol *pScriptEngine)
 {
 	this->m_pScriptEngine = pScriptEngine;
 }
@@ -40,6 +43,11 @@ void CCScriptEngineManager::registerScriptEngine(CCScriptEngineProtocol *pScript
 CCScriptEngineProtocol* CCScriptEngineManager::getScriptEngine()
 {
 	return m_pScriptEngine;
+}
+
+void CCScriptEngineManager::removeScriptEngine()
+{
+    this->m_pScriptEngine = NULL;
 }
 
 CCScriptEngineManager* CCScriptEngineManager::sharedScriptEngineManager()
