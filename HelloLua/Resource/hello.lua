@@ -40,7 +40,7 @@ function CloseMenu()
 end
 
 function PopMenu()
-    pMenu:setPosition( cocos2d.CCPoint(0, -50) )
+    pMenu:setPosition( cocos2d.CCPoint(0, -100) )
 end
 
 pCloseItem = cocos2d.CCMenuItemImage:itemFromNormalImage("menu1.png","menu1.png")
