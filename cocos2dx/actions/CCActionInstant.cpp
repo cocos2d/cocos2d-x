@@ -352,7 +352,8 @@ namespace cocos2d {
 		if (CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
 		{
 			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_scriptFuncName.c_str(),
-		}			                                                                                m_pTarget);
+					                                                                                m_pTarget);
+		}
 	}
 	CCCallFuncN * CCCallFuncN::actionWithTarget(SelectorProtocol* pSelectorTarget, SEL_CallFuncN selector)
 	{
