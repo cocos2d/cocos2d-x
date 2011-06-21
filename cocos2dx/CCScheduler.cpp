@@ -73,7 +73,7 @@ typedef struct _hashScriptFuncEntry
 {
 	CCTimer			*timer;
 	bool			paused;
-	string			funcName;
+	string			*funcName;
 	UT_hash_handle	hh;
 } tHashScriptFuncEntry;
 
@@ -321,7 +321,7 @@ void CCScheduler::scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, 
 	if (! pElement)
 	{
 		pElement = (tHashScriptFuncEntry *)calloc(sizeof(*pElement), 1);
-		pElement->funcName = string(pszFuncName);
+		pElement->funcName = new string(pszFuncName);
 		pElement->timer = new CCTimer();
 		pElement->timer->initWithScriptFuncName(pszFuncName, fInterval);
 		pElement->paused = bPaused;
@@ -402,6 +402,7 @@ void CCScheduler::unscheduleScriptFunc(const char *pfzFuncName)
 	if (pElement)
 	{
 		pElement->timer->release();
+		delete pElement->funcName;
 
 		HASH_DEL(m_pHashForSelectors, pElement);
 		free(pElement);
