@@ -1,6 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2011      NetDragon.com
+Copyright (c) 2011 cocos2d-x.org
+Copyright (c) 2011 NetDragon.com
 
 http://www.cocos2d-x.org
 
@@ -22,6 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef _LUA_ENGINE_IMPL_H
 #define _LUA_ENGINE_IMPL_H
 
