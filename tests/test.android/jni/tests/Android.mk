@@ -91,8 +91,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
 #                 -L$(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries -lcurl \
 #                -lpng \
 #                -lxml2 \
-#                -ljpeg \
-#                -lskia
+#                -ljpeg
                 
 
 # it is used for ndk-r5    
@@ -105,8 +104,7 @@ LOCAL_LDLIBS := -lGLESv1_CM \
                 -L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl \
                 -lpng \
                 -lxml2 \
-                -ljpeg \
-                -lskia
+                -ljpeg 
                 
 LOCAL_STATIC_LIBRARIES := libcocos2d libcocosdenshion libbox2d libchipmunk
             
