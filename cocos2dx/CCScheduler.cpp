@@ -114,7 +114,7 @@ void CCTimer::update(ccTime dt)
 
 	if (m_fElapsed >= m_fInterval)
 	{
-		if (m_pfnSelector)
+		if (NULL != m_pfnSelector)
 		{
 			(m_pTarget->*m_pfnSelector)(m_fElapsed);
 			m_fElapsed = 0;
@@ -197,8 +197,7 @@ void CCScheduler::scheduleTimer(CCTimer *pTimer)
 
 void CCScheduler::unscheduleTimer(CCTimer *pTimer)
 {
-    //CC_UNUSED_PARAM(pTimer);
-	pTimer = NULL;
+    CC_UNUSED_PARAM(pTimer);	
     assert(false);
 }
 
@@ -209,7 +208,7 @@ void CCScheduler::unscheduleAllTimers()
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused)
 {
-	assert(pfnSelector);
+	assert(NULL != pfnSelector);
 	assert(pTarget);
 
 	tHashSelectorEntry *pElement = NULL;
@@ -267,7 +266,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 	}
 
 	assert(pTarget);
-	assert(pfnSelector);
+	assert(NULL != pfnSelector);
 
 	tHashSelectorEntry *pElement = NULL;
 	HASH_FIND_INT(m_pHashForSelectors, &pTarget, pElement);
