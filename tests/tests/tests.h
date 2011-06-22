@@ -38,6 +38,7 @@
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
 #include "CurlTest/CurlTest.h"
+#include "AdvanceSprite/AdvanceSpriteTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
@@ -87,6 +88,7 @@ enum
     TEST_PERFORMANCE,
     TEST_ZWOPTEX,
 	TEST_CURL,
+    TEST_ADVANCE_SPRITE,
 	TEST_USERDEFAULT,
 
     TESTS_COUNT,
@@ -128,6 +130,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "PerformanceTest",
     "ZwoptexTest",
 	"CurlTest",
+    "AdvanceSprite",
 	"UserDefaultTest"
 };
 

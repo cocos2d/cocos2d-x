@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CCPARTICLE_EXAMPLE_H__
 
 #include "platform/CCArchOptimalParticleSystem.h"
-
+#include "AdvanceParticleQuadSystem.h"
 namespace cocos2d {
 
 //! @brief A fire particle system
@@ -259,6 +259,27 @@ public:
 		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
+};
+    
+//! @brief A rain particle system
+class CC_DLL CCParticleAniamtion : public AdvanceParticleQuadSystem
+{
+public:
+    CCParticleAniamtion(){}
+    virtual ~CCParticleAniamtion(){}
+    bool init(){ return initWithTotalParticles(10); }
+    virtual bool initWithTotalParticles(int numberOfParticles);
+    static CCParticleAniamtion * node()
+    {
+        CCParticleAniamtion *pRet = new CCParticleAniamtion();
+        if (pRet->init())
+        {
+            pRet->autorelease();
+            return pRet;
+        }
+        CC_SAFE_DELETE(pRet)
+        return NULL;
+    }
 };
 
 }// namespace cocos2d

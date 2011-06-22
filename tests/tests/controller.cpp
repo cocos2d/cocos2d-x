@@ -20,7 +20,6 @@ static TestScene* CreateTestScene(int nIdx)
     CCDirector::sharedDirector()->purgeCachedData();
 
     TestScene* pScene = NULL;
-
     switch (nIdx)
     {
     case TEST_ACTIONS:
@@ -107,6 +106,8 @@ static TestScene* CreateTestScene(int nIdx)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	case TEST_CURL:
 		pScene = new CurlTestScene(); break;
+    case TEST_ADVANCE_SPRITE:
+        pScene = new AdvanceSpriteScene(); break;  
 	case TEST_USERDEFAULT:
 		pScene = new UserDefaultTestScene(); break;
 #endif
