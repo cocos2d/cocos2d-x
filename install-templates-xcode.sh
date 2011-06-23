@@ -287,6 +287,19 @@ copy_xcode4_project_templates(){
 	echo done!
 
 
+    print_template_banner "Installing Xcode 4 lua iOS template"
+
+
+    LIBS_DIR="$DST_DIR""lib_lua.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+
+    echo ...copying lua files
+    copy_files lua "$LIBS_DIR"
+    copy_files LICENSE.lua "$LIBS_DIR"
+    copy_files LICENSE.lua++ "$LIBS_DIR"
+
+    echo done!
+
     # Move File Templates to correct position
 	# DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/cocos2d/"
 	# OLD_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
