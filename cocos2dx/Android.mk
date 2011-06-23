@@ -107,19 +107,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/third_party/android/iconv \
                     $(LOCAL_PATH)/platform/third_party/android/libpng \
                     $(LOCAL_PATH)/platform/third_party/android/libxml2 \
-                    $(LOCAL_PATH)/platform/third_party/android/libjpeg \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/core \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/animator \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/config \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/effects \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/images \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/pdf \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/ports \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/svg \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/text \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/utils \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/views \
-                    $(LOCAL_PATH)/platform/third_party/android/skia/xml                  
+                    $(LOCAL_PATH)/platform/third_party/android/libjpeg                 
 
                                  
 LOCAL_CFLAGS := -DUSE_FILE32API  
