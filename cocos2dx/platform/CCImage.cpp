@@ -22,13 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCImage.h"
 
+#include "CCImage.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "png.h"
 #include <string>
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) 
+// on ios, we should use platform/ios/CCImage_ios.mm instead
 
 #define  QGLOBAL_H        // defined for wophone
 #include "jpeglib.h"
@@ -285,6 +288,11 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 }
 
 NS_CC_END;
+
+#endif // (CC_TARGET_PLATFORM != TARGET_OS_IPHONE)
+/* ios/CCImage_ios.mm uses "mm" as the extension, 
+   so we cannot inclue it in this CCImage.cpp.
+   It makes a little difference on ios */
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "win32/CCImage_win32.cpp"
