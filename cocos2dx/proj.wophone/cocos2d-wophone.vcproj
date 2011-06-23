@@ -497,6 +497,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\CCScriptSupport.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\CCSet.h"
 				>
 			</File>
@@ -1098,6 +1102,14 @@
 			</File>
 			<File
 				RelativePath="..\text_input_node\CCTextFieldTTF.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="script_support"
+			>
+			<File
+				RelativePath="..\script_support\CCScriptSupport.cpp"
 				>
 			</File>
 		</Filter>
