@@ -22,16 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#define COCOS2D_DEBUG 1
+// undefine ANDROID to include skia headers
+#ifdef ANDROID
+#undef ANDROID
+#endif
 
-#include <android/log.h>
-#include <string.h>
-#include <jni.h>
+/* used for SkRefCnt::unref(), it used to decrease the count */
+static int sk_atomic_dec(int *value)
+{
+	*value = *value - 1;
+	return *value;
+}
 
-#include "CCPlatformMacros.h"
-#include "Cocos2dJni.h"
-#include "CCImage.h"
-
+#include "SkBitmap.h"
+#include "SkPaint.h"
+#include "SkScalar.h"
+#include "SkCanvas.h"
+#include "SkTypeface.h"
 
 NS_CC_BEGIN;
 
@@ -39,69 +46,130 @@ class BitmapDC
 {
 public:
     BitmapDC()
-	: m_pData(NULL)
-	, m_nWidth(0)
-	, m_nHeight(0)
+		:m_pPaint(NULL)
     {
+		m_pBitmap = new SkBitmap();
     }
 
     ~BitmapDC(void)
     {
-		if (m_pData)
-		{
-			delete [] m_pData;
-		}
+		CC_SAFE_DELETE(m_pPaint);
+		CC_SAFE_DELETE(m_pBitmap);
     }
 
-	bool getBitmapFromJava(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize)
+	bool setFont(const char * pFontName = NULL, int nSize = 0)
 	{
-		// get env
-		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) <0 )
+		bool bRet = false;
+
+		if (m_pPaint)
 		{
-			if (gJavaVM->AttachCurrentThread(&env, NULL) < 0)
+			delete m_pPaint;
+			m_pPaint = NULL;
+		}
+
+		do 
+		{
+			/* init paint */
+			m_pPaint = new SkPaint();
+			CC_BREAK_IF(! m_pPaint);
+			m_pPaint->setColor(SK_ColorWHITE);
+			m_pPaint->setTextSize(nSize);
+
+			/* create font */
+			SkTypeface *pTypeFace = SkTypeface::CreateFromName(pFontName, SkTypeface::kNormal);
+			if (! pTypeFace)
+			{
+				CC_SAFE_DELETE(m_pPaint);
+				break;
+			}
+			m_pPaint->setTypeface( pTypeFace );
+			/* can not unref, I don't know why. It may be memory leak, but how to avoid? */
+			pTypeFace->unref();
+
+			bRet = true;
+		} while (0);
+
+		return bRet;
+	}
+
+	bool prepareBitmap(int nWidth, int nHeight)
+	{
+		m_pBitmap->reset();
+		
+		if (nWidth > 0 && nHeight > 0)
+		{
+			/* use rgba8888 and alloc memory */
+            m_pBitmap->setConfig(SkBitmap::kARGB_8888_Config, nWidth, nHeight);
+
+			if (! m_pBitmap->allocPixels())
 			{
 				return false;
 			}
-		}
 
-		// get class
-		jclass mClass = env->FindClass("org/cocos2dx/lib/Cocos2dxBitmap");
-		if (! mClass)
-		{
-			CCLOG("can not find org.cocos2dx.Cocos2dJNI");
-			return false;
+			/* start with black/transparent pixels */
+			m_pBitmap->eraseColor(0);
 		}
-
-		// get method of createBitmap
-		jmethodID midCreateTextBitmap = env->GetStaticMethodID(mClass, "createTextBitmap", "(Ljava/lang/String;II)V");
-		if (! midCreateTextBitmap)
-		{
-			CCLOG("can not find method createTextBitmap");
-			return false;
-		}
-
-		/**create bitmap
-		 * this method call Cococs2dx.createBitmap()(java code) to create the bitmap, the java code
-		 * will call Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC() to init the width, height
-		 * and data.
-		 * use this appoach to decrease the jni call number
-		*/
-		env->CallStaticVoidMethod(mClass, midCreateTextBitmap, env->NewStringUTF(text), (int)fontSize, eAlignMask);
 
 		return true;
 	}
 
-	// ARGB -> RGBA
-	unsigned int swapAlpha(unsigned int value)
+	bool drawText(const char *pszText, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask)
+    {
+        bool bRet = false;
+
+        do 
+        {
+            CC_BREAK_IF(! pszText);
+
+            CC_BREAK_IF(! prepareBitmap(nWidth, nHeight));
+
+			/* create canvas */
+			SkPaint::FontMetrics font;
+			m_pPaint->getFontMetrics(&font);
+			SkCanvas canvas(*m_pBitmap);
+
+			/*
+			 * draw text
+			 * @todo: alignment
+			 */
+			canvas.drawText(pszText, strlen(pszText), 0.0, -font.fAscent, *m_pPaint);
+			bRet = true;
+        } while (0);
+
+        return bRet;
+    }
+
+	bool getTextExtentPoint(const char * pszText, int *pWidth, int *pHeight)
 	{
-		return ((value << 8 & 0xffffff00) | (value >> 24 & 0x000000ff));
+		bool bRet = false;
+
+		do 
+		{
+			CC_BREAK_IF(!pszText || !pWidth || !pHeight);
+
+			// get text width and height
+			if (m_pPaint)
+			{
+				SkPaint::FontMetrics font;
+				m_pPaint->getFontMetrics(&font);
+				*pHeight = (int)ceil((font.fDescent - font.fAscent));
+				*pWidth = (int)ceil((m_pPaint->measureText(pszText, strlen(pszText))));
+
+				bRet = true;
+			}			
+		} while (0);
+
+		return bRet;
 	}
 
-public:
-	int m_nWidth;
-	int m_nHeight;
-	unsigned char *m_pData;
-	JNIEnv *env;
+	SkBitmap* getBitmap()
+	{
+		return m_pBitmap;
+	}
+
+private:
+    SkPaint *m_pPaint;
+	SkBitmap *m_pBitmap;
 };
 
 static BitmapDC& sharedBitmapDC()
@@ -126,17 +194,36 @@ bool CCImage::initWithString(
 		
         BitmapDC &dc = sharedBitmapDC();
 
-		CC_BREAK_IF(! dc.getBitmapFromJava(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
+		/* init font with font name and size */
+		CC_BREAK_IF(! dc.setFont(pFontName, nSize));
 
-		// assign the dc.m_pData to m_pData in order to save time
-		m_pData = dc.m_pData;
+		/* compute text width and height */
+		if (nWidth <= 0 || nHeight <= 0)
+		{
+			dc.getTextExtentPoint(pText, &nWidth, &nHeight);
+		}
+		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+
+		CC_BREAK_IF( false == dc.drawText(pText, nWidth, nHeight, eAlignMask) );
+
+		/*init image information */
+		SkBitmap *pBitmap = dc.getBitmap();
+		CC_BREAK_IF(! pBitmap);
+
+		int nWidth	= pBitmap->width();
+		int nHeight	= pBitmap->height();
+		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
+
+		int nDataLen = pBitmap->rowBytes() * pBitmap->height();
+		m_pData = new unsigned char[nDataLen];
 		CC_BREAK_IF(! m_pData);
+		memcpy((void*) m_pData, pBitmap->getPixels(), nDataLen);
 
-		m_nWidth    = (short)dc.m_nWidth;
-		m_nHeight   = (short)dc.m_nHeight;
+		m_nWidth    = (short)nWidth;
+		m_nHeight   = (short)nHeight;
 		m_bHasAlpha = true;
 		m_bPreMulti = true;
-		m_nBitsPerComponent = 8;
+		m_nBitsPerComponent = pBitmap->bytesPerPixel();
 
 		bRet = true;
     } while (0);
@@ -145,31 +232,3 @@ bool CCImage::initWithString(
 }
 
 NS_CC_END;
-
-// this method is called by Cocos2dxBitmap
-extern "C"
-{
-	/**
-	* this method is called by java code to init width, height and pixels data
-	*/
-	void Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
-	{
-		int size = width * height * 4;
-		cocos2d::sharedBitmapDC().m_nWidth = width;
-		cocos2d::sharedBitmapDC().m_nHeight = height;
-		cocos2d::sharedBitmapDC().m_pData = new unsigned char[size];
-		cocos2d::sharedBitmapDC().env->GetByteArrayRegion(pixels, 0, size, (jbyte*)cocos2d::sharedBitmapDC().m_pData);
-
-		// swap data
-		unsigned int *tempPtr = (unsigned int*)cocos2d::sharedBitmapDC().m_pData;
-		unsigned int tempdata = 0;
-		for (int i = 0; i < height; ++i)
-		{
-			for (int j = 0; j < width; ++j)
-			{
-				tempdata = *tempPtr;
-				*tempPtr++ = cocos2d::sharedBitmapDC().swapAlpha(tempdata);
-			}
-		}
-	}
-};

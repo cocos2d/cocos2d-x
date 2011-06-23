@@ -884,7 +884,6 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
     }
 }
 
-
 /***************************************************
 * implementation of DisplayLinkDirector
 **************************************************/

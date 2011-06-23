@@ -60,11 +60,6 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
-	{
-		return menuWithItems(item, NULL);
-	}
-
 	bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
 	{
 		if (CCLayer::init())

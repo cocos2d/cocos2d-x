@@ -919,7 +919,7 @@ void CCNode::schedule(SEL_SCHEDULE selector)
 
 void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 {
-	CCAssert( selector, "Argument must be non-nil");
+	CCAssert( NULL != selector, "Argument must be non-nil");
 	CCAssert( interval >=0, "Argument must be positive");
 
 	CCScheduler::sharedScheduler()->scheduleSelector(selector, this, interval, !m_bIsRunning);

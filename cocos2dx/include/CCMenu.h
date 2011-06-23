@@ -58,12 +58,6 @@ namespace cocos2d{
 		/** creates a CCMenu with it's items */
 		static CCMenu* menuWithItems(CCMenuItem* item, ...);
 
-		/** creates a CCMenu with it's item, then use addChild() to add 
-		  * other items. It is used for script, it can't init with undetermined
-		  * number of variables.
-		*/
-		static CCMenu*menuWithItem(CCMenuItem* item);
-
 		/** initializes a CCMenu with it's items */
 		bool initWithItems(CCMenuItem* item, va_list args);
 

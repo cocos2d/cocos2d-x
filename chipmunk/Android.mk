@@ -35,4 +35,4 @@ src/cpVect.c
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include/chipmunk
 LOCAL_CFLAGS := -std=c99
                                  
-include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_SHARED_LIBRARY)

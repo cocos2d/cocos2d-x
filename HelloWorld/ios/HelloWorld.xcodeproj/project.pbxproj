@@ -48,8 +48,6 @@
 		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
 		BF755FB112A1015E00450234 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAE12A1015E00450234 /* CloseSelected.png */; };
 		BF755FB212A1015E00450234 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAF12A1015E00450234 /* HelloWorld.png */; };
-		BF7B975C13B18860004222DD /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF7B975B13B18860004222DD /* CCScriptSupport.cpp */; };
-		BF7B975E13B1886E004222DD /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7B975D13B1886E004222DD /* CCScriptSupport.h */; };
 		BF83541813275F5600F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83517813275F5500F3C033 /* CCAction.cpp */; };
 		BF83541913275F5600F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83517913275F5500F3C033 /* CCActionCamera.cpp */; };
 		BF83541A13275F5600F3C033 /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83517A13275F5500F3C033 /* CCActionEase.cpp */; };
@@ -618,8 +616,6 @@
 		BF755FAD12A1015E00450234 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		BF755FAE12A1015E00450234 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		BF755FAF12A1015E00450234 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
-		BF7B975B13B18860004222DD /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
-		BF7B975D13B1886E004222DD /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		BF83517813275F5500F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		BF83517913275F5500F3C033 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
 		BF83517A13275F5500F3C033 /* CCActionEase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEase.cpp; sourceTree = "<group>"; };
@@ -1274,18 +1270,9 @@
 			path = ../Resource;
 			sourceTree = SOURCE_ROOT;
 		};
-		BF7B975A13B18860004222DD /* script_support */ = {
-			isa = PBXGroup;
-			children = (
-				BF7B975B13B18860004222DD /* CCScriptSupport.cpp */,
-			);
-			path = script_support;
-			sourceTree = "<group>";
-		};
 		BF83517613275F5500F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
-				BF7B975A13B18860004222DD /* script_support */,
 				BF1E5331135D23A100FD0934 /* text_input_node */,
 				BF1FAE951352F52F007553D9 /* CCDirector.cpp */,
 				BF83517713275F5500F3C033 /* actions */,
@@ -1373,7 +1360,6 @@
 		BF83519C13275F5500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				BF7B975D13B1886E004222DD /* CCScriptSupport.h */,
 				BF126D181373F24200C4ABC5 /* CCUserDefault.h */,
 				BF193EFB136007BC002463D2 /* CCArray.h */,
 				BF1E5340135D245500FD0934 /* CCTextFieldTTF.h */,
@@ -2723,7 +2709,6 @@
 				BF1E5339135D23FC00FD0934 /* CCIMEDispatcher.h in Headers */,
 				BF1E5341135D245500FD0934 /* CCTextFieldTTF.h in Headers */,
 				BF126D191373F24200C4ABC5 /* CCUserDefault.h in Headers */,
-				BF7B975E13B1886E004222DD /* CCScriptSupport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2919,7 +2904,6 @@
 				BF1E5334135D23E100FD0934 /* CCIMEDispatcher.cpp in Sources */,
 				BF1E5335135D23E100FD0934 /* CCTextFieldTTF.cpp in Sources */,
 				BF126D1B1373F25400C4ABC5 /* CCUserDefault.cpp in Sources */,
-				BF7B975C13B18860004222DD /* CCScriptSupport.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

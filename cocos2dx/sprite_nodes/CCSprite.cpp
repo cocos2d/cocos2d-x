@@ -1027,7 +1027,7 @@ void CCSprite::setDisplayFrame(const char *pszAnimationName, int nFrameIndex)
 
 void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
 {
-	assert(animationName);
+	assert(NULL != animationName);
 
 	CCAnimation *a = CCAnimationCache::sharedAnimationCache()->animationByName(animationName);
 

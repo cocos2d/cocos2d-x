@@ -38,27 +38,9 @@ static const int kMaxLogLen = 255;
 void CC_DLL CCLog(const char * pszFormat, ...);
 
 /**
- * lua can not deal with ...
- */
-inline void CC_DLL CCLuaLog(const char * pszFormat)
-{
-	CCLog(pszFormat);
-}
-
-
-/**
 @brief Pop out a message box
 */
 void CC_DLL CCMessageBox(const char * pszMsg, const char * pszTitle);
-
-/**
-@brief Enum the language type supportted now
-*/
-typedef enum LanguageType
-{
-    kLanguageEnglish = 0,
-    kLanguageChinese,
-} ccLanguageType;
 
 NS_CC_END;
 

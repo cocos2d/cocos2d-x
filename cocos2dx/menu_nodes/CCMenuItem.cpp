@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
 #include "CCLabelTTF.h"
-#include "CCScriptSupport.h"
 
 #include <stdarg.h>
 
@@ -65,67 +64,39 @@ namespace cocos2d{
 		m_bIsSelected = false;
 		return true;
 	}
-
 	void CCMenuItem::selected()
 	{
 		m_bIsSelected = true;
 	}
-
 	void CCMenuItem::unselected()
 	{
 		m_bIsSelected = false;
 	}
-
-	void CCMenuItem::registerScriptHandler(const char* pszFunctionName)
-	{
-		if (pszFunctionName)
-		{
-			this->m_functionName = string(pszFunctionName);
-		}
-		else
-		{
-			this->m_functionName.clear();
-		}
-	}
-
 	void CCMenuItem::activate()
 	{
-		if (m_bIsEnabled)
+		if (m_bIsEnabled && m_pListener)
 		{
-			if (m_pListener)
-			{
-				(m_pListener->*m_pfnSelector)(this);
-			}
-
-			if (m_functionName.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
-			{
-				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_functionName.c_str());
-			}
+			(m_pListener->*m_pfnSelector)(this);
 		}
 	}
-
 	void CCMenuItem::setIsEnabled(bool enabled)
 	{
 		m_bIsEnabled = enabled;
 	}
-
 	bool CCMenuItem::getIsEnabled()
 	{
 		return m_bIsEnabled;
 	}
-
 	CCRect CCMenuItem::rect()
 	{
 		return CCRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
 						m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
 						m_tContentSize.width, m_tContentSize.height);
 	}
-
 	bool CCMenuItem::getIsSelected()
 	{
 		return m_bIsSelected;
 	}
-
 	//
 	//CCMenuItemLabel
 	//

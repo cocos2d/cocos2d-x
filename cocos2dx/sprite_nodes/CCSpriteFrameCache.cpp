@@ -167,7 +167,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary<std::string,
             CCMutableArray<CCString*>::CCMutableArrayIterator iter;
 
             CCString * frameKey = new CCString(key.c_str());
-            for (iter = aliases->begin(); iter != aliases->end(); ++iter)
+            for (iter = aliases->begin(); iter != aliases->end(); iter++)
             {
                 std::string oneAlias = ((CCString*) (*iter))->m_sString;
                 if (m_pSpriteFramesAliases->objectForKey(oneAlias))
@@ -353,7 +353,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary<std::stri
 	framesDict->end();
 
 	vector<string>::iterator iter;
-	for (iter = keysToRemove.begin(); iter != keysToRemove.end(); ++iter)
+	for (iter = keysToRemove.begin(); iter != keysToRemove.end(); iter++)
 	{
 		m_pSpriteFrames->removeObjectForKey(*iter);
 	}
@@ -377,7 +377,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
 	m_pSpriteFrames->end();
 
 	vector<string>::iterator iter;
-	for (iter = keysToRemove.begin(); iter != keysToRemove.end(); ++iter)
+	for (iter = keysToRemove.begin(); iter != keysToRemove.end(); iter++)
 	{
 		m_pSpriteFrames->removeObjectForKey(*iter);
 	}

@@ -195,7 +195,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     		linearParams.height = 0;
     		mTextField.setLayoutParams(linearParams);
     		mTextField.setOnEditorActionListener(textInputWraper);
-    		this.requestFocus();
     	}
     }
     

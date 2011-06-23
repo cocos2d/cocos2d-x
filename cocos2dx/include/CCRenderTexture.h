@@ -74,11 +74,7 @@ public:
     This is more efficient then calling -clear first and then -begin */
     void beginWithClear(float r, float g, float b, float a);
 
-    
-    /** end is key word of lua, use other name to export to lua. */
-	inline void endToLua(){ end();};
-
-	/** ends grabbing */
+    /** ends grabbing */
     void end();
 
     /** clears the texture with a color */

@@ -46,6 +46,10 @@ public class TestsDemo extends Cocos2dxActivity{
 	 }
 
      static {
+    	 System.loadLibrary("cocosdenshion");
+    	 System.loadLibrary("chipmunk");
+    	 System.loadLibrary("box2d");
+    	 System.loadLibrary("cocos2d");
          System.loadLibrary("tests");
      }     
 }

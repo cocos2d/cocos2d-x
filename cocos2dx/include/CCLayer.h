@@ -55,13 +55,6 @@ public:
 	virtual void onExit();
     virtual void onEnterTransitionDidFinish();
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-
-	// default implements are used to call script callback if exist
-	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-
 	virtual void destroy(void);
 	virtual void keep(void);
 	
@@ -101,24 +94,6 @@ public:
     */
     CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
 };
-    
-// for the subclass of CCLayer, each has to implement the static "node" method 
-#define LAYER_NODE_FUNC(layer) \
-static layer* node() \
-{ \
-layer *pRet = new layer(); \
-if (pRet && pRet->init()) \
-{ \
-pRet->autorelease(); \
-return pRet; \
-} \
-else \
-{ \
-delete pRet; \
-pRet = NULL; \
-return NULL; \
-} \
-}; 
 
 //
 // CCLayerColor
@@ -170,8 +145,7 @@ public:
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
 	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
-    LAYER_NODE_FUNC(CCLayerColor);
-    
+
 protected:
 	virtual void updateColor();
 };
@@ -230,7 +204,6 @@ public:
     CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
     CC_PROPERTY(CCPoint, m_AlongVector, Vector)
 
-    LAYER_NODE_FUNC(CCLayerGradient);
 protected:
     virtual void updateColor();
 };
@@ -252,15 +225,6 @@ public:
 
 	/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
 	static CCMultiplexLayer * layerWithLayers(CCLayer* layer, ... );
-
-    /**
-	 * lua script can not init with undetermined number of variables
-	 * so add these functinons to be used with lua.
-	 */
-	static CCMultiplexLayer * layerWithLayer(CCLayer* layer);
-	void addLayer(CCLayer* layer);
-	bool initWithLayer(CCLayer* layer);
-
 	/** initializes a MultiplexLayer with one or more layers using a variable argument list. */
 	bool initWithLayers(CCLayer* layer, va_list params);
 	/** switches to a certain layer indexed by n. 
@@ -271,10 +235,26 @@ public:
 	The current (old) layer will be removed from it's parent with 'cleanup:YES'.
 	*/
 	void switchToAndReleaseMe(unsigned int n);
-    
-    LAYER_NODE_FUNC(CCMultiplexLayer);
 };
 }//namespace   cocos2d 
+
+// for the subclass of CCLayer, each has to implement the static "node" method 
+#define LAYER_NODE_FUNC(layer) \
+static layer* node() \
+{ \
+	layer *pRet = new layer(); \
+	if (pRet && pRet->init()) \
+	{ \
+		pRet->autorelease(); \
+		return pRet; \
+	} \
+	else \
+	{ \
+		delete pRet; \
+		pRet = NULL; \
+		return NULL; \
+	} \
+}; 
 
 #endif // __CCLAYER_H__
 

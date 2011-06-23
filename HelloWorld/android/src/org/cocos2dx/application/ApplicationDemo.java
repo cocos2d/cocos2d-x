@@ -1,13 +1,13 @@
 package org.cocos2dx.application;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.application.R;
 
+
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.widget.EditText;
 
 public class ApplicationDemo extends Cocos2dxActivity{
-	private Cocos2dxGLSurfaceView mGLView;
-	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
@@ -17,7 +17,6 @@ public class ApplicationDemo extends Cocos2dxActivity{
 		
 		setContentView(R.layout.helloworld_demo);
         mGLView = (Cocos2dxGLSurfaceView) findViewById(R.id.helloworld_gl_surfaceview);
-        mGLView.setTextField((EditText)findViewById(R.id.textField));
 
         // Get the size of the mGLView after the layout happens
         mGLView.post(new Runnable() {
@@ -41,8 +40,12 @@ public class ApplicationDemo extends Cocos2dxActivity{
 	     super.onResume();
 	     mGLView.onResume();
 	 }
+	  
+	 private GLSurfaceView mGLView;
 	
      static {
+    	 System.loadLibrary("cocos2d");
+    	 System.loadLibrary("cocosdenshion");
          System.loadLibrary("helloworld");
      }
 }

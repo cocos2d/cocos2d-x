@@ -101,13 +101,7 @@ public:
          @return Current application instance pointer.
          */
         static CCApplication& sharedApplication();
-
-        /**
-        @brief Get current language config
-        @return Current language config
-        */
-        static ccLanguageType getCurrentLanguage();
-
+        
 protected:
         static CCApplication * sm_pSharedApplication;
 };

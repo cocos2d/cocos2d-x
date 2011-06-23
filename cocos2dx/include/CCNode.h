@@ -525,6 +525,7 @@ namespace   cocos2d {
 		@since v0.7.1
 		*/
 		CCPoint convertTouchToNodeSpaceAR(CCTouch * touch);
+
 	};
 }//namespace   cocos2d 
 

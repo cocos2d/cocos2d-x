@@ -3,7 +3,6 @@
 
 #include "TG3.h"
 #include "CCDirector.h"
-#include "CCCommon.h"
 
 NS_CC_BEGIN;
 
@@ -75,12 +74,6 @@ public:
     @return Current application instance pointer.
     */
     static CCApplication& sharedApplication();
-
-    /**
-    @brief Get current language config
-    @return Current language config
-    */
-    static ccLanguageType getCurrentLanguage();
 
     /**
     @brief Get the data path of the Application.

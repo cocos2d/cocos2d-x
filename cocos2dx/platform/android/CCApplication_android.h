@@ -80,12 +80,6 @@ public:
     */
     static CCApplication& sharedApplication();
 
-    /**
-    @brief Get current language config
-    @return Current language config
-    */
-    static ccLanguageType getCurrentLanguage();
-
 protected:
     static CCApplication * sm_pSharedApplication;
 };

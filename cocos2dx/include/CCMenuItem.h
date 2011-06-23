@@ -69,14 +69,9 @@ namespace cocos2d{
 		virtual void selected();
 		/** The item was unselected */
 		virtual void unselected();
-		/** Register a script function, the function is called in activete
-		*  If pszFunctionName is NULL, then unregister it.
-		*/
-		virtual void registerScriptHandler(const char* pszFunctionName);
 	protected:
 		SelectorProtocol*	m_pListener;
 		SEL_MenuHandler		m_pfnSelector;
-		std::string         m_functionName;
 	};
 
 	/** @brief An abstract class for "label" CCMenuItemLabel items 

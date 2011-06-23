@@ -257,38 +257,6 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 	return true;
 }
 
-void CCLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
-{
-	if (isScriptHandlerExist(CCTOUCHBEGAN))
-	{
-		excuteScriptTouchesHandler(CCTOUCHBEGAN, pTouches);
-	}
-}
-
-void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
-{
-	if (isScriptHandlerExist(CCTOUCHENDED))
-	{
-		excuteScriptTouchesHandler(CCTOUCHENDED, pTouches);
-	}
-}
-
-void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
-{
-	if (isScriptHandlerExist(CCTOUCHMOVED))
-	{
-		excuteScriptTouchesHandler(CCTOUCHMOVED, pTouches);
-	}
-}
-
-void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
-{
-	if (isScriptHandlerExist(CCTOUCHCANCELLED))
-	{
-		excuteScriptTouchesHandler(CCTOUCHCANCELLED, pTouches);
-	}
-}
-
 /// ColorLayer
 
 
@@ -634,28 +602,6 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 	va_end(args);
 	CC_SAFE_DELETE(pMultiplexLayer);
 	return NULL;
-}
-
-CCMultiplexLayer * CCMultiplexLayer::layerWithLayer(CCLayer* layer)
-{
-	CCMultiplexLayer * pMultiplexLayer = new CCMultiplexLayer();
-	pMultiplexLayer->initWithLayer(layer);
-	pMultiplexLayer->autorelease();
-	return pMultiplexLayer;
-}
-void CCMultiplexLayer::addLayer(CCLayer* layer)
-{
-	assert(m_pLayers);
-	m_pLayers->addObject(layer);
-}
-
-bool CCMultiplexLayer::initWithLayer(CCLayer* layer)
-{
-	m_pLayers = new CCMutableArray<CCLayer*>(1);
-	m_pLayers->addObject(layer);
-	m_nEnabledLayer = 0;
-	this->addChild(layer);
-	return true;
 }
 
 bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)

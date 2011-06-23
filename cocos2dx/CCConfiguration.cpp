@@ -30,6 +30,10 @@ THE SOFTWARE.
 using namespace std;
 namespace   cocos2d {
 
+// singleton stuff
+static bool g_bInited;
+static CCConfiguration g_SharedConfiguration;
+static char *g_pGlExtensions;
 
 CCConfiguration::CCConfiguration(void)
 :m_nMaxTextureSize(0) 
@@ -38,10 +42,8 @@ CCConfiguration::CCConfiguration(void)
 , m_bSupportsNPOT(false)
 , m_bSupportsBGRA8888(false)
 , m_bSupportsDiscardFramebuffer(false)
-, m_bInited(false)
 , m_uOSVersion(0)
 , m_nMaxSamplesAllowed(0)
-, m_pGlExtensions(NULL)
 {
 }
 
@@ -51,7 +53,7 @@ bool CCConfiguration::init(void)
 	CCLOG("cocos2d: GL_RENDERER:   %s", glGetString(GL_RENDERER));
 	CCLOG("cocos2d: GL_VERSION:    %s", glGetString(GL_VERSION));
 
-	m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
+	g_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
 
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
 	glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &m_nMaxModelviewStackDepth);
@@ -106,14 +108,12 @@ CCGlesVersion CCConfiguration::getGlesVersion()
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
 {
-    static CCConfiguration sharedConfiguration;
-    if (!sharedConfiguration.m_bInited)
-    {
-        sharedConfiguration.init();
-        sharedConfiguration.m_bInited = true;
-    }
-    
-    return &sharedConfiguration;
+	if (! g_bInited)
+	{
+		g_SharedConfiguration.init();
+	}
+
+	return &g_SharedConfiguration;
 }
 
 bool CCConfiguration::checkForGLExtension(const string &searchName)
@@ -121,8 +121,8 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
 	bool bRet = false;
 	const char *kSearchName = searchName.c_str();
 	
-	if (m_pGlExtensions && 
-		strstr(m_pGlExtensions, kSearchName))
+	if (g_pGlExtensions && 
+		strstr(g_pGlExtensions, kSearchName))
 	{
 		bRet = true;
 	}
