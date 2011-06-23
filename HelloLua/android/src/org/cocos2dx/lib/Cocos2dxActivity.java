@@ -45,6 +45,7 @@ package org.cocos2dx.lib;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -58,6 +59,7 @@ import android.util.Log;
 public class Cocos2dxActivity extends Activity{
 	public static int screenWidth;
     public static int screenHeight;
+    public static Context context;
     private static Cocos2dxMusic backgroundMusicPlayer;
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
@@ -71,6 +73,8 @@ public class Cocos2dxActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        context = this;
         
         // get frame size
         DisplayMetrics dm = new DisplayMetrics();
@@ -92,6 +96,11 @@ public class Cocos2dxActivity extends Activity{
         		}
         	}
         };
+    }
+    
+    public static String getCurrentLanguage() {
+    	String languageName = java.util.Locale.getDefault().getLanguage();
+    	return languageName;
     }
     
     public static void showMessageBox(String title, String message){
