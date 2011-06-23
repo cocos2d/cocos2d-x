@@ -63,6 +63,8 @@ CCLuaScriptModule::CCLuaScriptModule()
 	d_state = lua_open();
 	luaL_openlibs(d_state);
 	int nOpen = tolua_Cocos2d_open(d_state);
+    CC_UNUSED_PARAM(nOpen);
+    
 	// init all standard libraries
 	/*luaopen_base(d_state);
 	luaopen_io(d_state);

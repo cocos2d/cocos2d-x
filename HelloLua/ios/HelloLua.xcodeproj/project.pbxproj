@@ -321,8 +321,8 @@
 		D4E4FF6113B2F23800A3F698 /* lundump.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF3D13B2F23800A3F698 /* lundump.c */; };
 		D4E4FF6213B2F23800A3F698 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF3F13B2F23800A3F698 /* lvm.c */; };
 		D4E4FF6313B2F23800A3F698 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF4113B2F23800A3F698 /* lzio.c */; };
-		D4E4FF6413B2F23800A3F698 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF4313B2F23800A3F698 /* Makefile */; };
 		D4E4FF6513B2F23800A3F698 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF4413B2F23800A3F698 /* print.c */; };
+		D4E4FF7F13B321D900A3F698 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E4FF7E13B321D900A3F698 /* Icon.png */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -678,8 +678,8 @@
 		D4E4FF4013B2F23800A3F698 /* lvm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lvm.h; sourceTree = "<group>"; };
 		D4E4FF4113B2F23800A3F698 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
 		D4E4FF4213B2F23800A3F698 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
-		D4E4FF4313B2F23800A3F698 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		D4E4FF4413B2F23800A3F698 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
+		D4E4FF7E13B321D900A3F698 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -739,7 +739,7 @@
 			children = (
 				BF82F41413A864B000616D55 /* Classes */,
 				BF82F40313A8647B00616D55 /* Resource */,
-				506EDAA3102F461B00A389B3 /* cocos2d Sources */,
+				506EDAA3102F461B00A389B3 /* libs */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -775,14 +775,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		506EDAA3102F461B00A389B3 /* cocos2d Sources */ = {
+		506EDAA3102F461B00A389B3 /* libs */ = {
 			isa = PBXGroup;
 			children = (
 				BF82FC4913A87F1900616D55 /* lua */,
 				BF82FBAC13A8662200616D55 /* CocosDenshion */,
 				BF82F42413A8657100616D55 /* cocos2dx */,
 			);
-			name = "cocos2d Sources";
+			name = libs;
 			sourceTree = "<group>";
 		};
 		BF23C09F13B038AB00F32062 /* cocos2dx_support */ = {
@@ -809,6 +809,7 @@
 		BF82F40313A8647B00616D55 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				D4E4FF7E13B321D900A3F698 /* Icon.png */,
 				BF82F40413A8647B00616D55 /* 90001.jpg */,
 				BF82F40513A8647B00616D55 /* crop1.png */,
 				BF82F40613A8647B00616D55 /* dog1.png */,
@@ -1402,7 +1403,6 @@
 				D4E4FF4013B2F23800A3F698 /* lvm.h */,
 				D4E4FF4113B2F23800A3F698 /* lzio.c */,
 				D4E4FF4213B2F23800A3F698 /* lzio.h */,
-				D4E4FF4313B2F23800A3F698 /* Makefile */,
 				D4E4FF4413B2F23800A3F698 /* print.c */,
 			);
 			path = lua;
@@ -1642,6 +1642,7 @@
 				BF82F41113A8647B00616D55 /* menu1.png in Resources */,
 				BF82F41213A8647B00616D55 /* menu2.png in Resources */,
 				BF82F41313A8647B00616D55 /* Default.png in Resources */,
+				D4E4FF7F13B321D900A3F698 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1686,7 +1687,6 @@
 				D4E4FF6113B2F23800A3F698 /* lundump.c in Sources */,
 				D4E4FF6213B2F23800A3F698 /* lvm.c in Sources */,
 				D4E4FF6313B2F23800A3F698 /* lzio.c in Sources */,
-				D4E4FF6413B2F23800A3F698 /* Makefile in Sources */,
 				D4E4FF6513B2F23800A3F698 /* print.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
