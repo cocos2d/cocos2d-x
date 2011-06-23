@@ -73,7 +73,7 @@ public:
 		}
 
 		// get method of createBitmap
-		jmethodID midCreateTextBitmap = env->GetStaticMethodID(mClass, "createTextBitmap", "(Ljava/lang/String;I)V");
+		jmethodID midCreateTextBitmap = env->GetStaticMethodID(mClass, "createTextBitmap", "(Ljava/lang/String;II)V");
 		if (! midCreateTextBitmap)
 		{
 			CCLOG("can not find method createTextBitmap");
@@ -86,7 +86,7 @@ public:
 		 * and data.
 		 * use this appoach to decrease the jni call number
 		*/
-		env->CallStaticVoidMethod(mClass, midCreateTextBitmap, env->NewStringUTF(text), (int)fontSize);
+		env->CallStaticVoidMethod(mClass, midCreateTextBitmap, env->NewStringUTF(text), (int)fontSize, eAlignMask);
 
 		return true;
 	}
