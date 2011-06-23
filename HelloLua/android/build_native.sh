@@ -1,9 +1,10 @@
 # set params
-ANDROID_NDK_ROOT=/cygdrive/e/android-ndk-r5
-COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
+ANDROID_NDK_ROOT=/workspace/android-dev/android-ndk-r5
+COCOS2DX_ROOT=/workspace/cocos2d-x
+
 GAME_ROOT=$COCOS2DX_ROOT/HelloLua
 GAME_ANDROID_ROOT=$GAME_ROOT/android
-RESOURCE_ROOT=$GAME_ROOT/Resource
+GAME_RESOURCE_ROOT=$GAME_ROOT/Resource
 
 # make sure assets is exist
 if [ -d $GAME_ANDROID_ROOT/assets ]; then
@@ -13,7 +14,7 @@ fi
 mkdir $GAME_ANDROID_ROOT/assets
 
 # copy resources
-for file in $RESOURCE_ROOT/*
+for file in $GAME_RESOURCE_ROOT/*
 do
     if [ -d $file ]; then
         cp -rf $file $GAME_ANDROID_ROOT/assets
@@ -25,5 +26,7 @@ do
 done
 
 # build
-$ANDROID_NDK_ROOT/ndk-build -C $GAME_ANDROID_ROOT $*
+pushd $ANDROID_NDK_ROOT
+./ndk-build -C $GAME_ANDROID_ROOT $*
+popd
 
