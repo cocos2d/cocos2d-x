@@ -1,11 +1,11 @@
 package org.cocos2dx.hellolua;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
-import org.cocos2dx.hellolua.R;
 
-
+import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 public class HelloLua extends Cocos2dxActivity{
 	protected void onCreate(Bundle savedInstanceState){
@@ -15,8 +15,8 @@ public class HelloLua extends Cocos2dxActivity{
 		String packageName = getApplication().getPackageName();
 		super.setPackageName(packageName);
 		
-		setContentView(R.layout.game_demo);
-        mGLView = (Cocos2dxGLSurfaceView) findViewById(R.id.game_gl_surfaceview);
+        mGLView = new LuaGLSurfaceView(this);
+        setContentView(mGLView);
 
         // Get the size of the mGLView after the layout happens
         mGLView.post(new Runnable() {
@@ -46,4 +46,19 @@ public class HelloLua extends Cocos2dxActivity{
      static {
          System.loadLibrary("game");
      }
+}
+
+class LuaGLSurfaceView extends Cocos2dxGLSurfaceView{
+	
+	public LuaGLSurfaceView(Context context){
+		super(context);
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	// exit program when key back is entered
+    	if (keyCode == KeyEvent.KEYCODE_BACK) {
+    		android.os.Process.killProcess(android.os.Process.myPid());
+    	}
+        return super.onKeyDown(keyCode, event);
+    }
 }
