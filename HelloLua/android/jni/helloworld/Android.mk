@@ -14,7 +14,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                     $(LOCAL_PATH)/../../../../cocos2dx/lua_support \
                     $(LOCAL_PATH)/../../../../CocosDenshion/include \
                     $(LOCAL_PATH)/../../../Classes \
-                    $(LOCAL_PATH)/../../../../lua/src \
+                    $(LOCAL_PATH)/../../../../lua/lua \
                     $(LOCAL_PATH)/../../../../lua/tolua \
                     $(LOCAL_PATH)/../../../../lua/cocos2dx_support
 
