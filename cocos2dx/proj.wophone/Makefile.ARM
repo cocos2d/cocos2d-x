@@ -123,7 +123,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCTMXTiledMap.o \
 	$(OBJECTS_DIR)/CCTMXXMLParser.o \
 	$(OBJECTS_DIR)/CCTouchDispatcher.o \
-	$(OBJECTS_DIR)/CCTouchHandler.o
+	$(OBJECTS_DIR)/CCTouchHandler.o \
+	$(OBJECTS_DIR)/CCScriptSupport.o
 
 ADD_OBJECTS += 
 
@@ -418,3 +419,5 @@ $(OBJECTS_DIR)/CCTouchDispatcher.o : ../touch_dispatcher/CCTouchDispatcher.cpp
 $(OBJECTS_DIR)/CCTouchHandler.o : ../touch_dispatcher/CCTouchHandler.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTouchHandler.o ../touch_dispatcher/CCTouchHandler.cpp
 
+$(OBJECTS_DIR)/CCScriptSupport.o : ../script_support/CCScriptSupport.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScriptSupport.o ../script_support/CCScriptSupport.cpp
