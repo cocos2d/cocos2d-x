@@ -14,4 +14,8 @@ echo "generating libchipmunk"
 mkdir -p template/xcode4/lib_chipmunk.xctemplate
 python ./tools/template_generator.py --directory chipmunk --identifier libchipmunk --prefix libs --exclude "android win32 airplay wophone Android.mk" > ./template/xcode4/lib_chipmunk.xctemplate/TemplateInfo.plist
 
+echo "generating liblua"
+mkdir -p template/xcode4/lib_lua.xctemplate
+python ./tools/template_generator.py --directory lua --identifier liblua --prefix libs --exclude "android win32 airplay wophone Makefile" > ./template/xcode4/lib_lua.xctemplate/TemplateInfo.plist
+
 echo "done"
