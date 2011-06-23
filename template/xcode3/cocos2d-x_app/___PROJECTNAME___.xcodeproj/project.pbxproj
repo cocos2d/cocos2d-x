@@ -268,6 +268,8 @@
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D408234E132F3DD900F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D408234D132F3DD900F44E75 /* main.m */; };
 		D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
+		D4E4FED113B2D6A400A3F698 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FED013B2D6A400A3F698 /* CCScriptSupport.cpp */; };
+		D4E4FED313B2D6CC00A3F698 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E4FED213B2D6CC00A3F698 /* CCScriptSupport.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -547,6 +549,8 @@
 		D408234D132F3DD900F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
 		D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
 		D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
+		D4E4FED013B2D6A400A3F698 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
+		D4E4FED213B2D6CC00A3F698 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -606,7 +610,7 @@
 			children = (
 				BF19164112E052E1007DCFF1 /* LICENSE.cocos2d-x */,
 				BF1915B912E04F70007DCFF1 /* Resource */,
-				506EDAA3102F461B00A389B3 /* cocos2d Sources */,
+				506EDAA3102F461B00A389B3 /* libs */,
 				2D500B1D0D5A766B00DBA0E3 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -654,13 +658,13 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		506EDAA3102F461B00A389B3 /* cocos2d Sources */ = {
+		506EDAA3102F461B00A389B3 /* libs */ = {
 			isa = PBXGroup;
 			children = (
 				BF835DC11328687E00F3C033 /* cocos2dx */,
 				BF776BC612DFEFA800358B43 /* CocosDenshion */,
 			);
-			name = "cocos2d Sources";
+			name = libs;
 			sourceTree = "<group>";
 		};
 		BF1915B912E04F70007DCFF1 /* Resource */ = {
@@ -719,6 +723,7 @@
 		BF835DC11328687E00F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				D4E4FECF13B2D6A400A3F698 /* script_support */,
 				BFA70A21136AB08700ABC725 /* text_input_node */,
 				BF1FB0111352F91A007553D9 /* CCDirector.cpp */,
 				BF76372B133389F4009E0E50 /* CCCamera.cpp */,
@@ -806,6 +811,7 @@
 		BF835DE71328687E00F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				D4E4FED213B2D6CC00A3F698 /* CCScriptSupport.h */,
 				BF9935F11373ED1200197D1B /* CCUserDefault.h */,
 				BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */,
 				BFA70A1C136AB06C00ABC725 /* CCIMEDispatcher.h */,
@@ -1123,6 +1129,14 @@
 			path = text_input_node;
 			sourceTree = "<group>";
 		};
+		D4E4FECF13B2D6A400A3F698 /* script_support */ = {
+			isa = PBXGroup;
+			children = (
+				D4E4FED013B2D6A400A3F698 /* CCScriptSupport.cpp */,
+			);
+			path = script_support;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1262,6 +1276,7 @@
 				BFA70A1F136AB06C00ABC725 /* CCIMEDispatcher.h in Headers */,
 				BFA70A20136AB06C00ABC725 /* CCTextFieldTTF.h in Headers */,
 				BF9935F21373ED1200197D1B /* CCUserDefault.h in Headers */,
+				D4E4FED313B2D6CC00A3F698 /* CCScriptSupport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1468,6 +1483,7 @@
 				BFA70A24136AB08700ABC725 /* CCIMEDispatcher.cpp in Sources */,
 				BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */,
 				BF126CE71373EE2800C4ABC5 /* CCUserDefault.cpp in Sources */,
+				D4E4FED113B2D6A400A3F698 /* CCScriptSupport.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

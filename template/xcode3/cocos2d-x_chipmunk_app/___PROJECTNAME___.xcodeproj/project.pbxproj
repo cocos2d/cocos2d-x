@@ -313,6 +313,8 @@
 		D4236B1B1387F5BB00F75A88 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B181387F5BB00F75A88 /* cpSpaceQuery.c */; };
 		D4236B1C1387F5BB00F75A88 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B191387F5BB00F75A88 /* cpSpaceComponent.c */; };
 		D4236B1E1387F5DA00F75A88 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D4236B1D1387F5DA00F75A88 /* chipmunk_private.h */; };
+		D4E4FEE613B2D75500A3F698 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FEE513B2D75500A3F698 /* CCScriptSupport.cpp */; };
+		D4E4FEE813B2D77100A3F698 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E4FEE713B2D77100A3F698 /* CCScriptSupport.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -645,6 +647,8 @@
 		D4236B181387F5BB00F75A88 /* cpSpaceQuery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceQuery.c; sourceTree = "<group>"; };
 		D4236B191387F5BB00F75A88 /* cpSpaceComponent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceComponent.c; sourceTree = "<group>"; };
 		D4236B1D1387F5DA00F75A88 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
+		D4E4FEE513B2D75500A3F698 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
+		D4E4FEE713B2D77100A3F698 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -711,7 +715,7 @@
 				D408245A132F45B200F44E75 /* Classes */,
 				BF152AF112E16B4200703484 /* LICENSE.cocos2d-x */,
 				E0C5505A11FA3A8000B9E4CB /* LICENSE.chipmunk */,
-				506EDAA3102F461B00A389B3 /* cocos2d Sources */,
+				506EDAA3102F461B00A389B3 /* libs */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				50F4144210692EE7002A0D5E /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -748,14 +752,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		506EDAA3102F461B00A389B3 /* cocos2d Sources */ = {
+		506EDAA3102F461B00A389B3 /* libs */ = {
 			isa = PBXGroup;
 			children = (
 				BF83696B13287D3400F3C033 /* cocos2dx */,
 				BF1537BA12E16C0400703484 /* CocosDenshion */,
 				BF152AF312E16B6F00703484 /* chipmunk */,
 			);
-			name = "cocos2d Sources";
+			name = libs;
 			sourceTree = "<group>";
 		};
 		50F4144210692EE7002A0D5E /* Resources */ = {
@@ -915,6 +919,7 @@
 		BF83696B13287D3400F3C033 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
+				D4E4FEE413B2D75500A3F698 /* script_support */,
 				BFA70A4D136AB11200ABC725 /* text_input_node */,
 				BF1FB06B1352FB17007553D9 /* CCDirector.cpp */,
 				BF76377713338AE6009E0E50 /* CCCamera.cpp */,
@@ -1002,6 +1007,7 @@
 		BF83699113287D3500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				D4E4FEE713B2D77100A3F698 /* CCScriptSupport.h */,
 				BF126D001373EF1F00C4ABC5 /* CCUserDefault.h */,
 				BFA70A54136AB14B00ABC725 /* CCIMEDelegate.h */,
 				BFA70A55136AB14B00ABC725 /* CCIMEDispatcher.h */,
@@ -1330,6 +1336,14 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		D4E4FEE413B2D75500A3F698 /* script_support */ = {
+			isa = PBXGroup;
+			children = (
+				D4E4FEE513B2D75500A3F698 /* CCScriptSupport.cpp */,
+			);
+			path = script_support;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1495,6 +1509,7 @@
 				BF193F62136008DB002463D2 /* CCArray.h in Headers */,
 				BF126D011373EF1F00C4ABC5 /* CCUserDefault.h in Headers */,
 				D4236B1E1387F5DA00F75A88 /* chipmunk_private.h in Headers */,
+				D4E4FEE813B2D77100A3F698 /* CCScriptSupport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1725,6 +1740,7 @@
 				D4236B1A1387F5BB00F75A88 /* cpSpaceStep.c in Sources */,
 				D4236B1B1387F5BB00F75A88 /* cpSpaceQuery.c in Sources */,
 				D4236B1C1387F5BB00F75A88 /* cpSpaceComponent.c in Sources */,
+				D4E4FEE613B2D75500A3F698 /* CCScriptSupport.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
