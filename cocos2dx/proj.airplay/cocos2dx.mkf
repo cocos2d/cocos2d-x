@@ -91,6 +91,10 @@ files
 	[platforms/airplay]
 	"*.h"
 	"*.cpp"
+
+    ("../script_support")
+    [script_support]
+    "*.cpp"
 	
 	("../sprite_nodes")
 	[sprite_nodes]
