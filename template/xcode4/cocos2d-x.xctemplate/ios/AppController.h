@@ -6,8 +6,11 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-@interface ___PROJECTNAMEASIDENTIFIER___AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate> {
+@class RootViewController;
+
+@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate> {
     UIWindow *window;
+    RootViewController	*viewController;
 }
 
 @end
