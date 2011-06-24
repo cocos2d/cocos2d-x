@@ -63345,6 +63345,23 @@ static int tolua_Cocos2d_cocos2d_CCLayer_ccTouchesCancelled00(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: __CCNode__ of class  cocos2d::CCLayer */
+#ifndef TOLUA_DISABLE_tolua_get_cocos2d__CCLayer___CCNode__
+static int tolua_get_cocos2d__CCLayer___CCNode__(lua_State* tolua_S)
+{
+    cocos2d::CCLayer* self = (cocos2d::CCLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__CCNode__'",NULL);
+#endif
+#ifdef __cplusplus
+    tolua_pushusertype(tolua_S,(void*)static_cast<cocos2d::CCNode*>(self), "cocos2d::CCNode");
+#else
+    tolua_pushusertype(tolua_S,(void*)((cocos2d::CCNode*)self), "cocos2d::CCNode");
+#endif
+    return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: __CCTouchDelegate__ of class  cocos2d::CCLayer */
 #ifndef TOLUA_DISABLE_tolua_get_cocos2d__CCLayer___CCTouchDelegate__
 static int tolua_get_cocos2d__CCLayer___CCTouchDelegate__(lua_State* tolua_S)
@@ -72486,6 +72503,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"ccTouchesMoved",tolua_Cocos2d_cocos2d_CCLayer_ccTouchesMoved00);
     tolua_function(tolua_S,"ccTouchesEnded",tolua_Cocos2d_cocos2d_CCLayer_ccTouchesEnded00);
     tolua_function(tolua_S,"ccTouchesCancelled",tolua_Cocos2d_cocos2d_CCLayer_ccTouchesCancelled00);
+    tolua_variable(tolua_S,"__CCNode__",tolua_get_cocos2d__CCLayer___CCNode__,NULL);
     tolua_variable(tolua_S,"__CCTouchDelegate__",tolua_get_cocos2d__CCLayer___CCTouchDelegate__,NULL);
     tolua_variable(tolua_S,"__CCAccelerometerDelegate__",tolua_get_cocos2d__CCLayer___CCAccelerometerDelegate__,NULL);
     tolua_variable(tolua_S,"__CCKeypadDelegate__",tolua_get_cocos2d__CCLayer___CCKeypadDelegate__,NULL);
