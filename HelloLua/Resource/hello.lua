@@ -16,16 +16,31 @@ spriteFarm:setPosition(cocos2d.CCPoint(winSize.width/2 + 80, winSize.height/2))
 layerFarm:addChild(spriteFarm)
 
 -- touch handers
+pointBegin = nil
+
 function btnTouchMove(e)
-    cocos2d.CCLuaLog("mousemove")
+    cocos2d.CCLuaLog("btnTouchMove")
+    if pointBegin ~= nil then
+        local v = e[1]
+        local pointMove = v:locationInView(v:view())
+        pointMove = cocos2d.CCDirector:sharedDirector():convertToGL(pointMove)
+        local positionCurrent = layerFarm.__CCNode__:getPosition()
+        layerFarm.__CCNode__:setPosition(cocos2d.CCPoint(positionCurrent.x + pointMove.x - pointBegin.x, positionCurrent.y + pointMove.y - pointBegin.y))
+        pointBegin = pointMove
+    end
 end
 
 function btnTouchBegin(e)
-    cocos2d.CCLuaLog("btnTouchBegin")
+    for k,v in ipairs(e) do
+        pointBegin = v:locationInView(v:view())
+        pointBegin = cocos2d.CCDirector:sharedDirector():convertToGL(pointBegin)
+        cocos2d.CCLuaLog("btnTouchBegin, x= %d, y = %d", pointBegin.x, pointBegin.y)
+    end
 end
 
 function btnTouchEnd(e)
     cocos2d.CCLuaLog("btnTouchEnd")
+    touchStart = nil
 end
 
 -- regiester touch handlers
@@ -70,7 +85,7 @@ frame1 = cocos2d.CCSpriteFrame:frameWithTexture(textureDog, cocos2d.CCRectMake(F
 
 spriteDog = cocos2d.CCSprite:spriteWithSpriteFrame(frame0)
 spriteDog:setPosition(cocos2d.CCPoint(0, winSize.height/4*3))
-layerMenu:addChild(spriteDog)
+layerFarm:addChild(spriteDog)
 
 animFrames = cocos2d.CCMutableArray_CCSpriteFrame__:new(2)
 animFrames:addObject(frame0)

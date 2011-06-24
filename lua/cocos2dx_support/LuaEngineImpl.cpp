@@ -109,7 +109,7 @@ bool CCLuaScriptModule::executeScriptFile(const std::string& filename)
 	if (nRet != 0)
 	{
 		CCLog("executeScriptFile Error nRet = %d", nRet);
-        
+		        
         // print the error msg
         const char* strErrMsg = lua_tostring(d_state, -1);
         CCLog("%s", strErrMsg);
@@ -427,8 +427,17 @@ bool CCLuaScriptModule::executeTouchesEvent(const std::string& handler_name, CCS
 		CCLog("%s %d", msg.c_str(), __LINE__);
 		return false;
 	}
-	// push EventArgs as the first parameter
-	tolua_pushusertype(d_state,(void*)pobj,"cocos2d::CCSet");
+	// push array to lua
+	lua_createtable(d_state, pobj->count(), 0);
+	int newTable = lua_gettop(d_state);
+	int index = 1;
+	CCSetIterator iter = pobj->begin();
+	for (; iter != pobj->end(); iter++)
+	{
+        tolua_pushusertype(d_state,(void*)(*iter),"cocos2d::CCTouch");
+		lua_rawseti(d_state, newTable, index++);
+	}
+	
 	// call it
 	int error = lua_pcall(d_state,1,0,0);
 	// handle errors
