@@ -311,7 +311,7 @@ copy_xcode4_project_templates(){
     echo ...copying lua files
     copy_files lua "$LIBS_DIR"
     copy_files LICENSE.lua "$LIBS_DIR"
-    copy_files LICENSE.lua++ "$LIBS_DIR"
+    copy_files LICENSE.tolua++ "$LIBS_DIR"
 
     echo done!
 

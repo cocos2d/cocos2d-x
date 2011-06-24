@@ -36,11 +36,7 @@
 		BF1FB01A1352F95C007553D9 /* CCMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB0191352F95C007553D9 /* CCMenu.cpp */; };
 		BF1FB01C1352F971007553D9 /* CCNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB01B1352F971007553D9 /* CCNode.cpp */; };
 		BF1FB01E1352F98C007553D9 /* CCParticleSystemPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB01D1352F98C007553D9 /* CCParticleSystemPoint.cpp */; };
-		BF22ED9313B4654A00E008B2 /* 90001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BF22ED8C13B4654A00E008B2 /* 90001.jpg */; };
-		BF22ED9413B4654A00E008B2 /* crop1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF22ED8D13B4654A00E008B2 /* crop1.png */; };
-		BF22ED9513B4654A00E008B2 /* dog1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF22ED8E13B4654A00E008B2 /* dog1.png */; };
 		BF22ED9613B4654A00E008B2 /* hello.lua in Resources */ = {isa = PBXBuildFile; fileRef = BF22ED8F13B4654A00E008B2 /* hello.lua */; };
-		BF22ED9713B4654A00E008B2 /* land1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF22ED9013B4654A00E008B2 /* land1.png */; };
 		BF22ED9813B4654A00E008B2 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF22ED9113B4654A00E008B2 /* menu1.png */; };
 		BF22ED9913B4654A00E008B2 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = BF22ED9213B4654A00E008B2 /* menu2.png */; };
 		BF22EE1C13B4658B00E008B2 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = BF22EDCD13B4658B00E008B2 /* tolua_event.c */; };
@@ -329,7 +325,6 @@
 		BF8362B31328687F00F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360601328687F00F3C033 /* CCTouchDispatcher.cpp */; };
 		BF8362B41328687F00F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360611328687F00F3C033 /* CCTouchHandler.cpp */; };
 		BF8362B51328687F00F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8360621328687F00F3C033 /* CCTouchHandler.h */; };
-		BF83638D132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		BF9935F21373ED1200197D1B /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF9935F11373ED1200197D1B /* CCUserDefault.h */; };
 		BFA008A6134423F500289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008A5134423F500289DC3 /* CCCommon_ios.mm */; };
 		BFA70A1E136AB06C00ABC725 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */; };
@@ -339,7 +334,13 @@
 		BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D408234E132F3DD900F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D408234D132F3DD900F44E75 /* main.m */; };
-		D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
+		D4D56BE313B4C6470040A228 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = D4D56BDF13B4C6470040A228 /* land.png */; };
+		D4D56BE413B4C6470040A228 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4D56BE013B4C6470040A228 /* farm.jpg */; };
+		D4D56BE513B4C6470040A228 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = D4D56BE113B4C6470040A228 /* dog.png */; };
+		D4D56BE613B4C6470040A228 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = D4D56BE213B4C6470040A228 /* crop.png */; };
+		D4D56BE913B4C6620040A228 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4D56BE713B4C6620040A228 /* AppDelegate.cpp */; };
+		D4D56BEE13B4C6800040A228 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4D56BEA13B4C6800040A228 /* AppController.mm */; };
+		D4D56BEF13B4C6800040A228 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4D56BEB13B4C6800040A228 /* RootViewController.mm */; };
 		D4E4FED113B2D6A400A3F698 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FED013B2D6A400A3F698 /* CCScriptSupport.cpp */; };
 		D4E4FED313B2D6CC00A3F698 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E4FED213B2D6CC00A3F698 /* CCScriptSupport.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
@@ -386,11 +387,7 @@
 		BF1FB0191352F95C007553D9 /* CCMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenu.cpp; sourceTree = "<group>"; };
 		BF1FB01B1352F971007553D9 /* CCNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNode.cpp; sourceTree = "<group>"; };
 		BF1FB01D1352F98C007553D9 /* CCParticleSystemPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParticleSystemPoint.cpp; sourceTree = "<group>"; };
-		BF22ED8C13B4654A00E008B2 /* 90001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 90001.jpg; sourceTree = "<group>"; };
-		BF22ED8D13B4654A00E008B2 /* crop1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop1.png; sourceTree = "<group>"; };
-		BF22ED8E13B4654A00E008B2 /* dog1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog1.png; sourceTree = "<group>"; };
 		BF22ED8F13B4654A00E008B2 /* hello.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello.lua; sourceTree = "<group>"; };
-		BF22ED9013B4654A00E008B2 /* land1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land1.png; sourceTree = "<group>"; };
 		BF22ED9113B4654A00E008B2 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu1.png; sourceTree = "<group>"; };
 		BF22ED9213B4654A00E008B2 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
 		BF22EDCD13B4658B00E008B2 /* tolua_event.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_event.c; sourceTree = "<group>"; };
@@ -679,8 +676,6 @@
 		BF8360601328687F00F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF8360611328687F00F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
 		BF8360621328687F00F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
-		BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
-		BF83638B132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		BF9935F11373ED1200197D1B /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		BFA008A5134423F500289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
@@ -690,8 +685,16 @@
 		BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextFieldTTF.cpp; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D408234D132F3DD900F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
-		D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
-		D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
+		D4D56BDF13B4C6470040A228 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
+		D4D56BE013B4C6470040A228 /* farm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = farm.jpg; sourceTree = "<group>"; };
+		D4D56BE113B4C6470040A228 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
+		D4D56BE213B4C6470040A228 /* crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop.png; sourceTree = "<group>"; };
+		D4D56BE713B4C6620040A228 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		D4D56BE813B4C6620040A228 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D4D56BEA13B4C6800040A228 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = ios/AppController.mm; sourceTree = "<group>"; };
+		D4D56BEB13B4C6800040A228 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RootViewController.mm; path = ios/RootViewController.mm; sourceTree = "<group>"; };
+		D4D56BEC13B4C6800040A228 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = ios/RootViewController.h; sourceTree = "<group>"; };
+		D4D56BED13B4C6800040A228 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = "<group>"; };
 		D4E4FED013B2D6A400A3F698 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		D4E4FED213B2D6CC00A3F698 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -765,8 +768,10 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
-				D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
+				D4D56BEA13B4C6800040A228 /* AppController.mm */,
+				D4D56BEB13B4C6800040A228 /* RootViewController.mm */,
+				D4D56BEC13B4C6800040A228 /* RootViewController.h */,
+				D4D56BED13B4C6800040A228 /* AppController.h */,
 				D408234D132F3DD900F44E75 /* main.m */,
 				1F3B9A820EF2151B00286867 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
 			);
@@ -793,8 +798,8 @@
 		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BF83638A132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */,
-				BF83638B132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
+				D4D56BE713B4C6620040A228 /* AppDelegate.cpp */,
+				D4D56BE813B4C6620040A228 /* AppDelegate.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -812,11 +817,11 @@
 		BF1915B912E04F70007DCFF1 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				BF22ED8C13B4654A00E008B2 /* 90001.jpg */,
-				BF22ED8D13B4654A00E008B2 /* crop1.png */,
-				BF22ED8E13B4654A00E008B2 /* dog1.png */,
+				D4D56BDF13B4C6470040A228 /* land.png */,
+				D4D56BE013B4C6470040A228 /* farm.jpg */,
+				D4D56BE113B4C6470040A228 /* dog.png */,
+				D4D56BE213B4C6470040A228 /* crop.png */,
 				BF22ED8F13B4654A00E008B2 /* hello.lua */,
-				BF22ED9013B4654A00E008B2 /* land1.png */,
 				BF22ED9113B4654A00E008B2 /* menu1.png */,
 				BF22ED9213B4654A00E008B2 /* menu2.png */,
 				BF1915BC12E04F70007DCFF1 /* Default.png */,
@@ -1632,13 +1637,13 @@
 				BF1915CC12E04F70007DCFF1 /* Icon.png in Resources */,
 				BF1915CD12E04F70007DCFF1 /* Icon@2x.png in Resources */,
 				BF19164212E052E1007DCFF1 /* LICENSE.cocos2d-x in Resources */,
-				BF22ED9313B4654A00E008B2 /* 90001.jpg in Resources */,
-				BF22ED9413B4654A00E008B2 /* crop1.png in Resources */,
-				BF22ED9513B4654A00E008B2 /* dog1.png in Resources */,
 				BF22ED9613B4654A00E008B2 /* hello.lua in Resources */,
-				BF22ED9713B4654A00E008B2 /* land1.png in Resources */,
 				BF22ED9813B4654A00E008B2 /* menu1.png in Resources */,
 				BF22ED9913B4654A00E008B2 /* menu2.png in Resources */,
+				D4D56BE313B4C6470040A228 /* land.png in Resources */,
+				D4D56BE413B4C6470040A228 /* farm.jpg in Resources */,
+				D4D56BE513B4C6470040A228 /* dog.png in Resources */,
+				D4D56BE613B4C6470040A228 /* crop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1649,9 +1654,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF83638D132875D800F3C033 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */,
 				D408234E132F3DD900F44E75 /* main.m in Sources */,
-				D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
+				D4D56BE913B4C6620040A228 /* AppDelegate.cpp in Sources */,
+				D4D56BEE13B4C6800040A228 /* AppController.mm in Sources */,
+				D4D56BEF13B4C6800040A228 /* RootViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
