@@ -74,7 +74,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
-//     pDirector->enableRetinaDisplay(true);
+    // pDirector->enableRetinaDisplay(true);
 
 	// turn on display FPS
 	pDirector->setDisplayFPS(true);
@@ -132,7 +132,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
     printf("%s", path.c_str());
     CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());

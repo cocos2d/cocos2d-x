@@ -109,6 +109,11 @@ bool CCLuaScriptModule::executeScriptFile(const std::string& filename)
 	if (nRet != 0)
 	{
 		CCLog("executeScriptFile Error nRet = %d", nRet);
+        
+        // print the error msg
+        const char* strErrMsg = lua_tostring(d_state, -1);
+        CCLog("%s", strErrMsg);
+        
 		return false;
 	}
 
