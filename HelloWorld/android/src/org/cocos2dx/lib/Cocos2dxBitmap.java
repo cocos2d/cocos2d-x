@@ -7,9 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
-import android.view.Gravity;
-import android.widget.TextView;
 
 public class Cocos2dxBitmap{
 	/*
@@ -20,63 +20,70 @@ public class Cocos2dxBitmap{
 	private static final int ALIGNLEFT	 = 0x31;
 	private static final int ALIGNRIGHT	 = 0x32;
 	
-    public static void createTextBitmap(String content, int fontSize, int alignment){
-    	TextProperty textProperty = getTextWidthAndHeight(content, fontSize);   
+    public static void createTextBitmap(String content, String fontName, 
+    		int fontSize, int alignment){
+    	Paint paint = newPaint(fontName, fontSize, alignment);
     	
-        // create TextView and set corresponding property
-        TextView tv = new TextView(Cocos2dxActivity.context);
-    	tv.setText(content);
-        tv.measure(textProperty.maxWidth, textProperty.height);
-        tv.setTextSize(fontSize);
-        tv.layout(0, 0, textProperty.maxWidth, textProperty.height);
-        setTextViewAlignment(tv, alignment);
+    	TextProperty textProperty = getTextWidthAndHeight(content, paint);      	
       
         // draw text to bitmap
-        Bitmap bitmap = Bitmap.createBitmap(textProperty.maxWidth, textProperty.height, 
-        		Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(textProperty.maxWidth, 
+        		textProperty.height * textProperty.numberLines, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        tv.draw(canvas);
+        
+        // draw string
+        FontMetricsInt fm = paint.getFontMetricsInt();
+        int x = 0;
+        int y = -fm.ascent;
+        String[] lines = content.split("\\n");
+        for (String line : lines){
+        	x = computeX(paint, line, textProperty.maxWidth, alignment);
+        	canvas.drawText(line, x, y, paint);
+        	y += textProperty.height;
+        }
         
         initNativeObject(bitmap);
     }
     
-    private static void setTextViewAlignment(TextView tv, int alignment){
+    private static int computeX(Paint paint, String content, int w, int alignment){
+    	int ret = 0;
+    	
     	switch (alignment){
     	case ALIGNCENTER:
-    		tv.setGravity(Gravity.CENTER);
+    		ret = w / 2;
     		break;
-    		
-    	case ALIGNLEFT:
-    		tv.setGravity(Gravity.LEFT);
+    	
+        // ret = 0
+    	case ALIGNLEFT:   		
     		break;
     		
     	case ALIGNRIGHT:
-    		tv.setGravity(Gravity.RIGHT);
+    		ret = w;
     		break;
-    		
+    	
+    	// default is align left ret = 0
     	default:
-    		tv.setGravity(Gravity.CENTER);
     		break;
     	}
+    	
+    	return ret;
     }
     
     private static class TextProperty{
     	int maxWidth;
     	int height;
+    	int numberLines;
 
-    	TextProperty(int w, int h){
+    	TextProperty(int w, int h, int n){
     		this.maxWidth = w;
     		this.height = h;
+    		this.numberLines = n;
     	}
     }
     
-    private static TextProperty getTextWidthAndHeight(String content, int fontSize){
-    	Paint paint = new Paint();
-    	paint.setColor(Color.WHITE);
-        paint.setTextSize(fontSize);
-        
+    private static TextProperty getTextWidthAndHeight(String content, Paint paint){              
         FontMetricsInt fm = paint.getFontMetricsInt();
-        int h = (int)Math.ceil(fm.descent - fm.ascent) + 2;
+        int h = (int)Math.ceil(fm.descent - fm.ascent);
         
         String[] lines = content.split("\\n");
         
@@ -92,7 +99,35 @@ public class Cocos2dxBitmap{
         	}
         }
         
-        return new TextProperty(w, h * lines.length);
+        return new TextProperty(w, h, lines.length);
+    }
+    
+    private static Paint newPaint(String fontName, int fontSize, int alignment){
+    	Paint paint = new Paint();
+    	paint.setColor(Color.WHITE);
+        paint.setTextSize(fontSize);
+        paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
+        paint.setAntiAlias(true);
+        
+        switch (alignment){
+    	case ALIGNCENTER:
+    		paint.setTextAlign(Align.CENTER);
+    		break;
+    	
+    	case ALIGNLEFT:  
+    		paint.setTextAlign(Align.LEFT);
+    		break;
+    		
+    	case ALIGNRIGHT:
+    		paint.setTextAlign(Align.RIGHT);
+    		break;
+    	
+    	default:
+    		paint.setTextAlign(Align.LEFT);
+    		break;
+    	}
+        
+        return paint;
     }
     
     private static void initNativeObject(Bitmap bitmap){
