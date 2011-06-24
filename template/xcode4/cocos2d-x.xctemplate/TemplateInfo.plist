@@ -68,6 +68,22 @@
 			<key>Path</key>
 			<string>ios/main.m</string>
 		</dict>
+        <key>ios/RootViewController.mm</key>
+		<dict>
+			<key>Group</key>
+			<string>ios</string>
+			<key>Path</key>
+			<string>ios/RootViewController.mm</string>
+		</dict>
+        <key>ios/RootViewController.h</key>
+		<dict>
+			<key>Group</key>
+			<string>ios</string>
+			<key>Path</key>
+			<string>ios/RootViewController.h</string>
+            <key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>Prefix.pch</key>
 		<dict>
 			<key>Group</key>

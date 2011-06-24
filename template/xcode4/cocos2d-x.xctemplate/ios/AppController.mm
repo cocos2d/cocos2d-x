@@ -11,7 +11,9 @@
 #import "EAGLView.h"
 #import "AppDelegate.h"
 
-@implementation ___PROJECTNAMEASIDENTIFIER___AppController
+#import "RootViewController.h"
+
+@implementation AppController
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -32,7 +34,14 @@ static AppDelegate s_sharedApplication;
                                       sharegroup: nil
                                    multiSampling: NO
                                  numberOfSamples: 0 ];
-    [window addSubview: __glView];
+    
+    // Use RootViewController manage EAGLView 
+    viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    viewController.wantsFullScreenLayout = YES;
+    viewController.view = __glView;
+
+    // Set RootViewController to window
+    window.rootViewController = viewController;
     [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
@@ -72,7 +81,6 @@ static AppDelegate s_sharedApplication;
 	cocos2d::CCDirector::sharedDirector()->startAnimation();
 }
 
-
 - (void)applicationWillTerminate:(UIApplication *)application {
     /*
      Called when the application is about to terminate.
@@ -97,3 +105,4 @@ static AppDelegate s_sharedApplication;
 
 
 @end
+
