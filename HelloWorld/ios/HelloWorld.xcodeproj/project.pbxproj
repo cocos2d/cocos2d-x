@@ -563,6 +563,7 @@
 		BF8357B813276BCA00F3C033 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BFA008F81344267700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008F71344267700289DC3 /* CCCommon_ios.mm */; };
 		BFA008F91344267700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008F71344267700289DC3 /* CCCommon_ios.mm */; };
+		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
 		D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F25D12E53386005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
@@ -1150,6 +1151,7 @@
 		BF8356931327611D00F3C033 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
 		BF8356941327611D00F3C033 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		BFA008F71344267700289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloWorld-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4F9F25D12E53386005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1242,6 +1244,7 @@
 		BF5681CC1313A84D0055EEAC /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				D4ABB4B213B4395300552E6E /* main.m */,
 				BF365AA612A103F70050DCF4 /* AppController.h */,
 				BF365AA712A103F70050DCF4 /* AppController.mm */,
 				BF4DE6AB138BB89600CF907D /* RootViewController.h */,
@@ -2814,6 +2817,7 @@
 				BF365AA812A103F70050DCF4 /* AppController.mm in Sources */,
 				BFA008F81344267700289DC3 /* CCCommon_ios.mm in Sources */,
 				BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */,
+				D4ABB4B313B4395300552E6E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
