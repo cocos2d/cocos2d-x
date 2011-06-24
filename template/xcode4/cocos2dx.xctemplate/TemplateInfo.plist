@@ -106,6 +106,8 @@
 		<string>ios/main.m</string>
 		<string>ios/AppController.h</string>
 		<string>ios/AppController.mm</string>
+        <string>ios/RootViewController.h</string>
+        <string>ios/RootViewController.mm</string>
 		<string>Classes/AppDelegate.h</string>
 		<string>Classes/AppDelegate.cpp</string>
 		<string>Classes/HelloWorldScene.h</string>
