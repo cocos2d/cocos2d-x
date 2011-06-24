@@ -2,7 +2,7 @@
 
 echo 'cocos2d-x template installer'
 
-COCOS2D_VER='cocos2d-0.99.5-x-0.8.4'
+COCOS2D_VER='cocos2d-0.99.5-x-0.8.5'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 
@@ -141,7 +141,7 @@ print_template_banner(){
 
 # copies project-based templates
 copy_xcode3_project_templates(){
-		if [[ $user_dir ]]; then
+          if [[ $user_dir ]]; then
 		TEMPLATE_DIR="${BASE_TEMPLATE_USER_DIR}/Project Templates/${COCOS2D_VER}/"
 	else
 		TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/Project Templates/${COCOS2D_VER}/"
@@ -175,7 +175,7 @@ copy_xcode3_project_templates(){
     check_dst_dir
         
     echo ...copying template files
-	copy_files template/xcode3/cocos2d-x_box2d_app/ "$DST_DIR"
+    copy_files template/xcode3/cocos2d-x_box2d_app/ "$DST_DIR"
     
     copy_base_files
         
@@ -192,12 +192,27 @@ copy_xcode3_project_templates(){
     check_dst_dir
         
     echo ...copying template files
-	copy_files template/xcode3/cocos2d-x_chipmunk_app/ "$DST_DIR"
+    copy_files template/xcode3/cocos2d-x_chipmunk_app/ "$DST_DIR"
     
     copy_base_files
         
     echo ...coping chipmunk files
     copy_files chipmunk "$LIBS_DIR"
+    
+    print_template_banner "Installing cocos2d-x iOS + lua template"
+    
+    DST_DIR="$TEMPLATE_DIR""cocos2d-x lua Application/"
+    LIBS_DIR="$DST_DIR"libs
+    
+    check_dst_dir
+    
+    echo ...copying template files
+    copy_files template/xcode3/cocos2d-x_lua_app/ "$DST_DIR"
+    
+    copy_base_files
+    
+    echo ...coping lua files
+    copy_files lua "$LIBS_DIR"
         
     echo done!
 }
@@ -314,9 +329,27 @@ copy_xcode4_project_templates(){
 
 }
 
-# copy Xcode4 templates
-copy_xcode4_project_templates
+select_template_version(){
+        echo "select the template version to install"
+        echo "3 for xcode3"
+        echo "4 for xcode4"
+        echo "input nothing for all"
+        
+        read select
+        
+        if [[ "$select" == 3 ]]; then
+            copy_xcode3_project_templates
+        fi
+        
+        if [[ "$select" == 4 ]]; then
+            copy_xcode4_project_templates
+        fi
+        
+        if [[ "$select""aaaa" == "aaaa" ]]; then
+            copy_xcode3_project_templates
+            copy_xcode4_project_templates
+        fi
+            
+}
 
-# copy Xcode3 templates
-copy_xcode3_project_templates
-# copy_xcode3_file_templates
+select_template_version
