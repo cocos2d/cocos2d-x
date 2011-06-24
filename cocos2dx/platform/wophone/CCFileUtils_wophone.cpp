@@ -57,7 +57,6 @@ bool isResourceExist(const char* pszResName)
             bRet = true;
            
         } while (0);
-
         if (pZipFile)
         {
             unzClose(pZipFile);
