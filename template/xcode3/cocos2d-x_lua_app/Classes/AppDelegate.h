@@ -1,5 +1,5 @@
-#ifndef  ___PROJECTNAMEASIDENTIFIER___AppDelegate_H__
-#define  ___PROJECTNAMEASIDENTIFIER___AppDelegate_H__
+#ifndef  _APP_DELEGATE_H_
+#define  _APP_DELEGATE_H_
 
 #include "CCApplication.h"
 #include "LuaEngine.h"
@@ -43,5 +43,5 @@ private:
     LuaEngine* m_pLuaEngine;
 };
 
-#endif // ___PROJECTNAMEASIDENTIFIER___AppDelegate_H__
+#endif // _APP_DELEGATE_H_
 
