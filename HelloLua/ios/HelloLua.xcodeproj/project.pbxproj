@@ -25,16 +25,12 @@
 		BF23C0AB13B038AB00F32062 /* LuaCocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF23C0A513B038AB00F32062 /* LuaCocos2d.cpp */; };
 		BF23C0AE13B038D700F32062 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF23C0AD13B038D700F32062 /* CCScriptSupport.cpp */; };
 		BF23C0B013B038E800F32062 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = BF23C0AF13B038E800F32062 /* CCScriptSupport.h */; };
-		BF82F40C13A8647B00616D55 /* 90001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40413A8647B00616D55 /* 90001.jpg */; };
-		BF82F40D13A8647B00616D55 /* crop1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40513A8647B00616D55 /* crop1.png */; };
-		BF82F40E13A8647B00616D55 /* dog1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40613A8647B00616D55 /* dog1.png */; };
 		BF82F40F13A8647B00616D55 /* hello.lua in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40713A8647B00616D55 /* hello.lua */; };
-		BF82F41013A8647B00616D55 /* land1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40813A8647B00616D55 /* land1.png */; };
 		BF82F41113A8647B00616D55 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40913A8647B00616D55 /* menu1.png */; };
 		BF82F41213A8647B00616D55 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40A13A8647B00616D55 /* menu2.png */; };
 		BF82F41313A8647B00616D55 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BF82F40B13A8647B00616D55 /* Default.png */; };
 		BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41513A864D700616D55 /* AppDelegate.cpp */; };
-		BF82F42113A8652A00616D55 /* HelloLuaAppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* HelloLuaAppController.mm */; };
+		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
 		BF82F8B413A8657700616D55 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42613A8657100616D55 /* CCActionCamera.cpp */; };
 		BF82F8B513A8657700616D55 /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42713A8657100616D55 /* CCActionEase.cpp */; };
@@ -290,6 +286,11 @@
 		BF82FCF713A87F1A00616D55 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB813A87F1A00616D55 /* tolua_push.c */; };
 		BF82FCF813A87F1A00616D55 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB913A87F1A00616D55 /* tolua_to.c */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
+		D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4CEAD7713B4634300780515 /* RootViewController.mm */; };
+		D4CEAD9713B4770400780515 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9313B4770300780515 /* land.png */; };
+		D4CEAD9813B4770400780515 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9413B4770300780515 /* farm.jpg */; };
+		D4CEAD9913B4770400780515 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9513B4770400780515 /* dog.png */; };
+		D4CEAD9A13B4770400780515 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9613B4770400780515 /* crop.png */; };
 		D4E4FF4513B2F23800A3F698 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF0D13B2F23800A3F698 /* lapi.c */; };
 		D4E4FF4613B2F23800A3F698 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF0F13B2F23800A3F698 /* lauxlib.c */; };
 		D4E4FF4713B2F23800A3F698 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FF1113B2F23800A3F698 /* lbaselib.c */; };
@@ -355,18 +356,14 @@
 		BF23C0A513B038AB00F32062 /* LuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCocos2d.cpp; sourceTree = "<group>"; };
 		BF23C0AD13B038D700F32062 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		BF23C0AF13B038E800F32062 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
-		BF82F40413A8647B00616D55 /* 90001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 90001.jpg; sourceTree = "<group>"; };
-		BF82F40513A8647B00616D55 /* crop1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop1.png; sourceTree = "<group>"; };
-		BF82F40613A8647B00616D55 /* dog1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog1.png; sourceTree = "<group>"; };
 		BF82F40713A8647B00616D55 /* hello.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello.lua; sourceTree = "<group>"; };
-		BF82F40813A8647B00616D55 /* land1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land1.png; sourceTree = "<group>"; };
 		BF82F40913A8647B00616D55 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu1.png; sourceTree = "<group>"; };
 		BF82F40A13A8647B00616D55 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
 		BF82F40B13A8647B00616D55 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		BF82F41513A864D700616D55 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF82F41613A864D700616D55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = SOURCE_ROOT; };
-		BF82F41E13A8652A00616D55 /* HelloLuaAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloLuaAppController.h; sourceTree = "<group>"; };
-		BF82F41F13A8652A00616D55 /* HelloLuaAppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloLuaAppController.mm; sourceTree = "<group>"; };
+		BF82F41E13A8652A00616D55 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		BF82F41F13A8652A00616D55 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF82F42013A8652A00616D55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BF82F42313A8654600616D55 /* HelloLua_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloLua_Prefix.pch; sourceTree = "<group>"; };
 		BF82F42613A8657100616D55 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -624,6 +621,12 @@
 		BF82FCB813A87F1A00616D55 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		BF82FCB913A87F1A00616D55 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		D4CEAD7713B4634300780515 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		D4CEAD7813B4634300780515 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		D4CEAD9313B4770300780515 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
+		D4CEAD9413B4770300780515 /* farm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = farm.jpg; sourceTree = "<group>"; };
+		D4CEAD9513B4770400780515 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
+		D4CEAD9613B4770400780515 /* crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop.png; sourceTree = "<group>"; };
 		D4E4FF0D13B2F23800A3F698 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		D4E4FF0E13B2F23800A3F698 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
 		D4E4FF0F13B2F23800A3F698 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
@@ -750,9 +753,11 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D4CEAD7713B4634300780515 /* RootViewController.mm */,
+				D4CEAD7813B4634300780515 /* RootViewController.h */,
 				BF82F42313A8654600616D55 /* HelloLua_Prefix.pch */,
-				BF82F41E13A8652A00616D55 /* HelloLuaAppController.h */,
-				BF82F41F13A8652A00616D55 /* HelloLuaAppController.mm */,
+				BF82F41E13A8652A00616D55 /* AppController.h */,
+				BF82F41F13A8652A00616D55 /* AppController.mm */,
 				BF82F42013A8652A00616D55 /* main.m */,
 			);
 			name = "Other Sources";
@@ -809,12 +814,12 @@
 		BF82F40313A8647B00616D55 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				D4CEAD9313B4770300780515 /* land.png */,
+				D4CEAD9413B4770300780515 /* farm.jpg */,
+				D4CEAD9513B4770400780515 /* dog.png */,
+				D4CEAD9613B4770400780515 /* crop.png */,
 				D4E4FF7E13B321D900A3F698 /* Icon.png */,
-				BF82F40413A8647B00616D55 /* 90001.jpg */,
-				BF82F40513A8647B00616D55 /* crop1.png */,
-				BF82F40613A8647B00616D55 /* dog1.png */,
 				BF82F40713A8647B00616D55 /* hello.lua */,
-				BF82F40813A8647B00616D55 /* land1.png */,
 				BF82F40913A8647B00616D55 /* menu1.png */,
 				BF82F40A13A8647B00616D55 /* menu2.png */,
 				BF82F40B13A8647B00616D55 /* Default.png */,
@@ -1634,15 +1639,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF82F40C13A8647B00616D55 /* 90001.jpg in Resources */,
-				BF82F40D13A8647B00616D55 /* crop1.png in Resources */,
-				BF82F40E13A8647B00616D55 /* dog1.png in Resources */,
 				BF82F40F13A8647B00616D55 /* hello.lua in Resources */,
-				BF82F41013A8647B00616D55 /* land1.png in Resources */,
 				BF82F41113A8647B00616D55 /* menu1.png in Resources */,
 				BF82F41213A8647B00616D55 /* menu2.png in Resources */,
 				BF82F41313A8647B00616D55 /* Default.png in Resources */,
 				D4E4FF7F13B321D900A3F698 /* Icon.png in Resources */,
+				D4CEAD9713B4770400780515 /* land.png in Resources */,
+				D4CEAD9813B4770400780515 /* farm.jpg in Resources */,
+				D4CEAD9913B4770400780515 /* dog.png in Resources */,
+				D4CEAD9A13B4770400780515 /* crop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1654,7 +1659,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */,
-				BF82F42113A8652A00616D55 /* HelloLuaAppController.mm in Sources */,
+				BF82F42113A8652A00616D55 /* AppController.mm in Sources */,
 				BF82F42213A8652A00616D55 /* main.m in Sources */,
 				D4E4FF4513B2F23800A3F698 /* lapi.c in Sources */,
 				D4E4FF4613B2F23800A3F698 /* lauxlib.c in Sources */,
@@ -1688,6 +1693,7 @@
 				D4E4FF6213B2F23800A3F698 /* lvm.c in Sources */,
 				D4E4FF6313B2F23800A3F698 /* lzio.c in Sources */,
 				D4E4FF6513B2F23800A3F698 /* print.c in Sources */,
+				D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1860,8 +1866,9 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = HelloLua;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 				WARNING_CFLAGS = "";
 			};
@@ -1902,6 +1909,7 @@
 				PRODUCT_NAME = HelloLua;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 				WARNING_CFLAGS = "";
 			};
@@ -1929,7 +1937,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
