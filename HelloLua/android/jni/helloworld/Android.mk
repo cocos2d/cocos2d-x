@@ -30,12 +30,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
 # if you build with ndk-r4, comment it  
 # because the new Windows toolchain doesn't support Cygwin's drive
 # mapping (i.e /cygdrive/c/ instead of C:/)  
-LOCAL_LDLIBS := -llog -lGLESv1_CM -llog -lz \
-                -L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl \
-                -lpng \
-                -lxml2 \
-                -ljpeg
-                
-LOCAL_STATIC_LIBRARIES := libcocos2d libcocosdenshion liblua
+LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
+		-L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl \
+		-lcocos2d \
+		-lcocosdenshion \
+		-llua
             
 include $(BUILD_SHARED_LIBRARY)
