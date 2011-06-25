@@ -43,4 +43,4 @@ Dynamics/b2WorldCallbacks.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/..
                                  
-include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_SHARED_LIBRARY)
