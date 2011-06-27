@@ -136,8 +136,8 @@ public class Cocos2dxMusic {
 	}
 	
 	public void setBackgroundVolume(float volume){
+	    this.mLeftVolume = this.mRightVolume = volume;
 		if (this.mBackgroundMediaPlayer != null){
-			this.mLeftVolume = this.mRightVolume = volume;
 			this.mBackgroundMediaPlayer.setVolume(this.mLeftVolume, this.mRightVolume);
 		}
 	}
