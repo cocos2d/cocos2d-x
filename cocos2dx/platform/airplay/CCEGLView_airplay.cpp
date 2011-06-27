@@ -231,6 +231,26 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 					(GLint)h);
 	}		
 }
+
+void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
+{
+    if (m_bNotHVGA)
+    {
+        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+        glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
+            (GLint)(y * factor) + m_rcViewPort.origin.y,
+            (GLint)(w * factor),
+            (GLint)(h * factor));
+    }
+    else
+    {
+        glScissor((GLint)x,
+            (GLint)y,
+            (GLint)w,
+            (GLint)h);
+    }		
+}
+
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
 	static CCEGLView instance;
