@@ -58,6 +58,7 @@ public:
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor); 
 	void    setViewPortInPoints(float x, float y, float w, float h);
+    void    setScissorInPoints(float x, float y, float w, float h);
 	CCRect  getViewPort();
 	float   getScreenScaleFactor();
     void    setIMEKeyboardState(bool bOpen);

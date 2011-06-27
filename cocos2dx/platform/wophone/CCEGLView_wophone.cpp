@@ -658,6 +658,18 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
     }
 }
 
+void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
+{
+    if (m_pEGL)
+    {
+        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+        glScissor((GLint)(x * factor) + m_rcViewPort.X(),
+            (GLint)(y * factor) + m_rcViewPort.Y(),
+            (GLint)(w * factor),
+            (GLint)(h * factor));
+    }
+}
+
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     do 
