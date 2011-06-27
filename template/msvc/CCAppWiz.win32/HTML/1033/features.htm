@@ -212,7 +212,7 @@
 													<TD VALIGN="top" WIDTH="12">
 														&nbsp;
 													</TD>
-													<TD VALIGN="top" HEIGHT="100%" COLSPAN="7">
+													<TD VALIGN="top" COLSPAN="7">
 														<SPAN CLASS="itemText">Select audio engine:
 															<br />
 															<br />
@@ -222,6 +222,26 @@
                                                                     TITLE="Application uses CocosDenshion:SimpleAudioEngine. Include &quot;SimpleAudioEngine.h&quot; if needs." 
                                                                     ID="CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE_LABEL">
 																	<U>S</U>imple Audio Engine in Cocos Denshion</LABEL>
+															</DIV>
+														</SPAN>
+														
+														<P CLASS="ElementSpacer">&nbsp;</P>
+													</TD>
+												</TR>
+												<TR>
+													<TD VALIGN="top" WIDTH="12">
+														&nbsp;
+													</TD>
+													<TD VALIGN="top" HEIGHT="100%" COLSPAN="7">
+														<SPAN CLASS="itemText">Select Lua support:
+															<br />
+															<br />
+															<INPUT CLASS="CheckBoxA" TYPE="checkbox" ID="CC_USE_LUA" ACCESSKEY="S" TITLE="Application uses liblua." value="ON" NAME="CC_USE_LUA onClick="OnUseLua();">
+															<DIV CLASS="itemTextCheckboxB" ID="CC_USE_LUA_DIV" TITLE="Application uses liblua.">
+																<LABEL FOR="CC_USE_LUA" 
+                                                                    TITLE="Application uses liblua. Include &quot;LuaEngine.h&quot; if needs." 
+                                                                    ID="CC_USE_LUA_LABEL">
+																	<U>S</U>upport Lua</LABEL>
 															</DIV>
 														</SPAN>
 													</TD>
@@ -341,6 +361,7 @@ function OnInit()
     CC_USE_BOX2D.disabled = false;
     CC_USE_CHIPMUNK.disabled = false;
     CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE.disabled = false;
+    CC_USE_LUA.disabled = false;
     
     if (window.external.FindSymbol("CC_USE_BOX2D")) 
     {
@@ -355,6 +376,11 @@ function OnInit()
     if (window.external.FindSymbol("CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE")) 
     {
         CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE.checked = true;
+    }
+
+    if (window.external.FindSymbol("CC_USE_LUA"))
+    {
+        CC_USE_LUA.checked = true;
     }
 }
 
@@ -393,6 +419,19 @@ function OnUseCocosDenshionSimpleAudioEngine()
         window.external.AddSymbol("CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE", false);
     }
 }
+
+function OnUseLua()
+{
+    if (CC_USE_LUA.checked)
+    {
+        window.external.AddSymbol("CC_USE_LUA", true);
+    }
+    else
+    {
+        window.external.AddSymbol("CC_USE_LUA", false);
+    }
+}
+
 
         </SCRIPT>
 		<SCRIPT ID="INCLUDE_SCRIPT" LANGUAGE="JSCRIPT"></SCRIPT>
