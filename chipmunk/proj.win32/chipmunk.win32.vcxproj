@@ -143,9 +143,6 @@
     <ClCompile Include="..\src\cpSpaceStep.c" />
     <ClCompile Include="..\src\cpVect.c" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\chipmunk-docs.html" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

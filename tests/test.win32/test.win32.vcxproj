@@ -66,13 +66,17 @@
       <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;libcurl_imp.lib;libcurl_imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -89,7 +93,7 @@
       <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;libcurl_imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -98,10 +102,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp" />
-    <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\AppDelegate.cpp" />
     <ClCompile Include="..\tests\controller.cpp" />
@@ -148,6 +154,7 @@
     <ClCompile Include="..\tests\ChipmunkTest\Sensors.cpp" />
     <ClCompile Include="..\tests\ChipmunkTest\Simple.cpp" />
     <ClCompile Include="..\tests\ChipmunkTest\Springies.cpp" />
+    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp" />
     <ClCompile Include="..\tests\ChipmunkTest\TheoJansen.cpp" />
     <ClCompile Include="..\tests\ChipmunkTest\Tumble.cpp" />
     <ClCompile Include="..\tests\ChipmunkTest\UnsafeOps.cpp" />
@@ -169,9 +176,9 @@
     <ClCompile Include="..\tests\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="..\tests\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\tests\TextInputTest\TextInputTest.cpp" />
+    <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\tests\UserDefaultTest\UserDefaultTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\AppDelegate.h" />
     <ClInclude Include="..\tests\controller.h" />
@@ -260,6 +267,25 @@
     <ClInclude Include="..\tests\ZwoptexTest\ZwoptexTest.h" />
     <ClInclude Include="..\tests\CurlTest\CurlTest.h" />
     <ClInclude Include="..\tests\TextInputTest\TextInputTest.h" />
+    <ClInclude Include="..\tests\UserDefaultTest\UserDefaultTest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Box2D\proj.win32\Box2D.win32.vcxproj">
+      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\chipmunk\proj.win32\chipmunk.win32.vcxproj">
+      <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2dx\proj.win32\cocos2d-win32.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CocosDenshion\proj.win32\CocosDenshion.win32.vcxproj">
+      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
