@@ -61,6 +61,7 @@ public:
 	void    setContentScaleFactor(float contentScaleFactor);
 	void    setAnimationInterval(double interval) {};
     void    setViewPortInPoints(float x, float y, float w, float h);
+    void    setScissorInPoints(float x, float y, float w, float h);
     void    setIMEKeyboardState(bool bOpen);
     // static function
     /**
