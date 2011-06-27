@@ -49,7 +49,8 @@ public:
     void    setTouchDelegate(EGLTouchDelegate * pDelegate);
     void    swapBuffers();
     void    setViewPortInPoints(float x, float y, float w, float h);
-        
+    void    setScissorInPoints(float x, float y, float w, float h);
+
     void touchesBegan(CCSet *set);
     void touchesMoved(CCSet *set);
     void touchesEnded(CCSet *set);

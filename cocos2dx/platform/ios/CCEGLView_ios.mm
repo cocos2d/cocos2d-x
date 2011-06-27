@@ -116,6 +116,11 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
     glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
 }
 
+void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
+{
+    glScissor((GLint)x, (GLint)y, (GLint)w, (GLint)h);
+}
+
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)
