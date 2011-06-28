@@ -2,121 +2,121 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="win32">
-      <UniqueIdentifier>{a024fc4a-f920-4162-9a80-03a48e447a41}</UniqueIdentifier>
+      <UniqueIdentifier>{cf199c50-e9bd-48e9-8a05-364eb7449201}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes">
-      <UniqueIdentifier>{7f2a1cbd-ab5c-465f-b9e2-65da3f0b14b1}</UniqueIdentifier>
+      <UniqueIdentifier>{d45c4074-bde2-4446-b47f-20dc487947f8}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests">
-      <UniqueIdentifier>{0562cf43-75dd-48e8-8ba4-f98f90f5a19b}</UniqueIdentifier>
+      <UniqueIdentifier>{3d3135db-1a1d-41b7-a237-ce9bd7d68eda}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ActionsTest">
-      <UniqueIdentifier>{652f9b28-0000-4a5f-824e-6c5f432476ba}</UniqueIdentifier>
+      <UniqueIdentifier>{322ef07a-fc47-44f1-b718-678e08ab493c}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\TransitionsTest">
-      <UniqueIdentifier>{edb8b03e-23d6-43e7-9d7c-e8bf2202e6b5}</UniqueIdentifier>
+      <UniqueIdentifier>{fb9689c5-553f-4346-bef7-a105b2ee5712}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ProgressActionsTest">
-      <UniqueIdentifier>{d74d5794-fb61-4d73-93c5-4eec3b3af02a}</UniqueIdentifier>
+      <UniqueIdentifier>{4d6cf257-1df2-412e-bad2-a86fc8c8c28c}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\EffectsTest">
-      <UniqueIdentifier>{194ea888-f365-466b-8b4b-cde9a6b631af}</UniqueIdentifier>
+      <UniqueIdentifier>{4be7789d-78b1-4840-9662-06db2988f727}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ClickAndMoveTest">
-      <UniqueIdentifier>{4c291544-ce87-455f-8435-6fdcbcad44db}</UniqueIdentifier>
+      <UniqueIdentifier>{a012edb8-106c-427d-88d9-9739cba67299}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\RotateWorldTest">
-      <UniqueIdentifier>{51d48b68-cd80-4a8c-a72f-a672a5bd9dea}</UniqueIdentifier>
+      <UniqueIdentifier>{cb715b39-6f9b-442d-b99b-5ba4d71cd7d2}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ParticleTest">
-      <UniqueIdentifier>{00aa431d-cb15-4280-807d-e3d25dcf78f8}</UniqueIdentifier>
+      <UniqueIdentifier>{905dd2f4-3138-4b3a-84de-63f93ddaa430}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\EaseActionsTest">
-      <UniqueIdentifier>{cc0a3cab-a5bc-4a28-b6f1-b88eb9eedc10}</UniqueIdentifier>
+      <UniqueIdentifier>{6f40b1a3-f116-4701-b51f-696e46334da9}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\MotionStreakTest">
-      <UniqueIdentifier>{55c800ad-1f34-4fc7-9a02-80eae274f756}</UniqueIdentifier>
+      <UniqueIdentifier>{2afa708f-716d-47d3-9a5c-69444fa853a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\DrawPrimitivesTest">
-      <UniqueIdentifier>{2e10e902-0172-4a92-8370-861f6e92c9ae}</UniqueIdentifier>
+      <UniqueIdentifier>{e7d5c185-fd12-4e4d-9313-6deb91b05b8d}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\CocosNodeTest">
-      <UniqueIdentifier>{359a2bac-0a6a-4d22-b6f4-f9a50f1255d2}</UniqueIdentifier>
+      <UniqueIdentifier>{5a7a452a-2040-4f4b-a66d-b29d80c943da}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\TouchesTest">
-      <UniqueIdentifier>{87dbf085-eef3-4dd9-b748-61d0061accff}</UniqueIdentifier>
+      <UniqueIdentifier>{3a0f96fe-ebb1-411d-bb2d-a42be092ca10}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\MenuTest">
-      <UniqueIdentifier>{75d90a2e-0c23-4095-98cb-b83008e54fa1}</UniqueIdentifier>
+      <UniqueIdentifier>{40c72c6d-35e5-4cc8-82fc-2243b8a561a1}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ActionManagerTest">
-      <UniqueIdentifier>{3b3b82c9-1257-4558-97f2-f3399fe6a765}</UniqueIdentifier>
+      <UniqueIdentifier>{614a834d-1377-4f96-89f9-b0cb6954e56c}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\LayerTest">
-      <UniqueIdentifier>{d6bc2dca-aca7-4c17-81c0-9833d8f3fc7e}</UniqueIdentifier>
+      <UniqueIdentifier>{62b8c24a-9ba1-42fc-b501-3021ddf406a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\SceneTest">
-      <UniqueIdentifier>{f31da793-e5cd-4be0-8073-4bc54801ae49}</UniqueIdentifier>
+      <UniqueIdentifier>{0a45e6ec-9cc8-4a98-b67a-3ada27878740}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ParallaxTest">
-      <UniqueIdentifier>{eec876e8-73b5-45b5-a3fd-1c4c1b31abed}</UniqueIdentifier>
+      <UniqueIdentifier>{fe985bbe-d077-437a-b225-0a8922beb844}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\TileMapTest">
-      <UniqueIdentifier>{977ab3f6-6c20-42c5-bb52-232c75c6f0b1}</UniqueIdentifier>
+      <UniqueIdentifier>{d49af4f8-b439-4b56-850d-3e94e38f7680}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\IntervalTest">
-      <UniqueIdentifier>{6bf1ce70-b8b0-49de-9072-8a586f4abbf1}</UniqueIdentifier>
+      <UniqueIdentifier>{e673428f-356a-42b6-b8f2-6f62828d8cab}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\LabelTest">
-      <UniqueIdentifier>{d2e62e4c-f96e-4e47-858f-52944ac02384}</UniqueIdentifier>
+      <UniqueIdentifier>{e67c419b-5b49-426a-b7be-00a94e569b93}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\SpriteTest">
-      <UniqueIdentifier>{d81167f0-05a1-487e-9e05-d423c84f1820}</UniqueIdentifier>
+      <UniqueIdentifier>{860c82a3-7e6f-4c1f-b302-d18c1cdda5a0}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\SchedulerTest">
-      <UniqueIdentifier>{ad2a98bd-1438-4599-9ab7-edc789967c14}</UniqueIdentifier>
+      <UniqueIdentifier>{4972286e-ef4d-4d77-b98f-145806c19e12}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\RenderTextureTest">
-      <UniqueIdentifier>{07d2c6d1-000b-4058-bebf-834fbcd0b669}</UniqueIdentifier>
+      <UniqueIdentifier>{6669409b-79c8-48af-83cc-705b3149807c}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ChipmunkTest">
-      <UniqueIdentifier>{b65ffe13-d12e-4169-b239-678f8fe21bc0}</UniqueIdentifier>
+      <UniqueIdentifier>{472ffce1-9d1f-4d36-931f-5e15dccf0c2e}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\Box2dTest">
-      <UniqueIdentifier>{1a93656d-5a2e-4d8e-b43b-505b274d5979}</UniqueIdentifier>
+      <UniqueIdentifier>{00685a5b-e6e1-4feb-acbb-2f42842b9ae9}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\Box2DTestBed">
-      <UniqueIdentifier>{c0a0c51c-ec66-4c47-9009-7caf504319ab}</UniqueIdentifier>
+      <UniqueIdentifier>{090a311f-5745-47b0-a3d6-2be46bff76f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\Box2DTestBed\Tests">
-      <UniqueIdentifier>{9ad3df9f-fbb5-4cfa-96d3-987697e1e5cb}</UniqueIdentifier>
+      <UniqueIdentifier>{626fde82-8600-4c29-a910-06597768b9c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\EffectsAdvancedTest">
-      <UniqueIdentifier>{efce9243-e9b9-4f71-a15b-0e027c81ba6a}</UniqueIdentifier>
+      <UniqueIdentifier>{4221f5af-c188-4880-84f4-6fdd49407dca}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\HiResTest">
-      <UniqueIdentifier>{f9f96425-ba84-4bdb-b2ed-f26325916b2e}</UniqueIdentifier>
+      <UniqueIdentifier>{af973cd5-e645-4f37-abde-df2d2ad84846}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\KeypadTest">
-      <UniqueIdentifier>{d195e87a-d0de-4d1f-85fd-bab27fa87055}</UniqueIdentifier>
+      <UniqueIdentifier>{cc2c4496-ec68-430b-b640-cd34bf6ed005}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\CocosDenshionTest">
-      <UniqueIdentifier>{7eec9749-c15a-4a03-9576-aab4c2635695}</UniqueIdentifier>
+      <UniqueIdentifier>{82bd1d75-20d5-4b2f-a380-1a87bac694a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\PerformanceTest">
-      <UniqueIdentifier>{af3d4541-fe03-42ba-9519-6b6e3191226f}</UniqueIdentifier>
+      <UniqueIdentifier>{70754dcd-39cd-4b33-b748-636a3f6a099d}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\ZwoptexTest">
-      <UniqueIdentifier>{b8563bde-8490-4201-be9f-c37d4338b54e}</UniqueIdentifier>
+      <UniqueIdentifier>{39ecd1b3-d93a-4eb7-a01d-2dc1e0fd18b9}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\CurlTest">
-      <UniqueIdentifier>{b3b643b1-1883-4ccc-adbc-e32a4e46bebf}</UniqueIdentifier>
+      <UniqueIdentifier>{215bbd1d-e86a-4858-b450-3090625c3e48}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\TextInputTest">
-      <UniqueIdentifier>{3cbe9845-8408-4456-8928-00452f1e7cce}</UniqueIdentifier>
+      <UniqueIdentifier>{52a2aa94-6076-489c-8e88-e8ddbd40660c}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\tests\UserDefaultTest">
-      <UniqueIdentifier>{f9810289-ecfc-4775-81f1-06ccf227b715}</UniqueIdentifier>
+      <UniqueIdentifier>{25cf805e-be4e-440a-924b-354b3c064cc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +258,9 @@
     <ClCompile Include="..\tests\ChipmunkTest\Springies.cpp">
       <Filter>classes\tests\ChipmunkTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp">
+      <Filter>classes\tests\ChipmunkTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\tests\ChipmunkTest\TheoJansen.cpp">
       <Filter>classes\tests\ChipmunkTest</Filter>
     </ClCompile>
@@ -323,9 +326,6 @@
     </ClCompile>
     <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp">
       <Filter>classes\tests\UserDefaultTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\ChipmunkTest\Tank.cpp">
-      <Filter>classes\tests\ChipmunkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

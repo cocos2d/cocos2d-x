@@ -2,74 +2,80 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="base_nodes">
-      <UniqueIdentifier>{7714c41e-f26c-4eca-a28b-c2e8828399df}</UniqueIdentifier>
+      <UniqueIdentifier>{f3277e3d-84f3-4840-a31d-8ff5e84dd136}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocoa">
-      <UniqueIdentifier>{b8713560-2596-4f18-a53c-a1ae7304c719}</UniqueIdentifier>
+      <UniqueIdentifier>{ded95344-2130-4fa9-805e-fabeba358bad}</UniqueIdentifier>
     </Filter>
     <Filter Include="effects">
-      <UniqueIdentifier>{87fd26d2-f23e-46f8-b369-e01c20d4f668}</UniqueIdentifier>
+      <UniqueIdentifier>{21e7592b-d2e3-4f15-a297-2643a81039d8}</UniqueIdentifier>
     </Filter>
     <Filter Include="actions">
-      <UniqueIdentifier>{46467c38-3c10-4176-a8b0-e60bd32fe588}</UniqueIdentifier>
+      <UniqueIdentifier>{b2b4d623-4408-4ed7-8063-d62b74b2ecfc}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{e4b0d401-1832-4fb5-ab90-a211d7ce92ca}</UniqueIdentifier>
+      <UniqueIdentifier>{9ddfa14a-82b0-4bff-ad2c-b0b058052e0a}</UniqueIdentifier>
     </Filter>
     <Filter Include="label_nodes">
-      <UniqueIdentifier>{b0e87eea-097f-486a-8d6c-a71682e1eb25}</UniqueIdentifier>
+      <UniqueIdentifier>{3f94b0fa-2a3b-4dc7-8cae-67a99257b3c3}</UniqueIdentifier>
     </Filter>
     <Filter Include="layers_scenes_transitions_nodes">
-      <UniqueIdentifier>{f91e3ad0-f275-4744-bdd2-79645fc82493}</UniqueIdentifier>
+      <UniqueIdentifier>{85ad290d-3fd4-47d5-ba1a-87393aabdaba}</UniqueIdentifier>
     </Filter>
     <Filter Include="menu_nodes">
-      <UniqueIdentifier>{b1c5aeb6-8793-442d-a15d-6a094f182b4c}</UniqueIdentifier>
+      <UniqueIdentifier>{3b7fd88c-c4fb-47ff-b98c-dc108713390b}</UniqueIdentifier>
     </Filter>
     <Filter Include="misc_nodes">
-      <UniqueIdentifier>{fa8daed2-7c4e-43b5-b635-7b226f101e8c}</UniqueIdentifier>
+      <UniqueIdentifier>{493ffcf9-262f-48f5-9572-f4e50773c4fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="particle_nodes">
-      <UniqueIdentifier>{f26b71ad-1a9e-4d0c-97bc-7c5e95be32b4}</UniqueIdentifier>
+      <UniqueIdentifier>{55b03bf1-9100-489c-89cc-16fad97a8762}</UniqueIdentifier>
     </Filter>
     <Filter Include="platform">
-      <UniqueIdentifier>{b2c227b0-edb3-49fc-b11c-e03b3ef8d5e0}</UniqueIdentifier>
+      <UniqueIdentifier>{55cd28c6-4c82-45a3-906e-542b589f27d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="platform\win32">
-      <UniqueIdentifier>{1d71811a-3685-434f-b10e-d580377f1af6}</UniqueIdentifier>
+      <UniqueIdentifier>{40a48afa-d5fb-441f-8348-d1014f692256}</UniqueIdentifier>
     </Filter>
     <Filter Include="sprite_nodes">
-      <UniqueIdentifier>{c4322f73-5058-41f6-913b-18db9aa1dfba}</UniqueIdentifier>
+      <UniqueIdentifier>{751ea16a-d51a-47c4-9884-e3c99db48df9}</UniqueIdentifier>
     </Filter>
     <Filter Include="support">
-      <UniqueIdentifier>{c2f97472-1254-4e99-9778-0e6c7674e390}</UniqueIdentifier>
+      <UniqueIdentifier>{9cf46310-2c09-4fc9-91dd-121325dcf34b}</UniqueIdentifier>
     </Filter>
     <Filter Include="support\data_support">
-      <UniqueIdentifier>{7776f8b7-b04e-4bd1-b356-695134f3927f}</UniqueIdentifier>
+      <UniqueIdentifier>{47042c62-da04-4ae4-994c-74a064174be8}</UniqueIdentifier>
     </Filter>
     <Filter Include="support\image_support">
-      <UniqueIdentifier>{18d327b4-acaf-4421-b683-9837d92b5488}</UniqueIdentifier>
+      <UniqueIdentifier>{a651c933-a7e6-427c-8f32-cd9935cecff7}</UniqueIdentifier>
     </Filter>
     <Filter Include="support\zip_support">
-      <UniqueIdentifier>{3e1780b2-6a4d-48f0-90ca-e4e0d2613978}</UniqueIdentifier>
+      <UniqueIdentifier>{813dece4-78bf-491d-a851-690b06d3a5a1}</UniqueIdentifier>
     </Filter>
     <Filter Include="textures">
-      <UniqueIdentifier>{022561bf-a9f5-4d03-b3d3-5178fe3ed572}</UniqueIdentifier>
+      <UniqueIdentifier>{56a87ca1-c62a-4b27-897b-5de4260b3845}</UniqueIdentifier>
     </Filter>
     <Filter Include="tileMap_parallax_nodes">
-      <UniqueIdentifier>{a7e15d3b-0c81-4444-aca0-3d0ede9e2669}</UniqueIdentifier>
+      <UniqueIdentifier>{1bfa95c9-d799-4b42-8861-86f5146db1cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="touch_dispatcher">
-      <UniqueIdentifier>{0cb1e8a6-13ea-4681-a5c8-899a9efb0440}</UniqueIdentifier>
+      <UniqueIdentifier>{572ac5fe-54c6-495d-85b6-0f5f7b903fb7}</UniqueIdentifier>
     </Filter>
     <Filter Include="keypad_dispatcher">
-      <UniqueIdentifier>{b7e6a4ee-f78a-4399-8f56-526294bf8580}</UniqueIdentifier>
+      <UniqueIdentifier>{17de5b29-0571-40cb-83dd-1ccdf67b59da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="test_input_node">
-      <UniqueIdentifier>{2bb0e4ec-d798-44ec-bc81-c7f7bfc90391}</UniqueIdentifier>
+    <Filter Include="text_input_node">
+      <UniqueIdentifier>{de464353-a149-4cda-85a9-7b1a763f4d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script_support">
+      <UniqueIdentifier>{e20bbd88-a111-40c3-9d5d-387a4c9cd4d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
+      <Filter>base_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base_nodes\CCNode.cpp">
       <Filter>base_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp">
@@ -84,6 +90,9 @@
     <ClCompile Include="..\cocoa\CCGeometry.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocoa\CCNS.cpp">
+      <Filter>cocoa</Filter>
+    </ClCompile>
     <ClCompile Include="..\cocoa\CCObject.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
@@ -94,6 +103,9 @@
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\effects\CCGrabber.cpp">
+      <Filter>effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\effects\CCGrid.cpp">
       <Filter>effects</Filter>
     </ClCompile>
     <ClCompile Include="..\actions\CCAction.cpp">
@@ -138,7 +150,13 @@
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp">
+      <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionPageTurn.cpp">
@@ -146,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransitionRadial.cpp">
       <Filter>layers_scenes_transitions_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\menu_nodes\CCMenu.cpp">
+      <Filter>menu_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\menu_nodes\CCMenuItem.cpp">
       <Filter>menu_nodes</Filter>
@@ -168,16 +189,25 @@
     <ClCompile Include="..\particle_nodes\CCParticleSystem.cpp">
       <Filter>particle_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\particle_nodes\CCParticleSystemPoint.cpp">
+      <Filter>particle_nodes</Filter>
+    </ClCompile>
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp">
       <Filter>particle_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCCommon.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CCFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
     <ClCompile Include="..\platform\CCGL.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCImage.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCSAXParser.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCStdC.cpp">
@@ -219,10 +249,16 @@
     <ClCompile Include="..\support\base64.cpp">
       <Filter>support</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\CCArray.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
     <ClCompile Include="..\support\CCPointExtension.cpp">
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="..\support\CCProfiling.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\CCUserDefault.cpp">
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="..\support\ccUtils.cpp">
@@ -285,53 +321,26 @@
     <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp">
       <Filter>keypad_dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp">
+      <Filter>text_input_node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp">
+      <Filter>text_input_node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\script_support\CCScriptSupport.cpp">
+      <Filter>script_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCConfiguration.cpp" />
+    <ClCompile Include="..\CCDirector.cpp" />
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
-    <ClCompile Include="..\CCCamera.cpp" />
-    <ClCompile Include="..\platform\CCSAXParser.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCFileUtils.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cocoa\CCNS.cpp">
-      <Filter>cocoa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp">
-      <Filter>test_input_node</Filter>
-    </ClCompile>
-    <ClCompile Include="..\text_input_node\CCTextFieldTTF.cpp">
-      <Filter>test_input_node</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base_nodes\CCNode.cpp">
-      <Filter>base_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCDirector.cpp" />
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp">
-      <Filter>layers_scenes_transitions_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\particle_nodes\CCParticleSystemPoint.cpp">
-      <Filter>particle_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\CCArray.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\effects\CCGrid.cpp">
-      <Filter>effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\menu_nodes\CCMenu.cpp">
-      <Filter>menu_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\CCUserDefault.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\cocoa\CCNS.h">
+      <Filter>cocoa</Filter>
+    </ClInclude>
     <ClInclude Include="..\effects\CCGrabber.h">
       <Filter>effects</Filter>
     </ClInclude>
@@ -389,6 +398,9 @@
     <ClInclude Include="..\include\CCApplication.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\CCArray.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\CCAtlasNode.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -413,22 +425,16 @@
     <ClInclude Include="..\include\CCEGLView.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\CCEvent.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCEventDispatcher.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCFileUtils.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\CCGeometry.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCGL.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\CCKeyboardEventDelegate.h">
+    <ClInclude Include="..\include\CCIMEDelegate.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCIMEDispatcher.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCKeypadDelegate.h">
@@ -459,9 +465,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCMotionStreak.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCMouseEventDelegate.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCMutableArray.h">
@@ -515,6 +518,9 @@
     <ClInclude Include="..\include\CCScheduler.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\CCScriptSupport.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\CCSet.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -534,6 +540,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCString.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCTextFieldTTF.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCTexture2D.h">
@@ -581,13 +590,13 @@
     <ClInclude Include="..\include\ccTypes.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\CCUserDefault.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\CCZone.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cocos2d.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\FileUtils.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\selector_protocol.h">
@@ -608,7 +617,7 @@
     <ClInclude Include="..\platform\CCEGLView_platform.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCFileUtils_platform.h">
+    <ClInclude Include="..\platform\CCFileUtils.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCGL.h">
@@ -620,13 +629,13 @@
     <ClInclude Include="..\platform\CCLibxml2.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCNS.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCPlatformConfig.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCPlatformMacros.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCSAXParser.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCStdC.h">
@@ -684,26 +693,5 @@
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\CCConfiguration.h" />
-    <ClInclude Include="..\platform\CCSAXParser.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCFileUtils.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocoa\CCNS.h">
-      <Filter>cocoa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCTextFieldTTF.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCIMEDelegate.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCIMEDispatcher.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCUserDefault.h">
-      <Filter>include</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
