@@ -22,6 +22,11 @@ public class Cocos2dxBitmap{
 	
     public static void createTextBitmap(String content, String fontName, 
     		int fontSize, int alignment){
+    	// avoid error when content is ""
+    	if (content.compareTo("") == 0){
+    		content = " ";
+    	}
+    	
     	Paint paint = newPaint(fontName, fontSize, alignment);
     	
     	TextProperty textProperty = getTextWidthAndHeight(content, paint);      	
