@@ -1,3 +1,38 @@
+cocos2d-0.99.5-x-0.8.5 @ Jun.28,2011
+ [all platforms]
+    Feature  #577  Lua Support! We export all the cocos2d-x classes & methods to lua! 
+                   Please compile and run HelloLua, and read HelloLua/Resource/hello.lua for more details. 
+                   And the lua new project template/wizard is ready on xcode3, xcode4 and VisualStudio2008 & 2010 
+    Feature  #398  Xcode4 templates! Run install-template-xcode.sh to do the magic
+    Feature  #323  Internationalization support! Add CCApplication::getCurrentLanguage() method on all platforms
+    Feature  #529  add static node() method to CCLayerColor & CCLayerGradient
+    Bug      #534  don't raise compile error if ios project includes CCImage.cpp & CCFileUtils.cpp
+    Bug      #429  Effect is wrong when the value of defaultAlphaPixelFormet=kCCTexture2DPixelFormat_A8 in CCTexture2D
+    Bug      #491  Unsafe cycle in CCScheduler::unscheduleAllSelectors
+    Bug      #502  Refactor the singleton mode of CCConfiguration
+    Bug      #512,#525  fix warnings in /Wall flag
+    Bug      #516  Undefined behavious in ccCArray.h (signed / unsigned conversion)
+    Bug      #518  CCScheduler::unscheduleAllSelectors() uses tHashSelectorEntry in wrong way
+    Bug      #521  the effect of PageTurn3D is curious
+    Bug      #523  CCParticleSystemQuad::particleWithFile() can't work correctly
+    Bug      #524  CCFileUtils::dictionaryWithContentsOfFile() can't parse special plist format
+    Bug      #526  glScissior can't work correctly when use autoscale function
+ [android]
+    Bug      #490  TextInputTest show words on soft keyboard detach instead of each key pressed
+    Bug      #507  RenderTextureTest failed on some android devices
+    Bug      #532  GLSurface has no response when tap screen frequently for a long time
+    Bug      #542  SimpleAudioEngine::setBackgroundMusicVolume() not work when background music changed
+    Refactor #535  remove skia dependence when drawing strings, which cause bug #507
+ [ios]
+    Feature  #540  Add RootViewController into xcode3/xcode4 templates. Games can use ios rotation mechanism
+ [win32]
+    Feature  #537  Update PVRFrame lib to version 2.8 for ATI graphic card new driver
+ [wophone]
+    Bug      #539  games on wophone wva devices probably failed on reading resource from zip package
+    
+
+
+
 cocos2d-0.99.5-x-0.8.4 @ May.26,2011
  [android]
     Feature  #496  SUPPORT ANDROID 3.0! We test it on both Motorola XOOM & Samsung Galaxy Tab 10.1 (Highlight!!!!!)
