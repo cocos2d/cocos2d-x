@@ -17,6 +17,9 @@
     <ClInclude Include="..\include\chipmunk\chipmunk_ffi.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\chipmunk\chipmunk_private.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\chipmunk\chipmunk_types.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -95,9 +98,6 @@
     <ClInclude Include="..\include\chipmunk\constraints\util.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\chipmunk\chipmunk_private.h">
-      <Filter>include</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\chipmunk.c">
@@ -163,13 +163,10 @@
     <ClCompile Include="..\src\cpSpace.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cpSpaceHash.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\cpVect.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cpSpaceComponent.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpSpaceHash.c">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpSpaceQuery.c">
@@ -178,8 +175,8 @@
     <ClCompile Include="..\src\cpSpaceStep.c">
       <Filter>src</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\chipmunk-docs.html" />
+    <ClCompile Include="..\src\cpVect.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
