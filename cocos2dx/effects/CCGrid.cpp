@@ -212,8 +212,7 @@ namespace cocos2d
 		glLoadIdentity();
 
         // set view port for user FBO, fixed bug #543 #544
- 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
-//        CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, winSize.width, winSize.height);
+		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
@@ -226,8 +225,7 @@ namespace cocos2d
 		CCSize	winSize = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 
         // set view port for user FBO, fixed bug #543 #544
- 		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
-//        CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, winSize.width, winSize.height);
+		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
