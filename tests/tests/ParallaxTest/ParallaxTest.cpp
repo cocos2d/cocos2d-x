@@ -72,7 +72,7 @@ Parallax1::Parallax1()
 
 std::string Parallax1::title()
 {
-	return "MotionStreak test (tap screen)";
+	return "Parallax: parent and 3 children";
 }
 
 //------------------------------------------------------------------
