@@ -17,6 +17,8 @@ cocos2d-0.99.5-x-0.8.5 @ Jun.28,2011
     Bug      #523  CCParticleSystemQuad::particleWithFile() can't work correctly
     Bug      #524  CCFileUtils::dictionaryWithContentsOfFile() can't parse special plist format
     Bug      #526  glScissior can't work correctly when use autoscale function
+    Bug      #543  EffectTest renders x4 scale when use auto-scale on android/win32/wophone
+    Bug      #544  some test cases of TransitionTest renders x4 scale when use auto-scale on android/win32/wophone 
  [android]
     Bug      #490  TextInputTest show words on soft keyboard detach instead of each key pressed
     Bug      #507  RenderTextureTest failed on some android devices
