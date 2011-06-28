@@ -33,6 +33,7 @@
 		<SYMBOL NAME='CC_USE_BOX2D' TYPE="checkbox" VALUE="true"></SYMBOL>
 		<SYMBOL NAME='CC_USE_CHIPMUNK' TYPE="checkbox" VALUE="false"></SYMBOL>
 	    <SYMBOL NAME='CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE' TYPE="checkbox" VALUE="true"></SYMBOL>
+	    <SYMBOL NAME='CC_USE_LUA' TYPE="checkbox" VALUE="false"></SYMBOL>
 		<SYMBOL NAME='CC_HAS_MAIN_FORM' TYPE="checkbox" VALUE="true"></SYMBOL>
 
 		<!-- Page 3 Controls -->
@@ -208,6 +209,12 @@
 																<LABEL FOR="CC_AUDIO_ENGINE_SUMMARY"></LABEL>
 															</SPAN>
 														</LI>
+														
+														<LI CLASS="LIST">
+															<SPAN CLASS="SideBtnHidden" ID="CC_LUA_SUMMARY" TITLE="">
+																<LABEL FOR="CC_LUA_SUMMARY"></LABEL>
+															</SPAN>
+														</LI>
 
 													</UL>
 
@@ -364,6 +371,15 @@ function OnInit()
 	else
 	{
 	    CC_AUDIO_ENGINE_SUMMARY.innerText = "None Audio Engine";
+	}
+
+	if (window.external.FindSymbol("CC_USE_LUA"))
+	{
+	    CC_LUA_SUMMARY.innerText = "Lua Supportted: Yes";
+	}
+	else
+	{
+	    CC_LUA_SUMMARY.innerText = "Lua Supportted: NO";
 	}
 }
 

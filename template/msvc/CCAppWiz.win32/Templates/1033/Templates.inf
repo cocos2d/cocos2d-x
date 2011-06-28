@@ -8,9 +8,23 @@ win32/main.cpp
 Classes/AppDelegate.h
 Classes/AppDelegate.cpp
 
+[! if ! CC_USE_LUA]
 Classes/HelloWorldScene.h
 Classes/HelloWorldScene.cpp
+[! endif]
 
+[! if CC_USE_LUA]
+Resource/Default.png
+Resource/crop.png
+Resource/farm.jpg
+Resource/land.png
+Resource/menu2.png
+Resource/Icon.png
+Resource/dog.png
+Resource/hello.lua
+Resource/menu1.png
+[! else]
 Resource/CloseSelected.png
 Resource/CloseNormal.png
 Resource/HelloWorld.png
+[! endif]

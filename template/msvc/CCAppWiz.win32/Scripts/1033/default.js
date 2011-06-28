@@ -231,6 +231,11 @@ function AddConfigurations(proj, strProjectName) {
             if (wizard.FindSymbol('CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE')) {
                 strAddIncludeDir += ';..\\CocosDenshion\\Include';
             }
+            if (wizard.FindSymbol('CC_USE_LUA')) {
+                strAddIncludeDir += ';..\\lua\\cocos2dx_support';
+                strAddIncludeDir += ';..\\lua\\tolua';
+                strAddIncludeDir += ';..\\lua\\src';
+            }
             CLTool.AdditionalIncludeDirectories = strAddIncludeDir;
 
             CLTool.UsePrecompiledHeader = pchNone;  // pchUseUsingSpecific;
@@ -281,6 +286,9 @@ function AddConfigurations(proj, strProjectName) {
             }
             if (wizard.FindSymbol('CC_USE_COCOS_DENSHION_SIMPLE_AUDIO_ENGINE')) {
                 strAddDepends += ' libCocosDenshion.lib';
+            }
+            if (wizard.FindSymbol('CC_USE_LUA')) {
+                strAddDepends += ' liblua.lib';
             }
             LinkTool.AdditionalLibraryDirectories = '$(OutDir)';
             LinkTool.AdditionalDependencies = strAddDepends;
