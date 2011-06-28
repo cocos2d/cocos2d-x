@@ -291,6 +291,8 @@ public:
 CCActionInterval* createEffect(int nIndex, ccTime t)
 {
 
+    CCDirector::sharedDirector()->setDepthTest(false);
+
 	switch(nIndex)
 	{
 		case 0: return Shaky3DDemo::actionWithDuration(t);
@@ -330,7 +332,6 @@ CCActionInterval* getAction()
 void EffectTestScene::runThisTest()
 {
     addChild(TextLayer::node());
-	CCDirector::sharedDirector()->setDepthTest(false);
     CCDirector::sharedDirector()->replaceScene(this);
 }
 
