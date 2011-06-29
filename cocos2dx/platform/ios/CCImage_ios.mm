@@ -376,6 +376,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
             {
                 canvasSize    = textSize;
                 pInfo->height = (size_t) textSize.height;
+                pInfo->width  = (size_t) textSize.width;
                 
                 textRect = CGRectMake(0, 0, textSize.width, textSize.height);
             }
