@@ -31,7 +31,7 @@ PROJECT_NAME           = cocos2d-x
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 0.99.5-x-0.8.3
+PROJECT_NUMBER         = 0.99.5-x-0.8.5
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description 
 # for a project that appears at the top of each page and should give viewer 
@@ -621,7 +621,8 @@ WARN_LOGFILE           =
 
 INPUT                  = ../CocosDenshion/include \
                          ../cocos2dx/include \
-                         ../doxygen
+                         ../doxygen \
+                         ../lua/cocos2dx_support
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
