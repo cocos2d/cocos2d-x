@@ -2,6 +2,7 @@ package org.cocos2dx.lib;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.LinkedList;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -14,37 +15,42 @@ import android.graphics.Paint.FontMetricsInt;
 public class Cocos2dxBitmap{
 	/*
 	 * The values are the same as cocos2dx/platform/CCImage.h.
-	 * I think three alignments are ok.
+	 * I think three alignments are OK.
 	 */
 	private static final int ALIGNCENTER = 0x33;
 	private static final int ALIGNLEFT	 = 0x31;
 	private static final int ALIGNRIGHT	 = 0x32;
 	
+	/*
+	 * @width: the width to draw, it can be 0
+	 * @height: the height to draw, it can be 0
+	 */
     public static void createTextBitmap(String content, String fontName, 
-    		int fontSize, int alignment){
-    	// avoid error when content is ""
+    		int fontSize, int alignment, int width, int height){
+    	
+    	// Avoid error when content is ""
     	if (content.compareTo("") == 0){
     		content = " ";
     	}
     	
     	Paint paint = newPaint(fontName, fontSize, alignment);
     	
-    	TextProperty textProperty = getTextWidthAndHeight(content, paint);      	
+    	TextProperty textProperty = getTextWidthAndHeight(content, paint, width, height);      	
       
-        // draw text to bitmap
+        // Draw text to bitmap
         Bitmap bitmap = Bitmap.createBitmap(textProperty.maxWidth, 
-        		textProperty.height * textProperty.numberLines, Bitmap.Config.ARGB_8888);
+        		textProperty.totalHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         
-        // draw string
+        // Draw string
         FontMetricsInt fm = paint.getFontMetricsInt();
         int x = 0;
         int y = -fm.ascent;
-        String[] lines = content.split("\\n");
+        String[] lines = textProperty.lines;
         for (String line : lines){
         	x = computeX(paint, line, textProperty.maxWidth, alignment);
         	canvas.drawText(line, x, y, paint);
-        	y += textProperty.height;
+        	y += textProperty.heightPerLine;
         }
         
         initNativeObject(bitmap);
@@ -66,7 +72,10 @@ public class Cocos2dxBitmap{
     		ret = w;
     		break;
     	
-    	// default is align left ret = 0
+    	/*
+    	 * Default is align left.
+    	 * Should be same as newPaint().
+    	 */
     	default:
     		break;
     	}
@@ -75,36 +84,153 @@ public class Cocos2dxBitmap{
     }
     
     private static class TextProperty{
+    	// The max width of lines
     	int maxWidth;
-    	int height;
-    	int numberLines;
+    	// The height of all lines
+    	int totalHeight;
+    	int heightPerLine;
+    	String[] lines;
 
-    	TextProperty(int w, int h, int n){
+    	TextProperty(int w, int h, String[] lines){
     		this.maxWidth = w;
-    		this.height = h;
-    		this.numberLines = n;
+    		this.heightPerLine = h;
+    		this.totalHeight = h * lines.length;   		
+    		this.lines = lines;
     	}
     }
     
-    private static TextProperty getTextWidthAndHeight(String content, Paint paint){              
+    private static TextProperty getTextWidthAndHeight(String content, Paint paint,
+    		int maxWidth, int maxHeight){              
         FontMetricsInt fm = paint.getFontMetricsInt();
         int h = (int)Math.ceil(fm.descent - fm.ascent);
+        int maxContentWidth = 0;
         
-        String[] lines = content.split("\\n");
+        String[] lines = splitString(content, maxHeight, maxWidth, paint);
         
-        /*
-         * Compute the max width
-         */
-        int w = 0;
-        int temp = 0;
-        for (String line : lines){
-        	temp = (int)Math.ceil(paint.measureText(line, 0, line.length()));
-        	if (temp > w){
-        		w = temp;
-        	}
+        if (maxWidth != 0){
+        	maxContentWidth = maxWidth;
+        }
+        else {
+        	/*
+             * Compute the max width
+             */
+            int temp = 0;
+            for (String line : lines){
+            	temp = (int)Math.ceil(paint.measureText(line, 0, line.length()));
+            	if (temp > maxContentWidth){
+            		maxContentWidth = temp;
+            	}
+            }
         }
         
-        return new TextProperty(w, h, lines.length);
+        
+        return new TextProperty(maxContentWidth, h, lines);
+    }
+    
+    /*
+     * If maxWidth or maxHeight is not 0,
+     * split the string to fix the maxWidth and maxHeight.
+     */
+    private static String[] splitString(String content, int maxHeight, int maxWidth, 
+    		Paint paint){
+    	String[] lines = content.split("\\n");
+    	String[] ret = null;
+    	FontMetricsInt fm = paint.getFontMetricsInt();
+        int heightPerLine = (int)Math.ceil(fm.descent - fm.ascent);
+        int maxLines = maxHeight / heightPerLine;
+    	
+    	if (maxWidth != 0){
+    		LinkedList<String> strList = new LinkedList<String>();
+    		for (String line : lines){
+    			/*
+    			 * The width of line is exceed maxWidth, should divide it into
+    			 * two or more lines.
+    			 */
+    			int lineWidth = (int)Math.ceil(paint.measureText(line));
+    			if (lineWidth > maxWidth){    				
+    				strList.addAll(divideStringWithMaxWidth(paint, line, maxWidth));
+    			}
+    			else{
+    				strList.add(line);
+    			}
+    			
+    			/*
+    			 * Should not exceed the max height;
+    			 */
+    			if (maxLines > 0 && strList.size() >= maxLines){
+    				break;
+    			}
+    		}
+    		
+    		/*
+    		 * Remove exceeding lines
+    		 */
+    		if (maxLines > 0 && strList.size() > maxLines){
+    			while (strList.size() > maxLines){
+    				strList.removeLast();
+    			}
+    		}
+    		
+    		ret = new String[strList.size()];
+    		strList.toArray(ret);
+    	} else 
+    	if (maxHeight != 0 && lines.length > maxLines) {
+    		/*
+    		 * Remove exceeding lines
+    		 */
+    		LinkedList<String> strList = new LinkedList<String>();
+    		for (int i = 0; i < maxLines; i++){
+    			strList.add(lines[i]);
+    		}
+    		ret = new String[strList.size()];
+    		strList.toArray(ret);
+    	}
+    	else {
+    		ret = lines;
+    	}
+    	
+    	return ret;
+    }
+    
+    private static LinkedList<String> divideStringWithMaxWidth(Paint paint, String content, 
+    		int width){
+    	int charLength = content.length();
+    	int start = 0;
+    	int tempWidth = 0;
+    	LinkedList<String> strList = new LinkedList<String>();
+    	
+    	/*
+    	 * Break a String into String[] by the width
+    	 */
+    	for (int i = 1; i <= charLength; ++i){
+    		tempWidth = (int)Math.ceil(paint.measureText(content, start, i));
+    		if (tempWidth >= width){
+    			/*
+    			 * Should not exceed the width
+    			 */
+    			if (tempWidth > width){
+    				strList.add(content.substring(start, i - 1));
+    				/*
+    				 * compute from previous char
+    				 */
+    				--i;
+    			}
+    			else {
+    				strList.add(content.substring(start, i));   				
+    			}
+    			
+    			start = i;
+    		}
+    	}
+    	
+    	/*
+    	 * Add the last char
+    	 */
+    	if (start == charLength - 1){
+    		strList.add(content.substring(charLength-1));
+    	}
+    	
+    	return strList;
     }
     
     private static Paint newPaint(String fontName, int fontSize, int alignment){
