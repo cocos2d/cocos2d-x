@@ -35,31 +35,29 @@ extern "C" {
 #include "lua.h"
 }
 
+/** 
+ @brief invoke lua script from c++ code
+ */
 class CCLuaScriptModule :  public cocos2d::CCObject
 {
 public:
 	/*************************************************************************
 		Construction and Destruction
 	*************************************************************************/
-	/*!
-	\brief
-		Constructor for LuaScriptModule class which create a lua_State
+	/**
+     @brief Constructor for LuaScriptModule class which create a lua_State
 	*/
 	CCLuaScriptModule();
 
-	/*!
-	\brief
-		Constructor for LuaScriptModule class which takes a lua_State
-
-	\param state
-		Pointer to the lua_State that the script module should attach to.
+	/**
+	 @brief Constructor for LuaScriptModule class which takes a lua_State
+     @param state Pointer to the lua_State that the script module should attach to.
 	*/
 	CCLuaScriptModule(lua_State* state);
 
 
-	/*!
-	\brief
-		Destructor for LuaScriptModule class.
+	/**
+     @brief Destructor for LuaScriptModule class.
 	*/
 	virtual ~CCLuaScriptModule();
 
@@ -67,46 +65,33 @@ public:
 	/*************************************************************************
 		Script Execution Functions
 	*************************************************************************/
-	/*!
-	\brief
-		Execute a script file.
-
-	\param filename
-		String object holding the filename of the script file that is to be executed
-		
+	/**
+     @brief Execute a script file.
+     @param filename String object holding the filename of the script file that is to be executed
 	*/
 	bool executeScriptFile(const std::string& filename);
 
-
-	/*!
-	\brief
-		Execute a scripted global function.  The function should not take any parameters and should return an integer.
-
-	\param function_name
-		String object holding the name of the function, in the global script environment, that
-		is to be executed.
-
-	\return
-		The integer value returned from the script function.
+	/**
+     @brief Execute a scripted global function.  
+     @brief The function should not take any parameters and should return an integer.
+     @param function_name String object holding the name of the function, in the global script environment, that is to be executed.
+     @return The integer value returned from the script function.
 	*/
 	int executeScriptGlobal(const std::string& function_name);
 
 
-	/*!
-	\brief
-		Execute a scripted global 'event handler' function.  The function should take some kind of EventArgs like parameter
-		that the concrete implementation of this function can create from the passed EventArgs based object.  The function
-		should not return anything.
+	/**
+     @brief Execute a scripted global 'event handler' function.
+     
+     The function should take some kind of EventArgs like parameter
+     that the concrete implementation of this function can create from the passed EventArgs based object.  The function
+     should not return anything.
 
-	\param handler_name
-		String object holding the name of the scripted handler function.
-
-	\param e
-		EventArgs based object that should be passed, by any appropriate means, to the scripted function.
-
-	\return
-		- true if the event was handled.
-		- false if the event was not handled.
+     @param handler_name String object holding the name of the scripted handler function.
+     @param e EventArgs based object that should be passed, by any appropriate means, to the scripted function.
+     
+     @return true if the event was handled.
+     @return false if the event was not handled.
 	*/
 	bool executeSchedule(const std::string& handler_name, cocos2d::ccTime cc);
 	bool executeCallFunc(const std::string& handler_name);
@@ -118,16 +103,12 @@ public:
 	bool executeTouchesEvent(const std::string& handler_name, cocos2d::CCSet *pobj);
 	bool executeTouch(const std::string& handler_name, cocos2d::CCTouch *pobj);
 	bool executeListItem(const std::string& handler_name, int index, cocos2d::CCObject* pobj);
-	/*!
-    \brief
-        Execute script code contained in the given CEGUI::String object.
-
-    \param str
-        String object holding the valid script code that should be executed.
-
-    \return
-	- true if the string is excuted correctly.
-	- false if the string is excuted wrongly.
+	
+    /**
+     @brief Execute script code contained in the given CEGUI::String object.
+     @param str String object holding the valid script code that should be executed.
+     @return true if the string is excuted correctly.
+     @return false if the string is excuted wrongly.
     */
 	bool executeString(const std::string& str);
 
@@ -135,25 +116,20 @@ public:
 	/*************************************************************************
 		Bindings creation / destruction
 	*************************************************************************/
-	/*!
-    \brief
-        Method called during system initialisation, prior to running any scripts via the ScriptModule, to enable the ScriptModule
-        to perform any operations required to complete initialisation or binding of the script language to the gui system objects.
-
-    \return
-        Nothing.
+	/**
+     @brief Method called during system initialisation, prior to running any scripts via the ScriptModule, 
+     @brief to enable the ScriptModule to perform any operations required to complete initialisation or binding 
+     @brief of the script language to the gui system objects.
+     @return Nothing.
     */
 	void createBindings(void);
 
 
-	/*!
-    \brief
-        Method called during system destruction, after all scripts have been run via the ScriptModule, to enable the ScriptModule
-        to perform any operations required to cleanup bindings of the script language to the gui system objects, as set-up in the
-        earlier createBindings call.
-
-    \return
-        Nothing.
+	/**
+     @brief Method called during system destruction, after all scripts have been run via the ScriptModule, 
+     @brief to enable the ScriptModule to perform any operations required to cleanup bindings of the script 
+     @brief language to the gui system objects, as set-up in the earlier createBindings call.
+     @return Nothing.
     */
 	void destroyBindings(void);
 
@@ -161,18 +137,21 @@ public:
 	/*************************************************************************
 		Accessor type functions
 	*************************************************************************/
-	/*!
-    \brief
-		Method used to get a pointer to the lua_State that the script module is attached to.
-
-    \return
-        A pointer to the lua_State that the script module is attached to.
+	/**
+     @brief Method used to get a pointer to the lua_State that the script module is attached to.
+     @return A pointer to the lua_State that the script module is attached to.
     */
 	lua_State* getLuaState(void) const	{return d_state;}
 
 
+    /**
+     @breif Get the instance of CCLuaScriptModule singleton
+     */
 	static CCLuaScriptModule* sharedLuaScriptModule(void);
 
+    /**
+     @brief Purge and release the CCLuaScriptModule singleton 
+     */
 	static void purgeSharedLuaScriptModule();
 
 	
