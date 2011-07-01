@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011 Zynga Inc.
  
 http://www.cocos2d-x.org
 
@@ -320,7 +321,7 @@ bool CCRepeat::initWithAction(cocos2d::CCFiniteTimeAction *pAction, unsigned int
 	if (CCActionInterval::initWithDuration(d))
 	{
         m_uTimes = times;
-		m_pOther = pAction;
+		m_pInnerAction = pAction;
 		pAction->retain();
 
 		m_uTotal = 0;
@@ -349,7 +350,7 @@ CCObject* CCRepeat::copyWithZone(cocos2d::CCZone *pZone)
 
 	CCActionInterval::copyWithZone(pZone);
 
-	pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()), m_uTimes);
+	pCopy->initWithAction((CCFiniteTimeAction*)(m_pInnerAction->copy()->autorelease()), m_uTimes);
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -357,19 +358,19 @@ CCObject* CCRepeat::copyWithZone(cocos2d::CCZone *pZone)
 
 CCRepeat::~CCRepeat(void)
 {
-	CC_SAFE_RELEASE(m_pOther);
+	CC_SAFE_RELEASE(m_pInnerAction);
 }
 
 void CCRepeat::startWithTarget(CCNode *pTarget)
 {
 	m_uTotal = 0;
 	CCActionInterval::startWithTarget(pTarget);
-	m_pOther->startWithTarget(pTarget);
+	m_pInnerAction->startWithTarget(pTarget);
 }
 
 void CCRepeat::stop(void)
 {
-	m_pOther->stop();
+	m_pInnerAction->stop();
 	CCActionInterval::stop();
 }
 
@@ -380,22 +381,22 @@ void CCRepeat::update(cocos2d::ccTime time)
 	ccTime t = time * m_uTimes;
 	if (t > m_uTotal + 1)
 	{
-		m_pOther->update(1.0f);
+		m_pInnerAction->update(1.0f);
 		m_uTotal++;
-		m_pOther->stop();
-		m_pOther->startWithTarget(m_pTarget);
+		m_pInnerAction->stop();
+		m_pInnerAction->startWithTarget(m_pTarget);
 
 		// repeat is over?
 		if (m_uTotal == m_uTimes)
 		{
 			// so, set it in the original position
-			m_pOther->update(0);
+			m_pInnerAction->update(0);
 		}
 		else
 		{
 			// no ? start next repeat with the right update
 			// to prevent jerk (issue #390)
-			m_pOther->update(t - m_uTotal);
+			m_pInnerAction->update(t - m_uTotal);
 		}
 	}
 	else
@@ -411,7 +412,7 @@ void CCRepeat::update(cocos2d::ccTime time)
 		}
 
 //		m_pOther->update(min(r, 1));
-		m_pOther->update(r > 1 ? 1 : r);
+		m_pInnerAction->update(r > 1 ? 1 : r);
 	}
 }
 
@@ -422,7 +423,7 @@ bool CCRepeat::isDone(void)
 
 CCActionInterval* CCRepeat::reverse(void)
 {
-	return CCRepeat::actionWithAction(m_pOther->reverse(), m_uTimes);
+	return CCRepeat::actionWithAction(m_pInnerAction->reverse(), m_uTimes);
 }
 
 //
@@ -430,7 +431,7 @@ CCActionInterval* CCRepeat::reverse(void)
 //
 CCRepeatForever::~CCRepeatForever()
 {
-	CC_SAFE_RELEASE(m_pOther);
+	CC_SAFE_RELEASE(m_pInnerAction);
 }
 CCRepeatForever *CCRepeatForever::actionWithAction(CCActionInterval *pAction)
 {
@@ -448,7 +449,7 @@ bool CCRepeatForever::initWithAction(CCActionInterval *pAction)
 {
 	assert(pAction != NULL);
 	pAction->retain();
-	m_pOther = pAction;
+	m_pInnerAction = pAction;
 	return true;
 }
 CCObject* CCRepeatForever::copyWithZone(CCZone *pZone)
@@ -466,7 +467,7 @@ CCObject* CCRepeatForever::copyWithZone(CCZone *pZone)
 	}
 	CCActionInterval::copyWithZone(pZone);
 	// win32 : use the m_pOther's copy object.
-	pRet->initWithAction((CCActionInterval*)(m_pOther->copy()->autorelease())); 
+	pRet->initWithAction((CCActionInterval*)(m_pInnerAction->copy()->autorelease())); 
 	CC_SAFE_DELETE(pNewZone);
 	return pRet;
 }
@@ -474,18 +475,18 @@ CCObject* CCRepeatForever::copyWithZone(CCZone *pZone)
 void CCRepeatForever::startWithTarget(CCNode* pTarget)
 {
 	CCActionInterval::startWithTarget(pTarget);
-	m_pOther->startWithTarget(pTarget);
+	m_pInnerAction->startWithTarget(pTarget);
 }
 
 void CCRepeatForever::step(ccTime dt)
 {
-	m_pOther->step(dt);
-	if (m_pOther->isDone())
+	m_pInnerAction->step(dt);
+	if (m_pInnerAction->isDone())
 	{
-		ccTime diff = dt + m_pOther->getDuration() - m_pOther->getElapsed();
-		m_pOther->startWithTarget(m_pTarget);
+		ccTime diff = dt + m_pInnerAction->getDuration() - m_pInnerAction->getElapsed();
+		m_pInnerAction->startWithTarget(m_pTarget);
 		// to prevent jerk. issue #390
-		m_pOther->step(diff);
+		m_pInnerAction->step(diff);
 	}
 }
 
@@ -496,7 +497,7 @@ bool CCRepeatForever::isDone()
 
 CCActionInterval *CCRepeatForever::reverse()
 {
-	return (CCActionInterval*)(CCRepeatForever::actionWithAction(m_pOther->reverse()));
+	return (CCActionInterval*)(CCRepeatForever::actionWithAction(m_pInnerAction->reverse()));
 }
 
 //
@@ -896,9 +897,185 @@ CCActionInterval* CCMoveBy::reverse(void)
 }
 
 //
+// CCSkewTo
+//
+CCSkewTo* CCSkewTo::actionWithDuration(cocos2d::ccTime t, float sx, float sy)
+{
+	CCSkewTo *pSkewTo = new CCSkewTo();
+	if (pSkewTo)
+	{
+		if (pSkewTo->initWithDuration(t, sx, sy))
+		{
+			pSkewTo->autorelease();
+		}
+		else
+		{
+			CC_SAFE_DELETE(pSkewTo);
+		}
+	}
+
+	return pSkewTo;
+}
+
+bool CCSkewTo::initWithDuration(ccTime t, float sx, float sy)
+{
+	bool bRet = false;
+
+	if (CCActionInterval::initWithDuration(t))
+	{
+		m_fEndSkewX = sx;
+		m_fEndSkewY = sy;
+
+		bRet = true;
+	}
+
+	return bRet;
+}
+
+CCObject* CCSkewTo::copyWithZone(CCZone* pZone)
+{
+	CCZone* pNewZone = NULL;
+	CCSkewTo* pCopy = NULL;
+	if(pZone && pZone->m_pCopyObject) 
+	{
+		//in case of being called at sub class
+		pCopy = (CCSkewTo*)(pZone->m_pCopyObject);
+	}
+	else
+	{
+		pCopy = new CCSkewTo();
+		pZone = pNewZone = new CCZone(pCopy);
+	}
+
+	CCActionInterval::copyWithZone(pZone);
+
+	pCopy->initWithDuration(m_fDuration, m_fEndSkewX, m_fEndSkewY);
+
+	CC_SAFE_DELETE(pNewZone);
+	return pCopy;
+}
+
+void CCSkewTo::startWithTarget(cocos2d::CCNode *pTarget)
+{
+	CCActionInterval::startWithTarget(pTarget);
+
+	m_fStartSkewX = pTarget->getSkewX();
+
+	if (m_fStartSkewX > 0)
+	{
+		m_fStartSkewX = fmodf(m_fStartSkewX, 180.f);
+	}
+	else
+	{
+		m_fStartSkewX = fmodf(m_fStartSkewX, -180.f);
+	}
+
+	m_fDeltaX = m_fEndSkewX - m_fStartSkewX;
+
+	if (m_fDeltaX > 180)
+	{
+		m_fDeltaX -= 360;
+	}
+	if (m_fDeltaX < -180)
+	{
+		m_fDeltaX += 360;
+	}
+
+	m_fSkewY = pTarget->getSkewY();
+
+	if (m_fStartSkewY > 0)
+	{
+		m_fStartSkewY = fmodf(m_fStartSkewY, 360.f);
+	}
+	else
+	{
+		m_fStartSkewY = fmodf(m_fStartSkewY, -360.f);
+	}
+
+	m_fDeltaY = m_fEndSkewY - m_fStartSkewY;
+
+	if (m_fDeltaY > 180)
+	{
+		m_fDeltaY -= 360;
+	}
+	if (m_fDeltaY < -180)
+	{
+		m_fDeltaY += 360;
+	}
+}
+
+void CCSkewTo::update(ccTime t)
+{
+	m_pTarget->setSkewX(m_fStartSkewX + m_fDeltaX * t);
+	m_pTarget->setSkewY(m_fStartSkewY + m_fDeltaY * t);
+}
+
+CCSkewTo::CCSkewTo()
+: m_fSkewX(0.0)
+, m_fSkewY(0.0)
+, m_fStartSkewX(0.0)
+, m_fStartSkewY(0.0)
+, m_fEndSkewX(0.0)
+, m_fEndSkewY(0.0)
+, m_fDeltaX(0.0)
+, m_fDeltaY(0.0)
+{
+}
+
+//
+// CCSkewBy
+//
+CCSkewBy* CCSkewBy::actionWithDuration(ccTime t, float sx, float sy)
+{
+	CCSkewBy *pSkewBy = new CCSkewBy();
+	if (pSkewBy)
+	{
+		if (pSkewBy->initWithDuration(t, sx, sy))
+		{
+			pSkewBy->autorelease();
+		}
+		else
+		{
+			CC_SAFE_DELETE(pSkewBy);
+		}
+	}
+
+	return pSkewBy;
+}
+
+bool CCSkewBy::initWithDuration(cocos2d::ccTime t, float deltaSkewX, float deltaSkewY)
+{
+	bool bRet = false;
+
+	if (CCSkewTo::initWithDuration(t, deltaSkewX, deltaSkewY))
+	{
+		m_fSkewX = deltaSkewX;
+		m_fSkewY = deltaSkewY;
+
+		bRet = true;
+	}
+
+	return bRet;
+}
+
+void CCSkewBy::startWithTarget(cocos2d::CCNode *pTarget)
+{
+	CCSkewTo::startWithTarget(pTarget);
+	m_fDeltaX = m_fSkewX;
+	m_fDeltaY = m_fSkewY;
+	m_fEndSkewX = m_fStartSkewX + m_fDeltaX;
+	m_fEndSkewY = m_fStartSkewY + m_fDeltaY;
+}
+
+CCActionInterval* CCSkewBy::reverse()
+{
+	return actionWithDuration(m_fDuration, -m_fSkewX, -m_fSkewY);
+}
+
+//
 // JumpBy
 //
-CCJumpBy* CCJumpBy::actionWithDuration(cocos2d::ccTime duration, cocos2d::CCPoint position, cocos2d::ccTime height, int jumps)
+CCJumpBy* CCJumpBy::actionWithDuration(cocos2d::ccTime duration, cocos2d::CCPoint position, cocos2d::ccTime height, unsigned int jumps)
 {
 	CCJumpBy *pJumpBy = new CCJumpBy();
 	pJumpBy->initWithDuration(duration, position, height, jumps);
@@ -907,7 +1084,7 @@ CCJumpBy* CCJumpBy::actionWithDuration(cocos2d::ccTime duration, cocos2d::CCPoin
 	return pJumpBy;
 }
 
-bool CCJumpBy::initWithDuration(cocos2d::ccTime duration, cocos2d::CCPoint position, cocos2d::ccTime height, int jumps)
+bool CCJumpBy::initWithDuration(cocos2d::ccTime duration, cocos2d::CCPoint position, cocos2d::ccTime height, unsigned int jumps)
 {
 	if (CCActionInterval::initWithDuration(duration))
 	{
@@ -1735,8 +1912,14 @@ CCReverseTime* CCReverseTime::actionWithAction(cocos2d::CCFiniteTimeAction *pAct
 
 bool CCReverseTime::initWithAction(cocos2d::CCFiniteTimeAction *pAction)
 {
+	assert(pAction != NULL);
+	assert(pAction != m_pOther);
+
 	if (CCActionInterval::initWithDuration(pAction->getDuration()))
 	{
+		// Don't leak if action is reused
+		CC_SAFE_RELEASE(m_pOther);
+
 		m_pOther = pAction;
 		pAction->retain();
 
