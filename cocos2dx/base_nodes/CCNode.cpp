@@ -2,6 +2,7 @@
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,7 +44,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 CCNode::CCNode(void)
-: m_nZOrder(0)
+: m_uZOrder(0)
 , m_fVertexZ(0.0f)
 , m_fRotation(0.0f)
 , m_fScaleX(1.0f)
@@ -69,6 +70,8 @@ CCNode::CCNode(void)
 , m_pUserData(NULL)
 , m_bIsTransformDirty(true)
 , m_bIsInverseDirty(true)
+, m_fSkewX(0.0)
+, m_fSkewY(0.0)
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 , m_bIsTransformGLDirty(true)
 #endif
@@ -118,17 +121,46 @@ void CCNode::arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func)
 	}
 }
 
-/// zOrder getter
-int CCNode::getZOrder()
+float CCNode::getSkewX()
 {
-	return m_nZOrder;
+	return m_fSkewX;
+}
+
+void CCNode::setSkewX(float newSkewX)
+{
+	m_fSkewX = newSkewX;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
+}
+
+float CCNode::getSkewY()
+{
+	return m_fSkewY;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
+}
+
+void CCNode::setSkewY(float newSkewY)
+{
+	m_fSkewY = newSkewY;
+
+}
+
+/// zOrder getter
+unsigned int CCNode::getZOrder()
+{
+	return m_uZOrder;
 }
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
-void CCNode::setZOrder(int z)
+void CCNode::setZOrder(unsigned int z)
 {
-	m_nZOrder = z;
+	m_uZOrder = z;
 }
 
 /// ertexZ getter
@@ -158,38 +190,6 @@ void CCNode::setRotation(float newRotation)
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
-#endif
-}
-
-/// SkewX getter
-float CCNode::getSkewX()
-{
-    return m_fSkewX;
-}
-
-/// SkewX setter
-void CCNode::setSkewX(float newSkewX)
-{
-    m_fSkewX = newSkewX;
-    m_bIsTransformDirty = m_bIsInverseDirty = true;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-    m_bIsTransformGLDirty = true;
-#endif
-}
-
-/// SkewY getter
-float CCNode::getSkewY()
-{
-    return m_fSkewY;
-}
-
-/// SkewY setter
-void CCNode::setSkewY(float newSkewY)
-{
-    m_fSkewY = newSkewY;
-    m_bIsTransformDirty = m_bIsInverseDirty = true;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-    m_bIsTransformGLDirty = true;
 #endif
 }
 
@@ -526,7 +526,7 @@ void CCNode::childrenAlloc(void)
     m_pChildren->retain();
 }
 
-CCNode* CCNode::getChildByTag(int aTag)
+CCNode* CCNode::getChildByTag(unsigned int aTag)
 {
 	CCAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
 
@@ -547,7 +547,7 @@ CCNode* CCNode::getChildByTag(int aTag)
 * If a class want's to extend the 'addChild' behaviour it only needs
 * to override this method
 */
-void CCNode::addChild(CCNode *child, int zOrder, int tag)
+void CCNode::addChild(CCNode *child, unsigned int zOrder, int tag)
 {	
 	CCAssert( child != NULL, "Argument must be non-nil");
 	CCAssert( child->m_pParent == NULL, "child already added. It can't be added again");
@@ -570,7 +570,7 @@ void CCNode::addChild(CCNode *child, int zOrder, int tag)
 	}
 }
 
-void CCNode::addChild(CCNode *child, int zOrder)
+void CCNode::addChild(CCNode *child, unsigned int zOrder)
 {
 	CCAssert( child != NULL, "Argument must be non-nil");
 	this->addChild(child, zOrder, child->m_nTag);
@@ -579,7 +579,7 @@ void CCNode::addChild(CCNode *child, int zOrder)
 void CCNode::addChild(CCNode *child)
 {
 	CCAssert( child != NULL, "Argument must be non-nil");
-	this->addChild(child, child->m_nZOrder, child->m_nTag);
+	this->addChild(child, child->m_uZOrder, child->m_nTag);
 }
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
@@ -605,7 +605,7 @@ void CCNode::removeChild(CCNode* child, bool cleanup)
 	}
 }
 
-void CCNode::removeChildByTag(int tag, bool cleanup)
+void CCNode::removeChildByTag(unsigned int tag, bool cleanup)
 {
 	CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
 
@@ -679,7 +679,7 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 
 
 // helper used by reorderChild & add
-void CCNode::insertChild(CCNode* child, int z)
+void CCNode::insertChild(CCNode* child, unsigned int z)
 {
     unsigned int index = 0;
     CCNode* a = (CCNode*) m_pChildren->lastObject();
@@ -693,7 +693,7 @@ void CCNode::insertChild(CCNode* child, int z)
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pNode = (CCNode*) pObject;
-            if ( pNode && (pNode->m_nZOrder > z ))
+            if ( pNode && (pNode->m_uZOrder > z ))
             {
                 m_pChildren->insertObject(child, index);
                 break;
@@ -705,7 +705,7 @@ void CCNode::insertChild(CCNode* child, int z)
     child->setZOrder(z);
 }
 
-void CCNode::reorderChild(CCNode *child, int zOrder)
+void CCNode::reorderChild(CCNode *child, unsigned int zOrder)
 {
 	CCAssert( child != NULL, "Child must be non-nil");
 
@@ -752,7 +752,7 @@ void CCNode::visit()
         {
             pNode = (CCNode*) arrayData->arr[i];
 
-			if ( pNode && pNode->m_nZOrder < 0 ) 
+			if ( pNode && pNode->m_uZOrder < 0 ) 
 			{
 				pNode->visit();
 			}
@@ -852,6 +852,15 @@ void CCNode::transform()
 	if (m_fRotation != 0.0f )
 		glRotatef( -m_fRotation, 0.0f, 0.0f, 1.0f );
 
+	// skew
+	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) 
+	{
+		CCAffineTransform skewMatrix = CCAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
+		GLfloat	glMatrix[16];
+		CCAffineToGL(&skewMatrix, glMatrix);															 
+		glMultMatrixf(glMatrix);
+	}
+
 	// scale
 	if (m_fScaleX != 1.0f || m_fScaleY != 1.0f)
 		glScalef( m_fScaleX, m_fScaleY, 1.0f );
@@ -909,19 +918,19 @@ void CCNode::stopAction(CCAction* action)
 	CCActionManager::sharedManager()->removeAction(action);
 }
 
-void CCNode::stopActionByTag(int tag)
+void CCNode::stopActionByTag(unsigned int tag)
 {
 	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	CCActionManager::sharedManager()->removeActionByTag(tag, this);
 }
 
-CCAction * CCNode::getActionByTag(int tag)
+CCAction * CCNode::getActionByTag(unsigned int tag)
 {
 	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	return CCActionManager::sharedManager()->getActionByTag(tag, this);
 }
 
-int CCNode::numberOfRunningActions()
+unsigned int CCNode::numberOfRunningActions()
 {
 	return CCActionManager::sharedManager()->numberOfRunningActionsInTarget(this);
 }
@@ -933,7 +942,7 @@ void CCNode::scheduleUpdate()
 	scheduleUpdateWithPriority(0);
 }
 
-void CCNode::scheduleUpdateWithPriority(int priority)
+void CCNode::scheduleUpdateWithPriority(unsigned int priority)
 {
 	CCScheduler::sharedScheduler()->scheduleUpdateForTarget(this, priority, !m_bIsRunning);
 }
@@ -994,22 +1003,42 @@ void CCNode::selectorProtocolRelease(void)
 
 CCAffineTransform CCNode::nodeToParentTransform(void)
 {
-	if ( m_bIsTransformDirty ) {
+	if (m_bIsTransformDirty) {
 
 		m_tTransform = CCAffineTransformIdentity;
 
 		if( ! m_bIsRelativeAnchorPoint && ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPixels, CCPointZero) )
+		{
 			m_tTransform = CCAffineTransformTranslate(m_tTransform, m_tAnchorPointInPixels.x, m_tAnchorPointInPixels.y);
+		}
 
-		if( ! CCPoint::CCPointEqualToPoint(m_tPositionInPixels, CCPointZero) )
+		if(! CCPoint::CCPointEqualToPoint(m_tPositionInPixels, CCPointZero))
+		{
 			m_tTransform = CCAffineTransformTranslate(m_tTransform, m_tPositionInPixels.x, m_tPositionInPixels.y);
-		if( m_fRotation != 0 )
-			m_tTransform = CCAffineTransformRotate(m_tTransform, -CC_DEGREES_TO_RADIANS(m_fRotation));
-		if( ! (m_fScaleX == 1 && m_fScaleY == 1) ) 
-			m_tTransform = CCAffineTransformScale(m_tTransform, m_fScaleX, m_fScaleY);
+		}
 
-		if( ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPixels, CCPointZero) )
+		if(m_fRotation != 0)
+		{
+			m_tTransform = CCAffineTransformRotate(m_tTransform, -CC_DEGREES_TO_RADIANS(m_fRotation));
+		}
+
+		if(m_fSkewX != 0 || m_fSkewY != 0) 
+		{
+			// create a skewed coordinate system
+			CCAffineTransform skew = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)), tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f, 0.0f, 0.0f);
+			// apply the skew to the transform
+			m_tTransform = CCAffineTransformConcat(skew, m_tTransform);
+		}
+
+		if(! (m_fScaleX == 1 && m_fScaleY == 1)) 
+		{
+			m_tTransform = CCAffineTransformScale(m_tTransform, m_fScaleX, m_fScaleY);
+		}
+
+		if(! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPixels, CCPointZero))
+		{
 			m_tTransform = CCAffineTransformTranslate(m_tTransform, -m_tAnchorPointInPixels.x, -m_tAnchorPointInPixels.y);
+		}
 
 		m_bIsTransformDirty = false;
 	}

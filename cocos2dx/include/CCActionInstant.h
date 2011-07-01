@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011 Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -204,9 +205,33 @@ namespace cocos2d {
 
 		void registerScriptFunction(const char* pszFunctionName);
 
+		inline SelectorProtocol* getTargetCallback()
+		{
+			return m_pSelectorTarget;
+		}
+
+		inline void setTargetCallback(SelectorProtocol* pSel)
+		{
+			if (pSel != m_pSelectorTarget)
+			{
+				if (m_pSelectorTarget)
+				{
+					m_pSelectorTarget->selectorProtocolRelease();
+				}
+				
+				m_pSelectorTarget = pSel;
+
+				if (m_pSelectorTarget)
+				{
+					m_pSelectorTarget->selectorProtocolRetain();
+				}				
+			}
+		}
+
 	protected:
+		/** Target that will be called */
 		SelectorProtocol*   m_pSelectorTarget;
-		// the script function name to call back
+		/** the script function name to call back */
 		std::string         m_scriptFuncName;
 
 		union
@@ -291,7 +316,23 @@ namespace cocos2d {
         virtual CCObject* copyWithZone(CCZone *pZone);
         virtual void execute();
 
+		inline CCObject* getObject()
+		{
+			return m_pObject;
+		}
+
+		inline void setObject(CCObject* pObj)
+		{
+			if (pObj != m_pObject)
+			{
+				CC_SAFE_RELEASE(m_pObject);
+				m_pObject = pObj;
+				CC_SAFE_RETAIN(m_pObject);
+			}
+		}
+
     protected:
+		/** object to be passed as argument */
         CCObject* m_pObject;
     };
 
