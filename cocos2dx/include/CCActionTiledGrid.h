@@ -82,7 +82,7 @@ namespace cocos2d
 		~CCShuffleTiles(void);
 		/** initializes the action with a random seed, the grid size and the duration */
 		bool initWithSeed(int s, ccGridSize gridSize, ccTime duration);
-		void shuffle(int *pArray, int nLen);
+		void shuffle(int *pArray, unsigned int nLen);
 		ccGridSize getDelta(ccGridSize pos);
 		void placeTile(ccGridSize pos, Tile *t);
 
@@ -95,10 +95,10 @@ namespace cocos2d
 		static CCShuffleTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
 
 	protected:
-		int m_nSeed;
-		int m_nTilesCount;
-		int *m_pTilesOrder;
-		Tile *m_pTiles;
+		int			 m_nSeed;
+		unsigned int m_nTilesCount;
+		int			 *m_pTilesOrder;
+		Tile		 *m_pTiles;
 	};
 
 	/** @brief CCFadeOutTRTiles action
@@ -167,7 +167,7 @@ namespace cocos2d
 		~CCTurnOffTiles(void);
 		/** initializes the action with a random seed, the grid size and the duration */
 		bool initWithSeed(int s, ccGridSize gridSize, ccTime duration);
-		void shuffle(int *pArray, int nLen);
+		void shuffle(int *pArray, unsigned int nLen);
 		void turnOnTile(ccGridSize pos);
 		void turnOffTile(ccGridSize pos);
 
@@ -182,9 +182,9 @@ namespace cocos2d
 		static CCTurnOffTiles* actionWithSeed(int s, ccGridSize gridSize, ccTime duration);
 
 	protected:
-		int m_nSeed;
-		int m_nTilesCount;
-		int *m_pTilesOrder;
+		int				m_nSeed;
+		unsigned int	m_nTilesCount;
+		int				*m_pTilesOrder;
 	};
 
 	/** @brief CCWavesTiles3D action. */
