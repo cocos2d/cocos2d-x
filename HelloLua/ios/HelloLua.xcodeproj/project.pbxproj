@@ -63,7 +63,6 @@
 		BF82F8D013A8657700616D55 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F44613A8657100616D55 /* CCSpriteBatchNode.h */; };
 		BF82F8D113A8657700616D55 /* CCSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F44713A8657100616D55 /* CCSpriteFrame.h */; };
 		BF82F8D213A8657700616D55 /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F44813A8657100616D55 /* CCSpriteFrameCache.h */; };
-		BF82F8D313A8657700616D55 /* CCSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F44913A8657100616D55 /* CCSpriteSheet.h */; };
 		BF82F8D413A8657700616D55 /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F44A13A8657100616D55 /* CCString.h */; };
 		BF82F8D513A8657700616D55 /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F44B13A8657100616D55 /* CCTMXLayer.h */; };
 		BF82F8D613A8657700616D55 /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F44C13A8657100616D55 /* CCTMXObjectGroup.h */; };
@@ -217,7 +216,6 @@
 		BF82FB7413A8657800616D55 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F79C13A8657300616D55 /* platform.cpp */; };
 		BF82FB7513A8657800616D55 /* CCAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F87313A8657700616D55 /* CCAnimation.cpp */; };
 		BF82FB7613A8657800616D55 /* CCAnimationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F87413A8657700616D55 /* CCAnimationCache.cpp */; };
-		BF82FB7713A8657800616D55 /* CCSpriteSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F87513A8657700616D55 /* CCSpriteSheet.cpp */; };
 		BF82FB7813A8657800616D55 /* CCSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F87613A8657700616D55 /* CCSprite.cpp */; };
 		BF82FB7913A8657800616D55 /* CCSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F87713A8657700616D55 /* CCSpriteBatchNode.cpp */; };
 		BF82FB7A13A8657800616D55 /* CCSpriteFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F87813A8657700616D55 /* CCSpriteFrame.cpp */; };
@@ -397,7 +395,6 @@
 		BF82F44613A8657100616D55 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		BF82F44713A8657100616D55 /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
 		BF82F44813A8657100616D55 /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
-		BF82F44913A8657100616D55 /* CCSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteSheet.h; sourceTree = "<group>"; };
 		BF82F44A13A8657100616D55 /* CCString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCString.h; sourceTree = "<group>"; };
 		BF82F44B13A8657100616D55 /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
 		BF82F44C13A8657100616D55 /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
@@ -552,7 +549,6 @@
 		BF82F79C13A8657300616D55 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
 		BF82F87313A8657700616D55 /* CCAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimation.cpp; sourceTree = "<group>"; };
 		BF82F87413A8657700616D55 /* CCAnimationCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimationCache.cpp; sourceTree = "<group>"; };
-		BF82F87513A8657700616D55 /* CCSpriteSheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteSheet.cpp; sourceTree = "<group>"; };
 		BF82F87613A8657700616D55 /* CCSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite.cpp; sourceTree = "<group>"; };
 		BF82F87713A8657700616D55 /* CCSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteBatchNode.cpp; sourceTree = "<group>"; };
 		BF82F87813A8657700616D55 /* CCSpriteFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteFrame.cpp; sourceTree = "<group>"; };
@@ -934,7 +930,6 @@
 				BF82F44613A8657100616D55 /* CCSpriteBatchNode.h */,
 				BF82F44713A8657100616D55 /* CCSpriteFrame.h */,
 				BF82F44813A8657100616D55 /* CCSpriteFrameCache.h */,
-				BF82F44913A8657100616D55 /* CCSpriteSheet.h */,
 				BF82F44A13A8657100616D55 /* CCString.h */,
 				BF82F44B13A8657100616D55 /* CCTMXLayer.h */,
 				BF82F44C13A8657100616D55 /* CCTMXObjectGroup.h */,
@@ -1185,7 +1180,6 @@
 			children = (
 				BF82F87313A8657700616D55 /* CCAnimation.cpp */,
 				BF82F87413A8657700616D55 /* CCAnimationCache.cpp */,
-				BF82F87513A8657700616D55 /* CCSpriteSheet.cpp */,
 				BF82F87613A8657700616D55 /* CCSprite.cpp */,
 				BF82F87713A8657700616D55 /* CCSpriteBatchNode.cpp */,
 				BF82F87813A8657700616D55 /* CCSpriteFrame.cpp */,
@@ -1428,7 +1422,6 @@
 				BF82F8D013A8657700616D55 /* CCSpriteBatchNode.h in Headers */,
 				BF82F8D113A8657700616D55 /* CCSpriteFrame.h in Headers */,
 				BF82F8D213A8657700616D55 /* CCSpriteFrameCache.h in Headers */,
-				BF82F8D313A8657700616D55 /* CCSpriteSheet.h in Headers */,
 				BF82F8D413A8657700616D55 /* CCString.h in Headers */,
 				BF82F8D513A8657700616D55 /* CCTMXLayer.h in Headers */,
 				BF82F8D613A8657700616D55 /* CCTMXObjectGroup.h in Headers */,
@@ -1764,7 +1757,6 @@
 				BF82FB7413A8657800616D55 /* platform.cpp in Sources */,
 				BF82FB7513A8657800616D55 /* CCAnimation.cpp in Sources */,
 				BF82FB7613A8657800616D55 /* CCAnimationCache.cpp in Sources */,
-				BF82FB7713A8657800616D55 /* CCSpriteSheet.cpp in Sources */,
 				BF82FB7813A8657800616D55 /* CCSprite.cpp in Sources */,
 				BF82FB7913A8657800616D55 /* CCSpriteBatchNode.cpp in Sources */,
 				BF82FB7A13A8657800616D55 /* CCSpriteFrame.cpp in Sources */,

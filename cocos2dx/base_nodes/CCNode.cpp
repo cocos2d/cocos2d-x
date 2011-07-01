@@ -161,6 +161,37 @@ void CCNode::setRotation(float newRotation)
 #endif
 }
 
+/// SkewX getter
+float CCNode::getSkewX()
+{
+    return m_fSkewX;
+}
+
+/// SkewX setter
+void CCNode::setSkewX(float newSkewX)
+{
+    m_fSkewX = newSkewX;
+    m_bIsTransformDirty = m_bIsInverseDirty = true;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+    m_bIsTransformGLDirty = true;
+#endif
+}
+
+/// SkewY getter
+float CCNode::getSkewY()
+{
+    return m_fSkewY;
+}
+
+/// SkewY setter
+void CCNode::setSkewY(float newSkewY)
+{
+    m_fSkewY = newSkewY;
+    m_bIsTransformDirty = m_bIsInverseDirty = true;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+    m_bIsTransformGLDirty = true;
+#endif
+}
 
 /// scale getter
 float CCNode::getScale(void)
