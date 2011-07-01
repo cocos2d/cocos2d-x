@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -47,14 +48,14 @@ class CC_DLL CCAtlasNode : public CCNode, public CCRGBAProtocol, public CCTextur
 protected:
 
 	//! chars per row
-	int m_nItemsPerRow;
+	unsigned int m_uItemsPerRow;
 	//! chars per column
-	int m_nItemsPerColumn;
+	unsigned int m_uItemsPerColumn;
 
 	//! width of each char
-	int	m_nItemWidth;
+	unsigned int	m_uItemWidth;
 	//! height of each char
-	int	m_nItemHeight;
+	unsigned int	m_uItemHeight;
 
 	ccColor3B	m_tColorUnmodified;
 
@@ -71,10 +72,11 @@ public:
 	virtual ~CCAtlasNode();
 
 	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);
+	static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
+		unsigned int itemsToRender);
 
 	/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	bool initWithTileFile(const char* tile, int tileWidth, int tileHeight, int itemsToRender);
+	bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 
 	/** updates the Atlas (indexed vertex array).
 	* Shall be overriden in subclasses
