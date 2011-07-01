@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -55,6 +56,8 @@ bool CCLayer::init()
 		CCDirector * pDirector;
 		CC_BREAK_IF(!(pDirector = CCDirector::sharedDirector()));
 		this->setContentSize(pDirector->getWinSize());
+        m_bIsTouchEnabled = false;
+        m_bIsAccelerometerEnabled = false;
 		// success
 		bRet = true;
 	} while(0);
@@ -375,7 +378,8 @@ bool CCLayerColor::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfl
 
 	for (unsigned int i=0; i<sizeof(m_pSquareVertices) / sizeof(m_pSquareVertices[0]); i++ )
 	{
-		m_pSquareVertices[i] = 0.0f;
+		m_pSquareVertices[i].x = 0.0f;
+        m_pSquareVertices[i].y = 0.0f;
 	}
 
 	this->updateColor();
@@ -393,10 +397,10 @@ bool CCLayerColor::initWithColor(ccColor4B color)
 /// override contentSize
 void CCLayerColor::setContentSize(CCSize size)
 {
-	m_pSquareVertices[2] = size.width * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[5] = size.height * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[6] = size.width * CC_CONTENT_SCALE_FACTOR();
-	m_pSquareVertices[7] = size.height * CC_CONTENT_SCALE_FACTOR();
+	m_pSquareVertices[1].x = size.width * CC_CONTENT_SCALE_FACTOR();
+	m_pSquareVertices[2].y = size.height * CC_CONTENT_SCALE_FACTOR();
+	m_pSquareVertices[3].x = size.width * CC_CONTENT_SCALE_FACTOR();
+	m_pSquareVertices[3].y = size.height * CC_CONTENT_SCALE_FACTOR();
 
 	CCLayer::setContentSize(size);
 }
@@ -420,10 +424,10 @@ void CCLayerColor::updateColor()
 {
 	for( unsigned int i=0; i < 4; i++ )
 	{
-		m_pSquareColors[i * 4]     = m_tColor.r;
-		m_pSquareColors[i * 4 + 1] = m_tColor.g;
-		m_pSquareColors[i * 4 + 2] = m_tColor.b;
-		m_pSquareColors[i * 4 + 3] = m_cOpacity;
+		m_pSquareColors[i].r = m_tColor.r;
+		m_pSquareColors[i].g = m_tColor.g;
+		m_pSquareColors[i].b = m_tColor.b;
+		m_pSquareColors[i].a = m_cOpacity;
 	}
 }
 
@@ -501,6 +505,8 @@ bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CCPoint v)
     m_AlongVector   = v;
 
     start.a	= 255;
+    m_bCompressedInterpolation = true;
+
     return CCLayerColor::initWithColor(start);
 }
 
@@ -508,12 +514,19 @@ void CCLayerGradient::updateColor()
 {
     CCLayerColor::updateColor();
 
-    float h = sqrtf(m_AlongVector.x * m_AlongVector.x + m_AlongVector.y * m_AlongVector.y);
+    float h = ccpLength(m_AlongVector);
     if (h == 0)
         return;
 
     double c = sqrt(2.0);
     CCPoint u = ccp(m_AlongVector.x / h, m_AlongVector.y / h);
+
+    // Compressed Interpolation mode
+    if (m_bCompressedInterpolation)
+    {
+        float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
+        u = ccpMult(u, h2 * (float)c);
+    }
 
     float opacityf = (float)m_cOpacity / 255.0f;
 
@@ -532,25 +545,25 @@ void CCLayerGradient::updateColor()
     };
 
     // (-1, -1)
-    m_pSquareColors[0]  = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[1]  = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[2]  = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[3]  = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[0].r = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[0].g = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[0].b = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[0].a = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c)));
     // (1, -1)
-    m_pSquareColors[4]  = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[5]  = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[6]  = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c)));
-    m_pSquareColors[7]  = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[1].r = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[1].g = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[1].b = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c)));
+    m_pSquareColors[1].a = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c)));
     // (-1, 1)
-    m_pSquareColors[8]  = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[9]  = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[10] = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[11] = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[2].r = (GLubyte) (E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[2].g = (GLubyte) (E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[2].b = (GLubyte) (E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[2].a = (GLubyte) (E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c)));
     // (1, 1)
-    m_pSquareColors[12] = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[13] = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[14] = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c)));
-    m_pSquareColors[15] = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[3].r = (GLubyte) (E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[3].g = (GLubyte) (E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[3].b = (GLubyte) (E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c)));
+    m_pSquareColors[3].a = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c)));
 }
 
 ccColor3B CCLayerGradient::getStartColor()
@@ -607,24 +620,35 @@ CCPoint CCLayerGradient::getVector()
     return m_AlongVector;
 }
 
+bool CCLayerGradient::getIsCompressedInterpolation()
+{
+    return m_bCompressedInterpolation;
+}
+
+void CCLayerGradient::setIsCompressedInterpolation(bool compress)
+{
+    m_bCompressedInterpolation = compress;
+    updateColor();
+}
+
 /// MultiplexLayer
 
-CCMultiplexLayer::CCMultiplexLayer()
+CCLayerMultiplex::CCLayerMultiplex()
 : m_nEnabledLayer(0)
 , m_pLayers(NULL)
 {
 }
-CCMultiplexLayer::~CCMultiplexLayer()
+CCLayerMultiplex::~CCLayerMultiplex()
 {
 	CC_SAFE_RELEASE(m_pLayers);
 }
 
-CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
+CCLayerMultiplex * CCLayerMultiplex::layerWithLayers(CCLayer * layer, ...)
 {
 	va_list args;
 	va_start(args,layer);
 
-	CCMultiplexLayer * pMultiplexLayer = new CCMultiplexLayer();
+	CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
 	if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
 	{
 		pMultiplexLayer->autorelease();
@@ -636,20 +660,20 @@ CCMultiplexLayer * CCMultiplexLayer::layerWithLayers(CCLayer * layer, ...)
 	return NULL;
 }
 
-CCMultiplexLayer * CCMultiplexLayer::layerWithLayer(CCLayer* layer)
+CCLayerMultiplex * CCLayerMultiplex::layerWithLayer(CCLayer* layer)
 {
-	CCMultiplexLayer * pMultiplexLayer = new CCMultiplexLayer();
+	CCLayerMultiplex * pMultiplexLayer = new CCLayerMultiplex();
 	pMultiplexLayer->initWithLayer(layer);
 	pMultiplexLayer->autorelease();
 	return pMultiplexLayer;
 }
-void CCMultiplexLayer::addLayer(CCLayer* layer)
+void CCLayerMultiplex::addLayer(CCLayer* layer)
 {
 	assert(m_pLayers);
 	m_pLayers->addObject(layer);
 }
 
-bool CCMultiplexLayer::initWithLayer(CCLayer* layer)
+bool CCLayerMultiplex::initWithLayer(CCLayer* layer)
 {
 	m_pLayers = new CCMutableArray<CCLayer*>(1);
 	m_pLayers->addObject(layer);
@@ -658,7 +682,7 @@ bool CCMultiplexLayer::initWithLayer(CCLayer* layer)
 	return true;
 }
 
-bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
+bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params)
 {
 	m_pLayers = new CCMutableArray<CCLayer*>(5);
 	//m_pLayers->retain();
@@ -678,7 +702,7 @@ bool CCMultiplexLayer::initWithLayers(CCLayer *layer, va_list params)
 }
 
 
-void CCMultiplexLayer::switchTo(unsigned int n)
+void CCLayerMultiplex::switchTo(unsigned int n)
 {
 	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
@@ -689,7 +713,7 @@ void CCMultiplexLayer::switchTo(unsigned int n)
 	this->addChild(m_pLayers->getObjectAtIndex(n));
 }
 
-void CCMultiplexLayer::switchToAndReleaseMe(unsigned int n)
+void CCLayerMultiplex::switchToAndReleaseMe(unsigned int n)
 {
 	CCAssert( n < m_pLayers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
