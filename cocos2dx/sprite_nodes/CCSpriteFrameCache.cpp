@@ -233,22 +233,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 	if (! texturePath.empty())
 	{
 		// build texture path relative to plist file
-
-		// stringByDeletingLastPathComponent
-		string textureBase(pszPath);
-		int indexOfLastSeperator = textureBase.find_last_of('/');
-        if (indexOfLastSeperator == (int)textureBase.length() - 1)
-		{
-			textureBase.erase(indexOfLastSeperator, 1);
-			indexOfLastSeperator = textureBase.find_last_of('/');
-		}
-		textureBase.erase(indexOfLastSeperator);
-
-		// stringByAppendingPathComponent
-        if (! textureBase.empty())
-		{
-			texturePath = textureBase + "/" + texturePath;
-		}
+        texturePath = CCFileUtils::fullPathFromRelativeFile(texturePath.c_str(), pszPath);
 	}
 	else
 	{
