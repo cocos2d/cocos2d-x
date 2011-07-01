@@ -95,6 +95,17 @@ public class Cocos2dxSound {
 				return INVALID_SOUND_ID;
 			}
 			
+			/*
+			 * Someone reports that, it can not play effect for the
+			 * first time. If you are lucky to meet it. There are two
+			 * ways to resolve it.
+			 * 1. Add some delay here. I don't know how long it is, so
+			 *    I don't add it here.
+			 * 2. If you use 2.2(API level 8), you can call 
+			 *    SoundPool.setOnLoadCompleteListener() to play the effect.
+			 *    Because the method is supported from 2.2, so I can't use
+			 *    it here.
+			 */
 			playEffect(path);
 		}
 		
