@@ -2,6 +2,7 @@
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -76,19 +77,19 @@ public:
 	void removeAction(CCAction *pAction);
 
     /** Removes an action given its tag and the target */
-	void removeActionByTag(int tag, CCObject *pTarget);
+	void removeActionByTag(unsigned int tag, CCObject *pTarget);
 
 	/** Gets an action given its tag an a target
 	 @return the Action the with the given tag
 	 */
-	CCAction* getActionByTag(int tag, CCObject *pTarget);
+	CCAction* getActionByTag(unsigned int tag, CCObject *pTarget);
 
     /** Returns the numbers of actions that are running in a certain target. 
 	 * Composable actions are counted as 1 action. Example:
 	 * - If you are running 1 Sequence of 7 actions, it will return 1.
 	 * - If you are running 7 Sequences of 2 actions, it will return 7.
 	 */
-	int numberOfRunningActionsInTarget(CCObject *pTarget);
+	unsigned int numberOfRunningActionsInTarget(CCObject *pTarget);
 
     /** Pauses the target: all running actions and newly added actions will be paused.
 	*/
@@ -97,15 +98,6 @@ public:
     /** Resumes the target. All queued actions will be resumed.
 	*/
 	void resumeTarget(CCObject *pTarget);
-
-    /** Resumes the target. All queued actions will be resumed.
-	 @deprecated Use resumeTarget: instead. Will be removed in v1.0.
-	 */
-	void resumeAllActionsForTarget(CCObject *pTarget);
-
-	/** Pauses the target: all running actions and newly added actions will be paused.
-	*/
-	void pauseAllActionsForTarget(CCObject *pTarget);
 
 	/** purges the shared action manager. It releases the retained instance.
 	 * because it uses this, so it can not be static

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
  
 http://www.cocos2d-x.org
 
@@ -119,7 +120,7 @@ CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 //
 CCSpeed::~CCSpeed()
 {
-	CC_SAFE_RELEASE(m_pOther);
+	CC_SAFE_RELEASE(m_pInnerAction);
 }
 
 CCSpeed * CCSpeed::actionWithAction(CCActionInterval *pAction, float fRate)
@@ -138,7 +139,7 @@ bool CCSpeed::initWithAction(CCActionInterval *pAction, float fRate)
 {
 	assert(pAction != NULL);
 	pAction->retain();
-	m_pOther = pAction;
+	m_pInnerAction = pAction;
 	m_fSpeed = fRate;	
 	return true;
 }
@@ -158,7 +159,7 @@ CCObject *CCSpeed::copyWithZone(CCZone *pZone)
 	}
 	CCAction::copyWithZone(pZone);
 
-	pRet->initWithAction( (CCActionInterval*)(m_pOther->copy()->autorelease()) , m_fSpeed );
+	pRet->initWithAction( (CCActionInterval*)(m_pInnerAction->copy()->autorelease()) , m_fSpeed );
 	
 	CC_SAFE_DELETE(pNewZone);
 	return pRet;
@@ -167,28 +168,38 @@ CCObject *CCSpeed::copyWithZone(CCZone *pZone)
 void CCSpeed::startWithTarget(CCNode* pTarget)
 {
 	CCAction::startWithTarget(pTarget);
-	m_pOther->startWithTarget(pTarget);
+	m_pInnerAction->startWithTarget(pTarget);
 }
 
 void CCSpeed::stop()
 {
-	m_pOther->stop();
+	m_pInnerAction->stop();
 	CCAction::stop();
 }
 
 void CCSpeed::step(ccTime dt)
 {
-    m_pOther->step(dt * m_fSpeed);
+    m_pInnerAction->step(dt * m_fSpeed);
 }
 
 bool CCSpeed::isDone()
 {
-	return m_pOther->isDone();
+	return m_pInnerAction->isDone();
 }
 
 CCActionInterval *CCSpeed::reverse()
 {
-	 return (CCActionInterval*)(CCSpeed::actionWithAction(m_pOther->reverse(), m_fSpeed));
+	 return (CCActionInterval*)(CCSpeed::actionWithAction(m_pInnerAction->reverse(), m_fSpeed));
+}
+
+void CCSpeed::setInnerAction(CCActionInterval *pAction)
+{
+	if (m_pInnerAction != pAction)
+	{
+		CC_SAFE_RELEASE(m_pInnerAction);
+		m_pInnerAction = pAction;
+		CC_SAFE_RETAIN(m_pInnerAction);
+	}
 }
 
 //

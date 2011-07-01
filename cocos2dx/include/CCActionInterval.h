@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2011 Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -102,6 +103,8 @@ public:
 public:
 	/** helper constructor to create an array of sequenceable actions */
 	static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
+	/** helper contructor to create an array of sequenceable actions given an array */
+	static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
 
 	/** creates the action */
 	static CCSequence* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
@@ -129,6 +132,21 @@ public:
 	virtual bool isDone(void);
 	virtual CCActionInterval* reverse(void);
 
+	inline void setInnerAction(CCFiniteTimeAction *pAction)
+	{
+		if (m_pInnerAction != pAction)
+		{
+			CC_SAFE_RELEASE(m_pInnerAction);
+			m_pInnerAction = pAction;
+			CC_SAFE_RETAIN(m_pInnerAction);
+		}
+	}
+
+	inline CCFiniteTimeAction* getInnerAction()
+	{
+		return m_pInnerAction;
+	}
+
 public:
 	/** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
 	static CCRepeat* actionWithAction(CCFiniteTimeAction *pAction, unsigned int times);
@@ -136,7 +154,8 @@ public:
 protected:
 	unsigned int m_uTimes;
 	unsigned int m_uTotal;
-	CCFiniteTimeAction *m_pOther;
+	/** Inner action */
+	CCFiniteTimeAction *m_pInnerAction;
 };
 
 /** @brief Repeats an action for ever.
@@ -147,7 +166,7 @@ class CC_DLL CCRepeatForever : public CCActionInterval
 {
 public:
 	CCRepeatForever()
-		: m_pOther(NULL)
+		: m_pInnerAction(NULL)
 	{}
 	virtual ~CCRepeatForever();
 
@@ -159,12 +178,28 @@ public:
 	virtual bool isDone(void);
 	virtual CCActionInterval* reverse(void);
 
+	inline void setInnerAction(CCActionInterval *pAction)
+	{
+		if (m_pInnerAction != pAction)
+		{
+			CC_SAFE_RELEASE(m_pInnerAction);
+			m_pInnerAction = pAction;
+			CC_SAFE_RETAIN(m_pInnerAction);
+		}
+	}
+
+	inline CCActionInterval* getInnerAction()
+	{
+		return m_pInnerAction;
+	}
+
 public:
 	/** creates the action */
 	static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
 
 protected:
-	CCActionInterval *m_pOther;
+	/** Inner action */
+	CCActionInterval *m_pInnerAction;
 };
 
 /** @brief Spawn a new action immediately
@@ -186,6 +221,9 @@ public:
 public:
 	/** helper constructor to create an array of spawned actions */
 	static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
+
+	/** helper contructor to create an array of spawned actions given an array */
+	static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
 
 	/** creates the Spawn action */
 	static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
@@ -282,13 +320,53 @@ public:
 	static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
 };
 
+/** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
+@since v1.0
+*/
+class CC_DLL CCSkewTo : public CCActionInterval
+{
+public:
+	CCSkewTo();
+	virtual bool initWithDuration(ccTime t, float sx, float sy);
+	virtual CCObject* copyWithZone(CCZone* pZone);
+	virtual void startWithTarget(CCNode *pTarget);
+	virtual void update(ccTime time);
+
+public:
+	static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
+
+protected:
+	float m_fSkewX;
+	float m_fSkewY;
+	float m_fStartSkewX;
+	float m_fStartSkewY;
+	float m_fEndSkewX;
+	float m_fEndSkewY;
+	float m_fDeltaX;
+	float m_fDeltaY;
+};
+
+/** Skews a CCNode object by skewX and skewY degrees
+@since v1.0
+*/
+class CC_DLL CCSkewBy : public CCSkewTo
+{
+public:
+	virtual bool initWithDuration(ccTime t, float sx, float sy);
+	virtual void startWithTarget(CCNode *pTarget);
+	virtual CCActionInterval* reverse(void);
+
+public:
+	static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
+};
+
 /** @brief Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
 class CC_DLL CCJumpBy : public CCActionInterval
 {
 public:
 	/** initializes the action */
-	bool initWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+	bool initWithDuration(ccTime duration, CCPoint position, ccTime height, unsigned int jumps);
 
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
@@ -297,13 +375,13 @@ public:
 
 public:
 	/** creates the action */
-	static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+	static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, unsigned int jumps);
 
 protected:
-	CCPoint m_startPosition;
-	CCPoint m_delta;
-	ccTime  m_height;
-	int     m_nJumps;
+	CCPoint			m_startPosition;
+	CCPoint			m_delta;
+	ccTime			m_height;
+	unsigned int    m_nJumps;
 };
 
 /** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
@@ -432,7 +510,7 @@ public:
 	/** creates the action */
 	static CCBlink* actionWithDuration(ccTime duration, unsigned int uBlinks);
 protected:
-	int m_nTimes;
+	unsigned int m_nTimes;
 };
 
 /** @brief Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.

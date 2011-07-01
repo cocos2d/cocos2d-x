@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -82,7 +83,7 @@ public:
 	
 	inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
 	/** Set the original target, since target can be nil.
-	Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
+	Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
 	The target is 'assigned', it is not 'retained'.
 	@since v0.8.2
 	*/
@@ -104,7 +105,7 @@ protected:
 	*/
 	CCNode	*m_pTarget;
 	/** The action tag. An identifier of the action */
-	int 		m_nTag;
+	int 	m_nTag;
 };
 
 /** 
@@ -142,14 +143,14 @@ class CCRepeatForever;
  @brief Changes the speed of an action, making it take longer (speed>1)
  or less (speed<1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
- @warning This action can't be Sequenceable because it is not an IntervalAction
+ @warning This action can't be Sequenceable because it is not an CCIntervalAction
  */
 class CC_DLL CCSpeed : public CCAction
 {
 public:
 	CCSpeed()
 		: m_fSpeed(0.0)
-		, m_pOther(NULL)
+		, m_pInnerAction(NULL)
 	{}
 	virtual ~CCSpeed(void);
 
@@ -167,13 +168,20 @@ public:
 	virtual bool isDone(void);
 	virtual CCActionInterval* reverse(void);
 
+	inline void setInnerAction(CCActionInterval *pAction);
+
+	inline CCActionInterval* getInnerAction()
+	{
+		return m_pInnerAction;
+	}
+
 public:
 	/** creates the action */
 	static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);
     
 protected:
 	float m_fSpeed;
-	CCActionInterval *m_pOther;
+	CCActionInterval *m_pInnerAction;
 };
 
 
