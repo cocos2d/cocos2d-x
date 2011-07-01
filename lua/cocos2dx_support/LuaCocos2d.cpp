@@ -50,7 +50,7 @@ static int tolua_collect_cocos2d__CCTMXObjectGroup (lua_State* tolua_S)
 
 static int tolua_collect_cocos2d__CCMultiplexLayer (lua_State* tolua_S)
 {
- cocos2d::CCMultiplexLayer* self = (cocos2d::CCMultiplexLayer*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCLayerMultiplex* self = (cocos2d::CCLayerMultiplex*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -1303,8 +1303,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccBezierConfig), "cocos2d::ccBezierConfig");
  tolua_usertype(tolua_S,"cocos2d::CCMenuItemImage");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemImage), "cocos2d::CCMenuItemImage");
- tolua_usertype(tolua_S,"cocos2d::CCMultiplexLayer");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCMultiplexLayer), "cocos2d::CCMultiplexLayer");
+ tolua_usertype(tolua_S,"cocos2d::CCLayerMultiplex");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayerMultiplex), "cocos2d::CCLayerMultiplex");
  tolua_usertype(tolua_S,"cocos2d::CCTMXTiledMap");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXTiledMap), "cocos2d::CCTMXTiledMap");
  tolua_usertype(tolua_S,"cocos2d::CCLayerGradient");
@@ -64537,14 +64537,14 @@ static int tolua_Cocos2d_cocos2d_CCLayerGradient_getVector00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  cocos2d::CCMultiplexLayer */
+/* method: new of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -64552,8 +64552,8 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00(lua_State* tolua_S)
 #endif
  {
   {
-   cocos2d::CCMultiplexLayer* tolua_ret = (cocos2d::CCMultiplexLayer*)  Mtolua_new((cocos2d::CCMultiplexLayer)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCMultiplexLayer");
+   cocos2d::CCLayerMultiplex* tolua_ret = (cocos2d::CCLayerMultiplex*)  Mtolua_new((cocos2d::CCLayerMultiplex)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCLayerMultiplex");
   }
  }
  return 1;
@@ -64565,14 +64565,14 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  cocos2d::CCMultiplexLayer */
+/* method: new_local of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00_local
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -64580,8 +64580,8 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00_local(lua_State* tolua_S
 #endif
  {
   {
-   cocos2d::CCMultiplexLayer* tolua_ret = (cocos2d::CCMultiplexLayer*)  Mtolua_new((cocos2d::CCMultiplexLayer)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCMultiplexLayer");
+   cocos2d::CCLayerMultiplex* tolua_ret = (cocos2d::CCLayerMultiplex*)  Mtolua_new((cocos2d::CCLayerMultiplex)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCLayerMultiplex");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -64594,14 +64594,14 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00_local(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: layerWithLayer of class  cocos2d::CCMultiplexLayer */
+/* method: layerWithLayer of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_layerWithLayer00
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_layerWithLayer00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,2,"cocos2d::CCLayer",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -64611,8 +64611,8 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_layerWithLayer00(lua_State* to
  {
   cocos2d::CCLayer* layer = ((cocos2d::CCLayer*)  tolua_tousertype(tolua_S,2,0));
   {
-   cocos2d::CCMultiplexLayer* tolua_ret = (cocos2d::CCMultiplexLayer*)  cocos2d::CCMultiplexLayer::layerWithLayer(layer);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCMultiplexLayer");
+   cocos2d::CCLayerMultiplex* tolua_ret = (cocos2d::CCLayerMultiplex*)  cocos2d::CCLayerMultiplex::layerWithLayer(layer);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCLayerMultiplex");
   }
  }
  return 1;
@@ -64624,14 +64624,14 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_layerWithLayer00(lua_State* to
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: addLayer of class  cocos2d::CCMultiplexLayer */
+/* method: addLayer of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_addLayer00
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_addLayer00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,2,"cocos2d::CCLayer",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -64639,7 +64639,7 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_addLayer00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::CCMultiplexLayer* self = (cocos2d::CCMultiplexLayer*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCLayerMultiplex* self = (cocos2d::CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
   cocos2d::CCLayer* layer = ((cocos2d::CCLayer*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addLayer'", NULL);
@@ -64657,14 +64657,14 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_addLayer00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: initWithLayer of class  cocos2d::CCMultiplexLayer */
+/* method: initWithLayer of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayer00
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayer00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,2,"cocos2d::CCLayer",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -64672,7 +64672,7 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayer00(lua_State* tol
  else
 #endif
  {
-  cocos2d::CCMultiplexLayer* self = (cocos2d::CCMultiplexLayer*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCLayerMultiplex* self = (cocos2d::CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
   cocos2d::CCLayer* layer = ((cocos2d::CCLayer*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithLayer'", NULL);
@@ -64691,14 +64691,14 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayer00(lua_State* tol
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: initWithLayers of class  cocos2d::CCMultiplexLayer */
+/* method: initWithLayers of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayers00
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayers00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isusertype(tolua_S,2,"cocos2d::CCLayer",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"va_list",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -64707,7 +64707,7 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayers00(lua_State* to
  else
 #endif
  {
-  cocos2d::CCMultiplexLayer* self = (cocos2d::CCMultiplexLayer*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCLayerMultiplex* self = (cocos2d::CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
   cocos2d::CCLayer* layer = ((cocos2d::CCLayer*)  tolua_tousertype(tolua_S,2,0));
   va_list params = *((va_list*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -64727,14 +64727,14 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_initWithLayers00(lua_State* to
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: switchTo of class  cocos2d::CCMultiplexLayer */
+/* method: switchTo of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_switchTo00
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_switchTo00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -64742,7 +64742,7 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_switchTo00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::CCMultiplexLayer* self = (cocos2d::CCMultiplexLayer*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCLayerMultiplex* self = (cocos2d::CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
   unsigned int n = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'switchTo'", NULL);
@@ -64760,14 +64760,14 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_switchTo00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: switchToAndReleaseMe of class  cocos2d::CCMultiplexLayer */
+/* method: switchToAndReleaseMe of class  cocos2d::CCLayerMultiplex */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMultiplexLayer_switchToAndReleaseMe00
 static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_switchToAndReleaseMe00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cocos2d::CCMultiplexLayer",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCLayerMultiplex",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -64775,7 +64775,7 @@ static int tolua_Cocos2d_cocos2d_CCMultiplexLayer_switchToAndReleaseMe00(lua_Sta
  else
 #endif
  {
-  cocos2d::CCMultiplexLayer* self = (cocos2d::CCMultiplexLayer*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCLayerMultiplex* self = (cocos2d::CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
   unsigned int n = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'switchToAndReleaseMe'", NULL);
@@ -72557,11 +72557,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getVector",tolua_Cocos2d_cocos2d_CCLayerGradient_getVector00);
    tolua_endmodule(tolua_S);
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"CCMultiplexLayer","cocos2d::CCMultiplexLayer","cocos2d::CCLayer",tolua_collect_cocos2d__CCMultiplexLayer);
+   tolua_cclass(tolua_S,"CCLayerMultiplex","cocos2d::CCLayerMultiplex","cocos2d::CCLayer",tolua_collect_cocos2d__CCMultiplexLayer);
    #else
-   tolua_cclass(tolua_S,"CCMultiplexLayer","cocos2d::CCMultiplexLayer","cocos2d::CCLayer",NULL);
+   tolua_cclass(tolua_S,"CCLayerMultiplex","cocos2d::CCLayerMultiplex","cocos2d::CCLayer",NULL);
    #endif
-   tolua_beginmodule(tolua_S,"CCMultiplexLayer");
+   tolua_beginmodule(tolua_S,"CCLayerMultiplex");
     tolua_function(tolua_S,"new",tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00);
     tolua_function(tolua_S,"new_local",tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00_local);
     tolua_function(tolua_S,".call",tolua_Cocos2d_cocos2d_CCMultiplexLayer_new00_local);
