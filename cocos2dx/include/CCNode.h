@@ -140,6 +140,20 @@ namespace   cocos2d {
 			CC_PROPERTY(CCPoint, m_tPosition, Position)
 			CC_PROPERTY(CCPoint, m_tPositionInPixels, PositionInPixels)
 
+            /** The X skew angle of the node in degrees.
+            This angle describes the shear distortion in the X direction.
+            Thus, it is the angle between the Y axis and the left edge of the shape
+            The default skewX angle is 0. Positive values distort the node in a CW direction.
+            */
+            CC_PROPERTY(float, m_fSkewX, SkewX)
+
+            /** The Y skew angle of the node in degrees.
+            This angle describes the shear distortion in the Y direction.
+            Thus, it is the angle between the X axis and the bottom edge of the shape
+            The default skewY angle is 0. Positive values distort the node in a CCW direction.
+            */
+            CC_PROPERTY(float, m_fSkewY, SkewY)
+
 			CC_PROPERTY_READONLY(CCArray*, m_pChildren, Children)
 
 			/** A CCCamera object that lets you move the node using a gluLookAt
