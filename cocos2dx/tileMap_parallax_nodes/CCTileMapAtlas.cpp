@@ -52,8 +52,8 @@ namespace cocos2d {
 		{
 			m_pPosToAtlasIndex = new StringToIntegerDictionary();
 			this->updateAtlasValues();
-			this->setContentSize(CCSizeMake((float)(m_pTGAInfo->width*m_nItemWidth),
-											(float)(m_pTGAInfo->height*m_nItemHeight)));
+			this->setContentSize(CCSizeMake((float)(m_pTGAInfo->width*m_uItemWidth),
+											(float)(m_pTGAInfo->height*m_uItemHeight)));
 			return true;
 		}
 		return false;
@@ -180,22 +180,22 @@ namespace cocos2d {
 
 		int x = pos.x;
 		int y = pos.y;
-        float row = (float) (value.r % m_nItemsPerRow);
-        float col = (float) (value.r / m_nItemsPerRow);
+        float row = (float) (value.r % m_uItemsPerRow);
+        float col = (float) (value.r / m_uItemsPerRow);
 
         float textureWide = (float) (m_pTextureAtlas->getTexture()->getPixelsWide());
         float textureHigh = (float) (m_pTextureAtlas->getTexture()->getPixelsHigh());
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        float left		= (2 * row * m_nItemWidth + 1) / (2 * textureWide);
-        float right		= left + (m_nItemWidth * 2 - 2) / (2 * textureWide);
-        float top		= (2 * col * m_nItemHeight + 1) / (2 * textureHigh);
-        float bottom	= top + (m_nItemHeight * 2 - 2) / (2 * textureHigh);
+        float left		= (2 * row * m_uItemWidth + 1) / (2 * textureWide);
+        float right		= left + (m_uItemWidth * 2 - 2) / (2 * textureWide);
+        float top		= (2 * col * m_uItemHeight + 1) / (2 * textureHigh);
+        float bottom	= top + (m_uItemHeight * 2 - 2) / (2 * textureHigh);
 #else
-        float left		= (row * m_nItemWidth) / textureWide;
-        float right		= left + m_nItemWidth / textureWide;
-        float top		= (col * m_nItemHeight) / textureHigh;
-        float bottom	= top + m_nItemHeight / textureHigh;
+        float left		= (row * m_uItemWidth) / textureWide;
+        float right		= left + m_uItemWidth / textureWide;
+        float top		= (col * m_uItemHeight) / textureHigh;
+        float bottom	= top + m_uItemHeight / textureHigh;
 #endif
 
         quad.tl.texCoords.u = left;
@@ -207,17 +207,17 @@ namespace cocos2d {
         quad.br.texCoords.u = right;
         quad.br.texCoords.v = bottom;
 
-		quad.bl.vertices.x = (float) (x * m_nItemWidth);
-		quad.bl.vertices.y = (float) (y * m_nItemHeight);
+		quad.bl.vertices.x = (float) (x * m_uItemWidth);
+		quad.bl.vertices.y = (float) (y * m_uItemHeight);
 		quad.bl.vertices.z = 0.0f;
-		quad.br.vertices.x = (float)(x * m_nItemWidth + m_nItemWidth);
-		quad.br.vertices.y = (float)(y * m_nItemHeight);
+		quad.br.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
+		quad.br.vertices.y = (float)(y * m_uItemHeight);
 		quad.br.vertices.z = 0.0f;
-		quad.tl.vertices.x = (float)(x * m_nItemWidth);
-		quad.tl.vertices.y = (float)(y * m_nItemHeight + m_nItemHeight);
+		quad.tl.vertices.x = (float)(x * m_uItemWidth);
+		quad.tl.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
 		quad.tl.vertices.z = 0.0f;
-		quad.tr.vertices.x = (float)(x * m_nItemWidth + m_nItemWidth);
-		quad.tr.vertices.y = (float)(y * m_nItemHeight + m_nItemHeight);
+		quad.tr.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
+		quad.tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
 		quad.tr.vertices.z = 0.0f;
 
 		m_pTextureAtlas->updateQuad(&quad, index);
