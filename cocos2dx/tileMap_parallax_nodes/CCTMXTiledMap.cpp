@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -154,9 +155,6 @@ namespace cocos2d{
 	
 	CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
 	{
-		CCTMXTilesetInfo *tileset = NULL;
-		//CFByteOrder o = CFByteOrderGetCurrent();
-
 		CCSize size = layerInfo->m_tLayerSize;
 		CCMutableArray<CCTMXTilesetInfo*>* tilesets = mapInfo->getTilesets();
 		if (tilesets && tilesets->count()>0)
@@ -197,7 +195,7 @@ namespace cocos2d{
 
 		// If all the tiles are 0, return empty tileset
 		CCLOG("cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo->m_sName.c_str());
-		return tileset;
+		return NULL;
 	}
 
 

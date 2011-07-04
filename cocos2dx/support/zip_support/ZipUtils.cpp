@@ -34,14 +34,13 @@ namespace cocos2d
 	// Should buffer factor be 1.5 instead of 2 ?
     #define BUFFER_INC_FACTOR (2)
 
-	int ZipUtils::inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
+	int ZipUtils::ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, unsigned int outLenghtHint)
 	{
 		/* ret value */
 		int err = Z_OK;
 
-		/* 256k initial decompress buffer */
-		int bufferSize = 256 * 1024;
-		*out = new unsigned char[bufferSize];
+		int bufferSize = outLenghtHint;
+		*out = (unsigned char*) malloc(bufferSize);
 
 		z_stream d_stream; /* decompression stream */	
 		d_stream.zalloc = (alloc_func)0;
@@ -55,11 +54,10 @@ namespace cocos2d
 
 		/* window size to hold 256k */
 		if( (err = inflateInit2(&d_stream, 15 + 32)) != Z_OK )
-		{
 			return err;
-		}
 
-		for (;;) {
+		for (;;) 
+		{
 			err = inflate(&d_stream, Z_NO_FLUSH);
 
 			if (err == Z_STREAM_END)
@@ -67,28 +65,30 @@ namespace cocos2d
 				break;
 			}
 
-			switch (err) {
+			switch (err) 
+			{
 			case Z_NEED_DICT:
 				err = Z_DATA_ERROR;
 			case Z_DATA_ERROR:
 			case Z_MEM_ERROR:
 				inflateEnd(&d_stream);
 				return err;
-			}
+		    }
 
 			// not enough memory ?
 			if (err != Z_STREAM_END) 
 			{
-				delete [] *out;
-				*out = new unsigned char[bufferSize * BUFFER_INC_FACTOR];
+				unsigned char *tmp = (unsigned char*)realloc(*out, bufferSize * BUFFER_INC_FACTOR);
 
 				/* not enough memory, ouch */
-				if (! *out ) 
+				if (! tmp ) 
 				{
 					CCLOG("cocos2d: ZipUtils: realloc failed");
 					inflateEnd(&d_stream);
 					return Z_MEM_ERROR;
 				}
+				/* only assign to *out if tmp is valid. it's not guaranteed that realloc will reuse the memory */
+				*out = tmp;
 
 				d_stream.next_out = *out + bufferSize;
 				d_stream.avail_out = bufferSize;
@@ -96,16 +96,15 @@ namespace cocos2d
 			}
 		}
 
-
 		*outLength = bufferSize - d_stream.avail_out;
 		err = inflateEnd(&d_stream);
 		return err;
 	}
 
-	int ZipUtils::ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
+	int ZipUtils::ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outLengthHint)
 	{
 		unsigned int outLength = 0;
-		int err = inflateMemory_(in, inLength, out, &outLength);
+		int err = ccInflateMemoryWithHint(in, inLength, out, &outLength, outLengthHint);
 
 		if (err != Z_OK || *out == NULL) {
 			if (err == Z_MEM_ERROR)
@@ -131,6 +130,12 @@ namespace cocos2d
 		}
 
 		return outLength;
+	}
+
+	int ZipUtils::ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
+	{
+		// 256k for hint
+		return ccInflateMemoryWithHint(in, inLength, out, 256 * 1024);
 	}
 
 	int ZipUtils::ccInflateGZipFile(const char *path, unsigned char **out)
