@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -164,6 +165,13 @@ namespace cocos2d{
 		pRet->autorelease();
 		return pRet;
 	}
+	CCMenuItemLabel* CCMenuItemLabel::itemWithLabel(CCNode *label)
+	{
+		CCMenuItemLabel *pRet = new CCMenuItemLabel();
+		pRet->initWithLabel(label, NULL, NULL);
+		pRet->autorelease();
+		return pRet;
+	}
 	bool CCMenuItemLabel::initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
 		CCMenuItem::initWithTarget(target, selector);
@@ -180,8 +188,6 @@ namespace cocos2d{
 	{
 		m_pLabel->convertToLabelProtocol()->setString(label);
 		this->setContentSize(m_pLabel->getContentSize());
-// 		[label_ setString:string];
-// 		[self setContentSize: [label_ contentSize]];
 	}
 	void CCMenuItemLabel::activate()
 	{
@@ -198,8 +204,17 @@ namespace cocos2d{
 		if(m_bIsEnabled)
 		{
 			CCMenuItem::selected();
-			this->stopActionByTag(kZoomActionTag);
-			m_fOriginalScale = this->getScale();
+
+			CCAction *action = getActionByTag(kZoomActionTag);
+			if (action)
+			{
+				this->stopAction(action);
+			}
+			else
+			{
+				m_fOriginalScale = this->getScale();
+			}
+			
 			CCAction *zoomAction = CCScaleTo::actionWithDuration(0.1f, m_fOriginalScale * 1.2f);
 	   	 	zoomAction->setTag(kZoomActionTag);
 			this->runAction(zoomAction);
