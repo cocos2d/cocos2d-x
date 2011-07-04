@@ -93,7 +93,7 @@ protected:
 	float m_fPercentage;
 	CCSprite *m_pSprite;
 	int m_nVertexDataCount;
-	ccV2F_C4F_T2F *m_pVertexData;
+	ccV2F_C4B_T2F *m_pVertexData;
 };
 
 }
