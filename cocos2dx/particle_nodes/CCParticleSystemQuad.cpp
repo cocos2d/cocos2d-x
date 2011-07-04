@@ -2,6 +2,7 @@
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009		Leonardo Kasperavičius
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
  
@@ -33,13 +34,13 @@ namespace cocos2d {
 
 //implementation CCParticleSystemQuad
 // overriding the init method
-bool CCParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
+bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	// base initialization
 	if( CCParticleSystem::initWithTotalParticles(numberOfParticles) ) 
 	{
 		// allocating data space
-		m_pQuads = new ccV2F_C4F_T2F_Quad[m_nTotalParticles];
+		m_pQuads = new ccV2F_C4B_T2F_Quad[m_nTotalParticles];
 		m_pIndices = new GLushort[m_nTotalParticles * 6];
 
 		if( !m_pQuads || !m_pIndices) 
@@ -100,10 +101,10 @@ CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistF
         return pRet;
 }
 
-// rect should be in Texture coordinates, not pixel coordinates
+// pointRect should be in Texture coordinates, not pixel coordinates
 void CCParticleSystemQuad::initTexCoordsWithRect(CCRect pointRect)
 {
-    // convert to Tex coords
+    // convert to pixels coords
 
     CCRect rect = CCRectMake(
         pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
@@ -163,9 +164,8 @@ void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, CCRect rect)
 }
 void CCParticleSystemQuad::setTexture(CCTexture2D* var)
 {
-	this->setTextureWithRect(var, CCRectMake(0, 0, 
-        (float)(var->getPixelsWide() / CC_CONTENT_SCALE_FACTOR()), 
-        (float)(var->getPixelsHigh() / CC_CONTENT_SCALE_FACTOR())));
+	CCSize s = m_pTexture->getContentSize();
+	this->setTextureWithRect(var, CCRectMake(0, 0, s.width, s.height));
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 {
@@ -181,8 +181,8 @@ void CCParticleSystemQuad::initIndices()
 {
 	for( int i = 0; i < m_nTotalParticles; ++i)
 	{
-        const int i6 = i*6;
-        const int i4 = i*4;
+        const unsigned int i6 = i*6;
+        const unsigned int i4 = i*4;
 		m_pIndices[i6+0] = (GLushort) i4+0;
 		m_pIndices[i6+1] = (GLushort) i4+1;
 		m_pIndices[i6+2] = (GLushort) i4+2;
@@ -195,11 +195,14 @@ void CCParticleSystemQuad::initIndices()
 void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// colors
-    ccV2F_C4F_T2F_Quad *quad = &(m_pQuads[m_nParticleIdx]);
-	quad->bl.colors = particle->color;
-	quad->br.colors = particle->color;
-	quad->tl.colors = particle->color;
-	quad->tr.colors = particle->color;
+    ccV2F_C4B_T2F_Quad *quad = &(m_pQuads[m_nParticleIdx]);
+
+	ccColor4B color = {(GLbyte)particle->color.r * 255, (GLbyte)particle->color.g * 255, (GLbyte)particle->color.b * 255, 
+		(GLbyte)particle->color.b * 255};
+	quad->bl.colors = color;
+	quad->br.colors = color;
+	quad->tl.colors = color;
+	quad->tr.colors = color;
 
 	// vertices
 	GLfloat size_2 = particle->size/2;
@@ -286,23 +289,23 @@ void CCParticleSystemQuad::draw()
 
 	glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
 
-	glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,colors) );
 
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,texCoords) );
 #else   // vertex array list
 
     int offset = (int) m_pQuads;
 
     // vertex
-    int diff = offsetof( ccV2F_C4F_T2F, vertices);
+    int diff = offsetof( ccV2F_C4B_T2F, vertices);
     glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
 
     // color
-    diff = offsetof( ccV2F_C4F_T2F, colors);
-    glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
+    diff = offsetof( ccV2F_C4B_T2F, colors);
+    glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
 
     // tex coords
-    diff = offsetof( ccV2F_C4F_T2F, texCoords);
+    diff = offsetof( ccV2F_C4B_T2F, texCoords);
     glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
 
 #endif // ! CC_USES_VBO
@@ -315,7 +318,7 @@ void CCParticleSystemQuad::draw()
 
     CCAssert( m_nParticleIdx == m_nParticleCount, "Abnormal error in particle quad");
 
-	glDrawElements(GL_TRIANGLES, m_nParticleIdx*6, GL_UNSIGNED_SHORT, m_pIndices);	
+	glDrawElements(GL_TRIANGLES, (GLsizei)m_nParticleIdx*6, GL_UNSIGNED_SHORT, m_pIndices);	
 
 	// restore blend state
 	if( newBlend )

@@ -176,7 +176,7 @@ static inline ccTex2F tex2(const float u, const float v)
 typedef struct _ccPointSprite
 {
 	ccVertex2F	pos;		// 8 bytes
-	ccColor4B	colors;		// 4 bytes
+	ccColor4B	color;		// 4 bytes
 	GLfloat		size;		// 4 bytes
 } ccPointSprite;
 
