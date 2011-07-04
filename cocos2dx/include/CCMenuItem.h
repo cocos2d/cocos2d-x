@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -100,6 +101,8 @@ namespace cocos2d{
 		virtual ~CCMenuItemLabel();
 		/** creates a CCMenuItemLabel with a Label, target and selector */
 		static CCMenuItemLabel * itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector);
+		/** creates a CCMenuItemLabel with a Label. Target and selector will be nill */
+		static CCMenuItemLabel* itemWithLabel(CCNode *label);
 		/** initializes a CCMenuItemLabel with a Label, target and selector */
 		bool initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MenuHandler selector);
 		/** sets a new string to the inner label */
