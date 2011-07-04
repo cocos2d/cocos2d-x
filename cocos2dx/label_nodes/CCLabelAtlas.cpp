@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -120,16 +121,17 @@ namespace cocos2d{
 	//CCLabelAtlas - CCLabelProtocol
 	void CCLabelAtlas::setString(const char *label)
 	{
-		if (strlen(label) > m_pTextureAtlas->getTotalQuads())
+		unsigned int len = strlen(label);
+		if (len > m_pTextureAtlas->getTotalQuads())
 		{
-			m_pTextureAtlas->resizeCapacity(strlen(label));
+			m_pTextureAtlas->resizeCapacity(len);
 		}
 		m_sString.clear();
 		m_sString = label;
 		this->updateAtlasValues();
 
 		CCSize s;
-		s.width = (float)(m_sString.length() * m_uItemWidth);
+		s.width = (float)(len * m_uItemWidth);
 		s.height = (float)(m_uItemHeight);
 		this->setContentSizeInPixels(s);
 	}
@@ -159,7 +161,7 @@ namespace cocos2d{
 			glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 		}
 
-		m_pTextureAtlas->drawNumberOfQuads(m_sString.length());
+		m_pTextureAtlas->drawNumberOfQuads(m_sString.length(), 0);
 
 		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);

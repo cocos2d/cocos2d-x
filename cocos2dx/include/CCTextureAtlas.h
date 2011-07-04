@@ -141,6 +141,13 @@ public:
 	*/
 	void drawNumberOfQuads(unsigned int n);
 
+	/** draws n quads from an index (offset).
+	n + start can't be greater than the capacity of the atlas
+
+	@since v1.0
+	*/
+	void drawNumberOfQuads(unsigned int n, unsigned int start);
+
 	/** draws all the Atlas's Quads
 	*/
 	void drawQuads();
