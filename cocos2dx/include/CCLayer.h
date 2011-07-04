@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -132,8 +133,8 @@ All features from CCLayer are valid, plus the following new features:
 class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
-	GLfloat m_pSquareVertices[4 * 2];
-	GLubyte m_pSquareColors[4 * 4];
+	ccVertex2F m_pSquareVertices[4];
+	ccColor4B  m_pSquareColors[4];
 
 public:
 
@@ -195,15 +196,17 @@ the background.
 All features from CCLayerColor are valid, plus the following new features:
 - direction
 - final color
+- interpolation mode
 
 Color is interpolated between the startColor and endColor along the given
 vector (starting at the origin, ending at the terminus).  If no vector is
 supplied, it defaults to (0, -1) -- a fade from top to bottom.
 
-Given the nature of
-the interpolation, you will not see either the start or end color for
+If 'compressedInterpolation' is disabled, you will not see either the start or end color for
 non-cardinal vectors; a smooth gradient implying both end points will be still
 be drawn, however.
+
+If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
 
 @since v0.99.5
 */
@@ -222,13 +225,16 @@ public:
     /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
     virtual bool initWithColor(ccColor4B start, ccColor4B end, CCPoint v);
 
-    ccColor3B getStartColor();
-    void      setStartColor(ccColor3B colors);
-
+    CC_PROPERTY(ccColor3B, m_startColor, StartColor)
     CC_PROPERTY(ccColor3B, m_endColor, EndColor)
     CC_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
     CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
     CC_PROPERTY(CCPoint, m_AlongVector, Vector)
+
+    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
+    Default: YES
+    */
+    CC_PROPERTY(bool, m_bCompressedInterpolation, IsCompressedInterpolation)
 
     LAYER_NODE_FUNC(CCLayerGradient);
 protected:
@@ -240,24 +246,24 @@ Features:
 - It supports one or more children
 - Only one children will be active a time
 */
-class CC_DLL CCMultiplexLayer : public CCLayer
+class CC_DLL CCLayerMultiplex : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;
 	CCMutableArray<CCLayer *> * m_pLayers;
 public:
 
-	CCMultiplexLayer();
-	virtual ~CCMultiplexLayer();
+	CCLayerMultiplex();
+	virtual ~CCLayerMultiplex();
 
-	/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
-	static CCMultiplexLayer * layerWithLayers(CCLayer* layer, ... );
+	/** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
+	static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
 
     /**
 	 * lua script can not init with undetermined number of variables
 	 * so add these functinons to be used with lua.
 	 */
-	static CCMultiplexLayer * layerWithLayer(CCLayer* layer);
+	static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
 	void addLayer(CCLayer* layer);
 	bool initWithLayer(CCLayer* layer);
 
@@ -272,7 +278,16 @@ public:
 	*/
 	void switchToAndReleaseMe(unsigned int n);
     
-    LAYER_NODE_FUNC(CCMultiplexLayer);
+    LAYER_NODE_FUNC(CCLayerMultiplex);
+};
+
+/** CCMultiplexLayer
+It is the same as CCLayerMultiplex.
+
+@deprecated Use CCLayerMultiplex instead. This class will be removed in v1.0.1
+*/
+class CCMultiplexLayer : public CCLayerMultiplex
+{
 };
 }//namespace   cocos2d 
 

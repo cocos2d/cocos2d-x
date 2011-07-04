@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -179,9 +180,9 @@ namespace cocos2d{
 		virtual void setAnchorPoint(CCPoint var);
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
-#if CC_BITMAPFONTATLAS_DEBUG_DRAW
+#if CC_LABELBMFONT_DEBUG_DRAW
 		virtual void draw();
-#endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
+#endif // CC_LABELBMFONT_DEBUG_DRAW
 	private:
 		char * atlasNameFromFntFile(const char *fntFile);
 		int kerningAmountForFirst(unsigned short first, unsigned short second);

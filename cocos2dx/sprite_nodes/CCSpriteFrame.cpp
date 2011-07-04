@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -86,4 +87,17 @@ CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)
 	
 	return pCopy;
 }
+
+void CCSpriteFrame::setRect(CCRect rect)
+{
+    m_obRect = rect;
+    m_obRectInPixels = CC_RECT_POINTS_TO_PIXELS(m_obRect);
+}
+
+void CCSpriteFrame::setRectInPixels(CCRect rectInPixels)
+{
+    m_obRectInPixels = rectInPixels;
+    m_obRect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
+}
+
 }//namespace   cocos2d 

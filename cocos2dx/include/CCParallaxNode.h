@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -49,9 +50,9 @@ namespace cocos2d {
 		CCParallaxNode();
 		virtual ~CCParallaxNode();
 		static CCParallaxNode * node();
-		virtual void addChild(CCNode * child, int z, CCPoint parallaxRatio, CCPoint positionOffset);
+		virtual void addChild(CCNode * child, unsigned int z, CCPoint parallaxRatio, CCPoint positionOffset);
 		// super methods
-		virtual void addChild(CCNode * child, int zOrder, int tag);
+		virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
 		virtual void removeChild(CCNode* child, bool cleanup);
 		virtual void removeAllChildrenWithCleanup(bool cleanup);
 		virtual void visit(void);

@@ -3,6 +3,7 @@ Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -233,22 +234,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 	if (! texturePath.empty())
 	{
 		// build texture path relative to plist file
-
-		// stringByDeletingLastPathComponent
-		string textureBase(pszPath);
-		int indexOfLastSeperator = textureBase.find_last_of('/');
-        if (indexOfLastSeperator == (int)textureBase.length() - 1)
-		{
-			textureBase.erase(indexOfLastSeperator, 1);
-			indexOfLastSeperator = textureBase.find_last_of('/');
-		}
-		textureBase.erase(indexOfLastSeperator);
-
-		// stringByAppendingPathComponent
-        if (! textureBase.empty())
-		{
-			texturePath = textureBase + "/" + texturePath;
-		}
+        texturePath = CCFileUtils::fullPathFromRelativeFile(texturePath.c_str(), pszPath);
 	}
 	else
 	{
