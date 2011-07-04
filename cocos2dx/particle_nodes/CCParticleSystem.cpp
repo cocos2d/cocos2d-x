@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -203,6 +204,12 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 			m_tPosVar.x = (float)atof(valueForKey("sourcePositionVariancex", dictionary));
 			m_tPosVar.y = (float)atof(valueForKey("sourcePositionVariancey", dictionary));
 
+			// Spinning
+			m_fStartSpin = (float)atof(valueForKey("rotationStart", dictionary));
+			m_fStartSpinVar = (float)atof(valueForKey("rotationStartVariance", dictionary));
+			m_fEndSpin= (float)atof(valueForKey("rotationEnd", dictionary));
+			m_fEndSpinVar= (float)atof(valueForKey("rotationEndVariance", dictionary));
+
 			m_nEmitterMode = atoi(valueForKey("emitterType", dictionary));
 
 			// Mode A: Gravity + tangential accel + radial accel
@@ -259,25 +266,32 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 			char *textureName = (char *)valueForKey("textureFileName", dictionary);
             std::string fullpath = CCFileUtils::fullPathFromRelativeFile(textureName, m_sPlistFile.c_str());
 
+			CCTexture2D *tex = NULL;
+
             if (strlen(textureName) > 0)
             {
                 // set not pop-up message box when load image failed
                 bool bNotify = CCFileUtils::getIsPopupNotify();
                 CCFileUtils::setIsPopupNotify(false);
-                this->m_pTexture = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
+                tex = CCTextureCache::sharedTextureCache()->addImage(fullpath.c_str());
 
                 // reset the value of UIImage notify
                 CCFileUtils::setIsPopupNotify(bNotify);
             }
 
-			// if it fails, try to get it from the base64-gzipped data			
-            char *textureData = NULL;
-			if ( ! m_pTexture && 
-                (textureData = (char *)valueForKey("textureImageData", dictionary)))
+			if (tex)
 			{
+				this->m_pTexture = tex;
+			}
+			else
+			{						
+                char *textureData = (char*)valueForKey("textureImageData", dictionary);
+				assert(textureData);
+
 				int dataLen = strlen(textureData);
 				if(dataLen != 0)
 				{
+					// if it fails, try to get it from the base64-gzipped data	
 					int decodeLen = base64Decode((unsigned char*)textureData, dataLen, &buffer);
 					CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
 					CC_BREAK_IF(!buffer);
@@ -306,7 +320,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 	CC_SAFE_DELETE(image);
 	return bRet;
 }
-bool CCParticleSystem::initWithTotalParticles(int numberOfParticles)
+bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	m_nTotalParticles = numberOfParticles;
 
@@ -381,7 +395,8 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 {
 	// timeToLive
 	// no negative life. prevent division by 0
-	particle->timeToLive = MAX(0, m_fLife + m_fLifeVar * CCRANDOM_MINUS1_1() );
+	particle->timeToLive = m_fLife + m_fLifeVar * CCRANDOM_MINUS1_1();
+	particle->timeToLive = MAX(0, particle->timeToLive);
 
 	// position
 	particle->pos.x = m_tSourcePosition.x + m_tPosVar.x * CCRANDOM_MINUS1_1();
@@ -391,16 +406,16 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 
 	// Color
 	ccColor4F start;
-	start.r = MIN(1, MAX(0, m_tStartColor.r + m_tStartColorVar.r * CCRANDOM_MINUS1_1() ) );
-	start.g = MIN(1, MAX(0, m_tStartColor.g + m_tStartColorVar.g * CCRANDOM_MINUS1_1() ) );
-	start.b = MIN(1, MAX(0, m_tStartColor.b + m_tStartColorVar.b * CCRANDOM_MINUS1_1() ) );
-	start.a = MIN(1, MAX(0, m_tStartColor.a + m_tStartColorVar.a * CCRANDOM_MINUS1_1() ) );
+	start.r = clampf(m_tStartColor.r + m_tStartColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
+	start.g = clampf(m_tStartColor.g + m_tStartColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
+	start.b = clampf(m_tStartColor.b + m_tStartColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
+	start.a = clampf(m_tStartColor.a + m_tStartColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 
 	ccColor4F end;
-	end.r = MIN(1, MAX(0, m_tEndColor.r + m_tEndColorVar.r * CCRANDOM_MINUS1_1() ) );
-	end.g = MIN(1, MAX(0, m_tEndColor.g + m_tEndColorVar.g * CCRANDOM_MINUS1_1() ) );
-	end.b = MIN(1, MAX(0, m_tEndColor.b + m_tEndColorVar.b * CCRANDOM_MINUS1_1() ) );
-	end.a = MIN(1, MAX(0, m_tEndColor.a + m_tEndColorVar.a * CCRANDOM_MINUS1_1() ) );
+	end.r = clampf(m_tEndColor.r + m_tEndColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
+	end.g = clampf(m_tEndColor.g + m_tEndColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
+	end.b = clampf(m_tEndColor.b + m_tEndColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
+	end.a = clampf(m_tEndColor.a + m_tEndColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 
 	particle->color = start;
 	particle->deltaColor.r = (end.r - start.r) / particle->timeToLive;
@@ -409,7 +424,8 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	particle->deltaColor.a = (end.a - start.a) / particle->timeToLive;
 
 	// size
-	float startS = MAX(0, m_fStartSize + m_fStartSizeVar * CCRANDOM_MINUS1_1() ); // no negative size
+	float startS = m_fStartSize + m_fStartSizeVar * CCRANDOM_MINUS1_1();
+	startS = MAX(0, startS); // No negative value
     startS *= CC_CONTENT_SCALE_FACTOR();
 
 	particle->size = startS;
@@ -421,7 +437,7 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
 	else
 	{
 		float endS = m_fEndSize + m_fEndSizeVar * CCRANDOM_MINUS1_1();
-		endS = MAX(0, endS);
+		endS = MAX(0, endS); // No negative values
         endS *= CC_CONTENT_SCALE_FACTOR();
 		particle->deltaSize = (endS - startS) / particle->timeToLive;
 	}

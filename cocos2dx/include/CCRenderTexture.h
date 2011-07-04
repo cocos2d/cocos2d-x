@@ -97,11 +97,6 @@ protected:
 	CCTexture2D*		m_pTexture;
 
     GLenum              m_ePixelFormat;
-    GLfloat             m_aClearColor[4];
-
-private:
-    void saveGLstate();
-    void restoreGLstate();
 };
 
 } // namespace cocos2d

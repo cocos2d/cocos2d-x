@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -358,7 +359,7 @@ public:
 	bool initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary);
 
 	//! Initializes a system with a fixed number of particles
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	//! Add a particle to the emitter
 	bool addParticle();
 	//! Initializes a particle
