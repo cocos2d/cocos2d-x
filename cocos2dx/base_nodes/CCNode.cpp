@@ -193,7 +193,6 @@ void CCNode::setRotation(float newRotation)
 #endif
 }
 
-
 /// scale getter
 float CCNode::getScale(void)
 {

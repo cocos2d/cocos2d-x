@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,8 +37,6 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 class CCSpriteBatchNode;
-class CCSpriteSheet;
-class CCSpriteSheetInternalOnly;
 class CCSpriteFrame;
 class CCAnimation;
 class CCRect;
@@ -64,9 +63,11 @@ typedef enum {
 	CC_HONOR_PARENT_TRANSFORM_ROTATE	=  1 << 1,
 	//! Scale with it's parent
 	CC_HONOR_PARENT_TRANSFORM_SCALE		=  1 << 2,
+    //! Skew with it's parent
+    CC_HONOR_PARENT_TRANSFORM_SKEW		=  1 << 3,
 
 	//! All possible transformation enabled. Default value.
-	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE,
+	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_SKEW,
 
 } ccHonorParentTransform;
 
@@ -195,8 +196,6 @@ public:
 	*/
 	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
 
-    static CCSprite* spriteWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CCRect rect);
-
 public:
 	bool init(void);
 	virtual ~CCSprite(void);
@@ -213,6 +212,8 @@ public:
 	virtual void setPosition(CCPoint pos);
 	virtual void setPositionInPixels(CCPoint pos);
 	virtual void setRotation(float fRotation);
+    virtual void setSkewX(float sx);
+    virtual void setSkewY(float sy);
 	virtual void setScaleX(float fScaleX);
 	virtual void setScaleY(float fScaleY);
 	virtual void setScale(float fScale);
@@ -288,11 +289,10 @@ public:
 	 */
     bool initWithFile(const char *pszFilename, CCRect rect);
 
-	/** Initializes an sprite with an CCSpriteSheet and a rect in points */
+	/** Initializes an sprite with an CCSpriteBatchNode and a rect in points */
 	bool initWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
-    bool initWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CCRect rect);
 
-	/** Initializes an sprite with an CCSpriteSheet and a rect in pixels
+	/** Initializes an sprite with an CCSpriteBatchNode and a rect in pixels
 	@since v0.99.5
 	*/
 	bool initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, CCRect rect);
@@ -318,7 +318,6 @@ public:
 	 @since v0.99.0
 	 */
 	 void useBatchNode(CCSpriteBatchNode *batchNode);
-	 void useSpriteSheetRender(CCSpriteSheetInternalOnly *pSpriteSheet);
 
 	// Frames
 
