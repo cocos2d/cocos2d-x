@@ -236,7 +236,7 @@ namespace cocos2d {
 			{
 				CCRect rect = m_pTileSet->rectForGID(gid);
 				tile = new CCSprite();
-				tile->initWithSpriteSheet((CCSpriteSheetInternalOnly *)this, rect);
+				tile->initWithBatchNode(this, rect);
 				tile->setPositionInPixels(positionAt(pos));
 				tile->setVertexZ((float)vertexZForPos(pos));
 				tile->setAnchorPoint(CCPointZero);
@@ -268,11 +268,11 @@ namespace cocos2d {
 		if( ! m_pReusedTile )
 		{
 			m_pReusedTile = new CCSprite();
-			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
+			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		else
 		{
-			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
+			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		m_pReusedTile->setPositionInPixels(positionAt(pos));
 		m_pReusedTile->setVertexZ((float)vertexZForPos(pos));
@@ -316,11 +316,11 @@ namespace cocos2d {
 		if( ! m_pReusedTile )
 		{
 			m_pReusedTile = new CCSprite();
-			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
+			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		else
 		{
-			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
+			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		
 		m_pReusedTile->setPositionInPixels(positionAt(pos));
@@ -349,11 +349,11 @@ namespace cocos2d {
 		if( ! m_pReusedTile )
 		{
 			m_pReusedTile = new CCSprite();
-			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
+			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		else
 		{
-			m_pReusedTile->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
+			m_pReusedTile->initWithBatchNode(this, rect);
 		}
 		
 		m_pReusedTile->setPosition(positionAt(pos));
