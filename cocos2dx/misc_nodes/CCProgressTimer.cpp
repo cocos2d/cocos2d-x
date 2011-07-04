@@ -96,19 +96,7 @@ void CCProgressTimer::setPercentage(float fPercentage)
 {
 	if (m_fPercentage != fPercentage)
 	{
-		if (m_fPercentage < 0.f)
-		{
-			m_fPercentage = 0.f;
-		} else
-		if (fPercentage > 100.0f)
-		{
-			m_fPercentage = 100.f;
-		}
-		else
-		{
-			m_fPercentage = fPercentage;
-		}
-
+		m_fPercentage = clampf(m_fPercentage, 0, 100);
 		updateProgress();
 	}
 }
@@ -176,18 +164,15 @@ ccVertex2F CCProgressTimer::vertexFromTexCoord(cocos2d::CCPoint texCoord)
 
 void CCProgressTimer::updateColor(void)
 {
-	ccColor4F color = ccc4FFromccc3B(m_pSprite->getColor());
+	GLbyte op = m_pSprite->getOpacity();
+	ccColor3B c3b = m_pSprite->getColor();
+
+	ccColor4B color = {c3b.r, c3b.g, c3b.b, op};
 	if (m_pSprite->getTexture()->getHasPremultipliedAlpha())
 	{
-		float op = m_pSprite->getOpacity() / 255.f;
-		color.r *= op;
-		color.g *= op;
-		color.b *= op;
-		color.a = op;
-	}
-	else
-	{
-		color.a = m_pSprite->getOpacity() / 255.f;
+		color.r *= op / 255;
+		color.g *= op / 255;
+		color.b *= op / 255;
 	}
 
 	if (m_pVertexData)
@@ -344,7 +329,7 @@ void CCProgressTimer::updateRadial(void)
 	if (! m_pVertexData)
 	{
 		m_nVertexDataCount = index + 3;
-		m_pVertexData = new ccV2F_C4F_T2F[m_nVertexDataCount];
+		m_pVertexData = new ccV2F_C4B_T2F[m_nVertexDataCount];
 		assert(m_pVertexData);
 
 		updateColor();
@@ -420,6 +405,7 @@ void CCProgressTimer::updateBar(void)
 	CCPoint tMax = ccp(m_pSprite->getTexture()->getMaxS(), m_pSprite->getTexture()->getMaxT());
 
 	unsigned char vIndexes[2] = {0, 0};
+	unsigned char index = 0;
 
 	//	We know vertex data is always equal to the 4 corners
 	//	If we don't have vertex data then we create it here and populate
@@ -427,7 +413,7 @@ void CCProgressTimer::updateBar(void)
 	if (! m_pVertexData)
 	{
 		m_nVertexDataCount = kProgressTextureCoordsCount;
-		m_pVertexData = new ccV2F_C4F_T2F[m_nVertexDataCount];
+		m_pVertexData = new ccV2F_C4B_T2F[m_nVertexDataCount];
 		assert(m_pVertexData);
 
 		if (m_eType == kCCProgressTimerTypeHorizontalBarLR)
@@ -451,7 +437,7 @@ void CCProgressTimer::updateBar(void)
 			m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, 0);
 		}
 
-		unsigned char index = vIndexes[0];
+		index = vIndexes[0];
 		m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
 			                                                   m_pVertexData[index].texCoords.v));
 
@@ -463,7 +449,7 @@ void CCProgressTimer::updateBar(void)
 		{
 			if (m_pSprite->isFlipX())
 			{
-				unsigned char index = vIndexes[0];
+				index = vIndexes[0];
 				m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
 				index = vIndexes[1];
 				m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
@@ -471,7 +457,7 @@ void CCProgressTimer::updateBar(void)
 
 			if (m_pSprite->isFlipY())
 			{
-				unsigned char index = vIndexes[0];
+				index = vIndexes[0];
 				m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
 				index = vIndexes[1];
 				m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
@@ -502,7 +488,7 @@ void CCProgressTimer::updateBar(void)
 		m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMax.y*alpha);
 	}
 
-	unsigned char index = vIndexes[0];
+	index = vIndexes[0];
 	m_pVertexData[index].vertices = vertexFromTexCoord(ccp(m_pVertexData[index].texCoords.u,
 		                                                   m_pVertexData[index].texCoords.v));
 	index = vIndexes[1];
@@ -513,7 +499,7 @@ void CCProgressTimer::updateBar(void)
 	{
 		if (m_pSprite->isFlipX()) 
 		{
-			unsigned char index = vIndexes[0];
+			index = vIndexes[0];
 			m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
 			index = vIndexes[1];
 			m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
@@ -521,7 +507,7 @@ void CCProgressTimer::updateBar(void)
 
 		if (m_pSprite->isFlipY())
 		{
-			unsigned char index = vIndexes[0];
+			index = vIndexes[0];
 			m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
 			index = vIndexes[1];
 			m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
@@ -570,9 +556,9 @@ void CCProgressTimer::draw(void)
 	//	Replaced [texture_ drawAtPoint:CCPointZero] with my own vertexData
 	//	Everything above me and below me is copied from CCTextureNode's draw
 	glBindTexture(GL_TEXTURE_2D, m_pSprite->getTexture()->getName());
-	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &m_pVertexData[0].vertices);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &m_pVertexData[0].texCoords);
-	glColorPointer(4, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &m_pVertexData[0].colors);
+	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].vertices);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].texCoords);
+	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].colors);
 	
 	if(m_eType == kCCProgressTimerTypeRadialCCW || m_eType == kCCProgressTimerTypeRadialCW)
 	{

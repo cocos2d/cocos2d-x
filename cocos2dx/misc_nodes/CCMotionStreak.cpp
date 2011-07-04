@@ -58,12 +58,12 @@ bool CCMotionStreak::initWithFade(float fade, float seg, const char *imagePath, 
 	m_pRibbon = CCRibbon::ribbonWithWidth(m_fWidth, imagePath, length, color, fade);
 	this->addChild(m_pRibbon);
 
-	// update ribbon position
-	this->schedule(schedule_selector(CCMotionStreak::updateMotion), 0);
+	// update ribbon position. Use schedule:interval and not scheduleUpdated. (cocos2d-iphone)issue #1075
+	this->schedule(schedule_selector(CCMotionStreak::update), 0);
 	return true;
 }
 
-void CCMotionStreak::updateMotion(ccTime delta)
+void CCMotionStreak::update(ccTime delta)
 {
 	CCPoint location = this->convertToWorldSpace(CCPointZero);
 	m_pRibbon->setPosition(ccp(-1*location.x, -1*location.y));

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
  
 http://www.cocos2d-x.org
 
@@ -30,7 +31,7 @@ namespace cocos2d {
 //
 // ParticleFire
 //
-bool CCParticleFire::initWithTotalParticles(int numberOfParticles)
+bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
@@ -100,7 +101,7 @@ bool CCParticleFire::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleFireworks
 //
-bool CCParticleFireworks::initWithTotalParticles(int numberOfParticles)
+bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
@@ -168,7 +169,7 @@ bool CCParticleFireworks::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleSun
 //
-bool CCParticleSun::initWithTotalParticles(int numberOfParticles)
+bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
@@ -240,7 +241,7 @@ bool CCParticleSun::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleGalaxy
 //
-bool CCParticleGalaxy::initWithTotalParticles(int numberOfParticles)
+bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
@@ -314,7 +315,7 @@ bool CCParticleGalaxy::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleFlower
 //
-bool CCParticleFlower::initWithTotalParticles(int numberOfParticles)
+bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
@@ -387,7 +388,7 @@ bool CCParticleFlower::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleMeteor
 //
-bool CCParticleMeteor::initWithTotalParticles(int numberOfParticles)
+bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
@@ -461,7 +462,7 @@ bool CCParticleMeteor::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleSpiral
 //
-bool CCParticleSpiral::initWithTotalParticles(int numberOfParticles)
+bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) ) 
 	{
@@ -535,7 +536,7 @@ bool CCParticleSpiral::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleExplosion
 //
-bool CCParticleExplosion::initWithTotalParticles(int numberOfParticles)
+bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) ) 
 	{
@@ -608,7 +609,7 @@ bool CCParticleExplosion::initWithTotalParticles(int numberOfParticles)
 //
 // ParticleSmoke
 //
-bool CCParticleSmoke::initWithTotalParticles(int numberOfParticles)
+bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
@@ -677,7 +678,7 @@ bool CCParticleSmoke::initWithTotalParticles(int numberOfParticles)
 //
 // CCParticleSnow
 //
-bool CCParticleSnow::initWithTotalParticles(int numberOfParticles)
+bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) ) 
 	{
@@ -750,7 +751,7 @@ bool CCParticleSnow::initWithTotalParticles(int numberOfParticles)
 //
 // CCParticleRain
 //
-bool CCParticleRain::initWithTotalParticles(int numberOfParticles)
+bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( ARCH_OPTIMAL_PARTICLE_SYSTEM::initWithTotalParticles(numberOfParticles) )
 	{
