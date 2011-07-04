@@ -2,6 +2,7 @@
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2011		Максим Аксенов 
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -391,10 +392,15 @@ namespace cocos2d {
 				{
 					layerAttribs = pTMXMapInfo->getLayerAttribs();
 					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribGzip);
+				} else
+				if (compression == "zip")
+				{
+					layerAttribs = pTMXMapInfo->getLayerAttribs();
+					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribZlib);
 				}
-				CCAssert( compression == "" || compression == "gzip", "TMX: unsupported compression method" );
+				CCAssert( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
 			}
-			CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip maps are supported" );
+			CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
 		} 
 		else if(elementName == "object")
@@ -534,17 +540,25 @@ namespace cocos2d {
 
 			std::string currentString = pTMXMapInfo->getCurrentString();
 			unsigned char *buffer;
-			len = base64Decode((unsigned char*)currentString.c_str(), currentString.length(), &buffer);
+			len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
 			if( ! buffer ) 
 			{
 				CCLOG("cocos2d: TiledMap: decode data error");
 				return;
 			}
 
-			if( pTMXMapInfo->getLayerAttribs() & TMXLayerAttribGzip )
+			if( pTMXMapInfo->getLayerAttribs() & (TMXLayerAttribGzip | TMXLayerAttribZlib) )
 			{
 				unsigned char *deflated;
-				ZipUtils::ccInflateMemory(buffer, len, &deflated);
+				CCSize s = layer->m_tLayerSize;
+				// int sizeHint = s.width * s.height * sizeof(uint32_t);
+				int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
+
+				int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+				assert(inflatedLen == sizeHint);
+
+				inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
+				
 				delete [] buffer;
 				buffer = NULL;
 

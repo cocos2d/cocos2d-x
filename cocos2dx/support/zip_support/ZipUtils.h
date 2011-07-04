@@ -51,11 +51,24 @@ namespace cocos2d
 		* Inflates either zlib or gzip deflated memory. The inflated memory is
 		* expected to be freed by the caller.
 		*
+		* It will allocate 256k for the destination buffer. If it is not enought it will multiply the previous buffer size per 2, until there is enough memory.
 		* @returns the length of the deflated buffer
 		*
 		@since v0.8.1
 		*/
 		static int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
+
+		/** 
+		* Inflates either zlib or gzip deflated memory. The inflated memory is
+		* expected to be freed by the caller.
+		*
+		* outLenghtHint is assumed to be the needed room to allocate the inflated buffer.
+		*
+		* @returns the length of the deflated buffer
+		*
+		@since v1.0.0
+		*/
+		static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outLenghtHint);
 
 		/** inflates a GZip file into memory
 		*
@@ -74,7 +87,8 @@ namespace cocos2d
 		static int ccInflateCCZFile(const char *filename, unsigned char **out);
 
 	private:
-		static int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLengh);
+		static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, 
+			unsigned int outLenghtHint);
 	};
 
 } // end of namespace cocos2d

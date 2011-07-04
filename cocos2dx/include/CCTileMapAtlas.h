@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -75,7 +76,7 @@ namespace cocos2d {
 	private:
 		void loadTGAfile(const char *file);
 		void calculateItemsToRender();
-		void updateAtlasValueAt(ccGridSize pos, ccColor3B value, int index);
+		void updateAtlasValueAt(ccGridSize pos, ccColor3B value, unsigned int index);
 		void updateAtlasValues();
 
 	protected:
