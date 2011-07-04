@@ -42,7 +42,6 @@ CCRenderTexture::CCRenderTexture()
 , m_pTexture(0)
 , m_ePixelFormat(kCCPixelFormatRGBA8888)
 {
-    memset(m_aClearColor, 0, sizeof(m_aClearColor));
 }
 
 CCRenderTexture::~CCRenderTexture()
@@ -155,9 +154,6 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 
 void CCRenderTexture::begin()
 {
-    saveGLstate();
-
-	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
 	glPushMatrix();
 
@@ -176,36 +172,32 @@ void CCRenderTexture::begin()
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);//Will direct drawing to the frame buffer created above
 
+	// Issue #1145
+	// There is no need to enable the default GL states here
+	// but since CCRenderTexture is mostly used outside the "render" loop
+	// these states needs to be enabled.
+	// Since this bug was discovered in API-freeze (very close of 1.0 release)
+	// This bug won't be fixed to prevent incompatibilities with code.
+	// 
+	// If you understand the above mentioned message, then you can comment the following line
+	// and enable the gl states manually, in case you need them.
+
 	CC_ENABLE_DEFAULT_GL_STATES();	
 }
 
 void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 {
-    this->saveGLstate();
+    this->begin();
 
-    CC_DISABLE_DEFAULT_GL_STATES();
-    // Save the current matrix
-    glPushMatrix();
+	// save clear color
+	GLfloat	clearColor[4];
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor); 
 
-    CCSize texSize = m_pTexture->getContentSizeInPixels();
+	glClearColor(r, g, b, a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Calculate the adjustment ratios based on the old and new projections
-    CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
-    float widthRatio = size.width / texSize.width;
-    float heightRatio = size.height / texSize.height;
-
-    // Adjust the orthographic propjection and viewport
-    ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
-    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
-//     CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, texSize.width, texSize.height);
-
-    glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
-    ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);//Will direct drawing to the frame buffer created above
-
-    glClearColor(r, g, b, a);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    CC_ENABLE_DEFAULT_GL_STATES();
+	// restore clear color
+	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
 }
 
 void CCRenderTexture::end()
@@ -216,27 +208,13 @@ void CCRenderTexture::end()
 	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 //	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
     CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
-    this->restoreGLstate();
 }
 
 void CCRenderTexture::clear(float r, float g, float b, float a)
 {
-	this->begin();
-	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	this->beginWithClear(r, g, b, a);
 	this->end();
 }
-
-void CCRenderTexture::saveGLstate()
-{
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, m_aClearColor);
-}
-
-void CCRenderTexture::restoreGLstate()
-{
-    glClearColor(m_aClearColor[0], m_aClearColor[1], m_aClearColor[2], m_aClearColor[3]);
-}
-
 
 bool CCRenderTexture::saveBuffer(const char *name)
 {
