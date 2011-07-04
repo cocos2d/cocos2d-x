@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada 
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -58,7 +59,7 @@ public:
     static CCParticleSystemPoint * particleWithFile(const char *plistFile);
 
 	// super methods
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	virtual void postStep();
 	virtual void draw();

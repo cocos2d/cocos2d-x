@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +29,7 @@ THE SOFTWARE.
 namespace cocos2d {
 
 //implementation CCParticleSystemPoint
-bool CCParticleSystemPoint::initWithTotalParticles(int numberOfParticles)
+bool CCParticleSystemPoint::initWithTotalParticles(unsigned int numberOfParticles)
 {
 	if( CCParticleSystem::initWithTotalParticles(numberOfParticles) )
 	{
@@ -79,7 +80,8 @@ void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoin
 	// place vertices and colos in array
     m_pVertices[m_nParticleIdx].pos = vertex2(newPosition.x, newPosition.y);
 	m_pVertices[m_nParticleIdx].size = particle->size;
-	m_pVertices[m_nParticleIdx].colors = particle->color;
+	ccColor4B color = {(GLubyte)particle->color.r * 255, (GLubyte)particle->color.g * 255, (GLubyte)particle->color.b * 255, (GLubyte)particle->color.a * 255};
+	m_pVertices[m_nParticleIdx].color = color;
 }
 void CCParticleSystemPoint::postStep()
 {
@@ -117,7 +119,7 @@ void CCParticleSystemPoint::draw()
 
 	glVertexPointer(2,GL_FLOAT,kPointSize,0);
 
-	glColorPointer(4, GL_FLOAT, kPointSize,(GLvoid*) offsetof(ccPointSprite,colors) );
+	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize,(GLvoid*)offsetof(ccPointSprite,color) );
 
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glPointSizePointerOES(GL_FLOAT,kPointSize,(GLvoid*) offsetof(ccPointSprite,size) );
@@ -125,8 +127,8 @@ void CCParticleSystemPoint::draw()
     int offset = (int)m_pVertices;
     glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
 
-    int diff = offsetof(ccPointSprite, colors);
-    glColorPointer(4, GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
+    int diff = offsetof(ccPointSprite, color);
+    glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (GLvoid*) (offset+diff));
 
     glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
     diff = offsetof(ccPointSprite, size);

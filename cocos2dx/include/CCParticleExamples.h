@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 
 http://www.cocos2d-x.org
@@ -37,7 +38,7 @@ public:
 	CCParticleFire(){}
 	virtual ~CCParticleFire(){}
 	bool init(){ return initWithTotalParticles(250); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleFire * node()
 	{
 		CCParticleFire *pRet = new CCParticleFire();
@@ -58,7 +59,7 @@ public:
 	CCParticleFireworks(){}
 	virtual ~CCParticleFireworks(){}
 	bool init(){ return initWithTotalParticles(1500); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleFireworks * node()
 	{
 		CCParticleFireworks *pRet = new CCParticleFireworks();
@@ -79,7 +80,7 @@ public:
 	CCParticleSun(){}
 	virtual ~CCParticleSun(){}
 	bool init(){ return initWithTotalParticles(350); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleSun * node()
 	{
 		CCParticleSun *pRet = new CCParticleSun();
@@ -100,7 +101,7 @@ public:
 	CCParticleGalaxy(){}
 	virtual ~CCParticleGalaxy(){}
 	bool init(){ return initWithTotalParticles(200); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleGalaxy * node()
 	{
 		CCParticleGalaxy *pRet = new CCParticleGalaxy();
@@ -121,7 +122,7 @@ public:
 	CCParticleFlower(){}
 	virtual ~CCParticleFlower(){}
 	bool init(){ return initWithTotalParticles(250); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleFlower * node()
 	{
 		CCParticleFlower *pRet = new CCParticleFlower();
@@ -142,7 +143,7 @@ public:
 	CCParticleMeteor(){}
 	virtual ~CCParticleMeteor(){}
 	bool init(){ return initWithTotalParticles(150); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleMeteor * node()
 	{
 		CCParticleMeteor *pRet = new CCParticleMeteor();
@@ -163,7 +164,7 @@ public:
 	CCParticleSpiral(){}
 	virtual ~CCParticleSpiral(){}
 	bool init(){ return initWithTotalParticles(500); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleSpiral * node()
 	{
 		CCParticleSpiral *pRet = new CCParticleSpiral();
@@ -184,7 +185,7 @@ public:
 	CCParticleExplosion(){}
 	virtual ~CCParticleExplosion(){}
 	bool init(){ return initWithTotalParticles(700); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleExplosion * node()
 	{
 		CCParticleExplosion *pRet = new CCParticleExplosion();
@@ -205,7 +206,7 @@ public:
 	CCParticleSmoke(){}
 	virtual ~CCParticleSmoke(){}
 	bool init(){ return initWithTotalParticles(200); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleSmoke * node()
 	{
 		CCParticleSmoke *pRet = new CCParticleSmoke();
@@ -226,7 +227,7 @@ public:
 	CCParticleSnow(){}
 	virtual ~CCParticleSnow(){}
 	bool init(){ return initWithTotalParticles(700); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleSnow * node()
 	{
 		CCParticleSnow *pRet = new CCParticleSnow();
@@ -247,7 +248,7 @@ public:
 	CCParticleRain(){}
 	virtual ~CCParticleRain(){}
 	bool init(){ return initWithTotalParticles(1000); }
-	virtual bool initWithTotalParticles(int numberOfParticles);
+	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	static CCParticleRain * node()
 	{
 		CCParticleRain *pRet = new CCParticleRain();
