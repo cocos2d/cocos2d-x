@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -74,7 +75,7 @@ namespace cocos2d {
 
 			// mapInfo
 			m_tMapTileSize = mapInfo->getTileSize();
-			m_nLayerOrientation = mapInfo->getOrientation();
+			m_uLayerOrientation = mapInfo->getOrientation();
 
 			// offset (after layer orientation is set);
 			CCPoint offset = this->calculateLayerOffset(layerInfo->m_tOffset);
@@ -519,7 +520,7 @@ namespace cocos2d {
 	CCPoint CCTMXLayer::calculateLayerOffset(CCPoint pos)
 	{
 		CCPoint ret = CCPointZero;
-		switch( m_nLayerOrientation ) 
+		switch( m_uLayerOrientation ) 
 		{
 		case CCTMXOrientationOrtho:
 			ret = ccp( pos.x * m_tMapTileSize.width, -pos.y *m_tMapTileSize.height);
@@ -537,7 +538,7 @@ namespace cocos2d {
 	CCPoint CCTMXLayer::positionAt(CCPoint pos)
 	{
 		CCPoint ret = CCPointZero;
-		switch( m_nLayerOrientation )
+		switch( m_uLayerOrientation )
 		{
 		case CCTMXOrientationOrtho:
 			ret = positionForOrthoAt(pos);
@@ -581,7 +582,7 @@ namespace cocos2d {
 		unsigned int maxVal = 0;
 		if( m_bUseAutomaticVertexZ )
 		{
-			switch( m_nLayerOrientation ) 
+			switch( m_uLayerOrientation ) 
 			{
 			case CCTMXOrientationIso:
 				maxVal = (unsigned int)(m_tLayerSize.width + m_tLayerSize.height);
