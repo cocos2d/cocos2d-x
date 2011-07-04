@@ -405,5 +405,10 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 #endif // CC_USES_VBO
 }
 
+void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
+{
+
+}
+
 
 }//namespace   cocos2d 
