@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -643,7 +644,7 @@ namespace cocos2d{
 	}
 
 	//BitmapFontAtlas - Debug draw
-#if CC_BITMAPFONTATLAS_DEBUG_DRAW
+#if CC_LABELBMFONT_DEBUG_DRAW
 	void CCLabelBMFont::draw()
 	{
 		CCSpriteBatchNode::draw();
@@ -654,6 +655,6 @@ namespace cocos2d{
 		};
 		ccDrawPoly(vertices, 4, true);
 	}
-#endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
+#endif // CC_LABELBMFONT_DEBUG_DRAW
 
 }
