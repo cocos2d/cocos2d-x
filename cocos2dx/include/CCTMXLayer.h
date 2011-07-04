@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -70,7 +71,7 @@ namespace cocos2d {
 		/** Tilset information for the layer */
 		CC_PROPERTY(CCTMXTilesetInfo*, m_pTileSet, TileSet);
 		/** Layer orientation, which is the same as the map orientation */
-		CC_SYNTHESIZE(int, m_nLayerOrientation, LayerOrientation);
+		CC_SYNTHESIZE(unsigned int, m_uLayerOrientation, LayerOrientation);
 		/** properties from the layer. They can be added using Tiled */
 		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -174,7 +175,7 @@ namespace cocos2d {
 
 		return value;	
 	}
-	void CCTileMapAtlas::updateAtlasValueAt(ccGridSize pos, ccColor3B value, int index)
+	void CCTileMapAtlas::updateAtlasValueAt(ccGridSize pos, ccColor3B value, unsigned int index)
 	{
 		ccV3F_C4B_T2F_Quad quad;
 
