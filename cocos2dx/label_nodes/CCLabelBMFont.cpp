@@ -486,7 +486,7 @@ namespace cocos2d{
 			if( ! fontChar )
 			{
 				fontChar = new CCSprite();
-				fontChar->initWithSpriteSheet((CCSpriteSheetInternalOnly *) this, rect);
+				fontChar->initWithBatchNode(this, rect);
 				this->addChild(fontChar, 0, i);
 				fontChar->release();
 			}

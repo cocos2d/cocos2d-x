@@ -99,7 +99,6 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCSpriteBatchNode.o \
 	$(OBJECTS_DIR)/CCSpriteFrame.o \
 	$(OBJECTS_DIR)/CCSpriteFrameCache.o \
-	$(OBJECTS_DIR)/CCSpriteSheet.o \
 	$(OBJECTS_DIR)/base64.o \
 	$(OBJECTS_DIR)/CCArray.o \
 	$(OBJECTS_DIR)/CCPointExtension.o \
@@ -343,9 +342,6 @@ $(OBJECTS_DIR)/CCSpriteFrame.o : ../sprite_nodes/CCSpriteFrame.cpp
 
 $(OBJECTS_DIR)/CCSpriteFrameCache.o : ../sprite_nodes/CCSpriteFrameCache.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSpriteFrameCache.o ../sprite_nodes/CCSpriteFrameCache.cpp
-
-$(OBJECTS_DIR)/CCSpriteSheet.o : ../sprite_nodes/CCSpriteSheet.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCSpriteSheet.o ../sprite_nodes/CCSpriteSheet.cpp
 
 $(OBJECTS_DIR)/base64.o : ../support/base64.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/base64.o ../support/base64.cpp

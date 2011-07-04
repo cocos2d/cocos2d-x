@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +27,6 @@ THE SOFTWARE.
 #include "CCSpriteBatchNode.h"
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
-#include "CCSpriteSheet.h"
 #include "ccConfig.h"
 #include "CCSprite.h"
 #include "CCSpriteFrame.h"
@@ -54,6 +54,7 @@ struct transformValues_ {
 	CCPoint pos;		// position x and y
 	CCPoint	scale;		// scale x and y
 	float	rotation;
+    CCPoint skew;		// skew x and y
 	CCPoint ap;			// anchor point in pixels
 	bool    visible;    
 };
@@ -167,17 +168,12 @@ CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 	return spriteWithSpriteFrame(pFrame);
 }
 
-CCSprite* CCSprite::spriteWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CCRect rect)
-{
-    return spriteWithBatchNode(pSpriteSheet, rect);
-}
-
 bool CCSprite::init(void)
 {
 	m_bDirty = m_bRecursiveDirty = false;
 
 	// by default use "Self Render".
-	// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
+	// if the sprite is added to an batchnode, then it will automatically switch to "SpriteSheet Render"
     useSelfRender();
 
 	m_bOpacityModifyRGB = true;
@@ -323,11 +319,6 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 }
 */
 
-bool CCSprite::initWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CCRect rect)
-{
-	return initWithBatchNode(pSpriteSheet, rect);
-}
-
 CCSprite::CCSprite()
 : m_pobTexture(NULL)
 {
@@ -363,11 +354,6 @@ void CCSprite::useBatchNode(CCSpriteBatchNode *batchNode)
     m_bUsesBatchNode = true;
 	m_pobTextureAtlas = batchNode->getTextureAtlas(); // weak ref
     m_pobBatchNode = batchNode;
-}
-
-void CCSprite::useSpriteSheetRender(CCSpriteSheetInternalOnly *pSpriteSheet)
-{
-	useBatchNode(pSpriteSheet);
 }
 
 void CCSprite::initAnimationDictionary(void)
@@ -406,7 +392,7 @@ void CCSprite::setTextureRectInPixels(CCRect rect, bool rotated, CCSize size)
 	m_obOffsetPositionInPixels.x = relativeOffsetInPixels.x + (m_tContentSizeInPixels.width - m_obRectInPixels.size.width) / 2;
 	m_obOffsetPositionInPixels.y = relativeOffsetInPixels.y + (m_tContentSizeInPixels.height - m_obRectInPixels.size.height) / 2;
 
-	// rendering using SpriteSheet
+	// rendering using batch node
 	if (m_bUsesBatchNode)
 	{
 		// update dirty_, don't update recursiveDirty_
@@ -544,6 +530,13 @@ void CCSprite::updateTransform(void)
         matrix = CCAffineTransformMake(c * m_fScaleX, s * m_fScaleX,
 			-s * m_fScaleY, c * m_fScaleY,
 			m_tPositionInPixels.x, m_tPositionInPixels.y);
+        if( m_fSkewX || m_fSkewY )
+        {
+            CCAffineTransform skewMatrix = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
+                tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f,
+                0.0f, 0.0f);
+            matrix = CCAffineTransformConcat(skewMatrix, matrix);
+        }
 		matrix = CCAffineTransformTranslate(matrix, -m_tAnchorPointInPixels.x, -m_tAnchorPointInPixels.y);
 	} else // parent_ != batchNode_ 
 	{
@@ -571,7 +564,7 @@ void CCSprite::updateTransform(void)
 
 			CCAffineTransform newMatrix = CCAffineTransformIdentity;
 
-			// 2nd: Translate, Rotate, Scale
+			// 2nd: Translate, Skew, Rotate, Scale
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
 			{
 				newMatrix = CCAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
@@ -581,6 +574,13 @@ void CCSprite::updateTransform(void)
 			{
 				newMatrix = CCAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
 			}
+
+            if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW )
+            {
+                CCAffineTransform skew = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
+                // apply the skew to the transform
+                newMatrix = CCAffineTransformConcat(skew, newMatrix);
+            }
 
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) 
 			{
@@ -643,6 +643,8 @@ void CCSprite::getTransformValues(struct transformValues_ *tv)
 	tv->scale.x = m_fScaleX;
 	tv->scale.y = m_fScaleY;
 	tv->rotation = m_fRotation;
+    tv->skew.x	 = m_fSkewX;
+    tv->skew.y	 = m_fSkewY;
 	tv->ap = m_tAnchorPointInPixels;
 	tv->visible = m_bIsVisible;
 }
@@ -835,6 +837,18 @@ void CCSprite::setRotation(float fRotation)
 	SET_DIRTY_RECURSIVELY();
 }
 
+void CCSprite::setSkewX(float sx)
+{
+    CCNode::setSkewX(sx);
+    SET_DIRTY_RECURSIVELY();
+}
+
+void CCSprite::setSkewY(float sy)
+{
+    CCNode::setSkewY(sy);
+    SET_DIRTY_RECURSIVELY();
+}
+
 void CCSprite::setScaleX(float fScaleX)
 {
 	CCNode::setScaleX(fScaleX);
@@ -882,7 +896,7 @@ void CCSprite::setFlipX(bool bFlipX)
 	if (m_bFlipX != bFlipX)
 	{
 		m_bFlipX = bFlipX;
-		setTextureRectInPixels(m_obRectInPixels, m_bRectRotated, m_obRectInPixels.size);
+		setTextureRectInPixels(m_obRectInPixels, m_bRectRotated, m_tContentSizeInPixels);
 	}
 }
 
@@ -896,7 +910,7 @@ void CCSprite::setFlipY(bool bFlipY)
 	if (m_bFlipY != bFlipY)
 	{
 		m_bFlipY = bFlipY;
-		setTextureRectInPixels(m_obRectInPixels, m_bRectRotated, m_obRectInPixels.size);
+		setTextureRectInPixels(m_obRectInPixels, m_bRectRotated, m_tContentSizeInPixels);
 	}
 }
 
@@ -1050,7 +1064,11 @@ bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
 
 CCSpriteFrame* CCSprite::displayedFrame(void)
 {
-	return CCSpriteFrame::frameWithTexture(m_pobTexture, m_obRect);
+	return CCSpriteFrame::frameWithTexture(m_pobTexture,
+                                           m_obRectInPixels,
+                                           m_bRectRotated,
+                                           m_obUnflippedOffsetPositionFromCenter,
+                                           m_tContentSizeInPixels);
 }
 
 void CCSprite::addAnimation(CCAnimation *pAnimation)
