@@ -110,8 +110,8 @@ namespace cocos2d
     	CCDirector *pDirector = CCDirector::sharedDirector();
 		CCSize s = pDirector->getWinSizeInPixels();
 		
-		unsigned int POTWide = ccNextPOT((unsigned int)s.width);
-		unsigned int POTHigh = ccNextPOT((unsigned int)s.height);
+		unsigned long POTWide = ccNextPOT((unsigned int)s.width);
+		unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
 
 		CCTexture2DPixelFormat format = pDirector->getPiexFormat() == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
 
@@ -346,7 +346,7 @@ namespace cocos2d
 
 		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
 		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
-		glDrawElements(GL_TRIANGLES, n * 6, GL_UNSIGNED_SHORT, m_pIndices);
+		glDrawElements(GL_TRIANGLES, (GLsizei)n * 6, GL_UNSIGNED_SHORT, m_pIndices);
 
 		// restore GL default state
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -521,7 +521,7 @@ namespace cocos2d
 
 		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
 		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
-		glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, m_pIndices);
+		glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
 
 		// restore default GL state
 		glEnableClientState(GL_COLOR_ARRAY);
