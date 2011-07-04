@@ -2,6 +2,7 @@
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2011      Zynga Inc.
  
 http://www.cocos2d-x.org
 
@@ -44,7 +45,7 @@ typedef struct _hashElement
 	CCAction					*currentAction;
 	bool						currentActionSalvaged;
 	bool						paused;
-	UT_hash_handle		hh;
+	UT_hash_handle				hh;
 } tHashElement;
 
 CCActionManager* CCActionManager::sharedManager(void)
@@ -166,12 +167,6 @@ void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pEl
 
 // pause / resume
 
-// XXX DEPRECATED. REMOVE IN 1.0
-void CCActionManager::pauseAllActionsForTarget(CCObject *pTarget)
-{
-	pauseTarget(pTarget);
-}
-
 void CCActionManager::pauseTarget(CCObject *pTarget)
 {
 	tHashElement *pElement = NULL;
@@ -180,12 +175,6 @@ void CCActionManager::pauseTarget(CCObject *pTarget)
 	{
 		pElement->paused = true;
 	}
-}
-
-// XXX DEPRECATED. REMOVE IN 1.0
-void CCActionManager::resumeAllActionsForTarget(CCObject *pTarget)
-{
-	resumeTarget(pTarget);
 }
 
 void CCActionManager::resumeTarget(CCObject *pTarget)
@@ -297,7 +286,7 @@ void CCActionManager::removeAction(cocos2d::CCAction *pAction)
 	}
 }
 
-void CCActionManager::removeActionByTag(int tag, CCObject *pTarget)
+void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 {
 	assert(tag != kCCActionTagInvalid);
 	assert(pTarget != NULL);
@@ -327,7 +316,7 @@ void CCActionManager::removeActionByTag(int tag, CCObject *pTarget)
 
 // get
 
-CCAction* CCActionManager::getActionByTag(int tag, CCObject *pTarget)
+CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
 {
 	assert(tag != kCCActionTagInvalid);
 
@@ -359,7 +348,7 @@ CCAction* CCActionManager::getActionByTag(int tag, CCObject *pTarget)
 	return NULL;
 }
 
-int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
+unsigned int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
 {
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);

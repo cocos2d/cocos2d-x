@@ -112,12 +112,12 @@ MenuLayer1::~MenuLayer1()
 
 void MenuLayer1::menuCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(1);
+	((CCLayerMultiplex*)m_pParent)->switchTo(1);
 }
 
 void MenuLayer1::menuCallbackConfig(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(3);
+	((CCLayerMultiplex*)m_pParent)->switchTo(3);
 }
 
 void MenuLayer1::menuCallbackDisabled(CCObject* sender) 
@@ -131,7 +131,7 @@ void MenuLayer1::menuCallbackEnable(CCObject* sender)
 
 void MenuLayer1::menuCallback2(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(2);
+	((CCLayerMultiplex*)m_pParent)->switchTo(2);
 }
 
 void MenuLayer1::onQuit(CCObject* sender)
@@ -223,7 +223,7 @@ void MenuLayer2::alignMenusV()
 
 void MenuLayer2::menuCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(0);
+	((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
 void MenuLayer2::menuCallbackOpacity(CCObject* sender)
@@ -301,7 +301,7 @@ MenuLayer3::~MenuLayer3()
 
 void MenuLayer3::menuCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(0);
+	((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
 void MenuLayer3::menuCallback2(CCObject* sender)
@@ -412,7 +412,7 @@ void MenuLayer4::menuCallback(CCObject* sender)
 
 void MenuLayer4::backCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(0);
+	((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
 void MenuTestScene::runThisTest()
@@ -422,7 +422,7 @@ void MenuTestScene::runThisTest()
     CCLayer* pLayer3 = new MenuLayer3();
     CCLayer* pLayer4 = new MenuLayer4();
 
-    CCMultiplexLayer* layer = CCMultiplexLayer::layerWithLayers(pLayer1, pLayer2, pLayer3, pLayer4, NULL);
+    CCLayerMultiplex* layer = CCLayerMultiplex::layerWithLayers(pLayer1, pLayer2, pLayer3, pLayer4, NULL);
     addChild(layer, 0); 
 
     pLayer1->release();

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -53,7 +54,7 @@ public:
 	// attributes
 
 	inline CCRect getRectInPixels(void) { return m_obRectInPixels; }
-	inline void setRectInPixels(CCRect rectInPixels) { m_obRectInPixels = rectInPixels; }
+	void setRectInPixels(CCRect rectInPixels);
 
 	inline bool isRotated(void) { return m_bRotated; }
 	inline void setRotated(bool bRotated) { m_bRotated = bRotated; }
@@ -61,7 +62,7 @@ public:
 	/** get rect of the frame */
 	inline CCRect getRect(void) { return m_obRect; }
 	/** set rect of the frame */
-	inline void setRect(CCRect rect) { m_obRect = rect; }
+	void setRect(CCRect rect);
 
 	/** get offset of the frame */
 	inline CCPoint getOffsetInPixels(void) { return m_obOffsetInPixels; }

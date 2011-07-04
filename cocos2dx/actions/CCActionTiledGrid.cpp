@@ -294,12 +294,12 @@ namespace cocos2d
 		CC_SAFE_DELETE_ARRAY(m_pTiles);
 	}
 
-	void CCShuffleTiles::shuffle(int *pArray, int nLen)
+	void CCShuffleTiles::shuffle(int *pArray, unsigned int nLen)
 	{
-		int i;
+		unsigned int i;
 		for( i = nLen - 1; i >= 0; i-- )
 		{
-			int j = rand() % (i+1);
+			unsigned int j = rand() % (i+1);
 			int v = pArray[i];
 			pArray[i] = pArray[j];
 			pArray[j] = v;
@@ -310,7 +310,7 @@ namespace cocos2d
 	{
 		CCPoint	pos2;
 
-		int idx = pos.x * m_sGridSize.y + pos.y;
+		unsigned int idx = pos.x * m_sGridSize.y + pos.y;
 
 		pos2.x = (float)(m_pTilesOrder[idx] / (int)m_sGridSize.y);
 		pos2.y = (float)(m_pTilesOrder[idx] % (int)m_sGridSize.y);
@@ -350,10 +350,15 @@ namespace cocos2d
 		m_nTilesCount = m_sGridSize.x * m_sGridSize.y;
 		m_pTilesOrder = new int[m_nTilesCount];
 		int i, j;
+		unsigned int k;
 
-		for (i = 0; i < m_nTilesCount; ++i)
+		/**
+		 * Use k to loop. Because m_nTilesCount is unsigned int,
+		 * and i is used later for int.
+		 */
+		for (k = 0; k < m_nTilesCount; ++k)
 		{
-			m_pTilesOrder[i] = i;
+			m_pTilesOrder[k] = k;
 		}
 
 		shuffle(m_pTilesOrder, m_nTilesCount);
@@ -660,12 +665,12 @@ namespace cocos2d
 		CC_SAFE_DELETE_ARRAY(m_pTilesOrder);
 	}
 
-	void CCTurnOffTiles::shuffle(int *pArray, int nLen)
+	void CCTurnOffTiles::shuffle(int *pArray, unsigned int nLen)
 	{
-		int i;
+		unsigned int i;
 		for (i = nLen - 1; i >= 0; i--)
 		{
-			int j = rand() % (i+1);
+			unsigned int j = rand() % (i+1);
 			int v = pArray[i];
 			pArray[i] = pArray[j];
 			pArray[j] = v;
@@ -687,7 +692,7 @@ namespace cocos2d
 
 	void CCTurnOffTiles::startWithTarget(CCNode *pTarget)
 	{
-		int i;
+		unsigned int i;
 
 		CCTiledGrid3DAction::startWithTarget(pTarget);
 
@@ -699,7 +704,7 @@ namespace cocos2d
 		m_nTilesCount = m_sGridSize.x * m_sGridSize.y;
 		m_pTilesOrder = new int[m_nTilesCount];
 
-		for ( i = 0; i < m_nTilesCount; ++i)
+		for (i = 0; i < m_nTilesCount; ++i)
 		{
 			m_pTilesOrder[i] = i;
 		}
@@ -709,7 +714,7 @@ namespace cocos2d
 
 	void CCTurnOffTiles::update(cocos2d::ccTime time)
 	{
-		int i, l, t;
+		unsigned int i, l, t;
 
 		l = (int)(time * (float)m_nTilesCount);
 
