@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -52,6 +53,7 @@ protected:
 	GLushort			*m_pIndices;
 #if CC_USES_VBO
 	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
+	bool				m_bDirty; //indicates whether or not the array buffer of the VBO needs to be updated
 #endif // CC_USES_VBO
 
 	/** quantity of quads that are going to be drawn */
@@ -128,7 +130,7 @@ public:
 	void removeAllQuads();
 
 
-	/** resize the capacity of the Texture Atlas.
+	/** resize the capacity of the CCTextureAtlas.
 	* The new capacity can be lower or higher than the current one
 	* It returns YES if the resize was successful.
 	* If it fails to resize the capacity it will return NO with a new capacity of 0.
