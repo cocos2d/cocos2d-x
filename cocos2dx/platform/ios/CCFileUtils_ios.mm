@@ -254,10 +254,10 @@ namespace cocos2d {
 
     int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     {
-        assert( out );
-        assert( &*out );
+        CCAssert( out, "ccLoadFileIntoMemory: invalid 'out' parameter");
+	CCAssert( &*out, "ccLoadFileIntoMemory: invalid 'out' parameter");
 
-        int size = 0;
+        size_t size = 0;
         FILE *f = fopen(filename, "rb");
         if( !f ) { 
             *out = NULL;
@@ -269,7 +269,7 @@ namespace cocos2d {
         fseek(f, 0, SEEK_SET);
 
         *out = (unsigned char*)malloc(size);
-        int read = fread(*out, 1, size, f);
+        size_t read = fread(*out, 1, size, f);
         if( read != size ) { 
             free(*out);
             *out = NULL;
