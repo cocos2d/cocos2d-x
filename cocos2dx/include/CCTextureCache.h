@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -133,6 +134,13 @@ public:
 	@since v0.99.4
 	*/
 	void removeTextureForKey(const char *textureKeyName);
+
+	/** Output to CCLOG the current contents of this CCTextureCache
+	* This will attempt to calculate the size of each texture, and the total texture memory in use
+	*
+	* @since v1.0
+	*/
+	void dumpCachedTextureInfo();
 
 #if _POWERVR_SUPPORT_
 	/** Returns a Texture2D object given an PVRTC RAW filename
