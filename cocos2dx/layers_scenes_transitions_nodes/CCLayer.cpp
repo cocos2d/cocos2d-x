@@ -297,8 +297,13 @@ void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 
 CCLayerColor::CCLayerColor()
 : m_cOpacity(0)
+, m_tColor( ccc3(0,0,0) )
 {
+    // default blend function
+	m_tBlendFunc.src = CC_BLEND_SRC;
+	m_tBlendFunc.dst = CC_BLEND_DST;
 }
+    
 CCLayerColor::~CCLayerColor()
 {
 }
