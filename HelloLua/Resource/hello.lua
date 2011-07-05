@@ -31,10 +31,10 @@ function btnTouchMove(e)
 end
 
 function btnTouchBegin(e)
+    cocos2d.CCLuaLog("btnTouchBegin")
     for k,v in ipairs(e) do
         pointBegin = v:locationInView(v:view())
         pointBegin = cocos2d.CCDirector:sharedDirector():convertToGL(pointBegin)
-        cocos2d.CCLuaLog("btnTouchBegin, x= %d, y = %d", pointBegin.x, pointBegin.y)
     end
 end
 

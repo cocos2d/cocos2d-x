@@ -1887,8 +1887,11 @@
 				GCC_VERSION = 4.2;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
 				HEADER_SEARCH_PATHS = (
-					libs/cocos2dx,
-					libs/CocosDenshion/include,
+					"\"$(SDKROOT)/usr/include/libxml2/\"",
+					"\"$(SRCROOT)/../../cocos2dx/\"",
+					"\"$(SRCROOT)/../../lua/tolua\"",
+					"\"$(SRCROOT)/../../lua/src\"",
+					"$(SRCROOT)/../../lua/cocos2dx_support",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1946,17 +1949,13 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../cocos2dx",
 					"$(SDKROOT)/usr/include/libxml2",
-					libs/cocos2dx,
-					libs/CocosDenshion/include,
+					"$(SRCROOT)/../../cocos2dx/platform",
+					"$(SRCROOT)/../../cocos2dx/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/android/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/win32/libraries\"",
-					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libraries\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d libraries";
 				SDKROOT = iphoneos;

@@ -2949,8 +2949,9 @@
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Debug;
 		};
@@ -3001,7 +3002,8 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include /usr/local/include/libxml2";
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Debug;
 		};
@@ -3041,7 +3043,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Debug;
 		};
