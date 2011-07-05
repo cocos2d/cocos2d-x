@@ -49,10 +49,18 @@ typedef enum {
 	kCCTexture2DPixelFormat_RGB565,
 	//! 8-bit textures used as masks
 	kCCTexture2DPixelFormat_A8,
+	//! 8-bit intensity texture
+	kCCTexture2DPixelFormat_I8,
+	//! 16-bit textures used as masks
+	kCCTexture2DPixelFormat_AI88,
 	//! 16-bit textures: RGBA4444
 	kCCTexture2DPixelFormat_RGBA4444,
 	//! 16-bit textures: RGB5A1
 	kCCTexture2DPixelFormat_RGB5A1,	
+	//! 4-bit PVRTC-compressed texture: PVRTC4
+	kCCTexture2DPixelFormat_PVRTC4,
+	//! 2-bit PVRTC-compressed texture: PVRTC2
+	kCCTexture2DPixelFormat_PVRTC2,
 
 	//! Default texture format: RGBA8888
 	kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
@@ -188,6 +196,11 @@ public:
 	@since v0.99.0
 	*/
 	void generateMipmap();
+
+	/** returns the bits-per-pixel of the in-memory OpenGL texture
+	@since v1.0
+	*/
+    int bitsPerPixelForFormat();
 
 
 	/** sets the default pixel format for UIImages that contains alpha channel.
