@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -176,27 +177,6 @@ public:
 	 */
 	void resumeTarget(SelectorProtocol *pTarget);
 
-	/** schedules a Timer.
-	 It will be fired in every frame.
-	 
-	 @deprecated Use scheduleSelector:forTarget:interval:paused instead. Will be removed in 1.0
-	 */
-	void scheduleTimer(CCTimer *pTimer);
-
-	/** unschedules an already scheduled Timer
- 
-	 @deprecated Use unscheduleSelector:forTarget. Will be removed in v1.0
-	 */
-	void unscheduleTimer(CCTimer *pTimer);
-
-	/** unschedule all timers.
-	 You should NEVER call this method, unless you know what you are doing.
-	 
-	 @deprecated Use scheduleAllSelectors instead. Will be removed in 1.0
-	 @since v0.8
-	 */
-	void unscheduleAllTimers(void);
-
 public:
     /** returns a shared instance of the Scheduler */
 	static CCScheduler* sharedScheduler(void);
@@ -208,6 +188,7 @@ public:
 
 private:
 	void removeHashElement(struct _hashSelectorEntry *pElement);
+	void removeUpdateFromHash(struct _listEntry *entry);
 	CCScheduler();
 	bool init(void);
 
@@ -231,6 +212,8 @@ protected:
 	struct _hashSelectorEntry *m_pHashForSelectors;
 	struct _hashSelectorEntry *m_pCurrentTarget;
 	bool m_bCurrentTargetSalvaged;
+	// If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
+	bool m_bUpdateHashLocked;
 
 	// Used for "script function call back with interval"
 	struct _hashScriptFuncEntry *m_pHashForScriptFunctions;
