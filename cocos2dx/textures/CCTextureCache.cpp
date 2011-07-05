@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -77,7 +78,7 @@ CCTextureCache::CCTextureCache()
 
 CCTextureCache::~CCTextureCache()
 {
-	CCLOG("cocos2d: deallocing CCTextureCache.");
+	CCLOGINFO("cocos2d: deallocing CCTextureCache.");
 
 	CC_SAFE_RELEASE(m_pTextures);
 	CC_SAFE_DELETE(m_pDictLock);
@@ -225,7 +226,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #endif
 
 					m_pTextures->setObject(texture, pathKey);
-					texture->release();
+					// autorelease prevents possible crash in multithreaded environments
+					texture->autorelease();
 				}
 				else
 				{
@@ -252,7 +254,8 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 #endif
 
 					m_pTextures->setObject(texture, pathKey);
-					texture->release();
+					// autorelease prevents possible crash in multithreaded environments
+					texture->autorelease();
 				}
 				else
 				{
@@ -445,6 +448,34 @@ void CCTextureCache::reloadAllTextures()
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     VolatileTexture::reloadAllTextures();
 #endif
+}
+
+void CCTextureCache::dumpCachedTextureInfo()
+{
+	unsigned int count = 0;
+	unsigned int totalBytes = 0;
+
+	vector<string> keys = m_pTextures->allKeys();
+	vector<string>::iterator iter;
+	for (iter = keys.begin(); iter != keys.end(); iter++)
+	{
+		CCTexture2D *tex = m_pTextures->objectForKey(*iter);
+		unsigned int bpp = tex->bitsPerPixelForFormat();
+        // Each texture takes up width * height * bytesPerPixel bytes.
+		unsigned int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
+		totalBytes += bytes;
+		count++;
+		CCLOG("cocos2d: \"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB",
+			   (*iter).c_str(),
+			   (long)tex->retainCount(),
+			   (long)tex->getName(),
+			   (long)tex->getPixelsWide(),
+			   (long)tex->getPixelsHigh(),
+			   (long)bpp,
+			   (long)bytes / 1024);
+	}
+
+	CCLOG("cocos2d: CCTextureCache dumpDebugInfo: %ld textures, for %lu KB (%.2f MB)", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
 }
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
