@@ -44,7 +44,7 @@ namespace cocos2d
 	@since v0.99.5
 	*/
 
-	unsigned int ccNextPOT( unsigned int value );
+	unsigned long ccNextPOT( unsigned long value );
 }
 
 #endif // __SUPPORT_CC_UTILS_H__

@@ -301,8 +301,8 @@ CCPoint CC_DLL ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float an
 	the hit point also is	p1 + s * (p2 - p1);
  @since v0.99.1
  */
-bool CC_DLL ccpLineIntersect(const CCPoint& p1, const CCPoint& p2, 
-					  const CCPoint& p3, const CCPoint& p4,
+bool CC_DLL ccpLineIntersect(CCPoint p1, CCPoint p2, 
+					  CCPoint p3, CCPoint p4,
 					  float *s, float *t);
 
 }//namespace   cocos2d 

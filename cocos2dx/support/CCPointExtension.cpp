@@ -87,7 +87,8 @@ CCPoint ccpFromSize(const CCSize& s)
 	return ccp(s.width, s.height);
 }
 
-CCPoint ccpCompOp(const CCPoint& p, float (*opFunc)(float)){
+CCPoint ccpCompOp(const CCPoint& p, float (*opFunc)(float))
+{
 	return ccp(opFunc(p.x), opFunc(p.y));
 }
 
@@ -106,59 +107,78 @@ CCPoint ccpCompMult(const CCPoint& a, const CCPoint& b)
 
 float ccpAngleSigned(const CCPoint& a, const CCPoint& b)
 {
-	CCPoint a2 = ccpNormalize(a);	CCPoint b2 = ccpNormalize(b);
+	CCPoint a2 = ccpNormalize(a);
+    CCPoint b2 = ccpNormalize(b);
 	float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
 	if( fabs(angle) < kCCPointEpsilon ) return 0.f;
 	return angle;
 }
 
-CCPoint ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle) {
+CCPoint ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle)
+{
 	CCPoint r = ccpSub(v, pivot);
+    float cosa = cosf(angle), sina = sinf(angle);
 	float t = r.x;
-	float cosa = cosf(angle), sina = sinf(angle);
-	r.x = t*cosa - r.y*sina;
-	r.y = t*sina + r.y*cosa;
-	r = ccpAdd(r, pivot);
+    r.x = t*cosa - r.y*sina + pivot.x;
+    r.y = t*sina + r.y*cosa + pivot.y;
 	return r;
 }
 
-bool ccpLineIntersect(const CCPoint& p1, const CCPoint& p2, 
-					  const CCPoint& p3, const CCPoint& p4,
-					  float *s, float *t){
-	CCPoint p13, p43, p21;
-	float d1343, d4321, d1321, d4343, d2121;
-	float numer, denom;
-	
-	p13 = ccpSub(p1, p3);
-	
-	p43 = ccpSub(p4, p3);
-	
-	//Roughly equal to zero but with an epsilon deviation for float 
-	//correction
-	if (ccpFuzzyEqual(p43, CCPointZero, kCCPointEpsilon))
-		return false;
-	
-	p21 = ccpSub(p2, p1);
-	
-	//Roughly equal to zero
-	if (ccpFuzzyEqual(p21,CCPointZero, kCCPointEpsilon))
-		return false;
-	
-	d1343 = ccpDot(p13, p43);
-	d4321 = ccpDot(p43, p21);
-	d1321 = ccpDot(p13, p21);
-	d4343 = ccpDot(p43, p43);
-	d2121 = ccpDot(p21, p21);
-	
-	denom = d2121 * d4343 - d4321 * d4321;
-	if (fabs(denom) < kCCPointEpsilon)
-		return false;
-	numer = d1343 * d4321 - d1321 * d4343;
-	
-	*s = numer / denom;
-	*t = (d1343 + d4321 *(*s)) / d4343;
-	
-	return true;
+bool ccpLineIntersect(CCPoint A, CCPoint B, 
+					  CCPoint C, CCPoint D,
+					  float *S, float *T)
+{
+    // FAIL: Line undefined
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
+    {
+        return false;
+    }
+
+    //  Translate system to make A the origin
+    B.x-=A.x; B.y-=A.y;
+    C.x-=A.x; C.y-=A.y;
+    D.x-=A.x; D.y-=A.y;
+
+    // Cache
+    CCPoint C2 = C, D2 = D;
+
+    // Length of segment AB
+    float distAB = sqrtf(B.x*B.x+B.y*B.y);
+
+    // Rotate the system so that point B is on the positive X axis.
+    float theCos = B.x/distAB;
+    float theSin = B.y/distAB;
+    float newX = C.x*theCos+C.y*theSin;
+    C.y  = C.y*theCos-C.x*theSin; C.x = newX;
+    newX = D.x*theCos+D.y*theSin;
+    D.y  = D.y*theCos-D.x*theSin; D.x = newX;
+
+    // FAIL: Lines are parallel.
+    if (C.y == D.y)
+    {
+        return false;
+    }
+
+    // Discover position of the intersection in the line AB
+    float ABpos = D.x+(C.x-D.x)*D.y/(D.y-C.y);
+
+    // Vector CD
+    C.x = D2.x-C2.x;
+    C.y = D2.y-C2.y;
+
+    // Vector between intersection and point C
+    A.x = ABpos*theCos-C2.x;
+    A.y = ABpos*theSin-C2.y;
+
+    newX = sqrtf((A.x*A.x+A.y*A.y)/(C.x*C.x+C.y*C.y));
+    if(((A.y<0) != (C.y<0)) || ((A.x<0) != (C.x<0)))
+        newX *= -1.0f;
+
+    *S = ABpos/distAB;
+    *T = newX;
+
+    // Success.
+    return true;
 }
 
 float ccpAngle(const CCPoint& a, const CCPoint& b)
