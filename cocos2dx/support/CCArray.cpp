@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 Abstraction Works. http://www.abstractionworks.com
+Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
 Copyright (c) 2010 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -192,6 +192,49 @@ void CCArray::fastRemoveObjectAtIndex(unsigned int index)
 void CCArray::fastRemoveObject(CCObject* object)
 {
     ccArrayFastRemoveObject(data, object);
+}
+
+void CCArray::exchangeObject(CCObject* object1, CCObject* object2)
+{
+    unsigned int index1 = ccArrayGetIndexOfObject(data, object1);
+    if(index1 == UINT_MAX)
+    {
+        return;
+    }
+
+    unsigned int index2 = ccArrayGetIndexOfObject(data, object2);
+    if(index2 == UINT_MAX)
+    {
+        return;
+    }
+
+    ccArraySwapObjectsAtIndexes(data, index1, index2);
+}
+
+void CCArray::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
+{
+    ccArraySwapObjectsAtIndexes(data, index1, index2);
+}
+
+void CCArray::reverseObjects()
+{
+    if (data->num > 1)
+    {
+        //floor it since in case of a oneven number the number of swaps stays the same
+        int count = (int) floorf(data->num/2.f); 
+        unsigned int maxIndex = data->num - 1;
+
+        for (int i = 0; i < count ; i++)
+        {
+            ccArraySwapObjectsAtIndexes(data, i, maxIndex);
+            maxIndex--;
+        }
+    }
+}
+
+void CCArray::reduceMemoryFootprint()
+{
+    ccArrayShrink(data);
 }
 
 CCArray::~CCArray()
