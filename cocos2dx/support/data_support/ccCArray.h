@@ -95,7 +95,10 @@ static inline void ccArrayFree(ccArray *arr)
 static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
-	arr->arr = (CCObject**) realloc(arr->arr, arr->max * sizeof(CCObject*));
+    CCObject** newArr = (CCObject**)realloc( arr->arr, arr->max * sizeof(CCObject*) );
+    // will fail when there's not enough memory
+    CCAssert(newArr != NULL, "ccArrayDoubleCapacity failed. Not enough memory");
+    arr->arr = newArr;
 }
 
 /** Increases array capacity such that max >= num + extra. */
@@ -106,6 +109,30 @@ static inline void ccArrayEnsureExtraCapacity(ccArray *arr, unsigned int extra)
 		ccArrayDoubleCapacity(arr); 
 	}
 }
+
+/** shrinks the array so the memory footprint corresponds with the number of items */
+static inline void ccArrayShrink(ccArray *arr)
+{
+    unsigned int newSize;
+
+    //only resize when necessary
+    if (arr->max > arr->num && !(arr->num==0 && arr->max==1))
+    {
+        if (arr->num!=0) 
+        {
+            newSize=arr->num;
+            arr->max=arr->num; 
+        }
+        else 
+        {//minimum capacity of 1, with 0 elements the array would be free'd by realloc
+            newSize=1;
+            arr->max=1;
+        }
+
+        arr->arr = (CCObject**) realloc(arr->arr,newSize * sizeof(CCObject*) );
+        CCAssert(arr->arr != NULL, "could not reallocate the memory");
+    }
+} 
 
 /** Returns index of first occurence of object, UXNotFound if object not found. */
 static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, CCObject* object)
@@ -158,19 +185,32 @@ static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 	ccArrayAppendArray(arr, plusArr);
 }
 
+/** Inserts an object at index */
 static inline void ccArrayInsertObjectAtIndex(ccArray *arr, CCObject* object, unsigned int index)
 {
     CCAssert(index<=arr->num, "Invalid index. Out of bounds");
 
     ccArrayEnsureExtraCapacity(arr, 1);
 
-    int remaining = arr->num - index;
+    unsigned int remaining = arr->num - index;
     if( remaining > 0)
         memmove(&arr->arr[index+1], &arr->arr[index], sizeof(CCObject*) * remaining );
 
     object->retain();
     arr->arr[index] = object;
     arr->num++;
+}
+
+/** Swaps two objects */
+static inline void ccArraySwapObjectsAtIndexes(ccArray *arr, unsigned int index1, unsigned int index2)
+{
+    CCAssert(index1 < arr->num, "(1) Invalid index. Out of bounds");
+    CCAssert(index2 < arr->num, "(2) Invalid index. Out of bounds");
+
+    CCObject* object1 = arr->arr[index1];
+
+    arr->arr[index1] = arr->arr[index2];
+    arr->arr[index2] = object1;
 }
 
 /** Removes all objects from arr */
@@ -189,7 +229,7 @@ static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index)
 	arr->arr[index]->release(); 
 	arr->num--;
 
-	int remaining = arr->num - index;
+	unsigned int remaining = arr->num - index;
 	if (remaining > 0)
 	{
 			memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(void*));
@@ -335,7 +375,8 @@ static inline bool ccCArrayContainsValue(ccCArray *arr, void* value)
 /** Inserts a value at a certain position. The valid index is [0, num] */
 static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index)
 {
-	int remaining = arr->num - index;
+    CCAssert( index < arr->max, "ccCArrayInsertValueAtIndex: invalid index");
+	unsigned int remaining = arr->num - index;
 
 	// make sure it has enough capacity
 	if (arr->num + 1 == arr->max)
