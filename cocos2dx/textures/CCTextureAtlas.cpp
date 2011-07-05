@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -145,6 +146,9 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 	this->m_pTexture = texture;
 	CC_SAFE_RETAIN(m_pTexture);
 
+	// Re-initialization is not allowed
+	assert(m_pQuads == NULL && m_pIndices == NULL);
+
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)calloc( sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, 1 );
 	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
 
@@ -161,7 +165,8 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 #if CC_USES_VBO
 	// initial binding
-	glGenBuffers(2, &m_pBuffersVBO[0]);		
+	glGenBuffers(2, &m_pBuffersVBO[0]);	
+	m_bDirty = true;
 #endif // CC_USES_VBO
 
 	this->initIndices();
@@ -222,6 +227,10 @@ void CCTextureAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 	m_uTotalQuads = max( index+1, m_uTotalQuads);
 
 	m_pQuads[index] = *quad;	
+
+#if CC_USES_VBO
+	m_bDirty = true;
+#endif
 }
 
 void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
@@ -241,6 +250,10 @@ void CCTextureAtlas::insertQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
 	}
 
 	m_pQuads[index] = *quad;
+
+#if CC_USES_VBO
+	m_bDirty = true;
+#endif
 }
 
 void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int newIndex)
@@ -265,6 +278,10 @@ void CCTextureAtlas::insertQuadFromIndex(unsigned int oldIndex, unsigned int new
 	ccV3F_C4B_T2F_Quad quadsBackup = m_pQuads[oldIndex];
 	memmove( &m_pQuads[dst],&m_pQuads[src], sizeof(m_pQuads[0]) * howMany );
 	m_pQuads[newIndex] = quadsBackup;
+
+#if CC_USES_VBO
+	m_bDirty = true;
+#endif
 }
 
 void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
@@ -281,6 +298,10 @@ void CCTextureAtlas::removeQuadAtIndex(unsigned int index)
 	}
 
 	m_uTotalQuads--;
+
+#if CC_USES_VBO
+	m_bDirty = true;
+#endif
 }
 
 void CCTextureAtlas::removeAllQuads()
@@ -324,6 +345,10 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 
 	this->initIndices();
 
+#if CC_USES_VBO
+	m_bDirty = true;
+#endif
+
 	return true;
 }
 
@@ -331,10 +356,15 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 
 void CCTextureAtlas::drawQuads()
 {
-	this->drawNumberOfQuads(m_uTotalQuads);
+	this->drawNumberOfQuads(m_uTotalQuads, 0);
 }
 
 void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
+{
+	this->drawNumberOfQuads(m_uTotalQuads, 0);
+}
+
+void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 {	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -354,7 +384,12 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 #endif
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0]) * n, m_pQuads);
+	if (m_bDirty)
+	{
+		glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * start, sizeof(m_pQuads[0]) * n, &m_pQuads[start]);
+		m_bDirty = false;
+	}
+	
 
 	// vertices
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
@@ -372,9 +407,9 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 #endif
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0);    
+	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*)(start * 6 * sizeof(m_pIndices[0])));    
 #else
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0); 
+	glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*)(start * 6 * sizeof(m_pIndices[0]))); 
 #endif // CC_USES_VBO
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -397,17 +432,12 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, m_pIndices);	
+	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, m_pIndices + start * 6);	
 #else
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, m_pIndices);	
+	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, m_pIndices + start * 6);	
 #endif
 
 #endif // CC_USES_VBO
-}
-
-void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
-{
-
 }
 
 
