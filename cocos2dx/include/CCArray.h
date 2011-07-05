@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 Abstraction Works. http://www.abstractionworks.com
+Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
 Copyright (c) 2010 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -53,6 +53,7 @@ public:
     bool initWithCapacity(unsigned int capacity);
     bool initWithArray(CCArray* otherArray);
 
+    // Querying an Array
     unsigned int count();
     unsigned int capacity();
     unsigned int indexOfObject(CCObject* object);
@@ -61,10 +62,12 @@ public:
     CCObject* randomObject();
     bool containsObject(CCObject* object);
 
+    // Adding Objects
     void addObject(CCObject* object);
     void addObjectsFromArray(CCArray* otherArray);
     void insertObject(CCObject* object, unsigned int index);
 
+    // Removing Objects
     void removeLastObject();
     void removeObject(CCObject* object);
     void removeObjectAtIndex(unsigned int index);
@@ -72,6 +75,12 @@ public:
     void removeAllObjects();
     void fastRemoveObject(CCObject* object);
     void fastRemoveObjectAtIndex(unsigned int index);
+
+    // Rearranging Content
+    void exchangeObject(CCObject* object1, CCObject* object2);
+    void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+    void reverseObjects();
+    void reduceMemoryFootprint();
 
 public:
     ccArray* data;

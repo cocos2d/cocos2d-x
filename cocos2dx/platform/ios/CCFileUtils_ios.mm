@@ -255,8 +255,8 @@ namespace cocos2d {
 
     int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     {
-        assert( out );
-        assert( &*out );
+        CCAssert( out, "ccLoadFileIntoMemory: invalid 'out' parameter");
+	CCAssert( &*out, "ccLoadFileIntoMemory: invalid 'out' parameter");
 
         size_t size = 0;
         FILE *f = fopen(filename, "rb");
