@@ -705,7 +705,7 @@ void CCDirector::showProfilers()
 // is the view currently attached
 bool CCDirector::isOpenGLAttached(void)
 {
-	return m_pobOpenGLView->isOpenGLReady();
+    return m_pobOpenGLView? m_pobOpenGLView->isOpenGLReady() : false;
 }
 
 void CCDirector::updateContentScaleFactor()
