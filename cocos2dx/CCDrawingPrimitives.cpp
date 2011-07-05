@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -69,8 +70,8 @@ void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 	ccVertex2F *newPoints = new ccVertex2F[numberOfPoints];
 
 	// iPhone and 32-bit machines optimization
-	if( sizeof(CCPoint) == sizeof(ccVertex2F) ) {
-
+	if( sizeof(CCPoint) == sizeof(ccVertex2F) ) 
+	{
 		// points ?
 		if( CC_CONTENT_SCALE_FACTOR() != 1 ) 
 		{
@@ -83,11 +84,14 @@ void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 			glVertexPointer(2, GL_FLOAT, 0, newPoints);
 
 		} else
+		{
 			glVertexPointer(2, GL_FLOAT, 0, points);
+		}
 
-		glDrawArrays(GL_POINTS, 0, numberOfPoints);
+		glDrawArrays(GL_POINTS, 0, (GLsizei)numberOfPoints);
 
-	} else {
+	} else 
+	{
 
 		// Mac on 64-bit
 		for( unsigned int i = 0; i < numberOfPoints; i++)
@@ -97,7 +101,7 @@ void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 		}
 
 		glVertexPointer(2, GL_FLOAT, 0, newPoints);
-		glDrawArrays(GL_POINTS, 0, numberOfPoints);
+		glDrawArrays(GL_POINTS, 0, (GLsizei)numberOfPoints);
 	}
 
 	delete[] newPoints;
@@ -149,10 +153,11 @@ void ccDrawPoly(const CCPoint *poli, int numberOfPoints, bool closePolygon)
 
 
     // iPhone and 32-bit machines
-    if( sizeof(CCPoint) == sizeof(ccVertex2F) ) {
-
+    if( sizeof(CCPoint) == sizeof(ccVertex2F) ) 
+	{
         // convert to pixels ?
-        if( CC_CONTENT_SCALE_FACTOR() != 1 ) {
+        if( CC_CONTENT_SCALE_FACTOR() != 1 ) 
+		{
             memcpy( newPoint, poli, numberOfPoints * sizeof(ccVertex2F) );
             for( int i=0; i<numberOfPoints;i++)
             {
@@ -161,11 +166,16 @@ void ccDrawPoly(const CCPoint *poli, int numberOfPoints, bool closePolygon)
             }
             glVertexPointer(2, GL_FLOAT, 0, newPoint);
 
-        } else
+        } 
+		else
+		{
             glVertexPointer(2, GL_FLOAT, 0, poli);
+		}
 
 
-    } else {
+    } 
+	else 
+	{
         // 64-bit machines (Mac)
 
         for( int i=0; i<numberOfPoints;i++)
@@ -179,9 +189,13 @@ void ccDrawPoly(const CCPoint *poli, int numberOfPoints, bool closePolygon)
     }
 
     if( closePolygon )
-        glDrawArrays(GL_LINE_LOOP, 0, numberOfPoints);
+	{
+        glDrawArrays(GL_LINE_LOOP, 0, (GLsizei)numberOfPoints);
+	}
     else
-        glDrawArrays(GL_LINE_STRIP, 0, numberOfPoints);
+	{
+        glDrawArrays(GL_LINE_STRIP, 0, (GLsizei)numberOfPoints);
+	}
 
     // restore default state
     glEnableClientState(GL_COLOR_ARRAY);
@@ -228,7 +242,7 @@ void ccDrawCircle(CCPoint center, float r, float a, int segs, bool drawLineToCen
 	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, segs+additionalSegment);
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
 	
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -260,7 +274,7 @@ void ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, int 
 	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 	delete[] vertices;
 	
 	// restore default state
@@ -291,7 +305,7 @@ void ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoi
 	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, segments + 1);
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 	delete[] vertices;
 	
 	// restore default state

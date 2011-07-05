@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,48 +37,6 @@ THE SOFTWARE.
 #include "CCGL.h"
 
 namespace   cocos2d {
-
-	enum  {
-		/// If the window is resized, it won't be autoscaled
-		kCCDirectorResize_NoScale,
-		/// If the window is resized, it will be autoscaled (default behavior)
-		kCCDirectorResize_AutoScale,
-	};
-
-/** @typedef tPixelFormat
- Possible Pixel Formats for the CCEGLView
- */
-typedef enum {
-	/** RGB565 pixel format. No alpha. 16-bit. (Default) */
-	kCCPixelFormatRGB565,
-	/** RGBA format. 32-bit. Needed for some 3D effects. It is not as fast as the RGB565 format. */
-	kCCPixelFormatRGBA8888,
-	/** default pixel format */
-	kCCPixelFormatDefault = kCCPixelFormatRGB565,
-
-	// backward compatibility stuff
-	kPixelFormatRGB565 = kCCPixelFormatRGB565,
-	kRGB565 = kCCPixelFormatRGB565,
-	kPixelFormatRGBA8888 = kCCPixelFormatRGBA8888,
-	kRGBA8 = kCCPixelFormatRGBA8888,
-} tPixelFormat;
-
-/** @typedef tDepthBufferFormat
- Possible DepthBuffer Formats for the CCEGLView.
- Use 16 or 24 bit depth buffers if you are going to use real 3D objects.
- */
-typedef enum {
-	/// A Depth Buffer of 0 bits will be used (default)
-	kCCDepthBufferNone,
-	/// A depth buffer of 16 bits will be used
-	kCCDepthBuffer16,
-	/// A depth buffer of 24 bits will be used
-	kCCDepthBuffer24,
-	
-	// backward compatibility stuff
-	kDepthBuffer16 = kCCDepthBuffer16,
-	kDepthBuffer24 = kCCDepthBuffer24,
-} tDepthBufferFormat;
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -408,27 +367,6 @@ public:
 	*/
 	static bool setDirectorType(ccDirectorType obDirectorType);
 
-	/** Uses a new pixel format for the CCEGLView.
-	Call this class method before attaching it to a UIView
-	Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
-
-	@deprecated Set the pixel format when creating the CCEGLView. This method will be removed in v1.0
-	*/
-	void setPixelFormat(tPixelFormat kPixelFormat);
-	/** Pixel format used to create the context */
-	tPixelFormat getPiexFormat(void);
-
-	/** Change depth buffer format of the render buffer.
-	Call this class method before attaching it to a UIWindow/UIView
-	Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
-
-	@deprecated Set the depth buffer format when creating the CCEGLView. This method will be removed in v1.0
-	*/
-	void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat);
-
-	/** detach the cocos2d view from the view/window */
-	bool detach(void);
-
 public:
 	/** returns a shared instance of the director */
 	static CCDirector* sharedDirector(void);
@@ -438,7 +376,6 @@ protected:
 	void purgeDirector();
 	bool m_bPurgeDirecotorInNextLoop; // this flag will be set to true in end()
 	
-	bool isOpenGLAttached(void);
 	void updateContentScaleFactor(void);
 
 	void setNextScene(void);
@@ -518,9 +455,6 @@ protected:
 	ccDeviceOrientation	m_eDeviceOrientation;
 	/* contentScaleFactor could be simulated */
 	bool m_bIsContentScaleSupported;
-	// Deprecated. Will be removed in 1.0
-	tPixelFormat m_ePixelFormat;
-	tDepthBufferFormat m_eDepthBufferFormat;
 
 	bool m_bRetinaDisplay;
 	

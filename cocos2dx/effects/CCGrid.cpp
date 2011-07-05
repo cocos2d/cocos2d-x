@@ -113,7 +113,8 @@ namespace cocos2d
 		unsigned long POTWide = ccNextPOT((unsigned int)s.width);
 		unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
 
-		CCTexture2DPixelFormat format = pDirector->getPiexFormat() == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
+		// we only use rgba8888
+		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
 
 		void *data = calloc((int)(POTWide * POTHigh * 4), 1);
 		if (! data)
