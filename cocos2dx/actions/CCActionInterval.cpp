@@ -1952,6 +1952,11 @@ CCObject* CCReverseTime::copyWithZone(cocos2d::CCZone *pZone)
 	return pCopy;
 }
 
+CCReverseTime::CCReverseTime() : m_pOther(NULL) 
+{
+
+}
+
 CCReverseTime::~CCReverseTime(void)
 {
 	CC_SAFE_RELEASE(m_pOther);
