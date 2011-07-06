@@ -32,7 +32,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    42
+#define MAX_LAYER    48
 
 CCLayer* createSpriteTestLayer(int nIndex)
 {
@@ -81,6 +81,12 @@ CCLayer* createSpriteTestLayer(int nIndex)
         case 39: return new SpriteNilTexture();
         case 40: return new SpriteSubclass();
         case 41: return new AnimationCache();
+		case 42: return new SpriteOffsetAnchorSkew();
+		case 43: return new SpriteBatchNodeOffsetAnchorSkew();
+		case 44: return new SpriteOffsetAnchorSkewScale();
+		case 45: return new SpriteBatchNodeOffsetAnchorSkewScale();
+		case 46: return new SpriteOffsetAnchorFlip();
+		case 47: return new SpriteBatchNodeOffsetAnchorFlip();
     }
 
     return NULL;
@@ -3379,4 +3385,493 @@ void SpriteTestScene::runThisTest()
     addChild(pLayer);
 
     CCDirector::sharedDirector()->replaceScene(this);
+}
+
+//
+// SpriteOffsetAnchorSkew
+// 
+SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	for (int i = 0; i < 3; i++)
+	{
+		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animations/grossini.plist");
+		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		//
+		// Animation using Sprite batch
+		//
+		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+
+		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+		point->setScale(0.25f);
+		point->setPosition(sprite->getPosition());
+		addChild(point, 1);
+
+		switch (i)
+		{
+		case 0:
+			sprite->setAnchorPoint(CCPointZero);
+			break;
+		case 1:
+			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+			break;
+		case 2:
+			sprite->setAnchorPoint(ccp(1, 1));
+			break;
+		}
+
+		point->setPosition(sprite->getPosition());
+
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		char tmp[50];
+		for (int j = 0; j < 14; j++)
+		{			
+			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+			animFrames->addObject(frame);
+		}
+
+		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+
+		delete animFrames;
+
+		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+		CCSkewBy *skewX_back = skewX->reverse();
+		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+		CCSkewBy *skewY_back = skewY->reverse();
+
+		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+
+		addChild(sprite, 0);
+	}
+}
+
+SpriteOffsetAnchorSkew::~SpriteOffsetAnchorSkew()
+{
+	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->removeSpriteFramesFromFile("animations/grossini.plist");
+    cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteOffsetAnchorSkew::title()
+{
+	return "Sprite offset + anchor + scale";
+}
+
+//
+// SpriteBatchNodeOffsetAnchorSkew
+// 
+SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	for (int i = 0; i < 3; i++)
+	{
+		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animations/grossini.plist");
+		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		//
+		// Animation using Sprite batch
+		//
+		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+
+		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+		point->setScale(0.25f);
+		point->setPosition(sprite->getPosition());
+		addChild(point, 200);
+
+		switch (i)
+		{
+		case 0:
+			sprite->setAnchorPoint(CCPointZero);
+			break;
+		case 1:
+			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+			break;
+		case 2:
+			sprite->setAnchorPoint(ccp(1, 1));
+			break;
+		}
+
+		point->setPosition(sprite->getPosition());
+
+		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+		addChild(spritebatch);
+
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		char tmp[50];
+		for (int j = 0; j < 14; j++)
+		{			
+			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+			animFrames->addObject(frame);
+		}
+
+		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+
+		delete animFrames;
+
+		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+		CCSkewBy *skewX_back = skewX->reverse();
+		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+		CCSkewBy *skewY_back = skewY->reverse();
+
+		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+
+		spritebatch->addChild(sprite, i);
+	}
+}
+
+SpriteBatchNodeOffsetAnchorSkew::~SpriteBatchNodeOffsetAnchorSkew()
+{
+	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->removeSpriteFramesFromFile("animations/grossini.plist");
+	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteBatchNodeOffsetAnchorSkew::title()
+{
+	return "SpriteBatchNode offset + anchor + skew";
+}
+
+//
+// SpriteOffsetAnchorSkewScale
+//
+SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	for (int i = 0; i < 3; i++)
+	{
+		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animations/grossini.plist");
+		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		//
+		// Animation using Sprite batch
+		//
+		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+
+		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+		point->setScale(0.25f);
+		point->setPosition(sprite->getPosition());
+		addChild(point, 1);
+
+		switch (i)
+		{
+		case 0:
+			sprite->setAnchorPoint(CCPointZero);
+			break;
+		case 1:
+			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+			break;
+		case 2:
+			sprite->setAnchorPoint(ccp(1, 1));
+			break;
+		}
+
+		point->setPosition(sprite->getPosition());
+
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		char tmp[50];
+		for (int j = 0; j < 14; j++)
+		{			
+			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+			animFrames->addObject(frame);
+		}
+
+		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+
+		delete animFrames;
+
+		// Skew
+		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+		CCSkewBy *skewX_back = skewX->reverse();
+		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+		CCSkewBy *skewY_back = skewY->reverse();
+
+		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+
+		// Scale
+		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
+		CCScaleBy *scale_back = scale->reverse();
+		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
+
+		addChild(sprite, 0);
+	}
+}
+
+SpriteOffsetAnchorSkewScale::~SpriteOffsetAnchorSkewScale()
+{
+	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->removeSpriteFramesFromFile("animations/grossini.plist");
+	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteOffsetAnchorSkewScale::title()
+{
+	return "Sprite anchor + skew + scale";
+}
+
+SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	for (int i = 0; i < 3; i++)
+	{
+		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animations/grossini.plist");
+		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		//
+		// Animation using Sprite batch
+		//
+		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+
+		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+		point->setScale(0.25f);
+		point->setPosition(sprite->getPosition());
+		addChild(point, 200);
+
+		switch (i)
+		{
+		case 0:
+			sprite->setAnchorPoint(CCPointZero);
+			break;
+		case 1:
+			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+			break;
+		case 2:
+			sprite->setAnchorPoint(ccp(1, 1));
+			break;
+		}
+
+		point->setPosition(sprite->getPosition());
+
+		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+		addChild(spritebatch);
+
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		char tmp[50];
+		for (int j = 0; j < 14; j++)
+		{			
+			sprintf(tmp, "grossini_dance_%02d.png", j + 1);
+			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+			animFrames->addObject(frame);
+		}
+
+		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+
+		delete animFrames;
+
+		// skew
+		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
+		CCSkewBy *skewX_back = skewX->reverse();
+		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
+		CCSkewBy *skewY_back = skewY->reverse();
+
+		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
+
+		// scale 
+		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
+		CCScaleBy *scale_back = scale->reverse();
+		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
+
+		spritebatch->addChild(sprite, i);
+	}
+}
+
+SpriteBatchNodeOffsetAnchorSkewScale::~SpriteBatchNodeOffsetAnchorSkewScale()
+{
+	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->removeSpriteFramesFromFile("animations/grossini.plist");
+	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteBatchNodeOffsetAnchorSkewScale::title()
+{
+	return "SpriteBatchNode anchor + skew + scale";
+}
+
+//
+// SpriteOffsetAnchorFlip
+// 
+SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	for (int i = 0; i < 3; i++)
+	{
+		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animations/grossini.plist");
+		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		//
+		// Animation using Sprite batch
+		//
+		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+
+		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+		point->setScale(0.25f);
+		point->setPosition(sprite->getPosition());
+		addChild(point, 1);
+
+		switch (i)
+		{
+		case 0:
+			sprite->setAnchorPoint(CCPointZero);
+			break;
+		case 1:
+			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+			break;
+		case 2:
+			sprite->setAnchorPoint(ccp(1, 1));
+			break;
+		}
+
+		point->setPosition(sprite->getPosition());
+
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		char tmp[50];
+		for (int j = 0; j < 14; j++)
+		{			
+			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
+			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+			animFrames->addObject(frame);
+		}
+
+		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+
+		delete animFrames;
+
+		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
+		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
+		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
+		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
+
+		addChild(sprite, 0);
+	}
+}
+
+SpriteOffsetAnchorFlip::~SpriteOffsetAnchorFlip()
+{
+	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->removeSpriteFramesFromFile("animations/grossini.plist");
+	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteOffsetAnchorFlip::title()
+{
+	return "Sprite offset + anchor + flip";
+}
+
+string SpriteOffsetAnchorFlip::subtitle()
+{
+	return "issue #1078";
+}
+
+//
+// SpriteBatchNodeOffsetAnchorFlip
+// 
+
+SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	for (int i = 0; i < 3; i++)
+	{
+		CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+		cache->addSpriteFramesWithFile("animations/grossini.plist");
+		cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		//
+		// Animation using Sprite batch
+		//
+		CCSprite *sprite = CCSprite::spriteWithSpriteFrameName("grossini_dance_01.png");
+		sprite->setPosition(ccp(s.width / 4 * (i + 1), s.height / 2));
+
+		CCSprite *point = CCSprite::spriteWithFile("Images/r1.png");
+		point->setScale(0.25f);
+		point->setPosition(sprite->getPosition());
+		addChild(point, 200);
+
+		switch (i)
+		{
+		case 0:
+			sprite->setAnchorPoint(CCPointZero);
+			break;
+		case 1:
+			sprite->setAnchorPoint(ccp(0.5f, 0.5f));
+			break;
+		case 2:
+			sprite->setAnchorPoint(ccp(1, 1));
+			break;
+		}
+
+		point->setPosition(sprite->getPosition());
+
+		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
+		addChild(spritebatch);
+
+// 		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+// 		char tmp[50];
+// 		for (int j = 0; j < 14; j++)
+// 		{			
+// 			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
+// 			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+// 			animFrames->addObject(frame);
+// 		}
+// 
+// 		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+// 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+// 
+// 		delete animFrames;
+// 
+// 		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
+// 		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
+// 		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
+// 		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+// 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
+
+		spritebatch->addChild(sprite, i);
+	}
+}
+
+SpriteBatchNodeOffsetAnchorFlip::~SpriteBatchNodeOffsetAnchorFlip()
+{
+	CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	cache->removeSpriteFramesFromFile("animations/grossini.plist");
+	cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+}
+
+string SpriteBatchNodeOffsetAnchorFlip::title()
+{
+	return "SpriteBatchNode offset + anchor + flip";
+}
+
+string SpriteBatchNodeOffsetAnchorFlip::subtitle()
+{
+	return "issue #1078";
 }

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +29,7 @@ namespace   cocos2d {
 
 const char* cocos2dVersion()
 {
-	return "cocos2d v0.99.5";
+	return "cocos2d v1.0.0-rc3";
 }
 
 }//namespace   cocos2d 

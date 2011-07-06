@@ -278,6 +278,56 @@ public:
 	virtual std::string title();
 };
 
+class SpriteOffsetAnchorSkew : public SpriteTestDemo
+{
+public:
+	SpriteOffsetAnchorSkew();
+	~SpriteOffsetAnchorSkew();
+	virtual std::string title();
+};
+
+class SpriteBatchNodeOffsetAnchorSkew : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeOffsetAnchorSkew();
+    ~SpriteBatchNodeOffsetAnchorSkew();
+	virtual std::string title();
+};
+
+class SpriteOffsetAnchorSkewScale : public SpriteTestDemo
+{
+public:
+	SpriteOffsetAnchorSkewScale();
+	~SpriteOffsetAnchorSkewScale();
+	virtual std::string title();
+};
+
+class SpriteBatchNodeOffsetAnchorSkewScale : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeOffsetAnchorSkewScale();
+	~SpriteBatchNodeOffsetAnchorSkewScale();
+	virtual std::string title();
+};
+
+class SpriteOffsetAnchorFlip : public SpriteTestDemo
+{
+public:
+	SpriteOffsetAnchorFlip();
+	~SpriteOffsetAnchorFlip();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class SpriteBatchNodeOffsetAnchorFlip : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeOffsetAnchorFlip();
+	~SpriteBatchNodeOffsetAnchorFlip();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
 class SpriteAnimationSplit : public SpriteTestDemo
 {
 public:

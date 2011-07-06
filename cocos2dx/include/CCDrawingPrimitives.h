@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -38,7 +39,7 @@ THE SOFTWARE.
  - ccDrawCubicBezier
  
  You can change the color, width and other property by calling the
- glColor4ub(), glLineWitdh(), glPointSize().
+ glColor4ub(), glLineWidth(), glPointSize().
  
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
