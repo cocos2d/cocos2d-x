@@ -96,7 +96,7 @@ void CCProgressTimer::setPercentage(float fPercentage)
 {
 	if (m_fPercentage != fPercentage)
 	{
-		m_fPercentage = clampf(m_fPercentage, 0, 100);
+		m_fPercentage = clampf(fPercentage, 0, 100);
 		updateProgress();
 	}
 }
@@ -164,7 +164,7 @@ ccVertex2F CCProgressTimer::vertexFromTexCoord(cocos2d::CCPoint texCoord)
 
 void CCProgressTimer::updateColor(void)
 {
-	GLbyte op = m_pSprite->getOpacity();
+	GLubyte op = m_pSprite->getOpacity();
 	ccColor3B c3b = m_pSprite->getColor();
 
 	ccColor4B color = {c3b.r, c3b.g, c3b.b, op};
