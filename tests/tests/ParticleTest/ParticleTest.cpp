@@ -963,7 +963,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	32
+#define MAX_LAYER	33
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -1001,6 +1001,7 @@ CCLayer* createParticleLayer(int nIndex)
         case 29: return new RadiusMode2();
         case 30: return new Issue704();
         case 31: return new Issue870();
+		case 32: return new DemoParticleFromFile("Phoenix");
 	}
 
 	return NULL;

@@ -182,9 +182,11 @@ It is the same as CCLayerColor.
 
 @deprecated Use CCLayerColor instead. This class will be removed in v1.0.1
 */
-class CCColorLayer : public CCLayerColor
+class CC_DLL CCColorLayer : public CCLayerColor
 {
-
+public:
+    static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	static CCColorLayer * layerWithColor(ccColor4B color);
 };
 
 //

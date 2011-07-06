@@ -162,10 +162,10 @@ void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, CCRect rect)
 
 	this->initTexCoordsWithRect(rect);
 }
-void CCParticleSystemQuad::setTexture(CCTexture2D* var)
+void CCParticleSystemQuad::setTexture(CCTexture2D* texture)
 {
-	CCSize s = m_pTexture->getContentSize();
-	this->setTextureWithRect(var, CCRectMake(0, 0, s.width, s.height));
+	CCSize s = texture->getContentSize();
+	this->setTextureWithRect(texture, CCRectMake(0, 0, s.width, s.height));
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 {
