@@ -85,7 +85,7 @@ public:
 	void setTextureWithRect(CCTexture2D *texture, CCRect rect);
 	// super methods
 	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-	virtual void setTexture(CCTexture2D* var);
+	virtual void setTexture(CCTexture2D* texture);
 	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
 	virtual void postStep();
 	virtual void draw();

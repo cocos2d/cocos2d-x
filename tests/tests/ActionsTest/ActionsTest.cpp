@@ -17,6 +17,10 @@ CCLayer* CreateLayer(int nIndex)
         pLayer = new ActionScale(); break;
     case ACTION_ROTATE_LAYER:
         pLayer = new ActionRotate(); break;
+	case ACTION_SKEW_LAYER:
+		pLayer = new ActionSkew(); break;
+	case ACTION_SKEWROTATE_LAYER:
+		pLayer = new ActionSkewRotateScale(); break;
     case ACTION_JUMP_LAYER:
         pLayer = new ActionJump(); break;
     case ACTION_BEZIER_LAYER:
@@ -332,6 +336,81 @@ void ActionScale::onEnter()
 std::string ActionScale::subtitle()
 {
     return "ScaleTo / ScaleBy";
+}
+
+//------------------------------------------------------------------
+//
+//	ActionSkew
+//
+//------------------------------------------------------------------
+void ActionSkew::onEnter()
+{
+	ActionsDemo::onEnter();
+
+	centerSprites(3);
+
+	CCActionInterval *actionTo = CCSkewTo::actionWithDuration(2, 37.2f, -37.2f);
+	CCActionInterval *actionToBack = CCSkewTo::actionWithDuration(2, 0, 0);
+	CCActionInterval *actionBy = CCSkewBy::actionWithDuration(2, 0.0f, -90.0f);
+	CCActionInterval *actionBy2 = CCSkewBy::actionWithDuration(2, 45.0f, 45.0f);
+	CCActionInterval *actionByBack = actionBy->reverse();
+
+	m_tamara->runAction(CCSequence::actions(actionTo, actionToBack, NULL));
+	m_grossini->runAction(CCSequence::actions(actionBy, actionByBack, NULL));
+
+	m_kathia->runAction(CCSequence::actions(actionBy2, actionBy2->reverse(), NULL));
+}
+
+string ActionSkew::subtitle()
+{
+	return "SkewTo / SkewBy";
+}
+
+void ActionSkewRotateScale::onEnter()
+{
+    ActionsDemo::onEnter();
+
+	m_tamara->removeFromParentAndCleanup(true);
+	m_grossini->removeFromParentAndCleanup(true);
+	m_kathia->removeFromParentAndCleanup(true);
+
+	CCSize boxSize = CCSizeMake(100.0f, 100.0f);
+
+	CCColorLayer *box = CCColorLayer::layerWithColor(ccc4(255, 255, 0, 255));
+	box->setAnchorPoint(ccp(0, 0));
+	box->setPosition(ccp(190, 110));
+	box->setContentSize(boxSize);
+
+	static float markrside = 10.0f;
+	CCColorLayer *uL = CCColorLayer::layerWithColor(ccc4(255, 0, 0, 255));
+	box->addChild(uL);
+	uL->setContentSize(CCSizeMake(markrside, markrside));
+	uL->setPosition(ccp(0.f, boxSize.height - markrside));
+	uL->setAnchorPoint(ccp(0, 0));
+
+	CCColorLayer *uR = CCColorLayer::layerWithColor(ccc4(0, 0, 255, 255));
+	box->addChild(uR);
+	uR->setContentSize(CCSizeMake(markrside, markrside));
+	uR->setPosition(ccp(boxSize.width - markrside, boxSize.height - markrside));
+	uR->setAnchorPoint(ccp(0, 0));
+	addChild(box);
+
+	CCActionInterval *actionTo = CCSkewTo::actionWithDuration(2, 0.f, 2.f);
+	CCActionInterval *rotateTo = CCRotateTo::actionWithDuration(2, 61.0f);
+	CCActionInterval *actionScaleTo = CCScaleTo::actionWithDuration(2, -0.44f, 0.47f);
+
+	CCActionInterval *actionScaleToBack = CCScaleTo::actionWithDuration(2, 1.0f, 1.0f);
+	CCActionInterval *rotateToBack = CCRotateTo::actionWithDuration(2, 0);
+	CCActionInterval *actionToBack = CCSkewTo::actionWithDuration(2, 0, 0);
+
+	box->runAction(CCSequence::actions(actionTo, actionToBack, NULL));
+	box->runAction(CCSequence::actions(rotateTo, rotateToBack, NULL));
+	box->runAction(CCSequence::actions(actionScaleTo, actionScaleToBack, NULL));
+}
+
+string ActionSkewRotateScale::subtitle()
+{
+	return "Skew + Rotate + Scale";
 }
 
 //------------------------------------------------------------------

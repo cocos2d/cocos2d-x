@@ -40,7 +40,7 @@ CCRenderTexture::CCRenderTexture()
 , m_uFBO(0)
 , m_nOldFBO(0)
 , m_pTexture(0)
-, m_ePixelFormat(kCCPixelFormatRGBA8888)
+, m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 {
 }
 

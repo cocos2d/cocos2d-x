@@ -162,4 +162,22 @@ public:
     virtual void runThisTest();
 };
 
+class LabelTTFTest : public AtlasDemo
+{
+public:
+	LabelTTFTest();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class LabelTTFMultiline : public AtlasDemo
+{
+public:
+	LabelTTFMultiline();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+// we don't support linebreak mode
+
 #endif

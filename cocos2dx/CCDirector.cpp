@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -84,8 +85,6 @@ bool CCDirector::init(void)
 {
 	CCLOG("cocos2d: %s", cocos2dVersion());
 
-	CCLOG("cocos2d: Using Director Type: CCDirectorDisplayLink");
-
 	// scenes
 	m_pRunningScene = NULL;
 	m_pNextScene = NULL;
@@ -114,10 +113,6 @@ bool CCDirector::init(void)
 	m_bPurgeDirecotorInNextLoop = false;
 
 	m_obWinSizeInPixels = m_obWinSizeInPoints = CCSizeZero;
-
-	// default values
-	m_ePixelFormat = kCCPixelFormatDefault;
-	m_eDepthBufferFormat = kCCDepthBufferNone; // 0
 
 	// portrait mode default
 	m_eDeviceOrientation = CCDeviceOrientationPortrait;		
@@ -262,6 +257,14 @@ void CCDirector::calculateDeltaTime(void)
 		m_fDeltaTime = MAX(0, m_fDeltaTime);
 	}
 
+#ifdef DEBUG
+	// If we are debugging our code, prevent big delta time
+	if(m_fDeltaTime > 0.2f)
+	{
+		m_fDeltaTime = 1 / 60.0f;
+	}
+#endif
+
 	*m_pLastUpdate = now;
 }
 
@@ -302,10 +305,10 @@ void CCDirector::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
 void CCDirector::setProjection(ccDirectorProjection kProjection)
 {
 	CCSize size = m_obWinSizeInPixels;
+	float zeye = this->getZEye();
 	switch (kProjection)
 	{
 	case kCCDirectorProjection2D:
-// 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)size.width, (GLsizei)size.height);
         if (m_pobOpenGLView) 
         {
             m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
@@ -318,19 +321,18 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 		glLoadIdentity();
 		break;
 
-	case kCCDirectorProjection3D:
-// 		glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+	case kCCDirectorProjection3D:		
         if (m_pobOpenGLView) 
         {
             m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
         }
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
+		gluPerspective(60, (GLfloat)size.width/size.height, zeye - size.height / 2, zeye + size.height / 2);
 			
 		glMatrixMode(GL_MODELVIEW);	
 		glLoadIdentity();
-		gluLookAt( size.width/2, size.height/2, getZEye(),
+		gluLookAt( size.width/2, size.height/2, zeye,
 				 size.width/2, size.height/2, 0,
 				 0.0f, 1.0f, 0.0f);				
 		break;
@@ -353,7 +355,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
 void CCDirector::purgeCachedData(void)
 {
     CCLabelBMFont::purgeCachedData();
-	CCTextureCache::purgeSharedTextureCache();
+	CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
 float CCDirector::getZEye(void)
@@ -381,7 +383,7 @@ void CCDirector::setDepthTest(bool bOn)
 		ccglClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	}
 	else
 	{
@@ -441,7 +443,6 @@ CCPoint CCDirector::convertToUI(CCPoint obPoint)
 		break;
 	}
 
-	uiPoint = ccpMult(uiPoint, 1/m_fContentScaleFactor);
 	return uiPoint;
 }
 
@@ -702,12 +703,6 @@ void CCDirector::showProfilers()
 * mobile platforms specific functions
 **************************************************/
 
-// is the view currently attached
-bool CCDirector::isOpenGLAttached(void)
-{
-    return m_pobOpenGLView? m_pobOpenGLView->isOpenGLReady() : false;
-}
-
 void CCDirector::updateContentScaleFactor()
 {
 	// [openGLView responseToSelector:@selector(setContentScaleFactor)]
@@ -722,30 +717,6 @@ void CCDirector::updateContentScaleFactor()
 	}
 }
 
-// detach or attach to a view or a window
-bool CCDirector::detach(void)
-{
-	assert(isOpenGLAttached());
-
-	CC_SAFE_DELETE(m_pobOpenGLView);
-	return true;
-}
-
-void CCDirector::setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat)
-{
-	assert(! isOpenGLAttached());
-	m_eDepthBufferFormat = kDepthBufferFormat;
-}
-
-void CCDirector::setPixelFormat(tPixelFormat kPixelFormat)
-{
-	m_ePixelFormat = kPixelFormat;
-}
-
-tPixelFormat CCDirector::getPiexFormat(void)
-{
-	return m_ePixelFormat;
-}
 
 bool CCDirector::setDirectorType(ccDirectorType obDirectorType)
 {
