@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -45,6 +46,7 @@ typedef struct _listEntry
 	SelectorProtocol	*target;		// not retained (retained by hashUpdateEntry)
 	int				    priority;
 	bool				paused;
+	bool				markedForDeletion; // selector will no longer be called and entry will be removed at end of the next tick
 	
 } tListEntry;
 
@@ -227,6 +229,7 @@ bool CCScheduler::init(void)
 	m_pCurrentTarget = NULL;
     m_bCurrentTargetSalvaged = false;
 	m_pHashForSelectors = NULL;
+	m_bUpdateHashLocked = false;
 
 	return true;
 }
@@ -238,23 +241,6 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
 	pElement->target = NULL;
 	HASH_DEL(m_pHashForSelectors, pElement);
 	free(pElement);
-}
-
-void CCScheduler::scheduleTimer(CCTimer *pTimer)
-{
-    CC_UNUSED_PARAM(pTimer);
-	assert(false);
-}
-
-void CCScheduler::unscheduleTimer(CCTimer *pTimer)
-{
-	pTimer = NULL;
-    assert(false);
-}
-
-void CCScheduler::unscheduleAllTimers()
-{
-	assert(false);
 }
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, float fInterval, bool bPaused)
@@ -416,7 +402,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, SelectorProtocol *pTarget, int
 	pListElement->priority = nPriority;
 	pListElement->paused = bPaused;
 	pListElement->next = pListElement->prev = NULL;
-	// listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
+	pListElement->markedForDeletion = false;
 
 	// empey list ?
 	if (! *ppList)
@@ -471,7 +457,7 @@ void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool 
 
 	pListElement->target = pTarget;
 	pListElement->paused = bPaused;
-	// listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
+	pListElement->markedForDeletion = false;
 
 	DL_APPEND(*ppList, pListElement);
 
@@ -486,11 +472,19 @@ void CCScheduler::appendIn(_listEntry **ppList, SelectorProtocol *pTarget, bool 
 
 void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused)
 {
-#if COCOS2D_DEBUG >= 1
+
 	tHashUpdateEntry *pHashElement = NULL;
 	HASH_FIND_INT(m_pHashForUpdates, &pTarget, pHashElement);
-	assert(pHashElement == NULL);
+	if (pHashElement)
+	{
+#if COCOS2D_DEBUG >= 1
+		assert(pHashElement->entry->markedForDeletion);
 #endif
+		// TODO: check if priority has changed!
+
+		pHashElement->entry->markedForDeletion = false;
+		return;
+	}
 
 	// most of the updates are going to be 0, that's way there
 	// is an special list for updates with priority 0
@@ -509,6 +503,24 @@ void CCScheduler::scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriori
 	}
 }
 
+void CCScheduler::removeUpdateFromHash(struct _listEntry *entry)
+{
+	tHashUpdateEntry *element = NULL;
+
+	HASH_FIND_INT(m_pHashForUpdates, &entry->target, element);
+	if (element)
+	{
+		// list entry
+		DL_DELETE(*element->list, element->entry);
+		free(element->entry);
+
+		// hash entry
+		element->target->selectorProtocolRelease();
+		HASH_DEL(m_pHashForUpdates, element);
+		free(element);
+	}
+}
+
 void CCScheduler::unscheduleUpdateForTarget(const SelectorProtocol *pTarget)
 {
 	if (pTarget == NULL)
@@ -520,15 +532,14 @@ void CCScheduler::unscheduleUpdateForTarget(const SelectorProtocol *pTarget)
 	HASH_FIND_INT(m_pHashForUpdates, &pTarget, pElement);
 	if (pElement)
 	{
-		// list entry
-		DL_DELETE(*pElement->list, pElement->entry);
-		free(pElement->entry);
-
-		// hash entry
-		pElement->target->selectorProtocolRelease();
-		pElement->target = NULL;
-		HASH_DEL(m_pHashForUpdates, pElement);
-		free(pElement);
+		if (m_bUpdateHashLocked)
+		{
+			pElement->entry->markedForDeletion = true;
+		}
+		else
+		{
+			this->removeUpdateFromHash(pElement->entry);
+		}
 	}
 }
 
@@ -645,6 +656,8 @@ void CCScheduler::pauseTarget(SelectorProtocol *pTarget)
 // main loop
 void CCScheduler::tick(ccTime dt)
 {
+	m_bUpdateHashLocked = true;
+
 	if (m_fTimeScale != 1.0f)
 	{
 		dt *= m_fTimeScale;
@@ -656,7 +669,7 @@ void CCScheduler::tick(ccTime dt)
 	// updates with priority < 0
 	DL_FOREACH_SAFE(m_pUpdatesNegList, pEntry, pTmp)
 	{
-		if (! pEntry->paused)
+		if ((! pEntry->paused) && (! pEntry->markedForDeletion))
 		{
 			pEntry->target->update(dt);
 		}
@@ -665,7 +678,7 @@ void CCScheduler::tick(ccTime dt)
 	// updates with priority == 0
 	DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
 	{
-		if (! pEntry->paused)
+		if ((! pEntry->paused) && (! pEntry->markedForDeletion))
 		{
 			pEntry->target->update(dt);			
 		}
@@ -674,7 +687,7 @@ void CCScheduler::tick(ccTime dt)
 	// updates with priority > 0
 	DL_FOREACH_SAFE(m_pUpdatesPosList, pEntry, pTmp)
 	{
-		if (! pEntry->paused)
+		if ((! pEntry->paused) && (! pEntry->markedForDeletion))
 		{
 			pEntry->target->update(dt);			
 		}
@@ -718,6 +731,36 @@ void CCScheduler::tick(ccTime dt)
 			removeHashElement(m_pCurrentTarget);
 		}
 	}
+
+	// delete all updates that are morked for deletion
+	// updates with priority < 0
+	DL_FOREACH_SAFE(m_pUpdatesNegList, pEntry, pTmp)
+	{
+		if (pEntry->markedForDeletion)
+		{
+			this->removeUpdateFromHash(pEntry);
+		}
+	}
+
+	// updates with priority == 0
+	DL_FOREACH_SAFE(m_pUpdates0List, pEntry, pTmp)
+	{
+		if (pEntry->markedForDeletion)
+		{
+			this->removeUpdateFromHash(pEntry);
+		}
+	}
+
+	// updates with priority > 0
+	DL_FOREACH_SAFE(m_pUpdatesPosList, pEntry, pTmp)
+	{
+		if (pEntry->markedForDeletion)
+		{
+			this->removeUpdateFromHash(pEntry);
+		}
+	}
+
+	m_bUpdateHashLocked = false;
 
 	m_pCurrentTarget = NULL;
 

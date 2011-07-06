@@ -1185,7 +1185,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	24
+#define MAX_LAYER	25
 
 CCLayer* createTileMapLayer(int nIndex)
 {
@@ -1215,6 +1215,7 @@ CCLayer* createTileMapLayer(int nIndex)
 		case 21: return new TileMapEditTest();
         case 22: return new TMXBug987();
         case 23: return new TMXBug787();
+		case 24: return new TMXGIDObjectTest();
 	}
 
 	return NULL;
@@ -1382,4 +1383,64 @@ void TileMapTestScene::runThisTest()
 	CCDirector::sharedDirector()->setDepthTest(true);
 	
     CCDirector::sharedDirector()->replaceScene(this);
+}
+
+TMXGIDObjectTest::TMXGIDObjectTest()
+{
+	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/test-object-layer.tmx");
+	addChild(map, -1, kTagTileMap);
+
+	CCSize s = map->getContentSize();
+	CCLOG("Contentsize: %f, %f", s.width, s.height);
+
+	CCLOG("----> Iterating over all the group objets");
+	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
+
+}
+
+void TMXGIDObjectTest::draw()
+{
+	CCTMXTiledMap *map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
+	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
+
+	CCMutableArray<CCStringToStringDictionary*> *array = group->getObjects();
+	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator iter;
+	CCStringToStringDictionary *dict;
+
+	for (iter = array->begin(); iter != array->end(); ++iter)
+	{
+		dict = *iter;
+		if(!dict)
+		{
+			break;
+		}
+
+		std::string key = "x";
+		int x = dict->objectForKey(key)->toInt();
+		key = "y";
+		int y = dict->objectForKey(key)->toInt();
+		key = "width";
+		int width = dict->objectForKey(key)->toInt();
+		key = "height";
+		int height = dict->objectForKey(key)->toInt();
+
+		glLineWidth(3);
+
+		ccDrawLine(ccp(x, y), ccp(x + width, y));
+		ccDrawLine(ccp(x + width, y), ccp(x + width, y + height));
+		ccDrawLine(ccp(x + width,y + height), ccp(x,y + height));
+		ccDrawLine(ccp(x,y + height), ccp(x,y));
+
+		glLineWidth(1);
+	}
+}
+
+string TMXGIDObjectTest::title()
+{
+	return "TMX GID objects";
+}
+
+string TMXGIDObjectTest::subtitle()
+{
+	return "Tiles are created from an object group";
 }

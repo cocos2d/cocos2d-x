@@ -69,6 +69,11 @@ LayerTest::~LayerTest(void)
 {
 }
 
+string LayerTest::subtitle()
+{
+	return "";
+}
+
 std::string LayerTest::title()
 {
 	return "No title";
@@ -83,6 +88,14 @@ void LayerTest::onEnter()
 	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
 	label->setPosition( CCPointMake(s.width/2, s.height-50) );
+
+	string subtitle_ = subtitle();
+	if (subtitle_.size() > 0)
+	{
+		CCLabelTTF *l = CCLabelTTF::labelWithString(subtitle_.c_str(), "Thonburi", 16);
+		addChild(l, 1);
+		l->setPosition(ccp(s.width / 2, s.height - 80));
+	}
 
 	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(LayerTest::backCallback) );
 	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(LayerTest::restartCallback) );
@@ -278,11 +291,27 @@ std::string LayerTestBlend::title()
 //------------------------------------------------------------------
 LayerGradient::LayerGradient()
 {
-    //		CCSize s = [[CCDirector sharedDirector] winSize];
-    CCLayerGradient* layer1 = CCLayerGradient::layerWithColor(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(1,0));
-    addChild(layer1, 0, 1);
+    CCLayerGradient* layer1 = CCLayerGradient::layerWithColor(ccc4(255,0,0,255), ccc4(0,255,0,255), ccp(0.9f, 0.9f));
+    addChild(layer1, 0, kTagLayer);
 
     setIsTouchEnabled(true);
+
+	CCLabelTTF *label1 = CCLabelTTF::labelWithString("Compressed Interpolation: Enabled", "Marker Felt", 26);
+	CCLabelTTF *label2 = CCLabelTTF::labelWithString("Compressed Interpolation: Disabled", "Marker Felt", 26);
+	CCMenuItemLabel *item1 = CCMenuItemLabel::itemWithLabel(label1);
+	CCMenuItemLabel *item2 = CCMenuItemLabel::itemWithLabel(label2);
+	CCMenuItemToggle *item = CCMenuItemToggle::itemWithTarget(this, menu_selector(LayerGradient::toggleItem), item1, item2, NULL);
+
+	CCMenu *menu = CCMenu::menuWithItems(item, NULL);
+	addChild(menu);
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+	menu->setPosition(ccp(s.width / 2, 100));
+}
+
+void LayerGradient::toggleItem(CCObject *sender)
+{
+	CCLayerGradient *gradient = (CCLayerGradient*)getChildByTag(kTagLayer);
+	gradient->setIsCompressedInterpolation(! gradient->getIsCompressedInterpolation());
 }
 
 void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
@@ -304,6 +333,11 @@ void LayerGradient::ccTouchesMoved(CCSet * touches, CCEvent *event)
 std::string LayerGradient::title()
 {
     return "LayerGradient";
+}
+
+string LayerGradient::subtitle()
+{
+	return "Touch the screen and move your finger";
 }
 
 void LayerTestScene::runThisTest()

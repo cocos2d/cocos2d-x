@@ -248,6 +248,15 @@ public:
     virtual std::string subtitle();
 };
 
+class TMXGIDObjectTest : public TileDemo
+{
+public:
+	TMXGIDObjectTest();
+	virtual std::string title();
+	virtual std::string subtitle();
+	virtual void draw();
+};
+
 class TileMapTestScene : public TestScene
 {
 public:

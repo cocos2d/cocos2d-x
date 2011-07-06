@@ -239,7 +239,7 @@ void PauseTest::unpause(ccTime dt)
 {
 	unschedule( schedule_selector(PauseTest::unpause) );
 	CCNode* node = getChildByTag( kTagGrossini );
-	CCActionManager::sharedManager()->resumeAllActionsForTarget(node);
+	CCActionManager::sharedManager()->resumeTarget(node);
 }
 
 std::string PauseTest::title()
