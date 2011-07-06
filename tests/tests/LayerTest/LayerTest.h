@@ -14,6 +14,7 @@ public:
 	~LayerTest(void);
 
 	virtual std::string title();
+	virtual std::string subtitle();
 	virtual void onEnter();
 
 	void restartCallback(CCObject* pSender);
@@ -57,6 +58,8 @@ public:
     LayerGradient();
     virtual void ccTouchesMoved(CCSet * touches, CCEvent *event);
     virtual std::string title();
+	virtual std::string subtitle();
+	void toggleItem(cocos2d::CCObject *sender);
 };
 
 class LayerTestScene : public TestScene

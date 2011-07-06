@@ -36,7 +36,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	14
+#define MAX_LAYER	16
 
 CCLayer* createAtlasLayer(int nIndex)
 {
@@ -58,6 +58,8 @@ CCLayer* createAtlasLayer(int nIndex)
 
         // Not a label test. Should be moved to Atlas test
         case 13: return new Atlas1();
+		case 14: return new LabelTTFTest();
+		case 15: return new LabelTTFMultiline();
 	}
 
 	return NULL;
@@ -854,4 +856,59 @@ void AtlasTestScene::runThisTest()
     addChild(pLayer);
 
     CCDirector::sharedDirector()->replaceScene(this);
+}
+
+//------------------------------------------------------------------
+//
+// LabelTTFTest
+//
+//------------------------------------------------------------------
+LabelTTFTest::LabelTTFTest()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	// CCLabelBMFont
+	CCLabelTTF *left = CCLabelTTF::labelWithString("align left", CCSizeMake(s.width, 50), CCTextAlignmentLeft, "Marker Felt", 32);
+	CCLabelTTF *center = CCLabelTTF::labelWithString("align center", CCSizeMake(s.width, 50), CCTextAlignmentCenter, "Marker Felt", 32);
+	CCLabelTTF *right = CCLabelTTF::labelWithString("align right", CCSizeMake(s.width, 50), CCTextAlignmentRight, "Marker Felt", 32);
+
+	left->setPosition(ccp(s.width / 2, 200));
+	center->setPosition(ccp(s.width / 2, 150));
+	right->setPosition(ccp(s.width / 2, 100));
+
+	addChild(left);
+	addChild(center);
+	addChild(right);
+}
+
+string LabelTTFTest::title()
+{
+	return "Testing CCLabelTTF";
+}
+
+string LabelTTFTest::subtitle()
+{
+	return "You should see 3 labels aligned left, center and right";
+}
+
+LabelTTFMultiline::LabelTTFMultiline()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	// CCLabelBMFont
+	CCLabelTTF *center = CCLabelTTF::labelWithString("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
+		CCSizeMake(s.width / 2, 200), CCTextAlignmentCenter, "MarkerFelt.ttc", 32);
+	center->setPosition(ccp(s.width / 2, 150));
+
+	addChild(center);
+}
+
+string LabelTTFMultiline::title()
+{
+	return "Testing CCLabelTTF Word Wrap";
+}
+
+string LabelTTFMultiline::subtitle()
+{
+	return "Word wrap using CCLabelTTF";
 }
