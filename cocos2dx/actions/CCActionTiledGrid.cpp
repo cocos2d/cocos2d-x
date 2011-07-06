@@ -296,7 +296,7 @@ namespace cocos2d
 
 	void CCShuffleTiles::shuffle(int *pArray, unsigned int nLen)
 	{
-		unsigned int i;
+		int i;
 		for( i = nLen - 1; i >= 0; i-- )
 		{
 			unsigned int j = rand() % (i+1);
@@ -667,7 +667,7 @@ namespace cocos2d
 
 	void CCTurnOffTiles::shuffle(int *pArray, unsigned int nLen)
 	{
-		unsigned int i;
+		int i;
 		for (i = nLen - 1; i >= 0; i--)
 		{
 			unsigned int j = rand() % (i+1);
