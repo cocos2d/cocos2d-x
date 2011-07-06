@@ -44,7 +44,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 CCNode::CCNode(void)
-: m_uZOrder(0)
+: m_nZOrder(0)
 , m_fVertexZ(0.0f)
 , m_fRotation(0.0f)
 , m_fScaleX(1.0f)
@@ -151,16 +151,16 @@ void CCNode::setSkewY(float newSkewY)
 }
 
 /// zOrder getter
-unsigned int CCNode::getZOrder()
+int CCNode::getZOrder()
 {
-	return m_uZOrder;
+	return m_nZOrder;
 }
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
-void CCNode::setZOrder(unsigned int z)
+void CCNode::setZOrder(int z)
 {
-	m_uZOrder = z;
+	m_nZOrder = z;
 }
 
 /// ertexZ getter
@@ -526,7 +526,7 @@ void CCNode::childrenAlloc(void)
     m_pChildren->retain();
 }
 
-CCNode* CCNode::getChildByTag(unsigned int aTag)
+CCNode* CCNode::getChildByTag(int aTag)
 {
 	CCAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
 
@@ -547,7 +547,7 @@ CCNode* CCNode::getChildByTag(unsigned int aTag)
 * If a class want's to extend the 'addChild' behaviour it only needs
 * to override this method
 */
-void CCNode::addChild(CCNode *child, unsigned int zOrder, int tag)
+void CCNode::addChild(CCNode *child, int zOrder, int tag)
 {	
 	CCAssert( child != NULL, "Argument must be non-nil");
 	CCAssert( child->m_pParent == NULL, "child already added. It can't be added again");
@@ -570,7 +570,7 @@ void CCNode::addChild(CCNode *child, unsigned int zOrder, int tag)
 	}
 }
 
-void CCNode::addChild(CCNode *child, unsigned int zOrder)
+void CCNode::addChild(CCNode *child, int zOrder)
 {
 	CCAssert( child != NULL, "Argument must be non-nil");
 	this->addChild(child, zOrder, child->m_nTag);
@@ -579,7 +579,7 @@ void CCNode::addChild(CCNode *child, unsigned int zOrder)
 void CCNode::addChild(CCNode *child)
 {
 	CCAssert( child != NULL, "Argument must be non-nil");
-	this->addChild(child, child->m_uZOrder, child->m_nTag);
+	this->addChild(child, child->m_nZOrder, child->m_nTag);
 }
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
@@ -605,7 +605,7 @@ void CCNode::removeChild(CCNode* child, bool cleanup)
 	}
 }
 
-void CCNode::removeChildByTag(unsigned int tag, bool cleanup)
+void CCNode::removeChildByTag(int tag, bool cleanup)
 {
 	CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
 
@@ -679,7 +679,7 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 
 
 // helper used by reorderChild & add
-void CCNode::insertChild(CCNode* child, unsigned int z)
+void CCNode::insertChild(CCNode* child, int z)
 {
     unsigned int index = 0;
     CCNode* a = (CCNode*) m_pChildren->lastObject();
@@ -693,7 +693,7 @@ void CCNode::insertChild(CCNode* child, unsigned int z)
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pNode = (CCNode*) pObject;
-            if ( pNode && (pNode->m_uZOrder > z ))
+            if ( pNode && (pNode->m_nZOrder > z ))
             {
                 m_pChildren->insertObject(child, index);
                 break;
@@ -705,7 +705,7 @@ void CCNode::insertChild(CCNode* child, unsigned int z)
     child->setZOrder(z);
 }
 
-void CCNode::reorderChild(CCNode *child, unsigned int zOrder)
+void CCNode::reorderChild(CCNode *child, int zOrder)
 {
 	CCAssert( child != NULL, "Child must be non-nil");
 
@@ -752,7 +752,7 @@ void CCNode::visit()
         {
             pNode = (CCNode*) arrayData->arr[i];
 
-			if ( pNode && pNode->m_uZOrder < 0 ) 
+			if ( pNode && pNode->m_nZOrder < 0 ) 
 			{
 				pNode->visit();
 			}
@@ -918,13 +918,13 @@ void CCNode::stopAction(CCAction* action)
 	CCActionManager::sharedManager()->removeAction(action);
 }
 
-void CCNode::stopActionByTag(unsigned int tag)
+void CCNode::stopActionByTag(int tag)
 {
 	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	CCActionManager::sharedManager()->removeActionByTag(tag, this);
 }
 
-CCAction * CCNode::getActionByTag(unsigned int tag)
+CCAction * CCNode::getActionByTag(int tag)
 {
 	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	return CCActionManager::sharedManager()->getActionByTag(tag, this);
@@ -942,7 +942,7 @@ void CCNode::scheduleUpdate()
 	scheduleUpdateWithPriority(0);
 }
 
-void CCNode::scheduleUpdateWithPriority(unsigned int priority)
+void CCNode::scheduleUpdateWithPriority(int priority)
 {
 	CCScheduler::sharedScheduler()->scheduleUpdateForTarget(this, priority, !m_bIsRunning);
 }
