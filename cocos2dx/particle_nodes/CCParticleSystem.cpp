@@ -87,7 +87,7 @@ CCParticleSystem::CCParticleSystem()
 	,m_pProfilingTimer(NULL)
 #endif
 	,m_bIsActive(true)
-	,m_nParticleCount(0)
+	,m_uParticleCount(0)
 	,m_fDuration(0)
 	,m_tSourcePosition(CCPointZero)
 	,m_tPosVar(CCPointZero)
@@ -104,7 +104,7 @@ CCParticleSystem::CCParticleSystem()
 	,m_fEndSpin(0)
 	,m_fEndSpinVar(0)
 	,m_fEmissionRate(0)
-	,m_nTotalParticles(0)
+	,m_uTotalParticles(0)
 	,m_pTexture(NULL)
 	,m_bIsBlendAdditive(false)
 	,m_ePositionType(kCCPositionTypeFree)
@@ -259,7 +259,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 			m_fLifeVar = (float)atof(valueForKey("particleLifespanVariance", dictionary));
 
 			// emission Rate
-			m_fEmissionRate = m_nTotalParticles / m_fLife;
+			m_fEmissionRate = m_uTotalParticles / m_fLife;
 
 			// texture		
 			// Try to get the texture from the cache
@@ -292,7 +292,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 				if(dataLen != 0)
 				{
 					// if it fails, try to get it from the base64-gzipped data	
-					int decodeLen = base64Decode((unsigned char*)textureData, dataLen, &buffer);
+					int decodeLen = base64Decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
 					CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
 					CC_BREAK_IF(!buffer);
 
@@ -322,11 +322,11 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 }
 bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 {
-	m_nTotalParticles = numberOfParticles;
+	m_uTotalParticles = numberOfParticles;
 
     CC_SAFE_DELETE_ARRAY(m_pParticles);
 	
-	m_pParticles = new tCCParticle[m_nTotalParticles];
+	m_pParticles = new tCCParticle[m_uTotalParticles];
 
 	if( ! m_pParticles )
 	{
@@ -385,9 +385,9 @@ bool CCParticleSystem::addParticle()
 		return false;
 	}
 
-	tCCParticle * particle = &m_pParticles[ m_nParticleCount ];
+	tCCParticle * particle = &m_pParticles[ m_uParticleCount ];
 	this->initParticle(particle);
-	++m_nParticleCount;
+	++m_uParticleCount;
 
 	return true;
 }
@@ -510,7 +510,7 @@ void CCParticleSystem::resetSystem()
 {
 	m_bIsActive = true;
 	m_fElapsed = 0;
-	for (m_nParticleIdx = 0; m_nParticleIdx < m_nParticleCount; ++m_nParticleIdx)
+	for (m_nParticleIdx = 0; m_nParticleIdx < m_uParticleCount; ++m_nParticleIdx)
 	{
 		tCCParticle *p = &m_pParticles[m_nParticleIdx];
 		p->timeToLive = 0;
@@ -518,7 +518,7 @@ void CCParticleSystem::resetSystem()
 }
 bool CCParticleSystem::isFull()
 {
-	return (m_nParticleCount == m_nTotalParticles);
+	return (m_uParticleCount == m_uTotalParticles);
 }
 
 // ParticleSystem - MainLoop
@@ -528,7 +528,7 @@ void CCParticleSystem::update(ccTime dt)
 	{
 		float rate = 1.0f / m_fEmissionRate;
 		m_fEmitCounter += dt;
-		while( m_nParticleCount < m_nTotalParticles && m_fEmitCounter > rate ) 
+		while( m_uParticleCount < m_uTotalParticles && m_fEmitCounter > rate ) 
 		{
 			this->addParticle();
 			m_fEmitCounter -= rate;
@@ -563,7 +563,7 @@ void CCParticleSystem::update(ccTime dt)
         currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
     }
 
-	while( m_nParticleIdx < m_nParticleCount )
+	while( m_nParticleIdx < m_uParticleCount )
 	{
 		tCCParticle *p = &m_pParticles[m_nParticleIdx];
 
@@ -647,13 +647,13 @@ void CCParticleSystem::update(ccTime dt)
 		else 
 		{
 			// life < 0
-			if( m_nParticleIdx != m_nParticleCount-1 )
+			if( m_nParticleIdx != m_uParticleCount-1 )
 			{
-				m_pParticles[m_nParticleIdx] = m_pParticles[m_nParticleCount-1];
+				m_pParticles[m_nParticleIdx] = m_pParticles[m_uParticleCount-1];
 			}
-			--m_nParticleCount;
+			--m_uParticleCount;
 
-			if( m_nParticleCount == 0 && m_bIsAutoRemoveOnFinish )
+			if( m_uParticleCount == 0 && m_bIsAutoRemoveOnFinish )
 			{
 				this->unscheduleUpdate();
 				m_pParent->removeChild(this, true);
@@ -865,9 +865,9 @@ bool CCParticleSystem::getIsActive()
 {
 	return m_bIsActive;
 }
-int CCParticleSystem::getParticleCount()
+unsigned int CCParticleSystem::getParticleCount()
 {
-	return m_nParticleCount;
+	return m_uParticleCount;
 }
 float CCParticleSystem::getDuration()
 {
@@ -1029,13 +1029,13 @@ void CCParticleSystem::setEmissionRate(float var)
 {
 	m_fEmissionRate = var;
 }
-int CCParticleSystem::getTotalParticles()
+unsigned int CCParticleSystem::getTotalParticles()
 {
-	return m_nTotalParticles;
+	return m_uTotalParticles;
 }
-void CCParticleSystem::setTotalParticles(int var)
+void CCParticleSystem::setTotalParticles(unsigned int var)
 {
-	m_nTotalParticles = var;
+	m_uTotalParticles = var;
 }
 ccBlendFunc CCParticleSystem::getBlendFunc()
 {

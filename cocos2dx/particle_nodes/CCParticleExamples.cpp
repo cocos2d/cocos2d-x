@@ -72,7 +72,7 @@ bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per frame
-		m_fEmissionRate = m_nTotalParticles/m_fLife;
+		m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.76f;
@@ -135,7 +135,7 @@ bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
 		this->m_fLifeVar = 1;
 
 		// emits per frame
-		this->m_fEmissionRate = m_nTotalParticles/m_fLife;
+		this->m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.5f;
@@ -213,7 +213,7 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per seconds
-		m_fEmissionRate = m_nTotalParticles/m_fLife;
+		m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.76f;
@@ -285,7 +285,7 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		m_fEmissionRate = m_nTotalParticles/m_fLife;
+		m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.12f;
@@ -359,7 +359,7 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		m_fEmissionRate = m_nTotalParticles/m_fLife;
+		m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.50f;
@@ -432,7 +432,7 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		m_fEmissionRate = m_nTotalParticles/m_fLife;
+		m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.2f;
@@ -506,7 +506,7 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		m_fEmissionRate = m_nTotalParticles/m_fLife;
+		m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.5f;
@@ -579,7 +579,7 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		m_fEmissionRate = m_nTotalParticles/m_fDuration;
+		m_fEmissionRate = m_uTotalParticles/m_fDuration;
 
 		// color of particles
 		m_tStartColor.r = 0.7f;
@@ -649,7 +649,7 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
 		m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per frame
-		m_fEmissionRate = m_nTotalParticles/m_fLife;
+		m_fEmissionRate = m_uTotalParticles/m_fLife;
 
 		// color of particles
 		m_tStartColor.r = 0.8f;

@@ -33,7 +33,7 @@ bool CCParticleSystemPoint::initWithTotalParticles(unsigned int numberOfParticle
 {
 	if( CCParticleSystem::initWithTotalParticles(numberOfParticles) )
 	{
-		m_pVertices = new ccPointSprite[m_nTotalParticles];
+		m_pVertices = new ccPointSprite[m_uTotalParticles];
 
 		if( ! m_pVertices )
 		{
@@ -47,7 +47,7 @@ bool CCParticleSystemPoint::initWithTotalParticles(unsigned int numberOfParticle
 
 		// initial binding
 		glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_nTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_uTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 		return true;
@@ -80,14 +80,14 @@ void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoin
 	// place vertices and colos in array
     m_pVertices[m_nParticleIdx].pos = vertex2(newPosition.x, newPosition.y);
 	m_pVertices[m_nParticleIdx].size = particle->size;
-	ccColor4B color = {(GLubyte)particle->color.r * 255, (GLubyte)particle->color.g * 255, (GLubyte)particle->color.b * 255, (GLubyte)particle->color.a * 255};
+	ccColor4B color = {particle->color.r * 255, particle->color.g * 255, particle->color.b * 255, particle->color.a * 255};
 	m_pVertices[m_nParticleIdx].color = color;
 }
 void CCParticleSystemPoint::postStep()
 {
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(ccPointSprite)*m_nParticleCount, m_pVertices);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(ccPointSprite)*m_uParticleCount, m_pVertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 }
@@ -114,7 +114,7 @@ void CCParticleSystemPoint::draw()
 	glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_nTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_uTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
 #endif
 
 	glVertexPointer(2,GL_FLOAT,kPointSize,0);
