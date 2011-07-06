@@ -40,8 +40,8 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 	if( CCParticleSystem::initWithTotalParticles(numberOfParticles) ) 
 	{
 		// allocating data space
-		m_pQuads = new ccV2F_C4B_T2F_Quad[m_nTotalParticles];
-		m_pIndices = new GLushort[m_nTotalParticles * 6];
+		m_pQuads = new ccV2F_C4B_T2F_Quad[m_uTotalParticles];
+		m_pIndices = new GLushort[m_uTotalParticles * 6];
 
 		if( !m_pQuads || !m_pIndices) 
 		{
@@ -72,7 +72,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 
 		// initial binding
 		glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_nTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);	
 #endif
 		return true;
@@ -136,7 +136,7 @@ void CCParticleSystemQuad::initTexCoordsWithRect(CCRect pointRect)
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
 	CC_SWAP( top, bottom, float);
 
-	for(int i=0; i<m_nTotalParticles; i++) 
+	for(int i=0; i<m_uTotalParticles; i++) 
 	{
 		// bottom-left vertex:
 		m_pQuads[i].bl.texCoords.u = left;
@@ -179,7 +179,7 @@ void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 }
 void CCParticleSystemQuad::initIndices()
 {
-	for( int i = 0; i < m_nTotalParticles; ++i)
+	for( int i = 0; i < m_uTotalParticles; ++i)
 	{
         const unsigned int i6 = i*6;
         const unsigned int i4 = i*4;
@@ -197,8 +197,8 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CCPoint
 	// colors
     ccV2F_C4B_T2F_Quad *quad = &(m_pQuads[m_nParticleIdx]);
 
-	ccColor4B color = {(GLbyte)particle->color.r * 255, (GLbyte)particle->color.g * 255, (GLbyte)particle->color.b * 255, 
-		(GLbyte)particle->color.b * 255};
+	ccColor4B color = {particle->color.r * 255, particle->color.g * 255, particle->color.b * 255, 
+		particle->color.b * 255};
 	quad->bl.colors = color;
 	quad->br.colors = color;
 	quad->tl.colors = color;
@@ -265,7 +265,7 @@ void CCParticleSystemQuad::postStep()
 {
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*m_nParticleCount, m_pQuads);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*m_uParticleCount, m_pQuads);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 }
@@ -284,7 +284,7 @@ void CCParticleSystemQuad::draw()
     glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_nTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
+    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
 #endif
 
 	glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
@@ -316,9 +316,9 @@ void CCParticleSystemQuad::draw()
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-    CCAssert( m_nParticleIdx == m_nParticleCount, "Abnormal error in particle quad");
+    CCAssert( m_nParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
 
-	glDrawElements(GL_TRIANGLES, (GLsizei)m_nParticleIdx*6, GL_UNSIGNED_SHORT, m_pIndices);	
+	glDrawElements(GL_TRIANGLES, (GLsizei)(m_nParticleIdx*6), GL_UNSIGNED_SHORT, m_pIndices);	
 
 	// restore blend state
 	if( newBlend )

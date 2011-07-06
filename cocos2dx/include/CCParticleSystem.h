@@ -233,7 +233,7 @@ protected:
 	/** Is the emitter active */
 	CC_PROPERTY_READONLY(bool, m_bIsActive, IsActive)
 	/** Quantity of particles that are being simulated at the moment */
-	CC_PROPERTY_READONLY(int, m_nParticleCount, ParticleCount)
+	CC_PROPERTY_READONLY(unsigned int, m_uParticleCount, ParticleCount)
 	/** How many seconds the emitter wil run. -1 means 'forever' */
 	CC_PROPERTY(float, m_fDuration, Duration)
 	/** sourcePosition of the emitter */
@@ -308,7 +308,7 @@ public:
 	/** emission rate of the particles */
 	CC_PROPERTY(float, m_fEmissionRate, EmissionRate)
 	/** maximum particles of the system */
-	CC_PROPERTY(int, m_nTotalParticles, TotalParticles)
+	CC_PROPERTY(unsigned int, m_uTotalParticles, TotalParticles)
 	/** conforms to CocosNodeTexture protocol */
 	CC_PROPERTY(CCTexture2D*, m_pTexture, Texture)
 	/** conforms to CocosNodeTexture protocol */
