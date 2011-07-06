@@ -44,6 +44,9 @@ CCTextureAtlas::CCTextureAtlas()
     :m_pIndices(NULL)
 	,m_pTexture(NULL)	
 	,m_pQuads(NULL)
+#if CC_USES_VBO
+	, m_bDirty(false)
+#endif
 {}
 
 CCTextureAtlas::~CCTextureAtlas()
