@@ -641,6 +641,7 @@ class CC_DLL CCReverseTime : public CCActionInterval
 {
 public:
 	~CCReverseTime(void);
+	CCReverseTime();
 
 	/** initializes the action */
     bool initWithAction(CCFiniteTimeAction *pAction);
