@@ -109,7 +109,7 @@ namespace   cocos2d {
 		// variable property
 
 		/** The z order of the node relative to it's "brothers": children of the same parent */
-		CC_PROPERTY_READONLY(unsigned int, m_uZOrder, ZOrder)
+		CC_PROPERTY_READONLY(int, m_nZOrder, ZOrder)
 
 			/** The real openGL Z vertex.
 			Differences between openGL Z vertex and cocos2d Z order:
@@ -235,10 +235,10 @@ namespace   cocos2d {
 		void childrenAlloc(void);
 
 		//! helper that reorder a child
-		void insertChild(CCNode* child, unsigned int z);
+		void insertChild(CCNode* child, int z);
 
 		//! used internally to alter the zOrder variable. DON'T call this method manually
-		void setZOrder(unsigned int z);
+		void setZOrder(int z);
 
 		void detachChild(CCNode *child, bool doCleanup);
 
@@ -293,13 +293,13 @@ namespace   cocos2d {
 		If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
 		@since v0.7.1
 		*/
-		virtual void addChild(CCNode * child, unsigned int zOrder);
+		virtual void addChild(CCNode * child, int zOrder);
 
 		/** Adds a child to the container with z order and tag
 		If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
 		@since v0.7.1
 		*/
-		virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
+		virtual void addChild(CCNode * child, int zOrder, int tag);
 
 		// composition: REMOVE
 
@@ -317,7 +317,7 @@ namespace   cocos2d {
 		/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
 		@since v0.7.1
 		*/
-		void removeChildByTag(unsigned int tag, bool cleanup);
+		void removeChildByTag(int tag, bool cleanup);
 
 		/** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
 		@since v0.7.1
@@ -329,12 +329,12 @@ namespace   cocos2d {
 		@return returns a CCNode object
 		@since v0.7.1
 		*/
-		CCNode * getChildByTag(unsigned int tag);
+		CCNode * getChildByTag(int tag);
 
 		/** Reorders a child according to a new z value.
 		* The child MUST be already added.
 		*/
-		virtual void reorderChild(CCNode * child, unsigned int zOrder);
+		virtual void reorderChild(CCNode * child, int zOrder);
 
 		/** Stops all running actions and schedulers
 		@since v0.8
@@ -406,13 +406,13 @@ namespace   cocos2d {
 		/** Removes an action from the running action list given its tag
 		@since v0.7.1
 		*/
-		void stopActionByTag(unsigned int tag);
+		void stopActionByTag(int tag);
 
 		/** Gets an action from the running action list given its tag
 		@since v0.7.1
 		@return the Action the with the given tag
 		*/
-		CCAction* getActionByTag(unsigned int tag);
+		CCAction* getActionByTag(int tag);
 
 		/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
 		* Composable actions are counted as 1 action. Example:
@@ -441,7 +441,7 @@ namespace   cocos2d {
 
 		@since v0.99.3
 		*/
-		void scheduleUpdateWithPriority(unsigned int priority);
+		void scheduleUpdateWithPriority(int priority);
 
 		/* unschedules the "update" method.
 
