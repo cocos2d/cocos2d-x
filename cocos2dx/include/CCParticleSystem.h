@@ -219,7 +219,7 @@ protected:
 	float m_fEmitCounter;
 
 	//!  particle idx
-	int m_nParticleIdx;
+	unsigned int m_uParticleIdx;
 
 	// Optimization
 	//CC_UPDATE_PARTICLE_IMP	updateParticleImp;

@@ -82,7 +82,7 @@ CCParticleSystem::CCParticleSystem()
 	,m_fElapsed(0)
 	,m_pParticles(NULL)
 	,m_fEmitCounter(0)
-	,m_nParticleIdx(0)
+	,m_uParticleIdx(0)
 #if CC_ENABLE_PROFILERS
 	,m_pProfilingTimer(NULL)
 #endif
@@ -510,9 +510,9 @@ void CCParticleSystem::resetSystem()
 {
 	m_bIsActive = true;
 	m_fElapsed = 0;
-	for (m_nParticleIdx = 0; m_nParticleIdx < m_uParticleCount; ++m_nParticleIdx)
+	for (m_uParticleIdx = 0; m_uParticleIdx < m_uParticleCount; ++m_uParticleIdx)
 	{
-		tCCParticle *p = &m_pParticles[m_nParticleIdx];
+		tCCParticle *p = &m_pParticles[m_uParticleIdx];
 		p->timeToLive = 0;
 	}
 }
@@ -541,7 +541,7 @@ void CCParticleSystem::update(ccTime dt)
 		}
 	}
 
-	m_nParticleIdx = 0;
+	m_uParticleIdx = 0;
 
 
 #if CC_ENABLE_PROFILERS
@@ -563,9 +563,9 @@ void CCParticleSystem::update(ccTime dt)
         currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
     }
 
-	while( m_nParticleIdx < m_uParticleCount )
+	while( m_uParticleIdx < m_uParticleCount )
 	{
-		tCCParticle *p = &m_pParticles[m_nParticleIdx];
+		tCCParticle *p = &m_pParticles[m_uParticleIdx];
 
 		// life
 		p->timeToLive -= dt;
@@ -641,15 +641,15 @@ void CCParticleSystem::update(ccTime dt)
 			//updateParticleImp(self, updateParticleSel, p, newPos);
 
 			// update particle counter
-			++m_nParticleIdx;
+			++m_uParticleIdx;
 
 		} 
 		else 
 		{
 			// life < 0
-			if( m_nParticleIdx != m_uParticleCount-1 )
+			if( m_uParticleIdx != m_uParticleCount-1 )
 			{
-				m_pParticles[m_nParticleIdx] = m_pParticles[m_uParticleCount-1];
+				m_pParticles[m_uParticleIdx] = m_pParticles[m_uParticleCount-1];
 			}
 			--m_uParticleCount;
 
