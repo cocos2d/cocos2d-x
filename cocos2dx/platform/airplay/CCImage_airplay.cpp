@@ -26,8 +26,7 @@
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "s3eFile.h"
-#include "IwImage.h"
-#include "IwUtil.h"
+#include "png.h"
 
 #include <string>
 typedef struct 
@@ -92,6 +91,12 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
     return true;
 }
 
+void userReadData(png_structp pngPtr, png_bytep data, png_size_t length) {
+	png_voidp png_pointer = png_get_io_ptr(pngPtr);
+	s3eFileRead((char*)data, length, 1, (s3eFile*)png_pointer);
+}
+
+#define PNGSIGSIZE 8
 bool CCImage::_initWithPngData(void * pData, int nDatalen)
 {
 	IW_CALLSTACK("CCImage::_initWithPngData");
@@ -102,65 +107,127 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 	
 	IwAssert(GAME, pFile);
 	
-	CIwImage    *image		= NULL;
-	image = new CIwImage;
+	png_byte pngsig[PNGSIGSIZE];
 	
-	image->ReadFile( pFile);
+	bool is_png = false;
 	
-    s3eFileClose(pFile);
+	s3eFileRead((char*)pngsig, PNGSIGSIZE, 1, pFile);
+	
+	is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE) == 0 ? true : false;
+	
+	if (!is_png)
+		return false;
+	
+	png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	
+	if (!pngPtr)
+		return false;
+	
+	png_infop infoPtr = png_create_info_struct(pngPtr);
+	
+	if (!infoPtr)
+		return false;
+	
+	png_bytep* rowPtrs = NULL;
+	m_pData = NULL;
+	
+	if (setjmp(png_jmpbuf(pngPtr))) {
+		png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
+		if (rowPtrs != NULL) delete [] rowPtrs;
+		if (m_pData != NULL) delete [] m_pData;
+		
+		CCLog("ERROR: An error occured while reading the PNG file");
+		
+		return false;
+	}
+	
+	png_set_read_fn(pngPtr, pFile, userReadData);
+	png_set_sig_bytes(pngPtr, PNGSIGSIZE);
+	png_read_info(pngPtr, infoPtr);
+	
+	
+	png_uint_32 bitdepth   = png_get_bit_depth(pngPtr, infoPtr);
+	png_uint_32 channels   = png_get_channels(pngPtr, infoPtr);
+	png_uint_32 color_type = png_get_color_type(pngPtr, infoPtr);
+	
+	// Convert palette color to true color
+	if (color_type ==PNG_COLOR_TYPE_PALETTE)
+		png_set_palette_to_rgb(pngPtr);
+	
+	// Convert low bit colors to 8 bit colors
+	if (png_get_bit_depth(pngPtr, infoPtr) < 8)
+	{
+		if (color_type==PNG_COLOR_TYPE_GRAY || color_type==PNG_COLOR_TYPE_GRAY_ALPHA)
+			png_set_gray_1_2_4_to_8(pngPtr);
+		else
+			png_set_packing(pngPtr);
+	}
+
+	if (png_get_valid(pngPtr, infoPtr, PNG_INFO_tRNS))
+		png_set_tRNS_to_alpha(pngPtr);
+	
+	// Convert high bit colors to 8 bit colors
+	if (bitdepth == 16)
+		png_set_strip_16(pngPtr);
+	
+	// Convert gray color to true color
+	if (color_type==PNG_COLOR_TYPE_GRAY || color_type==PNG_COLOR_TYPE_GRAY_ALPHA)
+		png_set_gray_to_rgb(pngPtr);
+	
+	// Update the changes
+	png_read_update_info(pngPtr, infoPtr);
 	
 	// init image info
 	m_bPreMulti	= true;
-	m_bHasAlpha = image->HasAlpha();
 	
-	unsigned int bytesPerComponent = 3;
-	if (m_bHasAlpha)
-	{
-		bytesPerComponent = 4;
-	} 
-	m_nHeight = (unsigned int)image->GetHeight();
-	m_nWidth = (unsigned int)image->GetWidth();
-	m_nBitsPerComponent = (unsigned int)image->GetBitDepth()/bytesPerComponent;
+	unsigned int bytesPerComponent = png_get_channels(pngPtr, infoPtr);
 	
-	tImageSource imageSource;
+	m_bHasAlpha = (bytesPerComponent == 4 ? true : false);
 	
-	imageSource.data    = (unsigned char*)pData;
-	imageSource.size    = nDatalen;
-	imageSource.offset  = 0;
+	m_nHeight = (unsigned int)png_get_image_height(pngPtr, infoPtr);
+	m_nWidth = (unsigned int) png_get_image_width(pngPtr, infoPtr);
+	
+	m_nBitsPerComponent = (unsigned int)png_get_bit_depth(pngPtr, infoPtr)/bytesPerComponent;
 	
 	m_pData = new unsigned char[m_nHeight * m_nWidth * bytesPerComponent];
 	
 	unsigned int bytesPerRow = m_nWidth * bytesPerComponent;
-
-	if(m_bHasAlpha)
+	
 	{
-		unsigned char *src = NULL;
-		src = (unsigned char *)image->GetTexels();
-		
-		unsigned char *tmp = (unsigned char *) m_pData;
-		
-		for(unsigned int i = 0; i < m_nHeight*bytesPerRow; i += bytesPerComponent)
-		{
-			*(tmp + i + 0)	=  (*(src + i + 0) * *(src + i + 3) + 1) >> 8;
-			*(tmp + i + 1)	=  (*(src + i + 1) * *(src + i + 3) + 1) >> 8;					
-			*(tmp + i + 2)	=  (*(src + i + 2) * *(src + i + 3) + 1) >> 8;
-			*(tmp + i + 3)	=   *(src + i + 3);
-		}
-		
-	}
-	else
-	{
-		for (int j = 0; j < (m_nHeight); ++j)
-		{
-			memcpy(m_pData + j * bytesPerRow, image->GetTexels()+j * bytesPerRow, bytesPerRow);
+		unsigned char *ptr = m_pData;
+		rowPtrs = new png_bytep[m_nHeight];
+				
+		for (int i = 0; i < m_nHeight; i++) {
 			
+			int q = (i) * bytesPerRow;
+			
+			rowPtrs[i] = (png_bytep)m_pData + q;
 		}
+		
+		png_read_image(pngPtr, rowPtrs);
+		
+		delete[] (png_bytep)rowPtrs;
+		png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
+		
+		s3eFileClose(pFile);
+		pFile = 0;
 	}
+	
+	// premultiplay if alpha
+	if(m_bHasAlpha)
+		for(unsigned int i = 0; i < m_nHeight*bytesPerRow; i += bytesPerComponent){
+			*(m_pData + i + 0)	=  (*(m_pData + i + 0) * *(m_pData + i + 3) + 1) >> 8;
+			*(m_pData + i + 1)	=  (*(m_pData + i + 1) * *(m_pData + i + 3) + 1) >> 8;					
+			*(m_pData + i + 2)	=  (*(m_pData + i + 2) * *(m_pData + i + 3) + 1) >> 8;
+			*(m_pData + i + 3)	=   *(m_pData + i + 3);
+	}
+	
 
-	delete image;
+	
 	bRet = true;
     return bRet;
 }
+
 bool CCImage::initWithString(
 							 const char *    pText, 
 							 int             nWidth/* = 0*/, 
