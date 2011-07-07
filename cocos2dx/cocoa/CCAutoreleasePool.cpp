@@ -42,7 +42,7 @@ void CCAutoreleasePool::addObject(CCObject* pObject)
 {
 	m_pManagedObjectArray->addObject(pObject);
 
-	assert(pObject->m_uRefrence > 1);
+	assert(pObject->m_uReference > 1);
 
 	pObject->release(); // no ref count, in this case autorelease pool added.
 }

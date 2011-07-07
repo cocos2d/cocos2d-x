@@ -43,7 +43,7 @@ CCObject::CCObject(void)
 	m_uID = ++uObjectCount;
 
 	// when the object is created, the refrence count of it is 1
-	m_uRefrence = 1;
+	m_uReference = 1;
 	m_bManaged = false;
 }
 
@@ -64,10 +64,10 @@ CCObject* CCObject::copy()
 
 void CCObject::release(void)
 {
-	assert(m_uRefrence > 0);
-	--m_uRefrence;
+	assert(m_uReference > 0);
+	--m_uReference;
 
-	if (m_uRefrence == 0)
+	if (m_uReference == 0)
 	{
 		delete this;
 	}
@@ -75,9 +75,9 @@ void CCObject::release(void)
 
 void CCObject::retain(void)
 {
-	assert(m_uRefrence > 0);
+	assert(m_uReference > 0);
 
-	++m_uRefrence;
+	++m_uReference;
 }
 
 CCObject* CCObject::autorelease(void)
@@ -90,12 +90,12 @@ CCObject* CCObject::autorelease(void)
 
 bool CCObject::isSingleRefrence(void)
 {
-	return m_uRefrence == 1;
+	return m_uReference == 1;
 }
 
 unsigned int CCObject::retainCount(void)
 {
-	return m_uRefrence;
+	return m_uReference;
 }
 
 bool CCObject::isEqual(const CCObject *pObject)
