@@ -3835,25 +3835,25 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
 		addChild(spritebatch);
 
-// 		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
-// 		char tmp[50];
-// 		for (int j = 0; j < 14; j++)
-// 		{			
-// 			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
-// 			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-// 			animFrames->addObject(frame);
-// 		}
-// 
-// 		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-// 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
-// 
-// 		delete animFrames;
-// 
-// 		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
-// 		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
-// 		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
-// 		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
-// 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		char tmp[50];
+		for (int j = 0; j < 14; j++)
+		{			
+			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
+			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+			animFrames->addObject(frame);
+		}
+
+		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+
+		delete animFrames;
+
+		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
+		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
+		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
+		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
 		spritebatch->addChild(sprite, i);
 	}
