@@ -136,7 +136,7 @@ void CCParticleSystemQuad::initTexCoordsWithRect(CCRect pointRect)
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
 	CC_SWAP( top, bottom, float);
 
-	for(int i=0; i<m_uTotalParticles; i++) 
+	for(unsigned int i=0; i<m_uTotalParticles; i++) 
 	{
 		// bottom-left vertex:
 		m_pQuads[i].bl.texCoords.u = left;
@@ -179,7 +179,7 @@ void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
 }
 void CCParticleSystemQuad::initIndices()
 {
-	for( int i = 0; i < m_uTotalParticles; ++i)
+	for(unsigned int i = 0; i < m_uTotalParticles; ++i)
 	{
         const unsigned int i6 = i*6;
         const unsigned int i4 = i*4;
@@ -195,10 +195,10 @@ void CCParticleSystemQuad::initIndices()
 void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// colors
-    ccV2F_C4B_T2F_Quad *quad = &(m_pQuads[m_nParticleIdx]);
+    ccV2F_C4B_T2F_Quad *quad = &(m_pQuads[m_uParticleIdx]);
 
-	ccColor4B color = {particle->color.r * 255, particle->color.g * 255, particle->color.b * 255, 
-		particle->color.a * 255};
+	ccColor4B color = {(GLubyte)(particle->color.r * 255), (GLubyte)(particle->color.g * 255), (GLubyte)(particle->color.b * 255), 
+		(GLubyte)(particle->color.a * 255)};
 	quad->bl.colors = color;
 	quad->br.colors = color;
 	quad->tl.colors = color;
@@ -316,9 +316,9 @@ void CCParticleSystemQuad::draw()
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-    CCAssert( m_nParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
+    CCAssert( m_uParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
 
-	glDrawElements(GL_TRIANGLES, (GLsizei)(m_nParticleIdx*6), GL_UNSIGNED_SHORT, m_pIndices);	
+	glDrawElements(GL_TRIANGLES, (GLsizei)(m_uParticleIdx*6), GL_UNSIGNED_SHORT, m_pIndices);	
 
 	// restore blend state
 	if( newBlend )
