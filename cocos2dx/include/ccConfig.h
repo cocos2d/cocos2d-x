@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -202,10 +203,10 @@ Platforms: Only used on Retina Display devices like iPhone 4.
 */ 
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
 
-/** @def CC_USE_RGBA32_LABELS_ON_NEON_ARCH
-If enabled, it will use RGBA8888 (32-bit textures) on Neon devices for CCLabelTTF objects.
+/** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
+If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
 If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
-On Neon devices, RGBA8888 textures are 6% faster than A8 textures, but then will consule 4x memory.
+On Neon devices, LA88 textures are 6% faster than A8 textures, but then will consume 2x memory.
 
 This feature is disabled by default.
 
@@ -213,7 +214,7 @@ Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad
 
 @since v0.99.5
 */
-#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 0
+#define CC_USE_LA88_LABELS_ON_NEON_ARCH 0
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
@@ -224,7 +225,7 @@ Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad
 #define CC_SPRITE_DEBUG_DRAW 0
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
-If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
+If enabled, all subclasses of CCSprite that are rendered using an CCSpriteBatchNode draw a bounding box.
 Useful for debugging purposes only. It is recommened to leave it disabled.
 
 To enable set it to a value different than 0. Disabled by default.
@@ -232,11 +233,11 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
 
 /** @def CC_LABELBMFONT_DEBUG_DRAW
- If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
- 
- To enable set it to a value different than 0. Disabled by default.
- */
+If enabled, all subclasses of CCLabelBMFont will draw a bounding box
+Useful for debugging purposes only. It is recommened to leave it disabled.
+
+To enable set it to a value different than 0. Disabled by default.
+*/
 #define CC_LABELBMFONT_DEBUG_DRAW 0
 
 /** @def CC_LABELATLAS_DEBUG_DRAW
