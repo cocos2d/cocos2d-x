@@ -45,7 +45,7 @@ protected:
 	// object id
     unsigned int		m_uID;
 	// count of refrence
-	unsigned int		m_uRefrence;
+	unsigned int		m_uReference;
 	// is the object autoreleased
 	bool		m_bManaged;		
 public:
