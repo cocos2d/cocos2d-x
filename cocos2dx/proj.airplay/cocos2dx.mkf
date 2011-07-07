@@ -16,6 +16,7 @@ subprojects
 {
 	zlib
 	expat
+	libpng
 }
 includepaths
 {
