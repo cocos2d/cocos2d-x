@@ -198,7 +198,7 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CCPoint
     ccV2F_C4B_T2F_Quad *quad = &(m_pQuads[m_nParticleIdx]);
 
 	ccColor4B color = {particle->color.r * 255, particle->color.g * 255, particle->color.b * 255, 
-		particle->color.b * 255};
+		particle->color.a * 255};
 	quad->bl.colors = color;
 	quad->br.colors = color;
 	quad->tl.colors = color;
