@@ -354,7 +354,7 @@ class CC_DLL CCSkewBy : public CCSkewTo
 public:
 	virtual bool initWithDuration(ccTime t, float sx, float sy);
 	virtual void startWithTarget(CCNode *pTarget);
-	virtual CCSkewBy* reverse(void);
+	virtual CCActionInterval* reverse(void);
 
 public:
 	static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
@@ -483,7 +483,7 @@ class CC_DLL CCScaleBy : public CCScaleTo
 {
 public:
     virtual void startWithTarget(CCNode *pTarget);
-	virtual CCScaleBy* reverse(void);
+	virtual CCActionInterval* reverse(void);
 	virtual CCObject* copyWithZone(CCZone* pZone);
 
 public:
