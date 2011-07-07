@@ -78,10 +78,11 @@ CCParticleSystemPoint * CCParticleSystemPoint::particleWithFile(const char *plis
 void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
 {
 	// place vertices and colos in array
-    m_pVertices[m_nParticleIdx].pos = vertex2(newPosition.x, newPosition.y);
-	m_pVertices[m_nParticleIdx].size = particle->size;
-	ccColor4B color = {particle->color.r * 255, particle->color.g * 255, particle->color.b * 255, particle->color.a * 255};
-	m_pVertices[m_nParticleIdx].color = color;
+    m_pVertices[m_uParticleIdx].pos = vertex2(newPosition.x, newPosition.y);
+	m_pVertices[m_uParticleIdx].size = particle->size;
+	ccColor4B color = {(GLubyte)(particle->color.r * 255), (GLubyte)(particle->color.g * 255), (GLubyte)(particle->color.b * 255), 
+		(GLubyte)(particle->color.a * 255)};
+	m_pVertices[m_uParticleIdx].color = color;
 }
 void CCParticleSystemPoint::postStep()
 {
@@ -93,7 +94,7 @@ void CCParticleSystemPoint::postStep()
 }
 void CCParticleSystemPoint::draw()
 {
-	if (m_nParticleIdx==0)
+	if (m_uParticleIdx==0)
 	{
 		return;
 	}
@@ -141,7 +142,7 @@ void CCParticleSystemPoint::draw()
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-	glDrawArrays(GL_POINTS, 0, m_nParticleIdx);
+	glDrawArrays(GL_POINTS, 0, m_uParticleIdx);
 
 	// restore blend state
 	if( newBlend )
