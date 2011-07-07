@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -38,44 +39,6 @@ THE SOFTWARE.
 #endif  // CCAssert
 
 #include "ccConfig.h"
-
-/**
- @file
- cocos2d helper macros
- */
- /*
- * if COCOS2D_DEBUG is not defined, or if it is 0 then
- *	all CCLOGXXX macros will be disabled
- *
- * if COCOS2D_DEBUG==1 then:
- *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
- *		CCLOGINFO()	will be disabled
- *
- * if COCOS2D_DEBUG==2 or higher then:
- *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
- *		CCLOGINFO()	will be enabled 
- */
-// CCLOG macros move to CCMacros
-
-// #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-// #define CCLOG(...)              do {} while (0)
-// #define CCLOGINFO(...)          do {} while (0)
-// #define CCLOGERROR(...)         do {} while (0)
-// 
-// #elif COCOS2D_DEBUG == 1
-// #include "CCCommon.h"
-// #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
-// #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
-// #define CCLOGINFO(format,...)   do {} while (0)
-// 
-// #elif COCOS2D_DEBUG > 1
-// #include "CCCommon.h"
-// #define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
-// #define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
-// #define CCLOGINFO(format,...)   cocos2d::CCLog(format, ##__VA_ARGS__)
-// #endif // COCOS2D_DEBUG
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables
@@ -149,70 +112,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
 	glDisableClientState(GL_VERTEX_ARRAY);			\
 }
-
-/** @def CC_DIRECTOR_INIT
-	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
-	- The EAGLView view will have multiple touches disabled.
-	- It will create a UIWindow and it will assign it the 'window' variable. 'window' must be declared before calling this marcro.
-	- It will parent the EAGLView to the created window
-	- If the firmware >= 3.1 it will create a Display Link Director. Else it will create an NSTimer director.
-	- It will try to run at 60 FPS.
-	- The FPS won't be displayed.
-	- The orientation will be portrait.
-	- It will connect the director with the EAGLView.
-
- IMPORTANT: If you want to use another type of render buffer (eg: RGBA8)
- or if you want to use a 16-bit or 24-bit depth buffer, you should NOT
- use this macro. Instead, you should create the EAGLView manually.
- 
- @since v0.99.4
- */
-
-//---- todo: replace with wophone window
-
-/*
-#define CC_DIRECTOR_INIT()																	\
-do	{																							\
-    window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
-    if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )								\
-        [CCDirector setDirectorType:kCCDirectorTypeNSTimer];									\
-    CCDirector *__director = [CCDirector sharedDirector];										\
-    [__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
-    [__director setDisplayFPS:NO];																\
-    [__director setAnimationInterval:1.0/60];													\
-    EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]								\
-        pixelFormat:kEAGLColorFormatRGB565							\
-        depthFormat:0 				                                \
-        preserveBackbuffer:NO										\
-        sharegroup:nil												\
-        multiSampling:NO											\
-        numberOfSamples:0											\
-    ];											                    \
-    [__director setOpenGLView:__glView];														\
-    [window addSubview:__glView];																\
-    [window makeKeyAndVisible];																	\
-} while(0)
-*/
-
- 
- /** @def CC_DIRECTOR_END
-  Stops and removes the director from memory.
-  Removes the EAGLView from its parent
-  
-  @since v0.99.4
-  */
-
-//---- todo: replace with wophone window
-
-/*
-#define CC_DIRECTOR_END()									\
-do {														\
-  CCDirector *__director = [CCDirector sharedDirector];		\
-  CC_GLVIEW *__view = [__director openGLView];				\
-  [__view removeFromSuperview];								\
-  [__director end];											\
-} while(0)
-*/
 
 #ifndef FLT_EPSILON
 #define FLT_EPSILON     1.192092896e-07F
