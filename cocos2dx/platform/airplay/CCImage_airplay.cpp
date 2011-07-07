@@ -187,7 +187,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 	m_nHeight = (unsigned int)png_get_image_height(pngPtr, infoPtr);
 	m_nWidth = (unsigned int) png_get_image_width(pngPtr, infoPtr);
 	
-	m_nBitsPerComponent = (unsigned int)png_get_bit_depth(pngPtr, infoPtr)/bytesPerComponent;
+	m_nBitsPerComponent = (unsigned int)png_get_bit_depth(pngPtr, infoPtr);
 	
 	m_pData = new unsigned char[m_nHeight * m_nWidth * bytesPerComponent];
 	
