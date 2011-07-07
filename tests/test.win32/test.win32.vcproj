@@ -963,6 +963,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="DirectorTest"
+					>
+					<File
+						RelativePath="..\tests\DirectorTest\DirectorTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\DirectorTest\DirectorTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
