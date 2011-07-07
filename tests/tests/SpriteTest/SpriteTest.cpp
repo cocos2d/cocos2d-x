@@ -3441,9 +3441,9 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 		delete animFrames;
 
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
@@ -3521,9 +3521,9 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 		delete animFrames;
 
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
@@ -3599,16 +3599,16 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 
 		// Skew
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
 		// Scale
 		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
-		CCScaleBy *scale_back = scale->reverse();
+		CCActionInterval *scale_back = scale->reverse();
 		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
 
@@ -3683,16 +3683,16 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 
 		// skew
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
 		// scale 
 		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
-		CCScaleBy *scale_back = scale->reverse();
+		CCActionInterval *scale_back = scale->reverse();
 		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
 

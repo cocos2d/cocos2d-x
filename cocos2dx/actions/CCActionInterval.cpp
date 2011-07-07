@@ -1067,7 +1067,7 @@ void CCSkewBy::startWithTarget(cocos2d::CCNode *pTarget)
 	m_fEndSkewY = m_fStartSkewY + m_fDeltaY;
 }
 
-CCSkewBy* CCSkewBy::reverse()
+CCActionInterval* CCSkewBy::reverse()
 {
 	return actionWithDuration(m_fDuration, -m_fSkewX, -m_fSkewY);
 }
@@ -1467,7 +1467,7 @@ void CCScaleBy::startWithTarget(CCNode *pTarget)
 	m_fDeltaY = m_fStartScaleY * m_fEndScaleY - m_fStartScaleY;
 }
 
-CCScaleBy* CCScaleBy::reverse(void)
+CCActionInterval* CCScaleBy::reverse(void)
 {
 	return CCScaleBy::actionWithDuration(m_fDuration, 1 / m_fEndScaleX, 1 / m_fEndScaleY);
 }
