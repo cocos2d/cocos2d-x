@@ -35,15 +35,15 @@ using namespace std;
 namespace   cocos2d {
 class CCString;
 
-template<class _T, class _ValueT = CCObject*>
+template<class _KeyT, class _ValueT = CCObject*>
 class CCMutableDictionary : public CCObject
 {
 public:
-	typedef std::map<_T, _ValueT>	CCObjectMap;
+	typedef std::map<_KeyT, _ValueT>	CCObjectMap;
 	typedef typename CCObjectMap::iterator	CCObjectMapIter;
 
 protected:
-	typedef pair<_T, _ValueT> Int_Pair;
+	typedef pair<_KeyT, _ValueT> Int_Pair;
 	CCObjectMap		m_Map;
 	bool			m_bBegin;
 	CCObjectMapIter m_MapIter;
@@ -66,9 +66,9 @@ public:
 	}
 
 	/// return all the keys
-	std::vector<std::string> allKeys()
+	std::vector<_KeyT> allKeys()
 	{
-		std::vector<std::string> tRet;
+		std::vector<_KeyT> tRet;
 		if (m_Map.size() > 0)
 		{
 			CCObjectMapIter it;
@@ -81,9 +81,9 @@ public:
 	}
 
 	/** @warning : We use '==' to compare two objects*/
-	std::vector<std::string> allKeysForObject(_ValueT object)
+	std::vector<_KeyT> allKeysForObject(_ValueT object)
 	{
-		std::vector<std::string> tRet;
+		std::vector<_KeyT> tRet;
 		if (m_Map.size() > 0)
 		{
 			CCObjectMapIter it;
@@ -98,7 +98,7 @@ public:
 		return tRet;
 	}
 
-	_ValueT objectForKey(const _T& key)			///< 
+	_ValueT objectForKey(const _KeyT& key)			///< 
 	{
 		CCObjectMapIter it;
 
@@ -111,7 +111,7 @@ public:
 	}
 
 
-	bool setObject(_ValueT pObject, const _T& key)
+	bool setObject(_ValueT pObject, const _KeyT& key)
 	{
 		pair<CCObjectMapIter, bool > pr;
 
@@ -126,7 +126,7 @@ public:
 		return false;
 	}
 
-	void removeObjectForKey(const _T& key)
+	void removeObjectForKey(const _KeyT& key)
 	{
 		CCObjectMapIter it;
 
@@ -153,7 +153,7 @@ public:
 		return true;
 	}
 
-	_ValueT next(_T* key = NULL)
+	_ValueT next(_KeyT* key = NULL)
 	{
 		if(!m_bBegin)
 			return NULL;
@@ -212,13 +212,13 @@ public:
 		m_Map.clear();
 	}
 
-	static CCMutableDictionary<_T, _ValueT>* dictionaryWithDictionary(CCMutableDictionary<_T, _ValueT>* srcDict)
+	static CCMutableDictionary<_KeyT, _ValueT>* dictionaryWithDictionary(CCMutableDictionary<_KeyT, _ValueT>* srcDict)
 	{
-		CCMutableDictionary<_T, _ValueT>* pNewDict = new CCMutableDictionary<_T, _ValueT>();
+		CCMutableDictionary<_KeyT, _ValueT>* pNewDict = new CCMutableDictionary<_KeyT, _ValueT>();
 
 		srcDict->begin();
 
-		_T key;
+		_KeyT key;
 		_ValueT value;
 
 		while( (value = srcDict->next(&key)) )
