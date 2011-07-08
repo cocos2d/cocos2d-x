@@ -147,14 +147,12 @@ static CDBufferManager *bufferManager = nil;
 	int soundId = [bufferManager bufferForFile:filePath create:YES];
 	if (soundId == kCDNoBuffer) {
 		CDLOG(@"Denshion::SimpleAudioEngine sound failed to preload %@",filePath);
-	} else {
-		CDLOG(@"Denshion::SimpleAudioEngine preloaded %@",filePath);
-	}	
+	}
 }
 
 -(void) unloadEffect:(NSString*) filePath
 {
-	CDLOG(@"Denshion::SimpleAudioEngine unloadedEffect %@",filePath);
+	CDLOGINFO(@"Denshion::SimpleAudioEngine unloadedEffect %@",filePath);
 	[bufferManager releaseBufferForFile:filePath];
 }
 
@@ -212,7 +210,7 @@ static CDBufferManager *bufferManager = nil;
 	int soundId = [bufferManager bufferForFile:filePath create:YES];
 	if (soundId != kCDNoBuffer) {
 		CDSoundSource *result = [soundEngine soundSourceForSound:soundId sourceGroupId:0];
-		CDLOG(@"Denshion::SimpleAudioEngine sound source created for %@",filePath);
+		CDLOGINFO(@"Denshion::SimpleAudioEngine sound source created for %@",filePath);
 		return result;
 	} else {
 		return nil;
