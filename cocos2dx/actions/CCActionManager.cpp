@@ -303,14 +303,10 @@ void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 
 			if (pAction->getTag() == tag && pAction->getOriginalTarget() == pTarget)
 			{
-				return removeActionAtIndex(i, pElement);
+				removeActionAtIndex(i, pElement);
+				break;
 			}
 		}
-		CCLOG("cocos2d: removeActionByTag: Action not found!");
-	}
-	else
-	{
-		CCLOG("cocos2d: removeActionByTag: Target not found!");
 	}
 }
 

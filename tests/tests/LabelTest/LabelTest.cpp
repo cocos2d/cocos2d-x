@@ -34,6 +34,10 @@ enum
 	IDC_RESTART
 };
 
+CCLayer* nextAtlasAction();
+CCLayer* backAtlasAction();
+CCLayer* restartAtlasAction();
+
 static int sceneIdx = -1; 
 
 #define MAX_LAYER	16
@@ -352,6 +356,12 @@ std::string LabelAtlasColorTest::subtitle()
 //
 // Atlas3
 //
+// Use any of these editors to generate BMFonts:
+//     http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+//     http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+//     http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+//     http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+//
 //------------------------------------------------------------------
 Atlas3::Atlas3()
 {
@@ -429,6 +439,12 @@ std::string Atlas3::subtitle()
 //------------------------------------------------------------------
 //
 // Atlas4
+//
+// Use any of these editors to generate BMFonts:
+//     http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+//     http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+//     http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+//     http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 //
 //------------------------------------------------------------------
 Atlas4::Atlas4()
@@ -516,6 +532,12 @@ std::string Atlas4::subtitle()
 //
 // Atlas5
 //
+// Use any of these editors to generate BMFonts:
+//     http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+//     http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+//     http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+//     http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+//
 //------------------------------------------------------------------
 
 Atlas5::Atlas5()
@@ -541,6 +563,12 @@ std::string Atlas5::subtitle()
 //------------------------------------------------------------------
 //
 // Atlas6
+//
+// Use any of these editors to generate BMFonts:
+//     http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+//     http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+//     http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+//     http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 //
 //------------------------------------------------------------------
 
@@ -579,15 +607,13 @@ std::string Atlas6::subtitle()
 //
 // AtlasBitmapColor
 //
+// Use any of these editors to generate BMFonts:
+//     http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+//     http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+//     http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+//     http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+//
 //------------------------------------------------------------------
-
-/*
- * Use any of these editors to generate bitmap font atlas:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
- */
-
 AtlasBitmapColor::AtlasBitmapColor()
 {
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -627,6 +653,12 @@ std::string AtlasBitmapColor::subtitle()
 //
 // AtlasFastBitmap
 //
+// Use any of these editors to generate BMFonts:
+//     http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+//     http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+//     http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+//     http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+//
 //------------------------------------------------------------------
 
 AtlasFastBitmap::AtlasFastBitmap()
@@ -660,6 +692,12 @@ std::string AtlasFastBitmap::subtitle()
 //------------------------------------------------------------------
 //
 // BitmapFontMultiLine
+//
+// Use any of these editors to generate BMFonts:
+//     http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+//     http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+//     http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+//     http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 //
 //------------------------------------------------------------------
 BitmapFontMultiLine::BitmapFontMultiLine()
@@ -767,7 +805,7 @@ std::string LabelsEmpty::title()
 
 std::string LabelsEmpty::subtitle()
 {
-    return "3 empty labels: LabelAtlas, Label and BitmapFontAtlas";
+    return "3 empty labels: LabelAtlas, LabelTTF and LabelBMFont";
 }
 
 //------------------------------------------------------------------

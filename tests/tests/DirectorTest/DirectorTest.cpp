@@ -3,6 +3,10 @@
 
 #define MAX_LAYER	1
 
+CCLayer* nextDirectorTestCase();
+CCLayer* backDirectorTestCase();
+CCLayer* restartDirectorTestCase();
+
 static int sceneIdx=-1;
 static ccDeviceOrientation s_currentOrientation = CCDeviceOrientationPortrait;
 

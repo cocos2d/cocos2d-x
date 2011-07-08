@@ -177,6 +177,11 @@ public:
 	 */
 	void resumeTarget(SelectorProtocol *pTarget);
 
+    /** Returns whether or not the target is paused
+    @since v1.0.0
+    */
+    bool isTargetPaused(SelectorProtocol *pTarget);
+
 public:
     /** returns a shared instance of the Scheduler */
 	static CCScheduler* sharedScheduler(void);

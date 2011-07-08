@@ -1,6 +1,10 @@
 #include "ActionsTest.h"
 #include "../testResource.h"
 
+CCLayer* NextAction();
+CCLayer* BackAction();
+CCLayer* RestartAction();
+
 static int s_nActionIdx = -1;
 
 CCLayer* CreateLayer(int nIndex)
@@ -376,19 +380,19 @@ void ActionSkewRotateScale::onEnter()
 
 	CCSize boxSize = CCSizeMake(100.0f, 100.0f);
 
-	CCColorLayer *box = CCColorLayer::layerWithColor(ccc4(255, 255, 0, 255));
+	CCLayerColor *box = CCLayerColor::layerWithColor(ccc4(255, 255, 0, 255));
 	box->setAnchorPoint(ccp(0, 0));
 	box->setPosition(ccp(190, 110));
 	box->setContentSize(boxSize);
 
 	static float markrside = 10.0f;
-	CCColorLayer *uL = CCColorLayer::layerWithColor(ccc4(255, 0, 0, 255));
+	CCLayerColor *uL = CCLayerColor::layerWithColor(ccc4(255, 0, 0, 255));
 	box->addChild(uL);
 	uL->setContentSize(CCSizeMake(markrside, markrside));
 	uL->setPosition(ccp(0.f, boxSize.height - markrside));
 	uL->setAnchorPoint(ccp(0, 0));
 
-	CCColorLayer *uR = CCColorLayer::layerWithColor(ccc4(0, 0, 255, 255));
+	CCLayerColor *uR = CCLayerColor::layerWithColor(ccc4(0, 0, 255, 255));
 	box->addChild(uR);
 	uR->setContentSize(CCSizeMake(markrside, markrside));
 	uR->setPosition(ccp(boxSize.width - markrside, boxSize.height - markrside));

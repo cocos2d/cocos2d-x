@@ -5,6 +5,10 @@ static int sceneIdx = -1;
 
 #define MAX_LAYER	3
 
+CCLayer* nextAction();
+CCLayer* backAction();
+CCLayer* restartAction();
+
 CCLayer* createLayer(int nIndex)
 {
 	switch(nIndex)
