@@ -151,7 +151,7 @@ namespace cocos2d
 	void CCGrid3DAction::setVertex(cocos2d::ccGridSize pos, cocos2d::ccVertex3F vertex)
 	{
 		CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
-		return g->setVertex(pos, vertex);
+		g->setVertex(pos, vertex);
 	}
 
 	// implementation of TiledGrid3DAction
