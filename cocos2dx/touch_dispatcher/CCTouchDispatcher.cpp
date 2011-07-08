@@ -32,6 +32,16 @@ THE SOFTWARE.
 #include "support/data_support/ccCArray.h"
 
 #include <assert.h>
+#include <algorithm>
+
+/**
+ * Used for sort
+ */
+static bool less(const cocos2d::CCTouchHandler *p1, const cocos2d::CCTouchHandler *p2)
+{
+	return ((cocos2d::CCTouchHandler*)p1)->getPriority() < ((cocos2d::CCTouchHandler*)p2)->getPriority();
+}
+
 namespace   cocos2d {
 
 bool CCTouchDispatcher::isDispatchEvents(void)
@@ -229,11 +239,48 @@ void CCTouchDispatcher::removeAllDelegates(void)
 	}
 }
 
+CCTouchHandler* CCTouchDispatcher::findHandler(CCTouchDelegate *pDelegate)
+{
+	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
+
+	for (iter = m_pTargetedHandlers->begin(); iter != m_pTargetedHandlers->end(); ++iter)
+	{
+		if ((*iter)->getDelegate() == pDelegate)
+		{
+			return *iter;
+		}
+	}
+
+	for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
+	{
+		if ((*iter)->getDelegate() == pDelegate)
+		{
+			return *iter;
+		}
+	} 
+
+	return NULL;
+}
+
+void CCTouchDispatcher::rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArray)
+{
+	sort(pArray->begin(), pArray->end(), less);
+}
+
 void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 {
-    CC_UNUSED_PARAM(nPriority);
-    CC_UNUSED_PARAM(pDelegate);
-	assert(0);
+    assert(pDelegate != NULL);
+
+	CCTouchHandler *handler = NULL;
+
+	handler = this->findHandler(pDelegate);
+
+	assert(handler != NULL);
+
+	handler->setPriority(nPriority);
+
+	this->rearrangeHandlers(m_pTargetedHandlers);
+	this->rearrangeHandlers(m_pStandardHandlers);
 }
 
 //
