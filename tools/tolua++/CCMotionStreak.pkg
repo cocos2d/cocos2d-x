@@ -21,7 +21,7 @@ class CCMotionStreak : public CCNode, public CCTextureProtocol
 	CCMotionStreak();	
 	static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
 	bool initWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
-	void updateMotion(ccTime delta);
+	void update(ccTime delta);
 };
 
 } // namespace cocos2d
