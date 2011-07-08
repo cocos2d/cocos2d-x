@@ -3441,9 +3441,9 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
 		delete animFrames;
 
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
@@ -3521,9 +3521,9 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
 		delete animFrames;
 
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
@@ -3599,16 +3599,16 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
 
 		// Skew
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
 		// Scale
 		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
-		CCScaleBy *scale_back = scale->reverse();
+		CCActionInterval *scale_back = scale->reverse();
 		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
 
@@ -3683,16 +3683,16 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 
 		// skew
 		CCSkewBy *skewX = CCSkewBy::actionWithDuration(2, 45, 0);
-		CCSkewBy *skewX_back = skewX->reverse();
+		CCActionInterval *skewX_back = skewX->reverse();
 		CCSkewBy *skewY = CCSkewBy::actionWithDuration(2, 0, 45);
-		CCSkewBy *skewY_back = skewY->reverse();
+		CCActionInterval *skewY_back = skewY->reverse();
 
 		CCFiniteTimeAction *seq_skew = CCSequence::actions(skewX, skewX_back, skewY, skewY_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_skew));
 
 		// scale 
 		CCScaleBy *scale = CCScaleBy::actionWithDuration(2, 2);
-		CCScaleBy *scale_back = scale->reverse();
+		CCActionInterval *scale_back = scale->reverse();
 		CCFiniteTimeAction *seq_scale = CCSequence::actions(scale, scale_back, NULL);
 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq_scale));
 
@@ -3835,25 +3835,25 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
 		CCSpriteBatchNode *spritebatch = CCSpriteBatchNode::batchNodeWithFile("animations/grossini.png");
 		addChild(spritebatch);
 
-// 		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
-// 		char tmp[50];
-// 		for (int j = 0; j < 14; j++)
-// 		{			
-// 			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
-// 			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
-// 			animFrames->addObject(frame);
-// 		}
-// 
-// 		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
-// 		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
-// 
-// 		delete animFrames;
-// 
-// 		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
-// 		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
-// 		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
-// 		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
-// 		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
+		CCMutableArray<CCSpriteFrame*> *animFrames = new CCMutableArray<CCSpriteFrame*>();
+		char tmp[50];
+		for (int j = 0; j < 14; j++)
+		{			
+			sprintf(tmp, "grossini_dance_%02d.png", i + 1);
+			CCSpriteFrame *frame = cache->spriteFrameByName(tmp);
+			animFrames->addObject(frame);
+		}
+
+		CCAnimation *animation = CCAnimation::animationWithFrames(animFrames);
+		sprite->runAction(CCRepeatForever::actionWithAction(CCAnimate::actionWithDuration(2.8f, animation, false)));
+
+		delete animFrames;
+
+		CCFlipY *flip = CCFlipY::actionWithFlipY(true);
+		CCFlipY *flip_back = CCFlipY::actionWithFlipY(false);
+		CCDelayTime *delay = CCDelayTime::actionWithDuration(1);
+		CCFiniteTimeAction *seq = CCSequence::actions(delay, flip, delay->copyWithZone(NULL)->autorelease(), flip_back, NULL);
+		sprite->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
 		spritebatch->addChild(sprite, i);
 	}
