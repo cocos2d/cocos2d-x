@@ -22,6 +22,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Use any of these editors to generate BMFonts:
+  http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+  http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+  http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+  http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+
 ****************************************************************************/
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
@@ -128,9 +135,10 @@ namespace cocos2d{
 	If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
 
 	Supported editors:
-	- http://www.n4te.com/hiero/hiero.jnlp
-	- http://slick.cokeandcode.com/demos/hiero.jnlp
-	- http://www.angelcode.com/products/bmfont/
+    http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+    http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+    http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+    http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 	@since v0.8
 	*/

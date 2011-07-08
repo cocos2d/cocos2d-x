@@ -24,6 +24,13 @@
 #include "chipmunk_private.h"
 #include "constraints/util.h"
 
+cpFloat cpContactsEstimateCrushingImpulse(cpContact *contacts, int numContacts);
+cpArbiter* cpArbiterAlloc(void);
+cpArbiter* cpArbiterNew(cpShape *a, cpShape *b);
+void cpArbiterDestroy(cpArbiter *arb);
+void cpArbiterFree(cpArbiter *arb);
+
+
 cpFloat cp_bias_coef = 0.1f;
 cpFloat cp_collision_slop = 0.1f;
 

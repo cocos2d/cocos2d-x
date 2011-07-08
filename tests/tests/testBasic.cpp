@@ -29,12 +29,29 @@ void BackToMainMenuLayer::MainMenuCallback(CCObject* pSender)
     CCDirector::sharedDirector()->replaceScene(pScene);
 }
 
-TestScene::TestScene()
+TestScene::TestScene(bool bPortrait)
+:m_bPortrait(bPortrait)
 {
+    if (m_bPortrait)
+    {
+        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
+    }
+    
     CCScene::init();
     CCLayer* pLayer = new BackToMainMenuLayer();
     pLayer->autorelease();
 
     // 54321 is the tag of BackToMainMenuLayer
     addChild(pLayer, 1000, 54321);
+}
+
+void TestScene::onExit()
+{
+    if (m_bPortrait)
+    {
+        // turn back to the default orientation
+        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+    }
+    
+    CCScene::onExit();
 }

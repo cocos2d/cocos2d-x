@@ -9,6 +9,10 @@ enum
     kTagSequence,
 }; 
 
+CCLayer* nextActionManagerAction();
+CCLayer* backActionManagerAction();
+CCLayer* restartActionManagerAction();
+
 static int sceneIdx = -1; 
 
 #define MAX_LAYER	5

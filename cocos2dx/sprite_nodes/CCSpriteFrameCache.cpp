@@ -199,7 +199,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture
 	const char *pszPath = CCFileUtils::fullPathFromRelativePath(pszPlist);
 	CCDictionary<std::string, CCObject*> *dict = CCFileUtils::dictionaryWithContentsOfFile(pszPath);
 
-	return addSpriteFramesWithDictionary(dict, pobTexture);
+	addSpriteFramesWithDictionary(dict, pobTexture);
 }
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)

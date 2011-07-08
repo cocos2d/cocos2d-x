@@ -9,6 +9,11 @@ enum
 	kTagSlider,
 };
 
+
+CCLayer* nextCocosNodeAction();
+CCLayer* backCocosNodeAction();
+CCLayer* restartCocosNodeAction();
+
 //------------------------------------------------------------------
 //
 // TestCocosNodeDemo

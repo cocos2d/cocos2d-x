@@ -30,12 +30,12 @@ bool Bug1159Layer::init()
         CCLayerColor *sprite_a = CCLayerColor::layerWithColorWidthHeight(ccc4(255, 0, 0, 255), 700, 700);
 		sprite_a->setAnchorPoint(ccp(0.5f, 0.5f));
 		sprite_a->setIsRelativeAnchorPoint(true);
-		sprite_a->setPosition(ccp(0.0, s.height/2));
+		sprite_a->setPosition(ccp(0.0f, s.height/2));
 		addChild(sprite_a);
 
         sprite_a->runAction(CCRepeatForever::actionWithAction((CCActionInterval*) CCSequence::actions(
-                                                               CCMoveTo::actionWithDuration(1.0f, ccp(1024.0, 384.0)),
-                                                               CCMoveTo::actionWithDuration(1.0f, ccp(0.0, 384.0)),
+                                                               CCMoveTo::actionWithDuration(1.0f, ccp(1024.0f, 384.0f)),
+                                                               CCMoveTo::actionWithDuration(1.0f, ccp(0.0f, 384.0f)),
 															   NULL)));
 
         CCLayerColor *sprite_b = CCLayerColor::layerWithColorWidthHeight(ccc4(0, 0, 255, 255), 400, 400);
@@ -46,7 +46,7 @@ bool Bug1159Layer::init()
 
         CCMenuItemLabel *label = CCMenuItemLabel::itemWithLabel(CCLabelTTF::labelWithString("Flip Me", "Helvetica", 24), this, menu_selector(Bug1159Layer::callBack));
         CCMenu *menu = CCMenu::menuWithItems(label, NULL);
-		menu->setPosition(ccp(s.width - 200, 50.0));
+		menu->setPosition(ccp(s.width - 200.0f, 50.0f));
 		addChild(menu);
 
         return true;
