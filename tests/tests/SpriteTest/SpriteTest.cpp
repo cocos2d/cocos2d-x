@@ -34,6 +34,10 @@ static int sceneIdx = -1;
 
 #define MAX_LAYER    48
 
+CCLayer* nextSpriteTestAction();
+CCLayer* backSpriteTestAction();
+CCLayer* restartSpriteTestAction();
+
 CCLayer* createSpriteTestLayer(int nIndex)
 {
 

@@ -4,6 +4,10 @@
 #define MAX_LAYERS          2;
 static int sceneIdx = -1;
 
+CCLayer* nextHiResAction();
+CCLayer* restartHiResAction();
+CCLayer* backHiResAction();
+
 CCLayer* createHiResLayer(int idx)
 {
     CCLayer* pLayer = NULL;

@@ -12,6 +12,10 @@ enum
 	kTagLabelAtlas = 1,
 };
 
+CCLayer* nextParticleAction();
+CCLayer* backParticleAction();
+CCLayer* restartParticleAction();
+
 //------------------------------------------------------------------
 //
 // DemoFirework

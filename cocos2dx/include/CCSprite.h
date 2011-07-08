@@ -45,10 +45,7 @@ class CCSize;
 class CCTexture2D;
 struct transformValues_;
 
-enum {
-	/// CCSprite invalid index on the CCSpriteBatchNode
-	CCSpriteIndexNotInitialized = 0xffffffff,
-};
+#define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
 
 /**
  Whether or not an CCSprite will rotate, scale or translate with it's parent.

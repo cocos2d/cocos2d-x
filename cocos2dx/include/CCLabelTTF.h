@@ -33,7 +33,7 @@ namespace cocos2d{
 	*
 	* All features from CCTextureNode are valid in CCLabelTTF
 	*
-	* CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
+	* CCLabelTTF objects are slow. Consider using CCLabelAtlas or CCLabelBMFont instead.
 	*/
 	class CC_DLL CCLabelTTF : public CCSprite, public CCLabelProtocol
 	{

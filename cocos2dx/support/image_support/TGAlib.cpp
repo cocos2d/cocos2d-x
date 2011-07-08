@@ -30,6 +30,9 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
+void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
+void tgaFlipImage( tImageTGA *info );
+
 // load the image header field from stream
 bool tgaLoadHeader(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
 {
