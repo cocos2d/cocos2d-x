@@ -39,9 +39,7 @@ THE SOFTWARE.
 #include "CCActionTiledGrid.h"
 namespace   cocos2d {
 
-enum {
-	kSceneFade = 0xFADEFADE,
-};
+const unsigned int kSceneFade = 0xFADEFADE;
 
 #define IMPLEMENT_TRANSITIONWITHDURATION(_Type)\
     _Type* _Type::transitionWithDuration(ccTime t, CCScene* scene)\
