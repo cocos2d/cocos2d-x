@@ -37,7 +37,7 @@ namespace cocos2d{
 	- CCLabelAtlas "characters" have a fixed height and width
 	- CCLabelAtlas "characters" can be anything you want since they are taken from an image file
 
-	A more flexible class is CCBitmapFontAtlas. It supports variable width characters and it also has a nice editor.
+	A more flexible class is CCLabelBMFont. It supports variable width characters and it also has a nice editor.
 	*/
 	class CC_DLL CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol
 	{

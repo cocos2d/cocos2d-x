@@ -5,6 +5,8 @@
 
 #include "Bug-1174.h"
 
+int check_for_error( CCPoint p1, CCPoint p2, CCPoint p3, CCPoint p4, float s, float t );
+
 int check_for_error( CCPoint p1, CCPoint p2, CCPoint p3, CCPoint p4, float s, float t )
 {
 	//	the hit point is		p3 + t * (p4 - p3);
