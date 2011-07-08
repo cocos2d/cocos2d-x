@@ -244,6 +244,10 @@ static int sceneIdx = -1;
 
 #define MAX_LAYER	6
 
+CCLayer* nextEffectAdvanceAction();
+CCLayer* backEffectAdvanceAction();
+CCLayer* restartEffectAdvanceAction();
+
 CCLayer* createEffectAdvanceLayer(int nIndex)
 {
 	switch(nIndex)

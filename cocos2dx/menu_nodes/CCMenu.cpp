@@ -223,7 +223,7 @@ namespace cocos2d{
 	//Menu - Alignment
 	void CCMenu::alignItemsVertically()
 	{
-		return this->alignItemsVerticallyWithPadding(kDefaultPadding);
+		this->alignItemsVerticallyWithPadding(kDefaultPadding);
 	}
 
 	void CCMenu::alignItemsVerticallyWithPadding(float padding)
@@ -260,7 +260,7 @@ namespace cocos2d{
 
 	void CCMenu::alignItemsHorizontally(void)
 	{
-		return this->alignItemsHorizontallyWithPadding(kDefaultPadding);
+		this->alignItemsHorizontallyWithPadding(kDefaultPadding);
 	}
 
 	void CCMenu::alignItemsHorizontallyWithPadding(float padding)
