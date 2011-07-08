@@ -653,6 +653,20 @@ void CCScheduler::pauseTarget(SelectorProtocol *pTarget)
 	}
 }
 
+bool CCScheduler::isTargetPaused(SelectorProtocol *pTarget)
+{
+    CCAssert( pTarget != NULL, "target must be non nil" );
+
+    // Custom selectors
+    tHashSelectorEntry *pElement = NULL;
+    HASH_FIND_INT(m_pHashForSelectors, &pTarget, pElement);
+    if( pElement )
+    {
+        return pElement->paused;
+    }
+    return false;  // should never get here
+}
+
 // main loop
 void CCScheduler::tick(ccTime dt)
 {
