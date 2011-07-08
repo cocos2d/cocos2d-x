@@ -40,6 +40,7 @@
 #include "CurlTest/CurlTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "DirectorTest/DirectorTest.h"
+#include "BugsTest/BugsTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -90,6 +91,7 @@ enum
 	TEST_CURL,
 	TEST_USERDEFAULT,
     TEST_DIRECTOR,
+    TEST_BUGS,
 
     TESTS_COUNT,
 };
@@ -131,7 +133,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ZwoptexTest",
 	"CurlTest",
 	"UserDefaultTest",
-    "DirectorTest"
+    "DirectorTest",
+    "BugsTest"
 };
 
 #endif
