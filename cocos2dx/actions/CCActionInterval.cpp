@@ -542,28 +542,33 @@ bool CCSpawn:: initOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAct
 	assert(pAction1 != NULL);
 	assert(pAction2 != NULL);
 
+	bool bRet = false;
+
 	ccTime d1 = pAction1->getDuration();
 	ccTime d2 = pAction2->getDuration();
 
-	// __super::initWithDuration(fmaxf(d1, d2));
-	float maxd = (d1 >= d2 || isnan(d2)) ? d1 : d2;
-	CCActionInterval::initWithDuration(maxd);
-
-    m_pOne = pAction1;
-	m_pTwo = pAction2;
-
-	if (d1 > d2)
+	if (CCActionInterval::initWithDuration(MAX(d1, d2)))
 	{
-		m_pTwo = CCSequence::actionOneTwo(pAction2, CCDelayTime::actionWithDuration(d1 - d2));
-	} else
-	if (d1 < d2)
-	{
-		m_pOne = CCSequence::actionOneTwo(pAction1, CCDelayTime::actionWithDuration(d2 - d1));
+		m_pOne = pAction1;
+		m_pTwo = pAction2;
+
+		if (d1 > d2)
+		{
+			m_pTwo = CCSequence::actionOneTwo(pAction2, CCDelayTime::actionWithDuration(d1 - d2));
+		} else
+		if (d1 < d2)
+		{
+			m_pOne = CCSequence::actionOneTwo(pAction1, CCDelayTime::actionWithDuration(d2 - d1));
+		}
+
+		m_pOne->retain();
+		m_pTwo->retain();
+
+		bRet = true;
 	}
 
-	m_pOne->retain();
-	m_pTwo->retain();
-	return true;
+    
+	return bRet;
 }
 
 CCObject* CCSpawn::copyWithZone(cocos2d::CCZone *pZone)
