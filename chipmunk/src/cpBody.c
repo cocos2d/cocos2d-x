@@ -25,6 +25,9 @@
 
 #include "chipmunk_private.h"
 
+// function declaration
+cpBody *cpBodyNewStatic(void);
+
 // initialized in cpInitChipmunk()
 cpBody cpStaticBodySingleton;
 

@@ -19,7 +19,9 @@
  * SOFTWARE.
  */
 
-#define CP_DefineClassGetter(t) const cpConstraintClass * t##GetClass(){return (cpConstraintClass *)&klass;}
+#define CP_DefineClassGetter(t)													\
+const cpConstraintClass * t##GetClass(void);									\
+const cpConstraintClass * t##GetClass(){return (cpConstraintClass *)&klass;}
 
 void cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, cpBody *a, cpBody *b);
 
