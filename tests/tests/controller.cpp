@@ -5,14 +5,9 @@
 
 static CCPoint s_tCurPos = CCPointZero;
 
-static ccDeviceOrientation s_eOrientation = CCDeviceOrientationPortrait;
 static void ChangeOrientation(ccDeviceOrientation eOrientation)
 {
-    if (s_eOrientation != eOrientation)
-    {
-        s_eOrientation = eOrientation;
-        CCDirector::sharedDirector()->setDeviceOrientation(eOrientation);
-    }
+    CCDirector::sharedDirector()->setDeviceOrientation(eOrientation);
 }
 
 static TestScene* CreateTestScene(int nIdx)
@@ -110,6 +105,10 @@ static TestScene* CreateTestScene(int nIdx)
 	case TEST_USERDEFAULT:
 		pScene = new UserDefaultTestScene(); break;
 #endif
+    case TEST_DIRECTOR:
+        pScene = new DirectorTestScene(); break;
+    case TEST_BUGS:
+        pScene = new BugsTestScene(); break;
     default:
         break;
     }
@@ -144,9 +143,6 @@ TestController::TestController()
 
         m_pItmeMenu->addChild(pMenuItem, i + 10000);
         pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
-
-        // record the pointer of the menu item
-        m_pMenuItems[i] = pMenuItem;
     }
 
     m_pItmeMenu->setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
