@@ -11,6 +11,17 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/Box2DTestBed/GLES-Render.cpp \
 ../../../tests/Box2DTestBed/Test.cpp \
 ../../../tests/Box2DTestBed/TestEntries.cpp \
+../../../tests/BugsTest/Bug-1159.cpp \
+../../../tests/BugsTest/Bug-1174.cpp \
+../../../tests/BugsTest/Bug-350.cpp \
+../../../tests/BugsTest/Bug-422.cpp \
+../../../tests/BugsTest/Bug-624.cpp \
+../../../tests/BugsTest/Bug-886.cpp \
+../../../tests/BugsTest/Bug-899.cpp \
+../../../tests/BugsTest/Bug-914.cpp \
+../../../tests/BugsTest/BugsTest.cpp \
+../../../tests/BugsTest/Bug-458/Bug-458.cpp \
+../../../tests/BugsTest/Bug-458/QuestionContainerSprite.cpp \
 ../../../tests/ChipmunkTest/Bounce.cpp \
 ../../../tests/ChipmunkTest/Joints.cpp \
 ../../../tests/ChipmunkTest/LogoSmash.cpp \
@@ -36,6 +47,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/CocosDenshionTest/CocosDenshionTest.cpp \
 ../../../tests/CocosNodeTest/CocosNodeTest.cpp \
 ../../../tests/CurlTest/CurlTest.cpp \
+../../../tests/DirectorTest/DirectorTest.cpp \
 ../../../tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 ../../../tests/EaseActionsTest/EaseActionsTest.cpp \
 ../../../tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
