@@ -211,7 +211,6 @@
 		BF8360BF1328687F00F3C033 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E251328687E00F3C033 /* CCSpriteBatchNode.h */; };
 		BF8360C01328687F00F3C033 /* CCSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E261328687E00F3C033 /* CCSpriteFrame.h */; };
 		BF8360C11328687F00F3C033 /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E271328687E00F3C033 /* CCSpriteFrameCache.h */; };
-		BF8360C21328687F00F3C033 /* CCSpriteSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E281328687E00F3C033 /* CCSpriteSheet.h */; };
 		BF8360C31328687F00F3C033 /* CCString.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E291328687E00F3C033 /* CCString.h */; };
 		BF8360C41328687F00F3C033 /* CCTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E2A1328687E00F3C033 /* CCTexture2D.h */; };
 		BF8360C51328687F00F3C033 /* CCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835E2B1328687E00F3C033 /* CCTextureAtlas.h */; };
@@ -291,7 +290,6 @@
 		BF83628F1328687F00F3C033 /* CCSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360341328687F00F3C033 /* CCSpriteBatchNode.cpp */; };
 		BF8362901328687F00F3C033 /* CCSpriteFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360351328687F00F3C033 /* CCSpriteFrame.cpp */; };
 		BF8362911328687F00F3C033 /* CCSpriteFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360361328687F00F3C033 /* CCSpriteFrameCache.cpp */; };
-		BF8362921328687F00F3C033 /* CCSpriteSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360371328687F00F3C033 /* CCSpriteSheet.cpp */; };
 		BF8362931328687F00F3C033 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360391328687F00F3C033 /* base64.cpp */; };
 		BF8362941328687F00F3C033 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83603A1328687F00F3C033 /* base64.h */; };
 		BF8362951328687F00F3C033 /* CCPointExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83603B1328687F00F3C033 /* CCPointExtension.cpp */; };
@@ -562,7 +560,6 @@
 		BF835E251328687E00F3C033 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		BF835E261328687E00F3C033 /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
 		BF835E271328687E00F3C033 /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
-		BF835E281328687E00F3C033 /* CCSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteSheet.h; sourceTree = "<group>"; };
 		BF835E291328687E00F3C033 /* CCString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCString.h; sourceTree = "<group>"; };
 		BF835E2A1328687E00F3C033 /* CCTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2D.h; sourceTree = "<group>"; };
 		BF835E2B1328687E00F3C033 /* CCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureAtlas.h; sourceTree = "<group>"; };
@@ -642,7 +639,6 @@
 		BF8360341328687F00F3C033 /* CCSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteBatchNode.cpp; sourceTree = "<group>"; };
 		BF8360351328687F00F3C033 /* CCSpriteFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteFrame.cpp; sourceTree = "<group>"; };
 		BF8360361328687F00F3C033 /* CCSpriteFrameCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteFrameCache.cpp; sourceTree = "<group>"; };
-		BF8360371328687F00F3C033 /* CCSpriteSheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteSheet.cpp; sourceTree = "<group>"; };
 		BF8360391328687F00F3C033 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
 		BF83603A1328687F00F3C033 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		BF83603B1328687F00F3C033 /* CCPointExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPointExtension.cpp; sourceTree = "<group>"; };
@@ -1128,7 +1124,6 @@
 				BF835E251328687E00F3C033 /* CCSpriteBatchNode.h */,
 				BF835E261328687E00F3C033 /* CCSpriteFrame.h */,
 				BF835E271328687E00F3C033 /* CCSpriteFrameCache.h */,
-				BF835E281328687E00F3C033 /* CCSpriteSheet.h */,
 				BF835E291328687E00F3C033 /* CCString.h */,
 				BF835E2A1328687E00F3C033 /* CCTexture2D.h */,
 				BF835E2B1328687E00F3C033 /* CCTextureAtlas.h */,
@@ -1280,7 +1275,6 @@
 				BF8360341328687F00F3C033 /* CCSpriteBatchNode.cpp */,
 				BF8360351328687F00F3C033 /* CCSpriteFrame.cpp */,
 				BF8360361328687F00F3C033 /* CCSpriteFrameCache.cpp */,
-				BF8360371328687F00F3C033 /* CCSpriteSheet.cpp */,
 			);
 			path = sprite_nodes;
 			sourceTree = "<group>";
@@ -1465,7 +1459,6 @@
 				BF8360BF1328687F00F3C033 /* CCSpriteBatchNode.h in Headers */,
 				BF8360C01328687F00F3C033 /* CCSpriteFrame.h in Headers */,
 				BF8360C11328687F00F3C033 /* CCSpriteFrameCache.h in Headers */,
-				BF8360C21328687F00F3C033 /* CCSpriteSheet.h in Headers */,
 				BF8360C31328687F00F3C033 /* CCString.h in Headers */,
 				BF8360C41328687F00F3C033 /* CCTexture2D.h in Headers */,
 				BF8360C51328687F00F3C033 /* CCTextureAtlas.h in Headers */,
@@ -1731,7 +1724,6 @@
 				BF83628F1328687F00F3C033 /* CCSpriteBatchNode.cpp in Sources */,
 				BF8362901328687F00F3C033 /* CCSpriteFrame.cpp in Sources */,
 				BF8362911328687F00F3C033 /* CCSpriteFrameCache.cpp in Sources */,
-				BF8362921328687F00F3C033 /* CCSpriteSheet.cpp in Sources */,
 				BF8362931328687F00F3C033 /* base64.cpp in Sources */,
 				BF8362951328687F00F3C033 /* CCPointExtension.cpp in Sources */,
 				BF8362961328687F00F3C033 /* CCProfiling.cpp in Sources */,
