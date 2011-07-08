@@ -7,6 +7,10 @@ enum
 	kTagGrossini,
 };
 
+CCLayer* nextParallaxAction();
+CCLayer* backParallaxAction();
+CCLayer* restartParallaxAction();
+
 //------------------------------------------------------------------
 //
 // Parallax1

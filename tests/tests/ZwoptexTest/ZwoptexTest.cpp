@@ -5,6 +5,10 @@
 
 static int sceneIdx = -1;
 
+CCLayer* nextZwoptexTest();
+CCLayer* backZwoptexTest();
+CCLayer* restartZwoptexTest();
+
 CCLayer* createZwoptexLayer(int nIndex)
 {
     switch(nIndex)

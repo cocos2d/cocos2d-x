@@ -28,6 +28,7 @@ MenuLayer1::MenuLayer1()
 	CCMenuItemFont::setFontSize( 30 );
 	CCMenuItemFont::setFontName("Courier New");
 
+    setIsTouchEnabled(true);
 	// Font Item
 	
 	CCSprite* spriteNormal = CCSprite::spriteWithFile(s_MenuItem, CCRectMake(0,23*2,115,23));
@@ -51,7 +52,7 @@ MenuLayer1::MenuLayer1()
 	// Font Item
 	CCMenuItem *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
 	
-	// Label Item (BitmapFontAtlas)
+	// Label Item (CCLabelBMFont)
 	CCLabelBMFont* label = CCLabelBMFont::labelWithString("configuration", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item5 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer1::menuCallbackConfig));
 
@@ -105,6 +106,28 @@ MenuLayer1::MenuLayer1()
 
 }
 
+void MenuLayer1::registerWithTouchDispatcher()
+{
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority+1, true);
+}
+
+bool MenuLayer1::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
+{
+    return true;
+}
+
+void MenuLayer1::ccTouchEnded(CCTouch *touch, CCEvent * pEvent)
+{
+}
+
+void MenuLayer1::ccTouchCancelled(CCTouch *touch, CCEvent * pEvent)
+{
+}
+
+void MenuLayer1::ccTouchMoved(CCTouch *touch, CCEvent * pEvent)
+{
+}
+
 MenuLayer1::~MenuLayer1()
 {
 	m_disabledItem->release();
@@ -120,8 +143,19 @@ void MenuLayer1::menuCallbackConfig(CCObject* sender)
 	((CCLayerMultiplex*)m_pParent)->switchTo(3);
 }
 
+void MenuLayer1::allowTouches(ccTime dt)
+{
+    CCTouchDispatcher::sharedDispatcher()->setPriority(kCCMenuTouchPriority+1, this);
+    unscheduleAllSelectors();
+    CCLog("TOUCHES ALLOWED AGAIN");
+}
+
 void MenuLayer1::menuCallbackDisabled(CCObject* sender) 
 {
+    // hijack all touch events for 5 seconds
+    CCTouchDispatcher::sharedDispatcher()->setPriority(kCCMenuTouchPriority-1, this);
+    schedule(schedule_selector(MenuLayer1::allowTouches), 5.0f);
+    CCLog("TOUCHES DISABLED FOR 5 SECONDS");
 }
 
 void MenuLayer1::menuCallbackEnable(CCObject* sender) 

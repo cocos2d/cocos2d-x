@@ -29,6 +29,8 @@ namespace   cocos2d {
 
 unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len );
+
 int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
 {
     static char inalphabet[256], decoder[256];
