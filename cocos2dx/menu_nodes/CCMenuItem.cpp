@@ -40,13 +40,9 @@ namespace cocos2d{
 	static std::string _fontName = "Marker Felt";
 	static bool _fontNameRelease = false;
 
-	enum {
-		kCurrentItem = 0xc0c05001,
-	};
+    const uint32_t	kCurrentItem = 0xc0c05001;
+    const uint32_t	kZoomActionTag = 0xc0c05002;
 
-	enum {
-		kZoomActionTag = 0xc0c05002,
-	};
 	//
 	// CCMenuItem
 	//
