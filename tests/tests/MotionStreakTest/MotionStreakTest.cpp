@@ -1,6 +1,10 @@
 #include "MotionStreakTest.h"
 #include "../testResource.h"
 
+CCLayer* nextMotionAction();
+CCLayer* backMotionAction();
+CCLayer* restartMotionAction();
+
 //------------------------------------------------------------------
 //
 // MotionStreakTest1

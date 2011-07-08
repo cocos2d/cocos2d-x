@@ -6,6 +6,10 @@ enum
 	kTagTileMap = 1,
 };
 
+CCLayer* nextTileMapAction();
+CCLayer* backTileMapAction();
+CCLayer* restartTileMapAction();
+
 //------------------------------------------------------------------
 //
 // TileMapTest

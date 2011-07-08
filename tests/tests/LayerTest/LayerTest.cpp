@@ -6,6 +6,10 @@ enum
 	kTagLayer = 1,
 };
 
+CCLayer* nextTestAction();
+CCLayer* backTestAction();
+CCLayer* restartTestAction();
+
 static int sceneIdx = -1; 
 
 #define MAX_LAYER	4
