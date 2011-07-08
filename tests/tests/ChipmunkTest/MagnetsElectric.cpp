@@ -24,6 +24,7 @@
 // Prototypes
 struct DataforForce;
 typedef void (*SingForceFunc)(struct DataforForce* data);
+void make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg);
 
 // Structures
 // Singularities
