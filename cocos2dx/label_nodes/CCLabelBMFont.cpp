@@ -22,6 +22,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Use any of these editors to generate BMFonts:
+http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+
 ****************************************************************************/
 #include "CCLabelBMFont.h"
 
@@ -206,7 +213,7 @@ namespace cocos2d{
 		int index = line.find('=')+1;
 		int index2 = line.find(' ', index);
 		std::string value = line.substr(index, index2-index);
-		CCAssert(atoi(value.c_str()) == 0, "BitmapFontAtlas file could not be found");
+		CCAssert(atoi(value.c_str()) == 0, "LabelBMFont file could not be found");
 		// file 
 		index = line.find('"')+1;
 		index2 = line.find('"', index);
@@ -366,13 +373,13 @@ namespace cocos2d{
 	//CCLabelBMFont
 	//
 
-	//BitmapFontAtlas - Purge Cache
+	//LabelBMFont - Purge Cache
 	void CCLabelBMFont::purgeCachedData()
 	{
 		FNTConfigRemoveCache();
 	}
 
-	//BitmapFontAtlas - Creation & Init
+	//LabelBMFont - Creation & Init
 	CCLabelBMFont *CCLabelBMFont::labelWithString(const char *str, const char *fntFile)
 	{
 		CCLabelBMFont *pRet = new CCLabelBMFont();
@@ -396,7 +403,7 @@ namespace cocos2d{
 		CC_SAFE_RELEASE(m_pConfiguration);// allow re-init
 		m_pConfiguration = FNTConfigLoadFile(fntFile);
 		m_pConfiguration->retain();
-		CCAssert( m_pConfiguration, "Error creating config for BitmapFontAtlas");
+		CCAssert( m_pConfiguration, "Error creating config for LabelBMFont");
 
 		if (CCSpriteBatchNode::initWithFile(m_pConfiguration->m_sAtlasName.c_str(), strlen(theString)))
 		{
@@ -416,7 +423,7 @@ namespace cocos2d{
 		CC_SAFE_RELEASE(m_pConfiguration);
 	}
 
-	// BitmapFontAtlas - Atlas generation
+	// LabelBMFont - Atlas generation
 	int CCLabelBMFont::kerningAmountForFirst(unsigned short first, unsigned short second)
 	{
 		int ret = 0;
@@ -466,7 +473,7 @@ namespace cocos2d{
 		for(int i=0; i<len; i++)
 		{
 			unsigned short c = m_sString[i];
-			CCAssert( c < kCCBMFontMaxChars, "BitmapFontAtlas: character outside bounds");
+			CCAssert( c < kCCBMFontMaxChars, "LabelBMFont: character outside bounds");
 
             if (c == '\n')
             {
@@ -535,7 +542,7 @@ namespace cocos2d{
 		this->setContentSizeInPixels(tmpSize);
 	}
 
-	//BitmapFontAtlas - CCLabelProtocol protocol
+	//LabelBMFont - CCLabelProtocol protocol
 	void CCLabelBMFont::setString(const char *newString)
 	{	
 		m_sString.clear();
@@ -565,7 +572,7 @@ namespace cocos2d{
         setString(label);
     }
 
-	//BitmapFontAtlas - CCRGBAProtocol protocol
+	//LabelBMFont - CCRGBAProtocol protocol
 	void CCLabelBMFont::setColor(ccColor3B var)
 	{
 		m_tColor = var;
@@ -633,7 +640,7 @@ namespace cocos2d{
 		return m_bIsOpacityModifyRGB;
 	}
 
-	// BitmapFontAtlas - AnchorPoint
+	// LabelBMFont - AnchorPoint
 	void CCLabelBMFont::setAnchorPoint(CCPoint point)
 	{
 		if( ! CCPoint::CCPointEqualToPoint(point, m_tAnchorPoint) )
@@ -643,7 +650,7 @@ namespace cocos2d{
 		}
 	}
 
-	//BitmapFontAtlas - Debug draw
+	//LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW
 	void CCLabelBMFont::draw()
 	{

@@ -5,11 +5,6 @@
 
 static CCPoint s_tCurPos = CCPointZero;
 
-static void ChangeOrientation(ccDeviceOrientation eOrientation)
-{
-    CCDirector::sharedDirector()->setDeviceOrientation(eOrientation);
-}
-
 static TestScene* CreateTestScene(int nIdx)
 {
     CCDirector::sharedDirector()->purgeCachedData();
@@ -41,7 +36,6 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
-        ChangeOrientation(CCDeviceOrientationLandscapeRight);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -119,9 +113,6 @@ static TestScene* CreateTestScene(int nIdx)
 TestController::TestController()
 : m_tBeginPos(CCPointZero)
 {
-    // change to default orientation
-    ChangeOrientation(CCDeviceOrientationPortrait);
-
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
