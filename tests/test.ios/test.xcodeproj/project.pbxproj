@@ -460,6 +460,19 @@
 		D429012913B1D0CA00A3772F /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */; };
 		D429012C13B1D0DC00A3772F /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D429012B13B1D0DC00A3772F /* CCScriptSupport.h */; };
 		D429012E13B1D16900A3772F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D429012D13B1D16900A3772F /* libcurl.a */; };
+		D43461AE13C6D3B100FAA7A0 /* Bug-1159.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D434619713C6D3B100FAA7A0 /* Bug-1159.cpp */; };
+		D43461AF13C6D3B100FAA7A0 /* Bug-1174.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D434619913C6D3B100FAA7A0 /* Bug-1174.cpp */; };
+		D43461B013C6D3B100FAA7A0 /* Bug-350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D434619B13C6D3B100FAA7A0 /* Bug-350.cpp */; };
+		D43461B113C6D3B100FAA7A0 /* Bug-422.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D434619D13C6D3B100FAA7A0 /* Bug-422.cpp */; };
+		D43461B213C6D3B100FAA7A0 /* Bug-458.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461A013C6D3B100FAA7A0 /* Bug-458.cpp */; };
+		D43461B313C6D3B100FAA7A0 /* QuestionContainerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461A213C6D3B100FAA7A0 /* QuestionContainerSprite.cpp */; };
+		D43461B413C6D3B100FAA7A0 /* Bug-624.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461A413C6D3B100FAA7A0 /* Bug-624.cpp */; };
+		D43461B513C6D3B100FAA7A0 /* Bug-886.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461A613C6D3B100FAA7A0 /* Bug-886.cpp */; };
+		D43461B613C6D3B100FAA7A0 /* Bug-899.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461A813C6D3B100FAA7A0 /* Bug-899.cpp */; };
+		D43461B713C6D3B100FAA7A0 /* Bug-914.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461AA13C6D3B100FAA7A0 /* Bug-914.cpp */; };
+		D43461B813C6D3B100FAA7A0 /* BugsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461AC13C6D3B100FAA7A0 /* BugsTest.cpp */; };
+		D43461BC13C6D43B00FAA7A0 /* DirectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43461BA13C6D43B00FAA7A0 /* DirectorTest.cpp */; };
+		D43461BE13C6D5B700FAA7A0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D43461BD13C6D5B700FAA7A0 /* Icon.png */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -623,7 +636,6 @@
 		BF1712891292933300B8313A /* cpSpaceHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpSpaceHash.h; sourceTree = "<group>"; };
 		BF17128A1292933300B8313A /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		BF1712901292933300B8313A /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
-		BF1712911292933300B8313A /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		BF1712931292933300B8313A /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpConstraint.c; sourceTree = "<group>"; };
 		BF1712941292933300B8313A /* cpDampedRotarySpring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpDampedRotarySpring.c; sourceTree = "<group>"; };
 		BF1712951292933300B8313A /* cpDampedSpring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpDampedSpring.c; sourceTree = "<group>"; };
@@ -1045,6 +1057,31 @@
 		D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		D429012B13B1D0DC00A3772F /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		D429012D13B1D16900A3772F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		D434619713C6D3B100FAA7A0 /* Bug-1159.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-1159.cpp"; sourceTree = "<group>"; };
+		D434619813C6D3B100FAA7A0 /* Bug-1159.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-1159.h"; sourceTree = "<group>"; };
+		D434619913C6D3B100FAA7A0 /* Bug-1174.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-1174.cpp"; sourceTree = "<group>"; };
+		D434619A13C6D3B100FAA7A0 /* Bug-1174.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-1174.h"; sourceTree = "<group>"; };
+		D434619B13C6D3B100FAA7A0 /* Bug-350.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-350.cpp"; sourceTree = "<group>"; };
+		D434619C13C6D3B100FAA7A0 /* Bug-350.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-350.h"; sourceTree = "<group>"; };
+		D434619D13C6D3B100FAA7A0 /* Bug-422.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-422.cpp"; sourceTree = "<group>"; };
+		D434619E13C6D3B100FAA7A0 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
+		D43461A013C6D3B100FAA7A0 /* Bug-458.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-458.cpp"; sourceTree = "<group>"; };
+		D43461A113C6D3B100FAA7A0 /* Bug-458.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-458.h"; sourceTree = "<group>"; };
+		D43461A213C6D3B100FAA7A0 /* QuestionContainerSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuestionContainerSprite.cpp; sourceTree = "<group>"; };
+		D43461A313C6D3B100FAA7A0 /* QuestionContainerSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionContainerSprite.h; sourceTree = "<group>"; };
+		D43461A413C6D3B100FAA7A0 /* Bug-624.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-624.cpp"; sourceTree = "<group>"; };
+		D43461A513C6D3B100FAA7A0 /* Bug-624.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-624.h"; sourceTree = "<group>"; };
+		D43461A613C6D3B100FAA7A0 /* Bug-886.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-886.cpp"; sourceTree = "<group>"; };
+		D43461A713C6D3B100FAA7A0 /* Bug-886.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-886.h"; sourceTree = "<group>"; };
+		D43461A813C6D3B100FAA7A0 /* Bug-899.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-899.cpp"; sourceTree = "<group>"; };
+		D43461A913C6D3B100FAA7A0 /* Bug-899.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-899.h"; sourceTree = "<group>"; };
+		D43461AA13C6D3B100FAA7A0 /* Bug-914.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-914.cpp"; sourceTree = "<group>"; };
+		D43461AB13C6D3B100FAA7A0 /* Bug-914.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-914.h"; sourceTree = "<group>"; };
+		D43461AC13C6D3B100FAA7A0 /* BugsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BugsTest.cpp; sourceTree = "<group>"; };
+		D43461AD13C6D3B100FAA7A0 /* BugsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugsTest.h; sourceTree = "<group>"; };
+		D43461BA13C6D43B00FAA7A0 /* DirectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectorTest.cpp; sourceTree = "<group>"; };
+		D43461BB13C6D43B00FAA7A0 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectorTest.h; sourceTree = "<group>"; };
+		D43461BD13C6D5B700FAA7A0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1122,6 +1159,7 @@
 		080E96DDFE201D6D7F000001 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				D43461BD13C6D5B700FAA7A0 /* Icon.png */,
 				D4F9F37B12E54555005CA6D2 /* Test-Info.plist */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				1D3623240D0F684500981E51 /* testsAppDelegate.h */,
@@ -1386,7 +1424,6 @@
 				D4AFAB6A1387A96E00C88086 /* cpSpaceQuery.c */,
 				D4AFAB6B1387A96E00C88086 /* cpSpaceComponent.c */,
 				BF1712901292933300B8313A /* chipmunk.c */,
-				BF1712911292933300B8313A /* CMakeLists.txt */,
 				BF1712921292933300B8313A /* constraints */,
 				BF17129E1292933300B8313A /* cpArbiter.c */,
 				BF17129F1292933300B8313A /* cpArray.c */,
@@ -1505,6 +1542,8 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				D43461B913C6D43B00FAA7A0 /* DirectorTest */,
+				D434619613C6D3B100FAA7A0 /* BugsTest */,
 				BF31E11912E979A100D4F513 /* AccelerometerTest */,
 				BF31E11C12E979A100D4F513 /* ActionManagerTest */,
 				BF31E11F12E979A100D4F513 /* ActionsTest */,
@@ -2340,6 +2379,52 @@
 			path = script_support;
 			sourceTree = "<group>";
 		};
+		D434619613C6D3B100FAA7A0 /* BugsTest */ = {
+			isa = PBXGroup;
+			children = (
+				D434619713C6D3B100FAA7A0 /* Bug-1159.cpp */,
+				D434619813C6D3B100FAA7A0 /* Bug-1159.h */,
+				D434619913C6D3B100FAA7A0 /* Bug-1174.cpp */,
+				D434619A13C6D3B100FAA7A0 /* Bug-1174.h */,
+				D434619B13C6D3B100FAA7A0 /* Bug-350.cpp */,
+				D434619C13C6D3B100FAA7A0 /* Bug-350.h */,
+				D434619D13C6D3B100FAA7A0 /* Bug-422.cpp */,
+				D434619E13C6D3B100FAA7A0 /* Bug-422.h */,
+				D434619F13C6D3B100FAA7A0 /* Bug-458 */,
+				D43461A413C6D3B100FAA7A0 /* Bug-624.cpp */,
+				D43461A513C6D3B100FAA7A0 /* Bug-624.h */,
+				D43461A613C6D3B100FAA7A0 /* Bug-886.cpp */,
+				D43461A713C6D3B100FAA7A0 /* Bug-886.h */,
+				D43461A813C6D3B100FAA7A0 /* Bug-899.cpp */,
+				D43461A913C6D3B100FAA7A0 /* Bug-899.h */,
+				D43461AA13C6D3B100FAA7A0 /* Bug-914.cpp */,
+				D43461AB13C6D3B100FAA7A0 /* Bug-914.h */,
+				D43461AC13C6D3B100FAA7A0 /* BugsTest.cpp */,
+				D43461AD13C6D3B100FAA7A0 /* BugsTest.h */,
+			);
+			path = BugsTest;
+			sourceTree = "<group>";
+		};
+		D434619F13C6D3B100FAA7A0 /* Bug-458 */ = {
+			isa = PBXGroup;
+			children = (
+				D43461A013C6D3B100FAA7A0 /* Bug-458.cpp */,
+				D43461A113C6D3B100FAA7A0 /* Bug-458.h */,
+				D43461A213C6D3B100FAA7A0 /* QuestionContainerSprite.cpp */,
+				D43461A313C6D3B100FAA7A0 /* QuestionContainerSprite.h */,
+			);
+			path = "Bug-458";
+			sourceTree = "<group>";
+		};
+		D43461B913C6D43B00FAA7A0 /* DirectorTest */ = {
+			isa = PBXGroup;
+			children = (
+				D43461BA13C6D43B00FAA7A0 /* DirectorTest.cpp */,
+				D43461BB13C6D43B00FAA7A0 /* DirectorTest.h */,
+			);
+			path = DirectorTest;
+			sourceTree = "<group>";
+		};
 		D4E39D2F1342E22F00EBA039 /* ZwoptexTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2712,6 +2797,7 @@
 				BF31DE9A12E9779300D4F513 /* background.mp3 in Resources */,
 				BF31DE9B12E9779300D4F513 /* effect1.wav in Resources */,
 				D4E39D2E1342E22700EBA039 /* zwoptex in Resources */,
+				D43461BE13C6D5B700FAA7A0 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2797,6 +2883,18 @@
 				BF3326F413690DA4007CAA22 /* RootViewController.mm in Sources */,
 				BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */,
 				D4AFAB701387A98600C88086 /* Tank.cpp in Sources */,
+				D43461AE13C6D3B100FAA7A0 /* Bug-1159.cpp in Sources */,
+				D43461AF13C6D3B100FAA7A0 /* Bug-1174.cpp in Sources */,
+				D43461B013C6D3B100FAA7A0 /* Bug-350.cpp in Sources */,
+				D43461B113C6D3B100FAA7A0 /* Bug-422.cpp in Sources */,
+				D43461B213C6D3B100FAA7A0 /* Bug-458.cpp in Sources */,
+				D43461B313C6D3B100FAA7A0 /* QuestionContainerSprite.cpp in Sources */,
+				D43461B413C6D3B100FAA7A0 /* Bug-624.cpp in Sources */,
+				D43461B513C6D3B100FAA7A0 /* Bug-886.cpp in Sources */,
+				D43461B613C6D3B100FAA7A0 /* Bug-899.cpp in Sources */,
+				D43461B713C6D3B100FAA7A0 /* Bug-914.cpp in Sources */,
+				D43461B813C6D3B100FAA7A0 /* BugsTest.cpp in Sources */,
+				D43461BC13C6D43B00FAA7A0 /* DirectorTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3044,6 +3142,7 @@
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
@@ -3081,6 +3180,7 @@
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
