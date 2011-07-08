@@ -165,6 +165,10 @@ CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 {
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+
+    char msg[256] = {0};
+    sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
+    CCAssert(pFrame != NULL, msg);
 	return spriteWithSpriteFrame(pFrame);
 }
 
@@ -695,13 +699,23 @@ void CCSprite::draw(void)
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	}
 
-#if CC_SPRITE_DEBUG_DRAW
-	CCSize s = m_tContentSize;
-	CCPoint vertices[4]={
-		ccp(0,0),ccp(s.width,0),
-		ccp(s.width,s.height),ccp(0,s.height),
-	};
-	ccDrawPoly(vertices, 4, true);
+#if CC_SPRITE_DEBUG_DRAW == 1
+    // draw bounding box
+    CCSize s = m_tContentSize;
+    CCPoint vertices[4] = {
+        ccp(0,0), ccp(s.width,0),
+        ccp(s.width,s.height), ccp(0,s.height)
+    };
+    ccDrawPoly(vertices, 4, true);
+#elif CC_SPRITE_DEBUG_DRAW == 2
+    // draw texture box
+    CCSize s = m_obRect.size;
+    CCPoint offsetPix = getOffsetPositionInPixels();
+    CCPoint vertices[4] = {
+        ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
+        ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+    };
+    ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
 }
 
