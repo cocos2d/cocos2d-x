@@ -1,9 +1,12 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 
+// Test #1 by Jason Booth (slipster216)
+// Test #3 by David Deaco (ddeaco)
+
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    2
+#define MAX_LAYER    3
 
 CCLayer* createTestCase(int nIndex)
 {
@@ -12,6 +15,7 @@ CCLayer* createTestCase(int nIndex)
     {
     case 0: return new RenderTextureTest();
     case 1: return new RenderTextureIssue937();
+	case 2: return new RenderTextureZbuffer();
     }
 
     return NULL;
@@ -265,3 +269,143 @@ void RenderTextureScene::runThisTest()
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
+
+RenderTextureZbuffer::RenderTextureZbuffer()
+{
+	this->setIsTouchEnabled(true);
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	CCLabelTTF *label = CCLabelTTF::labelWithString("vertexZ = 50", "Marker Felt", 64);
+	label->setPosition(ccp(size.width / 2, size.height * 0.25f));
+	this->addChild(label);
+
+	CCLabelTTF *label2 = CCLabelTTF::labelWithString("vertexZ = 0", "Marker Felt", 64);
+	label2->setPosition(ccp(size.width / 2, size.height * 0.5f));
+	this->addChild(label2);
+
+	CCLabelTTF *label3 = CCLabelTTF::labelWithString("vertexZ = -50", "Marker Felt", 64);
+	label3->setPosition(ccp(size.width / 2, size.height * 0.75f));
+	this->addChild(label3);
+
+	label->setVertexZ(50);
+	label2->setVertexZ(0);
+	label3->setVertexZ(-50);
+
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Images/bugs/circle.plist");
+	mgr = CCSpriteBatchNode::batchNodeWithFile("Images/bugs/circle.png", 9);
+	this->addChild(mgr);
+	sp1 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp2 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp3 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp4 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp5 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp6 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp7 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp8 = CCSprite::spriteWithSpriteFrameName("circle.png");
+	sp9 = CCSprite::spriteWithSpriteFrameName("circle.png");
+
+	mgr->addChild(sp1, 9);
+	mgr->addChild(sp2, 8);
+	mgr->addChild(sp3, 7);
+	mgr->addChild(sp4, 6);
+	mgr->addChild(sp5, 5);
+	mgr->addChild(sp6, 4);
+	mgr->addChild(sp7, 3);
+	mgr->addChild(sp8, 2);
+	mgr->addChild(sp9, 1);
+
+	sp1->setVertexZ(400);
+	sp2->setVertexZ(300);
+	sp3->setVertexZ(200);
+	sp4->setVertexZ(100);
+	sp5->setVertexZ(0);
+	sp6->setVertexZ(-100);
+	sp7->setVertexZ(-200);
+	sp8->setVertexZ(-300);
+	sp9->setVertexZ(-400);
+
+	sp9->setScale(2);
+	sp9->setColor(ccYELLOW);
+}
+
+string RenderTextureZbuffer::title()
+{
+	return "Testing Z Buffer in Render Texture";
+}
+
+string RenderTextureZbuffer::subtitle()
+{
+	return "Touch screen. It should be green";
+}
+
+void RenderTextureZbuffer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *event)
+{
+	CCSetIterator iter;
+	CCTouch *touch;
+	for (iter = touches->begin(); iter != touches->end(); ++iter)
+	{
+		touch = (CCTouch *)(*iter);
+		CCPoint location = touch->locationInView(touch->view());
+
+		location = CCDirector::sharedDirector()->convertToGL(location);
+		sp1->setPosition(location);
+		sp2->setPosition(location);
+		sp3->setPosition(location);
+		sp4->setPosition(location);
+		sp5->setPosition(location);
+		sp6->setPosition(location);
+		sp7->setPosition(location);
+		sp8->setPosition(location);
+		sp9->setPosition(location);
+	}
+}
+
+void RenderTextureZbuffer::ccTouchesMoved(CCSet* touches, CCEvent* event)
+{
+	CCSetIterator iter;
+	CCTouch *touch;
+	for (iter = touches->begin(); iter != touches->end(); ++iter)
+	{
+		touch = (CCTouch *)(*iter);
+		CCPoint location = touch->locationInView(touch->view());
+
+		location = CCDirector::sharedDirector()->convertToGL(location);
+		sp1->setPosition(location);
+		sp2->setPosition(location);
+		sp3->setPosition(location);
+		sp4->setPosition(location);
+		sp5->setPosition(location);
+		sp6->setPosition(location);
+		sp7->setPosition(location);
+		sp8->setPosition(location);
+		sp9->setPosition(location);
+	}
+}
+
+void RenderTextureZbuffer::ccTouchesEnded(CCSet* touches, CCEvent* event)
+{
+	this->renderScreenShot();
+}
+
+void RenderTextureZbuffer::renderScreenShot()
+{
+	CCRenderTexture *texture = CCRenderTexture::renderTextureWithWidthAndHeight(512, 512);
+	texture->setAnchorPoint(ccp(0, 0));
+	texture->begin();
+
+	this->visit();
+
+	texture->end();
+
+	CCSprite *sprite = CCSprite::spriteWithTexture(texture->getSprite()->getTexture());
+
+	sprite->setPosition(ccp(256, 256));
+	sprite->setOpacity(182);
+	sprite->setFlipY(1);
+	this->addChild(sprite, 999999);
+	sprite->setColor(ccGREEN);
+
+	sprite->runAction(CCSequence::actions(CCFadeTo::actionWithDuration(2, 0),
+		                                  CCHide::action(),
+		                                  NULL));
+}
+
