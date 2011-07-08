@@ -98,6 +98,9 @@ namespace cocos2d {
 		void execute();		
 		void startWithTarget(CCNode *pTarget);
 		CCObject * copyWithZone(cocos2d::CCZone *pZone);
+		
+		SelectorProtocol* getTargetCallback();
+		void setTargetCallback(SelectorProtocol* pSel);
 	};
 
 
@@ -141,6 +144,9 @@ namespace cocos2d {
 
 		CCObject* copyWithZone(CCZone *pZone);
 		void execute();
+
+		CCObject* getObject();
+		void setObject(CCObject* pObj);
 
 	};
 
