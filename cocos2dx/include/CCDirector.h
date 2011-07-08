@@ -191,13 +191,19 @@ public:
 
 	/** Whether or not the Director is paused */
 	inline bool isPaused(void) { return m_bPaused; }
-
+    
+    /** How many frames were called since the director started */
+    inline unsigned int getFrames(void) { return m_uFrames; }
+    
 	/** Sets an OpenGL projection
 	 @since v0.8.2
 	 */
 	inline ccDirectorProjection getProjection(void) { return m_eProjection; }
 	void setProjection(ccDirectorProjection kProjection);
 
+    /** How many frames were called since the director started */
+    
+    
 	/** Whether or not the replaced scene will receive the cleanup message.
 	 If the new scene is pushed, then the old scene won't receive the "cleanup" message.
 	 If the new scene replaces the old one, the it will receive the "cleanup" message.
@@ -307,7 +313,7 @@ public:
 	// Memory Helper
 
 	/** Removes cached all cocos2d cached data.
-	 It will purge the CCTextureCache, CCSpriteFrameCache, CCBitmapFont cache
+	 It will purge the CCTextureCache, CCSpriteFrameCache, CCLabelBMFont cache
 	 @since v0.99.3
 	 */
 	void purgeCachedData(void);
@@ -408,6 +414,9 @@ protected:
 	/* is the running scene paused */
 	bool m_bPaused;
 	
+    /* How many frames were called since the director started */
+    unsigned int m_uFrames;
+     
 	/* The running scene */
 	CCScene *m_pRunningScene;
 	
