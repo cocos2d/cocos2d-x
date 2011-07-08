@@ -68,6 +68,9 @@ namespace   cocos2d {
 			void step(ccTime dt);
 			bool isDone(void);
 			CCActionInterval* reverse(void);
+			
+			void setInnerAction(CCActionInterval *pAction);
+			CCActionInterval* getInnerAction();
 
 			static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);	 
 

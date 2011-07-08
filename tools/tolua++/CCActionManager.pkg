@@ -22,8 +22,6 @@ public:
 	int numberOfRunningActionsInTarget(CCObject *pTarget);
 	void pauseTarget(CCObject *pTarget);
 	void resumeTarget(CCObject *pTarget);
-	void resumeAllActionsForTarget(CCObject *pTarget);
-	void pauseAllActionsForTarget(CCObject *pTarget);
 	void purgeSharedManager(void);
 	void selectorProtocolRetain(void);
 	void selectorProtocolRelease(void);
