@@ -7,6 +7,10 @@ enum {
 	kTagSlider = 1,
 };
 
+CCLayer* nextEaseAction();
+CCLayer* backEaseAction();
+CCLayer* restartEaseAction();
+
 //------------------------------------------------------------------
 //
 // SpriteEase

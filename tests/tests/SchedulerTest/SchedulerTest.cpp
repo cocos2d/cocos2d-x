@@ -8,6 +8,10 @@ enum {
 #define MAX_TESTS           8
 static int sceneIdx = -1;
 
+CCLayer* nextSchedulerTest();
+CCLayer* backSchedulerTest();
+CCLayer* restartSchedulerTest();
+
 CCLayer* createSchedulerTest(int nIndex)
 {
     CCLayer* pLayer = NULL;
