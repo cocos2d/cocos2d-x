@@ -201,17 +201,14 @@ const char * _FullPath(const char * szPath)
 {
     if (! s_szRootPath[0])
     {
-        s_dwRootLen = GetModuleFileName(NULL, s_szRootPath, sizeof(s_szRootPath));
-        while (--s_dwRootLen)
-        {
-            if ('\\' == s_szRootPath[s_dwRootLen])
-            {
-                s_szRootPath[s_dwRootLen + 1] = 0;
-                strcpy_s(s_szFullPath, sizeof(s_szFullPath), s_szRootPath);
-                ++s_dwRootLen;
-                break;
-            }
-        }
+        WCHAR  wszPath[MAX_PATH];
+        s_dwRootLen = WideCharToMultiByte(CP_ACP, 0, wszPath, 
+            GetCurrentDirectoryW(sizeof(wszPath), wszPath), 
+            s_szRootPath, MAX_PATH, NULL, NULL);
+        s_szRootPath[s_dwRootLen] = '\\';
+        s_szRootPath[s_dwRootLen + 1] = 0;
+        strcpy_s(s_szFullPath, sizeof(s_szFullPath), s_szRootPath);
+        ++s_dwRootLen;
     }
 
     if (0 != szPath[0] && ':' != szPath[1])
