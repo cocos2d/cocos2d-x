@@ -339,17 +339,13 @@ static inline void ccCArrayFree(ccCArray *arr)
 /** Doubles C array capacity */
 static inline void ccCArrayDoubleCapacity(ccCArray *arr)
 {
-	arr->max *= 2;
-	arr->arr = (void**) realloc(arr->arr, arr->max * sizeof(void*));
+	ccArrayDoubleCapacity((ccArray*)arr);
 }
 
 /** Increases array capacity such that max >= num + extra. */
 static inline void ccCArrayEnsureExtraCapacity(ccCArray *arr, unsigned int extra)
 {
-	while (arr->max < arr->num + extra)
-	{
-		ccCArrayDoubleCapacity(arr); 
-	}
+	ccArrayEnsureExtraCapacity((ccArray*)arr,extra);
 }
 
 /** Returns index of first occurence of value, NSNotFound if value not found. */
