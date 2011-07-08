@@ -45,4 +45,31 @@ public:
     virtual void runThisTest();
 };
 
+class RenderTextureZbuffer : public RenderTextureTestDemo
+{
+public:
+	RenderTextureZbuffer();
+
+	virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
+	virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+	virtual std::string title();
+	virtual std::string subtitle();
+
+	void renderScreenShot();
+
+private:
+	cocos2d::CCSpriteBatchNode *mgr;;
+
+	cocos2d::CCSprite *sp1;
+	cocos2d::CCSprite *sp2;
+	cocos2d::CCSprite *sp3;
+	cocos2d::CCSprite *sp4;
+	cocos2d::CCSprite *sp5;
+	cocos2d::CCSprite *sp6;
+	cocos2d::CCSprite *sp7;
+	cocos2d::CCSprite *sp8;
+	cocos2d::CCSprite *sp9;
+};
+
 #endif

@@ -157,6 +157,7 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CCSize contentSize)
 {
+	glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 	glGenTextures(1, &m_uName);
 	glBindTexture(GL_TEXTURE_2D, m_uName);
 

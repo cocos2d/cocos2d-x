@@ -192,6 +192,11 @@ For performance reasons, it's recommended disable it in games without retina dis
 
 To enable set it to 1. Use 0 to disable it. Enabled by default.
 
+This value governs only the PNG, GIF, BMP, images.
+This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
+
+@deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
+
 @since v0.99.5
 */
 #define CC_RETINA_DISPLAY_SUPPORT 1
@@ -225,7 +230,10 @@ Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
- To enable set it to a value different than 0. Disabled by default.
+ To enable set it to a value different than 0. Disabled by default:
+ 0 -- disabled
+ 1 -- draw bounding box
+ 2 -- draw texture box
  0 -- disabled
  1 -- draw bounding box
  2 -- draw texture box
