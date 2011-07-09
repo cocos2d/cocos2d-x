@@ -1,7 +1,7 @@
 [S3E]
 
 MemSize=[s3e]SCREENSIZE + 50331648
-MemFlags0=USE_STACK_ALLOCATOR
+#MemFlags0=USE_STACK_ALLOCATOR
 FixScreenOrientation = 1
 
 
