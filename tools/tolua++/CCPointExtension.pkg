@@ -59,8 +59,11 @@ float  ccpAngle(const CCPoint& a, const CCPoint& b);
 
 CCPoint  ccpRotateByAngle(const CCPoint& v, const CCPoint& pivot, float angle);
 
-
 bool  ccpLineIntersect(const CCPoint& p1, const CCPoint& p2, const CCPoint& p3, const CCPoint& p4, float *s, float *t);
+
+bool ccpSegmentIntersect(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
+
+CCPoint ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
 
 }//namespace   cocos2d 
 
