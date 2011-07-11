@@ -24,6 +24,7 @@
 #include <stdarg.h>
 
 #include "chipmunk_private.h"
+#include "constraints/util.h"
 
 // function declaration
 cpBody *cpBodyNewStatic(void);
@@ -34,13 +35,13 @@ cpBody cpStaticBodySingleton;
 cpBody*
 cpBodyAlloc(void)
 {
-	return (cpBody *)cpmalloc(sizeof(cpBody));
+	return (cpBody *)cpcalloc(1, sizeof(cpBody));
 }
 
 cpBodyVelocityFunc cpBodyUpdateVelocityDefault = cpBodyUpdateVelocity;
 cpBodyPositionFunc cpBodyUpdatePositionDefault = cpBodyUpdatePosition;
 
-cpBody*
+cpBody *
 cpBodyInit(cpBody *body, cpFloat m, cpFloat i)
 {
 	body->velocity_func = cpBodyUpdateVelocityDefault;
@@ -155,16 +156,27 @@ cpBodyUpdatePosition(cpBody *body, cpFloat dt)
 void
 cpBodyResetForces(cpBody *body)
 {
+	cpBodyActivate(body);
 	body->f = cpvzero;
 	body->t = 0.0f;
 }
 
 void
-cpBodyApplyForce(cpBody *body, cpVect force, cpVect r)
+cpBodyApplyForce(cpBody *body, const cpVect force, const cpVect r)
 {
+	cpBodyActivate(body);
+	
 	body->f = cpvadd(body->f, force);
 	body->t += cpvcross(r, force);
 }
+
+void
+cpBodyApplyImpulse(cpBody *body, const cpVect j, const cpVect r)
+{
+	cpBodyActivate(body);
+	apply_impulse(body, j, r);
+}
+
 
 void
 cpApplyDampedSpring(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2, cpFloat rlen, cpFloat k, cpFloat dmp, cpFloat dt)

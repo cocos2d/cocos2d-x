@@ -65,11 +65,11 @@ blockerSeparate(cpArbiter *arb, cpSpace *space, void *unused)
 
 static void
 postStepRemove(cpSpace *space, cpShape *shape, void *unused)
-{	
-	cpSpaceRemoveShape(space, shape);
+{
 	cpSpaceRemoveBody(space, shape->body);
 	cpBodyFree(shape->body);
-		
+	
+	cpSpaceRemoveShape(space, shape);
 	cpShapeFree(shape);
 }
 

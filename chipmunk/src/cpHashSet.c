@@ -33,7 +33,7 @@ cpHashSetDestroy(cpHashSet *set)
 	// Free the table.
 	cpfree(set->table);
 	
-	cpArrayEach(set->allocatedBuffers, freeWrap, NULL);
+	if(set->allocatedBuffers) cpArrayEach(set->allocatedBuffers, freeWrap, NULL);
 	cpArrayFree(set->allocatedBuffers);
 }
 
@@ -133,7 +133,7 @@ getUnusedBin(cpHashSet *set)
 		int count = CP_BUFFER_BYTES/sizeof(cpHashSetBin);
 		cpAssert(count, "Buffer size is too small.");
 		
-		cpHashSetBin *buffer = (cpHashSetBin *)cpmalloc(CP_BUFFER_BYTES);
+		cpHashSetBin *buffer = (cpHashSetBin *)cpcalloc(1, CP_BUFFER_BYTES);
 		cpArrayPush(set->allocatedBuffers, buffer);
 		
 		// push all but the first one, return the first instead

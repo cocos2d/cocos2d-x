@@ -157,7 +157,7 @@ cpArbiterGetPoint(const cpArbiter *arb, int i)
 }
 
 static inline cpFloat
-cpArbiteGetDepth(const cpArbiter *arb, int i)
+cpArbiterGetDepth(const cpArbiter *arb, int i)
 {
 	return arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(dist);
 }

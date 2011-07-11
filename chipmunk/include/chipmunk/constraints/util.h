@@ -52,10 +52,16 @@ normal_relative_velocity(cpBody *a, cpBody *b, cpVect r1, cpVect r2, cpVect n){
 }
 
 static inline void
+apply_impulse(cpBody *body, cpVect j, cpVect r){
+	body->v = cpvadd(body->v, cpvmult(j, body->m_inv));
+	body->w += body->i_inv*cpvcross(r, j);
+}
+
+static inline void
 apply_impulses(cpBody *a , cpBody *b, cpVect r1, cpVect r2, cpVect j)
 {
-	cpBodyApplyImpulse(a, cpvneg(j), r1);
-	cpBodyApplyImpulse(b, j, r2);
+	apply_impulse(a, cpvneg(j), r1);
+	apply_impulse(b, j, r2);
 }
 
 static inline void
