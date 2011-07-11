@@ -58,6 +58,35 @@
 	#define cpfceil ceilf
 #endif
 
+#ifndef INFINITY
+	#ifdef _MSC_VER
+		union MSVC_EVIL_FLOAT_HACK
+		{
+			unsigned __int8 Bytes[4];
+			float Value;
+		};
+		static union MSVC_EVIL_FLOAT_HACK INFINITY_HACK = {{0x00, 0x00, 0x80, 0x7F}};
+		#define INFINITY (INFINITY_HACK.Value)
+	#endif
+	
+	#ifdef __GNUC__
+		#define INFINITY (__builtin_inf())
+	#endif
+	
+	#ifndef INFINITY
+		#define INFINITY (1e1000)
+	#endif
+#endif
+
+#ifndef M_PI
+	#define M_PI 3.14159265358979323846264338327950288
+#endif
+
+#ifndef M_E
+	#define M_E 2.71828182845904523536028747135266250
+#endif
+
+
 static inline cpFloat
 cpfmax(cpFloat a, cpFloat b)
 {
@@ -138,7 +167,7 @@ typedef unsigned int cpHashValue;
 #endif
 
 #ifdef CP_LAYERS_TYPE
-	typedef CP_GROUP_TYPE cpLayers;
+	typedef CP_LAYERS_TYPE cpLayers;
 #else
 	typedef unsigned int cpLayers;
 #endif

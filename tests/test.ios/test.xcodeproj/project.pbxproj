@@ -483,7 +483,6 @@
 		D4E39D321342E23F00EBA039 /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E39D301342E23F00EBA039 /* ZwoptexTest.cpp */; };
 		D4F1A270133B2FE700937FFA /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F1A26F133B2FE700937FFA /* CCSAXParser.h */; };
 		D4F1A50B133B3F5F00937FFA /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */; };
-		D4F9F37E12E545ED005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F37D12E545ED005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1094,7 +1093,6 @@
 		D4F1A26F133B2FE700937FFA /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		D4F1A50A133B3F5F00937FFA /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = SOURCE_ROOT; };
-		D4F9F37D12E545ED005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Res/Images/Icon.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1464,7 +1462,6 @@
 				D4E39D2D1342E22700EBA039 /* zwoptex */,
 				BF31DE9812E9779300D4F513 /* background.mp3 */,
 				BF31DE9912E9779300D4F513 /* effect1.wav */,
-				D4F9F37D12E545ED005CA6D2 /* Icon.png */,
 				BF1B1A7612951B7600E99D96 /* animations */,
 				BF1B1A7712951B7600E99D96 /* fonts */,
 				BF1B1A7812951B7600E99D96 /* Images */,
@@ -2792,7 +2789,6 @@
 				BF1B1A7B12951B7600E99D96 /* fonts in Resources */,
 				BF1B1A7C12951B7600E99D96 /* Images in Resources */,
 				BF1B1A7D12951B7600E99D96 /* TileMaps in Resources */,
-				D4F9F37E12E545ED005CA6D2 /* Icon.png in Resources */,
 				BF31DE9A12E9779300D4F513 /* background.mp3 in Resources */,
 				BF31DE9B12E9779300D4F513 /* effect1.wav in Resources */,
 				D4E39D2E1342E22700EBA039 /* zwoptex in Resources */,

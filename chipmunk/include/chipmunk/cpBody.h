@@ -192,18 +192,12 @@ cpBodyWorld2Local(const cpBody *body, const cpVect v)
 	return cpvunrotate(cpvsub(v, body->p), body->rot);
 }
 
-// Apply an impulse (in world coordinates) to the body at a point relative to the center of gravity (also in world coordinates).
-static inline void
-cpBodyApplyImpulse(cpBody *body, const cpVect j, const cpVect r)
-{
-	body->v = cpvadd(body->v, cpvmult(j, body->m_inv));
-	body->w += body->i_inv*cpvcross(r, j);
-}
-
 // Zero the forces on a body.
 void cpBodyResetForces(cpBody *body);
 // Apply a force (in world coordinates) to a body at a point relative to the center of gravity (also in world coordinates).
 void cpBodyApplyForce(cpBody *body, const cpVect f, const cpVect r);
+// Apply an impulse (in world coordinates) to the body at a point relative to the center of gravity (also in world coordinates).
+void cpBodyApplyImpulse(cpBody *body, const cpVect j, const cpVect r);
 
 static inline cpFloat
 cpBodyKineticEnergy(const cpBody *body)
