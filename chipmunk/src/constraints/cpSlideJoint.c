@@ -104,7 +104,7 @@ CP_DefineClassGetter(cpSlideJoint)
 cpSlideJoint *
 cpSlideJointAlloc(void)
 {
-	return (cpSlideJoint *)cpmalloc(sizeof(cpSlideJoint));
+	return (cpSlideJoint *)cpcalloc(1, sizeof(cpSlideJoint));
 }
 
 cpSlideJoint *

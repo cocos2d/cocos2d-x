@@ -201,7 +201,7 @@ shapeQueryHelper(cpShape *a, cpShape *b, shapeQueryContext *context)
 	if(
 		(a->group && a->group == b->group) ||
 		!(a->layers & b->layers) ||
-		a->sensor || b->sensor
+		a == b
 	) return;
 	
 	cpContact contacts[CP_MAX_CONTACTS_PER_ARBITER];
@@ -216,7 +216,7 @@ shapeQueryHelper(cpShape *a, cpShape *b, shapeQueryContext *context)
 	}
 	
 	if(numContacts){
-		context->anyCollision = cpTrue;
+		context->anyCollision = !(a->sensor || b->sensor);
 		
 		if(context->func){
 			cpContactPointSet set = {numContacts, {}};

@@ -75,7 +75,7 @@ CP_DefineClassGetter(cpSimpleMotor)
 cpSimpleMotor *
 cpSimpleMotorAlloc(void)
 {
-	return (cpSimpleMotor *)cpmalloc(sizeof(cpSimpleMotor));
+	return (cpSimpleMotor *)cpcalloc(1, sizeof(cpSimpleMotor));
 }
 
 cpSimpleMotor *
