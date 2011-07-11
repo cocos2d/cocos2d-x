@@ -200,25 +200,36 @@ public class Cocos2dxBitmap{
     	LinkedList<String> strList = new LinkedList<String>();
     	
     	/*
-    	 * Break a String into String[] by the width
+    	 * Break a String into String[] by the width & should wrap the word
     	 */
-    	for (int i = 1; i <= charLength; ++i){
+    	for (int i = 1; i <= charLength; ++i){  		
     		tempWidth = (int)Math.ceil(paint.measureText(content, start, i));
     		if (tempWidth >= width){
-    			/*
-    			 * Should not exceed the width
-    			 */
-    			if (tempWidth > width){
-    				strList.add(content.substring(start, i - 1));
-    				/*
-    				 * compute from previous char
+    			int lastIndexOfSpace = content.substring(0, i).lastIndexOf(" ");
+    			
+    			if (lastIndexOfSpace != -1){
+    				/**
+    				 * Should wrap the word
     				 */
-    				--i;
+    				strList.add(content.substring(start, lastIndexOfSpace));
+    				i = lastIndexOfSpace;
     			}
     			else {
-    				strList.add(content.substring(start, i));   				
+    				/*
+        			 * Should not exceed the width
+        			 */
+        			if (tempWidth > width){
+        				strList.add(content.substring(start, i - 1));
+        				/*
+        				 * compute from previous char
+        				 */
+        				--i;
+        			}
+        			else {
+        				strList.add(content.substring(start, i));   				
+        			}
     			}
-    			
+    			   			
     			start = i;
     		}
     	}
