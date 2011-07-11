@@ -309,13 +309,13 @@ bool CC_DLL ccpLineIntersect(const CCPoint& p1, const CCPoint& p2,
 ccpSegmentIntersect returns YES if Segment A-B intersects with segment C-D
 @since v1.0.0
 */
-bool ccpSegmentIntersect(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
+bool CC_DLL ccpSegmentIntersect(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
 
 /*
 ccpIntersectPoint returns the intersection point of line A-B, C-D
 @since v1.0.0
 */
-CCPoint ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
+CCPoint CC_DLL ccpIntersectPoint(const CCPoint& A, const CCPoint& B, const CCPoint& C, const CCPoint& D);
 
 }//namespace   cocos2d 
 
