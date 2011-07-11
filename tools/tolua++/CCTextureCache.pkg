@@ -29,6 +29,8 @@ class CCTextureCache : public CCObject
 	void removeTexture(CCTexture2D* texture);
 
 	void removeTextureForKey(const char *textureKeyName);
+	
+	void dumpCachedTextureInfo();
 
   static void reloadAllTextures();
 };
