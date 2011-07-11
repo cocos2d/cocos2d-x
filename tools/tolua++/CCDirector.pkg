@@ -9,45 +9,6 @@
 
 namespace   cocos2d {
 
-	enum  {
-		/// If the window is resized, it won't be autoscaled
-		kCCDirectorResize_NoScale,
-		/// If the window is resized, it will be autoscaled (default behavior)
-		kCCDirectorResize_AutoScale,
-	};
-
-	/** @typedef tPixelFormat
-	Possible Pixel Formats for the CCEGLView
-	*/
-	typedef enum {
-		/** RGB565 pixel format. No alpha. 16-bit. (Default) */
-		kCCPixelFormatRGB565,
-		/** RGBA format. 32-bit. Needed for some 3D effects. It is not as fast as the RGB565 format. */
-		kCCPixelFormatRGBA8888,
-		/** default pixel format */
-		kCCPixelFormatDefault = kCCPixelFormatRGB565,
-
-		// backward compatibility stuff
-		kPixelFormatRGB565 = kCCPixelFormatRGB565,
-		kRGB565 = kCCPixelFormatRGB565,
-		kPixelFormatRGBA8888 = kCCPixelFormatRGBA8888,
-		kRGBA8 = kCCPixelFormatRGBA8888,
-	} tPixelFormat;
-
-
-	typedef enum {
-		/// A Depth Buffer of 0 bits will be used (default)
-		kCCDepthBufferNone,
-		/// A depth buffer of 16 bits will be used
-		kCCDepthBuffer16,
-		/// A depth buffer of 24 bits will be used
-		kCCDepthBuffer24,
-
-		// backward compatibility stuff
-		kDepthBuffer16 = kCCDepthBuffer16,
-		kDepthBuffer24 = kCCDepthBuffer24,
-	} tDepthBufferFormat;
-
 	typedef enum {
 		/// sets a 2D projection (orthogonal projection)
 		kCCDirectorProjection2D,
@@ -123,6 +84,7 @@ namespace   cocos2d {
 		bool isNextDeltaTimeZero(void);
 		void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
 		bool isPaused(void);
+		unsigned int getFrames(void);
 		ccDirectorProjection getProjection(void);
 		void setProjection(ccDirectorProjection kProjection);
 		bool isSendCleanupToScene(void);
@@ -168,17 +130,6 @@ namespace   cocos2d {
 		bool isRetinaDisplay() { return m_bRetinaDisplay; }
 
 		static bool setDirectorType(ccDirectorType obDirectorType);
-
-
-		void setPixelFormat(tPixelFormat kPixelFormat);
-		/** Pixel format used to create the context */
-		tPixelFormat getPiexFormat(void);
-
-
-		void setDepthBufferFormat(tDepthBufferFormat kDepthBufferFormat);
-
-
-		bool detach(void);
 
 		static CCDirector* sharedDirector(void);
 	};
