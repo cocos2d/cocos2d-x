@@ -58,13 +58,7 @@ class CCScheduler : public CCObject
 
 	void resumeTarget(SelectorProtocol *pTarget);
 
-	void scheduleTimer(CCTimer *pTimer);
-
-	
-	void unscheduleTimer(CCTimer *pTimer);
-
-	void unscheduleAllTimers(void);
-
+	bool isTargetPaused(SelectorProtocol *pTarget);
 
 	static CCScheduler* sharedScheduler(void);
 
