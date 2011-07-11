@@ -16,8 +16,8 @@ namespace cocos2d {
 		void setTileSet(CCTMXTilesetInfo* pval);
 		
 		/** Layer orientation, which is the same as the map orientation */
-		void setLayerOrientation(int val);
-		int getLayerOrientation();
+		void setLayerOrientation(unsigned int val);
+		unsigned int getLayerOrientation();
 		/** properties from the layer. They can be added using Tiled */
 		CCStringToStringDictionary* getProperties();
 		void setProperties(CCStringToStringDictionary* pval);

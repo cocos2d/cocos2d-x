@@ -150,7 +150,7 @@ namespace cocos2d {
 		static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
 	};
 	
-	class CC_DLL CCSkewTo : public CCActionInterval
+	class CCSkewTo : public CCActionInterval
 	{
 		CCSkewTo();
 		virtual bool initWithDuration(ccTime t, float sx, float sy);
@@ -160,7 +160,7 @@ namespace cocos2d {
 		static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
 	};
 	
-	class CC_DLL CCSkewBy : public CCSkewTo
+	class CCSkewBy : public CCSkewTo
 	{
 		virtual bool initWithDuration(ccTime t, float sx, float sy);
 		virtual void startWithTarget(CCNode *pTarget);
