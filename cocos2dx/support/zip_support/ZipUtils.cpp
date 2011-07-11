@@ -40,7 +40,7 @@ namespace cocos2d
 		int err = Z_OK;
 
 		int bufferSize = outLenghtHint;
-		*out = (unsigned char*) malloc(bufferSize);
+		*out = new unsigned char[bufferSize];
 
 		z_stream d_stream; /* decompression stream */	
 		d_stream.zalloc = (alloc_func)0;
@@ -78,17 +78,16 @@ namespace cocos2d
 			// not enough memory ?
 			if (err != Z_STREAM_END) 
 			{
-				unsigned char *tmp = (unsigned char*)realloc(*out, bufferSize * BUFFER_INC_FACTOR);
+                delete [] *out;
+                *out = new unsigned char[bufferSize * BUFFER_INC_FACTOR];
 
 				/* not enough memory, ouch */
-				if (! tmp ) 
+				if (! *out ) 
 				{
 					CCLOG("cocos2d: ZipUtils: realloc failed");
 					inflateEnd(&d_stream);
 					return Z_MEM_ERROR;
 				}
-				/* only assign to *out if tmp is valid. it's not guaranteed that realloc will reuse the memory */
-				*out = tmp;
 
 				d_stream.next_out = *out + bufferSize;
 				d_stream.avail_out = bufferSize;

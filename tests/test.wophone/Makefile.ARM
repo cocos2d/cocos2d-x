@@ -38,7 +38,6 @@ first: all
 OBJECTS = \
 	$(OBJECTS_DIR)/AppDelegate.o \
 	$(OBJECTS_DIR)/main.o \
-	$(OBJECTS_DIR)/NewDeleteOp.o \
 	$(OBJECTS_DIR)/TG3AppDllEntry.o \
 	$(OBJECTS_DIR)/controller.o \
 	$(OBJECTS_DIR)/testBasic.o \
@@ -143,9 +142,6 @@ $(OBJECTS_DIR)/AppDelegate.o : ../AppDelegate.cpp
 
 $(OBJECTS_DIR)/main.o : ./main.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/main.o ./main.cpp
-
-$(OBJECTS_DIR)/NewDeleteOp.o : ./NewDeleteOp.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/NewDeleteOp.o ./NewDeleteOp.cpp
 
 $(OBJECTS_DIR)/TG3AppDllEntry.o : ./TG3AppDllEntry.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TG3AppDllEntry.o ./TG3AppDllEntry.cpp
