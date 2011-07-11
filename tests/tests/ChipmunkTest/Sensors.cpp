@@ -66,10 +66,13 @@ blockerSeparate(cpArbiter *arb, cpSpace *space, void *unused)
 static void
 postStepRemove(cpSpace *space, cpShape *shape, void *unused)
 {
+	// cocos2d-x: bring cpSpaceRemoveShape here to avoid
+	// the crash on win32 platform
+	cpSpaceRemoveShape(space, shape);
 	cpSpaceRemoveBody(space, shape->body);
 	cpBodyFree(shape->body);
 	
-	cpSpaceRemoveShape(space, shape);
+
 	cpShapeFree(shape);
 }
 
