@@ -184,6 +184,18 @@ CCFiniteTimeAction* CCSequence::actions(cocos2d::CCFiniteTimeAction *pAction1, .
 	return pPrev;
 }
 
+CCFiniteTimeAction* CCSequence::actionsWithArray(CCArray *actions)
+{
+	CCFiniteTimeAction* prev = (CCFiniteTimeAction*)actions->objectAtIndex(0);
+
+	for (unsigned int i = 1; i < actions->count(); ++i)
+	{
+		prev = actionOneTwo(prev, (CCFiniteTimeAction*)actions->objectAtIndex(i));
+	}
+
+	return prev;
+}
+
 bool CCSequence::initOneTwo(cocos2d::CCFiniteTimeAction *pActionOne, cocos2d::CCFiniteTimeAction *pActionTwo)
 {
 	assert(pActionOne != NULL);
@@ -526,6 +538,18 @@ CCFiniteTimeAction* CCSpawn::actions(cocos2d::CCFiniteTimeAction *pAction1, ...)
 
 	va_end(params);
 	return pPrev;
+}
+
+CCFiniteTimeAction* CCSpawn::actionsWithArray(cocos2d::CCArray *actions)
+{
+	CCFiniteTimeAction* prev = (CCFiniteTimeAction*)actions->objectAtIndex(0);
+
+	for (unsigned int i = 1; i < actions->count(); ++i)
+	{
+		prev = actionOneTwo(prev, (CCFiniteTimeAction*)actions->objectAtIndex(i));
+	}
+
+	return prev;
 }
 
 CCSpawn* CCSpawn::actionOneTwo(cocos2d::CCFiniteTimeAction *pAction1, cocos2d::CCFiniteTimeAction *pAction2)
