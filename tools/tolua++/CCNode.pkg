@@ -12,13 +12,18 @@ class CCNode : public CCObject, public SelectorProtocol
 	void	setRotation(float newRotation);
 	float	getScale();
 	void	setScale(float scale);
-	void	setScale(float scale);
 	float	getScaleX();
 	void	setScaleX(float newScaleX);
 	float	getScaleY();
 	void	setScaleY(float newScaleY);
 	CCPoint getPosition();
 	void	setPosition(CCPoint newPosition);
+	
+	float getSkewX();
+	void	setSkewX(float skewX);
+	float getSkewY();
+	void	setSkewY(float skewY);
+	
 	CCMutableArray<CCNode*> *  getChildren();
 	CCCamera*  getCamera();
 	CCGridBase*  getGrid();
@@ -65,7 +70,7 @@ class CCNode : public CCObject, public SelectorProtocol
 	CCAction* getActionByTag(int tag);
 	char *	description(void);
 	CCNode* getChildByTag(int tag);
-	int	numberOfRunningActions(void);
+	unsigned int	numberOfRunningActions(void);
 	//bool	isScheduled(SEL_SCHEDULE selector);
 	void	scheduleUpdate(void);
 	void	scheduleUpdateWithPriority(int priority);

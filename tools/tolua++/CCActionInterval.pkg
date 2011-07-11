@@ -35,6 +35,8 @@ namespace cocos2d {
 		//	static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
 		//用以下方法替代
 		static CCSequence* actionOneTwo(CCFiniteTimeAction *pActionOne, CCFiniteTimeAction *pActionTwo);
+		/** helper contructor to create an array of sequenceable actions given an array */
+		static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
 	};
 
 
@@ -50,6 +52,9 @@ namespace cocos2d {
 		void update(ccTime time);
 		bool isDone(void);
 		CCActionInterval* reverse(void);
+		
+		void setInnerAction(CCFiniteTimeAction *pAction);
+		CCFiniteTimeAction* getInnerAction();
 
 		static CCRepeat* actionWithAction(CCFiniteTimeAction *pAction, unsigned int times);
 
@@ -67,6 +72,10 @@ namespace cocos2d {
 		void step(ccTime dt);
 		bool isDone(void);
 		CCActionInterval* reverse(void);
+		
+		void setInnerAction(CCActionInterval *pAction);
+		CCActionInterval* getInnerAction();
+		
 		static CCRepeatForever* actionWithAction(CCActionInterval *pAction);
 
 	};
@@ -84,6 +93,9 @@ namespace cocos2d {
 		//static CCFiniteTimeAction* actions(CCFiniteTimeAction *pAction1, ...);
 		//用以下方法替代
 		static CCSpawn* actionOneTwo(CCFiniteTimeAction *pAction1, CCFiniteTimeAction *pAction2);
+
+		/** helper contructor to create an array of spawned actions given an array */
+		static CCFiniteTimeAction* actionsWithArray(CCArray *actions);
 
 	};
 
@@ -136,6 +148,24 @@ namespace cocos2d {
 		void startWithTarget(CCNode *pTarget);
 		CCActionInterval* reverse(void);
 		static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
+	};
+	
+	class CCSkewTo : public CCActionInterval
+	{
+		CCSkewTo();
+		virtual bool initWithDuration(ccTime t, float sx, float sy);
+		virtual CCObject* copyWithZone(CCZone* pZone);
+		virtual void startWithTarget(CCNode *pTarget);
+		virtual void update(ccTime time);
+		static CCSkewTo* actionWithDuration(ccTime t, float sx, float sy);
+	};
+	
+	class CCSkewBy : public CCSkewTo
+	{
+		virtual bool initWithDuration(ccTime t, float sx, float sy);
+		virtual void startWithTarget(CCNode *pTarget);
+		virtual CCActionInterval* reverse(void);
+		static CCSkewBy* actionWithDuration(ccTime t, float deltaSkewX, float deltaSkewY);
 	};
 
 	class  CCJumpBy : public CCActionInterval
