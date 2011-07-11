@@ -72,7 +72,7 @@ handleSetTrans(void *obj, cpSpaceHash *hash)
 		int count = CP_BUFFER_BYTES/sizeof(cpHandle);
 		cpAssert(count, "Buffer size is too small.");
 		
-		cpHandle *buffer = (cpHandle *)cpmalloc(CP_BUFFER_BYTES);
+		cpHandle *buffer = (cpHandle *)cpcalloc(1, CP_BUFFER_BYTES);
 		cpArrayPush(hash->allocatedBuffers, buffer);
 		
 		for(int i=0; i<count; i++) cpArrayPush(hash->pooledHandles, buffer + i);
@@ -144,15 +144,15 @@ static void freeWrap(void *ptr, void *unused){cpfree(ptr);}
 void
 cpSpaceHashDestroy(cpSpaceHash *hash)
 {
-	clearHash(hash);
+	if(hash->table) clearHash(hash);
+	cpfree(hash->table);
 	
 	cpHashSetFree(hash->handleSet);
 	
-	cpArrayEach(hash->allocatedBuffers, freeWrap, NULL);
+	if(hash->allocatedBuffers) cpArrayEach(hash->allocatedBuffers, freeWrap, NULL);
 	cpArrayFree(hash->allocatedBuffers);
-	cpArrayFree(hash->pooledHandles);
 	
-	cpfree(hash->table);
+	cpArrayFree(hash->pooledHandles);
 }
 
 void
@@ -200,7 +200,7 @@ getEmptyBin(cpSpaceHash *hash)
 		int count = CP_BUFFER_BYTES/sizeof(cpSpaceHashBin);
 		cpAssert(count, "Buffer size is too small.");
 		
-		cpSpaceHashBin *buffer = (cpSpaceHashBin *)cpmalloc(CP_BUFFER_BYTES);
+		cpSpaceHashBin *buffer = (cpSpaceHashBin *)cpcalloc(1, CP_BUFFER_BYTES);
 		cpArrayPush(hash->allocatedBuffers, buffer);
 		
 		// push all but the first one, return the first instead

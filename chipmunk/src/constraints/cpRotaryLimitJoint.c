@@ -97,7 +97,7 @@ CP_DefineClassGetter(cpRotaryLimitJoint)
 cpRotaryLimitJoint *
 cpRotaryLimitJointAlloc(void)
 {
-	return (cpRotaryLimitJoint *)cpmalloc(sizeof(cpRotaryLimitJoint));
+	return (cpRotaryLimitJoint *)cpcalloc(1, sizeof(cpRotaryLimitJoint));
 }
 
 cpRotaryLimitJoint *
