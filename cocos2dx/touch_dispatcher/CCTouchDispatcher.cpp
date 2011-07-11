@@ -264,7 +264,7 @@ CCTouchHandler* CCTouchDispatcher::findHandler(CCTouchDelegate *pDelegate)
 
 void CCTouchDispatcher::rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArray)
 {
-	sort(pArray->begin(), pArray->end(), less);
+	std::sort(pArray->begin(), pArray->end(), less);
 }
 
 void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
