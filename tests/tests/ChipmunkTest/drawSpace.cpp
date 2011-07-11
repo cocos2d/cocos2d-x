@@ -500,17 +500,12 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 		glPointSize(options->bodyPointSize);
 		
 		cpArray *bodies = space->bodies;
-		// cocos2d-x: use ccDrawPoints to optimize the speed
-		CCPoint *aPoints = new CCPoint[bodies->num];
-		
+
 		glColor4f(LINE_COLOR);
 		for(int i=0, count = bodies->num; i<count; i++){
 			cpBody *body = (cpBody *)bodies->arr[i];
-			aPoints[i] = CCPoint(body->p.x, body->p.y);
-			// ccDrawPoint( ccp(body->p.x, body->p.y) );
+			ccDrawPoint( ccp(body->p.x, body->p.y) );
 		}
-		ccDrawPoints( aPoints, bodies->num );
-		delete []aPoints;
 
 //			glColor3f(0.5f, 0.5f, 0.5f);
 //			cpArray *components = space->components;
@@ -529,18 +524,12 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 		cpArray *arbiters = space->arbiters;
 		for(int i=0; i<arbiters->num; i++){
 			cpArbiter *arb = (cpArbiter*)arbiters->arr[i];
-			// cocos2d-x: use ccDrawPoints to optimze the speed
-			CCPoint *aPoints = new CCPoint[arb->numContacts];
 			
 			glColor4f(COLLISION_COLOR);
 			for(int i=0; i<arb->numContacts; i++){
 				cpVect v = arb->contacts[i].p;
-				// ccDrawPoint( ccp(v.x, v.y) );
-				aPoints[i] = CCPoint(v.x, v.y);
+				ccDrawPoint( ccp(v.x, v.y) );
 			}
-			
-			ccDrawPoints( aPoints, arb->numContacts );
-			delete []aPoints;
 		}
 	}
 }
