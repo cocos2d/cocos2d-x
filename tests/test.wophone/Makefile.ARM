@@ -50,6 +50,17 @@ OBJECTS = \
 	$(OBJECTS_DIR)/GLES-Render.o \
 	$(OBJECTS_DIR)/Test.o \
 	$(OBJECTS_DIR)/TestEntries.o \
+	$(OBJECTS_DIR)/Bug-1159.o \
+	$(OBJECTS_DIR)/Bug-1174.o \
+	$(OBJECTS_DIR)/Bug-350.o \
+	$(OBJECTS_DIR)/Bug-422.o \
+	$(OBJECTS_DIR)/Bug-624.o \
+	$(OBJECTS_DIR)/Bug-886.o \
+	$(OBJECTS_DIR)/Bug-899.o \
+	$(OBJECTS_DIR)/Bug-914.o \
+	$(OBJECTS_DIR)/BugsTest.o \
+	$(OBJECTS_DIR)/Bug-458.o \
+	$(OBJECTS_DIR)/QuestionContainerSprite.o \
 	$(OBJECTS_DIR)/Bounce.o \
 	$(OBJECTS_DIR)/cocos2dChipmunkDemo.o \
 	$(OBJECTS_DIR)/drawSpace.o \
@@ -75,6 +86,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CocosDenshionTest.o \
 	$(OBJECTS_DIR)/CocosNodeTest.o \
 	$(OBJECTS_DIR)/CurlTest.o \
+	$(OBJECTS_DIR)/DirectorTest.o \
 	$(OBJECTS_DIR)/DrawPrimitivesTest.o \
 	$(OBJECTS_DIR)/EaseActionsTest.o \
 	$(OBJECTS_DIR)/EffectsAdvancedTest.o \
@@ -168,6 +180,39 @@ $(OBJECTS_DIR)/Test.o : ../tests/Box2DTestBed/Test.cpp
 $(OBJECTS_DIR)/TestEntries.o : ../tests/Box2DTestBed/TestEntries.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TestEntries.o ../tests/Box2DTestBed/TestEntries.cpp
 
+$(OBJECTS_DIR)/Bug-1159.o : ../tests/BugsTest/Bug-1159.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-1159.o ../tests/BugsTest/Bug-1159.cpp
+
+$(OBJECTS_DIR)/Bug-1174.o : ../tests/BugsTest/Bug-1174.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-1174.o ../tests/BugsTest/Bug-1174.cpp
+
+$(OBJECTS_DIR)/Bug-350.o : ../tests/BugsTest/Bug-350.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-350.o ../tests/BugsTest/Bug-350.cpp
+
+$(OBJECTS_DIR)/Bug-422.o : ../tests/BugsTest/Bug-422.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-422.o ../tests/BugsTest/Bug-422.cpp
+
+$(OBJECTS_DIR)/Bug-624.o : ../tests/BugsTest/Bug-624.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-624.o ../tests/BugsTest/Bug-624.cpp
+
+$(OBJECTS_DIR)/Bug-886.o : ../tests/BugsTest/Bug-886.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-886.o ../tests/BugsTest/Bug-886.cpp
+
+$(OBJECTS_DIR)/Bug-899.o : ../tests/BugsTest/Bug-899.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-899.o ../tests/BugsTest/Bug-899.cpp
+
+$(OBJECTS_DIR)/Bug-914.o : ../tests/BugsTest/Bug-914.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-914.o ../tests/BugsTest/Bug-914.cpp
+
+$(OBJECTS_DIR)/BugsTest.o : ../tests/BugsTest/BugsTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/BugsTest.o ../tests/BugsTest/BugsTest.cpp
+
+$(OBJECTS_DIR)/Bug-458.o : ../tests/BugsTest/Bug-458/Bug-458.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bug-458.o ../tests/BugsTest/Bug-458/Bug-458.cpp
+
+$(OBJECTS_DIR)/QuestionContainerSprite.o : ../tests/BugsTest/Bug-458/QuestionContainerSprite.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/QuestionContainerSprite.o ../tests/BugsTest/Bug-458/QuestionContainerSprite.cpp
+
 $(OBJECTS_DIR)/Bounce.o : ../tests/ChipmunkTest/Bounce.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Bounce.o ../tests/ChipmunkTest/Bounce.cpp
 
@@ -242,6 +287,9 @@ $(OBJECTS_DIR)/CocosNodeTest.o : ../tests/CocosNodeTest/CocosNodeTest.cpp
 
 $(OBJECTS_DIR)/CurlTest.o : ../tests/CurlTest/CurlTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CurlTest.o ../tests/CurlTest/CurlTest.cpp
+
+$(OBJECTS_DIR)/DirectorTest.o : ../tests/DirectorTest/DirectorTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/DirectorTest.o ../tests/DirectorTest/DirectorTest.cpp
 
 $(OBJECTS_DIR)/DrawPrimitivesTest.o : ../tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/DrawPrimitivesTest.o ../tests/DrawPrimitivesTest/DrawPrimitivesTest.cpp
