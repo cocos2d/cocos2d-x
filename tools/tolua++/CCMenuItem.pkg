@@ -34,6 +34,7 @@ namespace cocos2d{
 		CCMenuItemLabel();		
 
 		static CCMenuItemLabel * itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector);
+		static CCMenuItemLabel* itemWithLabel(CCNode *label);
 
 		bool initWithLabel(CCNode* label, SelectorProtocol* target, SEL_MenuHandler selector);
 

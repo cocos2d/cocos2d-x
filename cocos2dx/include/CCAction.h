@@ -168,7 +168,7 @@ public:
 	virtual bool isDone(void);
 	virtual CCActionInterval* reverse(void);
 
-	inline void setInnerAction(CCActionInterval *pAction);
+	void setInnerAction(CCActionInterval *pAction);
 
 	inline CCActionInterval* getInnerAction()
 	{
