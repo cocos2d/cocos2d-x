@@ -248,10 +248,10 @@ public:
     virtual std::string subtitle();
 };
 
-class TMXGIDObjectTest : public TileDemo
+class TMXGIDObjectsTest : public TileDemo
 {
 public:
-	TMXGIDObjectTest();
+	TMXGIDObjectsTest();
 	virtual std::string title();
 	virtual std::string subtitle();
 	virtual void draw();
