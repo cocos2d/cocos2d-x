@@ -535,6 +535,8 @@ CCPoint CCProgressTimer::boundaryTexCoord(char index)
 
 void CCProgressTimer::draw(void)
 {
+	CCNode::draw();
+
 	if(! m_pVertexData) 
 	{
 		return;

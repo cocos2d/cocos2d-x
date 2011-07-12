@@ -329,6 +329,10 @@ namespace cocos2d{
 	bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
 		CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+
+		this->setFontName(_fontName.c_str());
+		this->setFontSize(_fontSize);
+
 		CCLabelTTF *label = CCLabelTTF::labelWithString(value, _fontName.c_str(), (float)_fontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
@@ -336,6 +340,36 @@ namespace cocos2d{
 		}
 		return true;
 	}
+
+	void CCMenuItemFont::recreateLabel()
+	{
+		CCLabelTTF *label = CCLabelTTF::labelWithString(m_pLabel->convertToLabelProtocol()->getString(), 
+			m_strFontName.c_str(), (float)m_nFontSize);
+		this->setLabel(label);
+	}
+
+	void CCMenuItemFont::setFontSizeObj(int s)
+	{
+		m_nFontSize = s;
+		recreateLabel();
+	}
+
+	int CCMenuItemFont::getFontSize()
+	{
+		return m_nFontSize;
+	}
+
+	void CCMenuItemFont::setFontNameObj(const char* name)
+	{
+		m_strFontName = name;
+		recreateLabel();
+	}
+
+	const char* CCMenuItemFont::getFontName()
+	{
+		return m_strFontName.c_str();
+	}
+
 	//
 	//CCMenuItemSprite
 	//

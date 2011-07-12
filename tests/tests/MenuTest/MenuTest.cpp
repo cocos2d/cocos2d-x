@@ -50,7 +50,10 @@ MenuLayer1::MenuLayer1()
 	item3->setColor( ccc3(200,200,255) );
 	
 	// Font Item
-	CCMenuItem *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
+	CCMenuItemFont *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
+
+	item4->setFontSizeObj(20);
+	item4->setFontName("Marker Felt");
 	
 	// Label Item (CCLabelBMFont)
 	CCLabelBMFont* label = CCLabelBMFont::labelWithString("configuration", "fonts/bitmapFontTest3.fnt");
