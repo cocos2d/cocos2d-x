@@ -67,6 +67,9 @@ protected:
 	CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
 	CC_PROPERTY(ccColor3B, m_tColor, Color);
 
+	// quads to draw
+	CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);
+
 public:
 	CCAtlasNode();
 	virtual ~CCAtlasNode();

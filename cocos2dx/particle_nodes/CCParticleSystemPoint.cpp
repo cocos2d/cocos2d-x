@@ -94,6 +94,8 @@ void CCParticleSystemPoint::postStep()
 }
 void CCParticleSystemPoint::draw()
 {
+	CCParticleSystem::draw();
+
 	if (m_uParticleIdx==0)
 	{
 		return;

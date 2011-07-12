@@ -84,6 +84,12 @@
 
 	if (multiSampling_)
 	{
+	        if ( msaaColorbuffer_) 
+	        {
+                        glDeleteRenderbuffersOES(1, &msaaColorbuffer_);
+                        msaaColorbuffer_ = 0;
+                }
+                
 		/* Create the offscreen MSAA color buffer.
 		 After rendering, the contents of this will be blitted into ColorRenderbuffer */
 		

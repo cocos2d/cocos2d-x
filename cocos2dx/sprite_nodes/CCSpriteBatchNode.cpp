@@ -280,6 +280,8 @@ namespace cocos2d
 	// draw
 	void CCSpriteBatchNode::draw(void)
 	{
+		CCNode::draw();
+
 		// Optimization: Fast Dispatch	
 		if (m_pobTextureAtlas->getTotalQuads() == 0)
 		{
