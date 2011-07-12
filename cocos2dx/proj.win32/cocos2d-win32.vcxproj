@@ -184,7 +184,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\sprite_nodes\CCSpriteBatchNode.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrame.cpp" />
     <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp" />
-    <ClCompile Include="..\sprite_nodes\CCSpriteSheet.cpp" />
     <ClCompile Include="..\support\base64.cpp" />
     <ClCompile Include="..\support\CCArray.cpp" />
     <ClCompile Include="..\support\CCPointExtension.cpp" />
@@ -287,7 +286,6 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\include\CCSpriteBatchNode.h" />
     <ClInclude Include="..\include\CCSpriteFrame.h" />
     <ClInclude Include="..\include\CCSpriteFrameCache.h" />
-    <ClInclude Include="..\include\CCSpriteSheet.h" />
     <ClInclude Include="..\include\CCString.h" />
     <ClInclude Include="..\include\CCTextFieldTTF.h" />
     <ClInclude Include="..\include\CCTexture2D.h" />
