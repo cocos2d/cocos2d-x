@@ -44,6 +44,8 @@ class CCTextureAtlas : public CCObject
 
 
 	void drawNumberOfQuads(unsigned int n);
+	
+	void drawNumberOfQuads(unsigned int n, unsigned int start);
 
 	/** draws all the Atlas's Quads
 	*/

@@ -76,7 +76,8 @@ namespace   cocos2d {
 
 	class CCColorLayer : public CCLayerColor
 	{
-
+		static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+		static CCColorLayer * layerWithColor(ccColor4B color);
 	};
 
 	class  CCLayerGradient : public CCLayerColor
@@ -108,19 +109,27 @@ namespace   cocos2d {
 
 		void setVector(CCPoint Value);
 		CCPoint getVector(void);
+		
+		void setIsCompressedInterpolation(bool Value);
+		bool getIsCompressedInterpolation(void);
+
 	};
 
 
-	class  CCMultiplexLayer : public CCLayer
+	class  CCLayerMultiplex : public CCLayer
 	{
-		CCMultiplexLayer();		
-		//static CCMultiplexLayer * layerWithLayers(CCLayer* layer, ... );
+		CCLayerMultiplex();		
+		//static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
 		//lua instead with follow func
-		static CCMultiplexLayer * layerWithLayer(CCLayer* layer);
+		static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
 		void addLayer(CCLayer* layer);
 		bool initWithLayer(CCLayer* layer);
 		bool initWithLayers(CCLayer* layer, va_list params);	
 		void switchTo(unsigned int n);
 		void switchToAndReleaseMe(unsigned int n);
+	};
+	
+	class CCMultiplexLayer : public CCLayerMultiplex
+	{
 	};
 }//namespace   cocos2d 

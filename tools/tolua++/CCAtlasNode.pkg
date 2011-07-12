@@ -11,10 +11,8 @@ namespace   cocos2d {
 
 		CCAtlasNode();
 
-		static CCAtlasNode * atlasWithTileFile(const char* tile,int tileWidth, int tileHeight, int itemsToRender);
-
-		/** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-		bool initWithTileFile(const char* tile, int tileWidth, int tileHeight, int itemsToRender);
+		static CCAtlasNode * atlasWithTileFile(const char* tile,unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+		bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 
 		void updateAtlasValues();
 

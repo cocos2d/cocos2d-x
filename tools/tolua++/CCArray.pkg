@@ -36,6 +36,11 @@ namespace cocos2d
 		void removeAllObjects();
 		void fastRemoveObject(CCObject* object);
 		void fastRemoveObjectAtIndex(unsigned int index);
+		
+    void exchangeObject(CCObject* object1, CCObject* object2);
+    void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+    void reverseObjects();
+    void reduceMemoryFootprint();
 
 	public:
 		ccArray* data;
