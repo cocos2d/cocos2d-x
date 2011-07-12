@@ -134,6 +134,8 @@ namespace cocos2d{
 		s.width = (float)(len * m_uItemWidth);
 		s.height = (float)(m_uItemHeight);
 		this->setContentSizeInPixels(s);
+
+		m_uQuadsToDraw = len;
 	}
 
 	const char* CCLabelAtlas::getString(void)
@@ -143,46 +145,17 @@ namespace cocos2d{
 
 	//CCLabelAtlas - draw
 
-	// XXX: overriding draw from AtlasNode
+#if CC_LABELATLAS_DEBUG_DRAW	
 	void CCLabelAtlas::draw()
 	{
-		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		CCAtlasNode::draw();
 
-        // glColor4ub isn't implement on some android devices
-		// glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity);
-        glColor4f(((GLfloat)m_tColor.r) / 255, ((GLfloat)m_tColor.g) / 255, ((GLfloat)m_tColor.b) / 255, ((GLfloat)m_cOpacity) / 255);
-
-		bool newBlend = (m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST);
-		if(newBlend)
-        {
-			glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
-		}
-
-		m_pTextureAtlas->drawNumberOfQuads(m_sString.length(), 0);
-
-		if( newBlend )
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
-		// is this chepear than saving/restoring color state ?
-		// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
-		// XXX: that they need
-		//	glColor4ub( 255, 255, 255, 255);
-
-		// Restore Default GL state. Enable GL_COLOR_ARRAY
-		glEnableClientState(GL_COLOR_ARRAY);
-
-
-#if CC_LABELATLAS_DEBUG_DRAW
 		CCSize s = this->getContentSize();
 		CCPoint vertices[4]={
 			ccp(0,0),ccp(s.width,0),
 			ccp(s.width,s.height),ccp(0,s.height),
 		};
 		ccDrawPoly(vertices, 4, true);
-#endif // CC_LABELATLAS_DEBUG_DRAW
-
 	}
+#endif
 } // namespace cocos2d
