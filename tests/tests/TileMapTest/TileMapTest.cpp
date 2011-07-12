@@ -143,7 +143,7 @@ TMXOrthoTest::TMXOrthoTest()
 
 	float x, y, z;
 	map->getCamera()->getEyeXYZ(&x, &y, &z);
-	map->getCamera()->setEyeXYZ(x-2.0f, y, z+8.0f);	
+	map->getCamera()->setEyeXYZ(x-200, y, z+300);	
 }
 
 void TMXOrthoTest::onEnter()
