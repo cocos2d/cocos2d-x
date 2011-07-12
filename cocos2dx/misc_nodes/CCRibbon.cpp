@@ -255,6 +255,8 @@ void CCRibbon::addPointAt(CCPoint location, float width)
 
 void CCRibbon::draw()
 {
+	CCNode::draw();
+
 	if (m_pSegments->count() > 0)
 	{
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
