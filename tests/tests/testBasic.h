@@ -20,7 +20,6 @@ public:
     TestScene(bool bPortrait = false);
 
     virtual void runThisTest() = 0;
-    virtual void onExit();
 
 protected:
     bool m_bPortrait; // indicate if this test case requires portrait mode
