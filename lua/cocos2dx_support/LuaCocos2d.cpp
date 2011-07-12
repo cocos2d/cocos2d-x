@@ -73455,7 +73455,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"CC_LABELBMFONT_DEBUG_DRAW",CC_LABELBMFONT_DEBUG_DRAW);
   tolua_constant(tolua_S,"CC_LABELATLAS_DEBUG_DRAW",CC_LABELATLAS_DEBUG_DRAW);
   tolua_constant(tolua_S,"CC_ENABLE_PROFILERS",CC_ENABLE_PROFILERS);
-  tolua_constant(tolua_S,"CC_COMPATIBILITY_WITH_0_8",CC_COMPATIBILITY_WITH_0_8);
+  //tolua_constant(tolua_S,"CC_COMPATIBILITY_WITH_0_8",CC_COMPATIBILITY_WITH_0_8);
   tolua_constant(tolua_S,"CC_IS_RETINA_DISPLAY_SUPPORTED",CC_IS_RETINA_DISPLAY_SUPPORTED);
   tolua_constant(tolua_S,"CC_IS_RETINA_DISPLAY_SUPPORTED",CC_IS_RETINA_DISPLAY_SUPPORTED);
   tolua_module(tolua_S,"cocos2d",0);
