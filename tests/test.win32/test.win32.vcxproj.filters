@@ -118,6 +118,15 @@
     <Filter Include="classes\tests\UserDefaultTest">
       <UniqueIdentifier>{25cf805e-be4e-440a-924b-354b3c064cc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\BugsTest">
+      <UniqueIdentifier>{a470f805-a61e-4e0d-96fa-2933ade351e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\BugsTest\Bug-458">
+      <UniqueIdentifier>{858c5109-0abf-42db-9fa8-33d44063c1af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tests\DirectorTest">
+      <UniqueIdentifier>{4621182d-8908-4538-9b77-9e1da1233300}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -326,6 +335,42 @@
     </ClCompile>
     <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp">
       <Filter>classes\tests\UserDefaultTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-350.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-422.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-624.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-886.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-899.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-914.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-1159.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-1174.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\BugsTest.cpp">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-458\Bug-458.cpp">
+      <Filter>classes\tests\BugsTest\Bug-458</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.cpp">
+      <Filter>classes\tests\BugsTest\Bug-458</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp">
+      <Filter>classes\tests\DirectorTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -595,6 +640,42 @@
     </ClInclude>
     <ClInclude Include="..\tests\UserDefaultTest\UserDefaultTest.h">
       <Filter>classes\tests\UserDefaultTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\BugsTest.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-350.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-422.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-624.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-886.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-899.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-914.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-1159.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-1174.h">
+      <Filter>classes\tests\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-458\Bug-458.h">
+      <Filter>classes\tests\BugsTest\Bug-458</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.h">
+      <Filter>classes\tests\BugsTest\Bug-458</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\DirectorTest\DirectorTest.h">
+      <Filter>classes\tests\DirectorTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
