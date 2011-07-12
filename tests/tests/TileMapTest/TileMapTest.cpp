@@ -1398,7 +1398,7 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 	CCLOG("Contentsize: %f, %f", s.width, s.height);
 
 	CCLOG("----> Iterating over all the group objets");
-	//CCTMXObjectGroup *group = map->objectGroupNamed("Object Layer 1");
+	CCTMXObjectGroup *group = map->objectGroupNamed("Object Layer 1");
 
 }
 
