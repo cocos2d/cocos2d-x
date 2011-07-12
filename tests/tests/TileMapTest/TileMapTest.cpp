@@ -1219,7 +1219,7 @@ CCLayer* createTileMapLayer(int nIndex)
 		case 21: return new TileMapEditTest();
         case 22: return new TMXBug987();
         case 23: return new TMXBug787();
-		case 24: return new TMXGIDObjectTest();
+		case 24: return new TMXGIDObjectsTest();
 	}
 
 	return NULL;
@@ -1389,7 +1389,7 @@ void TileMapTestScene::runThisTest()
     CCDirector::sharedDirector()->replaceScene(this);
 }
 
-TMXGIDObjectTest::TMXGIDObjectTest()
+TMXGIDObjectsTest::TMXGIDObjectsTest()
 {
 	CCTMXTiledMap *map = CCTMXTiledMap::tiledMapWithTMXFile("TileMaps/test-object-layer.tmx");
 	addChild(map, -1, kTagTileMap);
@@ -1398,14 +1398,14 @@ TMXGIDObjectTest::TMXGIDObjectTest()
 	CCLOG("Contentsize: %f, %f", s.width, s.height);
 
 	CCLOG("----> Iterating over all the group objets");
-	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
+	CCTMXObjectGroup *group = map->objectGroupNamed("Object Layer 1");
 
 }
 
-void TMXGIDObjectTest::draw()
+void TMXGIDObjectsTest::draw()
 {
 	CCTMXTiledMap *map = (CCTMXTiledMap*)getChildByTag(kTagTileMap);
-	CCTMXObjectGroup *group = map->objectGroupNamed("Object Group 1");
+	CCTMXObjectGroup *group = map->objectGroupNamed("Object Layer 1");
 
 	CCMutableArray<CCStringToStringDictionary*> *array = group->getObjects();
 	CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator iter;
@@ -1439,12 +1439,12 @@ void TMXGIDObjectTest::draw()
 	}
 }
 
-string TMXGIDObjectTest::title()
+string TMXGIDObjectsTest::title()
 {
 	return "TMX GID objects";
 }
 
-string TMXGIDObjectTest::subtitle()
+string TMXGIDObjectsTest::subtitle()
 {
 	return "Tiles are created from an object group";
 }
