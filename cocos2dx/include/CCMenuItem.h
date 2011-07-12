@@ -148,15 +148,15 @@ namespace cocos2d{
 	class CC_DLL CCMenuItemFont : public CCMenuItemLabel
 	{
 	public:
-		CCMenuItemFont(){}
+		CCMenuItemFont() : m_nFontSize(0), m_strFontName(""){}
 		virtual ~CCMenuItemFont(){}
-		/** set font size */
+		/** set default font size */
 		static void setFontSize(int s);
-		/** get font size */
+		/** get default font size */
 		static int fontSize();
-		/** set the font name */
+		/** set the default font name */
 		static void setFontName(const char *name);
-		/** get the font name */
+		/** get the default font name */
 		static const char *fontName();
 		/** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
 		static CCMenuItemFont * itemFromString(const char *value);
@@ -164,6 +164,29 @@ namespace cocos2d{
 		static CCMenuItemFont * itemFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector);
 		/** initializes a menu item from a string with a target/selector */
 		bool initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector);
+
+		/** set font size
+		  * c++ can not overload static and non-static member functions with the same parameter types
+		  * so change the name to setFontSizeObj
+		  */
+		void setFontSizeObj(int s);
+
+		/** get font size */
+		int getFontSize();
+
+		/** set the font name 
+		 * c++ can not overload static and non-static member functions with the same parameter types
+		 * so change the name to setFontNameObj
+		 */
+		void setFontNameObj(const char* name);
+
+		const char* getFontName();
+
+	protected:
+		void recreateLabel();
+
+		int m_nFontSize;
+		std::string m_strFontName;
 	};
 
 	/** @brief CCMenuItemSprite accepts CCNode<CCRGBAProtocol> objects as items.
