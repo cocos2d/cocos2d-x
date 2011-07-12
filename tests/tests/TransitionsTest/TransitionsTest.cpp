@@ -191,7 +191,6 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
 
     // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
     CCDirector::sharedDirector()->setDepthTest(false);
-
     switch(nIndex)
     {
     case 0: return CCTransitionJumpZoom::transitionWithDuration(t, s);
