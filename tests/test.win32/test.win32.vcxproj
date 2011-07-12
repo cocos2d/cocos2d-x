@@ -50,6 +50,7 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -66,7 +67,7 @@
       <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -108,6 +109,18 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\tests\BugsTest\Bug-1159.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-1174.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-350.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-422.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-458\Bug-458.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-624.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-886.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-899.cpp" />
+    <ClCompile Include="..\tests\BugsTest\Bug-914.cpp" />
+    <ClCompile Include="..\tests\BugsTest\BugsTest.cpp" />
+    <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\AppDelegate.cpp" />
     <ClCompile Include="..\tests\controller.cpp" />
@@ -179,6 +192,18 @@
     <ClCompile Include="..\tests\UserDefaultTest\UserDefaultTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\BugsTest\Bug-1159.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-1174.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-350.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-422.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-458\Bug-458.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-458\QuestionContainerSprite.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-624.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-886.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-899.h" />
+    <ClInclude Include="..\tests\BugsTest\Bug-914.h" />
+    <ClInclude Include="..\tests\BugsTest\BugsTest.h" />
+    <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\AppDelegate.h" />
     <ClInclude Include="..\tests\controller.h" />
