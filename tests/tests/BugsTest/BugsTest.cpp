@@ -52,7 +52,6 @@ void BugsTestMainLayer::onEnter()
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     m_pItmeMenu = CCMenu::menuWithItems(NULL);
-    m_pItmeMenu->setPosition( CCPointZero );
     CCMenuItemFont::setFontName("Arial");
     CCMenuItemFont::setFontSize(24);
     for (int i = 0; i < MAX_COUNT; ++i)
@@ -63,6 +62,7 @@ void BugsTestMainLayer::onEnter()
         m_pItmeMenu->addChild(pItem, kItemTagBasic + i);
     }
 
+    m_pItmeMenu->setPosition(s_tCurPos);
     addChild(m_pItmeMenu);
     setIsTouchEnabled(true);
 }
