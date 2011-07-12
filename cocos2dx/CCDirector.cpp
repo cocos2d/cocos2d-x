@@ -328,7 +328,7 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
         }
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		gluPerspective(60, (GLfloat)size.width/size.height, zeye - size.height / 2, zeye + size.height / 2);
+		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
 			
 		glMatrixMode(GL_MODELVIEW);	
 		glLoadIdentity();
