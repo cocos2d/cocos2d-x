@@ -243,9 +243,6 @@
     <ClCompile Include="..\sprite_nodes\CCSpriteFrameCache.cpp">
       <Filter>sprite_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\sprite_nodes\CCSpriteSheet.cpp">
-      <Filter>sprite_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\base64.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -534,9 +531,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCSpriteFrameCache.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\CCSpriteSheet.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCString.h">
