@@ -393,7 +393,7 @@ namespace cocos2d {
 					layerAttribs = pTMXMapInfo->getLayerAttribs();
 					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribGzip);
 				} else
-				if (compression == "zip")
+				if (compression == "zlib")
 				{
 					layerAttribs = pTMXMapInfo->getLayerAttribs();
 					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribZlib);

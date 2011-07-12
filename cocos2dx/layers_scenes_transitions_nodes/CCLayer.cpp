@@ -437,7 +437,9 @@ void CCLayerColor::updateColor()
 }
 
 void CCLayerColor::draw()
-{		
+{
+	CCLayer::draw();
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, GL_COLOR_ARRAY
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY

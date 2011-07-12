@@ -268,6 +268,7 @@ namespace cocos2d
 
         // restore projection for default FBO .fixed bug #543 #544
         CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+        CCDirector::sharedDirector()->applyOrientation();
 		blit();
 	}
 

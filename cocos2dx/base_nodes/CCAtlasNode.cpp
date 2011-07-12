@@ -41,6 +41,7 @@ CCAtlasNode::CCAtlasNode()
 , m_pTextureAtlas(NULL)
 , m_bIsOpacityModifyRGB(false)
 , m_cOpacity(0)
+, m_uQuadsToDraw(0)
 {
 }
 
@@ -93,6 +94,8 @@ bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, uns
 
 	this->calculateMaxItems();
 
+	m_uQuadsToDraw = itemsToRender;
+
 	return true;
 }
 
@@ -115,6 +118,8 @@ void CCAtlasNode::updateAtlasValues()
 // CCAtlasNode - draw
 void CCAtlasNode::draw()
 {
+	CCNode::draw();
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: GL_COLOR_ARRAY
@@ -129,7 +134,7 @@ void CCAtlasNode::draw()
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-	m_pTextureAtlas->drawQuads();
+	m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
 
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
@@ -239,6 +244,16 @@ void CCAtlasNode::setTextureAtlas(CCTextureAtlas* var)
 CCTextureAtlas * CCAtlasNode::getTextureAtlas()
 {
 	return m_pTextureAtlas;
+}
+
+unsigned int CCAtlasNode::getQuadsToDraw()
+{
+	return m_uQuadsToDraw;
+}
+
+void CCAtlasNode::setQuadsToDraw(unsigned int uQuadsToDraw)
+{
+	m_uQuadsToDraw = uQuadsToDraw;
 }
 
 } // namespace   cocos2d
