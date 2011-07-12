@@ -64,7 +64,9 @@ namespace cocos2d{
 		virtual void updateAtlasValues();
 		virtual void setString(const char *label);
 		virtual const char* getString(void);
-		virtual void draw();		
+#if CC_LABELATLAS_DEBUG_DRAW
+		virtual void draw();
+#endif
 
 		virtual CCLabelProtocol* convertToLabelProtocol() { return (CCLabelProtocol*)this; }
 	protected:
