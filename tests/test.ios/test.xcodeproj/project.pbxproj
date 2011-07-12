@@ -263,19 +263,6 @@
 		BF340BEE133B26A70035A4D1 /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE5133B26A70035A4D1 /* PerformanceTextureTest.cpp */; };
 		BF340BEF133B26A70035A4D1 /* PerformanceTouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE7133B26A70035A4D1 /* PerformanceTouchesTest.cpp */; };
 		BF340BF0133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */; };
-		BF36580813CC31BC0007A416 /* bug886.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BF3657FC13CC31BC0007A416 /* bug886.jpg */; };
-		BF36580913CC31BC0007A416 /* bug886.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3657FD13CC31BC0007A416 /* bug886.png */; };
-		BF36580A13CC31BC0007A416 /* circle-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF3657FE13CC31BC0007A416 /* circle-hd.plist */; };
-		BF36580B13CC31BC0007A416 /* circle-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3657FF13CC31BC0007A416 /* circle-hd.png */; };
-		BF36580C13CC31BC0007A416 /* circle.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF36580013CC31BC0007A416 /* circle.plist */; };
-		BF36580D13CC31BC0007A416 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = BF36580113CC31BC0007A416 /* circle.png */; };
-		BF36580E13CC31BC0007A416 /* corner.png in Resources */ = {isa = PBXBuildFile; fileRef = BF36580213CC31BC0007A416 /* corner.png */; };
-		BF36580F13CC31BC0007A416 /* edge.png in Resources */ = {isa = PBXBuildFile; fileRef = BF36580313CC31BC0007A416 /* edge.png */; };
-		BF36581013CC31BC0007A416 /* fill.png in Resources */ = {isa = PBXBuildFile; fileRef = BF36580413CC31BC0007A416 /* fill.png */; };
-		BF36581113CC31BC0007A416 /* picture-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = BF36580513CC31BC0007A416 /* picture-hd.png */; };
-		BF36581213CC31BC0007A416 /* picture.png in Resources */ = {isa = PBXBuildFile; fileRef = BF36580613CC31BC0007A416 /* picture.png */; };
-		BF36581313CC31BC0007A416 /* RetinaDisplay.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BF36580713CC31BC0007A416 /* RetinaDisplay.jpg */; };
-		BF36582613CC332B0007A416 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = BF36582513CC332B0007A416 /* Hello.png */; };
 		BF3E8C77135C0B39001AE294 /* CurlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF3E8C76135C0B39001AE294 /* CurlTest.cpp */; };
 		BF835B2A13276C7900F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588A13276C7700F3C033 /* CCAction.cpp */; };
 		BF835B2B13276C7900F3C033 /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83588B13276C7700F3C033 /* CCActionCamera.cpp */; };
@@ -883,19 +870,6 @@
 		BF340BE8133B26A70035A4D1 /* PerformanceTouchesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTouchesTest.h; sourceTree = "<group>"; };
 		BF340BE9133B26A70035A4D1 /* PerformanceNodeChildrenTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceNodeChildrenTest.cpp; sourceTree = "<group>"; };
 		BF340BEA133B26A70035A4D1 /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
-		BF3657FC13CC31BC0007A416 /* bug886.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bug886.jpg; path = ../Res/Images/bugs/bug886.jpg; sourceTree = SOURCE_ROOT; };
-		BF3657FD13CC31BC0007A416 /* bug886.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bug886.png; path = ../Res/Images/bugs/bug886.png; sourceTree = SOURCE_ROOT; };
-		BF3657FE13CC31BC0007A416 /* circle-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "circle-hd.plist"; path = "../Res/Images/bugs/circle-hd.plist"; sourceTree = SOURCE_ROOT; };
-		BF3657FF13CC31BC0007A416 /* circle-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-hd.png"; path = "../Res/Images/bugs/circle-hd.png"; sourceTree = SOURCE_ROOT; };
-		BF36580013CC31BC0007A416 /* circle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = circle.plist; path = ../Res/Images/bugs/circle.plist; sourceTree = SOURCE_ROOT; };
-		BF36580113CC31BC0007A416 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = circle.png; path = ../Res/Images/bugs/circle.png; sourceTree = SOURCE_ROOT; };
-		BF36580213CC31BC0007A416 /* corner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = corner.png; path = ../Res/Images/bugs/corner.png; sourceTree = SOURCE_ROOT; };
-		BF36580313CC31BC0007A416 /* edge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edge.png; path = ../Res/Images/bugs/edge.png; sourceTree = SOURCE_ROOT; };
-		BF36580413CC31BC0007A416 /* fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fill.png; path = ../Res/Images/bugs/fill.png; sourceTree = SOURCE_ROOT; };
-		BF36580513CC31BC0007A416 /* picture-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "picture-hd.png"; path = "../Res/Images/bugs/picture-hd.png"; sourceTree = SOURCE_ROOT; };
-		BF36580613CC31BC0007A416 /* picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = picture.png; path = ../Res/Images/bugs/picture.png; sourceTree = SOURCE_ROOT; };
-		BF36580713CC31BC0007A416 /* RetinaDisplay.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = RetinaDisplay.jpg; path = ../Res/Images/bugs/RetinaDisplay.jpg; sourceTree = SOURCE_ROOT; };
-		BF36582513CC332B0007A416 /* Hello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hello.png; path = ../Res/Hello.png; sourceTree = SOURCE_ROOT; };
 		BF3E8C75135C0B39001AE294 /* CurlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlTest.h; sourceTree = "<group>"; };
 		BF3E8C76135C0B39001AE294 /* CurlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurlTest.cpp; sourceTree = "<group>"; };
 		BF83588A13276C7700F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
@@ -1209,18 +1183,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				BF3657FC13CC31BC0007A416 /* bug886.jpg */,
-				BF3657FD13CC31BC0007A416 /* bug886.png */,
-				BF3657FE13CC31BC0007A416 /* circle-hd.plist */,
-				BF3657FF13CC31BC0007A416 /* circle-hd.png */,
-				BF36580013CC31BC0007A416 /* circle.plist */,
-				BF36580113CC31BC0007A416 /* circle.png */,
-				BF36580213CC31BC0007A416 /* corner.png */,
-				BF36580313CC31BC0007A416 /* edge.png */,
-				BF36580413CC31BC0007A416 /* fill.png */,
-				BF36580513CC31BC0007A416 /* picture-hd.png */,
-				BF36580613CC31BC0007A416 /* picture.png */,
-				BF36580713CC31BC0007A416 /* RetinaDisplay.jpg */,
 				BF83588813276C7700F3C033 /* cocos2dx */,
 				080E96DDFE201D6D7F000001 /* ios */,
 				BF31DF1312E979A100D4F513 /* tests */,
@@ -1497,7 +1459,6 @@
 		BF1B1A7512951B5800E99D96 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BF36582513CC332B0007A416 /* Hello.png */,
 				D4E39D2D1342E22700EBA039 /* zwoptex */,
 				BF31DE9812E9779300D4F513 /* background.mp3 */,
 				BF31DE9912E9779300D4F513 /* effect1.wav */,
@@ -2831,19 +2792,6 @@
 				BF31DE9A12E9779300D4F513 /* background.mp3 in Resources */,
 				BF31DE9B12E9779300D4F513 /* effect1.wav in Resources */,
 				D4E39D2E1342E22700EBA039 /* zwoptex in Resources */,
-				BF36580813CC31BC0007A416 /* bug886.jpg in Resources */,
-				BF36580913CC31BC0007A416 /* bug886.png in Resources */,
-				BF36580A13CC31BC0007A416 /* circle-hd.plist in Resources */,
-				BF36580B13CC31BC0007A416 /* circle-hd.png in Resources */,
-				BF36580C13CC31BC0007A416 /* circle.plist in Resources */,
-				BF36580D13CC31BC0007A416 /* circle.png in Resources */,
-				BF36580E13CC31BC0007A416 /* corner.png in Resources */,
-				BF36580F13CC31BC0007A416 /* edge.png in Resources */,
-				BF36581013CC31BC0007A416 /* fill.png in Resources */,
-				BF36581113CC31BC0007A416 /* picture-hd.png in Resources */,
-				BF36581213CC31BC0007A416 /* picture.png in Resources */,
-				BF36581313CC31BC0007A416 /* RetinaDisplay.jpg in Resources */,
-				BF36582613CC332B0007A416 /* Hello.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

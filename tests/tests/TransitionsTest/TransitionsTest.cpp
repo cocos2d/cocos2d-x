@@ -127,6 +127,7 @@ class PageTransitionForward : public CCTransitionPageTurn
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
+        CCDirector::sharedDirector()->setDepthTest(true);
         return CCTransitionPageTurn::transitionWithDuration(t, s, false);
     }
 };
@@ -136,6 +137,7 @@ class PageTransitionBackward : public CCTransitionPageTurn
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
+        CCDirector::sharedDirector()->setDepthTest(true);
         return CCTransitionPageTurn::transitionWithDuration(t, s, true);
     }
 };
@@ -186,6 +188,9 @@ static int s_nSceneIdx = 0;
 
 CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
 {
+
+    // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
+    CCDirector::sharedDirector()->setDepthTest(false);
     switch(nIndex)
     {
     case 0: return CCTransitionJumpZoom::transitionWithDuration(t, s);
@@ -273,9 +278,6 @@ void TransitionsTestScene::runThisTest()
     CCLayer * pLayer = new TestLayer1();
     addChild(pLayer);
     pLayer->release();
-	
-	// fix bug #486, without setDepthTest(false), FlipX,Y will flickers
-	CCDirector::sharedDirector()->setDepthTest(false);
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
