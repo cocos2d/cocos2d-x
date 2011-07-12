@@ -111,6 +111,8 @@ void CCTransitionScene::sceneOrder()
 
 void CCTransitionScene::draw()
 {
+	CCScene::draw();
+
 	if( m_bIsInSceneOnTop ) {
 		m_pOutScene->visit();
 		m_pInScene->visit();

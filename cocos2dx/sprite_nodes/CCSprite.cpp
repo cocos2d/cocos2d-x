@@ -657,6 +657,8 @@ void CCSprite::getTransformValues(struct transformValues_ *tv)
 
 void CCSprite::draw(void)
 {
+	CCNode::draw();
+
 	assert(! m_bUsesBatchNode);
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
