@@ -39,7 +39,7 @@ namespace cocos2d
     @return A Core Graphics structure that represents a rectangle.
             If the string is not well-formed, the function returns CCRectZero.
     */
-    CCRect CCRectFromString(const char* pszContent);
+    CCRect CC_DLL CCRectFromString(const char* pszContent);
 
     /**
     @brief Returns a Core Graphics point structure corresponding to the data in a given string.
@@ -51,7 +51,7 @@ namespace cocos2d
     @return A Core Graphics structure that represents a point.
             If the string is not well-formed, the function returns CCPointZero.
     */
-	CCPoint CCPointFromString(const char* pszContent);
+	CCPoint CC_DLL CCPointFromString(const char* pszContent);
 
     /**
     @brief Returns a Core Graphics size structure corresponding to the data in a given string.
@@ -63,7 +63,7 @@ namespace cocos2d
     @return A Core Graphics structure that represents a size.
             If the string is not well-formed, the function returns CCSizeZero.
     */
-	CCSize CCSizeFromString(const char* pszContent);
+	CCSize CC_DLL CCSizeFromString(const char* pszContent);
 }
 
 #endif // __PLATFOMR_CCNS_H__
