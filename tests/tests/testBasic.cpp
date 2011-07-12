@@ -44,14 +44,3 @@ TestScene::TestScene(bool bPortrait)
     // 54321 is the tag of BackToMainMenuLayer
     addChild(pLayer, 1000, 54321);
 }
-
-void TestScene::onExit()
-{
-    if (m_bPortrait)
-    {
-        // turn back to the default orientation
-        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
-    }
-    
-    CCScene::onExit();
-}
