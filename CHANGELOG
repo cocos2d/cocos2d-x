@@ -1,3 +1,34 @@
+cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
+ [all platforms]
+    Feature  #584  upgrade to cocs2d-iphone v1.0.0
+    Feature  #601  use Chipmunk v5.3.5
+    Feature  #581  change return types of xxxAction::reverse() to its own type
+    Bug      #522  CCSpriteFrameCache::addSpriteFramesWithFile(const char* pszPlist) crashed if the param have no '/'
+    Bug      #522  CCTextureCache::removeTextureForKey(const char*) cache the image path incorrectly
+    Bug      #573  CCLayerColor does not init its m_tColor, which will result to a random color
+    Bug      #576  some CCMutableDictionary methods must return _KeyT instead of std::string
+    Bug      #577  CCReverseTime may crash
+    Bug      #578  Debian & LavaFlow of ParticleTest have not picture, the effect of ParticleFire is wrong
+    Bug      #580  ShuffleTilesTest of EffectText may crash
+ [ios]
+    Bug      #546  CCLabelTTF::labelWithString() works incorrectly when height = 0
+    Bug      #604  test.xcodeproject miss Summary & Info in xcode4 since v0.8.5
+ [android]
+    Feature  #547  line wrap of CCLabelTTF::initWithString(...) 
+ [win32]
+    Bug      #659  ChipmunkTest Sensors crashes in a few seconds
+    Bug      #583  SimpleAudioEngine::playBackgroundMusic(const char*, true) have no sound on win32
+    Bug      #605  export C methods in CCNS.h to dll interfaces
+    Bug      #548  export CCConfiguration to dll interfaces
+ [marmalade/airplay]
+    Bug      #600  incorrect memory allocation in marmalade port
+    Refactor #582  use libpng instead of CIwImage in CCImage_airplay.cpp
+ [wophone]
+    Bug      #545  fix the wrong effect of ChipmunkTest
+    Bug      #606  PageTransitionForward in TransitionsTest has wrong visual effect
+
+
+
 cocos2d-0.99.5-x-0.8.5 @ Jun.28,2011
  [all platforms]
     Feature  #577  Lua Support! We export all the cocos2d-x classes & methods to lua! 
@@ -31,7 +62,6 @@ cocos2d-0.99.5-x-0.8.5 @ Jun.28,2011
     Feature  #537  Update PVRFrame lib to version 2.8 for ATI graphic card new driver
  [wophone]
     Bug      #539  games on wophone wva devices probably failed on reading resource from zip package
-    
 
 
 
@@ -53,6 +83,8 @@ cocos2d-0.99.5-x-0.8.4 @ May.26,2011
  [win32]
     Bug      #492  CCFileUtils::fullPathFromRelativeFile forget to consider the path separated by '\'
     Feature  #489  Use GetCurrentDirectory instead of GetModuleFileName in CCFileUtils_win32.cpp
+
+
 
 cocos2d-0.99.5-x-0.8.3 @ May.12,2011
  [all platforms]
