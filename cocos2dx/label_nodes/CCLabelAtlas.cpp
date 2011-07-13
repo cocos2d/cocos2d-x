@@ -32,7 +32,7 @@ THE SOFTWARE.
 namespace cocos2d{
 
 	//CCLabelAtlas - Creation & Init
-	CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+	CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned char startCharMap)
 	{
 		CCLabelAtlas *pRet = new CCLabelAtlas();
 		if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
@@ -44,12 +44,12 @@ namespace cocos2d{
 		return NULL;
 	}
 
-    CCLabelAtlas * CCLabelAtlas::labelAtlasWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+    CCLabelAtlas * CCLabelAtlas::labelAtlasWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
     {
         return labelWithString(label, charMapFile, itemWidth, itemHeight, startCharMap);
     }
 
-	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
 	{
 		assert(label != NULL);
 		if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
@@ -64,17 +64,17 @@ namespace cocos2d{
 	//CCLabelAtlas - Atlas generation
 	void CCLabelAtlas::updateAtlasValues()
 	{
-		int n = m_sString.length();
+		unsigned int n = m_sString.length();
 
 		ccV3F_C4B_T2F_Quad quad;
 
-		const char *s = m_sString.c_str();
+		const unsigned char *s = (unsigned char*)m_sString.c_str();
 
         CCTexture2D *texture = m_pTextureAtlas->getTexture();
         float textureWide = (float) texture->getPixelsWide();
         float textureHigh = (float) texture->getPixelsHigh();
 
-		for( int i=0; i<n; i++) {
+		for(unsigned int i = 0; i < n; i++) {
 			unsigned char a = s[i] - m_cMapStartChar;
 			float row = (float) (a % m_uItemsPerRow);
 			float col = (float) (a / m_uItemsPerRow);

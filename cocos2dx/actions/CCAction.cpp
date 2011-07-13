@@ -305,7 +305,6 @@ CCObject *CCFollow::copyWithZone(CCZone *pZone)
 void CCFollow::step(ccTime dt)
 {
     CC_UNUSED_PARAM(dt);
-#define CLAMP(x,y,z) MIN(MAX(x,y),z)
 
 	if(m_bBoundarySet)
 	{
@@ -315,14 +314,13 @@ void CCFollow::step(ccTime dt)
 
 		CCPoint tempPos = ccpSub( m_obHalfScreenSize, m_pobFollowedNode->getPosition());
 
-		m_pTarget->setPosition(ccp(CLAMP(tempPos.x, m_fLeftBoundary, m_fRightBoundary), 
-								   CLAMP(tempPos.y, m_fBottomBoundary, m_fTopBoundary)));
+		m_pTarget->setPosition(ccp(clampf(tempPos.x, m_fLeftBoundary, m_fRightBoundary), 
+								   clampf(tempPos.y, m_fBottomBoundary, m_fTopBoundary)));
 	}
 	else
 	{
 		m_pTarget->setPosition(ccpSub(m_obHalfScreenSize, m_pobFollowedNode->getPosition()));
 	}
-#undef CLAMP
 }
 
 bool CCFollow::isDone()
