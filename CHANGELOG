@@ -1,6 +1,6 @@
 cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
  [all platforms]
-    Feature  #584  upgrade to cocs2d-iphone v1.0.0
+    Feature  #584  sync with cocos2d-iphone v1.0.0
     Feature  #601  use Chipmunk v5.3.5
     Feature  #581  change return types of xxxAction::reverse() to its own type
     Bug      #522  CCSpriteFrameCache::addSpriteFramesWithFile(const char* pszPlist) crashed if the param have no '/'
@@ -14,7 +14,7 @@ cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
     Bug      #546  CCLabelTTF::labelWithString() works incorrectly when height = 0
     Bug      #604  test.xcodeproject miss Summary & Info in xcode4 since v0.8.5
  [android]
-    Feature  #547  line wrap of CCLabelTTF::initWithString(...) 
+    Feature  #547  deal with line wrap of CCLabelTTF::initWithString(...) 
  [win32]
     Bug      #659  ChipmunkTest Sensors crashes in a few seconds
     Bug      #583  SimpleAudioEngine::playBackgroundMusic(const char*, true) have no sound on win32
