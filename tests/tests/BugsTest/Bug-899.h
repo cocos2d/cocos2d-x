@@ -6,7 +6,6 @@
 class Bug899Layer : public BugsTestBaseLayer
 {
 public:
-    virtual ~Bug899Layer();
     virtual bool init();
 };
 

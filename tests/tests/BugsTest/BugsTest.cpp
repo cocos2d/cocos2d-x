@@ -167,6 +167,7 @@ void BugsTestBaseLayer::onEnter()
 
 void BugsTestBaseLayer::backCallback(CCObject* pSender)
 {
+    CCDirector::sharedDirector()->enableRetinaDisplay(false);
     BugsTestScene* pScene = new BugsTestScene();
     pScene->runThisTest();
     pScene->autorelease();
