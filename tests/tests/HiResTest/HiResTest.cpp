@@ -52,25 +52,6 @@ CCLayer* backHiResAction()
     return pLayer;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// HiResTestBackToMainMenuLayer
-//////////////////////////////////////////////////////////////////////////
-class HiResTestBackToainMenuLayer : public BackToMainMenuLayer
-{
-public:
-    HiResTestBackToainMenuLayer() {}
-
-    // The CallBack for back to the main menu scene
-    virtual void MainMenuCallback(CCObject* pSender)
-    {
-        CCDirector::sharedDirector()->enableRetinaDisplay(sm_bRitinaDisplay);
-        BackToMainMenuLayer::MainMenuCallback(pSender);
-    }
-
-    static bool sm_bRitinaDisplay;
-};
-bool HiResTestBackToainMenuLayer::sm_bRitinaDisplay = false;
-
 ////////////////////////////////////
 //
 // HiResDemo
@@ -222,9 +203,11 @@ std::string HiResTest2::subtitle()
 // HiResTestScene
 //
 ///////////////////////////////////
+bool HiResTestScene::sm_bRitinaDisplay = false;
+
 void HiResTestScene::runThisTest()
 {
-    HiResTestBackToainMenuLayer::sm_bRitinaDisplay = CCDirector::sharedDirector()->isRetinaDisplay();
+    sm_bRitinaDisplay = CCDirector::sharedDirector()->isRetinaDisplay();
 
     CCLayer* pLayer = nextHiResAction();
     addChild(pLayer);
@@ -233,13 +216,8 @@ void HiResTestScene::runThisTest()
     CCDirector::sharedDirector()->replaceScene(this);
 }
 
-void HiResTestScene::onEnter()
+void HiResTestScene::MainMenuCallback(CCObject* pSender)
 {
-    TestScene::onEnter();
-
-    CCLayer*  pLayer = (CCLayer*)getChildByTag(54321);
-    removeChild(pLayer, true);
-    pLayer = new HiResTestBackToainMenuLayer;
-    addChild(pLayer, 1000, 54321);
-    pLayer->release();
+    CCDirector::sharedDirector()->enableRetinaDisplay(sm_bRitinaDisplay);
+    TestScene::MainMenuCallback(pSender);
 }
