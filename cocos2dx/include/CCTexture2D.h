@@ -200,7 +200,7 @@ public:
 	/** returns the bits-per-pixel of the in-memory OpenGL texture
 	@since v1.0
 	*/
-    int bitsPerPixelForFormat();
+    unsigned int bitsPerPixelForFormat();
 
 
 	/** sets the default pixel format for UIImages that contains alpha channel.
