@@ -20,8 +20,3 @@ bool Bug899Layer::init()
 	}
 	return false;
 }
-
-Bug899Layer::~Bug899Layer()
-{
-    CCDirector::sharedDirector()->enableRetinaDisplay(false);
-}
