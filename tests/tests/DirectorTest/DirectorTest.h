@@ -33,6 +33,8 @@ class DirectorTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
+
+    virtual void MainMenuCallback(CCObject* pSender);
 };
 
 #endif

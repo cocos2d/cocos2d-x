@@ -37,7 +37,9 @@ class HiResTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
-    virtual void onEnter();
+    virtual void MainMenuCallback(CCObject* pSender);
+
+    static bool sm_bRitinaDisplay;
 };
 
 #endif

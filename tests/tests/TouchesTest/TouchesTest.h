@@ -11,8 +11,9 @@ class PongScene : public TestScene
 public:
     PongScene();
 
-	virtual void onExit();
     virtual void runThisTest();
+
+    virtual void MainMenuCallback(CCObject* pSender);
 };
 
 class Ball;

@@ -5,21 +5,16 @@
 
 using namespace cocos2d;
 
-class BackToMainMenuLayer : public CCLayer
-{
-public:
-    BackToMainMenuLayer();
-
-    // The CallBack for back to the main menu scene
-    virtual void MainMenuCallback(CCObject* pSender);
-};
-
 class TestScene : public CCScene
 {
 public: 
     TestScene(bool bPortrait = false);
+    virtual void onEnter();
 
     virtual void runThisTest() = 0;
+
+    // The CallBack for back to the main menu scene
+    virtual void MainMenuCallback(CCObject* pSender);
 
 protected:
     bool m_bPortrait; // indicate if this test case requires portrait mode

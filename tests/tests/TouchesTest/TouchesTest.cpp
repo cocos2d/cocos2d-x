@@ -31,9 +31,10 @@ PongScene::PongScene()
     pongLayer->release();
 }
 
-void PongScene::onExit()
+void PongScene::MainMenuCallback(CCObject* pSender)
 {
-	TestScene::onExit();
+    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+    TestScene::MainMenuCallback(pSender);
 }
 
 //------------------------------------------------------------------
