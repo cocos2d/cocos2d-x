@@ -210,6 +210,21 @@ files
 	("../tests/ZwoptexTest")
 	"*.h"
 	"*.cpp"
+
+	[Tests/BugsTest]
+	("../tests/BugsTest")
+	"*.h"
+	"*.cpp"
+
+	[Tests/BugsTest/Bug-458]
+	("../tests/BugsTest/Bug-458")
+	"*.h"
+	"*.cpp"
+
+	[Tests/DirectorTest]
+	("../tests/DirectorTest")
+	"*.h"
+	"*.cpp"
 }
 
 if {{ defined AIRPLAYUSECHIPMUNK}}
