@@ -2,7 +2,6 @@
 #define _CONTROLLER_H_
 
 #include "cocos2d.h"
-#include "tests.h"
 
 using namespace cocos2d;
 

@@ -218,3 +218,9 @@ void DirectorTestScene::runThisTest()
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
+
+void DirectorTestScene::MainMenuCallback(CCObject* pSender)
+{
+    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+    TestScene::MainMenuCallback(pSender);
+}
