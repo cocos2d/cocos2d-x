@@ -1,0 +1,28 @@
+cocos2d-x authors 
+
+(ordered by the join in time)
+
+Core Developers:
+    Walzer Wang
+    Minggo Zhang
+    WenSheng Yang
+    Bin Zhang
+    RongHong Huang
+
+Developers:
+    Dumganhar
+        author of Bada port
+
+    Carlos Sessa
+	implement the accelerometer module onto Android
+
+    Max Aksenov
+        author and maintainer of Marmalade(Airplay) port
+
+    RuiXiang Zhou
+    XiDi Peng
+    AiYu Ye
+        authors of lua binding
+
+Thanks to all developers reported & trace bugs in forum & QQ groups!
+Special thanks to Ricardo Quesada, the co-author of cocos2d-iphone, who give us lots of guidances & suggestions.
