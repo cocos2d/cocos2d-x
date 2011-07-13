@@ -37,7 +37,7 @@ namespace cocos2d{
 	class CCLabelAtlas;
 	class CCSprite;
 
-#define kItemSize 32
+#define kCCItemSize 32
 
 	/** @brief CCMenuItem base class
 	*
@@ -148,12 +148,12 @@ namespace cocos2d{
 	class CC_DLL CCMenuItemFont : public CCMenuItemLabel
 	{
 	public:
-		CCMenuItemFont() : m_nFontSize(0), m_strFontName(""){}
+		CCMenuItemFont() : m_uFontSize(0), m_strFontName(""){}
 		virtual ~CCMenuItemFont(){}
 		/** set default font size */
-		static void setFontSize(int s);
+		static void setFontSize(unsigned int s);
 		/** get default font size */
-		static int fontSize();
+		static unsigned int fontSize();
 		/** set the default font name */
 		static void setFontName(const char *name);
 		/** get the default font name */
@@ -169,10 +169,10 @@ namespace cocos2d{
 		  * c++ can not overload static and non-static member functions with the same parameter types
 		  * so change the name to setFontSizeObj
 		  */
-		void setFontSizeObj(int s);
+		void setFontSizeObj(unsigned int s);
 
 		/** get font size */
-		int getFontSize();
+		unsigned int fontSizeObj();
 
 		/** set the font name 
 		 * c++ can not overload static and non-static member functions with the same parameter types
@@ -180,12 +180,12 @@ namespace cocos2d{
 		 */
 		void setFontNameObj(const char* name);
 
-		const char* getFontName();
+		const char* fontNameObj();
 
 	protected:
 		void recreateLabel();
 
-		int m_nFontSize;
+		unsigned int m_uFontSize;
 		std::string m_strFontName;
 	};
 

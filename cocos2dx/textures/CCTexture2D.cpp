@@ -633,9 +633,9 @@ CCTexture2DPixelFormat CCTexture2D::defaultAlphaPixelFormat()
 	return g_defaultAlphaPixelFormat;
 }
 
-int CCTexture2D::bitsPerPixelForFormat()
+unsigned int CCTexture2D::bitsPerPixelForFormat()
 {
-	int ret= -1;
+	unsigned int ret = 0;
 
 	switch (m_ePixelFormat) 
 	{
