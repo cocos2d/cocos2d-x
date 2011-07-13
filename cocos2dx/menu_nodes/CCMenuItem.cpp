@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 namespace cocos2d{
 
-	static int _fontSize = kItemSize;
+	static unsigned int _fontSize = kCCItemSize;
 	static std::string _fontName = "Marker Felt";
 	static bool _fontNameRelease = false;
 
@@ -291,11 +291,11 @@ namespace cocos2d{
 	//
 	//CCMenuItemFont
 	//
-	void CCMenuItemFont::setFontSize(int s)
+	void CCMenuItemFont::setFontSize(unsigned int s)
 	{
 		_fontSize = s;
 	}
-	int CCMenuItemFont::fontSize()
+	unsigned int CCMenuItemFont::fontSize()
 	{
 		return _fontSize;
 	}
@@ -330,10 +330,10 @@ namespace cocos2d{
 	{
 		CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
-		this->setFontName(_fontName.c_str());
-		this->setFontSize(_fontSize);
+		m_strFontName = _fontName;
+		m_uFontSize = _fontSize;
 
-		CCLabelTTF *label = CCLabelTTF::labelWithString(value, _fontName.c_str(), (float)_fontSize);
+		CCLabelTTF *label = CCLabelTTF::labelWithString(value, m_strFontName.c_str(), (float)m_uFontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
 			// do something ?
@@ -344,19 +344,19 @@ namespace cocos2d{
 	void CCMenuItemFont::recreateLabel()
 	{
 		CCLabelTTF *label = CCLabelTTF::labelWithString(m_pLabel->convertToLabelProtocol()->getString(), 
-			m_strFontName.c_str(), (float)m_nFontSize);
+			m_strFontName.c_str(), (float)m_uFontSize);
 		this->setLabel(label);
 	}
 
-	void CCMenuItemFont::setFontSizeObj(int s)
+	void CCMenuItemFont::setFontSizeObj(unsigned int s)
 	{
-		m_nFontSize = s;
+		m_uFontSize = s;
 		recreateLabel();
 	}
 
-	int CCMenuItemFont::getFontSize()
+	unsigned int CCMenuItemFont::fontSizeObj()
 	{
-		return m_nFontSize;
+		return m_uFontSize;
 	}
 
 	void CCMenuItemFont::setFontNameObj(const char* name)
@@ -365,7 +365,7 @@ namespace cocos2d{
 		recreateLabel();
 	}
 
-	const char* CCMenuItemFont::getFontName()
+	const char* CCMenuItemFont::fontNameObj()
 	{
 		return m_strFontName.c_str();
 	}
