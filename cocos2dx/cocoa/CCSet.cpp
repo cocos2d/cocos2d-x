@@ -36,10 +36,34 @@ CCSet::CCSet(void)
 CCSet::CCSet(const CCSet &rSetObject)
 {
     m_pSet = new set<CCObject *>(*rSetObject.m_pSet);
+
+	// call retain of members
+	CCSetIterator iter;
+	for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
+	{
+		if (! (*iter))
+		{
+			break;
+		}
+
+		(*iter)->retain();
+	}
 }
 
 CCSet::~CCSet(void)
 {
+	// call release() of elements
+	CCSetIterator iter;
+	for (iter = m_pSet->begin(); iter != m_pSet->end(); ++iter)
+	{
+		if (! (*iter))
+		{
+			break;
+		}
+
+		(*iter)->release();
+	}
+
 	CC_SAFE_DELETE(m_pSet);
 }
 
@@ -62,12 +86,14 @@ int CCSet::count(void)
 
 void CCSet::addObject(CCObject *pObject)
 {
+	CC_SAFE_RETAIN(pObject);
 	m_pSet->insert(pObject);
 }
 
 void CCSet::removeObject(CCObject *pObject)
 {
 	m_pSet->erase(pObject);
+	CC_SAFE_RELEASE(pObject);
 }
 
 bool CCSet::containsObject(CCObject *pObject)
