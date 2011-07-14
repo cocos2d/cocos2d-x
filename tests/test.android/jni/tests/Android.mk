@@ -94,14 +94,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                    $(LOCAL_PATH)/../../.. \
                    $(LOCAL_PATH)/../../../../chipmunk/include/chipmunk \
                    $(LOCAL_PATH)/../../../../CocosDenshion/include 
-                   
-# it is used for ndk-r4
-# if you build with nkd-r4, uncomment it   
-# LOCAL_LDLIBS := -L$(LOCAL_PATH)/../../libs/armeabi \
-#                -lGLESv1_CM \
-#                -lcocos2d -lcocosdenshion -llog \
-#                -lbox2d -lchipmunk \
-#                -L$(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries -lcurl
                 
 
 # it is used for ndk-r5    
