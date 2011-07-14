@@ -107,13 +107,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/platform/third_party/android/libpng \
                     $(LOCAL_PATH)/platform/third_party/android/libxml2 \
                     $(LOCAL_PATH)/platform/third_party/android/libjpeg                 
-# it is used for ndk-r4
-# if you build with nkd-r4, uncomment it   
-# LOCAL_LDLIBS := -L$(LOCAL_PATH)/platform/third_party/android/libraries \
-#                -lGLESv1_CM -llog -lz \
-#                -lpng \
-#                -lxml2 \
-#                -ljpeg
 
 # it is used for ndk-r5  
 # if you build with ndk-r4, comment it   

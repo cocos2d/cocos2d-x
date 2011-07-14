@@ -18,14 +18,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                     $(LOCAL_PATH)/../../../../lua/tolua \
                     $(LOCAL_PATH)/../../../../lua/cocos2dx_support
 
-# it is used for ndk-r4
-# if you build with nkd-r4, uncomment it                    
-# LOCAL_LDLIBS := -llog -lGLESv1_CM -llog -lz \
-#                -L$(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries -lcurl \
-#                -lpng \
-#                -lxml2 \
-#                -ljpeg
-
 # it is used for ndk-r5  
 # if you build with ndk-r4, comment it  
 # because the new Windows toolchain doesn't support Cygwin's drive
