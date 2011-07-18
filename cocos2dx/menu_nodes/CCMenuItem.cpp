@@ -96,7 +96,7 @@ namespace cocos2d{
 
 			if (m_functionName.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
 			{
-				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_functionName.c_str());
+				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_functionName.c_str(), this);
 			}
 		}
 	}
