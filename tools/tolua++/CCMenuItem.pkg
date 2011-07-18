@@ -125,6 +125,10 @@ namespace cocos2d{
 
 		CCMenuItemToggle();
 		
+		static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
+		bool initWithItem(CCMenuItem *item);
+		void addSubItem(CCMenuItem *item);
+		
 		CCMenuItem* selectedItem();
 		// super methods
 		virtual void activate();
