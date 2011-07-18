@@ -96,7 +96,7 @@ namespace cocos2d{
 
 			if (m_functionName.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
 			{
-				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFunc(m_functionName.c_str());
+				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_functionName.c_str(), this);
 			}
 		}
 	}
@@ -649,6 +649,30 @@ namespace cocos2d{
 		this->setSelectedIndex(0);
 		return true;
 	}
+
+	CCMenuItemToggle* CCMenuItemToggle::itemWithItem(CCMenuItem *item)
+	{
+		CCMenuItemToggle *pRet = new CCMenuItemToggle();
+		pRet->initWithItem(item);
+		pRet->autorelease();
+		return pRet;
+	}
+
+	bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
+	{
+		CCMenuItem::initWithTarget(NULL, NULL);
+		this->m_pSubItems = new CCMutableArray<CCMenuItem*>();
+		m_pSubItems->addObject(item);
+		m_uSelectedIndex = UINT_MAX;
+		this->setSelectedIndex(0);
+		return true;
+	}
+
+	void CCMenuItemToggle::addSubItem(CCMenuItem *item)
+	{
+		m_pSubItems->addObject(item);
+	}
+
 	CCMenuItemToggle::~CCMenuItemToggle()
 	{
 		CC_SAFE_RELEASE(m_pSubItems);
