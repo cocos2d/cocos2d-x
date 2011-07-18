@@ -284,9 +284,18 @@ namespace cocos2d{
 		{}
 		virtual ~CCMenuItemToggle();
 		/** creates a menu item from a list of items with a target/selector */
-		static CCMenuItemToggle* itemWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, ...);
+		static CCMenuItemToggle* itemWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, ...);		
 		/** initializes a menu item from a list of items with a target selector */
 		bool initWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args);
+
+		// The follow methods offered to lua
+		/** creates a menu item with a item */
+		static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
+		/** initializes a menu item with a item */
+		bool initWithItem(CCMenuItem *item);
+		/** add more menu item */
+		void addSubItem(CCMenuItem *item);
+
 		/** return the selected item */
 		CCMenuItem* selectedItem();
 		// super methods
