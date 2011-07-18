@@ -189,7 +189,7 @@ bool CCLuaScriptModule::executeSchedule(const std::string& handler_name, ccTime 
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+"\n\n"+"name does not represent a Lua function"+"\n";
+		std::string msg = handler_name + "\n" + "name does not represent a Lua function" + "\n";
 		CCLog("%s %d", msg.c_str(), __FILE__);
 		return false;
 	}
@@ -207,7 +207,7 @@ bool CCLuaScriptModule::executeSchedule(const std::string& handler_name, ccTime 
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+"\n\n"+msg+"\n";
+		std::string msgerror = handler_name + "\n\n" + msg + "\n";
 		CCLog("%s %d", msgerror.c_str(), __FILE__);
 		return false;
 	}
@@ -231,7 +231,7 @@ bool CCLuaScriptModule::executeCallFunc(const std::string& handler_name)
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name + "name does not represent a Lua functio"+"\n";
+		std::string msg = handler_name + "name does not represent a Lua function" + "\n";
 		CCLog("%s %d", msg.c_str(), __LINE__);
 		return false;
 	}
@@ -245,8 +245,8 @@ bool CCLuaScriptModule::executeCallFunc(const std::string& handler_name)
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name + msg +"\n";
-		CCLog("%s  %d", msgerror.c_str(), __LINE__);
+		std::string msgerror = handler_name + msg + "\n";
+		CCLog("%s %s  %d", __FILE__, msgerror.c_str(), __LINE__);
 		return false;
 	}
 	// return it
@@ -269,7 +269,7 @@ bool CCLuaScriptModule::executeCallFuncN(const std::string& handler_name, CCNode
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(executeCallFuncN) Unable to execute scripted event handler: "+handler_name +"name does not represent a Lua function"+"\n";
+		std::string msg = handler_name + "name does not represent a Lua function" + "\n";
 			CCLog("%s  %d", msg.c_str(), __LINE__);
 		return false;
 	}
@@ -283,8 +283,8 @@ bool CCLuaScriptModule::executeCallFuncN(const std::string& handler_name, CCNode
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(executeCallFuncN) Unable to execute scripted event handler: "+handler_name +msg+"\n";
-			CCLog("%s %d", msgerror.c_str(),  __LINE__);
+		std::string msgerror = handler_name + msg + "\n";
+			CCLog("%s %s %d", __FILE__, msgerror.c_str(),  __LINE__);
 		return false;
 	}
 	// return it
@@ -307,7 +307,7 @@ bool CCLuaScriptModule::executeCallFuncO(const std::string &handler_name, cocos2
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(executeCallFuncO) Unable to execute scripted event handler: "+handler_name +"name does not represent a Lua function"+"\n";
+		std::string msg = handler_name + "name does not represent a Lua function" + "\n";
 		CCLog("%s  %d", msg.c_str(), __LINE__);
 		return false;
 	}
@@ -321,8 +321,8 @@ bool CCLuaScriptModule::executeCallFuncO(const std::string &handler_name, cocos2
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(executeCallFuncO) Unable to execute scripted event handler: "+handler_name +msg+"\n";
-		CCLog("%s %d", msgerror.c_str(),  __LINE__);
+		std::string msgerror = handler_name + msg + "\n";
+		CCLog("%s %s %d", __FILE__, msgerror.c_str(),  __LINE__);
 		return false;
 	}
 	// return it
@@ -346,7 +346,7 @@ bool CCLuaScriptModule::executeCallFuncND(const std::string& handler_name, CCNod
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(executeCallFuncND) Unable to execute scripted event handler: "+handler_name +"name does not represent a Lua function"+"\n";
+		std::string msg = handler_name + "name does not represent a Lua function" + "\n";
 		CCLog("%s  %d", msg.c_str(), __LINE__);
 		return false;
 	}
@@ -361,8 +361,8 @@ bool CCLuaScriptModule::executeCallFuncND(const std::string& handler_name, CCNod
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(executeCallFuncND) Unable to execute scripted event handler: "+handler_name +msg+"\n";
-		CCLog("%s  %d", msgerror.c_str(), __LINE__);
+		std::string msgerror = handler_name + msg + "\n";
+		CCLog("%s  %d", __FILE__, msgerror.c_str(), __LINE__);
 		return false;
 	}
 	// return it
@@ -385,7 +385,7 @@ bool CCLuaScriptModule::executeMenuHandler(const std::string& handler_name, CCOb
 		if ( !lua_isfunction(d_state,-1) )
 		{
 			lua_settop( d_state, 0 );
-			std::string msg = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name + "name does not represent a Lua function"+"\n";
+			std::string msg = handler_name + "name does not represent a Lua function" + "\n";
 			CCLog("%s %d", msg.c_str(), __LINE__);
 			return false;
 		}
@@ -398,8 +398,8 @@ bool CCLuaScriptModule::executeMenuHandler(const std::string& handler_name, CCOb
 		{
 			std::string msg = lua_tostring(d_state,-1);
 			lua_pop(d_state,1);
-			std::string msgerror = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name +msg+"\n";
-			CCLog("%s %d", msgerror.c_str(), __LINE__);
+			std::string msgerror = handler_name + msg + "\n";
+			CCLog("%s %s %d", __FILE__, msgerror.c_str(), __LINE__);
 			return false;
 		}
 		// return it
@@ -423,7 +423,7 @@ bool CCLuaScriptModule::executeTouchesEvent(const std::string& handler_name, CCS
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+"name does not represent a Lua function"+"\n";
+		std::string msg = handler_name+" does not represent a Lua function"+"\n";
 		CCLog("%s %d", msg.c_str(), __LINE__);
 		return false;
 	}
@@ -446,7 +446,7 @@ bool CCLuaScriptModule::executeTouchesEvent(const std::string& handler_name, CCS
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+msg+"\n";
+		std::string msgerror = handler_name + msg + "\n";
 		CCLog("%s %d", msgerror.c_str(), __LINE__);
 		return false;
 	}
@@ -470,8 +470,8 @@ bool CCLuaScriptModule::executeTouch(const std::string& handler_name, CCTouch *p
 		if ( !lua_isfunction(d_state,-1) )
 		{
 			lua_settop( d_state, 0 );
-			std::string msg = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+"\n\n"+"name does not represent a Lua function"+"\n";
-			CCLog("%s ", msg.c_str());
+			std::string msg = handler_name+"\n"+" does not represent a Lua function"+"\n";
+			CCLog("%s %d", msg.c_str(), __LINE__);
 			return false;
 		}
 		// push EventArgs as the first parameter
@@ -483,8 +483,8 @@ bool CCLuaScriptModule::executeTouch(const std::string& handler_name, CCTouch *p
 		{
 			std::string msg = lua_tostring(d_state,-1);
 			lua_pop(d_state,1);
-			std::string msgerror = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+"\n\n"+msg+"\n";
-			CCLog("%s ", msgerror.c_str());
+			std::string msgerror = handler_name + "\n" + msg + "\n";
+			CCLog("%s %s %d", __FILE__, msgerror.c_str(), __LINE__);
 			return false;
 		}
 		// return it
@@ -508,8 +508,8 @@ bool CCLuaScriptModule::executeEventHandler(const std::string& handler_name, CCE
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+"\n\n"+"name does not represent a Lua function"+"\n";
-		CCLog("%s ", msg.c_str());
+		std::string msg = handler_name + "\n" + " does not represent a Lua function" + "\n";
+		CCLog("%s %d", msg.c_str(), __LINE__);
 		return false;
 	}
 	// push EventArgs as the first parameter
@@ -522,8 +522,8 @@ bool CCLuaScriptModule::executeEventHandler(const std::string& handler_name, CCE
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(LuaScriptModule) Unable to execute scripted event handler: "+handler_name+"\n\n"+msg+"\n";
-		CCLog("%s ", msgerror.c_str());
+		std::string msgerror = handler_name + "\n" + msg + "\n";
+		CCLog("%s %s %d", __FILE__, msgerror.c_str(), __LINE__);
 		return false;
 	}
 	// return it
@@ -547,7 +547,7 @@ bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int ind
 	if ( !lua_isfunction(d_state,-1) )
 	{
 		lua_settop( d_state, 0 );
-		std::string msg = "(CCLuaScriptModule) Unable to execute scripted event handler: "+handler_name +"name does not represent a Lua function"+"\n";
+		std::string msg = handler_name + " does not represent a Lua function" + "\n";
 		CCLog("%s  %d", msg.c_str(), __LINE__);
 		return false;
 	}
@@ -562,8 +562,8 @@ bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int ind
 		std::string msg = lua_tostring(d_state,-1);
 		lua_pop(d_state,1);
 		lua_settop( d_state, 0 );
-		std::string msgerror = "(CCLuaScriptModule) Unable to execute scripted event handler: "+handler_name +msg+"\n";
-		CCLog("%s  %d", msgerror.c_str(), __LINE__);
+		std::string msgerror = handler_name  + msg + "\n";
+		CCLog("%s %s  %d", __FILE__, msgerror.c_str(), __LINE__);
 		return false;
 	}
 	// return it

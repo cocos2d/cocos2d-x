@@ -42,7 +42,7 @@ void CCLog(const char * pszFormat, ...)
 
     va_list ap;
     va_start(ap, pszFormat);
-    vsprintf_s(szBuf, MAX_LEN, pszFormat, ap);
+    vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
     va_end(ap);
 
     WCHAR wszBuf[MAX_LEN] = {0};
