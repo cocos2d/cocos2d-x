@@ -54,6 +54,7 @@ There are config below:
     #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
     #define CC_SUPPORT_MULTITHREAD 0
     #define CC_SUPPORT_UNICODE 0
+    #define CC_SUPPORT_PVRTC
 #endif
 
 // android

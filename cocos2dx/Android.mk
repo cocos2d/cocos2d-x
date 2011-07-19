@@ -89,6 +89,7 @@ text_input_node/CCTextFieldTTF.cpp \
 textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
+textures/CCTexturePVR.cpp \
 tileMap_parallax_nodes/CCParallaxNode.cpp \
 tileMap_parallax_nodes/CCTMXLayer.cpp \
 tileMap_parallax_nodes/CCTMXObjectGroup.cpp \
