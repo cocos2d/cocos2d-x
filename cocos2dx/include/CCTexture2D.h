@@ -157,16 +157,17 @@ public:
 	/** returns the content size of the texture in points */
 	CCSize getContentSize(void);
 
-#ifdef _POWERVR_SUPPORT_
+#ifdef CC_SUPPORT_PVRTC	
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a PVRTC file
 	Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a PVRTC buffer */
-	bool initWithPVRTCData(const void* data, int level, int bpp, bool hasAlpha, int length);
-	/** Initializes a texture from a PVRTC file */
-	bool initWithPVRTCFile(const char* file);
-#endif
+    bool initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length, CCTexture2DPixelFormat pixelFormat);
+#endif // CC_SUPPORT_PVRTC
+    
+    /** Initializes a texture from a PVR file */
+	bool initWithPVRFile(const char* file);
 
 	/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
 	If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
@@ -203,6 +204,8 @@ public:
     unsigned int bitsPerPixelForFormat();
 
 
+    void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    
 	/** sets the default pixel format for UIImages that contains alpha channel.
 	If the UIImage contains alpha channel, then the options are:
 	- generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
@@ -227,6 +230,9 @@ public:
 
 private:
 	bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+    
+    // By default PVR images are treated as if they don't have the alpha channel premultiplied
+    bool m_bPVRHaveAlphaPremultiplied;
 
 };
 }//namespace   cocos2d 

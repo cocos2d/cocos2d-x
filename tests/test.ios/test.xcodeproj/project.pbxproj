@@ -342,7 +342,6 @@
 		BF835B7C13276C7900F3C033 /* CCPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8358E213276C7700F3C033 /* CCPointExtension.h */; };
 		BF835B7D13276C7900F3C033 /* CCProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8358E313276C7700F3C033 /* CCProgressTimer.h */; };
 		BF835B7E13276C7900F3C033 /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8358E413276C7700F3C033 /* CCProtocols.h */; };
-		BF835B7F13276C7900F3C033 /* CCPVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8358E513276C7700F3C033 /* CCPVRTexture.h */; };
 		BF835B8013276C7900F3C033 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8358E613276C7700F3C033 /* CCRenderTexture.h */; };
 		BF835B8113276C7900F3C033 /* CCRibbon.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8358E713276C7700F3C033 /* CCRibbon.h */; };
 		BF835B8213276C7900F3C033 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8358E813276C7700F3C033 /* CCScene.h */; };
@@ -451,7 +450,6 @@
 		BF835D6D13276C7900F3C033 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835B1713276C7900F3C033 /* unzip.h */; };
 		BF835D6E13276C7900F3C033 /* ZipUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B1813276C7900F3C033 /* ZipUtils.cpp */; };
 		BF835D6F13276C7900F3C033 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF835B1913276C7900F3C033 /* ZipUtils.h */; };
-		BF835D7013276C7900F3C033 /* CCPVRTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B1B13276C7900F3C033 /* CCPVRTexture.cpp */; };
 		BF835D7113276C7900F3C033 /* CCTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B1C13276C7900F3C033 /* CCTexture2D.cpp */; };
 		BF835D7213276C7900F3C033 /* CCTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B1D13276C7900F3C033 /* CCTextureAtlas.cpp */; };
 		BF835D7313276C7900F3C033 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF835B1E13276C7900F3C033 /* CCTextureCache.cpp */; };
@@ -469,6 +467,8 @@
 		BF9935DB1373EBF500197D1B /* UserDefaultTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */; };
 		BFA00A1F134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
 		BFA00A20134426C600289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */; };
+		D40EB54513D01DAE00BB8B5E /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = D40EB54413D01DAE00BB8B5E /* CCTexturePVR.h */; };
+		D40EB54913D0200200BB8B5E /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40EB54813D0200200BB8B5E /* CCTexturePVR.cpp */; };
 		D4236C351387F6E600F75A88 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D4236C341387F6E600F75A88 /* chipmunk_private.h */; };
 		D429012913B1D0CA00A3772F /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */; };
 		D429012C13B1D0DC00A3772F /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D429012B13B1D0DC00A3772F /* CCScriptSupport.h */; };
@@ -951,7 +951,6 @@
 		BF8358E213276C7700F3C033 /* CCPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointExtension.h; sourceTree = "<group>"; };
 		BF8358E313276C7700F3C033 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressTimer.h; sourceTree = "<group>"; };
 		BF8358E413276C7700F3C033 /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
-		BF8358E513276C7700F3C033 /* CCPVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPVRTexture.h; sourceTree = "<group>"; };
 		BF8358E613276C7700F3C033 /* CCRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture.h; sourceTree = "<group>"; };
 		BF8358E713276C7700F3C033 /* CCRibbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRibbon.h; sourceTree = "<group>"; };
 		BF8358E813276C7700F3C033 /* CCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScene.h; sourceTree = "<group>"; };
@@ -1060,7 +1059,6 @@
 		BF835B1713276C7900F3C033 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
 		BF835B1813276C7900F3C033 /* ZipUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZipUtils.cpp; sourceTree = "<group>"; };
 		BF835B1913276C7900F3C033 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
-		BF835B1B13276C7900F3C033 /* CCPVRTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPVRTexture.cpp; sourceTree = "<group>"; };
 		BF835B1C13276C7900F3C033 /* CCTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2D.cpp; sourceTree = "<group>"; };
 		BF835B1D13276C7900F3C033 /* CCTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureAtlas.cpp; sourceTree = "<group>"; };
 		BF835B1E13276C7900F3C033 /* CCTextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCache.cpp; sourceTree = "<group>"; };
@@ -1078,6 +1076,8 @@
 		BF9935D91373EBF500197D1B /* UserDefaultTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultTest.h; sourceTree = "<group>"; };
 		BF9935DA1373EBF500197D1B /* UserDefaultTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserDefaultTest.cpp; sourceTree = "<group>"; };
 		BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		D40EB54413D01DAE00BB8B5E /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
+		D40EB54813D0200200BB8B5E /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
 		D4236C341387F6E600F75A88 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
 		D429012813B1D0CA00A3772F /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		D429012B13B1D0DC00A3772F /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
@@ -2100,6 +2100,7 @@
 		BF8358AE13276C7700F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				D40EB54413D01DAE00BB8B5E /* CCTexturePVR.h */,
 				D429012B13B1D0DC00A3772F /* CCScriptSupport.h */,
 				BF99347D1373E6CE00197D1B /* CCUserDefault.h */,
 				BF193EDB13600549002463D2 /* CCArray.h */,
@@ -2155,7 +2156,6 @@
 				BF8358E213276C7700F3C033 /* CCPointExtension.h */,
 				BF8358E313276C7700F3C033 /* CCProgressTimer.h */,
 				BF8358E413276C7700F3C033 /* CCProtocols.h */,
-				BF8358E513276C7700F3C033 /* CCPVRTexture.h */,
 				BF8358E613276C7700F3C033 /* CCRenderTexture.h */,
 				BF8358E713276C7700F3C033 /* CCRibbon.h */,
 				BF8358E813276C7700F3C033 /* CCScene.h */,
@@ -2376,7 +2376,7 @@
 		BF835B1A13276C7900F3C033 /* textures */ = {
 			isa = PBXGroup;
 			children = (
-				BF835B1B13276C7900F3C033 /* CCPVRTexture.cpp */,
+				D40EB54813D0200200BB8B5E /* CCTexturePVR.cpp */,
 				BF835B1C13276C7900F3C033 /* CCTexture2D.cpp */,
 				BF835B1D13276C7900F3C033 /* CCTextureAtlas.cpp */,
 				BF835B1E13276C7900F3C033 /* CCTextureCache.cpp */,
@@ -2492,7 +2492,6 @@
 				BF835B7C13276C7900F3C033 /* CCPointExtension.h in Headers */,
 				BF835B7D13276C7900F3C033 /* CCProgressTimer.h in Headers */,
 				BF835B7E13276C7900F3C033 /* CCProtocols.h in Headers */,
-				BF835B7F13276C7900F3C033 /* CCPVRTexture.h in Headers */,
 				BF835B8013276C7900F3C033 /* CCRenderTexture.h in Headers */,
 				BF835B8113276C7900F3C033 /* CCRibbon.h in Headers */,
 				BF835B8213276C7900F3C033 /* CCScene.h in Headers */,
@@ -2565,6 +2564,7 @@
 				BF2CE35D13666BD0006DCA18 /* CCTextFieldTTF.h in Headers */,
 				BF99347E1373E6CE00197D1B /* CCUserDefault.h in Headers */,
 				D429012C13B1D0DC00A3772F /* CCScriptSupport.h in Headers */,
+				D40EB54513D01DAE00BB8B5E /* CCTexturePVR.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2971,7 +2971,6 @@
 				BF835D6A13276C7900F3C033 /* ioapi.cpp in Sources */,
 				BF835D6C13276C7900F3C033 /* unzip.cpp in Sources */,
 				BF835D6E13276C7900F3C033 /* ZipUtils.cpp in Sources */,
-				BF835D7013276C7900F3C033 /* CCPVRTexture.cpp in Sources */,
 				BF835D7113276C7900F3C033 /* CCTexture2D.cpp in Sources */,
 				BF835D7213276C7900F3C033 /* CCTextureAtlas.cpp in Sources */,
 				BF835D7313276C7900F3C033 /* CCTextureCache.cpp in Sources */,
@@ -2998,6 +2997,7 @@
 				BF2CE34A13666B43006DCA18 /* CCTextFieldTTF.cpp in Sources */,
 				BF9934801373E6E600197D1B /* CCUserDefault.cpp in Sources */,
 				D429012913B1D0CA00A3772F /* CCScriptSupport.cpp in Sources */,
+				D40EB54913D0200200BB8B5E /* CCTexturePVR.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -77,7 +77,7 @@ THE SOFTWARE.
 #include "CCActionPageTurn3D.h"
 #include "CCTransitionPageTurn.h"
 #include "CCTexture2D.h"
-#include "CCPVRTexture.h"
+#include "CCTexturePVR.h"
 #include "CCTransitionRadial.h"
 #include "CCActionProgressTimer.h"
 #include "CCTouchDispatcher.h"

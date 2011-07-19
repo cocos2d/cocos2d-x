@@ -142,7 +142,7 @@ public:
 	*/
 	void dumpCachedTextureInfo();
 
-#if _POWERVR_SUPPORT_
+#ifdef CC_SUPPORT_PVRTC
 	/** Returns a Texture2D object given an PVRTC RAW filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
 	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
@@ -152,13 +152,13 @@ public:
 	* hasAlpha: whether or not the image contains alpha channel
 	*/
 	CCTexture2D* addPVRTCImage(const char* fileimage, int bpp, bool hasAlpha, int width);
-
-	/** Returns a Texture2D object given an PVRTC filename
+#endif // CC_SUPPORT_PVRTC
+    
+	/** Returns a Texture2D object given an PVR filename
 	* If the file image was not previously loaded, it will create a new CCTexture2D
 	*  object and it will return it. Otherwise it will return a reference of a previosly loaded image
 	*/
-	CCTexture2D* addPVRTCImage(const char* fileimage);
-#endif
+	CCTexture2D* addPVRImage(const char* filename);
 
     /** Reload all textures
     It's only useful when the value of CC_ENABLE_CACHE_TEXTTURE_DATA is 1
