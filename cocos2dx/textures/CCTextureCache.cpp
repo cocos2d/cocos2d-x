@@ -197,14 +197,11 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 			lowerCase[i] = tolower(lowerCase[i]);
 		}
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
-		// if ( [[path lowercaseString] hasSuffix:@".pvr"] )
 		do 
 		{
 			if (std::string::npos != lowerCase.find(".pvr"))
 			{
-#ifdef _POWERVR_SUPPORT_
-				texture = this->addPVRTCImage(fullpath.c_str());
-#endif
+				texture = this->addPVRImage(fullpath.c_str());
 			}
 			// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 			else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
@@ -269,15 +266,17 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
 	return texture;
 }
 
-#ifdef _POWERVR_SUPPORT_
+#ifdef CC_SUPPORT_PVRTC
 CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAlpha, int width)
 {
-	
 	CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
 	CCAssert( bpp==2 || bpp==4, "TextureCache: bpp must be either 2 or 4");
 
 	CCTexture2D * texture;
+
 	std::string temp(path);
+    CCFileUtils::ccRemoveHDSuffixFromFile(temp);
+    
 	if ( (texture = m_pTextures->objectForKey(temp)) )
 	{
 		return texture;
@@ -288,8 +287,9 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 
 	CCData * data = CCData::dataWithContentsOfFile(fullpath);
 	texture = new CCTexture2D();
-	texture->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width);
-	if( texture )
+	
+	if( texture->initWithPVRTCData(data->bytes(), 0, bpp, hasAlpha, width,
+                                   (bpp==2 ? kCCTexture2DPixelFormat_PVRTC2 : kCCTexture2DPixelFormat_PVRTC4)))
 	{
 		m_pTextures->setObject(texture, temp);
 		texture->autorelease();
@@ -302,33 +302,37 @@ CCTexture2D* CCTextureCache::addPVRTCImage(const char* path, int bpp, bool hasAl
 
 	return texture;
 }
+#endif // CC_SUPPORT_PVRTC
 
-CCTexture2D * CCTextureCache::addPVRTCImage(const char* fileimage)
+CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 {
-	CCAssert(fileimage != NULL, "TextureCache: fileimage MUST not be nill");
+	CCAssert(path != NULL, "TextureCache: fileimage MUST not be nill");
 
-	CCTexture2D * texture;
-	std::string key(fileimage);
-	if( (texture = m_pTextures->objectForKey(key)) ) 
+	CCTexture2D * tex;
+	std::string key(path);
+    // remove possible -HD suffix to prevent caching the same image twice (issue #1040)
+    CCFileUtils::ccRemoveHDSuffixFromFile(key);
+    
+	if( (tex = m_pTextures->objectForKey(key)) ) 
 	{
-		return texture;
+		return tex;
 	}
 
-	texture = new CCTexture2D();
-	texture = texture->initWithPVRTCFile(fileimage);
-	if( texture )
+    // Split up directory and filename
+    std::string fullpath = CCFileUtils::fullPathFromRelativePath(key.c_str());
+	tex = new CCTexture2D();
+	if( tex->initWithPVRFile(fullpath.c_str()) )
 	{
-		m_pTextures-> setObject( texture, key);
-		texture->autorelease();
+		m_pTextures->setObject(tex, key);
+		tex->autorelease();
 	}
 	else
 	{
-		CCLOG("cocos2d: Couldn't add PVRTCImage:%s in CCTextureCache",fileimage);
+		CCLOG("cocos2d: Couldn't add PVRImage:%s in CCTextureCache",key);
 	}
 
-	return texture;
+	return tex;
 }
-#endif
 
 /* @todo CGImageRef
 -(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (string & )key

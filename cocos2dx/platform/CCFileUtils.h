@@ -116,7 +116,7 @@ public:
     ///////////////////////////////////////////////////
     // interfaces on ios
     ///////////////////////////////////////////////////
-    int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
+    static int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 };
 
 class CCFileData
