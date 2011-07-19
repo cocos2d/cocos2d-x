@@ -181,6 +181,10 @@ public class Cocos2dxActivity extends Activity{
     public static String getCocos2dxPackageName(){
     	return packageName;
     }
+    
+    public static void terminateProcess(){
+    	android.os.Process.killProcess(android.os.Process.myPid());
+    }
 
     @Override
     protected void onResume() {
