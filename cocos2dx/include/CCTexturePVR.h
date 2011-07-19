@@ -26,8 +26,7 @@ THE SOFTWARE.
 #ifndef __CCPVRTEXTURE_H__
 #define __CCPVRTEXTURE_H__
 
-#include <string>
-#include <stdint.h>
+#include "CCStdC.h"
 
 #include "CCGL.h"
 #include "CCObject.h"

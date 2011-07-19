@@ -44,7 +44,7 @@ namespace   cocos2d {
 
 	NOTE: this should be placed somewhere in macros
 */
-#define CC_HOST_IS_BIG_ENDIAN (*(uint16_t *)"\0\xff" < 0x100)
+#define CC_HOST_IS_BIG_ENDIAN (*(unsigned short *)"\0\xff" < 0x100)
 
 /*
 	Helper function which converts 4-byte little endian 
@@ -236,7 +236,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
 	unsigned int dataLength = 0, dataOffset = 0, dataSize = 0;
 	unsigned int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
 	unsigned int width = 0, height = 0, bpp = 4;
-	uint8_t *bytes = NULL;
+	unsigned char *bytes = NULL;
     unsigned int formatFlags;
 
 	//Cast first sizeof(PVRTexHeader) bytes of data stream as PVRTexHeader
@@ -274,7 +274,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
      It means that image is compressed as flipped. We don't
      support automatic flipping.
      */
-    bool flipped = flags & kPVRTextureFlagVerticalFlip;
+    bool flipped = (bool)(flags & kPVRTextureFlagVerticalFlip);
     if ( flipped )
     {
         CCLOG("cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
@@ -358,7 +358,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
 					heightBlocks = 2;
 
 				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
-				float packetLength = (dataLength-dataOffset);
+				unsigned int packetLength = (dataLength-dataOffset);
 				packetLength = packetLength > dataSize ? dataSize : packetLength;
 				
 				//Make record to the mipmaps array and increment coutner
@@ -476,7 +476,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     }
     else
     {
-        pvrlen = CCFileUtils::ccLoadFileIntoMemory(path, &pvrdata);
+		pvrdata = CCFileUtils::getFileData(path, "r", (unsigned long *)(&pvrlen));
     }
     
     if (pvrlen < 0)

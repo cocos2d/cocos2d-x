@@ -516,10 +516,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\CCPVRTexture.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\CCRenderTexture.h"
 				>
 			</File>
@@ -577,6 +573,10 @@
 			</File>
 			<File
 				RelativePath="..\include\CCTextureCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\CCTexturePVR.h"
 				>
 			</File>
 			<File
@@ -992,10 +992,6 @@
 			Name="textures"
 			>
 			<File
-				RelativePath="..\textures\CCPVRTexture.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\textures\CCTexture2D.cpp"
 				>
 			</File>
@@ -1005,6 +1001,10 @@
 			</File>
 			<File
 				RelativePath="..\textures\CCTextureCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\textures\CCTexturePVR.cpp"
 				>
 			</File>
 		</Filter>
