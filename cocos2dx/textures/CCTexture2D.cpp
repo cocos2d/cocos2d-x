@@ -40,10 +40,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "support/ccUtils.h"
 #include "platform/CCPlatformMacros.h"
-
-#ifdef _POWERVR_SUPPORT_
-    #include "CCPVRTexture.h"
-#endif
+#include "CCTexturePVR.h"
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     #include "CCTextureCache.h"
@@ -68,6 +65,7 @@ CCTexture2D::CCTexture2D()
 , m_fMaxS(0.0)
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
+, m_bPVRHaveAlphaPremultiplied(true)
 {
 }
 
@@ -506,12 +504,11 @@ void CCTexture2D::drawInRect(CCRect rect)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-
-// implementation CCTexture2D (PVRTC)
-#ifdef _POWERVR_SUPPORT_
-bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length)
+#ifdef CC_SUPPORT_PVRTC
+// implementation CCTexture2D (PVRTC);    
+bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length, CCTexture2DPixelFormat pixelFormat)
 {
-	if( !(CCPlatformConfiguration::sharedConfiguration()->isSupportsPVRTC()) )
+	if( !(CCConfiguration::sharedConfiguration()->isSupportsPVRTC()) )
 	{
 		CCLOG("cocos2d: WARNING: PVRTC images is not supported.");
 		this->release();
@@ -540,47 +537,53 @@ bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool h
 	m_uPixelsHigh = length;
 	m_fMaxS = 1.0f;
 	m_fMaxT = 1.0f;
+    m_bHasPremultipliedAlpha = m_bPVRHaveAlphaPremultiplied;
+    m_ePixelFormat = pixelFormat;
 
 	return true;
 }
+#endif // CC_SUPPORT_PVRTC
 
-CCTexture2D * CCTexture2D::initWithPVRTCFile(const char* file)
+bool CCTexture2D::initWithPVRFile(const char* file)
 {
-	if (! CCPlatformConfiguration::sharedConfiguration()->isSupportsPVRTC())
-	{
-		CCLOG("cocos2d: WARNING: PVRTC images is not supported");
-		this->release();
-		return false;
-	}
+    bool bRet = false;
+    // nothing to do with CCObject::init
+    
+    CCTexturePVR *pvr = new CCTexturePVR;
+    bRet = pvr->initWithContentsOfFile(file);
+        
+    if (bRet)
+    {
+        pvr->setRetainName(true); // don't dealloc texture on release
+        
+        m_uName = pvr->getName();
+        m_fMaxS = 1.0f;
+        m_fMaxT = 1.0f;
+        m_uPixelsWide = pvr->getWidth();
+        m_uPixelsHigh = pvr->getHeight();
+        m_tContentSize = CCSizeMake(m_uPixelsWide, m_uPixelsHigh);
+        m_bHasPremultipliedAlpha = m_bPVRHaveAlphaPremultiplied;
+        m_ePixelFormat = pvr->getFormat();
+                
+        this->setAntiAliasTexParameters();
+    }
+    else
+    {
+        CCLOG("cocos2d: Couldn't load PVR image %s", file);
+    }
+    
+    pvr->release();
 
-	CCPVRTexture *pvr = new CCPVRTexture();
-	pvr = pvr->initWithContentsOfFile(file);
-	if( pvr )
-	{
-		pvr->setRetainName(true);			// don't dealloc texture on release
-
-		m_uName = pvr->getName();				// texture id
-		m_fMaxS = 1.0f;
-		m_fMaxT = 1.0f;
-		m_uPixelsWide = pvr->getWidth();		// width
-		m_uPixelsHigh = pvr->getHeight();		// height
-		/// be careful : unsigned int to float
-		m_tContentSize = CCSizeMake((float)(m_uPixelsWide), (float)(m_uPixelsHigh));
-
-		pvr->release();
-
-		this->setAntiAliasTexParameters();
-	}
-	else 
-	{
-		CCLOG("cocos2d: Couldn't load PVR image");
-		this->release();
-		return false;
-	}
-	return true;
+    return bRet;
+    
 }
-#endif
 
+void CCTexture2D::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+{
+    m_bPVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
+}
+
+    
 //
 // Use to apply MIN/MAG filter
 //
