@@ -524,6 +524,13 @@ static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_cocos2d__CCNode (lua_State* tolua_S)
+{
+ cocos2d::CCNode* self = (cocos2d::CCNode*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_cocos2d__CCString (lua_State* tolua_S)
 {
  cocos2d::CCString* self = (cocos2d::CCString*) tolua_tousertype(tolua_S,1,0);
@@ -1556,6 +1563,63 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionPageTurn), "cocos2d::CCTransitionPageTurn");
 }
 
+/* method: new of class  cocos2d::CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCNode_new00
+static int tolua_Cocos2d_cocos2d_CCNode_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"cocos2d::CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   cocos2d::CCNode* tolua_ret = (cocos2d::CCNode*)  Mtolua_new((cocos2d::CCNode)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  cocos2d::CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCNode_new00_local
+static int tolua_Cocos2d_cocos2d_CCNode_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"cocos2d::CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   cocos2d::CCNode* tolua_ret = (cocos2d::CCNode*)  Mtolua_new((cocos2d::CCNode)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCNode");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getZOrder of class  cocos2d::CCNode */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCNode_getZOrder00
 static int tolua_Cocos2d_cocos2d_CCNode_getZOrder00(lua_State* tolua_S)
@@ -2424,6 +2488,81 @@ static int tolua_Cocos2d_cocos2d_CCNode_getAnchorPointInPixels00(lua_State* tolu
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getAnchorPointInPixels'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getContentSizeInPixels of class  cocos2d::CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCNode_getContentSizeInPixels00
+static int tolua_Cocos2d_cocos2d_CCNode_getContentSizeInPixels00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCNode* self = (cocos2d::CCNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getContentSizeInPixels'", NULL);
+#endif
+  {
+   cocos2d::CCSize tolua_ret = (cocos2d::CCSize)  self->getContentSizeInPixels();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((cocos2d::CCSize)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"cocos2d::CCSize");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(cocos2d::CCSize));
+     tolua_pushusertype(tolua_S,tolua_obj,"cocos2d::CCSize");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getContentSizeInPixels'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setContentSizeInPixels of class  cocos2d::CCNode */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCNode_setContentSizeInPixels00
+static int tolua_Cocos2d_cocos2d_CCNode_setContentSizeInPixels00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCNode",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"cocos2d::CCSize",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCNode* self = (cocos2d::CCNode*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCSize sz = *((cocos2d::CCSize*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setContentSizeInPixels'", NULL);
+#endif
+  {
+   self->setContentSizeInPixels(sz);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setContentSizeInPixels'.",&tolua_err);
  return 0;
 #endif
 }
@@ -69666,6 +69805,103 @@ static int tolua_Cocos2d_cocos2d_CCMenuItemToggle_new00_local(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: itemWithItem of class  cocos2d::CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMenuItemToggle_itemWithItem00
+static int tolua_Cocos2d_cocos2d_CCMenuItemToggle_itemWithItem00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"cocos2d::CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCMenuItem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCMenuItem* item = ((cocos2d::CCMenuItem*)  tolua_tousertype(tolua_S,2,0));
+  {
+   cocos2d::CCMenuItemToggle* tolua_ret = (cocos2d::CCMenuItemToggle*)  cocos2d::CCMenuItemToggle::itemWithItem(item);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cocos2d::CCMenuItemToggle");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'itemWithItem'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: initWithItem of class  cocos2d::CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMenuItemToggle_initWithItem00
+static int tolua_Cocos2d_cocos2d_CCMenuItemToggle_initWithItem00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCMenuItem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCMenuItemToggle* self = (cocos2d::CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCMenuItem* item = ((cocos2d::CCMenuItem*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithItem'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->initWithItem(item);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'initWithItem'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addSubItem of class  cocos2d::CCMenuItemToggle */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMenuItemToggle_addSubItem00
+static int tolua_Cocos2d_cocos2d_CCMenuItemToggle_addSubItem00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"cocos2d::CCMenuItemToggle",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCMenuItem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCMenuItemToggle* self = (cocos2d::CCMenuItemToggle*)  tolua_tousertype(tolua_S,1,0);
+  cocos2d::CCMenuItem* item = ((cocos2d::CCMenuItem*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addSubItem'", NULL);
+#endif
+  {
+   self->addSubItem(item);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addSubItem'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: selectedItem of class  cocos2d::CCMenuItemToggle */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCMenuItemToggle_selectedItem00
 static int tolua_Cocos2d_cocos2d_CCMenuItemToggle_selectedItem00(lua_State* tolua_S)
@@ -70304,7 +70540,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_module(tolua_S,"cocos2d",0);
   tolua_beginmodule(tolua_S,"cocos2d");
    tolua_constant(tolua_S,"kCCNodeTagInvalid",cocos2d::kCCNodeTagInvalid);
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"CCNode","cocos2d::CCNode","cocos2d::CCObject",tolua_collect_cocos2d__CCNode);
+   #else
    tolua_cclass(tolua_S,"CCNode","cocos2d::CCNode","cocos2d::CCObject",NULL);
+   #endif
    tolua_beginmodule(tolua_S,"CCNode");
     tolua_function(tolua_S,"getZOrder",tolua_Cocos2d_cocos2d_CCNode_getZOrder00);
     tolua_function(tolua_S,"getVertexZ",tolua_Cocos2d_cocos2d_CCNode_getVertexZ00);
@@ -70332,6 +70572,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"getAnchorPoint",tolua_Cocos2d_cocos2d_CCNode_getAnchorPoint00);
     tolua_function(tolua_S,"setAnchorPoint",tolua_Cocos2d_cocos2d_CCNode_setAnchorPoint00);
     tolua_function(tolua_S,"getAnchorPointInPixels",tolua_Cocos2d_cocos2d_CCNode_getAnchorPointInPixels00);
+    tolua_function(tolua_S,"getContentSizeInPixels",tolua_Cocos2d_cocos2d_CCNode_getContentSizeInPixels00);
+    tolua_function(tolua_S,"setContentSizeInPixels",tolua_Cocos2d_cocos2d_CCNode_setContentSizeInPixels00);
     tolua_function(tolua_S,"getContentSize",tolua_Cocos2d_cocos2d_CCNode_getContentSize00);
     tolua_function(tolua_S,"setContentSize",tolua_Cocos2d_cocos2d_CCNode_setContentSize00);
     tolua_function(tolua_S,"getIsRunning",tolua_Cocos2d_cocos2d_CCNode_getIsRunning00);
@@ -74084,6 +74326,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"new",tolua_Cocos2d_cocos2d_CCMenuItemToggle_new00);
     tolua_function(tolua_S,"new_local",tolua_Cocos2d_cocos2d_CCMenuItemToggle_new00_local);
     tolua_function(tolua_S,".call",tolua_Cocos2d_cocos2d_CCMenuItemToggle_new00_local);
+    tolua_function(tolua_S,"itemWithItem",tolua_Cocos2d_cocos2d_CCMenuItemToggle_itemWithItem00);
+    tolua_function(tolua_S,"initWithItem",tolua_Cocos2d_cocos2d_CCMenuItemToggle_initWithItem00);
+    tolua_function(tolua_S,"addSubItem",tolua_Cocos2d_cocos2d_CCMenuItemToggle_addSubItem00);
     tolua_function(tolua_S,"selectedItem",tolua_Cocos2d_cocos2d_CCMenuItemToggle_selectedItem00);
     tolua_function(tolua_S,"activate",tolua_Cocos2d_cocos2d_CCMenuItemToggle_activate00);
     tolua_function(tolua_S,"selected",tolua_Cocos2d_cocos2d_CCMenuItemToggle_selected00);
