@@ -276,9 +276,6 @@
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp">
       <Filter>support\zip_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\textures\CCPVRTexture.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\textures\CCTexture2D.cpp">
       <Filter>textures</Filter>
     </ClCompile>
@@ -333,6 +330,9 @@
     <ClCompile Include="..\CCDrawingPrimitives.cpp" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\textures\CCTexturePVR.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -687,5 +687,8 @@
       <Filter>touch_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\CCConfiguration.h" />
+    <ClInclude Include="..\include\CCTexturePVR.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

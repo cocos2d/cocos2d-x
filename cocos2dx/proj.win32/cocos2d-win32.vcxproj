@@ -195,10 +195,10 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\zip_support\ioapi.cpp" />
     <ClCompile Include="..\support\zip_support\unzip.cpp" />
     <ClCompile Include="..\support\zip_support\ZipUtils.cpp" />
-    <ClCompile Include="..\textures\CCPVRTexture.cpp" />
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
     <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
+    <ClCompile Include="..\textures\CCTexturePVR.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
@@ -291,6 +291,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\include\CCTexture2D.h" />
     <ClInclude Include="..\include\CCTextureAtlas.h" />
     <ClInclude Include="..\include\CCTextureCache.h" />
+    <ClInclude Include="..\include\CCTexturePVR.h" />
     <ClInclude Include="..\include\CCTileMapAtlas.h" />
     <ClInclude Include="..\include\CCTMXLayer.h" />
     <ClInclude Include="..\include\CCTMXObjectGroup.h" />
