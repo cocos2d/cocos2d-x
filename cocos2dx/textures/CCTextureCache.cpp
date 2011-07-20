@@ -328,7 +328,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
 	}
 	else
 	{
-		CCLOG("cocos2d: Couldn't add PVRImage:%s in CCTextureCache",key);
+		CCLOG("cocos2d: Couldn't add PVRImage:%s in CCTextureCache",key.c_str());
 	}
 
 	return tex;
