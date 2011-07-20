@@ -112,6 +112,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/SchedulerTest.o \
 	$(OBJECTS_DIR)/SpriteTest.o \
 	$(OBJECTS_DIR)/TextInputTest.o \
+	$(OBJECTS_DIR)/Texture2dTest.o \
 	$(OBJECTS_DIR)/TileMapTest.o \
 	$(OBJECTS_DIR)/Ball.o \
 	$(OBJECTS_DIR)/Paddle.o \
@@ -364,6 +365,9 @@ $(OBJECTS_DIR)/SpriteTest.o : ../tests/SpriteTest/SpriteTest.cpp
 
 $(OBJECTS_DIR)/TextInputTest.o : ../tests/TextInputTest/TextInputTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TextInputTest.o ../tests/TextInputTest/TextInputTest.cpp
+
+$(OBJECTS_DIR)/Texture2dTest.o : ../tests/Texture2dTest/Texture2dTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/Texture2dTest.o ../tests/Texture2dTest/Texture2dTest.cpp
 
 $(OBJECTS_DIR)/TileMapTest.o : ../tests/TileMapTest/TileMapTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/TileMapTest.o ../tests/TileMapTest/TileMapTest.cpp

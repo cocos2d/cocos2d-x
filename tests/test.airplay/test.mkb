@@ -191,6 +191,11 @@ files
 	"*.h"
 	"*.cpp"
 
+        [Tests/Texture2dTest]
+	("../tests/Texture2dTest")
+	"*.h"
+	"*.cpp"
+
 	[Tests/TileMapTest]
 	("../tests/TileMapTest")
 	"*.h"
