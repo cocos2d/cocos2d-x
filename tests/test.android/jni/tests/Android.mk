@@ -74,6 +74,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/SceneTest/SceneTest.cpp \
 ../../../tests/SchedulerTest/SchedulerTest.cpp \
 ../../../tests/SpriteTest/SpriteTest.cpp \
+../../../tests/Texture2dTest/Texture2dTest.cpp \
 ../../../tests/TileMapTest/TileMapTest.cpp \
 ../../../tests/TouchesTest/Ball.cpp \
 ../../../tests/TouchesTest/Paddle.cpp \

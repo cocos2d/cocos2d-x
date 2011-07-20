@@ -41,6 +41,7 @@
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "DirectorTest/DirectorTest.h"
 #include "BugsTest/BugsTest.h"
+#include "Texture2dTest/Texture2dTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -79,6 +80,7 @@ enum
     TEST_SPRITE,
     TEST_SCHEDULER,
     TEST_RENDERTEXTURE,
+    TEST_TEXTURE2D,
     TEST_BOX2D,
     TEST_BOX2DBED,
     TEST_EFFECT_ADVANCE,
@@ -122,6 +124,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "SpriteTest",
     "SchdulerTest",
     "RenderTextureTest",
+    "Texture2DTest",
     "Box2dTest",
     "Box2dTestBed",
     "EffectAdvancedTest",
