@@ -456,4 +456,20 @@ extern "C"
 
         return ret;
     }
+
+	//////////////////////////////////////////////////////////////////////////
+	// terminate the process
+	//////////////////////////////////////////////////////////////////////////
+	void terminateProcessJNI()
+	{
+		TMethodJNI t;
+
+		if (getMethodID(t
+			, "org/cocos2dx/lib/Cocos2dxActivity"
+			, "terminateProcess"
+			, "()V"))
+		{
+			t.env->CallStaticObjectMethod(t.classID, t.methodID);
+		}
+	}
 }
