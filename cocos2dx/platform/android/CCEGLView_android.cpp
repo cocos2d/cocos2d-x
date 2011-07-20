@@ -98,7 +98,7 @@ bool CCEGLView::isOpenGLReady()
 
 void CCEGLView::release()
 {
-	exit(0);
+	terminateProcessJNI();
 }
 
 void CCEGLView::setTouchDelegate(EGLTouchDelegate * pDelegate)
