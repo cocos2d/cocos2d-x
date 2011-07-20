@@ -186,7 +186,7 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 	case kCCTexture2DPixelFormat_A8:
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 		break;
-	default:;
+	default:
 		CCAssert(0, "NSInternalInconsistencyException");
 
 	}
@@ -566,16 +566,14 @@ bool CCTexture2D::initWithPVRFile(const char* file)
         m_ePixelFormat = pvr->getFormat();
                 
         this->setAntiAliasTexParameters();
+        pvr->release();
     }
     else
     {
         CCLOG("cocos2d: Couldn't load PVR image %s", file);
     }
-    
-    pvr->release();
 
     return bRet;
-    
 }
 
 void CCTexture2D::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
@@ -669,6 +667,9 @@ unsigned int CCTexture2D::bitsPerPixelForFormat()
 		case kCCTexture2DPixelFormat_AI88:
 			ret = 16;
 			break;
+        case kCCTexture2DPixelFormat_RGB888:
+            ret = 24;
+            break;
 		default:
 			ret = -1;
 			assert(false);

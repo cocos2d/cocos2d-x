@@ -1071,6 +1071,18 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="Texture2dTest"
+					>
+					<File
+						RelativePath="..\tests\Texture2dTest\Texture2dTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\Texture2dTest\Texture2dTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
