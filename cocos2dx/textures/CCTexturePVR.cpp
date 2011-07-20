@@ -476,7 +476,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     }
     else
     {
-		pvrdata = CCFileUtils::getFileData(path, "r", (unsigned long *)(&pvrlen));
+		pvrdata = CCFileUtils::getFileData(path, "rb", (unsigned long *)(&pvrlen));
     }
     
     if (pvrlen < 0)
@@ -495,12 +495,12 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
 
 	if ( !unpackPVRData(pvrdata, pvrlen)  || !createGLTexture() )
 	{
-		free(pvrdata);
+		delete [] pvrdata;
 		this->release();
 		return false;
 	}
 
-    free(pvrdata);
+    delete [] pvrdata;
     
 	return true;
 }
