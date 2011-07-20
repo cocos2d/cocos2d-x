@@ -44,6 +44,8 @@ NS_CC_BEGIN;
 class CC_DLL CCScriptEngineProtocol
 {
 public:
+	CCScriptEngineProtocol();
+
 	// functions for excute touch event
 	virtual bool executeTouchEvent(const char *pszFuncName, CCTouch *pTouch) = 0;
 	virtual bool executeTouchesEvent(const char *pszFuncName, CCSet *pTouches) = 0;
