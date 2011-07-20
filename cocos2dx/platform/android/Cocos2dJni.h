@@ -30,12 +30,13 @@ extern "C"
 
 {
 	extern JavaVM *gJavaVM;
-	void enableAccelerometerJNI();
-	void disableAccelerometerJNI();
-	void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
-    void setKeyboardStateJNI(int bOpen);
-    char* getCurrentLanguageJNI();
-	char* getPackageNameJNI();
+	extern void enableAccelerometerJNI();
+	extern void disableAccelerometerJNI();
+	extern void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
+    extern void setKeyboardStateJNI(int bOpen);
+    extern char* getCurrentLanguageJNI();
+	extern char* getPackageNameJNI();
+	extern void terminateProcessJNI();
 }
 
 #endif // __ANDROID_COCOS2D_JNI_H__
