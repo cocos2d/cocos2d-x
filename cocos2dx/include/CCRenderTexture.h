@@ -94,9 +94,9 @@ public:
 protected:
 	GLuint				m_uFBO;
 	GLint				m_nOldFBO;
-	CCTexture2D*		m_pTexture;
-
-    GLenum              m_ePixelFormat;
+	CCTexture2D			*m_pTexture;
+	GLubyte				*m_pTextureDataBuffer;
+    GLenum				m_ePixelFormat;
 };
 
 } // namespace cocos2d
