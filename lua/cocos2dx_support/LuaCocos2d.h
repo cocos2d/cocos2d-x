@@ -41,4 +41,6 @@
 #endif
 int  tolua_Cocos2d_open(lua_State* tolua_S);
 
+#define TOLUA_RELEASE
+
 #endif//LUACOCOS2D_H
