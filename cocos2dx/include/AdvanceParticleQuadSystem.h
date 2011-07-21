@@ -14,6 +14,12 @@ namespace cocos2d {
     
     class CCSpriteFrame;
     
+    
+    typedef struct sCCParticleTexture
+    {
+        CCSize       pTexPos;     // Origin for texture in Sprite sheet.
+        ccTime       pElaspeTime;  //Frame rate for each particle.
+    }tCCParticleTexture;
     /** @brief CCParticleSystemQuad is a subclass of CCParticleSystem
      
      It includes all the features of ParticleSystem.
@@ -34,6 +40,8 @@ namespace cocos2d {
         ccV2F_C4F_T2F_Quad	*m_pQuads;		// quads to be rendered
         GLushort			*m_pIndices;	// indices
         ccTime m_dt;
+        //! Array of particlesTexture
+        tCCParticleTexture *m_pParticlesTex;
         //! chars per row
         int m_nItemsPerRow;
         //! chars per column
@@ -43,6 +51,11 @@ namespace cocos2d {
         int	m_nItemWidth;
         //! height of each char
         int	m_nItemHeight;
+        //Emition Rate
+        float m_ftEmitCounter;
+        int m_tParticleTexCount;
+        GLfloat m_tWidth;
+        GLfloat m_tHeight;
         
         ccTime m_FrameRate;
         
@@ -60,6 +73,11 @@ namespace cocos2d {
         ,m_nItemWidth(0)
         ,m_nItemHeight(0)
         ,m_bNeedsToRemoveParticleAfterAniamtion(false)
+        ,m_pParticlesTex(NULL)
+        ,m_tParticleTexCount(0)
+        ,m_ftEmitCounter(0)
+        ,m_tWidth(0)
+        ,m_tHeight(0)
         {}
         virtual ~AdvanceParticleQuadSystem();
         /** initialices the indices for the vertices*/
@@ -87,7 +105,7 @@ namespace cocos2d {
         
         void setFrameRate(int number_Frames_per_Second){m_FrameRate = calculateFrameRate(number_Frames_per_Second);}
         void setFrameRate(float frameRate){m_FrameRate = frameRate;}
-        
+        void addTexturePoints();
          /**********************************************************************/
         // super methods
         virtual bool initWithTotalParticles(int numberOfParticles);

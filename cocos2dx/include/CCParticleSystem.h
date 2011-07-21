@@ -88,8 +88,7 @@ enum {
      Structure that contains the values of each particle
      */
     typedef struct sCCParticle {
-        
-        int         frameInd;
+      
         CCPoint     pos;
         CCPoint     startPos;
         
@@ -103,9 +102,6 @@ enum {
         float		deltaRotation;
         
         ccTime		timeToLive;
-        
-        CCSize       pTexPos;     // Origin for texture in Sprite sheet.
-        ccTime       pElaspeTime;  //Frame rate for each particle.
         
         //! Mode A: gravity, direction, radial accel, tangential accel
         struct {

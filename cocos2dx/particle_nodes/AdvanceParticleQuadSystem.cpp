@@ -1,7 +1,6 @@
 //
 //  AdvanceParticleQuadSystem.cpp
-//  FlyingFreak
-//
+//  
 //  Created by varadharaj on 31/05/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
@@ -20,6 +19,16 @@ namespace cocos2d {
         // base initialization
         if( CCParticleSystem::initWithTotalParticles(numberOfParticles) ) 
         {
+            CC_SAFE_DELETE_ARRAY(m_pParticlesTex);
+                                 
+            m_pParticlesTex = new tCCParticleTexture[numberOfParticles];
+                                 
+            if( ! m_pParticlesTex )
+            {
+                CCLOG("Particle system: not enough memory");
+                this->release();
+                return false;
+            }
             // allocating data space
             m_pQuads = new ccV2F_C4F_T2F_Quad[m_nTotalParticles];
             m_pIndices = new GLushort[m_nTotalParticles * 6];
@@ -64,6 +73,7 @@ namespace cocos2d {
     {
         CC_SAFE_DELETE_ARRAY(m_pQuads);
         CC_SAFE_DELETE_ARRAY(m_pIndices);
+        CC_SAFE_DELETE_ARRAY(m_pParticlesTex);
 #if CC_USES_VBO
         glDeleteBuffers(1, &m_uQuadsID);
 #endif
@@ -81,6 +91,8 @@ namespace cocos2d {
         if( !m_pTexture || spriteFrame->getTexture()->getName() != m_pTexture->getName() )
         {
             CCParticleSystem::setTexture(spriteFrame->getTexture());
+            m_tWidth = (GLfloat)m_pTexture->getPixelsWide();
+            m_tHeight = (GLfloat)m_pTexture->getPixelsHigh();
         }
         
         if(tileWidth > 0 && tileHeight > 0 && number_Frames_per_Second > 0)
@@ -101,6 +113,8 @@ namespace cocos2d {
         if( !m_pTexture || texture->getName() != m_pTexture->getName() )
         {
             CCParticleSystem::setTexture(texture);
+            m_tWidth = (GLfloat)m_pTexture->getPixelsWide();
+            m_tHeight = (GLfloat)m_pTexture->getPixelsHigh();
         }
         
         if(tileWidth > 0 && tileHeight > 0 && number_Frames_per_Second > 0)
@@ -221,29 +235,66 @@ namespace cocos2d {
     void AdvanceParticleQuadSystem::update(ccTime dt)
     {
         m_dt = dt;
+        
+        if( m_bIsActive && m_fEmissionRate )
+        {
+            float rate = 1.0f / m_fEmissionRate;
+            m_ftEmitCounter += dt;
+            while( m_tParticleTexCount < m_nTotalParticles && m_ftEmitCounter > rate ) 
+            {
+                this->addTexturePoints();
+                m_ftEmitCounter -= rate;
+            }
+        }
+        
+        m_nParticleIdx = 0;
+        while( m_nParticleIdx < m_tParticleTexCount )
+        {
+            tCCParticle *p = &m_pParticles[m_nParticleIdx];
+            
+            if( p->timeToLive - dt <= 0 ) 
+            {
+                if( m_nParticleIdx != m_tParticleTexCount-1 )
+                {
+                    m_pParticlesTex[m_nParticleIdx] = m_pParticlesTex[m_tParticleTexCount-1];
+                }
+                --m_tParticleTexCount;
+            }
+            // update particle counter
+			++m_nParticleIdx;
+        }
         CCParticleSystem::update(dt);
+    }
+    
+    void AdvanceParticleQuadSystem::addTexturePoints()
+    {
+        tCCParticleTexture * particle = &m_pParticlesTex[ m_tParticleTexCount ];
+        ++m_tParticleTexCount;
+        particle->pElaspeTime = CCRANDOM_MINUS1_1();
+        particle->pTexPos. width = 0;
+        particle->pTexPos. height = 0;
     }
     
     void AdvanceParticleQuadSystem::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
     {
         //Texture
-        
+        tCCParticleTexture * particleTex = &m_pParticlesTex[ m_nParticleIdx ];
         if(m_nItemWidth > 0 && m_nItemHeight > 0 && m_FrameRate > 0)
         {
-            particle->pElaspeTime += m_dt;
+            particleTex->pElaspeTime += m_dt;
             
-            while (particle->pElaspeTime >= m_FrameRate) 
+            while (particleTex->pElaspeTime >= m_FrameRate) 
             {
-                particle->pElaspeTime -= m_FrameRate;
+                particleTex->pElaspeTime -= m_FrameRate;
                 
-                particle->pTexPos.width++;
-                if(particle->pTexPos.width == m_nItemsPerRow)
+                particleTex->pTexPos.width++;
+                if(particleTex->pTexPos.width == m_nItemsPerRow)
                 {
-                    particle->pTexPos.width = 0;
-                    particle->pTexPos.height++;
-                    if(particle->pTexPos.height == m_nItemsPerColumn)
+                    particleTex->pTexPos.width = 0;
+                    particleTex->pTexPos.height++;
+                    if(particleTex->pTexPos.height == m_nItemsPerColumn)
                     {
-                        particle->pTexPos.height = 0;
+                        particleTex->pTexPos.height = 0;
                         if(m_bNeedsToRemoveParticleAfterAniamtion)
                             particle->timeToLive = 0;
                         return;
@@ -251,18 +302,11 @@ namespace cocos2d {
                 } 
                 
             }
-            GLfloat wide = 0;
-            GLfloat high = 0;
-            if (m_pTexture)
-            {
-                wide = (GLfloat)m_pTexture->getPixelsWide();
-                high = (GLfloat)m_pTexture->getPixelsHigh();
-            }
-        
-            GLfloat left = (particle->pTexPos.width * m_nItemWidth)/ wide;
-            GLfloat bottom = (particle->pTexPos.height * m_nItemHeight) / high;
-            GLfloat right = left + m_nItemWidth / wide;
-            GLfloat top = bottom + m_nItemHeight / high;
+            
+            GLfloat left = (particleTex->pTexPos.width * m_nItemWidth)/ m_tWidth;
+            GLfloat bottom = (particleTex->pTexPos.height * m_nItemHeight) / m_tHeight;
+            GLfloat right = left + m_nItemWidth / m_tWidth;
+            GLfloat top = bottom + m_nItemHeight / m_tHeight;
             
             // Important. Texture in cocos2d are inverted, so the Y component should be inverted
             CC_SWAP( top, bottom, float);
