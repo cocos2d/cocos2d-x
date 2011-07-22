@@ -101,7 +101,7 @@ int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
 		
 		if (ret > 0 )
 		{
-			std::printf("Base64Utils: error decoding");
+			printf("Base64Utils: error decoding");
 			delete [] *out;
 			*out = NULL;			
 			outLength = 0;
