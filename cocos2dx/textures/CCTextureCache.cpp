@@ -535,7 +535,6 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
 
 void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, CCSize contentSize)
 {
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
 	if (isReloading)
 		return;
 
@@ -557,7 +556,6 @@ void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPix
 	vt->m_pTextureData = data;
 	vt->m_PixelFormat = pixelFormat;
 	vt->m_TextureSize = contentSize;
-#endif
 }
 
 void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
@@ -626,7 +624,6 @@ void VolatileTexture::reloadAllTextures()
 				}
 			}
 			break;
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
 		case kImageData:
 			{
 				unsigned int nPOTWide, nPOTHigh;
@@ -635,7 +632,6 @@ void VolatileTexture::reloadAllTextures()
 				vt->texture->initWithData(vt->m_pTextureData, vt->m_PixelFormat, nPOTWide, nPOTHigh, vt->m_TextureSize);
 			}
 			break;
-#endif
 		case kString:
 			{
 				vt->texture->initWithString(vt->m_strText.c_str(),

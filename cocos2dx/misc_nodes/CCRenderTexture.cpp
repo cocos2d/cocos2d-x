@@ -209,32 +209,44 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
 }
 
-void CCRenderTexture::end()
-{
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-	if (NULL != m_pTextureDataBuffer)
+	void CCRenderTexture::end(bool bIsTOCasheTexture)
 	{
-		delete []m_pTextureDataBuffer;
-		m_pTextureDataBuffer = NULL;
+		if (bIsTOCasheTexture)
+		{
+			if (NULL != m_pTextureDataBuffer)
+			{
+				delete []m_pTextureDataBuffer;
+				m_pTextureDataBuffer = NULL;
+			}
+
+			// to get the rendered texture data
+			CCSize s = m_pTexture->getContentSizeInPixels();
+			int tx = (int)s.width;
+			int ty = (int)s.height;
+			m_pTextureDataBuffer = new GLubyte[tx * ty * 4];
+			glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, m_pTextureDataBuffer);
+			VolatileTexture::addDataTexture(m_pTexture, m_pTextureDataBuffer, kTexture2DPixelFormat_RGBA8888, s);
+		}
+
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
+		// Restore the original matrix and viewport
+		glPopMatrix();
+		CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+		//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+		CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
 	}
-	
-	// to get the rendered texture data
-	CCSize s = m_pTexture->getContentSizeInPixels();
-	int tx = (int)s.width;
-	int ty = (int)s.height;
-	m_pTextureDataBuffer = new GLubyte[tx * ty * 4];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, m_pTextureDataBuffer);
-	VolatileTexture::addDataTexture(m_pTexture, m_pTextureDataBuffer, kTexture2DPixelFormat_RGBA8888, s);
+#else
+	void CCRenderTexture::end()
+	{
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
+		// Restore the original matrix and viewport
+		glPopMatrix();
+		CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+	//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+		CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+	}
 #endif
-
-
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
-	// Restore the original matrix and viewport
-	glPopMatrix();
-	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
-//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
-    CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
-}
 
 void CCRenderTexture::clear(float r, float g, float b, float a)
 {

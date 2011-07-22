@@ -195,7 +195,39 @@ void RenderTextureTest::ccTouchesMoved(CCSet* touches, CCEvent* event)
         }
     }
     // finish drawing and return context back to the screen
-    m_target->end();
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+    m_target->end(false);
+#else
+	m_target->end();
+#endif
+}
+
+void RenderTextureTest::ccTouchesEnded(CCSet* touches, CCEvent* event)
+{
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+
+	CCSetIterator it;
+	CCTouch* touch;
+
+	for( it = touches->begin(); it != touches->end(); it++) 
+	{
+		touch = (CCTouch*)(*it);
+
+		if(!touch)
+			break;
+
+		CCPoint location = touch->locationInView(touch->view());
+
+		location = CCDirector::sharedDirector()->convertToGL(location);
+
+		m_brush->setPosition(location);
+		m_brush->setRotation( rand()%360 );
+	}
+
+	m_target->begin();
+	m_brush->visit();
+	m_target->end(true);
+#endif
 }
 
 RenderTextureIssue937::RenderTextureIssue937()
