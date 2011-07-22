@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,21 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __ANDROID_COCOS2D_JNI_H__
-#define __ANDROID_COCOS2D_JNI_H__
+#ifndef __ANDROID_JNI_HELPER_H__
+#define __ANDROID_JNI_HELPER_H__
 
 #include <jni.h>
+#include "CCPlatformMacros.h"
 
-extern "C"
+namespace cocos2d {
 
-{
-	extern void enableAccelerometerJNI();
-	extern void disableAccelerometerJNI();
-	extern void showMessageBoxJNI(const char * pszMsg, const char * pszTitle);
-    extern void setKeyboardStateJNI(int bOpen);
-    extern char* getCurrentLanguageJNI();
-	extern char* getPackageNameJNI();
-	extern void terminateProcessJNI();
+	typedef struct JniMethodInfo_
+	{
+		JNIEnv *    env;
+		jclass      classID;
+		jmethodID   methodID;
+	} JniMethodInfo;
+
+	class CC_DLL JniHelper
+	{
+	public:
+		static JavaVM* getJavaVM();
+		static void setJavaVM(JavaVM *javaVM);
+		static jclass getClassID(const char *className, JNIEnv *env=0);
+		static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
+		static bool getMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
+		static char* jstringToChar(jstring str);
+
+	private:
+		static JavaVM *m_psJavaVM;
+	};
 }
 
-#endif // __ANDROID_COCOS2D_JNI_H__
+#endif // __ANDROID_JNI_HELPER_H__

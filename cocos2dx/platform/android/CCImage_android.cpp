@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCPlatformMacros.h"
 #include "Cocos2dJni.h"
 #include "CCImage.h"
+#include "jni/JniHelper.h"
 
 
 NS_CC_BEGIN;
@@ -55,28 +56,11 @@ public:
 
 	bool getBitmapFromJava(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize)
 	{
-		// get env
-		if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) <0 )
+		JniMethodInfo methodInfo;
+		if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmap", 
+			"(Ljava/lang/String;Ljava/lang/String;IIII)V"))
 		{
-			if (gJavaVM->AttachCurrentThread(&env, NULL) < 0)
-			{
-				return false;
-			}
-		}
-
-		// get class
-		jclass mClass = env->FindClass("org/cocos2dx/lib/Cocos2dxBitmap");
-		if (! mClass)
-		{
-			CCLOG("can not find org.cocos2dx.Cocos2dJNI");
-			return false;
-		}
-
-		// get method of createBitmap
-		jmethodID midCreateTextBitmap = env->GetStaticMethodID(mClass, "createTextBitmap", "(Ljava/lang/String;Ljava/lang/String;IIII)V");
-		if (! midCreateTextBitmap)
-		{
-			CCLOG("can not find method createTextBitmap");
+			CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
 			return false;
 		}
 
@@ -86,8 +70,8 @@ public:
 		 * and data.
 		 * use this appoach to decrease the jni call number
 		*/
-		env->CallStaticVoidMethod(mClass, midCreateTextBitmap, env->NewStringUTF(text), env->NewStringUTF(pFontName), 
-			(int)fontSize, eAlignMask, nWidth, nHeight);
+		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, methodInfo.env->NewStringUTF(text), 
+			methodInfo.env->NewStringUTF(pFontName), (int)fontSize, eAlignMask, nWidth, nHeight);
 
 		return true;
 	}
@@ -159,7 +143,7 @@ extern "C"
 		cocos2d::sharedBitmapDC().m_nWidth = width;
 		cocos2d::sharedBitmapDC().m_nHeight = height;
 		cocos2d::sharedBitmapDC().m_pData = new unsigned char[size];
-		cocos2d::sharedBitmapDC().env->GetByteArrayRegion(pixels, 0, size, (jbyte*)cocos2d::sharedBitmapDC().m_pData);
+		env->GetByteArrayRegion(pixels, 0, size, (jbyte*)cocos2d::sharedBitmapDC().m_pData);
 
 		// swap data
 		unsigned int *tempPtr = (unsigned int*)cocos2d::sharedBitmapDC().m_pData;
