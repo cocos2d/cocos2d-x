@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "CCAccelerometer_android.h"
 #include <android/log.h>
 
+#include "jni/JniHelper.h"
+
 #if 0
 #define  LOG_TAG    "Cocos2dJni"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -50,32 +52,18 @@ extern "C"
     // java vm helper function
     //////////////////////////////////////////////////////////////////////////
 
-    JavaVM *gJavaVM = NULL;
-
-    jint JNI_OnLoad(JavaVM *vm, void *reserved)
-    {
-        gJavaVM = vm;
-        return JNI_VERSION_1_4;
-    }
-
-    struct TMethodJNI
-    {
-        JNIEnv *    env;
-        jclass      classID;
-        jmethodID   methodID;
-    };
-    static bool getMethodID(struct TMethodJNI& t, const char *className, const char *methodName, const char *paramCode)
+    static bool getMethodID(JniMethodInfo& t, const char *className, const char *methodName, const char *paramCode)
     {
         bool ret = 0;
         do 
         {
-            if (gJavaVM->GetEnv((void**)&t.env, JNI_VERSION_1_4) != JNI_OK)
+            if (JniHelper::getJavaVM()->GetEnv((void**)&t.env, JNI_VERSION_1_4) != JNI_OK)
             {
                 LOGD("Failed to get the environment using GetEnv()");
                 break;
             }
 
-            if (gJavaVM->AttachCurrentThread(&t.env, 0) < 0)
+            if (JniHelper::getJavaVM()->AttachCurrentThread(&t.env, 0) < 0)
             {
                 LOGD("Failed to get the environment using AttachCurrentThread()");
                 break;
@@ -291,7 +279,7 @@ extern "C"
 
 	void enableAccelerometerJNI()
 	{
-		TMethodJNI t;
+		JniMethodInfo t;
         if (getMethodID(t
             , "org/cocos2dx/lib/Cocos2dxActivity"
             , "enableAccelerometer"
@@ -303,7 +291,7 @@ extern "C"
 
 	void disableAccelerometerJNI()
 	{
-        TMethodJNI t;
+        JniMethodInfo t;
 
         if (getMethodID(t
             , "org/cocos2dx/lib/Cocos2dxActivity"
@@ -321,7 +309,7 @@ extern "C"
 			return;
 		}
 
-        TMethodJNI t;
+        JniMethodInfo t;
         if (getMethodID(t
             , "org/cocos2dx/lib/Cocos2dxActivity"
             , "showMessageBox"
@@ -349,7 +337,7 @@ extern "C"
 
     void setKeyboardStateJNI(int bOpen)
     {
-        TMethodJNI t;
+        JniMethodInfo t;
         //jint open = bOpen;
         if (getMethodID(t
             , "org/cocos2dx/lib/Cocos2dxGLSurfaceView"
@@ -380,7 +368,7 @@ extern "C"
     {
         JNIEnv * env = 0;
 
-        if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env)
+        if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env)
         {
             return 0;
         }
@@ -418,7 +406,7 @@ extern "C"
 
 	char* getPackageNameJNI()
 	{
-		TMethodJNI t;
+		JniMethodInfo t;
 		char* ret = NULL;
 
 		if (getMethodID(t, 
@@ -440,7 +428,7 @@ extern "C"
     //////////////////////////////////////////////////////////////////////////
     char* getCurrentLanguageJNI()
     {
-        TMethodJNI t;
+        JniMethodInfo t;
         char* ret = NULL;
 
         if (getMethodID(t
@@ -462,7 +450,7 @@ extern "C"
 	//////////////////////////////////////////////////////////////////////////
 	void terminateProcessJNI()
 	{
-		TMethodJNI t;
+		JniMethodInfo t;
 
 		if (getMethodID(t
 			, "org/cocos2dx/lib/Cocos2dxActivity"
