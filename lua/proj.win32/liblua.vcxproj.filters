@@ -4,9 +4,6 @@
     <Filter Include="lua">
       <UniqueIdentifier>{020bfeb5-842d-4139-94b3-8c4efa7c9d4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocos2dx_support">
-      <UniqueIdentifier>{a7b0a396-a4d9-467c-808d-f127ea7ac30d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="tolua">
       <UniqueIdentifier>{71825967-f1c3-4552-abf5-2b4618f567b7}</UniqueIdentifier>
     </Filter>
@@ -108,15 +105,6 @@
     <ClCompile Include="..\lua\print.c">
       <Filter>lua</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\LuaEngine.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\LuaEngineImpl.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\tolua\tolua_event.c">
       <Filter>tolua</Filter>
     </ClCompile>
@@ -202,15 +190,6 @@
     </ClInclude>
     <ClInclude Include="..\lua\lzio.h">
       <Filter>lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\LuaEngine.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\LuaEngineImpl.h">
-      <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\tolua\tolua++.h">
       <Filter>tolua</Filter>
