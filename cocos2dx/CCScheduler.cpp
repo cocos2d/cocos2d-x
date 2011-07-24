@@ -159,7 +159,7 @@ void CCTimer::update(ccTime dt)
 
 	if (m_fElapsed >= m_fInterval)
 	{
-		if (NULL != m_pfnSelector)
+                if (0 != m_pfnSelector)
 		{
 			(m_pTarget->*m_pfnSelector)(m_fElapsed);
 			m_fElapsed = 0;
