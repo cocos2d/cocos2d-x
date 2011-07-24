@@ -27,25 +27,9 @@ THE SOFTWARE.
 #include "CCScriptSupport.h"
 #include "cocos2d.h"
 
-#ifdef _WINDOWS
-
-#undef LUA_DLL
-
-#if defined(_USRDLL)
-    #define LUA_DLL     __declspec(dllexport)
-#else 		/* use a DLL library */
-    #define LUA_DLL     __declspec(dllimport)
-#endif
-
-#else
-    #define LUA_DLL
-
-#endif  // CC_PLATFORM_WIN32
-
-class LUA_DLL LuaEngine : public cocos2d::CCScriptEngineProtocol
+class LuaEngine : public cocos2d::CCScriptEngineProtocol
 {
 public:
-
 	// functions for excute touch event
 	virtual bool executeTouchEvent(const char *pszFuncName, cocos2d::CCTouch *pTouch);
 	virtual bool executeTouchesEvent(const char *pszFuncName, cocos2d::CCSet *pTouches);

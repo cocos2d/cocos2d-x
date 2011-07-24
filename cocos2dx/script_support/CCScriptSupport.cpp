@@ -25,6 +25,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN;
 
+CCScriptEngineProtocol::CCScriptEngineProtocol() {}
+
 CCScriptEngineManager::CCScriptEngineManager() 
 :m_pScriptEngine(NULL) 
 {

@@ -17,12 +17,12 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\lua;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -80,7 +80,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\lua;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBLUA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -137,9 +137,6 @@
     <ClCompile Include="..\lua\lvm.c" />
     <ClCompile Include="..\lua\lzio.c" />
     <ClCompile Include="..\lua\print.c" />
-    <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp" />
-    <ClCompile Include="..\cocos2dx_support\LuaEngine.cpp" />
-    <ClCompile Include="..\cocos2dx_support\LuaEngineImpl.cpp" />
     <ClCompile Include="..\tolua\tolua_event.c" />
     <ClCompile Include="..\tolua\tolua_is.c" />
     <ClCompile Include="..\tolua\tolua_map.c" />
@@ -170,9 +167,6 @@
     <ClInclude Include="..\lua\lundump.h" />
     <ClInclude Include="..\lua\lvm.h" />
     <ClInclude Include="..\lua\lzio.h" />
-    <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h" />
-    <ClInclude Include="..\cocos2dx_support\LuaEngine.h" />
-    <ClInclude Include="..\cocos2dx_support\LuaEngineImpl.h" />
     <ClInclude Include="..\tolua\tolua++.h" />
     <ClInclude Include="..\tolua\tolua_event.h" />
   </ItemGroup>

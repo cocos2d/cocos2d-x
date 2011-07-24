@@ -91,7 +91,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 {
     CC_UNUSED_PARAM(eImgFmt);
     CCFileData data(CCFileUtils::fullPathFromRelativePath(strPath), "rb");
-    return initWithImageData(data.getBuffer(), data.getSize());
+    return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
 }
 
 bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
