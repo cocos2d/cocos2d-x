@@ -369,6 +369,7 @@ public:
 	static CCMutableArray<T>* arrayWithObjects(T pObject1, ...)
 	{
 		CCMutableArray<T> *pArray = new CCMutableArray<T>();
+        pArray->autorelease();
 
 		va_list params;
 		va_start(params, pObject1);
@@ -385,14 +386,22 @@ public:
 		return pArray;
 	}
 
-	static CCMutableArray<T>* arrayWithArray(CCMutableArray<T> *pArray)
+	static CCMutableArray<T>* arrayWithArray(CCMutableArray<T> *pSrcArray)
 	{
-		if (pArray == NULL)
+        CCMutableArray<T> *pDestArray = NULL;
+        
+		if (pSrcArray == NULL)
 		{
-			return new CCMutableArray<T>();
+            pDestArray = new CCMutableArray<T>();
 		}
-
-		return pArray->copy();
+        else
+        {
+            pDestArray = pSrcArray->copy();
+        }
+        
+        pDestArray->autorelease();
+        
+		return pDestArray;
 	}
 
 private:
