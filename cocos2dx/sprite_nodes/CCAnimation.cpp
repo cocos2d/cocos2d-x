@@ -105,7 +105,8 @@ namespace cocos2d
 	{
         m_fDelay = delay;
 		m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
-
+        m_pobFrames->retain();
+        
 		return true;
 	}
 
@@ -134,6 +135,7 @@ namespace cocos2d
 		m_fDelay = fDelay;
 		m_nameStr = pszName;
 		m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
+        m_pobFrames->retain();
 
 		return true;
 	}
