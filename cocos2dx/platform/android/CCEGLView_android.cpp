@@ -23,12 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCEGLView_android.h"
 #include "GLES/gl.h"
-
 #include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "CCTouchDispatcher.h"
-#include "Cocos2dJni.h"
+#include "jni/IMEJni.h"
+#include "jni/MessageJni.h"
 
 #include <stdlib.h>
 
