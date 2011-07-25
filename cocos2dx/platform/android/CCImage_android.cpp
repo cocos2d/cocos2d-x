@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include <jni.h>
 
 #include "CCPlatformMacros.h"
-#include "Cocos2dJni.h"
 #include "CCImage.h"
 #include "jni/JniHelper.h"
 
