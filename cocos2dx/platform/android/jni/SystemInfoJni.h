@@ -21,34 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __ANDROID_SYSTEM_INFO_JNI_H__
+#define __ANDROID_SYSTEM_INFO_JNI_H__
 
-#ifndef __PLATFORM_ANDROID_CCACCELEROMETER_H__
-#define __PLATFORM_ANDROID_CCACCELEROMETER_H__
+#include <jni.h>
 
-#include "CCCommon.h"
-#include "CCAccelerometerDelegate.h"
-#include <list>
+extern "C"
 
-namespace   cocos2d {
-
-class CC_DLL CCAccelerometer
 {
-public:
-	CCAccelerometer();
-    ~CCAccelerometer();
+    extern char* getCurrentLanguageJNI();
+	extern char* getPackageNameJNI();
+}
 
-    static CCAccelerometer* sharedAccelerometer();
-
-    void removeDelegate(CCAccelerometerDelegate* pDelegate);
-    void addDelegate(CCAccelerometerDelegate* pDelegate);
-    void update(float x, float y, float z, long sensorTimeStamp);
-
-private:
-	static CCAccelerometer* m_spCCAccelerometer;
-	std::list<CCAccelerometerDelegate*>* m_pAccelDelegates;
-	CCAcceleration m_obAccelerationValue;
-};
-
-}//namespace cocos2d
-
-#endif
+#endif // __ANDROID_SYSTEM_INFO_JNI_H__

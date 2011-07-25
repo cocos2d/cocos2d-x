@@ -65,7 +65,12 @@ platform/platform.cpp \
 platform/android/CCEGLView_android.cpp \
 platform/android/CCAccelerometer_android.cpp \
 platform/android/CCApplication_android.cpp \
-platform/android/Cocos2dJni.cpp \
+platform/android/jni/JniHelper.cpp \
+platform/android/jni/IMEJni.cpp \
+platform/android/jni/MessageJni.cpp \
+platform/android/jni/SensorJni.cpp \
+platform/android/jni/SystemInfoJni.cpp \
+platform/android/jni/TouchesJni.cpp \
 script_support/CCScriptSupport.cpp \
 sprite_nodes/CCAnimation.cpp \
 sprite_nodes/CCAnimationCache.cpp \
@@ -97,7 +102,7 @@ tileMap_parallax_nodes/CCTMXTiledMap.cpp \
 tileMap_parallax_nodes/CCTMXXMLParser.cpp \
 tileMap_parallax_nodes/CCTileMapAtlas.cpp \
 touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp \
+touch_dispatcher/CCTouchHandler.cpp 
 
 
 
