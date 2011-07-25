@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,34 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __ANDROID_JNI_HELPER_H__
+#define __ANDROID_JNI_HELPER_H__
 
-#ifndef __PLATFORM_ANDROID_CCACCELEROMETER_H__
-#define __PLATFORM_ANDROID_CCACCELEROMETER_H__
+#include <jni.h>
+#include "CCPlatformMacros.h"
 
-#include "CCCommon.h"
-#include "CCAccelerometerDelegate.h"
-#include <list>
+namespace cocos2d {
 
-namespace   cocos2d {
+	typedef struct JniMethodInfo_
+	{
+		JNIEnv *    env;
+		jclass      classID;
+		jmethodID   methodID;
+	} JniMethodInfo;
 
-class CC_DLL CCAccelerometer
-{
-public:
-	CCAccelerometer();
-    ~CCAccelerometer();
+	class CC_DLL JniHelper
+	{
+	public:
+		static JavaVM* getJavaVM();
+		static void setJavaVM(JavaVM *javaVM);
+		static jclass getClassID(const char *className, JNIEnv *env=0);
+		static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
+		static bool getMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
+		static char* jstringToChar(jstring str);
 
-    static CCAccelerometer* sharedAccelerometer();
+	private:
+		static JavaVM *m_psJavaVM;
+	};
+}
 
-    void removeDelegate(CCAccelerometerDelegate* pDelegate);
-    void addDelegate(CCAccelerometerDelegate* pDelegate);
-    void update(float x, float y, float z, long sensorTimeStamp);
-
-private:
-	static CCAccelerometer* m_spCCAccelerometer;
-	std::list<CCAccelerometerDelegate*>* m_pAccelDelegates;
-	CCAcceleration m_obAccelerationValue;
-};
-
-}//namespace cocos2d
-
-#endif
+#endif // __ANDROID_JNI_HELPER_H__

@@ -25,7 +25,7 @@ THE SOFTWARE.
 NS_CC_BEGIN;
 
 #include "CCCommon.h"
-#include "Cocos2dJni.h"
+#include "jni/SystemInfoJni.h"
 
 #define  MAX_PATH 256
 
