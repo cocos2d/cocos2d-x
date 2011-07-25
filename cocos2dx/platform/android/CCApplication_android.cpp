@@ -2,7 +2,7 @@
 #include "jni/JniHelper.h"
 #include "CCDirector.h"
 #include "CCEGLView.h"
-#include "Cocos2dJni.h"
+#include "android/jni/SystemInfoJni.h"
 #include <android/log.h>
 #include <jni.h>
 
