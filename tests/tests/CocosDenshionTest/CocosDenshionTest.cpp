@@ -122,7 +122,7 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
 		break;
 	// play effect
 	case 6:
-		m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE, true);	
+		m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE);	
 		break;
 	// stop effect
 	case 7:
