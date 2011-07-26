@@ -168,7 +168,7 @@ namespace CocosDenshion
 		s3eSoundSetInt(S3E_SOUND_VOLUME, volume);
 	}
 
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
+	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 	{
 					
 		
