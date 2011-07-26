@@ -234,7 +234,7 @@ function AddConfigurations(proj, strProjectName) {
             if (wizard.FindSymbol('CC_USE_LUA')) {
                 strAddIncludeDir += ';..\\lua\\cocos2dx_support';
                 strAddIncludeDir += ';..\\lua\\tolua';
-                strAddIncludeDir += ';..\\lua\\src';
+                strAddIncludeDir += ';..\\lua\\lua';
             }
             CLTool.AdditionalIncludeDirectories = strAddIncludeDir;
 
