@@ -28,7 +28,6 @@ public class Cocos2dxSound {
 	private static final int MAX_SIMULTANEOUS_STREAMS_DEFAULT = 5;
 	private static final float SOUND_RATE = 1.0f;
 	private static final int SOUND_PRIORITY = 1;
-	private static final int SOUND_LOOP_TIME = 0;
 	private static final int SOUND_QUALITY = 5;
 	
 	private final int INVALID_SOUND_ID = -1;
@@ -75,15 +74,17 @@ public class Cocos2dxSound {
 		}
 	}
 	
-	public int playEffect(String path){
+	public int playEffect(String path, boolean isLoop){
 		Integer soundId = this.mPathSoundIDMap.get(path);
 		
 		if (soundId != null){
-			// the sound is preloaded
+			// the sound is preloaded, stop it first
+			
+			this.mSoundPool.stop(soundId);
 			
 			// play sound
 			int streamId = this.mSoundPool.play(soundId.intValue(), this.mLeftVolume, 
-					this.mRightVolume, SOUND_PRIORITY, SOUND_LOOP_TIME, SOUND_RATE);
+					this.mRightVolume, SOUND_PRIORITY, isLoop ? -1 : 0, SOUND_RATE);
 			
 			// record sound id and stream id map
 			this.mSoundIdStreamIdMap.put(soundId, streamId);
@@ -106,7 +107,7 @@ public class Cocos2dxSound {
 			 *    Because the method is supported from 2.2, so I can't use
 			 *    it here.
 			 */
-			playEffect(path);
+			playEffect(path, isLoop);
 		}
 		
 		return soundId.intValue();

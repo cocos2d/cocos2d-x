@@ -204,7 +204,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 
 
 // for sound effects
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
     preloadEffect(pszFilePath);
     int nRet = -1;
