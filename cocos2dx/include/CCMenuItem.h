@@ -74,6 +74,9 @@ namespace cocos2d{
 		*  If pszFunctionName is NULL, then unregister it.
 		*/
 		virtual void registerScriptHandler(const char* pszFunctionName);
+
+                /** set the target/selector of the menu item*/
+                void setTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
 	protected:
 		SelectorProtocol*	m_pListener;
 		SEL_MenuHandler		m_pfnSelector;
