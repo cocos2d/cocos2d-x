@@ -219,6 +219,12 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
         soundParam.dataLen    = pElement->nDataSize;
         soundParam.dataType   = SOUND_TYPE_WAVE;
         soundParam.volume     = (int) (0xFFFF * s_fEffectsVolume);
+		int nTimes = 0;
+		if (bLoop)
+		{
+			nTimes = -1;
+		}
+		soundParam.loopTime = nTimes;
 
         nRet = s_pEffectPlayer->Play(soundParam);
     } while (0);
