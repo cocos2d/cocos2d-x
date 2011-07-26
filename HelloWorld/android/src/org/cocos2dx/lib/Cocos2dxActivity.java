@@ -149,8 +149,8 @@ public class Cocos2dxActivity extends Activity{
     	backgroundMusicPlayer.setBackgroundVolume(volume);
     }
     
-    public static int playEffect(String path){
-    	return soundPlayer.playEffect(path);
+    public static int playEffect(String path, boolean isLoop){
+    	return soundPlayer.playEffect(path, isLoop);
     }
     
     public static void stopEffect(int soundId){
