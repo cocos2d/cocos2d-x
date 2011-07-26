@@ -44,7 +44,7 @@ extern "C"
 		JniMethodInfo t;
 		char* ret = 0;
 
-		if (JniHelper::getMethodInfo(t, 
+		if (JniHelper::getStaticMethodInfo(t, 
 						"org/cocos2dx/lib/Cocos2dxActivity",
 						"getCocos2dxPackageName",
 						"()Ljava/lang/String;"))
@@ -66,7 +66,7 @@ extern "C"
         JniMethodInfo t;
         char* ret = 0;
 
-        if (JniHelper::getMethodInfo(t
+        if (JniHelper::getStaticMethodInfo(t
             , "org/cocos2dx/lib/Cocos2dxActivity"
             , "getCurrentLanguage"
             , "()Ljava/lang/String;"))
