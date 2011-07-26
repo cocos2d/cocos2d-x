@@ -75,7 +75,7 @@ extern "C"
 	{
 		JniMethodInfo t;
 
-		if (JniHelper::getMethodInfo(t, 
+		if (JniHelper::getStaticMethodInfo(t, 
 			                         "org/cocos2dx/lib/Cocos2dxActivity",
 									 "enableAccelerometer",
 									 "()V"))
@@ -88,7 +88,7 @@ extern "C"
 	{
 		JniMethodInfo t;
 
-		if (JniHelper::getMethodInfo(t, 
+		if (JniHelper::getStaticMethodInfo(t, 
 			"org/cocos2dx/lib/Cocos2dxActivity",
 			"disableAccelerometer",
 			"()V"))
