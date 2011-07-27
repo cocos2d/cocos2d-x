@@ -391,6 +391,12 @@ function GetTargetName(strName, strProjectName) {
             strTarget = strName.substring(0, nIndex) + strProjectName + strName.substring(nIndex + 4, strName.length);
         }
 
+        var strTemp = "../../../../../lua";
+        nIndex = strTarget.indexOf(strTemp);
+        if (nIndex >= 0) {
+            strTarget = "Classes" + strTarget.substring(nIndex + strTemp.length, strTarget.length);
+        }
+
         return strTarget;
     }
     catch (e) {
