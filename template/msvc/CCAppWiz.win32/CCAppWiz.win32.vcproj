@@ -111,27 +111,27 @@
 					Name="cocos2dx_support"
 					>
 					<File
-						RelativePath=".\Templates\1033\Classes\cocos2dx_support\LuaCocos2d.cpp"
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaCocos2d.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Templates\1033\Classes\cocos2dx_support\LuaCocos2d.h"
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaCocos2d.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Templates\1033\Classes\cocos2dx_support\LuaEngine.cpp"
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngine.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Templates\1033\Classes\cocos2dx_support\LuaEngine.h"
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngine.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Templates\1033\Classes\cocos2dx_support\LuaEngineImpl.cpp"
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngineImpl.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Templates\1033\Classes\cocos2dx_support\LuaEngineImpl.h"
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngineImpl.h"
 						>
 					</File>
 				</Filter>
