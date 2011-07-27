@@ -22,6 +22,8 @@ do
     fi
 done
 
+# remove test_image_rgba4444.pvr.gz
+rm -f $TESTS_ROOT/assets/Images/test_image_rgba4444.pvr.gz
 
 # build
 pushd $ANDROID_NDK_ROOT
