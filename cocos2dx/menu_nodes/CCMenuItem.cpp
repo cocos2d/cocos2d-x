@@ -123,7 +123,13 @@ namespace cocos2d{
 		return m_bIsSelected;
 	}
 
-	//
+        void CCMenuItem::setTarget(SelectorProtocol *rec, SEL_MenuHandler selector)
+        {
+            m_pListener = rec;
+            m_pfnSelector = selector;
+        }
+
+        //
 	//CCMenuItemLabel
 	//
 	ccColor3B CCMenuItemLabel::getDisabledColor()
