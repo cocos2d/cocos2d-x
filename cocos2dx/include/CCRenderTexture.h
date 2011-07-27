@@ -91,6 +91,9 @@ public:
 
     /* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
     CCData *getUIImageAsDataFromBuffer(int format);
+
+	bool getUIImageFromBuffer(CCImage *pImage);
+
 protected:
 	GLuint				m_uFBO;
 	GLint				m_nOldFBO;
