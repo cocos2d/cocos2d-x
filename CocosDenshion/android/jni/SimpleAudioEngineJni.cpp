@@ -151,17 +151,17 @@ extern "C"
 		}
 	}
 
-	unsigned int playEffectJNI(const char* path)
+	unsigned int playEffectJNI(const char* path, bool bLoop)
 	{
 		int ret = 0;
 
 		// int playEffect(String)
-		jmethodID playEffectMethodID = getMethodID("playEffect", "(Ljava/lang/String;)I");
+		jmethodID playEffectMethodID = getMethodID("playEffect", "(Ljava/lang/String;Z)I");
 
 		if (playEffectMethodID)
 		{
 			jstring StringArg = env->NewStringUTF(path);
-			ret = env->CallStaticIntMethod(classOfCocos2dxActivity, playEffectMethodID, StringArg);
+			ret = env->CallStaticIntMethod(classOfCocos2dxActivity, playEffectMethodID, StringArg, bLoop);
 		}
 
 		return (unsigned int)ret;

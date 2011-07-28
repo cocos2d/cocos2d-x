@@ -234,7 +234,7 @@ function AddConfigurations(proj, strProjectName) {
             if (wizard.FindSymbol('CC_USE_LUA')) {
                 strAddIncludeDir += ';..\\lua\\cocos2dx_support';
                 strAddIncludeDir += ';..\\lua\\tolua';
-                strAddIncludeDir += ';..\\lua\\src';
+                strAddIncludeDir += ';..\\lua\\lua';
             }
             CLTool.AdditionalIncludeDirectories = strAddIncludeDir;
 
@@ -389,6 +389,12 @@ function GetTargetName(strName, strProjectName) {
 
         if (nIndex >= 0) {
             strTarget = strName.substring(0, nIndex) + strProjectName + strName.substring(nIndex + 4, strName.length);
+        }
+
+        var strTemp = "../../../../../lua";
+        nIndex = strTarget.indexOf(strTemp);
+        if (nIndex >= 0) {
+            strTarget = "Classes" + strTarget.substring(nIndex + strTemp.length, strTarget.length);
         }
 
         return strTarget;

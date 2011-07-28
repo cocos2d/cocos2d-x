@@ -8,7 +8,14 @@ win32/main.cpp
 Classes/AppDelegate.h
 Classes/AppDelegate.cpp
 
-[! if ! CC_USE_LUA]
+[! if CC_USE_LUA]
+../../../../../lua/cocos2dx_support/LuaCocos2d.cpp
+../../../../../lua/cocos2dx_support/LuaEngine.cpp
+../../../../../lua/cocos2dx_support/LuaEngineImpl.cpp
+../../../../../lua/cocos2dx_support/LuaCocos2d.h
+../../../../../lua/cocos2dx_support/LuaEngine.h
+../../../../../lua/cocos2dx_support/LuaEngineImpl.h
+[! else]
 Classes/HelloWorldScene.h
 Classes/HelloWorldScene.cpp
 [! endif]

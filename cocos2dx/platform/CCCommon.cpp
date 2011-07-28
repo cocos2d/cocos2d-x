@@ -159,8 +159,9 @@ NS_CC_END;
 
 #include <android/log.h>
 #include <stdio.h>
+#include <jni.h>
 
-#include "android/Cocos2dJni.h"
+#include "android/jni/MessageJni.h"
 
 NS_CC_BEGIN;
 
