@@ -119,9 +119,9 @@ namespace CocosDenshion
 		setEffectsVolumeJNI(volume);
 	}
 
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
+	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 	{
-		return playEffectJNI(pszFilePath);
+		return playEffectJNI(pszFilePath, bLoop);
 	}
 
 	void SimpleAudioEngine::stopEffect(unsigned int nSoundId)

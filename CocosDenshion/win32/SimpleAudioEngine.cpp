@@ -9,8 +9,8 @@ using namespace std;
 
 namespace CocosDenshion {
 
-typedef map<unsigned int, MciPlayer> EffectList;
-typedef pair<unsigned int, MciPlayer> Effect;
+typedef map<unsigned int, MciPlayer *> EffectList;
+typedef pair<unsigned int, MciPlayer *> Effect;
 
 static char     s_szRootPath[MAX_PATH];
 static DWORD    s_dwRootLen;
@@ -50,6 +50,14 @@ SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
 void SimpleAudioEngine::end()
 {
     sharedMusic().Close();
+
+	EffectList::iterator p = sharedList().begin();
+	while (p != sharedList().end())
+	{
+		delete p->second;
+		p->second = NULL;
+		p++;
+	}   
     sharedList().clear();
     return;
 }
@@ -114,7 +122,7 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 // effect function
 //////////////////////////////////////////////////////////////////////////
 
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
     unsigned int nRet = _Hash(pszFilePath);
 
@@ -123,7 +131,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
     EffectList::iterator p = sharedList().find(nRet);
     if (p != sharedList().end())
     {
-        p->second.Rewind();
+        p->second->Play((bLoop) ? -1 : 1);
     }
 
     return nRet;
@@ -134,7 +142,7 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
     EffectList::iterator p = sharedList().find(nSoundId);
     if (p != sharedList().end())
     {
-        p->second.Stop();
+        p->second->Stop();
     }
 }
 
@@ -149,11 +157,11 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
         BREAK_IF(sharedList().end() != sharedList().find(nRet));
 
-        sharedList().insert(Effect(nRet, MciPlayer()));
-        MciPlayer& player = sharedList()[nRet];
-        player.Open(_FullPath(pszFilePath), nRet);
+        sharedList().insert(Effect(nRet, new MciPlayer()));
+        MciPlayer * pPlayer = sharedList()[nRet];
+        pPlayer->Open(_FullPath(pszFilePath), nRet);
 
-        BREAK_IF(nRet == player.GetSoundID());
+        BREAK_IF(nRet == pPlayer->GetSoundID());
 
         sharedList().erase(nRet);
         nRet = 0;
@@ -168,7 +176,14 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
     unsigned int nID = _Hash(pszFilePath);
-    sharedList().erase(nID);
+
+	EffectList::iterator p = sharedList().find(nID);
+	if (p != sharedList().end())
+	{
+		delete p->second;
+		p->second = NULL;
+		sharedList().erase(nID);
+	}    
 }
 
 //////////////////////////////////////////////////////////////////////////

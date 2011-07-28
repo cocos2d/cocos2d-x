@@ -389,6 +389,10 @@ void RenderTextureZbuffer::ccTouchesEnded(CCSet* touches, CCEvent* event)
 void RenderTextureZbuffer::renderScreenShot()
 {
 	CCRenderTexture *texture = CCRenderTexture::renderTextureWithWidthAndHeight(512, 512);
+	if (NULL == texture)
+	{
+		return;
+	}
 	texture->setAnchorPoint(ccp(0, 0));
 	texture->begin();
 

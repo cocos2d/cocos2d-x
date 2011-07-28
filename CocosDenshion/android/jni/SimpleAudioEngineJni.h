@@ -13,7 +13,7 @@ extern "C"
 	extern bool isBackgroundMusicPlayingJNI();
 	extern float getBackgroundMusicVolumeJNI();
 	extern void setBackgroundMusicVolumeJNI(float volume);
-	extern unsigned int playEffectJNI(const char* path);
+	extern unsigned int playEffectJNI(const char* path, bool bLoop);
 	extern void stopEffectJNI(unsigned int nSoundId);
 	extern void endJNI();
 	extern float getEffectsVolumeJNI();

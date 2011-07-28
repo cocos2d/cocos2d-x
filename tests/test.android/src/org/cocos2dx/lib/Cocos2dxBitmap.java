@@ -28,11 +28,7 @@ public class Cocos2dxBitmap{
     public static void createTextBitmap(String content, String fontName, 
     		int fontSize, int alignment, int width, int height){
     	
-    	// Avoid error when content is ""
-    	if (content.compareTo("") == 0){
-    		content = " ";
-    	}
-    	
+    	content = refactorString(content);   	
     	Paint paint = newPaint(fontName, fontSize, alignment);
     	
     	TextProperty textProperty = getTextWidthAndHeight(content, paint, width, height);      	
@@ -271,6 +267,40 @@ public class Cocos2dxBitmap{
         
         return paint;
     }
+    
+    private static String refactorString(String str){
+    	// Avoid error when content is ""
+		if (str.compareTo("") == 0){
+			return " ";
+		}
+		
+		/*
+		 * If the font of "\n" is "" or "\n", insert " " in front of it.
+		 * 
+		 * For example:
+		 * "\nabc"     -> " \nabc"
+		 * "\nabc\n\n" -> " \nabc\n \n"
+		 */
+		StringBuilder strBuilder = new StringBuilder(str);
+		int start = 0;
+		int index = strBuilder.indexOf("\n");
+		while (index != -1){
+			if (index == 0 || strBuilder.charAt(index -1) == '\n'){
+				strBuilder.insert(start, " ");
+				start = index + 2;
+			} else {
+				start = index + 1;
+			}
+			
+			if (start > strBuilder.length() || index == strBuilder.length()){
+				break;
+			}
+			
+			index = strBuilder.indexOf("\n", start);			
+		}
+		
+		return strBuilder.toString();
+	}
     
     private static void initNativeObject(Bitmap bitmap){
     	byte[] pixels = getPixels(bitmap);

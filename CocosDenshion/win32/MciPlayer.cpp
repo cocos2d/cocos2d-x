@@ -102,7 +102,7 @@ void MciPlayer::Play(UINT uTimes /* = 1 */)
 	}
 	MCI_PLAY_PARMS mciPlay = {0};
 	mciPlay.dwCallback = (DWORD_PTR)m_hWnd;
-	s_mciError = mciSendCommand(m_hDev,MCI_PLAY, MCI_NOTIFY,(DWORD)&mciPlay);
+	s_mciError = mciSendCommand(m_hDev,MCI_PLAY, MCI_FROM|MCI_NOTIFY,(DWORD)&mciPlay);
 	if (! s_mciError)
 	{
 		m_bPlaying = true;

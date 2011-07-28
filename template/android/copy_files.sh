@@ -43,11 +43,11 @@ copy_cpp_h_from_helloworld(){
 
 # copy resources
 copy_resouces(){
-    mkdir $APP_DIR/Resource
+    mkdir $APP_DIR/Resources
     
     for file in $HELLOWORLD_ROOT/Resource/*
     do
-        cp $file $APP_DIR/Resource
+        cp $file $APP_DIR/Resources
     done
 }
 

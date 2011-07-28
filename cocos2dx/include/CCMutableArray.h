@@ -47,7 +47,7 @@ public:
 		m_array.resize(uSize);
 	}
 
-	~CCMutableArray(void)
+	virtual ~CCMutableArray(void)
 	{
 		removeAllObjects();
 	}

@@ -107,6 +107,34 @@
 					RelativePath=".\Templates\1033\Classes\HelloWorldScene.h"
 					>
 				</File>
+				<Filter
+					Name="cocos2dx_support"
+					>
+					<File
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaCocos2d.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaCocos2d.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngine.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngine.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngineImpl.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lua\cocos2dx_support\LuaEngineImpl.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
