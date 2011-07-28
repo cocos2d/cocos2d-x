@@ -57,7 +57,7 @@ namespace cocos2d{
 		virtual ~CCMenu(){}
 
                 /** creates an empty CCMenu */
-                static CCMenu* menu();
+                static CCMenu* node();
 
                 /** creates a CCMenu with it's items */
                 static CCMenu* menuWithItems(CCMenuItem* item, ...);

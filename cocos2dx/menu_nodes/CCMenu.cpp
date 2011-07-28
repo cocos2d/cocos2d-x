@@ -45,7 +45,7 @@ namespace cocos2d{
 	//CCMenu
 	//
 
-        CCMenu* CCMenu::menu()
+        CCMenu* CCMenu::node()
         {
             CCMenu *menu = new CCMenu();
             if (menu && menu->init()) {
