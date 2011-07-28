@@ -225,7 +225,7 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 
 	bool bRet = false;
 	CCAssert(format == kCCImageFormatJPG || format == kCCImageFormatPNG,
-			 @"the image can only be saved as JPG or PNG format");
+			 "the image can only be saved as JPG or PNG format");
 
 	CCImage *pImage = new CCImage();
 	if (pImage != NULL && getUIImageFromBuffer(pImage))
@@ -261,7 +261,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
 
 	do
 	{
-		CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
+		CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 
 		CCSize s = m_pTexture->getContentSizeInPixels();
 		int tx = (int)s.width;
