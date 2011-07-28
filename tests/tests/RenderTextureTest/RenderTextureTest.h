@@ -25,7 +25,8 @@ public:
     RenderTextureTest();
     ~RenderTextureTest();
     virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+	
 private:
     CCRenderTexture*	m_target;
     CCSprite*			m_brush;

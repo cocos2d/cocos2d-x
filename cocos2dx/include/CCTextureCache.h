@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <string>
 #include "CCObject.h"
 #include "CCMutableDictionary.h"
+#include "CCTexture2D.h"
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     #include "CCImage.h"
@@ -37,7 +38,6 @@ THE SOFTWARE.
 #endif
 
 namespace   cocos2d {
-class CCTexture2D;
 class CCAsyncObject;
 class CCLock;
 class CCImage;
@@ -170,12 +170,20 @@ public:
 
 class VolatileTexture
 {
+typedef enum {
+	kInvalid = 0,
+	kImageFile,
+	kImageData,
+	kString,
+}ccCachedImageType;
+
 public:
     VolatileTexture(CCTexture2D *t);
     ~VolatileTexture();
 
     static void addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format);
     static void addStringTexture(CCTexture2D *tt, const char* text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+	static void addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, CCSize contentSize);
 
     static void removeTexture(CCTexture2D *t);
     static void reloadAllTextures();
@@ -187,7 +195,11 @@ public:
 protected:
     CCTexture2D *texture;
 
-    bool m_bIsString;
+	ccCachedImageType m_eCashedImageType;
+
+	void *m_pTextureData;
+	CCSize m_TextureSize;
+	CCTexture2DPixelFormat m_PixelFormat;
 
     std::string m_strFileName;
     CCImage::EImageFormat m_FmtImage;
