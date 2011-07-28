@@ -274,10 +274,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
 		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
 		this->end();
 
-		pImage->initWithImageData(pBuffer, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
-
-		bRet = true;
-
+		bRet = pImage->initWithImageData(pBuffer, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
 	} while (0);
 
 	CC_SAFE_DELETE_ARRAY(pBuffer);
