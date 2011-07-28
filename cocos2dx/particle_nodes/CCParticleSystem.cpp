@@ -199,9 +199,10 @@ bool CCParticleSystem::initWithDictionary(CCDictionary<std::string, CCObject*> *
 			m_fEndSizeVar = (float)atof(valueForKey("finishParticleSizeVariance", dictionary));
 
 			// position
-			m_tPosition.x = (float)atof(valueForKey("sourcePositionx", dictionary));
-			m_tPosition.y = (float)atof(valueForKey("sourcePositiony", dictionary));
-			m_tPosVar.x = (float)atof(valueForKey("sourcePositionVariancex", dictionary));
+            float x = (float)atof(valueForKey("sourcePositionx", dictionary));
+            float y = (float)atof(valueForKey("sourcePositiony", dictionary));
+            this->setPosition( ccp(x,y) );			
+            m_tPosVar.x = (float)atof(valueForKey("sourcePositionVariancex", dictionary));
 			m_tPosVar.y = (float)atof(valueForKey("sourcePositionVariancey", dictionary));
 
 			// Spinning
