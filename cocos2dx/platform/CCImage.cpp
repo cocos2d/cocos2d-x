@@ -375,14 +375,14 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 
 		png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
-		if (png_ptr == NULL)
+		if (NULL == png_ptr)
 		{
 			fclose(fp);
 			break;
 		}
 
 		info_ptr = png_create_info_struct(png_ptr);
-		if (info_ptr == NULL)
+		if (NULL == info_ptr)
 		{
 			fclose(fp);
 			png_destroy_write_struct(&png_ptr, NULL);
@@ -441,7 +441,12 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 			if (bIsToRGB)
 			{
 				unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
-				CC_BREAK_IF(NULL == pTempData);
+				if (NULL == pTempData)
+				{
+					fclose(fp);
+					png_destroy_write_struct(&png_ptr, &info_ptr);
+					break;
+				}
 
 				for (int i = 0; i < m_nHeight; ++i)
 				{
@@ -527,7 +532,13 @@ bool CCImage::_saveImageToJPG(const char * pszFilePath)
 		if (m_bHasAlpha)
 		{
 			unsigned char *pTempData = new unsigned char[m_nWidth * m_nHeight * 3];
-			CC_BREAK_IF(NULL == pTempData);
+			if (NULL == pTempData)
+			{
+				jpeg_finish_compress(&cinfo);
+				jpeg_destroy_compress(&cinfo);
+				fclose(outfile);
+				break;
+			}
 
 			for (int i = 0; i < m_nHeight; ++i)
 			{
