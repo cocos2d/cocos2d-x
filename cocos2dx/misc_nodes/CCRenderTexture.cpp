@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCImage.h"
 #include "support/ccUtils.h"
-
+#include "CCFileUtils.h"
 #include "CCGL.h"
 
 namespace cocos2d { 
@@ -222,24 +222,66 @@ bool CCRenderTexture::saveBuffer(const char *name)
 }
 bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 {
-    CC_UNUSED_PARAM(fileName);
-    CC_UNUSED_PARAM(format);
-	bool bRet = false;
-//@ todo CCRenderTexture::saveBuffer
-// 	UIImage *myImage = this->getUIImageFromBuffer(format);
-//     CCMutableArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//     CCString *documentsDirectory	= [paths objectAtIndex:0];
-//     CCString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
 
-//     CCData * data = this->getUIImageAsDataFromBuffer(format);
-// 	if (data)
-// 	{
-//         bRet = data->writeToFile(path, true);
-// 		delete data;
-//         bRet = true;
-// 	}
+	bool bRet = false;
+	CCAssert(format == kCCImageFormatJPG || format == kCCImageFormatPNG,
+			 "the image can only be saved as JPG or PNG format");
+
+	CCImage *pImage = new CCImage();
+	if (pImage != NULL && getUIImageFromBuffer(pImage))
+	{
+		std::string fullpath = CCFileUtils::getWriteablePath() + fileName;
+		if (kCCImageFormatPNG == format)
+		{
+			fullpath += ".png";
+		}
+		else
+		{
+			fullpath += ".jpg";
+		}
+		
+		bRet = pImage->saveToFile(fullpath.c_str());
+	}
+
+	CC_SAFE_DELETE(pImage);
+
 	return bRet;
 }
+
+/* get buffer as UIImage */
+bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
+{
+	if (NULL == pImage)
+	{
+		return false;
+	}
+
+	GLubyte * pBuffer   = NULL;
+	bool bRet = false;
+
+	do
+	{
+		CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
+
+		CCSize s = m_pTexture->getContentSizeInPixels();
+		int tx = (int)s.width;
+		int ty = (int)s.height;
+
+		CC_BREAK_IF(! (pBuffer = new GLubyte[tx * ty * 4]));
+
+		this->begin();
+		glPixelStorei(GL_PACK_ALIGNMENT, 1);
+		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
+		this->end();
+
+		bRet = pImage->initWithImageData(pBuffer, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
+	} while (0);
+
+	CC_SAFE_DELETE_ARRAY(pBuffer);
+
+	return bRet;
+}
+
 
 CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 {

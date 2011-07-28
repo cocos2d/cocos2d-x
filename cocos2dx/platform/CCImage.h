@@ -39,6 +39,7 @@ public:
     {
         kFmtJpg = 0,
         kFmtPng,
+		kFmtRawData,
     }EImageFormat;
 
     typedef enum
@@ -65,12 +66,18 @@ public:
     /**
     @brief  Load image from stream buffer.
 
-    @warning Only support png data now.
+	@warning kFmtRawData only support RGBA8888
     @param pBuffer  stream buffer that hold the image data
     @param nLength  the length of data(managed in byte)
+	@param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData
     @return true if load correctly
     */
-    bool initWithImageData(void * pData, int nDataLen, EImageFormat eFmt = kFmtPng);
+    bool initWithImageData(void * pData, 
+						   int nDataLen, 
+						   EImageFormat eFmt = kFmtPng,
+						   int nWidth = 0,
+						   int nHeight = 0,
+						   int nBitsPerComponent = 8);
 
     /**
     @brief	Create image with specified string.
@@ -99,18 +106,26 @@ public:
 
     /**
     @brief	Save the CCImage data to specified file with specified format.
+	@param	pszFilePath		the file's absolute path, including file subfix
+	@param	bIsToRGB		if the image is saved as RGB format
     */
-    bool saveToFile(const char * pszFilePath) { CC_UNUSED_PARAM(pszFilePath);return false; }
+    bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
     CC_SYNTHESIZE_READONLY(short,   m_nWidth,       Width);
     CC_SYNTHESIZE_READONLY(short,   m_nHeight,      Height);
-    CC_SYNTHESIZE_READONLY(int,        m_nBitsPerComponent,         BitsPerComponent);
+    CC_SYNTHESIZE_READONLY(int,     m_nBitsPerComponent,   BitsPerComponent);
 
 protected:
-    bool _initWithJpgData(void * pData, int nDatalen);
-    bool _initWithPngData(void * pData, int nDatalen);
+    bool _initWithJpgData(void *pData, int nDatalen);
+    bool _initWithPngData(void *pData, int nDatalen);
 
-    unsigned char * m_pData;
+	// @warning kFmtRawData only support RGBA8888
+	bool _initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent);
+
+	bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
+	bool _saveImageToJPG(const char *pszFilePath);
+
+    unsigned char *m_pData;
     bool m_bHasAlpha;
     bool m_bPreMulti;
 
