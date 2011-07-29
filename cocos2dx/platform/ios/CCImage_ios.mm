@@ -26,6 +26,11 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "CCFileUtils.h"
 #include <string>
+#if CC_FONT_LABEL_SUPPORT
+// FontLabel support
+#include "FontManager.h"
+#include "FontLabelStringDrawing.h"
+#endif// CC_FONT_LABEL_SUPPORT
 
 typedef struct
 {
@@ -336,14 +341,29 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         CC_BREAK_IF(! pText || ! pInfo);
         
         NSString * string  = [NSString stringWithUTF8String:pText];
+        NSString * fntName = [NSString stringWithUTF8String:pFontName];
         
-        // create the font
-        NSString * fntName = _isValidFontName(pFontName) ? [NSString stringWithUTF8String:pFontName] : @"MarkerFelt-Wide";
-        UIFont * font = [UIFont fontWithName:fntName size:nSize];
-        if (! font) 
+        // create the font        
+        UIFont * font = [UIFont fontWithName:fntName size:nSize];        
+        
+#if CC_FONT_LABEL_SUPPORT
+	if (! font)
+	{
+		font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
+	}
+#endif // CC_FONT_LABEL_SUPPORT
+
+        if (! font)
         {
-            font = [UIFont systemFontOfSize:nSize];
+                fntName = _isValidFontName(pFontName) ? fntName : @"MarkerFelt-Wide";
+                font = [UIFont fontWithName:fntName size:nSize];
+                
+                if (! font) 
+                {
+                        font = [UIFont systemFontOfSize:nSize];
+                }
         }
+
         CC_BREAK_IF(! font);
         
         // measure text size with specified font and determine the rectangle to draw text in
@@ -432,7 +452,19 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         UITextAlignment align = (2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft;
-        [string drawInRect:textRect withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+        
+        // normal fonts
+	if( [font isKindOfClass:[UIFont class] ] )
+	{
+		[string drawInRect:textRect withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+	}
+	
+#if CC_FONT_LABEL_SUPPORT
+	else // ZFont class 
+	{
+		[string drawInRect:textRect withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+	}
+#endif
         
         UIGraphicsPopContext();
         
@@ -473,7 +505,12 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
 }
 
-bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
+bool CCImage::initWithImageData(void * pData, 
+                                int nDataLen, 
+                                EImageFormat eFmt,
+                                int nWidth,
+                                int nHeight,
+                                int nBitsPerComponent)
 {
     bool bRet = false;
     tImageInfo info = {0};
