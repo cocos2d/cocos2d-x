@@ -125,8 +125,7 @@ public class Cocos2dxBitmap{
             		maxContentWidth = temp;
             	}
             }
-        }
-        
+        }        
         
         return new TextProperty(maxContentWidth, h, lines);
     }
@@ -274,8 +273,6 @@ public class Cocos2dxBitmap{
         else {
         	paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
         }
-        
-        paint.setTypeface(typeFace);
         
         switch (alignment){
     	case ALIGNCENTER:
