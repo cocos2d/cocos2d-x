@@ -39,7 +39,7 @@ public class Cocos2dxBitmap{
     	content = refactorString(content);   	
     	Paint paint = newPaint(fontName, fontSize, alignment);
     	
-    	TextProperty textProperty = getTextWidthAndHeight(content, paint, width, height);      	
+    	TextProperty textProperty = computeTextProperty(content, paint, width, height);      	
       
         // Draw text to bitmap
         Bitmap bitmap = Bitmap.createBitmap(textProperty.maxWidth, 
@@ -103,7 +103,7 @@ public class Cocos2dxBitmap{
     	}
     }
     
-    private static TextProperty getTextWidthAndHeight(String content, Paint paint,
+    private static TextProperty computeTextProperty(String content, Paint paint,
     		int maxWidth, int maxHeight){              
         FontMetricsInt fm = paint.getFontMetricsInt();
         int h = (int)Math.ceil(fm.descent - fm.ascent);
@@ -126,7 +126,6 @@ public class Cocos2dxBitmap{
             	}
             }
         }
-        
         
         return new TextProperty(maxContentWidth, h, lines);
     }
@@ -252,15 +251,15 @@ public class Cocos2dxBitmap{
     	Paint paint = new Paint();
     	paint.setColor(Color.WHITE);
         paint.setTextSize(fontSize);      
-        paint.setAntiAlias(true);
-        Typeface typeFace = null;      
+        paint.setAntiAlias(true);    
         
         /*
          * Set type face for paint, now it support .ttf file.
          */
         if (fontName.endsWith(".ttf")){
         	 try {
-             	typeFace = Typeface.createFromAsset(context.getAssets(), fontName);
+        		Typeface typeFace = Typeface.createFromAsset(context.getAssets(), fontName);
+             	paint.setTypeface(typeFace);
              } catch (Exception e){
              	Log.e("Cocos2dxBitmap", 
              		"error to create ttf type face: " + fontName);
@@ -274,9 +273,7 @@ public class Cocos2dxBitmap{
         else {
         	paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
         }
-        
-        paint.setTypeface(typeFace);
-        
+               
         switch (alignment){
     	case ALIGNCENTER:
     		paint.setTextAlign(Align.CENTER);

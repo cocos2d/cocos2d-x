@@ -42,6 +42,7 @@
 #include "DirectorTest/DirectorTest.h"
 #include "BugsTest/BugsTest.h"
 #include "Texture2dTest/Texture2dTest.h"
+#include "FontTest/FontTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -94,6 +95,7 @@ enum
 	TEST_USERDEFAULT,
     TEST_DIRECTOR,
     TEST_BUGS,
+	TEST_FONTS,
 
     TESTS_COUNT,
 };
@@ -137,7 +139,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"CurlTest",
 	"UserDefaultTest",
     "DirectorTest",
-    "BugsTest"
+    "BugsTest",
+	"FontTest"
 };
 
 #endif

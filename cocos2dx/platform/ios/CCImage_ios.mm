@@ -342,15 +342,24 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         NSString * string  = [NSString stringWithUTF8String:pText];
         NSString * fntName = [NSString stringWithUTF8String:pFontName];
+        CGSize dim;
         
         // create the font        
-        UIFont * font = [UIFont fontWithName:fntName size:nSize];        
+        id font = [UIFont fontWithName:fntName size:nSize];  
+        if (font)
+        {
+                dim = [string sizeWithFont:font];
+        }      
         
 #if CC_FONT_LABEL_SUPPORT
-	if (! font)
-	{
-		font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
-	}
+	    if (! font)
+	    {
+		        font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
+		        if (font)
+                {
+                        dim = [string sizeWithZFont:font];
+                }  
+	    }
 #endif // CC_FONT_LABEL_SUPPORT
 
         if (! font)
@@ -362,93 +371,48 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                 {
                         font = [UIFont systemFontOfSize:nSize];
                 }
+                
+                if (font)
+                {
+                        dim = [string sizeWithFont:font];
+                }  
+        }
+        
+        if (pInfo->width != 0 || pInfo->height != 0)
+        {
+                dim.width = pInfo->width;
+                dim.height = pInfo->height;
+        }
+        else
+        {
+                pInfo->width = dim.width;
+                pInfo->height = dim.height;
         }
 
         CC_BREAK_IF(! font);
         
-        // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = eAlign & 0x0f;
-        unsigned uVertFlag = (eAlign & 0xf0) >> 4;
-        
-        CGSize textSize;    // the size which total text layout need
-        CGSize canvasSize;  // the size which malloc for drawtext
-        CGRect textRect;    // the rectangle which draw text in
-        
-        if (0 >= pInfo->width)
-        {
-            //  the content width no limit, use 0x7fffffff as a big enough bounds
-            CGSize contentSize = CGSizeMake(0x7fffffff, 0x7fffffff);
-            textSize = [string sizeWithFont:font constrainedToSize:contentSize];
-            
-            canvasSize    = textSize;
-            pInfo->width  = (size_t) textSize.width;
-            pInfo->height = (size_t) textSize.height;
-            
-            textRect = CGRectMake(0, 0, textSize.width, textSize.height);
-        }
-        else
-        {
-            //  the content  height no limit, use 0x7fffffff as a big enough height
-            CGSize contentSize = CGSizeMake(pInfo->width, 0x7fffffff);
-            textSize = [string sizeWithFont:font constrainedToSize:contentSize];
-            
-            if (0 >= pInfo->height)
-            {
-                canvasSize    = textSize;
-                pInfo->height = (size_t) textSize.height;
-                pInfo->width  = (size_t) textSize.width;
-                
-                textRect = CGRectMake(0, 0, textSize.width, textSize.height);
-            }
-            else
-            {
-                canvasSize.width = pInfo->width;
-                if (textSize.height <= pInfo->height)
-                {
-                    canvasSize.height = pInfo->height;
-                }
-                else
-                {
-                    // the height of text larger than the specified
-                    // let canvas's height larger a little,
-                    // make sure the last line of text in specified rectangle draw in canvas
-                    size_t lineHeight = (size_t)font.lineHeight;
-                    canvasSize.height = ((pInfo->height + lineHeight - 1) / lineHeight) * lineHeight;
-                }
-
-                canvasSize = CGSizeMake(pInfo->width, MAX(pInfo->height, (size_t)textSize.height));
-                
-                textRect.size = textSize;
-                textRect.origin.x = (1 == uHoriFlag) ? 0               // align to left
-                    : (2 == uHoriFlag) ? pInfo->width - textSize.width // align to right
-                    : (pInfo->width - textSize.width) / 2;             // align to center
-
-                textRect.origin.y = (1 == uVertFlag || textSize.height >= pInfo->height) ? 0 // align to top
-                    : (2 == uVertFlag) ? pInfo->height - textSize.height // align to bottom
-                    : (pInfo->height - textSize.height) / 2;             // align to center
-            }
-
-        }
-                
-        // malloc space to store pixels data
-        size_t width  = (size_t)canvasSize.width;
-        size_t height = (size_t)canvasSize.height;
-        unsigned char* data = new unsigned char[width * height * 4];
-        CC_BREAK_IF(! data);
-        memset(data, 0, height * width * 4);
+        unsigned char* data = new unsigned char[pInfo->width * pInfo->height * 4];
+        memset(data, 0, pInfo->width * pInfo->height * 4);
         
         // draw text
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        
-        CGContextRef context = CGBitmapContextCreate(data, width, height, 8, width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();    
+        CGContextRef context = CGBitmapContextCreate(data, dim.width, dim.height, 8, dim.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
         CGColorSpaceRelease(colorSpace);
-		CC_BREAK_IF(!context);
+        
+		if (! context)
+		{
+		        delete[] data;
+		        break;
+		}
         
         CGContextSetRGBFillColor(context, 1, 1, 1, 1);
-        CGContextTranslateCTM(context, 0.0f, height);
+        CGContextTranslateCTM(context, 0.0f, dim.height);
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
         UIGraphicsPushContext(context);
         
+        // measure text size with specified font and determine the rectangle to draw text in
+        unsigned uHoriFlag = eAlign & 0x0f;
+        unsigned uVertFlag = (eAlign & 0xf0) >> 4;
         UITextAlignment align = (2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft;
@@ -456,13 +420,13 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         // normal fonts
 	if( [font isKindOfClass:[UIFont class] ] )
 	{
-		[string drawInRect:textRect withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[string drawInRect:CGRectMake(0, 0, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 	
 #if CC_FONT_LABEL_SUPPORT
 	else // ZFont class 
 	{
-		[string drawInRect:textRect withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[string drawInRect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 #endif
         
@@ -555,6 +519,11 @@ bool CCImage::initWithString(
     m_pData = info.data;
 
     return true;
+}
+
+bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+{
+    return false;
 }
 
 NS_CC_END;

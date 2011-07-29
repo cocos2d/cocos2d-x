@@ -52,6 +52,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../tests/EaseActionsTest/EaseActionsTest.cpp \
 ../../../tests/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 ../../../tests/EffectsTest/EffectsTest.cpp \
+../../../tests/FontTest/FontTest.cpp \
 ../../../tests/HiResTest/HiResTest.cpp \
 ../../../tests/IntervalTest/IntervalTest.cpp \
 ../../../tests/KeypadTest/KeypadTest.cpp \
