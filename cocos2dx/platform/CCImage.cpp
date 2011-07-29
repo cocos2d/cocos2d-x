@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "png.h"
 #include <string>
+#include <ctype.h>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) 
 // on ios, we should use platform/ios/CCImage_ios.mm instead
