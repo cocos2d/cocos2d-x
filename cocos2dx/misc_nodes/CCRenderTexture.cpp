@@ -256,7 +256,8 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
 		return false;
 	}
 
-	GLubyte * pBuffer   = NULL;
+	GLubyte *pBuffer = NULL;
+	GLubyte *pTempData = NULL;
 	bool bRet = false;
 
 	do
@@ -268,16 +269,27 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
 		int ty = (int)s.height;
 
 		CC_BREAK_IF(! (pBuffer = new GLubyte[tx * ty * 4]));
+		CC_BREAK_IF(! (pTempData = new GLubyte[tx * ty * 4]));
 
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
 		this->end();
 
-		bRet = pImage->initWithImageData(pBuffer, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
+		// #640 the image read from rendertexture is upseted
+		int nRowBytes = tx * 4;
+		for (int i = 0; i < ty; ++i)
+		{
+			memcpy(&pTempData[(ty - 1 - i) * nRowBytes], 
+				&pBuffer[i * nRowBytes], 
+				nRowBytes);
+		}
+
+		bRet = pImage->initWithImageData(pTempData, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
 	} while (0);
 
 	CC_SAFE_DELETE_ARRAY(pBuffer);
+	CC_SAFE_DELETE_ARRAY(pTempData);
 
 	return bRet;
 }
