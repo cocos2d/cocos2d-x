@@ -155,10 +155,8 @@ bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 
 	if (value)
 	{
-		if (! strcmp(value, "true"))
-		{
-			ret = true;
-		}
+		ret = (! strcmp(value, "true"));
+		xmlFree((void*)value);
 	}
 
 	return ret;
