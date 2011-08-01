@@ -460,7 +460,7 @@
 		NSRange subrange = NSMakeRange(first, [_attributes count] - first);
 		if (NSMaxRange(range) < [_buffer length]) {
 			ZAttributeRun *newRun = [[ZAttributeRun alloc] initWithIndex:NSMaxRange(range)
-															  attributes:(NSDictionary*)[[_attributes lastObject] attributes]];
+															  attributes:(NSDictionary*)[(ZAttributeRun *)[_attributes lastObject] attributes]];
 			[_attributes addObject:newRun];
 			[newRun release];
 		}
@@ -484,7 +484,7 @@
 		if ([[_attributes objectAtIndex:firstAfter] index] > NSMaxRange(range)) {
 			// the first after is too far after, insert another run!
 			ZAttributeRun *newRun = [[ZAttributeRun alloc] initWithIndex:NSMaxRange(range)
-															  attributes:(NSDictionary*)[[_attributes objectAtIndex:firstAfter-1] attributes]];
+															  attributes:[(ZAttributeRun *)[_attributes objectAtIndex:firstAfter-1] attributes]];
 			[_attributes insertObject:newRun atIndex:firstAfter];
 			[newRun release];
 		}

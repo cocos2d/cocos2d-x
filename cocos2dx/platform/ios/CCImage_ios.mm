@@ -21,15 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include <Foundation/Foundation.h>
-#include <UIKit/UIKit.h>
-#include "CCImage.h"
-#include "CCFileUtils.h"
-#include <string>
+#import "CCImage.h"
+#import "CCFileUtils.h"
+#import <string>
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #if CC_FONT_LABEL_SUPPORT
 // FontLabel support
-#include "FontManager.h"
-#include "FontLabelStringDrawing.h"
+#import "FontLabel/FontManager.h"
+#import "FontLabel/FontLabelStringDrawing.h"
 #endif// CC_FONT_LABEL_SUPPORT
 
 typedef struct
@@ -340,15 +342,16 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
     {
         CC_BREAK_IF(! pText || ! pInfo);
         
-        NSString * string  = [NSString stringWithUTF8String:pText];
+        NSString * str  = [NSString stringWithUTF8String:pText];
         NSString * fntName = [NSString stringWithUTF8String:pFontName];
         CGSize dim;
         
-        // create the font        
-        id font = [UIFont fontWithName:fntName size:nSize];  
+        // create the font   
+        id font;
+        font = [UIFont fontWithName:fntName size:nSize];  
         if (font)
         {
-                dim = [string sizeWithFont:font];
+                dim = [str sizeWithFont:font];
         }      
         
 #if CC_FONT_LABEL_SUPPORT
@@ -357,7 +360,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		        font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
 		        if (font)
                 {
-                        dim = [string sizeWithZFont:font];
+                        //dim = [str sizeWithZFont:font];
+                        dim = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font];
                 }  
 	    }
 #endif // CC_FONT_LABEL_SUPPORT
@@ -374,7 +378,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                 
                 if (font)
                 {
-                        dim = [string sizeWithFont:font];
+                        dim = [str sizeWithFont:font];
                 }  
         }
         
@@ -412,7 +416,6 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         // measure text size with specified font and determine the rectangle to draw text in
         unsigned uHoriFlag = eAlign & 0x0f;
-        unsigned uVertFlag = (eAlign & 0xf0) >> 4;
         UITextAlignment align = (2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft;
@@ -420,13 +423,14 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         // normal fonts
 	if( [font isKindOfClass:[UIFont class] ] )
 	{
-		[string drawInRect:CGRectMake(0, 0, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[str drawInRect:CGRectMake(0, 0, dim.width, dim.height) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 	
 #if CC_FONT_LABEL_SUPPORT
 	else // ZFont class 
 	{
-		[string drawInRect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		//[str drawInRect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
+		[FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 #endif
         
