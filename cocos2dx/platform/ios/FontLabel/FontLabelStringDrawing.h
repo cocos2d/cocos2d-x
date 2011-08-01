@@ -4,6 +4,7 @@
 //
 //  Created by Kevin Ballard on 5/5/09.
 //  Copyright © 2009 Zynga Game Networks
+//  Copyright (c) 2011 cocos2d-x.org
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -66,4 +67,15 @@
 - (CGSize)drawInRect:(CGRect)rect withLineBreakMode:(UILineBreakMode)lineBreakMode alignment:(UITextAlignment)alignment;
 - (CGSize)drawInRect:(CGRect)rect withLineBreakMode:(UILineBreakMode)lineBreakMode alignment:(UITextAlignment)alignment
 	   numberOfLines:(NSUInteger)numberOfLines;
+@end
+
+// This class is used to invoke in .mm file.
+// Can not invoke FontLabelStringDrawing directly in .mm.
+// It seems that, in .mm it can not support category.
+@interface FontLabelStringDrawingHelper : NSObject {
+}
++ (CGSize)sizeWithZFont:(NSString*)string zfont:(ZFont *)font;
++ (CGSize)drawInRect:(NSString*)string rect:(CGRect)rect withZFont:(ZFont *)font 
+       lineBreakMode:(UILineBreakMode)lineBreakMode 
+           alignment:(UITextAlignment)alignment;
 @end

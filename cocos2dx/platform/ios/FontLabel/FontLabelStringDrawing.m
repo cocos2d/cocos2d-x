@@ -4,6 +4,7 @@
 //
 //  Created by Kevin Ballard on 5/5/09.
 //  Copyright © 2009 Zynga Game Networks
+//  Copyright (c) 2011 cocos2d-x.org
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -890,3 +891,17 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, U
 	return drawTextInRect(rect, self.string, self.attributes, lineBreakMode, alignment, numberOfLines, NO);
 }
 @end
+
+@implementation FontLabelStringDrawingHelper
++ (CGSize)sizeWithZFont:(NSString*)string zfont:(ZFont *)font {
+        CGSize size = drawOrSizeTextConstrainedToSize(NO, string, attributeRunForFont(font), CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), 1,
+												  UILineBreakModeClip, UITextAlignmentLeft, YES);
+	return CGSizeMake(ceilf(size.width), ceilf(size.height));
+}
+
++ (CGSize)drawInRect:(NSString*)string rect:(CGRect)rect withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode 
+           alignment:(UITextAlignment)alignment {
+       return [string drawInRect:rect withZFont:font lineBreakMode:lineBreakMode alignment:alignment];
+}
+@end
+
