@@ -100,6 +100,23 @@ CCLuaScriptModule::~CCLuaScriptModule()
 
 }
 
+
+/*************************************************************************
+    Add a path to find lua files in (equivalent to LUA_PATH)
+ *************************************************************************/
+bool CCLuaScriptModule::addSearchPath(const std::string& path)
+{
+    lua_getglobal( d_state, "package" );
+    lua_getfield( d_state, -1, "path" ); // get field "path" from table at top of stack (-1)
+    const char* cur_path =  lua_tostring( d_state, -1 ); // grab path string from top of stack
+    lua_pop( d_state, 1 ); // get rid of the string on the stack we just pushed on line 5
+    lua_pushfstring(d_state, "%s;%s/?.lua", cur_path, path.c_str());
+    lua_setfield( d_state, -2, "path" ); // set the field "path" in table at -2 with value at top of stack
+    lua_pop( d_state, 1 ); // get rid of package table from top of stack
+    return 0; // all done!
+}
+
+
 /*************************************************************************
 	Execute script file
 *************************************************************************/
