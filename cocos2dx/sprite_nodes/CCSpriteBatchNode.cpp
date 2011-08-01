@@ -266,7 +266,7 @@ namespace cocos2d
                 CCSprite* pChild = (CCSprite*) pObject;
                 if (pChild)
                 {
-                    pChild->useSelfRender();
+                    removeSpriteFromAtlas(pChild);
                 }
             }
 		}
