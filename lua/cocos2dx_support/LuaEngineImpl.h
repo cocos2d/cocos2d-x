@@ -60,7 +60,15 @@ public:
      @brief Destructor for LuaScriptModule class.
 	*/
 	virtual ~CCLuaScriptModule();
-
+    
+	/*************************************************************************
+        Seting Functions
+     *************************************************************************/
+    /**
+     @brief Add a path to find lua files in
+     @param path to be added to the Lua path
+    */
+    bool addSearchPath(const std::string& path);
 
 	/*************************************************************************
 		Script Execution Functions
