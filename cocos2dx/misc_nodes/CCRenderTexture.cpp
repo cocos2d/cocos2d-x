@@ -216,13 +216,21 @@ void CCRenderTexture::clear(float r, float g, float b, float a)
 	this->end();
 }
 
-bool CCRenderTexture::saveBuffer(const char *name)
+bool CCRenderTexture::saveBuffer(const char *szFilePath)
 {
-	return this->saveBuffer(name, kCCImageFormatJPG);
+	bool bRet = false;
+
+	CCImage *pImage = new CCImage();
+	if (pImage != NULL && getUIImageFromBuffer(pImage))
+	{
+		bRet = pImage->saveToFile(szFilePath);
+	}
+
+	CC_SAFE_DELETE(pImage);
+	return bRet;
 }
 bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 {
-
 	bool bRet = false;
 	CCAssert(format == kCCImageFormatJPG || format == kCCImageFormatPNG,
 			 "the image can only be saved as JPG or PNG format");

@@ -85,7 +85,8 @@ public:
     void clear(float r, float g, float b, float a);
 
 	/** saves the texture into a file */
-	bool saveBuffer(const char *name);
+	// para szFilePath      the absolute path to save
+	bool saveBuffer(const char *szFilePath);
 	/** saves the texture into a file. The format can be JPG or PNG */
 	bool saveBuffer(const char *name, int format);
 
