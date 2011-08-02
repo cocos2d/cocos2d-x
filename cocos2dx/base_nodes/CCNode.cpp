@@ -166,7 +166,7 @@ void CCNode::setZOrder(int z)
 /// ertexZ getter
 float CCNode::getVertexZ()
 {
-	return m_fVertexZ;
+	return m_fVertexZ / CC_CONTENT_SCALE_FACTOR();
 }
 
 
