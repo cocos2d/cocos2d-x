@@ -411,7 +411,7 @@ namespace cocos2d{
 			m_tColor = ccWHITE;
 			m_tContentSize = CCSizeZero;
 			m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
-			m_tAnchorPoint = ccp(0.5f, 0.5f);
+			setAnchorPoint(ccp(0.5f, 0.5f));
 			this->setString(theString);
 			return true;
 		}
