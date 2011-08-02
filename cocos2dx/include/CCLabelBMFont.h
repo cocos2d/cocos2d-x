@@ -171,12 +171,6 @@ namespace cocos2d{
 		/** creates a bitmap font altas with an initial string and the FNT file */
 		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);
 
-        /** creates a BMFont label with an initial string and the FNT file
-        @deprecated Will be removed in 1.0.1. Use "labelWithString" instead.
-        @since v0.99.5
-        */
-        static CCLabelBMFont * bitmapFontAtlasWithString(const char *str, const char *fntFile);
-
 		/** init a bitmap font altas with an initial string and the FNT file */
 		bool initWithString(const char *str, const char *fntFile);
 		/** updates the font chars based on the string to render */
@@ -203,14 +197,6 @@ namespace cocos2d{
 	/** Purges the FNT config cache
 	*/
 	CC_DLL void FNTConfigRemoveCache( void );
-
-    /** CCBitmapFontAtlas
-    @deprecated Use CCLabelBMFont instead. Will be removed 1.0.1
-    */
-    class CCBitmapFontAtlas : public CCLabelBMFont
-    {
-    };
-
 }// namespace cocos2d
 
 #endif //__CCBITMAP_FONT_ATLAS_H__

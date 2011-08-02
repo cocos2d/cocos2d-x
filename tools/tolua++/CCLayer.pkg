@@ -74,12 +74,6 @@ namespace   cocos2d {
 
 	};
 
-	class CCColorLayer : public CCLayerColor
-	{
-		static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
-		static CCColorLayer * layerWithColor(ccColor4B color);
-	};
-
 	class  CCLayerGradient : public CCLayerColor
 	{
 
@@ -127,9 +121,5 @@ namespace   cocos2d {
 		bool initWithLayers(CCLayer* layer, va_list params);	
 		void switchTo(unsigned int n);
 		void switchToAndReleaseMe(unsigned int n);
-	};
-	
-	class CCMultiplexLayer : public CCLayerMultiplex
-	{
 	};
 }//namespace   cocos2d 

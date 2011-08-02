@@ -25,7 +25,7 @@ echo.
 
 call %VSVARS%
 if %VC_VER%==90 (
-    vcbuild cocos2d-win32.vc2008.sln $ALL
+    vcbuild /MP /M10 cocos2d-win32.vc2008.sln $ALL
 ) else if %VC_VER%==100 (
     msbuild cocos2d-win32.vc2010.sln /p:Configuration="Debug" 
     msbuild cocos2d-win32.vc2010.sln /p:Configuration="Release"

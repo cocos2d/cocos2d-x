@@ -55,7 +55,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItem::initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector)
 	{
-		m_tAnchorPoint = ccp(0.5f, 0.5f);
+		setAnchorPoint(ccp(0.5f, 0.5f));
 		m_pListener = rec;
 		m_pfnSelector = selector;
 		m_bIsEnabled = true;

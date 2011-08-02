@@ -392,11 +392,6 @@ namespace cocos2d{
 		return NULL;
 	}
 
-    CCLabelBMFont * CCLabelBMFont::bitmapFontAtlasWithString(const char *str, const char *fntFile)
-    {
-        return labelWithString(str, fntFile);
-    }
-
 	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 	{	
 		assert(theString != NULL);
@@ -411,7 +406,7 @@ namespace cocos2d{
 			m_tColor = ccWHITE;
 			m_tContentSize = CCSizeZero;
 			m_bIsOpacityModifyRGB = m_pobTextureAtlas->getTexture()->getHasPremultipliedAlpha();
-			m_tAnchorPoint = ccp(0.5f, 0.5f);
+			setAnchorPoint(ccp(0.5f, 0.5f));
 			this->setString(theString);
 			return true;
 		}

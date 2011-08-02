@@ -51,7 +51,6 @@ namespace cocos2d{
 		CCLabelBMFont();	
 		static void purgeCachedData();		
 		static CCLabelBMFont * labelWithString(const char *str, const char *fntFile);       
-		static CCLabelBMFont * bitmapFontAtlasWithString(const char *str, const char *fntFile);	
 		bool initWithString(const char *str, const char *fntFile);		
 		void createFontChars();	
 		void setString(const char *label);
@@ -67,10 +66,6 @@ namespace cocos2d{
 	CCBMFontConfiguration * FNTConfigLoadFile( const char *file );
 
 	void FNTConfigRemoveCache( void );
-
-	class CCBitmapFontAtlas : public CCLabelBMFont
-	{
-	};
 
 }// namespace cocos2d
 
