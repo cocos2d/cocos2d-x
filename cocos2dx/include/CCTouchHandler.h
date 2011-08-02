@@ -36,7 +36,7 @@ namespace   cocos2d {
  CCTouchHandler
  Object than contains the delegate and priority of the event handler.
 */
-class CCTouchHandler : public CCObject
+class CC_DLL  CCTouchHandler : public CCObject
 {
 public:
 	virtual ~CCTouchHandler(void);
@@ -69,7 +69,7 @@ protected:
 /** CCStandardTouchHandler
  It forwardes each event to the delegate.
  */
-class CCStandardTouchHandler : public CCTouchHandler
+class CC_DLL  CCStandardTouchHandler : public CCTouchHandler
 {
 public:
 	/** initializes a TouchHandler with a delegate and a priority */
@@ -85,7 +85,7 @@ public:
  Object than contains the claimed touches and if it swallos touches.
  Used internally by TouchDispatcher
  */
-class CCTargetedTouchHandler : public CCTouchHandler
+class CC_DLL  CCTargetedTouchHandler : public CCTouchHandler
 {
 public:
     ~CCTargetedTouchHandler(void);

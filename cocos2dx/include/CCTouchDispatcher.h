@@ -142,13 +142,13 @@ public:
 public:
 	/** singleton of the CCTouchDispatcher */
 	static CCTouchDispatcher* sharedDispatcher();
+	CCTouchHandler* findHandler(CCTouchDelegate *pDelegate);
 
 protected:
 	void forceRemoveDelegate(CCTouchDelegate *pDelegate);
 	void forceAddHandler(CCTouchHandler *pHandler, CCMutableArray<CCTouchHandler*> *pArray);
 	void forceRemoveAllDelegates(void);
 	void rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArray);
-	CCTouchHandler* findHandler(CCTouchDelegate *pDelegate);
 
 protected:
  	CCMutableArray<CCTouchHandler*> *m_pTargetedHandlers;

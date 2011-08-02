@@ -121,6 +121,25 @@ return NULL; \
 } \
 }; 
 
+#define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
+	static layer* node(__PARAMTYPE__ __PARAM__) \
+{ \
+	layer *pRet = new layer(); \
+	if (pRet && pRet->init(__PARAM__)) \
+{ \
+	pRet->autorelease(); \
+	return pRet; \
+	} \
+else \
+{ \
+	delete pRet; \
+	pRet = NULL; \
+	return NULL; \
+	} \
+	}; 
+
+
+
 //
 // CCLayerColor
 //
