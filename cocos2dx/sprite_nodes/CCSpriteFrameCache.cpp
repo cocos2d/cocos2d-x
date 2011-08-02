@@ -388,11 +388,6 @@ CCSpriteFrame* CCSpriteFrameCache::spriteFrameByName(const char *pszName)
 	return frame;
 }
 
-CCSprite* CCSpriteFrameCache::createSpriteWithFrameName(const char *pszName)
-{
-	CCSpriteFrame *frame = m_pSpriteFrames->objectForKey(std::string(pszName));
-	return CCSprite::spriteWithSpriteFrame(frame);
-}
 const char * CCSpriteFrameCache::valueForKey(const char *key, CCDictionary<std::string, CCObject*> *dict)
 {
 	if (dict)

@@ -227,11 +227,6 @@ namespace cocos2d{
 		return NULL;
 	}
 
-	// XXX deprecated
-	CCTMXObjectGroup * CCTMXTiledMap::groupNamed(const char *groupName)
-	{
-		return objectGroupNamed(groupName);
-	}
 	CCString * CCTMXTiledMap::propertyNamed(const char *propertyName)
 	{
 		return m_pProperties->objectForKey(std::string(propertyName));
