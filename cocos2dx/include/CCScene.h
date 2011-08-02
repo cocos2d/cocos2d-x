@@ -80,7 +80,7 @@ static scene* node() \
 }; 
 
 #define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
-	static cocos2d::CCScene* scene(__PARAMTYPE__ __PARAM__) \
+	static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
 { \
 	cocos2d::CCScene * scene = NULL; \
 	do  \
