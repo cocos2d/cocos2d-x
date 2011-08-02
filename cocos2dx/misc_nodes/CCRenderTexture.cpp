@@ -279,21 +279,36 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
 		CC_BREAK_IF(! (pBuffer = new GLubyte[tx * ty * 4]));
 		CC_BREAK_IF(! (pTempData = new GLubyte[tx * ty * 4]));
 
+		// On some machines, like Samsung i9000, Motorola Defy,
+		// the dimension need to be a power of 2
+		int nReadBufferWidth = 0;
+		int nReadBufferHeight = 0;
+		int nMaxTextureSize = 0;
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nMaxTextureSize);
+
+		nReadBufferWidth = ccNextPOT(tx);
+		nReadBufferHeight = ccNextPOT(ty);
+
+		CC_BREAK_IF(0 == nReadBufferWidth || 0 == nReadBufferHeight);
+		CC_BREAK_IF(nReadBufferWidth > nMaxTextureSize || nReadBufferHeight > nMaxTextureSize);
+
+		CC_BREAK_IF(! (pTempData = new GLubyte[nReadBufferWidth * nReadBufferHeight * 4]));
+
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
-		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
+		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
 		this->end();
 
+		// to get the actual texture data 
 		// #640 the image read from rendertexture is upseted
-		int nRowBytes = tx * 4;
 		for (int i = 0; i < ty; ++i)
 		{
-			memcpy(&pTempData[(ty - 1 - i) * nRowBytes], 
-				&pBuffer[i * nRowBytes], 
-				nRowBytes);
+			memcpy(&pBuffer[i * tx * 4], 
+				&pTempData[(ty - i - 1) * nReadBufferWidth * 4], 
+				tx * 4);
 		}
 
-		bRet = pImage->initWithImageData(pTempData, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
+		bRet = pImage->initWithImageData(pBuffer, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
 	} while (0);
 
 	CC_SAFE_DELETE_ARRAY(pBuffer);
