@@ -83,6 +83,9 @@ public class Cocos2dxActivity extends Activity{
         backgroundMusicPlayer = new Cocos2dxMusic(this);
         soundPlayer = new Cocos2dxSound(this);
         
+        // init bitmap context
+        Cocos2dxBitmap.setContext(this);
+        
         handler = new Handler(){
         	public void handleMessage(Message msg){
         		switch(msg.what){
