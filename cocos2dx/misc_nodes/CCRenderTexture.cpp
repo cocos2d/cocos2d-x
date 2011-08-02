@@ -314,8 +314,8 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		int nMaxTextureSize = 0;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nMaxTextureSize);
 
-		nReadBufferWidth = ccNextPOT(nSavedBufferWidth);
-		nReadBufferHeight = ccNextPOT(nSavedBufferHeight);
+		nReadBufferWidth = ccNextPOT(tx);
+		nReadBufferHeight = ccNextPOT(ty);
 
 		CC_BREAK_IF(0 == nReadBufferWidth || 0 == nReadBufferHeight);
 		CC_BREAK_IF(nReadBufferWidth > nMaxTextureSize || nReadBufferHeight > nMaxTextureSize);
@@ -324,7 +324,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
-		glReadPixels(x,y,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
+		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
 		this->end();
 
 		// to get the actual texture data 
@@ -332,7 +332,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		for (int i = 0; i < nSavedBufferHeight; ++i)
 		{
 			memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
-				&pTempData[(nSavedBufferHeight - i - 1) * nReadBufferWidth * 4], 
+				&pTempData[(y + nSavedBufferHeight - i - 1) * nReadBufferWidth * 4 + x * 4], 
 				nSavedBufferWidth * 4);
 		}
 
