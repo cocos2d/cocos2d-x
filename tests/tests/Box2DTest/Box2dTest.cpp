@@ -120,7 +120,7 @@ void Box2DTestLayer::addNewSpriteWithCoords(CCPoint p)
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = batch->createSpriteWithRect( CCRectMake(32 * idx,32 * idy,32,32));
+	CCSprite *sprite = CCSprite::spriteWithTexture(batch->getTexture(), CCRectMake(32 * idx,32 * idy,32,32));
 	batch->addChild(sprite);
 	
 	sprite->setPosition( CCPointMake( p.x, p.y) );

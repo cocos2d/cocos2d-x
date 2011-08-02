@@ -121,6 +121,25 @@ return NULL; \
 } \
 }; 
 
+#define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
+	static layer* node(__PARAMTYPE__ __PARAM__) \
+{ \
+	layer *pRet = new layer(); \
+	if (pRet && pRet->init(__PARAM__)) \
+{ \
+	pRet->autorelease(); \
+	return pRet; \
+	} \
+else \
+{ \
+	delete pRet; \
+	pRet = NULL; \
+	return NULL; \
+	} \
+	}; 
+
+
+
 //
 // CCLayerColor
 //
@@ -175,18 +194,6 @@ public:
     
 protected:
 	virtual void updateColor();
-};
-
-/** CCColorLayer
-It is the same as CCLayerColor.
-
-@deprecated Use CCLayerColor instead. This class will be removed in v1.0.1
-*/
-class CC_DLL CCColorLayer : public CCLayerColor
-{
-public:
-    static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
-	static CCColorLayer * layerWithColor(ccColor4B color);
 };
 
 //
@@ -283,14 +290,6 @@ public:
     LAYER_NODE_FUNC(CCLayerMultiplex);
 };
 
-/** CCMultiplexLayer
-It is the same as CCLayerMultiplex.
-
-@deprecated Use CCLayerMultiplex instead. This class will be removed in v1.0.1
-*/
-class CCMultiplexLayer : public CCLayerMultiplex
-{
-};
 }//namespace   cocos2d 
 
 #endif // __CCLAYER_H__
