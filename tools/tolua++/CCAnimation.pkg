@@ -20,29 +20,14 @@ namespace   cocos2d {
 		 void setDelay(float fDelay);
 		 CCMutableArray<CCSpriteFrame*>* getFrames(void);
 		 void setFrames(CCMutableArray<CCSpriteFrame*> *pFrames);
-
 	
 		bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames);
-
 		
 		bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay);
-
-		
-		bool initWithName(const char *pszName);
-
-		
-		bool initWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames);
-
-		bool initWithName(const char *pszName, float fDelay);
-
-	
-		bool initWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames);
-
 		
 		void addFrame(CCSpriteFrame *pFrame);
 
 		void addFrameWithFileName(const char *pszFileName);
-
 	
 		void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
@@ -55,18 +40,6 @@ namespace   cocos2d {
 		static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames);
 
 		static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
-
-		
-		static CCAnimation* animationWithName(const char *pszName);
-
-		
-		static CCAnimation* animationWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames);
-
-		/** Creates a CCAnimation with a name and delay between frames. */
-		static CCAnimation* animationWithName(const char *pszName, float fDelay);
-
-		/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-		static CCAnimation* animationWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames);
 	};
 } // end of name sapce cocos2d
 

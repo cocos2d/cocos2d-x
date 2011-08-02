@@ -44,11 +44,6 @@ namespace cocos2d{
 		return NULL;
 	}
 
-    CCLabelAtlas * CCLabelAtlas::labelAtlasWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
-    {
-        return labelWithString(label, charMapFile, itemWidth, itemHeight, startCharMap);
-    }
-
 	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
 	{
 		assert(label != NULL);

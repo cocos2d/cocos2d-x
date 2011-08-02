@@ -145,21 +145,13 @@ class  CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
 
 	void useSelfRender(void);
 
-  void setTextureRect(CCRect rect);
+        void setTextureRect(CCRect rect);
 
 	void setTextureRectInPixels(CCRect rect, bool rotated, CCSize size);
-
 	void useBatchNode(CCSpriteBatchNode *batchNode);
 	void setDisplayFrame(CCSpriteFrame *pNewFrame);
 	bool isFrameDisplayed(CCSpriteFrame *pFrame);
 	CCSpriteFrame* displayedFrame(void);
-
-	void addAnimation(CCAnimation *pAnimation);
-
-	CCAnimation* animationByName(const char *pszAnimationName);
-
-	void setDisplayFrame(const char *pszAnimationName, int nFrameIndex);
-
 	void setDisplayFrameWithAnimationName(const char *animationName, int frameIndex);
 
 };

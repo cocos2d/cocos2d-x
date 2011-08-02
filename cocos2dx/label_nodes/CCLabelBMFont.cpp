@@ -392,11 +392,6 @@ namespace cocos2d{
 		return NULL;
 	}
 
-    CCLabelBMFont * CCLabelBMFont::bitmapFontAtlasWithString(const char *str, const char *fntFile)
-    {
-        return labelWithString(str, fntFile);
-    }
-
 	bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile)
 	{	
 		assert(theString != NULL);

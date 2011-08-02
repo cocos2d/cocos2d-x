@@ -470,33 +470,6 @@ void CCLayerColor::draw()
 }
 
 //
-// CCColorLayer
-//
-CCColorLayer* CCColorLayer::layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
-{
-	CCColorLayer * pLayer = new CCColorLayer();
-	if( pLayer && pLayer->initWithColorWidthHeight(color,width,height))
-	{
-		pLayer->autorelease();
-		return pLayer;
-	}
-	CC_SAFE_DELETE(pLayer);
-	return NULL;
-}
-
-CCColorLayer* CCColorLayer::layerWithColor(ccColor4B color)
-{
-	CCColorLayer * pLayer = new CCColorLayer();
-	if(pLayer && pLayer->initWithColor(color))
-	{
-		pLayer->autorelease();
-		return pLayer;
-	}
-	CC_SAFE_DELETE(pLayer);
-	return NULL;
-}
-
-//
 // CCLayerGradient
 // 
 CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
