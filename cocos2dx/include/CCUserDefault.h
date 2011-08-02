@@ -38,18 +38,18 @@ public:
 	~CCUserDefault();
 
 	// get value methods
-	bool	getBoolForKey(const char* pKey);
-	int		getIntegerForKey(const char* pKey);
-	float	getFloatForKey(const char* pKey);
-	double  getDoubleForKey(const char* pKey);
-	std::string getStringForKey(const char* pKey);
+	bool	getBoolForKey(const char* pKey, bool defaultValue = false);
+	int		getIntegerForKey(const char* pKey, int defaultValue = 0);
+	float	getFloatForKey(const char* pKey, float defaultValue=0.0f);
+	double  getDoubleForKey(const char* pKey, double defaultValue=0.0);
+	std::string getStringForKey(const char* pKey, const std::string & defaultValue = "");
 
 	// set value methods
 	void	setBoolForKey(const char* pKey, bool value);
 	void	setIntegerForKey(const char* pKey, int value);
 	void	setFloatForKey(const char* pKey, float value);
 	void	setDoubleForKey(const char* pKey, double value);
-	void	setStringForKey(const char* pKey, std::string value);
+	void	setStringForKey(const char* pKey, const std::string & value);
 
 	static CCUserDefault* sharedUserDefault();
 	static void purgeSharedUserDefault();

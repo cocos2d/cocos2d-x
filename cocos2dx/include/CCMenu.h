@@ -124,10 +124,8 @@ namespace cocos2d{
 
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 
-	private:
-		CCMenuItem* itemForTouch(CCTouch * touch);
-
 	protected:
+		CCMenuItem* itemForTouch(CCTouch * touch);
 		tCCMenuState m_eState;
         GLubyte m_cOpacity;
 		CCMenuItem *m_pSelectedItem;		
