@@ -617,7 +617,7 @@ void ActionAnimate::onEnter()
         animation->addFrameWithFileName(frameName);
     }
 
-    CCActionInterval*  action = CCAnimate::actionWithAnimation( animation, false);
+    CCActionInterval*  action = CCAnimate::actionWithDuration(3, animation, false);
     CCActionInterval*  action_back = action->reverse();
 
     m_grossini->runAction( CCSequence::actions( action, action_back, NULL));
