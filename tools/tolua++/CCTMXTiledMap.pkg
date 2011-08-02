@@ -46,11 +46,6 @@ namespace cocos2d {
 		/** return the TMXObjectGroup for the secific group */
 		CCTMXObjectGroup* objectGroupNamed(const char *groupName);
 
-		/** return the TMXObjectGroup for the secific group
-		@deprecated Use map#objectGroupNamed instead
-		*/
-		CCTMXObjectGroup* groupNamed(const char *groupName);
-
 		/** return the value for the specific property name */
 		CCString *propertyNamed(const char *propertyName);
 
