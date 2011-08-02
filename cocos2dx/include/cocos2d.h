@@ -80,6 +80,7 @@ THE SOFTWARE.
 #include "CCTexturePVR.h"
 #include "CCTransitionRadial.h"
 #include "CCActionProgressTimer.h"
+#include "CCTouchHandler.h"
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
