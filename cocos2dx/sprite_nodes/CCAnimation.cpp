@@ -65,42 +65,6 @@ namespace cocos2d
 		return pAnimation;
 	}
 
-	CCAnimation* CCAnimation::animationWithName(const char *pszName)
-	{
-		CCAnimation *pAnimation = new CCAnimation();
-		pAnimation->initWithName(pszName);
-		pAnimation->autorelease();
-
-		return pAnimation;
-	}
-
-	CCAnimation* CCAnimation::animationWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames)
-	{
-		CCAnimation *pAnimation = new CCAnimation();
-		pAnimation->initWithName(pszName, pFrames);
-		pAnimation->autorelease();
-
-		return pAnimation;
-	}
-
-	CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames)
-	{
-		CCAnimation *pAnimation = new CCAnimation();
-		pAnimation->initWithName(pszName, fDelay, pFrames);
-		pAnimation->autorelease();
-
-		return pAnimation;
-	}
-
-	CCAnimation* CCAnimation::animationWithName(const char *pszName, float fDelay)
-	{
-		CCAnimation *pAnimation = new CCAnimation();
-		pAnimation->initWithName(pszName, fDelay);
-		pAnimation->autorelease();
-
-		return pAnimation;
-	}
-
 	bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay)
 	{
         m_fDelay = delay;
@@ -113,31 +77,6 @@ namespace cocos2d
 	bool CCAnimation::initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames)
 	{
         return initWithFrames(pFrames, 0);
-	}
-
-	bool CCAnimation::initWithName(const char *pszName)
-	{
-		return initWithName(pszName, 0, NULL);
-	}
-
-	bool CCAnimation::initWithName(const char *pszName, float fDelay)
-	{
-		return initWithName(pszName, fDelay, NULL);
-	}
-
-	bool CCAnimation::initWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames)
-	{
-		return initWithName(pszName, 0, pFrames);
-	}
-
-	bool CCAnimation::initWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames)
-	{
-		m_fDelay = fDelay;
-		m_nameStr = pszName;
-		m_pobFrames = CCMutableArray<CCSpriteFrame*>::arrayWithArray(pFrames);
-        m_pobFrames->retain();
-
-		return true;
 	}
 
 	CCAnimation::~CCAnimation(void)
