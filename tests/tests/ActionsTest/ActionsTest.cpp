@@ -609,7 +609,7 @@ void ActionAnimate::onEnter()
 
     centerSprites(1);
 
-    CCAnimation* animation = CCAnimation::animationWithName("dance", 0.2f);
+    CCAnimation* animation = CCAnimation::animation();
     char frameName[100] = {0};
     for( int i=1;i<15;i++)
     {

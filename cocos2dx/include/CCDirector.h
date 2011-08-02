@@ -404,7 +404,6 @@ protected:
 	bool m_bLandscape;
 	
 	bool m_bDisplayFPS;
-	int  m_nFrames;
 	ccTime m_fAccumDt;
 	ccTime m_fFrameRate;
 #if	CC_DIRECTOR_FAST_FPS
@@ -415,6 +414,7 @@ protected:
 	bool m_bPaused;
 	
     /* How many frames were called since the director started */
+	unsigned int m_uTotalFrames;
     unsigned int m_uFrames;
      
 	/* The running scene */
