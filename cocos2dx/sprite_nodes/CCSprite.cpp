@@ -199,7 +199,7 @@ bool CCSprite::init(void)
 	m_pAnimations = NULL;
 
 	// default transform anchor: center
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 
 	// zwoptex default values
     m_obOffsetPositionInPixels = CCPointZero;

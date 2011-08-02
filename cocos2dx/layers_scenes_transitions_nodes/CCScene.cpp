@@ -33,7 +33,7 @@ namespace   cocos2d {
 CCScene::CCScene()
 {
 	m_bIsRelativeAnchorPoint = false;
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 	m_eSceneType = ccNormalScene;
 }
 
