@@ -561,6 +561,17 @@
 		BFA008F91344267700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008F71344267700289DC3 /* CCCommon_ios.mm */; };
 		BFEE2DB713E14D6C005C0577 /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2DB613E14D6C005C0577 /* CCTexturePVR.cpp */; };
 		BFEE2DBB13E14D8D005C0577 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2DBA13E14D8D005C0577 /* CCTexturePVR.h */; };
+		BFEE2E3713E16D2D005C0577 /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E2C13E16D2D005C0577 /* FontLabel.h */; };
+		BFEE2E3813E16D2D005C0577 /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E2D13E16D2D005C0577 /* FontLabel.m */; };
+		BFEE2E3913E16D2D005C0577 /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E2E13E16D2D005C0577 /* FontLabelStringDrawing.h */; };
+		BFEE2E3A13E16D2D005C0577 /* FontLabelStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E2F13E16D2D005C0577 /* FontLabelStringDrawing.m */; };
+		BFEE2E3B13E16D2D005C0577 /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3013E16D2D005C0577 /* FontManager.h */; };
+		BFEE2E3C13E16D2D005C0577 /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3113E16D2D005C0577 /* FontManager.m */; };
+		BFEE2E3D13E16D2D005C0577 /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3213E16D2D005C0577 /* ZAttributedString.h */; };
+		BFEE2E3E13E16D2D005C0577 /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3313E16D2D005C0577 /* ZAttributedString.m */; };
+		BFEE2E3F13E16D2D005C0577 /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3413E16D2D005C0577 /* ZAttributedStringPrivate.h */; };
+		BFEE2E4013E16D2D005C0577 /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3513E16D2D005C0577 /* ZFont.h */; };
+		BFEE2E4113E16D2D005C0577 /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3613E16D2D005C0577 /* ZFont.m */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
 		D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F25D12E53386005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
@@ -1147,6 +1158,17 @@
 		BFA008F71344267700289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		BFEE2DB613E14D6C005C0577 /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
 		BFEE2DBA13E14D8D005C0577 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
+		BFEE2E2C13E16D2D005C0577 /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
+		BFEE2E2D13E16D2D005C0577 /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
+		BFEE2E2E13E16D2D005C0577 /* FontLabelStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabelStringDrawing.h; sourceTree = "<group>"; };
+		BFEE2E2F13E16D2D005C0577 /* FontLabelStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabelStringDrawing.m; sourceTree = "<group>"; };
+		BFEE2E3013E16D2D005C0577 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
+		BFEE2E3113E16D2D005C0577 /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
+		BFEE2E3213E16D2D005C0577 /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
+		BFEE2E3313E16D2D005C0577 /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
+		BFEE2E3413E16D2D005C0577 /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
+		BFEE2E3513E16D2D005C0577 /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
+		BFEE2E3613E16D2D005C0577 /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloWorld-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4F9F25D12E53386005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -2254,6 +2276,7 @@
 		BF83567E1327611D00F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BFEE2E2B13E16D2D005C0577 /* FontLabel */,
 				BFA008F71344267700289DC3 /* CCCommon_ios.mm */,
 				BF83567F1327611D00F3C033 /* AccelerometerDelegateWrapper.h */,
 				BF8356801327611D00F3C033 /* AccelerometerDelegateWrapper.mm */,
@@ -2277,6 +2300,24 @@
 				BF8356941327611D00F3C033 /* OpenGL_Internal.h */,
 			);
 			path = ios;
+			sourceTree = "<group>";
+		};
+		BFEE2E2B13E16D2D005C0577 /* FontLabel */ = {
+			isa = PBXGroup;
+			children = (
+				BFEE2E2C13E16D2D005C0577 /* FontLabel.h */,
+				BFEE2E2D13E16D2D005C0577 /* FontLabel.m */,
+				BFEE2E2E13E16D2D005C0577 /* FontLabelStringDrawing.h */,
+				BFEE2E2F13E16D2D005C0577 /* FontLabelStringDrawing.m */,
+				BFEE2E3013E16D2D005C0577 /* FontManager.h */,
+				BFEE2E3113E16D2D005C0577 /* FontManager.m */,
+				BFEE2E3213E16D2D005C0577 /* ZAttributedString.h */,
+				BFEE2E3313E16D2D005C0577 /* ZAttributedString.m */,
+				BFEE2E3413E16D2D005C0577 /* ZAttributedStringPrivate.h */,
+				BFEE2E3513E16D2D005C0577 /* ZFont.h */,
+				BFEE2E3613E16D2D005C0577 /* ZFont.m */,
+			);
+			path = FontLabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2720,6 +2761,12 @@
 				BF126D191373F24200C4ABC5 /* CCUserDefault.h in Headers */,
 				BF7B975E13B1886E004222DD /* CCScriptSupport.h in Headers */,
 				BFEE2DBB13E14D8D005C0577 /* CCTexturePVR.h in Headers */,
+				BFEE2E3713E16D2D005C0577 /* FontLabel.h in Headers */,
+				BFEE2E3913E16D2D005C0577 /* FontLabelStringDrawing.h in Headers */,
+				BFEE2E3B13E16D2D005C0577 /* FontManager.h in Headers */,
+				BFEE2E3D13E16D2D005C0577 /* ZAttributedString.h in Headers */,
+				BFEE2E3F13E16D2D005C0577 /* ZAttributedStringPrivate.h in Headers */,
+				BFEE2E4013E16D2D005C0577 /* ZFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2916,6 +2963,11 @@
 				BF126D1B1373F25400C4ABC5 /* CCUserDefault.cpp in Sources */,
 				BF7B975C13B18860004222DD /* CCScriptSupport.cpp in Sources */,
 				BFEE2DB713E14D6C005C0577 /* CCTexturePVR.cpp in Sources */,
+				BFEE2E3813E16D2D005C0577 /* FontLabel.m in Sources */,
+				BFEE2E3A13E16D2D005C0577 /* FontLabelStringDrawing.m in Sources */,
+				BFEE2E3C13E16D2D005C0577 /* FontManager.m in Sources */,
+				BFEE2E3E13E16D2D005C0577 /* ZAttributedString.m in Sources */,
+				BFEE2E4113E16D2D005C0577 /* ZFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2949,7 +3001,7 @@
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
 				PRODUCT_NAME = HelloWorld;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -3002,7 +3054,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include /usr/local/include/libxml2";
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Debug;

@@ -21,6 +21,17 @@
 		BF19164212E052E1007DCFF1 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF19164112E052E1007DCFF1 /* LICENSE.cocos2d-x */; };
 		BF193F3413600871002463D2 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = BF193F3313600871002463D2 /* CCArray.h */; };
 		BF193F361360087D002463D2 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF193F351360087D002463D2 /* CCArray.cpp */; };
+		BF1E788413E250E800C2D68B /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E787913E250E800C2D68B /* FontLabel.h */; };
+		BF1E788513E250E800C2D68B /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E787A13E250E800C2D68B /* FontLabel.m */; };
+		BF1E788613E250E800C2D68B /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E787B13E250E800C2D68B /* FontLabelStringDrawing.h */; };
+		BF1E788713E250E800C2D68B /* FontLabelStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E787C13E250E800C2D68B /* FontLabelStringDrawing.m */; };
+		BF1E788813E250E800C2D68B /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E787D13E250E800C2D68B /* FontManager.h */; };
+		BF1E788913E250E800C2D68B /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E787E13E250E800C2D68B /* FontManager.m */; };
+		BF1E788A13E250E800C2D68B /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E787F13E250E800C2D68B /* ZAttributedString.h */; };
+		BF1E788B13E250E800C2D68B /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E788013E250E800C2D68B /* ZAttributedString.m */; };
+		BF1E788C13E250E800C2D68B /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E788113E250E800C2D68B /* ZAttributedStringPrivate.h */; };
+		BF1E788D13E250E800C2D68B /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E788213E250E800C2D68B /* ZFont.h */; };
+		BF1E788E13E250E800C2D68B /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E788313E250E800C2D68B /* ZFont.m */; };
 		BF1FB0121352F91A007553D9 /* CCDirector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB0111352F91A007553D9 /* CCDirector.cpp */; };
 		BF1FB0141352F92E007553D9 /* CCGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB0131352F92E007553D9 /* CCGrid.cpp */; };
 		BF1FB0171352F949007553D9 /* CCLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB0151352F949007553D9 /* CCLayer.cpp */; };
@@ -297,6 +308,17 @@
 		BF19164112E052E1007DCFF1 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
 		BF193F3313600871002463D2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		BF193F351360087D002463D2 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
+		BF1E787913E250E800C2D68B /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
+		BF1E787A13E250E800C2D68B /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
+		BF1E787B13E250E800C2D68B /* FontLabelStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabelStringDrawing.h; sourceTree = "<group>"; };
+		BF1E787C13E250E800C2D68B /* FontLabelStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabelStringDrawing.m; sourceTree = "<group>"; };
+		BF1E787D13E250E800C2D68B /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
+		BF1E787E13E250E800C2D68B /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
+		BF1E787F13E250E800C2D68B /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
+		BF1E788013E250E800C2D68B /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
+		BF1E788113E250E800C2D68B /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
+		BF1E788213E250E800C2D68B /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
+		BF1E788313E250E800C2D68B /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		BF1FB0111352F91A007553D9 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDirector.cpp; sourceTree = "<group>"; };
 		BF1FB0131352F92E007553D9 /* CCGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGrid.cpp; sourceTree = "<group>"; };
 		BF1FB0151352F949007553D9 /* CCLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLayer.cpp; sourceTree = "<group>"; };
@@ -663,6 +685,24 @@
 			name = libs;
 			sourceTree = "<group>";
 		};
+		BF1E787813E250E800C2D68B /* FontLabel */ = {
+			isa = PBXGroup;
+			children = (
+				BF1E787913E250E800C2D68B /* FontLabel.h */,
+				BF1E787A13E250E800C2D68B /* FontLabel.m */,
+				BF1E787B13E250E800C2D68B /* FontLabelStringDrawing.h */,
+				BF1E787C13E250E800C2D68B /* FontLabelStringDrawing.m */,
+				BF1E787D13E250E800C2D68B /* FontManager.h */,
+				BF1E787E13E250E800C2D68B /* FontManager.m */,
+				BF1E787F13E250E800C2D68B /* ZAttributedString.h */,
+				BF1E788013E250E800C2D68B /* ZAttributedString.m */,
+				BF1E788113E250E800C2D68B /* ZAttributedStringPrivate.h */,
+				BF1E788213E250E800C2D68B /* ZFont.h */,
+				BF1E788313E250E800C2D68B /* ZFont.m */,
+			);
+			path = FontLabel;
+			sourceTree = "<group>";
+		};
 		BF21A9A013E0F9D20067F790 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -989,6 +1029,7 @@
 		BF835E7E1328687E00F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BF1E787813E250E800C2D68B /* FontLabel */,
 				BFA008A5134423F500289DC3 /* CCCommon_ios.mm */,
 				BF835E7F1328687E00F3C033 /* AccelerometerDelegateWrapper.h */,
 				BF835E801328687E00F3C033 /* AccelerometerDelegateWrapper.mm */,
@@ -1270,6 +1311,12 @@
 				BFA70A20136AB06C00ABC725 /* CCTextFieldTTF.h in Headers */,
 				BF9935F21373ED1200197D1B /* CCUserDefault.h in Headers */,
 				D4E4FED313B2D6CC00A3F698 /* CCScriptSupport.h in Headers */,
+				BF1E788413E250E800C2D68B /* FontLabel.h in Headers */,
+				BF1E788613E250E800C2D68B /* FontLabelStringDrawing.h in Headers */,
+				BF1E788813E250E800C2D68B /* FontManager.h in Headers */,
+				BF1E788A13E250E800C2D68B /* ZAttributedString.h in Headers */,
+				BF1E788C13E250E800C2D68B /* ZAttributedStringPrivate.h in Headers */,
+				BF1E788D13E250E800C2D68B /* ZFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1476,6 +1523,11 @@
 				BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */,
 				BF126CE71373EE2800C4ABC5 /* CCUserDefault.cpp in Sources */,
 				D4E4FED113B2D6A400A3F698 /* CCScriptSupport.cpp in Sources */,
+				BF1E788513E250E800C2D68B /* FontLabel.m in Sources */,
+				BF1E788713E250E800C2D68B /* FontLabelStringDrawing.m in Sources */,
+				BF1E788913E250E800C2D68B /* FontManager.m in Sources */,
+				BF1E788B13E250E800C2D68B /* ZAttributedString.m in Sources */,
+				BF1E788E13E250E800C2D68B /* ZFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
