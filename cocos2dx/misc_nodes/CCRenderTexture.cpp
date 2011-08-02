@@ -286,27 +286,17 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
 		int nMaxTextureSize = 0;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nMaxTextureSize);
 
-		for (int i = 0; i <= 12; i++)
-		{
-			int nPowerTwo = (int)pow(2.0f, (float)i);
-			if (0 == nReadBufferWidth && tx <= nPowerTwo)
-			{
-				nReadBufferWidth = nPowerTwo;
-			}
-			if (0 == nReadBufferHeight && ty <= nPowerTwo)
-			{
-				nReadBufferHeight = nPowerTwo;
-			}
-		}
+		nReadBufferWidth = ccNextPOT(tx);
+		nReadBufferHeight = ccNextPOT(ty);
 
 		CC_BREAK_IF(0 == nReadBufferWidth || 0 == nReadBufferHeight);
 		CC_BREAK_IF(nReadBufferWidth > nMaxTextureSize || nReadBufferHeight > nMaxTextureSize);
 
 		CC_BREAK_IF(! (pTempData = new GLubyte[nReadBufferWidth * nReadBufferHeight * 4]));
+
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
-
 		this->end();
 
 		// to get the actual texture data 
