@@ -93,7 +93,7 @@ namespace cocos2d{
 			CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 			this->m_bIsRelativeAnchorPoint = false;
-			m_tAnchorPoint = ccp(0.5f, 0.5f);
+			setAnchorPoint(ccp(0.5f, 0.5f));
 			this->setContentSize(s);
 
 			// XXX: in v0.7, winSize should return the visible size

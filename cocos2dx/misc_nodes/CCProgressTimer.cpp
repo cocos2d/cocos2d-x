@@ -79,7 +79,7 @@ bool CCProgressTimer::initWithTexture(cocos2d::CCTexture2D *pTexture)
 	m_fPercentage = 0.f;
 	m_pVertexData = NULL;
     m_nVertexDataCount = 0;
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 	setContentSize(m_pSprite->getContentSize());
     m_eType = kCCProgressTimerTypeRadialCCW;
 

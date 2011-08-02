@@ -40,7 +40,7 @@ CCLayer::CCLayer()
 ,m_bIsKeypadEnabled(false)
 {
 	m_eTouchDelegateType = ccTouchDelegateAllBit;
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 	m_bIsRelativeAnchorPoint = false;
 }
 
