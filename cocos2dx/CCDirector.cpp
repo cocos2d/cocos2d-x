@@ -102,7 +102,7 @@ bool CCDirector::init(void)
 
 	// FPS
 	m_bDisplayFPS = false;
-	m_nFrames = 0;
+	m_uTotalFrames = m_uFrames = 0;
 	m_pszFPS = new char[10];
 	m_pLastUpdate = new struct cc_timeval();
 
@@ -226,6 +226,8 @@ void CCDirector::drawScene(void)
 	CC_DISABLE_DEFAULT_GL_STATES();
 
 	glPopMatrix();
+
+	m_uTotalFrames++;
 
 	// swap buffers
 	if (m_pobOpenGLView)
@@ -669,13 +671,13 @@ void CCDirector::resume(void)
 // updates the FPS every frame
 void CCDirector::showFPS(void)
 {
-	m_nFrames++;
+	m_uFrames++;
 	m_fAccumDt += m_fDeltaTime;
 
 	if (m_fAccumDt > CC_DIRECTOR_FPS_INTERVAL)
 	{
-		m_fFrameRate = m_nFrames / m_fAccumDt;
-		m_nFrames = 0;
+		m_fFrameRate = m_uFrames / m_fAccumDt;
+		m_uFrames = 0;
 		m_fAccumDt = 0;
 
 		sprintf(m_pszFPS, "%.1f", m_fFrameRate);

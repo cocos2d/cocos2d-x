@@ -79,4 +79,21 @@ static scene* node() \
 	} \
 }; 
 
+#define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
+	static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
+{ \
+	cocos2d::CCScene * scene = NULL; \
+	do  \
+{ \
+	scene = cocos2d::CCScene::node(); \
+	CC_BREAK_IF(! scene); \
+	__TYPE__ *layer = __TYPE__::node(__PARAM__); \
+	CC_BREAK_IF(! layer); \
+	scene->addChild(layer); \
+} while (0); \
+	return scene; \
+};
+
+
+
 #endif // __CCSCENE_H__
