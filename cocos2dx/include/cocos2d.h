@@ -28,6 +28,10 @@ THE SOFTWARE.
 #ifndef __COCOS2D_H__
 #define __COCOS2D_H__
 
+// 0x00 HI ME LO
+// 00   01 00 01
+#define COCOS2D_VERSION 0x00010001
+
 //
 // all cocos2d include files
 //
@@ -80,6 +84,7 @@ THE SOFTWARE.
 #include "CCTexturePVR.h"
 #include "CCTransitionRadial.h"
 #include "CCActionProgressTimer.h"
+#include "CCTouchHandler.h"
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"

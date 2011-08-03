@@ -48,11 +48,6 @@ namespace cocos2d
 		return batchNode;
 	}
 
-	CCSpriteBatchNode* CCSpriteBatchNode::spriteSheetWithTexture(cocos2d::CCTexture2D *tex)
-	{
-		return batchNodeWithTexture(tex);
-	}
-
 	CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity)
 	{
 		CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
@@ -60,11 +55,6 @@ namespace cocos2d
 		batchNode->autorelease();
 
 		return batchNode;
-	}
-
-	CCSpriteBatchNode* CCSpriteBatchNode::spriteSheetWithTexture(CCTexture2D *tex, unsigned int capacity)
-	{
-		return batchNodeWithTexture(tex, capacity);
 	}
 
 	/*
@@ -79,11 +69,6 @@ namespace cocos2d
 		return batchNode;
 	}
 
-	CCSpriteBatchNode* CCSpriteBatchNode::spriteSheetWithFile(const char *fileImage, unsigned int capacity)
-	{
-		return batchNodeWithFile(fileImage, capacity);
-	}
-
 	CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithFile(const char *fileImage)
 	{
 		CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
@@ -91,11 +76,6 @@ namespace cocos2d
 		batchNode->autorelease();
 
 		return batchNode;
-	}
-
-	CCSpriteBatchNode* CCSpriteBatchNode::spriteSheetWithFile(const char *fileImage)
-	{
-		return batchNodeWithFile(fileImage);
 	}
 
 	/*
@@ -168,25 +148,6 @@ namespace cocos2d
 		}
 
 		glPopMatrix();
-	}
-
-	// xxx deprecated
-	CCSprite* CCSpriteBatchNode::createSpriteWithRect(CCRect rect)
-	{
-		CCSprite *pSprite = CCSprite::spriteWithTexture(m_pobTextureAtlas->getTexture(), rect);
-		pSprite->useBatchNode(this);
-
-		return pSprite;
-	}
-
-	// XXX deprecated
-	void CCSpriteBatchNode::initSprite(cocos2d::CCSprite *sprite, cocos2d::CCRect rect)
-	{
-		if (sprite)
-		{
-			sprite->initWithTexture(m_pobTextureAtlas->getTexture(), rect);
-			sprite->useBatchNode(this);
-		}		
 	}
 
 	void CCSpriteBatchNode::addChild(CCNode *child, int zOrder, int tag)
