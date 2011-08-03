@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "CCAccelerometer.h"
 #include "platform/android/CCAccelerometer_android.h"
 #include "CCEGLView.h"
-#include "CCFileUtils.h"
 #include "JniHelper.h"
 #include <android/log.h>
 #include <jni.h>
@@ -57,19 +56,7 @@ extern "C"
             (y - rcRect.origin.y) / fScreenScaleFactor, 
             z, 
             timeStamp);
-    }
-
-    void Java_org_cocos2dx_lib_Cocos2dxActivity_nativeSetPaths(JNIEnv*  env, jobject thiz, jstring apkPath)
-    {
-        const char* str;
-        jboolean isCopy;
-        str = env->GetStringUTFChars(apkPath, &isCopy);
-        if (isCopy) {
-            cocos2d::CCFileUtils::setResourcePath(str);
-            env->ReleaseStringUTFChars(apkPath, str);
-        }
-    }
-	
+    }	
 
 	void enableAccelerometerJNI()
 	{

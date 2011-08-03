@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCStdC.h"
 
 #include <vector>
+#include <stdarg.h>
 
 using namespace std;
 
@@ -79,7 +80,7 @@ namespace cocos2d{
 
     bool CCMenu::init()
     {
-        va_list args = NULL;
+        va_list args;
         return initWithItems(0, args);
     }
 
