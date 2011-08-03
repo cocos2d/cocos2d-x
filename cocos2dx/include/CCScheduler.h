@@ -143,7 +143,7 @@ public:
 	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
 	/** Unschedule the script function
 	*/
-	void unscheduleScriptFunc(const char *pfzFuncName);
+	void unscheduleScriptFunc(const char *pszFuncName);
 
 	/** Unschedules the update selector for a given target
 	 @since v0.99.3
