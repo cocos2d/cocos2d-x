@@ -75,7 +75,7 @@ typedef struct _hashScriptFuncEntry
 {
 	CCTimer			*timer;
 	bool			paused;
-	string			*funcName;
+	const char		*funcName;
 	UT_hash_handle	hh;
 } tHashScriptFuncEntry;
 
@@ -306,7 +306,7 @@ void CCScheduler::scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, 
 	if (! pElement)
 	{
 		pElement = (tHashScriptFuncEntry *)calloc(sizeof(*pElement), 1);
-		pElement->funcName = new string(pszFuncName);
+		pElement->funcName = pszFuncName;
 		pElement->timer = new CCTimer();
 		pElement->timer->initWithScriptFuncName(pszFuncName, fInterval);
 		pElement->paused = bPaused;
@@ -373,23 +373,22 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol 
 	}
 }
 
-void CCScheduler::unscheduleScriptFunc(const char *pfzFuncName)
+void CCScheduler::unscheduleScriptFunc(const char *pszFuncName)
 {
 	// explicity handle nil arguments when removing an object
-	if (pfzFuncName == 0)
+	if (pszFuncName == 0)
 	{
 		return;
 	}
 
 	tHashScriptFuncEntry *pElement = NULL;
-	HASH_FIND_INT(m_pHashForScriptFunctions, &pfzFuncName, pElement);
+	HASH_FIND_INT(m_pHashForScriptFunctions, &pszFuncName, pElement);
 
 	if (pElement)
 	{
 		pElement->timer->release();
-		delete pElement->funcName;
 
-		HASH_DEL(m_pHashForSelectors, pElement);
+		HASH_DEL(m_pHashForScriptFunctions, pElement);
 		free(pElement);
 	}
 }
