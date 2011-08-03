@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "TG3.h"
 #include <string>
+#include "CCApplication.h"
 
 NS_CC_BEGIN
 
@@ -35,6 +36,7 @@ public:
     BitmapDC()
     : m_pBmp(NULL)
     , m_pMemWnd(NULL)
+	, m_pFont(NULL)
     {
 
     }
@@ -42,16 +44,59 @@ public:
     ~BitmapDC(void)
     {
         prepareBitmap(0, 0);
+		if (m_pFont)
+		{
+			delete m_pFont;
+			m_pFont = NULL;
+		}
     }
 
     bool setFont(const char * pFontName = NULL, int nSize = 0)
     {
         bool bRet = false;
+		TFont * pNewFont = new TFont;
         do 
         {
-            CC_BREAK_IF(! m_hFont.Create(0, (Int32)nSize));
-            bRet = true;
+			if (NULL == pFontName)
+			{
+				break;				
+			}		
+
+			TUChar szFullPath[MAX_PATH] = {0};
+			std::string fullpath;
+#ifdef _TRANZDA_VM_
+			fullpath = pFontName;			
+			CCLog("++fullpath %s",fullpath.c_str());
+			fullpath = CCFileUtils::fullPathFromRelativePath(fullpath.c_str());
+			CCLog("--fullpath %s",fullpath.c_str());
+			fullpath = &fullpath.c_str()[strlen("D:/Work7")];			
+#else
+			fullpath = CCApplication::sharedApplication().getAppDataPath();
+			fullpath += pFontName;
+#endif
+			TUString::StrGBToUnicode(szFullPath,(const Char*)fullpath.c_str());			
+			CCLog("path %s,++pNewFont->Create",fullpath.c_str());
+			CC_BREAK_IF(! pNewFont->Create(szFullPath,0, (Int32)nSize,0,NULL));
+			CCLog("path %s,--pNewFont->Create",fullpath.c_str());
+			bRet = true;
         } while (0);
+		// create default font
+		if (!bRet &&
+			pNewFont->Create(0, (Int32)nSize))
+		{
+			bRet = true;
+		}
+		// delete old font
+		if (bRet)
+		{
+			if (m_pFont)
+			{
+				delete m_pFont;
+				m_pFont = NULL;
+			}
+			m_pFont = pNewFont;
+		}
+
         return bRet;
     }
 
@@ -96,7 +141,7 @@ public:
                     }
 
                     // calculate the width of current line and update the window width
-                    int nTempWidth = m_hFont.CharsWidth(strLine.c_str(), strLine.length() + 1);
+                    int nTempWidth = m_pFont->CharsWidth(strLine.c_str(), strLine.length() + 1);
                     if (nTempWidth >= nWinWidth)
                     {
                         nWinWidth = nTempWidth;
@@ -115,14 +160,14 @@ public:
                 int nCurPos = 0;
                 do 
                 {
-                    nCurPos = m_hFont.WordWrap(strLeft.c_str(), nWinWidth);
+                    nCurPos = m_pFont->WordWrap(strLeft.c_str(), nWinWidth);
                     strLeft = strLeft.substr(nCurPos);
                     ++nLineCount;
                 } while (strLeft.length() > 0);
             }
 
             // calculate the window height.
-            tSize.SetHeight(nLineCount * m_hFont.LineHeight());
+            tSize.SetHeight(nLineCount * m_pFont->LineHeight());
             tSize.SetWidth(nWinWidth);
 
             bRet = true;
@@ -205,7 +250,7 @@ public:
             m_pMemWnd->GetMemWindowTBitmapPtr()->Fill32(RGBA(0, 0, 0, 0), 0, 0, nWidth, nHeight);
 
             TRectangle rect(0, 0, nWidth, nHeight);
-            dc.DrawTextInRectangleEx(pszText, 0, RGBA(255,255,255,255), RGBA(0,0,0,255), m_hFont, &rect, style);
+            dc.DrawTextInRectangleEx(pszText, 0, RGBA(255,255,255,255), RGBA(0,0,0,255), *m_pFont, &rect, style);
 
             dc.ReadBitmap(m_pBmp, 0, 0);
 
@@ -217,7 +262,7 @@ public:
     CC_SYNTHESIZE_READONLY(TBitmap*, m_pBmp, Bitmap);
 
 private:
-    TFont m_hFont;
+    TFont * m_pFont;
     TWindow * m_pMemWnd;
 };
 

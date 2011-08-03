@@ -12,23 +12,14 @@ namespace cocos2d
 		CCArray* getDescendants(void);
 
 		static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
-		static CCSpriteBatchNode* spriteSheetWithTexture(CCTexture2D *tex); // deprecated
-
-		static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);
-		static CCSpriteBatchNode* spriteSheetWithTexture(CCTexture2D *tex, unsigned int capacity); // deprecated
+		static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);	
 		static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage);
-		static CCSpriteBatchNode* spriteSheetWithFile(const char* fileImage); // deprecated
 		static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
-		static CCSpriteBatchNode* spriteSheetWithFile(const char* fileImage, unsigned int capacity); // deprecated
 		bool initWithTexture(CCTexture2D *tex, unsigned int capacity);
 		
 		bool initWithFile(const char* fileImage, unsigned int capacity);
 
 		void increaseAtlasCapacity();
-
-		CCSprite* createSpriteWithRect(CCRect rect);
-
-		void initSprite(CCSprite *sprite, CCRect rect);
 
 		void removeChildAtIndex(unsigned int index, bool doCleanup);
 

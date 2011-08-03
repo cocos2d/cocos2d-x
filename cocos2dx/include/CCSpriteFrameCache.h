@@ -117,13 +117,6 @@ public:
 	 */
 	CCSpriteFrame* spriteFrameByName(const char *pszName);
 
-	/** Creates an sprite with the name of an sprite frame.
-	 The created sprite will contain the texture, rect and offset of the sprite frame.
-	 It returns an autorelease object.
-	 @deprecated use CCSprite::spriteWithSpriteFrameName(name). This method will be removed on final v0.9
-	 */
-	CCSprite* createSpriteWithFrameName(const char *pszName);
-
 public:
 	/** Returns the shared instance of the Sprite Frame cache */
 	static CCSpriteFrameCache* sharedSpriteFrameCache(void);

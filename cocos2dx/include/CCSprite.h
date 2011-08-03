@@ -327,24 +327,7 @@ public:
 	/** returns the current displayed frame. */
 	CCSpriteFrame* displayedFrame(void);
 
-	/** adds an Animation to the Sprite.
-
-	@deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
-	*/
-	void addAnimation(CCAnimation *pAnimation);
-
-	/** returns an Animation given it's name.
-
-	@deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
-	*/
-	CCAnimation* animationByName(const char *pszAnimationName);
-
 	// Animation
-
-	/** changes the display frame based on an animation and an index.
-	@deprecated Will be removed in 1.0.1. Use setDisplayFrameWithAnimationName:index instead
-	*/
-	void setDisplayFrame(const char *pszAnimationName, int nFrameIndex);
 
 	/** changes the display frame with animation name and index.
 	The animation name will be get from the CCAnimationCache
@@ -355,7 +338,6 @@ public:
 protected:
 	void updateTextureCoords(CCRect rect);
 	void updateBlendFunc(void);
-	void initAnimationDictionary(void);
     void getTransformValues(struct transformValues_ *tv); // optimization
 
 protected:
@@ -404,9 +386,6 @@ protected:
 	// image is flipped
 	bool m_bFlipX;
 	bool m_bFlipY;
-
-	// Animations that belong to the sprite
-	CCMutableDictionary<std::string, CCAnimation*> *m_pAnimations;
 };
 }//namespace   cocos2d 
 

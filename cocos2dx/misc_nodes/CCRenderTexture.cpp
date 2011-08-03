@@ -216,12 +216,12 @@ void CCRenderTexture::clear(float r, float g, float b, float a)
 	this->end();
 }
 
-bool CCRenderTexture::saveBuffer(const char *szFilePath)
+bool CCRenderTexture::saveBuffer(const char *szFilePath, int x, int y, int nWidth, int nHeight)
 {
 	bool bRet = false;
 
 	CCImage *pImage = new CCImage();
-	if (pImage != NULL && getUIImageFromBuffer(pImage))
+	if (pImage != NULL && getUIImageFromBuffer(pImage, x, y, nWidth, nHeight))
 	{
 		bRet = pImage->saveToFile(szFilePath);
 	}
@@ -229,14 +229,14 @@ bool CCRenderTexture::saveBuffer(const char *szFilePath)
 	CC_SAFE_DELETE(pImage);
 	return bRet;
 }
-bool CCRenderTexture::saveBuffer(const char *fileName, int format)
+bool CCRenderTexture::saveBuffer(int format, const char *fileName, int x, int y, int nWidth, int nHeight)
 {
 	bool bRet = false;
 	CCAssert(format == kCCImageFormatJPG || format == kCCImageFormatPNG,
 			 "the image can only be saved as JPG or PNG format");
 
 	CCImage *pImage = new CCImage();
-	if (pImage != NULL && getUIImageFromBuffer(pImage))
+	if (pImage != NULL && getUIImageFromBuffer(pImage, x, y, nWidth, nHeight))
 	{
 		std::string fullpath = CCFileUtils::getWriteablePath() + fileName;
 		if (kCCImageFormatPNG == format)
@@ -257,12 +257,45 @@ bool CCRenderTexture::saveBuffer(const char *fileName, int format)
 }
 
 /* get buffer as UIImage */
-bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
+bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nWidth, int nHeight)
 {
-	if (NULL == pImage)
+	if (NULL == pImage || NULL == m_pTexture)
 	{
 		return false;
 	}
+
+	CCSize s = m_pTexture->getContentSizeInPixels();
+	int tx = (int)s.width;
+	int ty = (int)s.height;
+
+	if (x < 0 || x >= tx || y < 0 || y >= ty)
+	{
+		return false;
+	}
+
+	if (nWidth < 0 
+		|| nHeight < 0
+		|| (0 == nWidth && 0 != nHeight)
+		|| (0 == nHeight && 0 != nWidth))
+	{
+		return false;
+	}
+	
+	// to get the image size to save
+	//		if the saving image domain exeeds the buffer texture domain,
+	//		it should be cut
+	int nSavedBufferWidth = nWidth;
+	int nSavedBufferHeight = nHeight;
+	if (0 == nWidth)
+	{
+		nSavedBufferWidth = tx;
+	}
+	if (0 == nHeight)
+	{
+		nSavedBufferHeight = ty;
+	}
+	nSavedBufferWidth = x + nSavedBufferWidth > tx ? (tx - x): nSavedBufferWidth;
+	nSavedBufferHeight = y + nSavedBufferHeight > ty ? (ty - y): nSavedBufferHeight;
 
 	GLubyte *pBuffer = NULL;
 	GLubyte *pTempData = NULL;
@@ -272,28 +305,38 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage)
 	{
 		CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 
-		CCSize s = m_pTexture->getContentSizeInPixels();
-		int tx = (int)s.width;
-		int ty = (int)s.height;
+		CC_BREAK_IF(! (pBuffer = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]));
 
-		CC_BREAK_IF(! (pBuffer = new GLubyte[tx * ty * 4]));
-		CC_BREAK_IF(! (pTempData = new GLubyte[tx * ty * 4]));
+		// On some machines, like Samsung i9000, Motorola Defy,
+		// the dimension need to be a power of 2
+		int nReadBufferWidth = 0;
+		int nReadBufferHeight = 0;
+		int nMaxTextureSize = 0;
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nMaxTextureSize);
+
+		nReadBufferWidth = ccNextPOT(tx);
+		nReadBufferHeight = ccNextPOT(ty);
+
+		CC_BREAK_IF(0 == nReadBufferWidth || 0 == nReadBufferHeight);
+		CC_BREAK_IF(nReadBufferWidth > nMaxTextureSize || nReadBufferHeight > nMaxTextureSize);
+
+		CC_BREAK_IF(! (pTempData = new GLubyte[nReadBufferWidth * nReadBufferHeight * 4]));
 
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
-		glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, pBuffer);
+		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
 		this->end();
 
+		// to get the actual texture data 
 		// #640 the image read from rendertexture is upseted
-		int nRowBytes = tx * 4;
-		for (int i = 0; i < ty; ++i)
+		for (int i = 0; i < nSavedBufferHeight; ++i)
 		{
-			memcpy(&pTempData[(ty - 1 - i) * nRowBytes], 
-				&pBuffer[i * nRowBytes], 
-				nRowBytes);
+			memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
+				&pTempData[(y + nSavedBufferHeight - i - 1) * nReadBufferWidth * 4 + x * 4], 
+				nSavedBufferWidth * 4);
 		}
 
-		bRet = pImage->initWithImageData(pTempData, tx * ty * 4, CCImage::kFmtRawData, tx, ty, 8);
+		bRet = pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, CCImage::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
 	} while (0);
 
 	CC_SAFE_DELETE_ARRAY(pBuffer);
