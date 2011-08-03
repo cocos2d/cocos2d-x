@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __ANDROID_JNI_HELPER_H__
 
 #include <jni.h>
+#include <string>
 #include "CCPlatformMacros.h"
 
 namespace cocos2d {
@@ -44,7 +45,7 @@ namespace cocos2d {
 		static jclass getClassID(const char *className, JNIEnv *env=0);
 		static bool getStaticMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
 		static bool getMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode);
-		static char* jstringToChar(jstring str);
+		static std::string jstring2string(jstring str);
 
 	private:
 		static JavaVM *m_psJavaVM;
