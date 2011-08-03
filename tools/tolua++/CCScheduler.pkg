@@ -43,6 +43,7 @@ class CCScheduler : public CCObject
 
 	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
 	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
+	void unscheduleScriptFunc(const char *pszFuncName);
 	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
 
 	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
