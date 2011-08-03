@@ -19,6 +19,8 @@
  * SOFTWARE.
  */
 
+
+#include "cocos2d.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -26,7 +28,7 @@
 #include <string.h>
 #include "chipmunk.h"
 #include "drawSpace.h"
-#include "cocos2d.h"
+
 
 using namespace cocos2d;
 
