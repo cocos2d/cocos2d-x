@@ -65,7 +65,12 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return initWithImageData(data.getBuffer(), data.getSize(), eImgFmt);
 }
 
-bool CCImage::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
+bool CCImage::initWithImageData(void * pData, 
+								int nDataLen, 
+								EImageFormat eFmt,
+								int nWidth,
+								int nHeight,
+								int nBitsPerComponent)
 {
     bool bRet = false;
     do 
@@ -239,4 +244,29 @@ bool CCImage::initWithString(
 	bool bRet = false;
     return bRet;	
 }
+
+bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
+{
+	// todo
+	return false;
+}
+
+bool CCImage::_initWithRawData(void * pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
+{
+	// todo
+	return false;
+}
+
+bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
+{
+	// todo
+	return false;
+}
+
+bool CCImage::_saveImageToJPG(const char * pszFilePath)
+{
+	// todo
+	return false;
+}
+
 NS_CC_END;
