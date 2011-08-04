@@ -63,7 +63,7 @@ public:
 			{
 				RemoveFontResource(pwszBuffer);
 				SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-				delete pwszBuffer;
+				delete [] pwszBuffer;
 				pwszBuffer = NULL;
 			}
 		}
@@ -143,7 +143,7 @@ public:
 					{
 						RemoveFontResource(pwszBuffer);
 						SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-						delete pwszBuffer;
+						delete [] pwszBuffer;
 						pwszBuffer = NULL;
 					}
 				}
@@ -156,7 +156,7 @@ public:
 					{
 						AddFontResource(pwszBuffer);
 						SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
-						delete pwszBuffer;
+						delete [] pwszBuffer;
 						pwszBuffer = NULL;
 					}
 				}
