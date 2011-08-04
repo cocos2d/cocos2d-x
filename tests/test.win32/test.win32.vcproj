@@ -1083,6 +1083,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="FontTest"
+					>
+					<File
+						RelativePath="..\tests\FontTest\FontTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\FontTest\FontTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
