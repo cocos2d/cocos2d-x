@@ -86,14 +86,28 @@ public:
 
 	/** saves the texture into a file */
 	// para szFilePath      the absolute path to save
-	bool saveBuffer(const char *szFilePath);
-	/** saves the texture into a file. The format can be JPG or PNG */
-	bool saveBuffer(const char *name, int format);
+	// para x,y         the lower left corner coordinates of the buffer to save
+	// pare nWidth,nHeight    the size of the buffer to save
+	//                        when nWidth = 0 and nHeight = 0, the image size to save equals to buffer texture size
+	bool saveBuffer(const char *szFilePath, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
+
+	/** saves the texture into a file. 
+	// para name        the file name to save
+	// para format      the image format to save, here it supports kCCImageFormatPNG and kCCImageFormatJPG */
+	// para x,y         the lower left corner coordinates of the buffer to save
+	// pare nWidth,nHeight    the size of the buffer to save
+	//                        when nWidth = 0 and nHeight = 0, the image size to save equals to buffer texture size
+	bool saveBuffer(int format, const char *name, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
 
     /* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
     CCData *getUIImageAsDataFromBuffer(int format);
 
-	bool getUIImageFromBuffer(CCImage *pImage);
+	/** save the buffer data to a CCImage */
+	// para pImage      the CCImage to save
+	// para x,y         the lower left corner coordinates of the buffer to save
+	// pare nWidth,nHeight    the size of the buffer to save
+	//                        when nWidth = 0 and nHeight = 0, the image size to save equals to buffer texture size
+	bool getUIImageFromBuffer(CCImage *pImage, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
 
 protected:
 	GLuint				m_uFBO;
