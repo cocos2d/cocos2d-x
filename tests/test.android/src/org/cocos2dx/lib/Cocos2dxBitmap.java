@@ -125,7 +125,7 @@ public class Cocos2dxBitmap{
             		maxContentWidth = temp;
             	}
             }
-        }
+        }        
         
         return new TextProperty(maxContentWidth, h, lines);
     }
@@ -238,10 +238,10 @@ public class Cocos2dxBitmap{
     	}
     	
     	/*
-    	 * Add the last char
+    	 * Add the last chars
     	 */
-    	if (start == charLength - 1){
-    		strList.add(content.substring(charLength-1));
+    	if (start < charLength){
+    		strList.add(content.substring(start));
     	}
     	
     	return strList;
@@ -259,7 +259,7 @@ public class Cocos2dxBitmap{
         if (fontName.endsWith(".ttf")){
         	 try {
         		Typeface typeFace = Typeface.createFromAsset(context.getAssets(), fontName);
-             	paint.setTypeface(typeFace);
+              	paint.setTypeface(typeFace);
              } catch (Exception e){
              	Log.e("Cocos2dxBitmap", 
              		"error to create ttf type face: " + fontName);
@@ -273,7 +273,7 @@ public class Cocos2dxBitmap{
         else {
         	paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
         }
-               
+        
         switch (alignment){
     	case ALIGNCENTER:
     		paint.setTextAlign(Align.CENTER);
