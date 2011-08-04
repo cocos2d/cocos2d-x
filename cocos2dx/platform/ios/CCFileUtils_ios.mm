@@ -247,12 +247,7 @@ namespace cocos2d {
 
         strcpy(s_pszResourcePath, pszResourcePath);
     }
-
-    const char* CCFileUtils::getResourcePath()
-    {
-        return s_pszResourcePath;
-    }
-
+    
     int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     {
         CCAssert( out, "ccLoadFileIntoMemory: invalid 'out' parameter");
@@ -344,10 +339,6 @@ namespace cocos2d {
         return pBuffer;
     }
     void CCFileUtils::setResource(const char* pszZipFileName)
-    {
-        CCAssert(0, "Have not implement!");
-    }
-    void CCFileUtils::setRelativePath(const char* pszRelativePath)
     {
         CCAssert(0, "Have not implement!");
     }
