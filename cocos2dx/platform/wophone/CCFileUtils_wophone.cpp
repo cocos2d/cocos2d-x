@@ -247,17 +247,6 @@ void CCFileUtils::setResourcePath(const char *pszResourcePath)
     CCAssert(0, "Have not implement!");
 }
 
-const char* CCFileUtils::getResourcePath(void)
-{
-    CCAssert(0, "Have not implement!");
-    return NULL;
-}
-
-void CCFileUtils::setRelativePath(const char* pszRelativePath)
-{
-    CCAssert(0, "Have not implement!");
-}
-
 string CCFileUtils::getWriteablePath()
 {
 	return string(CCApplication::sharedApplication().getAppWritablePath());

@@ -40,6 +40,9 @@ bool AppDelegate::initInstance()
 		// OpenGLView initialized in HelloWorld/android/jni/helloworld/main.cpp
 		// the default setting is to create a fullscreen view
 		// if you want to use auto-scale, please enable view->create(320,480) in main.cpp
+		// if the resources under '/sdcard" or other writeable path, set it.
+		// warning: the audio source should in assets/
+		// cocos2d::CCFileUtils::setResourcePath("/sdcard");
 
 #endif  // CC_PLATFORM_ANDROID
 
