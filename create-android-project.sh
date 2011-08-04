@@ -5,8 +5,8 @@
 # Don't modify the script until you know what you do.
 
 # set environment paramters
-NDK_ROOT="/workspace/android-dev/android-ndk-r5"
-ANDROID_SDK_ROOT="/workspace/android-dev/android-sdk-mac_86"
+#NDK_ROOT="/workspace/android-dev/android-ndk-r5"
+#ANDROID_SDK_ROOT="/workspace/android-dev/android-sdk-mac_86"
 
 # check if it was called by .bat file
 if [ $# -eq 5 ];then
@@ -19,7 +19,7 @@ fi
 
 
 # the bash file should not be called by cygwin
-UNIX_NAME=`uname -o`
+UNIX_NAME=`uname -s`
 if [ $UNIX_NAME = "Cygwin" ];then
     echo "Error!!!"
     echo "Don't run in cygwin. You should run corresponding bat."
