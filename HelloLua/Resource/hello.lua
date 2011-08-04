@@ -24,8 +24,8 @@ function btnTouchMove(e)
         local v = e[1]
         local pointMove = v:locationInView(v:view())
         pointMove = cocos2d.CCDirector:sharedDirector():convertToGL(pointMove)
-        local positionCurrent = layerFarm.__CCNode__:getPosition()
-        layerFarm.__CCNode__:setPosition(cocos2d.CCPoint(positionCurrent.x + pointMove.x - pointBegin.x, positionCurrent.y + pointMove.y - pointBegin.y))
+        local positionCurrent = layerFarm:getPosition()
+        layerFarm:setPosition(cocos2d.CCPoint(positionCurrent.x + pointMove.x - pointBegin.x, positionCurrent.y + pointMove.y - pointBegin.y))
         pointBegin = pointMove
     end
 end
