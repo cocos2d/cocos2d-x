@@ -19,8 +19,8 @@ fi
 
 
 # the bash file should not be called by cygwin
-UNIX_NAME=`uname -s`
-if [ $UNIX_NAME = "Cygwin" ];then
+KERNEL_NAME=`uname -s | grep "CYGWIN*"`
+if [ $KERNEL_NAME"hi" != "hi" ]; then
     echo "Error!!!"
     echo "Don't run in cygwin. You should run corresponding bat."
     exit 
