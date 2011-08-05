@@ -65,6 +65,7 @@ copy_src_and_jni(){
 copy_build_native(){
     # here should use # instead of /, why??
     sed "s#__cocos2dxroot__#$COCOS2DX_ROOT#;s#__ndkroot__#$NDK_ROOT#;s#__projectname__#$APP_NAME#" $COCOS2DX_ROOT/template/android/build_native.sh > $APP_DIR/android/build_native.sh
+    chmod u+x $APP_DIR/android/build_native.sh
 }
 
 # replace AndroidManifext.xml and change the activity name
