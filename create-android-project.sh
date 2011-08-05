@@ -19,7 +19,7 @@ fi
 
 
 # the bash file should not be called by cygwin
-UNIX_NAME=`uname -o`
+UNIX_NAME=`uname -s`
 if [ $UNIX_NAME = "Cygwin" ];then
     echo "Error!!!"
     echo "Don't run in cygwin. You should run corresponding bat."
