@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.LinkedList;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
+import android.util.Log;
 
 public class Cocos2dxBitmap{
 	/*
@@ -20,6 +22,12 @@ public class Cocos2dxBitmap{
 	private static final int ALIGNCENTER = 0x33;
 	private static final int ALIGNLEFT	 = 0x31;
 	private static final int ALIGNRIGHT	 = 0x32;
+	
+	private static Context context;
+	
+	public static void setContext(Context context){
+		Cocos2dxBitmap.context = context;
+	}
 	
 	/*
 	 * @width: the width to draw, it can be 0
@@ -31,7 +39,7 @@ public class Cocos2dxBitmap{
     	content = refactorString(content);   	
     	Paint paint = newPaint(fontName, fontSize, alignment);
     	
-    	TextProperty textProperty = getTextWidthAndHeight(content, paint, width, height);      	
+    	TextProperty textProperty = computeTextProperty(content, paint, width, height);      	
       
         // Draw text to bitmap
         Bitmap bitmap = Bitmap.createBitmap(textProperty.maxWidth, 
@@ -95,7 +103,7 @@ public class Cocos2dxBitmap{
     	}
     }
     
-    private static TextProperty getTextWidthAndHeight(String content, Paint paint,
+    private static TextProperty computeTextProperty(String content, Paint paint,
     		int maxWidth, int maxHeight){              
         FontMetricsInt fm = paint.getFontMetricsInt();
         int h = (int)Math.ceil(fm.descent - fm.ascent);
@@ -117,8 +125,7 @@ public class Cocos2dxBitmap{
             		maxContentWidth = temp;
             	}
             }
-        }
-        
+        }        
         
         return new TextProperty(maxContentWidth, h, lines);
     }
@@ -231,10 +238,10 @@ public class Cocos2dxBitmap{
     	}
     	
     	/*
-    	 * Add the last char
+    	 * Add the last chars
     	 */
-    	if (start == charLength - 1){
-    		strList.add(content.substring(charLength-1));
+    	if (start < charLength){
+    		strList.add(content.substring(start));
     	}
     	
     	return strList;
@@ -243,9 +250,29 @@ public class Cocos2dxBitmap{
     private static Paint newPaint(String fontName, int fontSize, int alignment){
     	Paint paint = new Paint();
     	paint.setColor(Color.WHITE);
-        paint.setTextSize(fontSize);
-        paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
-        paint.setAntiAlias(true);
+        paint.setTextSize(fontSize);      
+        paint.setAntiAlias(true);    
+        
+        /*
+         * Set type face for paint, now it support .ttf file.
+         */
+        if (fontName.endsWith(".ttf")){
+        	 try {
+        		Typeface typeFace = Typeface.createFromAsset(context.getAssets(), fontName);
+              	paint.setTypeface(typeFace);
+             } catch (Exception e){
+             	Log.e("Cocos2dxBitmap", 
+             		"error to create ttf type face: " + fontName);
+             	
+             	/*
+             	 * The file may not find, use system font
+             	 */
+             	paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
+             }
+        }
+        else {
+        	paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
+        }
         
         switch (alignment){
     	case ALIGNCENTER:

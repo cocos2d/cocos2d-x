@@ -79,7 +79,7 @@ bool CCProgressTimer::initWithTexture(cocos2d::CCTexture2D *pTexture)
 	m_fPercentage = 0.f;
 	m_pVertexData = NULL;
     m_nVertexDataCount = 0;
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 	setContentSize(m_pSprite->getContentSize());
     m_eType = kCCProgressTimerTypeRadialCCW;
 
@@ -108,6 +108,7 @@ void CCProgressTimer::setSprite(cocos2d::CCSprite *pSprite)
 		CC_SAFE_RETAIN(pSprite);
 		CC_SAFE_RELEASE(m_pSprite);
 		m_pSprite = pSprite;
+        setContentSize(m_pSprite->getContentSize());
 
 		//	Everytime we set a new sprite, we free the current vertex data
 		if (m_pVertexData)
@@ -148,9 +149,17 @@ ccVertex2F CCProgressTimer::vertexFromTexCoord(cocos2d::CCPoint texCoord)
     CCTexture2D *pTexture = m_pSprite->getTexture();
     if (pTexture)
     {
-        CCSize texSize = pTexture->getContentSizeInPixels();
-        tmp = ccp(texSize.width * texCoord.x / pTexture->getMaxS(),
-                    texSize.height * (1 - (texCoord.y / pTexture->getMaxT())));
+        float fXMax = MAX(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
+        float fXMin = MIN(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
+        float fYMax = MAX(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
+        float fYMin = MIN(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
+        CCPoint tMax = ccp(fXMax, fYMax);
+        CCPoint tMin = ccp(fXMin, fYMin);
+
+        CCSize texSize = CCSizeMake(m_pSprite->getQuad().br.vertices.x - m_pSprite->getQuad().bl.vertices.x,
+                                    m_pSprite->getQuad().tl.vertices.y - m_pSprite->getQuad().bl.vertices.y);
+        tmp = ccp(texSize.width * (texCoord.x - tMin.x) / (tMax.x - tMin.x),
+                    texSize.height * (1 - (texCoord.y - tMin.y) / (tMax.y - tMin.y)));
 	}
 	else
 	{
@@ -215,11 +224,15 @@ void CCProgressTimer::updateProgress(void)
 void CCProgressTimer::updateRadial(void)
 {
 	//	Texture Max is the actual max coordinates to deal with non-power of 2 textures
-	CCPoint tMax = ccp(m_pSprite->getTexture()->getMaxS(),
-		               m_pSprite->getTexture()->getMaxT());
+    float fXMax = MAX(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
+    float fXMin = MIN(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
+    float fYMax = MAX(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
+    float fYMin = MIN(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
+    CCPoint tMax = ccp(fXMax, fYMax);
+    CCPoint tMin = ccp(fXMin, fYMin);
 
 	//	Grab the midpoint
-	CCPoint midpoint = ccpCompMult(m_tAnchorPoint, tMax);
+	CCPoint midpoint = ccpAdd(tMin, ccpCompMult(m_tAnchorPoint, ccpSub(tMax, tMin)));
 
 	float alpha = m_fPercentage / 100.f;
 
@@ -229,7 +242,7 @@ void CCProgressTimer::updateRadial(void)
 	//	We find the vector to do a hit detection based on the percentage
 	//	We know the first vector is the one @ 12 o'clock (top,mid) so we rotate 
 	//	from that by the progress angle around the midpoint pivot
-	CCPoint topMid = ccp(midpoint.x, 0.f);
+	CCPoint topMid = ccp(midpoint.x, tMin.y);
 	CCPoint percentagePt = ccpRotateByAngle(topMid, midpoint, angle);
 
 	int index = 0;
@@ -261,8 +274,8 @@ void CCProgressTimer::updateRadial(void)
 		{
 			int pIndex = (i + (kProgressTextureCoordsCount - 1)) % kProgressTextureCoordsCount;
 
-			CCPoint edgePtA = ccpCompMult(boundaryTexCoord(i % kProgressTextureCoordsCount), tMax);
-			CCPoint edgePtB = ccpCompMult(boundaryTexCoord(pIndex), tMax);
+			CCPoint edgePtA = ccpAdd(tMin, ccpCompMult(boundaryTexCoord(i % kProgressTextureCoordsCount), ccpSub(tMax, tMin)));
+			CCPoint edgePtB = ccpAdd(tMin, ccpCompMult(boundaryTexCoord(pIndex), ccpSub(tMax, tMin)));
 
 			//	Remember that the top edge is split in half for the 12 o'clock position
 			//	Let's deal with that here by finding the correct endpoints
@@ -342,12 +355,12 @@ void CCProgressTimer::updateRadial(void)
 		m_pVertexData[0].texCoords = tex2(midpoint.x, midpoint.y);
 		m_pVertexData[0].vertices = vertexFromTexCoord(midpoint);
 
-		m_pVertexData[1].texCoords = tex2(midpoint.x, 0.f);
-		m_pVertexData[1].vertices = vertexFromTexCoord(ccp(midpoint.x, 0.f));
+		m_pVertexData[1].texCoords = tex2(midpoint.x, tMin.y);
+		m_pVertexData[1].vertices = vertexFromTexCoord(ccp(midpoint.x, tMin.y));
 
 		for (int i = 0; i < index; ++i)
 		{
-			CCPoint texCoords = ccpCompMult(boundaryTexCoord(i), tMax);
+			CCPoint texCoords = ccpAdd(tMin, ccpCompMult(boundaryTexCoord(i), ccpSub(tMax, tMin)));
 
 			m_pVertexData[i+2].texCoords = tex2(texCoords.x, texCoords.y);
 			m_pVertexData[i+2].vertices = vertexFromTexCoord(texCoords);
@@ -360,12 +373,12 @@ void CCProgressTimer::updateRadial(void)
 			{
 				if (m_pSprite->isFlipX())
 				{
-					m_pVertexData[i].texCoords.u = tMax.x - m_pVertexData[i].texCoords.u;
+					m_pVertexData[i].texCoords.u = tMin.x + tMax.x - m_pVertexData[i].texCoords.u;
 				}
 
 				if (m_pSprite->isFlipY())
 				{
-					m_pVertexData[i].texCoords.v = tMax.y - m_pVertexData[i].texCoords.v;
+					m_pVertexData[i].texCoords.v = tMin.y + tMax.y - m_pVertexData[i].texCoords.v;
 				}
 			}
 		}
@@ -379,12 +392,12 @@ void CCProgressTimer::updateRadial(void)
 	{
 		if (m_pSprite->isFlipX())
 		{
-			m_pVertexData[m_nVertexDataCount - 1].texCoords.u = tMax.x - m_pVertexData[m_nVertexDataCount - 1].texCoords.u;
+			m_pVertexData[m_nVertexDataCount - 1].texCoords.u = tMin.x + tMax.x - m_pVertexData[m_nVertexDataCount - 1].texCoords.u;
 		}
 
         if (m_pSprite->isFlipY())
 		{
-			m_pVertexData[m_nVertexDataCount - 1].texCoords.v = tMax.y - m_pVertexData[m_nVertexDataCount - 1].texCoords.v;
+			m_pVertexData[m_nVertexDataCount - 1].texCoords.v = tMin.y + tMax.y - m_pVertexData[m_nVertexDataCount - 1].texCoords.v;
 		}
 	}
 }
@@ -402,7 +415,12 @@ void CCProgressTimer::updateBar(void)
 {
 	float alpha = m_fPercentage / 100.f;
 
-	CCPoint tMax = ccp(m_pSprite->getTexture()->getMaxS(), m_pSprite->getTexture()->getMaxT());
+    float fXMax = MAX(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
+    float fXMin = MIN(m_pSprite->getQuad().br.texCoords.u, m_pSprite->getQuad().bl.texCoords.u);
+    float fYMax = MAX(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
+    float fYMin = MIN(m_pSprite->getQuad().tl.texCoords.v, m_pSprite->getQuad().bl.texCoords.v);
+    CCPoint tMax = ccp(fXMax, fYMax);
+    CCPoint tMin = ccp(fXMin, fYMin);
 
 	unsigned char vIndexes[2] = {0, 0};
 	unsigned char index = 0;
@@ -418,23 +436,23 @@ void CCProgressTimer::updateBar(void)
 
 		if (m_eType == kCCProgressTimerTypeHorizontalBarLR)
 		{
-			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(0, 0);
-			m_pVertexData[vIndexes[1] = 1].texCoords = tex2(0, tMax.y);
+			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y);
+			m_pVertexData[vIndexes[1] = 1].texCoords = tex2(tMin.x, tMax.y);
 		} else
 		if (m_eType == kCCProgressTimerTypeHorizontalBarRL)
 		{
 			m_pVertexData[vIndexes[0] = 2].texCoords = tex2(tMax.x, tMax.y);
-			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, 0.f);
+			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMin.y);
 		} else
 		if (m_eType == kCCProgressTimerTypeVerticalBarBT)
 		{
-			m_pVertexData[vIndexes[0] = 1].texCoords = tex2(0, tMax.y);
+			m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x, tMax.y);
 			m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMax.y);
 		} else
 		if (m_eType == kCCProgressTimerTypeVerticalBarTB)
 		{
-			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(0, 0);
-			m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, 0);
+			m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y);
+			m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, tMin.y);
 		}
 
 		index = vIndexes[0];
@@ -450,17 +468,17 @@ void CCProgressTimer::updateBar(void)
 			if (m_pSprite->isFlipX())
 			{
 				index = vIndexes[0];
-				m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
+				m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
 				index = vIndexes[1];
-				m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
+				m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
 			}
 
 			if (m_pSprite->isFlipY())
 			{
 				index = vIndexes[0];
-				m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
+				m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
 				index = vIndexes[1];
-				m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
+				m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
 			}
 		}
 
@@ -469,23 +487,23 @@ void CCProgressTimer::updateBar(void)
 
 	if(m_eType == kCCProgressTimerTypeHorizontalBarLR)
 	{
-		m_pVertexData[vIndexes[0] = 3].texCoords = tex2(tMax.x*alpha, tMax.y);
-		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x*alpha, 0);
+		m_pVertexData[vIndexes[0] = 3].texCoords = tex2(tMin.x + (tMax.x - tMin.x) *alpha, tMax.y);
+		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMin.x + (tMax.x - tMin.x) *alpha, tMin.y);
 	} else 
 	if (m_eType == kCCProgressTimerTypeHorizontalBarRL) 
 	{
-		m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMax.x*(1.f - alpha), 0);
-		m_pVertexData[vIndexes[1] = 0].texCoords = tex2(tMax.x*(1.f - alpha), tMax.y);
+		m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x + (tMax.x - tMin.x) * (1.f - alpha), tMin.y);
+		m_pVertexData[vIndexes[1] = 0].texCoords = tex2(tMin.x + (tMax.x - tMin.x) * (1.f - alpha), tMax.y);
 	} else 
 	if (m_eType == kCCProgressTimerTypeVerticalBarBT) 
 	{
-		m_pVertexData[vIndexes[0] = 0].texCoords = tex2(0, tMax.y*(1.f - alpha));
-		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, tMax.y*(1.f - alpha));
+		m_pVertexData[vIndexes[0] = 0].texCoords = tex2(tMin.x, tMin.y + (tMax.y - tMin.y) * (1.f - alpha));
+		m_pVertexData[vIndexes[1] = 2].texCoords = tex2(tMax.x, tMin.y + (tMax.y - tMin.y) * (1.f - alpha));
 	} else 
 	if (m_eType == kCCProgressTimerTypeVerticalBarTB) 
 	{
-		m_pVertexData[vIndexes[0] = 1].texCoords = tex2(0, tMax.y*alpha);
-		m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMax.y*alpha);
+		m_pVertexData[vIndexes[0] = 1].texCoords = tex2(tMin.x, tMin.y + (tMax.y - tMin.y) * alpha);
+		m_pVertexData[vIndexes[1] = 3].texCoords = tex2(tMax.x, tMin.y + (tMax.y - tMin.y) * alpha);
 	}
 
 	index = vIndexes[0];
@@ -500,17 +518,17 @@ void CCProgressTimer::updateBar(void)
 		if (m_pSprite->isFlipX()) 
 		{
 			index = vIndexes[0];
-			m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
+			m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
 			index = vIndexes[1];
-			m_pVertexData[index].texCoords.u = tMax.x - m_pVertexData[index].texCoords.u;
+			m_pVertexData[index].texCoords.u = tMin.x + tMax.x - m_pVertexData[index].texCoords.u;
 		}
 
 		if (m_pSprite->isFlipY())
 		{
 			index = vIndexes[0];
-			m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
+			m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
 			index = vIndexes[1];
-			m_pVertexData[index].texCoords.v = tMax.y - m_pVertexData[index].texCoords.v;
+			m_pVertexData[index].texCoords.v = tMin.y + tMax.y - m_pVertexData[index].texCoords.v;
 		}
 	}
 }

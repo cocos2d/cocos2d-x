@@ -148,18 +148,6 @@ void CCFileUtils::setResource(const char* pszZipFileName)
     CCAssert(0, "Have not implement!");
 }
 
-const char* CCFileUtils::getResourcePath(void)
-{
-    CCAssert(0, "Have not implement!");
-    return NULL;
-}
-
-void CCFileUtils::setRelativePath(const char* pszRelativePath)
-{
-    CC_UNUSED_PARAM(pszRelativePath);
-    CCAssert(0, "Have not implement!");
-}
-
 string CCFileUtils::getWriteablePath()
 {
 	// return the path that the exe file saved in

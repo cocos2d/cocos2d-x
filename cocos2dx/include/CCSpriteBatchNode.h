@@ -78,27 +78,23 @@ namespace cocos2d
 		The capacity will be increased in 33% in runtime if it run out of space.
 		*/
 		static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D *tex);
-		static CCSpriteBatchNode* spriteSheetWithTexture(CCTexture2D *tex); // deprecated
 
 		/** creates a CCSpriteBatchNode with a texture2d and capacity of children.
 		The capacity will be increased in 33% in runtime if it run out of space.
 		*/
 		static CCSpriteBatchNode* batchNodeWithTexture(CCTexture2D* tex, unsigned int capacity);
-		static CCSpriteBatchNode* spriteSheetWithTexture(CCTexture2D *tex, unsigned int capacity); // deprecated
 
 		/** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
 		The capacity will be increased in 33% in runtime if it run out of space.
 		The file will be loaded using the TextureMgr.
 		*/
 		static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage);
-		static CCSpriteBatchNode* spriteSheetWithFile(const char* fileImage); // deprecated
 
 		/** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
 		The capacity will be increased in 33% in runtime if it run out of space.
 		The file will be loaded using the TextureMgr.
 		*/
 		static CCSpriteBatchNode* batchNodeWithFile(const char* fileImage, unsigned int capacity);
-		static CCSpriteBatchNode* spriteSheetWithFile(const char* fileImage, unsigned int capacity); // deprecated
 
 		/** initializes a CCSpriteBatchNode with a texture2d and capacity of children.
 		The capacity will be increased in 33% in runtime if it run out of space.
@@ -111,25 +107,6 @@ namespace cocos2d
 		bool initWithFile(const char* fileImage, unsigned int capacity);
 
 		void increaseAtlasCapacity();
-
-		/** creates an sprite with a rect in the CCSpriteBatchNode.
-		It's the same as:
-		- create an standard CCSsprite
-		- set the usingSpriteSheet = YES
-		- set the textureAtlas to the same texture Atlas as the CCSpriteBatchNode
-		@deprecated Use [CCSprite spriteWithBatchNode:rect:] instead;
-		*/
-		CCSprite* createSpriteWithRect(CCRect rect);
-
-		/** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteBatchNode.
-		It's the same as:
-		- initialize an standard CCSsprite
-		- set the usingBatchNode = YES
-		- set the textureAtlas to the same texture Atlas as the CCSpriteBatchNode
-		@since v0.99.0
-		@deprecated Use [CCSprite initWithBatchNode:rect:] instead;
-		*/ 
-		void initSprite(CCSprite *sprite, CCRect rect);
 
 		/** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
 		@warning Removing a child from a CCSpriteBatchNode is very slow

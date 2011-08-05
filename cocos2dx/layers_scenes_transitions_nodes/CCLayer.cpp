@@ -40,7 +40,7 @@ CCLayer::CCLayer()
 ,m_bIsKeypadEnabled(false)
 {
 	m_eTouchDelegateType = ccTouchDelegateAllBit;
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 	m_bIsRelativeAnchorPoint = false;
 }
 
@@ -467,33 +467,6 @@ void CCLayerColor::draw()
 	// restore default GL state
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);
-}
-
-//
-// CCColorLayer
-//
-CCColorLayer* CCColorLayer::layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
-{
-	CCColorLayer * pLayer = new CCColorLayer();
-	if( pLayer && pLayer->initWithColorWidthHeight(color,width,height))
-	{
-		pLayer->autorelease();
-		return pLayer;
-	}
-	CC_SAFE_DELETE(pLayer);
-	return NULL;
-}
-
-CCColorLayer* CCColorLayer::layerWithColor(ccColor4B color)
-{
-	CCColorLayer * pLayer = new CCColorLayer();
-	if(pLayer && pLayer->initWithColor(color))
-	{
-		pLayer->autorelease();
-		return pLayer;
-	}
-	CC_SAFE_DELETE(pLayer);
-	return NULL;
 }
 
 //

@@ -93,6 +93,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCAccelerometer_wophone.o \
 	$(OBJECTS_DIR)/CCApplication_wophone.o \
 	$(OBJECTS_DIR)/CCEGLView_wophone.o \
+	$(OBJECTS_DIR)/CCScriptSupport.o \
 	$(OBJECTS_DIR)/CCAnimation.o \
 	$(OBJECTS_DIR)/CCAnimationCache.o \
 	$(OBJECTS_DIR)/CCSprite.o \
@@ -115,6 +116,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCTexture2D.o \
 	$(OBJECTS_DIR)/CCTextureAtlas.o \
 	$(OBJECTS_DIR)/CCTextureCache.o \
+	$(OBJECTS_DIR)/CCTexturePVR.o \
 	$(OBJECTS_DIR)/CCParallaxNode.o \
 	$(OBJECTS_DIR)/CCTileMapAtlas.o \
 	$(OBJECTS_DIR)/CCTMXLayer.o \
@@ -122,8 +124,7 @@ OBJECTS = \
 	$(OBJECTS_DIR)/CCTMXTiledMap.o \
 	$(OBJECTS_DIR)/CCTMXXMLParser.o \
 	$(OBJECTS_DIR)/CCTouchDispatcher.o \
-	$(OBJECTS_DIR)/CCTouchHandler.o \
-	$(OBJECTS_DIR)/CCScriptSupport.o
+	$(OBJECTS_DIR)/CCTouchHandler.o
 
 ADD_OBJECTS += 
 
@@ -325,6 +326,9 @@ $(OBJECTS_DIR)/CCApplication_wophone.o : ../platform/wophone/CCApplication_wopho
 $(OBJECTS_DIR)/CCEGLView_wophone.o : ../platform/wophone/CCEGLView_wophone.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCEGLView_wophone.o ../platform/wophone/CCEGLView_wophone.cpp
 
+$(OBJECTS_DIR)/CCScriptSupport.o : ../script_support/CCScriptSupport.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScriptSupport.o ../script_support/CCScriptSupport.cpp
+
 $(OBJECTS_DIR)/CCAnimation.o : ../sprite_nodes/CCAnimation.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCAnimation.o ../sprite_nodes/CCAnimation.cpp
 
@@ -391,6 +395,9 @@ $(OBJECTS_DIR)/CCTextureAtlas.o : ../textures/CCTextureAtlas.cpp
 $(OBJECTS_DIR)/CCTextureCache.o : ../textures/CCTextureCache.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTextureCache.o ../textures/CCTextureCache.cpp
 
+$(OBJECTS_DIR)/CCTexturePVR.o : ../textures/CCTexturePVR.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTexturePVR.o ../textures/CCTexturePVR.cpp
+
 $(OBJECTS_DIR)/CCParallaxNode.o : ../tileMap_parallax_nodes/CCParallaxNode.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCParallaxNode.o ../tileMap_parallax_nodes/CCParallaxNode.cpp
 
@@ -415,5 +422,3 @@ $(OBJECTS_DIR)/CCTouchDispatcher.o : ../touch_dispatcher/CCTouchDispatcher.cpp
 $(OBJECTS_DIR)/CCTouchHandler.o : ../touch_dispatcher/CCTouchHandler.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCTouchHandler.o ../touch_dispatcher/CCTouchHandler.cpp
 
-$(OBJECTS_DIR)/CCScriptSupport.o : ../script_support/CCScriptSupport.cpp
-	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CCScriptSupport.o ../script_support/CCScriptSupport.cpp

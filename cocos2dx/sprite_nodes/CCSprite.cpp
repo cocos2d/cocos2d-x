@@ -195,11 +195,8 @@ bool CCSprite::init(void)
 
 	m_bFlipX = m_bFlipY = false;
 
-	// lazy alloc
-	m_pAnimations = NULL;
-
 	// default transform anchor: center
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 
 	// zwoptex default values
     m_obOffsetPositionInPixels = CCPointZero;
@@ -332,7 +329,6 @@ CCSprite::CCSprite()
 CCSprite::~CCSprite(void)
 {
 	CC_SAFE_RELEASE(m_pobTexture);
-	CC_SAFE_RELEASE(m_pAnimations);
 }
 
 void CCSprite::useSelfRender(void)
@@ -358,11 +354,6 @@ void CCSprite::useBatchNode(CCSpriteBatchNode *batchNode)
     m_bUsesBatchNode = true;
 	m_pobTextureAtlas = batchNode->getTextureAtlas(); // weak ref
     m_pobBatchNode = batchNode;
-}
-
-void CCSprite::initAnimationDictionary(void)
-{
-	m_pAnimations = new CCMutableDictionary<string, CCAnimation*>();
 }
 
 void CCSprite::setTextureRect(CCRect rect)
@@ -1039,22 +1030,6 @@ void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 	setTextureRectInPixels(pNewFrame->getRectInPixels(), pNewFrame->isRotated(), pNewFrame->getOriginalSizeInPixels());
 }
 
-// XXX deprecated
-void CCSprite::setDisplayFrame(const char *pszAnimationName, int nFrameIndex)
-{
-	if (! m_pAnimations)
-	{
-		initAnimationDictionary();
-	}
-
-	CCAnimation *pAnimation = m_pAnimations->objectForKey(std::string(pszAnimationName));
-	CCSpriteFrame *pFrame = pAnimation->getFrames()->getObjectAtIndex(nFrameIndex);
-
-	assert(pFrame);
-
-	setDisplayFrame(pFrame);
-}
-
 void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
 {
 	assert(animationName);
@@ -1085,24 +1060,6 @@ CCSpriteFrame* CCSprite::displayedFrame(void)
                                            m_bRectRotated,
                                            m_obUnflippedOffsetPositionFromCenter,
                                            m_tContentSizeInPixels);
-}
-
-void CCSprite::addAnimation(CCAnimation *pAnimation)
-{
-	// lazy alloc
-	if (! m_pAnimations)
-	{
-		initAnimationDictionary();
-	}
-
-	m_pAnimations->setObject(pAnimation, pAnimation->getName());
-}
-
-CCAnimation* CCSprite::animationByName(const char *pszAnimationName)
-{
-	assert(pszAnimationName != NULL);
-
-	return m_pAnimations->objectForKey(std::string(pszAnimationName));
 }
 
 // Texture protocol

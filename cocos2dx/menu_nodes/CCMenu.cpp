@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCStdC.h"
 
 #include <vector>
+#include <stdarg.h>
 
 using namespace std;
 
@@ -44,6 +45,18 @@ namespace cocos2d{
 	//
 	//CCMenu
 	//
+
+        CCMenu* CCMenu::node()
+        {
+            CCMenu *menu = new CCMenu();
+            if (menu && menu->init()) {
+                menu->autorelease();
+                return menu;
+            }
+            CC_SAFE_DELETE(menu)
+            return 0;
+        }
+
 	CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
 	{
 		va_list args;
@@ -65,6 +78,12 @@ namespace cocos2d{
 		return menuWithItems(item, NULL);
 	}
 
+    bool CCMenu::init()
+    {
+        va_list args;
+        return initWithItems(0, args);
+    }
+
 	bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
 	{
 		if (CCLayer::init())
@@ -75,7 +94,7 @@ namespace cocos2d{
 			CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 			this->m_bIsRelativeAnchorPoint = false;
-			m_tAnchorPoint = ccp(0.5f, 0.5f);
+			setAnchorPoint(ccp(0.5f, 0.5f));
 			this->setContentSize(s);
 
 			// XXX: in v0.7, winSize should return the visible size
@@ -156,6 +175,15 @@ namespace cocos2d{
 		{
 			return false;
 		}
+
+		for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
+		{
+			if (c->getIsVisible() == false)
+			{
+				return false;
+			}
+		}
+
 		m_pSelectedItem = this->itemForTouch(touch);
 		if (m_pSelectedItem)
 		{

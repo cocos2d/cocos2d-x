@@ -6,7 +6,7 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-#include "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"
+#include "AppDelegate.h"
 
 #include "cocos2d.h"
 #include "HelloWorldScene.h"

@@ -35,8 +35,6 @@ class CCSpriteFrameCache : public CCObject
 
 	CCSpriteFrame* spriteFrameByName(const char *pszName);
 
-	CCSprite* createSpriteWithFrameName(const char *pszName);
-
 
 	/** Returns the shared instance of the Sprite Frame cache */
 	static CCSpriteFrameCache* sharedSpriteFrameCache(void);

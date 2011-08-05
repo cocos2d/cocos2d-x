@@ -34,6 +34,8 @@ THE SOFTWARE.
 
 #define JAVAVM	cocos2d::JniHelper::getJavaVM()
 
+using namespace std;
+
 extern "C"
 {
 
@@ -161,34 +163,24 @@ extern "C"
 		return bRet;
 	}
 
-	static char* jstringToChar_(jstring jstr)
+	static string jstring2string_(jstring jstr)
 	{
-		char* rtn = 0;
 		JNIEnv *env = 0;
 
+		jboolean isCopy;
 		if (! getEnv(&env))
 		{
 			return 0;
 		}
 
-		// convert jstring to byte array
-		jclass clsstring = env->FindClass("java/lang/String");
-		jstring strencode = env->NewStringUTF("utf-8");
-		jmethodID mid = env->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
-		jbyteArray barr= (jbyteArray)env->CallObjectMethod(jstr, mid, strencode);
-		jsize alen =  env->GetArrayLength(barr);
-		jbyte* ba = env->GetByteArrayElements(barr, JNI_FALSE);
-
-		// copy byte array into char[]
-		if (alen > 0)
+		const char* chars = env->GetStringUTFChars(jstr, &isCopy);
+		string ret(chars);
+		if (isCopy)
 		{
-			rtn = new char[alen + 1];
-			memcpy(rtn, ba, alen);
-			rtn[alen] = 0;
+			env->ReleaseStringUTFChars(jstr, chars);
 		}
-		env->ReleaseByteArrayElements(barr, ba, 0);
 
-		return rtn;
+		return ret;
 	}
 }
 
@@ -221,8 +213,8 @@ namespace cocos2d {
 		return getMethodInfo_(methodinfo, className, methodName, paramCode);
 	}
 
-	char* JniHelper::jstringToChar(jstring str)
+	string JniHelper::jstring2string(jstring str)
 	{
-		return jstringToChar_(str);
+		return jstring2string_(str);
 	}
 }

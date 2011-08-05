@@ -445,7 +445,8 @@ void CCTextureCache::removeTextureForKey(const char *textureKeyName)
 
 CCTexture2D* CCTextureCache::textureForKey(const char* key)
 {
-	return m_pTextures->objectForKey(string(key));
+    std::string strKey = CCFileUtils::fullPathFromRelativePath(key);
+	return m_pTextures->objectForKey(strKey);
 }
 
 void CCTextureCache::reloadAllTextures()

@@ -2180,8 +2180,7 @@ CCActionInterval* CCAnimate::reverse(void)
 		}
 	}
 
-	CCAnimation *pNewAnim = CCAnimation::animationWithName(m_pAnimation->getName(),
-		m_pAnimation->getDelay(), pNewArray);
+	CCAnimation *pNewAnim = CCAnimation::animationWithFrames(pNewArray, m_pAnimation->getDelay());
 
 	pNewArray->release();
 

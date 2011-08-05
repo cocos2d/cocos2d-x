@@ -52,12 +52,6 @@ namespace cocos2d{
 		/** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
 		static CCLabelAtlas * labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
 
-
-        /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element in points and the starting char of the atlas.
-        @deprecated Will be removed in 1.0.1. Use "labelWithString:" instead
-        */
-        static CCLabelAtlas * labelAtlasWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
-
 		/** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
 		bool initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap);
 		// super methods

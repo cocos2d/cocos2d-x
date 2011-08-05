@@ -50,7 +50,7 @@ extern "C"
 						"()Ljava/lang/String;"))
 		{
 			jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
-			ret = JniHelper::jstringToChar(str);
+			ret = (char*)JniHelper::jstring2string(str).c_str();
 
 			LOGD("package name %s", ret);
 		}
@@ -72,7 +72,7 @@ extern "C"
             , "()Ljava/lang/String;"))
         {
             jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
-			ret = JniHelper::jstringToChar(str);
+			ret = (char*)JniHelper::jstring2string(str).c_str();
 
 			LOGD("language name %s", ret);
         }
