@@ -86,28 +86,6 @@ namespace   cocos2d {
 		*/
 		bool initWithFrames(CCMutableArray<CCSpriteFrame*> *pFrames, float delay);
 
-		/** Initializes a CCAnimation with a name
-		@since v0.99.3
-		@deprecated Will be removed in 1.0.1. Use "init" instead.
-		*/
-		bool initWithName(const char *pszName);
-
-		/** Initializes a CCAnimation with a name and frames
-		@since v0.99.3
-		@deprecated Will be removed in 1.0.1. Use "initWithFrames" instead.
-		*/
-		bool initWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames);
-
-		/** Initializes a CCAnimation with a name and delay between frames.
-		@deprecated Will be removed in 1.0.1. Use "initWithFrames:nil delay:delay" instead.
-		*/
-		bool initWithName(const char *pszName, float fDelay);
-
-		/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
-		@deprecated Will be removed in 1.0.1. Use "initWithFrames:frames delay:delay" instead.
-		*/
-		bool initWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames);
-
 		/** adds a frame to a CCAnimation */
 		void addFrame(CCSpriteFrame *pFrame);
 
@@ -138,24 +116,6 @@ namespace   cocos2d {
 		@since v0.99.5
 		*/
 		static CCAnimation* animationWithFrames(CCMutableArray<CCSpriteFrame*> *frames, float delay);
-
-		/** Creates a CCAnimation with a name
-		@since v0.99.3
-		@deprecated Will be removed in 1.0.1. Use "animation" instead.
-		*/
-		static CCAnimation* animationWithName(const char *pszName);
-
-		/** Creates a CCAnimation with a name and frames
-		@since v0.99.3
-		@deprecated Will be removed in 1.0.1. Use "animationWithFrames" instead.
-		*/
-		static CCAnimation* animationWithName(const char *pszName, CCMutableArray<CCSpriteFrame*> *pFrames);
-
-		/** Creates a CCAnimation with a name and delay between frames. */
-		static CCAnimation* animationWithName(const char *pszName, float fDelay);
-
-		/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-		static CCAnimation* animationWithName(const char *pszName, float fDelay, CCMutableArray<CCSpriteFrame*> *pFrames);
 	};
 } // end of name sapce cocos2d
 

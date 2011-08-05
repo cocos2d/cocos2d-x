@@ -106,6 +106,10 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new DirectorTestScene(); break;
     case TEST_BUGS:
         pScene = new BugsTestScene(); break;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+	case TEST_FONTS:
+		pScene = new FontTestScene(); break;
+#endif
     default:
         break;
     }

@@ -55,8 +55,12 @@ namespace cocos2d{
 			, m_pSelectedItem(NULL)
 		{}
 		virtual ~CCMenu(){}
-		/** creates a CCMenu with it's items */
-		static CCMenu* menuWithItems(CCMenuItem* item, ...);
+
+                /** creates an empty CCMenu */
+                static CCMenu* node();
+
+                /** creates a CCMenu with it's items */
+                static CCMenu* menuWithItems(CCMenuItem* item, ...);
 
 		/** creates a CCMenu with it's item, then use addChild() to add 
 		  * other items. It is used for script, it can't init with undetermined
@@ -64,6 +68,8 @@ namespace cocos2d{
 		*/
 		static CCMenu*menuWithItem(CCMenuItem* item);
 
+                /** initializes an empty CCMenu */
+                bool init();
 		/** initializes a CCMenu with it's items */
 		bool initWithItems(CCMenuItem* item, va_list args);
 
@@ -118,10 +124,8 @@ namespace cocos2d{
 
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 
-	private:
-		CCMenuItem* itemForTouch(CCTouch * touch);
-
 	protected:
+		CCMenuItem* itemForTouch(CCTouch * touch);
 		tCCMenuState m_eState;
         GLubyte m_cOpacity;
 		CCMenuItem *m_pSelectedItem;		

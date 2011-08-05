@@ -127,7 +127,6 @@
 		BF83546A13275F5600F3C033 /* CCPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351D013275F5500F3C033 /* CCPointExtension.h */; };
 		BF83546B13275F5600F3C033 /* CCProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351D113275F5500F3C033 /* CCProgressTimer.h */; };
 		BF83546C13275F5600F3C033 /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351D213275F5500F3C033 /* CCProtocols.h */; };
-		BF83546D13275F5600F3C033 /* CCPVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351D313275F5500F3C033 /* CCPVRTexture.h */; };
 		BF83546E13275F5600F3C033 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351D413275F5500F3C033 /* CCRenderTexture.h */; };
 		BF83546F13275F5600F3C033 /* CCRibbon.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351D513275F5500F3C033 /* CCRibbon.h */; };
 		BF83547013275F5600F3C033 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8351D613275F5500F3C033 /* CCScene.h */; };
@@ -525,7 +524,6 @@
 		BF83565B13275F5600F3C033 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83540513275F5600F3C033 /* unzip.h */; };
 		BF83565C13275F5600F3C033 /* ZipUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83540613275F5600F3C033 /* ZipUtils.cpp */; };
 		BF83565D13275F5600F3C033 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83540713275F5600F3C033 /* ZipUtils.h */; };
-		BF83565E13275F5600F3C033 /* CCPVRTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83540913275F5600F3C033 /* CCPVRTexture.cpp */; };
 		BF83565F13275F5600F3C033 /* CCTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83540A13275F5600F3C033 /* CCTexture2D.cpp */; };
 		BF83566013275F5600F3C033 /* CCTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83540B13275F5600F3C033 /* CCTextureAtlas.cpp */; };
 		BF83566113275F5600F3C033 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83540C13275F5600F3C033 /* CCTextureCache.cpp */; };
@@ -561,6 +559,19 @@
 		BF8357B813276BCA00F3C033 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BFA008F81344267700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008F71344267700289DC3 /* CCCommon_ios.mm */; };
 		BFA008F91344267700289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008F71344267700289DC3 /* CCCommon_ios.mm */; };
+		BFEE2DB713E14D6C005C0577 /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2DB613E14D6C005C0577 /* CCTexturePVR.cpp */; };
+		BFEE2DBB13E14D8D005C0577 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2DBA13E14D8D005C0577 /* CCTexturePVR.h */; };
+		BFEE2E3713E16D2D005C0577 /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E2C13E16D2D005C0577 /* FontLabel.h */; };
+		BFEE2E3813E16D2D005C0577 /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E2D13E16D2D005C0577 /* FontLabel.m */; };
+		BFEE2E3913E16D2D005C0577 /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E2E13E16D2D005C0577 /* FontLabelStringDrawing.h */; };
+		BFEE2E3A13E16D2D005C0577 /* FontLabelStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E2F13E16D2D005C0577 /* FontLabelStringDrawing.m */; };
+		BFEE2E3B13E16D2D005C0577 /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3013E16D2D005C0577 /* FontManager.h */; };
+		BFEE2E3C13E16D2D005C0577 /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3113E16D2D005C0577 /* FontManager.m */; };
+		BFEE2E3D13E16D2D005C0577 /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3213E16D2D005C0577 /* ZAttributedString.h */; };
+		BFEE2E3E13E16D2D005C0577 /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3313E16D2D005C0577 /* ZAttributedString.m */; };
+		BFEE2E3F13E16D2D005C0577 /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3413E16D2D005C0577 /* ZAttributedStringPrivate.h */; };
+		BFEE2E4013E16D2D005C0577 /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE2E3513E16D2D005C0577 /* ZFont.h */; };
+		BFEE2E4113E16D2D005C0577 /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE2E3613E16D2D005C0577 /* ZFont.m */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
 		D4F9F25E12E53386005CA6D2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D4F9F25D12E53386005CA6D2 /* Icon.png */; };
 /* End PBXBuildFile section */
@@ -696,7 +707,6 @@
 		BF8351D013275F5500F3C033 /* CCPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointExtension.h; sourceTree = "<group>"; };
 		BF8351D113275F5500F3C033 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressTimer.h; sourceTree = "<group>"; };
 		BF8351D213275F5500F3C033 /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
-		BF8351D313275F5500F3C033 /* CCPVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPVRTexture.h; sourceTree = "<group>"; };
 		BF8351D413275F5500F3C033 /* CCRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture.h; sourceTree = "<group>"; };
 		BF8351D513275F5500F3C033 /* CCRibbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRibbon.h; sourceTree = "<group>"; };
 		BF8351D613275F5500F3C033 /* CCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScene.h; sourceTree = "<group>"; };
@@ -1113,7 +1123,6 @@
 		BF83540513275F5600F3C033 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
 		BF83540613275F5600F3C033 /* ZipUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZipUtils.cpp; sourceTree = "<group>"; };
 		BF83540713275F5600F3C033 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
-		BF83540913275F5600F3C033 /* CCPVRTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPVRTexture.cpp; sourceTree = "<group>"; };
 		BF83540A13275F5600F3C033 /* CCTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2D.cpp; sourceTree = "<group>"; };
 		BF83540B13275F5600F3C033 /* CCTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureAtlas.cpp; sourceTree = "<group>"; };
 		BF83540C13275F5600F3C033 /* CCTextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCache.cpp; sourceTree = "<group>"; };
@@ -1147,6 +1156,19 @@
 		BF8356931327611D00F3C033 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
 		BF8356941327611D00F3C033 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		BFA008F71344267700289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
+		BFEE2DB613E14D6C005C0577 /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
+		BFEE2DBA13E14D8D005C0577 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
+		BFEE2E2C13E16D2D005C0577 /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
+		BFEE2E2D13E16D2D005C0577 /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
+		BFEE2E2E13E16D2D005C0577 /* FontLabelStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabelStringDrawing.h; sourceTree = "<group>"; };
+		BFEE2E2F13E16D2D005C0577 /* FontLabelStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabelStringDrawing.m; sourceTree = "<group>"; };
+		BFEE2E3013E16D2D005C0577 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
+		BFEE2E3113E16D2D005C0577 /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
+		BFEE2E3213E16D2D005C0577 /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
+		BFEE2E3313E16D2D005C0577 /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
+		BFEE2E3413E16D2D005C0577 /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
+		BFEE2E3513E16D2D005C0577 /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
+		BFEE2E3613E16D2D005C0577 /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D4F9F25B12E53322005CA6D2 /* HelloWorld-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HelloWorld-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4F9F25D12E53386005CA6D2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1372,6 +1394,7 @@
 		BF83519C13275F5500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BFEE2DBA13E14D8D005C0577 /* CCTexturePVR.h */,
 				BF7B975D13B1886E004222DD /* CCScriptSupport.h */,
 				BF126D181373F24200C4ABC5 /* CCUserDefault.h */,
 				BF193EFB136007BC002463D2 /* CCArray.h */,
@@ -1427,7 +1450,6 @@
 				BF8351D013275F5500F3C033 /* CCPointExtension.h */,
 				BF8351D113275F5500F3C033 /* CCProgressTimer.h */,
 				BF8351D213275F5500F3C033 /* CCProtocols.h */,
-				BF8351D313275F5500F3C033 /* CCPVRTexture.h */,
 				BF8351D413275F5500F3C033 /* CCRenderTexture.h */,
 				BF8351D513275F5500F3C033 /* CCRibbon.h */,
 				BF8351D613275F5500F3C033 /* CCScene.h */,
@@ -2220,7 +2242,7 @@
 		BF83540813275F5600F3C033 /* textures */ = {
 			isa = PBXGroup;
 			children = (
-				BF83540913275F5600F3C033 /* CCPVRTexture.cpp */,
+				BFEE2DB613E14D6C005C0577 /* CCTexturePVR.cpp */,
 				BF83540A13275F5600F3C033 /* CCTexture2D.cpp */,
 				BF83540B13275F5600F3C033 /* CCTextureAtlas.cpp */,
 				BF83540C13275F5600F3C033 /* CCTextureCache.cpp */,
@@ -2254,6 +2276,7 @@
 		BF83567E1327611D00F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BFEE2E2B13E16D2D005C0577 /* FontLabel */,
 				BFA008F71344267700289DC3 /* CCCommon_ios.mm */,
 				BF83567F1327611D00F3C033 /* AccelerometerDelegateWrapper.h */,
 				BF8356801327611D00F3C033 /* AccelerometerDelegateWrapper.mm */,
@@ -2277,6 +2300,24 @@
 				BF8356941327611D00F3C033 /* OpenGL_Internal.h */,
 			);
 			path = ios;
+			sourceTree = "<group>";
+		};
+		BFEE2E2B13E16D2D005C0577 /* FontLabel */ = {
+			isa = PBXGroup;
+			children = (
+				BFEE2E2C13E16D2D005C0577 /* FontLabel.h */,
+				BFEE2E2D13E16D2D005C0577 /* FontLabel.m */,
+				BFEE2E2E13E16D2D005C0577 /* FontLabelStringDrawing.h */,
+				BFEE2E2F13E16D2D005C0577 /* FontLabelStringDrawing.m */,
+				BFEE2E3013E16D2D005C0577 /* FontManager.h */,
+				BFEE2E3113E16D2D005C0577 /* FontManager.m */,
+				BFEE2E3213E16D2D005C0577 /* ZAttributedString.h */,
+				BFEE2E3313E16D2D005C0577 /* ZAttributedString.m */,
+				BFEE2E3413E16D2D005C0577 /* ZAttributedStringPrivate.h */,
+				BFEE2E3513E16D2D005C0577 /* ZFont.h */,
+				BFEE2E3613E16D2D005C0577 /* ZFont.m */,
+			);
+			path = FontLabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2338,7 +2379,6 @@
 				BF83546A13275F5600F3C033 /* CCPointExtension.h in Headers */,
 				BF83546B13275F5600F3C033 /* CCProgressTimer.h in Headers */,
 				BF83546C13275F5600F3C033 /* CCProtocols.h in Headers */,
-				BF83546D13275F5600F3C033 /* CCPVRTexture.h in Headers */,
 				BF83546E13275F5600F3C033 /* CCRenderTexture.h in Headers */,
 				BF83546F13275F5600F3C033 /* CCRibbon.h in Headers */,
 				BF83547013275F5600F3C033 /* CCScene.h in Headers */,
@@ -2720,6 +2760,13 @@
 				BF1E5341135D245500FD0934 /* CCTextFieldTTF.h in Headers */,
 				BF126D191373F24200C4ABC5 /* CCUserDefault.h in Headers */,
 				BF7B975E13B1886E004222DD /* CCScriptSupport.h in Headers */,
+				BFEE2DBB13E14D8D005C0577 /* CCTexturePVR.h in Headers */,
+				BFEE2E3713E16D2D005C0577 /* FontLabel.h in Headers */,
+				BFEE2E3913E16D2D005C0577 /* FontLabelStringDrawing.h in Headers */,
+				BFEE2E3B13E16D2D005C0577 /* FontManager.h in Headers */,
+				BFEE2E3D13E16D2D005C0577 /* ZAttributedString.h in Headers */,
+				BFEE2E3F13E16D2D005C0577 /* ZAttributedStringPrivate.h in Headers */,
+				BFEE2E4013E16D2D005C0577 /* ZFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2879,7 +2926,6 @@
 				BF83565813275F5600F3C033 /* ioapi.cpp in Sources */,
 				BF83565A13275F5600F3C033 /* unzip.cpp in Sources */,
 				BF83565C13275F5600F3C033 /* ZipUtils.cpp in Sources */,
-				BF83565E13275F5600F3C033 /* CCPVRTexture.cpp in Sources */,
 				BF83565F13275F5600F3C033 /* CCTexture2D.cpp in Sources */,
 				BF83566013275F5600F3C033 /* CCTextureAtlas.cpp in Sources */,
 				BF83566113275F5600F3C033 /* CCTextureCache.cpp in Sources */,
@@ -2916,6 +2962,12 @@
 				BF1E5335135D23E100FD0934 /* CCTextFieldTTF.cpp in Sources */,
 				BF126D1B1373F25400C4ABC5 /* CCUserDefault.cpp in Sources */,
 				BF7B975C13B18860004222DD /* CCScriptSupport.cpp in Sources */,
+				BFEE2DB713E14D6C005C0577 /* CCTexturePVR.cpp in Sources */,
+				BFEE2E3813E16D2D005C0577 /* FontLabel.m in Sources */,
+				BFEE2E3A13E16D2D005C0577 /* FontLabelStringDrawing.m in Sources */,
+				BFEE2E3C13E16D2D005C0577 /* FontManager.m in Sources */,
+				BFEE2E3E13E16D2D005C0577 /* ZAttributedString.m in Sources */,
+				BFEE2E4113E16D2D005C0577 /* ZFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

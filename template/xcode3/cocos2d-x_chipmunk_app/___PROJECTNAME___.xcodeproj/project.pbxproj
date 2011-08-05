@@ -88,6 +88,17 @@
 		BF1537F012E16C0400703484 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */; };
 		BF193F62136008DB002463D2 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = BF193F61136008DB002463D2 /* CCArray.h */; };
 		BF193F66136008E6002463D2 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF193F65136008E6002463D2 /* CCArray.cpp */; };
+		BF1E78C613E2522500C2D68B /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E78BB13E2522500C2D68B /* FontLabel.h */; };
+		BF1E78C713E2522500C2D68B /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E78BC13E2522500C2D68B /* FontLabel.m */; };
+		BF1E78C813E2522500C2D68B /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E78BD13E2522500C2D68B /* FontLabelStringDrawing.h */; };
+		BF1E78C913E2522500C2D68B /* FontLabelStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E78BE13E2522500C2D68B /* FontLabelStringDrawing.m */; };
+		BF1E78CA13E2522500C2D68B /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E78BF13E2522500C2D68B /* FontManager.h */; };
+		BF1E78CB13E2522500C2D68B /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E78C013E2522500C2D68B /* FontManager.m */; };
+		BF1E78CC13E2522500C2D68B /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E78C113E2522500C2D68B /* ZAttributedString.h */; };
+		BF1E78CD13E2522500C2D68B /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E78C213E2522500C2D68B /* ZAttributedString.m */; };
+		BF1E78CE13E2522500C2D68B /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E78C313E2522500C2D68B /* ZAttributedStringPrivate.h */; };
+		BF1E78CF13E2522500C2D68B /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E78C413E2522500C2D68B /* ZFont.h */; };
+		BF1E78D013E2522500C2D68B /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E78C513E2522500C2D68B /* ZFont.m */; };
 		BF1FB06C1352FB17007553D9 /* CCDirector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB06B1352FB17007553D9 /* CCDirector.cpp */; };
 		BF1FB06E1352FB28007553D9 /* CCGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB06D1352FB28007553D9 /* CCGrid.cpp */; };
 		BF1FB0711352FB42007553D9 /* CCLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FB06F1352FB42007553D9 /* CCLayer.cpp */; };
@@ -305,12 +316,12 @@
 		D403B5B8135D1ADD004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5B7135D1ADD004B518D /* libxml2.dylib */; };
 		D40823D0132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
 		D40823D1132F41B600F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D40823CF132F41B600F44E75 /* main.m */; };
-		D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */; };
 		D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D408245D132F45C200F44E75 /* HelloWorldScene.cpp */; };
 		D4236B1A1387F5BB00F75A88 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B171387F5BB00F75A88 /* cpSpaceStep.c */; };
 		D4236B1B1387F5BB00F75A88 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B181387F5BB00F75A88 /* cpSpaceQuery.c */; };
 		D4236B1C1387F5BB00F75A88 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = D4236B191387F5BB00F75A88 /* cpSpaceComponent.c */; };
 		D4236B1E1387F5DA00F75A88 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D4236B1D1387F5DA00F75A88 /* chipmunk_private.h */; };
+		D4D9412313EADC2700555460 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4D9412113EADC2700555460 /* AppDelegate.cpp */; };
 		D4E4FEE613B2D75500A3F698 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FEE513B2D75500A3F698 /* CCScriptSupport.cpp */; };
 		D4E4FEE813B2D77100A3F698 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E4FEE713B2D77100A3F698 /* CCScriptSupport.h */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
@@ -413,6 +424,17 @@
 		BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		BF193F61136008DB002463D2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		BF193F65136008E6002463D2 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
+		BF1E78BB13E2522500C2D68B /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
+		BF1E78BC13E2522500C2D68B /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
+		BF1E78BD13E2522500C2D68B /* FontLabelStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabelStringDrawing.h; sourceTree = "<group>"; };
+		BF1E78BE13E2522500C2D68B /* FontLabelStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabelStringDrawing.m; sourceTree = "<group>"; };
+		BF1E78BF13E2522500C2D68B /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
+		BF1E78C013E2522500C2D68B /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
+		BF1E78C113E2522500C2D68B /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
+		BF1E78C213E2522500C2D68B /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
+		BF1E78C313E2522500C2D68B /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
+		BF1E78C413E2522500C2D68B /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
+		BF1E78C513E2522500C2D68B /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		BF1FB06B1352FB17007553D9 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDirector.cpp; sourceTree = "<group>"; };
 		BF1FB06D1352FB28007553D9 /* CCGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGrid.cpp; sourceTree = "<group>"; };
 		BF1FB06F1352FB42007553D9 /* CCLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLayer.cpp; sourceTree = "<group>"; };
@@ -635,14 +657,14 @@
 		D40823CE132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
 		D40823CF132F41B600F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
 		D408241A132F439600F44E75 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER____Prefix.pch"; sourceTree = "<group>"; };
-		D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp"; sourceTree = "<group>"; };
-		D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; path = "Classes/___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		D408245D132F45C200F44E75 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
 		D408245E132F45C200F44E75 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
 		D4236B171387F5BB00F75A88 /* cpSpaceStep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceStep.c; sourceTree = "<group>"; };
 		D4236B181387F5BB00F75A88 /* cpSpaceQuery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceQuery.c; sourceTree = "<group>"; };
 		D4236B191387F5BB00F75A88 /* cpSpaceComponent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceComponent.c; sourceTree = "<group>"; };
 		D4236B1D1387F5DA00F75A88 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
+		D4D9412113EADC2700555460 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
+		D4D9412213EADC2700555460 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		D4E4FEE513B2D75500A3F698 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		D4E4FEE713B2D77100A3F698 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -910,6 +932,24 @@
 				BF1537C812E16C0400703484 /* SimpleAudioEngine_objc.m */,
 			);
 			path = iphone;
+			sourceTree = "<group>";
+		};
+		BF1E78BA13E2522500C2D68B /* FontLabel */ = {
+			isa = PBXGroup;
+			children = (
+				BF1E78BB13E2522500C2D68B /* FontLabel.h */,
+				BF1E78BC13E2522500C2D68B /* FontLabel.m */,
+				BF1E78BD13E2522500C2D68B /* FontLabelStringDrawing.h */,
+				BF1E78BE13E2522500C2D68B /* FontLabelStringDrawing.m */,
+				BF1E78BF13E2522500C2D68B /* FontManager.h */,
+				BF1E78C013E2522500C2D68B /* FontManager.m */,
+				BF1E78C113E2522500C2D68B /* ZAttributedString.h */,
+				BF1E78C213E2522500C2D68B /* ZAttributedString.m */,
+				BF1E78C313E2522500C2D68B /* ZAttributedStringPrivate.h */,
+				BF1E78C413E2522500C2D68B /* ZFont.h */,
+				BF1E78C513E2522500C2D68B /* ZFont.m */,
+			);
+			path = FontLabel;
 			sourceTree = "<group>";
 		};
 		BF83696B13287D3400F3C033 /* cocos2dx */ = {
@@ -1185,6 +1225,7 @@
 		BF836A2813287D3500F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BF1E78BA13E2522500C2D68B /* FontLabel */,
 				BFA008E51344246700289DC3 /* CCCommon_ios.mm */,
 				BF836A2913287D3500F3C033 /* AccelerometerDelegateWrapper.h */,
 				BF836A2A13287D3500F3C033 /* AccelerometerDelegateWrapper.mm */,
@@ -1322,8 +1363,8 @@
 		D408245A132F45B200F44E75 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D408245B132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp */,
-				D408245C132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
+				D4D9412113EADC2700555460 /* AppDelegate.cpp */,
+				D4D9412213EADC2700555460 /* AppDelegate.h */,
 				D408245D132F45C200F44E75 /* HelloWorldScene.cpp */,
 				D408245E132F45C200F44E75 /* HelloWorldScene.h */,
 			);
@@ -1503,6 +1544,12 @@
 				BF126D011373EF1F00C4ABC5 /* CCUserDefault.h in Headers */,
 				D4236B1E1387F5DA00F75A88 /* chipmunk_private.h in Headers */,
 				D4E4FEE813B2D77100A3F698 /* CCScriptSupport.h in Headers */,
+				BF1E78C613E2522500C2D68B /* FontLabel.h in Headers */,
+				BF1E78C813E2522500C2D68B /* FontLabelStringDrawing.h in Headers */,
+				BF1E78CA13E2522500C2D68B /* FontManager.h in Headers */,
+				BF1E78CC13E2522500C2D68B /* ZAttributedString.h in Headers */,
+				BF1E78CE13E2522500C2D68B /* ZAttributedStringPrivate.h in Headers */,
+				BF1E78CF13E2522500C2D68B /* ZFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1595,10 +1642,10 @@
 			files = (
 				D40823D0132F41B600F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
 				D40823D1132F41B600F44E75 /* main.m in Sources */,
-				D408245F132F45C200F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.cpp in Sources */,
 				D4082460132F45C200F44E75 /* HelloWorldScene.cpp in Sources */,
 				BFA70A50136AB11200ABC725 /* CCIMEDispatcher.cpp in Sources */,
 				BFA70A51136AB11200ABC725 /* CCTextFieldTTF.cpp in Sources */,
+				D4D9412313EADC2700555460 /* AppDelegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1733,6 +1780,11 @@
 				D4236B1B1387F5BB00F75A88 /* cpSpaceQuery.c in Sources */,
 				D4236B1C1387F5BB00F75A88 /* cpSpaceComponent.c in Sources */,
 				D4E4FEE613B2D75500A3F698 /* CCScriptSupport.cpp in Sources */,
+				BF1E78C713E2522500C2D68B /* FontLabel.m in Sources */,
+				BF1E78C913E2522500C2D68B /* FontLabelStringDrawing.m in Sources */,
+				BF1E78CB13E2522500C2D68B /* FontManager.m in Sources */,
+				BF1E78CD13E2522500C2D68B /* ZAttributedString.m in Sources */,
+				BF1E78D013E2522500C2D68B /* ZFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

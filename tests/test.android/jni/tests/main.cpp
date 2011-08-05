@@ -8,8 +8,6 @@
 
 using namespace cocos2d;
 
-#define IMG_PATH        "assets"
-
 extern "C"
 {
 
@@ -22,8 +20,6 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         // if you want to run in WVGA with HVGA resource, set it
         // view->create(480, 320);
         cocos2d::CCDirector::sharedDirector()->setOpenGLView(view);
-
-        CCFileUtils::setRelativePath(IMG_PATH);
 
         AppDelegate *pAppDelegate = new AppDelegate();
         cocos2d::CCApplication::sharedApplication().run();

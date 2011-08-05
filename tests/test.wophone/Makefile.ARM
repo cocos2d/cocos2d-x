@@ -119,7 +119,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/TouchesTest.o \
 	$(OBJECTS_DIR)/TransitionsTest.o \
 	$(OBJECTS_DIR)/UserDefaultTest.o \
-	$(OBJECTS_DIR)/ZwoptexTest.o
+	$(OBJECTS_DIR)/ZwoptexTest.o \
+	$(OBJECTS_DIR)/FontTest.o
 
 ADD_OBJECTS += 
 
@@ -389,4 +390,7 @@ $(OBJECTS_DIR)/UserDefaultTest.o : ../tests/UserDefaultTest/UserDefaultTest.cpp
 
 $(OBJECTS_DIR)/ZwoptexTest.o : ../tests/ZwoptexTest/ZwoptexTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/ZwoptexTest.o ../tests/ZwoptexTest/ZwoptexTest.cpp
+
+$(OBJECTS_DIR)/FontTest.o : ../tests/FontTest/FontTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/FontTest.o ../tests/FontTest/FontTest.cpp
 

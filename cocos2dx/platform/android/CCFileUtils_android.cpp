@@ -29,49 +29,49 @@ NS_CC_BEGIN;
 
 #define  MAX_PATH 256
 
+using namespace std;
+
 // record the resource path
-static std::string s_strRelativePath = "";
-static std::string s_strResourcePath = "";
+static string s_strResourcePath = "";
 	
-void CCFileUtils::setRelativePath(const char* pszRelativePath)
+void CCFileUtils::setResourcePath(const char* pszResourcePath)
 {
-	CCAssert(pszRelativePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
+	CCAssert(pszResourcePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
 	
-	if (! pszRelativePath)
+	if (! pszResourcePath)
 	{
 		return;
 	}
 	
-	s_strRelativePath = pszRelativePath;
-	
-	// if the path is not ended with '/', append it
-	if (s_strRelativePath.find("/") != (strlen(s_strRelativePath.c_str()) - 1))
+	s_strResourcePath = pszResourcePath;
+
+	/*
+	 * If the path is set by user, and not end with "/", append it
+	 */
+	if (s_strResourcePath.find(".apk") == string::npos 
+		&& s_strResourcePath.find_last_of("/") != s_strResourcePath.length() - 1)
 	{
-		s_strRelativePath += "/";
+		s_strResourcePath += "/";
 	}
-}
-
-void CCFileUtils::setResourcePath(const char *pszResourcePath)
-{
-    CCAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-    CCAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
-
-    s_strResourcePath = pszResourcePath;
-}
-
-const char* CCFileUtils::getResourcePath()
-{
-	return s_strResourcePath.c_str();
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-	return pszRelativePath;
+	if (s_strResourcePath.find(".apk") != string::npos)
+	{
+		return pszRelativePath;
+	}
+	else
+	{
+		CCString *pRet = new CCString();
+		pRet->autorelease();
+		pRet->m_sString = s_strResourcePath + pszRelativePath;
+		return pRet->m_sString.c_str();
+	}
 }
 
 const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
-	//std::string relativeFile = fullPathFromRelativePath(pszRelativeFile);
 	std::string relativeFile = pszRelativeFile;
 	CCString *pRet = new CCString();
 	pRet->autorelease();
@@ -81,14 +81,38 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
-{	
-	string fullPath = s_strRelativePath + pszFileName;
-	unsigned char * pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+{
+	string fullPath = pszFileName;
+	unsigned char * pData = 0;
+
+	if (s_strResourcePath.find(".apk") != string::npos)
+	{
+		// read from apk
+		fullPath.insert(0, "assets/");
+		pData =  CCFileUtils::getFileDataFromZip(s_strResourcePath.c_str(), fullPath.c_str(), pSize);
+	}
+	else
+	{
+		do 
+		{
+			// read rrom other path than user set it
+			FILE *fp = fopen(pszFileName, pszMode);
+			CC_BREAK_IF(!fp);
+
+			fseek(fp,0,SEEK_END);
+			*pSize = ftell(fp);
+			fseek(fp,0,SEEK_SET);
+			pData = new unsigned char[*pSize];
+			*pSize = fread(pData,sizeof(unsigned char), *pSize,fp);
+			fclose(fp);
+		} while (0);		
+	}
+
     if (! pData && getIsPopupNotify())
     {
         std::string title = "Notification";
         std::string msg = "Get data from file(";
-        msg.append(pszFileName).append(") failed!");
+        msg.append(fullPath.c_str()).append(") failed!");
         CCMessageBox(msg.c_str(), title.c_str());
     }
     return pData;

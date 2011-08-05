@@ -108,12 +108,6 @@ public:
     static void setResource(const char* pszZipFileName);
 
     ///////////////////////////////////////////////////
-    // interfaces on android
-    ///////////////////////////////////////////////////
-    static const char* getResourcePath(void);
-    static void setRelativePath(const char* pszRelativePath);
-
-    ///////////////////////////////////////////////////
     // interfaces on ios
     ///////////////////////////////////////////////////
     static int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
