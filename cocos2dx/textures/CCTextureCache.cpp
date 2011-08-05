@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCFileUtils.h"
 #include "CCImage.h"
+#include "support/ccUtils.h"
 
 namespace   cocos2d {
 
@@ -490,7 +491,9 @@ bool VolatileTexture::isReloading = false;
 
 VolatileTexture::VolatileTexture(CCTexture2D *t)
 : texture(t)
-, m_bIsString(false)
+, m_eCashedImageType(kInvalid)
+, m_pTextureData(NULL)
+, m_PixelFormat(kTexture2DPixelFormat_RGBA8888)
 , m_strFileName("")
 , m_FmtImage(CCImage::kFmtPng)
 , m_alignment(CCTextAlignmentCenter)
@@ -526,9 +529,34 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
     if (!vt)
         vt = new VolatileTexture(tt);
 
-    vt->m_bIsString   = false;
+    vt->m_eCashedImageType = kImageFile;
     vt->m_strFileName = imageFileName;
     vt->m_FmtImage    = format;
+}
+
+void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, CCSize contentSize)
+{
+	if (isReloading)
+		return;
+
+	VolatileTexture *vt = 0;
+	std::list<VolatileTexture *>::iterator i = textures.begin();
+	while( i != textures.end() )
+	{
+		VolatileTexture *v = *i++;
+		if (v->texture == tt) {
+			vt = v;
+			break;
+		}
+	}
+
+	if (!vt)
+		vt = new VolatileTexture(tt);
+
+	vt->m_eCashedImageType = kImageData;
+	vt->m_pTextureData = data;
+	vt->m_PixelFormat = pixelFormat;
+	vt->m_TextureSize = contentSize;
 }
 
 void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
@@ -550,8 +578,8 @@ void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, CCSize
     if (!vt)
         vt = new VolatileTexture(tt);
 
-    vt->m_bIsString = true;
-    vt->m_size      = dimensions;
+    vt->m_eCashedImageType = kString;
+    vt->m_size        = dimensions;
     vt->m_strFontName = fontName;
     vt->m_alignment   = alignment;
     vt->m_fFontSize   = fontSize;
@@ -581,26 +609,42 @@ void VolatileTexture::reloadAllTextures()
     while( i != textures.end() )
     {
         VolatileTexture *vt = *i++;
-        if (vt->m_bIsString)
-        {
-            vt->texture->initWithString(vt->m_strText.c_str(),
-                                        vt->m_size,
-                                        vt->m_alignment,
-                                        vt->m_strFontName.c_str(),
-                                        vt->m_fFontSize);
-        }
-        else
-        {
-            CCImage image;
-            CCFileData data(vt->m_strFileName.c_str(), "rb");
-            unsigned long nSize  = data.getSize();
-            unsigned char* pBuffer = data.getBuffer();
 
-            if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
-            {
-                vt->texture->initWithImage(&image);
-            }
-        }
+		switch (vt->m_eCashedImageType)
+		{
+		case kImageFile:
+			{
+				CCImage image;
+				CCFileData data(vt->m_strFileName.c_str(), "rb");
+				unsigned long nSize  = data.getSize();
+				unsigned char* pBuffer = data.getBuffer();
+
+				if (image.initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
+				{
+					vt->texture->initWithImage(&image);
+				}
+			}
+			break;
+		case kImageData:
+			{
+				unsigned int nPOTWide, nPOTHigh;
+				nPOTWide = ccNextPOT((int)vt->m_TextureSize.width);
+				nPOTHigh = ccNextPOT((int)vt->m_TextureSize.height);
+				vt->texture->initWithData(vt->m_pTextureData, vt->m_PixelFormat, nPOTWide, nPOTHigh, vt->m_TextureSize);
+			}
+			break;
+		case kString:
+			{
+				vt->texture->initWithString(vt->m_strText.c_str(),
+					vt->m_size,
+					vt->m_alignment,
+					vt->m_strFontName.c_str(),
+					vt->m_fFontSize);
+			}
+			break;
+		default:
+			break;
+		}
     }
 
     isReloading = false;
