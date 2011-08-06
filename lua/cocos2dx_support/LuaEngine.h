@@ -49,6 +49,8 @@ public:
 
 	// execute a schedule function
 	virtual bool executeSchedule(const char* pszFuncName, cocos2d::ccTime t);
+    // add a search path  
+    virtual bool addSearchPath(const char* pszPath);
 };
 
 #endif // __LUA_ENGINE_H__
