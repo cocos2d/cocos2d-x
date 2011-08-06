@@ -81,3 +81,9 @@ bool LuaEngine::executeSchedule(const char* pszFuncName, ccTime t)
 {
 	return CCLuaScriptModule::sharedLuaScriptModule()->executeSchedule(pszFuncName, t);
 }
+
+bool LuaEngine::addSearchPath(const char* pszPath)
+{
+	return CCLuaScriptModule::sharedLuaScriptModule()->addSearchPath(pszPath);
+}
+
