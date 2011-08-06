@@ -65,6 +65,8 @@ public:
 
 	// execute a schedule function
 	virtual bool executeSchedule(const char* pszFuncName, ccTime t) = 0;
+    // add a search path  
+    virtual bool addSearchPath(const char* pszPath) = 0;
 };
 
 /**
