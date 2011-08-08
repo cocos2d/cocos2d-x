@@ -32,6 +32,22 @@ private:
     CCSprite*			m_brush;
 };
 
+class RenderTextureSave : public RenderTextureTestDemo
+{
+public:
+	RenderTextureSave();
+	~RenderTextureSave();
+	virtual std::string title();
+	virtual std::string subtitle();
+	virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
+	void clearImage(CCObject *pSender);
+	void saveImage(CCObject *pSender);
+
+private:
+	CCRenderTexture *m_pTarget;
+	CCSprite *m_pBrush;
+};
+
 class RenderTextureIssue937 : public RenderTextureTestDemo
 {
 public:
