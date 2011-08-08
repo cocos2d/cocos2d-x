@@ -6,7 +6,7 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    3
+#define MAX_LAYER    4
 
 CCLayer* createTestCase(int nIndex)
 {
@@ -16,6 +16,7 @@ CCLayer* createTestCase(int nIndex)
     case 0: return new RenderTextureTest();
     case 1: return new RenderTextureIssue937();
 	case 2: return new RenderTextureZbuffer();
+	case 3: return new RenderTextureSave();
     }
 
     return NULL;
@@ -230,6 +231,111 @@ void RenderTextureTest::ccTouchesEnded(CCSet* touches, CCEvent* event)
 #endif
 }
 
+/**
+* Impelmentation of RenderTextureSave
+*/
+RenderTextureSave::RenderTextureSave()
+{
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+
+	// create a render texture, this is what we are going to draw into
+	m_pTarget = CCRenderTexture::renderTextureWithWidthAndHeight(s.width, s.height);
+	m_pTarget->retain();
+	m_pTarget->setPosition(ccp(s.width / 2, s.height / 2));
+
+	// note that the render texture is a CCNode, and contains a sprite of its texture for convience,
+	// so we can just parent it to the scene like any other CCNode
+	this->addChild(m_pTarget, -1);
+
+	// create a brush image to draw into the texture with
+	m_pBrush = CCSprite::spriteWithFile("Images/fire.png");
+	m_pBrush->retain();
+	m_pBrush->setOpacity(20);
+	this->setIsTouchEnabled(true);
+
+	// Save Image menu
+	CCMenuItemFont::setFontSize(16);
+	CCMenuItem *item1 = CCMenuItemFont::itemFromString("Save Image", this, menu_selector(RenderTextureSave::saveImage));
+	CCMenuItem *item2 = CCMenuItemFont::itemFromString("Clear", this, menu_selector(RenderTextureSave::clearImage));
+	CCMenu *menu = CCMenu::menuWithItems(item1, item2, NULL);
+	this->addChild(menu);
+	menu->alignItemsVertically();
+	menu->setPosition(ccp(s.width - 80, s.height - 30));
+}
+
+string RenderTextureSave::title()
+{
+	return "Touch the screen";
+}
+
+string RenderTextureSave::subtitle()
+{
+	return "Press 'Save Image' to create an snapshot of the render texture";
+}
+
+void RenderTextureSave::clearImage(cocos2d::CCObject *pSender)
+{
+	m_pTarget->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+}
+
+void RenderTextureSave::saveImage(cocos2d::CCObject *pSender)
+{
+	static int counter = 0;
+
+	char str[20];
+	sprintf(str, "image-%d.png", counter);
+	m_pTarget->saveBuffer(kCCImageFormatPNG, str);
+	CCLOG("Image saved %s", str);
+
+	counter++;
+}
+
+RenderTextureSave::~RenderTextureSave()
+{
+	m_pBrush->release();
+	m_pTarget->release();
+	CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+}
+
+void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
+{
+	CCTouch *touch = (CCTouch *)touches->anyObject();
+	CCPoint start = touch->locationInView(touch->view());
+	start = CCDirector::sharedDirector()->convertToGL(start);
+	CCPoint end = touch->previousLocationInView(touch->view());
+
+	// begin drawing to the render texture
+	m_pTarget->begin();
+
+	// for extra points, we'll draw this smoothly from the last position and vary the sprite's
+	// scale/rotation/offset
+	float distance = ccpDistance(start, end);
+	if (distance > 1)
+	{
+		int d = (int)distance;
+		for (int i = 0; i < d; i++)
+		{
+			float difx = end.x - start.x;
+			float dify = end.y - start.y;
+			float delta = (float)i / distance;
+			m_pBrush->setPosition(ccp(start.x + (difx * delta), start.y + (dify * delta)));
+			m_pBrush->setRotation(rand() % 360);
+			float r = (float)(rand() % 50 / 50.f) + 0.25f;
+			m_pBrush->setScale(r);
+			m_pBrush->setColor(ccc3(CCRANDOM_0_1() * 127 + 128, 255, 255));
+			// Call visit to draw the brush, don't call draw..
+			m_pBrush->visit();
+		}
+	}
+
+	// finish drawing and return context back to the screen
+	m_pTarget->end();
+}
+
+/**
+ * Impelmentation of RenderTextureIssue937
+ */
+
 RenderTextureIssue937::RenderTextureIssue937()
 {
     /*
@@ -301,6 +407,10 @@ void RenderTextureScene::runThisTest()
 
     CCDirector::sharedDirector()->replaceScene(this);
 }
+
+/**
+* Impelmentation of RenderTextureZbuffer
+*/
 
 RenderTextureZbuffer::RenderTextureZbuffer()
 {

@@ -277,14 +277,6 @@ bool CCRenderTexture::saveBuffer(int format, const char *fileName, int x, int y,
 	if (pImage != NULL && getUIImageFromBuffer(pImage, x, y, nWidth, nHeight))
 	{
 		std::string fullpath = CCFileUtils::getWriteablePath() + fileName;
-		if (kCCImageFormatPNG == format)
-		{
-			fullpath += ".png";
-		}
-		else
-		{
-			fullpath += ".jpg";
-		}
 		
 		bRet = pImage->saveToFile(fullpath.c_str());
 	}
