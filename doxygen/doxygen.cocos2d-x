@@ -622,7 +622,8 @@ WARN_LOGFILE           =
 INPUT                  = ../CocosDenshion/include \
                          ../cocos2dx/include \
                          ../doxygen \
-                         ../lua/cocos2dx_support
+                         ../lua/cocos2dx_support \
+                         ../cocos2dx/platform
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
@@ -652,7 +653,8 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = 
+EXCLUDE                = ../cocos2dx/platform/third_party \
+                         ../cocos2dx/include/CCTMXXMLParser.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix file system feature) are excluded 
