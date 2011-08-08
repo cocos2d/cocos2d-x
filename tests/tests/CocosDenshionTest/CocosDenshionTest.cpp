@@ -33,6 +33,7 @@ m_nSoundId(0)
 		"rewind background music",
 		"is background music playing",
 		"play effect",
+        "play effect repeatly",
 		"stop effect",
 		"unload effect",
 		"add background music volume",
@@ -68,6 +69,10 @@ m_nSoundId(0)
 	// preload background music and effect
 	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(MUSIC_FILE);
 	SimpleAudioEngine::sharedEngine()->preloadEffect(EFFECT_FILE);
+    
+    // set default volume
+    SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
+    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
 }
 
 CocosDenshionTest::~CocosDenshionTest()
@@ -124,28 +129,32 @@ void CocosDenshionTest::menuCallback(CCObject * pSender)
 	case 6:
 		m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE);	
 		break;
-	// stop effect
-	case 7:
+    // play effect
+    case 7:
+        m_nSoundId = SimpleAudioEngine::sharedEngine()->playEffect(EFFECT_FILE, true);	
+        break;
+    // stop effect
+	case 8:
 		SimpleAudioEngine::sharedEngine()->stopEffect(m_nSoundId);
 		break;
 	// unload effect
-	case 8:
+	case 9:
 		SimpleAudioEngine::sharedEngine()->unloadEffect(EFFECT_FILE);
 		break;
 		// add bakcground music volume
-	case 9:
+	case 10:
 		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() + 0.1);
 		break;
 		// sub backgroud music volume
-	case 10:
+	case 11:
 		SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() - 0.1);
 		break;
 		// add effects volume
-	case 11:
+	case 12:
 		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() + 0.1);
 		break;
 		// sub effects volume
-	case 12:
+	case 13:
 		SimpleAudioEngine::sharedEngine()->setEffectsVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume() - 0.1);
 		break;
 	}
