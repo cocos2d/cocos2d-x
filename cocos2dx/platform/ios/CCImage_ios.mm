@@ -105,54 +105,53 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     size_t bpp = CGImageGetBitsPerComponent(image);
     colorSpace = CGImageGetColorSpace(image);
     
-    if(colorSpace) {
+    if(colorSpace) 
+    {
         if(hasAlpha || bpp >= 8)
+        {
             pixelFormat = kCCTexture2DPixelFormat_Default;
-        else {
-            //CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
+        }
+        else 
+        {
             pixelFormat = kCCTexture2DPixelFormat_RGB565;
         }
-    } else  {
+    } 
+    else  
+    {
         // NOTE: No colorspace means a mask image
-        //CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is a mask");
         pixelFormat = kCCTexture2DPixelFormat_A8;
     }
     
     imageSize.width = CGImageGetWidth(image);
     imageSize.height = CGImageGetHeight(image);
-    //imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
     
     // Create the bitmap graphics context
     
-    switch(pixelFormat) {      
+    switch(pixelFormat) 
+    {      
         case kCCTexture2DPixelFormat_RGBA8888:
         case kCCTexture2DPixelFormat_RGBA4444:
         case kCCTexture2DPixelFormat_RGB5A1:
             colorSpace = CGColorSpaceCreateDeviceRGB();
-            //data = malloc(POTHigh * POTWide * 4);
             data = new unsigned char[POTHigh * POTWide * 4];
             info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast; 
-            // info = kCGImageAlphaPremultipliedLast;  // issue #886. This patch breaks BMP images.
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);                
             CGColorSpaceRelease(colorSpace);
             break;
             
         case kCCTexture2DPixelFormat_RGB565:
             colorSpace = CGColorSpaceCreateDeviceRGB();
-            //data = malloc(POTHigh * POTWide * 4);
             data = new unsigned char[POTHigh * POTWide * 4];
             info = kCGImageAlphaNoneSkipLast;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
             CGColorSpaceRelease(colorSpace);
             break;
         case kCCTexture2DPixelFormat_A8:
-            //data = malloc(POTHigh * POTWide);
             data = new unsigned char[POTHigh * POTWide];
             info = kCGImageAlphaOnly; 
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
             break;            
         default:
-            //[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
             return false;
     }
     
@@ -162,82 +161,79 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     rect.origin.x = 0;
     rect.origin.y = 0;
     
-    //CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
     CGContextClearRect(context, rect);
     CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
-    //CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
     rect.size.width = CGImageGetWidth(image);
     rect.size.height = CGImageGetHeight(image);
     rect.origin.x = 0;
     rect.origin.y = 0;
-    //CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image);
     CGContextDrawImage(context, rect, image);
     
     // Repack the pixel data into the right format
     
-    if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
+    if(pixelFormat == kCCTexture2DPixelFormat_RGB565) 
+    {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-        //tempData = malloc(POTHigh * POTWide * 2);
         tempData = new unsigned char[POTHigh * POTWide * 2];
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+        {
             *outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
-        //free(data);
+        }
+
         delete[] data;
         data = tempData;
         
     }
-    else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
+    else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) 
+    {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-        //tempData = malloc(POTHigh * POTWide * 2);
         tempData = new unsigned char[POTHigh * POTWide * 2];
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+        {
             *outPixel16++ = 
             ((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
             ((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
             ((((*inPixel32 >> 16) & 0xFF) >> 4) << 4) | // B
             ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0); // A
+        }       
         
-        
-        //free(data);
         delete[] data;
         data = tempData;
         
     }
-    else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
+    else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) 
+    {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-        //tempData = malloc(POTHigh * POTWide * 2);
         tempData = new unsigned char[POTHigh * POTWide * 2];
         inPixel32 = (unsigned int*)data;
         outPixel16 = (unsigned short*)tempData;
         for(i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+        {
             *outPixel16++ = 
             ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
             ((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
             ((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
             ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
+        }
                 
-        //free(data);
         delete[] data;
         data = tempData;
     }
-    //self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh contentSize:imageSize];
     
     // should be after calling super init
-    //s_imageInfo.isPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
     pImageInfo->isPremultipliedAlpha = true;
     pImageInfo->hasAlpha = true;
-    //s_imageInfo.hasAlpha = hasAlpha;
     pImageInfo->bitsPerComponent = bpp;
     pImageInfo->width = imageSize.width;
     pImageInfo->height = imageSize.height;
     
     if (pImageInfo->data)
     {
-        delete []pImageInfo->data;
+        delete [] pImageInfo->data;
     }
     pImageInfo->data = data;
     
@@ -247,25 +243,17 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
 
 static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo)
 {
-    NSUInteger                POTWide, POTHigh;
+    NSUInteger POTWide, POTHigh;
     
-    if(CGImage == NULL) {
-            //CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. ccxImage is nil");
+    if(CGImage == NULL) 
+    {
         return false;
     }
-    
-        //CCConfiguration *conf = [CCConfiguration sharedConfiguration];
-        // cocos2d::CCConfiguration *conf = cocos2d::CCConfiguration::sharedConfiguration();
     
     POTWide = CGImageGetWidth(CGImage);
     POTHigh = CGImageGetHeight(CGImage);
     
-    // unsigned maxTextureSize = conf->getMaxTextureSize();
-        // if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-    //     return false;
-    // }
-    
-        // always load premultiplied images
+    // always load premultiplied images
     _initPremultipliedATextureWithImage(CGImage, POTWide, POTHigh, pImageinfo);
     
     return true;
@@ -278,7 +266,7 @@ static bool _initWithFile(const char* path, tImageInfo *pImageinfo)
     UIImage                    *png;
     bool            ret;
     
-        // convert jpg to png before loading the texture
+    // convert jpg to png before loading the texture
     
     NSString *fullPath = [NSString stringWithUTF8String:path];
     jpg = [[UIImage alloc] initWithContentsOfFile: fullPath];
@@ -298,9 +286,10 @@ static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
 {
     bool ret = false;
     
-    if (pBuffer) {
-        CGImageRef                CGImage;
-        NSData          *data;
+    if (pBuffer) 
+    {
+        CGImageRef CGImage;
+        NSData *data;
         
         data = [NSData dataWithBytes:pBuffer length:length];
         CGImage = [[UIImage imageWithData:data] CGImage];
@@ -317,14 +306,18 @@ static bool _isValidFontName(const char *fontName)
     
     NSString *fontNameNS = [NSString stringWithUTF8String:fontName];
     
-    for (NSString *familiName in [UIFont familyNames]) {
-        if ([familiName isEqualToString:fontNameNS]) {
+    for (NSString *familiName in [UIFont familyNames]) 
+    {
+        if ([familiName isEqualToString:fontNameNS]) 
+        {
             ret = true;
             goto out;
         }
         
-        for(NSString *font in [UIFont fontNamesForFamilyName: familiName]){
-            if ([font isEqualToString: fontNameNS]){
+        for(NSString *font in [UIFont fontNamesForFamilyName: familiName])
+        {
+            if ([font isEqualToString: fontNameNS])
+            {
                 ret = true;
                 goto out;
             }
@@ -429,7 +422,6 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 #if CC_FONT_LABEL_SUPPORT
 	else // ZFont class 
 	{
-		//[str drawInRect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 		[FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, 0, dim.width, dim.height) withZFont:font lineBreakMode:UILineBreakModeWordWrap alignment:align];
 	}
 #endif
@@ -485,18 +477,70 @@ bool CCImage::initWithImageData(void * pData,
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
-        bRet = _initWithData(pData, nDataLen, &info);
+        if (eFmt == kFmtRawData)
+        {
+            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent);
+        }
+        else // init with png or jpg file data
+        {
+            bRet = _initWithData(pData, nDataLen, &info);
+            if (bRet)
+            {
+                m_nHeight = (short)info.height;
+                m_nWidth = (short)info.width;
+                m_nBitsPerComponent = info.bitsPerComponent;
+                m_bHasAlpha = info.hasAlpha;
+                m_bPreMulti = info.isPremultipliedAlpha;
+                m_pData = info.data;
+            }
+        }
     } while (0);
-    if (bRet)
-    {
-        m_nHeight = (short)info.height;
-        m_nWidth = (short)info.width;
-        m_nBitsPerComponent = info.bitsPerComponent;
-        m_bHasAlpha = info.hasAlpha;
-        m_bPreMulti = info.isPremultipliedAlpha;
-        m_pData = info.data;
-    }
+    
     return bRet;
+}
+
+bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent)
+{
+    bool bRet = false;
+	do 
+	{
+		CC_BREAK_IF(0 == nWidth || 0 == nHeight);
+
+		m_nBitsPerComponent = nBitsPerComponent;
+		m_nHeight   = (short)nHeight;
+		m_nWidth    = (short)nWidth;
+		m_bHasAlpha = true;
+
+		// only RGBA8888 surported
+		int nBytesPerComponent = 4;
+		int nSize = nHeight * nWidth * nBytesPerComponent;
+		m_pData = new unsigned char[nSize];
+		CC_BREAK_IF(! m_pData);
+		memcpy(m_pData, pData, nSize);
+
+		bRet = true;
+	} while (0);
+	return bRet;
+}
+
+bool CCImage::_initWithJpgData(void *pData, int nDatalen)
+{
+    assert(0);
+}
+
+bool CCImage::_initWithPngData(void *pData, int nDatalen)
+{
+    assert(0);
+}
+
+bool CCImage::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
+{
+    assert(0);
+}
+
+bool CCImage::_saveImageToJPG(const char *pszFilePath)
+{
+    assert(0);
 }
 
 bool CCImage::initWithString(
@@ -527,7 +571,87 @@ bool CCImage::initWithString(
 
 bool CCImage::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
-    return false;
+	bool saveToPNG = false;
+	bool needToCopyPixels = false;
+	std::string filePath(pszFilePath);
+	if (std::string::npos != filePath.find(".png"))
+	{
+	    saveToPNG = true;
+	}
+		
+	int bitsPerComponent = 8;			
+	int bitsPerPixel = m_bHasAlpha ? 32 : 24;
+	if ((! saveToPNG) || bIsToRGB)
+	{
+	    bitsPerPixel = 24;
+	}			
+	
+	int bytesPerRow	= (bitsPerPixel/8) * m_nWidth;
+	int myDataLength = bytesPerRow * m_nHeight;
+	
+	unsigned char *pixels	= m_pData;
+	
+	// The data has alpha channel, and want to save it with an RGB png file,
+    // or want to save as jpg,  remove the alpha channel.
+	if ((saveToPNG && m_bHasAlpha && bIsToRGB)
+       || (! saveToPNG))
+	{
+	    pixels = new unsigned char[myDataLength];
+	    
+	    for (int i = 0; i < m_nHeight; ++i)
+		{
+			for (int j = 0; j < m_nWidth; ++j)
+			{
+				pixels[(i * m_nWidth + j) * 3] = m_pData[(i * m_nWidth + j) * 4];
+				pixels[(i * m_nWidth + j) * 3 + 1] = m_pData[(i * m_nWidth + j) * 4 + 1];
+				pixels[(i * m_nWidth + j) * 3 + 2] = m_pData[(i * m_nWidth + j) * 4 + 2];
+			}
+		}
+		
+	    needToCopyPixels = true;
+	}
+		
+	// make data provider with data.
+	CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
+	if (saveToPNG && m_bHasAlpha && (! bIsToRGB))
+	{
+	    bitmapInfo |= kCGImageAlphaPremultipliedLast;
+	}
+	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
+	CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
+	CGImageRef iref					= CGImageCreate(m_nWidth, m_nHeight,
+														bitsPerComponent, bitsPerPixel, bytesPerRow,
+														colorSpaceRef, bitmapInfo, provider,
+														NULL, false,
+														kCGRenderingIntentDefault);
+		
+	UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
+		
+	CGImageRelease(iref);	
+	CGColorSpaceRelease(colorSpaceRef);
+	CGDataProviderRelease(provider);
+	
+	NSData *data;
+				
+	if (saveToPNG)
+	{
+		data = UIImagePNGRepresentation(image);
+	}
+	else
+	{
+		data = UIImageJPEGRepresentation(image, 1.0f);
+	}
+	
+	[data writeToFile:[NSString stringWithUTF8String:pszFilePath] atomically:YES];
+		
+	[image release];
+		
+	if (needToCopyPixels)
+	{
+	    delete [] pixels;
+	}
+	
+	return true;
 }
 
 NS_CC_END;
