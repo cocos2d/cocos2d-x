@@ -26,11 +26,10 @@ THE SOFTWARE.
 #define __CC_PLATFORM_CONFIG_H__
 
 /**
-@file
-@brief Config of cocos2d-x project.
+Config of cocos2d-x project.
 
 There are config below:
-    - build for which target platform
+build for which target platform
 */
 
 //////////////////////////////////////////////////////////////////////////
