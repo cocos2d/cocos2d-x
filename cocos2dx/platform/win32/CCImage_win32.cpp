@@ -85,6 +85,7 @@ public:
 			CC_BREAK_IF(! pwszBuffer);
 			memset(pwszBuffer,0,nBufLen);
 			nLen = MultiByteToWideChar(CP_UTF8, 0, nString.c_str(), nLen, pwszBuffer, nBufLen);		
+			pwszBuffer[nLen] = '\0';
 		} while (0);	
 		return pwszBuffer;
 
@@ -141,8 +142,10 @@ public:
 					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
 					if (pwszBuffer)
 					{
-						RemoveFontResource(pwszBuffer);
-						SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+						if(RemoveFontResource(pwszBuffer))
+						{
+							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+						}						
 						delete [] pwszBuffer;
 						pwszBuffer = NULL;
 					}
@@ -154,8 +157,10 @@ public:
 					wchar_t * pwszBuffer = utf8ToUtf16(m_curFontPath);
 					if (pwszBuffer)
 					{
-						AddFontResource(pwszBuffer);
-						SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+						if(AddFontResource(pwszBuffer))
+						{
+							SendMessage( m_hWnd, WM_FONTCHANGE, 0, 0);
+						}						
 						delete [] pwszBuffer;
 						pwszBuffer = NULL;
 					}
