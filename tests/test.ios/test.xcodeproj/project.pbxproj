@@ -165,6 +165,7 @@
 		BF1B266513C7108F009769C6 /* DirectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265813C7108F009769C6 /* DirectorTest.cpp */; };
 		BF1C47EB1293683800B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		BF1C5C2913EBF83F0076BDF6 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1C5C2813EBF83F0076BDF6 /* CCTouchHandler.h */; };
 		BF1E7A5413E2637200C2D68B /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E7A4913E2637200C2D68B /* FontLabel.h */; };
 		BF1E7A5513E2637200C2D68B /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E7A4A13E2637200C2D68B /* FontLabel.m */; };
 		BF1E7A5613E2637200C2D68B /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1E7A4B13E2637200C2D68B /* FontLabelStringDrawing.h */; };
@@ -758,6 +759,7 @@
 		BF1B265813C7108F009769C6 /* DirectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectorTest.cpp; sourceTree = "<group>"; };
 		BF1B265913C7108F009769C6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectorTest.h; sourceTree = "<group>"; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BF1C5C2813EBF83F0076BDF6 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BF1E7A4313E2629800C2D68B /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontTest.h; sourceTree = "<group>"; };
 		BF1E7A4913E2637200C2D68B /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
 		BF1E7A4A13E2637200C2D68B /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
@@ -2343,6 +2345,7 @@
 		BF8358AE13276C7700F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF1C5C2813EBF83F0076BDF6 /* CCTouchHandler.h */,
 				D40EB54413D01DAE00BB8B5E /* CCTexturePVR.h */,
 				D429012B13B1D0DC00A3772F /* CCScriptSupport.h */,
 				BF99347D1373E6CE00197D1B /* CCUserDefault.h */,
@@ -2815,6 +2818,7 @@
 				BF1E7A5A13E2637200C2D68B /* ZAttributedString.h in Headers */,
 				BF1E7A5C13E2637200C2D68B /* ZAttributedStringPrivate.h in Headers */,
 				BF1E7A5D13E2637200C2D68B /* ZFont.h in Headers */,
+				BF1C5C2913EBF83F0076BDF6 /* CCTouchHandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
