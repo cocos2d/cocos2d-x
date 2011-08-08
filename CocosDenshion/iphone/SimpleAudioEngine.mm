@@ -77,6 +77,7 @@ static float static_getBackgroundMusicVolume()
 
 static void static_setBackgroundMusicVolume(float volume)
 {
+    volume = MAX( MIN(volume, 1.0), 0 );
     [SimpleAudioEngine sharedEngine].backgroundMusicVolume = volume;
 }
      
@@ -87,6 +88,7 @@ static float static_getEffectsVolume()
      
 static void static_setEffectsVolume(float volume)
 {
+    volume = MAX( MIN(volume, 1.0), 0 );
     [SimpleAudioEngine sharedEngine].effectsVolume = volume;
 }
      
