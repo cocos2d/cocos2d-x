@@ -96,7 +96,8 @@ public:
 	//                        when nWidth = 0 and nHeight = 0, the image size to save equals to buffer texture size
 	bool saveBuffer(const char *szFilePath, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0);
 
-	/** saves the texture into a file. 
+	/** saves the texture into a file. put format at the first argument, or ti will be overloaded with
+	 * saveBuffer(const char *szFilePath, int x = 0, int y = 0, int nWidth = 0, int nHeight = 0) */
 	// para name        the file name to save
 	// para format      the image format to save, here it supports kCCImageFormatPNG and kCCImageFormatJPG */
 	// para x,y         the lower left corner coordinates of the buffer to save
