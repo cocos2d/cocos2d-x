@@ -322,7 +322,9 @@ void RenderTextureSave::ccTouchesMoved(CCSet* touches, CCEvent* event)
 			m_pBrush->setRotation(rand() % 360);
 			float r = (float)(rand() % 50 / 50.f) + 0.25f;
 			m_pBrush->setScale(r);
-			m_pBrush->setColor(ccc3(CCRANDOM_0_1() * 127 + 128, 255, 255));
+			/*m_pBrush->setColor(ccc3(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
+			// Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
+			m_pBrush->setColor(ccc3(rand() % 127 + 128, 255, 255));
 			// Call visit to draw the brush, don't call draw..
 			m_pBrush->visit();
 		}
