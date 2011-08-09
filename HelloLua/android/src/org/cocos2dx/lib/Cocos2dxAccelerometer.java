@@ -1,10 +1,13 @@
 package org.cocos2dx.lib;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
+import android.view.WindowManager;
 
 /**
  * 
@@ -37,11 +40,27 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 
-		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
+		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER){
             return;
+		}
 
-        onSensorChanged(event.values[0], event.values[1], event.values[2], event.timestamp);
-        
+		float x = event.values[0];
+		float y = event.values[1];
+		float z = event.values[2];
+		
+		/*
+		 * Because the axes are not swapped when the device's screen orientation changes. 
+		 * So we should swap it here.
+		 */
+		int orientation = mContext.getResources().getConfiguration().orientation;
+		if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+			float tmp = x;
+			x = -y;
+			y = tmp;
+		}
+				
+        onSensorChanged(x, y, z, event.timestamp);
+        // Log.d(TAG, "x = " + event.values[0] + " y = " + event.values[1] + " z = " + event.values[2]);
 	}
 
 	@Override
