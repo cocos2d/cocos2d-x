@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,45 +31,14 @@ THE SOFTWARE.
 #define _USE_MATH_DEFINES
 #endif
 
-#include <math.h>
-#include <cstdio>
+#include "CCCommon.h"
+#include "CCStdC.h"
 
-/**
- @file
- cocos2d helper macros
- */
- /*
- * if COCOS2D_DEBUG is not defined, or if it is 0 then
- *	all CCLOGXXX macros will be disabled
- *
- * if COCOS2D_DEBUG==1 then:
- *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
- *		CCLOGINFO()	will be disabled
- *
- * if COCOS2D_DEBUG==2 or higher then:
- *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
- *		CCLOGINFO()	will be enabled 
- */
+#ifndef CCAssert
+#define CCAssert(cond, msg)         CC_ASSERT(cond)
+#endif  // CCAssert
 
-#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define CCLOG(...)              do {} while (0)
-#define CCLOGINFO(...)          do {} while (0)
-#define CCLOGERROR(...)         do {} while (0)
-
-#elif COCOS2D_DEBUG == 1
-#include "ccxCommon.h"
-#define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGINFO(format,...)   do {} while (0)
-
-#elif COCOS2D_DEBUG > 1
-#include "ccxCommon.h"
-#define CCLOG(format, ...)      cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCXLog(format, ##__VA_ARGS__)
-#define CCLOGINFO(format,...)   cocos2d::CCXLog(format, ##__VA_ARGS__)
-#endif // COCOS2D_DEBUG
+#include "ccConfig.h"
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables
@@ -101,7 +72,13 @@ simple macro that swaps 2 variables
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
 */
-#define CC_BLEND_SRC GL_ONE
+#if CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
+    #define CC_BLEND_SRC GL_ONE
+    #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+#else
+    #define CC_BLEND_SRC GL_SRC_ALPHA
+    #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+#endif // ! CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 
 /** @def CC_BLEND_DST
  default gl blend dst function. Compatible with premultiplied alpha images.
@@ -136,65 +113,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	glDisableClientState(GL_VERTEX_ARRAY);			\
 }
 
-/** @def CC_DIRECTOR_INIT
-	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
-	- The EAGLView view will have multiple touches disabled.
-	- It will create a UIWindow and it will assign it the 'window' variable. 'window' must be declared before calling this marcro.
-	- It will parent the EAGLView to the created window
-	- If the firmware >= 3.1 it will create a Display Link Director. Else it will create an NSTimer director.
-	- It will try to run at 60 FPS.
-	- The FPS won't be displayed.
-	- The orientation will be portrait.
-	- It will connect the director with the EAGLView.
-
- IMPORTANT: If you want to use another type of render buffer (eg: RGBA8)
- or if you want to use a 16-bit or 24-bit depth buffer, you should NOT
- use this macro. Instead, you should create the EAGLView manually.
- 
- @since v0.99.4
- */
-
-//---- todo: replace with uphone window
-
-
-// #define CC_DIRECTOR_INIT()																		\
-// do	{																							\
-// 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
-// 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )								\
-// 		[CCDirector setDirectorType:kCCDirectorTypeNSTimer];									\
-// 	CCDirector *__director = [CCDirector sharedDirector];										\
-// 	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
-// 	[__director setDisplayFPS:NO];																\
-// 	[__director setAnimationInterval:1.0/60];													\
-// 	EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]								\
-// 									pixelFormat:kEAGLColorFormatRGB565							\
-// 									depthFormat:0 GL_DEPTH_COMPONENT24_OES   				\
-// 							 preserveBackbuffer:NO];											\
-// 	[__director setOpenGLView:__glView];														\
-// 	[window addSubview:__glView];																\
-// 	[window makeKeyAndVisible];																	\
-// } while(0)
-
- 
- /** @def CC_DIRECTOR_END
-  Stops and removes the director from memory.
-  Removes the EAGLView from its parent
-  
-  @since v0.99.4
-  */
-
-//---- todo: replace with uphone window
-
-
-// #define CC_DIRECTOR_END()										\
-// do {															\
-// 	CCDirector *__director = [CCDirector sharedDirector];		\
-// 	EAGLView *__view = [__director openGLView];					\
-// 	[__view removeFromSuperview];								\
-// 	[__director end];											\
-// } while(0)
-
-
 #ifndef FLT_EPSILON
 #define FLT_EPSILON     1.192092896e-07F
 #endif // FLT_EPSILON
@@ -203,5 +121,48 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	        TypeName(const TypeName&);\
 			void operator=(const TypeName&)
 
+/**
+@since v0.99.5
+@todo upto-0.99.5 check the code  for retina
+*/
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+/****************************/
+/** RETINA DISPLAY ENABLED **/
+/****************************/
+
+/** @def CC_CONTENT_SCALE_FACTOR
+On Mac it returns 1;
+On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
+*/
+#include "CCDirector.h"
+#define CC_CONTENT_SCALE_FACTOR() CCDirector::sharedDirector()->getContentScaleFactor()
+
+
+/** @def CC_RECT_PIXELS_TO_POINTS
+Converts a rect in pixels to points
+*/
+#define CC_RECT_PIXELS_TO_POINTS(__pixels__)																		\
+    CCRectMake( (__pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),	\
+    (__pixels__).size.width / CC_CONTENT_SCALE_FACTOR(), (__pixels__).size.height / CC_CONTENT_SCALE_FACTOR() )
+
+/** @def CC_RECT_POINTS_TO_PIXELS
+Converts a rect in points to pixels
+*/
+#define CC_RECT_POINTS_TO_PIXELS(__points__)																		\
+    CCRectMake( (__points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__points__).origin.y * CC_CONTENT_SCALE_FACTOR(),	\
+    (__points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__points__).size.height * CC_CONTENT_SCALE_FACTOR() )
+
+#else // retina disabled
+
+/*****************************/
+/** RETINA DISPLAY DISABLED **/
+/*****************************/
+
+#define CC_CONTENT_SCALE_FACTOR() 1
+#define CC_RECT_PIXELS_TO_POINTS(__pixels__) __pixels__
+#define CC_RECT_POINTS_TO_PIXELS(__points__) __points__
+
+#endif
 
 #endif // __CCMACROS_H__

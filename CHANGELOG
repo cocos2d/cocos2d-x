@@ -1,7 +1,282 @@
-cocos2d-0.99.4-x-0.7.0
-	http://www.cocos2d-x.org/versions/show/4
+cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
+ [all platforms]
+    Feature  #584  sync with cocos2d-iphone v1.0.0
+    Feature  #601  use Chipmunk v5.3.5
+    Feature  #581  change return types of xxxAction::reverse() to its own type
+    Bug      #522  CCSpriteFrameCache::addSpriteFramesWithFile(const char* pszPlist) crashed if the param have no '/'
+    Bug      #522  CCTextureCache::removeTextureForKey(const char*) cache the image path incorrectly
+    Bug      #573  CCLayerColor does not init its m_tColor, which will result to a random color
+    Bug      #576  some CCMutableDictionary methods must return _KeyT instead of std::string
+    Bug      #577  CCReverseTime may crash
+    Bug      #578  Debian & LavaFlow of ParticleTest have not picture, the effect of ParticleFire is wrong
+    Bug      #580  ShuffleTilesTest of EffectText may crash
+ [ios]
+    Bug      #546  CCLabelTTF::labelWithString() works incorrectly when height = 0
+    Bug      #604  test.xcodeproject miss Summary & Info in xcode4 since v0.8.5
+ [android]
+    Feature  #547  deal with line wrap of CCLabelTTF::initWithString(...) 
+ [win32]
+    Bug      #659  ChipmunkTest Sensors crashes in a few seconds
+    Bug      #583  SimpleAudioEngine::playBackgroundMusic(const char*, true) have no sound on win32
+    Bug      #605  export C methods in CCNS.h to dll interfaces
+    Bug      #548  export CCConfiguration to dll interfaces
+ [marmalade/airplay]
+    Bug      #600  incorrect memory allocation in marmalade port
+    Refactor #582  use libpng instead of CIwImage in CCImage_airplay.cpp
+ [wophone]
+    Bug      #545  fix the wrong effect of ChipmunkTest
+    Bug      #606  PageTransitionForward in TransitionsTest has wrong visual effect
 
-cocos2d-0.99.4-uphone-win32-stable-rc1
+
+
+cocos2d-0.99.5-x-0.8.5 @ Jun.28,2011
+ [all platforms]
+    Feature  #577  Lua Support! We export all the cocos2d-x classes & methods to lua! 
+                   Please compile and run HelloLua, and read HelloLua/Resource/hello.lua for more details. 
+                   And the lua new project template/wizard is ready on xcode3, xcode4 and VisualStudio2008 & 2010 
+    Feature  #398  Xcode4 templates! Run install-template-xcode.sh to do the magic
+    Feature  #323  Internationalization support! Add CCApplication::getCurrentLanguage() method on all platforms
+    Feature  #529  add static node() method to CCLayerColor & CCLayerGradient
+    Bug      #534  don't raise compile error if ios project includes CCImage.cpp & CCFileUtils.cpp
+    Bug      #429  Effect is wrong when the value of defaultAlphaPixelFormet=kCCTexture2DPixelFormat_A8 in CCTexture2D
+    Bug      #491  Unsafe cycle in CCScheduler::unscheduleAllSelectors
+    Bug      #502  Refactor the singleton mode of CCConfiguration
+    Bug      #512,#525  fix warnings in /Wall flag
+    Bug      #516  Undefined behavious in ccCArray.h (signed / unsigned conversion)
+    Bug      #518  CCScheduler::unscheduleAllSelectors() uses tHashSelectorEntry in wrong way
+    Bug      #521  the effect of PageTurn3D is curious
+    Bug      #523  CCParticleSystemQuad::particleWithFile() can't work correctly
+    Bug      #524  CCFileUtils::dictionaryWithContentsOfFile() can't parse special plist format
+    Bug      #526  glScissior can't work correctly when use autoscale function
+    Bug      #543  EffectTest renders x4 scale when use auto-scale on android/win32/wophone
+    Bug      #544  some test cases of TransitionTest renders x4 scale when use auto-scale on android/win32/wophone 
+ [android]
+    Bug      #490  TextInputTest show words on soft keyboard detach instead of each key pressed
+    Bug      #507  RenderTextureTest failed on some android devices
+    Bug      #532  GLSurface has no response when tap screen frequently for a long time
+    Bug      #542  SimpleAudioEngine::setBackgroundMusicVolume() not work when background music changed
+    Refactor #535  remove skia dependence when drawing strings, which cause bug #507
+ [ios]
+    Feature  #540  Add RootViewController into xcode3/xcode4 templates. Games can use ios rotation mechanism
+ [win32]
+    Feature  #537  Update PVRFrame lib to version 2.8 for ATI graphic card new driver
+ [wophone]
+    Bug      #539  games on wophone wva devices probably failed on reading resource from zip package
+
+
+
+cocos2d-0.99.5-x-0.8.4 @ May.26,2011
+ [android]
+    Feature  #496  SUPPORT ANDROID 3.0! We test it on both Motorola XOOM & Samsung Galaxy Tab 10.1 (Highlight!!!!!)
+    Bug      #494  typo fixed, Cocos2dxActivity::setPackgeName() to setPackageName()
+    Bug      #495  Memory leak of CCFileUtils::getWriteablePath()
+    Bug      #497  soft keyboard stays shown on some devices while the project includes CCTextFieldTTF
+    Bug      #501  projects creaed by android template have the same package name
+    Bug      #510  Tests progress is killed at the power down phase
+ [all platforms]
+    Feature  #503  upgrade chipmunk from 5.1 to 5.3.4, keep sync with cocos2d-iphone (Highlight!)
+    Feature  #509  For integrting IME, we had to rotate UI to landscape by default
+    Bug      #499  CCRGBAProtocol isn't inherited and implemented in CCMenuItemSprite
+ [ios]
+    Bug      #493  the return value of CCFileUtils::getWriteablePath() is not end with '/'
+    Bug      #508  Problem in running Tests in Retina resolution since 0.8.2
+ [win32]
+    Bug      #492  CCFileUtils::fullPathFromRelativeFile forget to consider the path separated by '\'
+    Feature  #489  Use GetCurrentDirectory instead of GetModuleFileName in CCFileUtils_win32.cpp
+
+
+
+cocos2d-0.99.5-x-0.8.3 @ May.12,2011
+ [all platforms]
+    Feature  #317  wrap input box for game dev, CCTextFieldTTF. (Highlight!)
+    Feature  #455  implement CCUserDefault for data persistence (Highlight!)
+    Feature  #456  integrate libcurl for network access (Highlight!)
+    Feature  #468  implement CCProfiler & CCProfilingTimer
+    Feature  #450  can set default pixel format other than RGBA888
+    Feature  #449  Remove the sources for mac platform. We plan to focus on mobile platforms & reduce the complexity
+    Refactor #451  Remove the event dispatcher and refactor CCLayer & CCMenu & CCParticleSystemPoint.
+    Refactor #452  Refactor CCDirector CCGrid CCNode, reduce the complexity
+    Refactor #472  Refactor duplicated modules under cocos2dx/platform, reduce the complexity
+    Bug      #341  CCTMXFiledMap crashed when a child is not the obj of CCTMXLayer
+    Bug      #371  A layer can't registered as a StandardTouchDelegate when touch event is handling
+    Bug      #428  Function addChild low efficiency
+    Bug      #448  CCCallFuncO crashes
+    Bug      #467  CCLayer:m_eTouchDelegateType = ccTouchDeletateAllBit all the time
+    Bug      #471  invoke CCFileUtils::setResourcePath may cause loading texture for ParticleSystem failed
+    Bug      #484  CCTextureAtlas::initWithTexture() may cause memory leak
+    Bug      #486  transition test FlipX, FlipY, FlipAngular, ZoomFlipXxx flickers on ios simulator & device
+ [ios]
+    Bug      #447  really exit application when "x" button is clicked
+    Bug      #460  cocos2dx + box2d template cannot find libxml2.dylib
+ [android]
+    Feature  #393  use full version of libxml2, with xmlXPath.. serial methods
+    Feature  #477  Set compilation default ndk version to r5
+    Bug      #374  replace the method for EGL rendering context lost
+    Bug      #453  Android Cocosdenshion can't replace background music
+    Bug      #462  no applicationDidEnterBackground / applicationWillEnterBackground on Android
+    Bug      #470  use GAME_ROOT or other words instead of HELLOWORLD_ROOT in anroid new projects
+    Bug      #475  CCImage::initWithString return true even if the bitmap hasn't been initialized
+ [win32]
+    Feature  #454  Modify the including path of Box2D genereated by win32 template
+    Bug      #459  the project create by template for vs use the RuntimeLibrary MTd, different with other project
+ [wophone] 
+    Feature  #482  Modify the resource data path for the new WoPhone SDK
+    Feature  #487  Implement the function CCFiltUtils::getWriteablePath() on wophone
+    Refactor #466  Refactor CCFileUtils for the new packing approach on wophone
+    Bug      #481  After power down & up, backlight will turn off automaticlly if there's no operation
+    Bug      #485  reduce the CPU occupation, modify the approach of FPS control on wophone
+ [airplay]
+    Feature  #480  add template for airplay
+
+
+
+cocos2d-0.99.5-x-0.8.2 @ Apr.7,2011
+ [all platforms]
+    390    Feature    Implement performance test
+    411    Feature    support .plist format outputed by the last version of Zwoptex 
+    415    Feature    Make all xxxFromFile methods can accept relative path
+    439    Feature    all file reading must pass though CCFileUtils::getFileData
+    441    Feature    Initialize pointers in construction & detect them in destruction
+    427    Refactor   refactor CCTMXXMLParser with multi-platform CCSAXParser design
+    434    Refactor   refactor class CCFileUtils
+    396    Refactor   remove ccxScopedPtr & ccxScopedArray, use STL instead
+    350    Bug        TransitionFade flickers
+    391    Bug        CCSpriteFrameCache doesn't support .plist files which format isn't equal to 0
+    420    Bug        CCSprite::spriteWithFile() returns a valid object when the image file isn't present
+    440    Bug        Can't show MessageBox when imageFromFile can't find the image
+ [ios]
+    349    Bug        deal with plist files in binary format
+    435    Bug        CocosDenshion crashes at foreground/background switching
+    438    Bug        MotionStreak Test crashes on device
+ [android]
+    421    Feature    Add a template & new project script for android
+    443    Feature    implement CCKeypadDelegate on android
+    367    Bug        Android.mk of HelloWorld and Tests depends on alphabet order
+    422    Bug        the 2nd point in multi-touch isn't located to the correct coordinate
+    430    Bug        replace glColor4ub with glColor4f to avoid "called unimplement OpenGL ES API" on some android devices
+    431    Bug        ParticleFlower on G3 can't show the particles correctly
+ [win32]
+    417    Bug        No touchEnd when the mouse move out from the window
+    424    Bug        open vs2010.sln says cannot open CCamera.cpp
+ [airplay]
+    379    Feature    integrate airplay sdk port
+    442    feature    implement CocosDenshion on airplay port
+	
+	
+	
+cocos2d-0.99.5-x-0.8.1 @ Mar.21,2011
+ [all platforms]
+    400    Bug        typo, rename CCamera.cpp to CCCamera
+    403    Feature    rename cocos2d::UIEvent to cocos2d::CCEvent, to avoid class name conflict on ios
+    405	   Bug        CCConfiguration::checkForGLExtension(const string&) sometimes may crashes
+    407    Bug        replace "CCGL.h" with "CCGL.h" in CCCamera.cpp, for case-sensitive systems
+    408    Bug        memory leak in CCImage::_initWithPngData
+    409    Feature    rename cocos2d::NSArray to cocos2d::CCArray, to avoid the conflict on ios
+    418    Feature    add copyright of cocos2d-iphone original authors to each file
+    423    Bug        fix compilation warnings when COCOS2D_DEBUG == 2
+ [ios]
+    404    Bug        HiResTest isnot prerfect on HVGA/Retina yet
+    410    Bug        xcode3 template, cannot find libxml from header searh paths in release build
+    419    Bug        test case TMXIsoVertexZ in TileMapTst has wrong effect on ios
+ [android]
+    399    Bug        HelloWorld crashes when the screen is touched
+    405    Bug        CocosDenshion test, BGM isn't paused after HOME key tapped
+ [win32]
+    395    Bug        make AppDelegate.cpp created by VS wizard portable without any modification
+    401    Bug        VisualStudio template for 2010 OutputDir errors
+
+
+
+cocos2d-0.99.5-x-0.8.0 @ Mar.15,2011
+ [all platforms]
+    316    Feature    Resolution auto adjustment, auto scale HVGA resource to WVGA or any other resolutions
+    336    Refactor   refactor platform porting layer
+    253    Bug        xml parser sometimes crashes
+    375    Feature    Rename NS,CG,UI prefix classes/definitions to CC prefix, avoid the crash at ios dev
+    332    Feature    upgrade tests from 0.99.4 to 0.99.5
+ [ios]
+    363    Bug        CCLabelTTF can't treat line breaks and wrapping correctly.
+    351    Feature    CCLabelTTF cannot automatic line break on iphone
+    352    Bug        ccRemoveHDSuffixFromFile & CCFileUtils::getDoubleResolutionImage isnot work
+    392    Bug        border of sprite debug draw isn't scaled if enableRetinaDisplay(true)
+    385    Feature    implement ccos2d::CCLog
+    388    Feature    update the template for iOS
+ [android]
+    247    Feature    support multitouch
+    242    Feature    support accelerometer on android
+    353    Feature    support jpg on android
+    344    Feature    add APP_ABI := armeabi armeabi-v7a to improve the performance on some devices
+    356    Bug        CCLabelTTF::initWithString crashed
+ [wophone]
+    386    Bug        resolve the compile conflict on wophone sdk
+    383    Bug        The approach which handle left soft-key clicked is not work
+    377    Feature    Replace the word "uphone" with "wophone"
+    357    Bug        CCLabelTTF doesn't support words contain line breaks.
+    348    Bug        CCLabelTTF blur if color = white and fontSize < 24
+ [win32]
+    373    Feature    Disable PVRFrame window when cocos2d running
+    355    Bug        CCLabelTTF doesn't support line breaks and wrapping words
+    300    Feature    wizard for Visual C++ 2008 Express & VS2010 Express/Professional
+	
+
+
+cocos2d-0.99.5-x-0.7.2 @ Jan.26,2011
+ [all platforms]
+    - upgrade engine logic internal & interfaces to 0.99.5
+    - the list of menu items in tests is showing how to scroll now
+    - lots of bugs fixed
+ [iphone]
+    - add new project templates for Xcode
+    - add the c++ wrapper for CocosDenshion::SimpleAudioEngine
+    - support UTF8 charactors in text renderring, such as CCLabelTTF, CCMenuItemFont
+ [android]
+    - add CocosDenshion::SimpleAudioEngine implement on android
+    - the engine can adjust the apk filename automatically
+    - the engine will not crash at surface recreate, especially at background-to-foreground switching
+ [wophone]
+    - switch the game to background, then press power key will not cause the background music play again
+    - remove the methods of using resouce map in cocos2d-wophone & SimpleAudioEngine. 
+      Only zip resource is recommended and suppported.
+    - can auto find the installed path of your game, and load zip resource file from the current folder. 
+      No absolute path in code any more. Do this to support installing games to micro-SD card
+      
+      
+
+cocos2d-0.99.4-x-0.7.1 @ Dec.20,2010
+ [all platforms]
+    - add CCKeypadDelegate class, which enable CCLayer to respond "back" key in wophone & android
+    - Add namespace for CocosDenshion
+    - fix compile errors when enable CC_XXX_DEBUG_DRAW switchs in ccConfig.h
+    - fix memory leaks on each platform
+    - more details: http://www.cocos2d-x.org/versions/show/5
+ [android] 
+    - Run through all the test cases of cocos2d, support ndk r4,r5, sdk higher than 2.0. Tested on HTC G2,G3,G6,G7
+    - HelloWorld integrate all platforms in one directory now
+    - WANRNING: this version isn't ready for android games porting yet. The CocosDenshion isn't ported to android,
+      and this version will crashes when screen orientation changes or the game gack to foreground 
+      look more on this bug http://www.cocos2d-x.org/boards/10/topics/202
+ [iphone]  
+    - Add support of loading textureImageData from the ParticleDesign plist file
+    - Fix more then 3000 complie warnings
+    - You can try to use this version to develop your iOS game now. It's much more stable than the previous version
+ [wophone]  
+    - Games can easily read resources from zip file now. This will drastically reduce the memory usage
+    - Add power management: pause the message loop when cocos2d-x game is switched to background or backlight down
+    - Multi-touch support
+ [win32]
+    - SimpleAudioEngine can play background musci with repeating now
+  
+
+
+cocos2d-0.99.4-x-0.7.0 @ Nov.29,2010
+* cocos2d-iphone-cpp port ready! include accelerometer & multi-touch
+* refactor the directory structure of HelloWorld & tests
+* cocos2d-wophone supports accelerometer
+* add cocos2d-x wizard for cocos2d-win32 & cocos2d-wophone for VisualStudio2008
+* jump out a message box when load texture failed (win32 & wophone)
+* more details: 	http://www.cocos2d-x.org/versions/show/4
+
+cocos2d-0.99.4-wophone-win32-stable-rc1
 	http://www.cocos2d-x.org/versions/show/1
 	http://www.cocos2d-x.org/versions/show/2
 	http://www.cocos2d-x.org/versions/show/3

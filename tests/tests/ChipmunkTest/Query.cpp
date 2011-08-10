@@ -30,11 +30,10 @@
 
 #include "chipmunk_unsafe.h"
 
-extern cpSpace *space;
-extern cpBody *staticBody;
+static cpSpace *space;
 extern cpVect mousePoint;
 
-cpShape *querySeg = NULL;
+static cpShape *querySeg = NULL;
 
 
 static void
@@ -53,7 +52,7 @@ update(int ticks)
 	}
 	
 	cpSegmentQueryInfo info = {};
-	if(cpSpaceSegmentQueryFirst(space, start, end, -1, 0, &info)){
+	if(cpSpaceSegmentQueryFirst(space, start, end, CP_ALL_LAYERS, CP_NO_GROUP, &info)){
 		cpVect point = cpSegmentQueryHitPoint(start, end, info);
 		lineEnd = cpvadd(point, cpvzero);//cpvmult(info.n, 4.0f));
 		
@@ -64,7 +63,8 @@ update(int ticks)
 		strcat(messageString, "Segment Query (None)");
 	}
 	
-	cpSegmentShapeSetEndpoints(querySeg, cpvzero, lineEnd);
+	cpSegmentShapeSetEndpoints(querySeg, start, lineEnd);
+	cpShapeCacheBB(querySeg); // force it to update it's collision detection data so it will draw
 	
 	// normal other stuff.
 	int steps = 1;
@@ -78,22 +78,20 @@ update(int ticks)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
 	space->elasticIterations = 0;
 	space->iterations = 5;
-	
+
 	cpSpaceResizeStaticHash(space, 40.0f, 999);
 	cpSpaceResizeActiveHash(space, 30.0f, 2999);
-	
+
+	cpBody *staticBody = &space->staticBody;
 	cpShape *shape;
 	
 	// add a non-collidable segment as a quick and dirty way to draw the query line
-	shape = cpSegmentShapeNew(staticBody, cpvzero, cpv(100.0f, 0.0f), 4.0f);
-	cpSpaceAddStaticShape(space, shape);
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpvzero, cpv(100.0f, 0.0f), 4.0f));
 	shape->layers = 0;
 	querySeg = shape;
 	
@@ -109,7 +107,7 @@ init(void)
 	}
 	
 	{ // add a static segment
-		cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(0, 300), cpv(300, 0), 0.0f));
+		cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(0, 300), cpv(300, 0), 0.0f));
 	}
 	
 	{ // add a pentagon
@@ -119,7 +117,7 @@ init(void)
 		cpVect verts[NUM_VERTS];
 		for(int i=0; i<NUM_VERTS; i++){
 			cpFloat angle = -2*(cpFloat)M_PI*i/((cpFloat) NUM_VERTS);
-			verts[i] = cpv(30*cpfcos(angle), 30*cpfsin(angle));
+			verts[i] = cpv(30*cosf(angle), 30*sinf(angle));
 		}
 		
 		cpBody *body = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, NUM_VERTS, verts, cpvzero)));
@@ -144,12 +142,11 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 }
 
-const chipmunkDemo Query = {
+chipmunkDemo Query = {
 	"Segment Query",
 	NULL,
 	init,

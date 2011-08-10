@@ -1,0 +1,153 @@
+
+############################################################################
+#
+#   Makefile for building : chipmunk_Arm.TMK3
+#   Created by TMK3_V2.3, please do not modify.
+#
+#############################################################################
+
+TO_PROJECT_ROOT = ../../../PRJ_TG3
+OUTPUT_FILENAME = libChipmunkStatic.a
+
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_Base_StaticLib.ARM
+include $(TO_PROJECT_ROOT)/MakeInclude/Makefile_TOPS_Def.ARM
+
+DEFINES += -DCC_UNDER_WOPHONE
+INCLUDE_PATH += -I../  \
+               -I../../cocos2dx	-I../../cocos2dx/include \
+               -I../include -I../include/chipmunk -I../include/chipmunk/contains \
+
+CC_FLAGS +=  -std=c99 -fvisibility=default
+
+OBJECTS_DIR = ./Debug-ARM
+DESTDIR = $(TO_PROJECT_ROOT)/$(BIN_OUTPUT_DIR)
+TARGET = $(DESTDIR)/$(OUTPUT_FILENAME)
+
+DEL_FILE = rm -f
+MKDIR = mkdir -p
+
+first: all
+
+OBJECTS = \
+	$(OBJECTS_DIR)/chipmunk.o \
+	$(OBJECTS_DIR)/cpArbiter.o \
+	$(OBJECTS_DIR)/cpArray.o \
+	$(OBJECTS_DIR)/cpBB.o \
+	$(OBJECTS_DIR)/cpBody.o \
+	$(OBJECTS_DIR)/cpCollision.o \
+	$(OBJECTS_DIR)/cpHashSet.o \
+	$(OBJECTS_DIR)/cpPolyShape.o \
+	$(OBJECTS_DIR)/cpShape.o \
+	$(OBJECTS_DIR)/cpSpace.o \
+	$(OBJECTS_DIR)/cpSpaceComponent.o \
+	$(OBJECTS_DIR)/cpSpaceHash.o \
+	$(OBJECTS_DIR)/cpSpaceQuery.o \
+	$(OBJECTS_DIR)/cpSpaceStep.o \
+	$(OBJECTS_DIR)/cpVect.o \
+	$(OBJECTS_DIR)/cpConstraint.o \
+	$(OBJECTS_DIR)/cpDampedRotarySpring.o \
+	$(OBJECTS_DIR)/cpDampedSpring.o \
+	$(OBJECTS_DIR)/cpGearJoint.o \
+	$(OBJECTS_DIR)/cpGrooveJoint.o \
+	$(OBJECTS_DIR)/cpPinJoint.o \
+	$(OBJECTS_DIR)/cpPivotJoint.o \
+	$(OBJECTS_DIR)/cpRatchetJoint.o \
+	$(OBJECTS_DIR)/cpRotaryLimitJoint.o \
+	$(OBJECTS_DIR)/cpSimpleMotor.o \
+	$(OBJECTS_DIR)/cpSlideJoint.o
+
+ADD_OBJECTS += 
+
+$(OBJECTS_DIR) :
+	$(MKDIR) $(OBJECTS_DIR)
+
+$(DESTDIR) :
+	$(MKDIR) $(DESTDIR)
+
+all : $(OBJECTS_DIR) $(DESTDIR) $(TARGET)
+
+$(TARGET) : $(OBJECTS)
+	$(LINK) $(LINK_FLAGS) -o $(TARGET) $(SYS_OBJECTS) $(OBJECTS) $(ADD_OBJECTS) $(LIBS) $(SYS_LIBS)
+
+clean : 
+	-$(DEL_FILE) $(OBJECTS)
+	-$(DEL_FILE) $(TARGET)
+
+$(OBJECTS_DIR)/chipmunk.o : ../src/chipmunk.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/chipmunk.o ../src/chipmunk.c
+
+$(OBJECTS_DIR)/cpArbiter.o : ../src/cpArbiter.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpArbiter.o ../src/cpArbiter.c
+
+$(OBJECTS_DIR)/cpArray.o : ../src/cpArray.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpArray.o ../src/cpArray.c
+
+$(OBJECTS_DIR)/cpBB.o : ../src/cpBB.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpBB.o ../src/cpBB.c
+
+$(OBJECTS_DIR)/cpBody.o : ../src/cpBody.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpBody.o ../src/cpBody.c
+
+$(OBJECTS_DIR)/cpCollision.o : ../src/cpCollision.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpCollision.o ../src/cpCollision.c
+
+$(OBJECTS_DIR)/cpHashSet.o : ../src/cpHashSet.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpHashSet.o ../src/cpHashSet.c
+
+$(OBJECTS_DIR)/cpPolyShape.o : ../src/cpPolyShape.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpPolyShape.o ../src/cpPolyShape.c
+
+$(OBJECTS_DIR)/cpShape.o : ../src/cpShape.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpShape.o ../src/cpShape.c
+
+$(OBJECTS_DIR)/cpSpace.o : ../src/cpSpace.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpace.o ../src/cpSpace.c
+
+$(OBJECTS_DIR)/cpSpaceComponent.o : ../src/cpSpaceComponent.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceComponent.o ../src/cpSpaceComponent.c
+
+$(OBJECTS_DIR)/cpSpaceHash.o : ../src/cpSpaceHash.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceHash.o ../src/cpSpaceHash.c
+
+$(OBJECTS_DIR)/cpSpaceQuery.o : ../src/cpSpaceQuery.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceQuery.o ../src/cpSpaceQuery.c
+
+$(OBJECTS_DIR)/cpSpaceStep.o : ../src/cpSpaceStep.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSpaceStep.o ../src/cpSpaceStep.c
+
+$(OBJECTS_DIR)/cpVect.o : ../src/cpVect.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpVect.o ../src/cpVect.c
+
+$(OBJECTS_DIR)/cpConstraint.o : ../src/constraints/cpConstraint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpConstraint.o ../src/constraints/cpConstraint.c
+
+$(OBJECTS_DIR)/cpDampedRotarySpring.o : ../src/constraints/cpDampedRotarySpring.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpDampedRotarySpring.o ../src/constraints/cpDampedRotarySpring.c
+
+$(OBJECTS_DIR)/cpDampedSpring.o : ../src/constraints/cpDampedSpring.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpDampedSpring.o ../src/constraints/cpDampedSpring.c
+
+$(OBJECTS_DIR)/cpGearJoint.o : ../src/constraints/cpGearJoint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpGearJoint.o ../src/constraints/cpGearJoint.c
+
+$(OBJECTS_DIR)/cpGrooveJoint.o : ../src/constraints/cpGrooveJoint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpGrooveJoint.o ../src/constraints/cpGrooveJoint.c
+
+$(OBJECTS_DIR)/cpPinJoint.o : ../src/constraints/cpPinJoint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpPinJoint.o ../src/constraints/cpPinJoint.c
+
+$(OBJECTS_DIR)/cpPivotJoint.o : ../src/constraints/cpPivotJoint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpPivotJoint.o ../src/constraints/cpPivotJoint.c
+
+$(OBJECTS_DIR)/cpRatchetJoint.o : ../src/constraints/cpRatchetJoint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpRatchetJoint.o ../src/constraints/cpRatchetJoint.c
+
+$(OBJECTS_DIR)/cpRotaryLimitJoint.o : ../src/constraints/cpRotaryLimitJoint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpRotaryLimitJoint.o ../src/constraints/cpRotaryLimitJoint.c
+
+$(OBJECTS_DIR)/cpSimpleMotor.o : ../src/constraints/cpSimpleMotor.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSimpleMotor.o ../src/constraints/cpSimpleMotor.c
+
+$(OBJECTS_DIR)/cpSlideJoint.o : ../src/constraints/cpSlideJoint.c
+	$(CC) -c $(CC_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/cpSlideJoint.o ../src/constraints/cpSlideJoint.c
+

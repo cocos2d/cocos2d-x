@@ -6,8 +6,8 @@
 class TileDemo : public CCLayer
 {
 protected:
-	CCLabel* m_label;
-	CCLabel* m_subtitle;
+	CCLabelTTF* m_label;
+	CCLabelTTF* m_subtitle;
 
 public:
 	TileDemo(void);
@@ -17,15 +17,15 @@ public:
 	virtual std::string subtitle();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 
 	void registerWithTouchDispatcher();
-	bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-	void ccTouchEnded(CCTouch* touch, UIEvent* event);
-	void ccTouchCancelled(CCTouch* touch, UIEvent* event);
-	void ccTouchMoved(CCTouch* touch, UIEvent* event);
+	bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+	void ccTouchEnded(CCTouch* touch, CCEvent* event);
+	void ccTouchCancelled(CCTouch* touch, CCEvent* event);
+	void ccTouchMoved(CCTouch* touch, CCEvent* event);
 };
 
 class TileMapTest : public TileDemo
@@ -230,6 +230,31 @@ public:
 	TMXOrthoMoveLayer(void);
 	virtual std::string title();
 	virtual std::string subtitle();
+};
+
+class TMXBug987 : public TileDemo
+{
+public:
+    TMXBug987();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TMXBug787 : public TileDemo
+{
+public:
+    TMXBug787();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class TMXGIDObjectsTest : public TileDemo
+{
+public:
+	TMXGIDObjectsTest();
+	virtual std::string title();
+	virtual std::string subtitle();
+	virtual void draw();
 };
 
 class TileMapTestScene : public TestScene

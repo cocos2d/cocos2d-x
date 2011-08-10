@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,27 +25,24 @@ THE SOFTWARE.
 ****************************************************************************/
 #include <cstring>
 #include "CCMenuItem.h"
-#include "CGPointExtension.h"
-#include "CCIntervalAction.h"
+#include "CCPointExtension.h"
+#include "CCActionInterval.h"
 #include "CCSprite.h"
 #include "CCLabelAtlas.h"
-#include "CCLabel.h"
+#include "CCLabelTTF.h"
+#include "CCScriptSupport.h"
 
 #include <stdarg.h>
 
 namespace cocos2d{
 
-	static int _fontSize = kItemSize;
+	static unsigned int _fontSize = kCCItemSize;
 	static std::string _fontName = "Marker Felt";
 	static bool _fontNameRelease = false;
 
-	enum {
-		kCurrentItem = 0xc0c05001,
-	};
+    const unsigned int	kCurrentItem = 0xc0c05001;
+    const unsigned int	kZoomActionTag = 0xc0c05002;
 
-	enum {
-		kZoomActionTag = 0xc0c05002,
-	};
 	//
 	// CCMenuItem
 	//
@@ -56,47 +55,81 @@ namespace cocos2d{
 	}
 	bool CCMenuItem::initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector)
 	{
-		m_tAnchorPoint = ccp(0.5f, 0.5f);
+		setAnchorPoint(ccp(0.5f, 0.5f));
 		m_pListener = rec;
 		m_pfnSelector = selector;
 		m_bIsEnabled = true;
 		m_bIsSelected = false;
 		return true;
 	}
+
 	void CCMenuItem::selected()
 	{
 		m_bIsSelected = true;
 	}
+
 	void CCMenuItem::unselected()
 	{
 		m_bIsSelected = false;
 	}
-	void CCMenuItem::activate()
+
+	void CCMenuItem::registerScriptHandler(const char* pszFunctionName)
 	{
-		if (m_bIsEnabled && m_pListener)
+		if (pszFunctionName)
 		{
-			(m_pListener->*m_pfnSelector)(this);
+			this->m_functionName = string(pszFunctionName);
+		}
+		else
+		{
+			this->m_functionName.clear();
 		}
 	}
+
+	void CCMenuItem::activate()
+	{
+		if (m_bIsEnabled)
+		{
+			if (m_pListener)
+			{
+				(m_pListener->*m_pfnSelector)(this);
+			}
+
+			if (m_functionName.size() && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
+			{
+				CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeCallFuncN(m_functionName.c_str(), this);
+			}
+		}
+	}
+
 	void CCMenuItem::setIsEnabled(bool enabled)
 	{
 		m_bIsEnabled = enabled;
 	}
+
 	bool CCMenuItem::getIsEnabled()
 	{
 		return m_bIsEnabled;
 	}
-	CGRect CCMenuItem::rect()
+
+	CCRect CCMenuItem::rect()
 	{
-		return CGRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
+		return CCRectMake( m_tPosition.x - m_tContentSize.width * m_tAnchorPoint.x, 
 						m_tPosition.y - m_tContentSize.height * m_tAnchorPoint.y,
 						m_tContentSize.width, m_tContentSize.height);
 	}
+
 	bool CCMenuItem::getIsSelected()
 	{
 		return m_bIsSelected;
 	}
-	//
+
+        void CCMenuItem::setTarget(SelectorProtocol *rec, SEL_MenuHandler selector)
+        {
+            m_pListener = rec;
+            m_pfnSelector = selector;
+        }
+
+        //
 	//CCMenuItemLabel
 	//
 	ccColor3B CCMenuItemLabel::getDisabledColor()
@@ -113,15 +146,31 @@ namespace cocos2d{
 	}
 	void CCMenuItemLabel::setLabel(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pLabel);
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            setContentSize(var->getContentSize());
+        }
+
+        if (m_pLabel)
+        {
+            removeChild(m_pLabel, true);
+        }
+        
 		m_pLabel = var;
-		this->setContentSize(m_pLabel->getContentSize());
 	}
 	CCMenuItemLabel * CCMenuItemLabel::itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
 		CCMenuItemLabel *pRet = new CCMenuItemLabel();
 		pRet->initWithLabel(label, target, selector);
+		pRet->autorelease();
+		return pRet;
+	}
+	CCMenuItemLabel* CCMenuItemLabel::itemWithLabel(CCNode *label)
+	{
+		CCMenuItemLabel *pRet = new CCMenuItemLabel();
+		pRet->initWithLabel(label, NULL, NULL);
 		pRet->autorelease();
 		return pRet;
 	}
@@ -136,14 +185,11 @@ namespace cocos2d{
 	}
 	CCMenuItemLabel::~CCMenuItemLabel()
 	{
-		CCX_SAFE_RELEASE(m_pLabel);
 	}
 	void CCMenuItemLabel::setString(const char * label)
 	{
 		m_pLabel->convertToLabelProtocol()->setString(label);
 		this->setContentSize(m_pLabel->getContentSize());
-// 		[label_ setString:string];
-// 		[self setContentSize: [label_ contentSize]];
 	}
 	void CCMenuItemLabel::activate()
 	{
@@ -160,8 +206,17 @@ namespace cocos2d{
 		if(m_bIsEnabled)
 		{
 			CCMenuItem::selected();
-			this->stopActionByTag(kZoomActionTag);
-			m_fOriginalScale = this->getScale();
+
+			CCAction *action = getActionByTag(kZoomActionTag);
+			if (action)
+			{
+				this->stopAction(action);
+			}
+			else
+			{
+				m_fOriginalScale = this->getScale();
+			}
+			
 			CCAction *zoomAction = CCScaleTo::actionWithDuration(0.1f, m_fOriginalScale * 1.2f);
 	   	 	zoomAction->setTag(kZoomActionTag);
 			this->runAction(zoomAction);
@@ -194,10 +249,6 @@ namespace cocos2d{
 			}
 		}
 		CCMenuItem::setIsEnabled(enabled);
-	}
-	void CCMenuItemLabel::draw()
-	{
-		m_pLabel->draw();
 	}
 	void CCMenuItemLabel::setOpacity(GLubyte opacity)
 	{
@@ -233,7 +284,7 @@ namespace cocos2d{
 	}
 	bool CCMenuItemAtlasFont::initFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "value lenght must be greater than 0");
+		CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
 		CCLabelAtlas *label = new CCLabelAtlas();
 		label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
 		label->autorelease();
@@ -246,11 +297,11 @@ namespace cocos2d{
 	//
 	//CCMenuItemFont
 	//
-	void CCMenuItemFont::setFontSize(int s)
+	void CCMenuItemFont::setFontSize(unsigned int s)
 	{
 		_fontSize = s;
 	}
-	int CCMenuItemFont::fontSize()
+	unsigned int CCMenuItemFont::fontSize()
 	{
 		return _fontSize;
 	}
@@ -283,14 +334,48 @@ namespace cocos2d{
 	}
 	bool CCMenuItemFont::initFromString(const char *value, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
-		NSAssert( value != NULL && strlen(value) != 0, "Value lenght must be greater than 0");
-		CCLabel *label = CCLabel::labelWithString(value, _fontName.c_str(), (float)_fontSize);
+		CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+
+		m_strFontName = _fontName;
+		m_uFontSize = _fontSize;
+
+		CCLabelTTF *label = CCLabelTTF::labelWithString(value, m_strFontName.c_str(), (float)m_uFontSize);
 		if (CCMenuItemLabel::initWithLabel(label, target, selector))
 		{
 			// do something ?
 		}
 		return true;
 	}
+
+	void CCMenuItemFont::recreateLabel()
+	{
+		CCLabelTTF *label = CCLabelTTF::labelWithString(m_pLabel->convertToLabelProtocol()->getString(), 
+			m_strFontName.c_str(), (float)m_uFontSize);
+		this->setLabel(label);
+	}
+
+	void CCMenuItemFont::setFontSizeObj(unsigned int s)
+	{
+		m_uFontSize = s;
+		recreateLabel();
+	}
+
+	unsigned int CCMenuItemFont::fontSizeObj()
+	{
+		return m_uFontSize;
+	}
+
+	void CCMenuItemFont::setFontNameObj(const char* name)
+	{
+		m_strFontName = name;
+		recreateLabel();
+	}
+
+	const char* CCMenuItemFont::fontNameObj()
+	{
+		return m_strFontName.c_str();
+	}
+
 	//
 	//CCMenuItemSprite
 	//
@@ -300,9 +385,19 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setNormalImage(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pNormalImage);
-		m_pNormalImage = var;
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            var->setIsVisible(true);
+        }
+
+        if (m_pNormalImage)
+        {
+            removeChild(m_pNormalImage, true);
+        }
+
+        m_pNormalImage = var;
 	}
 	CCNode * CCMenuItemSprite::getSelectedImage()
 	{
@@ -310,9 +405,19 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setSelectedImage(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pSelectedImage);
-		m_pSelectedImage = var;
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            var->setIsVisible(false);
+        }
+
+        if (m_pSelectedImage)
+        {
+            removeChild(m_pSelectedImage, true);
+        }
+
+        m_pSelectedImage = var;
 	}
 	CCNode * CCMenuItemSprite::getDisabledImage()
 	{
@@ -320,10 +425,51 @@ namespace cocos2d{
 	}
 	void CCMenuItemSprite::setDisabledImage(CCNode* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pDisabledImage);
-		m_pDisabledImage = var;
+        if (var)
+        {
+            addChild(var);
+            var->setAnchorPoint(ccp(0, 0));
+            var->setIsVisible(false);
+        }
+
+        if (m_pDisabledImage)
+        {
+            removeChild(m_pDisabledImage, true);
+        }
+
+        m_pDisabledImage = var;
 	}
+    //
+    //CCMenuItemSprite - CCRGBAProtocol protocol
+    //
+    void CCMenuItemSprite::setOpacity(GLubyte opacity)
+    {
+        m_pNormalImage->convertToRGBAProtocol()->setOpacity(opacity);
+        m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->convertToRGBAProtocol()->setOpacity(opacity);
+        }
+    }
+    void CCMenuItemSprite::setColor(ccColor3B color)
+    {
+        m_pNormalImage->convertToRGBAProtocol()->setColor(color);
+        m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->convertToRGBAProtocol()->setColor(color);
+        }
+    }
+    GLubyte CCMenuItemSprite::getOpacity()
+    {
+        return m_pNormalImage->convertToRGBAProtocol()->getOpacity();
+    }
+    ccColor3B CCMenuItemSprite::getColor()
+    {
+        return m_pNormalImage->convertToRGBAProtocol()->getColor();
+    }
 	CCMenuItemSprite * CCMenuItemSprite::itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite)
 	{
 		return CCMenuItemSprite::itemFromNormalSprite(normalSprite, selectedSprite, NULL, NULL, NULL);
@@ -343,75 +489,86 @@ namespace cocos2d{
 	{
 		assert(normalSprite != NULL);
 		CCMenuItem::initWithTarget(target, selector); 
-		this->m_pNormalImage = normalSprite; CCX_SAFE_RETAIN(normalSprite);
-		this->m_pSelectedImage = selectedSprite; CCX_SAFE_RETAIN(selectedSprite);
-		this->m_pDisabledImage = disabledSprite; CCX_SAFE_RETAIN(disabledSprite);
+        setNormalImage(normalSprite);
+        setSelectedImage(selectedSprite);
+        setDisabledImage(disabledSprite);
+
 		this->setContentSize(m_pNormalImage->getContentSize());
 		return true;
 	}
-	CCMenuItemSprite::~CCMenuItemSprite()
-	{
-		CCX_SAFE_RELEASE(m_pNormalImage);
-		CCX_SAFE_RELEASE(m_pSelectedImage);
-		CCX_SAFE_RELEASE(m_pDisabledImage);
-	}
-	void CCMenuItemSprite::draw()
-	{
-		if(m_bIsEnabled)
-		{
-			if( m_bIsSelected )
-			{
-				m_pSelectedImage->draw();
-			}
-			else
-			{
-				m_pNormalImage->draw();
-			}
-		} 
-		else 
-		{
-			if(m_pDisabledImage != NULL)
-			{
-				m_pDisabledImage->draw();
-			}
-			// disabled image was not provided
-			else
-			{
-				m_pNormalImage->draw();
-			}
-		}
-	}
-	//
-	//CCMenuItemImage - CCRGBAProtocol protocol
-	//
-	void CCMenuItemImage::setOpacity(GLubyte opacity)
-	{
-		m_pNormalImage->convertToRGBAProtocol()->setOpacity(opacity);
-		m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
 
-		if (m_pDisabledImage)
-		{
-			m_pDisabledImage->convertToRGBAProtocol()->setOpacity(opacity);
-		}
-	}
-	void CCMenuItemImage::setColor(ccColor3B color)
-	{
-		m_pNormalImage->convertToRGBAProtocol()->setColor(color);
-		m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
+    /**
+    @since v0.99.5
+    */
+    void CCMenuItemSprite::selected()
+    {
+        CCMenuItem::selected();
 
-		if (m_pDisabledImage)
-		{
-			m_pDisabledImage->convertToRGBAProtocol()->setColor(color);
-		}
-	}
-	GLubyte CCMenuItemImage::getOpacity()
-	{
-		return m_pNormalImage->convertToRGBAProtocol()->getOpacity();
-	}
-	ccColor3B CCMenuItemImage::getColor()
-	{
-		return m_pNormalImage->convertToRGBAProtocol()->getColor();
-	}
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->setIsVisible(false);
+        }
+
+        if (m_pSelectedImage)
+        {
+            m_pNormalImage->setIsVisible(false);
+            m_pSelectedImage->setIsVisible(true);
+        }
+        else
+        {
+            m_pNormalImage->setIsVisible(true);
+        }
+    }
+
+    void CCMenuItemSprite::unselected()
+    {
+        CCMenuItem::unselected();
+
+        m_pNormalImage->setIsVisible(true);
+
+        if (m_pSelectedImage)
+        {
+            m_pSelectedImage->setIsVisible(false);
+        }
+
+        if (m_pDisabledImage)
+        {
+            m_pDisabledImage->setIsVisible(false);
+        }
+    }
+
+    void CCMenuItemSprite::setIsEnabled(bool bEnabled)
+    {
+        CCMenuItem::setIsEnabled(bEnabled);
+
+        if (m_pSelectedImage)
+        {
+            m_pSelectedImage->setIsVisible(false);
+        }
+
+        if (bEnabled)
+        {
+            m_pNormalImage->setIsVisible(true);
+
+            if (m_pDisabledImage)
+            {
+                m_pDisabledImage->setIsVisible(false);
+            }
+        }
+        else
+        {
+            if (m_pDisabledImage)
+            {
+                m_pDisabledImage->setIsVisible(true);
+                m_pNormalImage->setIsVisible(false);
+            }
+            else
+            {
+                m_pNormalImage->setIsVisible(true);
+            }
+        }
+    }
+
 	CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage)
 	{
 		return CCMenuItemImage::itemFromNormalImage(normalImage, selectedImage, NULL, NULL, NULL);
@@ -428,7 +585,7 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	CCMenuItemImage * CCMenuItemImage::itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage)
@@ -439,14 +596,19 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCMenuItemImage::initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector)
 	{
 		CCNode *normalSprite = CCSprite::spriteWithFile(normalImage);
-		CCNode *selectedSprite = CCSprite::spriteWithFile(selectedImage); 
+		CCNode *selectedSprite = NULL;
 		CCNode *disabledSprite = NULL;
+
+        if (selectedImage)
+        {
+            selectedSprite = CCSprite::spriteWithFile(selectedImage);
+        }
 
 		if(disabledImage)
 		{
@@ -457,13 +619,13 @@ namespace cocos2d{
 	//
 	// MenuItemToggle
 	//
-	void CCMenuItemToggle::setSubItems(NSMutableArray<CCMenuItem*>* var)
+	void CCMenuItemToggle::setSubItems(CCMutableArray<CCMenuItem*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pSubItems);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pSubItems);
 		m_pSubItems = var;
 	}
-	NSMutableArray<CCMenuItem*> *CCMenuItemToggle::getSubItems()
+	CCMutableArray<CCMenuItem*> *CCMenuItemToggle::getSubItems()
 	{
 		return m_pSubItems;
 	}
@@ -480,7 +642,7 @@ namespace cocos2d{
 	bool CCMenuItemToggle::initWithTarget(SelectorProtocol* target, SEL_MenuHandler selector, CCMenuItem* item, va_list args)
 	{
 		CCMenuItem::initWithTarget(target, selector);
-		this->m_pSubItems = new NSMutableArray<CCMenuItem*>();
+		this->m_pSubItems = new CCMutableArray<CCMenuItem*>();
 		int z = 0;
 		CCMenuItem *i = item;
 		while(i) 
@@ -493,9 +655,33 @@ namespace cocos2d{
 		this->setSelectedIndex(0);
 		return true;
 	}
+
+	CCMenuItemToggle* CCMenuItemToggle::itemWithItem(CCMenuItem *item)
+	{
+		CCMenuItemToggle *pRet = new CCMenuItemToggle();
+		pRet->initWithItem(item);
+		pRet->autorelease();
+		return pRet;
+	}
+
+	bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
+	{
+		CCMenuItem::initWithTarget(NULL, NULL);
+		this->m_pSubItems = new CCMutableArray<CCMenuItem*>();
+		m_pSubItems->addObject(item);
+		m_uSelectedIndex = UINT_MAX;
+		this->setSelectedIndex(0);
+		return true;
+	}
+
+	void CCMenuItemToggle::addSubItem(CCMenuItem *item)
+	{
+		m_pSubItems->addObject(item);
+	}
+
 	CCMenuItemToggle::~CCMenuItemToggle()
 	{
-		m_pSubItems->release();
+		CC_SAFE_RELEASE(m_pSubItems);
 	}
 	void CCMenuItemToggle::setSelectedIndex(unsigned int index)
 	{
@@ -505,7 +691,7 @@ namespace cocos2d{
 			this->removeChildByTag(kCurrentItem, false);
 			CCMenuItem *item = m_pSubItems->getObjectAtIndex(m_uSelectedIndex);
 			this->addChild(item, 0, kCurrentItem);
-			CGSize s = item->getContentSize();
+			CCSize s = item->getContentSize();
 			this->setContentSize(s);
 			item->setPosition( ccp( s.width/2, s.height/2 ) );
 		}
@@ -540,7 +726,7 @@ namespace cocos2d{
 
 		if(m_pSubItems && m_pSubItems->count() > 0)
 		{
-			NSMutableArray<CCMenuItem*>::NSMutableArrayIterator it;
+			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
 				(*it)->setIsEnabled(enabled);
@@ -563,7 +749,7 @@ namespace cocos2d{
 		m_cOpacity = opacity;
 		if(m_pSubItems && m_pSubItems->count() > 0)
 		{
-			NSMutableArray<CCMenuItem*>::NSMutableArrayIterator it;
+			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
 				(*it)->convertToRGBAProtocol()->setOpacity(opacity);
@@ -579,7 +765,7 @@ namespace cocos2d{
 		m_tColor = color;
 		if(m_pSubItems && m_pSubItems->count() > 0)
 		{
-			NSMutableArray<CCMenuItem*>::NSMutableArrayIterator it;
+			CCMutableArray<CCMenuItem*>::CCMutableArrayIterator it;
 			for( it = m_pSubItems->begin(); it != m_pSubItems->end(); ++it)
 			{
 				(*it)->convertToRGBAProtocol()->setColor(color);

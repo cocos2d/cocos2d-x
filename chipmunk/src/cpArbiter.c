@@ -21,8 +21,15 @@
  
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
+
+cpFloat cpContactsEstimateCrushingImpulse(cpContact *contacts, int numContacts);
+cpArbiter* cpArbiterAlloc(void);
+cpArbiter* cpArbiterNew(cpShape *a, cpShape *b);
+void cpArbiterDestroy(cpArbiter *arb);
+void cpArbiterFree(cpArbiter *arb);
+
 
 cpFloat cp_bias_coef = 0.1f;
 cpFloat cp_collision_slop = 0.1f;
@@ -104,13 +111,20 @@ cpArbiterAlloc(void)
 cpArbiter*
 cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b)
 {
+	arb->handler = NULL;
+	arb->swappedColl = cpFalse;
+	
+	arb->e = 0.0f;
+	arb->u = 0.0f;
+	arb->surface_vr = cpvzero;
+	
 	arb->numContacts = 0;
 	arb->contacts = NULL;
 	
-	arb->private_a = a;
-	arb->private_b = b;
+	arb->a = a;
+	arb->b = b;
 	
-	arb->stamp = -1;
+	arb->stamp = 0;
 	arb->state = cpArbiterStateFirstColl;
 	
 	return arb;
@@ -157,8 +171,6 @@ cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, cpCollisio
 				}
 			}
 		}
-
-//		cpfree(arb->contacts);
 	}
 	
 	arb->contacts = contacts;
@@ -172,17 +184,18 @@ cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, cpCollisio
 	arb->surface_vr = cpvsub(a->surface_v, b->surface_v);
 	
 	// For collisions between two similar primitive types, the order could have been swapped.
-	arb->private_a = a; arb->private_b = b;
+	arb->a = a;
+	arb->b = b;
+	
+	// mark it as new if it's been cached
+	if(arb->state == cpArbiterStateCached) arb->state = cpArbiterStateFirstColl;
 }
 
 void
 cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv)
 {
-	cpShape *shapea = arb->private_a;
-	cpShape *shapeb = arb->private_b;
-
-	cpBody *a = shapea->body;
-	cpBody *b = shapeb->body;
+	cpBody *a = arb->a->body;
+	cpBody *b = arb->b->body;
 	
 	for(int i=0; i<arb->numContacts; i++){
 		cpContact *con = &arb->contacts[i];
@@ -207,8 +220,8 @@ cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv)
 void
 cpArbiterApplyCachedImpulse(cpArbiter *arb)
 {
-	cpShape *shapea = arb->private_a;
-	cpShape *shapeb = arb->private_b;
+	cpShape *shapea = arb->a;
+	cpShape *shapeb = arb->b;
 		
 	arb->u = shapea->u * shapeb->u;
 	arb->surface_vr = cpvsub(shapeb->surface_v, shapea->surface_v);
@@ -225,8 +238,8 @@ cpArbiterApplyCachedImpulse(cpArbiter *arb)
 void
 cpArbiterApplyImpulse(cpArbiter *arb, cpFloat eCoef)
 {
-	cpBody *a = arb->private_a->body;
-	cpBody *b = arb->private_b->body;
+	cpBody *a = arb->a->body;
+	cpBody *b = arb->b->body;
 
 	for(int i=0; i<arb->numContacts; i++){
 		cpContact *con = &arb->contacts[i];

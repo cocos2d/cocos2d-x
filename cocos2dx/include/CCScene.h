@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +28,7 @@ THE SOFTWARE.
 #define __CCSCENE_H__
 
 #include "CCNode.h"
-#include "ccxCommon.h"
+
 namespace   cocos2d {
 
 typedef enum
@@ -45,7 +47,7 @@ additional logic.
 
 It is a good practice to use and CCScene as the parent of all your nodes.
 */
-class CCX_DLL CCScene : public CCNode
+class CC_DLL CCScene : public CCNode
 {
 public:
 	CCScene();
@@ -76,5 +78,22 @@ static scene* node() \
 		return NULL; \
 	} \
 }; 
+
+#define SCENE_FUNC_PARAM(__TYPE__,__PARAMTYPE__,__PARAM__) \
+	static cocos2d::CCScene* node(__PARAMTYPE__ __PARAM__) \
+{ \
+	cocos2d::CCScene * scene = NULL; \
+	do  \
+{ \
+	scene = cocos2d::CCScene::node(); \
+	CC_BREAK_IF(! scene); \
+	__TYPE__ *layer = __TYPE__::node(__PARAM__); \
+	CC_BREAK_IF(! layer); \
+	scene->addChild(layer); \
+} while (0); \
+	return scene; \
+};
+
+
 
 #endif // __CCSCENE_H__

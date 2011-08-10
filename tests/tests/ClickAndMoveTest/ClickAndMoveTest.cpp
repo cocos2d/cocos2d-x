@@ -21,33 +21,33 @@ MainLayer::MainLayer()
 	
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	
-	CCLayer* layer = CCColorLayer::layerWithColor(ccc4(255,255,0,255));
+	CCLayer* layer = CCLayerColor::layerWithColor(ccc4(255,255,0,255));
 	addChild(layer, -1);
 		
 	addChild(sprite, 0, kTagSprite);
-	sprite->setPosition( CGPointMake(20,150) );
+	sprite->setPosition( CCPointMake(20,150) );
 	
-	sprite->runAction( CCJumpTo::actionWithDuration(4, CGPointMake(300,48), 100, 4) );
+	sprite->runAction( CCJumpTo::actionWithDuration(4, CCPointMake(300,48), 100, 4) );
 	
 	layer->runAction( CCRepeatForever::actionWithAction( 
-														(CCIntervalAction*)( CCSequence::actions(	
+														(CCActionInterval*)( CCSequence::actions(	
 																			CCFadeIn::actionWithDuration(1),
 																			CCFadeOut::actionWithDuration(1),
 																			NULL) )
 														) ); 
 }
 
-void MainLayer::ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent)
+void MainLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    NSSetIterator it = pTouches->begin();
+    CCSetIterator it = pTouches->begin();
 	CCTouch* touch = (CCTouch*)(*it);
 	
-	CGPoint location = touch->locationInView( touch->view() );
-	CGPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
+	CCPoint location = touch->locationInView( touch->view() );
+	CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
 
 	CCNode* s = getChildByTag(kTagSprite);
 	s->stopAllActions();
-	s->runAction( CCMoveTo::actionWithDuration(1, CGPointMake(convertedLocation.x, convertedLocation.y) ) );
+	s->runAction( CCMoveTo::actionWithDuration(1, CCPointMake(convertedLocation.x, convertedLocation.y) ) );
 	float o = convertedLocation.x - s->getPosition().x;
 	float a = convertedLocation.y - s->getPosition().y;
 	float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
@@ -55,9 +55,9 @@ void MainLayer::ccTouchesEnded(NSSet *pTouches, UIEvent *pEvent)
 	if( a < 0 ) 
 	{
 		if(  o < 0 )
-			at = 180 + std::abs((int)at);
+			at = 180 + fabs(at);
 		else
-			at = 180 - std::abs((int)at);	
+			at = 180 - fabs(at);	
 	}
 	
 	s->runAction( CCRotateTo::actionWithDuration(1, at) );

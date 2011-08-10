@@ -28,11 +28,12 @@ MenuLayer1::MenuLayer1()
 	CCMenuItemFont::setFontSize( 30 );
 	CCMenuItemFont::setFontName("Courier New");
 
+    setIsTouchEnabled(true);
 	// Font Item
 	
-	CCSprite* spriteNormal = CCSprite::spriteWithFile(s_MenuItem, CGRectMake(0,23*2,115,23));
-	CCSprite* spriteSelected = CCSprite::spriteWithFile(s_MenuItem, CGRectMake(0,23*1,115,23));
-	CCSprite* spriteDisabled = CCSprite::spriteWithFile(s_MenuItem, CGRectMake(0,23*0,115,23));
+	CCSprite* spriteNormal = CCSprite::spriteWithFile(s_MenuItem, CCRectMake(0,23*2,115,23));
+	CCSprite* spriteSelected = CCSprite::spriteWithFile(s_MenuItem, CCRectMake(0,23*1,115,23));
+	CCSprite* spriteDisabled = CCSprite::spriteWithFile(s_MenuItem, CCRectMake(0,23*0,115,23));
 	//dynamic_cast<CCNode*>(mgr)->addChild(spriteNormal);
 	//dynamic_cast<CCNode*>(mgr)->addChild(spriteSelected);
 	//dynamic_cast<CCNode*>(mgr)->addChild(spriteDisabled);
@@ -43,16 +44,19 @@ MenuLayer1::MenuLayer1()
 	CCMenuItem* item2 = CCMenuItemImage::itemFromNormalImage(s_SendScore, s_PressSendScore, this, menu_selector(MenuLayer1::menuCallback2) );
 
 	// Label Item (LabelAtlas)
-	CCLabelAtlas* labelAtlas = CCLabelAtlas::labelAtlasWithString("0123456789", "fonts/fps_images.png", 16, 24, '.');
+	CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0123456789", "fonts/fps_images.png", 16, 24, '.');
 	CCMenuItemLabel* item3 = CCMenuItemLabel::itemWithLabel(labelAtlas, this, menu_selector(MenuLayer1::menuCallbackDisabled) );
 	item3->setDisabledColor( ccc3(32,32,64) );
 	item3->setColor( ccc3(200,200,255) );
 	
 	// Font Item
-	CCMenuItem *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
+	CCMenuItemFont *item4 = CCMenuItemFont::itemFromString("I toggle enable items", this, menu_selector(MenuLayer1::menuCallbackEnable) );
+
+	item4->setFontSizeObj(20);
+	item4->setFontName("Marker Felt");
 	
-	// Label Item (BitmapFontAtlas)
-	CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("configuration", "fonts/bitmapFontTest3.fnt");
+	// Label Item (CCLabelBMFont)
+	CCLabelBMFont* label = CCLabelBMFont::labelWithString("configuration", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item5 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer1::menuCallbackConfig));
 
 	// Testing issue #500
@@ -61,39 +65,38 @@ MenuLayer1::MenuLayer1()
 	// Font Item
 	CCMenuItemFont* item6 = CCMenuItemFont::itemFromString("Quit", this, menu_selector(MenuLayer1::onQuit));
 	
-	CCIntervalAction* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
-	CCIntervalAction* color_back = color_action->reverse();
+	CCActionInterval* color_action = CCTintBy::actionWithDuration(0.5f, 0, -255, -255);
+	CCActionInterval* color_back = color_action->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions(color_action, color_back, NULL);
-	item6->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));
+	item6->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));
 
 	CCMenu* menu = CCMenu::menuWithItems( item1, item2, item3, item4, item5, item6, NULL);
 	menu->alignItemsVertically();
 	
 	
 	// elastic effect
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	int i=0;
 	CCNode* child;
-	NSMutableArray<CCNode*> * pArray = menu->getChildren();
-    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-
-	for(it = pArray->begin(); it != pArray->end(); it++)
+	CCArray * pArray = menu->getChildren();
+    CCObject* pObject = NULL;
+    CCARRAY_FOREACH(pArray, pObject)
 	{
-		if(*it == NULL)
+		if(pObject == NULL)
 			break;
 
-		child = (CCNode*)(*it);
+		child = (CCNode*)pObject;
 
-		CGPoint dstPoint = child->getPosition();
+		CCPoint dstPoint = child->getPosition();
 		int offset = (int) (s.width/2 + 50);
 		if( i % 2 == 0)
 			offset = -offset;
 		
-		child->setPosition( CGPointMake( dstPoint.x + offset, dstPoint.y) );
+		child->setPosition( CCPointMake( dstPoint.x + offset, dstPoint.y) );
 		child->runAction( 
 							CCEaseElasticOut::actionWithAction(
-																CCMoveBy::actionWithDuration(2, CGPointMake(dstPoint.x - offset,0)), 0.35f
+																CCMoveBy::actionWithDuration(2, CCPointMake(dstPoint.x - offset,0)), 0.35f
 															) 
 						);
 		i++;
@@ -106,36 +109,69 @@ MenuLayer1::MenuLayer1()
 
 }
 
+void MenuLayer1::registerWithTouchDispatcher()
+{
+    CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority+1, true);
+}
+
+bool MenuLayer1::ccTouchBegan(CCTouch *touch, CCEvent * pEvent)
+{
+    return true;
+}
+
+void MenuLayer1::ccTouchEnded(CCTouch *touch, CCEvent * pEvent)
+{
+}
+
+void MenuLayer1::ccTouchCancelled(CCTouch *touch, CCEvent * pEvent)
+{
+}
+
+void MenuLayer1::ccTouchMoved(CCTouch *touch, CCEvent * pEvent)
+{
+}
+
 MenuLayer1::~MenuLayer1()
 {
 	m_disabledItem->release();
 }
 
-void MenuLayer1::menuCallback(NSObject* sender)
+void MenuLayer1::menuCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(1);
+	((CCLayerMultiplex*)m_pParent)->switchTo(1);
 }
 
-void MenuLayer1::menuCallbackConfig(NSObject* sender)
+void MenuLayer1::menuCallbackConfig(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(3);
+	((CCLayerMultiplex*)m_pParent)->switchTo(3);
 }
 
-void MenuLayer1::menuCallbackDisabled(NSObject* sender) 
+void MenuLayer1::allowTouches(ccTime dt)
 {
+    CCTouchDispatcher::sharedDispatcher()->setPriority(kCCMenuTouchPriority+1, this);
+    unscheduleAllSelectors();
+    CCLog("TOUCHES ALLOWED AGAIN");
 }
 
-void MenuLayer1::menuCallbackEnable(NSObject* sender) 
+void MenuLayer1::menuCallbackDisabled(CCObject* sender) 
+{
+    // hijack all touch events for 5 seconds
+    CCTouchDispatcher::sharedDispatcher()->setPriority(kCCMenuTouchPriority-1, this);
+    schedule(schedule_selector(MenuLayer1::allowTouches), 5.0f);
+    CCLog("TOUCHES DISABLED FOR 5 SECONDS");
+}
+
+void MenuLayer1::menuCallbackEnable(CCObject* sender) 
 {
 	m_disabledItem->setIsEnabled(! m_disabledItem->getIsEnabled() );
 }
 
-void MenuLayer1::menuCallback2(NSObject* sender)
+void MenuLayer1::menuCallback2(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(2);
+	((CCLayerMultiplex*)m_pParent)->switchTo(2);
 }
 
-void MenuLayer1::onQuit(NSObject* sender)
+void MenuLayer1::onQuit(CCObject* sender)
 {
 	//[[Director sharedDirector] end];
 	//getCocosApp()->exit();
@@ -185,16 +221,16 @@ void MenuLayer2::alignMenusH()
 		{
 			// TIP: if no padding, padding = 5
 			menu->alignItemsHorizontally();			
-			CGPoint p = menu->getPosition();
-			menu->setPosition( ccpAdd(p, CGPointMake(0,30)) );
+			CCPoint p = menu->getPosition();
+			menu->setPosition( ccpAdd(p, CCPointMake(0,30)) );
 			
 		} 
 		else 
 		{
 			// TIP: but padding is configurable
 			menu->alignItemsHorizontallyWithPadding(40);
-			CGPoint p = menu->getPosition();
-			menu->setPosition( ccpSub(p, CGPointMake(0,30)) );
+			CCPoint p = menu->getPosition();
+			menu->setPosition( ccpSub(p, CCPointMake(0,30)) );
 		}		
 	}
 }
@@ -209,25 +245,25 @@ void MenuLayer2::alignMenusV()
 		{
 			// TIP: if no padding, padding = 5
 			menu->alignItemsVertically();			
-			CGPoint p = menu->getPosition();
-			menu->setPosition( ccpAdd(p, CGPointMake(100,0)) );			
+			CCPoint p = menu->getPosition();
+			menu->setPosition( ccpAdd(p, CCPointMake(100,0)) );			
 		} 
 		else 
 		{
 			// TIP: but padding is configurable
 			menu->alignItemsVerticallyWithPadding(40);	
-			CGPoint p = menu->getPosition();
-			menu->setPosition( ccpSub(p, CGPointMake(100,0)) );
+			CCPoint p = menu->getPosition();
+			menu->setPosition( ccpSub(p, CCPointMake(100,0)) );
 		}		
 	}
 }
 
-void MenuLayer2::menuCallback(NSObject* sender)
+void MenuLayer2::menuCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(0);
+	((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
-void MenuLayer2::menuCallbackOpacity(NSObject* sender)
+void MenuLayer2::menuCallbackOpacity(CCObject* sender)
 {
 	CCMenu* menu = (CCMenu*)(((CCNode*)(sender))->getParent());
 	GLubyte opacity = menu->getOpacity();
@@ -237,7 +273,7 @@ void MenuLayer2::menuCallbackOpacity(NSObject* sender)
 		menu->setOpacity(128);	 
 }
 
-void MenuLayer2::menuCallbackAlign(NSObject* sender)
+void MenuLayer2::menuCallbackAlign(CCObject* sender)
 {
 	m_alignedH = ! m_alignedH;
 	
@@ -257,13 +293,13 @@ MenuLayer3::MenuLayer3()
 	CCMenuItemFont::setFontName("Marker Felt");
 	CCMenuItemFont::setFontSize(28);
 
-	CCBitmapFontAtlas* label = CCBitmapFontAtlas::bitmapFontAtlasWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
+	CCLabelBMFont* label = CCLabelBMFont::labelWithString("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
 	CCMenuItemLabel* item1 = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer3::menuCallback2) );
 	CCMenuItemFont* item2 = CCMenuItemFont::itemFromString("--- Go Back ---", this, menu_selector(MenuLayer3::menuCallback) );
 	
-	CCSprite *spriteNormal   = CCSprite::spriteWithFile(s_MenuItem,  CGRectMake(0,23*2,115,23));
-	CCSprite *spriteSelected = CCSprite::spriteWithFile(s_MenuItem,  CGRectMake(0,23*1,115,23));
-	CCSprite *spriteDisabled = CCSprite::spriteWithFile(s_MenuItem,  CGRectMake(0,23*0,115,23));
+	CCSprite *spriteNormal   = CCSprite::spriteWithFile(s_MenuItem,  CCRectMake(0,23*2,115,23));
+	CCSprite *spriteSelected = CCSprite::spriteWithFile(s_MenuItem,  CCRectMake(0,23*1,115,23));
+	CCSprite *spriteDisabled = CCSprite::spriteWithFile(s_MenuItem,  CCRectMake(0,23*0,115,23));
 	
 	
 	CCMenuItemSprite* item3 = CCMenuItemSprite::itemFromNormalSprite(spriteNormal, spriteSelected, spriteDisabled, this, menu_selector(MenuLayer3::menuCallback3));
@@ -271,22 +307,22 @@ MenuLayer3::MenuLayer3()
 	m_disabledItem->setIsEnabled( false );
 	
 	CCMenu *menu = CCMenu::menuWithItems( item1, item2, item3, NULL);	
-	menu->setPosition( CGPointMake(0,0) );
+	menu->setPosition( CCPointMake(0,0) );
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
-	item1->setPosition( CGPointMake(s.width/2 - 150, s.height/2) );
-	item2->setPosition( CGPointMake(s.width/2 - 200, s.height/2) );
-	item3->setPosition( CGPointMake(s.width/2, s.height/2 - 100) );
+	item1->setPosition( CCPointMake(s.width/2 - 150, s.height/2) );
+	item2->setPosition( CCPointMake(s.width/2 - 200, s.height/2) );
+	item3->setPosition( CCPointMake(s.width/2, s.height/2 - 100) );
 	
-	CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CGPointMake(400,0), 50, 4);
+	CCJumpBy* jump = CCJumpBy::actionWithDuration(3, CCPointMake(400,0), 50, 4);
 	item2->runAction( CCRepeatForever::actionWithAction(
-								(CCIntervalAction*)(CCSequence::actions( jump, jump->reverse(), NULL))
+								(CCActionInterval*)(CCSequence::actions( jump, jump->reverse(), NULL))
 								)
 					);
-	CCIntervalAction* spin1 = CCRotateBy::actionWithDuration(3, 360);
-	CCIntervalAction* spin2 = (CCIntervalAction*)(spin1->copy()->autorelease());
-	CCIntervalAction* spin3 = (CCIntervalAction*)(spin1->copy()->autorelease());
+	CCActionInterval* spin1 = CCRotateBy::actionWithDuration(3, 360);
+	CCActionInterval* spin2 = (CCActionInterval*)(spin1->copy()->autorelease());
+	CCActionInterval* spin3 = (CCActionInterval*)(spin1->copy()->autorelease());
 	
 	item1->runAction( CCRepeatForever::actionWithAction(spin1) );
 	item2->runAction( CCRepeatForever::actionWithAction(spin2) );
@@ -300,19 +336,19 @@ MenuLayer3::~MenuLayer3()
 	m_disabledItem->release();
 }
 
-void MenuLayer3::menuCallback(NSObject* sender)
+void MenuLayer3::menuCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(0);
+	((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
-void MenuLayer3::menuCallback2(NSObject* sender)
+void MenuLayer3::menuCallback2(CCObject* sender)
 {
 	//UXLOG("Label clicked. Toogling AtlasSprite");
 	m_disabledItem->setIsEnabled( ! m_disabledItem->getIsEnabled() );
 	m_disabledItem->stopAllActions();
 }
 
-void MenuLayer3::menuCallback3(NSObject* sender)
+void MenuLayer3::menuCallback3(CCObject* sender)
 {
 	//UXLOG("MenuItemSprite clicked");
 }
@@ -376,7 +412,7 @@ MenuLayer4::MenuLayer4()
 	//												 CCMenuItemFont::itemFromString( "66%" ),
 	//												 CCMenuItemFont::itemFromString( "100%" ),
 	//												 NULL );
-	// TIP: you can manipulate the items like any other NSMutableArray
+	// TIP: you can manipulate the items like any other CCMutableArray
 	item4->getSubItems()->addObject( CCMenuItemFont::itemFromString( "33%" ) ); 
 	item4->getSubItems()->addObject( CCMenuItemFont::itemFromString( "66%" ) ); 
 	item4->getSubItems()->addObject( CCMenuItemFont::itemFromString( "100%" ) ); 
@@ -387,7 +423,7 @@ MenuLayer4::MenuLayer4()
     CCMenuItemFont::setFontName( "Marker Felt" );
 	CCMenuItemFont::setFontSize( 34 );
 	
-	CCBitmapFontAtlas *label = CCBitmapFontAtlas::bitmapFontAtlasWithString( "go back", "fonts/bitmapFontTest3.fnt" );
+	CCLabelBMFont *label = CCLabelBMFont::labelWithString( "go back", "fonts/bitmapFontTest3.fnt" );
 	CCMenuItemLabel* back = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(MenuLayer4::backCallback) );
     
 	CCMenu *menu = CCMenu::menuWithItems(
@@ -406,14 +442,14 @@ MenuLayer4::~MenuLayer4()
 {
 }
 
-void MenuLayer4::menuCallback(NSObject* sender)
+void MenuLayer4::menuCallback(CCObject* sender)
 {
 	//UXLOG("selected item: %x index:%d", dynamic_cast<CCMenuItemToggle*>(sender)->selectedItem(), dynamic_cast<CCMenuItemToggle*>(sender)->selectedIndex() ); 
 }
 
-void MenuLayer4::backCallback(NSObject* sender)
+void MenuLayer4::backCallback(CCObject* sender)
 {
-	((CCMultiplexLayer*)m_pParent)->switchTo(0);
+	((CCLayerMultiplex*)m_pParent)->switchTo(0);
 }
 
 void MenuTestScene::runThisTest()
@@ -423,7 +459,7 @@ void MenuTestScene::runThisTest()
     CCLayer* pLayer3 = new MenuLayer3();
     CCLayer* pLayer4 = new MenuLayer4();
 
-    CCMultiplexLayer* layer = CCMultiplexLayer::layerWithLayers(pLayer1, pLayer2, pLayer3, pLayer4, NULL);
+    CCLayerMultiplex* layer = CCLayerMultiplex::layerWithLayers(pLayer1, pLayer2, pLayer3, pLayer4, NULL);
     addChild(layer, 0); 
 
     pLayer1->release();

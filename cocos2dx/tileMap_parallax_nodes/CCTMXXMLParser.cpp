@@ -1,5 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2011		Максим Аксенов 
+Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,23 +24,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include <libxml/parser.h>
-#include <libxml/tree.h>
-#include <libxml/xmlmemory.h>
+
 #include <map>
 #include "CCTMXXMLParser.h"
 #include "CCTMXTiledMap.h"
 #include "ccMacros.h"
-#include "CCXFileUtils.h"
-#include "CGPointExtension.h"
+#include "CCFileUtils.h"
+#include "support/zip_support/ZipUtils.h"
+#include "CCPointExtension.h"
 #include "support/base64.h"
 #include "platform/platform.h"
 
+/*
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+	#include "expat.h"
+#else
+	#include <libxml/parser.h>
+	#include <libxml/tree.h>
+	#include <libxml/xmlmemory.h>
+	#include "CCLibxml2.h"
+#endf
+*/
+
 namespace cocos2d {
 
+	/*
 	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
 	void tmx_endElement(void *ctx, const xmlChar *name);
 	void tmx_characters(void *ctx, const xmlChar *ch, int len);
+	*/
+	
 	const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
 	{
 		if (dict)
@@ -49,52 +65,52 @@ namespace cocos2d {
 	}
 	// implementation CCTMXLayerInfo
 	CCTMXLayerInfo::CCTMXLayerInfo()
-		:m_bOwnTiles(true)
-		,m_uMinGID(100000)
-		,m_uMaxGID(0)
-		,m_sName("")
-		,m_pTiles(NULL)
-		,m_tOffset(CGPointZero)
+        : m_sName("")
+        , m_pTiles(NULL)
+		, m_bOwnTiles(true)
+		, m_uMinGID(100000)
+		, m_uMaxGID(0)		
+		, m_tOffset(CCPointZero)
 	{
-		m_pProperties= new CCXStringToStringDictionary();;
+		m_pProperties= new CCStringToStringDictionary();;
 	}
 	CCTMXLayerInfo::~CCTMXLayerInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pProperties);
 		if( m_bOwnTiles && m_pTiles )
 		{
 			delete [] m_pTiles;
 			m_pTiles = NULL;
 		}
 	}
-	CCXStringToStringDictionary * CCTMXLayerInfo::getProperties()
+	CCStringToStringDictionary * CCTMXLayerInfo::getProperties()
 	{
 		return m_pProperties;
 	}
-	void CCTMXLayerInfo::setProperties(CCXStringToStringDictionary* var)
+	void CCTMXLayerInfo::setProperties(CCStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
 
 	// implementation CCTMXTilesetInfo
 	CCTMXTilesetInfo::CCTMXTilesetInfo()
 		:m_uFirstGid(0)
-		,m_tTileSize(CGSizeZero)
+		,m_tTileSize(CCSizeZero)
 		,m_uSpacing(0)
 		,m_uMargin(0)
-		,m_tImageSize(CGSizeZero)
+		,m_tImageSize(CCSizeZero)
 	{
 	}
 	CCTMXTilesetInfo::~CCTMXTilesetInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
 	}
-	CGRect CCTMXTilesetInfo::rectForGID(unsigned int gid)
+	CCRect CCTMXTilesetInfo::rectForGID(unsigned int gid)
 	{
-		CGRect rect;
+		CCRect rect;
 		rect.size = m_tTileSize;
 		gid = gid - m_uFirstGid;
 		int max_x = (int)((m_tImageSize.width - m_uMargin*2 + m_uSpacing) / (m_tTileSize.width + m_uSpacing));
@@ -114,17 +130,17 @@ namespace cocos2d {
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCTMXMapInfo::initWithTMXFile(const char *tmxFile)
 	{
-		m_pTilesets = new NSMutableArray<CCTMXTilesetInfo*>();
-		m_pLayers = new NSMutableArray<CCTMXLayerInfo*>();
+		m_pTilesets = new CCMutableArray<CCTMXTilesetInfo*>();
+		m_pLayers = new CCMutableArray<CCTMXLayerInfo*>();
 		m_sTMXFileName = CCFileUtils::fullPathFromRelativePath(tmxFile);
-		m_pObjectGroups = new NSMutableArray<CCTMXObjectGroup*>();
-		m_pProperties = new CCXStringToStringDictionary();
-		m_pTileProperties = new NSDictionary<int, CCXStringToStringDictionary*>();
+		m_pObjectGroups = new CCMutableArray<CCTMXObjectGroup*>();
+		m_pProperties = new CCStringToStringDictionary();
+		m_pTileProperties = new CCDictionary<int, CCStringToStringDictionary*>();
 
 		// tmp vars
 		m_sCurrentString = "";
@@ -135,13 +151,13 @@ namespace cocos2d {
 		return parseXMLFile(m_sTMXFileName.c_str());
 	}
 	CCTMXMapInfo::CCTMXMapInfo()
-		:m_bStoringCharacters(false)
-		,m_nLayerAttribs(0)
-		,m_tMapSize(CGSizeZero)
-		,m_tTileSize(CGSizeZero)
-		,m_pLayers(NULL)
-		,m_pTilesets(NULL)
-		,m_pObjectGroups(NULL)
+        :m_tMapSize(CCSizeZero)	
+        ,m_tTileSize(CCSizeZero)
+        ,m_pLayers(NULL)
+        ,m_pTilesets(NULL)
+        ,m_pObjectGroups(NULL)
+        ,m_nLayerAttribs(0)
+        ,m_bStoringCharacters(false)		
 		,m_pProperties(NULL)
 		,m_pTileProperties(NULL)
 	{
@@ -149,112 +165,83 @@ namespace cocos2d {
 	CCTMXMapInfo::~CCTMXMapInfo()
 	{
 		CCLOGINFO("cocos2d: deallocing.");
-		CCX_SAFE_RELEASE(m_pTilesets);
-		CCX_SAFE_RELEASE(m_pLayers);
-		CCX_SAFE_RELEASE(m_pProperties);
-		CCX_SAFE_RELEASE(m_pTileProperties);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RELEASE(m_pTilesets);
+		CC_SAFE_RELEASE(m_pLayers);
+		CC_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RELEASE(m_pObjectGroups);
 	}
-	NSMutableArray<CCTMXLayerInfo*> * CCTMXMapInfo::getLayers()
+	CCMutableArray<CCTMXLayerInfo*> * CCTMXMapInfo::getLayers()
 	{
 		return m_pLayers;
 	}
-	void CCTMXMapInfo::setLayers(NSMutableArray<CCTMXLayerInfo*>* var)
+	void CCTMXMapInfo::setLayers(CCMutableArray<CCTMXLayerInfo*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pLayers);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pLayers);
 		m_pLayers = var;
 	}
-	NSMutableArray<CCTMXTilesetInfo*> * CCTMXMapInfo::getTilesets()
+	CCMutableArray<CCTMXTilesetInfo*> * CCTMXMapInfo::getTilesets()
 	{
 		return m_pTilesets;
 	}
-	void CCTMXMapInfo::setTilesets(NSMutableArray<CCTMXTilesetInfo*>* var)
+	void CCTMXMapInfo::setTilesets(CCMutableArray<CCTMXTilesetInfo*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pTilesets);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pTilesets);
 		m_pTilesets = var;
 	}
-	NSMutableArray<CCTMXObjectGroup*> * CCTMXMapInfo::getObjectGroups()
+	CCMutableArray<CCTMXObjectGroup*> * CCTMXMapInfo::getObjectGroups()
 	{
 		return m_pObjectGroups;
 	}
-	void CCTMXMapInfo::setObjectGroups(NSMutableArray<CCTMXObjectGroup*>* var)
+	void CCTMXMapInfo::setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pObjectGroups);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pObjectGroups);
 		m_pObjectGroups = var;
 	}
-	CCXStringToStringDictionary * CCTMXMapInfo::getProperties()
+	CCStringToStringDictionary * CCTMXMapInfo::getProperties()
 	{
 		return m_pProperties;
 	}
-	void CCTMXMapInfo::setProperties(CCXStringToStringDictionary* var)
+	void CCTMXMapInfo::setProperties(CCStringToStringDictionary* var)
 	{
-		CCX_SAFE_RETAIN(var);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(var);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = var;
 	}
-	NSDictionary<int, CCXStringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
+	CCDictionary<int, CCStringToStringDictionary*> * CCTMXMapInfo::getTileProperties()
 	{
 		return m_pTileProperties;
 	}
-	void CCTMXMapInfo::setTileProperties(NSDictionary<int, CCXStringToStringDictionary*> * tileProperties)
+	void CCTMXMapInfo::setTileProperties(CCDictionary<int, CCStringToStringDictionary*> * tileProperties)
 	{
-		CCX_SAFE_RETAIN(tileProperties);
-		CCX_SAFE_RELEASE(m_pTileProperties);
+		CC_SAFE_RETAIN(tileProperties);
+		CC_SAFE_RELEASE(m_pTileProperties);
 		m_pTileProperties = tileProperties;
 	}
 
 	bool CCTMXMapInfo::parseXMLFile(const char *xmlFilename)
 	{
-		FILE *fp = NULL;
-		if( !(fp = fopen(xmlFilename, "r")) )
-		{
-			return NULL;
-		}
-		fseek(fp,0,SEEK_END);
-		int size = ftell(fp);
-		fseek(fp,0,SEEK_SET);
-		char *buffer = new char[size+1];
-		fread(buffer,sizeof(char),size,fp);
-		fclose(fp);
-		/*
-		* this initialize the library and check potential ABI mismatches
-		* between the version it was compiled for and the actual shared
-		* library used.
-		*/
-		LIBXML_TEST_VERSION
-			xmlSAXHandler saxHandler;
-		memset( &saxHandler, 0, sizeof(saxHandler) );
-		// Using xmlSAXVersion( &saxHandler, 2 ) generate crash as it sets plenty of other pointers...
-		saxHandler.initialized = XML_SAX2_MAGIC;  // so we do this to force parsing as SAX2.
-		saxHandler.startElement = &tmx_startElement;
-		saxHandler.endElement = &tmx_endElement;
-		saxHandler.characters = &tmx_characters;
+		CCSAXParser parser;
 		
-		int result = xmlSAXUserParseMemory( &saxHandler, this, buffer, size );
-		if ( result != 0 )
+		if (false == parser.init("UTF-8") )
 		{
 			return false;
 		}
-		/*
-		* Cleanup function for the XML library.
-		*/
-		xmlCleanupParser();
-		/*
-		* this is to debug memory for regression tests
-		*/
-		xmlMemoryDump();
-		delete []buffer;
-		return true;
+		
+		parser.setDelegator(this);
+
+		return parser.parse(xmlFilename);;	
 	}
 
 
 	// the XML parser calls here with all the elements
-	void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts)
+	void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 	{	
-		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
+        CC_UNUSED_PARAM(ctx);
+		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
 		std::map<std::string, std::string> *attributeDict = new std::map<std::string, std::string>();
 		if(atts && atts[0])
@@ -271,7 +258,7 @@ namespace cocos2d {
 			std::string version = valueForKey("version", attributeDict);
 			if ( version != "1.0")
 			{
-				CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %@", version);
+				CCLOG("cocos2d: TMXFormat: Unsupported TMX version: %@", version.c_str());
 			}
 			std::string orientationStr = valueForKey("orientation", attributeDict);
 			if( orientationStr == "orthogonal")
@@ -283,7 +270,7 @@ namespace cocos2d {
 			else
 				CCLOG("cocos2d: TMXFomat: Unsupported orientation: %d", pTMXMapInfo->getOrientation());
 
-			CGSize s;
+			CCSize s;
 			s.width = (float)atof(valueForKey("width", attributeDict));
 			s.height = (float)atof(valueForKey("height", attributeDict));
 			pTMXMapInfo->setMapSize(s);
@@ -311,7 +298,7 @@ namespace cocos2d {
 				tileset->m_uFirstGid = (unsigned int)atoi(valueForKey("firstgid", attributeDict));
 				tileset->m_uSpacing = (unsigned int)atoi(valueForKey("spacing", attributeDict));
 				tileset->m_uMargin = (unsigned int)atoi(valueForKey("margin", attributeDict));
-				CGSize s;
+				CCSize s;
 				s.width = (float)atof(valueForKey("tilewidth", attributeDict));
 				s.height = (float)atof(valueForKey("tileheight", attributeDict));
 				tileset->m_tTileSize = s;
@@ -323,10 +310,10 @@ namespace cocos2d {
 		else if(elementName == "tile")
 		{
 			CCTMXTilesetInfo* info = pTMXMapInfo->getTilesets()->getLastObject();
-			CCXStringToStringDictionary *dict = new CCXStringToStringDictionary();
+			CCStringToStringDictionary *dict = new CCStringToStringDictionary();
 			pTMXMapInfo->setParentGID(info->m_uFirstGid + atoi(valueForKey("id", attributeDict)));
 			pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
-			CCX_SAFE_RELEASE(dict);
+			CC_SAFE_RELEASE(dict);
 			
 			pTMXMapInfo->setParentElement(TMXPropertyTile);
 
@@ -336,7 +323,7 @@ namespace cocos2d {
 			CCTMXLayerInfo *layer = new CCTMXLayerInfo();
 			layer->m_sName = valueForKey("name", attributeDict);
 
-			CGSize s;
+			CCSize s;
 			s.width = (float)atof(valueForKey("width", attributeDict));
 			s.height = (float)atof(valueForKey("height", attributeDict));
 			layer->m_tLayerSize = s;
@@ -369,7 +356,7 @@ namespace cocos2d {
 		{
 			CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup();
 			objectGroup->setGroupName(valueForKey("name", attributeDict));
-			CGPoint positionOffset;
+			CCPoint positionOffset;
 			positionOffset.x = (float)atof(valueForKey("x", attributeDict)) * pTMXMapInfo->getTileSize().width;
 			positionOffset.y = (float)atof(valueForKey("y", attributeDict)) * pTMXMapInfo->getTileSize().height;
 			objectGroup->setPositionOffset(positionOffset);
@@ -405,10 +392,15 @@ namespace cocos2d {
 				{
 					layerAttribs = pTMXMapInfo->getLayerAttribs();
 					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribGzip);
+				} else
+				if (compression == "zlib")
+				{
+					layerAttribs = pTMXMapInfo->getLayerAttribs();
+					pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribZlib);
 				}
-				NSAssert( compression == "" || compression == "gzip", "TMX: unsupported compression method" );
+				CCAssert( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
 			}
-			NSAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip maps are supported" );
+			CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
 		} 
 		else if(elementName == "object")
@@ -418,24 +410,24 @@ namespace cocos2d {
 
 			// The value for "type" was blank or not a valid class name
 			// Create an instance of TMXObjectInfo to store the object and its properties
-			CCXStringToStringDictionary *dict = new CCXStringToStringDictionary();
+			CCStringToStringDictionary *dict = new CCStringToStringDictionary();
 
 			// Set the name of the object to the value for "name"
 			std::string key = "name";
-			NSString *value = new NSString(valueForKey("name", attributeDict));
+			CCString *value = new CCString(valueForKey("name", attributeDict));
 			dict->setObject(value, key);
 			value->release();
 
 			// Assign all the attributes as key/name pairs in the properties dictionary
 			key = "type";
-			value = new NSString(valueForKey("type", attributeDict));
+			value = new CCString(valueForKey("type", attributeDict));
 			dict->setObject(value, key);
 			value->release();
 
 			int x = atoi(valueForKey("x", attributeDict)) + (int)objectGroup->getPositionOffset().x;
 			key = "x";
 			sprintf(buffer, "%d", x);
-			value = new NSString(buffer);
+			value = new CCString(buffer);
 			dict->setObject(value, key);
 			value->release();
 
@@ -444,17 +436,17 @@ namespace cocos2d {
 			y = (int)(pTMXMapInfo->getMapSize().height * pTMXMapInfo->getTileSize().height) - y - atoi(valueForKey("height", attributeDict));
 			key = "y";
 			sprintf(buffer, "%d", y);
-			value = new NSString(buffer);
+			value = new CCString(buffer);
 			dict->setObject(value, key);
 			value->release();
 
 			key = "width";
-			value = new NSString(valueForKey("width", attributeDict));
+			value = new CCString(valueForKey("width", attributeDict));
 			dict->setObject(value, key);
 			value->release();
 
 			key = "height";
-			value = new NSString(valueForKey("height", attributeDict));
+			value = new CCString(valueForKey("height", attributeDict));
 			dict->setObject(value, key);
 			value->release();
 
@@ -476,7 +468,7 @@ namespace cocos2d {
 			else if ( pTMXMapInfo->getParentElement() == TMXPropertyMap )
 			{
 				// The parent element is the map
-				NSString *value = new NSString(valueForKey("value", attributeDict));
+				CCString *value = new CCString(valueForKey("value", attributeDict));
 				std::string key = valueForKey("name", attributeDict);
 				pTMXMapInfo->getProperties()->setObject(value, key);
 				value->release();
@@ -486,7 +478,7 @@ namespace cocos2d {
 			{
 				// The parent element is the last layer
 				CCTMXLayerInfo *layer = pTMXMapInfo->getLayers()->getLastObject();
-				NSString *value = new NSString(valueForKey("value", attributeDict));
+				CCString *value = new CCString(valueForKey("value", attributeDict));
 				std::string key = valueForKey("name", attributeDict);
 				// Add the property to the layer
 				layer->getProperties()->setObject(value, key);
@@ -497,7 +489,7 @@ namespace cocos2d {
 			{
 				// The parent element is the last object group
 				CCTMXObjectGroup *objectGroup = pTMXMapInfo->getObjectGroups()->getLastObject();
-				NSString *value = new NSString(valueForKey("value", attributeDict));
+				CCString *value = new CCString(valueForKey("value", attributeDict));
 				std::string key = valueForKey("name", attributeDict);
 				objectGroup->getProperties()->setObject(value, key);
 				value->release();
@@ -507,20 +499,20 @@ namespace cocos2d {
 			{
 				// The parent element is the last object
 				CCTMXObjectGroup *objectGroup = pTMXMapInfo->getObjectGroups()->getLastObject();
-				CCXStringToStringDictionary *dict = objectGroup->getObjects()->getLastObject();
+				CCStringToStringDictionary *dict = objectGroup->getObjects()->getLastObject();
 
 				std::string propertyName = valueForKey("name", attributeDict);
-				NSString *propertyValue = new NSString(valueForKey("value", attributeDict));
+				CCString *propertyValue = new CCString(valueForKey("value", attributeDict));
 				dict->setObject(propertyValue, propertyName);
 				propertyValue->release();
 			} 
 			else if ( pTMXMapInfo->getParentElement() == TMXPropertyTile ) 
 			{
-				CCXStringToStringDictionary *dict;
+				CCStringToStringDictionary *dict;
 				dict = pTMXMapInfo->getTileProperties()->objectForKey(pTMXMapInfo->getParentGID());
 
 				std::string propertyName = valueForKey("name", attributeDict);
-				NSString *propertyValue = new NSString(valueForKey("value", attributeDict));
+				CCString *propertyValue = new CCString(valueForKey("value", attributeDict));
 				dict->setObject(propertyValue, propertyName);
 				propertyValue->release();
 			}
@@ -532,9 +524,10 @@ namespace cocos2d {
 		}
 	}
 
-	void tmx_endElement(void *ctx, const xmlChar *name)
+	void CCTMXMapInfo::endElement(void *ctx, const char *name)
 	{
-		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
+        CC_UNUSED_PARAM(ctx);
+		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string elementName = (char*)name;
 
 		int len = 0;
@@ -547,17 +540,25 @@ namespace cocos2d {
 
 			std::string currentString = pTMXMapInfo->getCurrentString();
 			unsigned char *buffer;
-			len = base64Decode((unsigned char*)currentString.c_str(), currentString.length(), &buffer);
+			len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
 			if( ! buffer ) 
 			{
 				CCLOG("cocos2d: TiledMap: decode data error");
 				return;
 			}
 
-			if( pTMXMapInfo->getLayerAttribs() & TMXLayerAttribGzip )
+			if( pTMXMapInfo->getLayerAttribs() & (TMXLayerAttribGzip | TMXLayerAttribZlib) )
 			{
 				unsigned char *deflated;
-				ZipUtils::inflateMemory(buffer, len, &deflated);
+				CCSize s = layer->m_tLayerSize;
+				// int sizeHint = s.width * s.height * sizeof(uint32_t);
+				int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
+
+				int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+				assert(inflatedLen == sizeHint);
+
+				inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
+				
 				delete [] buffer;
 				buffer = NULL;
 
@@ -598,9 +599,11 @@ namespace cocos2d {
 			pTMXMapInfo->setParentElement(TMXPropertyNone);
 		}
 	}
-	void tmx_characters(void *ctx, const xmlChar *ch, int len)
+	
+	void CCTMXMapInfo::textHandler(void *ctx, const char *ch, int len)
 	{
-		CCTMXMapInfo *pTMXMapInfo = (CCTMXMapInfo*)(ctx);
+        CC_UNUSED_PARAM(ctx);
+		CCTMXMapInfo *pTMXMapInfo = this;
 		std::string pText((char*)ch,0,len);
 
 		if (pTMXMapInfo->getStoringCharacters())

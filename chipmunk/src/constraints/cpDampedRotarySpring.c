@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static cpFloat
@@ -33,12 +33,12 @@ defaultSpringTorque(cpDampedRotarySpring *spring, cpFloat relativeAngle){
 static void
 preStep(cpDampedRotarySpring *spring, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = spring->constraint.a;
-	cpBody *b = spring->constraint.b;
+	CONSTRAINT_BEGIN(spring, a, b);
 	
-	spring->iSum = 1.0f/(a->i_inv + b->i_inv);
+	cpFloat moment = a->i_inv + b->i_inv;
+	spring->iSum = 1.0f/moment;
 
-	spring->dt = dt;
+	spring->w_coef = 1.0f - cpfexp(-spring->damping*dt*moment);
 	spring->target_wrn = 0.0f;
 
 	// apply spring torque
@@ -50,15 +50,14 @@ preStep(cpDampedRotarySpring *spring, cpFloat dt, cpFloat dt_inv)
 static void
 applyImpulse(cpDampedRotarySpring *spring)
 {
-	cpBody *a = spring->constraint.a;
-	cpBody *b = spring->constraint.b;
+	CONSTRAINT_BEGIN(spring, a, b);
 	
 	// compute relative velocity
 	cpFloat wrn = a->w - b->w;//normal_relative_velocity(a, b, r1, r2, n) - spring->target_vrn;
 	
 	// compute velocity loss from drag
 	// not 100% certain this is derived correctly, though it makes sense
-	cpFloat w_damp = wrn*(1.0f - cpfexp(-spring->damping*spring->dt/spring->iSum));
+	cpFloat w_damp = wrn*spring->w_coef;
 	spring->target_wrn = wrn - w_damp;
 	
 	//apply_impulses(a, b, spring->r1, spring->r2, cpvmult(spring->n, v_damp*spring->nMass));
@@ -73,6 +72,7 @@ getImpulse(cpConstraint *constraint)
 	return 0.0f;
 }
 
+const cpConstraintClass * cpDampedRotarySpringGetClass();
 static const cpConstraintClass klass = {
 	(cpConstraintPreStepFunction)preStep,
 	(cpConstraintApplyImpulseFunction)applyImpulse,
@@ -83,7 +83,7 @@ CP_DefineClassGetter(cpDampedRotarySpring)
 cpDampedRotarySpring *
 cpDampedRotarySpringAlloc(void)
 {
-	return (cpDampedRotarySpring *)cpmalloc(sizeof(cpDampedRotarySpring));
+	return (cpDampedRotarySpring *)cpcalloc(1, sizeof(cpDampedRotarySpring));
 }
 
 cpDampedRotarySpring *

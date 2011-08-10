@@ -28,13 +28,12 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 
 // Iterate over all of the bodies and reset the ones that have fallen offscreen.
 static void
 eachBody(cpBody *body, void *unused)
 {
-	if(body->p.y < -260 || fabsf(body->p.x) > 340){
+	if(body->p.y < -260 || cpfabs(body->p.x) > 340){
 		cpFloat x = rand()/(cpFloat)RAND_MAX*640 - 320;
 		body->p = cpv(x, 260);
 	}
@@ -57,8 +56,6 @@ update(int ticks)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
@@ -68,14 +65,14 @@ init(void)
 	cpSpaceResizeStaticHash(space, 40.0f, 999);
 	cpSpaceResizeActiveHash(space, 30.0f, 2999);
 	
-	cpBody *body;
+	cpBody *body, *staticBody = &space->staticBody;
 	cpShape *shape;
 	
 	// Create vertexes for a pentagon shape.
 	cpVect verts[NUM_VERTS];
 	for(int i=0; i<NUM_VERTS; i++){
 		cpFloat angle = -2*(cpFloat)M_PI*i/((cpFloat) NUM_VERTS);
-		verts[i] = cpv(10*cpfcos(angle), 10*cpfsin(angle));
+		verts[i] = cpv(10*cosf(angle), 10*sinf(angle));
 	}
 	
 	// Vertexes for a triangle shape.
@@ -90,7 +87,7 @@ init(void)
 		for(int j=0; j<6; j++){
 			cpFloat stagger = (j%2)*40;
 			cpVect offset = cpv(i*80 - 320 + stagger, j*70 - 240);
-			shape = cpSpaceAddStaticShape(space, cpPolyShapeNew(staticBody, 3, tris, offset));
+			shape = cpSpaceAddShape(space, cpPolyShapeNew(staticBody, 3, tris, offset));
 			shape->e = 1.0f; shape->u = 1.0f;
 			shape->layers = NOT_GRABABLE_MASK;
 		}
@@ -112,7 +109,6 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 }

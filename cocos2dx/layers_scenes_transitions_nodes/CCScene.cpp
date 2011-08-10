@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScene.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCDirector.h"
 
 namespace   cocos2d {
@@ -31,7 +33,7 @@ namespace   cocos2d {
 CCScene::CCScene()
 {
 	m_bIsRelativeAnchorPoint = false;
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 	m_eSceneType = ccNormalScene;
 }
 
@@ -45,7 +47,7 @@ bool CCScene::init()
  	do 
  	{
  		CCDirector * pDirector;
- 		CCX_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
+ 		CC_BREAK_IF( ! (pDirector = CCDirector::sharedDirector()) );
  		this->setContentSize(pDirector->getWinSize());
  		// success
  		bRet = true;
@@ -63,7 +65,7 @@ CCScene *CCScene::node()
 	}
     else
     {
-	    CCX_SAFE_DELETE(pRet)
+	    CC_SAFE_DELETE(pRet)
 	    return NULL;
     }
 }

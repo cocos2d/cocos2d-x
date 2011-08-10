@@ -1,0 +1,60 @@
+namespace cocos2d {
+	enum
+	{
+		/** Orthogonal orientation */
+		CCTMXOrientationOrtho,
+
+		/** Hexagonal orientation */
+		CCTMXOrientationHex,
+
+		/** Isometric orientation */
+		CCTMXOrientationIso,
+	};
+
+	
+	class CCTMXTiledMap : public CCNode
+	{
+		/** the map's size property measured in tiles */
+		CCSize getMapSize();
+		void setMapSize(CCSize sz);
+		/** the tiles's size property measured in pixels */
+		CCSize getTileSize();
+		void setTileSize(CCSize sz);
+		/** map orientation */
+		int getMapOrientation();
+		void setMapOrientation(int val);
+		/** object groups */
+
+		CCMutableArray<CCTMXObjectGroup*>* getObjectGroups();
+		void  setObjectGroups(CCMutableArray<CCTMXObjectGroup*>* pval);
+		/** properties */
+		CCStringToStringDictionary* getProperties();
+		void setProperties(CCStringToStringDictionary* pval);
+
+		CCTMXTiledMap();
+		~CCTMXTiledMap();
+
+		/** creates a TMX Tiled Map with a TMX file.*/
+		static CCTMXTiledMap * tiledMapWithTMXFile(const char *tmxFile);
+
+		/** initializes a TMX Tiled Map with a TMX file */
+		bool initWithTMXFile(const char *tmxFile);
+
+		/** return the TMXLayer for the specific layer */
+		CCTMXLayer* layerNamed(const char *layerName);
+
+		/** return the TMXObjectGroup for the secific group */
+		CCTMXObjectGroup* objectGroupNamed(const char *groupName);
+
+		/** return the value for the specific property name */
+		CCString *propertyNamed(const char *propertyName);
+
+		/** return properties dictionary for tile GID */
+		CCDictionary<std::string, CCString*> *propertiesForGID(int GID);
+
+	};
+
+}// namespace cocos2d
+
+
+

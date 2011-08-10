@@ -1,0 +1,20 @@
+
+includepaths
+{
+	..
+	"../include"
+
+}
+files
+{
+
+	("../include")
+	[include]
+	"SimpleAudioEngine.h"
+
+	("../airplay")
+	[src]
+	"*.cpp"
+
+}
+

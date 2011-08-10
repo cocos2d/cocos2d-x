@@ -26,118 +26,149 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 #include "TGAlib.h"
+#include "CCFileUtils.h"
 
 namespace   cocos2d {
 
-// load the image header fields. We only keep those that matter!
-void tgaLoadHeader(FILE *pFile, tImageTGA *psInfo) {
-	unsigned char cGarbage;
-	signed short iGarbage;
+void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
+void tgaFlipImage( tImageTGA *info );
 
-	fread(&cGarbage, sizeof(unsigned char), 1, pFile);
-	fread(&cGarbage, sizeof(unsigned char), 1, pFile);
-
-	// type must be 2 or 3
-	fread(&psInfo->type, sizeof(unsigned char), 1, pFile);
-
-	fread(&iGarbage, sizeof(signed short), 1, pFile);
-	fread(&iGarbage, sizeof(signed short), 1, pFile);
-	fread(&cGarbage, sizeof(unsigned char), 1, pFile);
-	fread(&iGarbage, sizeof(signed short), 1, pFile);
-	fread(&iGarbage, sizeof(signed short), 1, pFile);
-
-	fread(&psInfo->width, sizeof(signed short), 1, pFile);
-	fread(&psInfo->height, sizeof(signed short), 1, pFile);
-	fread(&psInfo->pixelDepth, sizeof(unsigned char), 1, pFile);
-
-	fread(&cGarbage, sizeof(unsigned char), 1, pFile);
-	
-	psInfo->flipped = 0;
-	if ( cGarbage & 0x20 ) 
-	{
-		psInfo->flipped = 1;
-	}
-}
-
-// loads the image pixels. You shouldn't call this function directly
-void tgaLoadImageData(FILE *pFile, tImageTGA *psInfo) {
-	
-	int mode,total,i;
-	unsigned char aux;
-	
-	// mode equal the number of components for each pixel
-	mode = psInfo->pixelDepth / 8;
-	// total is the number of unsigned chars we'll have to read
-	total = psInfo->height * psInfo->width * mode;
-	
-	fread(psInfo->imageData,sizeof(unsigned char),total,pFile);
-	
-	// mode=3 or 4 implies that the image is RGB(A). However TGA
-	// stores it as BGR(A) so we'll have to swap R and B.
-	if (mode >= 3)
-		for (i=0; i < total; i+= mode) {
-			aux = psInfo->imageData[i];
-			psInfo->imageData[i] = psInfo->imageData[i+2];
-			psInfo->imageData[i+2] = aux;
-		}
-}
-
-// loads the RLE encoded image pixels. You shouldn't call this function directly
-void tgaLoadRLEImageData(FILE *pFile, tImageTGA *psInfo)
+// load the image header field from stream
+bool tgaLoadHeader(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
 {
-	unsigned int mode,total,i, index = 0;
-	unsigned char aux[4], runlength = 0;
-	unsigned int skip = 0, flag = 0;
-	
-	// mode equal the number of components for each pixel
-	mode = psInfo->pixelDepth / 8;
-	// total is the number of unsigned chars we'll have to read
-	total = psInfo->height * psInfo->width;
-	
-	for( i = 0; i < total; i++ )
-	{
-		// if we have a run length pending, run it
-		if ( runlength != 0 )
-		{
-			// we do, update the run length count
-			runlength--;
-			skip = (flag != 0);
-		}
-		else
-		{
-			// otherwise, read in the run length token
-			if ( fread(&runlength,sizeof(unsigned char),1,pFile) != 1 )
-				return;
-			
-			// see if it's a RLE encoded sequence
-			flag = runlength & 0x80;
-			if ( flag ) runlength -= 128;
-			skip = 0;
-		}
-		
-		// do we need to skip reading this pixel?
-		if ( !skip )
-		{
-			// no, read in the pixel data
-			if ( fread(aux,sizeof(unsigned char),mode,pFile) != mode )
-				return;
-			
-			// mode=3 or 4 implies that the image is RGB(A). However TGA
-			// stores it as BGR(A) so we'll have to swap R and B.
-			if ( mode >= 3 )
-			{
-				unsigned char tmp;
-				
-				tmp = aux[0];
-				aux[0] = aux[2];
-				aux[2] = tmp;
-			}
-		}
-		
-		// add the pixel to our image
-		memcpy(&psInfo->imageData[index], aux, mode);
-		index += mode;
-	}
+    bool bRet = false;
+
+    do 
+    {
+        size_t step = sizeof(unsigned char) * 2;
+        CC_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
+        memcpy(&psInfo->type, Buffer + step, sizeof(unsigned char));
+
+        step += sizeof(unsigned char) * 2;
+        step += sizeof(signed short) * 4;
+        CC_BREAK_IF((step + sizeof(signed short) * 2 + sizeof(unsigned char)) > bufSize);
+        memcpy(&psInfo->width, Buffer + step, sizeof(signed short));
+        memcpy(&psInfo->height, Buffer + step + sizeof(signed short), sizeof(signed short));
+        memcpy(&psInfo->pixelDepth, Buffer + step + sizeof(signed short) * 2, sizeof(unsigned char));
+
+        step += sizeof(unsigned char);
+        step += sizeof(signed short) * 2;
+        CC_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
+        unsigned char cGarbage;
+        memcpy(&cGarbage, Buffer + step, sizeof(unsigned char));
+
+        psInfo->flipped = 0;
+        if ( cGarbage & 0x20 ) 
+        {
+            psInfo->flipped = 1;
+        }
+        bRet = true;
+    } while (0);
+
+    return bRet;
+}
+
+bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *psInfo)
+{
+    bool bRet = false;
+
+    do 
+    {
+        int mode,total,i;
+        unsigned char aux;
+        size_t step = (sizeof(unsigned char) + sizeof(signed short)) * 6;
+
+        // mode equal the number of components for each pixel
+        mode = psInfo->pixelDepth / 8;
+        // total is the number of unsigned chars we'll have to read
+        total = psInfo->height * psInfo->width * mode;
+
+        size_t dataSize = sizeof(unsigned char) * total;
+        CC_BREAK_IF((step + dataSize) > bufSize);
+        memcpy(psInfo->imageData, Buffer + step, dataSize);
+
+        // mode=3 or 4 implies that the image is RGB(A). However TGA
+        // stores it as BGR(A) so we'll have to swap R and B.
+        if (mode >= 3)
+        {
+            for (i=0; i < total; i+= mode)
+            {
+                aux = psInfo->imageData[i];
+                psInfo->imageData[i] = psInfo->imageData[i+2];
+                psInfo->imageData[i+2] = aux;
+            }
+        }
+
+        bRet = true;
+    } while (0);
+
+    return bRet;
+}
+
+bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
+{
+    unsigned int mode,total,i, index = 0;
+    unsigned char aux[4], runlength = 0;
+    unsigned int skip = 0, flag = 0;
+    size_t step = (sizeof(unsigned char) + sizeof(signed short)) * 6;
+
+    // mode equal the number of components for each pixel
+    mode = psInfo->pixelDepth / 8;
+    // total is the number of unsigned chars we'll have to read
+    total = psInfo->height * psInfo->width;
+
+    for( i = 0; i < total; i++ )
+    {
+        // if we have a run length pending, run it
+        if ( runlength != 0 )
+        {
+            // we do, update the run length count
+            runlength--;
+            skip = (flag != 0);
+        }
+        else
+        {
+            // otherwise, read in the run length token
+            CC_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
+            memcpy(&runlength, Buffer + step, sizeof(unsigned char));
+            step += sizeof(unsigned char);
+
+            // see if it's a RLE encoded sequence
+            flag = runlength & 0x80;
+            if ( flag )
+            {
+                runlength -= 128;
+            }
+            skip = 0;
+        }
+
+        // do we need to skip reading this pixel?
+        if ( !skip )
+        {
+            // no, read in the pixel data
+            CC_BREAK_IF((step + sizeof(unsigned char) * mode) > bufSize);
+
+            memcpy(aux, Buffer + step, sizeof(unsigned char) * mode);
+            step += sizeof(unsigned char) * mode;
+
+            // mode=3 or 4 implies that the image is RGB(A). However TGA
+            // stores it as BGR(A) so we'll have to swap R and B.
+            if ( mode >= 3 )
+            {
+                unsigned char tmp;
+
+                tmp = aux[0];
+                aux[0] = aux[2];
+                aux[2] = tmp;
+            }
+        }
+
+        // add the pixel to our image
+        memcpy(&psInfo->imageData[index], aux, mode);
+        index += mode;
+    }
+    
+    return true;
 }
 
 void tgaFlipImage( tImageTGA *psInfo )
@@ -162,88 +193,84 @@ void tgaFlipImage( tImageTGA *psInfo )
 }
 
 // this is the function to call when we want to load an image
-tImageTGA * tgaLoad(const char *pszFilename) {
-	
-	FILE *file;
-	tImageTGA *info;
-	int mode,total;
-	
-	// allocate memory for the info struct and check!
-	info = (tImageTGA *)malloc(sizeof(tImageTGA));
-	if (info == NULL)
-		return(NULL);
-	
-	
-	// open the file for reading (binary mode)
-	if(!(file = fopen(pszFilename, "rb")))
-	{
-		free(info);
-		return NULL;
-	}
-	if (file == NULL) {
-		info->status = TGA_ERROR_FILE_OPEN;
-		return(info);
-	}
-	
-	// load the header
-	tgaLoadHeader(file,info);
-	
-	// check for errors when loading the header
-	if (ferror(file)) {
-		info->status = TGA_ERROR_READING_FILE;
-		fclose(file);
-		return(info);
-	}
-	
-	// check if the image is color indexed
-	if (info->type == 1) {
-		info->status = TGA_ERROR_INDEXED_COLOR;
-		fclose(file);
-		return(info);
-	}
-	// check for other types (compressed images)
-	if ((info->type != 2) && (info->type !=3) && (info->type !=10) ) {
-		info->status = TGA_ERROR_COMPRESSED_FILE;
-		fclose(file);
-		return(info);
-	}
-	
-	// mode equals the number of image components
-	mode = info->pixelDepth / 8;
-	// total is the number of unsigned chars to read
-	total = info->height * info->width * mode;
-	// allocate memory for image pixels
-	info->imageData = (unsigned char *)malloc(sizeof(unsigned char) *
-											  total);
-	
-	// check to make sure we have the memory required
-	if (info->imageData == NULL) {
-		info->status = TGA_ERROR_MEMORY;
-		fclose(file);
-		return(info);
-	}
-	// finally load the image pixels
-	if ( info->type == 10 )
-		tgaLoadRLEImageData(file, info);
-	else
-		tgaLoadImageData(file,info);
-	
-	// check for errors when reading the pixels
-	if (ferror(file)) {
-		info->status = TGA_ERROR_READING_FILE;
-		fclose(file);
-		return(info);
-	}
-	fclose(file);
-	info->status = TGA_OK;
-	
-	if ( info->flipped )
-	{
-		tgaFlipImage( info );
-		if ( info->flipped ) info->status = TGA_ERROR_MEMORY;
-	}
-	
-	return(info);
+tImageTGA * tgaLoad(const char *pszFilename)
+{
+    int mode,total;
+    tImageTGA *info = NULL;
+    CCFileData data(pszFilename, "rb");
+    unsigned long nSize = data.getSize();
+    unsigned char* pBuffer = data.getBuffer();
+
+    do
+    {
+        CC_BREAK_IF(! pBuffer);
+        info = (tImageTGA *)malloc(sizeof(tImageTGA));
+
+        // get the file header info
+        if (! tgaLoadHeader(pBuffer, nSize, info))
+        {
+            info->status = TGA_ERROR_MEMORY;
+            break;
+        }
+
+        // check if the image is color indexed
+        if (info->type == 1)
+        {
+            info->status = TGA_ERROR_INDEXED_COLOR;
+            break;
+        }
+
+        // check for other types (compressed images)
+        if ((info->type != 2) && (info->type !=3) && (info->type !=10) )
+        {
+            info->status = TGA_ERROR_COMPRESSED_FILE;
+            break;
+        }
+
+        // mode equals the number of image components
+        mode = info->pixelDepth / 8;
+        // total is the number of unsigned chars to read
+        total = info->height * info->width * mode;
+        // allocate memory for image pixels
+        info->imageData = (unsigned char *)malloc(sizeof(unsigned char) * total);
+
+        // check to make sure we have the memory required
+        if (info->imageData == NULL)
+        {
+            info->status = TGA_ERROR_MEMORY;
+            break;
+        }
+
+        bool bLoadImage = false;
+        // finally load the image pixels
+        if ( info->type == 10 )
+        {
+            bLoadImage = tgaLoadRLEImageData(pBuffer, nSize, info);
+        }
+        else
+        {
+            bLoadImage = tgaLoadImageData(pBuffer, nSize, info);
+        }
+
+        // check for errors when reading the pixels
+        if (! bLoadImage)
+        {
+            info->status = TGA_ERROR_READING_FILE;
+            break;
+        }
+        info->status = TGA_OK;
+
+        if ( info->flipped )
+        {
+            tgaFlipImage( info );
+            if ( info->flipped )
+            {
+                info->status = TGA_ERROR_MEMORY;
+            }
+        }
+    } while(0);
+
+    return info;
 }
 
 // converts RGB to greyscale

@@ -25,39 +25,36 @@
 // cpHashSetBin's form the linked lists in the chained hash table.
 typedef struct cpHashSetBin {
 	// Pointer to the element.
-	void *elt;
+	CP_PRIVATE(void *elt);
 	// Hash value of the element.
-	cpHashValue hash;
+	CP_PRIVATE(cpHashValue hash);
 	// Next element in the chain.
-	struct cpHashSetBin *next;
+	CP_PRIVATE(struct cpHashSetBin *next);
 } cpHashSetBin;
 
 // Equality function. Returns true if ptr is equal to elt.
-typedef int (*cpHashSetEqlFunc)(void *ptr, void *elt);
+typedef cpBool (*cpHashSetEqlFunc)(void *ptr, void *elt);
 // Used by cpHashSetInsert(). Called to transform the ptr into an element.
 typedef void *(*cpHashSetTransFunc)(void *ptr, void *data);
-// Iterator function for a hashset.
-typedef void (*cpHashSetIterFunc)(void *elt, void *data);
-// Filter function. Returns false if elt should be dropped.
-typedef int (*cpHashSetFilterFunc)(void *elt, void *data);
 
 typedef struct cpHashSet {
 	// Number of elements stored in the table.
-	int entries;
+	CP_PRIVATE(int entries);
 	// Number of cells in the table.
-	int size;
+	CP_PRIVATE(int size);
 	
-	cpHashSetEqlFunc eql;
-	cpHashSetTransFunc trans;
+	CP_PRIVATE(cpHashSetEqlFunc eql);
+	CP_PRIVATE(cpHashSetTransFunc trans);
 	
 	// Default value returned by cpHashSetFind() when no element is found.
 	// Defaults to NULL.
-	void *default_value;
+	CP_PRIVATE(void *default_value);
 	
 	// The table and recycled bins
-	cpHashSetBin **table, *pooledBins;
+	CP_PRIVATE(cpHashSetBin **table);
+	CP_PRIVATE(cpHashSetBin *pooledBins);
 	
-	cpArray *allocatedBuffers;
+	CP_PRIVATE(cpArray *allocatedBuffers);
 } cpHashSet;
 
 // Basic allocation/destruction functions.
@@ -77,6 +74,9 @@ void *cpHashSetRemove(cpHashSet *set, cpHashValue hash, void *ptr);
 void *cpHashSetFind(cpHashSet *set, cpHashValue hash, void *ptr);
 
 // Iterate over a hashset.
+typedef void (*cpHashSetIterFunc)(void *elt, void *data);
 void cpHashSetEach(cpHashSet *set, cpHashSetIterFunc func, void *data);
-// Iterate over a hashset, retain .
+
+// Iterate over a hashset, drop the element if the func returns false.
+typedef cpBool (*cpHashSetFilterFunc)(void *elt, void *data);
 void cpHashSetFilter(cpHashSet *set, cpHashSetFilterFunc func, void *data);

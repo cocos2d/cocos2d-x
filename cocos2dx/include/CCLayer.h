@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,13 +27,12 @@ THE SOFTWARE.
 #ifndef __CCLAYER_H__
 #define __CCLAYER_H__
 
-#include "CCXCocos2dDefine.h"
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "CCTouchDelegateProtocol.h"
-#include "CCUIAccelerometerDelegate.h"
-#include "ccxCommon.h"
-#include "CCXUIAccelerometer.h"
+#include "CCAccelerometerDelegate.h"
+#include "CCKeypadDelegate.h"
+
 namespace   cocos2d {
 
 //
@@ -43,7 +44,7 @@ All features from CCNode are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CCX_DLL CCLayer : public CCNode, public CCTouchDelegate, public UIAccelerometerDelegate
+class CC_DLL CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 public:
 	CCLayer();
@@ -53,13 +54,24 @@ public:
 
 	virtual void onEnter();
 	virtual void onExit();
-	virtual bool ccTouchBegan(CCTouch *pTouch, UIEvent *pEvent);
+    virtual void onEnterTransitionDidFinish();
+	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+
+	// default implements are used to call script callback if exist
+	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
+
 	virtual void destroy(void);
 	virtual void keep(void);
 	
-    virtual void didAccelerate(UIAcceleration* pAccelerationValue) {}
+    virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
     virtual void AccelerometerDestroy(void);
     virtual void AccelerometerKeep(void);
+
+    virtual void KeypadDestroy();
+    virtual void KeypadKeep();
 
 	/** If isTouchEnabled, this method is called onEnter. Override it to change the
 	way CCLayer receives touch events.
@@ -78,67 +90,164 @@ public:
 	Only the touches of this node will be affected. This "method" is not propagated to it's children.
 	@since v0.8.1
 	*/
-	CCX_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
+	CC_PROPERTY(bool, m_bIsTouchEnabled, IsTouchEnabled)
 	/** whether or not it will receive Accelerometer events
 	You can enable / disable accelerometer events with this property.
 	@since v0.8.1
 	*/
-	CCX_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+	CC_PROPERTY(bool, m_bIsAccelerometerEnabled, IsAccelerometerEnabled)
+    /** whether or not it will receive keypad events
+    You can enable / disable accelerometer events with this property.
+    it's new in cocos2d-x
+    */
+    CC_PROPERTY(bool, m_bIsKeypadEnabled, IsKeypadEnabled)
 };
+    
+// for the subclass of CCLayer, each has to implement the static "node" method 
+#define LAYER_NODE_FUNC(layer) \
+static layer* node() \
+{ \
+layer *pRet = new layer(); \
+if (pRet && pRet->init()) \
+{ \
+pRet->autorelease(); \
+return pRet; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}; 
+
+#define LAYER_NODE_FUNC_PARAM(layer,__PARAMTYPE__,__PARAM__) \
+	static layer* node(__PARAMTYPE__ __PARAM__) \
+{ \
+	layer *pRet = new layer(); \
+	if (pRet && pRet->init(__PARAM__)) \
+{ \
+	pRet->autorelease(); \
+	return pRet; \
+	} \
+else \
+{ \
+	delete pRet; \
+	pRet = NULL; \
+	return NULL; \
+	} \
+	}; 
+
+
 
 //
-// CCColorLayer
+// CCLayerColor
 //
-/** @brief CCColorLayer is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+/** @brief CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
 
 All features from CCLayer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CCX_DLL CCColorLayer : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
+class CC_DLL CCLayerColor : public CCLayer , public CCRGBAProtocol, public CCBlendProtocol
 {
 protected:
-	GLfloat m_pSquareVertices[4 * 2];
-	GLubyte m_pSquareColors[4 * 4];
+	ccVertex2F m_pSquareVertices[4];
+	ccColor4B  m_pSquareColors[4];
 
 public:
 
-	CCColorLayer();
-	virtual ~CCColorLayer();
+	CCLayerColor();
+	virtual ~CCLayerColor();
 
 	virtual void draw();
-	virtual void setContentSize(CGSize var);
+	virtual void setContentSize(CCSize var);
 
-	/** creates a CCLayer with color, width and height */
-	static CCColorLayer * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	/** creates a CCLayer with color, width and height in Points */
+	static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** creates a CCLayer with color. Width and height are the window size. */
-	static CCColorLayer * layerWithColor(ccColor4B color);
+	static CCLayerColor * layerWithColor(ccColor4B color);
 
-	/** initializes a CCLayer with color, width and height */
-	bool initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	/** initializes a CCLayer with color, width and height in Points */
+	virtual bool initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
 	/** initializes a CCLayer with color. Width and height are the window size. */
-	bool initWithColor(ccColor4B color);
+	virtual bool initWithColor(ccColor4B color);
 
-	/** change width */
+	/** change width in Points*/
 	void changeWidth(GLfloat w);
-	/** change height */
+	/** change height in Points*/
 	void changeHeight(GLfloat h);
-	/** change width and height
+	/** change width and height in Points
 	@since v0.8
 	*/
 	void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(GLubyte, m_cOpacity, Opacity)
+	CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
 	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CCX_PROPERTY(ccColor3B, m_tColor, Color)
+	CC_PROPERTY(ccColor3B, m_tColor, Color)
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
-	CCX_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
+	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
 	virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
+    LAYER_NODE_FUNC(CCLayerColor);
+    
+protected:
+	virtual void updateColor();
+};
 
-private :
-	void updateColor();
+//
+// CCLayerGradient
+//
+/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
+the background.
+
+All features from CCLayerColor are valid, plus the following new features:
+- direction
+- final color
+- interpolation mode
+
+Color is interpolated between the startColor and endColor along the given
+vector (starting at the origin, ending at the terminus).  If no vector is
+supplied, it defaults to (0, -1) -- a fade from top to bottom.
+
+If 'compressedInterpolation' is disabled, you will not see either the start or end color for
+non-cardinal vectors; a smooth gradient implying both end points will be still
+be drawn, however.
+
+If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
+
+@since v0.99.5
+*/
+class CC_DLL CCLayerGradient : public CCLayerColor
+{
+public:
+    /** Creates a full-screen CCLayer with a gradient between start and end. */
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
+
+    /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
+    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
+
+    /** Initializes the CCLayer with a gradient between start and end. */
+    virtual bool initWithColor(ccColor4B start, ccColor4B end);
+
+    /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
+    virtual bool initWithColor(ccColor4B start, ccColor4B end, CCPoint v);
+
+    CC_PROPERTY(ccColor3B, m_startColor, StartColor)
+    CC_PROPERTY(ccColor3B, m_endColor, EndColor)
+    CC_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
+    CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
+    CC_PROPERTY(CCPoint, m_AlongVector, Vector)
+
+    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
+    Default: YES
+    */
+    CC_PROPERTY(bool, m_bCompressedInterpolation, IsCompressedInterpolation)
+
+    LAYER_NODE_FUNC(CCLayerGradient);
+protected:
+    virtual void updateColor();
 };
 
 /** @brief CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
@@ -146,18 +255,27 @@ Features:
 - It supports one or more children
 - Only one children will be active a time
 */
-class CCX_DLL CCMultiplexLayer : public CCLayer
+class CC_DLL CCLayerMultiplex : public CCLayer
 {
 protected:
 	unsigned int m_nEnabledLayer;
-	NSMutableArray<CCLayer *> * m_pLayers;
+	CCMutableArray<CCLayer *> * m_pLayers;
 public:
 
-	CCMultiplexLayer();
-	virtual ~CCMultiplexLayer();
+	CCLayerMultiplex();
+	virtual ~CCLayerMultiplex();
 
-	/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
-	static CCMultiplexLayer * layerWithLayers(CCLayer* layer, ... );
+	/** creates a CCLayerMultiplex with one or more layers using a variable argument list. */
+	static CCLayerMultiplex * layerWithLayers(CCLayer* layer, ... );
+
+    /**
+	 * lua script can not init with undetermined number of variables
+	 * so add these functinons to be used with lua.
+	 */
+	static CCLayerMultiplex * layerWithLayer(CCLayer* layer);
+	void addLayer(CCLayer* layer);
+	bool initWithLayer(CCLayer* layer);
+
 	/** initializes a MultiplexLayer with one or more layers using a variable argument list. */
 	bool initWithLayers(CCLayer* layer, va_list params);
 	/** switches to a certain layer indexed by n. 
@@ -168,26 +286,11 @@ public:
 	The current (old) layer will be removed from it's parent with 'cleanup:YES'.
 	*/
 	void switchToAndReleaseMe(unsigned int n);
+    
+    LAYER_NODE_FUNC(CCLayerMultiplex);
 };
-}//namespace   cocos2d 
 
-// for the subclass of CCLayer, each has to implement the static "node" method 
-#define LAYER_NODE_FUNC(layer) \
-static layer* node() \
-{ \
-	layer *pRet = new layer(); \
-	if (pRet && pRet->init()) \
-	{ \
-		pRet->autorelease(); \
-		return pRet; \
-	} \
-	else \
-	{ \
-		delete pRet; \
-		pRet = NULL; \
-		return NULL; \
-	} \
-}; 
+}//namespace   cocos2d 
 
 #endif // __CCLAYER_H__
 

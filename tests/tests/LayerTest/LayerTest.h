@@ -14,11 +14,12 @@ public:
 	~LayerTest(void);
 
 	virtual std::string title();
+	virtual std::string subtitle();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 };
 
 class LayerTest1 : public LayerTest
@@ -30,9 +31,9 @@ public:
 	void registerWithTouchDispatcher();
 	void updateSize(CCTouch*touch);
 
-	virtual bool ccTouchBegan(CCTouch* touche, UIEvent* event);
-	virtual void ccTouchMoved(CCTouch* touche, UIEvent* event);
-	virtual void ccTouchEnded(CCTouch* touche, UIEvent* event);
+	virtual bool ccTouchBegan(CCTouch* touche, CCEvent* event);
+	virtual void ccTouchMoved(CCTouch* touche, CCEvent* event);
+	virtual void ccTouchEnded(CCTouch* touche, CCEvent* event);
 };
 
 class LayerTest2 : public LayerTest
@@ -49,6 +50,16 @@ public:
 	LayerTestBlend();
 	void newBlend(ccTime dt);
 	virtual std::string title();
+};
+
+class LayerGradient : public LayerTest
+{
+public:
+    LayerGradient();
+    virtual void ccTouchesMoved(CCSet * touches, CCEvent *event);
+    virtual std::string title();
+	virtual std::string subtitle();
+	void toggleItem(cocos2d::CCObject *sender);
 };
 
 class LayerTestScene : public TestScene

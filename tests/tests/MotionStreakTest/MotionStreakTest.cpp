@@ -1,6 +1,10 @@
 #include "MotionStreakTest.h"
 #include "../testResource.h"
 
+CCLayer* nextMotionAction();
+CCLayer* backMotionAction();
+CCLayer* restartMotionAction();
+
 //------------------------------------------------------------------
 //
 // MotionStreakTest1
@@ -11,17 +15,17 @@ void MotionStreakTest1::onEnter()
 {
 	MotionStreakTest::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
   
 	// the root object just rotates around
 	m_root = CCSprite::spriteWithFile(s_pPathR1);
 	addChild(m_root, 1);
-	m_root->setPosition( CGPointMake(s.width/2, s.height/2) );
+	m_root->setPosition( CCPointMake(s.width/2, s.height/2) );
   
 	// the target object is offset from root, and the streak is moved to follow it
 	m_target = CCSprite::spriteWithFile(s_pPathR1);
 	m_root->addChild(m_target);
-	m_target->setPosition( CGPointMake(100,0) );
+	m_target->setPosition( CCPointMake(100,0) );
 
 	// create the streak object and add it to the scene
 	m_streak = CCMotionStreak::streakWithFade(2, 3, s_streak, 32, 32, ccc4(0,255,0,255) );
@@ -29,17 +33,17 @@ void MotionStreakTest1::onEnter()
 	// schedule an update on each frame so we can syncronize the streak with the target
 	schedule(schedule_selector(MotionStreakTest1::onUpdate));
   
-	CCIntervalAction* a1 = CCRotateBy::actionWithDuration(2, 360);
+	CCActionInterval* a1 = CCRotateBy::actionWithDuration(2, 360);
 
 	CCAction* action1 = CCRepeatForever::actionWithAction(a1);
-	CCIntervalAction* motion = CCMoveBy::actionWithDuration(2, CGPointMake(100,0) );
-	m_root->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
+	CCActionInterval* motion = CCMoveBy::actionWithDuration(2, CCPointMake(100,0) );
+	m_root->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)(CCSequence::actions(motion, motion->reverse(), NULL)) ) );
 	m_root->runAction( action1 );
 }
 
 void MotionStreakTest1::onUpdate(ccTime delta)
 {
-	m_streak->setPosition( m_target->convertToWorldSpace(CGPointZero) );
+	m_streak->setPosition( m_target->convertToWorldSpace(CCPointZero) );
 }
 
 std::string MotionStreakTest1::title()
@@ -59,21 +63,21 @@ void MotionStreakTest2::onEnter()
 
 	setIsTouchEnabled(true);
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 		
 	// create the streak object and add it to the scene
 	m_streak = CCMotionStreak::streakWithFade(3, 3, s_streak, 64, 32, ccc4(255,255,255,255) );
 	addChild( m_streak );
 	
-	m_streak->setPosition( CGPointMake(s.width/2, s.height/2) ); 
+	m_streak->setPosition( CCPointMake(s.width/2, s.height/2) ); 
 }
 
-void MotionStreakTest2::ccTouchesMoved(NSSet* touches, UIEvent* event)
+void MotionStreakTest2::ccTouchesMoved(CCSet* touches, CCEvent* event)
 {
-    NSSetIterator it = touches->begin();
+    CCSetIterator it = touches->begin();
     CCTouch* touch = (CCTouch*)(*it);
 
-	CGPoint touchLocation = touch->locationInView( touch->view() );	
+	CCPoint touchLocation = touch->locationInView( touch->view() );	
 	touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
 	
 	m_streak->setPosition( touchLocation );
@@ -81,7 +85,7 @@ void MotionStreakTest2::ccTouchesMoved(NSSet* touches, UIEvent* event)
 
 std::string MotionStreakTest2::title()
 {
-	return "MotionStreak test (tap screen)";
+	return "MotionStreak test";
 }
 
 //------------------------------------------------------------------
@@ -162,11 +166,11 @@ void MotionStreakTest::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
 	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(MotionStreakTest::backCallback) );
 	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(MotionStreakTest::restartCallback) );
@@ -174,15 +178,15 @@ void MotionStreakTest::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
-	item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-	item2->setPosition( CGPointMake( s.width/2, 30) );
-	item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+	menu->setPosition( CCPointZero );
+	item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+	item2->setPosition( CCPointMake( s.width/2, 30) );
+	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 	
 	addChild(menu, 1);	
 }
 
-void MotionStreakTest::restartCallback(NSObject* pSender)
+void MotionStreakTest::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new MotionStreakTestScene();//CCScene::node();
 	s->addChild(restartMotionAction()); 
@@ -191,7 +195,7 @@ void MotionStreakTest::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void MotionStreakTest::nextCallback(NSObject* pSender)
+void MotionStreakTest::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new MotionStreakTestScene();//CCScene::node();
 	s->addChild( nextMotionAction() );
@@ -199,7 +203,7 @@ void MotionStreakTest::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void MotionStreakTest::backCallback(NSObject* pSender)
+void MotionStreakTest::backCallback(CCObject* pSender)
 {
 	CCScene* s = new MotionStreakTestScene;//CCScene::node();
 	s->addChild( backMotionAction() );

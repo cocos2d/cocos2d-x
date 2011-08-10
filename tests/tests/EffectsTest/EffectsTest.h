@@ -9,7 +9,7 @@ public:
     virtual void runThisTest();
 };
 
-class TextLayer : public CCColorLayer
+class TextLayer : public CCLayerColor
 {
 protected:
 	//UxString	m_strTitle;
@@ -22,9 +22,9 @@ public:
 
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 
 	void newOrientation();
 	void newScene();

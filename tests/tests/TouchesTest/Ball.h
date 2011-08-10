@@ -9,7 +9,7 @@ using namespace cocos2d;
 
 class Ball : public CCSprite
 {
-	CGPoint m_velocity;
+	CCPoint m_velocity;
 public:
 	Ball(void);
 	virtual ~Ball(void);
@@ -22,8 +22,8 @@ public:
 
 
 public:
-	void setVelocity(CGPoint velocity){m_velocity = velocity;}
-	CGPoint getVelocity(){return m_velocity;}
+	void setVelocity(CCPoint velocity){m_velocity = velocity;}
+	CCPoint getVelocity(){return m_velocity;}
 
 public:
 	static Ball* ballWithTexture(CCTexture2D* aTexture);

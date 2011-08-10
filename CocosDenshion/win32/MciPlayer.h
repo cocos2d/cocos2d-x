@@ -1,8 +1,10 @@
-#ifndef _MCI_PLAYER_UPHONE_H_
-#define _MCI_PLAYER_UPHONE_H_
+#ifndef _MCI_PLAYER_WIN32_H_
+#define _MCI_PLAYER_WIN32_H_
 
 #include<windows.h>
 #include <mmsystem.h>
+
+namespace CocosDenshion {
 
 class MciPlayer
 {
@@ -63,5 +65,7 @@ private:
 	UINT		m_uTimes;
 	bool		m_bPlaying;
 };
+
+} // end of namespace CocosDenshion
 
 #endif
