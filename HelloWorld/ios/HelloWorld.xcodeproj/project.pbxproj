@@ -48,6 +48,7 @@
 		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
 		BF755FB112A1015E00450234 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAE12A1015E00450234 /* CloseSelected.png */; };
 		BF755FB212A1015E00450234 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAF12A1015E00450234 /* HelloWorld.png */; };
+		BF7A45A113F2219E0035C563 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7A45A013F2219E0035C563 /* CCTouchHandler.h */; };
 		BF7B975C13B18860004222DD /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF7B975B13B18860004222DD /* CCScriptSupport.cpp */; };
 		BF7B975E13B1886E004222DD /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7B975D13B1886E004222DD /* CCScriptSupport.h */; };
 		BF83541813275F5600F3C033 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83517813275F5500F3C033 /* CCAction.cpp */; };
@@ -535,7 +536,6 @@
 		BF83566713275F5600F3C033 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83541313275F5600F3C033 /* CCTMXXMLParser.cpp */; };
 		BF83566813275F5600F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83541513275F5600F3C033 /* CCTouchDispatcher.cpp */; };
 		BF83566913275F5600F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83541613275F5600F3C033 /* CCTouchHandler.cpp */; };
-		BF83566A13275F5600F3C033 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83541713275F5600F3C033 /* CCTouchHandler.h */; };
 		BF8356951327611D00F3C033 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83567F1327611D00F3C033 /* AccelerometerDelegateWrapper.h */; };
 		BF8356961327611D00F3C033 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8356801327611D00F3C033 /* AccelerometerDelegateWrapper.mm */; };
 		BF8356971327611D00F3C033 /* CCAccelerometer_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8356811327611D00F3C033 /* CCAccelerometer_ios.h */; };
@@ -628,6 +628,7 @@
 		BF755FAD12A1015E00450234 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		BF755FAE12A1015E00450234 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		BF755FAF12A1015E00450234 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
+		BF7A45A013F2219E0035C563 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BF7B975B13B18860004222DD /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		BF7B975D13B1886E004222DD /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		BF83517813275F5500F3C033 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
@@ -1134,7 +1135,6 @@
 		BF83541313275F5600F3C033 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
 		BF83541513275F5600F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF83541613275F5600F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
-		BF83541713275F5600F3C033 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BF83567F1327611D00F3C033 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
 		BF8356801327611D00F3C033 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
 		BF8356811327611D00F3C033 /* CCAccelerometer_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer_ios.h; sourceTree = "<group>"; };
@@ -1394,6 +1394,7 @@
 		BF83519C13275F5500F3C033 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF7A45A013F2219E0035C563 /* CCTouchHandler.h */,
 				BFEE2DBA13E14D8D005C0577 /* CCTexturePVR.h */,
 				BF7B975D13B1886E004222DD /* CCScriptSupport.h */,
 				BF126D181373F24200C4ABC5 /* CCUserDefault.h */,
@@ -2268,7 +2269,6 @@
 			children = (
 				BF83541513275F5600F3C033 /* CCTouchDispatcher.cpp */,
 				BF83541613275F5600F3C033 /* CCTouchHandler.cpp */,
-				BF83541713275F5600F3C033 /* CCTouchHandler.h */,
 			);
 			path = touch_dispatcher;
 			sourceTree = "<group>";
@@ -2740,7 +2740,6 @@
 				BF83565913275F5600F3C033 /* ioapi.h in Headers */,
 				BF83565B13275F5600F3C033 /* unzip.h in Headers */,
 				BF83565D13275F5600F3C033 /* ZipUtils.h in Headers */,
-				BF83566A13275F5600F3C033 /* CCTouchHandler.h in Headers */,
 				BF8356951327611D00F3C033 /* AccelerometerDelegateWrapper.h in Headers */,
 				BF8356971327611D00F3C033 /* CCAccelerometer_ios.h in Headers */,
 				BF8356991327611D00F3C033 /* CCApplication_ios.h in Headers */,
@@ -2767,6 +2766,7 @@
 				BFEE2E3D13E16D2D005C0577 /* ZAttributedString.h in Headers */,
 				BFEE2E3F13E16D2D005C0577 /* ZAttributedStringPrivate.h in Headers */,
 				BFEE2E4013E16D2D005C0577 /* ZFont.h in Headers */,
+				BF7A45A113F2219E0035C563 /* CCTouchHandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
