@@ -442,18 +442,18 @@ namespace cocos2d{
 		CCSize tmpSize = CCSizeZero;
 
         int longestLine = 0;
-        int totalHeight = 0;
+        unsigned int totalHeight = 0;
 
-        int quantityOfLines = 1;
+        unsigned int quantityOfLines = 1;
 
-		int len = m_sString.length();
+		unsigned int stringLen = m_sString.length();
 
-        if (0 == len)
+        if (0 == stringLen)
         {
             return;
         }
 
-        for (int i = 0; i < len - 1; ++i)
+        for (unsigned int i = 0; i < stringLen - 1; ++i)
         {
             unsigned short c = m_sString[i];
             if (c == '\n')
@@ -463,9 +463,9 @@ namespace cocos2d{
         }
 
         totalHeight = m_pConfiguration->m_uCommonHeight * quantityOfLines;
-        nextFontPositionY = m_pConfiguration->m_uCommonHeight * (quantityOfLines - 1);
+        nextFontPositionY = -(m_pConfiguration->m_uCommonHeight - m_pConfiguration->m_uCommonHeight * quantityOfLines);
 
-		for(int i=0; i<len; i++)
+		for (unsigned int i= 0; i < stringLen; i++)
 		{
 			unsigned short c = m_sString[i];
 			CCAssert( c < kCCBMFontMaxChars, "LabelBMFont: character outside bounds");
@@ -489,7 +489,7 @@ namespace cocos2d{
 			if( ! fontChar )
 			{
 				fontChar = new CCSprite();
-				fontChar->initWithBatchNode(this, rect);
+				fontChar->initWithBatchNodeRectInPixels(this, rect);
 				this->addChild(fontChar, 0, i);
 				fontChar->release();
 			}
