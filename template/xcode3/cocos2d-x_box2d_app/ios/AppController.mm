@@ -1,15 +1,18 @@
 //
-//  ___PROJECTNAMEASIDENTIFIER___AppController.mm
+//  AppController.mm
 //  ___PROJECTNAME___
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
+
 #import <UIKit/UIKit.h>
 #import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
 #import "AppDelegate.h"
+
+#import "RootViewController.h"
 
 @implementation AppController
 
@@ -28,11 +31,18 @@ static AppDelegate s_sharedApplication;
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
                                      pixelFormat: kEAGLColorFormatRGBA8
                                      depthFormat: GL_DEPTH_COMPONENT16_OES
-						      preserveBackbuffer: NO
+                              preserveBackbuffer: NO
                                       sharegroup: nil
-								   multiSampling: NO
-								 numberOfSamples:0 ];
-    [window addSubview: __glView];
+                                   multiSampling: NO
+                                 numberOfSamples: 0 ];
+    
+    // Use RootViewController manage EAGLView 
+    viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    viewController.wantsFullScreenLayout = YES;
+    viewController.view = __glView;
+
+    // Set RootViewController to window
+    window.rootViewController = viewController;
     [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
@@ -96,3 +106,4 @@ static AppDelegate s_sharedApplication;
 
 
 @end
+
