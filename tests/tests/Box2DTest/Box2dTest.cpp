@@ -14,7 +14,7 @@ Box2DTestLayer::Box2DTestLayer()
 	setIsTouchEnabled( true );
 	setIsAccelerometerEnabled( true );
 
-	CGSize screenSize = CCDirector::sharedDirector()->getWinSize();
+	CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 	//UXLOG(L"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
 
 	// Define the gravity vector.
@@ -73,17 +73,17 @@ Box2DTestLayer::Box2DTestLayer()
 	
 	//Set up sprite
 	
-	CCSpriteSheet *mgr = CCSpriteSheet::spriteSheetWithFile(s_pPathBlock, 150);
+	CCSpriteBatchNode *mgr = CCSpriteBatchNode::batchNodeWithFile(s_pPathBlock, 150);
 	addChild(mgr, 0, kTagSpriteManager);
 	
-	addNewSpriteWithCoords( CGPointMake(screenSize.width/2, screenSize.height/2) );
+	addNewSpriteWithCoords( CCPointMake(screenSize.width/2, screenSize.height/2) );
 	
-	CCLabel *label = CCLabel::labelWithString("Tap screen", "Marker Felt", 32);
+	CCLabelTTF *label = CCLabelTTF::labelWithString("Tap screen", "Marker Felt", 32);
 	addChild(label, 0);
 	label->setColor( ccc3(0,0,255) );
-	label->setPosition( CGPointMake( screenSize.width/2, screenSize.height-50) );
+	label->setPosition( CCPointMake( screenSize.width/2, screenSize.height-50) );
 	
-	schedule( schedule_selector(Box2DTestLayer::tick) );
+	scheduleUpdate();
 }
 
 Box2DTestLayer::~Box2DTestLayer()
@@ -111,19 +111,19 @@ void Box2DTestLayer::draw()
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 }
 
-void Box2DTestLayer::addNewSpriteWithCoords(CGPoint p)
+void Box2DTestLayer::addNewSpriteWithCoords(CCPoint p)
 {
 	//UXLOG(L"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteSheet* sheet = (CCSpriteSheet*)getChildByTag(kTagSpriteManager);
+	CCSpriteBatchNode* batch = (CCSpriteBatchNode*)getChildByTag(kTagSpriteManager);
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = sheet->createSpriteWithRect( CGRectMake(32 * idx,32 * idy,32,32));
-	(CCNode*)(sheet)->addChild(sprite);
+	CCSprite *sprite = CCSprite::spriteWithTexture(batch->getTexture(), CCRectMake(32 * idx,32 * idy,32,32));
+	batch->addChild(sprite);
 	
-	sprite->setPosition( CGPointMake( p.x, p.y) );
+	sprite->setPosition( CCPointMake( p.x, p.y) );
 	
 	// Define the dynamic body.
 	//Set up a 1m squared box in the physics world
@@ -146,7 +146,7 @@ void Box2DTestLayer::addNewSpriteWithCoords(CGPoint p)
 }
 
 
-void Box2DTestLayer::tick(ccTime dt)
+void Box2DTestLayer::update(ccTime dt)
 {
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
@@ -166,16 +166,16 @@ void Box2DTestLayer::tick(ccTime dt)
 		if (b->GetUserData() != NULL) {
 			//Synchronize the AtlasSprites position and rotation with the corresponding body
 			CCSprite* myActor = (CCSprite*)b->GetUserData();
-			myActor->setPosition( CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
+			myActor->setPosition( CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
 			myActor->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
 		}	
 	}
 }
 
-void Box2DTestLayer::ccTouchesEnded(NSSet* touches, UIEvent* event)
+void Box2DTestLayer::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
 	//Add a new body/atlas sprite at the touched location
-	NSSetIterator it;
+	CCSetIterator it;
 	CCTouch* touch;
 
 	for( it = touches->begin(); it != touches->end(); it++) 
@@ -185,7 +185,7 @@ void Box2DTestLayer::ccTouchesEnded(NSSet* touches, UIEvent* event)
 		if(!touch)
 			break;
 
-		CGPoint location = touch->locationInView(touch->view());
+		CCPoint location = touch->locationInView(touch->view());
 		
 		location = CCDirector::sharedDirector()->convertToGL(location);
 	

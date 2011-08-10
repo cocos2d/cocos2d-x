@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Lam Pham
 
 http://www.cocos2d-x.org
 
@@ -52,7 +53,7 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CCX_DLL CCProgressTimer : public CCNode
+class CC_DLL CCProgressTimer : public CCNode
 {
 public:
 	~CCProgressTimer(void);
@@ -80,19 +81,19 @@ public:
 	static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
 
 protected:
-	CGPoint vertexFromTexCoord(CGPoint texCoord);
+	ccVertex2F vertexFromTexCoord(CCPoint texCoord);
 	void updateProgress(void);
 	void updateBar(void);
 	void updateRadial(void);
 	void updateColor(void);
-	CGPoint boundaryTexCoord(char index);
+	CCPoint boundaryTexCoord(char index);
 
 protected:
 	CCProgressTimerType m_eType;
 	float m_fPercentage;
 	CCSprite *m_pSprite;
 	int m_nVertexDataCount;
-	ccV2F_C4F_T2F *m_pVertexData;
+	ccV2F_C4B_T2F *m_pVertexData;
 };
 
 }

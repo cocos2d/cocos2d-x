@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      Valentin Milea
 
 http://www.cocos2d-x.org
 
@@ -23,10 +24,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TransformUtils.h"
-#include "CGAffineTransform.h"
+#include "CCAffineTransform.h"
 namespace   cocos2d {
 
-void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
+void CGAffineToGL(const CCAffineTransform *t, GLfloat *m)
 {
 	// | m[0] m[4] m[8]  m[12] |     | m11 m21 m31 m41 |     | a c 0 tx |
 	// | m[1] m[5] m[9]  m[13] |     | m12 m22 m32 m42 |     | b d 0 ty |
@@ -39,7 +40,7 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 	m[1] = t->b; m[5] = t->d; m[13] = t->ty;
 }
 
-void GLToCGAffine(const GLfloat *m, CGAffineTransform *t)
+void GLToCGAffine(const GLfloat *m, CCAffineTransform *t)
 {
 	t->a = m[0]; t->c = m[4]; t->tx = m[12];
 	t->b = m[1]; t->d = m[5]; t->ty = m[13];

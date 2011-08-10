@@ -28,7 +28,6 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 
 typedef struct PlayerStruct {
 	cpFloat u;
@@ -39,27 +38,27 @@ typedef struct PlayerStruct {
 
 PlayerStruct playerInstance;
 
-static int
+static cpBool
 begin(cpArbiter *arb, cpSpace *space, void *ignore)
 {
 	CP_ARBITER_GET_SHAPES(arb, a, b);
-	PlayerStruct *player = (PlayerStruct*)(a->data);
+	PlayerStruct *player = (PlayerStruct *)a->data;
 	
 	cpVect n = cpvneg(cpArbiterGetNormal(arb, 0));
 	if(n.y > 0.0f){
 		cpArrayPush(player->groundShapes, b);
 	}
 	
-	return 1;
+	return cpTrue;
 }
 
-static int
+static cpBool
 preSolve(cpArbiter *arb, cpSpace *space, void *ignore)
 {
 	CP_ARBITER_GET_SHAPES(arb, a, b);
-	PlayerStruct *player = (PlayerStruct*)(a->data);
+	PlayerStruct *player = (PlayerStruct *)a->data;
 	
-	if(arb->stamp > 0){
+	if(cpArbiterIsFirstContact(arb)){
 		a->u = player->u;
 		
 		// pick the most upright jump normal each frame
@@ -69,19 +68,20 @@ preSolve(cpArbiter *arb, cpSpace *space, void *ignore)
 		}
 	}
 	
-	return 1;
+	return cpTrue;
 }
 
 static void
 separate(cpArbiter *arb, cpSpace *space, void *ignore)
 {
 	CP_ARBITER_GET_SHAPES(arb, a, b);
-	PlayerStruct *player = (PlayerStruct*)(a->data);
+	PlayerStruct *player = (PlayerStruct *)a->data;
 	
 	cpArrayDeleteObj(player->groundShapes, b);
 	
 	if(player->groundShapes->num == 0){
 		a->u = 0.0f;
+		player->groundNormal = cpvzero;
 	}
 }
 
@@ -100,19 +100,21 @@ update(int ticks)
 	static int lastJumpState = 0;
 	int jumpState = (arrowDirection.y > 0.0f);
 	
+	cpBody *body = playerInstance.shape->body;
+	
 	cpVect groundNormal = playerInstance.groundNormal;
 	if(groundNormal.y > 0.0f){
 		playerInstance.shape->surface_v = cpvmult(cpvperp(groundNormal), 400.0f*arrowDirection.x);
+		if(arrowDirection.x) cpBodyActivate(body);
 	} else {
 		playerInstance.shape->surface_v = cpvzero;
 	}
-	
-	cpBody *body = playerInstance.shape->body;
 	
 	// apply jump
 	if(jumpState && !lastJumpState && cpvlengthsq(groundNormal)){
 //		body->v = cpvmult(cpvslerp(groundNormal, cpv(0.0f, 1.0f), 0.5f), 500.0f);
 		body->v = cpvadd(body->v, cpvmult(cpvslerp(groundNormal, cpv(0.0f, 1.0f), 0.75f), 500.0f));
+		cpBodyActivate(body);
 	}
 	
 	if(playerInstance.groundShapes->num == 0){
@@ -124,7 +126,6 @@ update(int ticks)
 	int steps = 3;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
-	playerInstance.groundNormal = cpvzero;
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
 	}
@@ -135,55 +136,53 @@ update(int ticks)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
 	space->iterations = 10;
 	space->gravity = cpv(0, -1500);
-	
-	cpBody *body;
+
+	cpBody *body, *staticBody = &space->staticBody;
 	cpShape *shape;
 	
 	// Create segments around the edge of the screen.
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
 	
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-320,240), cpv(320,240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-320,240), cpv(320,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
 	
 	// add some other segments to play with
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-220,-200), cpv(-220,240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-220,-200), cpv(-220,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(0,-240), cpv(320,-200), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(0,-240), cpv(320,-200), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(200,-240), cpv(320,-100), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(200,-240), cpv(320,-100), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-220,-80), cpv(200,-80), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-220,-80), cpv(200,-80), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	shape->collision_type = 2;
@@ -211,7 +210,6 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 	

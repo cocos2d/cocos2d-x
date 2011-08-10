@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static cpFloat
@@ -33,8 +33,7 @@ defaultSpringForce(cpDampedSpring *spring, cpFloat dist){
 static void
 preStep(cpDampedSpring *spring, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = spring->constraint.a;
-	cpBody *b = spring->constraint.b;
+	CONSTRAINT_BEGIN(spring, a, b);
 	
 	spring->r1 = cpvrotate(spring->anchr1, a->rot);
 	spring->r2 = cpvrotate(spring->anchr2, b->rot);
@@ -43,11 +42,11 @@ preStep(cpDampedSpring *spring, cpFloat dt, cpFloat dt_inv)
 	cpFloat dist = cpvlength(delta);
 	spring->n = cpvmult(delta, 1.0f/(dist ? dist : INFINITY));
 	
-	// calculate mass normal
-	spring->nMass = 1.0f/k_scalar(a, b, spring->r1, spring->r2, spring->n);
-
-	spring->dt = dt;
+	cpFloat k = k_scalar(a, b, spring->r1, spring->r2, spring->n);
+	spring->nMass = 1.0f/k;
+	
 	spring->target_vrn = 0.0f;
+	spring->v_coef = 1.0f - cpfexp(-spring->damping*dt*k);
 
 	// apply spring force
 	cpFloat f_spring = spring->springForceFunc((cpConstraint *)spring, dist);
@@ -57,8 +56,7 @@ preStep(cpDampedSpring *spring, cpFloat dt, cpFloat dt_inv)
 static void
 applyImpulse(cpDampedSpring *spring)
 {
-	cpBody *a = spring->constraint.a;
-	cpBody *b = spring->constraint.b;
+	CONSTRAINT_BEGIN(spring, a, b);
 	
 	cpVect n = spring->n;
 	cpVect r1 = spring->r1;
@@ -69,7 +67,7 @@ applyImpulse(cpDampedSpring *spring)
 	
 	// compute velocity loss from drag
 	// not 100% certain this is derived correctly, though it makes sense
-	cpFloat v_damp = -vrn*(1.0f - cpfexp(-spring->damping*spring->dt/spring->nMass));
+	cpFloat v_damp = -vrn*spring->v_coef;
 	spring->target_vrn = vrn + v_damp;
 	
 	apply_impulses(a, b, spring->r1, spring->r2, cpvmult(spring->n, v_damp*spring->nMass));
@@ -91,7 +89,7 @@ CP_DefineClassGetter(cpDampedSpring)
 cpDampedSpring *
 cpDampedSpringAlloc(void)
 {
-	return (cpDampedSpring *)cpmalloc(sizeof(cpDampedSpring));
+	return (cpDampedSpring *)cpcalloc(1, sizeof(cpDampedSpring));
 }
 
 cpDampedSpring *

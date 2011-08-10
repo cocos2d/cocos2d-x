@@ -1,0 +1,5 @@
+[Trace]
+GAME 				<0 or 1>	Game Channel
+
+[Assert]
+GAME 				<0 or 1>	Game Assert Channel

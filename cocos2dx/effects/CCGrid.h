@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      On-Core
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,7 +25,7 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRID_H__
 #define __EFFECTS_CCGRID_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include "CCNode.h"
 #include "CCCamera.h"
 #include "ccTypes.h"
@@ -37,7 +38,7 @@ namespace cocos2d
 
 	/** Base class for other
 	*/
-	class CCGridBase : public NSObject
+	class CCGridBase : public CCObject
 	{
 	public:
 		virtual ~CCGridBase(void);
@@ -55,8 +56,8 @@ namespace cocos2d
 		inline void setGridSize(ccGridSize gridSize) { m_sGridSize = gridSize; }
 
 		/** pixels between the grids */
-		inline CGPoint getStep(void) { return m_obStep; }
-		inline void setStep(CGPoint step) { m_obStep = step; }
+		inline CCPoint getStep(void) { return m_obStep; }
+		inline void setStep(CCPoint step) { m_obStep = step; }
 
 		/** is texture flipped */
 		inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
@@ -85,7 +86,7 @@ namespace cocos2d
 		int  m_nReuseGrid;
 		ccGridSize m_sGridSize;
 		CCTexture2D *m_pTexture;
-		CGPoint m_obStep;
+		CCPoint m_obStep;
 		CCGrabber *m_pGrabber;
 		bool m_bIsTextureFlipped;
 	};

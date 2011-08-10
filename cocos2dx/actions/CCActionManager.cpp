@@ -1,6 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2009      Valentin Milea
+Copyright (c) 2011      Zynga Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,7 +29,6 @@ THE SOFTWARE.
 #include "CCScheduler.h"
 #include "ccMacros.h"
 #include "support/data_support/ccCArray.h"
-#include "CCXCocos2dDefine.h"
 #include "support/data_support/uthash.h"
 
 namespace cocos2d {
@@ -38,12 +40,12 @@ static CCActionManager *gSharedManager = NULL;
 typedef struct _hashElement
 {
 	struct _ccArray             *actions;
-	NSObject					*target;
+	CCObject					*target;
 	unsigned int				actionIndex;
 	CCAction					*currentAction;
 	bool						currentActionSalvaged;
 	bool						paused;
-	UT_hash_handle		hh;
+	UT_hash_handle				hh;
 } tHashElement;
 
 CCActionManager* CCActionManager::sharedManager(void)
@@ -69,7 +71,7 @@ CCActionManager* CCActionManager::sharedManager(void)
 void CCActionManager::purgeSharedManager(void)
 {
 	CCScheduler::sharedScheduler()->unscheduleUpdateForTarget(this);
-	CCX_SAFE_RELEASE(gSharedManager);
+	CC_SAFE_RELEASE(gSharedManager);
 }
 
 void CCActionManager::selectorProtocolRetain()
@@ -83,6 +85,9 @@ void CCActionManager::selectorProtocolRelease()
 }
 
 CCActionManager::CCActionManager(void)
+: m_pTargets(NULL), 
+  m_pCurrentTarget(NULL),
+  m_bCurrentTargetSalvaged(false)
 {
 	assert(gSharedManager == NULL);
 }
@@ -162,13 +167,7 @@ void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pEl
 
 // pause / resume
 
-// XXX DEPRECATED. REMOVE IN 1.0
-void CCActionManager::pauseAllActionsForTarget(NSObject *pTarget)
-{
-	pauseTarget(pTarget);
-}
-
-void CCActionManager::pauseTarget(NSObject *pTarget)
+void CCActionManager::pauseTarget(CCObject *pTarget)
 {
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
@@ -178,13 +177,7 @@ void CCActionManager::pauseTarget(NSObject *pTarget)
 	}
 }
 
-// XXX DEPRECATED. REMOVE IN 1.0
-void CCActionManager::resumeAllActionsForTarget(NSObject *pTarget)
-{
-	resumeTarget(pTarget);
-}
-
-void CCActionManager::resumeTarget(NSObject *pTarget)
+void CCActionManager::resumeTarget(CCObject *pTarget)
 {
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
@@ -202,8 +195,8 @@ void CCActionManager::addAction(cocos2d::CCAction *pAction, CCNode *pTarget, boo
 	assert(pTarget != NULL);
 
 	tHashElement *pElement = NULL;
-	// we should convert it to NSObject*, because we save it as NSObject*
-	NSObject *tmp = pTarget;
+	// we should convert it to CCObject*, because we save it as CCObject*
+	CCObject *tmp = pTarget;
 	HASH_FIND_INT(m_pTargets, &tmp, pElement);
 	if (! pElement)
 	{
@@ -228,13 +221,13 @@ void CCActionManager::removeAllActions(void)
 {
 	for (tHashElement *pElement = m_pTargets; pElement != NULL; )
 	{
-		NSObject *pTarget = pElement->target;
+		CCObject *pTarget = pElement->target;
 		pElement = (tHashElement*)pElement->hh.next;
 		removeAllActionsFromTarget(pTarget);
 	}
 }
 
-void CCActionManager::removeAllActionsFromTarget(NSObject *pTarget)
+void CCActionManager::removeAllActionsFromTarget(CCObject *pTarget)
 {
 	// explicit null handling
 	if (pTarget == NULL)
@@ -277,12 +270,12 @@ void CCActionManager::removeAction(cocos2d::CCAction *pAction)
 	}
 
 	tHashElement *pElement = NULL;
-	NSObject *pTarget = pAction->getOriginalTarget();
+	CCObject *pTarget = pAction->getOriginalTarget();
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
 	if (pElement)
 	{
 		unsigned int i = ccArrayGetIndexOfObject(pElement->actions, pAction);
-		if (i != -1)
+		if (UINT_MAX != i)
 		{
 			removeActionAtIndex(i, pElement);
 		}
@@ -293,7 +286,7 @@ void CCActionManager::removeAction(cocos2d::CCAction *pAction)
 	}
 }
 
-void CCActionManager::removeActionByTag(int tag, NSObject *pTarget)
+void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 {
 	assert(tag != kCCActionTagInvalid);
 	assert(pTarget != NULL);
@@ -310,20 +303,16 @@ void CCActionManager::removeActionByTag(int tag, NSObject *pTarget)
 
 			if (pAction->getTag() == tag && pAction->getOriginalTarget() == pTarget)
 			{
-				return removeActionAtIndex(i, pElement);
+				removeActionAtIndex(i, pElement);
+				break;
 			}
 		}
-		CCLOG("cocos2d: removeActionByTag: Action not found!");
-	}
-	else
-	{
-		CCLOG("cocos2d: removeActionByTag: Target not found!");
 	}
 }
 
 // get
 
-CCAction* CCActionManager::getActionByTag(int tag, NSObject *pTarget)
+CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
 {
 	assert(tag != kCCActionTagInvalid);
 
@@ -355,7 +344,7 @@ CCAction* CCActionManager::getActionByTag(int tag, NSObject *pTarget)
 	return NULL;
 }
 
-int CCActionManager::numberOfRunningActionsInTarget(NSObject *pTarget)
+unsigned int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
 {
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
@@ -377,7 +366,7 @@ void CCActionManager::update(cocos2d::ccTime dt)
 
 		if (! m_pCurrentTarget->paused)
 		{
-			// The 'actions' NSMutableArray may change while inside this loop.
+			// The 'actions' CCMutableArray may change while inside this loop.
 			for (m_pCurrentTarget->actionIndex = 0; m_pCurrentTarget->actionIndex < m_pCurrentTarget->actions->num;
 				m_pCurrentTarget->actionIndex++)
 			{

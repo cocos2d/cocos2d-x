@@ -47,7 +47,7 @@ typedef struct cpShapeClass {
 	void (*destroy)(struct cpShape *shape);
 	
 	// called by cpShapePointQuery().
-	int (*pointQuery)(struct cpShape *shape, cpVect p);
+	cpBool (*pointQuery)(struct cpShape *shape, cpVect p);
 	
 	// called by cpShapeSegmentQuery()
 	 void (*segmentQuery)(struct cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info);
@@ -56,7 +56,7 @@ typedef struct cpShapeClass {
 // Basic shape struct that the others inherit from.
 typedef struct cpShape{
 	// The "class" of a shape as defined above 
-	const cpShapeClass *klass;
+	CP_PRIVATE(const cpShapeClass *klass);
 	
 	// cpBody that the shape is attached to.
 	cpBody *body;
@@ -65,7 +65,7 @@ typedef struct cpShape{
 	cpBB bb;
 	
 	// Sensors invoke callbacks, but do not generate collisions
-	int sensor;
+	cpBool sensor;
 	
 	// *** Surface properties.
 	
@@ -90,8 +90,11 @@ typedef struct cpShape{
 	
 	// *** Internally Used Fields
 	
+	// Shapes form a linked list when added to space on a non-NULL body
+	CP_PRIVATE(struct cpShape *next);
+	
 	// Unique id used as the hash value.
-	cpHashValue hashid;
+	CP_PRIVATE(cpHashValue hashid);
 } cpShape;
 
 // Low level shape initialization func.
@@ -105,7 +108,7 @@ void cpShapeFree(cpShape *shape);
 cpBB cpShapeCacheBB(cpShape *shape);
 
 // Test if a point lies within a shape.
-int cpShapePointQuery(cpShape *shape, cpVect p);
+cpBool cpShapePointQuery(cpShape *shape, cpVect p);
 
 #define CP_DeclareShapeGetter(struct, type, name) type struct##Get##name(cpShape *shape)
 
@@ -114,12 +117,12 @@ typedef struct cpCircleShape{
 	cpShape shape;
 	
 	// Center in body space coordinates
-	cpVect c;
+	CP_PRIVATE(cpVect c);
 	// Radius.
-	cpFloat r;
+	CP_PRIVATE(cpFloat r);
 	
 	// Transformed center. (world space coordinates)
-	cpVect tc;
+	CP_PRIVATE(cpVect tc);
 } cpCircleShape;
 
 // Basic allocation functions for cpCircleShape.
@@ -135,12 +138,12 @@ typedef struct cpSegmentShape{
 	cpShape shape;
 	
 	// Endpoints and normal of the segment. (body space coordinates)
-	cpVect a, b, n;
+	cpVect CP_PRIVATE(a), CP_PRIVATE(b), CP_PRIVATE(n);
 	// Radius of the segment. (Thickness)
-	cpFloat r;
+	cpFloat CP_PRIVATE(r);
 
 	// Transformed endpoints and normal. (world space coordinates)
-	cpVect ta, tb, tn;
+	cpVect CP_PRIVATE(ta), CP_PRIVATE(tb), CP_PRIVATE(tn);
 } cpSegmentShape;
 
 // Basic allocation functions for cpSegmentShape.
@@ -159,16 +162,16 @@ void cpResetShapeIdCounter(void);
 // Directed segment queries against individual shapes.
 void cpSegmentQueryInfoPrint(cpSegmentQueryInfo *info);
 
-int cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info);
+cpBool cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info);
 
 static inline cpVect
-cpSegmentQueryHitPoint(cpVect start, cpVect end, cpSegmentQueryInfo info)
+cpSegmentQueryHitPoint(const cpVect start, const cpVect end, const cpSegmentQueryInfo info)
 {
 	return cpvlerp(start, end, info.t);
 }
 
 static inline cpFloat
-cpSegmentQueryHitDist(cpVect start, cpVect end, cpSegmentQueryInfo info)
+cpSegmentQueryHitDist(const cpVect start, const cpVect end, const cpSegmentQueryInfo info)
 {
 	return cpvdist(start, end)*info.t;
 }

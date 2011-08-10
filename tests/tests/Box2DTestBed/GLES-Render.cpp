@@ -1,5 +1,5 @@
 #include "GLES-Render.h"
-#include <GLES/gl.h>
+#include "CCGL.h"
 
 
 #include <cstdio>

@@ -31,73 +31,79 @@ extern cpFloat cp_collision_slop;
 // Data structure for contact points.
 typedef struct cpContact {
 	// Contact point and normal.
-	cpVect p, n;
+	cpVect CP_PRIVATE(p), CP_PRIVATE(n);
 	// Penetration distance.
-	cpFloat dist;
+	CP_PRIVATE(cpFloat dist);
 	
 	// Calculated by cpArbiterPreStep().
-	cpVect r1, r2;
-	cpFloat nMass, tMass, bounce;
+	cpVect CP_PRIVATE(r1), CP_PRIVATE(r2);
+	cpFloat CP_PRIVATE(nMass), CP_PRIVATE(tMass), CP_PRIVATE(bounce);
 
 	// Persistant contact information.
-	cpFloat jnAcc, jtAcc, jBias;
-	cpFloat bias;
+	cpFloat CP_PRIVATE(jnAcc), CP_PRIVATE(jtAcc), CP_PRIVATE(jBias);
+	CP_PRIVATE(cpFloat bias);
 	
 	// Hash value used to (mostly) uniquely identify a contact.
-	cpHashValue hash;
+	CP_PRIVATE(cpHashValue hash);
 } cpContact;
 
 // Contacts are always allocated in groups.
 cpContact* cpContactInit(cpContact *con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash);
 
 // Sum the contact impulses. (Can be used after cpSpaceStep() returns)
-cpVect cpContactsSumImpulses(cpContact *contacts, int numContacts);
-cpVect cpContactsSumImpulsesWithFriction(cpContact *contacts, int numContacts);
+cpVect CP_PRIVATE(cpContactsSumImpulses)(cpContact *contacts, int numContacts);
+cpVect CP_PRIVATE(cpContactsSumImpulsesWithFriction)(cpContact *contacts, int numContacts);
+
+#define CP_MAX_CONTACTS_PER_ARBITER 6
 
 typedef enum cpArbiterState {
 	cpArbiterStateNormal,
 	cpArbiterStateFirstColl,
 	cpArbiterStateIgnore,
+	cpArbiterStateSleep,
+	cpArbiterStateCached,
 } cpArbiterState;
 
 // Data structure for tracking collisions between shapes.
 typedef struct cpArbiter {
 	// Information on the contact points between the objects.
-	int numContacts;
-	cpContact *contacts;
+	CP_PRIVATE(int numContacts);
+	CP_PRIVATE(cpContact *contacts);
 	
-	// The two shapes involved in the collision.
+	// The two shapes and bodies involved in the collision.
 	// These variables are NOT in the order defined by the collision handler.
-	cpShape *private_a, *private_b;
+	// Using CP_ARBITER_GET_SHAPES and CP_ARBITER_GET_BODIES will save you from
+	// many headaches
+	cpShape CP_PRIVATE(*a), CP_PRIVATE(*b);
 	
 	// Calculated before calling the pre-solve collision handler
 	// Override them with custom values if you want specialized behavior
-	cpFloat e;
-	cpFloat u;
+	CP_PRIVATE(cpFloat e);
+	CP_PRIVATE(cpFloat u);
 	 // Used for surface_v calculations, implementation may change
-	cpVect surface_vr;
+	CP_PRIVATE(cpVect surface_vr);
 	
 	// Time stamp of the arbiter. (from cpSpace)
-	int stamp;
+	CP_PRIVATE(cpTimestamp stamp);
 	
-	struct cpCollisionHandler *handler;
+	CP_PRIVATE(struct cpCollisionHandler *handler);
 	
 	// Are the shapes swapped in relation to the collision handler?
-	char swappedColl;
-	char state;
+	CP_PRIVATE(cpBool swappedColl);
+	CP_PRIVATE(cpArbiterState state);
 } cpArbiter;
 
 // Arbiters are allocated in large buffers by the space and don't require a destroy function
-cpArbiter* cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b);
+cpArbiter* CP_PRIVATE(cpArbiterInit)(cpArbiter *arb, cpShape *a, cpShape *b);
 
 // These functions are all intended to be used internally.
 // Inject new contact points into the arbiter while preserving contact history.
-void cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, struct cpCollisionHandler *handler, cpShape *a, cpShape *b);
+void CP_PRIVATE(cpArbiterUpdate)(cpArbiter *arb, cpContact *contacts, int numContacts, struct cpCollisionHandler *handler, cpShape *a, cpShape *b);
 // Precalculate values used by the solver.
-void cpArbiterPreStep(cpArbiter *arb, cpFloat dt_inv);
-void cpArbiterApplyCachedImpulse(cpArbiter *arb);
+void CP_PRIVATE(cpArbiterPreStep)(cpArbiter *arb, cpFloat dt_inv);
+void CP_PRIVATE(cpArbiterApplyCachedImpulse)(cpArbiter *arb);
 // Run an iteration of the solver on the arbiter.
-void cpArbiterApplyImpulse(cpArbiter *arb, cpFloat eCoef);
+void CP_PRIVATE(cpArbiterApplyImpulse)(cpArbiter *arb, cpFloat eCoef);
 
 // Arbiter Helper Functions
 cpVect cpArbiterTotalImpulse(cpArbiter *arb);
@@ -106,31 +112,77 @@ void cpArbiterIgnore(cpArbiter *arb);
 
 
 static inline void
-cpArbiterGetShapes(cpArbiter *arb, cpShape **a, cpShape **b)
+cpArbiterGetShapes(const cpArbiter *arb, cpShape **a, cpShape **b)
 {
-	if(arb->swappedColl){
-		(*a) = arb->private_b, (*b) = arb->private_a;
+	if(arb->CP_PRIVATE(swappedColl)){
+		(*a) = arb->CP_PRIVATE(b), (*b) = arb->CP_PRIVATE(a);
 	} else {
-		(*a) = arb->private_a, (*b) = arb->private_b;
+		(*a) = arb->CP_PRIVATE(a), (*b) = arb->CP_PRIVATE(b);
 	}
 }
 #define CP_ARBITER_GET_SHAPES(arb, a, b) cpShape *a, *b; cpArbiterGetShapes(arb, &a, &b);
 
+static inline void
+cpArbiterGetBodies(const cpArbiter *arb, cpBody **a, cpBody **b)
+{
+	CP_ARBITER_GET_SHAPES(arb, shape_a, shape_b);
+	(*a) = shape_a->body;
+	(*b) = shape_b->body;
+}
+#define CP_ARBITER_GET_BODIES(arb, a, b) cpBody *a, *b; cpArbiterGetBodies(arb, &a, &b);
+
+static inline cpBool
+cpArbiterIsFirstContact(const cpArbiter *arb)
+{
+	return arb->CP_PRIVATE(state) == cpArbiterStateFirstColl;
+}
+
 static inline int
-cpArbiterIsFirstContact(cpArbiter *arb)
+cpArbiterGetCount(const cpArbiter *arb)
 {
-	return arb->state == cpArbiterStateFirstColl;
+	return arb->CP_PRIVATE(numContacts);
 }
 
 static inline cpVect
-cpArbiterGetNormal(cpArbiter *arb, int i)
+cpArbiterGetNormal(const cpArbiter *arb, int i)
 {
-	cpVect n = arb->contacts[i].n;
-	return arb->swappedColl ? cpvneg(n) : n;
+	cpVect n = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(n);
+	return arb->CP_PRIVATE(swappedColl) ? cpvneg(n) : n;
 }
 
 static inline cpVect
-cpArbiterGetPoint(cpArbiter *arb, int i)
+cpArbiterGetPoint(const cpArbiter *arb, int i)
 {
-	return arb->contacts[i].p;
+	return arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(p);
+}
+
+static inline cpFloat
+cpArbiterGetDepth(const cpArbiter *arb, int i)
+{
+	return arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(dist);
+}
+
+typedef struct cpContactPointSet {
+	int count;
+	
+	struct {
+		cpVect point, normal;
+		cpFloat dist;
+	} points[CP_MAX_CONTACTS_PER_ARBITER];
+} cpContactPointSet;
+
+static inline cpContactPointSet
+cpArbiterGetContactPointSet(const cpArbiter *arb)
+{
+	cpContactPointSet set;
+	set.count = cpArbiterGetCount(arb);
+	
+	int i;
+	for(i=0; i<set.count; i++){
+		set.points[i].point = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(p);
+		set.points[i].normal = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(n);
+		set.points[i].dist = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(dist);
+	}
+	
+	return set;
 }

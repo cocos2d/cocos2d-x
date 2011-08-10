@@ -21,14 +21,13 @@
 
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
 preStep(cpRotaryLimitJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	cpFloat dist = b->a - a->a;
 	cpFloat pdist = 0.0f;
@@ -62,8 +61,7 @@ applyImpulse(cpRotaryLimitJoint *joint)
 {
 	if(!joint->bias) return; // early exit
 
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// compute relative rotational velocity
 	cpFloat wr = b->w - a->w;
@@ -99,7 +97,7 @@ CP_DefineClassGetter(cpRotaryLimitJoint)
 cpRotaryLimitJoint *
 cpRotaryLimitJointAlloc(void)
 {
-	return (cpRotaryLimitJoint *)cpmalloc(sizeof(cpRotaryLimitJoint));
+	return (cpRotaryLimitJoint *)cpcalloc(1, sizeof(cpRotaryLimitJoint));
 }
 
 cpRotaryLimitJoint *

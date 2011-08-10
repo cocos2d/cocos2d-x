@@ -1,5 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Neophit
+Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,26 +31,26 @@ namespace cocos2d {
 	//implementation CCTMXObjectGroup
 
 	CCTMXObjectGroup::CCTMXObjectGroup()
-		:m_sGroupName("")
-		,m_tPositionOffset(CGPointZero)
+        :m_tPositionOffset(CCPointZero)
+		,m_sGroupName("")		
 	{
-		m_pObjects = new NSArray<CCXStringToStringDictionary*>();
-		m_pProperties = new CCXStringToStringDictionary();
+		m_pObjects = new CCMutableArray<CCStringToStringDictionary*>();
+		m_pProperties = new CCStringToStringDictionary();
 	}
 	CCTMXObjectGroup::~CCTMXObjectGroup()
 	{
 		CCLOGINFO( "cocos2d: deallocing.");
-		CCX_SAFE_RELEASE(m_pObjects);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RELEASE(m_pObjects);
+		CC_SAFE_RELEASE(m_pProperties);
 	}
-	CCXStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
+	CCStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
 	{
 		if (m_pObjects && m_pObjects->count() > 0)
 		{
-			NSArray<CCXStringToStringDictionary*>::NSMutableArrayIterator it;
+			CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
 			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
 			{
-				NSString *name = (*it)->objectForKey(std::string("name"));
+				CCString *name = (*it)->objectForKey(std::string("name"));
 				if (name && name->m_sString == objectName)
 				{
 					return *it;
@@ -57,29 +60,29 @@ namespace cocos2d {
 		// object not found
 		return NULL;	
 	}
-	NSString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
+	CCString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
 	{
 		return m_pProperties->objectForKey(std::string(propertyName));
 	}
 
-	CCXStringToStringDictionary * CCTMXObjectGroup::getProperties()
+	CCStringToStringDictionary * CCTMXObjectGroup::getProperties()
 	{ 
 		return m_pProperties;
 	}
-	void CCTMXObjectGroup::setProperties(CCXStringToStringDictionary * properties)
+	void CCTMXObjectGroup::setProperties(CCStringToStringDictionary * properties)
 	{
-		CCX_SAFE_RETAIN(properties);
-		CCX_SAFE_RELEASE(m_pProperties);
+		CC_SAFE_RETAIN(properties);
+		CC_SAFE_RELEASE(m_pProperties);
 		m_pProperties = properties;
 	}
-	NSArray<CCXStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
+	CCMutableArray<CCStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
 	{
 		return m_pObjects;
 	}
-	void CCTMXObjectGroup::setObjects(NSArray<CCXStringToStringDictionary*> * objects)
+	void CCTMXObjectGroup::setObjects(CCMutableArray<CCStringToStringDictionary*> * objects)
 	{
-		CCX_SAFE_RETAIN(objects);
-		CCX_SAFE_RELEASE(m_pObjects);
+		CC_SAFE_RETAIN(objects);
+		CC_SAFE_RELEASE(m_pObjects);
 		m_pObjects = objects;
 	}
 

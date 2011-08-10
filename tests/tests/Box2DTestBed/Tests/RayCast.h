@@ -109,7 +109,7 @@ public:
 		const b2Vec2& normal, float32 fraction)
 	{
 		b2Body* body = fixture->GetBody();
-		int index = 0;
+		//int index = 0;
 		void* userData = body->GetUserData();
 		if (userData)
 		{

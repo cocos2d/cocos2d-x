@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2007      Scott Lembcke
 
 http://www.cocos2d-x.org
 
@@ -25,8 +26,8 @@ THE SOFTWARE.
 /** 
  @file
  Based on Chipmunk cpArray.
- ccArray is a faster alternative to NSMutableArray, it does pretty much the
- same thing (stores NSObjects and retains/releases them appropriately). It's
+ ccArray is a faster alternative to CCMutableArray, it does pretty much the
+ same thing (stores CCObjects and retains/releases them appropriately). It's
  faster because:
  - it uses a plain C interface so it doesn't incur Objective-c messaging overhead 
  - it assumes you know what you're doing, so it doesn't spend time on safety checks
@@ -40,19 +41,19 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 
-#include "NSMutableArray.h"
-#include "NSObject.h"
+#include "CCObject.h"
+#include "ccMacros.h"
 
 namespace cocos2d {
 
 	// Easy integration	
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
-	__object__=__array__->arr[0]; for(int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
+	__object__=__array__->arr[0]; for(unsigned int i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
 typedef struct _ccArray 
 {
 	unsigned int num, max;
-	NSObject**    arr; //equals NSObject** arr;
+	CCObject**    arr; //equals CCObject** arr;
 } ccArray;
 
 /** Allocates and initializes a new array with specified capacity */
@@ -66,7 +67,7 @@ static inline ccArray* ccArrayNew(unsigned int capacity)
 	ccArray *arr = (ccArray*)malloc( sizeof(ccArray) );
 	arr->num = 0;
 	
-	arr->arr =  (NSObject**)malloc( capacity * sizeof(NSObject*) );
+	arr->arr =  (CCObject**)malloc( capacity * sizeof(CCObject*) );
 	arr->max = capacity;
 	
 	return arr;
@@ -94,7 +95,10 @@ static inline void ccArrayFree(ccArray *arr)
 static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
-	arr->arr = (NSObject**) realloc(arr->arr, arr->max * sizeof(NSObject*));
+    CCObject** newArr = (CCObject**)realloc( arr->arr, arr->max * sizeof(CCObject*) );
+    // will fail when there's not enough memory
+    CCAssert(newArr != NULL, "ccArrayDoubleCapacity failed. Not enough memory");
+    arr->arr = newArr;
 }
 
 /** Increases array capacity such that max >= num + extra. */
@@ -106,8 +110,32 @@ static inline void ccArrayEnsureExtraCapacity(ccArray *arr, unsigned int extra)
 	}
 }
 
+/** shrinks the array so the memory footprint corresponds with the number of items */
+static inline void ccArrayShrink(ccArray *arr)
+{
+    unsigned int newSize;
+
+    //only resize when necessary
+    if (arr->max > arr->num && !(arr->num==0 && arr->max==1))
+    {
+        if (arr->num!=0) 
+        {
+            newSize=arr->num;
+            arr->max=arr->num; 
+        }
+        else 
+        {//minimum capacity of 1, with 0 elements the array would be free'd by realloc
+            newSize=1;
+            arr->max=1;
+        }
+
+        arr->arr = (CCObject**) realloc(arr->arr,newSize * sizeof(CCObject*) );
+        CCAssert(arr->arr != NULL, "could not reallocate the memory");
+    }
+} 
+
 /** Returns index of first occurence of object, UXNotFound if object not found. */
-static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, NSObject* object)
+static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, CCObject* object)
 {
 	for ( unsigned int i = 0; i < arr->num; i++)
 	{
@@ -117,24 +145,24 @@ static inline unsigned int ccArrayGetIndexOfObject(ccArray *arr, NSObject* objec
 		}
 	}
 
-	return -1; 
+	return UINT_MAX; 
 }
 
 /** Returns a Boolean value that indicates whether object is present in array. */
-static inline bool ccArrayContainsObject(ccArray *arr, NSObject* object)
+static inline bool ccArrayContainsObject(ccArray *arr, CCObject* object)
 {
-	return ccArrayGetIndexOfObject(arr, object) != -1;
+	return ccArrayGetIndexOfObject(arr, object) != UINT_MAX;
 }
 
 /** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
-static inline void ccArrayAppendObject(ccArray *arr, NSObject* object)
+static inline void ccArrayAppendObject(ccArray *arr, CCObject* object)
 {
 	arr->arr[arr->num] = object; object->retain();
 	arr->num++;
 }
 
 /** Appends an object. Capacity of arr is increased if needed. */
-static inline void ccArrayAppendObjectWithResize(ccArray *arr, NSObject* object)
+static inline void ccArrayAppendObjectWithResize(ccArray *arr, CCObject* object)
 {
 	ccArrayEnsureExtraCapacity(arr, 1);
 	ccArrayAppendObject(arr, object);
@@ -157,6 +185,34 @@ static inline void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 	ccArrayAppendArray(arr, plusArr);
 }
 
+/** Inserts an object at index */
+static inline void ccArrayInsertObjectAtIndex(ccArray *arr, CCObject* object, unsigned int index)
+{
+    CCAssert(index<=arr->num, "Invalid index. Out of bounds");
+
+    ccArrayEnsureExtraCapacity(arr, 1);
+
+    unsigned int remaining = arr->num - index;
+    if( remaining > 0)
+        memmove(&arr->arr[index+1], &arr->arr[index], sizeof(CCObject*) * remaining );
+
+    object->retain();
+    arr->arr[index] = object;
+    arr->num++;
+}
+
+/** Swaps two objects */
+static inline void ccArraySwapObjectsAtIndexes(ccArray *arr, unsigned int index1, unsigned int index2)
+{
+    CCAssert(index1 < arr->num, "(1) Invalid index. Out of bounds");
+    CCAssert(index2 < arr->num, "(2) Invalid index. Out of bounds");
+
+    CCObject* object1 = arr->arr[index1];
+
+    arr->arr[index1] = arr->arr[index2];
+    arr->arr[index2] = object1;
+}
+
 /** Removes all objects from arr */
 static inline void ccArrayRemoveAllObjects(ccArray *arr)
 {
@@ -171,10 +227,12 @@ static inline void ccArrayRemoveAllObjects(ccArray *arr)
 static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, unsigned int index)
 {
 	arr->arr[index]->release(); 
-	
-	for( unsigned int last = --arr->num; index < last; index++)
+	arr->num--;
+
+	unsigned int remaining = arr->num - index;
+	if (remaining > 0)
 	{
-		arr->arr[index] = arr->arr[index + 1]; 
+			memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(void*));
 	}
 }
 
@@ -189,13 +247,20 @@ static inline void ccArrayFastRemoveObjectAtIndex(ccArray *arr, unsigned int ind
 	arr->arr[index] = arr->arr[last];
 }
 
+static inline void ccArrayFastRemoveObject(ccArray *arr, CCObject* object)
+{
+    unsigned int index = ccArrayGetIndexOfObject(arr, object);
+    if (index != UINT_MAX)
+        ccArrayFastRemoveObjectAtIndex(arr, index);
+}
+
 /** Searches for the first occurance of object and removes it. If object is not
  found the function has no effect. */
-static inline void ccArrayRemoveObject(ccArray *arr, NSObject* object)
+static inline void ccArrayRemoveObject(ccArray *arr, CCObject* object)
 {
 	unsigned int index = ccArrayGetIndexOfObject(arr, object);
 
-	if (index != -1)
+	if (index != UINT_MAX)
 	{
 		ccArrayRemoveObjectAtIndex(arr, index);
 	}
@@ -236,7 +301,7 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 typedef struct _ccCArray 
 {
 	unsigned int num, max;
-	void**    arr; //equals NSObject** arr;
+	void**    arr; //equals CCObject** arr;
 } ccCArray;
 
 static inline void ccCArrayRemoveAllValues(ccCArray *arr);
@@ -274,17 +339,13 @@ static inline void ccCArrayFree(ccCArray *arr)
 /** Doubles C array capacity */
 static inline void ccCArrayDoubleCapacity(ccCArray *arr)
 {
-	arr->max *= 2;
-	arr->arr = (void**) realloc(arr->arr, arr->max * sizeof(void*));
+	ccArrayDoubleCapacity((ccArray*)arr);
 }
 
 /** Increases array capacity such that max >= num + extra. */
 static inline void ccCArrayEnsureExtraCapacity(ccCArray *arr, unsigned int extra)
 {
-	while (arr->max < arr->num + extra)
-	{
-		ccCArrayDoubleCapacity(arr); 
-	}
+	ccArrayEnsureExtraCapacity((ccArray*)arr,extra);
 }
 
 /** Returns index of first occurence of value, NSNotFound if value not found. */
@@ -310,7 +371,8 @@ static inline bool ccCArrayContainsValue(ccCArray *arr, void* value)
 /** Inserts a value at a certain position. The valid index is [0, num] */
 static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, unsigned int index)
 {
-	int remaining = arr->num - index;
+    CCAssert( index < arr->max, "ccCArrayInsertValueAtIndex: invalid index");
+	unsigned int remaining = arr->num - index;
 
 	// make sure it has enough capacity
 	if (arr->num + 1 == arr->max)
@@ -397,7 +459,7 @@ static inline void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, unsigned int in
 static inline void ccCArrayRemoveValue(ccCArray *arr, void* value)
 {
 	unsigned int index = ccCArrayGetIndexOfValue(arr, value);
-	if (index != -1)
+	if (index != UINT_MAX)
 	{
 		ccCArrayRemoveValueAtIndex(arr, index);
 	}

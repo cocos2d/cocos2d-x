@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -31,9 +32,14 @@ namespace cocos2d{
 
 	typedef enum  
 	{
-		kMenuStateWaiting,
-		kMenuStateTrackingTouch
-	} MenuState;
+        kCCMenuStateWaiting,
+        kCCMenuStateTrackingTouch
+    } tCCMenuState;
+
+    enum {
+        //* priority used by the menu
+        kCCMenuTouchPriority = -128,
+    };
 
 	/** @brief A CCMenu
 	* 
@@ -41,14 +47,29 @@ namespace cocos2d{
 	*  - You can add MenuItem objects in runtime using addChild:
 	*  - But the only accecpted children are MenuItem objects
 	*/
-	class CCX_DLL CCMenu : public CCLayer, public CCRGBAProtocol
+	class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
 	{
 	public:
-		CCMenu(){}
+		CCMenu()
+			: m_cOpacity(0)
+			, m_pSelectedItem(NULL)
+		{}
 		virtual ~CCMenu(){}
-		/** creates a CCMenu with it's items */
-		static CCMenu* menuWithItems(CCMenuItem* item, ...);
 
+                /** creates an empty CCMenu */
+                static CCMenu* node();
+
+                /** creates a CCMenu with it's items */
+                static CCMenu* menuWithItems(CCMenuItem* item, ...);
+
+		/** creates a CCMenu with it's item, then use addChild() to add 
+		  * other items. It is used for script, it can't init with undetermined
+		  * number of variables.
+		*/
+		static CCMenu*menuWithItem(CCMenuItem* item);
+
+                /** initializes an empty CCMenu */
+                bool init();
 		/** initializes a CCMenu with it's items */
 		bool initWithItems(CCMenuItem* item, va_list args);
 
@@ -75,15 +96,26 @@ namespace cocos2d{
 		void alignItemsInRows(unsigned int rows, va_list args);
 
 		//super methods
-		virtual CCNode * addChild(CCNode * child, int zOrder);
-		virtual CCNode * addChild(CCNode * child, int zOrder, int tag);
+		virtual void addChild(CCNode * child, int zOrder);
+		virtual void addChild(CCNode * child, int zOrder, int tag);
 		virtual void registerWithTouchDispatcher();
-		virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-		virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
-		virtual void ccTouchCancelled(CCTouch *touch, UIEvent* event);
-		virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
+
+        /**
+        @brief For phone event handle functions
+        */
+		virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+		virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+		virtual void ccTouchCancelled(CCTouch *touch, CCEvent* event);
+		virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+
 		virtual void destroy(void);
 		virtual void keep(void);
+
+        /**
+        @since v0.99.5
+        override onExit
+        */
+        virtual void onExit();
 
 		virtual void setOpacity(GLubyte opacity);
 		virtual GLubyte getOpacity(void);
@@ -92,13 +124,11 @@ namespace cocos2d{
 
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 
-	private:
-		CCMenuItem* itemForTouch(CCTouch * touch);
-
 	protected:
-		MenuState m_eState;
-		CCMenuItem *m_pSelectedItem;
-		GLubyte m_cOpacity;
+		CCMenuItem* itemForTouch(CCTouch * touch);
+		tCCMenuState m_eState;
+        GLubyte m_cOpacity;
+		CCMenuItem *m_pSelectedItem;		
 		ccColor3B m_tColor;
 	};
 }

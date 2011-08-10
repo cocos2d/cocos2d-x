@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,17 +29,14 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCProtocols.h"
-#include "NSMutableArray.h"
-#include "NSObject.h"
-
-#include <string.h>
+#include "CCObject.h"
 
 namespace   cocos2d {
-class CGRect;
-class CGPoint;
-class CGSize;
+class CCRect;
+class CCPoint;
+class CCSize;
 class CCTexture2D;
-class NSZone;
+class CCZone;
 
 /** @brief A CCSpriteFrame has:
 	- texture: A CCTexture2D that will be used by the CCSprite
@@ -49,147 +48,75 @@ class NSZone;
 	CCSpriteFrame *frame = CCSpriteFrame::frameWithTexture(texture, rect, offset);
 	sprite->setDisplayFrame(frame);
  */
-class CCX_DLL CCSpriteFrame : public NSObject
+class CC_DLL CCSpriteFrame : public CCObject
 {
 public:
 	// attributes
 
+	inline CCRect getRectInPixels(void) { return m_obRectInPixels; }
+	void setRectInPixels(CCRect rectInPixels);
+
+	inline bool isRotated(void) { return m_bRotated; }
+	inline void setRotated(bool bRotated) { m_bRotated = bRotated; }
+
 	/** get rect of the frame */
-	inline CGRect getRect(void) { return m_obRect; }
+	inline CCRect getRect(void) { return m_obRect; }
 	/** set rect of the frame */
-	inline void setRect(CGRect rect) { m_obRect = rect; }
+	void setRect(CCRect rect);
 
 	/** get offset of the frame */
-	inline CGPoint getOffset(void) { return m_obOffset; }
+	inline CCPoint getOffsetInPixels(void) { return m_obOffsetInPixels; }
 	/** set offset of the frame */
-	inline void setOffset(CGPoint offset) { m_obOffset = offset; }
+	inline void setOffsetInPixels(CCPoint offsetInPixels) { m_obOffsetInPixels = offsetInPixels; }
 
 	/** get original size of the trimmed image */
-	inline CGSize getOriginalSize(void) { return m_obOriginalSize; }
+	inline CCSize getOriginalSizeInPixels(void) { return m_obOriginalSizeInPixels; }
 	/** set original size of the trimmed image */
-	inline void setOriginalSize(CGSize size) { m_obOriginalSize = size; }
+	inline void setOriginalSizeInPixels(CCSize sizeInPixels) { m_obOriginalSizeInPixels = sizeInPixels; }
 
 	/** get texture of the frame */
 	inline CCTexture2D* getTexture(void) { return m_pobTexture; }
 	/** set texture of the frame, the texture is retained */
 	inline void setTexture(CCTexture2D* pobTexture)
 	{
-		CCX_SAFE_RETAIN(pobTexture);
-		CCX_SAFE_RELEASE(m_pobTexture);
+		CC_SAFE_RETAIN(pobTexture);
+		CC_SAFE_RELEASE(m_pobTexture);
 		m_pobTexture = pobTexture;
 	}
 
 public:
 	~CCSpriteFrame(void);
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 
-	/** Create a CCSpriteFrame with a texture, rect and offset.
+	/** Create a CCSpriteFrame with a texture, rect in points.
 	 It is assumed that the frame was not trimmed.
 	 */
-	static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset);
+	static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
-	/** Create a CCSpriteFrame with a texture, rect, offset and originalSize.
-	 The originalSize is the size in pixels of the frame before being trimmed.
+	/** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+	 The originalSize is the size in points of the frame before being trimmed.
 	 */
-    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset, CGSize originalSize);
+    static CCSpriteFrame* frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
 
 public:
-	/** Initializes a CCSpriteFrame with a texture, rect and offset.
+	/** Initializes a CCSpriteFrame with a texture, rect in points.
 	 It is assumed that the frame was not trimmed.
 	 */
-	bool initWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset);
+	bool initWithTexture(CCTexture2D* pobTexture, CCRect rect);
 
-	/** Initializes a CCSpriteFrame with a texture, rect, offset and originalSize.
-	 The originalSize is the size in pixels of the frame before being trimmed.
-	 */
-	bool initWithTexture(CCTexture2D* pobTexture, CGRect rect, CGPoint offset, CGSize originalSize);
+	/** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+	The originalSize is the size in points of the frame before being trimmed.
+	*/
+	bool initWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize);
 protected:
-	CGRect m_obRect;
-	CGPoint m_obOffset;
-	CGSize m_obOriginalSize;
+	CCRect m_obRectInPixels;
+	bool   m_bRotated;
+	CCRect m_obRect;
+	CCPoint m_obOffsetInPixels;
+	CCSize m_obOriginalSizeInPixels;
 	CCTexture2D *m_pobTexture;
 };
 
-//! @brief an Animation object used within Sprites to perform animations 
-class CCX_DLL CCAnimation : public NSObject
-{
-protected:
-	std::string m_nameStr;
-	float m_fDelay;
-	NSMutableArray<CCSpriteFrame*> *m_pobFrames;
-
-public:
-	// attributes
-
-	/** get name of the animation */
-	inline const char* getName(void) { return m_nameStr.c_str(); }
-	/** set name of the animation */
-	inline void setName(const char *pszName){ m_nameStr = pszName; }
-
-	/** get delay between frames in seconds */
-	inline float getDelay(void) { return m_fDelay; }
-	/** set delay between frames in seconds */
-	inline void setDelay(float fDelay) { m_fDelay = fDelay; }
-
-	/** get array of frames */
-	inline NSMutableArray<CCSpriteFrame*>* getFrames(void) { return m_pobFrames; }
-	/** set array of frames, the Frames is retained */
-	inline void setFrames(NSMutableArray<CCSpriteFrame*> *pFrames)
-	{
-		CCX_SAFE_RETAIN(pFrames);
-		CCX_SAFE_RELEASE(m_pobFrames);
-		m_pobFrames = pFrames;
-	}
-
-public:
-	~CCAnimation(void);
-
-	/** Initializes a CCAnimation with a name
-	 @since v0.99.3
-	 */
-	bool initWithName(const char *pszName);
-
-	/** Initializes a CCAnimation with a name and frames
-	 @since v0.99.3
-	 */
-    bool initWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
-
-	/** Initializes a CCAnimation with a name and delay between frames. */
-    bool initWithName(const char *pszName, float fDelay);
-
-	/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-	bool initWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
-
-	/** adds a frame to a CCAnimation */
-	void addFrame(CCSpriteFrame *pFrame);
-
-	/** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
-	 Added to facilitate the migration from v0.8 to v0.9.
-	 */
-	void addFrameWithFileName(const char *pszFileName);
-
-	/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
-	 Added to facilitate the migration from v0.8 to v0.9.
-	 */
-	void addFrameWithTexture(CCTexture2D* pobTexture, CGRect rect);
-
-public:
-	/** Creates a CCAnimation with a name
-	 @since v0.99.3
-	 */
-	static CCAnimation* animationWithName(const char *pszName);
-
-	/** Creates a CCAnimation with a name and frames
-	 @since v0.99.3
-	 */
-	static CCAnimation* animationWithName(const char *pszName, NSArray<CCSpriteFrame*> *pFrames);
-
-	/** Creates a CCAnimation with a name and delay between frames. */
-	static CCAnimation* animationWithName(const char *pszName, float fDelay);
-
-	/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-	static CCAnimation* animationWithName(const char *pszName, float fDelay, NSArray<CCSpriteFrame*> *pFrames);
-};
 }//namespace   cocos2d 
 
 #endif //__SPRITE_CCSPRITE_FRAME_H__

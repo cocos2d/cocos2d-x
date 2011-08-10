@@ -7,9 +7,10 @@ Thumbs.db
 *.pdb
 *.aps
 *.vcproj.*.user
-*.pch
 *.vspscc
 *_i.c
+*.i
+*.icf
 *_p.c
 *.ncb
 *.suo
@@ -21,9 +22,31 @@ Thumbs.db
 *.log
 [Bb]in
 [Dd]ebug*/
-*.lib
 *.sbr
 obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+
+# Ignore files build by ndk and eclipse
+libs/
+bin/
+obj/
+assets/
+.classpath
+.project
+.cproject
+
+# Ignore files build by airplay
+build_*_xcode/
+
+# Ignore files build by xcode
+*.mode*v*
+*.pbxuser
+*.xcbkptlist
+*.xcscheme
+*.xcworkspacedata
+*.xcuserstate
+xcschememanagement.plist
+build/
+.DS_Store

@@ -21,14 +21,13 @@
 
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
 preStep(cpGearJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// calculate moment of inertia coefficient.
 	joint->iSum = 1.0f/(a->i_inv*joint->ratio_inv + joint->ratio*b->i_inv);
@@ -49,8 +48,7 @@ preStep(cpGearJoint *joint, cpFloat dt, cpFloat dt_inv)
 static void
 applyImpulse(cpGearJoint *joint)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// compute relative rotational velocity
 	cpFloat wr = b->w*joint->ratio - a->w;
@@ -82,7 +80,7 @@ CP_DefineClassGetter(cpGearJoint)
 cpGearJoint *
 cpGearJointAlloc(void)
 {
-	return (cpGearJoint *)cpmalloc(sizeof(cpGearJoint));
+	return (cpGearJoint *)cpcalloc(1, sizeof(cpGearJoint));
 }
 
 cpGearJoint *
@@ -111,4 +109,5 @@ cpGearJointSetRatio(cpConstraint *constraint, cpFloat value)
 	cpConstraintCheckCast(constraint, cpGearJoint);
 	((cpGearJoint *)constraint)->ratio = value;
 	((cpGearJoint *)constraint)->ratio_inv = 1.0f/value;
+	cpConstraintActivateBodies(constraint);
 }

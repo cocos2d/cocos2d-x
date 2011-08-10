@@ -8,6 +8,10 @@ enum {
 #define MAX_TESTS           8
 static int sceneIdx = -1;
 
+CCLayer* nextSchedulerTest();
+CCLayer* backSchedulerTest();
+CCLayer* restartSchedulerTest();
+
 CCLayer* createSchedulerTest(int nIndex)
 {
     CCLayer* pLayer = NULL;
@@ -70,16 +74,16 @@ void SchedulerTestLayer::onEnter()
 {
     CCLayer::onEnter();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+    CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
     addChild(label);
     label->setPosition(ccp(s.width/2, s.height-50));
 
     std::string subTitle = subtitle();
     if(! subTitle.empty())
     {
-        CCLabel* l = CCLabel::labelWithString(subTitle.c_str(), "Thonburi", 16);
+        CCLabelTTF* l = CCLabelTTF::labelWithString(subTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(ccp(s.width/2, s.height-80));
     }
@@ -89,7 +93,7 @@ void SchedulerTestLayer::onEnter()
     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage("Images/f1.png", "Images/f2.png", this, menu_selector(SchedulerTestLayer::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
-    menu->setPosition(CGPointZero);
+    menu->setPosition(CCPointZero);
     item1->setPosition(ccp( s.width/2 - 100,30));
     item2->setPosition(ccp( s.width/2, 30));
     item3->setPosition(ccp( s.width/2 + 100,30));
@@ -97,7 +101,7 @@ void SchedulerTestLayer::onEnter()
     addChild(menu, 1);
 }
 
-void SchedulerTestLayer::backCallback(NSObject* pSender)
+void SchedulerTestLayer::backCallback(CCObject* pSender)
 {
     CCScene* pScene = new SchedulerTestScene();
     CCLayer* pLayer = backSchedulerTest();
@@ -107,7 +111,7 @@ void SchedulerTestLayer::backCallback(NSObject* pSender)
     pScene->release();
 }
 
-void SchedulerTestLayer::nextCallback(NSObject* pSender)
+void SchedulerTestLayer::nextCallback(CCObject* pSender)
 {
     CCScene* pScene = new SchedulerTestScene();
     CCLayer* pLayer = nextSchedulerTest();
@@ -117,7 +121,7 @@ void SchedulerTestLayer::nextCallback(NSObject* pSender)
     pScene->release();
 }
 
-void SchedulerTestLayer::restartCallback(NSObject* pSender)
+void SchedulerTestLayer::restartCallback(CCObject* pSender)
 {
     CCScene* pScene = new SchedulerTestScene();
     CCLayer* pLayer = restartSchedulerTest();
@@ -154,18 +158,18 @@ void SchedulerAutoremove::onEnter()
 void SchedulerAutoremove::autoremove(ccTime dt)
 {
     accum += dt;
-    ////NSLog(@"Time: %f", accum);
+    CCLOG("Time: %f", accum);
 
     if( accum > 3 )
     {
         unschedule(schedule_selector(SchedulerAutoremove::autoremove));
-        ////NSLog(@"scheduler removed");
+        CCLOG("scheduler removed");
     }
 }
 
 void SchedulerAutoremove::tick(ccTime dt)
 {
-    ////NSLog(@"This scheduler should not be removed");
+    CCLOG("This scheduler should not be removed");
 }
 
 std::string SchedulerAutoremove::title()
@@ -194,12 +198,12 @@ void SchedulerPauseResume::onEnter()
 
 void SchedulerPauseResume::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCLOG("tick1");
 }
 
 void SchedulerPauseResume::tick2(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCLOG("tick2");
 }
 
 void SchedulerPauseResume::pause(ccTime dt)
@@ -235,22 +239,22 @@ void SchedulerUnscheduleAll::onEnter()
 
 void SchedulerUnscheduleAll::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCLOG("tick1");
 }
 
 void SchedulerUnscheduleAll::tick2(ccTime dt)
 {
-    ////NSLog(@"tick2");
+    CCLOG("tick2");
 }
 
 void SchedulerUnscheduleAll::tick3(ccTime dt)
 {
-    ////NSLog(@"tick3");
+    CCLOG("tick3");
 }
 
 void SchedulerUnscheduleAll::tick4(ccTime dt)
 {
-    ////NSLog(@"tick4");
+    CCLOG("tick4");
 }
 
 void SchedulerUnscheduleAll::unscheduleAll(ccTime dt)
@@ -286,22 +290,22 @@ void SchedulerUnscheduleAllHard::onEnter()
 
 void SchedulerUnscheduleAllHard::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCLOG("tick1");
 }
 
 void SchedulerUnscheduleAllHard::tick2(ccTime dt)
 {
-    ////NSLog(@"tick2");
+    CCLOG("tick2");
 }
 
 void SchedulerUnscheduleAllHard::tick3(ccTime dt)
 {
-    ////NSLog(@"tick3");
+    CCLOG("tick3");
 }
 
 void SchedulerUnscheduleAllHard::tick4(ccTime dt)
 {
-    ////NSLog(@"tick4");
+    CCLOG("tick4");
 }
 
 void SchedulerUnscheduleAllHard::unscheduleAll(ccTime dt)
@@ -335,22 +339,22 @@ void SchedulerSchedulesAndRemove::onEnter()
 
 void SchedulerSchedulesAndRemove::tick1(ccTime dt)
 {
-    ////NSLog(@"tick1");
+    CCLOG("tick1");
 }
 
 void SchedulerSchedulesAndRemove::tick2(ccTime dt)
 {
-    ////NSLog(@"tick2");
+    CCLOG("tick2");
 }
 
 void SchedulerSchedulesAndRemove::tick3(ccTime dt)
 {
-    ////NSLog(@"tick3");
+    CCLOG("tick3");
 }
 
 void SchedulerSchedulesAndRemove::tick4(ccTime dt)
 {
-    ////NSLog(@"tick4");
+    CCLOG("tick4");
 }
 
 std::string SchedulerSchedulesAndRemove::title()
@@ -378,7 +382,7 @@ void SchedulerSchedulesAndRemove::scheduleAndUnschedule(ccTime dt)
 // TestNode
 //
 //------------------------------------------------------------------
-void TestNode::initWithString(NSString* pStr, int priority)
+void TestNode::initWithString(CCString* pStr, int priority)
 {
     m_pstring = pStr;
     m_pstring->retain();
@@ -400,42 +404,42 @@ void SchedulerUpdate::onEnter()
     SchedulerTestLayer::onEnter();
 
     TestNode* d = new TestNode();
-    NSString* pStr = new NSString("---");
+    CCString* pStr = new CCString("---");
     d->initWithString(pStr, 50);
     pStr->release();
     addChild(d);
     d->release();
 
     TestNode* b = new TestNode();
-    pStr = new NSString("3rd");
+    pStr = new CCString("3rd");
     b->initWithString(pStr, 0);
     pStr->release();
     addChild(b);
     b->release();
 
     TestNode* a = new TestNode();
-    pStr = new NSString("1st");
+    pStr = new CCString("1st");
     a->initWithString(pStr, -10);
     pStr->release();
     addChild(a);
     a->release();
 
     TestNode* c = new TestNode();
-    pStr = new NSString("4th");
+    pStr = new CCString("4th");
     c->initWithString(pStr, 10);
     pStr->release();
     addChild(c);
     c->release();
 
     TestNode* e = new TestNode();
-    pStr = new NSString("5th");
+    pStr = new CCString("5th");
     e->initWithString(pStr, 20);
     pStr->release();
     addChild(e);
     e->release();
 
     TestNode* f = new TestNode();
-    pStr = new NSString("2nd");
+    pStr = new CCString("2nd");
     f->initWithString(pStr, -5);
     pStr->release();
     addChild(f);
@@ -446,13 +450,12 @@ void SchedulerUpdate::onEnter()
 
 void SchedulerUpdate::removeUpdates(ccTime dt)
 {
-    NSMutableArray<CCNode*> * children = getChildren();
-    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-
+    CCArray* children = getChildren();
     CCNode* pNode;
-    for (it = children->begin(); it != children->end(); it++)
+    CCObject* pObject;
+    CCARRAY_FOREACH(children, pObject)
     {
-        pNode = (CCNode*)(*it);
+        pNode = (CCNode*)pObject;
 
         if (! pNode)
         {
@@ -488,12 +491,12 @@ void SchedulerUpdateAndCustom::onEnter()
 
 void SchedulerUpdateAndCustom::update(ccTime dt)
 {
-    ////NSLog(@"update called:%f", dt);
+    CCLOG("update called:%f", dt);
 }
 
 void SchedulerUpdateAndCustom::tick(ccTime dt)
 {
-    ////NSLog(@"custom selector called:%f",dt);
+    CCLOG("custom selector called:%f",dt);
 }
 
 void SchedulerUpdateAndCustom::stopSelectors(ccTime dt)
@@ -525,7 +528,7 @@ void SchedulerUpdateFromCustom::onEnter()
 
 void SchedulerUpdateFromCustom::update(ccTime dt)
 {
-    ////NSLog(@"update called:%f", dt);
+    CCLOG("update called:%f", dt);
 }
 
 void SchedulerUpdateFromCustom::schedUpdate(ccTime dt)
@@ -579,7 +582,7 @@ void RescheduleSelector::schedUpdate(ccTime dt)
 {
     m_nTicks++;
 
-    //CCLOG(@"schedUpdate: %.2f", dt);
+    CCLOG("schedUpdate: %.2f", dt);
     if ( m_nTicks > 3 )
     {
         m_fInterval += 1.0f;

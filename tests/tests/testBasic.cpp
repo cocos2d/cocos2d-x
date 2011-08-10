@@ -1,21 +1,38 @@
 #include "testBasic.h"
 #include "controller.h"
 
-BackToMainMenuLayer::BackToMainMenuLayer()
+TestScene::TestScene(bool bPortrait)
+:m_bPortrait(bPortrait)
 {
+    if (m_bPortrait)
+    {
+        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeRight);
+    }
+    
+    CCScene::init();
+}
+
+void TestScene::onEnter()
+{
+    CCScene::onEnter();
+
     //add the menu item for back to main menu
-    CCLabel* label = CCLabel::labelWithString("MainMenu", "Arial", 20);
-    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(BackToMainMenuLayer::MainMenuCallback));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+    CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString("MainMenu",  "fonts/arial16.fnt");
+#else
+    CCLabelTTF* label = CCLabelTTF::labelWithString("MainMenu", "Arial", 20);
+#endif
+    CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestScene::MainMenuCallback));
 
     CCMenu* pMenu =CCMenu::menuWithItems(pMenuItem, NULL);
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
-    pMenu->setPosition( CGPointZero );
-    pMenuItem->setPosition( CGPointMake( s.width - 50, 25) );
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    pMenu->setPosition( CCPointZero );
+    pMenuItem->setPosition( CCPointMake( s.width - 50, 25) );
 
     addChild(pMenu, 1);
 }
 
-void BackToMainMenuLayer::MainMenuCallback(NSObject* pSender)
+void TestScene::MainMenuCallback(CCObject* pSender)
 {
     CCScene* pScene = CCScene::node();
     CCLayer* pLayer = new TestController();
@@ -23,13 +40,4 @@ void BackToMainMenuLayer::MainMenuCallback(NSObject* pSender)
 
     pScene->addChild(pLayer);
     CCDirector::sharedDirector()->replaceScene(pScene);
-}
-
-TestScene::TestScene()
-{
-    CCScene::init();
-    CCLayer* pLayer = new BackToMainMenuLayer();
-    pLayer->autorelease();
-
-    addChild(pLayer, 1000);
 }

@@ -21,14 +21,13 @@
 
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
 preStep(cpSlideJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	joint->r1 = cpvrotate(joint->anchr1, a->rot);
 	joint->r2 = cpvrotate(joint->anchr2, b->rot);
@@ -69,8 +68,7 @@ applyImpulse(cpSlideJoint *joint)
 {
 	if(!joint->bias) return;  // early exit
 
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	cpVect n = joint->n;
 	cpVect r1 = joint->r1;
@@ -106,7 +104,7 @@ CP_DefineClassGetter(cpSlideJoint)
 cpSlideJoint *
 cpSlideJointAlloc(void)
 {
-	return (cpSlideJoint *)cpmalloc(sizeof(cpSlideJoint));
+	return (cpSlideJoint *)cpcalloc(1, sizeof(cpSlideJoint));
 }
 
 cpSlideJoint *

@@ -2,7 +2,7 @@
 #define _BOX2D_TEST_H_
 
 #include "cocos2d.h"
-#include "Box2d/Box2d.h"
+#include "Box2D/Box2D.h"
 #include "../testBasic.h"
 
 class Box2DTestLayer : public CCLayer
@@ -16,9 +16,9 @@ public:
 
 	virtual void draw();
 
-	void addNewSpriteWithCoords(CGPoint p);
-	void tick(ccTime dt);
-	virtual void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void addNewSpriteWithCoords(CCPoint p);
+	void update(ccTime dt);
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
 	//CREATE_NODE(Box2DTestLayer);
 } ;

@@ -14,12 +14,19 @@ public:
 	~MenuLayer1();
 
 public:
-	void menuCallback(NSObject* pSender);
-	void menuCallbackConfig(NSObject* pSender);
-	void menuCallbackDisabled(NSObject* pSender);
-	void menuCallbackEnable(NSObject* pSender);
-	void menuCallback2(NSObject* pSender);
-	void onQuit(NSObject* pSender);
+    virtual void registerWithTouchDispatcher();
+    virtual bool ccTouchBegan(CCTouch *touch, CCEvent * pEvent);
+    virtual void ccTouchEnded(CCTouch *touch, CCEvent * pEvent);
+    virtual void ccTouchCancelled(CCTouch *touch, CCEvent * pEvent);
+    virtual void ccTouchMoved(CCTouch *touch, CCEvent * pEvent);
+
+    void allowTouches(ccTime dt);
+	void menuCallback(CCObject* pSender);
+	void menuCallbackConfig(CCObject* pSender);
+	void menuCallbackDisabled(CCObject* pSender);
+	void menuCallbackEnable(CCObject* pSender);
+	void menuCallback2(CCObject* pSender);
+	void onQuit(CCObject* pSender);
 
 	//CREATE_NODE(MenuLayer1);
 };
@@ -27,7 +34,7 @@ public:
 class MenuLayer2 : public CCLayer
 {
 protected:
-	CGPoint		m_centeredMenu;
+	CCPoint		m_centeredMenu;
 	bool                m_alignedH; 
 
 	void alignMenusH();
@@ -38,9 +45,9 @@ public:
 	~MenuLayer2();
 
 public:
-	void menuCallback(NSObject* pSender);
-	void menuCallbackOpacity(NSObject* pSender);
-	void menuCallbackAlign(NSObject* pSender);
+	void menuCallback(CCObject* pSender);
+	void menuCallbackOpacity(CCObject* pSender);
+	void menuCallbackAlign(CCObject* pSender);
 
 	//CREATE_NODE(MenuLayer2);
 };
@@ -55,9 +62,9 @@ public:
 	~MenuLayer3();
 
 public:
-	void menuCallback(NSObject* pSender);
-	void menuCallback2(NSObject* pSender);
-	void menuCallback3(NSObject* pSender);
+	void menuCallback(CCObject* pSender);
+	void menuCallback2(CCObject* pSender);
+	void menuCallback3(CCObject* pSender);
 
 	//CREATE_NODE(MenuLayer3);
 };
@@ -69,8 +76,8 @@ public:
 	~MenuLayer4();
 
 public:
-	void menuCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void menuCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 
 	//CREATE_NODE(MenuLayer4);
 };

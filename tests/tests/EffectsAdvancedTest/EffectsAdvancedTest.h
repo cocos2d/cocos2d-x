@@ -18,9 +18,9 @@ public:
 	virtual std::string title();
 	virtual std::string subtitle();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 };
 
 class Effect1 : public EffectAdvanceTextLayer

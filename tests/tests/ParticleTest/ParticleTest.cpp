@@ -1,16 +1,20 @@
 #include "ParticleTest.h"
-// #include "CCIntervalAction.h"
+// #include "CCActionInterval.h"
 // #include "CCMenu.h"
-// #include "CCLabel.h"
+// #include "CCLabelTTF.h"
 // #include "CCLabelAtlas.h"
 // #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "../testResource.h"
-/*#include "support/CGPointExtension.h"*/
+/*#include "support/CCPointExtension.h"*/
 
 enum 
 {
 	kTagLabelAtlas = 1,
 };
+
+CCLayer* nextParticleAction();
+CCLayer* backParticleAction();
+CCLayer* restartParticleAction();
 
 //------------------------------------------------------------------
 //
@@ -50,8 +54,8 @@ void DemoFire::onEnter()
 	m_background->addChild(m_emitter, 10);
 	
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );//.pvr"];
-	CGPoint p = m_emitter->getPosition();
-	m_emitter->setPosition( CGPointMake(p.x, 100) );
+	CCPoint p = m_emitter->getPosition();
+	m_emitter->setPosition( CCPointMake(p.x, 100) );
 	
 	setEmitterPosition();
 }
@@ -138,7 +142,7 @@ void DemoBigFlower::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCQuadParticleSystem();
+	m_emitter = new CCParticleSystemQuad();
 	m_emitter->initWithTotalParticles(50);
 	//m_emitter->autorelease();
 
@@ -149,7 +153,7 @@ void DemoBigFlower::onEnter()
 	m_emitter->setDuration(-1);
 	
 	// gravity
-	m_emitter->setGravity(CGPointZero);
+	m_emitter->setGravity(CCPointZero);
 	
 	// angle
 	m_emitter->setAngle(90);
@@ -168,8 +172,8 @@ void DemoBigFlower::onEnter()
 	m_emitter->setTangentialAccelVar(0);
 	
 	// emitter position
-	m_emitter->setPosition( CGPointMake(160,240) );
-	m_emitter->setPosVar(CGPointZero);
+	m_emitter->setPosition( CCPointMake(160,240) );
+	m_emitter->setPosVar(CCPointZero);
 	
 	// life of particles
 	m_emitter->setLife(4);
@@ -222,7 +226,7 @@ void DemoRotFlower::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCQuadParticleSystem();
+	m_emitter = new CCParticleSystemQuad();
 	m_emitter->initWithTotalParticles(300);
 	//m_emitter->autorelease();
 
@@ -234,7 +238,7 @@ void DemoRotFlower::onEnter()
 	m_emitter->setDuration(-1);
 	
 	// gravity
-	m_emitter->setGravity(CGPointZero);
+	m_emitter->setGravity(CCPointZero);
 	
 	// angle
 	m_emitter->setAngle(90);
@@ -253,8 +257,8 @@ void DemoRotFlower::onEnter()
 	m_emitter->setTangentialAccelVar(0);
 	
 	// emitter position
-	m_emitter->setPosition( CGPointMake(160,240) );
-	m_emitter->setPosVar(CGPointZero);
+	m_emitter->setPosition( CCPointMake(160,240) );
+	m_emitter->setPosVar(CCPointZero);
 	
 	// life of particles
 	m_emitter->setLife(3);
@@ -383,8 +387,8 @@ void DemoSmoke::onEnter()
 	m_background->addChild(m_emitter, 10);
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
-	CGPoint p = m_emitter->getPosition();
-	m_emitter->setPosition( CGPointMake( p.x, 100) );
+	CCPoint p = m_emitter->getPosition();
+	m_emitter->setPosition( CCPointMake( p.x, 100) );
 	
 	setEmitterPosition();
 }
@@ -407,13 +411,13 @@ void DemoSnow::onEnter()
     m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
-	CGPoint p = m_emitter->getPosition();
-	m_emitter->setPosition( CGPointMake( p.x, p.y-110) );
+	CCPoint p = m_emitter->getPosition();
+	m_emitter->setPosition( CCPointMake( p.x, p.y-110) );
 	m_emitter->setLife(3);
 	m_emitter->setLifeVar(1);
 	
 	// gravity
-	m_emitter->setGravity(CGPointMake(0,-10));
+	m_emitter->setGravity(CCPointMake(0,-10));
 		
 	// speed of particles
 	m_emitter->setSpeed(130);
@@ -455,8 +459,8 @@ void DemoRain::onEnter()
     m_emitter->retain();
 	m_background->addChild(m_emitter, 10);
 	
-	CGPoint p = m_emitter->getPosition();
-	m_emitter->setPosition( CGPointMake( p.x, p.y-100) );
+	CCPoint p = m_emitter->getPosition();
+	m_emitter->setPosition( CCPointMake( p.x, p.y-100) );
 	m_emitter->setLife(4);
 	
 	m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
@@ -478,20 +482,20 @@ void DemoModernArt::onEnter()
 {
 	ParticleDemo::onEnter();
 
-	m_emitter = new CCPointParticleSystem();
+	m_emitter = new CCParticleSystemPoint();
 	m_emitter->initWithTotalParticles(1000);
 	//m_emitter->autorelease();
 
 	m_background->addChild(m_emitter, 10);
 	////m_emitter->release();
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// duration
 	m_emitter->setDuration(-1);
 	
 	// gravity
-	m_emitter->setGravity(CGPointMake(0,0));
+	m_emitter->setGravity(CCPointMake(0,0));
 	
 	// angle
 	m_emitter->setAngle(0);
@@ -510,8 +514,8 @@ void DemoModernArt::onEnter()
 	m_emitter->setSpeedVar(10);
 	
 	// emitter position
-	m_emitter->setPosition( CGPointMake( s.width/2, s.height/2) );
-	m_emitter->setPosVar(CGPointZero);
+	m_emitter->setPosition( CCPointMake( s.width/2, s.height/2) );
+	m_emitter->setPosVar(CCPointZero);
 	
 	// life of particles
 	m_emitter->setLife(2.0f);
@@ -592,6 +596,7 @@ void ParallaxParticle::onEnter()
 	ParticleDemo::onEnter();
 	
 	m_background->getParent()->removeChild(m_background, true);
+    m_background = NULL;
 
 	CCParallaxNode* p = CCParallaxNode::node(); 
 	addChild(p, 5);
@@ -599,24 +604,24 @@ void ParallaxParticle::onEnter()
 	CCSprite *p1 = CCSprite::spriteWithFile(s_back3);
 	CCSprite *p2 = CCSprite::spriteWithFile(s_back3);
 	
-	p->addChild( p1, 1, CGPointMake(0.5f,1), CGPointMake(0,250) );
-	p->addChild(p2, 2, CGPointMake(1.5f,1), CGPointMake(0,50) );
+	p->addChild( p1, 1, CCPointMake(0.5f,1), CCPointMake(0,250) );
+	p->addChild(p2, 2, CCPointMake(1.5f,1), CCPointMake(0,50) );
 
 	m_emitter = CCParticleFlower::node();
     m_emitter->retain();
     m_emitter->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 
 	p1->addChild(m_emitter, 10);
-	m_emitter->setPosition( CGPointMake(250,200) );
+	m_emitter->setPosition( CCPointMake(250,200) );
 	
 	CCParticleSun* par = CCParticleSun::node();
 	p2->addChild(par, 10);
     par->setTexture( CCTextureCache::sharedTextureCache()->addImage(s_fire) );
 	
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0));
-	CCIntervalAction* move_back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(4, CCPointMake(300,0));
+	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-	p->runAction(CCRepeatForever::actionWithAction((CCIntervalAction*)seq));	
+	p->runAction(CCRepeatForever::actionWithAction((CCActionInterval*)seq));	
 }
 
 std::string ParallaxParticle::title()
@@ -637,7 +642,7 @@ void RadiusMode1::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(200);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
@@ -664,9 +669,9 @@ void RadiusMode1::onEnter()
     m_emitter->setAngleVar(0);
 
     // emitter position
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     m_emitter->setPosition(ccp(size.width/2, size.height/2));
-    m_emitter->setPosVar(CGPointZero);
+    m_emitter->setPosVar(CCPointZero);
 
     // life of particles
     m_emitter->setLife(5);
@@ -721,7 +726,7 @@ void RadiusMode2::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(200);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/stars-grayscale.png"));
@@ -748,9 +753,9 @@ void RadiusMode2::onEnter()
     m_emitter->setAngleVar(0);
 
     // emitter position
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     m_emitter->setPosition(ccp(size.width/2, size.height/2));
-    m_emitter->setPosVar(CGPointZero);
+    m_emitter->setPosVar(CCPointZero);
 
     // life of particles
     m_emitter->setLife(4);
@@ -805,7 +810,7 @@ void Issue704::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     m_emitter->initWithTotalParticles(100);
     addChild(m_emitter, 10);
     m_emitter->setTexture(CCTextureCache::sharedTextureCache()->addImage("Images/fire.png"));
@@ -832,9 +837,9 @@ void Issue704::onEnter()
     m_emitter->setAngleVar(0);
 
     // emitter position
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     m_emitter->setPosition(ccp(size.width/2, size.height/2));
-    m_emitter->setPosVar(CGPointZero);
+    m_emitter->setPosVar(CCPointZero);
 
     // life of particles
     m_emitter->setLife(5);
@@ -897,9 +902,9 @@ void Issue870::onEnter()
     removeChild(m_background, true);
     m_background = NULL;
 
-    CCQuadParticleSystem *system = new CCQuadParticleSystem();
+    CCParticleSystemQuad *system = new CCParticleSystemQuad();
     system->initWithFile("Images/SpinningPeas.plist");
-    system->setTextureWithRect(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"), CGRectMake(0,0,32,32));
+    system->setTextureWithRect(CCTextureCache::sharedTextureCache()->addImage("Images/particles.png"), CCRectMake(0,0,32,32));
     addChild(system, 10);
     m_emitter = system;
 
@@ -910,8 +915,8 @@ void Issue870::onEnter()
 void Issue870::updateQuads(ccTime dt)
 {
     m_nIndex = (m_nIndex + 1) % 4;
-    CGRect rect = CGRectMake(m_nIndex * 32, 0, 32, 32);
-    CCQuadParticleSystem* system = (CCQuadParticleSystem*)m_emitter;
+    CCRect rect = CCRectMake(m_nIndex * 32, 0, 32, 32);
+    CCParticleSystemQuad* system = (CCParticleSystemQuad*)m_emitter;
     system->setTextureWithRect(m_emitter->getTexture(), rect);
 }
 
@@ -938,7 +943,7 @@ void DemoParticleFromFile::onEnter()
 	removeChild(m_background, true);
 	m_background = NULL;
 
-    m_emitter = new CCQuadParticleSystem();
+    m_emitter = new CCParticleSystemQuad();
     std::string filename = "Images/" + m_title + ".plist";
     m_emitter->initWithFile(filename.c_str());
     addChild(m_emitter, 10);
@@ -962,7 +967,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	32
+#define MAX_LAYER	33
 
 CCLayer* createParticleLayer(int nIndex)
 {
@@ -1000,6 +1005,7 @@ CCLayer* createParticleLayer(int nIndex)
         case 29: return new RadiusMode2();
         case 30: return new Issue704();
         case 31: return new Issue870();
+		case 32: return new DemoParticleFromFile("Phoenix");
 	}
 
 	return NULL;
@@ -1047,13 +1053,13 @@ ParticleDemo::ParticleDemo(void)
 
 	setIsTouchEnabled( true );
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 28);
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 28);
 	addChild(label, 100, 1000);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 	
-	CCLabel *tapScreen = CCLabel::labelWithString("(Tap the Screen)", "Arial", 20);
-	tapScreen->setPosition( CGPointMake(s.width/2, s.height-80) );
+	CCLabelTTF *tapScreen = CCLabelTTF::labelWithString("(Tap the Screen)", "Arial", 20);
+	tapScreen->setPosition( CCPointMake(s.width/2, s.height-80) );
 	addChild(tapScreen, 100);
 	
 	CCMenuItemImage* item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ParticleDemo::backCallback) );
@@ -1063,33 +1069,34 @@ ParticleDemo::ParticleDemo(void)
 	CCMenuItemToggle* item4 = CCMenuItemToggle::itemWithTarget(	this, 
 																menu_selector(ParticleDemo::toggleCallback), 
 																CCMenuItemFont::itemFromString( "Free Movement" ),
+                                                                CCMenuItemFont::itemFromString( "Relative Movement" ),
 																CCMenuItemFont::itemFromString( "Grouped Movement" ),
 																NULL );
 	
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, item4, NULL);
 		
-	menu->setPosition( CGPointZero );
-	item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-	item2->setPosition( CGPointMake( s.width/2, 30) );
-	item3->setPosition( CGPointMake( s.width/2 + 100,30) );
-	item4->setPosition( CGPointMake( 0, 100) );
-	item4->setAnchorPoint( CGPointMake(0,0) );
+	menu->setPosition( CCPointZero );
+	item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+	item2->setPosition( CCPointMake( s.width/2, 30) );
+	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
+	item4->setPosition( CCPointMake( 0, 100) );
+	item4->setAnchorPoint( CCPointMake(0,0) );
 
 	addChild( menu, 100 );	
 	
-    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelAtlasWithString("0000", "fonts/fps_images.png", 16, 24, '.');
+    CCLabelAtlas* labelAtlas = CCLabelAtlas::labelWithString("0000", "fonts/fps_images.png", 16, 24, '.');
     addChild(labelAtlas, 100, kTagLabelAtlas);
-	labelAtlas->setPosition( CGPointMake(s.width-66,50) );
+	labelAtlas->setPosition( CCPointMake(s.width-66,50) );
 	
 	// moving background
 	m_background = CCSprite::spriteWithFile(s_back3);
 	addChild(m_background, 5);
-	m_background->setPosition( CGPointMake(s.width/2, s.height-180) );
+	m_background->setPosition( CCPointMake(s.width/2, s.height-180) );
 
-	CCIntervalAction* move = CCMoveBy::actionWithDuration(4, CGPointMake(300,0) );
-	CCIntervalAction* move_back = move->reverse();
+	CCActionInterval* move = CCMoveBy::actionWithDuration(4, CCPointMake(300,0) );
+	CCActionInterval* move_back = move->reverse();
 	CCFiniteTimeAction* seq = CCSequence::actions( move, move_back, NULL);
-	m_background->runAction( CCRepeatForever::actionWithAction((CCIntervalAction*)seq) );
+	m_background->runAction( CCRepeatForever::actionWithAction((CCActionInterval*)seq) );
 	
 	
 	schedule( schedule_selector(ParticleDemo::step) );
@@ -1104,7 +1111,7 @@ void ParticleDemo::onEnter(void)
 {
 	CCLayer::onEnter();
 
-	CCLabel* pLabel = (CCLabel*)(this->getChildByTag(1000));
+	CCLabelTTF* pLabel = (CCLabelTTF*)(this->getChildByTag(1000));
 	pLabel->setString(title().c_str());
 }
 
@@ -1118,25 +1125,25 @@ void ParticleDemo::registerWithTouchDispatcher()
     CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
-bool ParticleDemo::ccTouchBegan(CCTouch* touch, UIEvent* event)
+bool ParticleDemo::ccTouchBegan(CCTouch* touch, CCEvent* event)
 {
 	return true;
 }
 
-void ParticleDemo::ccTouchMoved(CCTouch* touch, UIEvent* event)
+void ParticleDemo::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
 	return ccTouchEnded(touch, event);
 }
 
-void ParticleDemo::ccTouchEnded(CCTouch* touch, UIEvent* event)
+void ParticleDemo::ccTouchEnded(CCTouch* touch, CCEvent* event)
 {
-	CGPoint location = touch->locationInView( touch->view() );
-	CGPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
+	CCPoint location = touch->locationInView( touch->view() );
+	CCPoint convertedLocation = CCDirector::sharedDirector()->convertToGL(location);
 
-    CGPoint pos = CGPointZero;
+    CCPoint pos = CCPointZero;
     if (m_background)
     {
-	    pos = m_background->convertToWorldSpace(CGPointZero);
+	    pos = m_background->convertToWorldSpace(CCPointZero);
     }
 	m_emitter->setPosition( ccpSub(convertedLocation, pos) );	
 }
@@ -1152,20 +1159,22 @@ void ParticleDemo::step(ccTime dt)
     }
 }
 
-void ParticleDemo::toggleCallback(NSObject* pSender)
+void ParticleDemo::toggleCallback(CCObject* pSender)
 {
 	if( m_emitter->getPositionType() == kCCPositionTypeGrouped )
 		m_emitter->setPositionType( kCCPositionTypeFree );
-	else
+    else if (m_emitter->getPositionType() == kCCPositionTypeFree)
+        m_emitter->setPositionType(kCCPositionTypeRelative);
+	else if (m_emitter->getPositionType() == kCCPositionTypeRelative)
 		m_emitter->setPositionType( kCCPositionTypeGrouped );
 }
 
-void ParticleDemo::restartCallback(NSObject* pSender)
+void ParticleDemo::restartCallback(CCObject* pSender)
 {
 	m_emitter->resetSystem(); 
 }
 
-void ParticleDemo::nextCallback(NSObject* pSender)
+void ParticleDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new ParticleTestScene();
 	s->addChild( nextParticleAction() );
@@ -1173,7 +1182,7 @@ void ParticleDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void ParticleDemo::backCallback(NSObject* pSender)
+void ParticleDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new ParticleTestScene();
 	s->addChild( backParticleAction() );
@@ -1183,9 +1192,9 @@ void ParticleDemo::backCallback(NSObject* pSender)
 
 void ParticleDemo::setEmitterPosition()
 {
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	m_emitter->setPosition( CGPointMake(s.width / 2, s.height / 2) );
+	m_emitter->setPosition( CCPointMake(s.width / 2, s.height / 2) );
 }
 
 void ParticleTestScene::runThisTest()

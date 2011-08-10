@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      Valentin Milea
 
 http://www.cocos2d-x.org
 
@@ -25,14 +26,16 @@ THE SOFTWARE.
 #ifndef __SUPPORT_TRANSFORM_UTILS_H__
 #define __SUPPORT_TRANSFORM_UTILS_H__
 
-#include <GLES/gl.h>
+///@todo
+// when in MAC or windows, it includes <OpenGL/gl.h>
+#include "CCGL.h"
 
 namespace   cocos2d {
 
-struct CGAffineTransform;
+struct CCAffineTransform;
 
-void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
-void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);
+void CGAffineToGL(const CCAffineTransform *t, GLfloat *m);
+void GLToCGAffine(const GLfloat *m, CCAffineTransform *t);
 }//namespace   cocos2d 
 
 #endif // __SUPPORT_TRANSFORM_UTILS_H__

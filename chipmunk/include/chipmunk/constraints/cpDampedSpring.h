@@ -33,8 +33,8 @@ typedef struct cpDampedSpring {
 	cpFloat damping;
 	cpDampedSpringForceFunc springForceFunc;
 	
-	cpFloat dt;
 	cpFloat target_vrn;
+	cpFloat v_coef;
 	
 	cpVect r1, r2;
 	cpFloat nMass;

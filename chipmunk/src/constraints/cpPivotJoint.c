@@ -21,14 +21,13 @@
 
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
 preStep(cpPivotJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	joint->r1 = cpvrotate(joint->anchr1, a->rot);
 	joint->r2 = cpvrotate(joint->anchr2, b->rot);
@@ -50,8 +49,7 @@ preStep(cpPivotJoint *joint, cpFloat dt, cpFloat dt_inv)
 static void
 applyImpulse(cpPivotJoint *joint)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	cpVect r1 = joint->r1;
 	cpVect r2 = joint->r2;
@@ -85,7 +83,7 @@ CP_DefineClassGetter(cpPivotJoint)
 cpPivotJoint *
 cpPivotJointAlloc(void)
 {
-	return (cpPivotJoint *)cpmalloc(sizeof(cpPivotJoint));
+	return (cpPivotJoint *)cpcalloc(1, sizeof(cpPivotJoint));
 }
 
 cpPivotJoint *
@@ -110,5 +108,7 @@ cpPivotJointNew2(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2)
 cpConstraint *
 cpPivotJointNew(cpBody *a, cpBody *b, cpVect pivot)
 {
-	return cpPivotJointNew2(a, b, cpBodyWorld2Local(a, pivot), cpBodyWorld2Local(b, pivot));
+	cpVect anchr1 = (a ? cpBodyWorld2Local(a, pivot) : pivot);
+	cpVect anchr2 = (b ? cpBodyWorld2Local(b, pivot) : pivot);
+	return cpPivotJointNew2(a, b, anchr1, anchr2);
 }

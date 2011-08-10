@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 
 //#define CP_ARRAY_INCREMENT 10
@@ -42,7 +42,7 @@ cpArrayInit(cpArray *arr, int size)
 	
 	size = (size ? size : 4);
 	arr->max = size;
-	arr->arr = (void **)cpmalloc(size*sizeof(void**));
+	arr->arr = (void **)cpcalloc(size, sizeof(void**));
 	
 	return arr;
 }
@@ -57,6 +57,7 @@ void
 cpArrayDestroy(cpArray *arr)
 {
 	cpfree(arr->arr);
+	arr->arr = NULL;
 }
 
 void
@@ -112,17 +113,31 @@ cpArrayDeleteObj(cpArray *arr, void *obj)
 }
 
 void
+cpArrayAppend(cpArray *arr, cpArray *other)
+{
+	void *tail = &arr->arr[arr->num];
+	
+	arr->num += other->num;
+	if(arr->num >= arr->max){
+		arr->max = arr->num;
+		arr->arr = (void **)cprealloc(arr->arr, arr->max*sizeof(void**));
+	}
+	
+	memcpy(tail, other->arr, other->num*sizeof(void**));
+}
+
+void
 cpArrayEach(cpArray *arr, cpArrayIter iterFunc, void *data)
 {
 	for(int i=0; i<arr->num; i++)
 		iterFunc(arr->arr[i], data);
 }
 
-int
+cpBool
 cpArrayContains(cpArray *arr, void *ptr)
 {
 	for(int i=0; i<arr->num; i++)
-		if(arr->arr[i] == ptr) return 1;
+		if(arr->arr[i] == ptr) return cpTrue;
 	
-	return 0;
+	return cpFalse;
 }

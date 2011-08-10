@@ -24,6 +24,7 @@
 // Prototypes
 struct DataforForce;
 typedef void (*SingForceFunc)(struct DataforForce* data);
+void make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg);
 
 // Structures
 // Singularities
@@ -71,7 +72,6 @@ typedef struct DataforForce{
 
 // Global Varibales
 static cpSpace *space;
-static cpBody *staticBody;
 
 
 // **** Forces ****** // 
@@ -99,13 +99,13 @@ MagDipoleForce(ForceData* data){
 	
 	
 	// Components in polar coordinates
-	Fr=((cpFloat)2.0e0*cpfcos(alpha)*cpfcos(beta) - cpfsin(alpha)*cpfsin(beta));
-	Fphi=cpfsin(alpha+beta);
+	Fr=(2.0e0f*cosf(alpha)*cosf(beta) - sinf(alpha)*sinf(beta));
+	Fphi=sinf(alpha+beta);
 //	printf("%g %g %g %g %g\n",phi,alpha,beta,Fphi);
 	
 	// Cartesian coordinates
-	data->F=cpv(Fr*cpfcos(phi)-Fphi*cpfsin(phi),Fr*cpfsin(phi)+Fphi*cpfcos(phi));
-	data->F=cpvmult(data->F,(cpFloat)-3.e0*(cpFloat)MAG_MKS/(data->r[1]*data->r[1]));
+	data->F=cpv(Fr*cosf(phi)-Fphi*sinf(phi),Fr*sinf(phi)+Fphi*cosf(phi));
+	data->F=cpvmult(data->F,-3.e0f*(cpFloat)MAG_MKS/(data->r[1]*data->r[1]));
 }
 
 static void
@@ -121,7 +121,7 @@ MagDipoleTorque(ForceData* data){
 	// Torque. Though we could use a component of F to save some space, 
 	// we use another variables for the sake of clarity.
 	
-	data->T=((cpFloat)MAG_MKS/data->r[2])*((cpFloat)3.0e0*cpfcos(alpha)*cpfsin(beta) + cpfsin(alpha-beta));
+	data->T=((cpFloat)MAG_MKS/data->r[2])*(3.0e0f*cosf(alpha)*sinf(beta) + sinf(alpha-beta));
 }
 // ******* // 
 
@@ -214,7 +214,7 @@ ChargedBodyUpdatePositionVerlet(cpBody *body, cpFloat dt)
 	}
 	
 	cpVect dp = cpvmult(cpvadd(body->v, body->v_bias), dt);
-	dp = cpvadd(dp,cpvmult(cpvmult(body->f, body->m_inv), (cpFloat)0.5e0*dt*dt));
+	dp = cpvadd(dp,cpvmult(cpvmult(body->f, body->m_inv), 0.5e0f*dt*dt));
 	body->p = cpvadd(body->p, dp);
 
 	cpBodySetAngle(body, body->a + (body->w + body->w_bias)*dt 
@@ -238,11 +238,11 @@ ChargedBodyUpdatePositionVerlet(cpBody *body, cpFloat dt)
 static void
 ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 {
-	body->v = cpvadd(body->v, cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), (cpFloat)0.5e0*dt));
-	body->w = body->w + body->t*body->i_inv*(cpFloat)0.5e0*dt;
+	body->v = cpvadd(body->v, cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), 0.5e0f*dt));
+	body->w = body->w + body->t*body->i_inv*0.5e0f*dt;
 	
 	body->f = cpvzero;
-	body->t = 0;
+	body->t = 0.0e0f;
 	
 	// Long range interaction
     cpArray *bodies = space->bodies;
@@ -262,8 +262,8 @@ ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, c
         LRangeForceApply(body, B);
 	  }
 	}
-	body->v = cpvadd(cpvmult(body->v,damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), (cpFloat)0.5e0*dt));
-	body->w = body->w*damping + body->t*body->i_inv*(cpFloat)0.5e0*dt;
+	body->v = cpvadd(cpvmult(body->v,damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), 0.5e0f*dt));
+	body->w = body->w*damping + body->t*body->i_inv*0.5e0f*dt;
 }
 
 static void 
@@ -296,11 +296,11 @@ make_mag(cpVect p, cpFloat ang, cpFloat mag)
 		cpv( 10,-10)
 	};
 
-	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, nverts, verts, cpvzero));
 	body->p = p;
 	body->v = cpvzero;
 	cpBodySetAngle(body, ang);
-	body->w = 0;
+	body->w = 0.0e0f;
 	
     // Load the singularities
     Sing *magnet=(Sing*)cpmalloc(sizeof(Sing));
@@ -324,7 +324,7 @@ make_mag(cpVect p, cpFloat ang, cpFloat mag)
 	cpSpaceAddBody(space, body);
 	
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
-	shape->e = 0; shape->u = 0.7f;
+	shape->e = 0.0f; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 
@@ -339,11 +339,11 @@ make_charged(cpVect p, cpFloat chg)
 		cpv( 10,-10)
 	};
 
-	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, nverts, verts, cpvzero));
 	body->p = p;
 	body->v = cpvzero;
 	cpBodySetAngle(body, 0);
-	body->w = 0;
+	body->w = 0.0e0f;
 	
     // Load the singularities
     Sing *charge=(Sing*)cpmalloc(sizeof(Sing));;
@@ -366,7 +366,7 @@ make_charged(cpVect p, cpFloat chg)
 	cpSpaceAddBody(space, body);
 	
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
-	shape->e = 0; shape->u = 0.7f;
+	shape->e = 0.0f; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 void 
@@ -381,11 +381,11 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 		cpv( 10,-10)
 	};
 
-	cpBody *body = cpBodyNew(1, cpMomentForPoly(1, nverts, verts, cpvzero));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, nverts, verts, cpvzero));
 	body->p = p;
 	body->v = cpvzero;
 	cpBodySetAngle(body, ang);
-	body->w = 0;
+	body->w = 0.0e0f;
 	
     // Load the singularities
     Sing *mix=(Sing*)cpmalloc(sizeof(Sing));;
@@ -415,7 +415,7 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 	cpSpaceAddBody(space, body);
 	
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
-	shape->e = 0; shape->u = 0.7f;
+	shape->e = 0.0f; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 
@@ -423,67 +423,64 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 static cpSpace* 
 init(void)
 {
-	
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	cpResetShapeIdCounter();
 	space = cpSpaceNew();
 	space->iterations = 5;
 	space->gravity = cpvzero; //cpv(0,-100);
 	
-	cpSpaceResizeActiveHash(space, 30, 2999);
-	
+	cpSpaceResizeActiveHash(space, 30.0f, 2999);
+
 	// Screen border
 /*	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
-	cpSpaceAddStaticShape(space, shape);
+	cpSpaceAddShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
-	cpSpaceAddStaticShape(space, shape);
+	cpSpaceAddShape(space, shape);
 
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f);
 	shape->e = 1.0; shape->u = 1.0;
-	cpSpaceAddStaticShape(space, shape);
+	cpSpaceAddShape(space, shape);
 
 	// Reference line
 	// Does not collide with other objects, we just want to draw it.
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,0), cpv(320,0), 0.0f);
 	shape->collision_type = 1;
-	cpSpaceAddStaticShape(space, shape);
+	cpSpaceAddShape(space, shape);
 	// Add a collision pair function to filter collisions
 	cpSpaceAddCollisionPairFunc(space, 0, 1, NULL, NULL);
 */		
 	
-	srand(time(NULL));
+	srand((unsigned int) time(NULL));
     cpVect p;
 	cpFloat ang;
 	
 	// Create magnets
 	for(int i=0; i<NMAG; i++)
 	{
-	  p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
-  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
-  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)*(cpFloat)3.1415;
-	  make_mag(p, ang,(cpFloat)1.0e7);
+	  p.x=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*WIDTH/2.0f;
+  	  p.y=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*HEIGHT/2.0f;
+  	  ang=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*3.1415f;
+	  make_mag(p, ang,1.0e7f);
 	}
 	
 	// Create charged objects
 	for(int i=0; i<NCHG; i++)
 	{
-	  p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
-  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
-  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)* (cpFloat)3.1415;
-	  make_charged(p,(cpFloat)1.0e-3*cpfpow( (float)-1,(float)(i%2) ));
+	  p.x=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*WIDTH/2.0f;
+  	  p.y=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*HEIGHT/2.0f;
+  	  ang=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*3.1415f;
+	  make_charged(p, (float)(1.0e-3) *powf(-1.0f,i%2));
 	}
 		
 	// Create charged magnets objects
 	for(int i=0; i<NMIX; i++)
 	{
-      p.x=(2*rand()/((cpFloat)RAND_MAX) - 1)*WIDTH/2.0f;
-  	  p.y=(2*rand()/((cpFloat)RAND_MAX) - 1)*HEIGHT/2.0f;
-  	  ang=(2*rand()/((cpFloat)RAND_MAX) - 1)*(cpFloat)3.1415;
-	  make_mix(p, ang,(cpFloat)1.0e7*cpfpow( (float)-1,(float)(i%2) ), (cpFloat)1.0e-3*cpfpow( (float)-1,(float)(i%2)) );
+      p.x=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*WIDTH/2.0f;
+  	  p.y=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*HEIGHT/2.0f;
+  	  ang=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*3.1415f;
+	  make_mix(p, ang,1.0e7f*powf(-1.0f,i%2), (float)(1.0e-3) *powf(-1.0f,i%2));
 	}
 	
 	return space;
@@ -492,11 +489,10 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
-	
 }
+
 chipmunkDemo MagnetsElectric = {
 	"Magnets and Electric Charges (By: Juan Pablo Carbajal)",
 	NULL,

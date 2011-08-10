@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -23,14 +24,15 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCMenu.h"
 #include "CCDirector.h"
-#include "CCXApplication.h"
-#include "CGPointExtension.h"
+#include "CCApplication.h"
+#include "CCPointExtension.h"
 #include "CCTouchDispatcher.h"
 #include "CCTouch.h"
-#include "platform/CCXMath.h"
+#include "CCStdC.h"
 
 #include <vector>
-#include <float.h>
+#include <stdarg.h>
+
 using namespace std;
 
 namespace cocos2d{
@@ -43,6 +45,18 @@ namespace cocos2d{
 	//
 	//CCMenu
 	//
+
+        CCMenu* CCMenu::node()
+        {
+            CCMenu *menu = new CCMenu();
+            if (menu && menu->init()) {
+                menu->autorelease();
+                return menu;
+            }
+            CC_SAFE_DELETE(menu)
+            return 0;
+        }
+
 	CCMenu * CCMenu::menuWithItems(CCMenuItem* item, ...)
 	{
 		va_list args;
@@ -55,9 +69,20 @@ namespace cocos2d{
 			return pRet;
 		}
 		va_end(args);
-		CCX_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
+
+	CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
+	{
+		return menuWithItems(item, NULL);
+	}
+
+    bool CCMenu::init()
+    {
+        va_list args;
+        return initWithItems(0, args);
+    }
 
 	bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
 	{
@@ -66,15 +91,16 @@ namespace cocos2d{
 			this->m_bIsTouchEnabled = true;
 
 			// menu in the center of the screen
-			CGSize s = CCDirector::sharedDirector()->getWinSize();
+			CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 			this->m_bIsRelativeAnchorPoint = false;
-			m_tAnchorPoint = ccp(0.5f, 0.5f);
+			setAnchorPoint(ccp(0.5f, 0.5f));
 			this->setContentSize(s);
 
 			// XXX: in v0.7, winSize should return the visible size
 			// XXX: so the bar calculation should be done there
-			CGRect r = CCXApplication::sharedApplication()->statusBarFrame();
+			CCRect r;
+            CCApplication::sharedApplication().statusBarFrame(&r);
 			ccDeviceOrientation orientation = CCDirector::sharedDirector()->getDeviceOrientation();
 			if (orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight)
 			{
@@ -84,7 +110,7 @@ namespace cocos2d{
 			{
 				s.height -= r.size.height;
 			}
-			this->m_tPosition = ccp(s.width/2, s.height/2);
+			setPosition(ccp(s.width/2, s.height/2));
 
 			int z=0;
 
@@ -102,7 +128,7 @@ namespace cocos2d{
 			//	[self alignItemsVertically];
 
 			m_pSelectedItem = NULL;
-			m_eState = kMenuStateWaiting;
+			m_eState = kCCMenuStateWaiting;
 			return true;
 		}
 
@@ -112,64 +138,91 @@ namespace cocos2d{
 	/*
 	* override add:
 	*/
-	CCNode * CCMenu::addChild(CCNode * child, int zOrder)
+	void CCMenu::addChild(CCNode * child, int zOrder)
 	{
-		return CCLayer::addChild(child, zOrder);
+		CCLayer::addChild(child, zOrder);
 	}
 
-	CCNode * CCMenu::addChild(CCNode * child, int zOrder, int tag)
+	void CCMenu::addChild(CCNode * child, int zOrder, int tag)
 	{
 		// we can not use RTTI, so we do not known the type of object
-		/*NSAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
-		return CCLayer::addChild(child, zOrder, tag);
+		/*CCAssert( dynamic_cast<CCMenuItem*>(child) != NULL, L"Menu only supports MenuItem objects as children");*/
+		CCLayer::addChild(child, zOrder, tag);
 	}
+
+    void CCMenu::onExit()
+    {
+        if (m_eState == kCCMenuStateTrackingTouch)
+        {
+            m_pSelectedItem->unselected();
+            m_eState = kCCMenuStateWaiting;
+            m_pSelectedItem = NULL;
+        }
+
+        CCLayer::onExit();
+    }
 
 	//Menu - Events
 	void CCMenu::registerWithTouchDispatcher()
 	{
-		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+		CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority, true);
 	}
 
-	bool CCMenu::ccTouchBegan(CCTouch* touch, UIEvent* event)
+	bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
 	{
-		if (m_eState != kMenuStateWaiting || ! m_bIsVisible)
+        CC_UNUSED_PARAM(event);
+		if (m_eState != kCCMenuStateWaiting || ! m_bIsVisible)
 		{
 			return false;
 		}
+
+		for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
+		{
+			if (c->getIsVisible() == false)
+			{
+				return false;
+			}
+		}
+
 		m_pSelectedItem = this->itemForTouch(touch);
 		if (m_pSelectedItem)
 		{
-			m_eState = kMenuStateTrackingTouch;
+			m_eState = kCCMenuStateTrackingTouch;
 			m_pSelectedItem->selected();
 			return true;
 		}
 		return false;
 	}
 
-	void CCMenu::ccTouchEnded(CCTouch *touch, UIEvent* event)
+	void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
 	{
-		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
+        CC_UNUSED_PARAM(touch);
+        CC_UNUSED_PARAM(event);
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
 		if (m_pSelectedItem)
 		{
 			m_pSelectedItem->unselected();
 			m_pSelectedItem->activate();
 		}
-		m_eState = kMenuStateWaiting;
+		m_eState = kCCMenuStateWaiting;
 	}
 
-	void CCMenu::ccTouchCancelled(CCTouch *touch, UIEvent* event)
+	void CCMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
 	{
-		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
+        CC_UNUSED_PARAM(touch);
+        CC_UNUSED_PARAM(event);
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
 		if (m_pSelectedItem)
 		{
 			m_pSelectedItem->unselected();
 		}
-		m_eState = kMenuStateWaiting;
+		m_eState = kCCMenuStateWaiting;
 	}
 
-	void CCMenu::ccTouchMoved(CCTouch* touch, UIEvent* event)
+	void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
 	{
-		NSAssert(m_eState == kMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
+        CC_UNUSED_PARAM(event);
+		CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
 		CCMenuItem *currentItem = this->itemForTouch(touch);
 		if (currentItem != m_pSelectedItem) 
 		{
@@ -198,7 +251,7 @@ namespace cocos2d{
 	//Menu - Alignment
 	void CCMenu::alignItemsVertically()
 	{
-		return this->alignItemsVerticallyWithPadding(kDefaultPadding);
+		this->alignItemsVerticallyWithPadding(kDefaultPadding);
 	}
 
 	void CCMenu::alignItemsVerticallyWithPadding(float padding)
@@ -206,38 +259,36 @@ namespace cocos2d{
 		float height = -padding;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    height += pChild->getContentSize().height * pChild->getScaleY() + padding;
                 }
-                
-				height += (*it)->getContentSize().height * (*it)->getScaleY() + padding;
-			}
+            }
 		}
 
 		float y = height / 2.0f;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    pChild->setPosition(ccp(0, y - pChild->getContentSize().height * pChild->getScaleY() / 2.0f));
+                    y -= pChild->getContentSize().height * pChild->getScaleY() + padding;
                 }
-                
-				(*it)->setPosition(ccp(0, y - (*it)->getContentSize().height * (*it)->getScaleY() / 2.0f));
-				y -= (*it)->getContentSize().height * (*it)->getScaleY() + padding;
-			}
+            }
 		}
 	}
 
 	void CCMenu::alignItemsHorizontally(void)
 	{
-		return this->alignItemsHorizontallyWithPadding(kDefaultPadding);
+		this->alignItemsHorizontallyWithPadding(kDefaultPadding);
 	}
 
 	void CCMenu::alignItemsHorizontallyWithPadding(float padding)
@@ -246,32 +297,30 @@ namespace cocos2d{
 		float width = -padding;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-            NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    width += pChild->getContentSize().width * pChild->getScaleX() + padding;
                 }
-
-				width += (*it)->getContentSize().width * (*it)->getScaleX() + padding;
-			}
+            }
 		}
 
 		float x = -width / 2.0f;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-            NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-                if (!(*it))
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
                 {
-                    break;
+                    pChild->setPosition(ccp(x + pChild->getContentSize().width * pChild->getScaleX() / 2.0f, 0));
+     				x += pChild->getContentSize().width * pChild->getScaleX() + padding;
                 }
-
-				(*it)->setPosition(ccp(x + (*it)->getContentSize().width * (*it)->getScaleX() / 2.0f, 0));
-				x += (*it)->getContentSize().width * (*it)->getScaleX() + padding;
-			}
+            }
 		}
 	}
 
@@ -302,84 +351,81 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				// if it has no value, break
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    assert(row < rows.size());
 
-                assert(row < rows.size());
+				    rowColumns = rows[row];
+				    // can not have zero columns on a row
+				    assert(rowColumns);
 
-				rowColumns = rows[row];
-				// can not have zero columns on a row
-				assert(rowColumns);
+				    float tmp = pChild->getContentSize().height;
+				    rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
-				float tmp = (*it)->getContentSize().height;
-				rowHeight = (unsigned int)((rowHeight >= tmp || CCXMath::isnanCocos2d(tmp)) ? rowHeight : tmp);
+				    ++columnsOccupied;
+				    if (columnsOccupied >= rowColumns)
+				    {
+					    height += rowHeight + 5;
 
-				++columnsOccupied;
-				if (columnsOccupied >= rowColumns)
-				{
-					height += rowHeight + 5;
-
-					columnsOccupied = 0;
-					rowHeight = 0;
-					++row;
-				}
-			}
+					    columnsOccupied = 0;
+					    rowHeight = 0;
+					    ++row;
+				    }
+                }
+            }
 		}	
 
 		// check if too many rows/columns for available menu items
 		assert(! columnsOccupied);
 
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 		row = 0;
 		rowHeight = 0;
 		rowColumns = 0;
-		float w;
-		float x;
+		float w = 0.0;
+		float x = 0.0;
 		float y = (float)(height / 2);
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+				    if (rowColumns == 0)
+				    {
+					    rowColumns = rows[row];
+					    w = winSize.width / (1 + rowColumns);
+					    x = w;
+				    }
 
-				if (rowColumns == 0)
-				{
-					rowColumns = rows[row];
-					w = winSize.width / (1 + rowColumns);
-					x = w;
-				}
+				    float tmp = pChild->getContentSize().height;
+				    rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
-				float tmp = (*it)->getContentSize().height;
-				rowHeight = (unsigned int)((rowHeight >= tmp || CCXMath::isnanCocos2d(tmp)) ? rowHeight : tmp);
+				    pChild->setPosition(ccp(x - winSize.width / 2,
+					                       y - pChild->getContentSize().height / 2));
 
-				(*it)->setPosition(ccp(x - winSize.width / 2,
-					                   y - (*it)->getContentSize().height / 2));
+				    x += w;
+				    ++columnsOccupied;
 
-				x += w + 10;
-				++columnsOccupied;
+				    if (columnsOccupied >= rowColumns)
+				    {
+					    y -= rowHeight + 5;
 
-				if (columnsOccupied >= rowColumns)
-				{
-					y -= rowHeight + 5;
-
-					columnsOccupied = 0;
-					rowColumns = 0;
-					rowHeight = 0;
-					++row;
-				}
-			}
+					    columnsOccupied = 0;
+					    rowColumns = 0;
+					    rowHeight = 0;
+					    ++row;
+				    }
+                }
+            }
 		}	
 	}
 
@@ -414,88 +460,86 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    // check if too many menu items for the amount of rows/columns
+				    assert(column < columns.size());
 
-				// check if too many menu items for the amount of rows/columns
-				assert(column < columns.size());
+				    columnRows = columns[column];
+				    // can't have zero rows on a column
+				    assert(columnRows);
 
-				columnRows = columns[column];
-				// can't have zero rows on a column
-				assert(columnRows);
+				    // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+				    float tmp = pChild->getContentSize().width;
+				    columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-				// columnWidth = fmaxf(columnWidth, [item contentSize].width);
-				float tmp = (*it)->getContentSize().width;
-				columnWidth = (unsigned int)((columnWidth >= tmp || CCXMath::isnanCocos2d(tmp)) ? columnWidth : tmp);
+				    columnHeight += (int)(pChild->getContentSize().height + 5);
+				    ++rowsOccupied;
 
-				columnHeight += (int)((*it)->getContentSize().height + 5);
-				++rowsOccupied;
+				    if (rowsOccupied >= columnRows)
+				    {
+					    columnWidths.push_back(columnWidth);
+					    columnHeights.push_back(columnHeight);
+					    width += columnWidth + 10;
 
-				if (rowsOccupied >= columnRows)
-				{
-					columnWidths.push_back(columnWidth);
-					columnHeights.push_back(columnHeight);
-					width += columnWidth + 10;
-
-					rowsOccupied = 0;
-					columnWidth = 0;
-					columnHeight = -5;
-					++column;
-				}
-			}
+					    rowsOccupied = 0;
+					    columnWidth = 0;
+					    columnHeight = -5;
+					    ++column;
+				    }
+                }
+            }
 		}
 
 		// check if too many rows/columns for available menu items.
 		assert(! rowsOccupied);
 
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 		column = 0;
 		columnWidth = 0;
 		columnRows = 0;
 		float x = (float)(-width / 2);
-		float y;
+		float y = 0.0;
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    if (columnRows == 0)
+				    {
+					    columnRows = columns[column];
+					    y = (float) columnHeights[column];
+				    }
 
-				if (columnRows == 0)
-				{
-					columnRows = columns[column];
-					y = (float) columnHeights[column];
-				}
+				    // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+				    float tmp = pChild->getContentSize().width;
+				    columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-				// columnWidth = fmaxf(columnWidth, [item contentSize].width);
-				float tmp = (*it)->getContentSize().width;
-				columnWidth = (unsigned int)((columnWidth >= tmp || CCXMath::isnanCocos2d(tmp)) ? columnWidth : tmp);
+				    pChild->setPosition(ccp(x + columnWidths[column] / 2,
+					                       y - winSize.height / 2));
 
-				(*it)->setPosition(ccp(x + columnWidths[column] / 2,
-					                   y - winSize.height / 2));
+				    y -= pChild->getContentSize().height + 10;
+				    ++rowsOccupied;
 
-				y -= (*it)->getContentSize().height + 10;
-				++rowsOccupied;
-
-				if (rowsOccupied >= columnRows)
-				{
-					x += columnWidth + 5;
-					rowsOccupied = 0;
-					columnRows = 0;
-					columnWidth = 0;
-					++column;
-				}
-			}
+				    if (rowsOccupied >= columnRows)
+				    {
+					    x += columnWidth + 5;
+					    rowsOccupied = 0;
+					    columnRows = 0;
+					    columnWidth = 0;
+					    ++column;
+				    }
+                }
+            }
 		}
 	}
 
@@ -508,20 +552,19 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
-                
-				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-					pRGBAProtocol->setOpacity(m_cOpacity);
-				}
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    CCRGBAProtocol *pRGBAProtocol = pChild->convertToRGBAProtocol();
+				    if (pRGBAProtocol)
+				    {
+					    pRGBAProtocol->setOpacity(m_cOpacity);
+				    }
+                }
+            }
 		}
 	}
 
@@ -536,20 +579,19 @@ namespace cocos2d{
 
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
-
-				CCRGBAProtocol *pRGBAProtocol = (*it)->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-					pRGBAProtocol->setColor(m_tColor);
-				}
-			}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild)
+                {
+                    CCRGBAProtocol *pRGBAProtocol = pChild->convertToRGBAProtocol();
+                    if (pRGBAProtocol)
+                    {
+                    	pRGBAProtocol->setColor(m_tColor);
+                    }
+                }
+            }
 		}
 	}
 
@@ -560,33 +602,27 @@ namespace cocos2d{
 
 	CCMenuItem* CCMenu::itemForTouch(cocos2d::CCTouch *touch)
 	{
-		CGPoint touchLocation = touch->locationInView(touch->view());
+		CCPoint touchLocation = touch->locationInView(touch->view());
 		touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);
 
         if (m_pChildren && m_pChildren->count() > 0)
 		{
-			NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-			for (it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-			{
-				if (! *it)
-				{
-					break;
-				}
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = (CCNode*) pObject;
+                if (pChild && pChild->getIsVisible() && ((CCMenuItem*)pChild)->getIsEnabled())
+                {
+                    CCPoint local = pChild->convertToNodeSpace(touchLocation);
+					CCRect r = ((CCMenuItem*)pChild)->rect();
+					r.origin = CCPointZero;
 
-				// ignore invisible and disabled items: issue #779, #866
-				if ((*it)->getIsVisible() && ((CCMenuItem*)(*it))->getIsEnabled())
-				{
-					CGPoint local = (*it)->convertToNodeSpace(touchLocation);
-
-					CGRect r = ((CCMenuItem*)(*it))->rect();
-					r.origin = CGPointZero;
-
-					if (CGRect::CGRectContainsPoint(r, local))
+					if (CCRect::CCRectContainsPoint(r, local))
 					{
-						return (CCMenuItem*)(*it);
+						return (CCMenuItem*)pChild;
 					}
-				}
-			}
+                }
+            }
 			
 		}
 

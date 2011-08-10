@@ -1,0 +1,149 @@
+debug_define COCOS2D_DEBUG = 1
+debug_define _DEBUG = 1
+
+defines
+{	
+AIRPLAY = 1
+CC_UNDER_AIRPLAY = 1
+}
+
+options
+{
+	module_path="../platform/third_party/airplay/"
+}
+
+subprojects
+{
+	zlib
+	expat
+	libpng
+}
+includepaths
+{
+	.
+
+	"../"
+	"../include"
+	"../platform"
+}
+
+files
+{
+
+	("../")
+	"*.h"
+	"*.cpp"
+
+	("../actions")
+	[actions]
+	"*.cpp"
+
+	("../base_nodes")
+	[base_nodes]
+	"*.cpp"
+	
+	("../cocoa")
+	[cocoa]
+	"*.cpp"
+	
+	("../effects")
+	[effects]
+	"*.h"
+	"*.cpp"
+	
+	("../include")
+	[include]
+	"*.h"
+
+	("../keypad_dispatcher")
+	[keypad_dispatcher]
+	"*.cpp"
+	
+	("../label_nodes")
+	[label_nodes]
+	"*.cpp"
+	
+	("../layers_scenes_transitions_nodes")
+	[layers_scenes_transitions_nodes]
+	"*.cpp"
+	
+	("../menu_nodes")
+	[menu_nodes]
+	"*.cpp"
+	
+	("../misc_nodes")
+	[misc_nodes]
+	"*.cpp"
+	
+	("../particle_nodes")
+	[particle_nodes]
+	"*.cpp"
+	
+	("../platform")
+	[platforms]
+	"*.h"
+	"platform.cpp"
+	"CCThread.cpp"
+	"CCStdC.cpp"
+	"CCGL.cpp"
+	"CCCommon.cpp"
+
+	("../platform/airplay")
+	[platforms/airplay]
+	"*.h"
+	"*.cpp"
+
+    ("../script_support")
+    [script_support]
+    "*.cpp"
+	
+	("../sprite_nodes")
+	[sprite_nodes]
+	"*.cpp"
+	
+	("../support")
+	[support]
+	"base64.cpp"
+	"base64.h"
+	"CCArray.cpp"
+	"CCPointExtension.cpp"
+	"CCProfiling.cpp"
+	"CCProfiling.h"
+	"ccUtils.cpp"
+	"ccUtils.h"
+	"TransformUtils.cpp"
+	"TransformUtils.h"
+	
+	("../support/data_support")
+	[support/data_support]
+	"*.h"
+	
+	("../support/image_support")
+	[support/image_support]
+	"*.h"
+	"*.cpp"
+	
+	("../support/opengl_support")
+	[support/opengl_support]
+#	"*.h"
+#	"*.cpp"
+
+
+	("../support/zip_support")
+	[support/zip_support]
+	"*.cpp"
+	"*.h"
+	
+	("../textures")
+	[textures]
+	"*.cpp"
+	
+	("../tileMap_parallax_nodes")
+	[tileMap_parallax_nodes]
+	"*.cpp"
+	
+	("../touch_dispatcher")
+	[touch_dispatcher]
+	"*.cpp"
+}
+

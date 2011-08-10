@@ -1,0 +1,46 @@
+namespace cocos2d
+{
+
+typedef enum {
+	/// Radial Counter-Clockwise 
+	kCCProgressTimerTypeRadialCCW,
+	/// Radial ClockWise
+	kCCProgressTimerTypeRadialCW,
+	/// Horizontal Left-Right
+	kCCProgressTimerTypeHorizontalBarLR,
+	/// Horizontal Right-Left
+	kCCProgressTimerTypeHorizontalBarRL,
+	/// Vertical Bottom-top
+	kCCProgressTimerTypeVerticalBarBT,
+	/// Vertical Top-Bottom
+	kCCProgressTimerTypeVerticalBarTB,
+} CCProgressTimerType;
+
+
+class  CCProgressTimer : public CCNode
+{
+
+	~CCProgressTimer(void);
+	CCProgressTimerType getType(void);
+	float getPercentage(void);
+
+	/** The image to show the progress percentage, retain */
+	CCSprite* getSprite(void);
+
+	bool initWithFile(const char *pszFileName);
+	bool initWithTexture(CCTexture2D *pTexture);
+
+	void setPercentage(float fPercentage);
+	void setSprite(CCSprite *pSprite);
+	void setType(CCProgressTimerType type);
+
+	void draw(void);
+
+	static CCProgressTimer* progressWithFile(const char *pszFileName);
+	static CCProgressTimer* progressWithTexture(CCTexture2D *pTexture);
+
+
+};
+
+}
+
