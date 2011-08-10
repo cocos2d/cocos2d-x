@@ -6,12 +6,12 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-#import "___PROJECTNAMEASIDENTIFIER___AppController.h"
+#import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
-#import "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"
+#import "AppDelegate.h"
 
-@implementation ___PROJECTNAMEASIDENTIFIER___AppController
+@implementation AppController
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -28,10 +28,10 @@ static AppDelegate s_sharedApplication;
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
                                      pixelFormat: kEAGLColorFormatRGBA8
                                      depthFormat: GL_DEPTH_COMPONENT16_OES
-                              preserveBackbuffer: NO
+						      preserveBackbuffer: NO
                                       sharegroup: nil
-                                   multiSampling: NO
-                                 numberOfSamples: 0 ];
+								   multiSampling: NO
+								 numberOfSamples:0 ];
     [window addSubview: __glView];
     [window makeKeyAndVisible];
 
@@ -40,6 +40,7 @@ static AppDelegate s_sharedApplication;
     cocos2d::CCApplication::sharedApplication().run();
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*

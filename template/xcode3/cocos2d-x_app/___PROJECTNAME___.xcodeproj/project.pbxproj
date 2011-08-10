@@ -275,7 +275,7 @@
 		BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D408234E132F3DD900F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D408234D132F3DD900F44E75 /* main.m */; };
-		D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */; };
+		D4082351132F3DE800F44E75 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4082350132F3DE800F44E75 /* AppController.mm */; };
 		D4D9411313EADBA700555460 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4D9411113EADBA700555460 /* AppDelegate.cpp */; };
 		D4E4FED113B2D6A400A3F698 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E4FED013B2D6A400A3F698 /* CCScriptSupport.cpp */; };
 		D4E4FED313B2D6CC00A3F698 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E4FED213B2D6CC00A3F698 /* CCScriptSupport.h */; };
@@ -563,8 +563,8 @@
 		BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextFieldTTF.cpp; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D408234D132F3DD900F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
-		D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER___AppController.h"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.h"; sourceTree = "<group>"; };
-		D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "___PROJECTNAMEASIDENTIFIER___AppController.mm"; path = "ios/___PROJECTNAMEASIDENTIFIER___AppController.mm"; sourceTree = "<group>"; };
+		D408234F132F3DE800F44E75 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; name = AppController.h; path = ios/AppController.h; sourceTree = "<group>"; };
+		D4082350132F3DE800F44E75 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = ios/AppController.mm; sourceTree = "<group>"; };
 		D4D9411113EADBA700555460 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		D4D9411213EADBA700555460 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D4E4FED013B2D6A400A3F698 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
@@ -640,8 +640,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D408234F132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.h */,
-				D4082350132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm */,
+				D408234F132F3DE800F44E75 /* AppController.h */,
+				D4082350132F3DE800F44E75 /* AppController.mm */,
 				D408234D132F3DD900F44E75 /* main.m */,
 				1F3B9A820EF2151B00286867 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
 			);
@@ -1411,7 +1411,7 @@
 			files = (
 				BF83631F13286EF300F3C033 /* HelloWorldScene.cpp in Sources */,
 				D408234E132F3DD900F44E75 /* main.m in Sources */,
-				D4082351132F3DE800F44E75 /* ___PROJECTNAMEASIDENTIFIER___AppController.mm in Sources */,
+				D4082351132F3DE800F44E75 /* AppController.mm in Sources */,
 				D4D9411313EADBA700555460 /* AppDelegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
