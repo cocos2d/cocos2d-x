@@ -826,7 +826,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
     }
     else if (UIKeyboardDidShowNotification == type)
     {
-		CGSize screenSize = self.window.screen.bounds.size;
+		//CGSize screenSize = self.window.screen.bounds.size;
         dispatcher->dispatchKeyboardDidShow(notiInfo);
         caretRect_ = end;
         caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + [UIFont smallSystemFontSize]);
