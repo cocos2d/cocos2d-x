@@ -141,7 +141,7 @@ public: inline void set##funName(varType var){ varName = var; }
 // assertion
 #include <assert.h>
 #define CC_ASSERT(cond)                assert(cond)
-#define CC_UNUSED_PARAM(unusedparam)   unusedparam
+#define CC_UNUSED_PARAM(unusedparam)   (void)unusedparam
 
 
 
