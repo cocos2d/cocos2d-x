@@ -132,7 +132,6 @@
 		BF82F91613A8657700616D55 /* CCLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F48C13A8657100616D55 /* CCLabelAtlas.h */; };
 		BF82F91713A8657700616D55 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F48D13A8657100616D55 /* CCLabelTTF.h */; };
 		BF82F91813A8657700616D55 /* CCObject.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F48E13A8657100616D55 /* CCObject.h */; };
-		BF82F91913A8657700616D55 /* CCPVRTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F48F13A8657100616D55 /* CCPVRTexture.h */; };
 		BF82F91A13A8657700616D55 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F49013A8657100616D55 /* CCParallaxNode.h */; };
 		BF82F91B13A8657700616D55 /* CCParticleExamples.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F49113A8657100616D55 /* CCParticleExamples.h */; };
 		BF82F91C13A8657700616D55 /* CCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F49213A8657100616D55 /* CCParticleSystem.h */; };
@@ -242,7 +241,6 @@
 		BF82FB8F13A8657800616D55 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F89113A8657700616D55 /* base64.h */; };
 		BF82FB9013A8657800616D55 /* ccUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F89213A8657700616D55 /* ccUtils.cpp */; };
 		BF82FB9113A8657800616D55 /* ccUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F89313A8657700616D55 /* ccUtils.h */; };
-		BF82FB9213A8657800616D55 /* CCPVRTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F89513A8657700616D55 /* CCPVRTexture.cpp */; };
 		BF82FB9313A8657800616D55 /* CCTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F89613A8657700616D55 /* CCTexture2D.cpp */; };
 		BF82FB9413A8657800616D55 /* CCTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F89713A8657700616D55 /* CCTextureAtlas.cpp */; };
 		BF82FB9513A8657800616D55 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F89813A8657700616D55 /* CCTextureCache.cpp */; };
@@ -284,6 +282,7 @@
 		BF82FCF713A87F1A00616D55 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB813A87F1A00616D55 /* tolua_push.c */; };
 		BF82FCF813A87F1A00616D55 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB913A87F1A00616D55 /* tolua_to.c */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
+		D463AE1613F572CF00374EAA /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D463AE1513F572CF00374EAA /* CCTexturePVR.cpp */; };
 		D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4CEAD7713B4634300780515 /* RootViewController.mm */; };
 		D4CEAD9713B4770400780515 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9313B4770300780515 /* land.png */; };
 		D4CEAD9813B4770400780515 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9413B4770300780515 /* farm.jpg */; };
@@ -464,7 +463,6 @@
 		BF82F48C13A8657100616D55 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
 		BF82F48D13A8657100616D55 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
 		BF82F48E13A8657100616D55 /* CCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCObject.h; sourceTree = "<group>"; };
-		BF82F48F13A8657100616D55 /* CCPVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPVRTexture.h; sourceTree = "<group>"; };
 		BF82F49013A8657100616D55 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		BF82F49113A8657100616D55 /* CCParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleExamples.h; sourceTree = "<group>"; };
 		BF82F49213A8657100616D55 /* CCParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem.h; sourceTree = "<group>"; };
@@ -575,7 +573,6 @@
 		BF82F89113A8657700616D55 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		BF82F89213A8657700616D55 /* ccUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccUtils.cpp; sourceTree = "<group>"; };
 		BF82F89313A8657700616D55 /* ccUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUtils.h; sourceTree = "<group>"; };
-		BF82F89513A8657700616D55 /* CCPVRTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPVRTexture.cpp; sourceTree = "<group>"; };
 		BF82F89613A8657700616D55 /* CCTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2D.cpp; sourceTree = "<group>"; };
 		BF82F89713A8657700616D55 /* CCTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureAtlas.cpp; sourceTree = "<group>"; };
 		BF82F89813A8657700616D55 /* CCTextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCache.cpp; sourceTree = "<group>"; };
@@ -617,6 +614,7 @@
 		BF82FCB813A87F1A00616D55 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		BF82FCB913A87F1A00616D55 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		D463AE1513F572CF00374EAA /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
 		D4CEAD7713B4634300780515 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		D4CEAD7813B4634300780515 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		D4CEAD9313B4770300780515 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
@@ -999,7 +997,6 @@
 				BF82F48C13A8657100616D55 /* CCLabelAtlas.h */,
 				BF82F48D13A8657100616D55 /* CCLabelTTF.h */,
 				BF82F48E13A8657100616D55 /* CCObject.h */,
-				BF82F48F13A8657100616D55 /* CCPVRTexture.h */,
 				BF82F49013A8657100616D55 /* CCParallaxNode.h */,
 				BF82F49113A8657100616D55 /* CCParticleExamples.h */,
 				BF82F49213A8657100616D55 /* CCParticleSystem.h */,
@@ -1244,7 +1241,7 @@
 		BF82F89413A8657700616D55 /* textures */ = {
 			isa = PBXGroup;
 			children = (
-				BF82F89513A8657700616D55 /* CCPVRTexture.cpp */,
+				D463AE1513F572CF00374EAA /* CCTexturePVR.cpp */,
 				BF82F89613A8657700616D55 /* CCTexture2D.cpp */,
 				BF82F89713A8657700616D55 /* CCTextureAtlas.cpp */,
 				BF82F89813A8657700616D55 /* CCTextureCache.cpp */,
@@ -1491,7 +1488,6 @@
 				BF82F91613A8657700616D55 /* CCLabelAtlas.h in Headers */,
 				BF82F91713A8657700616D55 /* CCLabelTTF.h in Headers */,
 				BF82F91813A8657700616D55 /* CCObject.h in Headers */,
-				BF82F91913A8657700616D55 /* CCPVRTexture.h in Headers */,
 				BF82F91A13A8657700616D55 /* CCParallaxNode.h in Headers */,
 				BF82F91B13A8657700616D55 /* CCParticleExamples.h in Headers */,
 				BF82F91C13A8657700616D55 /* CCParticleSystem.h in Headers */,
@@ -1772,7 +1768,6 @@
 				BF82FB8C13A8657800616D55 /* TransformUtils.cpp in Sources */,
 				BF82FB8E13A8657800616D55 /* base64.cpp in Sources */,
 				BF82FB9013A8657800616D55 /* ccUtils.cpp in Sources */,
-				BF82FB9213A8657800616D55 /* CCPVRTexture.cpp in Sources */,
 				BF82FB9313A8657800616D55 /* CCTexture2D.cpp in Sources */,
 				BF82FB9413A8657800616D55 /* CCTextureAtlas.cpp in Sources */,
 				BF82FB9513A8657800616D55 /* CCTextureCache.cpp in Sources */,
@@ -1806,6 +1801,7 @@
 				BF23C0AA13B038AB00F32062 /* LuaEngineImpl.cpp in Sources */,
 				BF23C0AB13B038AB00F32062 /* LuaCocos2d.cpp in Sources */,
 				BF23C0AE13B038D700F32062 /* CCScriptSupport.cpp in Sources */,
+				D463AE1613F572CF00374EAA /* CCTexturePVR.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1983,7 +1979,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2003,7 +1999,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PREBINDING = NO;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
