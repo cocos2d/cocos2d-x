@@ -26,6 +26,11 @@ THE SOFTWARE.
 
 using namespace cocos2d;
 
+LuaEngine::~LuaEngine()
+{
+	CCLuaScriptModule::purgeSharedLuaScriptModule();
+}
+
 // functions for excute touch event
 bool LuaEngine::executeTouchEvent(const char *pszFuncName, CCTouch *pTouch)
 {
