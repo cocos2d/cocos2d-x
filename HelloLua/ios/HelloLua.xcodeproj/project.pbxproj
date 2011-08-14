@@ -283,6 +283,17 @@
 		BF82FCF813A87F1A00616D55 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB913A87F1A00616D55 /* tolua_to.c */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D463AE1613F572CF00374EAA /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D463AE1513F572CF00374EAA /* CCTexturePVR.cpp */; };
+		D4742F4F13F6273F002ED151 /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D4742F4413F6273F002ED151 /* FontLabel.h */; };
+		D4742F5013F6273F002ED151 /* FontLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D4742F4513F6273F002ED151 /* FontLabel.m */; };
+		D4742F5113F6273F002ED151 /* FontLabelStringDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = D4742F4613F6273F002ED151 /* FontLabelStringDrawing.h */; };
+		D4742F5213F6273F002ED151 /* FontLabelStringDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = D4742F4713F6273F002ED151 /* FontLabelStringDrawing.m */; };
+		D4742F5313F6273F002ED151 /* FontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D4742F4813F6273F002ED151 /* FontManager.h */; };
+		D4742F5413F6273F002ED151 /* FontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D4742F4913F6273F002ED151 /* FontManager.m */; };
+		D4742F5513F6273F002ED151 /* ZAttributedString.h in Headers */ = {isa = PBXBuildFile; fileRef = D4742F4A13F6273F002ED151 /* ZAttributedString.h */; };
+		D4742F5613F6273F002ED151 /* ZAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = D4742F4B13F6273F002ED151 /* ZAttributedString.m */; };
+		D4742F5713F6273F002ED151 /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D4742F4C13F6273F002ED151 /* ZAttributedStringPrivate.h */; };
+		D4742F5813F6273F002ED151 /* ZFont.h in Headers */ = {isa = PBXBuildFile; fileRef = D4742F4D13F6273F002ED151 /* ZFont.h */; };
+		D4742F5913F6273F002ED151 /* ZFont.m in Sources */ = {isa = PBXBuildFile; fileRef = D4742F4E13F6273F002ED151 /* ZFont.m */; };
 		D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4CEAD7713B4634300780515 /* RootViewController.mm */; };
 		D4CEAD9713B4770400780515 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9313B4770300780515 /* land.png */; };
 		D4CEAD9813B4770400780515 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4CEAD9413B4770300780515 /* farm.jpg */; };
@@ -615,6 +626,17 @@
 		BF82FCB913A87F1A00616D55 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D463AE1513F572CF00374EAA /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
+		D4742F4413F6273F002ED151 /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
+		D4742F4513F6273F002ED151 /* FontLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabel.m; sourceTree = "<group>"; };
+		D4742F4613F6273F002ED151 /* FontLabelStringDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabelStringDrawing.h; sourceTree = "<group>"; };
+		D4742F4713F6273F002ED151 /* FontLabelStringDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontLabelStringDrawing.m; sourceTree = "<group>"; };
+		D4742F4813F6273F002ED151 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
+		D4742F4913F6273F002ED151 /* FontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontManager.m; sourceTree = "<group>"; };
+		D4742F4A13F6273F002ED151 /* ZAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedString.h; sourceTree = "<group>"; };
+		D4742F4B13F6273F002ED151 /* ZAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAttributedString.m; sourceTree = "<group>"; };
+		D4742F4C13F6273F002ED151 /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
+		D4742F4D13F6273F002ED151 /* ZFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFont.h; sourceTree = "<group>"; };
+		D4742F4E13F6273F002ED151 /* ZFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFont.m; sourceTree = "<group>"; };
 		D4CEAD7713B4634300780515 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		D4CEAD7813B4634300780515 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		D4CEAD9313B4770300780515 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
@@ -1105,6 +1127,7 @@
 		BF82F4C913A8657100616D55 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				D4742F4313F6273F002ED151 /* FontLabel */,
 				BF82F4CA13A8657100616D55 /* AccelerometerDelegateWrapper.h */,
 				BF82F4CB13A8657100616D55 /* AccelerometerDelegateWrapper.mm */,
 				BF82F4CC13A8657100616D55 /* CCAccelerometer_ios.h */,
@@ -1342,6 +1365,24 @@
 			path = tolua;
 			sourceTree = "<group>";
 		};
+		D4742F4313F6273F002ED151 /* FontLabel */ = {
+			isa = PBXGroup;
+			children = (
+				D4742F4413F6273F002ED151 /* FontLabel.h */,
+				D4742F4513F6273F002ED151 /* FontLabel.m */,
+				D4742F4613F6273F002ED151 /* FontLabelStringDrawing.h */,
+				D4742F4713F6273F002ED151 /* FontLabelStringDrawing.m */,
+				D4742F4813F6273F002ED151 /* FontManager.h */,
+				D4742F4913F6273F002ED151 /* FontManager.m */,
+				D4742F4A13F6273F002ED151 /* ZAttributedString.h */,
+				D4742F4B13F6273F002ED151 /* ZAttributedString.m */,
+				D4742F4C13F6273F002ED151 /* ZAttributedStringPrivate.h */,
+				D4742F4D13F6273F002ED151 /* ZFont.h */,
+				D4742F4E13F6273F002ED151 /* ZFont.m */,
+			);
+			path = FontLabel;
+			sourceTree = "<group>";
+		};
 		D4E4FF0C13B2F23800A3F698 /* lua */ = {
 			isa = PBXGroup;
 			children = (
@@ -1557,6 +1598,12 @@
 				BF23C0A713B038AB00F32062 /* LuaEngineImpl.h in Headers */,
 				BF23C0A813B038AB00F32062 /* LuaEngine.h in Headers */,
 				BF23C0B013B038E800F32062 /* CCScriptSupport.h in Headers */,
+				D4742F4F13F6273F002ED151 /* FontLabel.h in Headers */,
+				D4742F5113F6273F002ED151 /* FontLabelStringDrawing.h in Headers */,
+				D4742F5313F6273F002ED151 /* FontManager.h in Headers */,
+				D4742F5513F6273F002ED151 /* ZAttributedString.h in Headers */,
+				D4742F5713F6273F002ED151 /* ZAttributedStringPrivate.h in Headers */,
+				D4742F5813F6273F002ED151 /* ZFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1802,6 +1849,11 @@
 				BF23C0AB13B038AB00F32062 /* LuaCocos2d.cpp in Sources */,
 				BF23C0AE13B038D700F32062 /* CCScriptSupport.cpp in Sources */,
 				D463AE1613F572CF00374EAA /* CCTexturePVR.cpp in Sources */,
+				D4742F5013F6273F002ED151 /* FontLabel.m in Sources */,
+				D4742F5213F6273F002ED151 /* FontLabelStringDrawing.m in Sources */,
+				D4742F5413F6273F002ED151 /* FontManager.m in Sources */,
+				D4742F5613F6273F002ED151 /* ZAttributedString.m in Sources */,
+				D4742F5913F6273F002ED151 /* ZFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
