@@ -3684,6 +3684,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Release;
 		};
@@ -3697,7 +3698,7 @@
 				1D6058950D05DD3E006BFB54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		BF170DAE12928DD100B8313A /* Build configuration list for PBXNativeTarget "cocos2d" */ = {
 			isa = XCConfigurationList;
@@ -3706,7 +3707,7 @@
 				BF170DAD12928DAA00B8313A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		BF17118A12928FC500B8313A /* Build configuration list for PBXNativeTarget "box2d" */ = {
 			isa = XCConfigurationList;
@@ -3715,7 +3716,7 @@
 				BF17118912928FA700B8313A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		BF1712DE1292933300B8313A /* Build configuration list for PBXNativeTarget "chipmunk" */ = {
 			isa = XCConfigurationList;
@@ -3724,7 +3725,7 @@
 				BF1712651292932000B8313A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		BF31DEB112E9782000D4F513 /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
 			isa = XCConfigurationList;
@@ -3733,7 +3734,7 @@
 				BF31DEB012E9780200D4F513 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "test" */ = {
 			isa = XCConfigurationList;
@@ -3742,7 +3743,7 @@
 				C01FCF5008A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

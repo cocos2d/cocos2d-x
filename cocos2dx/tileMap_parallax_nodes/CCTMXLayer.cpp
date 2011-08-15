@@ -68,7 +68,7 @@ namespace cocos2d {
 			m_uMaxGID = layerInfo->m_uMaxGID;
 			m_cOpacity = layerInfo->m_cOpacity;
 			m_pProperties = CCStringToStringDictionary::dictionaryWithDictionary(layerInfo->getProperties());
-                        m_fContentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor(); 
+			m_fContentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor(); 
 
 			// tilesetInfo
 			m_pTileSet = tilesetInfo;
@@ -243,7 +243,7 @@ namespace cocos2d {
 
 				tile = new CCSprite();
 				tile->initWithBatchNode(this, rect);
-				tile->setPositionIn(positionAt(pos));
+				tile->setPosition(positionAt(pos));
 				tile->setVertexZ((float)vertexZForPos(pos));
 				tile->setAnchorPoint(CCPointZero);
 				tile->setOpacity(m_cOpacity);
