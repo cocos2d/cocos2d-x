@@ -91,7 +91,7 @@ animFrames = cocos2d.CCMutableArray_CCSpriteFrame__:new(2)
 animFrames:addObject(frame0)
 animFrames:addObject(frame1)
 
-animation = cocos2d.CCAnimation:animationWithName("wait", 0.5, animFrames)
+animation = cocos2d.CCAnimation:animationWithFrames(animFrames, 0.5)
 
 animate = cocos2d.CCAnimate:actionWithAnimation(animation, false);
 spriteDog:runAction(cocos2d.CCRepeatForever:actionWithAction(animate))
