@@ -36,21 +36,21 @@ struct CCAffineTransform {
 CCAffineTransform __CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
 #define CCAffineTransformMake __CCAffineTransformMake
 
-CCPoint __CCPointApplyAffineTransform(CCPoint point, CCAffineTransform t);
+CCPoint __CCPointApplyAffineTransform(const CCPoint& point, const CCAffineTransform& t);
 #define CCPointApplyAffineTransform __CCPointApplyAffineTransform
 
-CCSize __CCSizeApplyAffineTransform(CCSize size, CCAffineTransform t);
+CCSize __CCSizeApplyAffineTransform(const CCSize& size, const CCAffineTransform& t);
 #define CCSizeApplyAffineTransform __CCSizeApplyAffineTransform
 
 CCAffineTransform CCAffineTransformMakeIdentity();
-CCRect CCRectApplyAffineTransform(CCRect rect, CCAffineTransform anAffineTransform);
+CCRect CCRectApplyAffineTransform(const CCRect& rect, const CCAffineTransform& anAffineTransform);
 
-CCAffineTransform CCAffineTransformTranslate(CCAffineTransform t, float tx, float ty);
-CCAffineTransform CCAffineTransformRotate(CCAffineTransform aTransform, CGFloat anAngle);
-CCAffineTransform CCAffineTransformScale(CCAffineTransform t, CGFloat sx, CGFloat sy);
-CCAffineTransform CCAffineTransformConcat(CCAffineTransform t1,CCAffineTransform t2);
-bool CCAffineTransformEqualToTransform(CCAffineTransform t1,CCAffineTransform t2);
-CCAffineTransform CCAffineTransformInvert(CCAffineTransform t);
+CCAffineTransform CCAffineTransformTranslate(const CCAffineTransform& t, float tx, float ty);
+CCAffineTransform CCAffineTransformRotate(const CCAffineTransform& aTransform, CGFloat anAngle);
+CCAffineTransform CCAffineTransformScale(const CCAffineTransform& t, CGFloat sx, CGFloat sy);
+CCAffineTransform CCAffineTransformConcat(const CCAffineTransform& t1, const CCAffineTransform& t2);
+bool CCAffineTransformEqualToTransform(const CCAffineTransform& t1, const CCAffineTransform& t2);
+CCAffineTransform CCAffineTransformInvert(const CCAffineTransform& t);
 
 extern const CCAffineTransform CCAffineTransformIdentity;
 }//namespace   cocos2d 
