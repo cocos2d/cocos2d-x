@@ -38,36 +38,6 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-/*
-	When define returns true it means that our architecture
-	uses big endiant
-
-	NOTE: this should be placed somewhere in macros
-*/
-#define CC_HOST_IS_BIG_ENDIAN (*(unsigned short *)"\0\xff" < 0x100)
-
-/*
-	Helper function which converts 4-byte little endian 
-	integral number to the machine native number representation
-
-	It should work same as apples CFSwapInt32LittleToHost(..)
-*/
-static unsigned int CCSwapInt32LittleToHost(unsigned int i)
-{
-	/*
-		When architecture is big endian (ARM) reorder bytes 
-		otherwise return same numbeer
-	*/
-	if (CC_HOST_IS_BIG_ENDIAN == true)
-    {
-		return ((i&0xff)<<24) + ((i&0xff00)<<8) + ((i&0xff0000)>>8) + ((i>>24)&0xff);
-	}
-    else
-    {
-		return i;
-    }
-}
-
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 #define PVR_TEXTURE_FLAG_FLIPPED_MASK 0x10000
 
@@ -243,7 +213,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
     header = (PVRTexHeader *)data;
 
 	//Make sure that tag is in correct formatting
-	pvrTag = CCSwapInt32LittleToHost(header->pvrTag);
+	pvrTag = CC_SWAP_INT32_LITTLE_TO_HOST(header->pvrTag);
 
 	/*
 		Check that given data really represents pvrtexture
@@ -264,7 +234,7 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
     CCConfiguration *configuration = CCConfiguration::sharedConfiguration();
 
 	//Get file flags (in correct byte order)
-	flags = CCSwapInt32LittleToHost(header->flags);
+	flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
 
 	//Trim to only bites which are needed. Resulting flag is image format
 	formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
@@ -304,17 +274,17 @@ bool CCTexturePVR::unpackPVRData(unsigned char* data, unsigned int len)
 			m_uNumberOfMipmaps = 0;
 
 			//Get size of maimap
-			m_uWidth = width = CCSwapInt32LittleToHost(header->width);
-			m_uHeight = height = CCSwapInt32LittleToHost(header->height);
+			m_uWidth = width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
+			m_uHeight = height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
 			
 			//Do we use alpha ?
-			if (CCSwapInt32LittleToHost(header->bitmaskAlpha))
+			if (CC_SWAP_INT32_LITTLE_TO_HOST(header->bitmaskAlpha))
 				m_bHasAlpha = true;
 			else
 				m_bHasAlpha = false;
 			
 			//Get ptr to where data starts..
-			dataLength = CCSwapInt32LittleToHost(header->dataLength);
+			dataLength = CC_SWAP_INT32_LITTLE_TO_HOST(header->dataLength);
 
 			//Move by size of header
 			bytes = ((unsigned char *)data) + sizeof(PVRTexHeader);
