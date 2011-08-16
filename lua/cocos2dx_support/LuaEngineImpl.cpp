@@ -34,6 +34,7 @@ extern "C" {
 #include "CCNode.h"
 #include "CCObject.h"
 #include "LuaCocos2d.h"
+#include "LuaSimpleAudioEngine.h"
 
 using namespace cocos2d;
 
@@ -64,7 +65,8 @@ CCLuaScriptModule::CCLuaScriptModule()
 	luaL_openlibs(d_state);
 	int nOpen = tolua_Cocos2d_open(d_state);
     CC_UNUSED_PARAM(nOpen);
-    
+    nOpen = tolua_SimpleAudioEngine_open(d_state);
+    CC_UNUSED_PARAM(nOpen);
 	// init all standard libraries
 	/*luaopen_base(d_state);
 	luaopen_io(d_state);
@@ -625,4 +627,7 @@ void CCLuaScriptModule::destroyBindings(void)
 	
 	lua_pushnil(d_state);
 	lua_setglobal(d_state,"cocos2d");
+	// called? necessary? by sunzhuoshi@gmail.com
+	lua_pushnil(d_state);
+	lua_setglobal(d_state, "CocosDenshion");
 }
