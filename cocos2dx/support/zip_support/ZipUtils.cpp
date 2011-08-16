@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "ZipUtils.h"
 #include "ccMacros.h"
+#include "CCFileUtils.h"
 
 namespace cocos2d
 {
@@ -209,75 +210,75 @@ namespace cocos2d
 
 	int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
 	{
-		///@todo implement CFSwapInt16BigToHost CFSwapInt32BigToHost
-		return -1;
+ 		assert( out );
+ 		assert( &*out );
+ 
+ 		// load file into memory
+ 		unsigned char *compressed = NULL;
+        
+        int fileLen = 0;
+        compressed = CCFileUtils::getFileData(path, "rb", (unsigned long *)(&fileLen));
+ 		// int fileLen  = CCFileUtils::ccLoadFileIntoMemory( path, &compressed );
 
-// 		assert( out );
-// 		assert( &*out );
-// 
-// 		// load file into memory
-// 		unsigned char *compressed = NULL;
-// 		int fileLen  = ccLoadFileIntoMemory( path, &compressed );
-// 		if( fileLen < 0 ) 
-// 		{
-// 			CCLOG("cocos2d: Error loading CCZ compressed file");
-// 		}
-// 
-// 		struct CCZHeader *header = (struct CCZHeader*) compressed;
-// 
-// 		// verify header
-// 		if( header->sig[0] != 'C' || header->sig[1] != 'C' || header->sig[2] != 'Z' || header->sig[3] != '!' ) 
-// 		{
-// 			CCLOG("cocos2d: Invalid CCZ file");
-// 			free(compressed);
-// 			return -1;
-// 		}
-// 
-// 		// verify header version
-// 		
-// 		unsigned int version = CFSwapInt16BigToHost( header->version );
-// 		if( version > 2 ) 
-// 		{
-// 			CCLOG("cocos2d: Unsupported CCZ header format");
-// 			free(compressed);
-// 			return -1;
-// 		}
-// 
-// 		// verify compression format
-// 		if( CFSwapInt16BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) 
-// 		{
-// 			CCLOG("cocos2d: CCZ Unsupported compression method");
-// 			free(compressed);
-// 			return -1;
-// 		}
-// 
-// 		uint32_t len = CFSwapInt32BigToHost( header->len );
-// 
-// 		*out = malloc( len );
-// 		if(! *out )
-// 		{
-// 			CCLOG("cocos2d: CCZ: Failed to allocate memory for texture");
-// 			free(compressed);
-// 			return -1;
-// 		}
-// 
-// 
-// 		uLongf destlen = len;
-// 		uLongf source = (uLongf) compressed + sizeof(*header);
-// 		int ret = uncompress(*out, &destlen, (Bytef*)source, fileLen - sizeof(*header) );
-// 
-// 		free( compressed );
-// 
-// 		if( ret != Z_OK )
-// 		{
-// 			CCLOG("cocos2d: CCZ: Failed to uncompress data");
-// 			free( *out );
-// 			*out = NULL;
-// 			return -1;
-// 		}
-// 
-// 
-// 		return len;
+ 		if( fileLen < 0 ) 
+ 		{
+ 			CCLOG("cocos2d: Error loading CCZ compressed file");
+            return -1;
+ 		}
+ 
+ 		struct CCZHeader *header = (struct CCZHeader*) compressed;
+ 
+ 		// verify header
+ 		if( header->sig[0] != 'C' || header->sig[1] != 'C' || header->sig[2] != 'Z' || header->sig[3] != '!' ) 
+ 		{
+ 			CCLOG("cocos2d: Invalid CCZ file");
+ 			delete [] compressed;
+ 			return -1;
+ 		}
+ 
+ 		// verify header version
+ 		unsigned int version = CC_SWAP_INT16_BIG_TO_HOST( header->version );
+ 		if( version > 2 ) 
+ 		{
+ 			CCLOG("cocos2d: Unsupported CCZ header format");
+ 			delete [] compressed;
+ 			return -1;
+ 		}
+ 
+ 		// verify compression format
+ 		if( CC_SWAP_INT16_BIG_TO_HOST(header->compression_type) != CCZ_COMPRESSION_ZLIB ) 
+ 		{
+ 			CCLOG("cocos2d: CCZ Unsupported compression method");
+ 			delete [] compressed;
+ 			return -1;
+ 		}
+ 
+ 		unsigned int len = CC_SWAP_INT32_BIG_TO_HOST( header->len );
+ 
+ 		*out = (unsigned char*)malloc( len );
+ 		if(! *out )
+ 		{
+ 			CCLOG("cocos2d: CCZ: Failed to allocate memory for texture");
+ 			delete [] compressed;
+ 			return -1;
+ 		}
+ 
+ 
+ 		unsigned long destlen = len;
+ 		unsigned long source = (unsigned long) compressed + sizeof(*header);
+ 		int ret = uncompress(*out, &destlen, (Bytef*)source, fileLen - sizeof(*header) );
+ 
+ 		delete [] compressed;
+ 
+ 		if( ret != Z_OK )
+ 		{
+ 			CCLOG("cocos2d: CCZ: Failed to uncompress data");
+ 			free( *out );
+ 			*out = NULL;
+ 			return -1;
+ 		}
+  
+ 		return len;
 	}
 
 } // end of namespace cocos2d
