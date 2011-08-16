@@ -167,6 +167,9 @@ namespace cocos2d {
 		//! used for optimization
 		CCSprite			*m_pReusedTile;
 		_ccCArray			*m_pAtlasIndexArray;
+        
+        // used for retina display
+        float               m_fContentScaleFactor;
 	};
 
 }// namespace cocos2d
