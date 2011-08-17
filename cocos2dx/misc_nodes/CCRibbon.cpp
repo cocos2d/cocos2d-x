@@ -47,7 +47,7 @@ namespace cocos2d {
 //
 // Ribbon
 //
-CCRibbon * CCRibbon::ribbonWithWidth(float w, const char *path, float length, ccColor4B color, float fade)
+CCRibbon * CCRibbon::ribbonWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade)
 {
 	CCRibbon *pRet = new CCRibbon();
 	if(pRet && pRet->initWithWidth(w, path, length, color, fade))
@@ -59,7 +59,7 @@ CCRibbon * CCRibbon::ribbonWithWidth(float w, const char *path, float length, cc
 	return NULL;
 }
 
-bool CCRibbon::initWithWidth(float w, const char *path, float length, ccColor4B color, float fade)
+bool CCRibbon::initWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade)
 {
 	m_pSegments = new CCMutableArray<CCRibbonSegment*>();
 	m_pDeletedSegments = new CCMutableArray<CCRibbonSegment*>();
@@ -105,12 +105,12 @@ CCRibbon::~CCRibbon()
     CC_SAFE_RELEASE(m_pTexture);
 }
 
-CCPoint CCRibbon::rotatePoint(CCPoint vec, float rotation)
+CCPoint CCRibbon::rotatePoint(const CCPoint& vec, float rotation)
 {
-	float xtemp = (vec.x * cosf(rotation)) - (vec.y * sinf(rotation));
-	vec.y = (vec.x * sinf(rotation)) + (vec.y * cosf(rotation));
-	vec.x = xtemp;
-	return vec;
+	CCPoint ret;
+	ret.x = (vec.x * cosf(rotation)) - (vec.y * sinf(rotation));
+	ret.y = (vec.x * sinf(rotation)) + (vec.y * cosf(rotation));
+	return ret;
 }
 
 void CCRibbon::update(ccTime delta)
@@ -119,7 +119,7 @@ void CCRibbon::update(ccTime delta)
 	m_fDelta = delta;
 }
 
-float CCRibbon::sideOfLine(CCPoint p, CCPoint l1, CCPoint l2)
+float CCRibbon::sideOfLine(const CCPoint& p, const CCPoint& l1, const CCPoint& l2)
 {
 	CCPoint vp = ccpPerp(ccpSub(l1, l2));
 	CCPoint vx = ccpSub(p, l1);
@@ -327,11 +327,11 @@ ccBlendFunc CCRibbon::getBlendFunc()
 	return m_tBlendFunc;
 }
 
-void CCRibbon::setColor(ccColor4B var)
+void CCRibbon::setColor(const ccColor4B& var)
 {
 	m_tColor = var;
 }
-ccColor4B CCRibbon::getColor()
+const ccColor4B& CCRibbon::getColor()
 {
 	return m_tColor;
 } 
@@ -364,7 +364,7 @@ void CCRibbonSegment::reset()
 	m_bFinished = false;
 }
 
-void CCRibbonSegment::draw(float curTime, float fadeTime, ccColor4B color)
+void CCRibbonSegment::draw(float curTime, float fadeTime, const ccColor4B& color)
 {
 	GLubyte r = color.r;
 	GLubyte g = color.g;

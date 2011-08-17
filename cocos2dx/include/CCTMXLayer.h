@@ -63,9 +63,9 @@ namespace cocos2d {
 	class CC_DLL CCTMXLayer : public CCSpriteBatchNode
 	{
 		/** size of the layer in tiles */
-		CC_SYNTHESIZE(CCSize, m_tLayerSize, LayerSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tLayerSize, LayerSize);
 		/** size of the map's tile (could be differnt from the tile's size) */
-		CC_SYNTHESIZE(CCSize, m_tMapTileSize, MapTileSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapTileSize, MapTileSize);
 		/** pointer to the map of tiles */
 		CC_SYNTHESIZE(unsigned int*, m_pTiles, Tiles);
 		/** Tilset information for the layer */
@@ -95,25 +95,25 @@ namespace cocos2d {
 		- layer->removeChild(sprite, cleanup);
 		- or layer->removeTileAt(ccp(x,y));
 		*/
-		CCSprite* tileAt(CCPoint tileCoordinate);
+		CCSprite* tileAt(const CCPoint& tileCoordinate);
 
 		/** returns the tile gid at a given tile coordinate.
 		if it returns 0, it means that the tile is empty.
 		This method requires the the tile map has not been previously released (eg. don't call layer->releaseMap())
 		*/
-		unsigned int  tileGIDAt(CCPoint tileCoordinate);
+		unsigned int  tileGIDAt(const CCPoint& tileCoordinate);
 
 		/** sets the tile gid (gid = tile global id) at a given tile coordinate.
 		The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
 		If a tile is already placed at that position, then it will be removed.
 		*/
-		void setTileGID(unsigned int gid, CCPoint tileCoordinate);
+		void setTileGID(unsigned int gid, const CCPoint& tileCoordinate);
 
 		/** removes a tile at given tile coordinate */
-		void removeTileAt(CCPoint tileCoordinate);
+		void removeTileAt(const CCPoint& tileCoordinate);
 
 		/** returns the position in pixels of a given tile coordinate */
-		CCPoint positionAt(CCPoint tileCoordinate);
+		CCPoint positionAt(const CCPoint& tileCoordinate);
 
 		/** return the value for the specific property name */
 		CCString *propertyNamed(const char *propertyName);
@@ -132,20 +132,20 @@ namespace cocos2d {
 		inline const char* getLayerName(){ return m_sLayerName.c_str(); }
 		inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
 	private:
-		CCPoint positionForIsoAt(CCPoint pos);
-		CCPoint positionForOrthoAt(CCPoint pos);
-		CCPoint positionForHexAt(CCPoint pos);
+		CCPoint positionForIsoAt(const CCPoint& pos);
+		CCPoint positionForOrthoAt(const CCPoint& pos);
+		CCPoint positionForHexAt(const CCPoint& pos);
 
-		CCPoint calculateLayerOffset(CCPoint offset);
+		CCPoint calculateLayerOffset(const CCPoint& offset);
 	
 		/* optimization methos */
-		CCSprite* appendTileForGID(unsigned int gid, CCPoint pos);
-		CCSprite* insertTileForGID(unsigned int gid, CCPoint pos);
-		CCSprite* updateTileForGID(unsigned int gid, CCPoint pos);
+		CCSprite* appendTileForGID(unsigned int gid, const CCPoint& pos);
+		CCSprite* insertTileForGID(unsigned int gid, const CCPoint& pos);
+		CCSprite* updateTileForGID(unsigned int gid, const CCPoint& pos);
 
 		/* The layer recognizes some special properties, like cc_vertez */
 		void parseInternalProperties();
-		int vertexZForPos(CCPoint pos);
+		int vertexZForPos(const CCPoint& pos);
 
 		// index
 		unsigned int atlasIndexForExistantZ(unsigned int z);

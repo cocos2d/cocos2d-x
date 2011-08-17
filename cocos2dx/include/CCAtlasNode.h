@@ -65,7 +65,7 @@ protected:
 	CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB)
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
 	CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
-	CC_PROPERTY(ccColor3B, m_tColor, Color);
+	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
 
 	// quads to draw
 	CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);

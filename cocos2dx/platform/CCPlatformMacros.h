@@ -66,6 +66,10 @@ It's new in cocos2d-x since v0.99.5
 protected: varType varName;\
 public: virtual varType get##funName(void);
 
+#define CC_PROPERTY_READONLY_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: virtual const varType& get##funName(void);
+
 /** CC_PROPERTY is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
  @param varType : the type of variable.
@@ -81,6 +85,11 @@ protected: varType varName;\
 public: virtual varType get##funName(void);\
 public: virtual void set##funName(varType var);
 
+#define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: virtual const varType& get##funName(void);\
+public: virtual void set##funName(const varType& var);
+
 /** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
  @param varType : the type of variable.
@@ -93,6 +102,10 @@ public: virtual void set##funName(varType var);
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
 public: inline varType get##funName(void) const { return varName; }
+
+#define CC_SYNTHESIZE_READONLY_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: inline const varType& get##funName(void) const { return varName; }
 
 /** CC_SYNTHESIZE is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
@@ -108,6 +121,11 @@ public: inline varType get##funName(void) const { return varName; }
 protected: varType varName;\
 public: inline varType get##funName(void) const { return varName; }\
 public: inline void set##funName(varType var){ varName = var; }
+
+#define CC_SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: inline const varType& get##funName(void) const { return varName; }\
+public: inline void set##funName(const varType& var){ varName = var; }
 
 #define CC_SAFE_DELETE(p)			if(p) { delete p; p = 0; }
 #define CC_SAFE_DELETE_ARRAY(p)    if(p) { delete[] p; p = 0; }

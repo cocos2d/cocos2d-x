@@ -49,6 +49,10 @@ namespace cocos2d{
 	*/
 	class CC_DLL CCMenu : public CCLayer, public CCRGBAProtocol
 	{
+		/** Color: conforms with CCRGBAProtocol protocol */
+		CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
+		/** Opacity: conforms with CCRGBAProtocol protocol */
+		CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
 	public:
 		CCMenu()
 			: m_cOpacity(0)
@@ -117,19 +121,12 @@ namespace cocos2d{
         */
         virtual void onExit();
 
-		virtual void setOpacity(GLubyte opacity);
-		virtual GLubyte getOpacity(void);
-		virtual ccColor3B getColor(void);
-		virtual void setColor(ccColor3B color);
-
 		virtual CCRGBAProtocol* convertToRGBAProtocol() { return (CCRGBAProtocol*)this; }
 
 	protected:
 		CCMenuItem* itemForTouch(CCTouch * touch);
 		tCCMenuState m_eState;
-        GLubyte m_cOpacity;
 		CCMenuItem *m_pSelectedItem;		
-		ccColor3B m_tColor;
 	};
 }
 
