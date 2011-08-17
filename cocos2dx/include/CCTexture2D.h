@@ -108,7 +108,7 @@ class CC_DLL CCTexture2D : public CCObject
 	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
 
 	/** content size */
-	CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSizeInPixels)
+	CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSizeInPixels)
 	/** texture max S */
 	CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
 	/** texture max T */
@@ -127,16 +127,16 @@ public:
 	void* keepData(void *data, unsigned int length);
 
 	/** Intializes with a texture2d with data */
-	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CCSize contentSize);
+	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
 
 	/**
 	Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
 	These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
 	*/
 	/** draws a texture at a given point */
-	void drawAtPoint(CCPoint point);
+	void drawAtPoint(const CCPoint& point);
 	/** draws a texture inside a rect */
-	void drawInRect(CCRect rect);
+	void drawInRect(const CCRect& rect);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from an image file.
@@ -150,7 +150,7 @@ public:
 	Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	bool initWithString(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+	bool initWithString(const char *text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
 	bool initWithString(const char *text, const char *fontName, float fontSize);
 

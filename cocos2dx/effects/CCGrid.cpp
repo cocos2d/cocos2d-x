@@ -35,7 +35,7 @@ namespace cocos2d
 {
 	// implementation of CCGridBase
 
-	CCGridBase* CCGridBase::gridWithSize(cocos2d::ccGridSize gridSize)
+	CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
 	{
         CCGridBase *pGridBase = new CCGridBase();
 
@@ -54,7 +54,7 @@ namespace cocos2d
 		return pGridBase;
 	}
 
-	CCGridBase* CCGridBase::gridWithSize(ccGridSize gridSize, CCTexture2D *texture, bool flipped)
+	CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
 	{
 		CCGridBase *pGridBase = new CCGridBase();
 
@@ -73,7 +73,7 @@ namespace cocos2d
 		return pGridBase;
 	}
 
-	bool CCGridBase::initWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped)
+	bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 	{
 		bool bRet = true;
 
@@ -85,7 +85,7 @@ namespace cocos2d
 		CC_SAFE_RETAIN(m_pTexture);
 		m_bIsTextureFlipped = bFlipped;
 
-		CCSize texSize = m_pTexture->getContentSizeInPixels();
+		const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 		m_obStep.x = texSize.width / m_sGridSize.x;
 		m_obStep.y = texSize.height / m_sGridSize.y;
 
@@ -105,7 +105,7 @@ namespace cocos2d
 		return bRet;
 	}
 
-	bool CCGridBase::initWithSize(ccGridSize gridSize)
+	bool CCGridBase::initWithSize(const ccGridSize& gridSize)
 	{
     	CCDirector *pDirector = CCDirector::sharedDirector();
 		CCSize s = pDirector->getWinSizeInPixels();
@@ -254,7 +254,7 @@ namespace cocos2d
 
 		if (pTarget->getCamera()->getDirty())
 		{
-			CCPoint offset = pTarget->getAnchorPointInPixels();
+			const CCPoint& offset = pTarget->getAnchorPointInPixels();
 
 			//
 			// XXX: Camera should be applied in the AnchorPoint
@@ -289,7 +289,7 @@ namespace cocos2d
 
 	// implementation of CCGrid3D
 
-	CCGrid3D* CCGrid3D::gridWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped)
+	CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 	{
 		CCGrid3D *pRet= new CCGrid3D();
 
@@ -309,7 +309,7 @@ namespace cocos2d
 		return pRet;
 	}
 
-	CCGrid3D* CCGrid3D::gridWithSize(ccGridSize gridSize)
+	CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize)
 	{
 		CCGrid3D *pRet= new CCGrid3D();
 
@@ -424,7 +424,7 @@ namespace cocos2d
 		memcpy(m_pOriginalVertices, m_pVertices, (m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
 	}
 
-	ccVertex3F CCGrid3D::vertex(ccGridSize pos)
+	ccVertex3F CCGrid3D::vertex(const ccGridSize& pos)
 	{
 		int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pVertices;
@@ -434,7 +434,7 @@ namespace cocos2d
 		return vert;
 	}
 
-	ccVertex3F CCGrid3D::originalVertex(cocos2d::ccGridSize pos)
+	ccVertex3F CCGrid3D::originalVertex(const ccGridSize& pos)
 	{
 		int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pOriginalVertices;
@@ -444,7 +444,7 @@ namespace cocos2d
 		return vert;
 	}
 
-	void CCGrid3D::setVertex(ccGridSize pos, ccVertex3F vertex)
+	void CCGrid3D::setVertex(const ccGridSize& pos, const ccVertex3F& vertex)
 	{
 		int index = (pos.x * (m_sGridSize.y + 1) + pos.y) * 3;
 		float *vertArray = (float*)m_pVertices;
@@ -472,7 +472,7 @@ namespace cocos2d
 		CC_SAFE_FREE(m_pIndices);
 	}
 
-	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(cocos2d::ccGridSize gridSize, cocos2d::CCTexture2D *pTexture, bool bFlipped)
+	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 	{
 		CCTiledGrid3D *pRet= new CCTiledGrid3D();
 
@@ -492,7 +492,7 @@ namespace cocos2d
 		return pRet;
 	}
 
-	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(cocos2d::ccGridSize gridSize)
+	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize)
 	{
 		CCTiledGrid3D *pRet= new CCTiledGrid3D();
 
@@ -604,14 +604,14 @@ namespace cocos2d
 		memcpy(m_pOriginalVertices, m_pVertices, numQuads * 12 * sizeof(GLfloat));
 	}
 
-	void CCTiledGrid3D::setTile(cocos2d::ccGridSize pos, cocos2d::ccQuad3 coords)
+	void CCTiledGrid3D::setTile(const ccGridSize& pos, const ccQuad3& coords)
 	{
 		int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
 		float *vertArray = (float*)m_pVertices;
 		memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
 	}
 
-	ccQuad3 CCTiledGrid3D::originalTile(ccGridSize pos)
+	ccQuad3 CCTiledGrid3D::originalTile(const ccGridSize& pos)
 	{
 		int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
 		float *vertArray = (float*)m_pOriginalVertices;
@@ -622,7 +622,7 @@ namespace cocos2d
 		return ret;
 	}
 
-	ccQuad3 CCTiledGrid3D::tile(cocos2d::ccGridSize pos)
+	ccQuad3 CCTiledGrid3D::tile(const ccGridSize& pos)
 	{
 		int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
 		float *vertArray = (float*)m_pVertices;

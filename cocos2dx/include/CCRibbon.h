@@ -56,27 +56,27 @@ class CC_DLL CCRibbon : public CCNode, public CCTextureProtocol
 	/** GL blendind function */
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 	/** color used by the Ribbon (RGBA) */
-	CC_PROPERTY(ccColor4B, m_tColor, Color)
+	CC_PROPERTY_PASS_BY_REF(ccColor4B, m_tColor, Color)
 
 public:
     CCRibbon() : m_pTexture(0), m_pSegments(0), m_pDeletedSegments(0){}
 	virtual ~CCRibbon();
 
 	/** creates the ribbon */
-	static CCRibbon * ribbonWithWidth(float w, const char *path, float length, ccColor4B color, float fade);
+	static CCRibbon * ribbonWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade);
 	/** init the ribbon */
-	bool initWithWidth(float w, const char *path, float length, ccColor4B color, float fade);
+	bool initWithWidth(float w, const char *path, float length, const ccColor4B& color, float fade);
 	/** add a point to the ribbon */
 	void addPointAt(CCPoint location, float width);
 	/** polling function */
 	void update(ccTime delta);
 	/** determine side of line */
-	float sideOfLine(CCPoint p, CCPoint l1, CCPoint l2);
+	float sideOfLine(const CCPoint& p, const CCPoint& l1, const CCPoint& l2);
 	// super method
 	virtual void draw();
 private:
 	/** rotates a point around 0, 0 */
-	CCPoint rotatePoint(CCPoint vec, float rotation);
+	CCPoint rotatePoint(const CCPoint& vec, float rotation);
 protected:
 	CCMutableArray<CCRibbonSegment*> *m_pSegments;
 	CCMutableArray<CCRibbonSegment*> *m_pDeletedSegments;
@@ -115,7 +115,7 @@ public:
 	char * description();
 	bool init();
 	void reset();
-	void draw(float curTime, float fadeTime, ccColor4B color);
+	void draw(float curTime, float fadeTime, const ccColor4B& color);
 };
 
 } // namespace cocos2d

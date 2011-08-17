@@ -98,11 +98,11 @@ public:
     //char * description();
 
     /** creates a CCTextFieldTTF from a fontname, alignment, dimension and font size */
-    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
     /** creates a CCLabelTTF from a fontname and font size */
     static CCTextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
     /** initializes the CCTextFieldTTF with a font name, alignment, dimension and font size */
-    bool initWithPlaceHolder(const char *placeholder, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+    bool initWithPlaceHolder(const char *placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
     /** initializes the CCTextFieldTTF with a font name and font size */
     bool initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
 
@@ -122,7 +122,7 @@ public:
     
     CC_SYNTHESIZE(CCTextFieldDelegate *, m_pDelegate, Delegate);
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
-    CC_SYNTHESIZE(ccColor3B, m_ColorSpaceHolder, ColorSpaceHolder);
+	CC_SYNTHESIZE_PASS_BY_REF(ccColor3B, m_ColorSpaceHolder, ColorSpaceHolder);
 
     // input text property
 public:

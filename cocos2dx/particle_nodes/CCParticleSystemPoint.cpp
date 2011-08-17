@@ -75,7 +75,7 @@ CCParticleSystemPoint * CCParticleSystemPoint::particleWithFile(const char *plis
         return pRet;
 }
 
-void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
+void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition)
 {
 	// place vertices and colos in array
     m_pVertices[m_uParticleIdx].pos = vertex2(newPosition.x, newPosition.y);

@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 namespace cocos2d 
 {
-	CCPageTurn3D* CCPageTurn3D::actionWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime time)
+	CCPageTurn3D* CCPageTurn3D::actionWithSize(const ccGridSize& gridSize, ccTime time)
 	{
 		CCPageTurn3D *pAction = new CCPageTurn3D();
 
@@ -49,7 +49,7 @@ namespace cocos2d
 	 * Update each tick
 	 * Time is the percentage of the way through the duration
 	 */
-	void CCPageTurn3D::update(cocos2d::ccTime time)
+	void CCPageTurn3D::update(ccTime time)
 	{
 		float tt = MAX(0, time - 0.25f);
 		float deltaAy = (tt * tt * 500);

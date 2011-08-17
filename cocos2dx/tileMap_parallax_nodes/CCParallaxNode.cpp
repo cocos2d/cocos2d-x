@@ -77,7 +77,7 @@ namespace cocos2d {
         CC_UNUSED_PARAM(tag);
 		CCAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 	}
-	void CCParallaxNode::addChild(CCNode *child, unsigned int z, CCPoint ratio, CCPoint offset)
+	void CCParallaxNode::addChild(CCNode *child, unsigned int z, const CCPoint& ratio, const CCPoint& offset)
 	{
 		CCAssert( child != NULL, "Argument must be non-nil");
 		CCPointObject *obj = CCPointObject::pointWithCCPoint(ratio, offset);
