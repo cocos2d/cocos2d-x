@@ -81,7 +81,7 @@ HelloWorld::HelloWorld()
 	
 	//Set up sprite
 	
-	CCSpriteBatchNode *mgr = CCSpriteBatchNode::spriteSheetWithFile("blocks.png", 150);
+	CCSpriteBatchNode *mgr = CCSpriteBatchNode::batchNodeWithFile("blocks.png", 150);
 	addChild(mgr, 0, kTagSpriteManager);
 	
 	addNewSpriteWithCoords( CCPointMake(screenSize.width/2, screenSize.height/2) );
@@ -128,7 +128,7 @@ void HelloWorld::addNewSpriteWithCoords(CCPoint p)
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = sheet->createSpriteWithRect( CCRectMake(32 * idx,32 * idy,32,32));
+	CCSprite *sprite = CCSprite::spritWithBatchNode(sheet, CCRectMake(32 * idx,32 * idy,32,32));
 	sheet->addChild(sprite);
 	
 	sprite->setPosition( CCPointMake( p.x, p.y) );
