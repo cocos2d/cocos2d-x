@@ -128,7 +128,7 @@ void HelloWorld::addNewSpriteWithCoords(CCPoint p)
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = CCSprite::spritWithBatchNode(sheet, CCRectMake(32 * idx,32 * idy,32,32));
+	CCSprite *sprite = CCSprite::spriteWithBatchNode(sheet, CCRectMake(32 * idx,32 * idy,32,32));
 	sheet->addChild(sprite);
 	
 	sprite->setPosition( CCPointMake( p.x, p.y) );
