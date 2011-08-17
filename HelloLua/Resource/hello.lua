@@ -118,7 +118,7 @@ layerMenu:addChild(menuPopup)
 function menuCallbackOpenPopup()
 -- loop test sound effect
 -- NOTE: effectID is global, so it can be used to stop 
-effectID = CocosDenshion.SimpleAudioEngine:sharedEngine():playEffect("effect1.wav", true)  
+effectID = CocosDenshion.SimpleAudioEngine:sharedEngine():playEffect("effect1.wav")  
 menuPopup:setIsVisible(true)
 end
 
