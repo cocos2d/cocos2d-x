@@ -127,6 +127,20 @@
 			<key>Path</key>
 			<string>Resources/menu2.png</string>
 		</dict>
+        <key>Resources/background.mp3</key>
+        <dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/background.mp3</string>
+		</dict>
+        <key>Resources/effect1.wav</key>
+        <dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/effect1.wav</string>
+		</dict>
 	</dict>
 	<key>Description</key>
 	<string>This template provides a starting point for an application that uses cocos2d-x for iOS, including CocosDenshion </string>
@@ -151,6 +165,8 @@
 		<string>Resources/land.png</string>
 		<string>Resources/menu1.png</string>
 		<string>Resources/menu2.png</string>
+        <string>Resources/background.mp3</string>
+        <string>Resources/effect1.wav</string>
 	</array>
 	<key>Options</key>
 	<array>

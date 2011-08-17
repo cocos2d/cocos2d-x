@@ -1052,19 +1052,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/include/CCPVRTexture.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/include/CCPVRTexture.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/include/CCRenderTexture.h</key>
 		<dict>
 			<key>Group</key>
@@ -1195,19 +1182,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2dx/include/CCSpriteSheet.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>include</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/include/CCSpriteSheet.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2dx/include/CCString.h</key>
 		<dict>
 			<key>Group</key>
@@ -1270,6 +1244,19 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/include/CCTextureCache.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/include/CCTexturePVR.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>include</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/include/CCTexturePVR.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -1374,6 +1361,19 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/include/CCTouchDispatcher.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/include/CCTouchHandler.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>include</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/include/CCTouchHandler.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -2196,6 +2196,161 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/FontLabel.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/FontLabel.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/FontLabel.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/FontLabel.m</string>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/FontLabelStringDrawing.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/FontLabelStringDrawing.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/FontLabelStringDrawing.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/FontLabelStringDrawing.m</string>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/FontManager.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/FontManager.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/FontManager.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/FontManager.m</string>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/ZAttributedString.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/ZAttributedString.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/ZAttributedString.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/ZAttributedString.m</string>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/ZAttributedStringPrivate.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/ZAttributedStringPrivate.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/ZFont.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/ZFont.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2dx/platform/ios/FontLabel/ZFont.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>platform</string>
+				<string>ios</string>
+				<string>FontLabel</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/platform/ios/FontLabel/ZFont.m</string>
+		</dict>
 		<key>libs/cocos2dx/platform/ios/OpenGL_Internal.h</key>
 		<dict>
 			<key>Group</key>
@@ -2310,17 +2465,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/sprite_nodes/CCSpriteFrameCache.cpp</string>
-		</dict>
-		<key>libs/cocos2dx/sprite_nodes/CCSpriteSheet.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>sprite_nodes</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/sprite_nodes/CCSpriteSheet.cpp</string>
 		</dict>
 		<key>libs/cocos2dx/support/base64.cpp</key>
 		<dict>
@@ -2619,17 +2763,6 @@
 			<key>Path</key>
 			<string>libs/cocos2dx/text_input_node/CCTextFieldTTF.cpp</string>
 		</dict>
-		<key>libs/cocos2dx/textures/CCPVRTexture.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>textures</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/textures/CCPVRTexture.cpp</string>
-		</dict>
 		<key>libs/cocos2dx/textures/CCTexture2D.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -2662,6 +2795,17 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2dx/textures/CCTextureCache.cpp</string>
+		</dict>
+		<key>libs/cocos2dx/textures/CCTexturePVR.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2dx</string>
+				<string>textures</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2dx/textures/CCTexturePVR.cpp</string>
 		</dict>
 		<key>libs/cocos2dx/tileMap_parallax_nodes/CCParallaxNode.cpp</key>
 		<dict>
@@ -2751,19 +2895,6 @@
 			<key>Path</key>
 			<string>libs/cocos2dx/touch_dispatcher/CCTouchHandler.cpp</string>
 		</dict>
-		<key>libs/cocos2dx/touch_dispatcher/CCTouchHandler.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2dx</string>
-				<string>touch_dispatcher</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2dx/touch_dispatcher/CCTouchHandler.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -2852,7 +2983,6 @@
 		<string>libs/cocos2dx/include/CCPointExtension.h</string>
 		<string>libs/cocos2dx/include/CCProgressTimer.h</string>
 		<string>libs/cocos2dx/include/CCProtocols.h</string>
-		<string>libs/cocos2dx/include/CCPVRTexture.h</string>
 		<string>libs/cocos2dx/include/CCRenderTexture.h</string>
 		<string>libs/cocos2dx/include/CCRibbon.h</string>
 		<string>libs/cocos2dx/include/CCScene.h</string>
@@ -2863,12 +2993,12 @@
 		<string>libs/cocos2dx/include/CCSpriteBatchNode.h</string>
 		<string>libs/cocos2dx/include/CCSpriteFrame.h</string>
 		<string>libs/cocos2dx/include/CCSpriteFrameCache.h</string>
-		<string>libs/cocos2dx/include/CCSpriteSheet.h</string>
 		<string>libs/cocos2dx/include/CCString.h</string>
 		<string>libs/cocos2dx/include/CCTextFieldTTF.h</string>
 		<string>libs/cocos2dx/include/CCTexture2D.h</string>
 		<string>libs/cocos2dx/include/CCTextureAtlas.h</string>
 		<string>libs/cocos2dx/include/CCTextureCache.h</string>
+		<string>libs/cocos2dx/include/CCTexturePVR.h</string>
 		<string>libs/cocos2dx/include/CCTileMapAtlas.h</string>
 		<string>libs/cocos2dx/include/CCTMXLayer.h</string>
 		<string>libs/cocos2dx/include/CCTMXObjectGroup.h</string>
@@ -2877,6 +3007,7 @@
 		<string>libs/cocos2dx/include/CCTouch.h</string>
 		<string>libs/cocos2dx/include/CCTouchDelegateProtocol.h</string>
 		<string>libs/cocos2dx/include/CCTouchDispatcher.h</string>
+		<string>libs/cocos2dx/include/CCTouchHandler.h</string>
 		<string>libs/cocos2dx/include/CCTransition.h</string>
 		<string>libs/cocos2dx/include/CCTransitionPageTurn.h</string>
 		<string>libs/cocos2dx/include/CCTransitionRadial.h</string>
@@ -2944,6 +3075,17 @@
 		<string>libs/cocos2dx/platform/ios/ES1Renderer.h</string>
 		<string>libs/cocos2dx/platform/ios/ES1Renderer.m</string>
 		<string>libs/cocos2dx/platform/ios/ESRenderer.h</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/FontLabel.h</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/FontLabel.m</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/FontLabelStringDrawing.h</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/FontLabelStringDrawing.m</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/FontManager.h</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/FontManager.m</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/ZAttributedString.h</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/ZAttributedString.m</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/ZAttributedStringPrivate.h</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/ZFont.h</string>
+		<string>libs/cocos2dx/platform/ios/FontLabel/ZFont.m</string>
 		<string>libs/cocos2dx/platform/ios/OpenGL_Internal.h</string>
 		<string>libs/cocos2dx/platform/platform.cpp</string>
 		<string>libs/cocos2dx/platform/platform.h</string>
@@ -2954,7 +3096,6 @@
 		<string>libs/cocos2dx/sprite_nodes/CCSpriteBatchNode.cpp</string>
 		<string>libs/cocos2dx/sprite_nodes/CCSpriteFrame.cpp</string>
 		<string>libs/cocos2dx/sprite_nodes/CCSpriteFrameCache.cpp</string>
-		<string>libs/cocos2dx/sprite_nodes/CCSpriteSheet.cpp</string>
 		<string>libs/cocos2dx/support/base64.cpp</string>
 		<string>libs/cocos2dx/support/base64.h</string>
 		<string>libs/cocos2dx/support/CCArray.cpp</string>
@@ -2979,10 +3120,10 @@
 		<string>libs/cocos2dx/support/zip_support/ZipUtils.h</string>
 		<string>libs/cocos2dx/text_input_node/CCIMEDispatcher.cpp</string>
 		<string>libs/cocos2dx/text_input_node/CCTextFieldTTF.cpp</string>
-		<string>libs/cocos2dx/textures/CCPVRTexture.cpp</string>
 		<string>libs/cocos2dx/textures/CCTexture2D.cpp</string>
 		<string>libs/cocos2dx/textures/CCTextureAtlas.cpp</string>
 		<string>libs/cocos2dx/textures/CCTextureCache.cpp</string>
+		<string>libs/cocos2dx/textures/CCTexturePVR.cpp</string>
 		<string>libs/cocos2dx/tileMap_parallax_nodes/CCParallaxNode.cpp</string>
 		<string>libs/cocos2dx/tileMap_parallax_nodes/CCTileMapAtlas.cpp</string>
 		<string>libs/cocos2dx/tileMap_parallax_nodes/CCTMXLayer.cpp</string>
@@ -2991,7 +3132,6 @@
 		<string>libs/cocos2dx/tileMap_parallax_nodes/CCTMXXMLParser.cpp</string>
 		<string>libs/cocos2dx/touch_dispatcher/CCTouchDispatcher.cpp</string>
 		<string>libs/cocos2dx/touch_dispatcher/CCTouchHandler.cpp</string>
-		<string>libs/cocos2dx/touch_dispatcher/CCTouchHandler.h</string>
 	</array>
 </dict>
 </plist>
