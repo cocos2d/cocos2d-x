@@ -14,6 +14,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\test.win32\test.win32.vcxproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloLua", "HelloLua\win32\HelloLua.win32.vcxproj", "{13E55395-94A2-4CD9-BFC2-1A051F80C17D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6} = {F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "lua\proj.win32\liblua.vcxproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
 EndProject
