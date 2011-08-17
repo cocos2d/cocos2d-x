@@ -146,7 +146,13 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         jpeg_create_decompress( &cinfo );
 
         /* this makes the library read from infile */
-        jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
+        //TODO in some linux release it use libjpeg62 which does not support jpeg_mem_src instead of libjpeg8
+//        jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
+        // load memory data as stream
+        FILE * source = fmemopen(data, nSize, "rb");
+        CC_BREAK_IF(!source);
+        jpeg_stdio_src(&cinfo, source);
+        fclose(source);
 
         /* reading the image header which contains image information */
         jpeg_read_header( &cinfo, true );

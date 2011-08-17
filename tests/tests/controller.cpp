@@ -27,7 +27,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_ROTATE_WORLD:
         pScene = new RotateWorldTestScene(); break;
     case TEST_PARTICLE:
-        pScene = new ParticleTestScene(); break;
+//        pScene = new ParticleTestScene(); break;
     case TEST_EASE_ACTIONS:
         pScene = new EaseActionsTestScene(); break;
     case TEST_MOTION_STREAK:
@@ -54,7 +54,7 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-        pScene = new ChipmunkTestScene(); break;
+//        pScene = new ChipmunkTestScene(); break;
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)
@@ -77,9 +77,9 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_TEXTURE2D:
         pScene = new TextureTestScene(); break;
     case TEST_BOX2D:
-        pScene = new Box2DTestScene(); break;
+//        pScene = new Box2DTestScene(); break;
     case TEST_BOX2DBED:
-        pScene = new Box2dTestBedScene(); break;
+//        pScene = new Box2dTestBedScene(); break;
     case TEST_EFFECT_ADVANCE:
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
@@ -91,14 +91,14 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
 	case TEST_COCOSDENSHION:
-		pScene = new CocosDenshionTestScene(); break;
+//		pScene = new CocosDenshionTestScene(); break;
     case TEST_PERFORMANCE:
-        pScene = new PerformanceTestScene(); break;
+//        pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	case TEST_CURL:
-		pScene = new CurlTestScene(); break;
+//		pScene = new CurlTestScene(); break;
 	case TEST_USERDEFAULT:
 		pScene = new UserDefaultTestScene(); break;
 #endif

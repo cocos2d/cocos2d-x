@@ -37,6 +37,8 @@ THE SOFTWARE.
     #include "wophone/CCApplication_wophone.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 	#include "airplay/CCApplication_airplay.h"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+	#include "Linux/CCAplication_linux.h"
 #else
     #error
 #endif
