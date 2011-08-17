@@ -121,6 +121,7 @@
     <ClCompile Include="..\tests\BugsTest\Bug-914.cpp" />
     <ClCompile Include="..\tests\BugsTest\BugsTest.cpp" />
     <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
+    <ClCompile Include="..\tests\FontTest\FontTest.cpp" />
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\AppDelegate.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="..\tests\BugsTest\Bug-914.h" />
     <ClInclude Include="..\tests\BugsTest\BugsTest.h" />
     <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
+    <ClInclude Include="..\tests\FontTest\FontTest.h" />
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\AppDelegate.h" />
