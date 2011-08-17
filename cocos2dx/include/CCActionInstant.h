@@ -157,9 +157,9 @@ namespace cocos2d {
 		CCPlace(){}
 		virtual ~CCPlace(){}
 		/** creates a Place action with a position */
-		static CCPlace * actionWithPosition(CCPoint pos);
+		static CCPlace * actionWithPosition(const CCPoint& pos);
 		/** Initializes a Place action with a position */
-		bool initWithPosition(CCPoint pos);
+		bool initWithPosition(const CCPoint& pos);
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCObject* copyWithZone(CCZone *pZone);
@@ -201,7 +201,7 @@ namespace cocos2d {
 		virtual void execute();
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
-		CCObject * copyWithZone(cocos2d::CCZone *pZone);
+		CCObject * copyWithZone(CCZone *pZone);
 
 		void registerScriptFunction(const char* pszFunctionName);
 

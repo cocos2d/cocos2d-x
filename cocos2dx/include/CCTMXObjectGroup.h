@@ -40,7 +40,7 @@ namespace cocos2d {
 	class CC_DLL CCTMXObjectGroup : public CCObject
 	{
 		/** offset position of child objects */
-		CC_SYNTHESIZE(CCPoint, m_tPositionOffset, PositionOffset);
+		CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
 		/** list of properties stored in a dictionary */
 		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 		/** array of the objects */

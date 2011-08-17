@@ -132,11 +132,11 @@ namespace cocos2d{
         //
 	//CCMenuItemLabel
 	//
-	ccColor3B CCMenuItemLabel::getDisabledColor()
+	const ccColor3B& CCMenuItemLabel::getDisabledColor()
 	{
 		return m_tDisabledColor;
 	}
-	void CCMenuItemLabel::setDisabledColor(ccColor3B var)
+	void CCMenuItemLabel::setDisabledColor(const ccColor3B& var)
 	{
 		m_tDisabledColor = var;
 	}
@@ -258,11 +258,11 @@ namespace cocos2d{
 	{
 		return m_pLabel->convertToRGBAProtocol()->getOpacity();
 	}
-	void CCMenuItemLabel::setColor(ccColor3B color)
+	void CCMenuItemLabel::setColor(const ccColor3B& color)
 	{
 		m_pLabel->convertToRGBAProtocol()->setColor(color);
 	}
-	ccColor3B CCMenuItemLabel::getColor()
+	const ccColor3B& CCMenuItemLabel::getColor()
 	{
 		return m_pLabel->convertToRGBAProtocol()->getColor();
 	}
@@ -452,7 +452,7 @@ namespace cocos2d{
             m_pDisabledImage->convertToRGBAProtocol()->setOpacity(opacity);
         }
     }
-    void CCMenuItemSprite::setColor(ccColor3B color)
+    void CCMenuItemSprite::setColor(const ccColor3B& color)
     {
         m_pNormalImage->convertToRGBAProtocol()->setColor(color);
         m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
@@ -466,7 +466,7 @@ namespace cocos2d{
     {
         return m_pNormalImage->convertToRGBAProtocol()->getOpacity();
     }
-    ccColor3B CCMenuItemSprite::getColor()
+    const ccColor3B& CCMenuItemSprite::getColor()
     {
         return m_pNormalImage->convertToRGBAProtocol()->getColor();
     }
@@ -691,7 +691,7 @@ namespace cocos2d{
 			this->removeChildByTag(kCurrentItem, false);
 			CCMenuItem *item = m_pSubItems->getObjectAtIndex(m_uSelectedIndex);
 			this->addChild(item, 0, kCurrentItem);
-			CCSize s = item->getContentSize();
+			const CCSize& s = item->getContentSize();
 			this->setContentSize(s);
 			item->setPosition( ccp( s.width/2, s.height/2 ) );
 		}
@@ -756,11 +756,11 @@ namespace cocos2d{
 			}
 		}
 	}
-	ccColor3B CCMenuItemToggle::getColor()
+	const ccColor3B& CCMenuItemToggle::getColor()
 	{
 		return m_tColor;
 	}
-	void CCMenuItemToggle::setColor(ccColor3B color)
+	void CCMenuItemToggle::setColor(const ccColor3B& color)
 	{
 		m_tColor = color;
 		if(m_pSubItems && m_pSubItems->count() > 0)

@@ -161,17 +161,17 @@ public:
 	virtual ~CCLayerColor();
 
 	virtual void draw();
-	virtual void setContentSize(CCSize var);
+	virtual void setContentSize(const CCSize& var);
 
 	/** creates a CCLayer with color, width and height in Points */
-	static CCLayerColor * layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	static CCLayerColor * layerWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height);
 	/** creates a CCLayer with color. Width and height are the window size. */
-	static CCLayerColor * layerWithColor(ccColor4B color);
+	static CCLayerColor * layerWithColor(const ccColor4B& color);
 
 	/** initializes a CCLayer with color, width and height in Points */
-	virtual bool initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height);
+	virtual bool initWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height);
 	/** initializes a CCLayer with color. Width and height are the window size. */
-	virtual bool initWithColor(ccColor4B color);
+	virtual bool initWithColor(const ccColor4B& color);
 
 	/** change width in Points*/
 	void changeWidth(GLfloat w);
@@ -184,8 +184,8 @@ public:
 
 	/** Opacity: conforms to CCRGBAProtocol protocol */
 	CC_PROPERTY(GLubyte, m_cOpacity, Opacity)
-	/** Opacity: conforms to CCRGBAProtocol protocol */
-	CC_PROPERTY(ccColor3B, m_tColor, Color)
+	/** Color: conforms to CCRGBAProtocol protocol */
+	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color)
 	/** BlendFunction. Conforms to CCBlendProtocol protocol */
 	CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc)
 
@@ -223,22 +223,22 @@ class CC_DLL CCLayerGradient : public CCLayerColor
 {
 public:
     /** Creates a full-screen CCLayer with a gradient between start and end. */
-    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end);
+    static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end);
 
     /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
-    static CCLayerGradient* layerWithColor(ccColor4B start, ccColor4B end, CCPoint v);
+    static CCLayerGradient* layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
     /** Initializes the CCLayer with a gradient between start and end. */
-    virtual bool initWithColor(ccColor4B start, ccColor4B end);
+    virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end);
 
     /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
-    virtual bool initWithColor(ccColor4B start, ccColor4B end, CCPoint v);
+    virtual bool initWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 
-    CC_PROPERTY(ccColor3B, m_startColor, StartColor)
-    CC_PROPERTY(ccColor3B, m_endColor, EndColor)
+	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_startColor, StartColor)
+	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_endColor, EndColor)
     CC_PROPERTY(GLubyte, m_cStartOpacity, StartOpacity)
     CC_PROPERTY(GLubyte, m_cEndOpacity, EndOpacity)
-    CC_PROPERTY(CCPoint, m_AlongVector, Vector)
+	CC_PROPERTY_PASS_BY_REF(CCPoint, m_AlongVector, Vector)
 
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
     Default: YES

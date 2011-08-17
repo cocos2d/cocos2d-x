@@ -103,9 +103,9 @@ namespace cocos2d {
 	class CC_DLL CCTMXTiledMap : public CCNode
 	{
 		/** the map's size property measured in tiles */
-		CC_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapSize, MapSize);
 		/** the tiles's size property measured in pixels */
-		CC_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
 		/** map orientation */
 		CC_SYNTHESIZE(int, m_nMapOrientation, MapOrientation);
 		/** object groups */

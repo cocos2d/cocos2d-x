@@ -116,7 +116,7 @@ void CCTransitionPageTurn::onEnter()
 }
 
 
-CCActionInterval* CCTransitionPageTurn:: actionWithSize(ccGridSize vector)
+CCActionInterval* CCTransitionPageTurn:: actionWithSize(const ccGridSize& vector)
 {
 	if( m_bBack )
 	{

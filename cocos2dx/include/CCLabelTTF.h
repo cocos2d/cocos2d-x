@@ -42,11 +42,11 @@ namespace cocos2d{
 		virtual ~CCLabelTTF();
 		char * description();
 		/** creates a CCLabelTTF from a fontname, alignment, dimension and font size */
-		static CCLabelTTF * labelWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+		static CCLabelTTF * labelWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 		/** creates a CCLabelTTF from a fontname and font size */
 		static CCLabelTTF * labelWithString(const char *label, const char *fontName, float fontSize);
 		/** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-		bool initWithString(const char *label, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
+		bool initWithString(const char *label, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 		/** initializes the CCLabelTTF with a font name and font size */
 		bool initWithString(const char *label, const char *fontName, float fontSize);
 

@@ -130,7 +130,7 @@ namespace cocos2d {
 	}
 
 	// CCTileMapAtlas - Atlas generation / updates
-	void CCTileMapAtlas::setTile(ccColor3B tile, ccGridSize position)
+	void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
 	{
 		CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
 		CCAssert( m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
@@ -164,7 +164,7 @@ namespace cocos2d {
 			this->updateAtlasValueAt(position, tile, num);
 		}	
 	}
-	ccColor3B CCTileMapAtlas::tileAt(ccGridSize position)
+	ccColor3B CCTileMapAtlas::tileAt(const ccGridSize& position)
 	{
 		CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
 		CCAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
@@ -175,7 +175,7 @@ namespace cocos2d {
 
 		return value;	
 	}
-	void CCTileMapAtlas::updateAtlasValueAt(ccGridSize pos, ccColor3B value, unsigned int index)
+	void CCTileMapAtlas::updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index)
 	{
 		ccV3F_C4B_T2F_Quad quad;
 
