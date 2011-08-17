@@ -146,8 +146,9 @@ end
 
 cocos2d.CCScheduler:sharedScheduler():scheduleScriptFunc("tick", 0.01, false)
 
--- run 
 -- play background music
 CocosDenshion.SimpleAudioEngine:sharedEngine():playBackgroundMusic("background.mp3", true);  
-
+-- preload effect
+CocosDenshion.SimpleAudioEngine:sharedEngine():preloadEffect("effect1.wav");
+-- run 
 cocos2d.CCDirector:sharedDirector():runWithScene(sceneGame)
