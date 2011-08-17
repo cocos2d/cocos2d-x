@@ -6,7 +6,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/AppDelegate.cpp \
 ../../../../lua/cocos2dx_support/LuaEngineImpl.cpp \
 ../../../../lua/cocos2dx_support/LuaCocos2d.cpp \
-../../../../lua/cocos2dx_support/LuaEngine.cpp
+../../../../lua/cocos2dx_support/LuaEngine.cpp \
+../../../../lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                     $(LOCAL_PATH)/../../../../cocos2dx/platform \
@@ -16,8 +17,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                     $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../../lua/lua \
                     $(LOCAL_PATH)/../../../../lua/tolua \
-                    $(LOCAL_PATH)/../../../../lua/cocos2dx_support
-
+                    $(LOCAL_PATH)/../../../../lua/cocos2dx_support \
+                    $(LOCAL_PATH)/../../../../lua/CocosDenshion_support
 # it is used for ndk-r5  
 # if you build with ndk-r4, comment it  
 # because the new Windows toolchain doesn't support Cygwin's drive
