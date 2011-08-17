@@ -28,16 +28,16 @@
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
-#include "Box2DTest/Box2dTest.h"
-#include "Box2DTestBed/Box2dView.h"
+//#include "Box2DTest/Box2dTest.h"
+//#include "Box2DTestBed/Box2dView.h"
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "HiResTest/HiResTest.h"
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
-#include "CocosDenshionTest/CocosDenshionTest.h"
-#include "CurlTest/CurlTest.h"
+//#include "CocosDenshionTest/CocosDenshionTest.h"
+//#include "CurlTest/CurlTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "DirectorTest/DirectorTest.h"
 #include "BugsTest/BugsTest.h"
@@ -45,7 +45,7 @@
 #include "FontTest/FontTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
+//	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)

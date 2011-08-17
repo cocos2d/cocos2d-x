@@ -67,13 +67,15 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 		this->initIndices();
 
 #if CC_USES_VBO
+		glEnable(GL_VERTEX_ARRAY);
+
 		// create the VBO buffer
 		glGenBuffers(1, &m_uQuadsID);
 
 		// initial binding
 		glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
-		glBindBuffer(GL_ARRAY_BUFFER, 0);	
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 		return true;
 	}
