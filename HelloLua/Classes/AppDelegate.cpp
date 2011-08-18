@@ -1,16 +1,33 @@
-#include "AppDelegate.h"
-
 #include "cocos2d.h"
+#include "AppDelegate.h"
+//#include "SimpleAudioEngine.h"
+
+
+#define IPHONE_4	0
+#define IPAD		0
+
+#if IPAD
+#define CC_WIDTH	1024
+#define CC_HEIGHT	768
+#elif IPHONE_4
+#define CC_WIDTH	960
+#define CC_HEIGHT	640
+#else
+#define CC_WIDTH	480
+#define CC_HEIGHT	320
+#endif
 
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
 :m_pLuaEngine(NULL)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
 }
 
 AppDelegate::~AppDelegate()
 {
+//    SimpleAudioEngine::end();
     CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
     CC_SAFE_DELETE(m_pLuaEngine);
 }
@@ -26,7 +43,7 @@ bool AppDelegate::initInstance()
         // The HelloWorld is designed as HVGA.
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd
-            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), 480, 320));
+            || ! pMainWnd->Create(TEXT("cocos2d: Hello World"), CC_WIDTH, CC_HEIGHT));
 
 #endif  // CC_PLATFORM_WIN32
         
