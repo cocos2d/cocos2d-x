@@ -7,11 +7,13 @@
 #include <jni.h>
 
 #include <cstring>
+#include <string>
 
 #define  LOG_TAG    "CCApplication_android Debug"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 NS_CC_BEGIN;
+using namespace std;
 
 // sharedApplication pointer
 CCApplication * CCApplication::sm_pSharedApplication = 0;
@@ -78,7 +80,7 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    char* pLanguageName = getCurrentLanguageJNI();
+    const char *pLanguageName = getCurrentLanguageJNI();
     ccLanguageType ret = kLanguageEnglish;
 
     if (0 == strcmp("zh", pLanguageName))
