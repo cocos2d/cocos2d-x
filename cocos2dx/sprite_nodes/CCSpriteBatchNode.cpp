@@ -39,7 +39,7 @@ namespace cocos2d
 	/*
 	* creation with CCTexture2D
 	*/
-	CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(cocos2d::CCTexture2D *tex)
+	CCSpriteBatchNode* CCSpriteBatchNode::batchNodeWithTexture(CCTexture2D *tex)
 	{
 		CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
 		batchNode->initWithTexture(tex, defaultCapacity);
@@ -81,7 +81,7 @@ namespace cocos2d
 	/*
 	* init with CCTexture2D
 	*/
-	bool CCSpriteBatchNode::initWithTexture(cocos2d::CCTexture2D *tex, unsigned int capacity)
+	bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
 	{
 		m_blendFunc.src = CC_BLEND_SRC;
 		m_blendFunc.dst = CC_BLEND_DST;

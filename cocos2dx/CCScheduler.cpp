@@ -121,7 +121,7 @@ CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSel
 	return pTimer;
 }
 
-bool CCTimer::initWithScriptFuncName(const char *pszFuncName, cocos2d::ccTime fSeconds)
+bool CCTimer::initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds)
 {
 	m_scriptFunc = string(pszFuncName);
 	m_fInterval = fSeconds;
