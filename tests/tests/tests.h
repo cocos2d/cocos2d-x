@@ -36,7 +36,7 @@
 #include "KeypadTest/KeypadTest.h"
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
-//#include "CocosDenshionTest/CocosDenshionTest.h"
+#include "CocosDenshionTest/CocosDenshionTest.h"
 //#include "CurlTest/CurlTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "DirectorTest/DirectorTest.h"
