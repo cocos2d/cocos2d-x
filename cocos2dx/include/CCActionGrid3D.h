@@ -42,14 +42,14 @@ namespace cocos2d
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		/** init the action */
-		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+		bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
 
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** create the action */
-		static CCWaves3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+		static CCWaves3D* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
 
 	protected:
 		int m_nWaves;
@@ -63,7 +63,7 @@ namespace cocos2d
 	public:
 		/** initializes the action with duration */
 		bool initWithDuration(ccTime duration);
-		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
+		virtual bool initWithSize(const ccGridSize& gridSize, ccTime duration);
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
@@ -93,17 +93,17 @@ namespace cocos2d
 		/** Set lens center position */
 		inline void setLensEffect(float fLensEffect) { m_fLensEffect = fLensEffect; }
 		
-		inline CCPoint getPosition(void) { return m_position; }
-		void setPosition(CCPoint position);
+		inline const CCPoint& getPosition(void) { return m_position; }
+		void setPosition(const CCPoint& position);
 
 		/** initializes the action with center position, radius, a grid size and duration */
-		bool initWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
+		bool initWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration);
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with center position, radius, a grid size and duration */
-        static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
+        static CCLens3D* actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration);
 	protected:
 		/* lens center position */
 		CCPoint m_position;
@@ -122,9 +122,9 @@ namespace cocos2d
 	{
 	public:
 		/** get center position */
-		inline CCPoint getPosition(void) { return m_position; }
+		inline const CCPoint& getPosition(void) { return m_position; }
 		/** set center position */
-		void setPosition(CCPoint position);
+		void setPosition(const CCPoint& position);
 
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -133,15 +133,15 @@ namespace cocos2d
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		/** initializes the action with radius, number of waves, amplitude, a grid size and duration */
-		bool initWithPosition(CCPoint pos, float r, int wav, float amp, 
-			ccGridSize gridSize, ccTime duration);
+		bool initWithPosition(const CCPoint& pos, float r, int wav, float amp, 
+			const ccGridSize& gridSize, ccTime duration);
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with radius, number of waves, amplitude, a grid size and duration */
-		static CCRipple3D* actionWithPosition(CCPoint pos, float r, int wav, float amp, 
-			ccGridSize gridSize, ccTime duration);
+		static CCRipple3D* actionWithPosition(const CCPoint& pos, float r, int wav, float amp, 
+			const ccGridSize& gridSize, ccTime duration);
 	protected:
 		/* center position */
 		CCPoint m_position;
@@ -159,13 +159,13 @@ namespace cocos2d
 	{
 	public:
 		/** initializes the action with a range, shake Z vertices, a grid and duration */
-		bool initWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
+		bool initWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration);
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with a range, shake Z vertices, a grid and duration */
-        static CCShaky3D* actionWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
+        static CCShaky3D* actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration);
 
 	protected:
 		int m_nRandrange;
@@ -183,13 +183,13 @@ namespace cocos2d
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		/** initializes the action with amplitude, a grid and duration */
-		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+		bool initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with amplitude, a grid and duration */
-		static CCLiquid* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+		static CCLiquid* actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration);
 
 	protected:
 		int m_nWaves;
@@ -208,14 +208,14 @@ namespace cocos2d
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		/** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
-		bool initWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,
+		bool initWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
 			ccTime duration);
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
-        static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,
+        static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize,
 			ccTime duration);
 	protected:
 		int m_nWaves;
@@ -230,9 +230,9 @@ namespace cocos2d
 	{
 	public:
 		/** get twirl center */
-		inline CCPoint getPosition(void) { return m_position; }
+		inline const CCPoint& getPosition(void) { return m_position; }
 		/** set twirl center */
-		void setPosition(CCPoint position);
+		void setPosition(const CCPoint& position);
 
 		inline float getAmplitude(void) { return m_fAmplitude; }
 		inline void setAmplitude(float fAmplitude) { m_fAmplitude = fAmplitude; }
@@ -241,14 +241,14 @@ namespace cocos2d
 		inline void setAmplitudeRate(float fAmplitudeRate) { m_fAmplitudeRate = fAmplitudeRate; }
 
 		/** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
-		bool initWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,
+		bool initWithPosition(const CCPoint& pos, int t, float amp, const ccGridSize& gridSize,
 			ccTime duration);
 		virtual CCObject* copyWithZone(CCZone* pZone);
 		virtual void update(ccTime time);
 
 	public:
 		/** creates the action with center position, number of twirls, amplitude, a grid size and duration */
-		static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,
+		static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize,
 			ccTime duration);
 	protected:
 		/* twirl center */

@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 namespace   cocos2d {
 
-void ccDrawPoint(CCPoint point)
+void ccDrawPoint(const CCPoint& point)
 {
 	ccVertex2F p = {point.x * CC_CONTENT_SCALE_FACTOR(), point.y * CC_CONTENT_SCALE_FACTOR() };
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -112,7 +112,7 @@ void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawLine(CCPoint origin, CCPoint destination)
+void ccDrawLine(const CCPoint& origin, const CCPoint& destination)
 {
 	ccVertex2F vertices[2] = 
     {
@@ -204,7 +204,7 @@ void ccDrawPoly(const CCPoint *poli, int numberOfPoints, bool closePolygon)
     delete[] newPoint;
 }
 
-void ccDrawCircle(CCPoint center, float r, float a, int segs, bool drawLineToCenter)
+void ccDrawCircle(const CCPoint& center, float r, float a, int segs, bool drawLineToCenter)
 {
 	int additionalSegment = 1;
 	if (drawLineToCenter)
@@ -252,7 +252,7 @@ void ccDrawCircle(CCPoint center, float r, float a, int segs, bool drawLineToCen
 	delete[] vertices; //	free(vertices);
 }
 
-void ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, int segments)
+void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, int segments)
 {
 	CCPoint *vertices = new CCPoint[segments + 1];
 	
@@ -283,7 +283,7 @@ void ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, int 
 	glEnable(GL_TEXTURE_2D);	
 }
 
-void ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoint destination, int segments)
+void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments)
 {
 	CCPoint *vertices = new CCPoint[segments + 1];
 	

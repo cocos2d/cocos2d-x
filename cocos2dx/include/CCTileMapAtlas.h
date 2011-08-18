@@ -66,17 +66,17 @@ namespace cocos2d {
 		/** returns a tile from position x,y.
 		For the moment only channel R is used
 		*/
-		ccColor3B tileAt(ccGridSize position);
+		ccColor3B tileAt(const ccGridSize& position);
 		/** sets a tile at position x,y.
 		For the moment only channel R is used
 		*/
-		void setTile(ccColor3B tile, ccGridSize position);
+		void setTile(const ccColor3B& tile, const ccGridSize& position);
 		/** dealloc the map from memory */
 		void releaseMap();
 	private:
 		void loadTGAfile(const char *file);
 		void calculateItemsToRender();
-		void updateAtlasValueAt(ccGridSize pos, ccColor3B value, unsigned int index);
+		void updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index);
 		void updateAtlasValues();
 
 	protected:

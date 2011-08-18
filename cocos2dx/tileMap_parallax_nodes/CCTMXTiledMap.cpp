@@ -92,7 +92,7 @@ namespace cocos2d{
                     m_pTMXLayers->setObject(child, layerName);
 
 					// update content size with the max size
-					CCSize childSize = child->getContentSize();
+					const CCSize& childSize = child->getContentSize();
 					CCSize currentSize = this->getContentSize();
 					currentSize.width = MAX( currentSize.width, childSize.width );
 					currentSize.height = MAX( currentSize.height, childSize.height );

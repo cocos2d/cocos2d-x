@@ -60,7 +60,7 @@ public:
 
 	// super methods
 	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
 	virtual void postStep();
 	virtual void draw();
 	virtual void setStartSpin(float var);
