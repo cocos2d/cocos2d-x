@@ -26,11 +26,8 @@ NS_CC_BEGIN;
 
 #include "CCCommon.h"
 #include "jni/SystemInfoJni.h"
-#include <string>
 
 #define  MAX_PATH 256
-
-using namespace std;
 
 // record the resource path
 static string s_strResourcePath = "";
