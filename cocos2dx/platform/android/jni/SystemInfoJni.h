@@ -25,7 +25,6 @@ THE SOFTWARE.
 #define __ANDROID_SYSTEM_INFO_JNI_H__
 
 #include <jni.h>
-#include <string>
 
 extern "C"
 
