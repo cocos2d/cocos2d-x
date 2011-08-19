@@ -29,8 +29,6 @@ NS_CC_BEGIN;
 
 #define  MAX_PATH 256
 
-using namespace std;
-
 // record the resource path
 static string s_strResourcePath = "";
 	
@@ -133,14 +131,11 @@ string CCFileUtils::getWriteablePath()
 {
 	// the path is: /data/data/ + package name
 	string dir("/data/data/");
-	char* tmp = getPackageNameJNI();
+	const char *tmp = getPackageNameJNI();
 
 	if (tmp)
 	{
 		dir.append(tmp).append("/");
-
-		// release memory
-		delete [] tmp;
 
 		return dir;
 	}
