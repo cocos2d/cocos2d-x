@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 // implementation of CCSpriteFrame
 
-CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, CCRect rect)
+CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
 {
 	CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
 	pSpriteFrame->initWithTexture(pobTexture, rect);
@@ -38,7 +38,7 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D *pobTexture, CCRect r
 	return pSpriteFrame;
 }
 
-CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize)
+CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
 	pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);
@@ -47,13 +47,13 @@ CCSpriteFrame* CCSpriteFrame::frameWithTexture(CCTexture2D* pobTexture, CCRect r
 	return pSpriteFrame;
 }
 
-bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CCRect rect)
+bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect)
 {
 	CCRect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
 	return initWithTexture(pobTexture, rectInPixels, false, CCPointZero, rectInPixels.size);
 }
 
-bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, CCRect rect, bool rotated, CCPoint offset, CCSize originalSize)
+bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
 	m_pobTexture = pobTexture;
 
@@ -88,13 +88,13 @@ CCObject* CCSpriteFrame::copyWithZone(CCZone *pZone)
 	return pCopy;
 }
 
-void CCSpriteFrame::setRect(CCRect rect)
+void CCSpriteFrame::setRect(const CCRect& rect)
 {
     m_obRect = rect;
     m_obRectInPixels = CC_RECT_POINTS_TO_PIXELS(m_obRect);
 }
 
-void CCSpriteFrame::setRectInPixels(CCRect rectInPixels)
+void CCSpriteFrame::setRectInPixels(const CCRect& rectInPixels)
 {
     m_obRectInPixels = rectInPixels;
     m_obRect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);

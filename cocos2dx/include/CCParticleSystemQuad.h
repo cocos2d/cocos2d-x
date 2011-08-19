@@ -71,7 +71,7 @@ public:
 	void initIndices();
 
     /** initilizes the texture with a rectangle measured Points */
-	void initTexCoordsWithRect(CCRect rect);
+	void initTexCoordsWithRect(const CCRect& rect);
 
 	/** Sets a new CCSpriteFrame as particle.
 	WARNING: this method is experimental. Use setTexture:withRect instead.
@@ -82,11 +82,11 @@ public:
     /** Sets a new texture with a rect. The rect is in Points.
 	@since v0.99.4
 	*/
-	void setTextureWithRect(CCTexture2D *texture, CCRect rect);
+	void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
 	// super methods
 	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
 	virtual void setTexture(CCTexture2D* texture);
-	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
 	virtual void postStep();
 	virtual void draw();
 };

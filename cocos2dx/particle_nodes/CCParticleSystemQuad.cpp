@@ -104,7 +104,7 @@ CCParticleSystemQuad * CCParticleSystemQuad::particleWithFile(const char *plistF
 }
 
 // pointRect should be in Texture coordinates, not pixel coordinates
-void CCParticleSystemQuad::initTexCoordsWithRect(CCRect pointRect)
+void CCParticleSystemQuad::initTexCoordsWithRect(const CCRect& pointRect)
 {
     // convert to pixels coords
 
@@ -154,7 +154,7 @@ void CCParticleSystemQuad::initTexCoordsWithRect(CCRect pointRect)
 		m_pQuads[i].tr.texCoords.v = top;
 	}
 }
-void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, CCRect rect)
+void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, const CCRect& rect)
 {
 	// Only update the texture if is different from the current one
 	if( !m_pTexture || texture->getName() != m_pTexture->getName() )
@@ -166,7 +166,7 @@ void CCParticleSystemQuad::setTextureWithRect(CCTexture2D *texture, CCRect rect)
 }
 void CCParticleSystemQuad::setTexture(CCTexture2D* texture)
 {
-	CCSize s = texture->getContentSize();
+	const CCSize& s = texture->getContentSize();
 	this->setTextureWithRect(texture, CCRectMake(0, 0, s.width, s.height));
 }
 void CCParticleSystemQuad::setDisplayFrame(CCSpriteFrame *spriteFrame)
@@ -194,7 +194,7 @@ void CCParticleSystemQuad::initIndices()
 		m_pIndices[i6+3] = (GLushort) i4+3;
 	}
 }
-void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
+void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition)
 {
 	// colors
     ccV2F_C4B_T2F_Quad *quad = &(m_pQuads[m_uParticleIdx]);

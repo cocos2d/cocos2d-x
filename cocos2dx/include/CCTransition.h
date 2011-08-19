@@ -408,9 +408,9 @@ public:
 	/** creates the transition with a duration and with an RGB color
 	* Example: FadeTransition::transitionWithDuration(2, scene, ccc3(255,0,0); // red color
 	*/
-	static CCTransitionFade* transitionWithDuration(ccTime duration,CCScene* scene, ccColor3B color = ccBLACK);
+	static CCTransitionFade* transitionWithDuration(ccTime duration,CCScene* scene, const ccColor3B& color = ccBLACK);
 	/** initializes the transition with a duration and with an RGB color */
-	virtual bool initWithDuration(ccTime t, CCScene*scene ,ccColor3B color);
+	virtual bool initWithDuration(ccTime t, CCScene*scene ,const ccColor3B& color);
 
 	virtual bool initWithDuration(ccTime t,CCScene* scene); 
 	virtual void onEnter();
@@ -494,7 +494,7 @@ class CC_DLL CCTransitionFadeTR : public CCTransitionScene , public CCTransition
 public:
 	CCTransitionFadeTR();
 	virtual ~CCTransitionFadeTR();
-	virtual CCActionInterval* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(const ccGridSize& size);
 	virtual void onEnter();
 	virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
@@ -513,7 +513,7 @@ class CC_DLL CCTransitionFadeBL : public CCTransitionFadeTR
 public:
 	CCTransitionFadeBL();
 	virtual ~CCTransitionFadeBL();
-	virtual CCActionInterval* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(const ccGridSize& size);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeBL)
@@ -527,7 +527,7 @@ class CC_DLL CCTransitionFadeUp : public CCTransitionFadeTR
 public:
 	CCTransitionFadeUp();
 	virtual ~CCTransitionFadeUp();
-	virtual CCActionInterval* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(const ccGridSize& size);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeUp)
@@ -541,7 +541,7 @@ class CC_DLL CCTransitionFadeDown : public CCTransitionFadeTR
 public:
 	CCTransitionFadeDown();
 	virtual ~CCTransitionFadeDown();
-	virtual CCActionInterval* actionWithSize(ccGridSize size);
+	virtual CCActionInterval* actionWithSize(const ccGridSize& size);
 
 public:
     DECLEAR_TRANSITIONWITHDURATION(CCTransitionFadeDown)

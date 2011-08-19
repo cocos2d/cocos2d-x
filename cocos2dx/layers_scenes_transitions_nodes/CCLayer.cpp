@@ -260,7 +260,7 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 	return true;
 }
 
-void CCLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
 	if (isScriptHandlerExist(CCTOUCHBEGAN))
 	{
@@ -322,13 +322,13 @@ void CCLayerColor::setOpacity(GLubyte var)
 }
 
 /// color getter
-ccColor3B CCLayerColor::getColor()
+const ccColor3B& CCLayerColor::getColor()
 {
 	return m_tColor;
 }
 
 /// color setter
-void CCLayerColor::setColor(ccColor3B var)
+void CCLayerColor::setColor(const ccColor3B& var)
 {
 	m_tColor = var;
 	updateColor();
@@ -347,7 +347,7 @@ void CCLayerColor::setBlendFunc(ccBlendFunc var)
 }
 
 
-CCLayerColor * CCLayerColor::layerWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
+CCLayerColor * CCLayerColor::layerWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height)
 {
 	CCLayerColor * pLayer = new CCLayerColor();
 	if( pLayer && pLayer->initWithColorWidthHeight(color,width,height))
@@ -358,7 +358,7 @@ CCLayerColor * CCLayerColor::layerWithColorWidthHeight(ccColor4B color, GLfloat 
 	CC_SAFE_DELETE(pLayer);
 	return NULL;
 }
-CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
+CCLayerColor * CCLayerColor::layerWithColor(const ccColor4B& color)
 {
 	CCLayerColor * pLayer = new CCLayerColor();
 	if(pLayer && pLayer->initWithColor(color))
@@ -370,7 +370,7 @@ CCLayerColor * CCLayerColor::layerWithColor(ccColor4B color)
 	return NULL;
 }
 
-bool CCLayerColor::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfloat height)
+bool CCLayerColor::initWithColorWidthHeight(const ccColor4B& color, GLfloat width, GLfloat height)
 {
 	// default blend function
 	m_tBlendFunc.src = CC_BLEND_SRC;
@@ -392,7 +392,7 @@ bool CCLayerColor::initWithColorWidthHeight(ccColor4B color, GLfloat width, GLfl
 	return true;
 }
 
-bool CCLayerColor::initWithColor(ccColor4B color)
+bool CCLayerColor::initWithColor(const ccColor4B& color)
 {
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	this->initWithColorWidthHeight(color, s.width, s.height);
@@ -400,7 +400,7 @@ bool CCLayerColor::initWithColor(ccColor4B color)
 }
 
 /// override contentSize
-void CCLayerColor::setContentSize(CCSize size)
+void CCLayerColor::setContentSize(const CCSize& size)
 {
 	m_pSquareVertices[1].x = size.width * CC_CONTENT_SCALE_FACTOR();
 	m_pSquareVertices[2].y = size.height * CC_CONTENT_SCALE_FACTOR();
@@ -472,7 +472,7 @@ void CCLayerColor::draw()
 //
 // CCLayerGradient
 // 
-CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
+CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end)
 {
     CCLayerGradient * pLayer = new CCLayerGradient();
     if( pLayer && pLayer->initWithColor(start, end))
@@ -484,7 +484,7 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end)
     return NULL;
 }
 
-CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end, CCPoint v)
+CCLayerGradient* CCLayerGradient::layerWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v)
 {
     CCLayerGradient * pLayer = new CCLayerGradient();
     if( pLayer && pLayer->initWithColor(start, end, v))
@@ -496,12 +496,12 @@ CCLayerGradient* CCLayerGradient::layerWithColor(ccColor4B start, ccColor4B end,
     return NULL;
 }
 
-bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end)
+bool CCLayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end)
 {
     return initWithColor(start, end, ccp(0, -1));
 }
 
-bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CCPoint v)
+bool CCLayerGradient::initWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v)
 {
     m_endColor.r  = end.r;
     m_endColor.g  = end.g;
@@ -511,10 +511,9 @@ bool CCLayerGradient::initWithColor(ccColor4B start, ccColor4B end, CCPoint v)
     m_cStartOpacity	= start.a;
     m_AlongVector   = v;
 
-    start.a	= 255;
     m_bCompressedInterpolation = true;
 
-    return CCLayerColor::initWithColor(start);
+    return CCLayerColor::initWithColor(ccc4(start.r, start.g, start.b, 255));
 }
 
 void CCLayerGradient::updateColor()
@@ -573,23 +572,23 @@ void CCLayerGradient::updateColor()
     m_pSquareColors[3].a = (GLubyte) (E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c)));
 }
 
-ccColor3B CCLayerGradient::getStartColor()
+const ccColor3B& CCLayerGradient::getStartColor()
 {
     return m_tColor;
 }
 
-void CCLayerGradient::setStartColor(ccColor3B colors)
+void CCLayerGradient::setStartColor(const ccColor3B& color)
 {
-    setColor(colors);
+    setColor(color);
 }
 
-void CCLayerGradient::setEndColor(ccColor3B colors)
+void CCLayerGradient::setEndColor(const ccColor3B& color)
 {
-    m_endColor = colors;
+    m_endColor = color;
     updateColor();
 }
 
-ccColor3B CCLayerGradient::getEndColor()
+const ccColor3B& CCLayerGradient::getEndColor()
 {
     return m_endColor;
 }
@@ -616,13 +615,13 @@ GLubyte CCLayerGradient::getEndOpacity()
     return m_cEndOpacity;
 }
 
-void CCLayerGradient::setVector(CCPoint var)
+void CCLayerGradient::setVector(const CCPoint& var)
 {
     m_AlongVector = var;
     updateColor();
 }
 
-CCPoint CCLayerGradient::getVector()
+const CCPoint& CCLayerGradient::getVector()
 {
     return m_AlongVector;
 }

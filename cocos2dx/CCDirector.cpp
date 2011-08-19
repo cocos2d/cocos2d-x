@@ -393,7 +393,7 @@ void CCDirector::setDepthTest(bool bOn)
 	}
 }
 
-CCPoint CCDirector::convertToGL(CCPoint obPoint)
+CCPoint CCDirector::convertToGL(const CCPoint& obPoint)
 {
 	CCSize s = m_obWinSizeInPoints;
 	float newY = s.height - obPoint.y;
@@ -421,7 +421,7 @@ CCPoint CCDirector::convertToGL(CCPoint obPoint)
 	return ret;
 }
 
-CCPoint CCDirector::convertToUI(CCPoint obPoint)
+CCPoint CCDirector::convertToUI(const CCPoint& obPoint)
 {
 	CCSize winSize = m_obWinSizeInPoints;
 	float oppositeX = winSize.width - obPoint.x;
@@ -480,7 +480,7 @@ CCSize CCDirector::getDisplaySizeInPixels(void)
 	return m_obWinSizeInPixels;
 }
 
-void CCDirector::reshapeProjection(CCSize newWindowSize)
+void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 {
     CC_UNUSED_PARAM(newWindowSize);
     m_obWinSizeInPoints = m_pobOpenGLView->getSize();

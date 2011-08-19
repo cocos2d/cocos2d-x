@@ -285,7 +285,7 @@ class CC_DLL CCMoveTo : public CCActionInterval
 {
 public:
 	/** initializes the action */
-	bool initWithDuration(ccTime duration, CCPoint position);
+	bool initWithDuration(ccTime duration, const CCPoint& position);
 
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
@@ -293,7 +293,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCMoveTo* actionWithDuration(ccTime duration, CCPoint position);
+	static CCMoveTo* actionWithDuration(ccTime duration, const CCPoint& position);
 
 protected:
 	CCPoint m_endPosition;
@@ -309,7 +309,7 @@ class CC_DLL CCMoveBy : public CCMoveTo
 {
 public:
 	/** initializes the action */
-	bool initWithDuration(ccTime duration, CCPoint position);
+	bool initWithDuration(ccTime duration, const CCPoint& position);
 
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
@@ -317,7 +317,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCMoveBy* actionWithDuration(ccTime duration, CCPoint position);
+	static CCMoveBy* actionWithDuration(ccTime duration, const CCPoint& position);
 };
 
 /** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
@@ -366,7 +366,7 @@ class CC_DLL CCJumpBy : public CCActionInterval
 {
 public:
 	/** initializes the action */
-	bool initWithDuration(ccTime duration, CCPoint position, ccTime height, unsigned int jumps);
+	bool initWithDuration(ccTime duration, const CCPoint& position, ccTime height, unsigned int jumps);
 
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
@@ -375,7 +375,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCJumpBy* actionWithDuration(ccTime duration, CCPoint position, ccTime height, unsigned int jumps);
+	static CCJumpBy* actionWithDuration(ccTime duration, const CCPoint& position, ccTime height, unsigned int jumps);
 
 protected:
 	CCPoint			m_startPosition;
@@ -394,7 +394,7 @@ public:
 
 public:
 	/** creates the action */
-	static CCJumpTo* actionWithDuration(ccTime duration, CCPoint position, ccTime height, int jumps);
+	static CCJumpTo* actionWithDuration(ccTime duration, const CCPoint& position, ccTime height, int jumps);
 };
 
 /** @typedef bezier configuration structure
@@ -414,7 +414,7 @@ class CC_DLL CCBezierBy : public CCActionInterval
 {
 public:
 	/** initializes the action with a duration and a bezier configuration */
-	bool initWithDuration(ccTime t, ccBezierConfig c);
+	bool initWithDuration(ccTime t, const ccBezierConfig& c);
 
 	virtual CCObject* copyWithZone(CCZone* pZone);
 	virtual void startWithTarget(CCNode *pTarget);
@@ -423,7 +423,7 @@ public:
 
 public:
 	/** creates the action with a duration and a bezier configuration */
-	static CCBezierBy* actionWithDuration(ccTime t, ccBezierConfig c);
+	static CCBezierBy* actionWithDuration(ccTime t, const ccBezierConfig& c);
 
 protected:
 	ccBezierConfig m_sConfig;
@@ -441,7 +441,7 @@ public:
 
 public:
 	/** creates the action with a duration and a bezier configuration */
-    static CCBezierTo* actionWithDuration(ccTime t, ccBezierConfig c);
+    static CCBezierTo* actionWithDuration(ccTime t, const ccBezierConfig& c);
 };
 
 /** @brief Scales a CCNode object to a zoom factor by modifying it's scale attribute.

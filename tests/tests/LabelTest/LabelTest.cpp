@@ -40,7 +40,7 @@ CCLayer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER	16
+#define MAX_LAYER	17
 
 CCLayer* createAtlasLayer(int nIndex)
 {
@@ -64,6 +64,7 @@ CCLayer* createAtlasLayer(int nIndex)
         case 13: return new Atlas1();
 		case 14: return new LabelTTFTest();
 		case 15: return new LabelTTFMultiline();
+		case 16: return new LabelTTFChinese();
 	}
 
 	return NULL;
@@ -949,4 +950,17 @@ string LabelTTFMultiline::title()
 string LabelTTFMultiline::subtitle()
 {
 	return "Word wrap using CCLabelTTF";
+}
+
+LabelTTFChinese::LabelTTFChinese()
+{
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	CCLabelTTF *pLable = CCLabelTTF::labelWithString("中国", "Marker Felt", 30);
+	pLable->setPosition(ccp(size.width / 2, size.height /2));
+	this->addChild(pLable);
+}
+
+string LabelTTFChinese::title()
+{
+	return "Testing CCLabelTTF with Chinese character";
 }

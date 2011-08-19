@@ -36,7 +36,7 @@ namespace cocos2d {
 	CCActionInstant::CCActionInstant()
 	{}
 
-	CCObject * CCActionInstant::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject * CCActionInstant::copyWithZone(CCZone *pZone)
 	{
 		CCZone *pNewZone = NULL;
 		CCActionInstant *pRet = NULL;
@@ -218,14 +218,14 @@ namespace cocos2d {
 	//
 	// Place
 	//
-	CCPlace * CCPlace::actionWithPosition(CCPoint pos)
+	CCPlace * CCPlace::actionWithPosition(const CCPoint& pos)
 	{
 		CCPlace *pRet = new CCPlace();
 		pRet->initWithPosition(pos);
 		pRet->autorelease();
 		return pRet;
 	}
-	bool CCPlace::initWithPosition(CCPoint pos)
+	bool CCPlace::initWithPosition(const CCPoint& pos)
 	{
 		m_tPosition = pos;
 		return true;
@@ -305,7 +305,7 @@ namespace cocos2d {
 		return true;
 	}
 
-	CCObject * CCCallFunc::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject * CCCallFunc::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCCallFunc* pRet = NULL;
