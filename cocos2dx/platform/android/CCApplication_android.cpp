@@ -78,7 +78,7 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    char* pLanguageName = getCurrentLanguageJNI();
+    const char *pLanguageName = getCurrentLanguageJNI();
     ccLanguageType ret = kLanguageEnglish;
 
     if (0 == strcmp("zh", pLanguageName))
