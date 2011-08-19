@@ -163,6 +163,7 @@
 		BF1B266313C7108F009769C6 /* Bug-914.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265313C7108F009769C6 /* Bug-914.cpp */; };
 		BF1B266413C7108F009769C6 /* BugsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265513C7108F009769C6 /* BugsTest.cpp */; };
 		BF1B266513C7108F009769C6 /* DirectorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B265813C7108F009769C6 /* DirectorTest.cpp */; };
+		BF1B49F013FE04C300838E41 /* CurrentLanguageTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1B49EF13FE04C300838E41 /* CurrentLanguageTest.cpp */; };
 		BF1C47EB1293683800B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		BF1C5C2913EBF83F0076BDF6 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF1C5C2813EBF83F0076BDF6 /* CCTouchHandler.h */; };
@@ -758,6 +759,8 @@
 		BF1B265613C7108F009769C6 /* BugsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugsTest.h; sourceTree = "<group>"; };
 		BF1B265813C7108F009769C6 /* DirectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectorTest.cpp; sourceTree = "<group>"; };
 		BF1B265913C7108F009769C6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectorTest.h; sourceTree = "<group>"; };
+		BF1B49EE13FE04C300838E41 /* CurrentLanguageTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentLanguageTest.h; sourceTree = "<group>"; };
+		BF1B49EF13FE04C300838E41 /* CurrentLanguageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurrentLanguageTest.cpp; sourceTree = "<group>"; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF1C5C2813EBF83F0076BDF6 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		BF1E7A4313E2629800C2D68B /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontTest.h; sourceTree = "<group>"; };
@@ -1689,6 +1692,16 @@
 			path = DirectorTest;
 			sourceTree = "<group>";
 		};
+		BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */ = {
+			isa = PBXGroup;
+			children = (
+				BF1B49EE13FE04C300838E41 /* CurrentLanguageTest.h */,
+				BF1B49EF13FE04C300838E41 /* CurrentLanguageTest.cpp */,
+			);
+			name = CurrentLanguageTest;
+			path = tests/CurrentLanguageTest;
+			sourceTree = "<group>";
+		};
 		BF1E7A4213E2629800C2D68B /* FontTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -1819,6 +1832,7 @@
 		BF31DF1312E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF1B49ED13FE04C300838E41 /* CurrentLanguageTest */,
 				BF31DF1412E979A100D4F513 /* AppDelegate.cpp */,
 				BF31DF1512E979A100D4F513 /* AppDelegate.h */,
 				BF31E11812E979A100D4F513 /* tests */,
@@ -3205,6 +3219,7 @@
 				BF1B266513C7108F009769C6 /* DirectorTest.cpp in Sources */,
 				BF1EB66813D6B915008D2559 /* Texture2dTest.cpp in Sources */,
 				BF1E7BC513E273DF00C2D68B /* FontTest.cpp in Sources */,
+				BF1B49F013FE04C300838E41 /* CurrentLanguageTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

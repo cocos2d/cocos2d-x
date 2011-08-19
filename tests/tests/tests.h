@@ -43,6 +43,7 @@
 #include "BugsTest/BugsTest.h"
 #include "Texture2dTest/Texture2dTest.h"
 #include "FontTest/FontTest.h"
+#include "CurrentLanguageTest/CurrentLanguageTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -96,6 +97,7 @@ enum
     TEST_DIRECTOR,
     TEST_BUGS,
 	TEST_FONTS,
+	TEST_CURRENT_LANGUAGE,
 
     TESTS_COUNT,
 };
@@ -140,7 +142,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"UserDefaultTest",
     "DirectorTest",
     "BugsTest",
-	"FontTest"
+	"FontTest",
+	"CurrentLanguageTest",
 };
 
 #endif
