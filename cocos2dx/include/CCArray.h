@@ -95,6 +95,9 @@ public:
 
 public:
     ccArray* data;
+
+private:
+	CCArray() : data(NULL) {};
 };
 
 }
