@@ -41,13 +41,13 @@ namespace cocos2d
 		virtual CCActionInterval* reverse(void);
 
 		/** initializes the action with size and duration */
-		virtual bool initWithSize(ccGridSize gridSize, ccTime duration);
+		virtual bool initWithSize(const ccGridSize& gridSize, ccTime duration);
 		/** returns the grid */
 		virtual CCGridBase* getGrid(void);
 
 	public:
 		/** creates the action with size and duration */
-		static CCGridAction* actionWithSize(ccGridSize gridSize, ccTime duration);
+		static CCGridAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
 
 	protected:
 		ccGridSize m_sGridSize;
@@ -63,15 +63,15 @@ namespace cocos2d
 		/** returns the grid */
 		virtual CCGridBase* getGrid(void);
 		/** returns the vertex than belongs to certain position in the grid */
-		ccVertex3F vertex(ccGridSize pos);
+		ccVertex3F vertex(const ccGridSize& pos);
 		/** returns the non-transformed vertex than belongs to certain position in the grid */
-		ccVertex3F originalVertex(ccGridSize pos);
+		ccVertex3F originalVertex(const ccGridSize& pos);
 		/** sets a new vertex to a certain position of the grid */
-		void setVertex(ccGridSize pos, ccVertex3F vertex);
+		void setVertex(const ccGridSize& pos, const ccVertex3F& vertex);
 
 	public:
 		/** creates the action with size and duration */
-        static CCGrid3DAction* actionWithSize(ccGridSize gridSize, ccTime duration);
+        static CCGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
 	};
 
 	/** @brief Base class for CCTiledGrid3D actions */
@@ -79,18 +79,18 @@ namespace cocos2d
 	{
 	public:
 		/** returns the tile that belongs to a certain position of the grid */
-		ccQuad3 tile(ccGridSize pos);
+		ccQuad3 tile(const ccGridSize& pos);
 		/** returns the non-transformed tile that belongs to a certain position of the grid */
-		ccQuad3 originalTile(ccGridSize pos);
+		ccQuad3 originalTile(const ccGridSize& pos);
 		/** sets a new tile to a certain position of the grid */
-		void setTile(ccGridSize pos, ccQuad3 coords);
+		void setTile(const ccGridSize& pos, const ccQuad3& coords);
 
 		/** returns the grid */
 		virtual CCGridBase* getGrid(void);
 
 	public:
 		/** creates the action with size and duration */
-        static CCTiledGrid3DAction* actionWithSize(ccGridSize gridSize, ccTime duration);
+        static CCTiledGrid3DAction* actionWithSize(const ccGridSize& gridSize, ccTime duration);
 	};
 
 	/** @brief CCAccelDeccelAmplitude action */

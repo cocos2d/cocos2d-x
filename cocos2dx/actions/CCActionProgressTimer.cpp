@@ -31,7 +31,7 @@ namespace cocos2d
 
     // implementation of CCProgressTo
 
-	CCProgressTo* CCProgressTo::actionWithDuration(cocos2d::ccTime duration, float fPercent)
+	CCProgressTo* CCProgressTo::actionWithDuration(ccTime duration, float fPercent)
 	{
 		CCProgressTo *pProgressTo = new CCProgressTo();
 		pProgressTo->initWithDuration(duration, fPercent);
@@ -40,7 +40,7 @@ namespace cocos2d
 		return pProgressTo;
 	}
  
-	bool CCProgressTo::initWithDuration(cocos2d::ccTime duration, float fPercent)
+	bool CCProgressTo::initWithDuration(ccTime duration, float fPercent)
 	{
 		if (CCActionInterval::initWithDuration(duration))
 		{
@@ -52,7 +52,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCProgressTo::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCProgressTo* pCopy = NULL;
@@ -88,14 +88,14 @@ namespace cocos2d
 		}
 	}
 
-	void CCProgressTo::update(cocos2d::ccTime time)
+	void CCProgressTo::update(ccTime time)
 	{
 		((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 	}
 
 	// implementation of CCProgressFromTo
  
-	CCProgressFromTo* CCProgressFromTo::actionWithDuration(cocos2d::ccTime duration, float fFromPercentage, float fToPercentage)
+	CCProgressFromTo* CCProgressFromTo::actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
 	{
 		CCProgressFromTo *pProgressFromTo = new CCProgressFromTo();
 		pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
@@ -104,7 +104,7 @@ namespace cocos2d
 		return pProgressFromTo;
 	}
 
-	bool CCProgressFromTo::initWithDuration(cocos2d::ccTime duration, float fFromPercentage, float fToPercentage)
+	bool CCProgressFromTo::initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
 	{
 		if (CCActionInterval::initWithDuration(duration))
 		{
@@ -117,7 +117,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCProgressFromTo::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCProgressFromTo* pCopy = NULL;
@@ -150,7 +150,7 @@ namespace cocos2d
 		CCActionInterval::startWithTarget(pTarget);
 	}
 
-	void CCProgressFromTo::update(cocos2d::ccTime time)
+	void CCProgressFromTo::update(ccTime time)
 	{
 		((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 	}

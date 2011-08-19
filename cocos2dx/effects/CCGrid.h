@@ -52,19 +52,19 @@ namespace cocos2d
 		inline void setReuseGrid(int nReuseGrid) { m_nReuseGrid = nReuseGrid; }
 
 		/** size of the grid */
-		inline ccGridSize getGridSize(void) { return m_sGridSize; }
-		inline void setGridSize(ccGridSize gridSize) { m_sGridSize = gridSize; }
+		inline const ccGridSize& getGridSize(void) { return m_sGridSize; }
+		inline void setGridSize(const ccGridSize& gridSize) { m_sGridSize = gridSize; }
 
 		/** pixels between the grids */
-		inline CCPoint getStep(void) { return m_obStep; }
-		inline void setStep(CCPoint step) { m_obStep = step; }
+		inline const CCPoint& getStep(void) { return m_obStep; }
+		inline void setStep(const CCPoint& step) { m_obStep = step; }
 
 		/** is texture flipped */
 		inline bool isTextureFlipped(void) { return m_bIsTextureFlipped; }
 		void setIsTextureFlipped(bool bFlipped);
 
-		bool initWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped);
-		bool initWithSize(ccGridSize gridSize);
+		bool initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+		bool initWithSize(const ccGridSize& gridSize);
 
 		void beforeDraw(void);
 		void afterDraw(CCNode *pTarget);
@@ -73,8 +73,8 @@ namespace cocos2d
 		virtual void calculateVertexPoints(void);
 
 	public:
-		static CCGridBase* gridWithSize(ccGridSize gridSize, CCTexture2D *texture, bool flipped);
-		static CCGridBase* gridWithSize(ccGridSize gridSize);
+		static CCGridBase* gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped);
+		static CCGridBase* gridWithSize(const ccGridSize& gridSize);
 		void set2DProjection(void);
 		void set3DProjection(void);
 
@@ -100,19 +100,19 @@ namespace cocos2d
         ~CCGrid3D(void);
 
 		/** returns the vertex at a given position */
-		ccVertex3F vertex(ccGridSize pos);
+		ccVertex3F vertex(const ccGridSize& pos);
 		/** returns the original (non-transformed) vertex at a given position */
-		ccVertex3F originalVertex(ccGridSize pos);
+		ccVertex3F originalVertex(const ccGridSize& pos);
 		/** sets a new vertex at a given position */
-		void setVertex(ccGridSize pos, ccVertex3F vertex);
+		void setVertex(const ccGridSize& pos, const ccVertex3F& vertex);
 
 		virtual void blit(void);
 		virtual void reuse(void);
 		virtual void calculateVertexPoints(void);
 
 	public:
-		static CCGrid3D* gridWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped);
-		static CCGrid3D* gridWithSize(ccGridSize gridSize);
+		static CCGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+		static CCGrid3D* gridWithSize(const ccGridSize& gridSize);
 
 	protected:
 		GLvoid *m_pTexCoordinates;
@@ -131,19 +131,19 @@ namespace cocos2d
 		~CCTiledGrid3D(void);
 
 		/** returns the tile at the given position */
-		ccQuad3 tile(ccGridSize pos);
+		ccQuad3 tile(const ccGridSize& pos);
 		/** returns the original tile (untransformed) at the given position */
-		ccQuad3 originalTile(ccGridSize pos);
+		ccQuad3 originalTile(const ccGridSize& pos);
 		/** sets a new tile */
-		void setTile(ccGridSize pos, ccQuad3 coords);
+		void setTile(const ccGridSize& pos, const ccQuad3& coords);
 
 		virtual void blit(void);
 		virtual void reuse(void);
 		virtual void calculateVertexPoints(void);
 
 	public:
-		static CCTiledGrid3D* gridWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped);
-		static CCTiledGrid3D* gridWithSize(ccGridSize gridSize);
+		static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped);
+		static CCTiledGrid3D* gridWithSize(const ccGridSize& gridSize);
 
 	protected:
 		GLvoid *m_pTexCoordinates;

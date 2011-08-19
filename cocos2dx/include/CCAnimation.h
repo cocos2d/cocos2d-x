@@ -97,7 +97,7 @@ namespace   cocos2d {
 		/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
 		Added to facilitate the migration from v0.8 to v0.9.
 		*/
-		void addFrameWithTexture(CCTexture2D* pobTexture, CCRect rect);
+		void addFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
 
 		bool init(void);
 

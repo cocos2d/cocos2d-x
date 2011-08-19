@@ -1,8 +1,10 @@
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 :m_pLuaEngine(NULL)
@@ -11,6 +13,8 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
+	// end simple audio engine here, or it may crashed on win32
+	SimpleAudioEngine::sharedEngine()->end();
     CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
     CC_SAFE_DELETE(m_pLuaEngine);
 }

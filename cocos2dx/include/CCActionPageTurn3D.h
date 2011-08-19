@@ -45,7 +45,7 @@ namespace cocos2d
 
 	public:
 		/** create the action */
-		static CCPageTurn3D* actionWithSize(ccGridSize gridSize, ccTime time);
+		static CCPageTurn3D* actionWithSize(const ccGridSize& gridSize, ccTime time);
 	};
 }
 
