@@ -144,7 +144,7 @@ NS_CC_BEGIN;
 OpenGL GLU implementation
 */
 
-typedef float GLfloat;
+//typedef float GLfloat;
 
 /** OpenGL gluLookAt implementation */
 void CC_DLL gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ,
