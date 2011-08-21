@@ -7,6 +7,7 @@
 # set environment paramters
 NDK_ROOT="/home/laschweinski/android/android-ndk-r5"
 ANDROID_SDK_ROOT="/home/laschweinski/android/android-sdk-linux_86"
+COCOS2DX_ROOT="/home/laschweinski/git/cocos2d-x"
 
 # check if it was called by .bat file
 if [ $# -eq 5 ];then
@@ -29,13 +30,13 @@ fi
 # ok, it was run under linux
 
 # check it was runned in cocos2d-x root
-check_path(){
-    if [ ! -f create-android-project.sh ];then
-        echo Error!!!
-        echo Please run in cocos2dx root
-        exit 
-    fi
-}
+#check_path(){
+#    if [ ! -f create-android-project.sh ];then
+#        echo Error!!!
+#        echo Please run in cocos2dx root
+#        exit 
+#    fi
+#}
 
 create_android_project(){
     echo "Input package path. For example: org.cocos2dx.example"
@@ -52,8 +53,8 @@ create_android_project(){
     $ANDROID_SDK_ROOT/tools/android create project -n $PROJECT_NAME -t $TARGET_ID -k $PACKAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR
 }
 
-check_path
+#check_path
 create_android_project
 
 # invoke template/android/copy_files.sh
-sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH
+sh $COCOS2DX_ROOT/template/android/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH
