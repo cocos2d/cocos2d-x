@@ -36,6 +36,8 @@ void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
     xmin = ymin * aspect;
     xmax = ymax * aspect;
 
+
+
     glFrustumf(xmin, xmax,
         ymin, ymax,
         zNear, zFar);	

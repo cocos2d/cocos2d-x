@@ -161,6 +161,10 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #define CC_ASSERT(cond)                assert(cond)
 #define CC_UNUSED_PARAM(unusedparam)   (void)unusedparam
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#undef CC_UNUSED_PARAM
+#define CC_UNUSED_PARAM(unusedparam)   //unusedparam
+#endif
 
 
 // platform depended macros
