@@ -198,6 +198,8 @@ public class Cocos2dxActivity extends Activity{
     	
     	// resume background music
     	resumeBackgroundMusic();
+    	
+    	soundPlayer.resumeAllEffect();
     }
 
     @Override
@@ -209,6 +211,8 @@ public class Cocos2dxActivity extends Activity{
     	
     	// pause background music
     	pauseBackgroundMusic();
+  
+    	soundPlayer.pauseAllEffect();
     }
 
     protected void setPackageName(String packageName) {
