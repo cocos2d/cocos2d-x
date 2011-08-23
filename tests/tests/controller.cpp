@@ -109,7 +109,11 @@ static TestScene* CreateTestScene(int nIdx)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	case TEST_FONTS:
 		pScene = new FontTestScene(); break;
+	case TEST_CURRENT_LANGUAGE:
+		pScene = new CurrentLanguageTestScene(); break;
+		break;
 #endif
+	
     default:
         break;
     }
