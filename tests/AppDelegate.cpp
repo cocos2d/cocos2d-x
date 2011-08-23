@@ -69,7 +69,7 @@ bool AppDelegate::initInstance()
 		// The HelloWorld is designed as HVGA.
 		CCEGLView * pMainWnd = new CCEGLView();
 		CC_BREAK_IF(! pMainWnd
-				|| ! pMainWnd->Create("cocos2d: tests", 800, 480, 480, 320));
+				|| ! pMainWnd->Create("cocos2d: tests", 480, 320, 480, 320));
 
 		//set the base resource folder pay attention to add "/"
 		CCFileUtils::setResourcePath("Res/");

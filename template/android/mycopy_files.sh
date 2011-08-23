@@ -3,10 +3,12 @@
 
 APP_NAME=$2
 COCOS2DX_ROOT=$1
-APP_DIR=`pwd`/$APP_NAME
+APP_DIR=`pwd`/$5
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloCocos2dx
 NDK_ROOT=$3
 PACKAGE_PATH=$4
+
+echo $APP_DIR
 
 # xxx.yyy.zzz -> xxx/yyy/zzz
 convert_package_path_to_dir(){
@@ -48,6 +50,11 @@ move_eclipse_configures_into(){
 	do
 		cp $HELLOWORLD_ROOT/$file $APP_DIR/
     	done
+}
+
+#copy shell script
+copy_shells(){
+	cp $HELLOWORLD_ROOT/postCompiled.sh $APP_DIR/
 }
 
 #copy main sources
@@ -118,6 +125,7 @@ modify_layout(){
 move_files_into_android
 move_files_into_linux
 move_eclipse_configures_into
+copy_shells
 copy_cpp_h_from_helloworld
 copy_resouces
 copy_src_and_jni

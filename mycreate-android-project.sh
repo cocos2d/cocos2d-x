@@ -49,6 +49,8 @@ create_android_project(){
     echo "input your project name:"
     read PROJECT_NAME
     PROJECT_DIR=`pwd`/$PROJECT_NAME
+    PROREAL_DIR=$PROJECT_NAME
+    PROJECT_NAME=An$PROJECT_NAME
 
     $ANDROID_SDK_ROOT/tools/android create project -n $PROJECT_NAME -t $TARGET_ID -k $PACKAGE_PATH -a $PROJECT_NAME -p $PROJECT_DIR
 }
@@ -57,4 +59,4 @@ create_android_project(){
 create_android_project
 
 # invoke template/android/copy_files.sh
-sh $COCOS2DX_ROOT/template/android/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH
+sh $COCOS2DX_ROOT/template/android/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH $PROREAL_DIR

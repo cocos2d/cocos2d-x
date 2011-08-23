@@ -346,6 +346,12 @@
 									<listOptionValue builtIn="false" value="z"/>
 								</option>
 								<option id="gnu.cpp.link.option.soname.2039202857" name="Shared object name (-Wl,-soname=)" superClass="gnu.cpp.link.option.soname" value="" valueType="string"/>
+								<option id="gnu.cpp.link.option.userobjs.857042882" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="../platform/third_party/android/libraries/libcurl.a"/>
+									<listOptionValue builtIn="false" value="../platform/third_party/android/libraries/libpng.a"/>
+									<listOptionValue builtIn="false" value="../platform/third_party/android/libraries/libxml2.a"/>
+									<listOptionValue builtIn="false" value="..//platform/third_party/android/libraries/libjpeg.a"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.787272563" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

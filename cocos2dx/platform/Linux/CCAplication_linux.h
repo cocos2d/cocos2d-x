@@ -89,7 +89,7 @@ public:
 	 */
 	static ccLanguageType getCurrentLanguage();
 protected:
-    double       m_nAnimationInterval;
+    long       m_nAnimationInterval;  //micro second
 
 	static CCApplication * sm_pSharedApplication;
 };
