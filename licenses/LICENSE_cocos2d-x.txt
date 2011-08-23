@@ -1,6 +1,7 @@
 cocos2d-x   http://www.cocos2d-x.org
 
-Copyright (c) 2008-2010 - (see each file to see the different copyright owners)
+Copyright (c) 2010-2011 - cocos2d-x community
+(see each file to see the different copyright owners)
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
