@@ -1010,7 +1010,7 @@ void CCSkewTo::startWithTarget(CCNode *pTarget)
 		m_fDeltaX += 360;
 	}
 
-	m_fSkewY = pTarget->getSkewY();
+	m_fStartSkewY = pTarget->getSkewY();
 
 	if (m_fStartSkewY > 0)
 	{
