@@ -237,15 +237,9 @@ static void static_addValueToCCDict(id key, id value, CCDictionary<std::string, 
 
 namespace cocos2d {
 
-    // record the resource path
-    static char s_pszResourcePath[MAX_PATH] = {0};
-
     void CCFileUtils::setResourcePath(const char *pszResourcePath)
     {
-        // NSAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
-        // NSAssert(strlen(pszResourcePath) <= MAX_PATH, "[FileUtils setResourcePath] -- resource path too long");
-
-        strcpy(s_pszResourcePath, pszResourcePath);
+        assert(0);
     }
     
     int CCFileUtils::ccLoadFileIntoMemory(const char *filename, unsigned char **out)
