@@ -29,6 +29,10 @@ void ERRCHECK(FMOD_RESULT result) {
 
 FmodAudioPlayer::FmodAudioPlayer() :
 		pMusic(0), pBGMChannel(0), iSoundChannelCount(0) {
+	init();
+}
+
+void FmodAudioPlayer::init(){
 	//init
 	FMOD_RESULT result;
 	FMOD::ChannelGroup *masterChannelGroup;
@@ -74,9 +78,16 @@ void FmodAudioPlayer::close() {
 		pMusic = 0;
 	}
 
-	result = pChannelGroup->stop();
+	result = pChannelGroup->release();
 	ERRCHECK(result);
 	sMusicPath.clear();
+
+	result = pSystem->close();
+	ERRCHECK(result);
+	result = pSystem->release();
+	ERRCHECK(result);
+
+	init();
 }
 
 FmodAudioPlayer::~FmodAudioPlayer() {
@@ -160,7 +171,7 @@ void FmodAudioPlayer::stopBackgroundMusic(bool bReleaseData) {
 	FMOD_RESULT result;
 	pSystem->update();
 
-	if (pBGMChannel==NULL||pMusic==NULL){
+	if (pBGMChannel == NULL || pMusic == NULL) {
 		return;
 	}
 	if (bReleaseData) {

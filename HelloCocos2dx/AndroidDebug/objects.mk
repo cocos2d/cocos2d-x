@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lcocos2d
+LIBS := -lcocos2d -lcocosdenshion
 
