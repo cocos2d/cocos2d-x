@@ -90,6 +90,23 @@ namespace cocos2d {
 	{
 		return (CCFiniteTimeAction*)(CCHide::action());
 	}
+
+	CCObject* CCShow::copyWithZone(CCZone *pZone){
+		CCZone *pNewZone = NULL;
+		CCActionInstant *pRet = NULL;
+		if (pZone && pZone->m_pCopyObject)
+		{
+			pRet = (CCShow*)(pZone->m_pCopyObject);
+		}
+		else
+		{
+			pRet = new CCShow();
+			pZone = pNewZone = new CCZone(pRet);
+		}
+		CCActionInstant::copyWithZone(pZone);
+		CC_SAFE_DELETE(pNewZone);
+		return pRet;
+	}
 	//
 	// Hide
 	//
@@ -108,6 +125,23 @@ namespace cocos2d {
 	CCFiniteTimeAction *CCHide::reverse()
 	{
 		return (CCFiniteTimeAction*)(CCShow::action());
+	}
+
+	CCObject* CCHide::copyWithZone(CCZone *pZone){
+		CCZone *pNewZone = NULL;
+		CCActionInstant *pRet = NULL;
+		if (pZone && pZone->m_pCopyObject)
+		{
+			pRet = (CCHide*)(pZone->m_pCopyObject);
+		}
+		else
+		{
+			pRet = new CCHide();
+			pZone = pNewZone = new CCZone(pRet);
+		}
+		CCActionInstant::copyWithZone(pZone);
+		CC_SAFE_DELETE(pNewZone);
+		return pRet;
 	}
 
 	//

@@ -20,7 +20,7 @@ CPP_DEPS += \
 Classes/%.o: ../Classes/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	arm-linux-androideabi-g++ -DANDROID -I"/home/laschweinski/Documents/workspace/orxworkspace/HelloCocos2dx/Classes" -I/home/laschweinski/git/cocos2d-x/cocos2dx -I/home/laschweinski/git/cocos2d-x/cocos2dx/include -I/home/laschweinski/git/cocos2d-x/cocos2dx/platform -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-androideabi-g++ -DANDROID -I"/home/laschweinski/git/cocos2d-x/cocos2dx" -I"/home/laschweinski/git/cocos2d-x/CocosDenshion/include" -I"/home/laschweinski/git/cocos2d-x/HelloCocos2dx/Classes" -I/home/laschweinski/git/cocos2d-x/cocos2dx/include -I/home/laschweinski/git/cocos2d-x/cocos2dx/platform -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

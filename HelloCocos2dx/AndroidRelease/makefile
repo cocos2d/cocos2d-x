@@ -45,7 +45,7 @@ all: libHelloCocos2dx.so
 libHelloCocos2dx.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	arm-linux-androideabi-g++ -L"/home/laschweinski/git/cocos2d-x/cocos2dx/AndroidDebug" -shared -o "libHelloCocos2dx.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-linux-androideabi-g++ -L"/home/laschweinski/git/cocos2d-x/lib/android/Release/" -shared -o "libHelloCocos2dx.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

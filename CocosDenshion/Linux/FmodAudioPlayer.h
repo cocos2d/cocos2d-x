@@ -28,6 +28,8 @@ public:
 
 	virtual void close();
 
+
+
 	/**
 	 @brief Preload background music
 	 @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
@@ -121,6 +123,8 @@ public:
 	virtual void unloadEffect(const char* pszFilePath);
 
 private:
+
+	void init();
 	map<string, FMOD::Sound*> mapEffectSound;
 	map<unsigned int, FMOD::Channel*> mapEffectSoundChannel;
 

@@ -61,11 +61,15 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
+		//add
+		virtual CCObject* copyWithZone(CCZone *pZone);
 	public:
 		//override static method
 		/** Allocates and initializes the action */
 		static CCShow * action();
 	};
+
+
 
 	/** 
 	@brief Hide the node
@@ -78,6 +82,8 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
+		//add
+		virtual CCObject* copyWithZone(CCZone *pZone);
 	public:
 		//override static method
 		/** Allocates and initializes the action */

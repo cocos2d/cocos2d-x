@@ -1,6 +1,6 @@
 android/jni/helloworld/main.d android/jni/helloworld/main.o: \
  ../android/jni/helloworld/main.cpp \
- /home/laschweinski/Documents/workspace/orxworkspace/HelloCocos2dx/Classes/AppDelegate.h \
+ /home/laschweinski/git/cocos2d-x/HelloCocos2dx/Classes/AppDelegate.h \
  /home/laschweinski/git/cocos2d-x/cocos2dx/include/CCApplication.h \
  /home/laschweinski/git/cocos2d-x/cocos2dx/platform/CCApplication_platform.h \
  /home/laschweinski/git/cocos2d-x/cocos2dx/platform/CCPlatformConfig.h \
@@ -115,7 +115,7 @@ android/jni/helloworld/main.d android/jni/helloworld/main.o: \
  /home/laschweinski/git/cocos2d-x/cocos2dx/platform/android/CCAccelerometer_android.h \
  /home/laschweinski/git/cocos2d-x/cocos2dx/include/CCAccelerometerDelegate.h
 
-/home/laschweinski/Documents/workspace/orxworkspace/HelloCocos2dx/Classes/AppDelegate.h:
+/home/laschweinski/git/cocos2d-x/HelloCocos2dx/Classes/AppDelegate.h:
 
 /home/laschweinski/git/cocos2d-x/cocos2dx/include/CCApplication.h:
 

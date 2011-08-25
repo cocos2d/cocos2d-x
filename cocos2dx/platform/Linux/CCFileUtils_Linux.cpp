@@ -10,6 +10,8 @@
 #include "CCFileUtils.h"
 #include "CCString.h"
 
+#include <unistd.h>
+
 using namespace std;
 
 NS_CC_BEGIN;
@@ -19,7 +21,12 @@ static string s_strResourcePath = "";
 void CCFileUtils::setResourcePath(const char* pszResourcePath) {
 	CCAssert(pszResourcePath != NULL, "[FileUtils setResourcePath] -- wrong resource path");
 
-	s_strResourcePath = pszResourcePath;
+//	s_strResourcePath = pszResourcePath;
+	/* Sets current directory */
+	if(chdir(pszResourcePath) < 0)
+	{
+		CCLog("set base folder error");
+	}
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath) {
