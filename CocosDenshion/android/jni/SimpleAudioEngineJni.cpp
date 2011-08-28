@@ -66,6 +66,18 @@ extern "C"
 			env->CallStaticVoidMethod(classOfCocos2dxActivity, preloadBackgroundMusicMethodID, StringArg);
 		}
 	}
+	
+	void unloadBackgroundMusicJNI(const char *path)
+	{
+		// void playBackgroundMusic(String,boolean)
+		jmethodID unloadBackgroundMusicMethodID = getMethodID("unloadBackgroundMusic", "(Ljava/lang/String;)V");
+
+		if (unloadBackgroundMusicMethodID)
+		{
+			jstring StringArg = env->NewStringUTF(path);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, unloadBackgroundMusicMethodID, StringArg);
+		}
+	}
 
 	void playBackgroundMusicJNI(const char *path, bool isLoop)
 	{

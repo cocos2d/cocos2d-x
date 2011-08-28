@@ -124,6 +124,10 @@ public class Cocos2dxActivity extends Activity{
     	backgroundMusicPlayer.preloadBackgroundMusic(path);
     }
     
+    public static void unloadBackgroundMusic(String path){
+    	backgroundMusicPlayer.unloadBackgroundMusic(path);
+    }
+    
     public static void playBackgroundMusic(String path, boolean isLoop){
     	backgroundMusicPlayer.playBackgroundMusic(path, isLoop);
     }
