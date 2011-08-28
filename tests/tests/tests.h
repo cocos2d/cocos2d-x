@@ -37,7 +37,7 @@
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
-//#include "CurlTest/CurlTest.h"
+#include "CurlTest/CurlTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "DirectorTest/DirectorTest.h"
 #include "BugsTest/BugsTest.h"
@@ -46,7 +46,7 @@
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-//	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
+	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)

@@ -54,7 +54,7 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
-//        pScene = new ChipmunkTestScene(); break;
+        pScene = new ChipmunkTestScene(); break;
 #else
 #ifdef AIRPLAYUSECHIPMUNK
 #if	(AIRPLAYUSECHIPMUNK == 1)
@@ -98,7 +98,7 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new ZwoptexTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	case TEST_CURL:
-//		pScene = new CurlTestScene(); break;
+		pScene = new CurlTestScene(); break;
 	case TEST_USERDEFAULT:
 		pScene = new UserDefaultTestScene(); break;
 #endif
