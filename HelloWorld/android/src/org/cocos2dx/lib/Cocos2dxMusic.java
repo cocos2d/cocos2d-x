@@ -41,6 +41,18 @@ public class Cocos2dxMusic {
 		}
 	}
 	
+	public void unloadBackgroundMusic(String path){
+	    if ((mCurrentPath != null) && (mCurrentPath.equals(path))){
+            // release resource
+            if (mBackgroundMediaPlayer != null){
+                mBackgroundMediaPlayer.release();				
+            }
+            
+            // clean the path
+            mCurrentPath = null;
+        }
+	}	
+	
 	public void playBackgroundMusic(String path, boolean isLoop){
 		if (mCurrentPath == null){
 			// it is the first time to play background music
