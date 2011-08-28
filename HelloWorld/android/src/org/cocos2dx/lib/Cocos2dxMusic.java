@@ -26,7 +26,7 @@ public class Cocos2dxMusic {
 	}
 	
 	public void preloadBackgroundMusic(String path){
-		if (! mCurrentPath.equals(path)){
+		if ((mCurrentPath == null) || (! mCurrentPath.equals(path))){
 			// preload new background music
 			
 			// release old resource and create a new one
