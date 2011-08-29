@@ -3,6 +3,16 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 
+extern "C" {
+#include "lua.h"
+}
+extern "C" {
+#include "lualib.h"
+#include "lauxlib.h"
+}
+
+#include "tolua++.h"
+
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -73,6 +83,9 @@ bool AppDelegate::initInstance()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+	lua_State* l;
+	l = lua_open();
+
 	// initialize director
 	CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());

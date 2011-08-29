@@ -45,7 +45,7 @@ public:
 
 private:
 	static CCAccelerometer* m_spCCAccelerometer;
-	std::list<CCAccelerometerDelegate*>* m_pAccelDelegates;
+	CCAccelerometerDelegate* m_pAccelDelegate;
 	CCAcceleration m_obAccelerationValue;
 };
 
