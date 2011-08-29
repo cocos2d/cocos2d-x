@@ -323,7 +323,6 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 CCSprite::CCSprite()
 : m_pobTexture(NULL)
 {
-    init();
 }
 
 CCSprite::~CCSprite(void)
