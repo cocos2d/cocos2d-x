@@ -33,7 +33,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../..//chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../Box2D"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.331369055" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
@@ -121,7 +121,7 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../CocosDenshion/include"/>
 									<listOptionValue builtIn="false" value="../../..//chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="../../../Box2D"/>
+									<listOptionValue builtIn="false" value="../../../"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.2022262883" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
