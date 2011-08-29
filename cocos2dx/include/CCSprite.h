@@ -198,7 +198,7 @@ public:
 	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect);
 
 public:
-	bool init(void);
+	virtual bool init(void);
 	virtual ~CCSprite(void);
 	CCSprite();
 
