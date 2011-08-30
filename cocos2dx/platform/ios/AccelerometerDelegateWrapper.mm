@@ -34,7 +34,7 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
 + (id) sharedAccelerometerDispather
 {
     if (s_pAccelerometerDispatcher == nil) {
-        s_pAccelerometerDispatcher = [self alloc];
+        s_pAccelerometerDispatcher = [[self alloc] init];
     }
     
     return s_pAccelerometerDispatcher;
