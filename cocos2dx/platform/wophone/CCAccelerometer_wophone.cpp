@@ -93,7 +93,7 @@ void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
 
 void CCAccelerometer::didAccelerate(CCAcceleration* pAccelerationValue)
 {
-	m_pAccelDelegate->didAccelerate(pAccelerationValue);
+	m_pDelegate->didAccelerate(pAccelerationValue);
 }
 
 }//namespace   cocos2d 
