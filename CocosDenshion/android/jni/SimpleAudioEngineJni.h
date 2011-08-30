@@ -6,7 +6,6 @@
 extern "C"
 {
     extern void preloadBackgroundMusicJNI(const char *path);
-    extern void unloadBackgroundMusicJNI(const char *path);
     extern void playBackgroundMusicJNI(const char *path, bool isLoop);
 	extern void stopBackgroundMusicJNI();
 	extern void pauseBackgroundMusicJNI();

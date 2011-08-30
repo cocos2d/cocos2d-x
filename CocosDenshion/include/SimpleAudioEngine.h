@@ -65,12 +65,6 @@ public:
     void preloadBackgroundMusic(const char* pszFilePath);
     
     /**
-     @brief Unload background music
-     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
-     */    
-    void unloadBackgroundMusic(const char* pszFilePath);
-    
-    /**
     @brief Play background music
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
