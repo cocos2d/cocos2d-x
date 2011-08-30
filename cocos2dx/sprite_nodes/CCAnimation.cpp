@@ -101,7 +101,7 @@ namespace cocos2d
 		m_pobFrames->addObject(pFrame);
 	}
 
-	void CCAnimation::addFrameWithTexture(CCTexture2D *pobTexture, CCRect rect)
+	void CCAnimation::addFrameWithTexture(CCTexture2D *pobTexture, const CCRect& rect)
 	{
 		CCSpriteFrame *pFrame = CCSpriteFrame::frameWithTexture(pobTexture, rect);
 		m_pobFrames->addObject(pFrame);

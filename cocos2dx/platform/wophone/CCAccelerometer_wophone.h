@@ -27,36 +27,10 @@ THE SOFTWARE.
 
 #include "CCAccelerometerDelegate.h"
 #include "TG3.h"
-#include "CCMutableArray.h"
 #include "CCCommon.h"
 #include "TCOM_Sensors_Interface.h"
 
 namespace   cocos2d {
-
-/**
-@brief
-CCAccelerometerHandler
-Object than contains the CCAccelerometerDelegate.
-*/
-class CC_DLL CCAccelerometerHandler : public CCObject
-{
-public:
-    virtual ~CCAccelerometerHandler(void);
-
-    /** delegate */
-    CCAccelerometerDelegate* getDelegate();
-    void setDelegate(CCAccelerometerDelegate *pDelegate);
-
-    /** initializes a CCAccelerometerHandler with a delegate */
-    virtual bool initWithDelegate(CCAccelerometerDelegate *pDelegate);
-
-public:
-    /** allocates a AccelerometerHandler with a delegate */
-    static CCAccelerometerHandler* handlerWithDelegate(CCAccelerometerDelegate *pDelegate);
-
-protected:
-    CCAccelerometerDelegate* m_pDelegate;
-};
 
 /**
 @brief 
@@ -90,9 +64,7 @@ public:
     void didAccelerate(CCAcceleration* pAccelerationValue);
 
 protected:
-    typedef CCMutableArray<CCAccelerometerHandler*> AccDelegateArray;
-
-    AccDelegateArray*               m_pDelegates;
+	CCAccelerometerDelegate*        m_pDelegate;
     TCOM_Sensors_DataType_Client*   m_pSensor;
 };
 

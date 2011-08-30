@@ -102,7 +102,7 @@ GLuint CCTexture2D::getName()
 	return m_uName;
 }
 
-CCSize CCTexture2D::getContentSizeInPixels()
+const CCSize& CCTexture2D::getContentSizeInPixels()
 {
 	return m_tContentSize;
 }
@@ -153,7 +153,7 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 	return m_bHasPremultipliedAlpha;
 }
 
-bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CCSize contentSize)
+bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
 	glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 	glGenTextures(1, &m_uName);
@@ -441,7 +441,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 {
 	return initWithString(text, CCSizeMake(0,0), CCTextAlignmentCenter, fontName, fontSize);
 }
-bool CCTexture2D::initWithString(const char *text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+bool CCTexture2D::initWithString(const char *text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
     // cache the texture data
@@ -462,7 +462,7 @@ bool CCTexture2D::initWithString(const char *text, CCSize dimensions, CCTextAlig
 
 // implementation CCTexture2D (Drawing)
 
-void CCTexture2D::drawAtPoint(CCPoint point)
+void CCTexture2D::drawAtPoint(const CCPoint& point)
 {
 	GLfloat	coordinates[] = {	
 		0.0f,	m_fMaxT,
@@ -485,7 +485,7 @@ void CCTexture2D::drawAtPoint(CCPoint point)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void CCTexture2D::drawInRect(CCRect rect)
+void CCTexture2D::drawInRect(const CCRect& rect)
 {
 	GLfloat	coordinates[] = {	
 		0.0f,	m_fMaxT,

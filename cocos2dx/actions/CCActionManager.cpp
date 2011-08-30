@@ -189,7 +189,7 @@ void CCActionManager::resumeTarget(CCObject *pTarget)
 
 // run
 
-void CCActionManager::addAction(cocos2d::CCAction *pAction, CCNode *pTarget, bool paused)
+void CCActionManager::addAction(CCAction *pAction, CCNode *pTarget, bool paused)
 {
 	assert(pAction != NULL);
 	assert(pTarget != NULL);
@@ -261,7 +261,7 @@ void CCActionManager::removeAllActionsFromTarget(CCObject *pTarget)
 	}
 }
 
-void CCActionManager::removeAction(cocos2d::CCAction *pAction)
+void CCActionManager::removeAction(CCAction *pAction)
 {
 	// explicit null handling
 	if (pAction == NULL)
@@ -357,7 +357,7 @@ unsigned int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
 }
 
 // main loop
-void CCActionManager::update(cocos2d::ccTime dt)
+void CCActionManager::update(ccTime dt)
 {
 	for (tHashElement *elt = m_pTargets; elt != NULL; )
 	{

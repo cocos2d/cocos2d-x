@@ -100,6 +100,8 @@ spriteDog:runAction(cocos2d.CCRepeatForever:actionWithAction(animate))
 -- add a popup menu
 
 function menuCallbackClosePopup()
+-- stop test sound effect
+CocosDenshion.SimpleAudioEngine:sharedEngine():stopEffect(effectID)  
 menuPopup:setIsVisible(false)
 end
 
@@ -114,6 +116,9 @@ layerMenu:addChild(menuPopup)
 -- add the left-bottom "tools" menu to invoke menuPopup
 
 function menuCallbackOpenPopup()
+-- loop test sound effect
+-- NOTE: effectID is global, so it can be used to stop 
+effectID = CocosDenshion.SimpleAudioEngine:sharedEngine():playEffect("effect1.wav")  
 menuPopup:setIsVisible(true)
 end
 
@@ -141,6 +146,9 @@ end
 
 cocos2d.CCScheduler:sharedScheduler():scheduleScriptFunc("tick", 0.01, false)
 
+-- play background music
+CocosDenshion.SimpleAudioEngine:sharedEngine():playBackgroundMusic("background.mp3", true);  
+-- preload effect
+CocosDenshion.SimpleAudioEngine:sharedEngine():preloadEffect("effect1.wav");
 -- run 
-
 cocos2d.CCDirector:sharedDirector():runWithScene(sceneGame)

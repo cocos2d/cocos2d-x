@@ -344,6 +344,10 @@
 		BFA70A25136AB08700ABC725 /* CCTextFieldTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D408234E132F3DD900F44E75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D408234D132F3DD900F44E75 /* main.m */; };
+		D4BA411013FB8CF2009E37C8 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4BA410E13FB8CF2009E37C8 /* background.mp3 */; };
+		D4BA411113FB8CF2009E37C8 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = D4BA410F13FB8CF2009E37C8 /* effect1.wav */; };
+		D4BA411E13FB8E03009E37C8 /* LuaSimpleAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4BA411C13FB8E03009E37C8 /* LuaSimpleAudioEngine.cpp */; };
+		D4BA411F13FB8E03009E37C8 /* LuaSimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BA411D13FB8E03009E37C8 /* LuaSimpleAudioEngine.h */; };
 		D4C3D24813F25D1100192C16 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C3D24613F25D1100192C16 /* CCTexturePVR.h */; };
 		D4C3D24913F25D1100192C16 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C3D24713F25D1100192C16 /* CCTouchHandler.h */; };
 		D4C3D24B13F25D3100192C16 /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4C3D24A13F25D3100192C16 /* CCTexturePVR.cpp */; };
@@ -704,6 +708,10 @@
 		BFA70A23136AB08700ABC725 /* CCTextFieldTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextFieldTTF.cpp; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D408234D132F3DD900F44E75 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
+		D4BA410E13FB8CF2009E37C8 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		D4BA410F13FB8CF2009E37C8 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
+		D4BA411C13FB8E03009E37C8 /* LuaSimpleAudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaSimpleAudioEngine.cpp; sourceTree = "<group>"; };
+		D4BA411D13FB8E03009E37C8 /* LuaSimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaSimpleAudioEngine.h; sourceTree = "<group>"; };
 		D4C3D24613F25D1100192C16 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		D4C3D24713F25D1100192C16 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
 		D4C3D24A13F25D3100192C16 /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
@@ -853,6 +861,8 @@
 		BF21A9CF13E0F9F20067F790 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D4BA410E13FB8CF2009E37C8 /* background.mp3 */,
+				D4BA410F13FB8CF2009E37C8 /* effect1.wav */,
 				BF21A9D013E0F9F20067F790 /* Default.png */,
 				BF21A9D113E0F9F20067F790 /* HelloWorld.png */,
 				BF21A9D213E0F9F20067F790 /* Icon-72.png */,
@@ -875,6 +885,7 @@
 		BF22ED9A13B4658B00E008B2 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				D4BA411B13FB8E03009E37C8 /* CocosDenshion_support */,
 				BF22EDCC13B4658B00E008B2 /* tolua */,
 				BF22EDD413B4658B00E008B2 /* cocos2dx_support */,
 				BF22EDDC13B4658B00E008B2 /* lua */,
@@ -1416,6 +1427,15 @@
 			path = text_input_node;
 			sourceTree = "<group>";
 		};
+		D4BA411B13FB8E03009E37C8 /* CocosDenshion_support */ = {
+			isa = PBXGroup;
+			children = (
+				D4BA411C13FB8E03009E37C8 /* LuaSimpleAudioEngine.cpp */,
+				D4BA411D13FB8E03009E37C8 /* LuaSimpleAudioEngine.h */,
+			);
+			path = CocosDenshion_support;
+			sourceTree = "<group>";
+		};
 		D4E4FECF13B2D6A400A3F698 /* script_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -1597,6 +1617,7 @@
 				BF1E790013E2529700C2D68B /* ZFont.h in Headers */,
 				D4C3D24813F25D1100192C16 /* CCTexturePVR.h in Headers */,
 				D4C3D24913F25D1100192C16 /* CCTouchHandler.h in Headers */,
+				D4BA411F13FB8E03009E37C8 /* LuaSimpleAudioEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +1705,8 @@
 				BF21A9EB13E0F9F20067F790 /* land.png in Resources */,
 				BF21A9EC13E0F9F20067F790 /* menu1.png in Resources */,
 				BF21A9ED13E0F9F20067F790 /* menu2.png in Resources */,
+				D4BA411013FB8CF2009E37C8 /* background.mp3 in Resources */,
+				D4BA411113FB8CF2009E37C8 /* effect1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1853,6 +1876,7 @@
 				BF1E78FE13E2529700C2D68B /* ZAttributedString.m in Sources */,
 				BF1E790113E2529700C2D68B /* ZFont.m in Sources */,
 				D4C3D24B13F25D3100192C16 /* CCTexturePVR.cpp in Sources */,
+				D4BA411E13FB8E03009E37C8 /* LuaSimpleAudioEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

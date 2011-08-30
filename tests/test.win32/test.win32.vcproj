@@ -1095,6 +1095,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="CurrentLanguageTest"
+					>
+					<File
+						RelativePath="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\CurrentLanguageTest\CurrentLanguageTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
