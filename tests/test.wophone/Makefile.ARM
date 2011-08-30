@@ -120,7 +120,8 @@ OBJECTS = \
 	$(OBJECTS_DIR)/TransitionsTest.o \
 	$(OBJECTS_DIR)/UserDefaultTest.o \
 	$(OBJECTS_DIR)/ZwoptexTest.o \
-	$(OBJECTS_DIR)/FontTest.o
+	$(OBJECTS_DIR)/FontTest.o \
+	$(OBJECTS_DIR)/CurrentLanguageTest.o
 
 ADD_OBJECTS += 
 
@@ -393,4 +394,7 @@ $(OBJECTS_DIR)/ZwoptexTest.o : ../tests/ZwoptexTest/ZwoptexTest.cpp
 
 $(OBJECTS_DIR)/FontTest.o : ../tests/FontTest/FontTest.cpp
 	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/FontTest.o ../tests/FontTest/FontTest.cpp
+
+$(OBJECTS_DIR)/CurrentLanguageTest.o : ../tests/CurrentLanguageTest/CurrentLanguageTest.cpp
+	$(CXX) -c $(CXX_FLAGS) $(INCLUDE_PATH) $(LAST_INCLUDE_PATH) -o $(OBJECTS_DIR)/CurrentLanguageTest.o ../tests/CurrentLanguageTest/CurrentLanguageTest.cpp
 
