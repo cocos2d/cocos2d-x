@@ -39,12 +39,12 @@ public:
     /** sets Color
      @since v0.8
      */
-    virtual void setColor(ccColor3B color) = 0;
+    virtual void setColor(const ccColor3B& color) = 0;
 
 	/** returns the color
 	 @since v0.8
 	 */
-	virtual ccColor3B getColor(void) = 0;
+	virtual const ccColor3B& getColor(void) = 0;
 
     // returns the opacity
     virtual GLubyte getOpacity(void) = 0;

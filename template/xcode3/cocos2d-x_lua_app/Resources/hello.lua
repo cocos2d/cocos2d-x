@@ -24,17 +24,17 @@ function btnTouchMove(e)
         local v = e[1]
         local pointMove = v:locationInView(v:view())
         pointMove = cocos2d.CCDirector:sharedDirector():convertToGL(pointMove)
-        local positionCurrent = layerFarm.__CCNode__:getPosition()
-        layerFarm.__CCNode__:setPosition(cocos2d.CCPoint(positionCurrent.x + pointMove.x - pointBegin.x, positionCurrent.y + pointMove.y - pointBegin.y))
+        local positionCurrent = layerFarm:getPosition()
+        layerFarm:setPosition(cocos2d.CCPoint(positionCurrent.x + pointMove.x - pointBegin.x, positionCurrent.y + pointMove.y - pointBegin.y))
         pointBegin = pointMove
     end
 end
 
 function btnTouchBegin(e)
+    cocos2d.CCLuaLog("btnTouchBegin")
     for k,v in ipairs(e) do
         pointBegin = v:locationInView(v:view())
         pointBegin = cocos2d.CCDirector:sharedDirector():convertToGL(pointBegin)
-        cocos2d.CCLuaLog("btnTouchBegin, x= %d, y = %d", pointBegin.x, pointBegin.y)
     end
 end
 
@@ -91,7 +91,7 @@ animFrames = cocos2d.CCMutableArray_CCSpriteFrame__:new(2)
 animFrames:addObject(frame0)
 animFrames:addObject(frame1)
 
-animation = cocos2d.CCAnimation:animationWithName("wait", 0.5, animFrames)
+animation = cocos2d.CCAnimation:animationWithFrames(animFrames, 0.5)
 
 animate = cocos2d.CCAnimate:actionWithAnimation(animation, false);
 spriteDog:runAction(cocos2d.CCRepeatForever:actionWithAction(animate))
@@ -100,6 +100,8 @@ spriteDog:runAction(cocos2d.CCRepeatForever:actionWithAction(animate))
 -- add a popup menu
 
 function menuCallbackClosePopup()
+-- stop test sound effect
+CocosDenshion.SimpleAudioEngine:sharedEngine():stopEffect(effectID)  
 menuPopup:setIsVisible(false)
 end
 
@@ -114,6 +116,9 @@ layerMenu:addChild(menuPopup)
 -- add the left-bottom "tools" menu to invoke menuPopup
 
 function menuCallbackOpenPopup()
+-- loop test sound effect
+-- NOTE: effectID is global, so it can be used to stop 
+effectID = CocosDenshion.SimpleAudioEngine:sharedEngine():playEffect("effect1.wav")  
 menuPopup:setIsVisible(true)
 end
 
@@ -142,5 +147,7 @@ end
 cocos2d.CCScheduler:sharedScheduler():scheduleScriptFunc("tick", 0.01, false)
 
 -- run 
+-- play background music
+CocosDenshion.SimpleAudioEngine:sharedEngine():playBackgroundMusic("background.mp3", true);  
 
 cocos2d.CCDirector:sharedDirector():runWithScene(sceneGame)

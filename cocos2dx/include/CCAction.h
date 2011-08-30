@@ -219,7 +219,7 @@ public:
 	bool initWithTarget(CCNode *pFollowedNode);
 
 	/** initializes the action with a set boundary */
-	bool initWithTarget(CCNode *pFollowedNode, CCRect rect);
+	bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect);
 
 	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void step(ccTime dt);
@@ -231,7 +231,7 @@ public:
 	static CCFollow* actionWithTarget(CCNode *pFollowedNode);
 
 	/** creates the action with a set boundary */
-	static CCFollow* actionWithTarget(CCNode *pFollowedNode, CCRect rect);
+	static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect);
 
 protected:
 	// node to follow

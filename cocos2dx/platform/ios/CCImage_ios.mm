@@ -328,6 +328,30 @@ static bool _isValidFontName(const char *fontName)
     return ret;
 }
 
+static CGSize _caculateStringSizeWithFontOrZFont(NSString *str, id font, bool isZfont)
+{
+    NSArray *listItems = [str componentsSeparatedByString: @"\n"];
+    CGSize dim;
+    
+    for (NSString *s in listItems)
+    {
+        CGSize tmp;
+        if (isZfont)
+        {
+            [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font];
+        }
+        else
+        {
+           tmp = [s sizeWithFont:font]; 
+        }
+        
+        dim.width += tmp.width;
+        dim.height += tmp.height;
+    }
+    
+    return dim;
+}
+
 static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
@@ -344,7 +368,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         font = [UIFont fontWithName:fntName size:nSize];  
         if (font)
         {
-                dim = [str sizeWithFont:font];
+                dim = _caculateStringSizeWithFontOrZFont(str, font, false);
         }      
         
 #if CC_FONT_LABEL_SUPPORT
@@ -353,8 +377,8 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		        font = [[FontManager sharedManager] zFontWithName:fntName pointSize:nSize];
 		        if (font)
                 {
-                        //dim = [str sizeWithZFont:font];
-                        dim = [FontLabelStringDrawingHelper sizeWithZFont:str zfont:font];
+                    //dim = [str sizeWithZFont:font];
+                    dim =_caculateStringSizeWithFontOrZFont(str, font, true);
                 }  
 	    }
 #endif // CC_FONT_LABEL_SUPPORT
@@ -371,7 +395,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
                 
                 if (font)
                 {
-                        dim = [str sizeWithFont:font];
+                    dim = _caculateStringSizeWithFontOrZFont(str, font, false);
                 }  
         }
         

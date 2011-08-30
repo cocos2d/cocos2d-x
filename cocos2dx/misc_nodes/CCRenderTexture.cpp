@@ -166,7 +166,7 @@ void CCRenderTexture::begin()
 	// Save the current matrix
 	glPushMatrix();
 
-	CCSize texSize = m_pTexture->getContentSizeInPixels();
+	const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 
 	// Calculate the adjustment ratios based on the old and new projections
 	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
@@ -221,7 +221,7 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 			}
 
 			// to get the rendered texture data
-			CCSize s = m_pTexture->getContentSizeInPixels();
+			const CCSize& s = m_pTexture->getContentSizeInPixels();
 			int tx = (int)s.width;
 			int ty = (int)s.height;
 			m_pTextureDataBuffer = new GLubyte[tx * ty * 4];
@@ -294,7 +294,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		return false;
 	}
 
-	CCSize s = m_pTexture->getContentSizeInPixels();
+	const CCSize& s = m_pTexture->getContentSizeInPixels();
 	int tx = (int)s.width;
 	int ty = (int)s.height;
 
@@ -393,7 +393,7 @@ CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 // 
 //         CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 // 
-//         CCSize s = m_pTexture->getContentSizeInPixels();
+//         const CCSize& s = m_pTexture->getContentSizeInPixels();
 //         int tx = s.width;
 //         int ty = s.height;
 // 

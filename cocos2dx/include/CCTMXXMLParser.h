@@ -134,9 +134,9 @@ namespace cocos2d {
 		/// map orientation
 		CC_SYNTHESIZE(int,	m_nOrientation, Orientation);
 		/// map width & height
-		CC_SYNTHESIZE(CCSize, m_tMapSize, MapSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapSize, MapSize);
 		/// tiles width & height
-		CC_SYNTHESIZE(CCSize, m_tTileSize, TileSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tTileSize, TileSize);
 		/// Layers
 		CC_PROPERTY(CCMutableArray<CCTMXLayerInfo*>*, m_pLayers, Layers);
 		/// tilesets

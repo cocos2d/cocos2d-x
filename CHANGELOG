@@ -1,3 +1,59 @@
+cocos2d-1.0.1-x-0.9.1 @ Aug.17,2011
+ [all platforms]
+    Feature  #347  Support custom TTF fonts
+    Feature  #536  Support PVR Texture
+    Feature  #645  update to cocos2d-iphone v1.0.1
+    Feature  #633  allow SimpleAudioEngine::playEffect repeatly
+    Feature  #630  implement CCRenderTexture::saveBuffer method
+    Feature  #613  Call executeCallFuncN instead of executeCallFunc in CCMenuItem::active()
+    Feature  #620  add Texture2d test case
+    Feature  #638  Add support for per ccz format
+    Feature  #641  users can CCRenderTexture::saveBuffer to any path
+    Feature  #643  swap Accelerometer input x/y according to the orientation
+    Feature  #665  add test case for CCRenderTexture::saveBuffer
+    Bug      #513  CCProgressTimer doesn't work with CCspriteFrameCache
+    Bug      #609  Retain & Release CCObject in CCSet
+    Bug      #628  CCMutableArray::arrayWithObjects should autorelease array object
+    Bug      #629  pass eImgFmt to initWithImageData in initWithImageFile
+    Bug      #636  CCTextureCache::textureForKey() can't find the right texture
+    Bug      #639  m_PositionInPixels isn't correctly initialized
+    Bug      #640  the image read from render texture is upseted
+    Bug      #644  CCSpriteBatchNode::removeAllChildrenWithCleanup() not work as expected
+    Bug      #680  CCtouchDispatcher::rearrangeHandlers() crash
+    Refactor #623  refactor Cocos2dJni.cpp
+    Refactor #652  refactor char* JniHelper::jstringtochar()
+    Document #622  comment CCUserDefault in doxygen format
+    Document #651  add CCFileUtils to oxygen api document
+ [lua]
+    Feature  #679  bind lua to CocosDenshion
+    Feature  #647  add a method to set search path of lua script
+    Feature  #611  Add some methods in CCMenuItemLabel & CCMenuItemToggle for lua
+    Feature  #612  Export CCNode::getContentSizeInPixels & setContentSizeInPixels to lua
+    Feature  #653  add CCScheduler::unscheduleScriptFunc
+    Bug      #615  CCLOG may crash in LuaEngineImpl
+ [android]
+    Feature  #610  Remove the support of ndk-r4 crystax.net version 
+    Bug      #608  CCRenderTexture cannot show textures after sleep and wake-up
+    Bug      #618  HelloWorld & Tests crash when X is clicked
+    Bug      #619  CCFadeTo may crash on android
+    Bug      #624  CCLabelTTF::setString("\n\n\n") crashes on android
+    Bug      #625  test_image_rgba4444.pvr.gz can not packed into app
+    Bug      #631  TextInputTest crash when input nothing
+    Bug      #637  Create resources folder instead of resource in create-android-project.sh
+    Bug      #648  CCRenderTexture::saveBuffer may crash on some devices like Moto Defy
+    Bug      #655  CCLabelTTF doesn't draw all characters, it may lost the last char
+    Refactor #656  refactor CCFileUtils, make it support reading data from directory other than assets 
+ [ios]
+    Feature  #642  CCImage_ios.mm should be modified for saving image
+    Feature  #658  xcode3 template should create AppDelegate.cpp/.h instead of ${PROJECT_NAME}AppDelegate.cpp/.h
+    Feature  #661  fix TMXTiledMap for iPhone Retina mode
+    Bug      #667  AppDelegate::applicationDidEnterBackground isn't invoked on iOS
+    Bug      #668  CCLabelBMFont display 4 characters in a square per character block in retina mode
+ [win32]
+    Feature  #620  change lua library to static lib 
+    Feature  #632  Update visual studio template for lua support
+
+   
 cocos2d-1.0.0-x-0.9.0 @ Jul.14,2011
  [all platforms]
     Feature  #584  sync with cocos2d-iphone v1.0.0

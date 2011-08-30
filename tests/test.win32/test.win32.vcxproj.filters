@@ -130,6 +130,9 @@
     <Filter Include="classes\tests\Texture2DTest">
       <UniqueIdentifier>{193709f6-8330-4eac-bda3-ff56f4c57e6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\tests\FontTest">
+      <UniqueIdentifier>{f50ced88-8293-41ef-a4cf-8e6f12be7066}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp">
       <Filter>classes\tests\Texture2DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\FontTest\FontTest.cpp">
+      <Filter>classes\tests\FontTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -685,6 +691,9 @@
     </ClInclude>
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h">
       <Filter>classes\tests\Texture2DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\FontTest\FontTest.h">
+      <Filter>classes\tests\FontTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
