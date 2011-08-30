@@ -49,11 +49,6 @@ class CC_DLL CCAccelerometerDelegate
 {
 public:
     virtual void didAccelerate(CCAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
-
-    //! call the release() in child layer
-    virtual void AccelerometerDestroy(void) {}
-    //! call the retain() in child layer
-    virtual void AccelerometerKeep(void) {}
 };
 
 } //namespace   cocos2d 
