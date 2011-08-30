@@ -96,16 +96,6 @@ void CCLayer::keep(void)
 	this->retain();
 }
 
-void CCLayer::AccelerometerDestroy(void)
-{
-    this->release();
-}
-
-void CCLayer::AccelerometerKeep(void)
-{
-    this->retain();
-}
-
 void CCLayer::KeypadDestroy()
 {
     this->release();
