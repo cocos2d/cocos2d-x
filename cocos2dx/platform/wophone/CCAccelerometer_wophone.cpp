@@ -64,7 +64,6 @@ CCAccelerometer* CCAccelerometer::sharedAccelerometer()
 void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate)
 {
 	m_pDelegate = NULL;
-
 	m_pSensor->Release();
 	m_pSensor = NULL;
 }
@@ -73,27 +72,39 @@ void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
 {
 	m_pDelegate = pDelegate;
 
-	m_pSensor = TCOM_Sensors_DataType_Client::GetInstance();
-
-	if (m_pSensor)
+	do 
 	{
-		m_pSensor->StartUp();
-		m_pSensor->SetDelay(TG3_SENSOR_DELAY_FASTEST);
+		if (m_pSensor)
+		{
+			break;
+		}
 
-		TApplication* pApp = TApplication::GetCurrentApplication();
-		TWindow* pWnd = pApp->GetActiveWindow();
-		m_pSensor->SetWindowCtrlId(pWnd->GetWindowHwndId(), 0);
-		m_pSensor->Activate(TG3_SENSOR_TYPE_ACCELEROMETER, TRUE);
-	}
-	else
-	{
-		CCLOG("cocos2d: The Accelerometer Sensor Open failed");
-	}
+		m_pSensor = TCOM_Sensors_DataType_Client::GetInstance();
+
+		if (m_pSensor)
+		{
+			m_pSensor->StartUp();
+			m_pSensor->SetDelay(TG3_SENSOR_DELAY_FASTEST);
+
+			TApplication* pApp = TApplication::GetCurrentApplication();
+			TWindow* pWnd = pApp->GetActiveWindow();
+			m_pSensor->SetWindowCtrlId(pWnd->GetWindowHwndId(), 0);
+			m_pSensor->Activate(TG3_SENSOR_TYPE_ACCELEROMETER, TRUE);
+		}
+		else
+		{
+			CCLOG("cocos2d: The Accelerometer Sensor Open failed");
+		}
+	} while (0);
+	
 }
 
 void CCAccelerometer::didAccelerate(CCAcceleration* pAccelerationValue)
 {
-	m_pDelegate->didAccelerate(pAccelerationValue);
+	if (m_pDelegate)
+	{
+		m_pDelegate->didAccelerate(pAccelerationValue);
+	}	
 }
 
 }//namespace   cocos2d 
