@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 #include "CCAccelerometerDelegate.h"
-#include <list>
 
 namespace   cocos2d {
 
