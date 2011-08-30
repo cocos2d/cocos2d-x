@@ -64,8 +64,11 @@ CCAccelerometer* CCAccelerometer::sharedAccelerometer()
 void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate)
 {
 	m_pDelegate = NULL;
-	m_pSensor->Release();
-	m_pSensor = NULL;
+	if (m_pSensor)
+	{
+		m_pSensor->Release();
+		m_pSensor = NULL;
+	}	
 }
 
 void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
