@@ -54,15 +54,18 @@ namespace cocos2d
     	return m_spCCAccelerometer;
     }
 
-    void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate) 
-	{
-		disableAccelerometerJNI();
-    }
-
-    void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate) 
+    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
 	{
 		m_pAccelDelegate = pDelegate;
-		enableAccelerometerJNI();
+
+		if (pDelegate)
+		{		
+			enableAccelerometerJNI();
+		}
+		else
+		{
+			disableAccelerometerJNI();
+		}
     }
 
     void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
