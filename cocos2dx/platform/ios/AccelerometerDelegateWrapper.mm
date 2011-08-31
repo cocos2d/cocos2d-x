@@ -68,6 +68,11 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {   
+    if (! delegate_)
+    {
+        return;
+    }
+    
     acceleration_->x = acceleration.x;
     acceleration_->y = acceleration.y;
     acceleration_->z = acceleration.z;
