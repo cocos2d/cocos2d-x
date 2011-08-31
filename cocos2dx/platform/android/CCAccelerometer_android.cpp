@@ -67,12 +67,15 @@ namespace cocos2d
 
     void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
 	{
-		m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
-		m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
-		m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
-		m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
+		if (m_pAccelDelegate)
+		{
+			m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+			m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+			m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
+			m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
 
-		m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+			m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+		}	
     }
 } // end of namespace cococs2d
 
