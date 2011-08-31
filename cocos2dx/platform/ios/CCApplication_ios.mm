@@ -126,6 +126,18 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageEnglish;
     }
+    else if ([languageCode isEqualToString:@"fr"]){
+        ret = kLanguageFrench;
+    }
+    else if ([languageCode isEqualToString:@"it"]){
+        ret = kLanguageItalian;
+    }
+    else if ([languageCode isEqualToString:@"de"]){
+        ret = kLanguageGerman;
+    }
+    else if ([languageCode isEqualToString:@"es"]){
+        ret = kLanguageSpanish;
+    }
 
     return ret;
 }
