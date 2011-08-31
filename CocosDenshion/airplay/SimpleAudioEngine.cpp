@@ -178,7 +178,7 @@ namespace CocosDenshion
 		
 		if (s3eSoundGetError()!= S3E_SOUND_ERR_NONE)
 		{
-			IwAssertMsg(GAME, this, ("Play sound %s Failed. Error Code : %s", pszFilePath, s3eSoundGetErrorString()));	
+			IwAssertMsg(GAME, false, ("Play sound %s Failed. Error Code : %s", pszFilePath, s3eSoundGetErrorString()));	
 		}
 
 		return channel;
