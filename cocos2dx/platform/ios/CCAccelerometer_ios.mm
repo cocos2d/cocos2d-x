@@ -46,12 +46,7 @@ namespace cocos2d {
         return m_spUIAccelerometer;
     }
     
-    void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate)
-    {
-        [[AccelerometerDispatcher sharedAccelerometerDispather] removeDelegate:pDelegate];
-    }
-    
-    void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate)
+    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
     {
         [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:pDelegate];
     }
