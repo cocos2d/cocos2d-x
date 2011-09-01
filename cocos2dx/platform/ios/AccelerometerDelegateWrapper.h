@@ -38,6 +38,5 @@
 + (id) sharedAccelerometerDispather;
 - (id) init;
 - (void) addDelegate: (cocos2d::CCAccelerometerDelegate *) delegate;
-- (void) removeDelegate: (cocos2d::CCAccelerometerDelegate *) delegate;
 
 @end
