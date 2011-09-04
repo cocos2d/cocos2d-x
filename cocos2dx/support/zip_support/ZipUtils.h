@@ -32,7 +32,7 @@ namespace cocos2d
 	struct CCZHeader {
 		unsigned char			sig[4];				// signature. Should be 'CCZ!' 4 bytes
 		unsigned short		    compression_type;	// should 0
-		unsigned char		    version;			// should be 2 (although version type==1 is also supported)
+		unsigned short		    version;			// should be 2 (although version type==1 is also supported)
 		unsigned int 		    reserved;			// Reserverd for users.
 		unsigned int		    len;				// size of the uncompressed file
 	};

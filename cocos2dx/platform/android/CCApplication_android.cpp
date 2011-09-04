@@ -89,7 +89,23 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageEnglish;
     }
-
+    else if (0 == strcmp("fr", pLanguageName))
+    {
+        ret = kLanguageFrench;
+    }
+    else if (0 == strcmp("it", pLanguageName))
+    {
+        ret = kLanguageItalian;
+    }
+    else if (0 == strcmp("de", pLanguageName))
+    {
+        ret = kLanguageGerman;
+    }
+    else if (0 == strcmp("es", pLanguageName))
+    {
+        ret = kLanguageSpanish;
+    }
+    
     return ret;
 }
 

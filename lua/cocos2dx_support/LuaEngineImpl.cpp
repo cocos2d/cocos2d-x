@@ -99,7 +99,6 @@ CCLuaScriptModule::~CCLuaScriptModule()
 		lua_close( d_state );
 	}
 	s_luaScriptModule = NULL;
-
 }
 
 
@@ -125,13 +124,14 @@ bool CCLuaScriptModule::addSearchPath(const std::string& path)
 bool CCLuaScriptModule::executeScriptFile(const std::string& filename)
 {
 	int nRet = luaL_dofile(d_state,filename.c_str());
+
 	if (nRet != 0)
-	{
-		CCLog("executeScriptFile Error nRet = %d", nRet);
-		        
+	{		        
         // print the error msg
-        const char* strErrMsg = lua_tostring(d_state, -1);
-        CCLog("%s", strErrMsg);
+        CCLog("%s", lua_tostring(d_state, -1));
+
+		// pop the error code
+		lua_pop(d_state, 1);
         
 		return false;
 	}
@@ -181,8 +181,6 @@ int	CCLuaScriptModule::executeScriptGlobal(const std::string& function_name)
 
 	// return it
 	return ret;
-
-	
 }
 
 
@@ -232,9 +230,8 @@ bool CCLuaScriptModule::executeSchedule(const std::string& handler_name, ccTime 
 	}
 	// return it
 	return true;
-
-
 }
+
 bool CCLuaScriptModule::executeCallFunc(const std::string& handler_name)
 {
 	
@@ -270,8 +267,8 @@ bool CCLuaScriptModule::executeCallFunc(const std::string& handler_name)
 	}
 	// return it
 	return true;
-
 }
+
 bool CCLuaScriptModule::executeCallFuncN(const std::string& handler_name, CCNode* pNode)
 {
 
@@ -386,8 +383,8 @@ bool CCLuaScriptModule::executeCallFuncND(const std::string& handler_name, CCNod
 	}
 	// return it
 	return true;
-
 }
+
 bool CCLuaScriptModule::executeMenuHandler(const std::string& handler_name, CCObject* pobj)
 {
 
@@ -423,7 +420,6 @@ bool CCLuaScriptModule::executeMenuHandler(const std::string& handler_name, CCOb
 		}
 		// return it
 		return true;
-
 }
 
 bool CCLuaScriptModule::executeTouchesEvent(const std::string& handler_name, CCSet *pobj)
@@ -508,9 +504,8 @@ bool CCLuaScriptModule::executeTouch(const std::string& handler_name, CCTouch *p
 		}
 		// return it
 		return true;
-	
-
 }
+
 bool CCLuaScriptModule::executeEventHandler(const std::string& handler_name, CCEvent* pEvent)
 {
 
@@ -547,7 +542,6 @@ bool CCLuaScriptModule::executeEventHandler(const std::string& handler_name, CCE
 	}
 	// return it
 	return true;
-
 }
 
 bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int index, CCObject* pobj)
@@ -587,7 +581,6 @@ bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int ind
 	}
 	// return it
 	return true;
-
 }
 
 /*************************************************************************
@@ -599,9 +592,12 @@ bool CCLuaScriptModule::executeString(const std::string& str)
 	int error =	luaL_dostring(d_state, str.c_str());
 
 	// handle errors
-	if ( error )
+	if (error)
 	{
-		CCLog("executeString %d", error);
+		// print error message and pop it
+		CCLog("%s", lua_tostring(d_state, -1));
+		lua_pop(d_state, 1);
+
 		return false;
 	}
 

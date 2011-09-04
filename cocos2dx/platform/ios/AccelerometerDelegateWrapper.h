@@ -28,27 +28,15 @@
 
 @interface AccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
-    NSMutableArray *delegateWrappers;
+	cocos2d::CCAccelerometerDelegate *delegate_;
+	cocos2d::CCAcceleration *acceleration_;
 }
 
-@property(readwrite, retain) NSMutableArray* delegateWrappers;
+@property(readwrite) cocos2d::CCAccelerometerDelegate *delegate_;
+@property(readwrite) cocos2d::CCAcceleration *acceleration_;
 
 + (id) sharedAccelerometerDispather;
 - (id) init;
 - (void) addDelegate: (cocos2d::CCAccelerometerDelegate *) delegate;
-- (void) removeDelegate: (cocos2d::CCAccelerometerDelegate *) delegate;
-
-@end
-
-
-@interface AccelerometerDelegateWrapper : NSObject {
-    cocos2d::CCAccelerometerDelegate *delegate_;
-}
-
-@property(readwrite) cocos2d::CCAccelerometerDelegate *delegate_;
-
-+ (id) delegateWrapperWithDelegate:(cocos2d::CCAccelerometerDelegate *)delegate;
-- (id) initWithDelegate: (cocos2d::CCAccelerometerDelegate *)delegate;
-- (void) didAccelerate: (cocos2d::CCAcceleration *)acceleration;
 
 @end
