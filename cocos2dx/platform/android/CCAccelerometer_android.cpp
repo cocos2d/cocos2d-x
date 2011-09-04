@@ -34,18 +34,17 @@ namespace cocos2d
 {
 	CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
 
-	CCAccelerometer::CCAccelerometer() {
-		m_pAccelDelegates = new std::list<CCAccelerometerDelegate*>();
+	CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+	{
 	}
 
-    CCAccelerometer::~CCAccelerometer() {
-    	if ( m_pAccelDelegates ) {
-    		delete m_pAccelDelegates;
-    		m_pAccelDelegates = NULL;
-    	}
+    CCAccelerometer::~CCAccelerometer() 
+	{
+		m_spCCAccelerometer = NULL;
     }
 
-    CCAccelerometer* CCAccelerometer::sharedAccelerometer() {
+    CCAccelerometer* CCAccelerometer::sharedAccelerometer() 
+	{
 
     	if (m_spCCAccelerometer == NULL)
     	{
@@ -55,34 +54,31 @@ namespace cocos2d
     	return m_spCCAccelerometer;
     }
 
-    void CCAccelerometer::removeDelegate(CCAccelerometerDelegate* pDelegate) {
-    	m_pAccelDelegates->remove(pDelegate);
+    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
+	{
+		m_pAccelDelegate = pDelegate;
 
-    	if ( 0 == m_pAccelDelegates->size() ) {
-    		disableAccelerometerJNI();
-    	}
+		if (pDelegate)
+		{		
+			enableAccelerometerJNI();
+		}
+		else
+		{
+			disableAccelerometerJNI();
+		}
     }
 
-    void CCAccelerometer::addDelegate(CCAccelerometerDelegate* pDelegate) {
-    	if ( 0 == m_pAccelDelegates->size() ) {
-    		enableAccelerometerJNI();
-    	}
+    void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
+	{
+		if (m_pAccelDelegate)
+		{
+			m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+			m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+			m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
+			m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
 
-    	m_pAccelDelegates->push_front(pDelegate);
-    }
-
-    void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) {
-    	if ( m_pAccelDelegates != NULL && !m_pAccelDelegates->empty() ) {
-    		m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
-    		m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
-    		m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
-    		m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
-
-    		for(std::list<CCAccelerometerDelegate*>::const_iterator it = m_pAccelDelegates->begin(); it != m_pAccelDelegates->end(); ++it)
-    		{
-				(*it)->didAccelerate(&m_obAccelerationValue);
-    		}
-    	}
+			m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+		}	
     }
 } // end of namespace cococs2d
 

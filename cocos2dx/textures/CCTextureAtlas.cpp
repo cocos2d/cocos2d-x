@@ -364,7 +364,7 @@ void CCTextureAtlas::drawQuads()
 
 void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 {
-	this->drawNumberOfQuads(m_uTotalQuads, 0);
+	this->drawNumberOfQuads(n, 0);
 }
 
 void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
