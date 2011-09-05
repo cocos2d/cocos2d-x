@@ -1,3 +1,7 @@
+require "hello2"
+
+cocos2d.CCLuaLog("result is " .. myadd(3, 5))
+
 -- create scene & layer
 layerFarm = cocos2d.CCLayer:node()
 layerFarm:setIsTouchEnabled(true)
