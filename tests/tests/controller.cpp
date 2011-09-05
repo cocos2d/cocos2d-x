@@ -27,7 +27,7 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_ROTATE_WORLD:
         pScene = new RotateWorldTestScene(); break;
     case TEST_PARTICLE:
-//        pScene = new ParticleTestScene(); break;
+        pScene = new ParticleTestScene(); break;
     case TEST_EASE_ACTIONS:
         pScene = new EaseActionsTestScene(); break;
     case TEST_MOTION_STREAK:
@@ -93,7 +93,7 @@ static TestScene* CreateTestScene(int nIdx)
 	case TEST_COCOSDENSHION:
 		pScene = new CocosDenshionTestScene(); break;
     case TEST_PERFORMANCE:
-//        pScene = new PerformanceTestScene(); break;
+        pScene = new PerformanceTestScene(); break;
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
