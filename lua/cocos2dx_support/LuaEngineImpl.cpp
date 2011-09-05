@@ -35,6 +35,7 @@ extern "C" {
 #include "CCObject.h"
 #include "LuaCocos2d.h"
 #include "LuaSimpleAudioEngine.h"
+#include "Cocos2dxLuaLoader.h"
 
 using namespace cocos2d;
 
@@ -67,14 +68,10 @@ CCLuaScriptModule::CCLuaScriptModule()
     CC_UNUSED_PARAM(nOpen);
     nOpen = tolua_SimpleAudioEngine_open(d_state);
     CC_UNUSED_PARAM(nOpen);
-	// init all standard libraries
-	/*luaopen_base(d_state);
-	luaopen_io(d_state);
-	luaopen_string(d_state);
-	luaopen_table(d_state);
-	luaopen_math(d_state);
-	*/
-	//luaopen_debug(d_state);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	addLuaLoader(loader_Android);
+#endif
 }
 
 
@@ -86,6 +83,10 @@ CCLuaScriptModule::CCLuaScriptModule(lua_State* state)
 	// just use the given state
 	d_ownsState = false;
 	d_state = state;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	addLuaLoader(loader_Android);
+#endif
 }
 
 
@@ -115,6 +116,36 @@ bool CCLuaScriptModule::addSearchPath(const std::string& path)
     lua_setfield( d_state, -2, "path" ); // set the field "path" in table at -2 with value at top of stack
     lua_pop( d_state, 1 ); // get rid of package table from top of stack
     return 0; // all done!
+}
+
+/*************************************************************************
+Add lua loader, now it is used on android
+*************************************************************************/
+void CCLuaScriptModule::addLuaLoader(lua_CFunction func)
+{
+	if (! func)
+	{
+		return;
+	}
+                                                           // stack content after the invoking of the function
+	// get loader table
+	lua_getglobal(d_state, "package");                     // package
+	lua_getfield(d_state, -1, "loaders");                  // package, loaders
+
+	// insert loader into index 2
+	lua_pushcfunction(d_state, func);                      // package, loaders, func
+	for (int i = lua_objlen(L, -2) + 1; i > 2; --i)
+	{
+		lua_rawgeti(d_state, -2, i - 1);                   // package, loaders, func, function
+		// we call lua_rawgeti, so the loader table now is at -3
+		lua_rawseti(d_state, -3, i);                       // package, loaders, func
+	}
+	lua_rawseti(d_state, -2, 2);                           // package, loaders
+
+	// set loaders into package
+	lua_setfield(d_state, -2, "loaders");                  // package
+
+	lua_pop(d_state, 1);
 }
 
 
