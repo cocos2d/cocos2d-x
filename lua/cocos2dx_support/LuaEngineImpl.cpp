@@ -134,7 +134,7 @@ void CCLuaScriptModule::addLuaLoader(lua_CFunction func)
 
 	// insert loader into index 2
 	lua_pushcfunction(d_state, func);                      // package, loaders, func
-	for (int i = lua_objlen(L, -2) + 1; i > 2; --i)
+	for (int i = lua_objlen(d_state, -2) + 1; i > 2; --i)
 	{
 		lua_rawgeti(d_state, -2, i - 1);                   // package, loaders, func, function
 		// we call lua_rawgeti, so the loader table now is at -3

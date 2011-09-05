@@ -24,6 +24,8 @@ THE SOFTWARE.
 #include "Cocos2dxLuaLoader.h"
 #include <string>
 
+using namespace cocos2d;
+
 extern "C"
 {
 	int loader_Android(lua_State *L)
@@ -44,7 +46,8 @@ extern "C"
 
 			if (luaL_loadstring(L, pCodes) != 0)
 			{
-				loaderror(L, filename.c_str());
+				luaL_error(L, "error loading module %s from file %s :\n\t%s",
+					lua_tostring(L, 1), filename.c_str(), lua_tostring(L, -1));
 			}
 			delete []pCodes;
 		}
