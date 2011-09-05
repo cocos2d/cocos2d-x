@@ -5,6 +5,7 @@ LOCAL_MODULE := game
 LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/AppDelegate.cpp \
 ../../../../lua/cocos2dx_support/LuaEngineImpl.cpp \
+../../../../lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
 ../../../../lua/cocos2dx_support/LuaCocos2d.cpp \
 ../../../../lua/cocos2dx_support/LuaEngine.cpp \
 ../../../../lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp
