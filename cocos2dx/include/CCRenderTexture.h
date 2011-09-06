@@ -78,13 +78,9 @@ public:
     /** end is key word of lua, use other name to export to lua. */
 	inline void endToLua(){ end();};
 
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
-	/** ends grabbing for android */
+	/** ends grabbing*/
+	// para bIsTOCacheTexture       the parameter is only used for android to cache the texture
 	void end(bool bIsTOCacheTexture = true);
-#else
-	/** ends grabbing */
-	void end();
-#endif
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
