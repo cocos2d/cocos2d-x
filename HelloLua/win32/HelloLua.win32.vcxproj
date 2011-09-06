@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
     <ClCompile Include="..\..\lua\cocos2dx_support\LuaCocos2d.cpp" />
     <ClCompile Include="..\..\lua\cocos2dx_support\LuaEngine.cpp" />
     <ClCompile Include="..\..\lua\cocos2dx_support\LuaEngineImpl.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.h" />
     <ClInclude Include="..\..\lua\cocos2dx_support\LuaCocos2d.h" />
     <ClInclude Include="..\..\lua\cocos2dx_support\LuaEngine.h" />
     <ClInclude Include="..\..\lua\cocos2dx_support\LuaEngineImpl.h" />
