@@ -42,7 +42,7 @@ CCRenderTexture::CCRenderTexture()
 , m_nOldFBO(0)
 , m_pTexture(0)
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-, m_pTextureDataBuffer(NULL)
+, m_pUITextureImage(NULL)
 {
 }
 
@@ -51,12 +51,7 @@ CCRenderTexture::~CCRenderTexture()
     removeAllChildrenWithCleanup(true);
     ccglDeleteFramebuffers(1, &m_uFBO);
 
-	if (NULL != m_pTextureDataBuffer)
-	{
-		delete []m_pTextureDataBuffer;
-		m_pTextureDataBuffer = NULL;
-	}
-	
+	CC_SAFE_DELETE(m_pUITextureImage);
 }
 
 CCSprite * CCRenderTexture::getSprite()
@@ -210,31 +205,33 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 }
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-	void CCRenderTexture::end(bool bIsTOCasheTexture)
+	void CCRenderTexture::end(bool bIsTOCacheTexture)
 	{
-		if (bIsTOCasheTexture)
-		{
-			if (NULL != m_pTextureDataBuffer)
-			{
-				delete []m_pTextureDataBuffer;
-				m_pTextureDataBuffer = NULL;
-			}
-
-			// to get the rendered texture data
-			const CCSize& s = m_pTexture->getContentSizeInPixels();
-			int tx = (int)s.width;
-			int ty = (int)s.height;
-			m_pTextureDataBuffer = new GLubyte[tx * ty * 4];
-			glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, m_pTextureDataBuffer);
-			VolatileTexture::addDataTexture(m_pTexture, m_pTextureDataBuffer, kTexture2DPixelFormat_RGBA8888, s);
-		}
-
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
 		// Restore the original matrix and viewport
 		glPopMatrix();
 		CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 		//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 		CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+
+		if (bIsTOCacheTexture)
+		{
+			CC_SAFE_DELETE(m_pUITextureImage);
+
+			// to get the rendered texture data
+			const CCSize& s = m_pTexture->getContentSizeInPixels();
+			int tx = (int)s.width;
+			int ty = (int)s.height;
+			m_pUITextureImage = new CCImage;
+			if (true == getUIImageFromBuffer(m_pUITextureImage, 0, 0, tx, ty))
+			{
+				VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+			} 
+			else
+			{
+				CCLOG("Cache rendertexture failed!");
+			}
+		}
 	}
 #else
 	void CCRenderTexture::end()
@@ -355,8 +352,11 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+		this->end(false);
+#else
 		this->end();
-
+#endif
 		// to get the actual texture data 
 		// #640 the image read from rendertexture is upseted
 		for (int i = 0; i < nSavedBufferHeight; ++i)
