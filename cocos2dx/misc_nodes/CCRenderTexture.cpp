@@ -342,11 +342,8 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
 		this->end(false);
-#else
-		this->end();
-#endif
+
 		// to get the actual texture data 
 		// #640 the image read from rendertexture is upseted
 		for (int i = 0; i < nSavedBufferHeight; ++i)
