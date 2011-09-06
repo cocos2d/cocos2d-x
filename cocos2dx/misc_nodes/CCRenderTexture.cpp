@@ -204,46 +204,36 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
 }
 
+void CCRenderTexture::end(bool bIsTOCacheTexture)
+{
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
+	// Restore the original matrix and viewport
+	glPopMatrix();
+	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
+	//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+	CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-	void CCRenderTexture::end(bool bIsTOCacheTexture)
+	if (bIsTOCacheTexture)
 	{
-		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
-		// Restore the original matrix and viewport
-		glPopMatrix();
-		CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
-		//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
-		CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+		CC_SAFE_DELETE(m_pUITextureImage);
 
-		if (bIsTOCacheTexture)
+		// to get the rendered texture data
+		const CCSize& s = m_pTexture->getContentSizeInPixels();
+		int tx = (int)s.width;
+		int ty = (int)s.height;
+		m_pUITextureImage = new CCImage;
+		if (true == getUIImageFromBuffer(m_pUITextureImage, 0, 0, tx, ty))
 		{
-			CC_SAFE_DELETE(m_pUITextureImage);
-
-			// to get the rendered texture data
-			const CCSize& s = m_pTexture->getContentSizeInPixels();
-			int tx = (int)s.width;
-			int ty = (int)s.height;
-			m_pUITextureImage = new CCImage;
-			if (true == getUIImageFromBuffer(m_pUITextureImage, 0, 0, tx, ty))
-			{
-				VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
-			} 
-			else
-			{
-				CCLOG("Cache rendertexture failed!");
-			}
+			VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+		} 
+		else
+		{
+			CCLOG("Cache rendertexture failed!");
 		}
 	}
-#else
-	void CCRenderTexture::end()
-	{
-		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
-		// Restore the original matrix and viewport
-		glPopMatrix();
-		CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
-	//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
-		CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
-	}
 #endif
+}
 
 void CCRenderTexture::clear(float r, float g, float b, float a)
 {
