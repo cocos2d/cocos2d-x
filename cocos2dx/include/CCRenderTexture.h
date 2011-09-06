@@ -80,7 +80,7 @@ public:
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
 	/** ends grabbing for android */
-	void end(bool bIsTOCasheTexture = true);
+	void end(bool bIsTOCacheTexture = true);
 #else
 	/** ends grabbing */
 	void end();
@@ -119,7 +119,7 @@ protected:
 	GLuint				m_uFBO;
 	GLint				m_nOldFBO;
 	CCTexture2D			*m_pTexture;
-	GLubyte				*m_pTextureDataBuffer;
+	CCImage				*m_pUITextureImage;
     GLenum				m_ePixelFormat;
 };
 
