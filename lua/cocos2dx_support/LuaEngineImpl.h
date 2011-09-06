@@ -70,6 +70,11 @@ public:
     */
     bool addSearchPath(const std::string& path);
 
+	/**
+	 @brief Add a loader for lua
+	*/
+	void addLuaLoader(lua_CFunction func);
+
 	/*************************************************************************
 		Script Execution Functions
 	*************************************************************************/

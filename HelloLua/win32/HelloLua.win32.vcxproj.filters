@@ -33,6 +33,9 @@
     <ClCompile Include="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.cpp">
       <Filter>Classes\CocosDenshion_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp">
+      <Filter>Classes\cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -52,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.h">
       <Filter>Classes\CocosDenshion_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.h">
+      <Filter>Classes\cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

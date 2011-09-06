@@ -335,6 +335,8 @@
 		BF8362B21328687F00F3C033 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83605E1328687F00F3C033 /* CCTMXXMLParser.cpp */; };
 		BF8362B31328687F00F3C033 /* CCTouchDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360601328687F00F3C033 /* CCTouchDispatcher.cpp */; };
 		BF8362B41328687F00F3C033 /* CCTouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8360611328687F00F3C033 /* CCTouchHandler.cpp */; };
+		BF87A2F51414D4DA0025E979 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF87A2F31414D4DA0025E979 /* Cocos2dxLuaLoader.cpp */; };
+		BF87A2F61414D4DA0025E979 /* Cocos2dxLuaLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = BF87A2F41414D4DA0025E979 /* Cocos2dxLuaLoader.h */; };
 		BF9935F21373ED1200197D1B /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF9935F11373ED1200197D1B /* CCUserDefault.h */; };
 		BFA008A6134423F500289DC3 /* CCCommon_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFA008A5134423F500289DC3 /* CCCommon_ios.mm */; };
 		BFA70A1E136AB06C00ABC725 /* CCIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */; };
@@ -699,6 +701,8 @@
 		BF83605E1328687F00F3C033 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
 		BF8360601328687F00F3C033 /* CCTouchDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchDispatcher.cpp; sourceTree = "<group>"; };
 		BF8360611328687F00F3C033 /* CCTouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchHandler.cpp; sourceTree = "<group>"; };
+		BF87A2F31414D4DA0025E979 /* Cocos2dxLuaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cocos2dxLuaLoader.cpp; sourceTree = "<group>"; };
+		BF87A2F41414D4DA0025E979 /* Cocos2dxLuaLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dxLuaLoader.h; sourceTree = "<group>"; };
 		BF9935F11373ED1200197D1B /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		BFA008A5134423F500289DC3 /* CCCommon_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon_ios.mm; sourceTree = "<group>"; };
 		BFA70A1B136AB06C00ABC725 /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIMEDelegate.h; sourceTree = "<group>"; };
@@ -911,6 +915,8 @@
 		BF22EDD413B4658B00E008B2 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				BF87A2F31414D4DA0025E979 /* Cocos2dxLuaLoader.cpp */,
+				BF87A2F41414D4DA0025E979 /* Cocos2dxLuaLoader.h */,
 				BF22EDD513B4658B00E008B2 /* LuaEngine.cpp */,
 				BF22EDD613B4658B00E008B2 /* LuaCocos2d.h */,
 				BF22EDD713B4658B00E008B2 /* LuaEngine.h */,
@@ -1618,6 +1624,7 @@
 				D4C3D24813F25D1100192C16 /* CCTexturePVR.h in Headers */,
 				D4C3D24913F25D1100192C16 /* CCTouchHandler.h in Headers */,
 				D4BA411F13FB8E03009E37C8 /* LuaSimpleAudioEngine.h in Headers */,
+				BF87A2F61414D4DA0025E979 /* Cocos2dxLuaLoader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1877,6 +1884,7 @@
 				BF1E790113E2529700C2D68B /* ZFont.m in Sources */,
 				D4C3D24B13F25D3100192C16 /* CCTexturePVR.cpp in Sources */,
 				D4BA411E13FB8E03009E37C8 /* LuaSimpleAudioEngine.cpp in Sources */,
+				BF87A2F51414D4DA0025E979 /* Cocos2dxLuaLoader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
