@@ -7,8 +7,9 @@ APP_DIR=`pwd`/$5
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld
 NDK_ROOT=$3
 PACKAGE_PATH=$4
+projName=$5
 
-echo $APP_DIR
+echo $APP_DIR $5
 
 # xxx.yyy.zzz -> xxx/yyy/zzz
 convert_package_path_to_dir(){
@@ -31,6 +32,7 @@ move_files_into_android(){
             mv $file $APP_DIR/android
         fi
     done
+    rm -r $APP_DIR/android/asset
 }
 
 #copy linux's
@@ -42,19 +44,19 @@ move_files_into_linux(){
             cp $file $APP_DIR/Linux
         fi
     done
+
+    cp $HELLOWORLD_ROOT/Linux/postCompiled.sh $APP_DIR/Linux
 }
 
 #copy eclipse configures
 move_eclipse_configures_into(){
-    for file in `ls -a $HELLOWORLD_ROOT/ | grep -E '\..*project' `
+    for file in `ls -a $HELLOWORLD_ROOT/Linux/ | grep -E '\..*project' `
 	do
-		cp $HELLOWORLD_ROOT/$file $APP_DIR/
+		cp $HELLOWORLD_ROOT/Linux/$file $APP_DIR/Linux/
     	done
-}
-
-#copy shell script
-copy_shells(){
-	cp $HELLOWORLD_ROOT/postCompiled.sh $APP_DIR/
+	mv $APP_DIR/Linux/.project $APP_DIR/Linux/.project1
+	sed "s/HelloWorld/$projName/" $APP_DIR/Linux/.project1 > $APP_DIR/Linux/.project
+	rm $APP_DIR/Linux/.project1
 }
 
 #copy main sources
@@ -125,7 +127,6 @@ modify_layout(){
 move_files_into_android
 move_files_into_linux
 move_eclipse_configures_into
-copy_shells
 copy_cpp_h_from_helloworld
 copy_resouces
 copy_src_and_jni

@@ -1,8 +1,15 @@
 #!/bin/bash
-echo  $1 $2
-test -e ../Debug/lib$1.so&&  cp ../Debug/lib$1.so ../../lib/linux/Debug/lib$2.so 
-test -e ../Release/lib$1.so&& cp ../Release/lib$1.so ../../lib/linux/Release/lib$2.so
+echo  $1 $2 $3
+pwd
+libDir=linux
+modeDir=Debug
+if  echo $3|grep -E "Android"; then
+	libDir=android
+fi
+if  echo $3|grep -E "Release"; then
+	modeDir=Release
+fi
+echo "mode: $modeDir"
+echo "mode: $libDir"
 
-test -e ../AndroidDebug/lib$1.so&& cp ../AndroidDebug/lib$1.so ../../lib/android/Debug/lib$2.so
-test -e ../AndroidRelease/lib$1.so&& cp ../AndroidRelease/lib$1.so ../../lib/android/Release/lib$2.so
-
+test -e ../$3/lib$1.so&&  cp ../$3/lib$1.so ../../../lib/$libDir/$modeDir/lib$2.so 
