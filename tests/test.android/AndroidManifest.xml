@@ -2,8 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.cocos2dx.tests"
       android:versionCode="1"
-      android:versionName="1.0">
-    <application android:label="@string/app_name" android:debuggable="true" android:icon="@drawable/icon">
+      android:versionName="1.0"
+      android:installLocation="preferExternal">
+
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="8"/>
+
+    <application android:label="@string/app_name"
+        android:debuggable="true"
+        android:icon="@drawable/icon">
+
         <activity android:name=".TestsDemo"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
@@ -13,12 +20,12 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>              
+        </activity>
     </application>
     <supports-screens android:largeScreens="true"
                       android:smallScreens="true"
                       android:anyDensity="true"
                       android:normalScreens="true"/>
                          
-    <uses-permission android:name="android.permission.INTERNET"/> 
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest> 
