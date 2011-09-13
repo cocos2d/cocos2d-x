@@ -39,14 +39,41 @@ public:
 	CCSet(const CCSet &rSetObject);
 	virtual ~CCSet(void);
 
+	/**
+	*@brief Return a copy of the CCSet, it will copy all the elelments.
+	*/
 	CCSet* copy();
+	/**
+	*@brief It is the same as copy().
+	*/
 	CCSet* mutableCopy();
+	/**
+	*@brief Return the number of elements the CCSet contains.
+	*/
 	int count();
+	/**
+	*@brief Add a element into CCSet, it will retain the element.
+	*/
 	void addObject(CCObject *pObject);
+	/**
+	*@brief Remove the given element, nothing todo if no element equals pObject.
+	*/
 	void removeObject(CCObject *pObject);
+	/**
+	*@brief Check if CCSet contains a element equals pObject.
+	*/
 	bool containsObject(CCObject *pObject);
+	/**
+	*@brief Return the iterator that points to the first element.
+	*/
 	CCSetIterator begin();
+	/**
+	*@brief Return the iterator that points to the poisition after the last element.
+	*/
 	CCSetIterator end();
+	/**
+	*@brief Return the first element if it contains elements, or null if it doesn't contain any element.
+	*/
     CCObject* anyObject();
 
 private:

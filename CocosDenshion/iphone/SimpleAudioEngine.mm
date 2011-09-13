@@ -204,7 +204,7 @@ namespace CocosDenshion
 
 	float SimpleAudioEngine::getEffectsVolume()
 	{
-                return (int)static_getEffectsVolume();
+                return static_getEffectsVolume();
 	}
 
 	void SimpleAudioEngine::setEffectsVolume(float volume)
