@@ -445,7 +445,11 @@ namespace cocos2d{
     void CCMenuItemSprite::setOpacity(GLubyte opacity)
     {
         m_pNormalImage->convertToRGBAProtocol()->setOpacity(opacity);
-        m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
+
+		if (m_pSelectedImage)
+		{
+			m_pSelectedImage->convertToRGBAProtocol()->setOpacity(opacity);
+		}
 
         if (m_pDisabledImage)
         {
@@ -455,7 +459,11 @@ namespace cocos2d{
     void CCMenuItemSprite::setColor(const ccColor3B& color)
     {
         m_pNormalImage->convertToRGBAProtocol()->setColor(color);
-        m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
+
+		if (m_pSelectedImage)
+		{
+			m_pSelectedImage->convertToRGBAProtocol()->setColor(color);
+		}    
 
         if (m_pDisabledImage)
         {
