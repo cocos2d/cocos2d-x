@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -162,7 +161,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         mainView = this;
     }
     
-    public void onPause(){    	
+    public void onPause(){
     	queueEvent(new Runnable() {
             @Override
             public void run() {
@@ -200,9 +199,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     public void setTextField(TextView view) {
     	mTextField = view;
     	if (null != mTextField && null != textInputWraper) {
-    		LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mTextField.getLayoutParams();
-    		linearParams.height = 0;
-    		mTextField.setLayoutParams(linearParams);
     		mTextField.setOnEditorActionListener(textInputWraper);
     		this.requestFocus();
     	}
