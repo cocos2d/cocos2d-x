@@ -48,6 +48,22 @@ public class Cocos2dxMusic {
 		initData();
 	}
 	
+	public void preloadBackgroundMusic(String path){
+		if ((mCurrentPath == null) || (! mCurrentPath.equals(path))){
+			// preload new background music
+			
+			// release old resource and create a new one
+			if (mBackgroundMediaPlayer != null){
+				mBackgroundMediaPlayer.release();				
+			}				
+
+			mBackgroundMediaPlayer = createMediaplayerFromAssets(path);
+			
+			// record the path
+			mCurrentPath = path;
+		}
+	}
+	
 	public void playBackgroundMusic(String path, boolean isLoop){
 		if (mCurrentPath == null){
 			// it is the first time to play background music
@@ -159,8 +175,8 @@ public class Cocos2dxMusic {
 	}
 	
 	public void setBackgroundVolume(float volume){
+	    this.mLeftVolume = this.mRightVolume = volume;
 		if (this.mBackgroundMediaPlayer != null){
-			this.mLeftVolume = this.mRightVolume = volume;
 			this.mBackgroundMediaPlayer.setVolume(this.mLeftVolume, this.mRightVolume);
 		}
 	}
