@@ -434,7 +434,7 @@ namespace cocos2d{
 		va_list args;
 		va_start(args, rows);
 
-		this->alignItemsInColumns(rows, args);
+		this->alignItemsInRows(rows, args);
 
 		va_end(args);
 	}
