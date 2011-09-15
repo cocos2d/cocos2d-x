@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package org.cocos2dx.application;
+package org.cocos2dx.hellolua;
 
 public final class R {
     public static final class attr {
@@ -14,12 +14,11 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int helloworld_gl_surfaceview=0x7f050001;
+        public static final int test_demo_gl_surfaceview=0x7f050001;
         public static final int textField=0x7f050000;
     }
     public static final class layout {
-        public static final int helloworld_demo=0x7f030000;
-        public static final int mylayout=0x7f030001;
+        public static final int game_demo=0x7f030000;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
