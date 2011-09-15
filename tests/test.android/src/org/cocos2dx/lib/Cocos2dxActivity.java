@@ -106,6 +106,10 @@ public class Cocos2dxActivity extends Activity{
         accelerometer.disable();
     }
 
+    public static void preloadBackgroundMusic(String path){
+    	backgroundMusicPlayer.preloadBackgroundMusic(path);
+    }
+    
     public static void playBackgroundMusic(String path, boolean isLoop){
     	backgroundMusicPlayer.playBackgroundMusic(path, isLoop);
     }
