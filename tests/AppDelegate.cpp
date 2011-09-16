@@ -72,7 +72,7 @@ bool AppDelegate::initInstance()
 				|| ! pMainWnd->Create("cocos2d: tests", 480, 320, 480, 320));
 
 		//set the base resource folder pay attention to add "/"
-		CCFileUtils::setResourcePath("Res/");
+		CCFileUtils::setResourcePath("../Res/");
 
 #endif  // CC_PLATFORM_LINUX
 
