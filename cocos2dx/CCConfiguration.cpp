@@ -100,8 +100,13 @@ CCGlesVersion CCConfiguration::getGlesVersion()
 	{
 		return GLES_VER_2_0;
 	}
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+	return GLES_VER_2_0;
+#else
+
 
 	return GLES_VER_INVALID;
+#endif
 }
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)

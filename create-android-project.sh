@@ -5,8 +5,8 @@
 # Don't modify the script until you know what you do.
 
 # set environment paramters
-NDK_ROOT="/workspace/android-dev/android-ndk-r5"
-ANDROID_SDK_ROOT="/workspace/android-dev/android-sdk-mac_86"
+NDK_ROOT="/home/laschweinski/android/android-ndk-r5"
+ANDROID_SDK_ROOT="/home/laschweinski/android/android-sdk-linux_86"
 
 # check if it was called by .bat file
 if [ $# -eq 5 ];then
