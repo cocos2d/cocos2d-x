@@ -16,8 +16,6 @@ namespace   cocos2d {
 	{
 
 		void didAccelerate(CCAcceleration* pAccelerationValue); 
-		void AccelerometerDestroy(void);  
-		void AccelerometerKeep(void);
 	};
 
 } //namespace   cocos2d 
