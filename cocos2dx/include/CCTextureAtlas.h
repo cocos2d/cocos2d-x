@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,7 +29,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "ccTypes.h"
-#include "NSObject.h"
+#include "CCObject.h"
 #include "ccConfig.h"
 
 namespace   cocos2d {
@@ -45,22 +47,23 @@ Supported features:
 The quads are rendered using an OpenGL ES VBO.
 To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
 */
-class CCX_DLL CCTextureAtlas : public NSObject 
+class CC_DLL CCTextureAtlas : public CCObject 
 {
 protected:
 	GLushort			*m_pIndices;
-#if CC_TEXTURE_ATLAS_USES_VBO
+#if CC_USES_VBO
 	GLuint				m_pBuffersVBO[2]; //0: vertex  1: indices
-#endif // CC_TEXTURE_ATLAS_USES_VBO
+	bool				m_bDirty; //indicates whether or not the array buffer of the VBO needs to be updated
+#endif // CC_USES_VBO
 
 	/** quantity of quads that are going to be drawn */
-	CCX_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
+	CC_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
 	/** quantity of quads that can be stored with the current texture atlas size */
-	CCX_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
+	CC_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
 	/** Texture of the texture atlas */
-	CCX_PROPERTY(CCTexture2D *, m_pTexture, Texture)
+	CC_PROPERTY(CCTexture2D *, m_pTexture, Texture)
 	/** Quads that are going to be rendered */
-	CCX_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
+	CC_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
 
 public:
 
@@ -127,7 +130,7 @@ public:
 	void removeAllQuads();
 
 
-	/** resize the capacity of the Texture Atlas.
+	/** resize the capacity of the CCTextureAtlas.
 	* The new capacity can be lower or higher than the current one
 	* It returns YES if the resize was successful.
 	* If it fails to resize the capacity it will return NO with a new capacity of 0.
@@ -139,6 +142,13 @@ public:
 	* n can't be greater than the capacity of the Atlas
 	*/
 	void drawNumberOfQuads(unsigned int n);
+
+	/** draws n quads from an index (offset).
+	n + start can't be greater than the capacity of the atlas
+
+	@since v1.0
+	*/
+	void drawNumberOfQuads(unsigned int n, unsigned int start);
 
 	/** draws all the Atlas's Quads
 	*/

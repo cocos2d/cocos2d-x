@@ -41,16 +41,16 @@ void Ball::move(ccTime delta)
 
 void Ball::collideWithPaddle(Paddle* paddle)
 {
-	CGRect paddleRect = paddle->rect();
+	CCRect paddleRect = paddle->rect();
 	paddleRect.origin.x += paddle->getPosition().x;
 	paddleRect.origin.y += paddle->getPosition().y;
 	
-    float lowY = CGRect::CGRectGetMinY(paddleRect);
-	float midY = CGRect::CGRectGetMidY(paddleRect);
-	float highY = CGRect::CGRectGetMaxY(paddleRect);
+    float lowY = CCRect::CCRectGetMinY(paddleRect);
+	float midY = CCRect::CCRectGetMidY(paddleRect);
+	float highY = CCRect::CCRectGetMaxY(paddleRect);
 	
-	float leftX = CGRect::CGRectGetMinX(paddleRect);
-	float rightX = CGRect::CGRectGetMaxX(paddleRect);
+	float leftX = CCRect::CCRectGetMinX(paddleRect);
+	float rightX = CCRect::CCRectGetMaxX(paddleRect);
 	
 	if (getPosition().x > leftX && getPosition().x < rightX) {
 	
@@ -59,13 +59,13 @@ void Ball::collideWithPaddle(Paddle* paddle)
 		
 		if (getPosition().y > midY && getPosition().y <= highY + radius()) 
 		{
-			setPosition( CGPointMake(getPosition().x, highY + radius()) );
+			setPosition( CCPointMake(getPosition().x, highY + radius()) );
 			hit = true;
 			angleOffset = (float)M_PI / 2;
 		}
 		else if (getPosition().y < midY && getPosition().y >= lowY - radius()) 
 		{
-			setPosition( CGPointMake(getPosition().x, lowY - radius()) );
+			setPosition( CCPointMake(getPosition().x, lowY - radius()) );
 			hit = true;
 			angleOffset = -(float)M_PI / 2;
 		}

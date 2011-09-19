@@ -10,10 +10,13 @@ public:
 	SceneTestLayer1();
 	~SceneTestLayer1();
 
+    virtual void onEnter();
+    virtual void onEnterTransitionDidFinish();
+
 	void testDealloc(ccTime dt);
-	void onPushScene(NSObject* pSender);
-	void onPushSceneTran(NSObject* pSender);
-	void onQuit(NSObject* pSender);
+	void onPushScene(CCObject* pSender);
+	void onPushSceneTran(CCObject* pSender);
+	void onQuit(CCObject* pSender);
 
 	//CREATE_NODE(SceneTestLayer1);
 } ;
@@ -25,21 +28,21 @@ public:
 	SceneTestLayer2();
 
 	void testDealloc(ccTime dt);
-	void onGoBack(NSObject* pSender);
-	void onReplaceScene(NSObject* pSender);
-	void onReplaceSceneTran(NSObject* pSender);
+	void onGoBack(CCObject* pSender);
+	void onReplaceScene(CCObject* pSender);
+	void onReplaceSceneTran(CCObject* pSender);
 
 	//CREATE_NODE(SceneTestLayer2);
 } ;
 
-class SceneTestLayer3 : public CCColorLayer
+class SceneTestLayer3 : public CCLayerColor
 {
 public:
 	SceneTestLayer3();
 
 	virtual void testDealloc(ccTime dt);
 
-	virtual void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
 	//CREATE_NODE(SceneTestLayer3);
 } ;

@@ -34,11 +34,11 @@ void AccelerometerTest::onEnter()
 
     setIsAccelerometerEnabled(true);
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
     m_pBall = CCSprite::spriteWithFile("Images/ball.png");
     m_pBall->setPosition(ccp(s.width / 2, s.height / 2));
@@ -47,28 +47,34 @@ void AccelerometerTest::onEnter()
     m_pBall->retain();
 }
 
-void AccelerometerTest::didAccelerate(UIAcceleration* pAccelerationValue)
+void AccelerometerTest::didAccelerate(CCAcceleration* pAccelerationValue)
 {
 //     double fNow = pAccelerationValue->timestamp;
 // 
 //     if (m_fLastTime > 0.0)
 //     {
-//         CGPoint ptNow = convertToUI
+//         CCPoint ptNow = convertToUI
 //     }
 // 
 //     m_fLastTime = fNow;
 
     CCDirector* pDir = CCDirector::sharedDirector();
-    CGSize winSize   = pDir->getWinSize();
-    CGSize ballSize  = m_pBall->getContentSize();
+    CCSize winSize   = pDir->getWinSize();
 
-    CGPoint ptNow  = m_pBall->getPosition();
-    CGPoint ptTemp = pDir->convertToUI(ptNow);
+    /*FIXME: Testing on the Nexus S sometimes m_pBall is NULL */
+    if ( m_pBall == NULL ) {
+    	return;
+    }
+
+    CCSize ballSize  = m_pBall->getContentSize();
+
+    CCPoint ptNow  = m_pBall->getPosition();
+    CCPoint ptTemp = pDir->convertToUI(ptNow);
 
     ptTemp.x += pAccelerationValue->x * 9.81f;
     ptTemp.y -= pAccelerationValue->y * 9.81f;
 
-    CGPoint ptNext = pDir->convertToGL(ptTemp);
+    CCPoint ptNext = pDir->convertToGL(ptTemp);
     FIX_POS(ptNext.x, (ballSize.width / 2.0), (winSize.width - ballSize.width / 2.0));
     FIX_POS(ptNext.y, (ballSize.height / 2.0), (winSize.height - ballSize.height / 2.0));
     m_pBall->setPosition(ptNext);

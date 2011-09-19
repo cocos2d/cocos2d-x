@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -35,10 +37,10 @@ namespace cocos2d {
 	The children will be moved faster / slower than the parent according the the parallax ratio.
 
 	*/
-	class CCX_DLL CCParallaxNode : public CCNode 
+	class CC_DLL CCParallaxNode : public CCNode 
 	{
 		/** array that holds the offset / ratio of the children */
-		CCX_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
+		CC_SYNTHESIZE(struct _ccArray *, m_pParallaxArray, ParallaxArray)
 
 	public:
 		/** Adds a child to the container with a z-order, a parallax ratio and a position offset
@@ -48,16 +50,16 @@ namespace cocos2d {
 		CCParallaxNode();
 		virtual ~CCParallaxNode();
 		static CCParallaxNode * node();
-		CCParallaxNode * addChild(CCNode * child, int z, CGPoint parallaxRatio, CGPoint positionOffset);
+		virtual void addChild(CCNode * child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
 		// super methods
-		virtual CCNode * addChild(CCNode * child, int zOrder, int tag);
+		virtual void addChild(CCNode * child, unsigned int zOrder, int tag);
 		virtual void removeChild(CCNode* child, bool cleanup);
 		virtual void removeAllChildrenWithCleanup(bool cleanup);
 		virtual void visit(void);
 	private:
-		CGPoint absolutePosition();
+		CCPoint absolutePosition();
 	protected:
-		CGPoint	m_tLastPosition;
+		CCPoint	m_tLastPosition;
 	};
 
 } // namespace cocos2d

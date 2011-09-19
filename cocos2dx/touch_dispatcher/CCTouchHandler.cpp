@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      Valentin Milea
 
 http://www.cocos2d-x.org
 
@@ -24,9 +25,7 @@ THE SOFTWARE.
 
 #include "CCTouchHandler.h"
 #include "ccMacros.h"
-#include "CCXCocos2dDefine.h"
 
-#include <assert.h>
 namespace   cocos2d {
 
 CCTouchDelegate* CCTouchHandler::getDelegate(void)
@@ -80,7 +79,7 @@ CCTouchHandler* CCTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, 
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pHandler);
+			CC_SAFE_RELEASE_NULL(pHandler);
 		}
 	}
 	
@@ -100,7 +99,10 @@ bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 
 CCTouchHandler::~CCTouchHandler(void)
 {
-    m_pDelegate->destroy();
+	if (m_pDelegate)
+	{
+		m_pDelegate->destroy();
+	}   
 }
 
 // implementation of CCStandardTouchHandler
@@ -138,7 +140,7 @@ CCStandardTouchHandler* CCStandardTouchHandler::handlerWithDelegate(CCTouchDeleg
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pHandler);
+			CC_SAFE_RELEASE_NULL(pHandler);
 		}
 	}
 
@@ -173,7 +175,7 @@ CCTargetedTouchHandler* CCTargetedTouchHandler::handlerWithDelegate(CCTouchDeleg
 		}
 		else
 		{
-			CCX_SAFE_RELEASE_NULL(pHandler);
+			CC_SAFE_RELEASE_NULL(pHandler);
 		}
 	}
 
@@ -205,6 +207,6 @@ bool CCTargetedTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nP
 
 CCTargetedTouchHandler::~CCTargetedTouchHandler(void)
 {
-	m_pClaimedTouches->release();
+	CC_SAFE_RELEASE(m_pClaimedTouches);
 }
 }//namespace   cocos2d 

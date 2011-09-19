@@ -1,141 +1,144 @@
 #include "TransitionsTest.h"
 #include "../testResource.h"
+#include "CCConfiguration.h"
 
 #define TRANSITION_DURATION (1.2f)
 
-class FadeWhiteTransition : public CCFadeTransition 
+class FadeWhiteTransition : public CCTransitionFade 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCFadeTransition::transitionWithDuration(t, s, ccWHITE); 
+        return CCTransitionFade::transitionWithDuration(t, s, ccWHITE); 
     }
 };
 
-class FlipXLeftOver : public CCFlipXTransition 
+class FlipXLeftOver : public CCTransitionFlipX 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCFlipXTransition::transitionWithDuration(t, s, kOrientationLeftOver);
+        return CCTransitionFlipX::transitionWithDuration(t, s, kOrientationLeftOver);
     }
 };
 
-class FlipXRightOver : public CCFlipXTransition 
+class FlipXRightOver : public CCTransitionFlipX 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCFlipXTransition::transitionWithDuration(t, s, kOrientationRightOver);
+        return CCTransitionFlipX::transitionWithDuration(t, s, kOrientationRightOver);
     }
 };
 
-class FlipYUpOver : public CCFlipYTransition 
+class FlipYUpOver : public CCTransitionFlipY 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCFlipYTransition::transitionWithDuration(t, s, kOrientationUpOver); 
+        return CCTransitionFlipY::transitionWithDuration(t, s, kOrientationUpOver); 
     }
 };
 
-class FlipYDownOver : public CCFlipYTransition 
+class FlipYDownOver : public CCTransitionFlipY 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCFlipYTransition::transitionWithDuration(t, s, kOrientationDownOver); 
+        return CCTransitionFlipY::transitionWithDuration(t, s, kOrientationDownOver); 
     }
 };
 
-class FlipAngularLeftOver : public CCFlipAngularTransition 
+class FlipAngularLeftOver : public CCTransitionFlipAngular 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCFlipAngularTransition::transitionWithDuration(t, s, kOrientationLeftOver); 
+        return CCTransitionFlipAngular::transitionWithDuration(t, s, kOrientationLeftOver); 
     }
 };
 
-class FlipAngularRightOver : public CCFlipAngularTransition 
+class FlipAngularRightOver : public CCTransitionFlipAngular 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCFlipAngularTransition::transitionWithDuration(t, s, kOrientationRightOver);
+        return CCTransitionFlipAngular::transitionWithDuration(t, s, kOrientationRightOver);
     }
 };
 
-class ZoomFlipXLeftOver : public CCZoomFlipXTransition 
+class ZoomFlipXLeftOver : public CCTransitionZoomFlipX 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCZoomFlipXTransition::transitionWithDuration(t, s, kOrientationLeftOver); 
+        return CCTransitionZoomFlipX::transitionWithDuration(t, s, kOrientationLeftOver); 
     }
 };
 
-class ZoomFlipXRightOver : public CCZoomFlipXTransition 
+class ZoomFlipXRightOver : public CCTransitionZoomFlipX 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCZoomFlipXTransition::transitionWithDuration(t, s, kOrientationRightOver);
+        return CCTransitionZoomFlipX::transitionWithDuration(t, s, kOrientationRightOver);
     }
 };
 
-class ZoomFlipYUpOver : public CCZoomFlipYTransition 
+class ZoomFlipYUpOver : public CCTransitionZoomFlipY 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCZoomFlipYTransition::transitionWithDuration(t, s, kOrientationUpOver); 
+        return CCTransitionZoomFlipY::transitionWithDuration(t, s, kOrientationUpOver); 
 
     }
 };
 
-class ZoomFlipYDownOver : public CCZoomFlipYTransition 
+class ZoomFlipYDownOver : public CCTransitionZoomFlipY 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCZoomFlipYTransition::transitionWithDuration(t, s, kOrientationDownOver); 
+        return CCTransitionZoomFlipY::transitionWithDuration(t, s, kOrientationDownOver); 
     }
 };
 
-class ZoomFlipAngularLeftOver : public CCZoomFlipAngularTransition 
+class ZoomFlipAngularLeftOver : public CCTransitionZoomFlipAngular 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCZoomFlipAngularTransition::transitionWithDuration(t, s, kOrientationLeftOver); 
+        return CCTransitionZoomFlipAngular::transitionWithDuration(t, s, kOrientationLeftOver); 
     }
 };
 
-class ZoomFlipAngularRightOver : public CCZoomFlipAngularTransition 
+class ZoomFlipAngularRightOver : public CCTransitionZoomFlipAngular 
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCZoomFlipAngularTransition::transitionWithDuration(t, s, kOrientationRightOver);
+        return CCTransitionZoomFlipAngular::transitionWithDuration(t, s, kOrientationRightOver);
     }
 };
 
-class PageTransitionForward : public CCPageTurnTransition
+class PageTransitionForward : public CCTransitionPageTurn
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCPageTurnTransition::transitionWithDuration(t, s, false);
+        CCDirector::sharedDirector()->setDepthTest(true);
+        return CCTransitionPageTurn::transitionWithDuration(t, s, false);
     }
 };
 
-class PageTransitionBackward : public CCPageTurnTransition
+class PageTransitionBackward : public CCTransitionPageTurn
 {
 public:
     static CCTransitionScene* transitionWithDuration(ccTime t, CCScene* s)
     {
-        return CCPageTurnTransition::transitionWithDuration(t, s, true);
+        CCDirector::sharedDirector()->setDepthTest(true);
+        return CCTransitionPageTurn::transitionWithDuration(t, s, true);
     }
 };
 
@@ -168,9 +171,9 @@ static std::string transitions[MAX_LAYER] = {
     "SlideInTTransition",
     "SlideInBTransition",
 
-    "CCCrossFadeTransition",
-    "CCRadialCCWTransition",
-    "CCRadialCWTransition",
+    "CCTransitionCrossFade",
+    "CCTransitionRadialCCW",
+    "CCTransitionRadialCW",
     "PageTransitionForward",
     "PageTransitionBackward",
     "FadeTRTransition",
@@ -185,10 +188,13 @@ static int s_nSceneIdx = 0;
 
 CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
 {
+    // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
+    CCDirector::sharedDirector()->setDepthTest(false);
+
     switch(nIndex)
     {
-    case 0: return CCJumpZoomTransition::transitionWithDuration(t, s);
-    case 1: return CCFadeTransition::transitionWithDuration(t, s);
+    case 0: return CCTransitionJumpZoom::transitionWithDuration(t, s);
+    case 1: return CCTransitionFade::transitionWithDuration(t, s);
     case 2: return FadeWhiteTransition::transitionWithDuration(t, s);
     case 3: return FlipXLeftOver::transitionWithDuration(t, s);
     case 4: return FlipXRightOver::transitionWithDuration(t, s);
@@ -202,29 +208,64 @@ CCTransitionScene* createTransition(int nIndex, ccTime t, CCScene* s)
     case 12: return ZoomFlipYDownOver::transitionWithDuration(t, s);
     case 13: return ZoomFlipAngularLeftOver::transitionWithDuration(t, s);
     case 14: return ZoomFlipAngularRightOver::transitionWithDuration(t, s);
-    case 15: return CCShrinkGrowTransition::transitionWithDuration(t, s);
-    case 16: return CCRotoZoomTransition::transitionWithDuration(t, s);
-    case 17: return CCMoveInLTransition::transitionWithDuration(t, s);
-    case 18: return CCMoveInRTransition::transitionWithDuration(t, s);
-    case 19: return CCMoveInTTransition::transitionWithDuration(t, s);
-    case 20: return CCMoveInBTransition::transitionWithDuration(t, s);
-    case 21: return CCSlideInLTransition::transitionWithDuration(t, s);
-    case 22: return CCSlideInRTransition::transitionWithDuration(t, s);
-    case 23: return CCSlideInTTransition::transitionWithDuration(t, s);
-    case 24: return CCSlideInBTransition::transitionWithDuration(t, s);
-
-    case 25: return CCCrossFadeTransition::transitionWithDuration(t,s);
-    case 26: return CCRadialCCWTransition::transitionWithDuration(t,s);
-    case 27: return CCRadialCWTransition::transitionWithDuration(t,s);
+    case 15: return CCTransitionShrinkGrow::transitionWithDuration(t, s);
+    case 16: return CCTransitionRotoZoom::transitionWithDuration(t, s);
+    case 17: return CCTransitionMoveInL::transitionWithDuration(t, s);
+    case 18: return CCTransitionMoveInR::transitionWithDuration(t, s);
+    case 19: return CCTransitionMoveInT::transitionWithDuration(t, s);
+    case 20: return CCTransitionMoveInB::transitionWithDuration(t, s);
+    case 21: return CCTransitionSlideInL::transitionWithDuration(t, s);
+    case 22: return CCTransitionSlideInR::transitionWithDuration(t, s);
+    case 23: return CCTransitionSlideInT::transitionWithDuration(t, s);
+    case 24: return CCTransitionSlideInB::transitionWithDuration(t, s);
+    case 25: 
+		{
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			{
+				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionCrossFade may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				return NULL;
+			}
+			else
+			{
+				return CCTransitionCrossFade::transitionWithDuration(t,s);
+			}
+		}
+		break;
+    case 26: 
+		{
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			{
+				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionRadialCCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				return NULL;
+			}
+			else
+			{
+				return CCTransitionRadialCCW::transitionWithDuration(t,s);
+			}
+		}
+		break;
+    case 27: 
+		{
+			if (CCConfiguration::sharedConfiguration()->getGlesVersion() <= GLES_VER_1_0)
+			{
+				CCMessageBox("The Opengl ES version is lower than 1.1, and TransitionRadialCW may not run correctly, it is ignored.", "Cocos2d-x Hint");
+				return NULL;
+			}
+			else
+			{
+				return CCTransitionRadialCW::transitionWithDuration(t,s);
+			}
+		}
+		break;
     case 28: return PageTransitionForward::transitionWithDuration(t, s);
     case 29: return PageTransitionBackward::transitionWithDuration(t, s);
-    case 30: return CCFadeTRTransition::transitionWithDuration(t, s);
-    case 31: return CCFadeBLTransition::transitionWithDuration(t, s);
-    case 32: return CCFadeUpTransition::transitionWithDuration(t, s);
-    case 33: return CCFadeDownTransition::transitionWithDuration(t, s);
-    case 34: return CCTurnOffTilesTransition::transitionWithDuration(t, s);
-    case 35: return CCSplitRowsTransition::transitionWithDuration(t, s);
-    case 36: return CCSplitColsTransition::transitionWithDuration(t, s);
+    case 30: return CCTransitionFadeTR::transitionWithDuration(t, s);
+    case 31: return CCTransitionFadeBL::transitionWithDuration(t, s);
+    case 32: return CCTransitionFadeUp::transitionWithDuration(t, s);
+    case 33: return CCTransitionFadeDown::transitionWithDuration(t, s);
+    case 34: return CCTransitionTurnOffTiles::transitionWithDuration(t, s);
+    case 35: return CCTransitionSplitRows::transitionWithDuration(t, s);
+    case 36: return CCTransitionSplitCols::transitionWithDuration(t, s);
     default: break;
     }
 
@@ -245,22 +286,22 @@ TestLayer1::TestLayer1(void)
 {
     float x,y;
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     x = size.width;
     y = size.height;
 
     CCSprite* bg1 = CCSprite::spriteWithFile(s_back1);
-    bg1->setPosition( CGPointMake(size.width/2, size.height/2) );
+    bg1->setPosition( CCPointMake(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    CCLabel* title = CCLabel::labelWithString( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    CCLabelTTF* title = CCLabelTTF::labelWithString( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
-    title->setPosition( CGPointMake(x/2, y-100) );
+    title->setPosition( CCPointMake(x/2, y-100) );
 
-    CCLabel* label = CCLabel::labelWithString("SCENE 1", "Marker Felt", 38);
+    CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 1", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CGPointMake(x/2,y/2));	
+    label->setPosition( CCPointMake(x/2,y/2));	
     addChild( label);
 
     // menu
@@ -270,10 +311,10 @@ TestLayer1::TestLayer1(void)
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CGPointZero );
-    item1->setPosition( CGPointMake( size.width/2 - 100,30) );
-    item2->setPosition( CGPointMake( size.width/2, 30) );
-    item3->setPosition( CGPointMake( size.width/2 + 100,30) );
+    menu->setPosition( CCPointZero );
+    item1->setPosition( CCPointMake( size.width/2 - 100,30) );
+    item2->setPosition( CCPointMake( size.width/2, 30) );
+    item3->setPosition( CCPointMake( size.width/2 + 100,30) );
 
     addChild(menu, 1);	
 
@@ -285,7 +326,7 @@ TestLayer1::~TestLayer1(void)
 
 }
 
-void TestLayer1::restartCallback(NSObject* pSender)
+void TestLayer1::restartCallback(CCObject* pSender)
 {
     CCScene* s = new TransitionsTestScene();
 
@@ -301,7 +342,7 @@ void TestLayer1::restartCallback(NSObject* pSender)
     }    
 }
 
-void TestLayer1::nextCallback(NSObject* pSender)
+void TestLayer1::nextCallback(CCObject* pSender)
 {
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
@@ -320,7 +361,7 @@ void TestLayer1::nextCallback(NSObject* pSender)
     }
 }
 
-void TestLayer1::backCallback(NSObject* pSender)
+void TestLayer1::backCallback(CCObject* pSender)
 {
     s_nSceneIdx--;
     int total = MAX_LAYER;
@@ -350,22 +391,22 @@ TestLayer2::TestLayer2()
 {
     float x,y;
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     x = size.width;
     y = size.height;
 
     CCSprite* bg1 = CCSprite::spriteWithFile(s_back2);
-    bg1->setPosition( CGPointMake(size.width/2, size.height/2) );
+    bg1->setPosition( CCPointMake(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    CCLabel* title = CCLabel::labelWithString((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    CCLabelTTF* title = CCLabelTTF::labelWithString((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( ccc3(255,32,32) );
-    title->setPosition( CGPointMake(x/2, y-100) );
+    title->setPosition( CCPointMake(x/2, y-100) );
 
-    CCLabel* label = CCLabel::labelWithString("SCENE 2", "Marker Felt", 38);
+    CCLabelTTF* label = CCLabelTTF::labelWithString("SCENE 2", "Marker Felt", 38);
     label->setColor( ccc3(16,16,255));
-    label->setPosition( CGPointMake(x/2,y/2));	
+    label->setPosition( CCPointMake(x/2,y/2));	
     addChild( label);
 
     // menu
@@ -375,10 +416,10 @@ TestLayer2::TestLayer2()
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CGPointZero );
-    item1->setPosition( CGPointMake( x/2 - 100,30) );
-    item2->setPosition( CGPointMake( x/2, 30) );
-    item3->setPosition( CGPointMake( x/2 + 100,30) );
+    menu->setPosition( CCPointZero );
+    item1->setPosition( CCPointMake( x/2 - 100,30) );
+    item2->setPosition( CCPointMake( x/2, 30) );
+    item3->setPosition( CCPointMake( x/2 + 100,30) );
 
     addChild(menu, 1);	
 
@@ -390,7 +431,7 @@ TestLayer2::~TestLayer2()
 
 }
 
-void TestLayer2::restartCallback(NSObject* pSender)
+void TestLayer2::restartCallback(CCObject* pSender)
 {
     CCScene* s = new TransitionsTestScene();
 
@@ -406,7 +447,7 @@ void TestLayer2::restartCallback(NSObject* pSender)
     }
 }
 
-void TestLayer2::nextCallback(NSObject* pSender)
+void TestLayer2::nextCallback(CCObject* pSender)
 {
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
@@ -425,7 +466,7 @@ void TestLayer2::nextCallback(NSObject* pSender)
     }
 }
 
-void TestLayer2::backCallback(NSObject* pSender)
+void TestLayer2::backCallback(CCObject* pSender)
 {
     s_nSceneIdx--;
     int total = MAX_LAYER;

@@ -5,6 +5,10 @@ static int sceneIdx = -1;
 
 #define MAX_LAYER	3
 
+CCLayer* nextAction();
+CCLayer* backAction();
+CCLayer* restartAction();
+
 CCLayer* createLayer(int nIndex)
 {
 	switch(nIndex)
@@ -84,18 +88,18 @@ void SpriteDemo::onEnter()
 {
 	CCLayer::onEnter();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 18);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 18);
 	addChild(label, 1);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		CCLabel* l = CCLabel::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
+		CCLabelTTF* l = CCLabelTTF::labelWithString(strSubtitle.c_str(), "Thonburi", 22);
 		addChild(l, 1);
-		l->setPosition( CGPointMake(s.width/2, s.height-80) );
+		l->setPosition( CCPointMake(s.width/2, s.height-80) );
 	}	
 
 	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(SpriteDemo::backCallback) );
@@ -104,15 +108,15 @@ void SpriteDemo::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
-	item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-	item2->setPosition( CGPointMake( s.width/2, 30) );
-	item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+	menu->setPosition( CCPointZero );
+	item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+	item2->setPosition( CCPointMake( s.width/2, 30) );
+	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 	
 	addChild(menu, 1);	
 }
 
-void SpriteDemo::restartCallback(NSObject* pSender)
+void SpriteDemo::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild(restartAction()); 
@@ -121,7 +125,7 @@ void SpriteDemo::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void SpriteDemo::nextCallback(NSObject* pSender)
+void SpriteDemo::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild( nextAction() );
@@ -129,7 +133,7 @@ void SpriteDemo::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void SpriteDemo::backCallback(NSObject* pSender)
+void SpriteDemo::backCallback(CCObject* pSender)
 {
 	CCScene* s = new ProgressActionsTestScene();
 	s->addChild( backAction() );
@@ -146,7 +150,7 @@ void SpriteProgressToRadial::onEnter()
 {
 	SpriteDemo::onEnter();
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
 	CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
 	CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
@@ -154,13 +158,13 @@ void SpriteProgressToRadial::onEnter()
 	CCProgressTimer *left = CCProgressTimer::progressWithFile(s_pPathSister1);
 	left->setType( kCCProgressTimerTypeRadialCW );
 	addChild(left);
-	left->setPosition(CGPointMake(100, s.height/2));
+	left->setPosition(CCPointMake(100, s.height/2));
 	left->runAction( CCRepeatForever::actionWithAction(to1));
 	
 	CCProgressTimer *right = CCProgressTimer::progressWithFile(s_pPathBlock);
 	right->setType( kCCProgressTimerTypeRadialCCW );
 	addChild(right);
-	right->setPosition(CGPointMake(s.width-100, s.height/2));
+	right->setPosition(CCPointMake(s.width-100, s.height/2));
 	right->runAction( CCRepeatForever::actionWithAction(to2));
 }
 
@@ -179,7 +183,7 @@ void SpriteProgressToHorizontal::onEnter()
 {
 	SpriteDemo::onEnter();
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
 	CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
@@ -187,13 +191,13 @@ void SpriteProgressToHorizontal::onEnter()
 	CCProgressTimer *left = CCProgressTimer::progressWithFile(s_pPathSister1);
 	left->setType( kCCProgressTimerTypeHorizontalBarLR );
 	addChild(left);
-	left->setPosition(CGPointMake(100, s.height/2));
+	left->setPosition(CCPointMake(100, s.height/2));
 	left->runAction( CCRepeatForever::actionWithAction(to1));
 	
 	CCProgressTimer *right = CCProgressTimer::progressWithFile(s_pPathSister2);
 	right->setType( kCCProgressTimerTypeHorizontalBarRL );
 	addChild(right);
-	right->setPosition(CGPointMake(s.width-100, s.height/2));
+	right->setPosition(CCPointMake(s.width-100, s.height/2));
 	right->runAction( CCRepeatForever::actionWithAction(to2));
 }
 
@@ -211,7 +215,7 @@ void SpriteProgressToVertical::onEnter()
 {
 	SpriteDemo::onEnter();
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	CCProgressTo *to1 = CCProgressTo::actionWithDuration(2, 100);
 	CCProgressTo *to2 = CCProgressTo::actionWithDuration(2, 100);
@@ -219,13 +223,13 @@ void SpriteProgressToVertical::onEnter()
 	CCProgressTimer *left = CCProgressTimer::progressWithFile(s_pPathSister1);
 	left->setType( kCCProgressTimerTypeVerticalBarBT );
 	addChild(left);
-	left->setPosition(CGPointMake(100, s.height/2));
+	left->setPosition(CCPointMake(100, s.height/2));
 	left->runAction( CCRepeatForever::actionWithAction(to1));
 	
 	CCProgressTimer *right = CCProgressTimer::progressWithFile(s_pPathSister2);
 	right->setType( kCCProgressTimerTypeVerticalBarTB );
 	addChild(right);
-	right->setPosition(CGPointMake(s.width-100, s.height/2));
+	right->setPosition(CCPointMake(s.width-100, s.height/2));
 	right->runAction( CCRepeatForever::actionWithAction(to2));
 }
 

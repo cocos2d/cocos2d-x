@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      On-Core
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,47 +25,67 @@ THE SOFTWARE.
 #include "CCGrabber.h"
 #include "ccMacros.h"
 #include "CCTexture2D.h"
-#include "support/opengl_support/OpenGL_Internal.h"
 #include "platform/platform.h"
-
-#include <GLES/glext.h>
 
 namespace cocos2d
 {
 	CCGrabber::CCGrabber(void)
+		: m_fbo(0)
+		, m_oldFBO(0)
 	{
-		m_fbo = 0;
-		m_oldFBO = 0;
+		m_eGlesVersion = CCConfiguration::sharedConfiguration()->getGlesVersion();
+
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
 
 		// generate FBO
-		glGenFramebuffersOES(1, &m_fbo);
+		ccglGenFramebuffers(1, &m_fbo);
 	}
 
-	void CCGrabber::grab(cocos2d::CCTexture2D *pTexture)
+	void CCGrabber::grab(CCTexture2D *pTexture)
 	{
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &m_oldFBO);
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
+		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
 		// bind
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_fbo);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
 
 		// associate texture with FBO
-		glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D,
+		ccglFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
 			pTexture->getName(), 0);
 
 		// check if it worked (probably worth doing :) )
-		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
-		if (status != GL_FRAMEBUFFER_COMPLETE_OES)
+		GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
+		if (status != CC_GL_FRAMEBUFFER_COMPLETE)
 		{
 			CCLOG("Frame Grabber: could not attach texture to frmaebuffer");
 		}
 
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_oldFBO);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
 	}
 	
-	void CCGrabber::beforeRender(cocos2d::CCTexture2D *pTexture)
+	void CCGrabber::beforeRender(CCTexture2D *pTexture)
 	{
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &m_oldFBO);
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_fbo);
+        CC_UNUSED_PARAM(pTexture);
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
+		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
 
 		// BUG XXX: doesn't work with RGB565.
 
@@ -81,13 +102,28 @@ namespace cocos2d
 
 	void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
 	{
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, m_oldFBO);
+        CC_UNUSED_PARAM(pTexture);
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
+		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
 		glColorMask(true, true, true, true);	// #631
 	}
 
 	CCGrabber::~CCGrabber()
 	{
+		// If the gles version is lower than GLES_VER_1_0, 
+		// all the functions in CCGrabber return directly.
+		if (m_eGlesVersion <= GLES_VER_1_0)
+		{
+			return ;
+		}
+
 		CCLOGINFO("cocos2d: deallocing %p", this);
-		glDeleteFramebuffersOES(1, &m_fbo);
+		ccglDeleteFramebuffers(1, &m_fbo);
 	}
 } // end of namespace cocos2d

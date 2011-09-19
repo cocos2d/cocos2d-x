@@ -1,13 +1,15 @@
-#include "tests.h"
 #include "controller.h"
 #include "testResource.h"
+#include "tests.h"
 
 #define LINE_SPACE          40
 
-static int s_nPageIndex = 0;
+static CCPoint s_tCurPos = CCPointZero;
 
 static TestScene* CreateTestScene(int nIdx)
 {
+    CCDirector::sharedDirector()->purgeCachedData();
+
     TestScene* pScene = NULL;
 
     switch (nIdx)
@@ -35,7 +37,6 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_COCOSNODE:
         pScene = new CocosNodeTestScene(); break;
     case TEST_TOUCHES:
-        CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
         pScene = new PongScene(); break;
     case TEST_MENU:
         pScene = new MenuTestScene(); break;
@@ -52,16 +53,29 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_INTERVAL:
         pScene = new IntervalTestScene(); break;
     case TEST_CHIPMUNK:
-		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
         pScene = new ChipmunkTestScene(); break;
-    case TEST_ATLAS:
+#else
+#ifdef AIRPLAYUSECHIPMUNK
+#if	(AIRPLAYUSECHIPMUNK == 1)
+        pScene = new ChipmunkTestScene(); break;
+#endif
+#endif
+#endif
+    case TEST_LABEL:
         pScene = new AtlasTestScene(); break;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+    case TEST_TEXT_INPUT:
+        pScene = new TextInputTestScene(); break;
+#endif
     case TEST_SPRITE:
         pScene = new SpriteTestScene(); break;
     case TEST_SCHEDULER:
         pScene = new SchedulerTestScene(); break;
     case TEST_RENDERTEXTURE:
         pScene = new RenderTextureScene(); break;
+    case TEST_TEXTURE2D:
+        pScene = new TextureTestScene(); break;
     case TEST_BOX2D:
         pScene = new Box2DTestScene(); break;
     case TEST_BOX2DBED:
@@ -70,12 +84,36 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new EffectAdvanceScene(); break;
     case TEST_HIRES:
         pScene = new HiResTestScene(); break;
-#ifndef _WIN32
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 	case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
 #endif
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
+	case TEST_COCOSDENSHION:
+		pScene = new CocosDenshionTestScene(); break;
+    case TEST_PERFORMANCE:
+        pScene = new PerformanceTestScene(); break;
+    case TEST_ZWOPTEX:
+        pScene = new ZwoptexTestScene(); break;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+	case TEST_CURL:
+		pScene = new CurlTestScene(); break;
+	case TEST_USERDEFAULT:
+		pScene = new UserDefaultTestScene(); break;
+#endif
+    case TEST_DIRECTOR:
+        pScene = new DirectorTestScene(); break;
+    case TEST_BUGS:
+        pScene = new BugsTestScene(); break;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+	case TEST_FONTS:
+		pScene = new FontTestScene(); break;
+	case TEST_CURRENT_LANGUAGE:
+		pScene = new CurrentLanguageTestScene(); break;
+		break;
+#endif
+	
     default:
         break;
     }
@@ -84,78 +122,52 @@ static TestScene* CreateTestScene(int nIdx)
 }
 
 TestController::TestController()
+: m_tBeginPos(CCPointZero)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
-
     // add close menu
     CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(s_pPathClose, s_pPathClose, this, menu_selector(TestController::closeCallback) );
     CCMenu* pMenu =CCMenu::menuWithItems(pCloseItem, NULL);
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
-    pMenu->setPosition( CGPointZero );
-    pCloseItem->setPosition(CGPointMake( s.width - 30, s.height - 30));
+    pMenu->setPosition( CCPointZero );
+    pCloseItem->setPosition(CCPointMake( s.width - 30, s.height - 30));
 
     // add menu items for tests
-    for (int i = 0; i < ITEM_EVERYPAGE; ++i)
+    m_pItmeMenu = CCMenu::menuWithItems(NULL);
+    for (int i = 0; i < TESTS_COUNT; ++i)
     {
-        CCLabel* label = CCLabel::labelWithString("For Test", "Arial", 24);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+		CCLabelBMFont* label = CCLabelBMFont::bitmapFontAtlasWithString(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+#else
+        CCLabelTTF* label = CCLabelTTF::labelWithString(g_aTestNames[i].c_str(), "Arial", 24);
+#endif		
         CCMenuItemLabel* pMenuItem = CCMenuItemLabel::itemWithLabel(label, this, menu_selector(TestController::menuCallback));
-        pMenu->addChild(pMenuItem, i + 2);
-        pMenuItem->setPosition( CGPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
 
-        // record the pointer of the menu item
-        m_pMenuItems[i] = pMenuItem;
-
-        // record the value of i as userdata
-        int * nIdx = new int;
-        *nIdx = i;
-        pMenuItem->setUserData((void *) nIdx);
+        m_pItmeMenu->addChild(pMenuItem, i + 10000);
+        pMenuItem->setPosition( CCPointMake( s.width / 2, (s.height - (i + 1) * LINE_SPACE) ));
     }
 
-    // update menu items text
-    updateItemsText();
+    m_pItmeMenu->setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)));
+    m_pItmeMenu->setPosition(s_tCurPos);
+    addChild(m_pItmeMenu);
 
-    // add menu item to change the page-number
-    CCLabel* pPreLabel = CCLabel::labelWithString("PrePage", "Arial", 22);
-    CCMenuItemLabel* pPreItem = CCMenuItemLabel::itemWithLabel(pPreLabel, this, menu_selector(TestController::prePageCallback));
-    pMenu->addChild(pPreItem, ITEM_EVERYPAGE + 2);
-    pPreItem->setPosition(CGPointMake(s.width - 150, 20));
-
-    CCLabel* pNextLabel = CCLabel::labelWithString("NextPage", "Arial", 22);
-    CCMenuItemLabel* pNextItem = CCMenuItemLabel::itemWithLabel(pNextLabel, this, menu_selector(TestController::nextPageCallback));
-    pMenu->addChild(pNextItem, ITEM_EVERYPAGE + 3);
-    pNextItem->setPosition(CGPointMake(s.width - 50, 20));
+    setIsTouchEnabled(true);
 
     addChild(pMenu, 1);
 }
 
 TestController::~TestController()
 {
-    for (int i = 0; i < ITEM_EVERYPAGE; ++i)
-    {
-        if (m_pMenuItems[i])
-        {
-            // delete the userdata have recorded
-            if (m_pMenuItems[i]->getUserData())
-            {
-                delete m_pMenuItems[i]->getUserData();
-                m_pMenuItems[i]->setUserData(NULL);
-            }
-        }
-    }
-
-    removeAllChildrenWithCleanup(true);
 }
 
-void TestController::menuCallback(NSObject * pSender)
+void TestController::menuCallback(CCObject * pSender)
 {
     // get the userdata, it's the index of the menu item clicked
     CCMenuItem* pMenuItem = (CCMenuItem *)(pSender);
-    void * pUserData = pMenuItem->getUserData();
-    int  * nIdx = (int *) pUserData;
+    int nIdx = pMenuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-    TestScene* pScene = CreateTestScene(s_nPageIndex * ITEM_EVERYPAGE + (*nIdx));
+    TestScene* pScene = CreateTestScene(nIdx);
     if (pScene)
     {
         pScene->runThisTest();
@@ -163,62 +175,45 @@ void TestController::menuCallback(NSObject * pSender)
     }
 }
 
-void TestController::closeCallback(NSObject * pSender)
+void TestController::closeCallback(CCObject * pSender)
 {
     CCDirector::sharedDirector()->end();
 }
 
-void TestController::nextPageCallback(NSObject * pSender)
+void TestController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    int nPageCount = TESTS_COUNT / ITEM_EVERYPAGE;
-    if (TESTS_COUNT % ITEM_EVERYPAGE != 0)
-    {
-        nPageCount += 1;
-    }
+    CCSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
 
-    // compute the current page number
-    s_nPageIndex = (s_nPageIndex + 1) % nPageCount;
-
-    // update menu items text
-    updateItemsText();
+    m_tBeginPos = touch->locationInView( touch->view() );	
+    m_tBeginPos = CCDirector::sharedDirector()->convertToGL( m_tBeginPos );
 }
 
-void TestController::prePageCallback(NSObject * pSender)
+void TestController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    int nPageCount = TESTS_COUNT / ITEM_EVERYPAGE;
-    if (TESTS_COUNT % ITEM_EVERYPAGE != 0)
+    CCSetIterator it = pTouches->begin();
+    CCTouch* touch = (CCTouch*)(*it);
+
+    CCPoint touchLocation = touch->locationInView( touch->view() );	
+    touchLocation = CCDirector::sharedDirector()->convertToGL( touchLocation );
+    float nMoveY = touchLocation.y - m_tBeginPos.y;
+
+    CCPoint curPos  = m_pItmeMenu->getPosition();
+    CCPoint nextPos = ccp(curPos.x, curPos.y + nMoveY);
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    if (nextPos.y < 0.0f)
     {
-        nPageCount += 1;
+        m_pItmeMenu->setPosition(CCPointZero);
+        return;
     }
 
-    // compute the current page number
-    s_nPageIndex -= 1;
-    if (s_nPageIndex < 0)
+    if (nextPos.y > ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height))
     {
-        s_nPageIndex = nPageCount - 1;
+        m_pItmeMenu->setPosition(ccp(0, ((TESTS_COUNT + 1)* LINE_SPACE - winSize.height)));
+        return;
     }
 
-    // update menu items text
-    updateItemsText();
-}
-
-void TestController::updateItemsText()
-{
-    int nStartIndex = s_nPageIndex * ITEM_EVERYPAGE;
-
-    for (int i = 0; i < ITEM_EVERYPAGE; ++i)
-    {
-        m_pMenuItems[i]->setIsVisible(false);
-        int nIdx = nStartIndex + i;
-        if (nIdx < TESTS_COUNT)
-        {
-            std::string menuText = g_aTestNames[nIdx];
-
-            if (! menuText.empty())
-            {
-                m_pMenuItems[i]->setString(menuText.c_str());
-                m_pMenuItems[i]->setIsVisible(true);
-            }
-        }
-    }
+    m_pItmeMenu->setPosition(nextPos);
+    m_tBeginPos = touchLocation;
+    s_tCurPos   = nextPos;
 }

@@ -26,7 +26,10 @@ src/cpHashSet.c \
 src/cpPolyShape.c \
 src/cpShape.c \
 src/cpSpace.c \
+src/cpSpaceComponent.c \
 src/cpSpaceHash.c \
+src/cpSpaceQuery.c \
+src/cpSpaceStep.c \
 src/cpVect.c
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include/chipmunk

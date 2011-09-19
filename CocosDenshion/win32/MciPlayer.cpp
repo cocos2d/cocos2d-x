@@ -3,6 +3,8 @@
 #define WIN_CLASS_NAME		"CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
 
+namespace CocosDenshion {
+
 static HINSTANCE s_hInstance;
 static MCIERROR  s_mciError;
 
@@ -100,7 +102,7 @@ void MciPlayer::Play(UINT uTimes /* = 1 */)
 	}
 	MCI_PLAY_PARMS mciPlay = {0};
 	mciPlay.dwCallback = (DWORD_PTR)m_hWnd;
-	s_mciError = mciSendCommand(m_hDev,MCI_PLAY, MCI_NOTIFY,(DWORD)&mciPlay);
+	s_mciError = mciSendCommand(m_hDev,MCI_PLAY, MCI_FROM|MCI_NOTIFY,(DWORD)&mciPlay);
 	if (! s_mciError)
 	{
 		m_bPlaying = true;
@@ -206,3 +208,5 @@ LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	}
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
+
+} // end of namespace CocosDenshion

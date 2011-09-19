@@ -20,9 +20,8 @@
  */
  
 #include <stdlib.h>
-#include <stdio.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "chipmunk_unsafe.h"
 
 cpPolyShape *
@@ -94,7 +93,7 @@ cpPolyShapeDestroy(cpShape *shape)
 	cpfree(poly->tAxes);
 }
 
-static int
+static cpBool
 cpPolyShapePointQuery(cpShape *shape, cpVect p){
 	return cpBBcontainsVect(shape->bb, p) && cpPolyShapeContainsVert((cpPolyShape *)shape, p);
 }
@@ -137,8 +136,8 @@ static const cpShapeClass polyClass = {
 	cpPolyShapeSegmentQuery,
 };
 
-int
-cpPolyValidate(cpVect *verts, int numVerts)
+cpBool
+cpPolyValidate(const cpVect *verts, const int numVerts)
 {
 	for(int i=0; i<numVerts; i++){
 		cpVect a = verts[i];
@@ -146,10 +145,10 @@ cpPolyValidate(cpVect *verts, int numVerts)
 		cpVect c = verts[(i+2)%numVerts];
 		
 		if(cpvcross(cpvsub(b, a), cpvsub(c, b)) > 0.0f)
-			return 0;
+			return cpFalse;
 	}
 	
-	return 1;
+	return cpTrue;
 }
 
 int
@@ -211,8 +210,8 @@ cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset)
 cpPolyShape *
 cpBoxShapeInit(cpPolyShape *poly, cpBody *body, cpFloat width, cpFloat height)
 {
-	cpFloat hw = width/2;
-	cpFloat hh = height/2;
+	cpFloat hw = width/2.0f;
+	cpFloat hh = height/2.0f;
 	
 	cpVect verts[] = {
 		cpv(-hw,-hh),

@@ -1,6 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,15 +34,24 @@ namespace   cocos2d {
 // CCAtlasNode - Creation & Init
 
 CCAtlasNode::CCAtlasNode()
+: m_uItemsPerRow(0)
+, m_uItemsPerColumn(0)
+, m_uItemWidth(0)
+, m_uItemHeight(0)
+, m_pTextureAtlas(NULL)
+, m_bIsOpacityModifyRGB(false)
+, m_cOpacity(0)
+, m_uQuadsToDraw(0)
 {
 }
 
 CCAtlasNode::~CCAtlasNode()
 {
-	m_pTextureAtlas->release();
+	CC_SAFE_RELEASE(m_pTextureAtlas);
 }
 
-CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
+CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
+											 unsigned int itemsToRender)
 {
 	CCAtlasNode * pRet = new CCAtlasNode();
 	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
@@ -48,15 +59,16 @@ CCAtlasNode * CCAtlasNode::atlasWithTileFile(const char *tile, int tileWidth, in
 		pRet->autorelease();
 		return pRet;
 	}
-	CCX_SAFE_DELETE(pRet);
+	CC_SAFE_DELETE(pRet);
 	return NULL;
 }
 
-bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeight, int itemsToRender)
+bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, 
+								   unsigned int itemsToRender)
 {
 	assert(tile != NULL);
-	m_nItemWidth = tileWidth;
-	m_nItemHeight = tileHeight;
+	m_uItemWidth  = (int) (tileWidth * CC_CONTENT_SCALE_FACTOR());
+	m_uItemHeight = (int) (tileHeight * CC_CONTENT_SCALE_FACTOR());
 
 	m_cOpacity = 255;
 	m_tColor = m_tColorUnmodified = ccWHITE;
@@ -69,13 +81,20 @@ bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeig
 	// also, using: self.textureAtlas supports re-initialization without leaking
 	this->m_pTextureAtlas = new CCTextureAtlas();
 	m_pTextureAtlas->initWithFile(tile, itemsToRender);
-//	m_pTextureAtlas->release();
+    
+	if (! m_pTextureAtlas)
+	{
+		CCLOG("cocos2d: Could not initialize CCAtlasNode. Invalid Texture.");
+		delete this;
+		return false;
+	}
 
 	this->updateBlendFunc();
 	this->updateOpacityModifyRGB();
 
 	this->calculateMaxItems();
-	this->calculateTexCoordsSteps();
+
+	m_uQuadsToDraw = itemsToRender;
 
 	return true;
 }
@@ -85,42 +104,37 @@ bool CCAtlasNode::initWithTileFile(const char *tile, int tileWidth, int tileHeig
 
 void CCAtlasNode::calculateMaxItems()
 {
-	CGSize s = m_pTextureAtlas->getTexture()->getContentSize();
-	m_nItemsPerColumn = (int)(s.height / m_nItemHeight);
-	m_nItemsPerRow = (int)(s.width / m_nItemWidth);
-}
-
-void CCAtlasNode:: calculateTexCoordsSteps()
-{
-	CCTexture2D *texture = m_pTextureAtlas->getTexture();
-	m_fTexStepX = m_nItemWidth / (float)(texture->getPixelsWide());
-	m_fTexStepY = m_nItemHeight / (float)(texture->getPixelsHigh());
+	const CCSize& s = m_pTextureAtlas->getTexture()->getContentSizeInPixels();
+	m_uItemsPerColumn = (int)(s.height / m_uItemHeight);
+	m_uItemsPerRow = (int)(s.width / m_uItemWidth);
 }
 
 void CCAtlasNode::updateAtlasValues()
 {
-	NSAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overriden");
+	CCAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overriden");
 	//[NSException raise:@"CCAtlasNode:Abstract" format:@"updateAtlasValue not overriden"];
 }
 
 // CCAtlasNode - draw
 void CCAtlasNode::draw()
 {
+	CCNode::draw();
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: GL_COLOR_ARRAY
 	glDisableClientState(GL_COLOR_ARRAY);
 
-	glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity);
-
-	bool newBlend = false;
-	if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) 
+    // glColor4ub isn't implement on some android devices
+	// glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity); 
+    glColor4f(((GLfloat)m_tColor.r) / 255, ((GLfloat)m_tColor.g) / 255, ((GLfloat)m_tColor.b) / 255, ((GLfloat)m_cOpacity) / 255);
+	bool newBlend = m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST;
+	if(newBlend) 
 	{
-		newBlend = true;
 		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-	m_pTextureAtlas->drawQuads();
+	m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
 
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
@@ -137,7 +151,7 @@ void CCAtlasNode::draw()
 
 // CCAtlasNode - RGBA protocol
 
-ccColor3B CCAtlasNode:: getColor()
+const ccColor3B& CCAtlasNode:: getColor()
 {
 	if(m_bIsOpacityModifyRGB)
 	{
@@ -146,7 +160,7 @@ ccColor3B CCAtlasNode:: getColor()
 	return m_tColor;
 }
 
-void CCAtlasNode::setColor(ccColor3B color3)
+void CCAtlasNode::setColor(const ccColor3B& color3)
 {
 	m_tColor = m_tColorUnmodified = color3;
 
@@ -169,7 +183,7 @@ void CCAtlasNode::setOpacity(GLubyte opacity)
 
 	// special opacity for premultiplied textures
 	if( m_bIsOpacityModifyRGB )
-		this->setColor(m_bIsOpacityModifyRGB ? m_tColorUnmodified : m_tColor);
+		this->setColor(m_tColorUnmodified);
 }
 
 void CCAtlasNode::setIsOpacityModifyRGB(bool bValue)
@@ -223,13 +237,23 @@ CCTexture2D * CCAtlasNode::getTexture()
 
 void CCAtlasNode::setTextureAtlas(CCTextureAtlas* var)
 {
-	CCX_SAFE_RETAIN(var);
-	CCX_SAFE_RELEASE(m_pTextureAtlas);
+	CC_SAFE_RETAIN(var);
+	CC_SAFE_RELEASE(m_pTextureAtlas);
 	m_pTextureAtlas = var;
 }
 CCTextureAtlas * CCAtlasNode::getTextureAtlas()
 {
 	return m_pTextureAtlas;
+}
+
+unsigned int CCAtlasNode::getQuadsToDraw()
+{
+	return m_uQuadsToDraw;
+}
+
+void CCAtlasNode::setQuadsToDraw(unsigned int uQuadsToDraw)
+{
+	m_uQuadsToDraw = uQuadsToDraw;
 }
 
 } // namespace   cocos2d

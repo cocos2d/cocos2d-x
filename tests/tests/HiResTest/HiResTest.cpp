@@ -4,6 +4,10 @@
 #define MAX_LAYERS          2;
 static int sceneIdx = -1;
 
+CCLayer* nextHiResAction();
+CCLayer* restartHiResAction();
+CCLayer* backHiResAction();
+
 CCLayer* createHiResLayer(int idx)
 {
     CCLayer* pLayer = NULL;
@@ -11,9 +15,13 @@ CCLayer* createHiResLayer(int idx)
     switch (idx)
     {
     case 0:
-        pLayer = new HiResTest1(); break;
+        CCDirector::sharedDirector()->enableRetinaDisplay(false);
+        pLayer = new HiResTest1();
+        break;
     case 1:
-        pLayer = new HiResTest2(); break;
+        CCDirector::sharedDirector()->enableRetinaDisplay(true);
+        pLayer = new HiResTest2();
+        break;
     }
 
     return pLayer;
@@ -53,31 +61,30 @@ void HiResDemo::onEnter()
 {
     CCLayer::onEnter();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    /**
-    @todo CCLabelTTF
-    */
-//     CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
-//     [self addChild: label z:1];
-//     [label setPosition: ccp(s.width/2, s.height-50)];
-//     NSString *subtitle = [self subtitle];
-//     if( subtitle ) {
-//         CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
-//         [self addChild:l z:1];
-//         [l setPosition:ccp(s.width/2, s.height-80)];
-//     }
+    CCLabelTTF *label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
+    label->setPosition(ccp(s.width/2, s.height-50));
+    addChild(label, 1);
 
+    std::string sSubTitle = subtitle();
+    if (sSubTitle.length())
+    {
+        CCLabelTTF *subLabel = CCLabelTTF::labelWithString(sSubTitle.c_str(), "Thonburi", 16);
+        subLabel->setPosition(ccp(s.width/2, s.height-80));
+        addChild(subLabel, 1);
+    }
+    
     CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(HiResDemo::backCallback) );
     CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(HiResDemo::restartCallback) );
     CCMenuItemImage *item3 = CCMenuItemImage::itemFromNormalImage(s_pPathF1, s_pPathF2, this, menu_selector(HiResDemo::nextCallback) );
 
     CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-    menu->setPosition( CGPointZero );
-    item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-    item2->setPosition( CGPointMake( s.width/2, 30) );
-    item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+    menu->setPosition( CCPointZero );
+    item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+    item2->setPosition( CCPointMake( s.width/2, 30) );
+    item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 
     addChild(menu, 1);
 }
@@ -92,7 +99,7 @@ std::string HiResDemo::subtitle()
     return "";
 }
 
-void HiResDemo::restartCallback(NSObject* pSender)
+void HiResDemo::restartCallback(CCObject* pSender)
 {
     CCLayer* pLayer = restartHiResAction();
 
@@ -107,7 +114,7 @@ void HiResDemo::restartCallback(NSObject* pSender)
     }
 }
 
-void HiResDemo::nextCallback(NSObject* pSender)
+void HiResDemo::nextCallback(CCObject* pSender)
 {
     CCLayer* pLayer = nextHiResAction();
 
@@ -122,7 +129,7 @@ void HiResDemo::nextCallback(NSObject* pSender)
     }
 }
 
-void HiResDemo::backCallback(NSObject* pSender)
+void HiResDemo::backCallback(CCObject* pSender)
 {
     CCLayer* pLayer = backHiResAction();
 
@@ -144,9 +151,10 @@ void HiResDemo::backCallback(NSObject* pSender)
 ///////////////////////////////////
 void HiResTest1::onEnter()
 {
+
     HiResDemo::onEnter();
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
 
     CCSprite *sprite = CCSprite::spriteWithFile("Images/grossini.png");
     addChild(sprite);
@@ -155,7 +163,12 @@ void HiResTest1::onEnter()
 
 std::string HiResTest1::title()
 {
-    return "Standard image";
+    return "High resolution image test";
+}
+
+std::string HiResTest1::subtitle()
+{
+    return "Image without high resolution resource";
 }
 
 ////////////////////////////////////
@@ -165,9 +178,10 @@ std::string HiResTest1::title()
 ///////////////////////////////////
 void HiResTest2::onEnter()
 {
+
     HiResDemo::onEnter();
 
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
 
     CCSprite *sprite = CCSprite::spriteWithFile("Images/bugs/picture.png");
     addChild(sprite);
@@ -176,12 +190,12 @@ void HiResTest2::onEnter()
 
 std::string HiResTest2::title()
 {
-    return "@2x images";
+    return "High resolution image test";
 }
 
 std::string HiResTest2::subtitle()
 {
-    return "Issue #910";
+    return "Image with high resolution resource";
 }
 
 ////////////////////////////////////
@@ -189,11 +203,21 @@ std::string HiResTest2::subtitle()
 // HiResTestScene
 //
 ///////////////////////////////////
+bool HiResTestScene::sm_bRitinaDisplay = false;
+
 void HiResTestScene::runThisTest()
 {
+    sm_bRitinaDisplay = CCDirector::sharedDirector()->isRetinaDisplay();
+
     CCLayer* pLayer = nextHiResAction();
     addChild(pLayer);
 
     pLayer->release();
     CCDirector::sharedDirector()->replaceScene(this);
+}
+
+void HiResTestScene::MainMenuCallback(CCObject* pSender)
+{
+    CCDirector::sharedDirector()->enableRetinaDisplay(sm_bRitinaDisplay);
+    TestScene::MainMenuCallback(pSender);
 }

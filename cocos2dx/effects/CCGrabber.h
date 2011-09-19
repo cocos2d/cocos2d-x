@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      On-Core
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,15 +25,16 @@ THE SOFTWARE.
 #ifndef __EFFECTS_CCGRABBER_H__
 #define __EFFECTS_CCGRABBER_H__
 
-#include "NSObject.h"
-#include <GLES/gl.h>
+#include "CCConfiguration.h"
+#include "CCObject.h"
+#include "CCGL.h"
 
 namespace cocos2d 
 {
 	class CCTexture2D;
 
 	/** FBO class that grabs the the contents of the screen */
-	class CCGrabber : public NSObject
+	class CCGrabber : public CCObject
 	{
 	public:
 		CCGrabber(void);
@@ -45,6 +47,7 @@ namespace cocos2d
 	protected:
 		GLuint m_fbo;
 		GLint m_oldFBO;
+		CCGlesVersion m_eGlesVersion;
 	};
 
 } // end of namespace cocos2d

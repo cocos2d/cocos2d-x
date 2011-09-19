@@ -1,4 +1,4 @@
-#include "drawPrimitivesTest.h"
+#include "DrawPrimitivesTest.h"
 
 DrawPrimitivesTest::DrawPrimitivesTest()
 {
@@ -8,7 +8,7 @@ void DrawPrimitivesTest::draw()
 {
 	CCLayer::draw();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 	
 	// draw a simple line
 	// The default state is:
@@ -16,7 +16,7 @@ void DrawPrimitivesTest::draw()
 	// color: 255,255,255,255 (white, non-transparent)
 	// Anti-Aliased
 	glEnable(GL_LINE_SMOOTH);
-	ccDrawLine( CGPointMake(0, 0), CGPointMake(s.width, s.height) );
+	ccDrawLine( CCPointMake(0, 0), CCPointMake(s.width, s.height) );
 	
 	// line: color, width, aliased
 	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
@@ -25,7 +25,7 @@ void DrawPrimitivesTest::draw()
 	glLineWidth( 5.0f );
 	/*glColor4ub(255,0,0,255);*/
 	glColor4f(1.0, 0.0, 0.0, 1.0);
-	ccDrawLine( CGPointMake(0, s.height), CGPointMake(s.width, 0) );
+	ccDrawLine( CCPointMake(0, s.height), CCPointMake(s.width, 0) );
 
 	// TIP:
 	// If you are going to use always the same color or width, you don't
@@ -37,10 +37,10 @@ void DrawPrimitivesTest::draw()
 	glPointSize(64);
 	/*glColor4ub(0,0,255,128);*/
 	glColor4f(0.0, 0.0, 1.0, 0.5);
-	ccDrawPoint( CGPointMake(s.width / 2, s.height / 2) );
+	ccDrawPoint( CCPointMake(s.width / 2, s.height / 2) );
 	
 	// draw 4 small points
-	CGPoint points[] = { CGPointMake(60,60), CGPointMake(70,70), CGPointMake(60,70), CGPointMake(70,60) };
+	CCPoint points[] = { CCPointMake(60,60), CCPointMake(70,70), CCPointMake(60,70), CCPointMake(70,60) };
 	glPointSize(4);
 	/*glColor4ub(0,255,255,255);*/
 	glColor4f(0.0, 1.0, 1.0, 1.0);
@@ -50,33 +50,33 @@ void DrawPrimitivesTest::draw()
 	glLineWidth(16);
 	/*glColor4ub(0, 255, 0, 255);*/
 	glColor4f(0.0, 1.0, 0.0, 1.0);
-	ccDrawCircle( CGPointMake(s.width/2,  s.height/2), 100, 0, 10, false);
+	ccDrawCircle( CCPointMake(s.width/2,  s.height/2), 100, 0, 10, false);
 
 	// draw a green circle with 50 segments with line to center
 	glLineWidth(2);
 	/*glColor4ub(0, 255, 255, 255);*/
 	glColor4f(0.0, 1.0, 1.0, 1.0);
-	ccDrawCircle( CGPointMake(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, true);	
+	ccDrawCircle( CCPointMake(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, true);	
 	
 	// open yellow poly
 	/*glColor4ub(255, 255, 0, 255);*/
 	glColor4f(1.0, 1.0, 0.0, 1.0);
 	glLineWidth(10);
-	CGPoint vertices[] = { CGPointMake(0,0), CGPointMake(50,50), CGPointMake(100,50), CGPointMake(100,100), CGPointMake(50,100) };
+	CCPoint vertices[] = { CCPointMake(0,0), CCPointMake(50,50), CCPointMake(100,50), CCPointMake(100,100), CCPointMake(50,100) };
 	ccDrawPoly( vertices, 5, false);
 	
 	// closed purble poly
 	/*glColor4ub(255, 0, 255, 255);*/
 	glColor4f(1.0, 0.0, 1.0, 1.0);
 	glLineWidth(2);
-	CGPoint vertices2[] = { CGPointMake(30,130), CGPointMake(30,230), CGPointMake(50,200) };
+	CCPoint vertices2[] = { CCPointMake(30,130), CCPointMake(30,230), CCPointMake(50,200) };
 	ccDrawPoly( vertices2, 3, true);
 	
 	// draw quad bezier path
-	ccDrawQuadBezier(CGPointMake(0,s.height), CGPointMake(s.width/2,s.height/2), CGPointMake(s.width,s.height), 50);
+	ccDrawQuadBezier(CCPointMake(0,s.height), CCPointMake(s.width/2,s.height/2), CCPointMake(s.width,s.height), 50);
 
 	// draw cubic bezier path
-	ccDrawCubicBezier(CGPointMake(s.width/2, s.height/2), CGPointMake(s.width/2+30,s.height/2+50), CGPointMake(s.width/2+60,s.height/2-50),CGPointMake(s.width, s.height/2),100);
+	ccDrawCubicBezier(CCPointMake(s.width/2, s.height/2), CCPointMake(s.width/2+30,s.height/2+50), CCPointMake(s.width/2+60,s.height/2-50),CCPointMake(s.width, s.height/2),100);
 
 	
 	// restore original values

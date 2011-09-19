@@ -28,7 +28,9 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
+static cpBody *planetBody;
+
+static cpFloat gravityStrength = 5.0e6f;
 
 static void
 update(int ticks)
@@ -40,15 +42,19 @@ update(int ticks)
 		cpSpaceStep(space, dt);
 		
 		// Update the static body spin so that it looks like it's rotating.
-		cpBodyUpdatePosition(staticBody, dt);
+		cpBodyUpdatePosition(planetBody, dt);
 	}
 }
 
 static void
 planetGravityVelocityFunc(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 {
+	// Gravitational acceleration is proportional to the inverse square of
+	// distance, and directed toward the origin. The central planet is assumed
+	// to be massive enough that it affects the satellites but not vice versa.
 	cpVect p = body->p;
-	cpVect g = cpvmult(p, -50000.0f/cpvdot(p, p));
+	cpFloat sqdist = cpvlengthsq(p);
+	cpVect g = cpvmult(p, -gravityStrength / (sqdist * cpfsqrt(sqdist)));
 	
 	cpBodyUpdateVelocity(body, g, damping, dt);
 }
@@ -59,7 +65,7 @@ rand_pos(cpFloat radius)
 	cpVect v;
 	do {
 		v = cpv(frand()*(640 - 2*radius) - (320 - radius), frand()*(480 - 2*radius) - (240 - radius));
-	} while(cpvlength(v) < 100.0f);
+	} while(cpvlength(v) < 85.0f);
 	
 	return v;
 }
@@ -82,7 +88,17 @@ add_box()
 	cpBody *body = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, 4, verts, cpvzero)));
 	body->velocity_func = planetGravityVelocityFunc;
 	body->p = rand_pos(radius);
-	body->v = cpvmult(cpv(2*frand() - 1, 2*frand() - 1), 200);
+
+	// Set the box's velocity to put it into a circular orbit from its
+	// starting position.
+	cpFloat r = cpvlength(body->p);
+	cpFloat v = cpfsqrt(gravityStrength / r) / r;
+	body->v = cpvmult(cpvperp(body->p), v);
+
+	// Set the box's angular velocity to match its orbital period and
+	// align its initial angle with its position.
+	body->w = v;
+	cpBodySetAngle(body, cpfatan2(body->p.y, body->p.x));
 
 	cpShape *shape = cpSpaceAddShape(space, cpPolyShapeNew(body, 4, verts, cpvzero));
 	shape->e = 0.0f; shape->u = 0.7f;
@@ -91,8 +107,8 @@ add_box()
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	staticBody->w = 0.2f;
+	planetBody = cpBodyNew(INFINITY, INFINITY);
+	planetBody->w = 0.2f;
 	
 	cpResetShapeIdCounter();
 	
@@ -103,7 +119,7 @@ init(void)
 	for(int i=0; i<30; i++)
 		add_box();
 	
-	cpShape *shape = cpSpaceAddStaticShape(space, cpCircleShapeNew(staticBody, 70.0f, cpvzero));
+	cpShape *shape = cpSpaceAddShape(space, cpCircleShapeNew(planetBody, 70.0f, cpvzero));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	
@@ -113,7 +129,7 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
+	cpBodyFree(planetBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 }

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      Valentin Milea
 
 http://www.cocos2d-x.org
 
@@ -26,8 +27,8 @@ THE SOFTWARE.
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
 #include "CCTouchDelegateProtocol.h"
-#include "NSObject.h"
-#include "NSMutableArray.h"
+#include "CCObject.h"
+#include "CCMutableArray.h"
 namespace   cocos2d {
 
 typedef enum
@@ -41,32 +42,32 @@ typedef enum
 
 
 enum {
-	ccTouchBegan,
-	ccTouchMoved,
-	ccTouchEnded,
-	ccTouchCancelled,
+	CCTOUCHBEGAN,
+	CCTOUCHMOVED,
+	CCTOUCHENDED,
+	CCTOUCHCANCELLED,
 	
 	ccTouchMax,
 };
 
-class NSSet;
-class UIEvent;
+class CCSet;
+class CCEvent;
 
 struct ccTouchHandlerHelperData {
 	// we only use the type
-//	void (StandardTouchDelegate::*touchesSel)(NSSet*, UIEvent*);
-//	void (TargetedTouchDelegate::*touchSel)(NSTouch*, UIEvent*);
+//	void (StandardTouchDelegate::*touchesSel)(CCSet*, CCEvent*);
+//	void (TargetedTouchDelegate::*touchSel)(NSTouch*, CCEvent*);
 	int  m_type;
 };
 
 
-class CCX_DLL EGLTouchDelegate
+class CC_DLL EGLTouchDelegate
 {
 public:
-	virtual void touchesBegan(NSSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesMoved(NSSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesEnded(NSSet* touches, UIEvent* pEvent) = 0;
-	virtual void touchesCancelled(NSSet* touches, UIEvent* pEvent) = 0;
+	virtual void touchesBegan(CCSet* touches, CCEvent* pEvent) = 0;
+	virtual void touchesMoved(CCSet* touches, CCEvent* pEvent) = 0;
+	virtual void touchesEnded(CCSet* touches, CCEvent* pEvent) = 0;
+	virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent) = 0;
 
     virtual ~EGLTouchDelegate() {}
 };
@@ -89,12 +90,18 @@ struct _ccCArray;
 
  @since v0.8.0
  */
-class CCX_DLL CCTouchDispatcher : public NSObject, public EGLTouchDelegate
+class CC_DLL CCTouchDispatcher : public CCObject, public EGLTouchDelegate
 {
 public:
 	~CCTouchDispatcher();
 	bool init(void);
-	CCTouchDispatcher() {}
+	CCTouchDispatcher() 
+        : m_pTargetedHandlers(NULL)
+        , m_pStandardHandlers(NULL)
+		, m_pHandlersToAdd(NULL)
+		, m_pHandlersToRemove(NULL)
+		
+	{}
 
 public:
 	/** Whether or not the events are going to be dispatched. Default: true */
@@ -125,30 +132,32 @@ public:
     the higher the priority */
 	void setPriority(int nPriority, CCTouchDelegate *pDelegate);
 
-	void touches(NSSet *pTouches, UIEvent *pEvent, unsigned int uIndex);
+	void touches(CCSet *pTouches, CCEvent *pEvent, unsigned int uIndex);
 
-	virtual void touchesBegan(NSSet* touches, UIEvent* pEvent);
-	virtual void touchesMoved(NSSet* touches, UIEvent* pEvent);
-	virtual void touchesEnded(NSSet* touches, UIEvent* pEvent);
-	virtual void touchesCancelled(NSSet* touches, UIEvent* pEvent);
+	virtual void touchesBegan(CCSet* touches, CCEvent* pEvent);
+	virtual void touchesMoved(CCSet* touches, CCEvent* pEvent);
+	virtual void touchesEnded(CCSet* touches, CCEvent* pEvent);
+	virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent);
 
 public:
 	/** singleton of the CCTouchDispatcher */
 	static CCTouchDispatcher* sharedDispatcher();
+	CCTouchHandler* findHandler(CCTouchDelegate *pDelegate);
 
 protected:
 	void forceRemoveDelegate(CCTouchDelegate *pDelegate);
-	void forceAddHandler(CCTouchHandler *pHandler, NSMutableArray<CCTouchHandler*> *pArray);
+	void forceAddHandler(CCTouchHandler *pHandler, CCMutableArray<CCTouchHandler*> *pArray);
 	void forceRemoveAllDelegates(void);
+	void rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArray);
 
 protected:
- 	NSMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
- 	NSMutableArray<CCTouchHandler*> *m_pStandardHandlers;
+ 	CCMutableArray<CCTouchHandler*> *m_pTargetedHandlers;
+ 	CCMutableArray<CCTouchHandler*> *m_pStandardHandlers;
 
 	bool m_bLocked;
 	bool m_bToAdd;
 	bool m_bToRemove;
- 	NSMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
+ 	CCMutableArray<CCTouchHandler*> *m_pHandlersToAdd;
 	struct _ccCArray *m_pHandlersToRemove;
 	bool m_bToQuit;
 	bool m_bDispatchEvents;

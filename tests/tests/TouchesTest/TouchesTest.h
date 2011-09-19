@@ -11,16 +11,17 @@ class PongScene : public TestScene
 public:
     PongScene();
 
-	virtual void onExit();
     virtual void runThisTest();
+
+    virtual void MainMenuCallback(CCObject* pSender);
 };
 
 class Ball;
 class PongLayer : public CCLayer
 {
 	Ball*		m_ball;
-	NSMutableArray<NSObject *> *m_paddles;
-	CGPoint		m_ballStartingVelocity; 
+	CCMutableArray<CCObject *> *m_paddles;
+	CCPoint		m_ballStartingVelocity; 
 public:
 	PongLayer();
 	~PongLayer();

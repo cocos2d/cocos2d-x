@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCKeypadDelegate.h"
-#include "CCXCocos2dDefine.h"
 #include "ccMacros.h"
 
 namespace   cocos2d {
@@ -40,7 +39,10 @@ CCKeypadDelegate* CCKeypadHandler::getDelegate()
 
 CCKeypadHandler::~CCKeypadHandler()
 {
-    m_pDelegate->KeypadDestroy();
+	if (m_pDelegate)
+	{
+		m_pDelegate->KeypadDestroy();
+	}  
 }
 
 void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
@@ -59,7 +61,7 @@ void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
 
 bool CCKeypadHandler::initWithDelegate(CCKeypadDelegate *pDelegate)
 {
-    NSAssert(pDelegate != NULL, "It's a wrong delegate!");
+    CCAssert(pDelegate != NULL, "It's a wrong delegate!");
 
     m_pDelegate = pDelegate;
     pDelegate->KeypadKeep();
@@ -79,7 +81,7 @@ CCKeypadHandler* CCKeypadHandler::handlerWithDelegate(CCKeypadDelegate *pDelegat
         }
         else
         {
-            CCX_SAFE_RELEASE_NULL(pHandler);
+            CC_SAFE_RELEASE_NULL(pHandler);
         }
     }
 

@@ -28,13 +28,12 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 
-enum {
+enum CollisionTypes {
 	BALL_TYPE,
 	BLOCKING_SENSOR_TYPE,
 	CATCH_SENSOR_TYPE,
-} CollisionTypes;
+};
 
 typedef struct Emitter {
 	int queue;
@@ -44,22 +43,22 @@ typedef struct Emitter {
 
 static Emitter emitterInstance;
 
-static int
+static cpBool
 blockerBegin(cpArbiter *arb, cpSpace *space, void *unused)
 {
 	CP_ARBITER_GET_SHAPES(arb, a, b);
-	Emitter *emitter = (Emitter*)(a->data);
+	Emitter *emitter = (Emitter *) a->data;
 	
 	emitter->blocked++;
 	
-	return 0; // Return values from sensors callbacks are ignored,
+	return cpFalse; // Return values from sensors callbacks are ignored,
 }
 
 static void
 blockerSeparate(cpArbiter *arb, cpSpace *space, void *unused)
 {
 	CP_ARBITER_GET_SHAPES(arb, a, b);
-	Emitter *emitter = (Emitter*)(a->data);
+	Emitter *emitter = (Emitter *) a->data;
 	
 	emitter->blocked--;
 }
@@ -67,23 +66,26 @@ blockerSeparate(cpArbiter *arb, cpSpace *space, void *unused)
 static void
 postStepRemove(cpSpace *space, cpShape *shape, void *unused)
 {
+	// cocos2d-x: bring cpSpaceRemoveShape here to avoid
+	// the crash on win32 platform
+	cpSpaceRemoveShape(space, shape);
 	cpSpaceRemoveBody(space, shape->body);
 	cpBodyFree(shape->body);
 	
-	cpSpaceRemoveShape(space, shape);
+
 	cpShapeFree(shape);
 }
 
-static int
+static cpBool
 catcherBarBegin(cpArbiter *arb, cpSpace *space, void *unused)
 {
 	cpShape *a, *b; cpArbiterGetShapes(arb, &a, &b);
-	Emitter *emitter = (Emitter*)(a->data);
+	Emitter *emitter = (Emitter *) a->data;
 	
 	emitter->queue++;
 	cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
 	
-	return 0;
+	return cpFalse;
 }
 
 static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.0f;}
@@ -113,14 +115,13 @@ update(int ticks)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
 	space->iterations = 10;
 	space->gravity = cpv(0, -100);
 	
+	cpBody *staticBody = &space->staticBody;
 	cpShape *shape;
 	
 	// Data structure for our ball emitter
@@ -131,13 +132,13 @@ init(void)
 	emitterInstance.position = cpv(0, 150);
 	
 	// Create our blocking sensor, so we know when the emitter is clear to emit another ball
-	shape = cpSpaceAddStaticShape(space, cpCircleShapeNew(staticBody, 15.0f, emitterInstance.position));
+	shape = cpSpaceAddShape(space, cpCircleShapeNew(staticBody, 15.0f, emitterInstance.position));
 	shape->sensor = 1;
 	shape->collision_type = BLOCKING_SENSOR_TYPE;
 	shape->data = &emitterInstance;
 	
 	// Create our catch sensor to requeue the balls when they reach the bottom of the screen
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-2000, -200), cpv(2000, -200), 15.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-2000, -200), cpv(2000, -200), 15.0f));
 	shape->sensor = 1;
 	shape->collision_type = CATCH_SENSOR_TYPE;
 	shape->data = &emitterInstance;
@@ -151,7 +152,6 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 }

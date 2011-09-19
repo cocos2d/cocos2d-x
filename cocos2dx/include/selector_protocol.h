@@ -26,46 +26,45 @@ THE SOFTWARE.
 #define __COCOA_SELECTOR_PROTOCOL_H__
 
 #include "ccTypes.h"
-#include "NSObject.h"
-#include "ccxCommon.h"
+#include "CCObject.h"
 
 namespace   cocos2d {
-class CCNode;
+	class CCNode;
+	class CCEvent;
 
-class CCX_DLL SelectorProtocol
-{
-public:
-	virtual void update(ccTime dt) {};
-	virtual void tick(ccTime dt){};
-	virtual void callfunc(){};
-	virtual void callfunc(CCNode* pSender){};
-	virtual void callfunc(CCNode* pSender, void* pData){};
-	virtual void menuHandler(NSObject* pSender){};
+	class CC_DLL SelectorProtocol
+	{
+	public:
+		virtual void update(ccTime dt) {CC_UNUSED_PARAM(dt);};
+		virtual void tick(ccTime dt){CC_UNUSED_PARAM(dt);};
+		virtual void callfunc(){};
+		virtual void callfunc(CCNode* pSender){CC_UNUSED_PARAM(pSender);};
+		virtual void callfunc(CCNode* pSender, void* pData){CC_UNUSED_PARAM(pSender);CC_UNUSED_PARAM(pData);};
+		virtual void menuHandler(CCObject* pSender){CC_UNUSED_PARAM(pSender);};
+		virtual void eventHandler(CCEvent* pEvent) {CC_UNUSED_PARAM(pEvent);};
 
-	// the child call responding retain/release function
-	virtual void selectorProtocolRetain(void) {};
-	virtual void selectorProtocolRelease(void) {};
-};
+		// the child call responding retain/release function
+		virtual void selectorProtocolRetain(void) {};
+		virtual void selectorProtocolRelease(void) {};
+	};
 
-class CCNode;
-typedef void (SelectorProtocol::*SEL_SCHEDULE)(ccTime);
+	class CCNode;
+	typedef void (SelectorProtocol::*SEL_SCHEDULE)(ccTime);
 
-typedef void (SelectorProtocol::*SEL_CallFunc)();
-typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
-typedef void (SelectorProtocol::*SEL_CallFuncND)(CCNode*, void*);
-typedef void (SelectorProtocol::*SEL_MenuHandler)(NSObject*);
+	typedef void (SelectorProtocol::*SEL_CallFunc)();
+	typedef void (SelectorProtocol::*SEL_CallFuncN)(CCNode*);
+	typedef void (SelectorProtocol::*SEL_CallFuncND)(CCNode*, void*);
+	typedef void (SelectorProtocol::*SEL_CallFuncO)(CCObject*);
+	typedef void (SelectorProtocol::*SEL_MenuHandler)(CCObject*);
+	typedef void (SelectorProtocol::*SEL_EventHandler)(CCEvent*);
 
-//  #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(*((SEL_SCHEDULE*)(&(&_SELECTOR))) )
-//  #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(*((SEL_CallFunc*)(&(&_SELECTOR))) )
-//  #define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(*((SEL_CallFuncN*)(&(&_SELECTOR))) )
-//  #define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(*((SEL_CallFuncND*)(&(&_SELECTOR))) )
-//  #define menu_selector(_SELECTOR) (SEL_MenuHandler)(*((SEL_MenuHandler*)(&(&_SELECTOR)))
-
-  #define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
-  #define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
-  #define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(&_SELECTOR)
-  #define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(&_SELECTOR)
-  #define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
+#define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
+#define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
+#define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(&_SELECTOR)
+#define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(&_SELECTOR)
+#define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
+#define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
+#define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 }//namespace   cocos2d 
 
 #endif // __COCOA_SELECTOR_PROTOCOL_H__

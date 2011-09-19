@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,24 +24,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCSpriteSheet.h"
+#include "CCSpriteBatchNode.h"
+#include "CCAnimation.h"
+#include "CCAnimationCache.h"
 #include "ccConfig.h"
 #include "CCSprite.h"
 #include "CCSpriteFrame.h"
 #include "CCSpriteFrameCache.h"
 #include "CCTextureCache.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "CCDrawingPrimitives.h"
-#include "CGGeometry.h"
+#include "CCGeometry.h"
 #include "CCTexture2D.h"
-#include "CGAffineTransform.h"
+#include "CCAffineTransform.h"
 
 #include <string.h>
 
 using namespace std;
 namespace   cocos2d {
 
-#if CC_SPRITESHEET_RENDER_SUBPIXEL
+#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
@@ -47,32 +51,76 @@ namespace   cocos2d {
 
 // XXX: Optmization
 struct transformValues_ {
-	CGPoint pos;		// position x and y
-	CGPoint	scale;		// scale x and y
+	CCPoint pos;		// position x and y
+	CCPoint	scale;		// scale x and y
 	float	rotation;
-	CGPoint ap;			// anchor point in pixels
+    CCPoint skew;		// skew x and y
+	CCPoint ap;			// anchor point in pixels
+	bool    visible;    
 };
+
+CCSprite* CCSprite::spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect)
+{
+	CCSprite *pobSprite = new CCSprite();
+	if (pobSprite && pobSprite->initWithBatchNode(batchNode, rect))
+	{
+        pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
+}
+
+bool CCSprite::initWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect)
+{
+	if (initWithTexture(batchNode->getTexture(), rect))
+    {
+	    useBatchNode(batchNode);
+        return true;
+    }
+	return false;
+}
+
+bool CCSprite::initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, const CCRect& rect)
+{
+	if (initWithTexture(batchNode->getTexture()))
+    {
+	    setTextureRectInPixels(rect, false, rect.size);
+	    useBatchNode(batchNode);
+        return true;
+    }
+	return false;
+}
 
 CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture)
 {
 	CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithTexture(pTexture);
-	pobSprite->autorelease();
-
-	return pobSprite;
+	if (pobSprite && pobSprite->initWithTexture(pTexture))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CGRect rect)
+CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithTexture(pTexture, rect);
-	pobSprite->autorelease();
-
-	return pobSprite;
+	if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
-CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CGRect rect, CGPoint offset)
+CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, const CCRect& rect, const CCPoint& offset)
 {
+    CC_UNUSED_PARAM(pTexture);
+    CC_UNUSED_PARAM(rect);
+    CC_UNUSED_PARAM(offset);
 	// not implement
 	assert(0);
 	return NULL;
@@ -81,67 +129,47 @@ CCSprite* CCSprite::spriteWithTexture(CCTexture2D *pTexture, CGRect rect, CGPoin
 CCSprite* CCSprite::spriteWithFile(const char *pszFileName)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithFile(pszFileName);
-	pobSprite->autorelease();
-
-	return pobSprite;
+    if (pobSprite && pobSprite->initWithFile(pszFileName))
+    {
+        pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
-CCSprite* CCSprite::spriteWithFile(const char *pszFileName, CGRect rect)
+CCSprite* CCSprite::spriteWithFile(const char *pszFileName, const CCRect& rect)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithFile(pszFileName, rect);
-	pobSprite->autorelease();
-
-	return pobSprite;
+	if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 CCSprite* CCSprite::spriteWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
     CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithSpriteFrame(pSpriteFrame);
-	pobSprite->autorelease();
-
-	return pobSprite;
+    if (pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
+    {
+	    pobSprite->autorelease();
+        return pobSprite;
+    }
+    CC_SAFE_DELETE(pobSprite);
+	return NULL;
 }
 
 CCSprite* CCSprite::spriteWithSpriteFrameName(const char *pszSpriteFrameName)
 {
 	CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+
+    char msg[256] = {0};
+    sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
+    CCAssert(pFrame != NULL, msg);
 	return spriteWithSpriteFrame(pFrame);
-}
-
-
-// XXX: deprecated
-/*
-CCSprite* CCSprite::spriteWithCGImage(CGImageRef pImage)
-{
-    CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithCGImage(pImage);
-	pobSprite->autorelease();
-
-	return pobSprite;
-}
-*/
-
-/*
-CCSprite* CCSprite::spriteWithCGImage(CGImageRef pImage, const char *pszKey)
-{
-    CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithCGImage(pImage, pszKey);
-	pobSprite->autorelease();
-
-	return pobSprite;
-}
-*/
-
-CCSprite* CCSprite::spriteWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect)
-{
-    CCSprite *pobSprite = new CCSprite();
-	pobSprite->initWithSpriteSheet(pSpriteSheet, rect);
-	pobSprite->autorelease();
-
-	return pobSprite;
 }
 
 bool CCSprite::init(void)
@@ -149,7 +177,7 @@ bool CCSprite::init(void)
 	m_bDirty = m_bRecursiveDirty = false;
 
 	// by default use "Self Render".
-	// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
+	// if the sprite is added to an batchnode, then it will automatically switch to "SpriteSheet Render"
     useSelfRender();
 
 	m_bOpacityModifyRGB = true;
@@ -167,14 +195,11 @@ bool CCSprite::init(void)
 
 	m_bFlipX = m_bFlipY = false;
 
-	// lazy alloc
-	m_pAnimations = NULL;
-
 	// default transform anchor: center
-	m_tAnchorPoint = ccp(0.5f, 0.5f);
+	setAnchorPoint(ccp(0.5f, 0.5f));
 
 	// zwoptex default values
-    m_obOffsetPosition = CGPointZero;
+    m_obOffsetPositionInPixels = CCPointZero;
 
 	m_eHonorParentTransform = CC_HONOR_PARENT_TRANSFORM_ALL;
 	m_bHasChildren = false;
@@ -191,12 +216,12 @@ bool CCSprite::init(void)
 	// updated in "useSelfRender"
 		
 	// Atlas: TexCoords
-	setTextureRect(CGRectZero);
+	setTextureRectInPixels(CCRectZero, false, CCSizeZero);
 
 	return true;
 }
 
-bool CCSprite::initWithTexture(CCTexture2D *pTexture, CGRect rect)
+bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 {
 	assert(pTexture != NULL);
 	// IMPORTANT: [self init] and not [super init];
@@ -211,7 +236,7 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture)
 {
 	assert(pTexture != NULL);
 
-	CGRect rect = CGRectZero;
+	CCRect rect = CCRectZero;
 	rect.size = pTexture->getContentSize();
 	
 	return initWithTexture(pTexture, rect);
@@ -224,7 +249,7 @@ bool CCSprite::initWithFile(const char *pszFilename)
 	CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFilename);
 	if (pTexture)
 	{
-		CGRect rect = CGRectZero;
+		CCRect rect = CCRectZero;
 		rect.size = pTexture->getContentSize();
 		return initWithTexture(pTexture, rect);
 	}
@@ -235,7 +260,7 @@ bool CCSprite::initWithFile(const char *pszFilename)
 	return false;
 }
 
-bool CCSprite::initWithFile(const char *pszFilename, CGRect rect)
+bool CCSprite::initWithFile(const char *pszFilename, const CCRect& rect)
 {
 	assert(pszFilename != NULL);
 
@@ -288,93 +313,81 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 	// XXX: possible bug. See issue #349. New API should be added
 	CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
 
-	CGSize size = pTexture->getContentSize();
-	CGRect rect = CGRectMake(0 ,0, size.width, size.height);
+	const CCSize& size = pTexture->getContentSize();
+	CCRect rect = CCRectMake(0 ,0, size.width, size.height);
 
 	return initWithTexture(texture, rect);
 }
 */
 
-bool CCSprite::initWithSpriteSheet(CCSpriteSheet *pSpriteSheet, CGRect rect)
-{
-	assert(pSpriteSheet != NULL);
-	bool bRet = initWithTexture(pSpriteSheet->getTexture(), rect);
-	useSpriteSheetRender(pSpriteSheet);
-
-	return bRet;
-}
-
 CCSprite::CCSprite()
 : m_pobTexture(NULL)
 {
-    init();
 }
 
 CCSprite::~CCSprite(void)
 {
-	CCX_SAFE_RELEASE(m_pobTexture);
-	CCX_SAFE_RELEASE(m_pAnimations);
+	CC_SAFE_RELEASE(m_pobTexture);
 }
 
 void CCSprite::useSelfRender(void)
 {
     m_uAtlasIndex = CCSpriteIndexNotInitialized;
-	m_bUsesSpriteSheet = false;
+	m_bUsesBatchNode = false;
 	m_pobTextureAtlas = NULL;
-    m_pobSpriteSheet = NULL;
+    m_pobBatchNode = NULL;
 	m_bDirty = m_bRecursiveDirty = false;
 
-	float x1 = 0 + m_obOffsetPosition.x;
-	float y1 = 0 + m_obOffsetPosition.y;
-	float x2 = x1 + m_obRect.size.width;
-	float y2 = y1 + m_obRect.size.height;
+	float x1 = 0 + m_obOffsetPositionInPixels.x;
+	float y1 = 0 + m_obOffsetPositionInPixels.y;
+	float x2 = x1 + m_obRectInPixels.size.width;
+	float y2 = y1 + m_obRectInPixels.size.height;
 	m_sQuad.bl.vertices = vertex3(x1, y1, 0);
 	m_sQuad.br.vertices = vertex3(x2, y1, 0);
 	m_sQuad.tl.vertices = vertex3(x1, y2, 0);
 	m_sQuad.tr.vertices = vertex3(x2, y2, 0);
 }
 
-void CCSprite::useSpriteSheetRender(CCSpriteSheet *pSpriteSheet)
+void CCSprite::useBatchNode(CCSpriteBatchNode *batchNode)
 {
-	m_bUsesSpriteSheet = true;
-	m_pobTextureAtlas = pSpriteSheet->getTextureAtlas();
-	m_pobSpriteSheet = pSpriteSheet;
+    m_bUsesBatchNode = true;
+	m_pobTextureAtlas = batchNode->getTextureAtlas(); // weak ref
+    m_pobBatchNode = batchNode;
 }
 
-void CCSprite::initAnimationDictionary(void)
+void CCSprite::setTextureRect(const CCRect& rect)
 {
-	m_pAnimations = new NSMutableDictionary<string, CCAnimation*>();
+	CCRect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
+	setTextureRectInPixels(rectInPixels, false, rectInPixels.size);
 }
 
-void CCSprite::setTextureRect(CGRect rect)
+
+void CCSprite::setTextureRectInPixels(const CCRect& rect, bool rotated, const CCSize& size)
 {
-	setTextureRect(rect, rect.size);
-}
+	m_obRectInPixels = rect;
+	m_obRect = CC_RECT_PIXELS_TO_POINTS(rect);
+	m_bRectRotated = rotated;
 
-void CCSprite::setTextureRect(CGRect rect, CGSize size)
-{
-	m_obRect = rect;
+	setContentSizeInPixels(size);
+	updateTextureCoords(m_obRectInPixels);
 
-	setContentSize(size);
-	updateTextureCoords(rect);
-
-	CGPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
+	CCPoint relativeOffsetInPixels = m_obUnflippedOffsetPositionFromCenter;
 
 	// issue #732
 	if (m_bFlipX)
 	{
-		relativeOffset.x = -relativeOffset.x;
+		relativeOffsetInPixels.x = -relativeOffsetInPixels.x;
 	}
 	if (m_bFlipY)
 	{
-		relativeOffset.y = -relativeOffset.y;
+		relativeOffsetInPixels.y = -relativeOffsetInPixels.y;
 	}
 
-	m_obOffsetPosition.x = relativeOffset.x + (m_tContentSize.width - m_obRect.size.width) / 2;
-	m_obOffsetPosition.y = relativeOffset.y + (m_tContentSize.height - m_obRect.size.height) / 2;
+	m_obOffsetPositionInPixels.x = relativeOffsetInPixels.x + (m_tContentSizeInPixels.width - m_obRectInPixels.size.width) / 2;
+	m_obOffsetPositionInPixels.y = relativeOffsetInPixels.y + (m_tContentSizeInPixels.height - m_obRectInPixels.size.height) / 2;
 
-	// rendering using SpriteSheet
-	if (m_bUsesSpriteSheet)
+	// rendering using batch node
+	if (m_bUsesBatchNode)
 	{
 		// update dirty_, don't update recursiveDirty_
 		m_bDirty = true;
@@ -384,10 +397,10 @@ void CCSprite::setTextureRect(CGRect rect, CGSize size)
 		// self rendering
 		
 		// Atlas: Vertex
-		float x1 = 0 + m_obOffsetPosition.x;
-		float y1 = 0 + m_obOffsetPosition.y;
-		float x2 = x1 + m_obRect.size.width;
-		float y2 = y1 + m_obRect.size.height;
+		float x1 = 0 + m_obOffsetPositionInPixels.x;
+		float y1 = 0 + m_obOffsetPositionInPixels.y;
+		float x2 = x1 + m_obRectInPixels.size.width;
+		float y2 = y1 + m_obRectInPixels.size.height;
 
 		// Don't update Z.
 		m_sQuad.bl.vertices = vertex3(x1, y1, 0);
@@ -397,30 +410,75 @@ void CCSprite::setTextureRect(CGRect rect, CGSize size)
 	}
 }
 
-void CCSprite::updateTextureCoords(CGRect rect)
-{
-	if (m_pobTexture)
-	{
-		float atlasWidth = (float)m_pobTexture->getPixelsWide();
-		float atlasHeight = (float)m_pobTexture->getPixelsHigh();
 
-		float left = m_obRect.origin.x / atlasWidth;
-		float right = (m_obRect.origin.x + m_obRect.size.width) / atlasWidth;
-		float top = m_obRect.origin.y / atlasHeight;
-		float bottom = (m_obRect.origin.y + m_obRect.size.height) / atlasHeight;
+void CCSprite::updateTextureCoords(const CCRect& rect)
+{
+	CCTexture2D *tex = m_bUsesBatchNode ? m_pobTextureAtlas->getTexture() : m_pobTexture;
+	if (! tex)
+	{
+		return;
+	}
+
+	float atlasWidth = (float)tex->getPixelsWide();
+	float atlasHeight = (float)tex->getPixelsHigh();
+
+	float left, right, top, bottom;
+
+	if (m_bRectRotated)
+	{
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+		left	= (2*rect.origin.x+1)/(2*atlasWidth);
+		right	= left+(rect.size.height*2-2)/(2*atlasWidth);
+		top		= (2*rect.origin.y+1)/(2*atlasHeight);
+		bottom	= top+(rect.size.width*2-2)/(2*atlasHeight);
+#else
+		left	= rect.origin.x/atlasWidth;
+		right	= left+(rect.size.height/atlasWidth);
+		top		= rect.origin.y/atlasHeight;
+		bottom	= top+(rect.size.width/atlasHeight);
+#endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 		if (m_bFlipX)
 		{
-			float tmp = left;
-			left = right;
-			right = tmp;
+			CC_SWAP(top, bottom, float);
 		}
 
 		if (m_bFlipY)
 		{
-			float tmp = top;
-			top = bottom;
-			bottom = tmp;
+			CC_SWAP(left, right, float);
+		}
+
+		m_sQuad.bl.texCoords.u = left;
+		m_sQuad.bl.texCoords.v = top;
+		m_sQuad.br.texCoords.u = left;
+		m_sQuad.br.texCoords.v = bottom;
+		m_sQuad.tl.texCoords.u = right;
+		m_sQuad.tl.texCoords.v = top;
+		m_sQuad.tr.texCoords.u = right;
+		m_sQuad.tr.texCoords.v = bottom;
+	}
+	else
+	{
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+		left	= (2*rect.origin.x+1)/(2*atlasWidth);
+		right	= left + (rect.size.width*2-2)/(2*atlasWidth);
+		top		= (2*rect.origin.y+1)/(2*atlasHeight);
+		bottom	= top + (rect.size.height*2-2)/(2*atlasHeight);
+#else
+		left	= rect.origin.x/atlasWidth;
+		right	= left + rect.size.width/atlasWidth;
+		top		= rect.origin.y/atlasHeight;
+		bottom	= top + rect.size.height/atlasHeight;
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+
+		if(m_bFlipX)
+		{
+			CC_SWAP(left,right,float);
+		}
+
+		if(m_bFlipY)
+		{
+			CC_SWAP(top,bottom,float);
 		}
 
 		m_sQuad.bl.texCoords.u = left;
@@ -436,9 +494,15 @@ void CCSprite::updateTextureCoords(CGRect rect)
 
 void CCSprite::updateTransform(void)
 {
-	assert(m_bUsesSpriteSheet);
+	assert(m_bUsesBatchNode);
 
-	CGAffineTransform matrix;
+	// optimization. Quick return if not dirty
+	if (! m_bDirty)
+	{
+		return;
+	}
+
+	CCAffineTransform matrix;
 
 	// Optimization: if it is not visible, then do nothing
 	if (! m_bIsVisible)
@@ -449,52 +513,79 @@ void CCSprite::updateTransform(void)
 		return;
 	}
 
-	// Optimization: If parent is spritesheet, or parent is nil
+	// Optimization: If parent is batchnode, or parent is nil
 	// build Affine transform manually
-	if (! m_pParent || m_pParent == m_pobSpriteSheet)
+	if (! m_pParent || m_pParent == m_pobBatchNode)
 	{
 		float radians = -CC_DEGREES_TO_RADIANS(m_fRotation);
 		float c = cosf(radians);
 		float s = sinf(radians);
 
-        matrix = CGAffineTransformMake(c * m_fScaleX, s * m_fScaleX,
+        matrix = CCAffineTransformMake(c * m_fScaleX, s * m_fScaleX,
 			-s * m_fScaleY, c * m_fScaleY,
-			m_tPosition.x, m_tPosition.y);
-		matrix = CGAffineTransformTranslate(matrix, -m_tAnchorPointInPixels.x, -m_tAnchorPointInPixels.y);
-	} else
-	if (m_pParent != m_pobSpriteSheet)
+			m_tPositionInPixels.x, m_tPositionInPixels.y);
+        if( m_fSkewX || m_fSkewY )
+        {
+            CCAffineTransform skewMatrix = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
+                tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f,
+                0.0f, 0.0f);
+            matrix = CCAffineTransformConcat(skewMatrix, matrix);
+        }
+		matrix = CCAffineTransformTranslate(matrix, -m_tAnchorPointInPixels.x, -m_tAnchorPointInPixels.y);
+	} else // parent_ != batchNode_ 
 	{
 		// else do affine transformation according to the HonorParentTransform
-		matrix = CGAffineTransformIdentity;
+		matrix = CCAffineTransformIdentity;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 
-		for (CCNode *p = this; p && p != m_pobSpriteSheet; p = p->getParent())
+		for (CCNode *p = this; p && p != m_pobBatchNode; p = p->getParent())
 		{
-			struct transformValues_ tv = ((CCSprite*)p)->getTransformValues();
+			// Might happen. Issue #1053
+			// how to implement, we can not use dynamic
+			// CCAssert( [p isKindOfClass:[CCSprite class]], @"CCSprite should be a CCSprite subclass. Probably you initialized an sprite with a batchnode, but you didn't add it to the batch node." );
+			struct transformValues_ tv;
+			((CCSprite*)p)->getTransformValues(&tv);
 
-			CGAffineTransform newMatrix = CGAffineTransformIdentity;
+			// If any of the parents are not visible, then don't draw this node
+			if (! tv.visible)
+			{
+				m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = vertex3(0,0,0);
+				m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+				m_bDirty = m_bRecursiveDirty = false;
 
-			// 2nd: Translate, Rotate, Scale
+				return;
+			}
+
+			CCAffineTransform newMatrix = CCAffineTransformIdentity;
+
+			// 2nd: Translate, Skew, Rotate, Scale
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
 			{
-				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
+				newMatrix = CCAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
 			}
 
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
 			{
-				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
+				newMatrix = CCAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
 			}
+
+            if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW )
+            {
+                CCAffineTransform skew = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
+                // apply the skew to the transform
+                newMatrix = CCAffineTransformConcat(skew, newMatrix);
+            }
 
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) 
 			{
-				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
+				newMatrix = CCAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
 			}
 
 			// 3rd: Translate anchor point
-			newMatrix = CGAffineTransformTranslate(newMatrix, -tv.ap.x, -tv.ap.y);
+			newMatrix = CCAffineTransformTranslate(newMatrix, -tv.ap.x, -tv.ap.y);
 
 			// 4th: Matrix multiplication
-			matrix = CGAffineTransformConcat( matrix, newMatrix);
+			matrix = CCAffineTransformConcat( matrix, newMatrix);
 
 			prevHonor = ((CCSprite*)p)->getHornorParentTransform();
 		}
@@ -503,10 +594,10 @@ void CCSprite::updateTransform(void)
 	//
 	// calculate the Quad based on the Affine Matrix
 	//
-	CGSize size = m_obRect.size;
+	CCSize size = m_obRectInPixels.size;
 
-	float x1 = m_obOffsetPosition.x;
-	float y1 = m_obOffsetPosition.y;
+	float x1 = m_obOffsetPositionInPixels.x;
+	float y1 = m_obOffsetPositionInPixels.y;
 
 	float x2 = x1 + size.width;
 	float y2 = y1 + size.height;
@@ -529,10 +620,10 @@ void CCSprite::updateTransform(void)
 	float dx = x1 * cr - y2 * sr2 + x;
 	float dy = x1 * sr + y2 * cr2 + y;
 
-	m_sQuad.bl.vertices = vertex3(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ);
-	m_sQuad.br.vertices = vertex3(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ);
-	m_sQuad.tl.vertices = vertex3(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ);
-	m_sQuad.tr.vertices = vertex3(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ);
+	m_sQuad.bl.vertices = vertex3((float)RENDER_IN_SUBPIXEL(ax), (float)RENDER_IN_SUBPIXEL(ay), m_fVertexZ);
+	m_sQuad.br.vertices = vertex3((float)RENDER_IN_SUBPIXEL(bx), (float)RENDER_IN_SUBPIXEL(by), m_fVertexZ);
+	m_sQuad.tl.vertices = vertex3((float)RENDER_IN_SUBPIXEL(dx), (float)RENDER_IN_SUBPIXEL(dy), m_fVertexZ);
+	m_sQuad.tr.vertices = vertex3((float)RENDER_IN_SUBPIXEL(cx), (float)RENDER_IN_SUBPIXEL(cy), m_fVertexZ);
 
 	m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
 	m_bDirty = m_bRecursiveDirty = false;
@@ -540,31 +631,32 @@ void CCSprite::updateTransform(void)
 
 // XXX: Optimization: instead of calling 5 times the parent sprite to obtain: position, scale.x, scale.y, anchorpoint and rotation,
 // this fuction return the 5 values in 1 single call
-struct transformValues_ CCSprite::getTransformValues(void)
+void CCSprite::getTransformValues(struct transformValues_ *tv)
 {
-	struct transformValues_ tv;
-	tv.pos = m_tPosition;
-	tv.scale.x = m_fScaleX;
-	tv.scale.y = m_fScaleY;
-	tv.rotation = m_fRotation;
-	tv.ap = m_tAnchorPointInPixels;
-
-	return tv;
+	tv->pos = m_tPositionInPixels;
+	tv->scale.x = m_fScaleX;
+	tv->scale.y = m_fScaleY;
+	tv->rotation = m_fRotation;
+    tv->skew.x	 = m_fSkewX;
+    tv->skew.y	 = m_fSkewY;
+	tv->ap = m_tAnchorPointInPixels;
+	tv->visible = m_bIsVisible;
 }
 
 // draw
 
 void CCSprite::draw(void)
 {
-	assert(! m_bUsesSpriteSheet);
+	CCNode::draw();
+
+	assert(! m_bUsesBatchNode);
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
-	bool newBlend = false;
-	if (m_sBlendFunc.src != CC_BLEND_SRC || m_sBlendFunc.dst != CC_BLEND_DST)
+	bool newBlend = m_sBlendFunc.src != CC_BLEND_SRC || m_sBlendFunc.dst != CC_BLEND_DST;
+	if (newBlend)
 	{
-		newBlend = true;
 		glBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
 	}
 
@@ -578,7 +670,7 @@ void CCSprite::draw(void)
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-	int offset = (int)&m_sQuad;
+	long offset = (long)&m_sQuad;
 
 	// vertex
 	int diff = offsetof(ccV3F_C4B_T2F, vertices);
@@ -599,43 +691,51 @@ void CCSprite::draw(void)
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	}
 
-#if CC_SPRITE_DEBUG_DRAW
-	CGSize s = m_tContentSize;
-	CGSize s = [self contentSize];
-	CGPoint vertices[4]={
-		ccp(0,0),ccp(s.width,0),
-		ccp(s.width,s.height),ccp(0,s.height),
-	};
-	ccDrawPoly(vertices, 4, ture);
+#if CC_SPRITE_DEBUG_DRAW == 1
+    // draw bounding box
+    CCSize s = m_tContentSize;
+    CCPoint vertices[4] = {
+        ccp(0,0), ccp(s.width,0),
+        ccp(s.width,s.height), ccp(0,s.height)
+    };
+    ccDrawPoly(vertices, 4, true);
+#elif CC_SPRITE_DEBUG_DRAW == 2
+    // draw texture box
+    const CCSize& s = m_obRect.size;
+    const CCPoint& offsetPix = getOffsetPositionInPixels();
+    CCPoint vertices[4] = {
+        ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
+        ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+    };
+    ccDrawPoly(vertices, 4, true);
 #endif // CC_SPRITE_DEBUG_DRAW
 }
 
 // CCNode overrides
 
-CCNode* CCSprite::addChild(CCNode* pChild)
+void CCSprite::addChild(CCNode* pChild)
 {
-	return CCNode::addChild(pChild);
+	CCNode::addChild(pChild);
 }
 
-CCNode* CCSprite::addChild(CCNode *pChild, int zOrder)
+void CCSprite::addChild(CCNode *pChild, int zOrder)
 {
-	return CCNode::addChild(pChild, zOrder);
+	CCNode::addChild(pChild, zOrder);
 }
 
-CCNode* CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
+void CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 {
 	assert(pChild != NULL);
-	CCNode* pRet = CCNode::addChild(pChild, zOrder, tag);
+	CCNode::addChild(pChild, zOrder, tag);
 
-	if (m_bUsesSpriteSheet)
+	if (m_bUsesBatchNode)
 	{
-		unsigned int index = m_pobSpriteSheet->atlasIndexForChild((CCSprite*)(pChild), zOrder);
-		m_pobSpriteSheet->insertChild((CCSprite*)(pChild), index);
+		assert(((CCSprite*)pChild)->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName());
+		unsigned int index = m_pobBatchNode->atlasIndexForChild((CCSprite*)(pChild), zOrder);
+		m_pobBatchNode->insertChild((CCSprite*)(pChild), index);
 	}
 
 	m_bHasChildren = true;
-
-	return pRet;
 }
 
 void CCSprite::reorderChild(CCNode *pChild, int zOrder)
@@ -648,7 +748,7 @@ void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 		return;
 	}
 
-	if (m_bUsesSpriteSheet)
+	if (m_bUsesBatchNode)
 	{
 		// XXX: Instead of removing/adding, it is more efficient to reorder manually
 		pChild->retain();
@@ -664,9 +764,9 @@ void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 
 void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 {
-	if (m_bUsesSpriteSheet)
+	if (m_bUsesBatchNode)
 	{
-		m_pobSpriteSheet->removeSpriteFromAtlas((CCSprite*)(pChild));
+		m_pobBatchNode->removeSpriteFromAtlas((CCSprite*)(pChild));
 	}
 
 	CCNode::removeChild(pChild, bCleanup);
@@ -675,16 +775,17 @@ void CCSprite::removeChild(CCNode *pChild, bool bCleanup)
 
 void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 {
-	if (m_bUsesSpriteSheet)
+	if (m_bUsesBatchNode)
 	{
-		CCSprite *pChild;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
-		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
-		{
-			pChild = (CCSprite*)(*iter);
-            CCX_BREAK_IF(! pChild);
-			m_pobSpriteSheet->removeSpriteFromAtlas(pChild);
-		}
+        CCObject* pObject = NULL;
+        CCARRAY_FOREACH(m_pChildren, pObject)
+        {
+            CCSprite* pChild = (CCSprite*) pObject;
+            if (pChild)
+            {
+                m_pobBatchNode->removeSpriteFromAtlas(pChild);
+            }
+        }
 	}
 
 	CCNode::removeAllChildrenWithCleanup(bCleanup);
@@ -694,7 +795,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 
 //
 // CCNode property overloads
-// used only when parent is CCSpriteSheet
+// used only when parent is CCSpriteBatchNode
 //
 
 void CCSprite::setDirtyRecursively(bool bValue)
@@ -703,29 +804,36 @@ void CCSprite::setDirtyRecursively(bool bValue)
 	// recursively set dirty
 	if (m_bHasChildren)
 	{
-		CCSprite *pChild;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
-		for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
-		{
-			pChild = (CCSprite*)(*iter);
-            CCX_BREAK_IF(! pChild);
-			pChild->setDirtyRecursively(true);
-		}
+        CCObject* pObject = NULL;
+        CCARRAY_FOREACH(m_pChildren, pObject)
+        {
+            CCSprite* pChild = (CCSprite*) pObject;
+            if (pChild)
+            {
+                pChild->setDirtyRecursively(true);
+            }
+        }
 	}
 }
 
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {									\
-					if (m_bUsesSpriteSheet && ! m_bRecursiveDirty) {	\
+					if (m_bUsesBatchNode && ! m_bRecursiveDirty) {	\
 						m_bDirty = m_bRecursiveDirty = true;				\
 						if ( m_bHasChildren)							\
 							setDirtyRecursively(true);			\
 						}											\
 					}
 
-void CCSprite::setPosition(CGPoint pos)
+void CCSprite::setPosition(const CCPoint& pos)
 {
 	CCNode::setPosition(pos);
+    SET_DIRTY_RECURSIVELY();
+}
+
+void CCSprite::setPositionInPixels(const CCPoint& pos)
+{
+	CCNode::setPositionInPixels(pos);
 	SET_DIRTY_RECURSIVELY();
 }
 
@@ -733,6 +841,18 @@ void CCSprite::setRotation(float fRotation)
 {
 	CCNode::setRotation(fRotation);
 	SET_DIRTY_RECURSIVELY();
+}
+
+void CCSprite::setSkewX(float sx)
+{
+    CCNode::setSkewX(sx);
+    SET_DIRTY_RECURSIVELY();
+}
+
+void CCSprite::setSkewY(float sy)
+{
+    CCNode::setSkewY(sy);
+    SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setScaleX(float fScaleX)
@@ -759,7 +879,7 @@ void CCSprite::setVertexZ(float fVertexZ)
 	SET_DIRTY_RECURSIVELY();
 }
 
-void CCSprite::setAnchorPoint(CGPoint anchor)
+void CCSprite::setAnchorPoint(const CCPoint& anchor)
 {
 	CCNode::setAnchorPoint(anchor);
 	SET_DIRTY_RECURSIVELY();
@@ -767,32 +887,14 @@ void CCSprite::setAnchorPoint(CGPoint anchor)
 
 void CCSprite::setIsRelativeAnchorPoint(bool bRelative)
 {
-	assert(! m_bUsesSpriteSheet);
+	assert(! m_bUsesBatchNode);
 	CCNode::setIsRelativeAnchorPoint(bRelative);
 }
 
 void CCSprite::setIsVisible(bool bVisible)
 {
-	if (bVisible != m_bIsVisible)
-	{
-		CCNode::setIsVisible(bVisible);
-		if (m_bUsesSpriteSheet && m_bRecursiveDirty)
-		{
-			m_bDirty = m_bRecursiveDirty = true;
-			CCNode *pChild;
-			NSMutableArray<CCNode*>::NSMutableArrayIterator iter;
-            if (m_pChildren && m_pChildren->count() != 0)
-            {
-                for (iter = m_pChildren->begin(); iter != m_pChildren->end(); ++iter)
-                {
-                    pChild = *iter;
-
-                    CCX_BREAK_IF(! pChild);
-                    pChild->setIsVisible(bVisible);
-                }
-            }
-		}
-	}
+	CCNode::setIsVisible(bVisible);
+	SET_DIRTY_RECURSIVELY();
 }
 
 void CCSprite::setFlipX(bool bFlipX)
@@ -800,7 +902,7 @@ void CCSprite::setFlipX(bool bFlipX)
 	if (m_bFlipX != bFlipX)
 	{
 		m_bFlipX = bFlipX;
-		setTextureRect(m_obRect);
+		setTextureRectInPixels(m_obRectInPixels, m_bRectRotated, m_tContentSizeInPixels);
 	}
 }
 
@@ -814,7 +916,7 @@ void CCSprite::setFlipY(bool bFlipY)
 	if (m_bFlipY != bFlipY)
 	{
 		m_bFlipY = bFlipY;
-		setTextureRect(m_obRect);
+		setTextureRectInPixels(m_obRectInPixels, m_bRectRotated, m_tContentSizeInPixels);
 	}
 }
 
@@ -837,7 +939,7 @@ void CCSprite::updateColor(void)
 	m_sQuad.tr.colors = color4;
 
 	// renders using Sprite Manager
-	if (m_bUsesSpriteSheet)
+	if (m_bUsesBatchNode)
 	{
 		if (m_uAtlasIndex != CCSpriteIndexNotInitialized)
 		{
@@ -873,7 +975,7 @@ void CCSprite::setOpacity(GLubyte opacity)
 	updateColor();
 }
 
-ccColor3B CCSprite::getColor(void)
+const ccColor3B& CCSprite::getColor(void)
 {
 	if (m_bOpacityModifyRGB)
 	{
@@ -883,7 +985,7 @@ ccColor3B CCSprite::getColor(void)
 	return m_sColor;
 }
 
-void CCSprite::setColor(ccColor3B color3)
+void CCSprite::setColor(const ccColor3B& color3)
 {
     m_sColor = m_sColorUnmodified = color3;
 
@@ -909,69 +1011,54 @@ bool CCSprite::getIsOpacityModifyRGB(void)
 	return m_bOpacityModifyRGB;
 }
 
-// CCFrameProtocol protocol
+// Frames
 
 void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
-	m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
+	m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffsetInPixels();
 
 	CCTexture2D *pNewTexture = pNewFrame->getTexture();
 	// update texture before updating texture rect
-	if (!m_pobTexture ||
-		pNewTexture->getName() != m_pobTexture->getName())
-	{
+    if (pNewTexture != m_pobTexture)
+    {
         setTexture(pNewTexture);
-	}
+    }
 
 	// update rect
-	setTextureRect(pNewFrame->getRect(), pNewFrame->getOriginalSize());
+	m_bRectRotated = pNewFrame->isRotated();
+	setTextureRectInPixels(pNewFrame->getRectInPixels(), pNewFrame->isRotated(), pNewFrame->getOriginalSizeInPixels());
 }
 
-void CCSprite::setDisplayFrame(const char *pszAnimationName, int nFrameIndex)
+void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
 {
-	if (! m_pAnimations)
-	{
-		initAnimationDictionary();
-	}
+	assert(animationName);
 
-	CCAnimation *pAnimation = m_pAnimations->objectForKey(std::string(pszAnimationName));
-	CCSpriteFrame *pFrame = pAnimation->getFrames()->getObjectAtIndex(nFrameIndex);
+	CCAnimation *a = CCAnimationCache::sharedAnimationCache()->animationByName(animationName);
 
-	assert(pFrame);
+	assert(a);
 
-	setDisplayFrame(pFrame);
+	CCSpriteFrame *frame = a->getFrames()->getObjectAtIndex(frameIndex);
+
+	assert(frame);
+
+	setDisplayFrame(frame);
 }
 
 bool CCSprite::isFrameDisplayed(CCSpriteFrame *pFrame)
 {
-	CGRect r = pFrame->getRect();
-	CGPoint p = pFrame->getOffset();
-	return (CGRect::CGRectEqualToRect(r, m_obRect) &&
-		pFrame->getTexture()->getName() == m_pobTexture->getName() &&
-		CGPoint::CGPointEqualToPoint(p, m_obOffsetPosition));
+	CCRect r = pFrame->getRect();
+
+	return (CCRect::CCRectEqualToRect(r, m_obRect) &&
+		pFrame->getTexture()->getName() == m_pobTexture->getName());
 }
 
 CCSpriteFrame* CCSprite::displayedFrame(void)
 {
-	return CCSpriteFrame::frameWithTexture(m_pobTexture, m_obRect, CGPointZero);
-}
-
-void CCSprite::addAnimation(CCAnimation *pAnimation)
-{
-	// lazy alloc
-	if (! m_pAnimations)
-	{
-		initAnimationDictionary();
-	}
-
-	m_pAnimations->setObject(pAnimation, pAnimation->getName());
-}
-
-CCAnimation* CCSprite::animationByName(const char *pszAnimationName)
-{
-	assert(pszAnimationName != NULL);
-
-	return m_pAnimations->objectForKey(std::string(pszAnimationName));
+	return CCSpriteFrame::frameWithTexture(m_pobTexture,
+                                           m_obRectInPixels,
+                                           m_bRectRotated,
+                                           m_obUnflippedOffsetPositionFromCenter,
+                                           m_tContentSizeInPixels);
 }
 
 // Texture protocol
@@ -979,7 +1066,7 @@ CCAnimation* CCSprite::animationByName(const char *pszAnimationName)
 void CCSprite::updateBlendFunc(void)
 {
 	// CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteSheet
-	assert (! m_bUsesSpriteSheet);
+	assert (! m_bUsesBatchNode);
 
 	// it's possible to have an untextured sprite
 	if (! m_pobTexture || ! m_pobTexture->getHasPremultipliedAlpha())
@@ -999,13 +1086,13 @@ void CCSprite::updateBlendFunc(void)
 void CCSprite::setTexture(CCTexture2D *texture)
 {
 	// CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteSheet
-	assert(! m_bUsesSpriteSheet);
+	assert(! m_bUsesBatchNode);
 
 	// we can not use RTTI, so we do not known the type of object
 	// accept texture==nil as argument
 	/*assert((! texture) || dynamic_cast<CCTexture2D*>(texture));*/
 
-	CCX_SAFE_RELEASE(m_pobTexture);
+	CC_SAFE_RELEASE(m_pobTexture);
 
 	m_pobTexture = texture;
 	if (texture)

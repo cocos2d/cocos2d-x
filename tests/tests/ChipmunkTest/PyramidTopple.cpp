@@ -28,12 +28,11 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 
 static void
 update(int ticks)
 {
-	int steps = 2;
+	int steps = 3;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
 	
 	for(int i=0; i<steps; i++)
@@ -43,15 +42,14 @@ update(int ticks)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
-	space->iterations = 20;
+	space->iterations = 30;
 	cpSpaceResizeActiveHash(space, 30.0f, 2999);
 	cpSpaceResizeStaticHash(space, 30.0f, 999);
 	space->gravity = cpv(0, -300);
+	space->sleepTimeThreshold = 0.5f;
 	
 	cpBody *body;
 	
@@ -67,7 +65,7 @@ init(void)
 	};
 	
 	// Add a floor.
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-600,-240), cpv(600,-240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(&space->staticBody, cpv(-600,-240), cpv(600,-240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	
@@ -127,7 +125,6 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 }

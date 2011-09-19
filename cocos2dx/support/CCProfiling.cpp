@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Stuart Carnie
 
 http://www.cocos2d-x.org
 
@@ -25,9 +26,6 @@ THE SOFTWARE.
 
 #if CC_ENABLE_PROFILERS
 
-#include <stdio.h>
-#include <iostream>
-
 namespace cocos2d
 {
 	using namespace std;
@@ -44,7 +42,7 @@ namespace cocos2d
 		return g_sSharedProfiler;
 	}
 
-	CCProfilingTimer* CCProfiler::timerWithName(const char *pszTimerName, NSObject *pInstance)
+	CCProfilingTimer* CCProfiler::timerWithName(const char *pszTimerName, CCObject *pInstance)
 	{
 		CCProfiler *p = CCProfiler::sharedProfiler();
 		CCProfilingTimer *t = new CCProfilingTimer();
@@ -59,38 +57,47 @@ namespace cocos2d
 	{
 		CCProfiler *p = CCProfiler::sharedProfiler();
 		p->m_pActiveTimers->removeObject(pTimer);
+
+        if (0 == (p->m_pActiveTimers->count()))
+        {
+            CC_SAFE_DELETE(g_sSharedProfiler);
+        }
 	}
 
 	bool CCProfiler::init()
 	{
-		m_pActiveTimers = new NSMutableArray<CCProfilingTimer*>();
+        m_pActiveTimers = CCArray::array();
+        m_pActiveTimers->retain();
 
 		return true;
 	}
 
 	CCProfiler::~CCProfiler(void)
 	{
-		CCX_SAFE_RELEASE(m_pActiveTimers);
+		CC_SAFE_RELEASE(m_pActiveTimers);
 	}
 
 	void CCProfiler::displayTimers()
 	{
-		NSMutableArray<CCProfilingTimer*>::NSMutableArrayIterator it;
-		for (it = m_pActiveTimers->begin(); it != m_pActiveTimers->end(); ++it)
+        CCObject* pObject = NULL;
+        CCProfilingTimer* pTimer = NULL;
+        CCARRAY_FOREACH(m_pActiveTimers, pObject)
 		{
-			char *pszDescription = (*it)->description();
-			cout << pszDescription << endl;
+            pTimer = (CCProfilingTimer*) pObject;
+			char *pszDescription = pTimer->description();
+			CCLog(pszDescription);
 			delete pszDescription;
 		}
 	}
 
 	// implementation of CCProfilingTimer
 
-	bool CCProfilingTimer::initWithName(const char* pszTimerName, NSObject *pInstance)
+	bool CCProfilingTimer::initWithName(const char* pszTimerName, CCObject *pInstance)
 	{
-		char tmp[100];
-		sprintf(tmp, "%s (0x%.8x)", pszTimerName, pInstance);
+		char tmp[160];
+		sprintf(tmp, "%s (0x%.8x)", pszTimerName, (unsigned int)pInstance);
 		m_NameStr = string(tmp);
+        m_dAverageTime = 0.0;
 
 		return true;
 	}
@@ -102,21 +109,21 @@ namespace cocos2d
 
 	char* CCProfilingTimer::description()
 	{
-        char *pszDes = new char[m_NameStr.length() + sizeof(double) + 20];
+        char *pszDes = new char[m_NameStr.length() + sizeof(double) + 32];
 		sprintf(pszDes, "%s: avg time, %fms", m_NameStr.c_str(), m_dAverageTime);
 		return pszDes;
 	}
 
 	void CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer)
 	{
-		CCTime::gettimeofday(&pTimer->getStartTime(), NULL);
+		CCTime::gettimeofdayCocos2d(pTimer->getStartTime(), NULL);
 	}
 
 	void CCProfilingEndTimingBlock(CCProfilingTimer *pTimer)
 	{
         struct cc_timeval currentTime;
-		CCTime::gettimeofday(&currentTime, NULL);
-		CCTime::timersub(&currentTime, &pTimer->getStartTime(), &currentTime);
+		CCTime::gettimeofdayCocos2d(&currentTime, NULL);
+		CCTime::timersubCocos2d(&currentTime, pTimer->getStartTime(), &currentTime);
 		double duration = currentTime.tv_sec * 1000.0 + currentTime.tv_usec / 1000.0;
 
 		// return in milliseconds
