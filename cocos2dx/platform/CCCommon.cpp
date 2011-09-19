@@ -225,11 +225,20 @@ NS_CC_END;
  ***************************************************/
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 #include <FBaseSys.h>
-
+#include <stdio.h>
+#include <stdarg.h>
 NS_CC_BEGIN;
 
+void CCLog(const char * pszFormat, ...)
+{
+	char buf[MAX_LEN] = {0};
 
-#define CCLog(...)  AppLog(__VA_ARGS__)
+	va_list args;
+	va_start(args, pszFormat);
+	vsnprintf(buf, MAX_LEN, pszFormat, args);
+	va_end(args);
+	AppLog(buf);
+}
 
 // bada no MessageBox, use CCLog instead
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
