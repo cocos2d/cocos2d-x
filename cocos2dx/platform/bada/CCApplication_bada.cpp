@@ -60,16 +60,14 @@ void CCApplication::setAnimationInterval(double interval)
 
 bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
 {
-	InitGbkUnicodeTable("/Res/gbk_uni_tb.dat");
-	if (applicationDidFinishLaunching())
-		return true;
-	return false;
+	if (! initInstance() || !applicationDidFinishLaunching())
+		return false;
+	return true;
 }
 
 
 bool CCApplication::OnAppTerminating(AppRegistry& appRegistry, bool forcedTermination)
 {
-	ReleaseGbkUnicodeTable();
 	return true;
 }
 

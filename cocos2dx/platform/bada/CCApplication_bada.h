@@ -42,7 +42,10 @@ class CC_DLL CCApplication :
 public:
     CCApplication();
     virtual ~CCApplication();
-
+    /**
+    @brief	Implement for initialize OpenGL instance, set source path, etc...
+    */
+    virtual bool initInstance() = 0;
     /**
     @brief	Implement Window create, CCDirector and CCScene init code here.
     @return true    Initialize success, app continue.
