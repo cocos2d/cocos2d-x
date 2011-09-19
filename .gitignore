@@ -50,3 +50,8 @@ build_*_xcode/
 xcschememanagement.plist
 build/
 .DS_Store
+
+# Ignore files build by bada
+.Simulator-Debug/
+.Target-Debug/
+.Target-Release/
