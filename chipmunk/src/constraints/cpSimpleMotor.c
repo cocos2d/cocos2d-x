@@ -21,14 +21,13 @@
 
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
 preStep(cpSimpleMotor *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// calculate moment of inertia coefficient.
 	joint->iSum = 1.0f/(a->i_inv + b->i_inv);
@@ -44,8 +43,7 @@ preStep(cpSimpleMotor *joint, cpFloat dt, cpFloat dt_inv)
 static void
 applyImpulse(cpSimpleMotor *joint)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// compute relative rotational velocity
 	cpFloat wr = b->w - a->w + joint->rate;
@@ -77,7 +75,7 @@ CP_DefineClassGetter(cpSimpleMotor)
 cpSimpleMotor *
 cpSimpleMotorAlloc(void)
 {
-	return (cpSimpleMotor *)cpmalloc(sizeof(cpSimpleMotor));
+	return (cpSimpleMotor *)cpcalloc(1, sizeof(cpSimpleMotor));
 }
 
 cpSimpleMotor *

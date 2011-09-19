@@ -14,9 +14,9 @@ public:
 	virtual std::string subtitle();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 };
 
 class Test2 : public TestCocosNodeDemo
@@ -104,7 +104,7 @@ class CameraZoomTest : public TestCocosNodeDemo
 	float	m_z;
 public:
 	CameraZoomTest();
-	void updateEye(ccTime dt);
+	void update(ccTime dt);
 
 	virtual void onEnter();
 	virtual void onExit();
@@ -118,6 +118,15 @@ public:
 	CameraCenterTest();
 	virtual std::string title();
 	virtual std::string subtitle();
+};
+
+class ConvertToNode : public TestCocosNodeDemo
+{
+public:
+    ConvertToNode();
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent *event);
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class CocosNodeTestScene : public TestScene

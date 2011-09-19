@@ -18,9 +18,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
+ 
 #include <stdlib.h>
 #include <stdio.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 #include "chipmunk.h"
 
@@ -33,7 +35,7 @@ extern "C" {
 #endif
 
 void
-cpMessage(char *message, char *condition, char *file, int line, int isError)
+cpMessage(const char *message, const char *condition, const char *file, int line, int isError)
 {
 #ifndef SHP
 	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: %s\n" : "Chipmunk warning: %s\n"), message);
@@ -44,7 +46,7 @@ cpMessage(char *message, char *condition, char *file, int line, int isError)
 }
 
 
-char *cpVersionString = "5.x.x";
+const char *cpVersionString = "5.3.5";
 
 void
 cpInitChipmunk(void)
@@ -60,7 +62,13 @@ cpInitChipmunk(void)
 cpFloat
 cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, cpVect offset)
 {
-	return (1.0f/2.0f)*m*(r1*r1 + r2*r2) + m*cpvdot(offset, offset);
+	return m*(0.5f*(r1*r1 + r2*r2) + cpvlengthsq(offset));
+}
+
+cpFloat
+cpAreaForCircle(cpFloat r1, cpFloat r2)
+{
+	return 2.0f*(cpFloat)M_PI*cpfabs(r1*r1 - r2*r2);
 }
 
 cpFloat
@@ -69,21 +77,23 @@ cpMomentForSegment(cpFloat m, cpVect a, cpVect b)
 	cpFloat length = cpvlength(cpvsub(b, a));
 	cpVect offset = cpvmult(cpvadd(a, b), 1.0f/2.0f);
 	
-	return m*length*length/12.0f + m*cpvdot(offset, offset);
+	return m*(length*length/12.0f + cpvlengthsq(offset));
 }
 
 cpFloat
-cpMomentForPoly(cpFloat m, const int numVerts, cpVect *verts, cpVect offset)
+cpAreaForSegment(cpVect a, cpVect b, cpFloat r)
 {
-	cpVect *tVerts = (cpVect *)cpcalloc(numVerts, sizeof(cpVect));
-	for(int i=0; i<numVerts; i++)
-		tVerts[i] = cpvadd(verts[i], offset);
-	
+	return 2.0f*r*((cpFloat)M_PI*r + cpvdist(a, b));
+}
+
+cpFloat
+cpMomentForPoly(cpFloat m, const int numVerts, const cpVect *verts, cpVect offset)
+{
 	cpFloat sum1 = 0.0f;
 	cpFloat sum2 = 0.0f;
 	for(int i=0; i<numVerts; i++){
-		cpVect v1 = tVerts[i];
-		cpVect v2 = tVerts[(i+1)%numVerts];
+		cpVect v1 = cpvadd(verts[i], offset);
+		cpVect v2 = cpvadd(verts[(i+1)%numVerts], offset);
 		
 		cpFloat a = cpvcross(v2, v1);
 		cpFloat b = cpvdot(v1, v1) + cpvdot(v1, v2) + cpvdot(v2, v2);
@@ -92,15 +102,51 @@ cpMomentForPoly(cpFloat m, const int numVerts, cpVect *verts, cpVect offset)
 		sum2 += a;
 	}
 	
-	cpfree(tVerts);
 	return (m*sum1)/(6.0f*sum2);
+}
+
+cpFloat
+cpAreaForPoly(const int numVerts, const cpVect *verts)
+{
+	cpFloat area = 0.0f;
+	for(int i=0; i<numVerts; i++){
+		area += cpvcross(verts[i], verts[(i+1)%numVerts]);
+	}
+	
+	return area/2.0f;
+}
+
+cpVect
+cpCentroidForPoly(const int numVerts, const cpVect *verts)
+{
+	cpFloat sum = 0.0f;
+	cpVect vsum = cpvzero;
+	
+	for(int i=0; i<numVerts; i++){
+		cpVect v1 = verts[i];
+		cpVect v2 = verts[(i+1)%numVerts];
+		cpFloat cross = cpvcross(v1, v2);
+		
+		sum += cross;
+		vsum = cpvadd(vsum, cpvmult(cpvadd(v1, v2), cross));
+	}
+	
+	return cpvmult(vsum, 1.0f/(3.0f*sum));
+}
+
+void
+cpRecenterPoly(const int numVerts, cpVect *verts){
+	cpVect centroid = cpCentroidForPoly(numVerts, verts);
+	
+	for(int i=0; i<numVerts; i++){
+		verts[i] = cpvsub(verts[i], centroid);
+	}
 }
 
 cpFloat
 cpMomentForBox(cpFloat m, cpFloat width, cpFloat height)
 {
-	return m*(width*width + height*height)/12;
+	return m*(width*width + height*height)/12.0f;
 }
-
 
 #include "chipmunk_ffi.h"

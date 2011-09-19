@@ -12,6 +12,8 @@ enum
     ACTION_MOVE_LAYER,
     ACTION_SCALE_LAYER,
     ACTION_ROTATE_LAYER,
+	ACTION_SKEW_LAYER,
+	ACTION_SKEWROTATE_LAYER,
     ACTION_JUMP_LAYER,
     ACTION_BEZIER_LAYER,
     ACTION_BLINK_LAYER,
@@ -28,6 +30,7 @@ enum
     ACTION_ROTATETOREPEATE_LAYER,
     ACTION_ROTATEJERK_LAYER,
     ACTION_CALLFUNC_LAYER,
+    ACTION_CALLFUNCND_LAYER,
     ACTION_REVERSESEQUENCE_LAYER,
     ACTION_REVERSESEQUENCE2_LAYER,
     ACTION_ORBIT_LAYER,
@@ -59,9 +62,9 @@ protected:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(NSObject* pSender);
-    void nextCallback(NSObject* pSender);
-    void backCallback(NSObject* pSender);
+    void restartCallback(CCObject* pSender);
+    void nextCallback(CCObject* pSender);
+    void backCallback(CCObject* pSender);
 };
 
 class ActionManual : public ActionsDemo
@@ -83,6 +86,18 @@ class ActionScale : public ActionsDemo
 public:
     virtual void onEnter();
     virtual std::string subtitle();
+};
+
+class ActionSkew : public ActionsDemo
+{
+	virtual void onEnter();
+	virtual std::string subtitle();
+};
+
+class ActionSkewRotateScale : public ActionsDemo
+{
+	virtual void onEnter();
+	virtual std::string subtitle();
 };
 
 class ActionRotate : public ActionsDemo
@@ -233,6 +248,14 @@ public:
     void callback1();
     void callback2(CCNode* pTarget);
     void callback3(CCNode* pTarget, void* data);
+};
+
+class ActionCallFuncND : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class ActionFollow : public ActionsDemo

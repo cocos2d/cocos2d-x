@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (C) 2008      Apple Inc. All Rights Reserved.
 
 http://www.cocos2d-x.org
 
@@ -26,15 +27,12 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
-#include <GLES/gl.h>
-
-#include "CCXCocos2dDefine.h"
-#include "NSObject.h"
-#include "CGGeometry.h"
+#include "CCObject.h"
+#include "CCGeometry.h"
 #include "ccTypes.h"
 
 namespace   cocos2d {
-class UIImage;
+class CCImage;
 
 //CONSTANTS:
 
@@ -47,14 +45,22 @@ typedef enum {
 	kCCTexture2DPixelFormat_RGBA8888,
 	//! 24-bit texture: RGBA888
 	kCCTexture2DPixelFormat_RGB888,
-	//! 16-bit texture: used with images that have alpha pre-multiplied
+	//! 16-bit texture without Alpha channel
 	kCCTexture2DPixelFormat_RGB565,
 	//! 8-bit textures used as masks
 	kCCTexture2DPixelFormat_A8,
+	//! 8-bit intensity texture
+	kCCTexture2DPixelFormat_I8,
+	//! 16-bit textures used as masks
+	kCCTexture2DPixelFormat_AI88,
 	//! 16-bit textures: RGBA4444
 	kCCTexture2DPixelFormat_RGBA4444,
 	//! 16-bit textures: RGB5A1
 	kCCTexture2DPixelFormat_RGB5A1,	
+	//! 4-bit PVRTC-compressed texture: PVRTC4
+	kCCTexture2DPixelFormat_PVRTC4,
+	//! 2-bit PVRTC-compressed texture: PVRTC2
+	kCCTexture2DPixelFormat_PVRTC2,
 
 	//! Default texture format: RGBA8888
 	kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
@@ -89,26 +95,26 @@ typedef struct _ccTexParams {
 * Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
 * Be aware that the content of the generated textures will be upside-down!
 */
-class CCX_DLL CCTexture2D : public NSObject
+class CC_DLL CCTexture2D : public CCObject
 {
 	/** pixel format of the texture */
-	CCX_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
+	CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
 	/** width in pixels */
-	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
 	/** hight in pixels */
-	CCX_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
+	CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
 
 	/** texture name */
-	CCX_PROPERTY_READONLY(GLuint, m_uName, Name)
+	CC_PROPERTY_READONLY(GLuint, m_uName, Name)
 
 	/** content size */
-	CCX_PROPERTY_READONLY(CGSize, m_tContentSize, ContentSize)
+	CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, m_tContentSize, ContentSizeInPixels)
 	/** texture max S */
-	CCX_PROPERTY(GLfloat, m_fMaxS, MaxS)
+	CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
 	/** texture max T */
-	CCX_PROPERTY(GLfloat, m_fMaxT, MaxT)
+	CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
 	/** whether or not the texture has their Alpha premultiplied */
-	CCX_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
+	CC_PROPERTY_READONLY(bool, m_bHasPremultipliedAlpha, HasPremultipliedAlpha);
 
 public:
 	CCTexture2D();
@@ -116,44 +122,52 @@ public:
 
 	char * description(void);
 
+	/** These functions are needed to create mutable textures */
+	void releaseData(void *data);
+	void* keepData(void *data, unsigned int length);
+
 	/** Intializes with a texture2d with data */
-	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, CGSize contentSize);
+	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
 
 	/**
 	Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
 	These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
 	*/
 	/** draws a texture at a given point */
-	void drawAtPoint(CGPoint point);
+	void drawAtPoint(const CCPoint& point);
 	/** draws a texture inside a rect */
-	void drawInRect(CGRect rect);
+	void drawInRect(const CCRect& rect);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from an image file.
 	Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a UIImage object */
-	bool initWithImage(UIImage * uiImage);
+	bool initWithImage(CCImage * uiImage);
 
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a string of text.
 	Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-	bool initWithString(const char *text, CGSize dimensions, UITextAlignment alignment, const char *fontName, float fontSize);
+	bool initWithString(const char *text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize);
 	/** Initializes a texture from a string with font name and font size */
 	bool initWithString(const char *text, const char *fontName, float fontSize);
 
-#ifdef _POWERVR_SUPPORT_
+	/** returns the content size of the texture in points */
+	CCSize getContentSize(void);
+
+#ifdef CC_SUPPORT_PVRTC	
 	/**
 	Extensions to make it easy to create a CCTexture2D object from a PVRTC file
 	Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 	*/
 	/** Initializes a texture from a PVRTC buffer */
-	bool initWithPVRTCData(const void* data, int level, int bpp, bool hasAlpha, int length);
-	/** Initializes a texture from a PVRTC file */
-	bool initWithPVRTCFile(const char* file);
-#endif
+    bool initWithPVRTCData(const void *data, int level, int bpp, bool hasAlpha, int length, CCTexture2DPixelFormat pixelFormat);
+#endif // CC_SUPPORT_PVRTC
+    
+    /** Initializes a texture from a PVR file */
+	bool initWithPVRFile(const char* file);
 
 	/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
 	If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
@@ -184,7 +198,14 @@ public:
 	*/
 	void generateMipmap();
 
+	/** returns the bits-per-pixel of the in-memory OpenGL texture
+	@since v1.0
+	*/
+    unsigned int bitsPerPixelForFormat();
 
+
+    void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    
 	/** sets the default pixel format for UIImages that contains alpha channel.
 	If the UIImage contains alpha channel, then the options are:
 	- generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
@@ -208,7 +229,10 @@ public:
 	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
 
 private:
-	bool initPremultipliedATextureWithImage(UIImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+	bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+    
+    // By default PVR images are treated as if they don't have the alpha channel premultiplied
+    bool m_bPVRHaveAlphaPremultiplied;
 
 };
 }//namespace   cocos2d 

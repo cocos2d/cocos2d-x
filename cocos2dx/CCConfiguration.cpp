@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -29,12 +30,18 @@ THE SOFTWARE.
 using namespace std;
 namespace   cocos2d {
 
-// singleton stuff
-static bool g_bInited;
-static CCConfiguration g_SharedConfiguration;
-static char *g_pGlExtensions;
 
 CCConfiguration::CCConfiguration(void)
+:m_nMaxTextureSize(0) 
+, m_nMaxModelviewStackDepth(0)
+, m_bSupportsPVRTC(false)
+, m_bSupportsNPOT(false)
+, m_bSupportsBGRA8888(false)
+, m_bSupportsDiscardFramebuffer(false)
+, m_bInited(false)
+, m_uOSVersion(0)
+, m_nMaxSamplesAllowed(0)
+, m_pGlExtensions(NULL)
 {
 }
 
@@ -44,7 +51,7 @@ bool CCConfiguration::init(void)
 	CCLOG("cocos2d: GL_RENDERER:   %s", glGetString(GL_RENDERER));
 	CCLOG("cocos2d: GL_VERSION:    %s", glGetString(GL_VERSION));
 
-	g_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
+	m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
 
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
 	glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &m_nMaxModelviewStackDepth);
@@ -75,17 +82,38 @@ bool CCConfiguration::init(void)
 #endif // CC_TEXTURE_ATLAS_USES_VBO
 
 	return true;
+}
 
+CCGlesVersion CCConfiguration::getGlesVersion()
+{
+	// To get the Opengl ES version
+	std::string strVersion((char *)glGetString(GL_VERSION));
+	if ((int)strVersion.find("1.0") != -1)
+	{
+		return GLES_VER_1_0;
+	}
+	else if ((int)strVersion.find("1.1") != -1)
+	{
+		return GLES_VER_1_1;
+	}
+	else if ((int)strVersion.find("2.0") != -1)
+	{
+		return GLES_VER_2_0;
+	}
+
+	return GLES_VER_INVALID;
 }
 
 CCConfiguration* CCConfiguration::sharedConfiguration(void)
 {
-	if (! g_bInited)
-	{
-		g_SharedConfiguration.init();
-	}
-
-	return &g_SharedConfiguration;
+    static CCConfiguration sharedConfiguration;
+    if (!sharedConfiguration.m_bInited)
+    {
+        sharedConfiguration.init();
+        sharedConfiguration.m_bInited = true;
+    }
+    
+    return &sharedConfiguration;
 }
 
 bool CCConfiguration::checkForGLExtension(const string &searchName)
@@ -93,9 +121,12 @@ bool CCConfiguration::checkForGLExtension(const string &searchName)
 	bool bRet = false;
 	const char *kSearchName = searchName.c_str();
 	
-	if (strstr(g_pGlExtensions, kSearchName))
+	if (m_pGlExtensions && 
+		strstr(m_pGlExtensions, kSearchName))
+	{
 		bRet = true;
-
+	}
+	
 	return bRet;
 }
 }//namespace   cocos2d 

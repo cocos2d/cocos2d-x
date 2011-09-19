@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,8 +28,8 @@ THE SOFTWARE.
 #define __ACTIONS_CCACTION_H__
 
 #include "ccTypes.h"
-#include "NSObject.h"
-#include "NSZone.h"
+#include "CCObject.h"
+#include "CCZone.h"
 #include "CCNode.h"
 
 namespace   cocos2d {
@@ -40,7 +42,7 @@ enum {
 /** 
 @brief Base class for CCAction objects.
  */
-class CCX_DLL CCAction : public NSObject 
+class CC_DLL CCAction : public CCObject 
 {
 public:
     CCAction(void);
@@ -48,7 +50,7 @@ public:
 
 	char * description();
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 
 	//! return true if the action has finished
 	virtual bool isDone(void);
@@ -81,7 +83,7 @@ public:
 	
 	inline CCNode* getOriginalTarget(void) { return m_pOriginalTarget; } 
 	/** Set the original target, since target can be nil.
-	Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
+	Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
 	The target is 'assigned', it is not 'retained'.
 	@since v0.8.2
 	*/
@@ -103,7 +105,7 @@ protected:
 	*/
 	CCNode	*m_pTarget;
 	/** The action tag. An identifier of the action */
-	int 		m_nTag;
+	int 	m_nTag;
 };
 
 /** 
@@ -115,10 +117,12 @@ protected:
 
  Infinite time actions are valid
  */
-class CCX_DLL CCFiniteTimeAction : public CCAction
+class CC_DLL CCFiniteTimeAction : public CCAction
 {
 public:
-	CCFiniteTimeAction(){}
+	CCFiniteTimeAction()
+		: m_fDuration(0)
+	{}
 	virtual ~CCFiniteTimeAction(){}
     //! get duration in seconds of the action
 	inline ccTime getDuration(void) { return m_fDuration; }
@@ -132,19 +136,22 @@ protected:
 	ccTime m_fDuration;
 };
 
-class CCIntervalAction;
+class CCActionInterval;
 class CCRepeatForever;
 
 /** 
  @brief Changes the speed of an action, making it take longer (speed>1)
  or less (speed<1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
- @warning This action can't be Sequenceable because it is not an IntervalAction
+ @warning This action can't be Sequenceable because it is not an CCIntervalAction
  */
-class CCX_DLL CCSpeed : public CCAction
+class CC_DLL CCSpeed : public CCAction
 {
 public:
-	CCSpeed(){}
+	CCSpeed()
+		: m_fSpeed(0.0)
+		, m_pInnerAction(NULL)
+	{}
 	virtual ~CCSpeed(void);
 
 	inline float getSpeed(void) { return m_fSpeed; }
@@ -152,28 +159,35 @@ public:
 	inline void setSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 
 	/** initializes the action */
-	bool initWithAction(CCIntervalAction *pAction, float fRate);
+	bool initWithAction(CCActionInterval *pAction, float fRate);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void startWithTarget(CCNode* pTarget);
 	virtual void stop();
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
-	virtual CCIntervalAction* reverse(void);
+	virtual CCActionInterval* reverse(void);
+
+	void setInnerAction(CCActionInterval *pAction);
+
+	inline CCActionInterval* getInnerAction()
+	{
+		return m_pInnerAction;
+	}
 
 public:
 	/** creates the action */
-	static CCSpeed* actionWithAction(CCIntervalAction *pAction, float fRate);
+	static CCSpeed* actionWithAction(CCActionInterval *pAction, float fRate);
     
 protected:
 	float m_fSpeed;
-	CCIntervalAction *m_pOther;
+	CCActionInterval *m_pInnerAction;
 };
 
 
 class CCNode;
-class CGPoint;
-class CGRect;
+class CCPoint;
+class CCRect;
 /** 
 @brief CCFollow is an action that "follows" a node.
 
@@ -183,10 +197,18 @@ layer->runAction(CCFollow::actionWithTarget(hero));
 Instead of using CCCamera as a "follower", use this action instead.
 @since v0.99.2
 */
-class CCX_DLL CCFollow : public CCAction
+class CC_DLL CCFollow : public CCAction
 {
 public:
-	CCFollow(){}
+	CCFollow()
+		: m_pobFollowedNode(NULL)
+        , m_bBoundarySet(false)
+		, m_bBoundaryFullyCovered(false)		
+		, m_fLeftBoundary(0.0)
+		, m_fRightBoundary(0.0)
+		, m_fTopBoundary(0.0)
+        , m_fBottomBoundary(0.0)
+	{}
 	virtual ~CCFollow(void);
 	
 	inline bool isBoundarySet(void) { return m_bBoundarySet; }
@@ -197,9 +219,9 @@ public:
 	bool initWithTarget(CCNode *pFollowedNode);
 
 	/** initializes the action with a set boundary */
-	bool initWithTarget(CCNode *pFollowedNode, CGRect rect);
+	bool initWithTarget(CCNode *pFollowedNode, const CCRect& rect);
 
-	virtual NSObject* copyWithZone(NSZone *pZone);
+	virtual CCObject* copyWithZone(CCZone *pZone);
 	virtual void step(ccTime dt);
 	virtual bool isDone(void);
 	virtual void stop(void);
@@ -209,7 +231,7 @@ public:
 	static CCFollow* actionWithTarget(CCNode *pFollowedNode);
 
 	/** creates the action with a set boundary */
-	static CCFollow* actionWithTarget(CCNode *pFollowedNode, CGRect rect);
+	static CCFollow* actionWithTarget(CCNode *pFollowedNode, const CCRect& rect);
 
 protected:
 	// node to follow
@@ -222,8 +244,8 @@ protected:
 	bool m_bBoundaryFullyCovered;
 
 	// fast access to the screen dimensions
-	CGPoint m_obHalfScreenSize;
-	CGPoint m_obFullScreenSize;
+	CCPoint m_obHalfScreenSize;
+	CCPoint m_obFullScreenSize;
 
 	// world boundaries
 	float m_fLeftBoundary;

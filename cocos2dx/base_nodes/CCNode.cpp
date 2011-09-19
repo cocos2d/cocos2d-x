@@ -1,5 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2009      Valentin Milea
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,7 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCNode.h"
-#include "CGPointExtension.h"
+#include "CCPointExtension.h"
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
@@ -41,33 +44,37 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 CCNode::CCNode(void)
-:m_bIsRunning(false)
-,m_fRotation(0.0f)
-,m_fScaleX(1.0f)
-,m_fScaleY(1.0f)
-,m_tPosition(CGPointZero)
-,m_tAnchorPointInPixels(CGPointZero)
-,m_tAnchorPoint(CGPointZero)
-,m_tContentSize(CGSizeZero)
-// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
-,m_bIsRelativeAnchorPoint(true)
-,m_bIsTransformDirty(true)
-,m_bIsInverseDirty(true)
-#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-,m_bIsTransformGLDirty(true)
-#endif
-,m_fVertexZ(0.0f)
-,m_pGrid(NULL)
-,m_bIsVisible(true)
-,m_nTag(kCCNodeTagInvalid)
-,m_nZOrder(0)
-// lazy alloc
-,m_pCamera(NULL)
+: m_nZOrder(0)
+, m_fVertexZ(0.0f)
+, m_fRotation(0.0f)
+, m_fScaleX(1.0f)
+, m_fScaleY(1.0f)
+, m_tPosition(CCPointZero)
+, m_tPositionInPixels(CCPointZero)
 // children (lazy allocs)
-,m_pChildren(NULL)
+, m_pChildren(NULL)
+// lazy alloc
+, m_pCamera(NULL)
+, m_pGrid(NULL)
+, m_bIsVisible(true)
+, m_tAnchorPoint(CCPointZero)
+, m_tAnchorPointInPixels(CCPointZero)
+, m_tContentSize(CCSizeZero)
+, m_tContentSizeInPixels(CCSizeZero)
+, m_bIsRunning(false)
+, m_pParent(NULL)
+// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to false
+, m_bIsRelativeAnchorPoint(true)
+, m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
-,m_pUserData(NULL)
-,m_pParent(NULL)
+, m_pUserData(NULL)
+, m_bIsTransformDirty(true)
+, m_bIsInverseDirty(true)
+, m_fSkewX(0.0)
+, m_fSkewY(0.0)
+#ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+, m_bIsTransformGLDirty(true)
+#endif
 {
     // nothing
 }
@@ -76,44 +83,71 @@ CCNode::~CCNode()
 	CCLOGINFO( "cocos2d: deallocing" );
 
 	// attributes
-	CCX_SAFE_RELEASE(m_pCamera);
+	CC_SAFE_RELEASE(m_pCamera);
 
-	CCX_SAFE_RELEASE(m_pGrid);
-
+	CC_SAFE_RELEASE(m_pGrid);
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
-		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); ++it)
-		{
-			if (*it)
-			{
-				(*it)->m_pParent = NULL;
-			}		
-		}
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCNode* pChild = (CCNode*) child;
+            if (pChild)
+            {
+                pChild->m_pParent = NULL;
+            }
+        }
 	}
 
 	// children
-	CCX_SAFE_RELEASE(m_pChildren);
+	CC_SAFE_RELEASE(m_pChildren);
 
 }
 
-void CCNode::arrayMakeObjectsPerformSelector(NSMutableArray<CCNode*> * pArray, callbackFunc func)
+void CCNode::arrayMakeObjectsPerformSelector(CCArray* pArray, callbackFunc func)
 {
 	if(pArray && pArray->count() > 0)
 	{
-		CCNode* pNode;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-		for( it = pArray->begin(); it != pArray->end(); it++)
-		{
-			pNode = (*it);
-
-			if(pNode && func)
-			{
-				(pNode->*func)();
-			}
-		}
+        CCObject* child;
+        CCARRAY_FOREACH(pArray, child)
+        {
+            CCNode* pNode = (CCNode*) child;
+            if(pNode && (0 != func))
+            {
+                (pNode->*func)();
+            }
+        }
 	}
+}
+
+float CCNode::getSkewX()
+{
+	return m_fSkewX;
+}
+
+void CCNode::setSkewX(float newSkewX)
+{
+	m_fSkewX = newSkewX;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
+}
+
+float CCNode::getSkewY()
+{
+	return m_fSkewY;
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif
+}
+
+void CCNode::setSkewY(float newSkewY)
+{
+	m_fSkewY = newSkewY;
+
 }
 
 /// zOrder getter
@@ -132,14 +166,14 @@ void CCNode::setZOrder(int z)
 /// ertexZ getter
 float CCNode::getVertexZ()
 {
-	return m_fVertexZ;
+	return m_fVertexZ / CC_CONTENT_SCALE_FACTOR();
 }
 
 
 /// vertexZ setter
 void CCNode::setVertexZ(float var)
 {
-	m_fVertexZ = var;
+	m_fVertexZ = var * CC_CONTENT_SCALE_FACTOR();
 }
 
 
@@ -159,11 +193,10 @@ void CCNode::setRotation(float newRotation)
 #endif
 }
 
-
 /// scale getter
 float CCNode::getScale(void)
 {
-	NSAssert( m_fScaleX == m_fScaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+	CCAssert( m_fScaleX == m_fScaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
 	return m_fScaleX;
 }
 
@@ -210,23 +243,57 @@ void CCNode::setScaleY(float newScaleY)
 }
 
 /// position getter
-CGPoint CCNode::getPosition()
+const CCPoint& CCNode::getPosition()
 {
 	return m_tPosition;
 }
 
 /// position setter
-void CCNode::setPosition(CGPoint newPosition)
+void CCNode::setPosition(const CCPoint& newPosition)
 {
 	m_tPosition = newPosition;
+	if (CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		m_tPositionInPixels = m_tPosition;
+	}
+	else
+	{
+		m_tPositionInPixels = ccpMult(newPosition, CC_CONTENT_SCALE_FACTOR());
+	}
+
 	m_bIsTransformDirty = m_bIsInverseDirty = true;
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	m_bIsTransformGLDirty = true;
 #endif
 }
 
+void CCNode::setPositionInPixels(const CCPoint& newPosition)
+{
+    m_tPositionInPixels = newPosition;
+
+	if ( CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		m_tPosition = m_tPositionInPixels;
+	}
+	else
+	{
+		m_tPosition = ccpMult(newPosition, 1/CC_CONTENT_SCALE_FACTOR());
+	}
+
+	m_bIsTransformDirty = m_bIsInverseDirty = true;
+
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	m_bIsTransformGLDirty = true;
+#endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+}
+
+const CCPoint& CCNode::getPositionInPixels()
+{
+	return m_tPositionInPixels;
+}
+
 /// children getter
-NSMutableArray<CCNode*> * CCNode::getChildren()
+CCArray* CCNode::getChildren()
 {
 	return m_pChildren;
 }
@@ -252,8 +319,8 @@ CCGridBase* CCNode::getGrid()
 /// grid setter
 void CCNode::setGrid(CCGridBase* pGrid)
 {
-	CCX_SAFE_RETAIN(pGrid);
-	CCX_SAFE_RELEASE(m_pGrid);
+	CC_SAFE_RETAIN(pGrid);
+	CC_SAFE_RELEASE(m_pGrid);
 	m_pGrid = pGrid;
 }
 
@@ -272,17 +339,17 @@ void CCNode::setIsVisible(bool var)
 
 
 /// anchorPoint getter
-CGPoint CCNode::getAnchorPoint()
+const CCPoint& CCNode::getAnchorPoint()
 {
 	return m_tAnchorPoint;
 }
 
-void CCNode::setAnchorPoint(CGPoint point)
+void CCNode::setAnchorPoint(const CCPoint& point)
 {
-	if( ! CGPoint::CGPointEqualToPoint(point, m_tAnchorPoint) ) 
+	if( ! CCPoint::CCPointEqualToPoint(point, m_tAnchorPoint) ) 
 	{
 		m_tAnchorPoint = point;
-		this->m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
+		m_tAnchorPointInPixels = ccp( m_tContentSizeInPixels.width * m_tAnchorPoint.x, m_tContentSizeInPixels.height * m_tAnchorPoint.y );
 		m_bIsTransformDirty = m_bIsInverseDirty = true;
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
@@ -291,23 +358,33 @@ void CCNode::setAnchorPoint(CGPoint point)
 }
 
 /// anchorPointInPixels getter
-CGPoint CCNode::getAnchorPointInPixels()
+const CCPoint& CCNode::getAnchorPointInPixels()
 {
 	return m_tAnchorPointInPixels;
 }
 
 /// contentSize getter
-CGSize CCNode::getContentSize()
+const CCSize& CCNode::getContentSize()
 {
 	return m_tContentSize;
 }
 
-void CCNode::setContentSize(CGSize size)
+void CCNode::setContentSize(const CCSize& size)
 {
-	if( ! CGSize::CGSizeEqualToSize(size, m_tContentSize) ) 
+	if( ! CCSize::CCSizeEqualToSize(size, m_tContentSize) ) 
 	{
 		m_tContentSize = size;
-		m_tAnchorPointInPixels = ccp( m_tContentSize.width * m_tAnchorPoint.x, m_tContentSize.height * m_tAnchorPoint.y );
+
+        if( CC_CONTENT_SCALE_FACTOR() == 1 )
+        {
+            m_tContentSizeInPixels = m_tContentSize;
+        }
+        else
+        {
+            m_tContentSizeInPixels = CCSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+        }
+
+		m_tAnchorPointInPixels = ccp( m_tContentSizeInPixels.width * m_tAnchorPoint.x, m_tContentSizeInPixels.height * m_tAnchorPoint.y );
 		m_bIsTransformDirty = m_bIsInverseDirty = true;
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		m_bIsTransformGLDirty = true;
@@ -315,8 +392,37 @@ void CCNode::setContentSize(CGSize size)
 	}
 }
 
+void CCNode::setContentSizeInPixels(const CCSize& size)
+{
+	if (! CCSize::CCSizeEqualToSize(size, m_tContentSizeInPixels))
+	{
+        m_tContentSizeInPixels = size;
 
-/// isRunning getter
+		if (CC_CONTENT_SCALE_FACTOR() == 1)
+		{
+			m_tContentSize = m_tContentSizeInPixels;
+		}
+		else
+		{
+			m_tContentSize = CCSizeMake(size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR());
+		}
+
+		m_tAnchorPointInPixels = ccp(m_tContentSizeInPixels.width * m_tAnchorPoint.x, m_tContentSizeInPixels.height * m_tAnchorPoint.y);
+		m_bIsTransformDirty = m_bIsInverseDirty = true;
+
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+		m_bIsTransformGLDirty = true;
+#endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	}
+}
+
+const CCSize& CCNode::getContentSizeInPixels()
+{
+	return m_tContentSizeInPixels;
+}
+
+
+// isRunning getter
 bool CCNode::getIsRunning()
 {
 	return m_bIsRunning;
@@ -374,10 +480,16 @@ void CCNode::setUserData(void *var)
 }
 
 
-CGRect CCNode::boundingBox()
+CCRect CCNode::boundingBox()
 {
-	CGRect rect = CGRectMake(0, 0, m_tContentSize.width, m_tContentSize.height);
-	return CGRectApplyAffineTransform(rect, nodeToParentTransform());
+	CCRect ret = boundingBoxInPixels();
+	return CC_RECT_PIXELS_TO_POINTS(ret);
+}
+
+CCRect CCNode::boundingBoxInPixels()
+{
+	CCRect rect = CCRectMake(0, 0, m_tContentSizeInPixels.width, m_tContentSizeInPixels.height);
+	return CCRectApplyAffineTransform(rect, nodeToParentTransform());
 }
 
 
@@ -410,20 +522,20 @@ char * CCNode::description()
 // lazy allocs
 void CCNode::childrenAlloc(void)
 {
-	m_pChildren = new NSMutableArray<CCNode*>(4);
+    m_pChildren = CCArray::arrayWithCapacity(4);
+    m_pChildren->retain();
 }
 
 CCNode* CCNode::getChildByTag(int aTag)
 {
-	NSAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
+	CCAssert( aTag != kCCNodeTagInvalid, "Invalid tag");
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
-		CCNode* pNode;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
-		{
-			pNode = (*it);
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCNode* pNode = (CCNode*) child;
 			if(pNode && pNode->m_nTag == aTag)
 				return pNode;
 		}
@@ -435,10 +547,10 @@ CCNode* CCNode::getChildByTag(int aTag)
 * If a class want's to extend the 'addChild' behaviour it only needs
 * to override this method
 */
-CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
+void CCNode::addChild(CCNode *child, int zOrder, int tag)
 {	
-	NSAssert( child != NULL, "Argument must be non-nil");
-	NSAssert( child->m_pParent == NULL, "child already added. It can't be added again");
+	CCAssert( child != NULL, "Argument must be non-nil");
+	CCAssert( child->m_pParent == NULL, "child already added. It can't be added again");
 
 	if( ! m_pChildren )
 	{
@@ -454,20 +566,20 @@ CCNode * CCNode::addChild(CCNode *child, int zOrder, int tag)
 	if( m_bIsRunning )
 	{
 		child->onEnter();
+		child->onEnterTransitionDidFinish();
 	}
-	return this;
 }
 
-CCNode * CCNode::addChild(CCNode *child, int zOrder)
+void CCNode::addChild(CCNode *child, int zOrder)
 {
-	NSAssert( child != NULL, "Argument must be non-nil");
-	return this->addChild(child, zOrder, child->m_nTag);
+	CCAssert( child != NULL, "Argument must be non-nil");
+	this->addChild(child, zOrder, child->m_nTag);
 }
 
-CCNode * CCNode::addChild(CCNode *child)
+void CCNode::addChild(CCNode *child)
 {
-	NSAssert( child != NULL, "Argument must be non-nil");
-	return this->addChild(child, child->m_nZOrder, child->m_nTag);
+	CCAssert( child != NULL, "Argument must be non-nil");
+	this->addChild(child, child->m_nZOrder, child->m_nTag);
 }
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
@@ -495,7 +607,7 @@ void CCNode::removeChild(CCNode* child, bool cleanup)
 
 void CCNode::removeChildByTag(int tag, bool cleanup)
 {
-	NSAssert( tag != kCCNodeTagInvalid, "Invalid tag");
+	CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
 
 	CCNode *child = this->getChildByTag(tag);
 
@@ -514,11 +626,10 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 	// not using detachChild improves speed here
 	if ( m_pChildren && m_pChildren->count() > 0 )
 	{
-		CCNode * pNode;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-		for ( it = m_pChildren->begin(); it!= m_pChildren->end(); it++ )
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
 		{
-			pNode = *it;
+            CCNode* pNode = (CCNode*) child;
 			if (pNode)
 			{
 				// IMPORTANT:
@@ -537,8 +648,10 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
 				pNode->setParent(NULL);
 			}
 		}
+		
+		m_pChildren->removeAllObjects();
 	}
-	m_pChildren->removeAllObjects();
+	
 }
 
 void CCNode::detachChild(CCNode *child, bool doCleanup)
@@ -568,38 +681,33 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 // helper used by reorderChild & add
 void CCNode::insertChild(CCNode* child, int z)
 {
-	int index=0;
-	bool added = false;
+    unsigned int index = 0;
+    CCNode* a = (CCNode*) m_pChildren->lastObject();
+    if (!a || a->getZOrder() <= z)
+    {
+        m_pChildren->addObject(child);
+    }
+    else
+    {
+        CCObject* pObject;
+        CCARRAY_FOREACH(m_pChildren, pObject)
+        {
+            CCNode* pNode = (CCNode*) pObject;
+            if ( pNode && (pNode->m_nZOrder > z ))
+            {
+                m_pChildren->insertObject(child, index);
+                break;
+            }
+            index++;
+        }
+    }
 
-	if(m_pChildren && m_pChildren->count() > 0)
-	{
-		CCNode* pNode;
-		NSMutableArray<CCNode*>::NSMutableArrayIterator it;
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
-		{
-			pNode = (*it);
-
-			if ( pNode && pNode->m_nZOrder > z ) 
-			{
-				added = true;
-				m_pChildren->insertObjectAtIndex(child, index);
-				break;
-			}
-			index++;
-		}
-	}
-
-	if( ! added )
-	{
-		m_pChildren->addObject(child);
-	}
-
-	child->setZOrder(z);
+    child->setZOrder(z);
 }
 
 void CCNode::reorderChild(CCNode *child, int zOrder)
 {
-	NSAssert( child != NULL, "Child must be non-nil");
+	CCAssert( child != NULL, "Child must be non-nil");
 
 	child->retain();
 	m_pChildren->removeObject(child);
@@ -633,15 +741,16 @@ void CCNode::visit()
 
 	this->transform();
 
-    CCNode* pNode;
-    NSMutableArray<CCNode*>::NSMutableArrayIterator it;
+    CCNode* pNode = NULL;
+    unsigned int i = 0;
 
 	if(m_pChildren && m_pChildren->count() > 0)
 	{
 		// draw children zOrder < 0
-		for( it = m_pChildren->begin(); it != m_pChildren->end(); it++)
-		{
-			pNode = (*it);
+        ccArray *arrayData = m_pChildren->data;
+        for( ; i < arrayData->num; i++ )
+        {
+            pNode = (CCNode*) arrayData->arr[i];
 
 			if ( pNode && pNode->m_nZOrder < 0 ) 
 			{
@@ -660,9 +769,10 @@ void CCNode::visit()
 	// draw children zOrder >= 0
     if (m_pChildren && m_pChildren->count() > 0)
     {
-		for ( ; it!=m_pChildren->end(); it++ )
-		{
-			pNode = (*it);
+        ccArray *arrayData = m_pChildren->data;
+        for( ; i < arrayData->num; i++ )
+        {
+            pNode = (CCNode*) arrayData->arr[i];
             if (pNode)
             {
                 pNode->visit();
@@ -695,7 +805,7 @@ void CCNode::transform()
 	// BEGIN alternative -- using cached transform
 	//
 	if( m_bIsTransformGLDirty ) {
-		CGAffineTransform t = this->nodeToParentTransform();
+		CCAffineTransform t = this->nodeToParentTransform();
 		CGAffineToGL(&t, m_pTransformGL);
 		m_bIsTransformGLDirty = false;
 	}
@@ -712,14 +822,14 @@ void CCNode::transform()
 
 		if( translate )
 		{
-			glTranslatef(RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.y), 0);
+			ccglTranslate(RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tAnchorPointInPixels.y), 0);
 		}
 
 		m_pCamera->locate();
 
 		if( translate )
 		{
-			glTranslatef(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
+			ccglTranslate(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 		}
 	}
 
@@ -734,13 +844,22 @@ void CCNode::transform()
 		glTranslatef( RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
 	if (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPosition.y + m_tAnchorPointInPixels.y), m_fVertexZ);
-	else if ( m_tPosition.x !=0 || m_tPosition.y !=0 || m_fVertexZ != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPosition.x), RENDER_IN_SUBPIXEL(m_tPosition.y), m_fVertexZ );
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y + m_tAnchorPointInPixels.y), m_fVertexZ);
+	else if ( m_tPositionInPixels.x !=0 || m_tPositionInPixels.y !=0 || m_fVertexZ != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y), m_fVertexZ );
 
 	// rotate
 	if (m_fRotation != 0.0f )
 		glRotatef( -m_fRotation, 0.0f, 0.0f, 1.0f );
+
+	// skew
+	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) 
+	{
+		CCAffineTransform skewMatrix = CCAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
+		GLfloat	glMatrix[16];
+		CCAffineToGL(&skewMatrix, glMatrix);															 
+		glMultMatrixf(glMatrix);
+	}
 
 	// scale
 	if (m_fScaleX != 1.0f || m_fScaleY != 1.0f)
@@ -784,7 +903,7 @@ void CCNode::onExit()
 }
 CCAction * CCNode::runAction(CCAction* action)
 {
-	NSAssert( action != NULL, "Argument must be non-nil");
+	CCAssert( action != NULL, "Argument must be non-nil");
 	CCActionManager::sharedManager()->addAction(action, this, !m_bIsRunning);
 	return action;
 }
@@ -801,17 +920,17 @@ void CCNode::stopAction(CCAction* action)
 
 void CCNode::stopActionByTag(int tag)
 {
-	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
+	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	CCActionManager::sharedManager()->removeActionByTag(tag, this);
 }
 
 CCAction * CCNode::getActionByTag(int tag)
 {
-	NSAssert( tag != kCCActionTagInvalid, "Invalid tag");
+	CCAssert( tag != kCCActionTagInvalid, "Invalid tag");
 	return CCActionManager::sharedManager()->getActionByTag(tag, this);
 }
 
-int CCNode::numberOfRunningActions()
+unsigned int CCNode::numberOfRunningActions()
 {
 	return CCActionManager::sharedManager()->numberOfRunningActionsInTarget(this);
 }
@@ -840,8 +959,8 @@ void CCNode::schedule(SEL_SCHEDULE selector)
 
 void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 {
-	NSAssert( selector != NULL, "Argument must be non-nil");
-	NSAssert( interval >=0, "Argument must be positive");
+	CCAssert( selector, "Argument must be non-nil");
+	CCAssert( interval >=0, "Argument must be positive");
 
 	CCScheduler::sharedScheduler()->scheduleSelector(selector, this, interval, !m_bIsRunning);
 }
@@ -849,7 +968,7 @@ void CCNode::schedule(SEL_SCHEDULE selector, ccTime interval)
 void CCNode::unschedule(SEL_SCHEDULE selector)
 {
 	// explicit nil handling
-	if (selector == NULL)
+	if (selector == 0)
 		return;
 
 	CCScheduler::sharedScheduler()->unscheduleSelector(selector, this);
@@ -882,24 +1001,44 @@ void CCNode::selectorProtocolRelease(void)
 	release();
 }
 
-CGAffineTransform CCNode::nodeToParentTransform(void)
+CCAffineTransform CCNode::nodeToParentTransform(void)
 {
-	if ( m_bIsTransformDirty ) {
+	if (m_bIsTransformDirty) {
 
-		m_tTransform = CGAffineTransformIdentity;
+		m_tTransform = CCAffineTransformIdentity;
 
-		if( ! m_bIsRelativeAnchorPoint && ! CGPoint::CGPointEqualToPoint(m_tAnchorPointInPixels, CGPointZero) )
-			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tAnchorPointInPixels.x, m_tAnchorPointInPixels.y);
+		if( ! m_bIsRelativeAnchorPoint && ! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPixels, CCPointZero) )
+		{
+			m_tTransform = CCAffineTransformTranslate(m_tTransform, m_tAnchorPointInPixels.x, m_tAnchorPointInPixels.y);
+		}
 
-		if( ! CGPoint::CGPointEqualToPoint(m_tPosition, CGPointZero) )
-			m_tTransform = CGAffineTransformTranslate(m_tTransform, m_tPosition.x, m_tPosition.y);
-		if( m_fRotation != 0 )
-			m_tTransform = CGAffineTransformRotate(m_tTransform, -CC_DEGREES_TO_RADIANS(m_fRotation));
-		if( ! (m_fScaleX == 1 && m_fScaleY == 1) ) 
-			m_tTransform = CGAffineTransformScale(m_tTransform, m_fScaleX, m_fScaleY);
+		if(! CCPoint::CCPointEqualToPoint(m_tPositionInPixels, CCPointZero))
+		{
+			m_tTransform = CCAffineTransformTranslate(m_tTransform, m_tPositionInPixels.x, m_tPositionInPixels.y);
+		}
 
-		if( ! CGPoint::CGPointEqualToPoint(m_tAnchorPointInPixels, CGPointZero) )
-			m_tTransform = CGAffineTransformTranslate(m_tTransform, -m_tAnchorPointInPixels.x, -m_tAnchorPointInPixels.y);
+		if(m_fRotation != 0)
+		{
+			m_tTransform = CCAffineTransformRotate(m_tTransform, -CC_DEGREES_TO_RADIANS(m_fRotation));
+		}
+
+		if(m_fSkewX != 0 || m_fSkewY != 0) 
+		{
+			// create a skewed coordinate system
+			CCAffineTransform skew = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)), tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f, 0.0f, 0.0f);
+			// apply the skew to the transform
+			m_tTransform = CCAffineTransformConcat(skew, m_tTransform);
+		}
+
+		if(! (m_fScaleX == 1 && m_fScaleY == 1)) 
+		{
+			m_tTransform = CCAffineTransformScale(m_tTransform, m_fScaleX, m_fScaleY);
+		}
+
+		if(! CCPoint::CCPointEqualToPoint(m_tAnchorPointInPixels, CCPointZero))
+		{
+			m_tTransform = CCAffineTransformTranslate(m_tTransform, -m_tAnchorPointInPixels.x, -m_tAnchorPointInPixels.y);
+		}
 
 		m_bIsTransformDirty = false;
 	}
@@ -907,68 +1046,112 @@ CGAffineTransform CCNode::nodeToParentTransform(void)
 	return m_tTransform;
 }
 
-CGAffineTransform CCNode::parentToNodeTransform(void)
+CCAffineTransform CCNode::parentToNodeTransform(void)
 {
 	if ( m_bIsInverseDirty ) {
-		m_tInverse = CGAffineTransformInvert(this->nodeToParentTransform());
+		m_tInverse = CCAffineTransformInvert(this->nodeToParentTransform());
 		m_bIsInverseDirty = false;
 	}
 
 	return m_tInverse;
 }
 
-CGAffineTransform CCNode::nodeToWorldTransform()
+CCAffineTransform CCNode::nodeToWorldTransform()
 {
-	CGAffineTransform t = this->nodeToParentTransform();
+	CCAffineTransform t = this->nodeToParentTransform();
 
 	for (CCNode *p = m_pParent; p != NULL; p = p->getParent())
-		t = CGAffineTransformConcat(t, p->nodeToParentTransform());
+		t = CCAffineTransformConcat(t, p->nodeToParentTransform());
 
 	return t;
 }
 
-CGAffineTransform CCNode::worldToNodeTransform(void)
+CCAffineTransform CCNode::worldToNodeTransform(void)
 {
-	return CGAffineTransformInvert(this->nodeToWorldTransform());
+	return CCAffineTransformInvert(this->nodeToWorldTransform());
 }
 
-CGPoint CCNode::convertToNodeSpace(CGPoint worldPoint)
+CCPoint CCNode::convertToNodeSpace(const CCPoint& worldPoint)
 {
-	return CGPointApplyAffineTransform(worldPoint, this->worldToNodeTransform());
+	CCPoint ret;
+	if(CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		ret = CCPointApplyAffineTransform(worldPoint, worldToNodeTransform());
+	}
+	else 
+	{
+		ret = ccpMult(worldPoint, CC_CONTENT_SCALE_FACTOR());
+		ret = CCPointApplyAffineTransform(ret, worldToNodeTransform());
+		ret = ccpMult(ret, 1/CC_CONTENT_SCALE_FACTOR());
+	}
+
+	return ret;
 }
 
-CGPoint CCNode::convertToWorldSpace(CGPoint nodePoint)
+CCPoint CCNode::convertToWorldSpace(const CCPoint& nodePoint)
 {
-	return CGPointApplyAffineTransform(nodePoint, this->nodeToWorldTransform());
+	CCPoint ret;
+	if(CC_CONTENT_SCALE_FACTOR() == 1)
+	{
+		ret = CCPointApplyAffineTransform(nodePoint, nodeToWorldTransform());
+	}
+	else 
+	{
+		ret = ccpMult( nodePoint, CC_CONTENT_SCALE_FACTOR() );
+		ret = CCPointApplyAffineTransform(ret, nodeToWorldTransform());
+		ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+
+	return ret;
 }
 
-CGPoint CCNode::convertToNodeSpaceAR(CGPoint worldPoint)
+CCPoint CCNode::convertToNodeSpaceAR(const CCPoint& worldPoint)
 {
-	CGPoint nodePoint = this->convertToNodeSpace(worldPoint);
-	return ccpSub(nodePoint, m_tAnchorPointInPixels);
+	CCPoint nodePoint = convertToNodeSpace(worldPoint);
+	CCPoint anchorInPoints;
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+	{
+		anchorInPoints = m_tAnchorPointInPixels;
+	}
+	else
+	{
+		anchorInPoints = ccpMult( m_tAnchorPointInPixels, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+
+	return ccpSub(nodePoint, anchorInPoints);
 }
 
-CGPoint CCNode::convertToWorldSpaceAR(CGPoint nodePoint)
+CCPoint CCNode::convertToWorldSpaceAR(const CCPoint& nodePoint)
 {
-	nodePoint = ccpAdd(nodePoint, m_tAnchorPointInPixels);
-	return this->convertToWorldSpace(nodePoint);
+	CCPoint anchorInPoints;
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+	{
+		anchorInPoints = m_tAnchorPointInPixels;
+	}
+	else
+	{
+		anchorInPoints = ccpMult( m_tAnchorPointInPixels, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+
+	CCPoint pt = ccpAdd(nodePoint, anchorInPoints);
+	return convertToWorldSpace(pt);
 }
-CGPoint CCNode::convertToWindowSpace(CGPoint nodePoint)
+CCPoint CCNode::convertToWindowSpace(const CCPoint& nodePoint)
 {
-	CGPoint worldPoint = this->convertToWorldSpace(nodePoint);
+	CCPoint worldPoint = this->convertToWorldSpace(nodePoint);
 	return CCDirector::sharedDirector()->convertToUI(worldPoint);
 }
 
-// convenience methods which take a CCTouch instead of CGPoint
-CGPoint CCNode::convertTouchToNodeSpace(CCTouch *touch)
+// convenience methods which take a CCTouch instead of CCPoint
+CCPoint CCNode::convertTouchToNodeSpace(CCTouch *touch)
 {
-	CGPoint point = touch->locationInView(touch->view());
+	CCPoint point = touch->locationInView(touch->view());
 	point = CCDirector::sharedDirector()->convertToGL(point);
 	return this->convertToNodeSpace(point);
 }
-CGPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
+CCPoint CCNode::convertTouchToNodeSpaceAR(CCTouch *touch)
 {
-	CGPoint point = touch->locationInView(touch->view());
+	CCPoint point = touch->locationInView(touch->view());
 	point = CCDirector::sharedDirector()->convertToGL(point);
 	return this->convertToNodeSpaceAR(point);
 }

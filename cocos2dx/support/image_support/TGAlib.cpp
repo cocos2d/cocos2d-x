@@ -26,10 +26,12 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 #include "TGAlib.h"
-#include "support/file_support/FileData.h"
-#include "CCXCocos2dDefine.h"
+#include "CCFileUtils.h"
 
 namespace   cocos2d {
+
+void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
+void tgaFlipImage( tImageTGA *info );
 
 // load the image header field from stream
 bool tgaLoadHeader(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
@@ -39,19 +41,19 @@ bool tgaLoadHeader(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psIn
     do 
     {
         size_t step = sizeof(unsigned char) * 2;
-        CCX_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
+        CC_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
         memcpy(&psInfo->type, Buffer + step, sizeof(unsigned char));
 
         step += sizeof(unsigned char) * 2;
         step += sizeof(signed short) * 4;
-        CCX_BREAK_IF((step + sizeof(signed short) * 2 + sizeof(unsigned char)) > bufSize);
+        CC_BREAK_IF((step + sizeof(signed short) * 2 + sizeof(unsigned char)) > bufSize);
         memcpy(&psInfo->width, Buffer + step, sizeof(signed short));
         memcpy(&psInfo->height, Buffer + step + sizeof(signed short), sizeof(signed short));
         memcpy(&psInfo->pixelDepth, Buffer + step + sizeof(signed short) * 2, sizeof(unsigned char));
 
         step += sizeof(unsigned char);
         step += sizeof(signed short) * 2;
-        CCX_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
+        CC_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
         unsigned char cGarbage;
         memcpy(&cGarbage, Buffer + step, sizeof(unsigned char));
 
@@ -82,7 +84,7 @@ bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *p
         total = psInfo->height * psInfo->width * mode;
 
         size_t dataSize = sizeof(unsigned char) * total;
-        CCX_BREAK_IF((step + dataSize) > bufSize);
+        CC_BREAK_IF((step + dataSize) > bufSize);
         memcpy(psInfo->imageData, Buffer + step, dataSize);
 
         // mode=3 or 4 implies that the image is RGB(A). However TGA
@@ -105,7 +107,6 @@ bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *p
 
 bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo)
 {
-    bool bRet = false;
     unsigned int mode,total,i, index = 0;
     unsigned char aux[4], runlength = 0;
     unsigned int skip = 0, flag = 0;
@@ -128,7 +129,7 @@ bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA
         else
         {
             // otherwise, read in the run length token
-            CCX_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
+            CC_BREAK_IF((step + sizeof(unsigned char)) > bufSize);
             memcpy(&runlength, Buffer + step, sizeof(unsigned char));
             step += sizeof(unsigned char);
 
@@ -145,7 +146,7 @@ bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA
         if ( !skip )
         {
             // no, read in the pixel data
-            CCX_BREAK_IF((step + sizeof(unsigned char) * mode) > bufSize);
+            CC_BREAK_IF((step + sizeof(unsigned char) * mode) > bufSize);
 
             memcpy(aux, Buffer + step, sizeof(unsigned char) * mode);
             step += sizeof(unsigned char) * mode;
@@ -196,13 +197,13 @@ tImageTGA * tgaLoad(const char *pszFilename)
 {
     int mode,total;
     tImageTGA *info = NULL;
-    FileData data;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = data.getFileData(pszFilename, "rb", &nSize);
+    CCFileData data(pszFilename, "rb");
+    unsigned long nSize = data.getSize();
+    unsigned char* pBuffer = data.getBuffer();
 
     do
     {
-        CCX_BREAK_IF(! pBuffer);
+        CC_BREAK_IF(! pBuffer);
         info = (tImageTGA *)malloc(sizeof(tImageTGA));
 
         // get the file header info

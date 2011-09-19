@@ -1,0 +1,845 @@
+/*
+
+===== IMPORTANT =====
+
+This is sample code demonstrating API, technology or techniques in development.
+Although this sample code has been reviewed for technical accuracy, it is not
+final. Apple is supplying this information to help you plan for the adoption of
+the technologies and programming interfaces described herein. This information
+is subject to change, and software implemented based on this sample code should
+be tested with final operating system software and final documentation. Newer
+versions of this sample code may be provided with future seeds of the API or
+technology. For information about updates to this and other developer
+documentation, view the New & Updated sidebars in subsequent documentation
+seeds.
+
+=====================
+
+File: EAGLView.m
+Abstract: Convenience class that wraps the CAEAGLLayer from CoreAnimation into a
+UIView subclass.
+
+Version: 1.3
+
+Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
+("Apple") in consideration of your agreement to the following terms, and your
+use, installation, modification or redistribution of this Apple software
+constitutes acceptance of these terms.  If you do not agree with these terms,
+please do not use, install, modify or redistribute this Apple software.
+
+In consideration of your agreement to abide by the following terms, and subject
+to these terms, Apple grants you a personal, non-exclusive license, under
+Apple's copyrights in this original Apple software (the "Apple Software"), to
+use, reproduce, modify and redistribute the Apple Software, with or without
+modifications, in source and/or binary forms; provided that if you redistribute
+the Apple Software in its entirety and without modifications, you must retain
+this notice and the following text and disclaimers in all such redistributions
+of the Apple Software.
+Neither the name, trademarks, service marks or logos of Apple Inc. may be used
+to endorse or promote products derived from the Apple Software without specific
+prior written permission from Apple.  Except as expressly stated in this notice,
+no other rights or licenses, express or implied, are granted by Apple herein,
+including but not limited to any patent rights that may be infringed by your
+derivative works or by other works in which the Apple Software may be
+incorporated.
+
+The Apple Software is provided by Apple on an "AS IS" basis.  APPLE MAKES NO
+WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED
+WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND OPERATION ALONE OR IN
+COMBINATION WITH YOUR PRODUCTS.
+
+IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION, MODIFICATION AND/OR
+DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED AND WHETHER UNDER THEORY OF
+CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF
+APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Copyright (C) 2008 Apple Inc. All Rights Reserved.
+
+*/
+
+#import <QuartzCore/QuartzCore.h>
+
+#import "EAGLView.h"
+#import "ES1Renderer.h"
+#import "CCDirector.h"
+#import "CCSet.h"
+#import "CCTouch.h"
+#import "CCIMEDispatcher.h"
+#import "OpenGL_Internal.h"
+
+//CLASS IMPLEMENTATIONS:
+
+#define MAX_TOUCHES     11
+
+static EAGLView *view;
+static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
+
+@interface EAGLView (Private)
+- (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
+- (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
+@end
+
+@implementation EAGLView
+
+@synthesize surfaceSize=size_;
+@synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
+@synthesize context=context_;
+@synthesize touchesIntergerDict;
+@synthesize indexBitsUsed;
+@synthesize multiSampling=multiSampling_;
+
++ (Class) layerClass
+{
+	return [CAEAGLLayer class];
+}
+
++ (id) viewWithFrame:(CGRect)frame
+{
+	return [[[self alloc] initWithFrame:frame] autorelease];
+}
+
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
+{
+	return [[[self alloc]initWithFrame:frame pixelFormat:format] autorelease];
+}
+
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
+{
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+}
+
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
+{
+	return [[[self alloc]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
+}
+
++ (id) sharedEGLView
+{
+	return view;
+}
+
+- (id) initWithFrame:(CGRect)frame
+{
+	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+}
+
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
+{
+	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+}
+
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
+{
+	if((self = [super initWithFrame:frame]))
+	{
+		pixelformat_ = format;
+		depthFormat_ = depth;
+		multiSampling_ = sampling;
+		requestedSamples_ = nSamples;
+		preserveBackbuffer_ = retained;
+		markedText_ = nil;
+		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
+			[self release];
+			return nil;
+		}
+	}
+        
+                touchesIntergerDict = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, NULL, NULL);
+                indexBitsUsed = 0x00000000;
+
+	view = self;
+	return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+	if( (self = [super initWithCoder:aDecoder]) ) {
+		
+		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
+		
+		pixelformat_ = kEAGLColorFormatRGB565;
+		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
+		multiSampling_= NO;
+		requestedSamples_ = 0;
+		size_ = [eaglLayer bounds].size;
+		markedText_ = nil;
+		
+		if( ! [self setupSurfaceWithSharegroup:nil] ) {
+			[self release];
+			return nil;
+		}
+    }
+	
+	view = self;
+    return self;
+}
+
+- (void)didMoveToWindow;
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onUIKeyboardNotification:)
+                                                 name:UIKeyboardDidHideNotification object:nil];
+}
+
+-(int) getWidth
+{
+	CGSize bound = [self bounds].size;
+	return bound.width;
+}
+
+-(int) getHeight
+{
+	CGSize bound = [self bounds].size;
+	return bound.height;
+}
+
+-(int) getUnUsedIndex
+{
+    int i;
+    int temp = indexBitsUsed;
+    
+    for (i = 0; i < MAX_TOUCHES; i++) {
+        if (! (temp & 0x00000001)) {
+            indexBitsUsed |= (1 <<  i);
+            return i;
+        }
+        
+        temp >>= 1;
+    }
+    
+    // all bits are used
+    return -1;
+}
+
+-(void) removeUsedIndexBit:(int) index
+{
+   if (index < 0 || index >= MAX_TOUCHES) {
+       return;
+   }
+    
+    unsigned int temp = 1 << index;
+    temp = ~temp;
+    indexBitsUsed &= temp;
+}
+
+-(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
+{
+	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+	
+	eaglLayer.opaque = YES;
+	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
+									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
+	
+	
+	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_
+										 withPixelFormat:[self convertPixelFormat:pixelformat_]
+										  withSharegroup:sharegroup
+									   withMultiSampling:multiSampling_
+									 withNumberOfSamples:requestedSamples_];
+	if (!renderer_)
+		return NO;
+	
+	context_ = [renderer_ context];
+	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
+
+	//discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+	
+	return YES;
+}
+
+- (void) dealloc
+{
+    CFRelease(touchesIntergerDict);
+	[renderer_ release];
+	[super dealloc];
+}
+
+- (void) layoutSubviews
+{
+    [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+	size_ = [renderer_ backingSize];
+
+	// Issue #914 #924
+// 	CCDirector *director = [CCDirector sharedDirector];
+// 	[director reshapeProjection:size_];
+    cocos2d::CCSize size;
+    size.width = size_.width;
+    size.height = size_.height;
+    cocos2d::CCDirector::sharedDirector()->reshapeProjection(size);
+
+	// Avoid flicker. Issue #350
+	//[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	cocos2d::CCDirector::sharedDirector()->drawScene();
+}
+
+- (void) swapBuffers
+{
+	// IMPORTANT:
+	// - preconditions
+	//	-> context_ MUST be the OpenGL context
+	//	-> renderbuffer_ must be the the RENDER BUFFER
+
+#ifdef __IPHONE_4_0
+	
+	if (multiSampling_)
+	{
+		/* Resolve from msaaFramebuffer to resolveFramebuffer */
+		//glDisable(GL_SCISSOR_TEST);     
+		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
+		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+		glResolveMultisampleFramebufferAPPLE();
+	}
+	
+	if( discardFramebufferSupported_)
+	{	
+		if (multiSampling_)
+		{
+			if (depthFormat_)
+			{
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES};
+				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
+			}
+			else
+			{
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
+				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
+			}
+			
+			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
+	
+		}	
+		
+		// not MSAA
+		else if (depthFormat_ ) {
+			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
+			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+		}
+	}
+	
+#endif // __IPHONE_4_0
+	
+ 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
+        {
+// 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+        }
+
+#if COCOS2D_DEBUG
+	CHECK_GL_ERROR();
+#endif
+	
+	// We can safely re-bind the framebuffer here, since this will be the
+	// 1st instruction of the new main loop
+	if( multiSampling_ )
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);	
+}
+
+- (unsigned int) convertPixelFormat:(NSString*) pixelFormat
+{
+	// define the pixel format
+	GLenum pFormat;
+	
+	
+	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
+		pFormat = GL_RGB565_OES;
+	else 
+		pFormat = GL_RGBA8_OES;
+	
+	return pFormat;
+}
+
+#pragma mark EAGLView - Point conversion
+
+- (CGPoint) convertPointFromViewToSurface:(CGPoint)point
+{
+	CGRect bounds = [self bounds];
+        
+        CGPoint ret;
+        ret.x = (point.x - bounds.origin.x) / bounds.size.width * size_.width;
+        ret.y =  (point.y - bounds.origin.y) / bounds.size.height * size_.height;
+    
+        return ret;
+}
+
+- (CGRect) convertRectFromViewToSurface:(CGRect)rect
+{
+	CGRect bounds = [self bounds];
+    
+        CGRect ret;
+        ret.origin.x = (rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width;
+        ret.origin.y = (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height;
+        ret.size.width = rect.size.width / bounds.size.width * size_.width;
+        ret.size.height = rect.size.height / bounds.size.height * size_.height;
+    
+        return ret;
+}
+
+// Pass the touches to the superview
+#pragma mark EAGLView - Touch Delegate
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	cocos2d::CCSet set;
+    cocos2d::CCTouch *pTouch;
+    
+	for (UITouch *touch in touches) {
+                NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+                int unUsedIndex = 0;
+        
+                // it is a new touch
+                if (! index) {
+                    unUsedIndex = [self getUnUsedIndex];
+                    
+                    // The touches is more than MAX_TOUCHES ?
+                    if (unUsedIndex == -1) {
+                        return;
+                    }
+                    
+                    pTouch = s_pTouches[unUsedIndex] = new cocos2d::CCTouch();
+                }
+
+		float x = [touch locationInView: [touch view]].x;
+		float y = [touch locationInView: [touch view]].y;
+		pTouch->SetTouchInfo(0, x, y);
+        
+                CFDictionaryAddValue(touchesIntergerDict, touch, [NSNumber numberWithInt:unUsedIndex]);
+		
+		set.addObject(pTouch);
+	}
+	
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesBegan(&set);
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	cocos2d::CCSet set;
+	for (UITouch *touch in touches) {
+		NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+                if (! index) {
+                    // if the index doesn't exist, it is an error
+                    return;
+                }
+                
+                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
+                if (! pTouch) {
+                    // if the pTouch is null, it is an error
+                    return;
+                }
+        
+		float x = [touch locationInView: [touch view]].x;
+		float y = [touch locationInView: [touch view]].y;
+		pTouch->SetTouchInfo(0, x, y);
+		
+		set.addObject(pTouch);
+	}
+	
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesMoved(&set);
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	cocos2d::CCSet set;
+	for (UITouch *touch in touches) {
+            NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+            if (! index) {
+                // if the index doesn't exist, it is an error
+                return;
+            }
+        
+                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
+                if (! pTouch) {
+                    // if the pTouch is null, it is an error
+                    return;
+                }
+        
+		float x = [touch locationInView: [touch view]].x;
+		float y = [touch locationInView: [touch view]].y;
+		pTouch->SetTouchInfo(0, x, y);
+		
+		set.addObject(pTouch);
+                CFDictionaryRemoveValue(touchesIntergerDict, touch);
+                pTouch->release();
+                s_pTouches[[index intValue]] = NULL;
+                [self removeUsedIndexBit:[index intValue]];
+	}
+	
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesEnded(&set);
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	cocos2d::CCSet set;
+	for (UITouch *touch in touches) {
+            NSNumber *index = (NSNumber*)CFDictionaryGetValue(touchesIntergerDict, touch);
+            if (! index) {
+                // if the index doesn't exist, it is an error
+                return;
+            }
+        
+                cocos2d::CCTouch *pTouch = s_pTouches[[index intValue]];
+                if (! pTouch) {
+                    // if the pTouch is null, it is an error
+                    return;
+                }
+        
+		float x = [touch locationInView: [touch view]].x;
+		float y = [touch locationInView: [touch view]].y;
+		pTouch->SetTouchInfo(0, x, y);
+		
+		set.addObject(pTouch);
+                CFDictionaryRemoveValue(touchesIntergerDict, touch);
+                pTouch->release();
+                s_pTouches[[index intValue]] = NULL;
+                [self removeUsedIndexBit:[index intValue]];
+	}
+	
+	cocos2d::CCDirector::sharedDirector()->getOpenGLView()->touchesCancelled(&set);
+}
+
+#pragma mark -
+#pragma mark UIView - Responder
+
+- (BOOL)canBecomeFirstResponder
+{
+	if (nil != markedText_) {
+		[markedText_ release];
+	}
+    markedText_ = nil;
+    return YES;
+}
+
+#pragma mark -
+#pragma mark UIKeyInput protocol
+
+- (BOOL)hasText
+{
+    return NO;
+}
+
+- (void)insertText:(NSString *)text
+{
+	if (nil != markedText_) {
+		[markedText_ release];
+		markedText_ = nil;
+	}
+    const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+}
+
+- (void)deleteBackward
+{
+	if (nil != markedText_) {
+		[markedText_ release];
+		markedText_ = nil;
+	}
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+}
+
+#pragma mark -
+#pragma mark UITextInputTrait protocol
+
+-(UITextAutocapitalizationType) autocapitalizationType
+{
+    return UITextAutocapitalizationTypeNone;
+}
+
+#pragma mark -
+#pragma mark UITextInput protocol
+
+#pragma mark UITextInput - properties
+
+@synthesize beginningOfDocument;
+@synthesize endOfDocument;
+@synthesize inputDelegate;
+@synthesize markedTextRange;
+@synthesize markedTextStyle;
+// @synthesize selectedTextRange;       // must implement
+@synthesize tokenizer;
+
+/* Text may have a selection, either zero-length (a caret) or ranged.  Editing operations are
+ * always performed on the text from this selection.  nil corresponds to no selection. */
+- (void)setSelectedTextRange:(UITextRange *)aSelectedTextRange;
+{
+    CCLOG("UITextRange:setSelectedTextRange");
+}
+- (UITextRange *)selectedTextRange;
+{
+	return [[[UITextRange alloc] init] autorelease];
+}
+
+#pragma mark UITextInput - Replacing and Returning Text
+
+- (NSString *)textInRange:(UITextRange *)range;
+{
+    CCLOG("textInRange");
+	return @"";
+}
+- (void)replaceRange:(UITextRange *)range withText:(NSString *)theText;
+{
+    CCLOG("replaceRange");
+}
+
+#pragma mark UITextInput - Working with Marked and Selected Text
+
+
+
+/* If text can be selected, it can be marked. Marked text represents provisionally
+ * inserted text that has yet to be confirmed by the user.  It requires unique visual
+ * treatment in its display.  If there is any marked text, the selection, whether a
+ * caret or an extended range, always resides witihin.
+ *
+ * Setting marked text either replaces the existing marked text or, if none is present,
+ * inserts it from the current selection. */ 
+
+- (void)setMarkedTextRange:(UITextRange *)markedTextRange;
+{
+    CCLOG("setMarkedTextRange");
+}
+
+- (UITextRange *)markedTextRange;
+{
+    CCLOG("markedTextRange");
+	return nil; // Nil if no marked text.
+}
+- (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle;
+{
+    CCLOG("setMarkedTextStyle");
+    
+}
+- (NSDictionary *)markedTextStyle;
+{
+    CCLOG("markedTextStyle");
+	return nil;
+}
+- (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
+{
+    CCLOG("setMarkedText");
+	if (markedText == markedText_) {
+		return;
+	}
+	if (nil != markedText_) {
+		[markedText_ release];
+	}
+    markedText_ = markedText;
+	[markedText_ retain];
+}
+- (void)unmarkText;
+{
+    CCLOG("unmarkText");
+    if (nil == markedText_)
+    {
+        return;
+    }
+    const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
+    cocos2d::CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+	[markedText_ release];
+    markedText_ = nil;
+}
+
+#pragma mark Methods for creating ranges and positions.
+
+- (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition;
+{
+    CCLOG("textRangeFromPosition");
+	return nil;
+}
+- (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset;
+{
+    CCLOG("positionFromPosition");
+	return nil;
+}
+- (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset;
+{
+    CCLOG("positionFromPosition");
+	return nil;
+}
+
+/* Simple evaluation of positions */
+- (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
+{
+    CCLOG("comparePosition");
+	return 0;
+}
+- (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
+{
+    CCLOG("offsetFromPosition");
+	return 0;
+}
+
+- (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction;
+{
+    CCLOG("positionWithinRange");
+	return nil;
+}
+- (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction;
+{
+    CCLOG("characterRangeByExtendingPosition");
+	return nil;
+}
+
+#pragma mark Writing direction
+
+- (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction;
+{
+    CCLOG("baseWritingDirectionForPosition");
+	return UITextWritingDirectionNatural;
+}
+- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range;
+{
+    CCLOG("setBaseWritingDirection");
+}
+
+#pragma mark Geometry
+
+/* Geometry used to provide, for example, a correction rect. */
+- (CGRect)firstRectForRange:(UITextRange *)range;
+{
+    CCLOG("firstRectForRange");
+	return CGRectNull;
+}
+- (CGRect)caretRectForPosition:(UITextPosition *)position;
+{
+	CCLOG("caretRectForPosition");
+	return caretRect_;
+}
+
+#pragma mark Hit testing
+
+/* JS - Find the closest position to a given point */
+- (UITextPosition *)closestPositionToPoint:(CGPoint)point;
+{
+    CCLOG("closestPositionToPoint");
+	return nil;
+}
+- (UITextPosition *)closestPositionToPoint:(CGPoint)point withinRange:(UITextRange *)range;
+{
+    CCLOG("closestPositionToPoint");
+	return nil;
+}
+- (UITextRange *)characterRangeAtPoint:(CGPoint)point;
+{
+    CCLOG("characterRangeAtPoint");
+	return nil;
+}
+
+#pragma mark -
+#pragma mark UIKeyboard notification
+
+- (void)onUIKeyboardNotification:(NSNotification *)notif;
+{
+    NSString * type = notif.name;
+    
+    NSDictionary* info = [notif userInfo];
+    CGRect begin = [self convertRect: 
+                    [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue]
+                            fromView:self];
+    CGRect end = [self convertRect: 
+                  [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue]
+                          fromView:self];
+    double aniDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    CGSize viewSize = self.frame.size;
+    CGFloat tmp;
+    
+    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    {
+        case UIInterfaceOrientationPortrait:
+            begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
+            end.origin.y = viewSize.height - end.origin.y - end.size.height;
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            begin.origin.x = viewSize.width - (begin.origin.x + begin.size.width);
+            end.origin.x = viewSize.width - (end.origin.x + end.size.width);
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            tmp = begin.size.width;
+            begin.size.width = begin.size.height;
+            begin.size.height = tmp;
+            tmp = end.size.width;
+            end.size.width = end.size.height;
+            end.size.height = tmp;
+            tmp = viewSize.width;
+            viewSize.width = viewSize.height;
+            viewSize.height = tmp;
+            
+            tmp = begin.origin.x;
+            begin.origin.x = begin.origin.y;
+            begin.origin.y = viewSize.height - tmp - begin.size.height;
+            tmp = end.origin.x;
+            end.origin.x = end.origin.y;
+            end.origin.y = viewSize.height - tmp - end.size.height;
+            break;
+            
+        case UIInterfaceOrientationLandscapeRight:
+            tmp = begin.size.width;
+            begin.size.width = begin.size.height;
+            begin.size.height = tmp;
+            tmp = end.size.width;
+            end.size.width = end.size.height;
+            end.size.height = tmp;
+            tmp = viewSize.width;
+            viewSize.width = viewSize.height;
+            viewSize.height = tmp;
+            
+            tmp = begin.origin.x;
+            begin.origin.x = begin.origin.y;
+            begin.origin.y = tmp;
+            tmp = end.origin.x;
+            end.origin.x = end.origin.y;
+            end.origin.y = tmp;
+            break;
+            
+        default:
+            break;
+    }
+    cocos2d::CCIMEKeyboardNotificationInfo notiInfo;
+    notiInfo.begin = cocos2d::CCRect(begin.origin.x,
+                                     begin.origin.y,
+                                     begin.size.width, 
+                                     begin.size.height);
+    notiInfo.end = cocos2d::CCRect(end.origin.x,
+                                   end.origin.y,
+                                   end.size.width, 
+                                   end.size.height);
+    notiInfo.duration = (float)aniDuration;
+    cocos2d::CCIMEDispatcher* dispatcher = cocos2d::CCIMEDispatcher::sharedDispatcher();
+    if (UIKeyboardWillShowNotification == type) 
+    {
+        dispatcher->dispatchKeyboardWillShow(notiInfo);
+    }
+    else if (UIKeyboardDidShowNotification == type)
+    {
+		//CGSize screenSize = self.window.screen.bounds.size;
+        dispatcher->dispatchKeyboardDidShow(notiInfo);
+        caretRect_ = end;
+        caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + [UIFont smallSystemFontSize]);
+        caretRect_.size.height = 0;
+    }
+    else if (UIKeyboardWillHideNotification == type)
+    {
+        dispatcher->dispatchKeyboardWillHide(notiInfo);
+    }
+    else if (UIKeyboardDidHideNotification == type)
+    {
+        caretRect_ = CGRectZero;
+        dispatcher->dispatchKeyboardDidHide(notiInfo);
+    }
+}
+@end

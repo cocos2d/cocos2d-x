@@ -1,0 +1,36 @@
+cocos2d-x authors 
+
+(ordered by the join in time)
+
+Core Developers:
+    Walzer Wang
+    Minggo Zhang
+    WenSheng Yang
+    Bin Zhang
+    RongHong Huang
+
+Developers:
+    ZhuoShi Shun
+	contribute the lua binding of CocosDenshion
+
+    Jirka Fajfr
+    Chris Calm
+        authors of CCTexturePVR
+
+    RuiXiang Zhou
+    XiDi Peng
+    AiYu Ye
+        authors of lua binding
+
+    Max Aksenov
+        author and maintainer of Marmalade(Airplay) port
+
+    Carlos Sessa
+	implement the accelerometer module onto Android
+
+    Dumganhar
+        author of Bada port
+
+Cocos2d-x can not grow so fast without the active community.
+Thanks to all developers who report & trace bugs, dicuss the engine usage in forum & QQ groups!
+Special thanks to Ricardo Quesada for giving us lots of guidances & suggestions.

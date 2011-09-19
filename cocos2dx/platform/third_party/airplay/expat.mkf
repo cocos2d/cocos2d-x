@@ -1,0 +1,33 @@
+define HAVE_EXPAT_CONFIG_H
+
+includepath
+{
+	.
+	"expat/lib"
+}
+
+files
+{
+	expat.defines.txt
+	expat_config.h
+
+	[expat]
+	("expat/lib")
+	ascii.h
+	asciitab.h
+	expat.h
+	expat_external.h
+	iasciitab.h
+	internal.h
+	latin1tab.h
+	macconfig.h
+	nametab.h
+	utf8tab.h
+	winconfig.h
+	xmlparse.c
+	xmlrole.c
+	xmlrole.h
+	xmltok.c
+	xmltok.h
+}
+

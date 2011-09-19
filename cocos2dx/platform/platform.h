@@ -25,41 +25,23 @@ THE SOFTWARE.
 #ifndef __PLATFORM_H__
 #define __PLATFORM_H__
 
-#include "config_platform.h"
+#include "CCThread.h"
 
-#if defined(CCX_PLATFORM_UPHONE)
-	#include "uphone/CCTime.h"
-	#include "uphone/NSLock.h"
-	#include "uphone/Cocos2dTypes.h"
-	// #include "uphone/CCXGLExtFunc.h"
-	#include "uphone/CCXBitmapDC.h"
-    #include "uphone/ZipUtils.h"
-#elif defined(CCX_PLATFORM_WIN32)
-    #include "win32/CCTime.h"
-    #include "win32/NSLock.h"
-    #include "win32/Cocos2dTypes.h"
-    #include "win32/CCXBitmapDC.h"
-    #include "win32/ZipUtils.h"
-#elif defined(CCX_PLATFORM_ANDROID)
-    #include "android/CCTime.h"
-    #include "android/NSLock.h"
-    #include "android/Cocos2dTypes.h"
-    #include "android/CCXBitmapDC.h"
-    #include "android/ZipUtils.h"
-#elif defined(CCX_PLATFORM_IPHONE)
-    #include "iphone/CCTime.h"
-    #include "iphone/NSLock.h"
-    #include "iphone/Cocos2dTypes.h"
-    #include "iphone/CCXBitmapDC.h"
-    #include "iphone/ZipUtils.h"
-#elif defined(CCX_PLATFORM_BADA)
-    #include "bada/CCTime.h"
-    #include "bada/NSLock.h"
-    #include "bada/Cocos2dTypes.h"
-    #include "bada/CCXBitmapDC.h"
-    #include "bada/ZipUtils.h"
-#else 
-    #error
-#endif
+NS_CC_BEGIN;
+
+struct cc_timeval
+{
+    long	tv_sec;		// seconds
+    long	tv_usec;    // microSeconds
+};
+
+class CCTime
+{
+public:
+    static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
+    static void timersubCocos2d(struct cc_timeval *out, struct cc_timeval *start, struct cc_timeval *end);
+};
+
+NS_CC_END;
 
 #endif // __PLATFORM_H__

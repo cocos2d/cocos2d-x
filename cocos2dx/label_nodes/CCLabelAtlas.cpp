@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,10 +25,14 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCLabelAtlas.h"
 #include "CCTextureAtlas.h"
+#include "CCPointExtension.h"
+#include "CCDrawingPrimitives.h"
+#include "ccConfig.h"
+
 namespace cocos2d{
 
 	//CCLabelAtlas - Creation & Init
-	CCLabelAtlas * CCLabelAtlas::labelAtlasWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+	CCLabelAtlas * CCLabelAtlas::labelWithString(const char *label, const char *charMapFile, unsigned int itemWidth, int unsigned itemHeight, unsigned char startCharMap)
 	{
 		CCLabelAtlas *pRet = new CCLabelAtlas();
 		if(pRet && pRet->initWithString(label, charMapFile, itemWidth, itemHeight, startCharMap))
@@ -34,10 +40,11 @@ namespace cocos2d{
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet)
+		CC_SAFE_DELETE(pRet)
 		return NULL;
 	}
-	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
+
+	bool CCLabelAtlas::initWithString(const char *label, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned char startCharMap)
 	{
 		assert(label != NULL);
 		if (CCAtlasNode::initWithTileFile(charMapFile, itemWidth, itemHeight, strlen(label)))
@@ -52,37 +59,54 @@ namespace cocos2d{
 	//CCLabelAtlas - Atlas generation
 	void CCLabelAtlas::updateAtlasValues()
 	{
-		int n = m_sString.length();
+		unsigned int n = m_sString.length();
 
 		ccV3F_C4B_T2F_Quad quad;
 
-		const char *s = m_sString.c_str();
+		const unsigned char *s = (unsigned char*)m_sString.c_str();
 
-		for( int i=0; i<n; i++) {
+        CCTexture2D *texture = m_pTextureAtlas->getTexture();
+        float textureWide = (float) texture->getPixelsWide();
+        float textureHigh = (float) texture->getPixelsHigh();
+
+		for(unsigned int i = 0; i < n; i++) {
 			unsigned char a = s[i] - m_cMapStartChar;
-			float row = (a % m_nItemsPerRow) * m_fTexStepX;
-			float col = (a / m_nItemsPerRow) * m_fTexStepY;
+			float row = (float) (a % m_uItemsPerRow);
+			float col = (float) (a / m_uItemsPerRow);
 
-			quad.tl.texCoords.u = row;
-			quad.tl.texCoords.v = col;
-			quad.tr.texCoords.u = row + m_fTexStepX;
-			quad.tr.texCoords.v = col;
-			quad.bl.texCoords.u = row;
-			quad.bl.texCoords.v = col + m_fTexStepY;
-			quad.br.texCoords.u = row + m_fTexStepX;
-			quad.br.texCoords.v = col + m_fTexStepY;
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+            // Issue #938. Don't use texStepX & texStepY
+            float left		= (2 * row * m_uItemWidth + 1) / (2 * textureWide);
+            float right		= left + (m_uItemWidth * 2 - 2) / (2 * textureWide);
+            float top		= (2 * col * m_uItemHeight + 1) / (2 * textureHigh);
+            float bottom	= top + (m_uItemHeight * 2 - 2) / (2 * textureHigh);
+#else
+            float left		= row * m_uItemWidth / textureWide;
+            float right		= left + m_uItemWidth / textureWide;
+            float top		= col * m_uItemHeight / textureHigh;
+            float bottom	= top + m_uItemHeight / textureHigh;
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-			quad.bl.vertices.x = (float) (i * m_nItemWidth);
+            quad.tl.texCoords.u = left;
+            quad.tl.texCoords.v = top;
+            quad.tr.texCoords.u = right;
+            quad.tr.texCoords.v = top;
+            quad.bl.texCoords.u = left;
+            quad.bl.texCoords.v = bottom;
+            quad.br.texCoords.u = right;
+            quad.br.texCoords.v = bottom;
+
+			quad.bl.vertices.x = (float) (i * m_uItemWidth);
 			quad.bl.vertices.y = 0;
 			quad.bl.vertices.z = 0.0f;
-			quad.br.vertices.x = (float)(i * m_nItemWidth + m_nItemWidth);
+			quad.br.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
 			quad.br.vertices.y = 0;
 			quad.br.vertices.z = 0.0f;
-			quad.tl.vertices.x = (float)(i * m_nItemWidth);
-			quad.tl.vertices.y = (float)(m_nItemHeight);
+			quad.tl.vertices.x = (float)(i * m_uItemWidth);
+			quad.tl.vertices.y = (float)(m_uItemHeight);
 			quad.tl.vertices.z = 0.0f;
-			quad.tr.vertices.x = (float)(i * m_nItemWidth + m_nItemWidth);
-			quad.tr.vertices.y = (float)(m_nItemHeight);
+			quad.tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
+			quad.tr.vertices.y = (float)(m_uItemHeight);
 			quad.tr.vertices.z = 0.0f;
 
 			m_pTextureAtlas->updateQuad(&quad, i);
@@ -92,60 +116,41 @@ namespace cocos2d{
 	//CCLabelAtlas - CCLabelProtocol
 	void CCLabelAtlas::setString(const char *label)
 	{
-		if (strlen(label) > m_pTextureAtlas->getTotalQuads())
+		unsigned int len = strlen(label);
+		if (len > m_pTextureAtlas->getTotalQuads())
 		{
-			m_pTextureAtlas->resizeCapacity(strlen(label));
+			m_pTextureAtlas->resizeCapacity(len);
 		}
 		m_sString.clear();
 		m_sString = label;
 		this->updateAtlasValues();
 
-		CGSize s;
-		s.width = (float)(m_sString.length() * m_nItemWidth);
-		s.height = (float)(m_nItemHeight);
-		this->setContentSize(s);
+		CCSize s;
+		s.width = (float)(len * m_uItemWidth);
+		s.height = (float)(m_uItemHeight);
+		this->setContentSizeInPixels(s);
+
+		m_uQuadsToDraw = len;
+	}
+
+	const char* CCLabelAtlas::getString(void)
+	{
+		return m_sString.c_str();
 	}
 
 	//CCLabelAtlas - draw
 
-	// XXX: overriding draw from AtlasNode
+#if CC_LABELATLAS_DEBUG_DRAW	
 	void CCLabelAtlas::draw()
 	{
-		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		CCAtlasNode::draw();
 
-		glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity);
-
-		bool newBlend = false;
-		if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) {
-			newBlend = true;
-			glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
-		}
-
-		m_pTextureAtlas->drawNumberOfQuads(m_sString.length());
-
-		if( newBlend )
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
-		// is this chepear than saving/restoring color state ?
-		// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
-		// XXX: that they need
-		//	glColor4ub( 255, 255, 255, 255);
-
-		// Restore Default GL state. Enable GL_COLOR_ARRAY
-		glEnableClientState(GL_COLOR_ARRAY);
-
-
-#if CC_LABELATLAS_DEBUG_DRAW
-		CGSize s = this->getContentSize();
-		CGPoint vertices[4]={
+		const CCSize& s = this->getContentSize();
+		CCPoint vertices[4]={
 			ccp(0,0),ccp(s.width,0),
 			ccp(s.width,s.height),ccp(0,s.height),
 		};
 		ccDrawPoly(vertices, 4, true);
-#endif // CC_LABELATLAS_DEBUG_DRAW
-
 	}
+#endif
 } // namespace cocos2d

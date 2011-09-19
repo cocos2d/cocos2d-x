@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __SUPPORT_DATA_SUPPORT_UTLIST_H__
 namespace   cocos2d {
 
-#define UTLIST_VERSION 1.9
+#define UTLIST_VERSION 1.9.1
 
 /* 
  * This file contains macros to manipulate singly and doubly-linked lists.
@@ -63,19 +63,16 @@ namespace   cocos2d {
    As decltype is only available in newer compilers (VS2010 or gcc 4.3+
    when compiling c++ code), this code uses whatever method is needed
    or, for VS2008 where neither is available, uses casting workarounds. */
-
-#ifndef DECLTYPE
 #ifdef _MSC_VER            /* MS compiler */
-#if _MSC_VER >= 1600 && __cplusplus  /* VS2010 and newer in C++ mode */
-#define DECLTYPE(x) decltype(x)
+#if _MSC_VER >= 1600 && defined(__cplusplus  )/* VS2010 or newer in C++ mode */
+#define LDECLTYPE(x) decltype(x)
 #else                     /* VS2008 or older (or VS2010 in C mode) */
 #define NO_DECLTYPE
-#define DECLTYPE(x) char*
+#define LDECLTYPE(x) char*
 #endif
 #else                      /* GNU, Sun and other compilers */
-#define DECLTYPE(x) __typeof(x)
+#define LDECLTYPE(x) __typeof(x)
 #endif
-#endif //  DECLTYPE
 
 /* for VS2008 we use some workarounds to get around the lack of decltype,
  * namely, we always reassign our tmp variable to the list head if we need
@@ -104,12 +101,12 @@ namespace   cocos2d {
  *****************************************************************************/
 #define LL_SORT(list, cmp)                                                                     \
 do {                                                                                           \
-  DECLTYPE(list) _ls_p;                                                                        \
-  DECLTYPE(list) _ls_q;                                                                        \
-  DECLTYPE(list) _ls_e;                                                                        \
-  DECLTYPE(list) _ls_tail;                                                                     \
-  DECLTYPE(list) _ls_oldhead;                                                                  \
-  DECLTYPE(list) _tmp;                                                                         \
+  LDECLTYPE(list) _ls_p;                                                                        \
+  LDECLTYPE(list) _ls_q;                                                                        \
+  LDECLTYPE(list) _ls_e;                                                                        \
+  LDECLTYPE(list) _ls_tail;                                                                     \
+  LDECLTYPE(list) _ls_oldhead;                                                                  \
+  LDECLTYPE(list) _tmp;                                                                         \
   int _ls_insize, _ls_nmerges, _ls_psize, _ls_qsize, _ls_i, _ls_looping;                       \
   if (list) {                                                                                  \
     _ls_insize = 1;                                                                            \
@@ -160,12 +157,12 @@ do {                                                                            
 
 #define DL_SORT(list, cmp)                                                                     \
 do {                                                                                           \
-  DECLTYPE(list) _ls_p;                                                                        \
-  DECLTYPE(list) _ls_q;                                                                        \
-  DECLTYPE(list) _ls_e;                                                                        \
-  DECLTYPE(list) _ls_tail;                                                                     \
-  DECLTYPE(list) _ls_oldhead;                                                                  \
-  DECLTYPE(list) _tmp;                                                                         \
+  LDECLTYPE(list) _ls_p;                                                                        \
+  LDECLTYPE(list) _ls_q;                                                                        \
+  LDECLTYPE(list) _ls_e;                                                                        \
+  LDECLTYPE(list) _ls_tail;                                                                     \
+  LDECLTYPE(list) _ls_oldhead;                                                                  \
+  LDECLTYPE(list) _tmp;                                                                         \
   int _ls_insize, _ls_nmerges, _ls_psize, _ls_qsize, _ls_i, _ls_looping;                       \
   if (list) {                                                                                  \
     _ls_insize = 1;                                                                            \
@@ -218,13 +215,13 @@ do {                                                                            
 
 #define CDL_SORT(list, cmp)                                                                    \
 do {                                                                                           \
-  DECLTYPE(list) _ls_p;                                                                        \
-  DECLTYPE(list) _ls_q;                                                                        \
-  DECLTYPE(list) _ls_e;                                                                        \
-  DECLTYPE(list) _ls_tail;                                                                     \
-  DECLTYPE(list) _ls_oldhead;                                                                  \
-  DECLTYPE(list) _tmp;                                                                         \
-  DECLTYPE(list) _tmp2;                                                                        \
+  LDECLTYPE(list) _ls_p;                                                                        \
+  LDECLTYPE(list) _ls_q;                                                                        \
+  LDECLTYPE(list) _ls_e;                                                                        \
+  LDECLTYPE(list) _ls_tail;                                                                     \
+  LDECLTYPE(list) _ls_oldhead;                                                                  \
+  LDECLTYPE(list) _tmp;                                                                         \
+  LDECLTYPE(list) _tmp2;                                                                        \
   int _ls_insize, _ls_nmerges, _ls_psize, _ls_qsize, _ls_i, _ls_looping;                       \
   if (list) {                                                                                  \
     _ls_insize = 1;                                                                            \
@@ -297,7 +294,7 @@ do {                                                                            
 
 #define LL_APPEND(head,add)                                                                    \
 do {                                                                                           \
-  DECLTYPE(head) _tmp;                                                                         \
+  LDECLTYPE(head) _tmp;                                                                         \
   (add)->next=NULL;                                                                            \
   if (head) {                                                                                  \
     _tmp = head;                                                                               \
@@ -310,7 +307,7 @@ do {                                                                            
 
 #define LL_DELETE(head,del)                                                                    \
 do {                                                                                           \
-  DECLTYPE(head) _tmp;                                                                         \
+  LDECLTYPE(head) _tmp;                                                                         \
   if ((head) == (del)) {                                                                       \
     (head)=(head)->next;                                                                       \
   } else {                                                                                     \

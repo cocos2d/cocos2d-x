@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,8 +27,9 @@ THE SOFTWARE.
 #include "cocos2d.h"
 namespace   cocos2d {
 
-char* cocos2dVersion()
+const char* cocos2dVersion()
 {
-	return "cocos2d v0.99.4";
+	return "cocos2d v1.0.1";
 }
+
 }//namespace   cocos2d 

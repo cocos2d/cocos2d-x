@@ -21,14 +21,13 @@
 
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
 preStep(cpGrooveJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	// calculate endpoints in worldspace
 	cpVect ta = cpBodyLocal2World(a, joint->grv_a);
@@ -79,8 +78,7 @@ grooveConstrain(cpGrooveJoint *joint, cpVect j){
 static void
 applyImpulse(cpGrooveJoint *joint)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	cpVect r1 = joint->r1;
 	cpVect r2 = joint->r2;
@@ -113,7 +111,7 @@ CP_DefineClassGetter(cpGrooveJoint)
 cpGrooveJoint *
 cpGrooveJointAlloc(void)
 {
-	return (cpGrooveJoint *)cpmalloc(sizeof(cpGrooveJoint));
+	return (cpGrooveJoint *)cpcalloc(1, sizeof(cpGrooveJoint));
 }
 
 cpGrooveJoint *
@@ -136,3 +134,28 @@ cpGrooveJointNew(cpBody *a, cpBody *b, cpVect groove_a, cpVect groove_b, cpVect 
 {
 	return (cpConstraint *)cpGrooveJointInit(cpGrooveJointAlloc(), a, b, groove_a, groove_b, anchr2);
 }
+
+void
+cpGrooveJointSetGrooveA(cpConstraint *constraint, cpVect value)
+{
+	cpGrooveJoint *g = (cpGrooveJoint *)constraint;
+	cpConstraintCheckCast(constraint, cpGrooveJoint);
+	
+	g->grv_a = value;
+	g->grv_n = cpvperp(cpvnormalize(cpvsub(g->grv_b, value)));
+	
+	cpConstraintActivateBodies(constraint);
+}
+
+void
+cpGrooveJointSetGrooveB(cpConstraint *constraint, cpVect value)
+{
+	cpGrooveJoint *g = (cpGrooveJoint *)constraint;
+	cpConstraintCheckCast(constraint, cpGrooveJoint);
+	
+	g->grv_b = value;
+	g->grv_n = cpvperp(cpvnormalize(cpvsub(value, g->grv_a)));
+	
+	cpConstraintActivateBodies(constraint);
+}
+

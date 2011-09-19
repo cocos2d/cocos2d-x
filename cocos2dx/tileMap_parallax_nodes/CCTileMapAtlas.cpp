@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,9 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCTileMapAtlas.h"
-#include "CCXFileUtils.h"
+#include "CCFileUtils.h"
 #include "CCTextureAtlas.h"
 #include "support/image_support/TGAlib.h"
+#include "ccConfig.h"
 
 namespace cocos2d {
 
@@ -39,7 +42,7 @@ namespace cocos2d {
 			pRet->autorelease();
 			return pRet;
 		}
-		CCX_SAFE_DELETE(pRet);
+		CC_SAFE_DELETE(pRet);
 		return NULL;
 	}
 	bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
@@ -50,15 +53,15 @@ namespace cocos2d {
 		{
 			m_pPosToAtlasIndex = new StringToIntegerDictionary();
 			this->updateAtlasValues();
-			this->setContentSize(CGSizeMake((float)(m_pTGAInfo->width*m_nItemWidth),
-											(float)(m_pTGAInfo->height*m_nItemHeight)));
+			this->setContentSize(CCSizeMake((float)(m_pTGAInfo->width*m_uItemWidth),
+											(float)(m_pTGAInfo->height*m_uItemHeight)));
 			return true;
 		}
 		return false;
 	}
 	CCTileMapAtlas::CCTileMapAtlas()
-		:m_pPosToAtlasIndex(NULL)
-		,m_pTGAInfo(NULL)
+        :m_pTGAInfo(NULL)
+		,m_pPosToAtlasIndex(NULL)
 		,m_nItemsToRender(0)
 	{
 	}
@@ -92,7 +95,7 @@ namespace cocos2d {
 	}
 	void CCTileMapAtlas::calculateItemsToRender()
 	{
-		NSAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
+		CCAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
 
 		m_nItemsToRender = 0;
 		for(int x=0;x < m_pTGAInfo->width; x++ ) 
@@ -110,30 +113,30 @@ namespace cocos2d {
 	}
 	void CCTileMapAtlas::loadTGAfile(const char *file)
 	{
-		NSAssert( file != NULL, "file must be non-nil");
+		CCAssert( file != NULL, "file must be non-nil");
 
 		//	//Find the path of the file
 		//	NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
-		//	NSString *resourcePath = [mainBndl resourcePath];
-		//	NSString * path = [resourcePath stringByAppendingPathComponent:file];
+		//	CCString *resourcePath = [mainBndl resourcePath];
+		//	CCString * path = [resourcePath stringByAppendingPathComponent:file];
 
 		m_pTGAInfo = tgaLoad( CCFileUtils::fullPathFromRelativePath(file) );
 	#if 1
 		if( m_pTGAInfo->status != TGA_OK ) 
 		{
-			NSAssert(0, "TileMapAtlasLoadTGA : TileMapAtas cannot load TGA file");
+			CCAssert(0, "TileMapAtlasLoadTGA : TileMapAtas cannot load TGA file");
 		}
 	#endif
 	}
 
 	// CCTileMapAtlas - Atlas generation / updates
-	void CCTileMapAtlas::setTile(ccColor3B tile, ccGridSize position)
+	void CCTileMapAtlas::setTile(const ccColor3B& tile, const ccGridSize& position)
 	{
-		NSAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
-		NSAssert( m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
-		NSAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
-		NSAssert( position.y < m_pTGAInfo->height, "Invalid position.x");
-		NSAssert( tile.r != 0, "R component must be non 0");
+		CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
+		CCAssert( m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
+		CCAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
+		CCAssert( position.y < m_pTGAInfo->height, "Invalid position.x");
+		CCAssert( tile.r != 0, "R component must be non 0");
 
 		ccColor3B *ptr = (ccColor3B*)m_pTGAInfo->imageData;
 		ccColor3B value = ptr[position.x + position.y * m_pTGAInfo->width];
@@ -161,53 +164,68 @@ namespace cocos2d {
 			this->updateAtlasValueAt(position, tile, num);
 		}	
 	}
-	ccColor3B CCTileMapAtlas::tileAt(ccGridSize position)
+	ccColor3B CCTileMapAtlas::tileAt(const ccGridSize& position)
 	{
-		NSAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
-		NSAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
-		NSAssert( position.y < m_pTGAInfo->height, "Invalid position.y");
+		CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
+		CCAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
+		CCAssert( position.y < m_pTGAInfo->height, "Invalid position.y");
 
 		ccColor3B *ptr = (ccColor3B*)m_pTGAInfo->imageData;
 		ccColor3B value = ptr[position.x + position.y * m_pTGAInfo->width];
 
 		return value;	
 	}
-	void CCTileMapAtlas::updateAtlasValueAt(ccGridSize pos, ccColor3B value, int index)
+	void CCTileMapAtlas::updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index)
 	{
 		ccV3F_C4B_T2F_Quad quad;
 
 		int x = pos.x;
 		int y = pos.y;
-		float row = (value.r % m_nItemsPerRow) * m_fTexStepX;
-		float col = (value.r / m_nItemsPerRow) * m_fTexStepY;
+        float row = (float) (value.r % m_uItemsPerRow);
+        float col = (float) (value.r / m_uItemsPerRow);
 
-		quad.tl.texCoords.u = row;
-		quad.tl.texCoords.v = col;
-		quad.tr.texCoords.u = row + m_fTexStepX;
-		quad.tr.texCoords.v = col;
-		quad.bl.texCoords.u = row;
-		quad.bl.texCoords.v = col + m_fTexStepY;
-		quad.br.texCoords.u = row + m_fTexStepX;
-		quad.br.texCoords.v = col + m_fTexStepY;
+        float textureWide = (float) (m_pTextureAtlas->getTexture()->getPixelsWide());
+        float textureHigh = (float) (m_pTextureAtlas->getTexture()->getPixelsHigh());
 
-		quad.bl.vertices.x = (float) (x * m_nItemWidth);
-		quad.bl.vertices.y = (float) (y * m_nItemHeight);
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+        float left		= (2 * row * m_uItemWidth + 1) / (2 * textureWide);
+        float right		= left + (m_uItemWidth * 2 - 2) / (2 * textureWide);
+        float top		= (2 * col * m_uItemHeight + 1) / (2 * textureHigh);
+        float bottom	= top + (m_uItemHeight * 2 - 2) / (2 * textureHigh);
+#else
+        float left		= (row * m_uItemWidth) / textureWide;
+        float right		= left + m_uItemWidth / textureWide;
+        float top		= (col * m_uItemHeight) / textureHigh;
+        float bottom	= top + m_uItemHeight / textureHigh;
+#endif
+
+        quad.tl.texCoords.u = left;
+        quad.tl.texCoords.v = top;
+        quad.tr.texCoords.u = right;
+        quad.tr.texCoords.v = top;
+        quad.bl.texCoords.u = left;
+        quad.bl.texCoords.v = bottom;
+        quad.br.texCoords.u = right;
+        quad.br.texCoords.v = bottom;
+
+		quad.bl.vertices.x = (float) (x * m_uItemWidth);
+		quad.bl.vertices.y = (float) (y * m_uItemHeight);
 		quad.bl.vertices.z = 0.0f;
-		quad.br.vertices.x = (float)(x * m_nItemWidth + m_nItemWidth);
-		quad.br.vertices.y = (float)(y * m_nItemHeight);
+		quad.br.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
+		quad.br.vertices.y = (float)(y * m_uItemHeight);
 		quad.br.vertices.z = 0.0f;
-		quad.tl.vertices.x = (float)(x * m_nItemWidth);
-		quad.tl.vertices.y = (float)(y * m_nItemHeight + m_nItemHeight);
+		quad.tl.vertices.x = (float)(x * m_uItemWidth);
+		quad.tl.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
 		quad.tl.vertices.z = 0.0f;
-		quad.tr.vertices.x = (float)(x * m_nItemWidth + m_nItemWidth);
-		quad.tr.vertices.y = (float)(y * m_nItemHeight + m_nItemHeight);
+		quad.tr.vertices.x = (float)(x * m_uItemWidth + m_uItemWidth);
+		quad.tr.vertices.y = (float)(y * m_uItemHeight + m_uItemHeight);
 		quad.tr.vertices.z = 0.0f;
 
 		m_pTextureAtlas->updateQuad(&quad, index);
 	}
 	void CCTileMapAtlas::updateAtlasValues()
 	{
-		NSAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
+		CCAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
 
 		int total = 0;
 

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -27,24 +28,23 @@ THE SOFTWARE.
 
 #include "ccTypes.h"
 #include "CCTexture2D.h"
-#include "ccxCommon.h"
 
 #include <string>
 namespace   cocos2d {
 
 //! @brief  CC RGBA protocol
-class CCX_DLL CCRGBAProtocol
+class CC_DLL CCRGBAProtocol
 {
 public:
     /** sets Color
      @since v0.8
      */
-    virtual void setColor(ccColor3B color) = 0;
+    virtual void setColor(const ccColor3B& color) = 0;
 
 	/** returns the color
 	 @since v0.8
 	 */
-	virtual ccColor3B getColor(void) = 0;
+	virtual const ccColor3B& getColor(void) = 0;
 
     // returns the opacity
     virtual GLubyte getOpacity(void) = 0;
@@ -63,7 +63,7 @@ public:
 	 Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
 	 @since v0.8
 	 */
-	virtual void setIsOpacityModifyRGB(bool bValue) {}
+	virtual void setIsOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
 
 	/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
 	 @since v0.8
@@ -75,7 +75,7 @@ public:
  @brief You can specify the blending fuction.
  @since v0.99.0
  */
-class CCX_DLL CCBlendProtocol
+class CC_DLL CCBlendProtocol
 {
 public:
 	// set the source blending function for the texture
@@ -94,23 +94,37 @@ public:
  But you can change the blending funtion at any time.
  @since v0.8.0
  */
-class CCX_DLL CCTextureProtocol : public CCBlendProtocol
+class CC_DLL CCTextureProtocol : public CCBlendProtocol
 {
 public:
 	// returns the used texture
 	virtual CCTexture2D* getTexture(void) = 0;
 
 	// sets a new texture. it will be retained
-	virtual void setTexture(CCTexture2D *texture) {}
+    virtual void setTexture(CCTexture2D *texture) {CC_UNUSED_PARAM(texture);}
 };
 
 //! @brief Common interface for Labels
-class CCX_DLL CCLabelProtocol
+class CC_DLL CCLabelProtocol
 {
 public:
 	// sets a new label using an string
 	virtual void setString(const char *label) = 0;
+
+	/** returns the string that is rendered */
+	virtual const char* getString(void) = 0;
 };
+
+/** OpenGL projection protocol */
+class CC_DLL CCProjectionProtocol : public CCObject
+{
+public:
+	/** Called by CCDirector when the porjection is updated, and "custom" projection is used
+	@since v0.99.5
+	*/
+	virtual void updateProjection(void) = 0;
+};
+
 }//namespace   cocos2d 
 
 #endif // __CCPROTOCOLS_H__

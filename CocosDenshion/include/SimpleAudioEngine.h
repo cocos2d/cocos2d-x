@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Steve Oldmeadow
 
 http://www.cocos2d-x.org
 
@@ -26,16 +27,9 @@ THE SOFTWARE.
 #define _SIMPLE_AUDIO_ENGINE_H_
 
 #include "Export.h"
+#include <stddef.h>
 
-/**
-@struct T_SoundResInfo
-@brief  The data type of resource name and resource ID
-*/
-typedef struct _tResourceInfo
-{
-    const char* FileName;
-    int         nResID;
-} T_SoundResInfo;
+namespace CocosDenshion {
 
 /**
 @class          SimpleAudioEngine
@@ -56,30 +50,20 @@ public:
     @brief Release the shared Engine object
     @warning It must be called before the application exit, or a memroy leak will be casued.
     */
-	static void release();
+	static void end();
 
     /**
-    @brief  Set the ResourcePath,we will find resource in this path
-    @param pszResourcePath  The absolute resource path
+    @brief  Set the zip file name
+    @param pszZipFileName The relative path of the .zip file
     */
-    static void setResourcePath(const char *pszResourcePath);
+    static void setResource(const char* pszZipFileName);
 
     /**
-    @brief Set the absolute path of the .zip file which contains all resource files
-    @param pszZipPath The absolute path of the .zip file
-    */
-    static void setResourceZipFile(const char* pszZipPath);
-
-    /**
-    @brief set the sound ResInfo,it's only used on platform-uphone now
-    */
-    void setSoundResInfo(const T_SoundResInfo ResInfo[], int nCount);
-
-    /**
-    @brief Set the resource entry,it's only used on platform-uphone now
-    */
-    void setResourceEntry(const void* pResEntry);
-
+     @brief Preload background music
+     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
+     */
+    void preloadBackgroundMusic(const char* pszFilePath);
+    
     /**
     @brief Play background music
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
@@ -118,67 +102,55 @@ public:
 
     // properties
     /**
-    @brief The volume of the background music max value is 100,the min value is 0
+    @brief The volume of the background music max value is 1.0,the min value is 0.0
     */
-    int GetBackgroundMusicVolume();
+    float getBackgroundMusicVolume();
 
     /**
     @brief set the volume of background music
-    @param volume must be in 0~100
+    @param volume must be in 0.0~1.0
     */
-    void SetBackgroundMusicVolume(int volume);
+    void setBackgroundMusicVolume(float volume);
 
     /**
-    @brief The volume of the effects max value is 100,the min value is 0
+    @brief The volume of the effects max value is 1.0,the min value is 0.0
     */
-    int GetEffectsVolume();
+    float getEffectsVolume();
 
     /**
     @brief set the volume of sound effecs
-    @param volume must be in 0~100
+    @param volume must be in 0.0~1.0
     */
-    void SetEffectsVolume(int volume);
+    void setEffectsVolume(float volume);
 
     // for sound effects
     /**
     @brief Play sound effect
     @param pszFilePath The path of the effect file,or the FileName of T_SoundResInfo
-    @return If play succeed return the effect sound ID,or return 0
+	@bLoop Whether to loop the effect playing, default value is false
     */
-    int playEffect(const char* pszFilePath);
+    unsigned int playEffect(const char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Stop playing sound effect
-    @param nSoundId The return value of function playEffect or preloadEffect
+    @param nSoundId The return value of function playEffect
     */
-    void stopEffect(int nSoundId);
+    void stopEffect(unsigned int nSoundId);
 
     /**
     @brief  		preload a compressed audio file
     @details	    the compressed audio will be decode to wave, then write into an 
     internal buffer in SimpleaudioEngine
-    @param[in]		pszFilePath		the relative path to currently executing program
-    @return         >0              preload success, return the SoundId
-    @return         ==0             can't read the file, or unsupported audio format
     */
-    int preloadEffect(const char* pszFilePath);
+    void preloadEffect(const char* pszFilePath);
 
     /**
     @brief  		unload the preloaded effect from internal buffer
-    @param[in]		nSoundId		the sound id returned from preloadEffect
+    @param[in]		pszFilePath		The path of the effect file,or the FileName of T_SoundResInfo
     */
-    void unloadEffect(int nSoundId);
-
-	/**
-	@brief          unload all preloaded effect from internal buffer
-	*/
-	void unloadEffectAll();
-
-    /**
-    @brief          play the preloaded effect
-    @param[in]		nSoundId		the sound id returned from preloadEffect
-    */
-    void playPreloadedEffect(int nSoundId);
+    void unloadEffect(const char* pszFilePath);
 };
+
+} // end of namespace CocosDenshion
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_

@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -46,35 +48,35 @@ namespace cocos2d {
 	You SHOULD not use this class.
 	Instead, use the newer TMX file format: CCTMXTiledMap
 	*/
-	class CCX_DLL CCTileMapAtlas : public CCAtlasNode 
+	class CC_DLL CCTileMapAtlas : public CCAtlasNode 
 	{
 		/** TileMap info */
-		CCX_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
+		CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
 	public:
 		CCTileMapAtlas();
 		virtual ~CCTileMapAtlas();
-		/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile.
+		/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
 		The tile file will be loaded using the TextureMgr.
 		*/
 		static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-		/** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile.
+		/** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
 		The file will be loaded using the TextureMgr.
 		*/
 		bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
 		/** returns a tile from position x,y.
 		For the moment only channel R is used
 		*/
-		ccColor3B tileAt(ccGridSize position);
+		ccColor3B tileAt(const ccGridSize& position);
 		/** sets a tile at position x,y.
 		For the moment only channel R is used
 		*/
-		void setTile(ccColor3B tile, ccGridSize position);
+		void setTile(const ccColor3B& tile, const ccGridSize& position);
 		/** dealloc the map from memory */
 		void releaseMap();
 	private:
 		void loadTGAfile(const char *file);
 		void calculateItemsToRender();
-		void updateAtlasValueAt(ccGridSize pos, ccColor3B value, int index);
+		void updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index);
 		void updateAtlasValues();
 
 	protected:

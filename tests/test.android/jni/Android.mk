@@ -4,7 +4,8 @@ include $(CLEAR_VARS)
 subdirs := $(addprefix $(LOCAL_PATH)/../../../,$(addsuffix /Android.mk, \
         Box2D \
         chipmunk \
-		cocos2dx \
+	cocos2dx \
+	CocosDenshion/android \
 	))
 	
 subdirs += $(LOCAL_PATH)/tests/Android.mk

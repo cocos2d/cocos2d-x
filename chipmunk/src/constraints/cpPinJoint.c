@@ -22,14 +22,13 @@
 #include <stdlib.h>
 //#include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
 preStep(cpPinJoint *joint, cpFloat dt, cpFloat dt_inv)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	
 	joint->r1 = cpvrotate(joint->anchr1, a->rot);
 	joint->r2 = cpvrotate(joint->anchr2, b->rot);
@@ -56,8 +55,7 @@ preStep(cpPinJoint *joint, cpFloat dt, cpFloat dt_inv)
 static void
 applyImpulse(cpPinJoint *joint)
 {
-	cpBody *a = joint->constraint.a;
-	cpBody *b = joint->constraint.b;
+	CONSTRAINT_BEGIN(joint, a, b);
 	cpVect n = joint->n;
 
 	// compute relative velocity
@@ -90,7 +88,7 @@ CP_DefineClassGetter(cpPinJoint);
 cpPinJoint *
 cpPinJointAlloc(void)
 {
-	return (cpPinJoint *)cpmalloc(sizeof(cpPinJoint));
+	return (cpPinJoint *)cpcalloc(1, sizeof(cpPinJoint));
 }
 
 cpPinJoint *
@@ -101,8 +99,9 @@ cpPinJointInit(cpPinJoint *joint, cpBody *a, cpBody *b, cpVect anchr1, cpVect an
 	joint->anchr1 = anchr1;
 	joint->anchr2 = anchr2;
 	
-	cpVect p1 = cpvadd(a->p, cpvrotate(anchr1, a->rot));
-	cpVect p2 = cpvadd(b->p, cpvrotate(anchr2, b->rot));
+	// STATIC_BODY_CHECK
+	cpVect p1 = (a ? cpvadd(a->p, cpvrotate(anchr1, a->rot)) : anchr1);
+	cpVect p2 = (b ? cpvadd(b->p, cpvrotate(anchr2, b->rot)) : anchr2);
 	joint->dist = cpvlength(cpvsub(p2, p1));
 
 	joint->jnAcc = 0.0f;

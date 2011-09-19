@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      Valentin Milea
 
 http://www.cocos2d-x.org
 
@@ -24,13 +25,23 @@ THE SOFTWARE.
 
 #include "CCTouchDispatcher.h"
 #include "CCTouchHandler.h"
-#include "NSMutableArray.h"
-#include "NSSet.h"
+#include "CCMutableArray.h"
+#include "CCSet.h"
 #include "CCTouch.h"
 #include "CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
 
 #include <assert.h>
+#include <algorithm>
+
+/**
+ * Used for sort
+ */
+static bool less(const cocos2d::CCTouchHandler *p1, const cocos2d::CCTouchHandler *p2)
+{
+	return ((cocos2d::CCTouchHandler*)p1)->getPriority() < ((cocos2d::CCTouchHandler*)p2)->getPriority();
+}
+
 namespace   cocos2d {
 
 bool CCTouchDispatcher::isDispatchEvents(void)
@@ -58,10 +69,10 @@ CCTouchDispatcher* CCTouchDispatcher::sharedDispatcher(void)
 }
 
 /*
-+(id) allocWithZone:(NSZone *)zone
++(id) allocWithZone:(CCZone *)zone
 {
 	@synchronized(self) {
-		NSAssert(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
+		CCAssert(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
 		return [super allocWithZone:zone];
 	}
 	return nil; // on subsequent allocation attempts return nil
@@ -71,10 +82,10 @@ CCTouchDispatcher* CCTouchDispatcher::sharedDispatcher(void)
 bool CCTouchDispatcher::init(void)
 {
 	m_bDispatchEvents = true;
- 	m_pTargetedHandlers = new NSMutableArray<CCTouchHandler*>(8);
- 	m_pStandardHandlers = new NSMutableArray<CCTouchHandler*>(4);
+ 	m_pTargetedHandlers = new CCMutableArray<CCTouchHandler*>(8);
+ 	m_pStandardHandlers = new CCMutableArray<CCTouchHandler*>(4);
 
- 	m_pHandlersToAdd = new NSMutableArray<CCTouchHandler*>(8);
+ 	m_pHandlersToAdd = new CCMutableArray<CCTouchHandler*>(8);
     m_pHandlersToRemove = ccCArrayNew(8);
 
 	m_bToRemove = false;
@@ -82,35 +93,32 @@ bool CCTouchDispatcher::init(void)
 	m_bToQuit = false;
 	m_bLocked = false;
 
-	m_sHandlerHelperData[ccTouchBegan].m_type = ccTouchBegan;
-	m_sHandlerHelperData[ccTouchMoved].m_type = ccTouchMoved;
-	m_sHandlerHelperData[ccTouchEnded].m_type = ccTouchEnded;
-	m_sHandlerHelperData[ccTouchCancelled].m_type = ccTouchCancelled;
+	m_sHandlerHelperData[CCTOUCHBEGAN].m_type = CCTOUCHBEGAN;
+	m_sHandlerHelperData[CCTOUCHMOVED].m_type = CCTOUCHMOVED;
+	m_sHandlerHelperData[CCTOUCHENDED].m_type = CCTOUCHENDED;
+	m_sHandlerHelperData[CCTOUCHCANCELLED].m_type = CCTOUCHCANCELLED;
 
 	return true;
 }
 
 CCTouchDispatcher::~CCTouchDispatcher(void)
 {
- 	m_pTargetedHandlers->release();
- 	m_pStandardHandlers->release();
- 	m_pHandlersToAdd->release();
-	ccCArrayFree(m_pHandlersToRemove);
+	CC_SAFE_RELEASE(m_pTargetedHandlers);
+	CC_SAFE_RELEASE(m_pStandardHandlers);
+	CC_SAFE_RELEASE(m_pHandlersToAdd);
 
-    m_pTargetedHandlers = NULL;
-    m_pStandardHandlers = NULL;
-    m_pHandlersToAdd = NULL;
-	m_pHandlersToRemove = NULL;
+	ccCArrayFree(m_pHandlersToRemove);
+	m_pHandlersToRemove = NULL;	
 }
 
 //
 // handlers management
 //
-void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, NSMutableArray<CCTouchHandler*> *pArray)
+void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, CCMutableArray<CCTouchHandler*> *pArray)
 {
 	unsigned int u = 0;
 
- 	NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator iter;
+ 	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
  	for (iter = pArray->begin(); iter != pArray->end(); ++iter)
  	{
  		CCTouchHandler *h = *iter;
@@ -134,6 +142,8 @@ void CCTouchDispatcher::forceAddHandler(CCTouchHandler *pHandler, NSMutableArray
 
 void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
+	pDelegate->m_eTouchDelegateType = ccTouchDelegateStandardBit;
+	
 	CCTouchHandler *pHandler = CCStandardTouchHandler::handlerWithDelegate(pDelegate, nPriority);
 	if (! m_bLocked)
 	{
@@ -148,6 +158,8 @@ void CCTouchDispatcher::addStandardDelegate(CCTouchDelegate *pDelegate, int nPri
 
 void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches)
 {
+	pDelegate->m_eTouchDelegateType = ccTouchDelegateTargetedBit;
+	
 	CCTouchHandler *pHandler = CCTargetedTouchHandler::handlerWithDelegate(pDelegate, nPriority, bSwallowsTouches);
 	if (! m_bLocked)
 	{
@@ -163,7 +175,7 @@ void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPri
 void CCTouchDispatcher::forceRemoveDelegate(CCTouchDelegate *pDelegate)
 {
 	CCTouchHandler *pHandler;
-	NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator  iter;
+	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator  iter;
 
 	// XXX: remove it from both handlers ???
 	
@@ -227,19 +239,58 @@ void CCTouchDispatcher::removeAllDelegates(void)
 	}
 }
 
+CCTouchHandler* CCTouchDispatcher::findHandler(CCTouchDelegate *pDelegate)
+{
+	CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
+
+	for (iter = m_pTargetedHandlers->begin(); iter != m_pTargetedHandlers->end(); ++iter)
+	{
+		if ((*iter)->getDelegate() == pDelegate)
+		{
+			return *iter;
+		}
+	}
+
+	for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
+	{
+		if ((*iter)->getDelegate() == pDelegate)
+		{
+			return *iter;
+		}
+	} 
+
+	return NULL;
+}
+
+void CCTouchDispatcher::rearrangeHandlers(CCMutableArray<CCTouchHandler*> *pArray)
+{
+	std::sort(pArray->begin(), pArray->end(), less);
+}
+
 void CCTouchDispatcher::setPriority(int nPriority, CCTouchDelegate *pDelegate)
 {
-	assert(0);
+    assert(pDelegate != NULL);
+
+	CCTouchHandler *handler = NULL;
+
+	handler = this->findHandler(pDelegate);
+
+	assert(handler != NULL);
+
+	handler->setPriority(nPriority);
+
+	this->rearrangeHandlers(m_pTargetedHandlers);
+	this->rearrangeHandlers(m_pStandardHandlers);
 }
 
 //
 // dispatch events
 //
-void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int uIndex)
+void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int uIndex)
 {
 	assert(uIndex >= 0 && uIndex < 4);
 
-	NSSet *pMutableTouches;
+	CCSet *pMutableTouches;
 	m_bLocked = true;
 
 	// optimization to prevent a mutable copy when it is not necessary
@@ -256,12 +307,12 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 	if (uTargetedHandlersCount > 0)
 	{
         CCTouch *pTouch;
-		NSSetIterator setIter;
+		CCSetIterator setIter;
 		for (setIter = pTouches->begin(); setIter != pTouches->end(); ++setIter)
 		{
 			pTouch = (CCTouch *)(*setIter);
 			CCTargetedTouchHandler *pHandler;
-			NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator arrayIter;
+			CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator arrayIter;
 			for (arrayIter = m_pTargetedHandlers->begin(); arrayIter != m_pTargetedHandlers->end(); ++arrayIter)
 			/*for (unsigned int i = 0; i < m_pTargetedHandlers->num; ++i)*/
 			{
@@ -273,9 +324,10 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
                 }
 
 				bool bClaimed = false;
-				if (uIndex == ccTouchBegan)
+				if (uIndex == CCTOUCHBEGAN)
 				{
 					bClaimed = pHandler->getDelegate()->ccTouchBegan(pTouch, pEvent);
+
 					if (bClaimed)
 					{
 						pHandler->getClaimedTouches()->addObject(pTouch);
@@ -288,14 +340,14 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 
 					switch (sHelper.m_type)
 					{
-					case ccTouchMoved:
+					case CCTOUCHMOVED:
 						pHandler->getDelegate()->ccTouchMoved(pTouch, pEvent);
 						break;
-					case ccTouchEnded:
+					case CCTOUCHENDED:
 						pHandler->getDelegate()->ccTouchEnded(pTouch, pEvent);
 						pHandler->getClaimedTouches()->removeObject(pTouch);
 						break;
-					case ccTouchCancelled:
+					case CCTOUCHCANCELLED:
 						pHandler->getDelegate()->ccTouchCancelled(pTouch, pEvent);
 						pHandler->getClaimedTouches()->removeObject(pTouch);
 						break;
@@ -320,7 +372,7 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 	//
 	if (uStandardHandlersCount > 0 && pMutableTouches->count() > 0)
 	{
-		NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator iter;
+		CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
 		CCStandardTouchHandler *pHandler;
 		for (iter = m_pStandardHandlers->begin(); iter != m_pStandardHandlers->end(); ++iter)
 		{
@@ -333,16 +385,16 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 
 			switch (sHelper.m_type)
 			{
-			case ccTouchBegan:
+			case CCTOUCHBEGAN:
 				pHandler->getDelegate()->ccTouchesBegan(pMutableTouches, pEvent);
 				break;
-			case ccTouchMoved:
+			case CCTOUCHMOVED:
 				pHandler->getDelegate()->ccTouchesMoved(pMutableTouches, pEvent);
 				break;
-			case ccTouchEnded:
+			case CCTOUCHENDED:
 				pHandler->getDelegate()->ccTouchesEnded(pMutableTouches, pEvent);
 				break;
-			case ccTouchCancelled:
+			case CCTOUCHCANCELLED:
 				pHandler->getDelegate()->ccTouchesCancelled(pMutableTouches, pEvent);
 				break;
 			}
@@ -372,7 +424,7 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 	if (m_bToAdd)
 	{
 		m_bToAdd = false;
- 		NSMutableArray<CCTouchHandler*>::NSMutableArrayIterator iter;
+ 		CCMutableArray<CCTouchHandler*>::CCMutableArrayIterator iter;
          CCTouchHandler *pHandler;
  		for (iter = m_pHandlersToAdd->begin(); iter != m_pHandlersToAdd->end(); ++iter)
  		{
@@ -402,35 +454,35 @@ void CCTouchDispatcher::touches(NSSet *pTouches, UIEvent *pEvent, unsigned int u
 	}
 }
 
-void CCTouchDispatcher::touchesBegan(NSSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesBegan(CCSet *touches, CCEvent *pEvent)
 {
 	if (m_bDispatchEvents)
 	{
-		this->touches(touches, pEvent, ccTouchBegan);
+		this->touches(touches, pEvent, CCTOUCHBEGAN);
 	}
 }
 
-void CCTouchDispatcher::touchesMoved(NSSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesMoved(CCSet *touches, CCEvent *pEvent)
 {
     if (m_bDispatchEvents)
 	{
-		this->touches(touches, pEvent, ccTouchMoved);
+		this->touches(touches, pEvent, CCTOUCHMOVED);
 	}
 }
 
-void CCTouchDispatcher::touchesEnded(NSSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesEnded(CCSet *touches, CCEvent *pEvent)
 {
     if (m_bDispatchEvents)
 	{
-		this->touches(touches, pEvent, ccTouchEnded);
+		this->touches(touches, pEvent, CCTOUCHENDED);
 	}
 }
 
-void CCTouchDispatcher::touchesCancelled(NSSet *touches, UIEvent *pEvent)
+void CCTouchDispatcher::touchesCancelled(CCSet *touches, CCEvent *pEvent)
 {
     if (m_bDispatchEvents)
 	{
-		this->touches(touches, pEvent, ccTouchCancelled);
+		this->touches(touches, pEvent, CCTOUCHCANCELLED);
 	}
 }
 }//namespace   cocos2d 

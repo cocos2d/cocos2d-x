@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCKeypadDispatcher.h"
-#include "CCXCocos2dDefine.h"
 #include "support/data_support/ccCArray.h"
 
 namespace   cocos2d {
@@ -47,9 +46,16 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 
 CCKeypadDispatcher::~CCKeypadDispatcher()
 {
-    m_pDelegates->release();
-    ccCArrayFree(m_pHandlersToAdd);
-    ccCArrayFree(m_pHandlersToRemove);
+	CC_SAFE_RELEASE(m_pDelegates);
+	if (m_pHandlersToAdd)
+	{
+		ccCArrayFree(m_pHandlersToAdd);
+	}
+    
+	if (m_pHandlersToRemove)
+	{
+		ccCArrayFree(m_pHandlersToRemove);
+	}    
 }
 
 CCKeypadDispatcher* CCKeypadDispatcher::sharedDispatcher()
@@ -119,7 +125,7 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 {
     CCKeypadHandler  *pHandler;
-    NSMutableArray<CCKeypadHandler*>::NSMutableArrayIterator  iter;
+    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
 
     for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
     {
@@ -136,7 +142,7 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
     CCKeypadHandler  *pHandler;
     CCKeypadDelegate *pDelegate;
-    NSMutableArray<CCKeypadHandler*>::NSMutableArrayIterator  iter;
+    CCMutableArray<CCKeypadHandler*>::CCMutableArrayIterator  iter;
 
     m_bLocked = true;
 
@@ -144,7 +150,7 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     {
         for (iter = m_pDelegates->begin(); iter != m_pDelegates->end(); ++iter)
         {
-            CCX_BREAK_IF(!(*iter));
+            CC_BREAK_IF(!(*iter));
 
             pHandler = *iter;
             pDelegate = pHandler->getDelegate();
@@ -154,7 +160,9 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
             case kTypeBackClicked:
                 pDelegate->keyBackClicked();
                 break;
-
+            case kTypeMenuClicked:
+                pDelegate->keyMenuClicked();
+                break;
             default:
                 break;
             }

@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "chipmunk_unsafe.h"
 
 #define CP_DefineShapeGetter(struct, type, member, name) \
@@ -60,8 +60,9 @@ cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body)
 	shape->layers = CP_ALL_LAYERS;
 	
 	shape->data = NULL;
+	shape->next = NULL;
 	
-	cpShapeCacheBB(shape);
+//	cpShapeCacheBB(shape);
 	
 	return shape;
 }
@@ -69,7 +70,7 @@ cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body)
 void
 cpShapeDestroy(cpShape *shape)
 {
-	if(shape->klass->destroy) shape->klass->destroy(shape);
+	if(shape->klass && shape->klass->destroy) shape->klass->destroy(shape);
 }
 
 void
@@ -81,6 +82,7 @@ cpShapeFree(cpShape *shape)
 	}
 }
 
+// TODO this function should really take a position and rotation explicitly and be renamed
 cpBB
 cpShapeCacheBB(cpShape *shape)
 {
@@ -90,12 +92,12 @@ cpShapeCacheBB(cpShape *shape)
 	return shape->bb;
 }
 
-int
+cpBool
 cpShapePointQuery(cpShape *shape, cpVect p){
 	return shape->klass->pointQuery(shape, p);
 }
 
-int
+cpBool
 cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info){
 	cpSegmentQueryInfo blank = {NULL, 0.0f, cpvzero};
 	(*info) = blank;
@@ -138,7 +140,7 @@ cpCircleShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 	return bbFromCircle(circle->tc, circle->r);
 }
 
-static int
+static cpBool
 cpCircleShapePointQuery(cpShape *shape, cpVect p){
 	cpCircleShape *circle = (cpCircleShape *)shape;
 	return cpvnear(circle->tc, p, circle->r);
@@ -147,7 +149,7 @@ cpCircleShapePointQuery(cpShape *shape, cpVect p){
 static void
 circleSegmentQuery(cpShape *shape, cpVect center, cpFloat r, cpVect a, cpVect b, cpSegmentQueryInfo *info)
 {
-	// umm... gross I normally frown upon such things
+	// offset the line to be relative to the circle
 	a = cpvsub(a, center);
 	b = cpvsub(b, center);
 	
@@ -239,16 +241,16 @@ cpSegmentShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 	return cpBBNew(l - rad, s - rad, r + rad, t + rad);
 }
 
-static int
+static cpBool
 cpSegmentShapePointQuery(cpShape *shape, cpVect p){
-	if(!cpBBcontainsVect(shape->bb, p)) return 0;
+	if(!cpBBcontainsVect(shape->bb, p)) return cpFalse;
 	
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
 	
 	// Calculate normal distance from segment.
 	cpFloat dn = cpvdot(seg->tn, p) - cpvdot(seg->ta, seg->tn);
 	cpFloat dist = cpfabs(dn) - seg->r;
-	if(dist > 0.0f) return 0;
+	if(dist > 0.0f) return cpFalse;
 	
 	// Calculate tangential distance along segment.
 	cpFloat dt = -cpvcross(seg->tn, p);
@@ -258,28 +260,32 @@ cpSegmentShapePointQuery(cpShape *shape, cpVect p){
 	// Decision tree to decide which feature of the segment to collide with.
 	if(dt <= dtMin){
 		if(dt < (dtMin - seg->r)){
-			return 0;
+			return cpFalse;
 		} else {
 			return cpvlengthsq(cpvsub(seg->ta, p)) < (seg->r*seg->r);
 		}
 	} else {
 		if(dt < dtMax){
-			return 1;
+			return cpTrue;
 		} else {
 			if(dt < (dtMax + seg->r)) {
 				return cpvlengthsq(cpvsub(seg->tb, p)) < (seg->r*seg->r);
 			} else {
-				return 0;
+				return cpFalse;
 			}
 		}
 	}
 	
-	return 1;	
+	return cpTrue;	
 }
+
+static inline cpBool inUnitRange(cpFloat t){return (0.0f < t && t < 1.0f);}
 
 static void
 cpSegmentShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info)
 {
+	// TODO this function could be optimized better.
+	
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
 	cpVect n = seg->tn;
 	// flip n if a is behind the axis
@@ -288,40 +294,37 @@ cpSegmentShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInf
 	
 	cpFloat an = cpvdot(a, n);
 	cpFloat bn = cpvdot(b, n);
-	cpFloat d = cpvdot(seg->ta, n) + seg->r;
 	
-	cpFloat t = (d - an)/(bn - an);
-	if(0.0f < t && t < 1.0f){
-		cpVect point = cpvlerp(a, b, t);
-		cpFloat dt = -cpvcross(seg->tn, point);
-		cpFloat dtMin = -cpvcross(seg->tn, seg->ta);
-		cpFloat dtMax = -cpvcross(seg->tn, seg->tb);
+	if(an != bn){
+		cpFloat d = cpvdot(seg->ta, n) + seg->r;
+		cpFloat t = (d - an)/(bn - an);
 		
-		if(dtMin < dt && dt < dtMax){
-			info->shape = shape;
-			info->t = t;
-			info->n = n;
+		if(0.0f < t && t < 1.0f){
+			cpVect point = cpvlerp(a, b, t);
+			cpFloat dt = -cpvcross(seg->tn, point);
+			cpFloat dtMin = -cpvcross(seg->tn, seg->ta);
+			cpFloat dtMax = -cpvcross(seg->tn, seg->tb);
 			
-			return; // don't continue on and check endcaps
+			if(dtMin < dt && dt < dtMax){
+				info->shape = shape;
+				info->t = t;
+				info->n = n;
+				
+				return; // don't continue on and check endcaps
+			}
 		}
 	}
 	
 	if(seg->r) {
-		cpSegmentQueryInfo info1; info1.shape = NULL;
-		cpSegmentQueryInfo info2; info2.shape = NULL;
+		cpSegmentQueryInfo info1 = {NULL, 1.0f, cpvzero};
+		cpSegmentQueryInfo info2 = {NULL, 1.0f, cpvzero};
 		circleSegmentQuery(shape, seg->ta, seg->r, a, b, &info1);
 		circleSegmentQuery(shape, seg->tb, seg->r, a, b, &info2);
 		
-		if(info1.shape && !info2.shape){
+		if(info1.t < info2.t){
 			(*info) = info1;
-		} else if(info2.shape && !info1.shape){
+		} else {
 			(*info) = info2;
-		} else if(info1.shape && info2.shape){
-			if(info1.t < info2.t){
-				(*info) = info1;
-			} else {
-				(*info) = info2;
-			}
 		}
 	}
 }

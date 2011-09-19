@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,47 +31,50 @@ THE SOFTWARE.
 /**
  @file
  Drawing OpenGL ES primitives.
-  - drawPoint
-  - drawLine
-  - drawPoly
-  - drawCircle
+ - ccDrawPoint
+ - ccDrawLine
+ - ccDrawPoly
+ - ccDrawCircle
+ - ccDrawQuadBezier
+ - ccDrawCubicBezier
  
  You can change the color, width and other property by calling the
- glColor4ub(), glLineWitdh(), glPointSize().
+ glColor4ub(), glLineWidth(), glPointSize().
  
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
 
-#include "CGGeometry.h"	// for CGPoint
+#include "CCGeometry.h"	// for CCPoint
 namespace   cocos2d {
 
-/** draws a point given x and y coordinate */
-void CCX_DLL ccDrawPoint( CGPoint point );
+/** draws a point given x and y coordinate measured in points */
+void CC_DLL ccDrawPoint( const CCPoint& point );
 
 /** draws an array of points.
  @since v0.7.2
  */
-void CCX_DLL ccDrawPoints( CGPoint *points, unsigned int numberOfPoints );
+void CC_DLL ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints );
 
-/** draws a line given the origin and destination point */
-void CCX_DLL ccDrawLine( CGPoint origin, CGPoint destination );
+/** draws a line given the origin and destination point measured in points */
+void CC_DLL ccDrawLine( const CCPoint& origin, const CCPoint& destination );
 
-/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices. The polygon can be closed or open
- */
-void CCX_DLL ccDrawPoly( CGPoint *vertices, int numOfVertices, bool closePolygon );
+/** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
+The polygon can be closed or open
+*/
+void CC_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon );
 
 /** draws a circle given the center, radius and number of segments. */
-void CCX_DLL ccDrawCircle( CGPoint center, float radius, float angle, int segments, bool drawLineToCenter);
+void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, int segments, bool drawLineToCenter);
 
 /** draws a quad bezier path
  @since v0.8
  */
-void CCX_DLL ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, int segments);
+void CC_DLL ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, int segments);
 
 /** draws a cubic bezier path
  @since v0.8
  */
-void CCX_DLL ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, int segments);
+void CC_DLL ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments);
 }//namespace   cocos2d 
 
 #endif // __CCDRAWING_PRIMITIVES__

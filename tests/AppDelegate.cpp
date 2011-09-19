@@ -1,99 +1,92 @@
 #include "AppDelegate.h"
+
 #include "cocos2d.h"
 #include "tests/controller.h"
+#include "SimpleAudioEngine.h"
 
-using namespace cocos2d;
+USING_NS_CC;
+using namespace CocosDenshion;
 
-// static void TimerCallback1(Int32 nTimerId, UInt32 uUserData);
 AppDelegate::AppDelegate()
-:m_pMainWnd(NULL)
 {
 
 }
 
 AppDelegate::~AppDelegate()
 {
-#if defined(CCX_PLATFORM_WIN32)
-    CCX_SAFE_DELETE(m_pMainWnd);
+    SimpleAudioEngine::end();
+}
+
+bool AppDelegate::initInstance()
+{
+    bool bRet = false;
+    do 
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
+        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
+        // The tests is designed as HVGA.
+        CCEGLView * pMainWnd = new CCEGLView();
+        CC_BREAK_IF(! pMainWnd
+            || ! pMainWnd->Create(TEXT("cocos2d: tests"), 480, 320));
+
+#endif  // CC_PLATFORM_WIN32
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+        // OpenGLView initialized in testsAppDelegate.mm on ios platform, nothing need to do here.
+
+#endif  // CC_PLATFORM_IOS
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
+        // Android doesn't need to do anything.
+
+#endif  // CC_PLATFORM_ANDROID
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
+
+        // Initialize OpenGLView instance, that release by CCDirector when application terminate.
+        // The tests is designed as HVGA.
+        CCEGLView* pMainWnd = new CCEGLView(this);
+        CC_BREAK_IF(! pMainWnd || ! pMainWnd->Create(320 ,480, WM_WINDOW_ROTATE_MODE_CW));
+
+#ifndef _TRANZDA_VM_  
+        // on wophone emulator, we copy resources files to Work7/NEWPLUS/TDA_DATA/Data folder instead of zip file
+        cocos2d::CCFileUtils::setResource("TestCocos2dx.zip");
+        CocosDenshion::SimpleAudioEngine::setResource("TestCocos2dx.zip");
 #endif
+
+#endif
+	
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
+#endif
+
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	// init the window
-#if defined(CCX_PLATFORM_UPHONE)
-	if (!(m_pMainWnd = new CCXEGLView(this)) || 
-		! m_pMainWnd->Create(&TRectangle(0,0,GetScreenWidth(),GetScreenHeight())))
-#elif defined(CCX_PLATFORM_WIN32)
-	if (!(m_pMainWnd = new CCXEGLView()) ||
-		! m_pMainWnd->Create(L"cocos2d-win32", 320, 480) )
-#elif defined(CCX_PLATFORM_IPHONE)
-    if (!(m_pMainWnd = new CCXEGLView()))
-#elif defined(CCX_PLATFORM_ANDROID)
-    if (!(m_pMainWnd = CCDirector::sharedDirector()->getOpenGLView()))
-#elif defined(CCX_PLATFORM_BADA)
-    if (!(m_pMainWnd = new CCXEGLView()) || !m_pMainWnd->Create(this))
-#else
-    #error
-#endif
-	{
-        CCX_SAFE_DELETE(m_pMainWnd);
-		return false;
-	}
+    // initialize director
+    CCDirector *pDirector = CCDirector::sharedDirector();
+    pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
-    // init director
-    CCDirector * pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(m_pMainWnd);
-    pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-	// pDirector->setDeviceOrientation(kCCDeviceOrientationPortrait);
+    // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
+    // pDirector->enableRetinaDisplay(true);
+
+    // sets opengl landscape mode
+    // tests set device orientation in RootViewController.mm
+    // pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+
+	// turn on display FPS
     pDirector->setDisplayFPS(true);
 
-#if defined(CCX_PLATFORM_UPHONE)
+	// set FPS. the default value is 1.0/60 if you don't call this
+	pDirector->setAnimationInterval(1.0 / 60);
 
-#if 1
-    // set the resource path
-    CCFileUtils::setResourcePath("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/");
-#else
-    // set the resource zip file
-    CCFileUtils::setResourceZipFile("/NEWPLUS/TDA_DATA/Data/cocos2d_tests/cocos2d_tests.zip");
-#endif
-
-
-#elif defined(CCX_PLATFORM_ANDROID)
-    CCFileUtils::setResourcePath("/data/app/org.cocos2dx.tests-1.apk");
-	CCFileUtils::setRelativePath("assets");
-#elif defined(CCX_PLATFORM_BADA)
-    // set the resource path
-    CCFileUtils::setResourcePath("/Res/");
-#endif
-
-#if 0
-	// SHOW SPLASH SCREEN
-
-    // load background image texture and get window size
-    CCTexture2D * pSplashTexture = CCTextureCache::sharedTextureCache()->addImage("b1.png");
-    CGSize size = CCDirector::sharedDirector()->getWinSize();
-
-    // splash sprite
-	CCSprite * pSplashSprite = CCSprite::spriteWithTexture(pSplashTexture);
-    pSplashSprite->setPosition(CGPoint(size.width / 2, size.height / 2));
-
-    // splash layer
-    CCLayer * pSplashLayer = new CCLayer();
-    pSplashLayer->addChild(pSplashSprite);
-    pSplashLayer->autorelease();
-
-    // add layer to scene
-    CCScene * pSplashScene = CCScene::node();
-    pSplashScene->addChild(pSplashLayer);
-
-	// add scene to director
-    CCDirector::sharedDirector()->runWithScene(pSplashScene);
-
-	// CCSequence::actions(this, callfunc_selector(AppDelegate::replaceSplashScreen))
-    m_nTimer = TIMER_Create(3000, TIMER_MODE_NORMAL, TimerCallback1, 0, 0);
-    TIMER_Start(m_nTimer, 0);
-#endif
     CCScene * pScene = CCScene::node();
     CCLayer * pLayer = new TestController();
     pLayer->autorelease();
@@ -104,24 +97,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     return true;
 }
 
+// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->pause();
+    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();   
 }
 
+// this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();   
 }
-
-/*
-static void TimerCallback1(Int32 nTimerId, UInt32 uUserData)
-{
-    CCScene * pScene = CCScene::node();
-    CCLayer * pLayer = new TestController();
-    pLayer->autorelease();
-
-    pScene->addChild(pLayer);
-    CCDirector::sharedDirector()->replaceScene(pScene);
-}
-*/

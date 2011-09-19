@@ -5,26 +5,21 @@
 
 using namespace cocos2d;
 
-#define ITEM_EVERYPAGE              7
-
 class TestController : public CCLayer
 {
 public:
     TestController();
     ~TestController();
 
-    void menuCallback(NSObject * pSender);
-    void closeCallback(NSObject * pSender);
+    void menuCallback(CCObject * pSender);
+    void closeCallback(CCObject * pSender);
 
-    void nextPageCallback(NSObject * pSender);
-    void prePageCallback(NSObject * pSender);
-
-    void updateItemsText();
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 
 private:
-    CCMenuItemLabel * m_pMenuItems[ITEM_EVERYPAGE];
-
-    unsigned int m_nUIDs[ITEM_EVERYPAGE];
+    CCPoint m_tBeginPos;
+    CCMenu* m_pItmeMenu;
 };
 
 #endif

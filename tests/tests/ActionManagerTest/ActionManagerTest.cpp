@@ -9,6 +9,10 @@ enum
     kTagSequence,
 }; 
 
+CCLayer* nextActionManagerAction();
+CCLayer* backActionManagerAction();
+CCLayer* restartActionManagerAction();
+
 static int sceneIdx = -1; 
 
 #define MAX_LAYER	5
@@ -82,11 +86,11 @@ void ActionManagerTest::onEnter()
 {
 	CCLayer::onEnter();
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* label = CCLabel::labelWithString(title().c_str(), "Arial", 32);
+	CCLabelTTF* label = CCLabelTTF::labelWithString(title().c_str(), "Arial", 32);
 	addChild(label, 1);
-	label->setPosition( CGPointMake(s.width/2, s.height-50) );
+	label->setPosition( CCPointMake(s.width/2, s.height-50) );
 
 	CCMenuItemImage *item1 = CCMenuItemImage::itemFromNormalImage(s_pPathB1, s_pPathB2, this, menu_selector(ActionManagerTest::backCallback) );
 	CCMenuItemImage *item2 = CCMenuItemImage::itemFromNormalImage(s_pPathR1, s_pPathR2, this, menu_selector(ActionManagerTest::restartCallback) );
@@ -94,15 +98,15 @@ void ActionManagerTest::onEnter()
 
 	CCMenu *menu = CCMenu::menuWithItems(item1, item2, item3, NULL);
 
-	menu->setPosition( CGPointZero );
-	item1->setPosition( CGPointMake( s.width/2 - 100,30) );
-	item2->setPosition( CGPointMake( s.width/2, 30) );
-	item3->setPosition( CGPointMake( s.width/2 + 100,30) );
+	menu->setPosition( CCPointZero );
+	item1->setPosition( CCPointMake( s.width/2 - 100,30) );
+	item2->setPosition( CCPointMake( s.width/2, 30) );
+	item3->setPosition( CCPointMake( s.width/2 + 100,30) );
 	
 	addChild(menu, 1);	
 }
 
-void ActionManagerTest::restartCallback(NSObject* pSender)
+void ActionManagerTest::restartCallback(CCObject* pSender)
 {
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild(restartActionManagerAction()); 
@@ -111,7 +115,7 @@ void ActionManagerTest::restartCallback(NSObject* pSender)
     s->release();
 }
 
-void ActionManagerTest::nextCallback(NSObject* pSender)
+void ActionManagerTest::nextCallback(CCObject* pSender)
 {
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild( nextActionManagerAction() );
@@ -119,7 +123,7 @@ void ActionManagerTest::nextCallback(NSObject* pSender)
     s->release();
 }
 
-void ActionManagerTest::backCallback(NSObject* pSender)
+void ActionManagerTest::backCallback(CCObject* pSender)
 {
 	CCScene* s = new ActionManagerTestScene();
 	s->addChild( backActionManagerAction() );
@@ -138,7 +142,7 @@ void CrashTest::onEnter()
 	ActionManagerTest::onEnter();
 
 	CCSprite* child = CCSprite::spriteWithFile(s_pPathGrossini);
-	child->setPosition( CGPointMake(200,200) );
+	child->setPosition( CCPointMake(200,200) );
 	addChild(child, 1);
 
 	//Sum of all action's duration is 1.5 second.
@@ -180,10 +184,10 @@ void LogicTest::onEnter()
 
 	CCSprite* grossini = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(grossini, 0, 2);
-	grossini->setPosition(CGPointMake(200,200));
+	grossini->setPosition(CCPointMake(200,200));
 
 	grossini->runAction( CCSequence::actions( 
-												CCMoveBy::actionWithDuration(1, CGPointMake(150,0)),
+												CCMoveBy::actionWithDuration(1, CCPointMake(150,0)),
 												CCCallFuncN::actionWithTarget(this, callfuncN_selector(LogicTest::bugMe)),
 												NULL) 
 						);
@@ -214,11 +218,11 @@ void PauseTest::onEnter()
 	//
 	ActionManagerTest::onEnter();
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-	CCLabel* l = CCLabel::labelWithString("After 5 seconds grossini should move", "Thonburi", 16);
+	CCLabelTTF* l = CCLabelTTF::labelWithString("After 5 seconds grossini should move", "Thonburi", 16);
 	addChild(l);
-	l->setPosition( CGPointMake(s.width/2, 245) );
+	l->setPosition( CCPointMake(s.width/2, 245) );
 	
 	
 	//
@@ -226,9 +230,9 @@ void PauseTest::onEnter()
 	//
 	CCSprite* grossini = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(grossini, 0, kTagGrossini);
-	grossini->setPosition( CGPointMake(200,200) );
+	grossini->setPosition( CCPointMake(200,200) );
 	
-	CCAction* action = CCMoveBy::actionWithDuration(1, CGPointMake(150,0));
+	CCAction* action = CCMoveBy::actionWithDuration(1, CCPointMake(150,0));
 
 	CCActionManager::sharedManager()->addAction(action, grossini, true);
 
@@ -239,7 +243,7 @@ void PauseTest::unpause(ccTime dt)
 {
 	unschedule( schedule_selector(PauseTest::unpause) );
 	CCNode* node = getChildByTag( kTagGrossini );
-	CCActionManager::sharedManager()->resumeAllActionsForTarget(node);
+	CCActionManager::sharedManager()->resumeTarget(node);
 }
 
 std::string PauseTest::title()
@@ -256,19 +260,19 @@ void RemoveTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabel* l = CCLabel::labelWithString("Should not crash", "Thonburi", 16);
+    CCLabelTTF* l = CCLabelTTF::labelWithString("Should not crash", "Thonburi", 16);
     addChild(l);
-    l->setPosition( CGPointMake(s.width/2, 245) );
+    l->setPosition( CCPointMake(s.width/2, 245) );
 
-    CCMoveBy* pMove = CCMoveBy::actionWithDuration(2, CGPointMake(200, 0));
+    CCMoveBy* pMove = CCMoveBy::actionWithDuration(2, CCPointMake(200, 0));
     CCCallFunc* pCallback = CCCallFunc::actionWithTarget(this, callfunc_selector(RemoveTest::stopAction));
-    CCIntervalAction* pSequence = (CCIntervalAction*) CCSequence::actions(pMove, pCallback, NULL);
+    CCActionInterval* pSequence = (CCActionInterval*) CCSequence::actions(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
     CCSprite* pChild = CCSprite::spriteWithFile(s_pPathGrossini);
-    pChild->setPosition(CGPointMake(200, 200));
+    pChild->setPosition(CCPointMake(200, 200));
 
     addChild(pChild, 1, kTagGrossini);
     pChild->runAction(pSequence);
@@ -299,15 +303,15 @@ void ResumeTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    CGSize s = CCDirector::sharedDirector()->getWinSize();
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-    CCLabel* l = CCLabel::labelWithString("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+    CCLabelTTF* l = CCLabelTTF::labelWithString("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
     addChild(l);
-    l->setPosition( CGPointMake(s.width/2, 245));
+    l->setPosition( CCPointMake(s.width/2, 245));
 
     CCSprite* pGrossini = CCSprite::spriteWithFile(s_pPathGrossini);
     addChild(pGrossini, 0, kTagGrossini);
-    pGrossini->setPosition(CGPointMake(s.width / 2, s.height / 2));
+    pGrossini->setPosition(CCPointMake(s.width / 2, s.height / 2));
 
     pGrossini->runAction(CCScaleBy::actionWithDuration(2, 2));
 

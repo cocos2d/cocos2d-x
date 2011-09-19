@@ -1,0 +1,6 @@
+iconv			1.9.2
+libjpeg			8b
+libpng			1.4.5beta04
+libxml2			2.7.7
+OGLES			2.08.28.0634
+zlib			1.2.5

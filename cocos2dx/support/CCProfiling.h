@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Stuart Carnie
 
 http://www.cocos2d-x.org
 
@@ -28,17 +29,17 @@ THE SOFTWARE.
 
 #if CC_ENABLE_PROFILERS
 
-#include <string.h>
+#include <string>
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include "platform/platform.h"
-#include "NSMutableArray.h"
+#include "CCArray.h"
 
 namespace cocos2d
 {
 	class CCProfilingTimer;
 
-	class CCProfiler : public NSObject
+	class CC_DLL CCProfiler : public CCObject
 	{
 	public:
 		~CCProfiler(void);
@@ -46,21 +47,21 @@ namespace cocos2d
 		bool init(void);
 
 	public:
-		static CCProfiler* getSharedProfiler(void);
-		static CCProfilingTimer* timerWithName(const char *pszTimerName, NSObject *pInstance);
+		static CCProfiler* sharedProfiler(void);
+		static CCProfilingTimer* timerWithName(const char *pszTimerName, CCObject *pInstance);
 		static void releaseTimer(CCProfilingTimer *pTimer);
 
 	protected:
-		NSMutableArray<CCProfilingTimer*> *m_pActiveTimers;
+		CCArray *m_pActiveTimers;
 	};
 
-	class CCProfilingTimer : public NSObject
+	class CCProfilingTimer : public CCObject
 	{
 	public:
-		bool initWithName(const char* pszTimerName, NSObject *pInstance);
+		bool initWithName(const char* pszTimerName, CCObject *pInstance);
 		~CCProfilingTimer(void);
 		char* description(void);
-		inline struct cc_timeval getStartTime(void) { return m_sStartTime; };
+		inline struct cc_timeval * getStartTime(void) { return &m_sStartTime; };
 		inline void setAverageTime(double value) { m_dAverageTime = value; }
 		inline double getAverageTime(void) { return m_dAverageTime; }
 
@@ -70,8 +71,8 @@ namespace cocos2d
 		double m_dAverageTime;
 	};
 
-	void CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer);
-	void CCProfilingEndTimingBlock(CCProfilingTimer *pTimer);
+	void CC_DLL CCProfilingBeginTimingBlock(CCProfilingTimer *pTimer);
+	void CC_DLL CCProfilingEndTimingBlock(CCProfilingTimer *pTimer);
 
 } // end of namespace cocos2d
 

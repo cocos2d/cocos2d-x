@@ -27,11 +27,11 @@ SceneTestLayer1::SceneTestLayer1()
 	
 	addChild( menu );
 	
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
-	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	sprite->setPosition( CCPointMake(s.width-40, s.height/2) );
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
@@ -43,12 +43,24 @@ void SceneTestLayer1::testDealloc(ccTime dt)
 	//UXLOG("SceneTestLayer1:testDealloc");
 }
 
+void SceneTestLayer1::onEnter()
+{
+    CCLOG("SceneTestLayer1#onEnter");
+    CCLayer::onEnter();
+}
+
+void SceneTestLayer1::onEnterTransitionDidFinish()
+{
+    CCLOG("SceneTestLayer1#onEnterTransitionDidFinish");
+    CCLayer::onEnterTransitionDidFinish();
+}
+
 SceneTestLayer1::~SceneTestLayer1()
 {
 	//NSLog(@"SceneTestLayer1 - dealloc");
 }
 
-void SceneTestLayer1::onPushScene(NSObject* pSender)
+void SceneTestLayer1::onPushScene(CCObject* pSender)
 {
 	CCScene* scene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer2();
@@ -58,19 +70,19 @@ void SceneTestLayer1::onPushScene(NSObject* pSender)
     pLayer->release();
 }
 
-void SceneTestLayer1::onPushSceneTran(NSObject* pSender)
+void SceneTestLayer1::onPushSceneTran(CCObject* pSender)
 {
 	CCScene* scene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer2();
     scene->addChild( pLayer, 0 );
 
-	CCDirector::sharedDirector()->pushScene( CCSlideInTTransition::transitionWithDuration(1, scene) );
+	CCDirector::sharedDirector()->pushScene( CCTransitionSlideInT::transitionWithDuration(1, scene) );
     scene->release();
     pLayer->release();
 }
 
 
-void SceneTestLayer1::onQuit(NSObject* pSender)
+void SceneTestLayer1::onQuit(CCObject* pSender)
 {
 	//getCocosApp()->exit();
 	//CCDirector::sharedDirector()->popScene();
@@ -100,11 +112,11 @@ SceneTestLayer2::SceneTestLayer2()
 	
 	addChild( menu );
 
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
-	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	sprite->setPosition( CCPointMake(s.width-40, s.height/2) );
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
@@ -118,12 +130,12 @@ void SceneTestLayer2::testDealloc(ccTime dt)
 	//	onReplaceScene(this);
 }
 
-void SceneTestLayer2::onGoBack(NSObject* pSender)
+void SceneTestLayer2::onGoBack(CCObject* pSender)
 {
 	CCDirector::sharedDirector()->popScene();
 }
 
-void SceneTestLayer2::onReplaceScene(NSObject* pSender)
+void SceneTestLayer2::onReplaceScene(CCObject* pSender)
 {
 	CCScene* pScene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer3();
@@ -134,12 +146,12 @@ void SceneTestLayer2::onReplaceScene(NSObject* pSender)
 }
 
 
-void SceneTestLayer2::onReplaceSceneTran(NSObject* pSender)
+void SceneTestLayer2::onReplaceSceneTran(CCObject* pSender)
 {
 	CCScene* pScene = new SceneTestScene();
     CCLayer* pLayer = new SceneTestLayer3();
 	pScene->addChild( pLayer, 0 );
-	CCDirector::sharedDirector()->replaceScene( CCFlipXTransition::transitionWithDuration(2, pScene) );
+	CCDirector::sharedDirector()->replaceScene( CCTransitionFlipX::transitionWithDuration(2, pScene) );
     pScene->release();
     pLayer->release();
 }
@@ -153,15 +165,15 @@ void SceneTestLayer2::onReplaceSceneTran(NSObject* pSender)
 SceneTestLayer3::SceneTestLayer3()
 {
 	setIsTouchEnabled( true );
-	CCLabel* label = CCLabel::labelWithString("Touch to popScene", "Marker Felt", 28);
+	CCLabelTTF* label = CCLabelTTF::labelWithString("Touch to popScene", "Marker Felt", 28);
 	addChild(label);
-	CGSize s = CCDirector::sharedDirector()->getWinSize();
-	label->setPosition( CGPointMake(s.width/2, s.height/2) );
+	CCSize s = CCDirector::sharedDirector()->getWinSize();
+	label->setPosition( CCPointMake(s.width/2, s.height/2) );
 	
 	CCSprite* sprite = CCSprite::spriteWithFile(s_pPathGrossini);
 	addChild(sprite);
-	sprite->setPosition( CGPointMake(s.width-40, s.height/2) );
-	CCIntervalAction* rotate = CCRotateBy::actionWithDuration(2, 360);
+	sprite->setPosition( CCPointMake(s.width-40, s.height/2) );
+	CCActionInterval* rotate = CCRotateBy::actionWithDuration(2, 360);
 	CCAction* repeat = CCRepeatForever::actionWithAction(rotate);
 	sprite->runAction(repeat);
 
@@ -173,9 +185,9 @@ void SceneTestLayer3::testDealloc(ccTime dt)
 
 }
 
-void SceneTestLayer3::ccTouchesEnded(NSSet* touches, UIEvent* event)
+void SceneTestLayer3::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
-	static int i = 0;
+//	static int i = 0;
 	//UXLOG("SceneTestLayer3::ccTouchesEnded(%d)", ++i);
 	CCDirector::sharedDirector()->popScene();
 }

@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +27,7 @@ THE SOFTWARE.
 #define __CCTMX_LAYER_H__
 #include "CCTMXObjectGroup.h"
 #include "CCAtlasNode.h"
-#include "CCSpriteSheet.h"
+#include "CCSpriteBatchNode.h"
 namespace cocos2d {
 
 	class CCTMXMapInfo;
@@ -35,7 +37,7 @@ namespace cocos2d {
 
 	/** @brief CCTMXLayer represents the TMX layer.
 
-	It is a subclass of CCSpriteSheet. By default the tiles are rendered using a CCTextureAtlas.
+	It is a subclass of CCSpriteBatchNode. By default the tiles are rendered using a CCTextureAtlas.
 	If you modify a tile on runtime, then, that tile will become a CCSprite, otherwise no CCSprite objects are created.
 	The benefits of using CCSprite objects as tiles are:
 	- tiles (CCSprite) can be rotated/scaled/moved with a nice API
@@ -58,20 +60,20 @@ namespace cocos2d {
 
 	@since v0.8.1
 	*/
-	class CCX_DLL CCTMXLayer : public CCSpriteSheet
+	class CC_DLL CCTMXLayer : public CCSpriteBatchNode
 	{
 		/** size of the layer in tiles */
-		CCX_SYNTHESIZE(CGSize, m_tLayerSize, LayerSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tLayerSize, LayerSize);
 		/** size of the map's tile (could be differnt from the tile's size) */
-		CCX_SYNTHESIZE(CGSize, m_tMapTileSize, MapTileSize);
+		CC_SYNTHESIZE_PASS_BY_REF(CCSize, m_tMapTileSize, MapTileSize);
 		/** pointer to the map of tiles */
-		CCX_SYNTHESIZE(unsigned int*, m_pTiles, Tiles);
+		CC_SYNTHESIZE(unsigned int*, m_pTiles, Tiles);
 		/** Tilset information for the layer */
-		CCX_PROPERTY(CCTMXTilesetInfo*, m_pTileSet, TileSet);
+		CC_PROPERTY(CCTMXTilesetInfo*, m_pTileSet, TileSet);
 		/** Layer orientation, which is the same as the map orientation */
-		CCX_SYNTHESIZE(int, m_nLayerOrientation, LayerOrientation);
+		CC_SYNTHESIZE(unsigned int, m_uLayerOrientation, LayerOrientation);
 		/** properties from the layer. They can be added using Tiled */
-		CCX_PROPERTY(CCXStringToStringDictionary*, m_pProperties, Properties);
+		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
 	public:
 		CCTMXLayer();
 		virtual ~CCTMXLayer();
@@ -93,28 +95,28 @@ namespace cocos2d {
 		- layer->removeChild(sprite, cleanup);
 		- or layer->removeTileAt(ccp(x,y));
 		*/
-		CCSprite* tileAt(CGPoint tileCoordinate);
+		CCSprite* tileAt(const CCPoint& tileCoordinate);
 
 		/** returns the tile gid at a given tile coordinate.
 		if it returns 0, it means that the tile is empty.
 		This method requires the the tile map has not been previously released (eg. don't call layer->releaseMap())
 		*/
-		unsigned int  tileGIDAt(CGPoint tileCoordinate);
+		unsigned int  tileGIDAt(const CCPoint& tileCoordinate);
 
 		/** sets the tile gid (gid = tile global id) at a given tile coordinate.
 		The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
 		If a tile is already placed at that position, then it will be removed.
 		*/
-		void setTileGID(unsigned int gid, CGPoint tileCoordinate);
+		void setTileGID(unsigned int gid, const CCPoint& tileCoordinate);
 
 		/** removes a tile at given tile coordinate */
-		void removeTileAt(CGPoint tileCoordinate);
+		void removeTileAt(const CCPoint& tileCoordinate);
 
 		/** returns the position in pixels of a given tile coordinate */
-		CGPoint positionAt(CGPoint tileCoordinate);
+		CCPoint positionAt(const CCPoint& tileCoordinate);
 
 		/** return the value for the specific property name */
-		NSString *propertyNamed(const char *propertyName);
+		CCString *propertyNamed(const char *propertyName);
 
 		/** Creates the tiles */
 		void setupTiles();
@@ -122,7 +124,7 @@ namespace cocos2d {
 		/** CCTMXLayer doesn't support adding a CCSprite manually.
 		@warning addchild(z, tag); is not supported on CCTMXLayer. Instead of setTileGID.
 		*/
-		CCNode * addChild(CCNode * child, int zOrder, int tag);
+		virtual void addChild(CCNode * child, int zOrder, int tag);
 		// super method
 		void removeChild(CCNode* child, bool cleanup);
 		void draw();
@@ -130,20 +132,20 @@ namespace cocos2d {
 		inline const char* getLayerName(){ return m_sLayerName.c_str(); }
 		inline void setLayerName(const char *layerName){ m_sLayerName = layerName; }
 	private:
-		CGPoint positionForIsoAt(CGPoint pos);
-		CGPoint positionForOrthoAt(CGPoint pos);
-		CGPoint positionForHexAt(CGPoint pos);
+		CCPoint positionForIsoAt(const CCPoint& pos);
+		CCPoint positionForOrthoAt(const CCPoint& pos);
+		CCPoint positionForHexAt(const CCPoint& pos);
 
-		CGPoint calculateLayerOffset(CGPoint offset);
+		CCPoint calculateLayerOffset(const CCPoint& offset);
 	
 		/* optimization methos */
-		CCSprite* appendTileForGID(unsigned int gid, CGPoint pos);
-		CCSprite* insertTileForGID(unsigned int gid, CGPoint pos);
-		CCSprite* updateTileForGID(unsigned int gid, CGPoint pos);
+		CCSprite* appendTileForGID(unsigned int gid, const CCPoint& pos);
+		CCSprite* insertTileForGID(unsigned int gid, const CCPoint& pos);
+		CCSprite* updateTileForGID(unsigned int gid, const CCPoint& pos);
 
 		/* The layer recognizes some special properties, like cc_vertez */
 		void parseInternalProperties();
-		int vertexZForPos(CGPoint pos);
+		int vertexZForPos(const CCPoint& pos);
 
 		// index
 		unsigned int atlasIndexForExistantZ(unsigned int z);
@@ -165,6 +167,9 @@ namespace cocos2d {
 		//! used for optimization
 		CCSprite			*m_pReusedTile;
 		_ccCArray			*m_pAtlasIndexArray;
+        
+        // used for retina display
+        float               m_fContentScaleFactor;
 	};
 
 }// namespace cocos2d

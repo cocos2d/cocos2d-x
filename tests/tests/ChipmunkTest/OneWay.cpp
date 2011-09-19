@@ -28,7 +28,6 @@
 #include "ChipmunkDemo.h"
 
 static cpSpace *space;
-static cpBody *staticBody;
 
 typedef struct OneWayPlatform {
 	cpVect n; // direction objects may pass through
@@ -37,35 +36,18 @@ typedef struct OneWayPlatform {
 
 static OneWayPlatform platformInstance;
 
-static int
+static cpBool
 preSolve(cpArbiter *arb, cpSpace *space, void *ignore)
 {
 	CP_ARBITER_GET_SHAPES(arb, a, b);
-	OneWayPlatform *platform = (OneWayPlatform*)(a->data);
-	
-	if(cpArrayContains(platform->passThruList, b)){
-		// The object is in the pass thru list, ignore it until separates.
-		return 0;
-	} else {
-		cpFloat dot = cpvdot(cpArbiterGetNormal(arb, 0), platform->n);
+	OneWayPlatform *platform = (OneWayPlatform *)a->data;
 		
-		if(dot < 0){
-			// Add the object to the pass thrru list
-			cpArrayPush(platform->passThruList, b);
-			return 0;
-		} else {
-			return 1;
-		}
+	if(cpvdot(cpArbiterGetNormal(arb, 0), platform->n) < 0){
+		cpArbiterIgnore(arb);
+		return cpFalse;
 	}
-}
-
-static void
-separate(cpArbiter *arb, cpSpace *space, void *ignore)
-{
-	CP_ARBITER_GET_SHAPES(arb, a, b);
 	
-	// remove the object from the pass thru list
-	cpArrayDeleteObj(((OneWayPlatform *)a->data)->passThruList, b);
+	return cpTrue;
 }
 
 static void
@@ -82,32 +64,30 @@ update(int ticks)
 static cpSpace *
 init(void)
 {
-	staticBody = cpBodyNew(INFINITY, INFINITY);
-	
 	cpResetShapeIdCounter();
 	
 	space = cpSpaceNew();
 	space->iterations = 10;
 	space->gravity = cpv(0, -100);
-	
-	cpBody *body;
+
+	cpBody *body, *staticBody = &space->staticBody;
 	cpShape *shape;
-	
+
 	// Create segments around the edge of the screen.
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(320,-240), cpv(320,240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(320,-240), 0.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	
 	// Add our one way segment
-	shape = cpSpaceAddStaticShape(space, cpSegmentShapeNew(staticBody, cpv(-160,-100), cpv(160,-100), 10.0f));
+	shape = cpSpaceAddShape(space, cpSegmentShapeNew(staticBody, cpv(-160,-100), cpv(160,-100), 10.0f));
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->collision_type = 1;
 	shape->layers = NOT_GRABABLE_MASK;
@@ -128,7 +108,7 @@ init(void)
 	shape->e = 0.0f; shape->u = 0.9f;
 	shape->collision_type = 2;
 	
-	cpSpaceAddCollisionHandler(space, 1, 2, NULL, preSolve, NULL, separate, NULL);
+	cpSpaceAddCollisionHandler(space, 1, 2, NULL, preSolve, NULL, NULL, NULL);
 	
 	return space;
 }
@@ -136,7 +116,6 @@ init(void)
 static void
 destroy(void)
 {
-	cpBodyFree(staticBody);
 	cpSpaceFreeChildren(space);
 	cpSpaceFree(space);
 	

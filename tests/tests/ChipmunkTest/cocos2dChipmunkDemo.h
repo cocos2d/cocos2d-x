@@ -63,18 +63,18 @@ class ChipmunkTestLayer : public CCLayer
 protected:
 	std::string	m_strTitle;
     int demoIndex;
-    CCLabel *label;
+    CCLabelTTF *label;
 
 public:
     void init();
 	// virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-    void step(ccTime dt);
+    void update(ccTime dt);
     void draw();
-    void ccTouchesEnded(NSSet* touches, UIEvent *event);
+    void ccTouchesEnded(CCSet* touches, CCEvent *event);
         
-	// void restartCallback(NSObject* pSender);
-	// void nextCallback(NSObject* pSender);
-	// void backCallback(NSObject* pSender);
+	// void restartCallback(CCObject* pSender);
+	// void nextCallback(CCObject* pSender);
+	// void backCallback(CCObject* pSender);
 };

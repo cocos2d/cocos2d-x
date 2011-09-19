@@ -12,7 +12,7 @@ public:
     virtual void runThisTest();
 };
 
-class ParticleDemo : public CCColorLayer
+class ParticleDemo : public CCLayerColor
 {
 protected:
 	CCParticleSystem*	m_emitter;
@@ -26,15 +26,15 @@ public:
 
 	virtual std::string title();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
-	void toggleCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
+	void toggleCallback(CCObject* pSender);
 
 	virtual void registerWithTouchDispatcher();
-	virtual bool ccTouchBegan(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchMoved(CCTouch* touch, UIEvent* event);
-	virtual void ccTouchEnded(CCTouch* touch, UIEvent* event);
+	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
 
 	void step(ccTime dt);
 	void setEmitterPosition();

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2009      On-Core
 
 http://www.cocos2d-x.org
 
@@ -22,18 +23,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "ccMacros.h"
-#include "CCGrid.h"
+#include "effects/CCGrid.h"
 #include "CCDirector.h"
-#include "CCGrabber.h"
+#include "effects/CCGrabber.h"
+#include "support/ccUtils.h"
 
-#include "support/opengl_support/glu.h"
-#include "CGPointExtension.h"
+#include "CCGL.h"
+#include "CCPointExtension.h"
 
 namespace cocos2d
 {
 	// implementation of CCGridBase
 
-	CCGridBase* CCGridBase::gridWithSize(cocos2d::ccGridSize gridSize)
+	CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize)
 	{
         CCGridBase *pGridBase = new CCGridBase();
 
@@ -45,14 +47,14 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pGridBase);
+				CC_SAFE_RELEASE_NULL(pGridBase);
 			}
 		}
 
 		return pGridBase;
 	}
 
-	CCGridBase* CCGridBase::gridWithSize(ccGridSize gridSize, CCTexture2D *texture, bool flipped)
+	CCGridBase* CCGridBase::gridWithSize(const ccGridSize& gridSize, CCTexture2D *texture, bool flipped)
 	{
 		CCGridBase *pGridBase = new CCGridBase();
 
@@ -64,14 +66,14 @@ namespace cocos2d
 			}
 			else
 			{
-				CCX_SAFE_RELEASE_NULL(pGridBase);
+				CC_SAFE_RELEASE_NULL(pGridBase);
 			}
 		}
 
 		return pGridBase;
 	}
 
-	bool CCGridBase::initWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped)
+	bool CCGridBase::initWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 	{
 		bool bRet = true;
 
@@ -80,10 +82,10 @@ namespace cocos2d
 		m_sGridSize = gridSize;
 
 		m_pTexture = pTexture;
-		CCX_SAFE_RETAIN(m_pTexture);
+		CC_SAFE_RETAIN(m_pTexture);
 		m_bIsTextureFlipped = bFlipped;
 
-		CGSize texSize = m_pTexture->getContentSize();
+		const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 		m_obStep.x = texSize.width / m_sGridSize.x;
 		m_obStep.y = texSize.height / m_sGridSize.y;
 
@@ -103,20 +105,18 @@ namespace cocos2d
 		return bRet;
 	}
 
-	bool CCGridBase::initWithSize(ccGridSize gridSize)
+	bool CCGridBase::initWithSize(const ccGridSize& gridSize)
 	{
     	CCDirector *pDirector = CCDirector::sharedDirector();
-		CGSize s = pDirector->getWinSize();
-		int textureSize = 8;
-		while (textureSize < s.width || textureSize < s.height)
-		{
-			textureSize *= 2;
-		}
+		CCSize s = pDirector->getWinSizeInPixels();
+		
+		unsigned long POTWide = ccNextPOT((unsigned int)s.width);
+		unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
 
+		// we only use rgba8888
+		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
 
-		CCTexture2DPixelFormat format = pDirector->getPiexFormat() == kCCPixelFormatRGB565 ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
-
-		void *data = malloc((int)(textureSize * textureSize * 4));
+		void *data = calloc((int)(POTWide * POTHigh * 4), 1);
 		if (! data)
 		{
 			CCLOG("cocos2d: CCGrid: not enough memory.");
@@ -124,18 +124,21 @@ namespace cocos2d
 			return false;
 		}
 
-		memset(data, 0, (int)(textureSize * textureSize * 4));
-
 		CCTexture2D *pTexture = new CCTexture2D();
-		pTexture->initWithData(data, format, textureSize, textureSize, s);
-		pTexture->autorelease();
+		pTexture->initWithData(data, format, POTWide, POTHigh, s);
 
 		free(data);
 
-		if (initWithSize(gridSize, pTexture, false))
+		if (! pTexture)
 		{
-			// do something
+			CCLOG("cocos2d: CCGrid: error creating texture");
+			delete this;
+			return false;
 		}
+
+		initWithSize(gridSize, pTexture, false);
+
+		pTexture->release();
 
 		return true;
 	}
@@ -145,8 +148,8 @@ namespace cocos2d
 		CCLOGINFO("cocos2d: deallocing %p", this);
 
 		setActive(false);
-		CCX_SAFE_RELEASE(m_pTexture);
-		CCX_SAFE_RELEASE(m_pGrabber);
+		CC_SAFE_RELEASE(m_pTexture);
+		CC_SAFE_RELEASE(m_pGrabber);
 	}
 
 	// properties
@@ -175,7 +178,7 @@ namespace cocos2d
 	{
 		CCDirector *pDirector = CCDirector::sharedDirector();
 
-		CGSize winSize = pDirector->getDisplaySize();
+		CCSize winSize = pDirector->getDisplaySizeInPixels();
 		float w = winSize.width / 2;
 		float h = winSize.height / 2;
 
@@ -205,21 +208,24 @@ namespace cocos2d
 
 	void CCGridBase::set2DProjection()
 	{
-		CGSize winSize = CCDirector::sharedDirector()->getWinSize();
+		CCSize winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 
 		glLoadIdentity();
+
+        // set view port for user FBO, fixed bug #543 #544
 		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrthof(0, winSize.width, 0, winSize.height, -100, 100);
+		ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
 		glMatrixMode(GL_MODELVIEW);
 	}
 
 	// This routine can be merged with Director
 	void CCGridBase::set3DProjection()
 	{
-		CGSize	winSize = CCDirector::sharedDirector()->getDisplaySize();
+		CCSize	winSize = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 
+        // set view port for user FBO, fixed bug #543 #544
 		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -248,18 +254,21 @@ namespace cocos2d
 
 		if (pTarget->getCamera()->getDirty())
 		{
-			CGPoint offset = pTarget->getAnchorPointInPixels();
+			const CCPoint& offset = pTarget->getAnchorPointInPixels();
 
 			//
 			// XXX: Camera should be applied in the AnchorPoint
 			//
-			glTranslatef(offset.x, offset.y, 0);
+			ccglTranslate(offset.x, offset.y, 0);
 			pTarget->getCamera()->locate();
-			glTranslatef(-offset.x, -offset.y, 0);
+			ccglTranslate(-offset.x, -offset.y, 0);
 		}
 
 		glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
 
+        // restore projection for default FBO .fixed bug #543 #544
+        CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
+        CCDirector::sharedDirector()->applyOrientation();
 		blit();
 	}
 
@@ -280,7 +289,7 @@ namespace cocos2d
 
 	// implementation of CCGrid3D
 
-	CCGrid3D* CCGrid3D::gridWithSize(ccGridSize gridSize, CCTexture2D *pTexture, bool bFlipped)
+	CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 	{
 		CCGrid3D *pRet= new CCGrid3D();
 
@@ -300,7 +309,7 @@ namespace cocos2d
 		return pRet;
 	}
 
-	CCGrid3D* CCGrid3D::gridWithSize(ccGridSize gridSize)
+	CCGrid3D* CCGrid3D::gridWithSize(const ccGridSize& gridSize)
 	{
 		CCGrid3D *pRet= new CCGrid3D();
 
@@ -322,10 +331,10 @@ namespace cocos2d
 
 	CCGrid3D::~CCGrid3D(void)
 	{
-		free(m_pTexCoordinates);
-		free(m_pVertices);
-		free(m_pIndices);
-		free(m_pOriginalVertices);
+		CC_SAFE_FREE(m_pTexCoordinates);
+        CC_SAFE_FREE(m_pVertices);
+		CC_SAFE_FREE(m_pIndices);
+		CC_SAFE_FREE(m_pOriginalVertices);
 	}
 
 	void CCGrid3D::blit(void)
@@ -339,7 +348,7 @@ namespace cocos2d
 
 		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
 		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
-		glDrawElements(GL_TRIANGLES, n * 6, GL_UNSIGNED_SHORT, m_pIndices);
+		glDrawElements(GL_TRIANGLES, (GLsizei)n * 6, GL_UNSIGNED_SHORT, m_pIndices);
 
 		// restore GL default state
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -349,13 +358,13 @@ namespace cocos2d
 	{
 		float width = (float)m_pTexture->getPixelsWide();
 		float height = (float)m_pTexture->getPixelsHigh();
-		float imageH = m_pTexture->getContentSize().height;
+		float imageH = m_pTexture->getContentSizeInPixels().height;
 
 		int x, y, i;
 
 		m_pVertices = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
 		m_pOriginalVertices = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
-		m_pTexCoordinates = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(CGPoint));
+		m_pTexCoordinates = malloc((m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(CCPoint));
 		m_pIndices = (GLushort*)malloc(m_sGridSize.x * m_sGridSize.y * sizeof(GLushort) * 6);
 
 		float *vertArray = (float*)m_pVertices;
@@ -373,10 +382,10 @@ namespace cocos2d
 				float y1 = y * m_obStep.y;
 				float y2= y1 + m_obStep.y;
 
-				GLushort a = x * (m_sGridSize.y + 1) + y;
-				GLushort b = (x + 1) * (m_sGridSize.y + 1) + y;
-				GLushort c = (x + 1) * (m_sGridSize.y + 1) + (y + 1);
-				GLushort d = x * (m_sGridSize.y + 1) + (y + 1);
+				GLushort a = (GLushort)(x * (m_sGridSize.y + 1) + y);
+				GLushort b = (GLushort)((x + 1) * (m_sGridSize.y + 1) + y);
+				GLushort c = (GLushort)((x + 1) * (m_sGridSize.y + 1) + (y + 1));
+				GLushort d = (GLushort)(x * (m_sGridSize.y + 1) + (y + 1));
 
 				GLushort tempidx[6] = {a, b, d, b, c, d};
 
@@ -391,7 +400,7 @@ namespace cocos2d
 				ccVertex3F l2[4] = {e, f, g, h};
 
 				int tex1[4] = {a*2, b*2, c*2, d*2};
-				CGPoint tex2[4] = {ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2)};
+				CCPoint tex2[4] = {ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2)};
 
 				for (i = 0; i < 4; ++i)
 				{
@@ -415,7 +424,7 @@ namespace cocos2d
 		memcpy(m_pOriginalVertices, m_pVertices, (m_sGridSize.x+1) * (m_sGridSize.y+1) * sizeof(ccVertex3F));
 	}
 
-	ccVertex3F CCGrid3D::vertex(ccGridSize pos)
+	ccVertex3F CCGrid3D::vertex(const ccGridSize& pos)
 	{
 		int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pVertices;
@@ -425,7 +434,7 @@ namespace cocos2d
 		return vert;
 	}
 
-	ccVertex3F CCGrid3D::originalVertex(cocos2d::ccGridSize pos)
+	ccVertex3F CCGrid3D::originalVertex(const ccGridSize& pos)
 	{
 		int index = (pos.x * (m_sGridSize.y+1) + pos.y) * 3;
 		float *vertArray = (float*)m_pOriginalVertices;
@@ -435,7 +444,7 @@ namespace cocos2d
 		return vert;
 	}
 
-	void CCGrid3D::setVertex(ccGridSize pos, ccVertex3F vertex)
+	void CCGrid3D::setVertex(const ccGridSize& pos, const ccVertex3F& vertex)
 	{
 		int index = (pos.x * (m_sGridSize.y + 1) + pos.y) * 3;
 		float *vertArray = (float*)m_pVertices;
@@ -457,13 +466,13 @@ namespace cocos2d
 
 	CCTiledGrid3D::~CCTiledGrid3D(void)
 	{
-		free(m_pTexCoordinates);
-		free(m_pVertices);
-		free(m_pOriginalVertices);
-		free(m_pIndices);
+		CC_SAFE_FREE(m_pTexCoordinates);
+		CC_SAFE_FREE(m_pVertices);
+		CC_SAFE_FREE(m_pOriginalVertices);
+		CC_SAFE_FREE(m_pIndices);
 	}
 
-	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(cocos2d::ccGridSize gridSize, cocos2d::CCTexture2D *pTexture, bool bFlipped)
+	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize, CCTexture2D *pTexture, bool bFlipped)
 	{
 		CCTiledGrid3D *pRet= new CCTiledGrid3D();
 
@@ -483,7 +492,7 @@ namespace cocos2d
 		return pRet;
 	}
 
-	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(cocos2d::ccGridSize gridSize)
+	CCTiledGrid3D* CCTiledGrid3D::gridWithSize(const ccGridSize& gridSize)
 	{
 		CCTiledGrid3D *pRet= new CCTiledGrid3D();
 
@@ -514,7 +523,7 @@ namespace cocos2d
 
 		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
 		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
-		glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, m_pIndices);
+		glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
 
 		// restore default GL state
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -524,7 +533,7 @@ namespace cocos2d
 	{
  		float width = (float)m_pTexture->getPixelsWide();
  		float height = (float)m_pTexture->getPixelsHigh();
-		float imageH = m_pTexture->getContentSize().height;
+		float imageH = m_pTexture->getContentSizeInPixels().height;
 		
 		int numQuads = m_sGridSize.x * m_sGridSize.y;
 		
@@ -583,26 +592,26 @@ namespace cocos2d
 		
 		for (x = 0; x < numQuads; x++)
 		{
-			idxArray[x*6+0] = x * 4 + 0;
-			idxArray[x*6+1] = x * 4 + 1;
-			idxArray[x*6+2] = x * 4 + 2;
+			idxArray[x*6+0] = (GLushort)(x * 4 + 0);
+			idxArray[x*6+1] = (GLushort)(x * 4 + 1);
+			idxArray[x*6+2] = (GLushort)(x * 4 + 2);
 			
-			idxArray[x*6+3] = x * 4 + 1;
-			idxArray[x*6+4] = x * 4 + 2;
-			idxArray[x*6+5] = x * 4 + 3;
+			idxArray[x*6+3] = (GLushort)(x * 4 + 1);
+			idxArray[x*6+4] = (GLushort)(x * 4 + 2);
+			idxArray[x*6+5] = (GLushort)(x * 4 + 3);
 		}
 		
 		memcpy(m_pOriginalVertices, m_pVertices, numQuads * 12 * sizeof(GLfloat));
 	}
 
-	void CCTiledGrid3D::setTile(cocos2d::ccGridSize pos, cocos2d::ccQuad3 coords)
+	void CCTiledGrid3D::setTile(const ccGridSize& pos, const ccQuad3& coords)
 	{
 		int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
 		float *vertArray = (float*)m_pVertices;
 		memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
 	}
 
-	ccQuad3 CCTiledGrid3D::originalTile(ccGridSize pos)
+	ccQuad3 CCTiledGrid3D::originalTile(const ccGridSize& pos)
 	{
 		int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
 		float *vertArray = (float*)m_pOriginalVertices;
@@ -613,7 +622,7 @@ namespace cocos2d
 		return ret;
 	}
 
-	ccQuad3 CCTiledGrid3D::tile(cocos2d::ccGridSize pos)
+	ccQuad3 CCTiledGrid3D::tile(const ccGridSize& pos)
 	{
 		int idx = (m_sGridSize.y * pos.x + pos.y) * 4 * 3;
 		float *vertArray = (float*)m_pVertices;

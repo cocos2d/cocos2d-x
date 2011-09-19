@@ -17,9 +17,9 @@ public:
 	virtual std::string subtitle();
 	virtual void onEnter();
 
-	void restartCallback(NSObject* pSender);
-	void nextCallback(NSObject* pSender);
-	void backCallback(NSObject* pSender);
+	void restartCallback(CCObject* pSender);
+	void nextCallback(CCObject* pSender);
+	void backCallback(CCObject* pSender);
 };
 
 class Sprite1 : public SpriteTestDemo
@@ -28,16 +28,16 @@ public:
 	Sprite1();
 	virtual std::string title();
 
-	void addNewSpriteWithCoords(CGPoint p);
-	void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void addNewSpriteWithCoords(CCPoint p);
+	void ccTouchesEnded(CCSet* touches, CCEvent* event);
 };
 
-class SpriteSheet1: public SpriteTestDemo
+class SpriteBatchNode1: public SpriteTestDemo
 {
 public:
-	SpriteSheet1();
-	void addNewSpriteWithCoords(CGPoint p);
-	virtual void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	SpriteBatchNode1();
+	void addNewSpriteWithCoords(CCPoint p);
+	virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 	virtual std::string title();
 };
 
@@ -49,10 +49,10 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetColorOpacity : public SpriteTestDemo
+class SpriteBatchNodeColorOpacity : public SpriteTestDemo
 {
 public:
-	SpriteSheetColorOpacity();
+	SpriteBatchNodeColorOpacity();
 	void removeAndAddSprite(ccTime dt);
 	virtual std::string title();
 };
@@ -66,29 +66,54 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetZOrder: public SpriteTestDemo
+class SpriteBatchNodeZOrder: public SpriteTestDemo
 {
 	int		m_dir;
 public:
-	SpriteSheetZOrder();
+	SpriteBatchNodeZOrder();
 	void reorderSprite(ccTime dt);
 	virtual std::string title();
 };
 
-class SpriteSheetReorder : public SpriteTestDemo
+class SpriteBatchNodeReorder : public SpriteTestDemo
 {
 public:
-	SpriteSheetReorder();
+	SpriteBatchNodeReorder();
 	virtual std::string title();
 	std::string subtitle();
 };
 
-class SpriteSheetReorderIssue744: public SpriteTestDemo
+class SpriteBatchNodeReorderIssue744: public SpriteTestDemo
 {
 public:
-	SpriteSheetReorderIssue744();
+	SpriteBatchNodeReorderIssue744();
 	virtual std::string title();
 	std::string subtitle();
+};
+
+class SpriteBatchNodeReorderIssue766 : public SpriteTestDemo
+{
+public:
+    SpriteBatchNodeReorderIssue766();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void reorderSprite(ccTime dt);
+    CCSprite* makeSpriteZ(int aZ);
+
+private:
+    CCSpriteBatchNode *batchNode;
+    CCSprite *sprite1;
+    CCSprite *sprite2;
+    CCSprite *sprite3;	
+};
+
+class SpriteBatchNodeReorderIssue767 : public SpriteTestDemo
+{
+public:
+    SpriteBatchNodeReorderIssue767();
+    virtual std::string title();
+    virtual std::string subtitle();
+    void reorderSprites(ccTime dt);
 };
 
 class SpriteZVertex: public SpriteTestDemo
@@ -102,14 +127,14 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetZVertex: public SpriteTestDemo
+class SpriteBatchNodeZVertex: public SpriteTestDemo
 {
 	int		m_dir;
 	float	m_time;
 public:
 	virtual void onEnter();
 	virtual void onExit();
-	SpriteSheetZVertex();
+	SpriteBatchNodeZVertex();
 	virtual std::string title();
 };
 
@@ -120,10 +145,10 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetAnchorPoint : public SpriteTestDemo
+class SpriteBatchNodeAnchorPoint : public SpriteTestDemo
 {
 public:
-	SpriteSheetAnchorPoint();
+	SpriteBatchNodeAnchorPoint();
 	virtual std::string title();
 };
 
@@ -142,10 +167,10 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetFlip : public SpriteTestDemo
+class SpriteBatchNodeFlip : public SpriteTestDemo
 {
 public:
-	SpriteSheetFlip();
+	SpriteBatchNodeFlip();
 	void flipSprites(ccTime dt);
 	virtual std::string title();
 };
@@ -159,10 +184,10 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetAliased : public SpriteTestDemo
+class SpriteBatchNodeAliased : public SpriteTestDemo
 {
 public:
-	SpriteSheetAliased();
+	SpriteBatchNodeAliased();
 	virtual void onEnter();
 	virtual void onExit();
 	virtual std::string title();
@@ -178,20 +203,20 @@ public:
 	SpriteNewTexture();
 	virtual ~SpriteNewTexture();
 	void addNewSprite();
-	void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void ccTouchesEnded(CCSet* touches, CCEvent* event);
 	virtual std::string title();
 };
 
-class SpriteSheetNewTexture : public SpriteTestDemo
+class SpriteBatchNodeNewTexture : public SpriteTestDemo
 {
 	CCTexture2D*	m_texture1;
 	CCTexture2D*	m_texture2; 
 
 public:
-	SpriteSheetNewTexture();
-	virtual ~SpriteSheetNewTexture();
+	SpriteBatchNodeNewTexture();
+	virtual ~SpriteBatchNodeNewTexture();
 	void addNewSprite();
-	void ccTouchesEnded(NSSet* touches, UIEvent* event);
+	void ccTouchesEnded(CCSet* touches, CCEvent* event);
 	virtual std::string title();
 };
 
@@ -212,6 +237,15 @@ private:
     int      m_nCounter;
 };
 
+class SpriteFrameAliasNameTest : public SpriteTestDemo
+{
+public:
+    virtual void onEnter();
+    ~SpriteFrameAliasNameTest();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class SpriteOffsetAnchorRotation: public SpriteTestDemo
 {
 public:
@@ -220,10 +254,10 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetOffsetAnchorRotation: public SpriteTestDemo
+class SpriteBatchNodeOffsetAnchorRotation: public SpriteTestDemo
 {
 public:
-	SpriteSheetOffsetAnchorRotation();
+	SpriteBatchNodeOffsetAnchorRotation();
 	virtual void onExit();
 	virtual std::string title();
 };
@@ -236,12 +270,62 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetOffsetAnchorScale: public SpriteTestDemo
+class SpriteBatchNodeOffsetAnchorScale: public SpriteTestDemo
 {
 public:
-	SpriteSheetOffsetAnchorScale();
+	SpriteBatchNodeOffsetAnchorScale();
 	virtual void onExit();
 	virtual std::string title();
+};
+
+class SpriteOffsetAnchorSkew : public SpriteTestDemo
+{
+public:
+	SpriteOffsetAnchorSkew();
+	~SpriteOffsetAnchorSkew();
+	virtual std::string title();
+};
+
+class SpriteBatchNodeOffsetAnchorSkew : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeOffsetAnchorSkew();
+    ~SpriteBatchNodeOffsetAnchorSkew();
+	virtual std::string title();
+};
+
+class SpriteOffsetAnchorSkewScale : public SpriteTestDemo
+{
+public:
+	SpriteOffsetAnchorSkewScale();
+	~SpriteOffsetAnchorSkewScale();
+	virtual std::string title();
+};
+
+class SpriteBatchNodeOffsetAnchorSkewScale : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeOffsetAnchorSkewScale();
+	~SpriteBatchNodeOffsetAnchorSkewScale();
+	virtual std::string title();
+};
+
+class SpriteOffsetAnchorFlip : public SpriteTestDemo
+{
+public:
+	SpriteOffsetAnchorFlip();
+	~SpriteOffsetAnchorFlip();
+	virtual std::string title();
+	virtual std::string subtitle();
+};
+
+class SpriteBatchNodeOffsetAnchorFlip : public SpriteTestDemo
+{
+public:
+	SpriteBatchNodeOffsetAnchorFlip();
+	~SpriteBatchNodeOffsetAnchorFlip();
+	virtual std::string title();
+	virtual std::string subtitle();
 };
 
 class SpriteAnimationSplit : public SpriteTestDemo
@@ -254,7 +338,7 @@ public:
 
 class SpriteHybrid: public SpriteTestDemo
 {
-	bool 	m_usingSpriteSheet; 
+	bool 	m_usingSpriteBatchNode; 
 public:
 	SpriteHybrid();
 	void reparentSprite(ccTime dt);
@@ -262,26 +346,26 @@ public:
 	virtual void onExit();
 };
 
-class SpriteSheetChildren: public SpriteTestDemo
+class SpriteBatchNodeChildren: public SpriteTestDemo
 {
 public:
-	SpriteSheetChildren();
+	SpriteBatchNodeChildren();
 	virtual void onExit();
 	virtual std::string title();
 };
 
-class SpriteSheetChildren2: public SpriteTestDemo
+class SpriteBatchNodeChildren2: public SpriteTestDemo
 {
 public:
-	SpriteSheetChildren2();
+	SpriteBatchNodeChildren2();
 	virtual void onExit();
 	virtual std::string title();
 };
 
-class SpriteSheetChildrenZ : public SpriteTestDemo
+class SpriteBatchNodeChildrenZ : public SpriteTestDemo
 {
 public:
-	SpriteSheetChildrenZ();
+	SpriteBatchNodeChildrenZ();
 	virtual void onExit();
 	virtual std::string title();
 };
@@ -294,6 +378,15 @@ public:
 	virtual std::string title();
 };
 
+class SpriteChildrenVisibilityIssue665 : public SpriteTestDemo
+{
+public:
+    SpriteChildrenVisibilityIssue665();
+    ~SpriteChildrenVisibilityIssue665();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class SpriteChildrenAnchorPoint: public SpriteTestDemo
 {
 public:
@@ -302,18 +395,18 @@ public:
 	virtual std::string title();
 };
 
-class SpriteSheetChildrenAnchorPoint: public SpriteTestDemo
+class SpriteBatchNodeChildrenAnchorPoint: public SpriteTestDemo
 {
 public:
-	SpriteSheetChildrenAnchorPoint();
+	SpriteBatchNodeChildrenAnchorPoint();
 	virtual void onExit();
 	virtual std::string title();
 };
 
-class SpriteSheetChildrenScale: public SpriteTestDemo
+class SpriteBatchNodeChildrenScale: public SpriteTestDemo
 {
 public:
-	SpriteSheetChildrenScale();
+	SpriteBatchNodeChildrenScale();
 	virtual std::string title();
 };
 
@@ -325,10 +418,10 @@ public:
 };
 
 
-class SpriteSheetChildrenChildren: public SpriteTestDemo
+class SpriteBatchNodeChildrenChildren: public SpriteTestDemo
 {
 public:
-	SpriteSheetChildrenChildren();
+	SpriteBatchNodeChildrenChildren();
 	virtual std::string title();
 };
 
@@ -338,6 +431,22 @@ public:
 	SpriteNilTexture();
 	virtual std::string title();
 	std::string subtitle();
+};
+
+class SpriteSubclass : public SpriteTestDemo
+{
+public:
+    SpriteSubclass();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class AnimationCache : public SpriteTestDemo
+{
+public:
+    AnimationCache();
+    virtual std::string title();
+    virtual std::string subtitle();
 };
 
 class SpriteTestScene : public TestScene

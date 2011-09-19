@@ -24,15 +24,17 @@ enum
 //
 //------------------------------------------------------------------
 PongScene::PongScene()
+:TestScene(true)
 {
 	PongLayer *pongLayer = new PongLayer();//PongLayer::node();
 	addChild(pongLayer);
     pongLayer->release();
 }
 
-void PongScene::onExit()
+void PongScene::MainMenuCallback(CCObject* pSender)
 {
-	TestScene::onExit();
+    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
+    TestScene::MainMenuCallback(pSender);
 }
 
 //------------------------------------------------------------------
@@ -42,37 +44,37 @@ void PongScene::onExit()
 //------------------------------------------------------------------
 PongLayer::PongLayer()
 {
-	m_ballStartingVelocity = CGPointMake(20.0f, -100.0f);
+	m_ballStartingVelocity = CCPointMake(20.0f, -100.0f);
 	
     m_ball = Ball::ballWithTexture( CCTextureCache::sharedTextureCache()->addImage(s_Ball) );
-	m_ball->setPosition( CGPointMake(160.0f, 240.0f) );
+	m_ball->setPosition( CCPointMake(160.0f, 240.0f) );
 	m_ball->setVelocity( m_ballStartingVelocity );
 	addChild( m_ball );
 	m_ball->retain();
 	
 	CCTexture2D* paddleTexture = CCTextureCache::sharedTextureCache()->addImage(s_Paddle);
 	
-	NSMutableArray<NSObject *> *paddlesM = new NSMutableArray<NSObject *>(4);
+	CCMutableArray<CCObject *> *paddlesM = new CCMutableArray<CCObject *>(4);
 	
 	Paddle* paddle = Paddle::paddleWithTexture(paddleTexture);
-	paddle->setPosition( CGPointMake(160, 15) );
+	paddle->setPosition( CCPointMake(160, 15) );
 	paddlesM->addObject( paddle );
 	
 	paddle = Paddle::paddleWithTexture( paddleTexture );
-	paddle->setPosition( CGPointMake(160, 480 - kStatusBarHeight - 15) );
+	paddle->setPosition( CCPointMake(160, 480 - kStatusBarHeight - 15) );
 	paddlesM->addObject( paddle );
 	
 	paddle = Paddle::paddleWithTexture( paddleTexture );
-	paddle->setPosition( CGPointMake(160, 100) );
+	paddle->setPosition( CCPointMake(160, 100) );
 	paddlesM->addObject( paddle );
 	
 	paddle = Paddle::paddleWithTexture( paddleTexture );
-	paddle->setPosition( CGPointMake(160, 480 - kStatusBarHeight - 100) );
+	paddle->setPosition( CCPointMake(160, 480 - kStatusBarHeight - 100) );
 	paddlesM->addObject( paddle );
 	
 	m_paddles = paddlesM->copy();
 	
-    NSMutableArray<NSObject *>::NSMutableArrayIterator it;
+    CCMutableArray<CCObject *>::CCMutableArrayIterator it;
 	for(it = m_paddles->begin(); it != m_paddles->end(); it++)
 	{
 		paddle = (Paddle*)(*it);
@@ -98,7 +100,7 @@ void PongLayer::resetAndScoreBallForPlayer(int player)
 {
 	m_ballStartingVelocity = ccpMult(m_ballStartingVelocity, -1.1f);
 	m_ball->setVelocity( m_ballStartingVelocity );
-	m_ball->setPosition( CGPointMake(160.0f, 240.0f) );
+	m_ball->setPosition( CCPointMake(160.0f, 240.0f) );
 	
 	// TODO -- scoring
 }
@@ -108,7 +110,7 @@ void PongLayer::doStep(ccTime delta)
 	m_ball->move(delta);
 
 	Paddle* paddle;
-    NSMutableArray<NSObject *>::NSMutableArrayIterator it;
+    CCMutableArray<CCObject *>::CCMutableArrayIterator it;
 	for(it = m_paddles->begin(); it != m_paddles->end(); it++)
 	{
 		paddle = (Paddle*)(*it);

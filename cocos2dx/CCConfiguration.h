@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2011 cocos2d-x.org
+Copyright (c) 2010      Ricardo Quesada
 
 http://www.cocos2d-x.org
 
@@ -25,28 +26,65 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "NSObject.h"
+#include "CCObject.h"
 #include <string>
-#include <GLES/gl.h>
+#include "CCGL.h"
 
 namespace   cocos2d {
+
+	/** OS version definitions.
+	*/
+	enum {
+		kCCiOSVersion_3_0   = 0x03000000,
+		kCCiOSVersion_3_1   = 0x03010000,
+		kCCiOSVersion_3_1_1 = 0x03010100,
+		kCCiOSVersion_3_1_2 = 0x03010200,
+		kCCiOSVersion_3_1_3 = 0x03010300,
+		kCCiOSVersion_3_2   = 0x03020000,
+		kCCiOSVersion_3_2_1 = 0x03020100,
+		kCCiOSVersion_4_0   = 0x04000000,
+		kCCiOSVersion_4_0_1 = 0x04000100,
+		kCCiOSVersion_4_1   = 0x04010000,
+		kCCiOSVersion_4_2   = 0x04020000,
+		kCCiOSVersion_4_3   = 0x04030000,
+		kCCiOSVersion_4_3_1 = 0x04030100,
+		kCCiOSVersion_4_3_2 = 0x04030200,
+		kCCiOSVersion_4_3_3 = 0x04030300,
+	};
+
+	typedef enum 
+	{
+		GLES_VER_INVALID,
+		GLES_VER_1_0,
+		GLES_VER_1_1,
+		GLES_VER_2_0
+	} CCGlesVersion;
 
 /**
  @brief CCConfiguration contains some openGL variables
  @since v0.99.0
  */
-class CCConfiguration : public NSObject
+class CC_DLL CCConfiguration : public CCObject
 {
 protected:
-	GLint	m_nMaxTextureSize;
-	GLint	m_nMaxModelviewStackDepth;
-	bool	m_bSupportsPVRTC;
-	bool	m_bSupportsNPOT;
-	bool	m_bSupportsBGRA8888;
-	bool	m_bSupportsDiscardFramebuffer;
+	GLint			m_nMaxTextureSize;
+	GLint			m_nMaxModelviewStackDepth;
+	bool			m_bSupportsPVRTC;
+	bool			m_bSupportsNPOT;
+	bool			m_bSupportsBGRA8888;
+	bool			m_bSupportsDiscardFramebuffer;
+    bool            m_bInited;
+	unsigned int	m_uOSVersion;
+	GLint           m_nMaxSamplesAllowed;
+    char *          m_pGlExtensions;
 
-public:
-	CCConfiguration(void);
+private:
+
+    CCConfiguration(void);
+
+public:	
+
+	CCGlesVersion getGlesVersion();
 	
 	/** OpenGL Max texture size. */
 	inline int getMaxTextureSize(void)
@@ -94,6 +132,14 @@ public:
 		return m_bSupportsDiscardFramebuffer;
 	}
 
+	/** returns the OS version.
+	- On iOS devices it returns the firmware version.
+	- On Mac returns the OS version
+
+	@since v0.99.5
+	*/
+	inline unsigned int getOSVersion() { return m_uOSVersion; }
+
 	/** returns whether or not an OpenGL is supported */
 	bool checkForGLExtension(const std::string &searchName);
 
@@ -101,7 +147,7 @@ public:
 
 public:
 	/** returns a shared instance of the CCConfiguration */
-	static CCConfiguration* sharedConfiguration(void);
+	static CCConfiguration *sharedConfiguration(void);
 };
 }//namespace   cocos2d 
 

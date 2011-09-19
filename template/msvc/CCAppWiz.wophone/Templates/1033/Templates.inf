@@ -1,0 +1,25 @@
+root_Arm.TMK3
+Makefile.ARM
+
+wophone/NewDeleteOp.cpp
+wophone/TG3AppDllEntry.cpp
+wophone/TG3AppDllEntry.h
+
+wophone/main.cpp
+
+wophone/rootUnicodeScript.h
+wophone/rootUnicodeScript_str.h
+
+[! if CC_USE_TCOM_SUPPORT]
+wophone/TCOM/root_TcomRegist.cpp
+[! endif]
+
+Classes/AppDelegate.h
+Classes/AppDelegate.cpp
+
+Classes/HelloWorldScene.h
+Classes/HelloWorldScene.cpp
+
+Resource/CloseNormal.png
+Resource/CloseSelected.png
+Resource/HelloWorld.png
