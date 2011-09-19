@@ -69,6 +69,71 @@ THE SOFTWARE.
 #include <GLES/glext.h>
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include <GL/gl.h>
+#include "GL/glext.h"
+
+//declare here while define in CCEGLView_linux.cpp
+extern PFNGLGENFRAMEBUFFERSEXTPROC         	glGenFramebuffersEXT;
+extern PFNGLDELETEFRAMEBUFFERSEXTPROC      	glDeleteFramebuffersEXT;
+extern PFNGLBINDFRAMEBUFFEREXTPROC         	glBindFramebufferEXT;
+extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC  	glCheckFramebufferStatusEXT;
+extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC    	glFramebufferTexture2DEXT;
+extern PFNGLGENERATEMIPMAPEXTPROC          	glGenerateMipmapEXT;
+
+extern PFNGLGENBUFFERSARBPROC 			   	glGenBuffersARB;
+extern PFNGLBINDBUFFERARBPROC 				glBindBufferARB;
+extern PFNGLBUFFERDATAARBPROC 				glBufferDataARB;
+extern PFNGLBUFFERSUBDATAARBPROC 			glBufferSubDataARB;
+extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
+
+
+
+
+#undef ccglOrtho
+#undef ccglClearDepth
+#undef ccglTranslate
+#undef ccglGenerateMipmap
+#undef ccglGenFramebuffers
+#undef ccglBindFramebuffer
+#undef ccglFramebufferTexture2D
+#undef ccglDeleteFramebuffers
+#undef ccglCheckFramebufferStatus
+
+#undef CC_GL_FRAMEBUFFER
+#undef CC_GL_FRAMEBUFFER_BINDING
+#undef CC_GL_COLOR_ATTACHMENT0
+#undef CC_GL_FRAMEBUFFER_COMPLETE
+
+#define ccglOrtho					glOrtho
+#define	ccglClearDepth				glClearDepth
+#define ccglTranslate				glTranslated
+
+#define ccglGenerateMipmap			glGenerateMipmapEXT
+#define ccglGenFramebuffers			glGenFramebuffersEXT
+#define ccglBindFramebuffer			glBindFramebufferEXT
+#define ccglFramebufferTexture2D	glFramebufferTexture2DEXT
+#define ccglDeleteFramebuffers		glDeleteFramebuffersEXT
+#define ccglCheckFramebufferStatus	glCheckFramebufferStatusEXT
+
+
+#define glFrustumf                  glFrustum
+#define glGenBuffers                glGenBuffersARB
+#define glBindBuffer                glBindBufferARB
+#define glBufferData                glBufferDataARB
+#define glBufferSubData             glBufferSubDataARB
+#define glDeleteBuffers             glDeleteBuffersARB
+
+#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
+#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
+#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
+#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
+
+#define GL_POINT_SPRITE_OES         GL_POINT_SPRITE_ARB
+#define GL_COORD_REPLACE_OES        GL_COORD_REPLACE_ARB
+#define GL_POINT_SIZE_ARRAY_OES     GL_POINT_SIZE
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 #include <IwGL.h>
 #endif
@@ -79,9 +144,11 @@ NS_CC_BEGIN;
 OpenGL GLU implementation
 */
 
+//typedef float GLfloat;
+
 /** OpenGL gluLookAt implementation */
-void CC_DLL gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ, 
-               GLfloat fLookAtX, GLfloat fLookAtY, GLfloat fLookAtZ, 
+void CC_DLL gluLookAt(GLfloat fEyeX, GLfloat fEyeY, GLfloat fEyeZ,
+               GLfloat fLookAtX, GLfloat fLookAtY, GLfloat fLookAtZ,
                GLfloat fUpX, GLfloat fUpY, GLfloat fUpZ);
 
 /** OpenGL gluPerspective implementation */

@@ -1,0 +1,1 @@
+Run the build_media_files.sh shell script (in the media directory ./media) to build the media files required for these examples.
