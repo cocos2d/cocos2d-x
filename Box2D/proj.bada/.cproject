@@ -62,7 +62,6 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry excluding="Collision|Common|Dynamics" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
@@ -328,6 +327,7 @@
 <externalSetting>
 <entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/.Target-Debug"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D"/>
 </externalSetting>
 </externalSettings>
 <extensions>
@@ -371,7 +371,9 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
 </sourceEntries>
 </configuration>
 </storageModule>
@@ -634,6 +636,7 @@
 <externalSetting>
 <entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/.Target-Release"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D"/>
 </externalSetting>
 </externalSettings>
 <extensions>
@@ -677,7 +680,9 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Collision"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Common"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Dynamics"/>
 </sourceEntries>
 </configuration>
 </storageModule>
