@@ -219,3 +219,24 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 NS_CC_END;
 
 #endif // CC_PLATFORM_AIRPLAY
+
+/****************************************************
+ * bada
+ ***************************************************/
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include <FBaseSys.h>
+
+NS_CC_BEGIN;
+
+
+#define CCLog(...)  AppLog(__VA_ARGS__)
+
+// bada no MessageBox, use CCLog instead
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    CCLog("%s: %s", pszTitle, pszMsg);
+}
+
+NS_CC_END;
+
+#endif // CC_PLATFORM_BADA

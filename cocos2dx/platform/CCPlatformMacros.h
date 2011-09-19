@@ -156,9 +156,13 @@ public: inline void set##funName(const varType& var){ varName = var; }
 // shared library declartor
 #define CC_DLL                 
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 // assertion
 #include <assert.h>
 #define CC_ASSERT(cond)                assert(cond)
+#else
+#define CC_ASSERT(cond)
+#endif
 #define CC_UNUSED_PARAM(unusedparam)   (void)unusedparam
 
 
@@ -186,5 +190,9 @@ public: inline void set##funName(const varType& var){ varName = var; }
     #endif
 
 #endif  // wophone VM
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include "CCPlatformFunc_bada.h"
+#endif
 
 #endif // __CC_PLATFORM_MACROS_H__
