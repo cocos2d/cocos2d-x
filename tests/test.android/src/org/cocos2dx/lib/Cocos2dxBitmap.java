@@ -64,11 +64,11 @@ public class Cocos2dxBitmap{
     	
     	TextProperty textProperty = computeTextProperty(content, paint, width, height);      	
 
-        int BitMapTotalHeight = (height == 0 ? textProperty.totalHeight:height);
+        int bitmapTotalHeight = (height == 0 ? textProperty.totalHeight:height);
 
         // Draw text to bitmap
         Bitmap bitmap = Bitmap.createBitmap(textProperty.maxWidth, 
-        		BitMapTotalHeight, Bitmap.Config.ARGB_8888);
+        		bitmapTotalHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         
         // Draw string
