@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <cstdio>
+#include <stdio.h>
 #include <stdlib.h>
 #include "base64.h"
 namespace   cocos2d {
@@ -67,7 +67,9 @@ int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *
 	if( c == '=' ) {
 		switch (char_count) {
 			case 1:
+#if CC_TARGET_PLATFORM != CC_PLATFORM_BADA
 				std::fprintf(stderr, "base64Decode: encoding incomplete: at least 2 bits missing");
+#endif
 				errors++;
 				break;
 			case 2:
@@ -80,8 +82,10 @@ int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *
 			}
 	} else if ( input_idx < input_len ) {
 		if (char_count) {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_BADA
 			std::fprintf(stderr, "base64 encoding incomplete: at least %d bits truncated",
 					((4 - char_count) * 6));
+#endif
 			errors++;
 		}
     }
@@ -101,7 +105,9 @@ int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out)
 		
 		if (ret > 0 )
 		{
+#if CC_TARGET_PLATFORM != CC_PLATFORM_BADA
 			printf("Base64Utils: error decoding");
+#endif
 			delete [] *out;
 			*out = NULL;			
 			outLength = 0;

@@ -116,4 +116,37 @@ int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+
+#include <FSysSystemTime.h>
+using namespace Osp::System;
+
+struct timeval
+{
+ 	long tv_sec;		// seconds
+ 	long tv_usec;    // microSeconds
+};
+
+struct timezone
+{
+    int tz_minuteswest;
+    int tz_dsttime;
+};
+
+int CC_DLL gettimeofday(struct timeval *, struct timezone *);
+
+#ifndef MIN
+#define MIN(x,y) (((x) > (y)) ? (y) : (x))
+#endif  // MIN
+
+#ifndef MAX
+#define MAX(x,y) (((x) < (y)) ? (y) : (x))
+#endif  // MAX
+
+#ifndef UINT_MAX
+#define UINT_MAX      0xffffffff    /* maximum unsigned int value */
+#endif  // UINT_MAX
+
+#endif  // CC_TARGET_PLATFORM == CC_PLATFORM_BADA
+
 #endif  // __CC_STD_C_H__

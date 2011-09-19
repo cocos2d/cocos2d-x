@@ -38,4 +38,8 @@ THE SOFTWARE.
 #include "android/CCThread_android.cpp"
 #endif // CC_PLATFORM_ANDROID
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include "bada/CCThread_bada.cpp"
+#endif // CC_PLATFORM_BADA
+
 #endif  // CC_SUPPORT_MULTITHREAD
