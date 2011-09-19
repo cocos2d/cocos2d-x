@@ -45,10 +45,10 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.c.linker.exe.simul.1562949457" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.simul.c.linker.exe.simul"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.linker.exe.simul.1526380860" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.linker.exe.simul">
 <option id="osp.gnu.cpp.link.simual.debug.option.libs.985039748" name="Libraries (-l)" superClass="osp.gnu.cpp.link.simual.debug.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="cocos2dx"/>
 <listOptionValue builtIn="false" value="osp_rt0"/>
 <listOptionValue builtIn="false" value="libc-newlib"/>
 <listOptionValue builtIn="false" value="FOsp"/>
-<listOptionValue builtIn="false" value="cocos2dx"/>
 <listOptionValue builtIn="false" value="FGraphicsOpengl"/>
 <listOptionValue builtIn="false" value="FGraphicsEgl"/>
 </option>
