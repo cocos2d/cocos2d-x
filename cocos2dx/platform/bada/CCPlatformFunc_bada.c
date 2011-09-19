@@ -4,9 +4,66 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <limits.h>
-#include <ctype.h>
 #include <malloc.h>
 #include <errno.h>
+#undef errno
+
+static int errno = 0;
+
+#define	_U	01
+#define	_L	02
+#define	_N	04
+#define	_S	010
+#define _P	020
+#define _C	040
+#define _X	0100
+#define	_B	0200
+
+#define _CTYPE_DATA_0_127 \
+	_C,	_C,	_C,	_C,	_C,	_C,	_C,	_C, \
+	_C,	_C|_S, _C|_S, _C|_S,	_C|_S,	_C|_S,	_C,	_C, \
+	_C,	_C,	_C,	_C,	_C,	_C,	_C,	_C, \
+	_C,	_C,	_C,	_C,	_C,	_C,	_C,	_C, \
+	_S|_B,	_P,	_P,	_P,	_P,	_P,	_P,	_P, \
+	_P,	_P,	_P,	_P,	_P,	_P,	_P,	_P, \
+	_N,	_N,	_N,	_N,	_N,	_N,	_N,	_N, \
+	_N,	_N,	_P,	_P,	_P,	_P,	_P,	_P, \
+	_P,	_U|_X,	_U|_X,	_U|_X,	_U|_X,	_U|_X,	_U|_X,	_U, \
+	_U,	_U,	_U,	_U,	_U,	_U,	_U,	_U, \
+	_U,	_U,	_U,	_U,	_U,	_U,	_U,	_U, \
+	_U,	_U,	_U,	_P,	_P,	_P,	_P,	_P, \
+	_P,	_L|_X,	_L|_X,	_L|_X,	_L|_X,	_L|_X,	_L|_X,	_L, \
+	_L,	_L,	_L,	_L,	_L,	_L,	_L,	_L, \
+	_L,	_L,	_L,	_L,	_L,	_L,	_L,	_L, \
+	_L,	_L,	_L,	_P,	_P,	_P,	_P,	_C
+
+#define _CTYPE_DATA_128_255 \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0, \
+	0,	0,	0,	0,	0,	0,	0,	0
+
+char _ctype_b[128 + 256] = {
+    _CTYPE_DATA_128_255,
+    _CTYPE_DATA_0_127,
+    _CTYPE_DATA_128_255
+};
+
+
+char *__ctype_ptr__ = (char *) _ctype_b + 127;
+
 
 int sprintf(char* buf, const char *format, ...)
 {
@@ -1285,3 +1342,9 @@ int sscanf (const char *s,const char *format, ...)
 
 	return done;
 }
+
+void __assert_func(const char *file, int line, const char *a, const char *b)
+{
+
+}
+

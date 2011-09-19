@@ -146,7 +146,7 @@ bool CCImage::_initWithJpgData(void * data, int nSize)
         jpeg_create_decompress( &cinfo );
 
         /* this makes the library read from infile */
- //cjh_must       jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
+        jpeg_mem_src( &cinfo, (unsigned char *) data, nSize );
 
         /* reading the image header which contains image information */
         jpeg_read_header( &cinfo, true );
@@ -221,8 +221,10 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 
         // init png_info
         info_ptr = png_create_info_struct(png_ptr);
-        //cjh_must     CC_BREAK_IF(!info_ptr || setjmp(png_jmpbuf(png_ptr)));
-
+        CC_BREAK_IF(!info_ptr);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_BADA
+        CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
+#endif
         // set the read call back function
         tImageSource imageSource;
         imageSource.data    = (unsigned char*)pData;
@@ -246,7 +248,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
 
         // init image info
         m_bPreMulti = true;
-        //cjh_must    m_bHasAlpha = ( info_ptr->color_type & PNG_COLOR_MASK_ALPHA ) ? true : false;
+        m_bHasAlpha = ( info_ptr->color_type & PNG_COLOR_MASK_ALPHA ) ? true : false;
 
         // allocate memory and read data
         int bytesPerComponent = 3;
@@ -390,12 +392,12 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 			break;
 		}
 
-		 //cjh_must	if (setjmp(png_jmpbuf(png_ptr)))
-		{
-			fclose(fp);
-			png_destroy_write_struct(&png_ptr, &info_ptr);
-			break;
-		}
+		 //cjh if (setjmp(png_jmpbuf(png_ptr)))
+//		{
+//			fclose(fp);
+//			png_destroy_write_struct(&png_ptr, &info_ptr);
+//			break;
+//		}
 
 		png_init_io(png_ptr, fp);
 

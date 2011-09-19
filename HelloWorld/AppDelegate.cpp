@@ -68,6 +68,7 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this));
+        cocos2d::CCFileUtils::setResourcePath("/Res/");
 #endif
         bRet = true;
     } while (0);

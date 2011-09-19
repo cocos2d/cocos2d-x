@@ -38,6 +38,7 @@ bool CCImage::initWithString(
     result r = E_FAILURE;
 	do
 	{
+		CC_BREAK_IF(nWidth <= 0 || nHeight <= 0);
 		Canvas * pCanvas = new Canvas();
 		CC_BREAK_IF(! pCanvas);
 
