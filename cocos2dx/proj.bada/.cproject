@@ -72,7 +72,7 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
 <entry excluding="CCFileUtils_bada.cpp|CCImage_bada.cpp|CCThread_bada.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform/bada"/>
-<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform/third_party/bada"/>
+<entry excluding="src/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform/third_party/bada"/>
 <entry excluding="platform/bada|platform/third_party/bada|actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|platform/airplay/|platform/android/|platform/ios/|platform/third_party/airplay/|platform/third_party/android/|platform/third_party/ios/|platform/third_party/win32/|platform/win32/|platform/wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 </sourceEntries>
 </configuration>

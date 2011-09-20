@@ -68,7 +68,7 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this));
-        cocos2d::CCFileUtils::setResourcePath("/Res/");
+        CCFileUtils::setResourcePath("/Res/");
 #endif
         bRet = true;
     } while (0);
@@ -81,6 +81,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+    CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+#endif
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
 //     pDirector->enableRetinaDisplay(true);
 

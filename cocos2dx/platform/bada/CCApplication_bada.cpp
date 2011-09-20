@@ -53,6 +53,11 @@ CCApplication& CCApplication::sharedApplication()
     return *s_pApplication;
 }
 
+ccLanguageType CCApplication::getCurrentLanguage()
+{
+    return kLanguageEnglish;
+}
+
 void CCApplication::setAnimationInterval(double interval)
 {
     s_nAnimationInterval = (long long)(interval * 1000 * 1000);

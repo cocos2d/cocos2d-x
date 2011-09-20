@@ -9,6 +9,7 @@
 <externalSetting>
 <entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/.Simulator-Debug"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion"/>
 </externalSetting>
 </externalSettings>
 <extensions>
@@ -31,7 +32,7 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul.19531877" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul">
 <option id="osp.gnu.cpp.compiler.simual.lib.option.include.paths.1510177755" name="Include paths (-I)" superClass="osp.gnu.cpp.compiler.simual.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.2021001707" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -46,7 +47,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry excluding="android/|iphone/|proj.uphone/|proj.win32/|uphone/|win32/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="bada"/>
 </sourceEntries>
 </configuration>
 </storageModule>

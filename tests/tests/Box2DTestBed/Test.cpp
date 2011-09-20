@@ -1,7 +1,7 @@
 #include "Test.h"
 #include "GLES-Render.h"
 
-#include <cstdio>
+#include <stdio.h>
 
 void DestructionListener::SayGoodbye(b2Joint* joint)
 {

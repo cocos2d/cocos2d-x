@@ -319,7 +319,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 }
 
 // for sound effects
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/* = false*/)
 {
 	unsigned int nRet = _Hash(pszFilePath);
 
