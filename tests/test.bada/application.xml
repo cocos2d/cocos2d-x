@@ -8,11 +8,15 @@
     <Vendor/>
     <Description/>
     <Icons>
-        <MainMenu/>
+        <MainMenu>TestCocos2dx.png<Type1>HelloWorld.png</Type1>
+            <Type2/>
+        </MainMenu>
         <Setting/>
         <Ticker/>
         <QuickPanel/>
-        <LaunchImage/>
+        <LaunchImage>Splash.png<Type1>Splash.png</Type1>
+            <Type2/>
+        </LaunchImage>
     </Icons>
     <AutoScaling>
         <Enabled>false</Enabled>
