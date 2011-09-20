@@ -17,14 +17,11 @@ DEFINES = -DLINUX
 OBJECTS = ./main.o \
         ../Classes/AppDelegate.o \
         ../Classes/HelloWorldScene.o 
-					
-STATICLIBS_DIR = ../../cocos2dx/platform/third_party/linux/libraries
-STATICLIBS =  ../../Box2D/lib/linux/libBox2D.a \
-							../../chipmunk/lib/linux/libchipmunk.a \
-							$(STATICLIBS_DIR)/libcurl.a 
-							
+
+STATICLIBS =  
 SHAREDLIBS = -L../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../lib/linux/Debug/
 
+$(shell ../../build-linux.sh $<)
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
