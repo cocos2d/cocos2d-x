@@ -76,7 +76,7 @@ int sprintf(char* buf, const char *format, ...)
 	int n = vsnprintf(szBuf, 256, format, ap);
 	va_end(ap) ;
 
-	strncpy(buf, szBuf, 256);
+	strcpy(buf, szBuf);
 
 //	AppLog(buf);
 

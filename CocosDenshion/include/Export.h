@@ -1,6 +1,8 @@
 #ifndef __EXPORT_COMMON__
 #define __EXPORT_COMMON__
-
+#if defined(SHP)
+#define EXPORT_DLL
+#else
 #if defined(_WIN32)
     #if defined(_EXPORT_DLL_)
     #define EXPORT_DLL     __declspec(dllexport)
@@ -18,5 +20,7 @@
     #define EXPORT_DLL
     #endif
 #endif 
+
+#endif /* SHP */
 
 #endif	// end of __EXPORT_COMMON__

@@ -1,8 +1,9 @@
 #include "CurlTest.h"
 #include "stdio.h"
 #include "stdlib.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 #include "curl/curl.h"
-
+#endif
 CurlTest::CurlTest()
 {
 	CCSize s = CCDirector::sharedDirector()->getWinSize();
@@ -25,6 +26,7 @@ CurlTest::CurlTest()
 // http://curl.haxx.se/mail/lib-2009-12/0071.html
 void CurlTest::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	CURL *curl;
 	CURLcode res;
 	char buffer[10];
@@ -50,6 +52,7 @@ void CurlTest::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 	{
 		m_pLabel->setString("no curl");
 	} 
+#endif
 }
 
 CurlTest::~CurlTest()
