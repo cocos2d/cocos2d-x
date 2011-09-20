@@ -50,6 +50,7 @@ extern "C"
 						"()Ljava/lang/String;"))
 		{
 			jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+			t.env->DeleteLocalRef(t.classID);
 			CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
 			ret->autorelease();
 
@@ -74,6 +75,7 @@ extern "C"
             , "()Ljava/lang/String;"))
         {
             jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+			t.env->DeleteLocalRef(t.classID);
 	        CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
 			ret->autorelease();
 

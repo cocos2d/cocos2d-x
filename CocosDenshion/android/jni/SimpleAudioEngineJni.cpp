@@ -45,6 +45,7 @@ extern "C"
 		if (env != 0 && classOfCocos2dxActivity != 0)
 		{
 			ret = env->GetStaticMethodID(classOfCocos2dxActivity, methodName, paramCode);
+			env->DeleteLocalRef(classOfCocos2dxActivity);
 		}
 
 		if (! ret)
@@ -62,8 +63,9 @@ extern "C"
 
 		if (preloadBackgroundMusicMethodID)
 		{
-			jstring StringArg = env->NewStringUTF(path);
-			env->CallStaticVoidMethod(classOfCocos2dxActivity, preloadBackgroundMusicMethodID, StringArg);
+			jstring stringArg = env->NewStringUTF(path);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, preloadBackgroundMusicMethodID, stringArg);
+			env->DeleteLocalRef(stringArg);
 		}
 	}
 
@@ -74,9 +76,9 @@ extern "C"
 
 		if (playBackgroundMusicMethodID)
 		{
-			jstring StringArg = env->NewStringUTF(path);
-			env->CallStaticVoidMethod(classOfCocos2dxActivity, playBackgroundMusicMethodID, StringArg, isLoop);
-			//env->ReleaseStringUTFChars(StringArg, path);
+			jstring stringArg = env->NewStringUTF(path);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, playBackgroundMusicMethodID, stringArg, isLoop);
+			env->DeleteLocalRef(stringArg);
 		}
 	}
 
@@ -172,8 +174,9 @@ extern "C"
 
 		if (playEffectMethodID)
 		{
-			jstring StringArg = env->NewStringUTF(path);
-			ret = env->CallStaticIntMethod(classOfCocos2dxActivity, playEffectMethodID, StringArg, bLoop);
+			jstring stringArg = env->NewStringUTF(path);
+			ret = env->CallStaticIntMethod(classOfCocos2dxActivity, playEffectMethodID, stringArg, bLoop);
+			env->DeleteLocalRef(stringArg);
 		}
 
 		return (unsigned int)ret;
@@ -233,8 +236,9 @@ extern "C"
 
 		if (preloadEffectMethodID)
 		{
-			jstring StringArg = env->NewStringUTF(path);
-			env->CallStaticVoidMethod(classOfCocos2dxActivity, preloadEffectMethodID, StringArg);
+			jstring stringArg = env->NewStringUTF(path);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, preloadEffectMethodID, stringArg);
+			env->DeleteLocalRef(stringArg);
 		}
 	}
 
@@ -245,8 +249,9 @@ extern "C"
 
 		if (unloadEffectMethodID)
 		{
-			jstring StringArg = env->NewStringUTF(path);
-			env->CallStaticVoidMethod(classOfCocos2dxActivity, unloadEffectMethodID, StringArg);
+			jstring stringArg = env->NewStringUTF(path);
+			env->CallStaticVoidMethod(classOfCocos2dxActivity, unloadEffectMethodID, stringArg);
+			env->DeleteLocalRef(stringArg);
 		}
 	}
 }
