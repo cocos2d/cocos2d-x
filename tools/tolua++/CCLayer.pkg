@@ -20,8 +20,6 @@ namespace   cocos2d {
 		void keep(void);
 
 		void didAccelerate(CCAcceleration* pAccelerationValue) {}
-		void AccelerometerDestroy(void);
-		void AccelerometerKeep(void);
 
 		void KeypadDestroy();
 		void KeypadKeep();

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 07/11/11 14:07:10.
+** Generated automatically by tolua++-1.0.92 on 09/18/11 18:26:35.
 */
 
 #include "LuaCocos2d.h"
@@ -41,9 +41,9 @@ static int tolua_collect_cocos2d__ccV3F_C4B_T2F_Quad (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCTMXObjectGroup (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCProgressTimer (lua_State* tolua_S)
 {
- cocos2d::CCTMXObjectGroup* self = (cocos2d::CCTMXObjectGroup*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCProgressTimer* self = (cocos2d::CCProgressTimer*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -279,9 +279,9 @@ static int tolua_collect_cocos2d__CCScene (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__ccVertex2F (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCTransitionFlipAngular (lua_State* tolua_S)
 {
- cocos2d::ccVertex2F* self = (cocos2d::ccVertex2F*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCTransitionFlipAngular* self = (cocos2d::CCTransitionFlipAngular*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -685,16 +685,16 @@ static int tolua_collect_cocos2d__ccColor3B (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCAtlasNode (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCAnimationCache (lua_State* tolua_S)
 {
- cocos2d::CCAtlasNode* self = (cocos2d::CCAtlasNode*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCAnimationCache* self = (cocos2d::CCAnimationCache*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCProgressTimer (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCTMXObjectGroup (lua_State* tolua_S)
 {
- cocos2d::CCProgressTimer* self = (cocos2d::CCProgressTimer*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCTMXObjectGroup* self = (cocos2d::CCTMXObjectGroup*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -727,9 +727,9 @@ static int tolua_collect_cocos2d__CCKeypadDispatcher (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____reverse_iterator (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCEaseRateAction (lua_State* tolua_S)
 {
- std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCEaseRateAction* self = (cocos2d::CCEaseRateAction*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -748,6 +748,13 @@ static int tolua_collect_cocos2d__CCLabelTTF (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_cocos2d__CCPoolManager (lua_State* tolua_S)
+{
+ cocos2d::CCPoolManager* self = (cocos2d::CCPoolManager*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_cocos2d__CCSpriteFrame (lua_State* tolua_S)
 {
  cocos2d::CCSpriteFrame* self = (cocos2d::CCSpriteFrame*) tolua_tousertype(tolua_S,1,0);
@@ -762,37 +769,9 @@ static int tolua_collect_cocos2d__CCFiniteTimeAction (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCPoolManager (lua_State* tolua_S)
-{
- cocos2d::CCPoolManager* self = (cocos2d::CCPoolManager*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_cocos2d__CCTimer (lua_State* tolua_S)
 {
  cocos2d::CCTimer* self = (cocos2d::CCTimer*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_cocos2d__CCTransitionShrinkGrow (lua_State* tolua_S)
-{
- cocos2d::CCTransitionShrinkGrow* self = (cocos2d::CCTransitionShrinkGrow*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_cocos2d__CCAccelDeccelAmplitude (lua_State* tolua_S)
-{
- cocos2d::CCAccelDeccelAmplitude* self = (cocos2d::CCAccelDeccelAmplitude*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_cocos2d__CCPoint (lua_State* tolua_S)
-{
- cocos2d::CCPoint* self = (cocos2d::CCPoint*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -804,6 +783,27 @@ static int tolua_collect_cocos2d__CCAutoreleasePool (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_cocos2d__CCAccelDeccelAmplitude (lua_State* tolua_S)
+{
+ cocos2d::CCAccelDeccelAmplitude* self = (cocos2d::CCAccelDeccelAmplitude*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_cocos2d__CCTransitionShrinkGrow (lua_State* tolua_S)
+{
+ cocos2d::CCTransitionShrinkGrow* self = (cocos2d::CCTransitionShrinkGrow*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_cocos2d__CCPoint (lua_State* tolua_S)
+{
+ cocos2d::CCPoint* self = (cocos2d::CCPoint*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_cocos2d__CCTransitionSceneOriented (lua_State* tolua_S)
 {
  cocos2d::CCTransitionSceneOriented* self = (cocos2d::CCTransitionSceneOriented*) tolua_tousertype(tolua_S,1,0);
@@ -811,9 +811,9 @@ static int tolua_collect_cocos2d__CCTransitionSceneOriented (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCAnimationCache (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCAtlasNode (lua_State* tolua_S)
 {
- cocos2d::CCAnimationCache* self = (cocos2d::CCAnimationCache*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCAtlasNode* self = (cocos2d::CCAtlasNode*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -832,23 +832,16 @@ static int tolua_collect_cocos2d__CCUserDefault (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCTransitionFlipAngular (lua_State* tolua_S)
+static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____reverse_iterator (lua_State* tolua_S)
 {
- cocos2d::CCTransitionFlipAngular* self = (cocos2d::CCTransitionFlipAngular*) tolua_tousertype(tolua_S,1,0);
+ std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____iterator (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCOrbitCamera (lua_State* tolua_S)
 {
- std::vector<cocos2d::CCFiniteTimeAction*>::iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::iterator*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_cocos2d__CCMutableArray_CCFiniteTimeAction__ (lua_State* tolua_S)
-{
- cocos2d::CCMutableArray<CCFiniteTimeAction*>* self = (cocos2d::CCMutableArray<CCFiniteTimeAction*>*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCOrbitCamera* self = (cocos2d::CCOrbitCamera*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -856,6 +849,13 @@ static int tolua_collect_cocos2d__CCMutableArray_CCFiniteTimeAction__ (lua_State
 static int tolua_collect_cocos2d__CCFlipX (lua_State* tolua_S)
 {
  cocos2d::CCFlipX* self = (cocos2d::CCFlipX*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_cocos2d__CCActionInstant (lua_State* tolua_S)
+{
+ cocos2d::CCActionInstant* self = (cocos2d::CCActionInstant*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -874,23 +874,23 @@ static int tolua_collect_cocos2d__CCRect (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCEaseRateAction (lua_State* tolua_S)
-{
- cocos2d::CCEaseRateAction* self = (cocos2d::CCEaseRateAction*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect_cocos2d__CCActionInstant (lua_State* tolua_S)
-{
- cocos2d::CCActionInstant* self = (cocos2d::CCActionInstant*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
 static int tolua_collect_cocos2d__CCTextFieldTTF (lua_State* tolua_S)
 {
  cocos2d::CCTextFieldTTF* self = (cocos2d::CCTextFieldTTF*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_cocos2d__CCTargetedTouchDelegate (lua_State* tolua_S)
+{
+ cocos2d::CCTargetedTouchDelegate* self = (cocos2d::CCTargetedTouchDelegate*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_cocos2d__CCTMXTilesetInfo (lua_State* tolua_S)
+{
+ cocos2d::CCTMXTilesetInfo* self = (cocos2d::CCTMXTilesetInfo*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -902,9 +902,9 @@ static int tolua_collect_cocos2d__CCTransitionJumpZoom (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCOrbitCamera (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCMutableArray_CCFiniteTimeAction__ (lua_State* tolua_S)
 {
- cocos2d::CCOrbitCamera* self = (cocos2d::CCOrbitCamera*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCMutableArray<CCFiniteTimeAction*>* self = (cocos2d::CCMutableArray<CCFiniteTimeAction*>*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -923,9 +923,9 @@ static int tolua_collect_cocos2d__CCTouchDispatcher (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCTargetedTouchDelegate (lua_State* tolua_S)
+static int tolua_collect_cocos2d__CCTransitionRotoZoom (lua_State* tolua_S)
 {
- cocos2d::CCTargetedTouchDelegate* self = (cocos2d::CCTargetedTouchDelegate*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::CCTransitionRotoZoom* self = (cocos2d::CCTransitionRotoZoom*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -944,16 +944,16 @@ static int tolua_collect_cocos2d__CCBMFontConfiguration (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCTMXTilesetInfo (lua_State* tolua_S)
+static int tolua_collect_std__vector_cocos2d__CCFiniteTimeAction____iterator (lua_State* tolua_S)
 {
- cocos2d::CCTMXTilesetInfo* self = (cocos2d::CCTMXTilesetInfo*) tolua_tousertype(tolua_S,1,0);
+ std::vector<cocos2d::CCFiniteTimeAction*>::iterator* self = (std::vector<cocos2d::CCFiniteTimeAction*>::iterator*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_cocos2d__CCTransitionRotoZoom (lua_State* tolua_S)
+static int tolua_collect_cocos2d__ccVertex2F (lua_State* tolua_S)
 {
- cocos2d::CCTransitionRotoZoom* self = (cocos2d::CCTransitionRotoZoom*) tolua_tousertype(tolua_S,1,0);
+ cocos2d::ccVertex2F* self = (cocos2d::ccVertex2F*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -1009,8 +1009,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCDelayTime), "cocos2d::CCDelayTime");
  tolua_usertype(tolua_S,"cocos2d::CCSize");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSize), "cocos2d::CCSize");
- tolua_usertype(tolua_S,"cocos2d::ccV3F_C4B_T2F");
- Mtolua_typeid(tolua_S,typeid(cocos2d::ccV3F_C4B_T2F), "cocos2d::ccV3F_C4B_T2F");
+ tolua_usertype(tolua_S,"cocos2d::CCMutableArray<CCNode*>");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCMutableArray<CCNode*>), "cocos2d::CCMutableArray<CCNode*>");
  tolua_usertype(tolua_S,"cocos2d::CCOrbitCamera");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCOrbitCamera), "cocos2d::CCOrbitCamera");
  tolua_usertype(tolua_S,"cocos2d::CCRepeatForever");
@@ -1049,14 +1049,14 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionScene), "cocos2d::CCTransitionScene");
  tolua_usertype(tolua_S,"cocos2d::CCGridBase");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCGridBase), "cocos2d::CCGridBase");
- tolua_usertype(tolua_S,"cocos2d::CCEaseBounceIn");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounceIn), "cocos2d::CCEaseBounceIn");
+ tolua_usertype(tolua_S,"cocos2d::CCProgressTo");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCProgressTo), "cocos2d::CCProgressTo");
  tolua_usertype(tolua_S,"cocos2d::CCTMXMapInfo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXMapInfo), "cocos2d::CCTMXMapInfo");
  tolua_usertype(tolua_S,"cocos2d::CCMenuItemLabel");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemLabel), "cocos2d::CCMenuItemLabel");
- tolua_usertype(tolua_S,"std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator");
- Mtolua_typeid(tolua_S,typeid(std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator), "std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator");
+ tolua_usertype(tolua_S,"cocos2d::ccVertex2F");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::ccVertex2F), "cocos2d::ccVertex2F");
  tolua_usertype(tolua_S,"cocos2d::CCBezierTo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCBezierTo), "cocos2d::CCBezierTo");
  tolua_usertype(tolua_S,"cocos2d::CCCallFuncO");
@@ -1091,8 +1091,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFlipY), "cocos2d::CCTransitionFlipY");
  tolua_usertype(tolua_S,"cocos2d::CCRotateBy");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCRotateBy), "cocos2d::CCRotateBy");
- tolua_usertype(tolua_S,"cocos2d::CCHide");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCHide), "cocos2d::CCHide");
+ tolua_usertype(tolua_S,"CCSAXDelegator");
+ Mtolua_typeid(tolua_S,typeid(CCSAXDelegator), "CCSAXDelegator");
  tolua_usertype(tolua_S,"cocos2d::CCMoveTo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMoveTo), "cocos2d::CCMoveTo");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionMoveInB");
@@ -1125,8 +1125,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItem), "cocos2d::CCMenuItem");
  tolua_usertype(tolua_S,"cocos2d::CCFlipY");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCFlipY), "cocos2d::CCFlipY");
- tolua_usertype(tolua_S,"cocos2d::CCEaseBounceOut");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounceOut), "cocos2d::CCEaseBounceOut");
+ tolua_usertype(tolua_S,"cocos2d::CCActionEase");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionEase), "cocos2d::CCActionEase");
  tolua_usertype(tolua_S,"cocos2d::CCAtlasNode");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAtlasNode), "cocos2d::CCAtlasNode");
  tolua_usertype(tolua_S,"cocos2d::CCNode");
@@ -1251,8 +1251,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCLabelProtocol), "cocos2d::CCLabelProtocol");
  tolua_usertype(tolua_S,"cocos2d::CCAnimation");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAnimation), "cocos2d::CCAnimation");
- tolua_usertype(tolua_S,"cocos2d::CCTMXTilesetInfo");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXTilesetInfo), "cocos2d::CCTMXTilesetInfo");
+ tolua_usertype(tolua_S,"CCData");
+ Mtolua_typeid(tolua_S,typeid(CCData), "CCData");
  tolua_usertype(tolua_S,"cocos2d::CCPageTurn3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCPageTurn3D), "cocos2d::CCPageTurn3D");
  tolua_usertype(tolua_S,"CCDictionary<std::string,cocos2d::CCObject*>");
@@ -1265,8 +1265,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccPointSprite), "cocos2d::ccPointSprite");
  tolua_usertype(tolua_S,"GLenum");
  Mtolua_typeid(tolua_S,typeid(GLenum), "GLenum");
- tolua_usertype(tolua_S,"cocos2d::CCEaseElasticOut");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElasticOut), "cocos2d::CCEaseElasticOut");
+ tolua_usertype(tolua_S,"cocos2d::CCScaleTo");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCScaleTo), "cocos2d::CCScaleTo");
  tolua_usertype(tolua_S,"cocos2d::CCCallFunc");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCCallFunc), "cocos2d::CCCallFunc");
  tolua_usertype(tolua_S,"cocos2d::CCCopying");
@@ -1275,8 +1275,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCScene), "cocos2d::CCScene");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionFlipAngular");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFlipAngular), "cocos2d::CCTransitionFlipAngular");
- tolua_usertype(tolua_S,"cocos2d::CCActionCamera");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionCamera), "cocos2d::CCActionCamera");
+ tolua_usertype(tolua_S,"cocos2d::CCMoveBy");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCMoveBy), "cocos2d::CCMoveBy");
  tolua_usertype(tolua_S,"cocos2d::CCReuseGrid");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCReuseGrid), "cocos2d::CCReuseGrid");
  tolua_usertype(tolua_S,"cocos2d::CCJumpTo");
@@ -1289,32 +1289,26 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionInstant), "cocos2d::CCActionInstant");
  tolua_usertype(tolua_S,"cocos2d::CCMotionStreak");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMotionStreak), "cocos2d::CCMotionStreak");
- tolua_usertype(tolua_S,"cocos2d::CCEvent");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEvent), "cocos2d::CCEvent");
- tolua_usertype(tolua_S,"CCIMEDelegate");
- Mtolua_typeid(tolua_S,typeid(CCIMEDelegate), "CCIMEDelegate");
- tolua_usertype(tolua_S,"cocos2d::CCMenuItemFont");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemFont), "cocos2d::CCMenuItemFont");
  tolua_usertype(tolua_S,"cocos2d::CCSpriteFrameCache");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSpriteFrameCache), "cocos2d::CCSpriteFrameCache");
- tolua_usertype(tolua_S,"cocos2d::CCMenuItemAtlasFont");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemAtlasFont), "cocos2d::CCMenuItemAtlasFont");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseBounce");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounce), "cocos2d::CCEaseBounce");
  tolua_usertype(tolua_S,"cocos2d::CCTexture2D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTexture2D), "cocos2d::CCTexture2D");
  tolua_usertype(tolua_S,"cocos2d::CCAcceleration");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAcceleration), "cocos2d::CCAcceleration");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionFadeDown");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFadeDown), "cocos2d::CCTransitionFadeDown");
+ tolua_usertype(tolua_S,"cocos2d::CCActionCamera");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionCamera), "cocos2d::CCActionCamera");
  tolua_usertype(tolua_S,"cocos2d::CCEaseBackInOut");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBackInOut), "cocos2d::CCEaseBackInOut");
  tolua_usertype(tolua_S,"cocos2d::CCLayerColor");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayerColor), "cocos2d::CCLayerColor");
- tolua_usertype(tolua_S,"cocos2d::CCMultiplexLayer");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCMultiplexLayer), "cocos2d::CCMultiplexLayer");
+ tolua_usertype(tolua_S,"cocos2d::CCMenuItemFont");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemFont), "cocos2d::CCMenuItemFont");
  tolua_usertype(tolua_S,"cocos2d::CCWavesTiles3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCWavesTiles3D), "cocos2d::CCWavesTiles3D");
- tolua_usertype(tolua_S,"va_list");
- Mtolua_typeid(tolua_S,typeid(va_list), "va_list");
+ tolua_usertype(tolua_S,"cocos2d::CCMenuItemAtlasFont");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemAtlasFont), "cocos2d::CCMenuItemAtlasFont");
  tolua_usertype(tolua_S,"cocos2d::CCKeypadHandler");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCKeypadHandler), "cocos2d::CCKeypadHandler");
  tolua_usertype(tolua_S,"cocos2d::CCTouchDelegate");
@@ -1323,20 +1317,20 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccBezierConfig), "cocos2d::ccBezierConfig");
  tolua_usertype(tolua_S,"cocos2d::CCMenuItemImage");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemImage), "cocos2d::CCMenuItemImage");
- tolua_usertype(tolua_S,"cocos2d::CCLayerGradient");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayerGradient), "cocos2d::CCLayerGradient");
+ tolua_usertype(tolua_S,"va_list");
+ Mtolua_typeid(tolua_S,typeid(va_list), "va_list");
  tolua_usertype(tolua_S,"cocos2d::CCTMXTiledMap");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXTiledMap), "cocos2d::CCTMXTiledMap");
- tolua_usertype(tolua_S,"cocos2d::CCColorLayer");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCColorLayer), "cocos2d::CCColorLayer");
- tolua_usertype(tolua_S,"cocos2d::CCLayer");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayer), "cocos2d::CCLayer");
+ tolua_usertype(tolua_S,"CCIMEDelegate");
+ Mtolua_typeid(tolua_S,typeid(CCIMEDelegate), "CCIMEDelegate");
+ tolua_usertype(tolua_S,"cocos2d::CCLayerGradient");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayerGradient), "cocos2d::CCLayerGradient");
  tolua_usertype(tolua_S,"cocos2d::_KerningHashElement");
  Mtolua_typeid(tolua_S,typeid(cocos2d::_KerningHashElement), "cocos2d::_KerningHashElement");
  tolua_usertype(tolua_S,"cocos2d::CCEaseElasticInOut");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElasticInOut), "cocos2d::CCEaseElasticInOut");
- tolua_usertype(tolua_S,"cocos2d::CCBitmapFontAtlas");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCBitmapFontAtlas), "cocos2d::CCBitmapFontAtlas");
+ tolua_usertype(tolua_S,"cocos2d::CCLayer");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayer), "cocos2d::CCLayer");
  tolua_usertype(tolua_S,"cocos2d::CCLabelBMFont");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCLabelBMFont), "cocos2d::CCLabelBMFont");
  tolua_usertype(tolua_S,"cocos2d::CCFiniteTimeAction");
@@ -1367,22 +1361,22 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCShakyTiles3D), "cocos2d::CCShakyTiles3D");
  tolua_usertype(tolua_S,"cocos2d::CCLayerMultiplex");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCLayerMultiplex), "cocos2d::CCLayerMultiplex");
- tolua_usertype(tolua_S,"cocos2d::CCRGBAProtocol");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCRGBAProtocol), "cocos2d::CCRGBAProtocol");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseSineIn");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseSineIn), "cocos2d::CCEaseSineIn");
  tolua_usertype(tolua_S,"cocos2d::CCAccelerometerDelegate");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAccelerometerDelegate), "cocos2d::CCAccelerometerDelegate");
  tolua_usertype(tolua_S,"CCMutableArray<CCStringToStringDictionary*>");
  Mtolua_typeid(tolua_S,typeid(CCMutableArray<CCStringToStringDictionary*>), "CCMutableArray<CCStringToStringDictionary*>");
- tolua_usertype(tolua_S,"CCRect");
- Mtolua_typeid(tolua_S,typeid(CCRect), "CCRect");
- tolua_usertype(tolua_S,"SEL_CallFuncND");
- Mtolua_typeid(tolua_S,typeid(SEL_CallFuncND), "SEL_CallFuncND");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionMoveInT");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionMoveInT), "cocos2d::CCTransitionMoveInT");
  tolua_usertype(tolua_S,"cocos2d::ccV3F_C4B_T2F_Quad");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccV3F_C4B_T2F_Quad), "cocos2d::ccV3F_C4B_T2F_Quad");
- tolua_usertype(tolua_S,"cocos2d::CCPoolManager");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCPoolManager), "cocos2d::CCPoolManager");
+ tolua_usertype(tolua_S,"CCRect");
+ Mtolua_typeid(tolua_S,typeid(CCRect), "CCRect");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionMoveInT");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionMoveInT), "cocos2d::CCTransitionMoveInT");
+ tolua_usertype(tolua_S,"cocos2d::CCEvent");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEvent), "cocos2d::CCEvent");
+ tolua_usertype(tolua_S,"cocos2d::CCEGLView");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEGLView), "cocos2d::CCEGLView");
  tolua_usertype(tolua_S,"cocos2d::CCPoint");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCPoint), "cocos2d::CCPoint");
  tolua_usertype(tolua_S,"cocos2d::CCTextureAtlas");
@@ -1393,68 +1387,68 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenuItemToggle), "cocos2d::CCMenuItemToggle");
  tolua_usertype(tolua_S,"CC_GLVIEW");
  Mtolua_typeid(tolua_S,typeid(CC_GLVIEW), "CC_GLVIEW");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionFlipX");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFlipX), "cocos2d::CCTransitionFlipX");
- tolua_usertype(tolua_S,"cocos2d::CCEaseBounce");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounce), "cocos2d::CCEaseBounce");
- tolua_usertype(tolua_S,"cocos2d::CCEGLView");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEGLView), "cocos2d::CCEGLView");
- tolua_usertype(tolua_S,"cocos2d::CCLabelTTF");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCLabelTTF), "cocos2d::CCLabelTTF");
- tolua_usertype(tolua_S,"cocos2d::CCMutableArray<CCNode*>");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCMutableArray<CCNode*>), "cocos2d::CCMutableArray<CCNode*>");
- tolua_usertype(tolua_S,"CCAffineTransform");
- Mtolua_typeid(tolua_S,typeid(CCAffineTransform), "CCAffineTransform");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseElasticOut");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElasticOut), "cocos2d::CCEaseElasticOut");
+ tolua_usertype(tolua_S,"cocos2d::ccV3F_C4B_T2F");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::ccV3F_C4B_T2F), "cocos2d::ccV3F_C4B_T2F");
  tolua_usertype(tolua_S,"cocos2d::CCSet");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSet), "cocos2d::CCSet");
+ tolua_usertype(tolua_S,"cocos2d::CCLabelTTF");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCLabelTTF), "cocos2d::CCLabelTTF");
+ tolua_usertype(tolua_S,"cocos2d::ccVertex3F");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::ccVertex3F), "cocos2d::ccVertex3F");
+ tolua_usertype(tolua_S,"CCAffineTransform");
+ Mtolua_typeid(tolua_S,typeid(CCAffineTransform), "CCAffineTransform");
+ tolua_usertype(tolua_S,"cocos2d::CCPoolManager");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCPoolManager), "cocos2d::CCPoolManager");
  tolua_usertype(tolua_S,"cocos2d::CCString");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCString), "cocos2d::CCString");
  tolua_usertype(tolua_S,"cocos2d::CCAutoreleasePool");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAutoreleasePool), "cocos2d::CCAutoreleasePool");
  tolua_usertype(tolua_S,"ccArray");
  Mtolua_typeid(tolua_S,typeid(ccArray), "ccArray");
- tolua_usertype(tolua_S,"cocos2d::ccVertex3F");
- Mtolua_typeid(tolua_S,typeid(cocos2d::ccVertex3F), "cocos2d::ccVertex3F");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseBounceOut");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounceOut), "cocos2d::CCEaseBounceOut");
  tolua_usertype(tolua_S,"cocos2d::CCTouch");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTouch), "cocos2d::CCTouch");
- tolua_usertype(tolua_S,"cocos2d::CCEaseElasticIn");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElasticIn), "cocos2d::CCEaseElasticIn");
- tolua_usertype(tolua_S,"cocos2d::CCAnimationCache");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCAnimationCache), "cocos2d::CCAnimationCache");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionZoomFlipAngular");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionZoomFlipAngular), "cocos2d::CCTransitionZoomFlipAngular");
  tolua_usertype(tolua_S,"cocos2d::ccGridSize");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccGridSize), "cocos2d::ccGridSize");
  tolua_usertype(tolua_S,"cocos2d::CCEaseSineOut");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseSineOut), "cocos2d::CCEaseSineOut");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionZoomFlipAngular");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionZoomFlipAngular), "cocos2d::CCTransitionZoomFlipAngular");
+ tolua_usertype(tolua_S,"cocos2d::CCAnimationCache");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCAnimationCache), "cocos2d::CCAnimationCache");
  tolua_usertype(tolua_S,"cocos2d::CCSplitCols");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSplitCols), "cocos2d::CCSplitCols");
+ tolua_usertype(tolua_S,"cocos2d::CCObject");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCObject), "cocos2d::CCObject");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionFadeUp");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFadeUp), "cocos2d::CCTransitionFadeUp");
- tolua_usertype(tolua_S,"cocos2d::ccTex2F");
- Mtolua_typeid(tolua_S,typeid(cocos2d::ccTex2F), "cocos2d::ccTex2F");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionTurnOffTiles");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionTurnOffTiles), "cocos2d::CCTransitionTurnOffTiles");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionRadialCW");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionRadialCW), "cocos2d::CCTransitionRadialCW");
  tolua_usertype(tolua_S,"cocos2d::CCSequence");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSequence), "cocos2d::CCSequence");
  tolua_usertype(tolua_S,"CCIMEKeyboardNotificationInfo");
  Mtolua_typeid(tolua_S,typeid(CCIMEKeyboardNotificationInfo), "CCIMEKeyboardNotificationInfo");
- tolua_usertype(tolua_S,"cocos2d::CCObject");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCObject), "cocos2d::CCObject");
+ tolua_usertype(tolua_S,"cocos2d::CCTileMapAtlas");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTileMapAtlas), "cocos2d::CCTileMapAtlas");
  tolua_usertype(tolua_S,"CCTransitionEaseScene");
  Mtolua_typeid(tolua_S,typeid(CCTransitionEaseScene), "CCTransitionEaseScene");
  tolua_usertype(tolua_S,"cocos2d::CCTurnOffTiles");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTurnOffTiles), "cocos2d::CCTurnOffTiles");
- tolua_usertype(tolua_S,"cocos2d::CCTileMapAtlas");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTileMapAtlas), "cocos2d::CCTileMapAtlas");
+ tolua_usertype(tolua_S,"cocos2d::CCHide");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCHide), "cocos2d::CCHide");
  tolua_usertype(tolua_S,"cocos2d::CCFadeOutBLTiles");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCFadeOutBLTiles), "cocos2d::CCFadeOutBLTiles");
  tolua_usertype(tolua_S,"cocos2d::CCShuffleTiles");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCShuffleTiles), "cocos2d::CCShuffleTiles");
- tolua_usertype(tolua_S,"cocos2d::CCEaseSineIn");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseSineIn), "cocos2d::CCEaseSineIn");
- tolua_usertype(tolua_S,"cocos2d::CCSpriteBatchNode");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCSpriteBatchNode), "cocos2d::CCSpriteBatchNode");
+ tolua_usertype(tolua_S,"cocos2d::CCTMXTilesetInfo");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXTilesetInfo), "cocos2d::CCTMXTilesetInfo");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionFadeDown");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFadeDown), "cocos2d::CCTransitionFadeDown");
  tolua_usertype(tolua_S,"cocos2d::CCMenu");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMenu), "cocos2d::CCMenu");
  tolua_usertype(tolua_S,"std::vector<cocos2d::CCObject*>::reverse_iterator");
@@ -1463,38 +1457,38 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElastic), "cocos2d::CCEaseElastic");
  tolua_usertype(tolua_S,"cocos2d::CCWaves3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCWaves3D), "cocos2d::CCWaves3D");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionTurnOffTiles");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionTurnOffTiles), "cocos2d::CCTransitionTurnOffTiles");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionFlipX");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionFlipX), "cocos2d::CCTransitionFlipX");
  tolua_usertype(tolua_S,"cocos2d::CCJumpTiles3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCJumpTiles3D), "cocos2d::CCJumpTiles3D");
  tolua_usertype(tolua_S,"cocos2d::CCEaseExponentialIn");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseExponentialIn), "cocos2d::CCEaseExponentialIn");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionSlideInL");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionSlideInL), "cocos2d::CCTransitionSlideInL");
+ tolua_usertype(tolua_S,"std::vector<cocos2d::CCFiniteTimeAction*>::iterator");
+ Mtolua_typeid(tolua_S,typeid(std::vector<cocos2d::CCFiniteTimeAction*>::iterator), "std::vector<cocos2d::CCFiniteTimeAction*>::iterator");
  tolua_usertype(tolua_S,"cocos2d::ccColor3B");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccColor3B), "cocos2d::ccColor3B");
- tolua_usertype(tolua_S,"cocos2d::CCProgressFromTo");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCProgressFromTo), "cocos2d::CCProgressFromTo");
- tolua_usertype(tolua_S,"cocos2d::CCProgressTo");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCProgressTo), "cocos2d::CCProgressTo");
+ tolua_usertype(tolua_S,"cocos2d::ccTex2F");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::ccTex2F), "cocos2d::ccTex2F");
  tolua_usertype(tolua_S,"std::vector<cocos2d::CCObject*>::iterator");
  Mtolua_typeid(tolua_S,typeid(std::vector<cocos2d::CCObject*>::iterator), "std::vector<cocos2d::CCObject*>::iterator");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseBounceIn");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseBounceIn), "cocos2d::CCEaseBounceIn");
+ tolua_usertype(tolua_S,"cocos2d::CCProgressFromTo");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCProgressFromTo), "cocos2d::CCProgressFromTo");
+ tolua_usertype(tolua_S,"cocos2d::_ccCArray");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::_ccCArray), "cocos2d::_ccCArray");
  tolua_usertype(tolua_S,"cocos2d::CCActionManager");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionManager), "cocos2d::CCActionManager");
- tolua_usertype(tolua_S,"cocos2d::CCTransitionCrossFade");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionCrossFade), "cocos2d::CCTransitionCrossFade");
- tolua_usertype(tolua_S,"cocos2d::ccVertex2F");
- Mtolua_typeid(tolua_S,typeid(cocos2d::ccVertex2F), "cocos2d::ccVertex2F");
  tolua_usertype(tolua_S,"CCDictionary<std::string,cocos2d::CCSpriteFrame*>");
  Mtolua_typeid(tolua_S,typeid(CCDictionary<std::string,cocos2d::CCSpriteFrame*>), "CCDictionary<std::string,cocos2d::CCSpriteFrame*>");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionMoveInL");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionMoveInL), "cocos2d::CCTransitionMoveInL");
- tolua_usertype(tolua_S,"GLshort");
- Mtolua_typeid(tolua_S,typeid(GLshort), "GLshort");
  tolua_usertype(tolua_S,"cocos2d::CCScheduler");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCScheduler), "cocos2d::CCScheduler");
  tolua_usertype(tolua_S,"cocos2d::CCAction");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAction), "cocos2d::CCAction");
+ tolua_usertype(tolua_S,"GLshort");
+ Mtolua_typeid(tolua_S,typeid(GLshort), "GLshort");
  tolua_usertype(tolua_S,"cocos2d::CCTintTo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTintTo), "cocos2d::CCTintTo");
  tolua_usertype(tolua_S,"cocos2d::ccTouchHandlerHelperData");
@@ -1503,26 +1497,26 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCFadeOut), "cocos2d::CCFadeOut");
  tolua_usertype(tolua_S,"cocos2d::CCAccelDeccelAmplitude");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCAccelDeccelAmplitude), "cocos2d::CCAccelDeccelAmplitude");
- tolua_usertype(tolua_S,"cocos2d::CCScaleTo");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCScaleTo), "cocos2d::CCScaleTo");
  tolua_usertype(tolua_S,"cocos2d::CCSkewTo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSkewTo), "cocos2d::CCSkewTo");
+ tolua_usertype(tolua_S,"SEL_CallFuncND");
+ Mtolua_typeid(tolua_S,typeid(SEL_CallFuncND), "SEL_CallFuncND");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionSceneOriented");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionSceneOriented), "cocos2d::CCTransitionSceneOriented");
- tolua_usertype(tolua_S,"cocos2d::CCMoveBy");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCMoveBy), "cocos2d::CCMoveBy");
- tolua_usertype(tolua_S,"CCSAXDelegator");
- Mtolua_typeid(tolua_S,typeid(CCSAXDelegator), "CCSAXDelegator");
+ tolua_usertype(tolua_S,"cocos2d::CCCallFuncND");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCCallFuncND), "cocos2d::CCCallFuncND");
+ tolua_usertype(tolua_S,"cocos2d::CCTargetedTouchDelegate");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTargetedTouchDelegate), "cocos2d::CCTargetedTouchDelegate");
  tolua_usertype(tolua_S,"cocos2d::CCUserDefault");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCUserDefault), "cocos2d::CCUserDefault");
  tolua_usertype(tolua_S,"cocos2d::CCLiquid");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCLiquid), "cocos2d::CCLiquid");
- tolua_usertype(tolua_S,"cocos2d::CCCallFuncND");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCCallFuncND), "cocos2d::CCCallFuncND");
+ tolua_usertype(tolua_S,"cocos2d::CCEaseElasticIn");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseElasticIn), "cocos2d::CCEaseElasticIn");
+ tolua_usertype(tolua_S,"cocos2d::CCRGBAProtocol");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCRGBAProtocol), "cocos2d::CCRGBAProtocol");
  tolua_usertype(tolua_S,"cocos2d::CCStopGrid");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCStopGrid), "cocos2d::CCStopGrid");
- tolua_usertype(tolua_S,"cocos2d::CCTextFieldTTF");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTextFieldTTF), "cocos2d::CCTextFieldTTF");
  tolua_usertype(tolua_S,"cocos2d::CCSpeed");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCSpeed), "cocos2d::CCSpeed");
  tolua_usertype(tolua_S,"cocos2d::ccV2F_C4F_T2F");
@@ -1533,28 +1527,28 @@ static void tolua_reg_types (lua_State* tolua_S)
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCMutableArray<CCSpriteFrame*>), "cocos2d::CCMutableArray<CCSpriteFrame*>");
  tolua_usertype(tolua_S,"cocos2d::CCWaves");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCWaves), "cocos2d::CCWaves");
+ tolua_usertype(tolua_S,"cocos2d::CCTextFieldTTF");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTextFieldTTF), "cocos2d::CCTextFieldTTF");
  tolua_usertype(tolua_S,"cocos2d::CCFlipY3D");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCFlipY3D), "cocos2d::CCFlipY3D");
- tolua_usertype(tolua_S,"cocos2d::CCActionEase");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCActionEase), "cocos2d::CCActionEase");
  tolua_usertype(tolua_S,"cocos2d::CCEaseInOut");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCEaseInOut), "cocos2d::CCEaseInOut");
  tolua_usertype(tolua_S,"cocos2d::CCTouchDispatcher");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTouchDispatcher), "cocos2d::CCTouchDispatcher");
- tolua_usertype(tolua_S,"std::vector<cocos2d::CCFiniteTimeAction*>::iterator");
- Mtolua_typeid(tolua_S,typeid(std::vector<cocos2d::CCFiniteTimeAction*>::iterator), "std::vector<cocos2d::CCFiniteTimeAction*>::iterator");
+ tolua_usertype(tolua_S,"std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator");
+ Mtolua_typeid(tolua_S,typeid(std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator), "std::vector<cocos2d::CCFiniteTimeAction*>::reverse_iterator");
  tolua_usertype(tolua_S,"cocos2d::CCTMXLayerInfo");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTMXLayerInfo), "cocos2d::CCTMXLayerInfo");
- tolua_usertype(tolua_S,"cocos2d::CCTargetedTouchDelegate");
- Mtolua_typeid(tolua_S,typeid(cocos2d::CCTargetedTouchDelegate), "cocos2d::CCTargetedTouchDelegate");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionSlideInL");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionSlideInL), "cocos2d::CCTransitionSlideInL");
  tolua_usertype(tolua_S,"cocos2d::ccQuad3");
  Mtolua_typeid(tolua_S,typeid(cocos2d::ccQuad3), "cocos2d::ccQuad3");
- tolua_usertype(tolua_S,"cocos2d::_ccCArray");
- Mtolua_typeid(tolua_S,typeid(cocos2d::_ccCArray), "cocos2d::_ccCArray");
+ tolua_usertype(tolua_S,"cocos2d::CCSpriteBatchNode");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCSpriteBatchNode), "cocos2d::CCSpriteBatchNode");
  tolua_usertype(tolua_S,"std::set<cocos2d::CCObject*>::iterator");
  Mtolua_typeid(tolua_S,typeid(std::set<cocos2d::CCObject*>::iterator), "std::set<cocos2d::CCObject*>::iterator");
- tolua_usertype(tolua_S,"CCData");
- Mtolua_typeid(tolua_S,typeid(CCData), "CCData");
+ tolua_usertype(tolua_S,"cocos2d::CCTransitionCrossFade");
+ Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionCrossFade), "cocos2d::CCTransitionCrossFade");
  tolua_usertype(tolua_S,"cocos2d::CCTransitionPageTurn");
  Mtolua_typeid(tolua_S,typeid(cocos2d::CCTransitionPageTurn), "cocos2d::CCTransitionPageTurn");
 }
@@ -63425,7 +63419,6 @@ static int tolua_Cocos2d_cocos2d_CCLayer_didAccelerate00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-
 /* method: KeypadDestroy of class  cocos2d::CCLayer */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_cocos2d_CCLayer_KeypadDestroy00
 static int tolua_Cocos2d_cocos2d_CCLayer_KeypadDestroy00(lua_State* tolua_S)
@@ -63851,23 +63844,6 @@ static int tolua_Cocos2d_cocos2d_CCLayer_ccTouchesCancelled00(lua_State* tolua_S
  tolua_error(tolua_S,"#ferror in function 'ccTouchesCancelled'.",&tolua_err);
  return 0;
 #endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: __CCNode__ of class  cocos2d::CCLayer */
-#ifndef TOLUA_DISABLE_tolua_get_cocos2d__CCLayer___CCNode__
-static int tolua_get_cocos2d__CCLayer___CCNode__(lua_State* tolua_S)
-{
-    cocos2d::CCLayer* self = (cocos2d::CCLayer*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '__CCNode__'",NULL);
-#endif
-#ifdef __cplusplus
-    tolua_pushusertype(tolua_S,(void*)static_cast<cocos2d::CCNode*>(self), "cocos2d::CCNode");
-#else
-    tolua_pushusertype(tolua_S,(void*)((cocos2d::CCNode*)self), "cocos2d::CCNode");
-#endif
-    return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -69667,6 +69643,9 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"CCNode","cocos2d::CCNode","cocos2d::CCObject",NULL);
    #endif
    tolua_beginmodule(tolua_S,"CCNode");
+    tolua_function(tolua_S,"new",tolua_Cocos2d_cocos2d_CCNode_new00);
+    tolua_function(tolua_S,"new_local",tolua_Cocos2d_cocos2d_CCNode_new00_local);
+    tolua_function(tolua_S,".call",tolua_Cocos2d_cocos2d_CCNode_new00_local);
     tolua_function(tolua_S,"getZOrder",tolua_Cocos2d_cocos2d_CCNode_getZOrder00);
     tolua_function(tolua_S,"getVertexZ",tolua_Cocos2d_cocos2d_CCNode_getVertexZ00);
     tolua_function(tolua_S,"setVertexZ",tolua_Cocos2d_cocos2d_CCNode_setVertexZ00);
@@ -73149,7 +73128,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
     tolua_function(tolua_S,"ccTouchesMoved",tolua_Cocos2d_cocos2d_CCLayer_ccTouchesMoved00);
     tolua_function(tolua_S,"ccTouchesEnded",tolua_Cocos2d_cocos2d_CCLayer_ccTouchesEnded00);
     tolua_function(tolua_S,"ccTouchesCancelled",tolua_Cocos2d_cocos2d_CCLayer_ccTouchesCancelled00);
-    tolua_variable(tolua_S,"__CCNode__",tolua_get_cocos2d__CCLayer___CCNode__,NULL);
     tolua_variable(tolua_S,"__CCTouchDelegate__",tolua_get_cocos2d__CCLayer___CCTouchDelegate__,NULL);
     tolua_variable(tolua_S,"__CCAccelerometerDelegate__",tolua_get_cocos2d__CCLayer___CCAccelerometerDelegate__,NULL);
     tolua_variable(tolua_S,"__CCKeypadDelegate__",tolua_get_cocos2d__CCLayer___CCKeypadDelegate__,NULL);
