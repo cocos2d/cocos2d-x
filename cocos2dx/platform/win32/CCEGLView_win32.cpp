@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 #include "CCIMEDispatcher.h"
+#include "CCKeypadDispatcher.h"
 
 NS_CC_BEGIN;
 
@@ -310,7 +311,12 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			m_bCaptured = false;
 		}
 		break;
-
+	case WM_KEYDOWN:
+		if (wParam == VK_F1 || wParam == VK_F1)
+		{
+			if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
+				CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
+		}
     case WM_CHAR:
         {
             if (wParam < 0x20)
