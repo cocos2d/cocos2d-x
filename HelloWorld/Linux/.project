@@ -3,6 +3,8 @@
 	<name>HelloWorld</name>
 	<comment></comment>
 	<projects>
+		<project>cocos2dx-base</project>
+		<project>CocosDenshion</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -31,7 +33,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/HelloCocos2dx/Debug}</value>
+					<value>${workspace_loc:/HelloCocos2dx/Release}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
