@@ -1,2 +1,0 @@
-/home/laschweinski/git/cocos2d-x/chipmunk/src/CMakeFiles/chipmunk.dir
-/home/laschweinski/git/cocos2d-x/chipmunk/src/CMakeFiles/chipmunk_static.dir
