@@ -78,7 +78,7 @@ CCTexture2D::~CCTexture2D()
 	CCLOGINFO("cocos2d: deallocing CCTexture2D %u.", m_uName);
 	if(m_uName)
 	{
-		glDeleteTextures(1, &m_uName);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDeleteTextures(1, &m_uName);
 	}
 }
 
@@ -155,9 +155,9 @@ bool CCTexture2D::getHasPremultipliedAlpha()
 
 bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize)
 {
-	glPixelStorei(GL_UNPACK_ALIGNMENT,1);
-	glGenTextures(1, &m_uName);
-	glBindTexture(GL_TEXTURE_2D, m_uName);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenTextures(1, &m_uName);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_uName);
 
 	this->setAntiAliasTexParameters();
 
@@ -166,25 +166,25 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
 	switch(pixelFormat)
 	{
 	case kCCTexture2DPixelFormat_RGBA8888:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		break;
 	case kCCTexture2DPixelFormat_RGB888:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		break;
 	case kCCTexture2DPixelFormat_RGBA4444:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 		break;
 	case kCCTexture2DPixelFormat_RGB5A1:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
 		break;
 	case kCCTexture2DPixelFormat_RGB565:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 		break;
 	case kCCTexture2DPixelFormat_AI88:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
 		break;
 	case kCCTexture2DPixelFormat_A8:
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 		break;
 	default:
 		CCAssert(0, "NSInternalInconsistencyException");
@@ -479,10 +479,10 @@ void CCTexture2D::drawAtPoint(const CCPoint& point)
 		point.x,			height  + point.y,	0.0f,
 		width + point.x,	height  + point.y,	0.0f };
 
-	glBindTexture(GL_TEXTURE_2D, m_uName);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_uName);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, 0, vertices);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 void CCTexture2D::drawInRect(const CCRect& rect)
@@ -498,10 +498,10 @@ void CCTexture2D::drawInRect(const CCRect& rect)
 		rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
 		rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 
-	glBindTexture(GL_TEXTURE_2D, m_uName);
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_uName);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, vertices);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 #ifdef CC_SUPPORT_PVRTC
@@ -515,8 +515,8 @@ bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool h
 		return false;
 	}
 
-	glGenTextures(1, &m_uName);
-	glBindTexture(GL_TEXTURE_2D, m_uName);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenTextures(1, &m_uName);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_uName);
 
 	this->setAntiAliasTexParameters();
 
@@ -530,7 +530,7 @@ bool CCTexture2D::initWithPVRTCData(const void *data, int level, int bpp, bool h
 	if(size < 32) {
 		size = 32;
 	}
-	glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
 
 	m_tContentSize = CCSizeMake((float)(length), (float)(length));
 	m_uPixelsWide = length;
@@ -590,7 +590,7 @@ void CCTexture2D::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied
 void CCTexture2D::generateMipmap()
 {
 	CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mimpap texture only works in POT textures");
-	glBindTexture( GL_TEXTURE_2D, this->m_uName );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture( GL_TEXTURE_2D, this->m_uName );
 	ccglGenerateMipmap(GL_TEXTURE_2D);
 }
 
@@ -599,11 +599,11 @@ void CCTexture2D::setTexParameters(ccTexParams *texParams)
 	CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh)) ||
 		(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 		"GL_CLAMP_TO_EDGE should be used in NPOT textures");
-	glBindTexture( GL_TEXTURE_2D, this->m_uName );
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture( GL_TEXTURE_2D, this->m_uName );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
 }
 
 void CCTexture2D::setAliasTexParameters()

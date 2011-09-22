@@ -80,7 +80,7 @@ glColor_from_pointer(void *ptr)
 	
 	// glColor4ub isn't implemented on some android devices
 	// glColor4ub(r, g, b, 255);
-	glColor4f( ((GLfloat)r)/255, ((GLfloat)g) / 255, ((GLfloat)b)/255, 1.0f );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f( ((GLfloat)r)/255, ((GLfloat)g) / 255, ((GLfloat)b)/255, 1.0f );
 }
 
 static void
@@ -90,11 +90,11 @@ glColor_for_shape(cpShape *shape, cpSpace *space)
 	if(body){
 		if(body->node.next){
 			GLfloat v = 0.25f;
-			glColor4f(v,v,v,1);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(v,v,v,1);
 			return;
 		} else if(body->node.idleTime > space->sleepTimeThreshold) {
 			GLfloat v = 0.9f;
-			glColor4f(v,v,v,1);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(v,v,v,1);
 			return;
 		}
 	}
@@ -135,35 +135,35 @@ static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/2;
 static void
 drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space)
 {
-	glVertexPointer(2, GL_FLOAT, 0, circleVAR);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, circleVAR);
 	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states:  GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 
-	glPushMatrix(); {
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPushMatrix(); {
 		cpVect center = circle->tc;
-		glTranslatef(center.x, center.y, 0.0f);
-		glRotatef(body->a*180.0f/(float)M_PI, 0.0f, 0.0f, 1.0f);
-		glScalef(circle->r, circle->r, 1.0f);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(center.x, center.y, 0.0f);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef(body->a*180.0f/(float)M_PI, 0.0f, 0.0f, 1.0f);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glScalef(circle->r, circle->r, 1.0f);
 		
 		if(!circle->shape.sensor){
 			glColor_for_shape((cpShape *)circle, space);
-			glDrawArrays(GL_TRIANGLE_FAN, 0, circleVAR_count - 1);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_FAN, 0, circleVAR_count - 1);
 		}
 		
-		glColor4f(LINE_COLOR);
-		glDrawArrays(GL_LINE_STRIP, 0, circleVAR_count);
-	} glPopMatrix();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(LINE_COLOR);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_STRIP, 0, circleVAR_count);
+	} cocos2d::CCDirector::sharedDirector()->getGLContext()->glPopMatrix();
 	
 	// restore default GL state
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 }
 
 static const GLfloat pillVAR[] = {
@@ -204,17 +204,17 @@ drawSegmentShape(cpBody *body, cpSegmentShape *seg, cpSpace *space)
 	cpVect b = seg->tb;
 	
 	if(seg->r){
-		glVertexPointer(3, GL_FLOAT, 0, pillVAR);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, 0, pillVAR);
 		
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Needed states:  GL_VERTEX_ARRAY, 
 		// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		
 		
-		glPushMatrix(); {
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPushMatrix(); {
 			cpVect d = cpvsub(b, a);
 			cpVect r = cpvmult(d, seg->r/cpvlength(d));
 
@@ -224,24 +224,24 @@ drawSegmentShape(cpBody *body, cpSegmentShape *seg, cpSpace *space)
 				 d.x, d.y, 0.0f, 0.0f,
 				 a.x, a.y, 0.0f, 1.0f,
 			};
-			glMultMatrixf(matrix);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glMultMatrixf(matrix);
 			
 			if(!seg->shape.sensor){
 				glColor_for_shape((cpShape *)seg, space);
-				glDrawArrays(GL_TRIANGLE_FAN, 0, pillVAR_count);
+				cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_FAN, 0, pillVAR_count);
 			}
 			
-			glColor4f(LINE_COLOR);
-			glDrawArrays(GL_LINE_LOOP, 0, pillVAR_count);
-		} glPopMatrix();
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(LINE_COLOR);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_LOOP, 0, pillVAR_count);
+		} cocos2d::CCDirector::sharedDirector()->getGLContext()->glPopMatrix();
 		
 		// restore default GL state
-		glEnable(GL_TEXTURE_2D);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 		
 	} else {
-		glColor4f(LINE_COLOR);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(LINE_COLOR);
 		ccDrawLine(ccp(a.x, a.y),ccp(b.x, b.y));
 	}
 }
@@ -251,31 +251,31 @@ drawPolyShape(cpBody *body, cpPolyShape *poly, cpSpace *space)
 {
 	int count = poly->numVerts;
 #if CP_USE_DOUBLES
-	glVertexPointer(2, GL_DOUBLE, 0, poly->tVerts);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_DOUBLE, 0, poly->tVerts);
 #else
-	glVertexPointer(2, GL_FLOAT, 0, poly->tVerts);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, poly->tVerts);
 #endif
 	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states:  GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	
 	if(!poly->shape.sensor){
 		glColor_for_shape((cpShape *)poly, space);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, count);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_FAN, 0, count);
 	}
 	
-	glColor4f(LINE_COLOR);
-	glDrawArrays(GL_LINE_LOOP, 0, count);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(LINE_COLOR);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_LOOP, 0, count);
 	
 	// restore default GL state
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 }
 
 static void
@@ -324,7 +324,7 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 	cpVect a = cpvadd(body_a->p, cpvrotate(spring->anchr1, body_a->rot));
 	cpVect b = cpvadd(body_b->p, cpvrotate(spring->anchr2, body_b->rot));
 
-	glPointSize(5.0f);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(5.0f);
 	ccDrawPoint( ccp(a.x, a.y) );
 	ccDrawPoint( ccp(b.x, b.y) );
 
@@ -333,12 +333,12 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states:  GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, springVAR);
-	glPushMatrix(); {
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, springVAR);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPushMatrix(); {
 		GLfloat x = a.x;
 		GLfloat y = a.y;
 		GLfloat cos = delta.x;
@@ -352,14 +352,14 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 					 x,      y, 0.0f, 1.0f,
 		};
 		
-		glMultMatrixf(matrix);
-		glDrawArrays(GL_LINE_STRIP, 0, springVAR_count);
-	} glPopMatrix();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMultMatrixf(matrix);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_STRIP, 0, springVAR_count);
+	} cocos2d::CCDirector::sharedDirector()->getGLContext()->glPopMatrix();
 	
 	// restore default GL state
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
 	
 }
 
@@ -376,7 +376,7 @@ drawConstraint(cpConstraint *constraint)
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(5.0f);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(5.0f);
 		ccDrawPoint( ccp(a.x, a.y) );
 		ccDrawPoint( ccp(b.x, b.y) );
 		ccDrawLine( ccp(a.x, a.y), ccp(b.x, b.y) );
@@ -387,7 +387,7 @@ drawConstraint(cpConstraint *constraint)
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(5.0f);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(5.0f);
 		ccDrawPoint( ccp(a.x, a.y) );
 		ccDrawPoint( ccp(b.x, b.y) );
 		ccDrawLine( ccp(a.x, a.y), ccp(b.x, b.y) );
@@ -398,7 +398,7 @@ drawConstraint(cpConstraint *constraint)
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(10.0f);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(10.0f);
 		ccDrawPoint( ccp(a.x, a.y) );
 		ccDrawPoint( ccp(b.x, b.y) );
 	} else if(klass == cpGrooveJointGetClass()){
@@ -408,7 +408,7 @@ drawConstraint(cpConstraint *constraint)
 		cpVect b = cpvadd(body_a->p, cpvrotate(joint->grv_b, body_a->rot));
 		cpVect c = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(5.0f);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(5.0f);
 		ccDrawPoint( ccp(c.x, c.y) );
 		ccDrawLine( ccp(a.x, a.y), ccp(b.x, b.y) );
 	} else if(klass == cpDampedSpringGetClass()){
@@ -460,7 +460,7 @@ drawSpatialHash(cpSpaceHash *hash)
 				cell_count++;
 			
 			GLfloat v = 1.0f - (GLfloat)cell_count/10.0f;
-			glColor4f(v,v,v,1);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(v,v,v,1);
 //			glRectf(i*dim, j*dim, (i + 1)*dim, (j + 1)*dim);
 		}
 	}
@@ -470,39 +470,39 @@ void
 drawSpace(cpSpace *space, drawSpaceOptions *options)
 {
 	if(options->drawHash){
-		glColorMask(GL_FALSE, GL_TRUE, GL_FALSE, GL_TRUE);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorMask(GL_FALSE, GL_TRUE, GL_FALSE, GL_TRUE);
 		drawSpatialHash(space->activeShapes);
-		glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
 		drawSpatialHash(space->staticShapes);
-		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	}
 	
-	glLineWidth(options->lineThickness);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(options->lineThickness);
 	if(options->drawShapes){
 		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)drawObject, space);
 		cpSpaceHashEach(space->staticShapes, (cpSpaceHashIterator)drawObject, space);
 	}
 	
-	glLineWidth(1.0f);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(1.0f);
 	if(options->drawBBs){
-		glColor4f(0.3f, 0.5f, 0.3f,1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(0.3f, 0.5f, 0.3f,1);
 		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)drawBB, NULL);
 		cpSpaceHashEach(space->staticShapes, (cpSpaceHashIterator)drawBB, NULL);
 	}
 
 	cpArray *constraints = space->constraints;
 
-	glColor4f(0.5f, 1.0f, 0.5f, 1);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(0.5f, 1.0f, 0.5f, 1);
 	for(int i=0, count = constraints->num; i<count; i++){
 		drawConstraint((cpConstraint *)constraints->arr[i]);
 	}
 	
 	if(options->bodyPointSize){
-		glPointSize(options->bodyPointSize);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(options->bodyPointSize);
 		
 		cpArray *bodies = space->bodies;
 
-		glColor4f(LINE_COLOR);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(LINE_COLOR);
 		for(int i=0, count = bodies->num; i<count; i++){
 			cpBody *body = (cpBody *)bodies->arr[i];
 			ccDrawPoint( ccp(body->p.x, body->p.y) );
@@ -521,12 +521,12 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 	}
 
 	if(options->collisionPointSize){
-		glPointSize(options->collisionPointSize);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(options->collisionPointSize);
 		cpArray *arbiters = space->arbiters;
 		for(int i=0; i<arbiters->num; i++){
 			cpArbiter *arb = (cpArbiter*)arbiters->arr[i];
 			
-			glColor4f(COLLISION_COLOR);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(COLLISION_COLOR);
 			for(int i=0; i<arb->numContacts; i++){
 				cpVect v = arb->contacts[i].p;
 				ccDrawPoint( ccp(v.x, v.y) );

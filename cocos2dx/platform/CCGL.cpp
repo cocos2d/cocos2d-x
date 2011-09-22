@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCGL.h"
 #include "CCStdC.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN;
 
@@ -36,7 +37,7 @@ void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
     xmin = ymin * aspect;
     xmax = ymax * aspect;
 
-    glFrustumf(xmin, xmax,
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glFrustumf(xmin, xmax,
         ymin, ymax,
         zNear, zFar);	
 }
@@ -118,11 +119,11 @@ void gluLookAt(float fEyeX, float fEyeY, float fEyeZ,
         GLfloat fixedM[16];
         for (a = 0; a < 16; ++a)
             fixedM[a] = m[a];
-        glMultMatrixf(fixedM);
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glMultMatrixf(fixedM);
     }
 
     /* Translate Eye to Origin */
-    glTranslatef(-fEyeX, -fEyeY, -fEyeZ);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(-fEyeX, -fEyeY, -fEyeZ);
 }
 
 NS_CC_END;

@@ -187,19 +187,19 @@ namespace cocos2d
 		switch (orientation)
 		{
 		case CCDeviceOrientationLandscapeLeft:
- 			glTranslatef(w,h,0);
- 			glRotatef(-90,0,0,1);
- 			glTranslatef(-h,-w,0);
+ 			cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(w,h,0);
+ 			cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef(-90,0,0,1);
+ 			cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(-h,-w,0);
             break;
 		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(w,h,0);
-			glRotatef(90,0,0,1);
-			glTranslatef(-h,-w,0);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(w,h,0);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef(90,0,0,1);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(-h,-w,0);
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
-			glTranslatef(w,h,0);
-			glRotatef(180,0,0,1);
-			glTranslatef(-w,-h,0);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(w,h,0);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef(180,0,0,1);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(-w,-h,0);
 			break;
 		default:
 			break;
@@ -210,14 +210,14 @@ namespace cocos2d
 	{
 		CCSize winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 
         // set view port for user FBO, fixed bug #543 #544
-		glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport((GLsizei)0, (GLsizei)0, (GLsizei)winSize.width, (GLsizei)winSize.height);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_PROJECTION);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 		ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
-		glMatrixMode(GL_MODELVIEW);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_MODELVIEW);
 	}
 
 	// This routine can be merged with Director
@@ -226,13 +226,13 @@ namespace cocos2d
 		CCSize	winSize = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 
         // set view port for user FBO, fixed bug #543 #544
-		glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport(0, 0, (GLsizei)winSize.width, (GLsizei)winSize.height);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_PROJECTION);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 		gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 
-		glMatrixMode(GL_MODELVIEW);	
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_MODELVIEW);	
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 		gluLookAt( winSize.width/2, winSize.height/2, CCDirector::sharedDirector()->getZEye(),
 			winSize.width/2, winSize.height/2, 0,
 			0.0f, 1.0f, 0.0f
@@ -264,7 +264,7 @@ namespace cocos2d
 			ccglTranslate(-offset.x, -offset.y, 0);
 		}
 
-		glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
 
         // restore projection for default FBO .fixed bug #543 #544
         CCDirector::sharedDirector()->setProjection(CCDirector::sharedDirector()->getProjection());
@@ -344,14 +344,14 @@ namespace cocos2d
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 
-		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
-		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
-		glDrawElements(GL_TRIANGLES, (GLsizei)n * 6, GL_UNSIGNED_SHORT, m_pIndices);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawElements(GL_TRIANGLES, (GLsizei)n * 6, GL_UNSIGNED_SHORT, m_pIndices);
 
 		// restore GL default state
-		glEnableClientState(GL_COLOR_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
 	}
 
 	void CCGrid3D::calculateVertexPoints(void)
@@ -519,14 +519,14 @@ namespace cocos2d
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 
-		glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
-		glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
-		glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, 0, m_pVertices);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, 0, m_pTexCoordinates);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, m_pIndices);
 
 		// restore default GL state
-		glEnableClientState(GL_COLOR_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
 	}
 
 	void CCTiledGrid3D::calculateVertexPoints(void)

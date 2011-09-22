@@ -98,6 +98,13 @@ typedef struct _ccColor4F {
 	GLfloat b;
 	GLfloat a;
 } ccColor4F;
+//! helper macro that creates an ccColor4B type
+static inline ccColor4F
+ccc4F(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
+{
+	ccColor4F c = {r, g, b, a};
+	return c;
+}
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
  @since v0.99.1

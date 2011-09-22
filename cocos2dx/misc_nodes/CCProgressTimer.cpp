@@ -569,34 +569,34 @@ void CCProgressTimer::draw(void)
     bool newBlend = (bf.src != CC_BLEND_SRC || bf.dst != CC_BLEND_DST) ? true : false;
 	if (newBlend) 
 	{
-		glBlendFunc(bf.src, bf.dst);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(bf.src, bf.dst);
 	}
 	
 	///	========================================================================
 	//	Replaced [texture_ drawAtPoint:CCPointZero] with my own vertexData
 	//	Everything above me and below me is copied from CCTextureNode's draw
-	glBindTexture(GL_TEXTURE_2D, m_pSprite->getTexture()->getName());
-	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].vertices);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].texCoords);
-	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].colors);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_pSprite->getTexture()->getName());
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].vertices);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].texCoords);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ccV2F_C4B_T2F), &m_pVertexData[0].colors);
 	
 	if(m_eType == kCCProgressTimerTypeRadialCCW || m_eType == kCCProgressTimerTypeRadialCW)
 	{
-		glDrawArrays(GL_TRIANGLE_FAN, 0, m_nVertexDataCount);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_FAN, 0, m_nVertexDataCount);
 	} else 
 	if (	m_eType == kCCProgressTimerTypeHorizontalBarLR ||
 			m_eType == kCCProgressTimerTypeHorizontalBarRL ||
 			m_eType == kCCProgressTimerTypeVerticalBarBT ||
 			m_eType == kCCProgressTimerTypeVerticalBarTB) 
 	{
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nVertexDataCount);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nVertexDataCount);
 	}
 	//glDrawElements(GL_TRIANGLES, indicesCount_, GL_UNSIGNED_BYTE, indices_);
 	///	========================================================================
 	
 	if( newBlend )
     {
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
     }
 }
 

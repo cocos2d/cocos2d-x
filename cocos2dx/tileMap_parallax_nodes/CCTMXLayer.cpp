@@ -625,15 +625,15 @@ namespace cocos2d {
 	{
 		if( m_bUseAutomaticVertexZ )
 		{
-			glEnable(GL_ALPHA_TEST);
-			glAlphaFunc(GL_GREATER, m_fAlphaFuncValue);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_ALPHA_TEST);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glAlphaFunc(GL_GREATER, m_fAlphaFuncValue);
 		}
 
 		CCSpriteBatchNode::draw();
 
 		if( m_bUseAutomaticVertexZ )
 		{
-			glDisable(GL_ALPHA_TEST);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_ALPHA_TEST);
 		}
 	}
 

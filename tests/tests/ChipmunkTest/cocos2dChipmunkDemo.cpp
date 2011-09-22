@@ -202,15 +202,15 @@ drawInfo()
 static void
 reshape(int width, int height)
 {
-	glViewport(0, 0, width, height);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport(0, 0, width, height);
 	
 	float rx = width / 2.0f;
 	float ry = height / 2.0f;
 	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrthof(-rx, rx, -ry, ry, -1.0f, 1.0f);
-	glTranslatef(0.5f, 0.5f, 0.0f);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_PROJECTION);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glOrthof(-rx, rx, -ry, ry, -1.0f, 1.0f);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(0.5f, 0.5f, 0.0f);
 }
 
 static void
@@ -274,12 +274,12 @@ keyboard(unsigned char key, int x, int y)
 	} else if(key == '='){
 		options.drawBBs = !options.drawBBs;
 	} else if(key == '\\'){
-		glEnable(GL_LINE_SMOOTH);
-		glEnable(GL_POINT_SMOOTH);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-		glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_LINE_SMOOTH);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_POINT_SMOOTH);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_BLEND);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
 	}
 }
 
@@ -384,9 +384,9 @@ arrowKeyUpFunc(int key, int x, int y)
 static void
 initGL(void)
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 	
-	glEnableClientState(GL_VERTEX_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_VERTEX_ARRAY);
 }
 
 static void
@@ -476,35 +476,35 @@ void ChipmunkTestLayer::onEnter()
 {
     CCLayer::onEnter();
 
-    glClearColor(1,1,1,1);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glClearColor(1,1,1,1);
     float factor = 1.0f;
     
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_PROJECTION);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 	// portraint
     //glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f); 
 	// landscape 
-    glOrthof(-320/factor, 320/factor, 0/factor, 960/factor, 1.0f, -1.0f); 
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glOrthof(-320/factor, 320/factor, 0/factor, 960/factor, 1.0f, -1.0f); 
 #else
     // portraint
     // glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
     // landscape
-    glOrthof(-480/factor, 480/factor, -320/factor, 320/factor, 1.0f, -1.0f); 
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glOrthof(-480/factor, 480/factor, -320/factor, 320/factor, 1.0f, -1.0f); 
 
 #endif
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_MODELVIEW);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
     
-    glPointSize(3.0f);
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
-    glLineWidth(1.5f);    
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSize(3.0f);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_LINE_SMOOTH);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_POINT_SMOOTH);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_BLEND);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(1.5f);    
 }
 
 void ChipmunkTestLayer::onExit()
