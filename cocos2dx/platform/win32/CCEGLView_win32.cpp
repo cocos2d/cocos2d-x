@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCIMEDispatcher.h"
 #include "CCKeypadDispatcher.h"
+#include "CCApplication.h"
 
 NS_CC_BEGIN;
 
@@ -234,7 +235,7 @@ bool CCEGLView::Create(LPCTSTR pTitle, int w, int h)
 			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,	// Extended Style For The Window
 			kWindowClassName,									// Class Name
 			pTitle,												// Window Title
-			WS_CAPTION | WS_POPUPWINDOW,	// Defined Window Style
+			WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,		// Defined Window Style
 			0, 0,								                // Window Position
 			0,                                                  // Window Width
 			0,                                                  // Window Height
@@ -311,12 +312,24 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			m_bCaptured = false;
 		}
 		break;
+	case WM_SIZE:
+		switch (wParam)
+		{
+		case SIZE_RESTORED:
+			CCApplication::sharedApplication().applicationWillEnterForeground();
+			break;
+		case SIZE_MINIMIZED:
+			CCApplication::sharedApplication().applicationDidEnterBackground();
+			break;
+		}
+		break;
 	case WM_KEYDOWN:
 		if (wParam == VK_F1 || wParam == VK_F2)
 		{
 			if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
 				CCKeypadDispatcher::sharedDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
 		}
+		break;
     case WM_CHAR:
         {
             if (wParam < 0x20)
