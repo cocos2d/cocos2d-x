@@ -130,7 +130,7 @@ namespace cocos2d
 			return;
 		}
 
-		glPushMatrix();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPushMatrix();
 
 		if (m_pGrid && m_pGrid->isActive())
 		{
@@ -147,7 +147,7 @@ namespace cocos2d
 			m_pGrid->afterDraw(this);
 		}
 
-		glPopMatrix();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPopMatrix();
 	}
 
 	void CCSpriteBatchNode::addChild(CCNode *child, int zOrder, int tag)
@@ -282,13 +282,13 @@ namespace cocos2d
 		bool newBlend = m_blendFunc.src != CC_BLEND_SRC || m_blendFunc.dst != CC_BLEND_DST;
 		if (newBlend)
 		{
-			glBlendFunc(m_blendFunc.src, m_blendFunc.dst);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(m_blendFunc.src, m_blendFunc.dst);
 		}
 
 		m_pobTextureAtlas->drawQuads();
 		if (newBlend)
 		{
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 		}
 	}
 

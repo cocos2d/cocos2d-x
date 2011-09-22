@@ -262,14 +262,14 @@ void CCRibbon::draw()
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 
-		glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
 
         bool newBlend = ( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) ? true : false;
         if( newBlend )
         {
-            glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
+            cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
         }
 
 		if(m_pSegments && m_pSegments->count() > 0)
@@ -285,11 +285,11 @@ void CCRibbon::draw()
 
 		if( newBlend )
 		{
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 		}
 
 		// restore default GL state
-		glEnableClientState( GL_COLOR_ARRAY );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState( GL_COLOR_ARRAY );
 	}
 }
 
@@ -380,12 +380,12 @@ void CCRibbonSegment::draw(float curTime, float fadeTime, const ccColor4B& color
 			// no alpha over time, so just set the color
             // glColor4ub isn't implement on some android devices
 			// glColor4ub(r,g,b,a);
-            glColor4f(((GLfloat)r) / 255, ((GLfloat)g) / 255, ((GLfloat)b) / 255, ((GLfloat)a) / 255);
+            cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(((GLfloat)r) / 255, ((GLfloat)g) / 255, ((GLfloat)b) / 255, ((GLfloat)a) / 255);
 		}
 		else
 		{
 			// generate alpha/color for each point
-			glEnableClientState(GL_COLOR_ARRAY);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
 			unsigned int i = m_uBegin;
 			for (; i < m_uEnd; ++i)
 			{
@@ -409,11 +409,11 @@ void CCRibbonSegment::draw(float curTime, float fadeTime, const ccColor4B& color
 					m_pColors[idx+7] = m_pColors[idx+3];
 				}
 			}
-			glColorPointer(4, GL_UNSIGNED_BYTE, 0, &m_pColors[m_uBegin*8]);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, 0, &m_pColors[m_uBegin*8]);
 		}
-		glVertexPointer(3, GL_FLOAT, 0, &m_pVerts[m_uBegin*6]);
-		glTexCoordPointer(2, GL_FLOAT, 0, &m_pCoords[m_uBegin*4]);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (m_uEnd - m_uBegin) * 2);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, 0, &m_pVerts[m_uBegin*6]);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, 0, &m_pCoords[m_uBegin*4]);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_STRIP, 0, (m_uEnd - m_uBegin) * 2);
 	}
 	else
 	{

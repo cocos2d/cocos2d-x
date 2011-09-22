@@ -163,7 +163,7 @@ void CCDirector::setGLDefaultValues(void)
 	setProjection(m_eProjection);
 
 	// set other opengl default values
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 #if CC_DIRECTOR_FAST_FPS
 	if (! m_pFPSLabel)
@@ -186,7 +186,7 @@ void CCDirector::drawScene(void)
 		CCScheduler::sharedScheduler()->tick(m_fDeltaTime);
 	}
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
@@ -195,7 +195,7 @@ void CCDirector::drawScene(void)
 		setNextScene();
 	}
 
-	glPushMatrix();
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPushMatrix();
 
 	applyOrientation();
 
@@ -225,7 +225,7 @@ void CCDirector::drawScene(void)
 
 	CC_DISABLE_DEFAULT_GL_STATES();
 
-	glPopMatrix();
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPopMatrix();
 
 	m_uTotalFrames++;
 
@@ -315,12 +315,12 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
         {
             m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
         }
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_PROJECTION);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 		ccglOrtho(0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 
 			1024 * CC_CONTENT_SCALE_FACTOR());
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_MODELVIEW);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 		break;
 
 	case kCCDirectorProjection3D:		
@@ -328,12 +328,12 @@ void CCDirector::setProjection(ccDirectorProjection kProjection)
         {
             m_pobOpenGLView->setViewPortInPoints(0, 0, size.width, size.height);
         }
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_PROJECTION);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 		gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
 			
-		glMatrixMode(GL_MODELVIEW);	
-		glLoadIdentity();
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMatrixMode(GL_MODELVIEW);	
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLoadIdentity();
 		gluLookAt( size.width/2, size.height/2, zeye,
 				 size.width/2, size.height/2, 0,
 				 0.0f, 1.0f, 0.0f);				
@@ -369,12 +369,12 @@ void CCDirector::setAlphaBlending(bool bOn)
 {
 	if (bOn)
 	{
-		glEnable(GL_BLEND);
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_BLEND);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	}
 	else
 	{
-		glDisable(GL_BLEND);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_BLEND);
 	}
 }
 
@@ -383,13 +383,13 @@ void CCDirector::setDepthTest(bool bOn)
 	if (bOn)
 	{
 		ccglClearDepth(1.0f);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_DEPTH_TEST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDepthFunc(GL_LEQUAL);
+//		cocos2d::CCDirector::sharedDirector()->getGLContext()->glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	}
 	else
 	{
-		glDisable(GL_DEPTH_TEST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_DEPTH_TEST);
 	}
 }
 
@@ -813,19 +813,19 @@ void CCDirector::applyOrientation(void)
 		break;
 	case CCDeviceOrientationPortraitUpsideDown:
 		// upside down
-		glTranslatef(w,h,0);
-		glRotatef(180,0,0,1);
-		glTranslatef(-w,-h,0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(w,h,0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef(180,0,0,1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(-w,-h,0);
 		break;
 	case CCDeviceOrientationLandscapeRight:
-		glTranslatef(w,h,0);
-		glRotatef(90,0,0,1);
-		glTranslatef(-h,-w,0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(w,h,0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef(90,0,0,1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(-h,-w,0);
 		break;
 	case CCDeviceOrientationLandscapeLeft:
-		glTranslatef(w,h,0);
-		glRotatef(-90,0,0,1);
-		glTranslatef(-h,-w,0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(w,h,0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef(-90,0,0,1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(-h,-w,0);
 		break;
 	}
 }
@@ -855,6 +855,13 @@ void CCDirector::setDeviceOrientation(ccDeviceOrientation kDeviceOrientation)
         m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor, m_obWinSizeInPoints.height * m_fContentScaleFactor);
         setProjection(m_eProjection);
     }
+}
+
+OpenGLES::OpenGLESContext* CCDirector::getGLContext() {
+	return m_pGLContext;
+}
+void CCDirector::setGLContext(OpenGLES::OpenGLESContext* c) {
+	m_pGLContext = c;
 }
 
 

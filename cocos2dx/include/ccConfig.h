@@ -321,4 +321,24 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_IS_RETINA_DISPLAY_SUPPORTED 0
 #endif
 
+#ifndef CC_OPENGLES20_SUPPORT
+#define CC_OPENGLES20_SUPPORT 1
+#endif
+
+#if CC_OPENGLES20_SUPPORT
+
+#	ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#		undef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+#	endif
+
+#	define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 0
+
+//#	ifdef CC_USES_VBO
+//#		undef CC_USES_VBO
+//#	endif
+//
+//#	define CC_USES_VBO 0
+
+#endif
+
 #endif // __CCCONFIG_H__
