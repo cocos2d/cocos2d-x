@@ -83,7 +83,7 @@ build for which target platform
 #endif
 
 // linux
-#if ! CC_TARGET_PLATFORM && defined(LINUX)
+#if ! CC_TARGET_PLATFORM && (defined(LINUX) ||defined(linux))
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
 #endif

@@ -22,7 +22,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="so" artifactName="cocosdenshion" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.1982681102" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="move output libs to a specific libs" postbuildStep="sh ../../../post.sh ${ProjName} cocosdenshion ${ConfigName}">
+				<configuration artifactExtension="so" artifactName="cocosdenshion" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.1982681102" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="" postbuildStep="">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.1982681102." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1290289406" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.1343594495" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
@@ -70,7 +70,6 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="scannerConfiguration"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.release.509246766">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.release.509246766" moduleId="org.eclipse.cdt.core.settings" name="Release">
@@ -91,7 +90,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="so" artifactName="cocosdenshion" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.509246766" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="move output libs to a specific libs" postbuildStep="sh ../../../post.sh ${ProjName} cocosdenshion ${ConfigName}">
+				<configuration artifactExtension="so" artifactName="cocosdenshion" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.509246766" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="" postbuildStep="">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.509246766." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.305868874" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.506287391" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
@@ -139,7 +138,6 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="scannerConfiguration"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.1982681102.1621062209">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.1982681102.1621062209" moduleId="org.eclipse.cdt.core.settings" name="AndroidDebug">
@@ -147,7 +145,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/AndroidDebug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocosdenshion"/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -160,7 +158,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="so" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.1982681102.1621062209" name="AndroidDebug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="move output libs to a specific libs" postbuildStep="sh ../../../post.sh ${ProjName} cocosdenshion ${ConfigName}">
+				<configuration artifactExtension="so" artifactName="cocosdenshion" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.1982681102.1621062209" name="AndroidDebug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="" postbuildStep="">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.1982681102.1621062209." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1558765061" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.620879821" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
@@ -206,7 +204,6 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="scannerConfiguration"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.release.509246766.1769340575">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.release.509246766.1769340575" moduleId="org.eclipse.cdt.core.settings" name="AndroidRelease">
@@ -214,7 +211,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CocosDenshion"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CocosDenshion/AndroidRelease"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CocosDenshion"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="cocosdenshion"/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -227,7 +224,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="so" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.509246766.1769340575" name="AndroidRelease" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="move output libs to a specific libs" postbuildStep="sh ../../../post.sh ${ProjName} cocosdenshion ${ConfigName}">
+				<configuration artifactExtension="so" artifactName="cocosdenshion" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.release.509246766.1769340575" name="AndroidRelease" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="" postbuildStep="">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.release.509246766.1769340575." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.885182269" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release.1280043208" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
@@ -273,7 +270,6 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="scannerConfiguration"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
