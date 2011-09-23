@@ -38,11 +38,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\obj\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\obj\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -55,7 +55,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform;..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;..\..\CocosDenshion\include;..\tests;..\..\cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,9 +67,9 @@
       <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libgles_cm.lib;libcurl_imp.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -78,12 +78,16 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\libraries\*.*" "$(IntDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir);$(SolutionDir)chipmunk\include\chipmunk;$(SolutionDir)CocosDenshion\include;..\tests;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\platform;..\..\cocos2dx;..\..\cocos2dx\include;..\..\;..\..\chipmunk\include\chipmunk;..\..\CocosDenshion\include;..\tests;..\..\cocos2dx\platform\third_party\win32\OGLES;..\;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -94,9 +98,9 @@
       <DisableSpecificWarnings>4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libgles_cm.lib;libcurl_imp.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -104,9 +108,14 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /Y /Q "..\..\cocos2dx\proj.win32\$(Configuration)\bin\*.dll" "$(OutDir)"
+xcopy /Y /Q "..\..\CocosDenshion\proj.win32\$(Configuration)\bin\*.dll" "$(OutDir)"
+xcopy /Y /Q "..\..\cocos2dx\platform\third_party\win32\libraries\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\libraries\*.*" "$(IntDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\tests\BugsTest\Bug-1159.cpp" />
@@ -120,6 +129,7 @@
     <ClCompile Include="..\tests\BugsTest\Bug-899.cpp" />
     <ClCompile Include="..\tests\BugsTest\Bug-914.cpp" />
     <ClCompile Include="..\tests\BugsTest\BugsTest.cpp" />
+    <ClCompile Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\tests\DirectorTest\DirectorTest.cpp" />
     <ClCompile Include="..\tests\FontTest\FontTest.cpp" />
     <ClCompile Include="..\tests\Texture2dTest\Texture2dTest.cpp" />
@@ -205,6 +215,7 @@
     <ClInclude Include="..\tests\BugsTest\Bug-899.h" />
     <ClInclude Include="..\tests\BugsTest\Bug-914.h" />
     <ClInclude Include="..\tests\BugsTest\BugsTest.h" />
+    <ClInclude Include="..\tests\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\tests\DirectorTest\DirectorTest.h" />
     <ClInclude Include="..\tests\FontTest\FontTest.h" />
     <ClInclude Include="..\tests\Texture2dTest\Texture2dTest.h" />
