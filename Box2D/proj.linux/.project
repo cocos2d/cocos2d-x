@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>CocosDenshion</name>
+	<name>libBox2D</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -31,7 +31,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/CocosDenshion/Debug}</value>
+					<value>${workspace_loc:/libBox2D/Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -82,24 +82,19 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Linux</name>
+			<name>Collision</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Linux</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Collision</locationURI>
 		</link>
 		<link>
-			<name>android</name>
+			<name>Common</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/android</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Common</locationURI>
 		</link>
 		<link>
-			<name>include</name>
+			<name>Dynamics</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/include</locationURI>
-		</link>
-		<link>
-			<name>third_party</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/third_party</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Dynamics</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
