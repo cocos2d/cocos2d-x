@@ -3,6 +3,7 @@
 
 APP_NAME=$2
 COCOS2DX_ROOT=$1
+COCOS2DX_ROOT_TEMP=$1
 APP_DIR=`pwd`/$5
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld
 NDK_ROOT=$3
@@ -50,13 +51,23 @@ move_files_into_linux(){
 
 #copy eclipse configures
 move_eclipse_configures_into(){
-    for file in `ls -a $HELLOWORLD_ROOT/Linux/ | grep -E '\..*project' `
-	do
-		cp $HELLOWORLD_ROOT/Linux/$file $APP_DIR/Linux/
-    	done
-	mv $APP_DIR/Linux/.project $APP_DIR/Linux/.project1
+        for file in `ls -a $HELLOWORLD_ROOT/Linux/ | grep -E '\..*project' `
+		do
+			cp $HELLOWORLD_ROOT/Linux/$file $APP_DIR/Linux/
+	    	done
+    	mv $APP_DIR/Linux/.project $APP_DIR/Linux/.project1
 	sed "s/HelloWorld/$projName/" $APP_DIR/Linux/.project1 > $APP_DIR/Linux/.project
 	rm $APP_DIR/Linux/.project1
+
+	mv $APP_DIR/Linux/.cproject $APP_DIR/Linux/.cproject1
+	
+	
+	
+	COCOS2DX_ROOT_TEMP=`echo ${COCOS2DX_ROOT//\//\\\/}`
+	echo $COCOS2DX_ROOT_TEMP
+
+	sed "s/stringMacro name=\"cocos2dx_loc\" type=\"VALUE_TEXT\" value=\"..\/..\/..\/\"/stringMacro name=\"cocos2dx_loc\" type=\"VALUE_TEXT\" value=\"$COCOS2DX_ROOT_TEMP\"/" $APP_DIR/Linux/.cproject1 > $APP_DIR/Linux/.cproject
+	rm $APP_DIR/Linux/.cproject1
 }
 
 #copy main sources
