@@ -657,38 +657,38 @@ void CCSprite::draw(void)
 	bool newBlend = m_sBlendFunc.src != CC_BLEND_SRC || m_sBlendFunc.dst != CC_BLEND_DST;
 	if (newBlend)
 	{
-		glBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
 	}
 
 #define kQuadSize sizeof(m_sQuad.bl)
     if (m_pobTexture)
     {
-        glBindTexture(GL_TEXTURE_2D, m_pobTexture->getName());
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_pobTexture->getName());
     }
     else
     {
-        glBindTexture(GL_TEXTURE_2D, 0);
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, 0);
     }
 
 	long offset = (long)&m_sQuad;
 
 	// vertex
 	int diff = offsetof(ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*)(offset + diff));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, kQuadSize, (void*)(offset + diff));
 
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
 	
 	// tex coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
 	
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
 	if( newBlend )
 	{
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	}
 
 #if CC_SPRITE_DEBUG_DRAW == 1

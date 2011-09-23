@@ -104,7 +104,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         w *= (int)CC_CONTENT_SCALE_FACTOR();
         h *= (int)CC_CONTENT_SCALE_FACTOR();
 
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &m_nOldFBO);
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
         // textures must be power of two squared
         unsigned int powW = ccNextPOT(w);
@@ -159,7 +159,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
 void CCRenderTexture::begin()
 {
 	// Save the current matrix
-	glPushMatrix();
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPushMatrix();
 
 	const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 
@@ -170,10 +170,10 @@ void CCRenderTexture::begin()
 
 	// Adjust the orthographic propjection and viewport
 	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
-    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
 //     CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, texSize.width, texSize.height);
 
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_uFBO);//Will direct drawing to the frame buffer created above
 
 	// Issue #1145
@@ -195,20 +195,20 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 
 	// save clear color
 	GLfloat	clearColor[4];
-	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor); 
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor); 
 
-	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glClearColor(r, g, b, a);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// restore clear color
-	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
 }
 
 void CCRenderTexture::end(bool bIsTOCacheTexture)
 {
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
 	// Restore the original matrix and viewport
-	glPopMatrix();
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPopMatrix();
 	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
 	//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 	CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
@@ -329,7 +329,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		int nReadBufferWidth = 0;
 		int nReadBufferHeight = 0;
 		int nMaxTextureSize = 0;
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nMaxTextureSize);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nMaxTextureSize);
 
 		nReadBufferWidth = ccNextPOT(tx);
 		nReadBufferHeight = ccNextPOT(ty);
@@ -340,8 +340,8 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		CC_BREAK_IF(! (pTempData = new GLubyte[nReadBufferWidth * nReadBufferHeight * 4]));
 
 		this->begin();
-		glPixelStorei(GL_PACK_ALIGNMENT, 1);
-		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glPixelStorei(GL_PACK_ALIGNMENT, 1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
 		this->end(false);
 
 		// to get the actual texture data 

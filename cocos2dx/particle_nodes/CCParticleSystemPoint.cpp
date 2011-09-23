@@ -43,12 +43,12 @@ bool CCParticleSystemPoint::initWithTotalParticles(unsigned int numberOfParticle
 		}
 
 #if CC_USES_VBO
-		glGenBuffers(1, &m_uVerticesID);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenBuffers(1, &m_uVerticesID);
 
 		// initial binding
-		glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_uTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_uTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 		return true;
 	}
@@ -58,7 +58,7 @@ CCParticleSystemPoint::~CCParticleSystemPoint()
 {
     CC_SAFE_DELETE(m_pVertices);
 #if CC_USES_VBO
-	glDeleteBuffers(1, &m_uVerticesID);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDeleteBuffers(1, &m_uVerticesID);
 #endif
 }
 
@@ -87,9 +87,9 @@ void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, const 
 void CCParticleSystemPoint::postStep()
 {
 #if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(ccPointSprite)*m_uParticleCount, m_pVertices);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(ccPointSprite)*m_uParticleCount, m_pVertices);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 }
 void CCParticleSystemPoint::draw()
@@ -104,62 +104,62 @@ void CCParticleSystemPoint::draw()
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY
 	// Unneeded states: GL_TEXTURE_COORD_ARRAY
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
 
-	glEnable(GL_POINT_SPRITE_OES);
-	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_POINT_SPRITE_OES);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );	
 
 #define kPointSize sizeof(m_pVertices[0])
 
 #if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_uVerticesID);
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_uTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*m_uTotalParticles, m_pVertices, GL_DYNAMIC_DRAW);
 #endif
 
-	glVertexPointer(2,GL_FLOAT,kPointSize,0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2,GL_FLOAT,kPointSize,0);
 
-	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize,(GLvoid*)offsetof(ccPointSprite,color) );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize,(GLvoid*)offsetof(ccPointSprite,color) );
 
-	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
-	glPointSizePointerOES(GL_FLOAT,kPointSize,(GLvoid*) offsetof(ccPointSprite,size) );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSizePointerOES(GL_FLOAT,kPointSize,(GLvoid*) offsetof(ccPointSprite,size) );
 #else // Uses Vertex Array List
     int offset = (int)m_pVertices;
-    glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
 
     int diff = offsetof(ccPointSprite, color);
-    glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (GLvoid*) (offset+diff));
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (GLvoid*) (offset+diff));
 
-    glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
     diff = offsetof(ccPointSprite, size);
-    glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
 #endif 
 
     bool newBlend = (m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST) ? true : false;
 	if( newBlend ) 
 	{
-		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
-	glDrawArrays(GL_POINTS, 0, m_uParticleIdx);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_POINTS, 0, m_uParticleIdx);
 
 	// restore blend state
 	if( newBlend )
-		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
 
 #if CC_USES_VBO
 	// unbind VBO buffer
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 
-	glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
-	glDisable(GL_POINT_SPRITE_OES);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_POINT_SPRITE_OES);
 
 	// restore GL default state
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 // Non supported properties
