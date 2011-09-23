@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
-			IntermediateDirectory="$(ConfigurationName).win32"
+			OutputDirectory="$(ConfigurationName)/bin"
+			IntermediateDirectory="$(ConfigurationName)/obj"
 			ConfigurationType="2"
 			CharacterSet="0"
 			>
@@ -94,8 +94,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
-			IntermediateDirectory="$(ConfigurationName).win32"
+			OutputDirectory="$(ConfigurationName)/bin"
+			IntermediateDirectory="$(ConfigurationName)/obj"
 			ConfigurationType="2"
 			CharacterSet="0"
 			>

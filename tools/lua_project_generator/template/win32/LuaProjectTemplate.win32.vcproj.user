@@ -10,6 +10,8 @@
 			>
 			<DebugSettings
 				WorkingDirectory="$(ProjectDir)..\Resource\"
+				Environment="PATH=$(ProjectDir)..\..\cocos2dx\proj.win32\$(ConfigurationName)\bin;$(ProjectDir)..\..\CocosDenshion\proj.win32\$(ConfigurationName)\bin;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\libraries"
+
 			/>
 		</Configuration>
 		<Configuration
