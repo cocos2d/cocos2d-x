@@ -57,7 +57,7 @@ CCTextureAtlas::~CCTextureAtlas()
 	CC_SAFE_FREE(m_pIndices)
 
 #if CC_USES_VBO
-	glDeleteBuffers(2, m_pBuffersVBO);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDeleteBuffers(2, m_pBuffersVBO);
 #endif // CC_USES_VBO
 
 	CC_SAFE_RELEASE(m_pTexture);
@@ -168,7 +168,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
 #if CC_USES_VBO
 	// initial binding
-	glGenBuffers(2, &m_pBuffersVBO[0]);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenBuffers(2, &m_pBuffersVBO[0]);	
 	m_bDirty = true;
 #endif // CC_USES_VBO
 
@@ -212,12 +212,12 @@ void CCTextureAtlas::initIndices()
 	}
 
 #if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif // CC_USES_VBO
 }
 
@@ -373,50 +373,50 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
 
-	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
 
 #define kQuadSize sizeof(m_pQuads[0].bl)
 
 
 #if CC_USES_VBO
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, m_pQuads, GL_DYNAMIC_DRAW);
 #endif
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (m_bDirty)
 	{
-		glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * start, sizeof(m_pQuads[0]) * n, &m_pQuads[start]);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * start, sizeof(m_pQuads[0]) * n, &m_pQuads[start]);
 		m_bDirty = false;
 	}
 	
 
 	// vertices
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
 
 	// colors
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
 
 	// texture coords
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_pIndices[0]) * m_uCapacity * 6, m_pIndices, GL_STATIC_DRAW);
 #endif
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*)(start * 6 * sizeof(m_pIndices[0])));    
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*)(start * 6 * sizeof(m_pIndices[0])));    
 #else
-	glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*)(start * 6 * sizeof(m_pIndices[0]))); 
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*)(start * 6 * sizeof(m_pIndices[0]))); 
 #endif // CC_USES_VBO
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 #else // ! CC_USES_VBO
 	
@@ -424,20 +424,20 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 
 	// vertex
 	unsigned int diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) (offset + diff) );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) (offset + diff) );
 
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
 
 	// texture coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, m_pIndices + start * 6);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, m_pIndices + start * 6);	
 #else
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, m_pIndices + start * 6);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, m_pIndices + start * 6);	
 #endif
 
 #endif // CC_USES_VBO

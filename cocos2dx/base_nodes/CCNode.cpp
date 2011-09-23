@@ -731,7 +731,7 @@ void CCNode::visit()
 	{
 		return;
 	}
-	glPushMatrix();
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPushMatrix();
 
  	if (m_pGrid && m_pGrid->isActive())
  	{
@@ -785,7 +785,7 @@ void CCNode::visit()
  		m_pGrid->afterDraw(this);
 	}
  
-	glPopMatrix();
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glPopMatrix();
 }
 
 void CCNode::transformAncestors()
@@ -810,10 +810,10 @@ void CCNode::transform()
 		m_bIsTransformGLDirty = false;
 	}
 
-	glMultMatrixf(m_pTransformGL);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glMultMatrixf(m_pTransformGL);
 	if( m_fVertexZ )
 	{
-		glTranslatef(0, 0, m_fVertexZ);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(0, 0, m_fVertexZ);
 	}
 
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
@@ -841,36 +841,36 @@ void CCNode::transform()
 	// 
 	// translate
 	if ( m_bIsRelativeAnchorPoint && (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0 ) )
-		glTranslatef( RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef( RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
 	if (m_tAnchorPointInPixels.x != 0 || m_tAnchorPointInPixels.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y + m_tAnchorPointInPixels.y), m_fVertexZ);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x + m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y + m_tAnchorPointInPixels.y), m_fVertexZ);
 	else if ( m_tPositionInPixels.x !=0 || m_tPositionInPixels.y !=0 || m_fVertexZ != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y), m_fVertexZ );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef( RENDER_IN_SUBPIXEL(m_tPositionInPixels.x), RENDER_IN_SUBPIXEL(m_tPositionInPixels.y), m_fVertexZ );
 
 	// rotate
 	if (m_fRotation != 0.0f )
-		glRotatef( -m_fRotation, 0.0f, 0.0f, 1.0f );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glRotatef( -m_fRotation, 0.0f, 0.0f, 1.0f );
 
 	// skew
-	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) 
+	if ( (m_fSkewX != 0.0f) || (m_fSkewY != 0.0f) ) 
 	{
-		CCAffineTransform skewMatrix = CCAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
+		CCAffineTransform skewMatrix = CCAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)), tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f, 0.0f, 0.0f );
 		GLfloat	glMatrix[16];
-		CCAffineToGL(&skewMatrix, glMatrix);															 
-		glMultMatrixf(glMatrix);
+		CGAffineToGL(&skewMatrix, glMatrix);															 
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glMultMatrixf(glMatrix);
 	}
 
 	// scale
 	if (m_fScaleX != 1.0f || m_fScaleY != 1.0f)
-		glScalef( m_fScaleX, m_fScaleY, 1.0f );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glScalef( m_fScaleX, m_fScaleY, 1.0f );
 
 	if ( m_pCamera  && !(m_pGrid && m_pGrid->isActive()) )
 		m_pCamera->locate();
 
 	// restore and re-position point
 	if (m_tAnchorPointInPixels.x != 0.0f || m_tAnchorPointInPixels.y != 0.0f)
-		glTranslatef(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef(RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.x), RENDER_IN_SUBPIXEL(-m_tAnchorPointInPixels.y), 0);
 
 	//
 	// END original implementation

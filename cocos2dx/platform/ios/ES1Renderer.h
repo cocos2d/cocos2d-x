@@ -29,8 +29,11 @@
 
 #import "ESRenderer.h"
 
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+#include "support/gl_support/OpenGLES/OpenGLESContext.h"
+#include "support/gl_support/OpenGLES/OpenGLESUtil.h"
+
+//#import <OpenGLES/ES1/gl.h>
+//#import <OpenGLES/ES1/glext.h>
 
 @interface ES1Renderer : NSObject <ESRenderer>
 {

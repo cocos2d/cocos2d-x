@@ -372,6 +372,9 @@ public:
 	@since v0.8.2
 	*/
 	static bool setDirectorType(ccDirectorType obDirectorType);
+	
+	OpenGLES::OpenGLESContext* getGLContext();
+	void setGLContext(OpenGLES::OpenGLESContext* c);
 
 public:
 	/** returns a shared instance of the director */
@@ -393,6 +396,8 @@ protected:
 	void showFPS(void) {}
 #endif // CC_DIRECTOR_FAST_FPS
 
+	OpenGLES::OpenGLESContext	*m_pGLContext;
+	
 /** calculates delta time since last time it was called */	void calculateDeltaTime();protected:
 	/* The CCEGLView, where everything is rendered */
     CC_GLVIEW	*m_pobOpenGLView;

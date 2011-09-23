@@ -433,30 +433,30 @@ void CCLayerColor::draw()
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, GL_COLOR_ARRAY
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
 
-	glVertexPointer(2, GL_FLOAT, 0, m_pSquareVertices);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, m_pSquareColors);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, m_pSquareVertices);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, 0, m_pSquareColors);
 
 	bool newBlend = false;
 	if( m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST ) {
 		newBlend = true;
-		glBlendFunc(m_tBlendFunc.src, m_tBlendFunc.dst);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(m_tBlendFunc.src, m_tBlendFunc.dst);
 	}
 	else if( m_cOpacity != 255 ) {
 		newBlend = true;
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 
 	// restore default GL state
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);
 }
 
 //

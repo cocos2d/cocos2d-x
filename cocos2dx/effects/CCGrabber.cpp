@@ -55,7 +55,7 @@ namespace cocos2d
 			return ;
 		}
 
-		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 
 		// bind
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
@@ -84,7 +84,7 @@ namespace cocos2d
 			return ;
 		}
 
-		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_oldFBO);
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_fbo);
 
 		// BUG XXX: doesn't work with RGB565.
@@ -93,11 +93,11 @@ namespace cocos2d
 
 		// BUG #631: To fix #631, uncomment the lines with #631
 		// Warning: But it CCGrabber won't work with 2 effects at the same time
-		glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glColorMask(true, true, true, false);	// #631
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorMask(true, true, true, false);	// #631
 	}
 
 	void CCGrabber::afterRender(cocos2d::CCTexture2D *pTexture)
@@ -111,7 +111,7 @@ namespace cocos2d
 		}
 
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
-		glColorMask(true, true, true, true);	// #631
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorMask(true, true, true, true);	// #631
 	}
 
 	CCGrabber::~CCGrabber()

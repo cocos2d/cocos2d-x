@@ -93,10 +93,10 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- GL_COLOR_ARRAY
  */
 #define CC_ENABLE_DEFAULT_GL_STATES() {				\
-	glEnableClientState(GL_VERTEX_ARRAY);			\
-	glEnableClientState(GL_COLOR_ARRAY);			\
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	\
-	glEnable(GL_TEXTURE_2D);						\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_VERTEX_ARRAY);			\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);			\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);	\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);						\
 }
 
 /** @def CC_DISABLE_DEFAULT_GL_STATES 
@@ -107,10 +107,10 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- GL_COLOR_ARRAY
  */
 #define CC_DISABLE_DEFAULT_GL_STATES() {			\
-	glDisable(GL_TEXTURE_2D);						\
-	glDisableClientState(GL_COLOR_ARRAY);			\
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
-	glDisableClientState(GL_VERTEX_ARRAY);			\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);						\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);			\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_VERTEX_ARRAY);			\
 }
 
 #ifndef FLT_EPSILON

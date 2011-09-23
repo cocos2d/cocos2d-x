@@ -912,14 +912,14 @@ void SpriteZVertex::onEnter()
     SpriteTestDemo::onEnter();
     
     // TIP: don't forget to enable Alpha test
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, 0.0f);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_ALPHA_TEST);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glAlphaFunc(GL_GREATER, 0.0f);
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void SpriteZVertex::onExit()
 {
-    glDisable(GL_ALPHA_TEST);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_ALPHA_TEST);
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
     SpriteTestDemo::onExit();
 }
@@ -985,15 +985,15 @@ void SpriteBatchNodeZVertex::onEnter()
     SpriteTestDemo::onEnter();
 
     // TIP: don't forget to enable Alpha test
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, 0.0f);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_ALPHA_TEST);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glAlphaFunc(GL_GREATER, 0.0f);
     
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 }
 
 void SpriteBatchNodeZVertex::onExit()
 {
-    glDisable(GL_ALPHA_TEST);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_ALPHA_TEST);
     CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
     SpriteTestDemo::onExit();
 }

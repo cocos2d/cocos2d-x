@@ -658,14 +658,14 @@ void TMXOrthoObjectsTest::draw()
 		key = "height";
 		int height = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
-		glLineWidth(3);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(3);
 		
 		ccDrawLine( ccp((float)x, (float)y), ccp((float)(x+width), (float)y) );
 		ccDrawLine( ccp((float)(x+width), (float)y), ccp((float)(x+width), (float)(y+height)) );
 		ccDrawLine( ccp((float)(x+width), (float)(y+height)), ccp((float)x, (float)(y+height)) );
 		ccDrawLine( ccp((float)x, (float)(y+height)), ccp((float)x, (float)y) );
 		
-		glLineWidth(1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(1);
 	}
 }
 
@@ -738,14 +738,14 @@ void TMXIsoObjectsTest::draw()
 		key = "height";
 		int height = dict->objectForKey(key)->toInt();//dynamic_cast<NSNumber*>(dict->objectForKey("height"))->getNumber();
 		
-		glLineWidth(3);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(3);
 		
 		ccDrawLine( ccp(x,y), ccp(x+width,y) );
 		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
 		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
 		ccDrawLine( ccp(x,y+height), ccp(x,y) );
 		
-		glLineWidth(1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(1);
 	}
 }
 
@@ -1428,14 +1428,14 @@ void TMXGIDObjectsTest::draw()
 		key = "height";
 		int height = dict->objectForKey(key)->toInt();
 
-		glLineWidth(3);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(3);
 
 		ccDrawLine(ccp(x, y), ccp(x + width, y));
 		ccDrawLine(ccp(x + width, y), ccp(x + width, y + height));
 		ccDrawLine(ccp(x + width,y + height), ccp(x,y + height));
 		ccDrawLine(ccp(x,y + height), ccp(x,y));
 
-		glLineWidth(1);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glLineWidth(1);
 	}
 }
 

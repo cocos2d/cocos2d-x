@@ -160,7 +160,7 @@ CCTexturePVR::~CCTexturePVR()
 	CCLOGINFO( "cocos2d: deallocing CCTexturePVR" );
 
 	if (m_uName != 0 && ! m_bRetainName )
-		glDeleteTextures(1, &m_uName);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDeleteTextures(1, &m_uName);
 }
 
 GLuint CCTexturePVR::getName()
@@ -371,11 +371,11 @@ bool CCTexturePVR::createGLTexture()
 	{
 		if (m_uName != 0)
         {
-			glDeleteTextures(1, &m_uName);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glDeleteTextures(1, &m_uName);
         }
 		
-		glGenTextures(1, &m_uName);
-		glBindTexture(GL_TEXTURE_2D, m_uName);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenTextures(1, &m_uName);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_uName);
 	}
 
 	// Generate textures with mipmaps
@@ -397,11 +397,11 @@ bool CCTexturePVR::createGLTexture()
 		
 		if (compressed == true)
 		{
-			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);
 		}
 		else 
 		{
-			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
 		}
 
 		if(i > 0 && (width != height || ccNextPOT(width) != width ) )
@@ -409,7 +409,7 @@ bool CCTexturePVR::createGLTexture()
 			CCLOG("cocos2d: TexturePVR. WARNING. Mipmap level %lu is not squared. Texture won't render correctly. width=%lu != height=%lu", i, width, height);
         }
 		
-		err = glGetError();
+		err = cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetError();
 		if (err != GL_NO_ERROR)
 		{
 			CCLOG("cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", (unsigned int)i, err);
