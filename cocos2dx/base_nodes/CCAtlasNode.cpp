@@ -123,21 +123,21 @@ void CCAtlasNode::draw()
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 
     // glColor4ub isn't implement on some android devices
 	// glColor4ub( m_tColor.r, m_tColor.g, m_tColor.b, m_cOpacity); 
-    glColor4f(((GLfloat)m_tColor.r) / 255, ((GLfloat)m_tColor.g) / 255, ((GLfloat)m_tColor.b) / 255, ((GLfloat)m_cOpacity) / 255);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glColor4f(((GLfloat)m_tColor.r) / 255, ((GLfloat)m_tColor.g) / 255, ((GLfloat)m_tColor.b) / 255, ((GLfloat)m_cOpacity) / 255);
 	bool newBlend = m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST;
 	if(newBlend) 
 	{
-		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
 	m_pTextureAtlas->drawNumberOfQuads(m_uQuadsToDraw, 0);
 
 	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 
 	// is this chepear than saving/restoring color state ?
 	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
@@ -145,7 +145,7 @@ void CCAtlasNode::draw()
 	//	glColor4ub( 255, 255, 255, 255);
 
 	// restore default GL state
-	glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
 
 }
 

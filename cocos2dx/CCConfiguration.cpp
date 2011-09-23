@@ -47,14 +47,14 @@ CCConfiguration::CCConfiguration(void)
 
 bool CCConfiguration::init(void)
 {
-	CCLOG("cocos2d: GL_VENDOR:     %s", glGetString(GL_VENDOR));
-	CCLOG("cocos2d: GL_RENDERER:   %s", glGetString(GL_RENDERER));
-	CCLOG("cocos2d: GL_VERSION:    %s", glGetString(GL_VERSION));
+	CCLOG("cocos2d: GL_VENDOR:     %s", cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetString(GL_VENDOR));
+	CCLOG("cocos2d: GL_RENDERER:   %s", cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetString(GL_RENDERER));
+	CCLOG("cocos2d: GL_VERSION:    %s", cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetString(GL_VERSION));
 
-	m_pGlExtensions = (char *)glGetString(GL_EXTENSIONS);
+	m_pGlExtensions = (char *)cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetString(GL_EXTENSIONS);
 
-	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
-	glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &m_nMaxModelviewStackDepth);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_nMaxTextureSize);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &m_nMaxModelviewStackDepth);
 
 	m_bSupportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
 	m_bSupportsNPOT = checkForGLExtension("GL_APPLE_texture_2D_limited_npot");
@@ -87,7 +87,7 @@ bool CCConfiguration::init(void)
 CCGlesVersion CCConfiguration::getGlesVersion()
 {
 	// To get the Opengl ES version
-	std::string strVersion((char *)glGetString(GL_VERSION));
+	std::string strVersion((char *)cocos2d::CCDirector::sharedDirector()->getGLContext()->glGetString(GL_VERSION));
 	if ((int)strVersion.find("1.0") != -1)
 	{
 		return GLES_VER_1_0;

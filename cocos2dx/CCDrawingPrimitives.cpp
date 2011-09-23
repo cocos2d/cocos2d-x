@@ -45,17 +45,17 @@ void ccDrawPoint(const CCPoint& point)
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, &p);	
-	glDrawArrays(GL_POINTS, 0, 1);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, &p);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_POINTS, 0, 1);
 
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);	
 }
 
 void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
@@ -63,9 +63,9 @@ void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 
 	ccVertex2F *newPoints = new ccVertex2F[numberOfPoints];
 
@@ -81,14 +81,14 @@ void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 				newPoints[i].y = points[i].y * CC_CONTENT_SCALE_FACTOR();
 			}
 
-			glVertexPointer(2, GL_FLOAT, 0, newPoints);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, newPoints);
 
 		} else
 		{
-			glVertexPointer(2, GL_FLOAT, 0, points);
+			cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, points);
 		}
 
-		glDrawArrays(GL_POINTS, 0, (GLsizei)numberOfPoints);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_POINTS, 0, (GLsizei)numberOfPoints);
 
 	} else 
 	{
@@ -100,16 +100,16 @@ void ccDrawPoints(const CCPoint *points, unsigned int numberOfPoints)
 			newPoints[i].y = points[i].y;
 		}
 
-		glVertexPointer(2, GL_FLOAT, 0, newPoints);
-		glDrawArrays(GL_POINTS, 0, (GLsizei)numberOfPoints);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, newPoints);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_POINTS, 0, (GLsizei)numberOfPoints);
 	}
 
 	delete[] newPoints;
 	
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);	
 }
 
 void ccDrawLine(const CCPoint& origin, const CCPoint& destination)
@@ -123,17 +123,17 @@ void ccDrawLine(const CCPoint& origin, const CCPoint& destination)
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
-	glDrawArrays(GL_LINES, 0, 2);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, vertices);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINES, 0, 2);
 	
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);	
 }
 
 
@@ -147,9 +147,9 @@ void ccDrawPoly(const CCPoint *poli, int numberOfPoints, bool closePolygon)
     // Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // Needed states: GL_VERTEX_ARRAY, 
     // Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-    glDisable(GL_TEXTURE_2D);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_COLOR_ARRAY);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 
 
     // iPhone and 32-bit machines
@@ -164,12 +164,12 @@ void ccDrawPoly(const CCPoint *poli, int numberOfPoints, bool closePolygon)
                 newPoint[i].x = poli[i].x * CC_CONTENT_SCALE_FACTOR();
                 newPoint[i].y = poli[i].y * CC_CONTENT_SCALE_FACTOR();
             }
-            glVertexPointer(2, GL_FLOAT, 0, newPoint);
+            cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, newPoint);
 
         } 
 		else
 		{
-            glVertexPointer(2, GL_FLOAT, 0, poli);
+            cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, poli);
 		}
 
 
@@ -184,23 +184,23 @@ void ccDrawPoly(const CCPoint *poli, int numberOfPoints, bool closePolygon)
             newPoint[i].y = poli[i].y;
         }
 
-        glVertexPointer(2, GL_FLOAT, 0, newPoint );
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, newPoint );
 
     }
 
     if( closePolygon )
 	{
-        glDrawArrays(GL_LINE_LOOP, 0, (GLsizei)numberOfPoints);
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_LOOP, 0, (GLsizei)numberOfPoints);
 	}
     else
 	{
-        glDrawArrays(GL_LINE_STRIP, 0, (GLsizei)numberOfPoints);
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_STRIP, 0, (GLsizei)numberOfPoints);
 	}
 
     // restore default state
-    glEnableClientState(GL_COLOR_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnable(GL_TEXTURE_2D);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);
     delete[] newPoint;
 }
 
@@ -237,17 +237,17 @@ void ccDrawCircle(const CCPoint& center, float r, float a, int segs, bool drawLi
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, vertices);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
 	
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);	
 
 	delete[] vertices; //	free(vertices);
 }
@@ -269,18 +269,18 @@ void ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoi
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, vertices);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 	delete[] vertices;
 	
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);	
 }
 
 void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments)
@@ -300,17 +300,17 @@ void ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCP
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
 	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisable(GL_TEXTURE_2D);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDisableClientState(GL_COLOR_ARRAY);
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2, GL_FLOAT, 0, vertices);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 	delete[] vertices;
 	
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_COLOR_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glEnable(GL_TEXTURE_2D);	
 }
 }//namespace   cocos2d 

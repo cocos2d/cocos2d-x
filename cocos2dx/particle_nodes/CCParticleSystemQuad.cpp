@@ -68,12 +68,12 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 
 #if CC_USES_VBO
 		// create the VBO buffer
-		glGenBuffers(1, &m_uQuadsID);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenBuffers(1, &m_uQuadsID);
 
 		// initial binding
-		glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
-		glBindBuffer(GL_ARRAY_BUFFER, 0);	
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);	
 #endif
 		return true;
 	}
@@ -84,7 +84,7 @@ CCParticleSystemQuad::~CCParticleSystemQuad()
 	CC_SAFE_DELETE_ARRAY(m_pQuads);
 	CC_SAFE_DELETE_ARRAY(m_pIndices);
 #if CC_USES_VBO
-    glDeleteBuffers(1, &m_uQuadsID);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glDeleteBuffers(1, &m_uQuadsID);
 #endif
 }
 
@@ -264,9 +264,9 @@ void CCParticleSystemQuad::updateQuadWithParticle(tCCParticle* particle, const C
 void CCParticleSystemQuad::postStep()
 {
 #if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*m_uParticleCount, m_pQuads);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*m_uParticleCount, m_pQuads);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 }
 
@@ -277,56 +277,56 @@ void CCParticleSystemQuad::draw()
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
-	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
 
 #define kQuadSize sizeof(m_pQuads[0].bl)
 
 #if CC_USES_VBO
-    glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, m_uQuadsID);
 
 #if CC_ENABLE_CACHE_TEXTTURE_DATA
-    glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads, GL_DYNAMIC_DRAW);	
 #endif
 
-	glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
 
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,colors) );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,colors) );
 
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,texCoords) );
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,texCoords) );
 #else   // vertex array list
 
     int offset = (int) m_pQuads;
 
     // vertex
     int diff = offsetof( ccV2F_C4B_T2F, vertices);
-    glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
 
     // color
     diff = offsetof( ccV2F_C4B_T2F, colors);
-    glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
 
     // tex coords
     diff = offsetof( ccV2F_C4B_T2F, texCoords);
-    glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
 
 #endif // ! CC_USES_VBO
 
     bool newBlend = (m_tBlendFunc.src != CC_BLEND_SRC || m_tBlendFunc.dst != CC_BLEND_DST) ? true : false;
 	if( newBlend ) 
 	{
-		glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 	}
 
     CCAssert( m_uParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
 
-	glDrawElements(GL_TRIANGLES, (GLsizei)(m_uParticleIdx*6), GL_UNSIGNED_SHORT, m_pIndices);	
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glDrawElements(GL_TRIANGLES, (GLsizei)(m_uParticleIdx*6), GL_UNSIGNED_SHORT, m_pIndices);	
 
 	// restore blend state
 	if( newBlend )
-		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
+		cocos2d::CCDirector::sharedDirector()->getGLContext()->glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
 
 #if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 
 	// restore GL default state

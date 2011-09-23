@@ -32,46 +32,48 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 
 #define CC_GLVIEW                   cocos2d::CCEGLView
-#define ccglOrtho					glOrthof
-#define	ccglClearDepth				glClearDepthf
-#define ccglGenerateMipmap			glGenerateMipmapOES
-#define ccglGenFramebuffers			glGenFramebuffersOES
-#define ccglBindFramebuffer			glBindFramebufferOES
-#define ccglFramebufferTexture2D	glFramebufferTexture2DOES
-#define ccglDeleteFramebuffers		glDeleteFramebuffersOES
-#define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
-#define ccglTranslate				glTranslatef
+#define ccglOrtho					cocos2d::CCDirector::sharedDirector()->getGLContext()->glOrthof
+#define	ccglClearDepth				cocos2d::CCDirector::sharedDirector()->getGLContext()->glClearDepthf
+#define ccglGenerateMipmap			cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenerateMipmap
+#define ccglGenFramebuffers			cocos2d::CCDirector::sharedDirector()->getGLContext()->glGenFramebuffers
+#define ccglBindFramebuffer			cocos2d::CCDirector::sharedDirector()->getGLContext()->glBindFramebuffer
+#define ccglFramebufferTexture2D	cocos2d::CCDirector::sharedDirector()->getGLContext()->glFramebufferTexture2D
+#define ccglDeleteFramebuffers		cocos2d::CCDirector::sharedDirector()->getGLContext()->glDeleteFramebuffers
+#define ccglCheckFramebufferStatus	cocos2d::CCDirector::sharedDirector()->getGLContext()->glCheckFramebufferStatus
+#define ccglTranslate				cocos2d::CCDirector::sharedDirector()->getGLContext()->glTranslatef
 
-#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
-#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
-#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
-#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
+#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
+#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
+#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
+#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
 
 #include "CCCommon.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "OpenGLES/ES1/gl.h"
-#include "OpenGLES/ES1/glext.h"
-#endif
+#include "support/gl_support/OpenGLES/OpenGLESContext.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-#include <IwGL.h>
-#endif
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//#include "OpenGLES/ES1/gl.h"
+//#include "OpenGLES/ES1/glext.h"
+//#endif
+//
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//#include <GLES/gl.h>
+//#include <GLES/glext.h>
+//#endif
+//
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
+//#include <GLES/gl.h>
+//#include <GLES/glext.h>
+//#endif
+//
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+//#include <GLES/gl.h>
+//#include <GLES/glext.h>
+//#endif
+//
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+//#include <IwGL.h>
+//#endif
 
 NS_CC_BEGIN;
 

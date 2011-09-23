@@ -69,7 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCSet.h"
 #import "CCTouch.h"
 #import "CCIMEDispatcher.h"
-#import "OpenGL_Internal.h"
+//#import "OpenGL_Internal.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -252,11 +252,12 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 										  withSharegroup:sharegroup
 									   withMultiSampling:multiSampling_
 									 withNumberOfSamples:requestedSamples_];
+
 	if (!renderer_)
 		return NO;
 	
 	context_ = [renderer_ context];
-	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
+	[context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:eaglLayer];
 
 	//discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	
@@ -296,14 +297,16 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 	//	-> renderbuffer_ must be the the RENDER BUFFER
 
 #ifdef __IPHONE_4_0
+	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
+	OpenGLES::OpenGLESContext* glContext = director->getGLContext();		
 	
 	if (multiSampling_)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
 		//glDisable(GL_SCISSOR_TEST);     
-		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
-		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
-		glResolveMultisampleFramebufferAPPLE();
+		glContext->glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
+		glContext->glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+		glContext->glResolveMultisampleFramebufferAPPLE();
 	}
 	
 	if( discardFramebufferSupported_)
@@ -312,41 +315,41 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 		{
 			if (depthFormat_)
 			{
-				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES};
-				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
+				glContext->glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
 			}
 			else
 			{
-				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
-				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
+				glContext->glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
 			
-			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
+			glContext->glBindRenderbuffer(GL_RENDERBUFFER, [renderer_ colorRenderBuffer]);
 	
 		}	
 		
 		// not MSAA
 		else if (depthFormat_ ) {
-			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
-			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+			GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
+			glContext->glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
 		}
 	}
 	
 #endif // __IPHONE_4_0
 	
- 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
+ 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
         {
 // 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
         }
 
 #if COCOS2D_DEBUG
-	CHECK_GL_ERROR();
+	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 #endif
 	
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);	
+		glContext->glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);	
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
@@ -356,7 +359,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 	
 	
 	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
-		pFormat = GL_RGB565_OES;
+		pFormat = GL_RGB565;
 	else 
 		pFormat = GL_RGBA8_OES;
 	

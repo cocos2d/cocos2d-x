@@ -64,8 +64,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+//#import <OpenGLES/ES1/gl.h>
+//#import <OpenGLES/ES1/glext.h>
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "ESRenderer.h"
