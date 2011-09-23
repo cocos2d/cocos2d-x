@@ -7,13 +7,13 @@
 # set environment paramters
 NDK_ROOT="/home/laschweinski/android/android-ndk-r5"
 ANDROID_SDK_ROOT="/home/laschweinski/android/android-sdk-linux_86"
-COCOS2DX_ROOT="/home/laschweinski/git/cocos2d-x"
+COCOS2DX_ROOT="/home/laschweinski/git/cocos2dx-ming/cocos2d-x"
 
 # check if it was called by .bat file
 if [ $# -eq 5 ];then
     if [ $5 = "windows" ];then
         # called by .bat file
-        sh $1/template/android/copy_files.sh $1 $2 $3 $4
+        sh $1/template/linux/copy_files.sh $1 $2 $3 $4
         exit
     fi
 fi
@@ -59,4 +59,4 @@ create_android_project(){
 create_android_project
 
 # invoke template/android/copy_files.sh
-sh $COCOS2DX_ROOT/template/android/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH $PROREAL_DIR
+sh $COCOS2DX_ROOT/template/linux/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH $PROREAL_DIR
