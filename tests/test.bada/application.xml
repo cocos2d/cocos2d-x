@@ -8,7 +8,7 @@
     <Vendor/>
     <Description/>
     <Icons>
-        <MainMenu>TestCocos2dx.png<Type1>HelloWorld.png</Type1>
+        <MainMenu>HelloWorld.png<Type1>HelloWorld.png</Type1>
             <Type2/>
         </MainMenu>
         <Setting/>
