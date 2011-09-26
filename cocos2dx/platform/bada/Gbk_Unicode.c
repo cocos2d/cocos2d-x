@@ -9,15 +9,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Gbk_Unicode.h"
-
-#define LOGI //printf
-
-#define USE_MEMORY
-
-#ifdef USE_MEMORY
 #include "gbk_table.h"
 #include "unicode_table.h"
-#endif
+
+#define LOGI //printf
 
 #undef SAFE_FREE
 #define SAFE_FREE(p) do \
@@ -47,91 +42,11 @@
 #define FONT_COL_END   254
 #define FONT_TOTAL     (((FONT_ROW_END)-(FONT_ROW_BEGIN)+1)*((FONT_COL_END)-(FONT_COL_BEGIN)+1))
 
-static unsigned short* g_uni_table = NULL;
-static unsigned short* g_gbk_table1 = NULL;
-static unsigned short* g_gbk_table2 = NULL;
-static unsigned short* g_gbk_table3 = NULL;
-static int s_bInit = 0;
-
 static int myWcslen(const unsigned short* str)
 {
 	int i=0;
 	while(*str++) i++;
 	return i;
-}
-
-int InitGbkUnicodeTable(const char* szTablePath)
-{
-#ifndef USE_MEMORY
-	int ret = 0;
-	FILE* fp = NULL;
-	if (s_bInit)
-		return 0;
-	fp = fopen(szTablePath, "rb");
-	if (fp == NULL)
-	{
-		return 0;
-	}
-	g_uni_table = (unsigned short*)malloc(FONT_TOTAL*2);
-	memset((void*)g_uni_table, 0, FONT_TOTAL*2);
-
-	g_gbk_table1 = (unsigned short*)malloc(UNICODE1_TOTAL*2);
-	memset((void*)g_gbk_table1, 0, UNICODE1_TOTAL*2);
-	g_gbk_table2 = (unsigned short*)malloc(UNICODE2_TOTAL*2);
-	memset((void*)g_gbk_table2, 0, UNICODE2_TOTAL*2);
-	g_gbk_table3 = (unsigned short*)malloc(UNICODE3_TOTAL*2);
-	memset((void*)g_gbk_table3, 0, UNICODE3_TOTAL*2);
-
-
-	ret = fread((void*)g_uni_table, FONT_TOTAL*2, 1, fp);
-
-	ret = fread((void*)g_gbk_table1, UNICODE1_TOTAL*2, 1, fp);
-	ret = fread((void*)g_gbk_table2, UNICODE2_TOTAL*2, 1, fp);
-	ret = fread((void*)g_gbk_table3, UNICODE3_TOTAL*2, 1, fp);
-	fclose(fp);
-
-	s_bInit = 1;
-#else
-	g_uni_table = g_uni_table_array;
-	g_gbk_table1 = g_gbk_table1_array;
-	g_gbk_table2 = g_gbk_table2_array;
-	g_gbk_table3 = g_gbk_table3_array;
-	s_bInit = 1;
-#endif
-	return 1;
-}
-
-void ReleaseGbkUnicodeTable(void)
-{
-#ifndef USE_MEMORY
-	if (s_bInit) {
-		if (g_uni_table != NULL)
-		{
-			free((void*)g_uni_table);
-			g_uni_table = NULL;
-		}
-
-		if (g_gbk_table1 != NULL)
-		{
-			free((void*)g_gbk_table1);
-			g_gbk_table1 = NULL;
-		}
-
-		if (g_gbk_table2 != NULL)
-		{
-			free((void*)g_gbk_table2);
-			g_gbk_table2 = NULL;
-		}
-
-		if (g_gbk_table3 != NULL)
-		{
-			free((void*)g_gbk_table3);
-			g_gbk_table3 = NULL;
-		}
-
-		s_bInit = 0;
-	}
-#endif
 }
 
 #define GET_GBK_WORD(table, s, e) \
@@ -152,9 +67,6 @@ int MyUnicodeToGBK(char* pGBKOut, int iGbkBufSize, const unsigned short* pUnicod
 	int len = 0;
 	int iIndex = 0;
 	int i = 0, j = 0;
-
-	if (!s_bInit)
-		return 0;
 
 	if (pUnicodeIn == NULL || pGBKOut == NULL || iGbkBufSize <= 2)
 	{
@@ -194,9 +106,9 @@ int MyUnicodeToGBK(char* pGBKOut, int iGbkBufSize, const unsigned short* pUnicod
 		}
 		else
 		{
-			GET_GBK_WORD(g_gbk_table1, UNICODE1_BEGIN, UNICODE1_END);// ºº×Ö
-			GET_GBK_WORD(g_gbk_table2, UNICODE2_BEGIN, UNICODE2_END);// È«½Ç×ÖÄ¸·ûºÅ
-			GET_GBK_WORD(g_gbk_table3, UNICODE3_BEGIN, UNICODE3_END);// ³£ÓÃ±êµã·ûºÅ
+			GET_GBK_WORD(g_gbk_table1_array, UNICODE1_BEGIN, UNICODE1_END);// ºº×Ö
+			GET_GBK_WORD(g_gbk_table2_array, UNICODE2_BEGIN, UNICODE2_END);// È«½Ç×ÖÄ¸·ûºÅ
+			GET_GBK_WORD(g_gbk_table3_array, UNICODE3_BEGIN, UNICODE3_END);// ³£ÓÃ±êµã·ûºÅ
 		}
 	}
 
@@ -216,9 +128,6 @@ int MyGBKToUnicode(unsigned short* pUnicodeOut, int iUniBufSize, const char* pGB
 	unsigned short oneGbkHanzi = 0;
 	unsigned char* pOneGbkHanzi = (unsigned char*)&oneGbkHanzi;
 	const unsigned char* pGBKInU = (const unsigned char*)pGBKIn;
-
-	if (!s_bInit)
-		return 0;
 
 	if (pUnicodeOut == NULL || pGBKIn == NULL || iUniBufSize <= 3)
 	{
@@ -251,7 +160,7 @@ int MyGBKToUnicode(unsigned short* pUnicodeOut, int iUniBufSize, const char* pGB
 			pOneGbkHanzi[1] = pGBKInU[i];
 			pOneGbkHanzi[0] = pGBKInU[i+1];
 			iIndex = (pOneGbkHanzi[1]-0x81)*191+(pOneGbkHanzi[0]-0x40);
-			pUnicodeOut[j] = g_uni_table[iIndex];
+			pUnicodeOut[j] = g_uni_table_array[iIndex];
 			++i;
 			++j;
 		}
