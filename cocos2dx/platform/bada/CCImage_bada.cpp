@@ -35,79 +35,85 @@ class BitmapDC
 public:
 	BitmapDC()
 	{
-
+		m_pCanvas = NULL;
+		m_pEnrichedText = NULL;
 	}
 
 	~BitmapDC()
 	{
-	
+		CC_SAFE_DELETE(m_pCanvas);
 	}
 
-	int drawText(const char * pszText, CGSize& dimensions, CCImage::ETextAlign alignment, const char * fontName = NULL, int fontSize = 0)
+	bool drawText(const char * pszText, CCSize& dimensions, CCImage::ETextAlign alignment, const char * fontName = NULL, int fontSize = 0)
 	{
-		int nRet = 0;
+		bool nRet = false;
 		do 
 		{
 			// text
-			unsigned short wideText[256] = {0};
-			MyGBKToUnicode(wideText, 256, pszText);
+			mchar wideText[256] = {0};
+			MyGBKToUnicode((unsigned short*)wideText, 256, pszText);
 
 			// Set a font to the TextElement
 			Font font;
 			font.Construct(FONT_STYLE_PLAIN, fontSize);
 
 			// calculate text size
-			if (CGSize::CGSizeEqualToSize(dimensions, CGSizeZero))
+			if (CCSize::CCSizeEqualToSize(dimensions, CCSizeZero))
 			{
 				Dimension dim;
 				font.GetTextExtent(wideText, wcslen(wideText), dim);
-				m_tSize.width = dim.width;
-				m_tSize.height = dim.height;
-			}
-			else
-			{
-				m_tSize = dimensions;
+				dimensions.width = dim.width;
+				dimensions.height = dim.height;
 			}
 
-			int width = (int)m_tSize.width;
-			int height = (int)m_tSize.height;
+			CC_SAFE_DELETE(m_pCanvas);
+
+			CC_BREAK_IF(dimensions.width <= 0 || dimensions.height <= 0);
 
 			m_pCanvas = new Canvas();
-			m_pCanvas->Construct(Rectangle(0, 0, width, height));
+			m_pCanvas->Construct(Rectangle(0, 0, dimensions.width, dimensions.height));
 
 			// Create an EnrichedText
 			m_pEnrichedText = new EnrichedText();
-			m_pEnrichedText->Construct(Dimension(m_tSize.width, m_tSize.height));
+			m_pEnrichedText->Construct(Dimension(dimensions.width, dimensions.height));
 
 			switch (alignment)
 			{
-			case kAlignLeft:
+			case CCImage::kAlignCenter:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
+				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_MIDDLE);
+				break;
+			case CCImage::kAlignTop:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
+				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_TOP);
+				break;
+			case CCImage::kAlignTopRight:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
+				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_TOP);
+				break;
+			case CCImage::kAlignRight:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
+				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_MIDDLE);
+				break;
+			case CCImage::kAlignBottomRight:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
+				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_BOTTOM);
+				break;
+			case CCImage::kAlignBottom:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
+				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_BOTTOM);
+				break;
+			case CCImage::kAlignBottomLeft:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_LEFT);
+				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_BOTTOM);
+				break;
+			case CCImage::kAlignLeft:
 				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_LEFT);
 				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_MIDDLE);
 				break;
-			case kAlignCenter:
-				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
-				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_MIDDLE);
-				break;
-			case kAlignRight:
-				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
-				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_MIDDLE);
-				break;
-			case kAlignTop:
-				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
+			case CCImage::kAlignTopLeft:
+				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_LEFT);
 				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_TOP);
-				break;
-			case kAlignTopRight:
-				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
-				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_TOP);
-				break;
-			case kAlignBottomRight:
-				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_RIGHT);
-				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_BOTTOM);
-				break;
-			case kAlignBottom:
-				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
-				m_pEnrichedText->SetVerticalAlignment(TEXT_ALIGNMENT_BOTTOM);
 				break;
 			default:
 				m_pEnrichedText->SetHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
@@ -118,21 +124,21 @@ public:
 			m_pEnrichedText->SetTextWrapStyle(TEXT_WRAP_CHARACTER_WRAP);
 			m_pEnrichedText->SetTextAbbreviationEnabled(true);
 
-
 			// Create a TextElement
-			TextElement* pTextElement1 = new TextElement();
-			pTextElement1->Construct(wideText);
+			TextElement* pTextElement = new TextElement();
+			pTextElement->Construct(wideText);
 			// After Adding, set attributes of the TextElement
-			pTextElement1->SetTextColor(Color::COLOR_WHITE);
-			pTextElement1->SetFont(font);
+			pTextElement->SetTextColor(Color::COLOR_WHITE);
+			pTextElement->SetFont(font);
 			// Add the TextElement to the EnrichedText
-			m_pEnrichedText->Add(*pTextElement1);
-
+			m_pEnrichedText->Add(*pTextElement);
 
 			m_pCanvas->DrawText(Point(0, 0), *m_pEnrichedText);
+
 			m_pEnrichedText->RemoveAllTextElements(true);
-			delete m_pEnrichedText;
-			nRet = 1;
+			CC_SAFE_DELETE(m_pEnrichedText);
+
+			nRet = true;
 		} while (0);
 		return nRet;
 	}
@@ -140,7 +146,6 @@ private:
 	friend class CCImage;
 	Canvas* m_pCanvas;
 	EnrichedText* m_pEnrichedText;
-	CGSize m_tSize;
 	std::string m_curFontPath;
 };
 
@@ -166,38 +171,32 @@ bool CCImage::initWithString(
 
 		BitmapDC& dc = sharedBitmapDC();
 
-		if (! dc.setFont(pFontName, nSize))
-		{
-			CCLog("Can't found font(%s), use system default", pFontName);
-		}
+		CCSize size(nWidth, nHeight);
 
-		// draw text
-		SIZE size = {nWidth, nHeight};
-		CC_BREAK_IF(! dc.drawText(pText, size, eAlignMask));
+		bRet = dc.drawText(pText, size, eAlignMask, pFontName, nSize);
 
-		Canvas * pCanvas = new Canvas();
-		CC_BREAK_IF(! pCanvas);
-
-		r = pCanvas->Construct(Rectangle(0, 0, nWidth, nHeight));
-		CC_BREAK_IF(IsFailed(r));
+		CC_BREAK_IF(!bRet);
 
 		BufferInfo bufferInfo;
-		r = pCanvas->Lock(bufferInfo);
+		r = dc.m_pCanvas->Lock(bufferInfo);
 		CC_BREAK_IF(IsFailed(r));
 
-		int nLen = bufferInfo.pitch * nHeight;
+		int nLen = bufferInfo.pitch * bufferInfo.height;
+
+		CC_SAFE_DELETE(m_pData);
 		m_pData = new unsigned char [nLen];
 		CC_BREAK_IF(!m_pData);
 		memcpy(m_pData, bufferInfo.pPixels, nLen);
 
-		m_nHeight		= nHeight;
-		m_nWidth		= nWidth;
-		m_bHasAlpha	= true;
-		m_bPreMulti = true;
-		m_nBitsPerComponent = bufferInfo.bitsPerPixel / 4;
-		pCanvas->Unlock();
 
-		CC_SAFE_DELETE(pCanvas);
+		m_nWidth		= bufferInfo.width;
+		m_nHeight		= bufferInfo.height;
+
+		m_bHasAlpha	= true;
+		m_bPreMulti = false;
+		m_nBitsPerComponent = bufferInfo.bitsPerPixel / 4;
+		dc.m_pCanvas->Unlock();
+
 		bRet = true;
 	} while (0);
 
