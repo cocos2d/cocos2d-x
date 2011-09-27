@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 /*#include "Availability.h"*/
 #include "CCParticleSystem.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include "CCParticleSystemQuad.h"
+#endif
 
 namespace cocos2d {
 
@@ -45,6 +48,11 @@ Features:
 Limitations:
 * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCParticleSystemQuad.
 */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+class CC_DLL CCParticleSystemPoint : public CCParticleSystemQuad{
+	//nothing to do
+};
+#else
 class CC_DLL CCParticleSystemPoint : public CCParticleSystem
 {	
 public:
@@ -77,6 +85,7 @@ protected:
 	GLuint	m_uVerticesID;	
 #endif
 };
+#endif
 
 }// namespace cocos2d
 

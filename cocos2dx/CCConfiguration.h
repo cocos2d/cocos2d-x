@@ -57,7 +57,7 @@ namespace   cocos2d {
 		GLES_VER_INVALID,
 		GLES_VER_1_0,
 		GLES_VER_1_1,
-		GLES_VER_2_0
+		GLES_VER_2_0,
 	} CCGlesVersion;
 
 /**

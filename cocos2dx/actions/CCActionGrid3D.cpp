@@ -91,13 +91,13 @@ namespace cocos2d
 	void CCWaves3D::update(ccTime time)
 	{
 		int i, j;
-
 		for (i = 0; i < m_sGridSize.x + 1; ++i)
 		{
 			for (j = 0; j < m_sGridSize.y + 1; ++j)
 			{
 				ccVertex3F v = originalVertex(ccg(i ,j));
 				v.z += (sinf((CGFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate);
+				CCLog("v.z offset is %f\n", (sinf((CGFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate));
 				setVertex(ccg(i, j), v);
 			}
 		}
