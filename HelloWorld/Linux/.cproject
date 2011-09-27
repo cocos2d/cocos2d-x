@@ -1017,7 +1017,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/HelloCocos2dx/AndroidRelease"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/HelloWorld/AndroidRelease"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="HelloCocos2dx"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="HelloWorld"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="helloworld"/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -1030,7 +1030,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="so" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.1378309016.1046894403" name="AndroidRelease" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="move required lib into android/libs automatically" postbuildStep="sh ../postCompiled.sh ${ConfigName} ${ProjName} ${cocos2dx_loc}">
+				<configuration artifactExtension="so" artifactName="helloworld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.1378309016.1046894403" name="AndroidRelease" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="move required lib into android/libs automatically" postbuildStep="sh ../postCompiled.sh ${ConfigName} helloworld ${cocos2dx_loc}">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.1378309016.1046894403." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.952577400" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.400831122" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
