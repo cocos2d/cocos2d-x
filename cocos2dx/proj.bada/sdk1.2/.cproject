@@ -23,7 +23,7 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="a" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.arm.lib.simul.1403305076" name="Simulator-Debug" parent="cdt.managedbuild.config.osp.gnu.arm.lib.simul" postannouncebuildStep="copy lib to test project" postbuildStep="cp -f libcocos2dx.a ../../../tests/test.bada/lib">
+<configuration artifactExtension="a" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.arm.lib.simul.1403305076" name="Simulator-Debug" parent="cdt.managedbuild.config.osp.gnu.arm.lib.simul" postannouncebuildStep="" postbuildStep="">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.arm.lib.simul.1403305076." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.arm.lib.simul.371626327" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.arm.lib.simul">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.simul.platform.lib.simul.1080676356" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.simul.platform.lib.simul"/>
@@ -32,13 +32,13 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul.1088437696" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul">
 <option id="osp.gnu.cpp.compiler.simual.lib.option.include.paths.680554623" name="Include paths (-I)" superClass="osp.gnu.cpp.compiler.simual.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/bada"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/zlib"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/libpng"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/libjpeg"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.584696368" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -516,7 +516,7 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="a" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.lib.debug.1924815457" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.lib.debug" postannouncebuildStep="copy lib to test project" postbuildStep="cp -f libcocos2dx.a ../../../HelloWorld/bada/lib/Target-Debug">
+<configuration artifactExtension="a" artifactName="cocos2dx" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.osp.gnu.target.lib.debug.1924815457" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.lib.debug" postannouncebuildStep="" postbuildStep="">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.target.lib.debug.1924815457." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug.1731969861" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.lib.debug">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug.885060700" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.lib.debug"/>
@@ -525,13 +525,13 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug.1200293080" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug">
 <option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.252378151" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/bada"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/zlib"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/libpng"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/libjpeg"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.813061333" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -1018,13 +1018,13 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release.1347720932" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release">
 <option id="osp.gnu.target.cpp.compiler.release.lib.option.include.paths.1605600028" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.release.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/include"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/bada"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/zlib"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/libpng"/>
-<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/bada/libjpeg"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.2133750642" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
