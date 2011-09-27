@@ -9,6 +9,7 @@
 <externalSetting>
 <entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/zlib"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/zlib/.Simulator-Debug"/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/zlib"/>
 </externalSetting>
 </externalSettings>
 <extensions>

@@ -80,4 +80,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>com.osp.ide.badaNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/cocos2dx/platform/third_party/bada/src/zlib/src</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
