@@ -37,8 +37,7 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul.1039656652" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul">
 <option id="osp.gnu.cpp.compiler.simual.lib.option.include.paths.1885751968" name="Include paths (-I)" superClass="osp.gnu.cpp.compiler.simual.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../../&quot;"/>
+<listOptionValue builtIn="false" value="../../../../"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1121778972" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -350,8 +349,7 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug.2067171510" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug">
 <option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.1072227878" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../../&quot;"/>
+<listOptionValue builtIn="false" value="../../../../"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.366980368" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -659,8 +657,7 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release.1344319780" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release">
 <option id="osp.gnu.target.cpp.compiler.release.lib.option.include.paths.862242866" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.release.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/inc&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../../&quot;"/>
+<listOptionValue builtIn="false" value="../../../../"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.706480954" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
