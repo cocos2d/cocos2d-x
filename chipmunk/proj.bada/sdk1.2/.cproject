@@ -32,15 +32,14 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul.523736122" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.lib.simul">
 <option id="osp.gnu.cpp.compiler.simual.lib.option.include.paths.1761010199" name="Include paths (-I)" superClass="osp.gnu.cpp.compiler.simual.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include/chipmunk&quot;"/>
+<listOptionValue builtIn="false" value="../../../include/chipmunk"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1042073020" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.c.compiler.lib.simul.1226023409" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.c.compiler.lib.simul">
 <option id="osp.gnu.c.compiler.simual.lib.option.include.paths.1842568413" name="Include paths (-I)" superClass="osp.gnu.c.compiler.simual.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include/chipmunk&quot;"/>
+<listOptionValue builtIn="false" value="../../../include/chipmunk"/>
 </option>
 <option id="osp.gnu.c.compiler.option.misc.other.152295968" name="Other flags" superClass="osp.gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -std=c99" valueType="string"/>
 <inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.1636209038" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
@@ -504,15 +503,14 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug.623826320" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug">
 <option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.1541400256" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include&quot;"/>
+<listOptionValue builtIn="false" value="../../../include/chipmunk"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.566696365" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.debug.395910636" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.debug">
 <option id="osp.gnu.target.c.compiler.debug.lib.option.include.paths.204472293" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.debug.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include/chipmunk&quot;"/>
+<listOptionValue builtIn="false" value="../../../include/chipmunk"/>
 </option>
 <option id="osp.gnu.target.c.compiler.lib.debug.option.other.other.1125950173" name="Other flags" superClass="osp.gnu.target.c.compiler.lib.debug.option.other.other" value="-c -std=c99" valueType="string"/>
 <inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.1480631906" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
@@ -976,15 +974,14 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release.636146026" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.release">
 <option id="osp.gnu.target.cpp.compiler.release.lib.option.include.paths.1989338913" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.release.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include&quot;"/>
+<listOptionValue builtIn="false" value="../../../include/chipmunk"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1930551176" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.release.383604126" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.release">
 <option id="osp.gnu.target.c.compiler.release.lib.option.include.paths.1568213387" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.release.lib.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/../include/chipmunk&quot;"/>
+<listOptionValue builtIn="false" value="../../../include/chipmunk"/>
 </option>
 <option id="osp.gnu.target.c.compiler.lib.release.option.other.other.849777279" name="Other flags" superClass="osp.gnu.target.c.compiler.lib.release.option.other.other" value="-c -std=c99" valueType="string"/>
 <inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.1191879302" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
