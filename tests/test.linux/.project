@@ -3,6 +3,10 @@
 	<name>cocos2dx-test</name>
 	<comment></comment>
 	<projects>
+		<project>cocos2dx-base</project>
+		<project>CocosDenshion</project>
+		<project>libBox2D</project>
+		<project>libChipmunk</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
