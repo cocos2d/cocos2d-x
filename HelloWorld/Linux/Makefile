@@ -21,7 +21,7 @@ OBJECTS = ./main.o \
 STATICLIBS =  
 SHAREDLIBS = -L../../lib/linux/Debug -lcocos2d -lrt -lz -lcocosdenshion -Wl,-rpath,../../lib/linux/Debug/
 
-$(shell ../../build-linux.sh $<)
+#$(shell ../../build-linux.sh $<)
 ####### Build rules
 $(TARGET): $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
