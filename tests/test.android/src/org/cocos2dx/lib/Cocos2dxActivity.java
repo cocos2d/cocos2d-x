@@ -24,10 +24,6 @@ THE SOFTWARE.
 
 package org.cocos2dx.lib;
 
-
-
-import org.cocos2dx.tests.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -228,7 +224,7 @@ public class Cocos2dxActivity extends Activity{
     	Dialog dialog = new AlertDialog.Builder(this)
 	    .setTitle(title)
 	    .setMessage(message)
-	    .setPositiveButton(R.string.button_ok, 
+	    .setPositiveButton("Ok", 
 	    new DialogInterface.OnClickListener()
 	    {
 	    	public void onClick(DialogInterface dialog, int whichButton){
