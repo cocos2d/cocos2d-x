@@ -38,6 +38,11 @@
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
 								</option>
+								<option id="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def.334903464" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+									<listOptionValue builtIn="false" value="SHP"/>
+									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1707579424" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug.194057110" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug">

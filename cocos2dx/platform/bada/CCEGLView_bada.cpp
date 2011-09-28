@@ -200,30 +200,40 @@ CCEGLView::~CCEGLView()
 
 CCSize CCEGLView::getSize()
 {
-	CCSize s;
-	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
-	{
-		if (m_bNotHVGA)
-		{
-			s = CCSizeMake(480, 800);
-		}
-		else
-		{
-			s = CCSizeMake(320, 480);
-		}
-	}
-	else
-	{
-		if (m_bNotHVGA)
-		{
-			s = CCSizeMake(800, 480);
-		}
-		else
-		{
-			s = CCSizeMake(480, 320);
-		}
-	}
-	return s;
+//	CCSize s;
+//	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
+//	{
+//		if (m_bNotHVGA)
+//		{
+//			s = CCSizeMake(480, 800);
+//		}
+//		else
+//		{
+//			s = CCSizeMake(320, 480);
+//		}
+//	}
+//	else
+//	{
+//		if (m_bNotHVGA)
+//		{
+//			s = CCSizeMake(800, 480);
+//		}
+//		else
+//		{
+//			s = CCSizeMake(480, 320);
+//		}
+//	}
+//	return s;
+    if (m_bNotHVGA)
+    {
+        CCSize size(m_sSizeInPoint.width, m_sSizeInPoint.height);
+        return size;
+    }
+    else
+    {
+        CCSize size(m_sSizeInPixel.width, m_sSizeInPixel.height);
+        return size;
+    }
 }
 
 CCRect CCEGLView::getFrame()
@@ -386,12 +396,16 @@ CCEGLView::OnInitializing(void)
 		m_bNotHVGA = false;
 		m_sSizeInPoint.width = 480;
 		m_sSizeInPoint.height = 320;
+		m_sSizeInPixel.width = 480;
+		m_sSizeInPixel.height = 320;
 	}
 	else
 	{
 		m_bNotHVGA = true;
-		m_sSizeInPoint.width = 800;
-		m_sSizeInPoint.height = 480;
+		m_sSizeInPoint.width = 480;
+		m_sSizeInPoint.height = 320;
+		m_sSizeInPixel.width = 800;
+		m_sSizeInPixel.height = 480;
 	}
 
 

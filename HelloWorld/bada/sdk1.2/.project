@@ -84,12 +84,17 @@
 		<link>
 			<name>AppDelegate.cpp</name>
 			<type>1</type>
-			<location>cocos2dx_root/HelloWorld/AppDelegate.cpp</location>
+			<locationURI>cocos2dx_root/HelloWorld/AppDelegate.cpp</locationURI>
 		</link>
 		<link>
 			<name>HelloWorldScene.cpp</name>
 			<type>1</type>
-			<location>cocos2dx_root/HelloWorld/HelloWorldScene.cpp</location>
+			<locationURI>cocos2dx_root/HelloWorld/HelloWorldScene.cpp</locationURI>
+		</link>
+		<link>
+			<name>src</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/HelloWorld/bada/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

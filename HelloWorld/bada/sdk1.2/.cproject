@@ -71,7 +71,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 <entry excluding="src" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 </sourceEntries>
 </configuration>
@@ -568,8 +568,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
-<entry excluding="src" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 </sourceEntries>
 </configuration>
 </storageModule>
@@ -1065,8 +1064,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
-<entry excluding="src" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 </sourceEntries>
 </configuration>
 </storageModule>

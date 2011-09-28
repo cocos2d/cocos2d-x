@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bada>
     <type>0</type>
-    <sdk>D:\bada\2.0.0b1</sdk>
+    <sdk>c:\bada\2.0.0b1</sdk>
     <model>WaveHVGA</model>
     <apiversioncheck>true</apiversioncheck>
     <priviligecheck>false</priviligecheck>

@@ -41,6 +41,11 @@
 									<listOptionValue builtIn="false" value="../../../../chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
 								</option>
+								<option id="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def.1528350161" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+									<listOptionValue builtIn="false" value="SHP"/>
+									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1400420237" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug.567155673" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.debug">
