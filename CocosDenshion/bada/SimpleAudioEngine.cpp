@@ -75,13 +75,19 @@ public:
 	*	@exception	 E_OUT_OF_MEMORY					Insufficient memory.
 	*	@see		Player::OpenFile(), Player::OpenUrl(), Player::OpenBuffer()
 	*/
-	virtual void OnPlayerOpened( result r ){}
+	virtual void OnPlayerOpened( result r )
+	{
+		AppLog("OnPlayerOpened");
+	}
 
 	/**
 	*	Notifies that the Player has reached the end of the clip.
 	*
 	*/
-	virtual void OnPlayerEndOfClip(void){}
+	virtual void OnPlayerEndOfClip(void)
+	{
+		AppLog("OnPlayerEndOfClip");
+	}
 
 	/**
 	*	Notifies that the position of the audio/video content was moved asynchronously.
@@ -91,7 +97,10 @@ public:
 	*	@see		Player::SeekTo()
 	*/
 
-	virtual void OnPlayerSeekCompleted( result r ){};
+	virtual void OnPlayerSeekCompleted( result r )
+	{
+		AppLog("OnPlayerSeekCompleted");
+	}
 
 
 	/**
@@ -100,7 +109,10 @@ public:
 	*	@param[in]	percent		The percentage of buffering completed
 	*	@see		Player::OpenUrl()
 	*/
-	virtual void OnPlayerBuffering(int percent){}
+	virtual void OnPlayerBuffering(int percent)
+	{
+		AppLog("OnPlayerBuffering");
+	}
 
 	/**
 	*	Notifies that an error has occurred while the Player is working.
@@ -111,20 +123,35 @@ public:
 	*				If the content includes invalid data, ::PLAYER_ERROR_INVALID_DATA may occur.
 	*	@see	PlayerErrorReason
 	*/
-	virtual void OnPlayerErrorOccurred( PlayerErrorReason r ){}
+	virtual void OnPlayerErrorOccurred( PlayerErrorReason r )
+	{
+		AppLog("OnPlayerErrorOccurred");
+	}
 
 
 	/**
 	 *	Notifies that the Player is being interrupted by a task of higher priority than Player.
 	 *
 	 */
-	virtual void OnPlayerInterrupted(void){}
+	virtual void OnPlayerInterrupted(void)
+	{
+		//Insert your code here
+		AppLog("OnPlayerInterrupted");
+		if (s_pBackPlayer->GetState() == PLAYER_STATE_PLAYING)
+			s_pBackPlayer->Pause();
+	}
 
 	/**
 	 *	Notifies that the interrupting Player has been released.
 	 *
 	 */
-	virtual void OnPlayerReleased(void){}
+	virtual void OnPlayerReleased(void)
+	{
+		//Insert your code here
+		AppLog("OnPlayerReleased");
+		if (s_pBackPlayer->GetState() != PLAYER_STATE_PLAYING)
+			s_pBackPlayer->Play();
+	}
 
 };
 
@@ -215,7 +242,11 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
     	s_pBackPlayer->SetLooping(bLoop);
     }
 
-    r = s_pBackPlayer->Play();
+    if (s_fBackgroundMusicVolume > 0.0f)
+    {
+    	r = s_pBackPlayer->Play();
+    }
+
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -236,7 +267,7 @@ void SimpleAudioEngine::pauseBackgroundMusic()
 
 void SimpleAudioEngine::resumeBackgroundMusic()
 {
-    if (s_pBackPlayer && PLAYER_STATE_PAUSED == s_pBackPlayer->GetState())
+    if (s_pBackPlayer && PLAYER_STATE_PLAYING != s_pBackPlayer->GetState())
     {
         s_pBackPlayer->Play();
     }
@@ -295,7 +326,7 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
     {
     	s_pBackPlayer->SetVolume((int) (volume * 99));
     }
-
+    AppLog("volume = %f", volume);
     s_fBackgroundMusicVolume = volume;
 }
 
