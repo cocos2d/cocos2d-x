@@ -181,19 +181,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\AppDelegate.cpp"
+				RelativePath="..\Classes\AppDelegate.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\AppDelegate.h"
+				RelativePath="..\Classes\AppDelegate.h"
 				>
 			</File>
 			<File
-				RelativePath="..\HelloWorldScene.cpp"
+				RelativePath="..\Classes\HelloWorldScene.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\HelloWorldScene.h"
+				RelativePath="..\Classes\HelloWorldScene.h"
 				>
 			</File>
 		</Filter>
