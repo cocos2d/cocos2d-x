@@ -87,7 +87,7 @@ int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
 #endif  // CC_PLATFORM_WIN32
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 
 #include <sys/time.h>
 
@@ -98,6 +98,16 @@ int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 #ifndef MAX
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+
+// some function linux do not have
+#define tanf tan
+#define sqrtf sqrt
+#define cosf cos
+#define sinf sin
+
+#endif
 
 #endif  // CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 

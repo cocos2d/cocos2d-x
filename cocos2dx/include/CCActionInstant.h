@@ -68,6 +68,8 @@ namespace cocos2d {
 		static CCShow * action();
 	};
 
+
+
 	/** 
 	@brief Hide the node
 	*/
@@ -176,8 +178,9 @@ namespace cocos2d {
 	public:
 		CCCallFunc()
             : m_pSelectorTarget(NULL)
-            , m_pCallFunc(NULL)
 			, m_scriptFuncName("")
+            , m_pCallFunc(NULL)
+
         {
 		}
 		virtual ~CCCallFunc()
