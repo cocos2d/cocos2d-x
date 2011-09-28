@@ -2,9 +2,10 @@
 #p=$(dirname $_)
 #echo "$p"
 
-path=$(dirname $0)
-path=${path/\./$(pwd)}
-echo $path
+#path=$(dirname $0)
+#path=${path/\./$(pwd)}
+#echo $path
+p=.
 
 if [ ! -d "lib" ]; then
 mkdir "lib"
@@ -31,20 +32,41 @@ if [ $# -ne 0 ]; then
 		cd $p/CocosDenshion/proj.linux
 		make clean
 
+		cd ../..
+		cd $p/Box2D/proj.linux
+		make clean
+
+		cd ../..
+		cd $p/chipmunk/proj.linux
+		make clean
+
 		cd ../../
 		rm -r lib/linux/Debug/*.so
 	fi
 	
 else
 	cd $p/cocos2dx/proj.linux
+	echo "**********************building cocos2dx**************************"
 	make
-
 	cp -f libcocos2d.so ../../lib/linux/Debug
+
+        echo "**********************building cocosdenshion*********************"
 	cd ../../
 	cd $p/CocosDenshion/proj.linux
 	make
+	cp -f libcocosdenshion.so ../../lib/linux/Debug
 
-	cp -f libCocosDenshion.so ../../lib/linux/Debug
+        echo "**********************building Box2D******************************"
+	cd ../..
+	cd $p/Box2D/proj.linux
+	make
+	cp -f libbox2d.a ../../lib/linux/Debug
+
+        echo "**********************building chipmunk***************************"
+	cd ../..
+	cd $p/chipmunk/proj.linux
+	make
+	cp -f libchipmunk.a ../../lib/linux/Debug
 
 	cd ../../
 fi
