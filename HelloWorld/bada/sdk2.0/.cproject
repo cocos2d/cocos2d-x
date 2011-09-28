@@ -38,7 +38,7 @@
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
 								</option>
-								<option id="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def.334903464" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def" valueType="definedSymbols">
+								<option id="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def.334903464" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="SHP"/>
 									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>

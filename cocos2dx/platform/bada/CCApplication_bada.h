@@ -37,7 +37,8 @@ NS_CC_BEGIN;
 
 
 class CC_DLL CCApplication :
-	public Osp::App::Application
+	public Osp::App::Application,
+	public Osp::Base::Runtime::ITimerEventListener
 {
 public:
     CCApplication();
@@ -113,9 +114,10 @@ public:
 	void OnBatteryLevelChanged(Osp::System::BatteryLevel batteryLevel);
 	void OnScreenOn (void);
 	void OnScreenOff (void);
-
+	void OnTimerExpired(Osp::Base::Runtime::Timer& timer);
+	virtual void OnUserEventReceivedN(RequestId requestId, Osp::Base::Collection::IList* pArgs);
 protected:
-
+	Osp::Base::Runtime::Timer* m_pTimer;
 };
 
 NS_CC_END;
