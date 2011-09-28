@@ -251,6 +251,7 @@
 							<tool command="arm-linux-androideabi-g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,../../CocosDenshion/proj.linux/${ConfigName}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.324228707" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.1608202533" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
+									<listOptionValue builtIn="false" value="GLESv1_CM"/>
 									<listOptionValue builtIn="false" value="box2d"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
 									<listOptionValue builtIn="false" value="cocosdenshion"/>
