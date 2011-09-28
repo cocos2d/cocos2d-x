@@ -229,7 +229,11 @@ void MyAudioOutEventListener::OnAudioOutBufferEndReached(Osp::Media::AudioOut& s
  */
 void MyAudioOutEventListener::OnAudioOutInterrupted(Osp::Media::AudioOut& src)
 {
-
+	AppLog("OnAudioOutInterrupted");
+	if (__pAudioOut->GetState() == AUDIOOUT_STATE_PLAYING)
+	{
+		__pAudioOut->Stop();
+	}
 }
 
 /**
@@ -239,5 +243,5 @@ void MyAudioOutEventListener::OnAudioOutInterrupted(Osp::Media::AudioOut& src)
  */
 void MyAudioOutEventListener::OnAudioOutReleased(Osp::Media::AudioOut& src)
 {
-
+	AppLog("OnAudioOutReleased");
 }
