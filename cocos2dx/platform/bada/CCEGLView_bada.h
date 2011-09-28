@@ -101,7 +101,7 @@ public:
 
 	virtual result OnDraw(void);
 private:
-private:
+
 	CCSize m_sSizeInPixel;
 	CCSize m_sSizeInPoint;
 	CCRect m_rcViewPort;
@@ -111,16 +111,14 @@ private:
 	float  m_fScreenScaleFactor;
 
     bool                m_bCaptured;
-	bool				m_bOrientationReverted;
-	bool				m_bOrientationInitVertical;
+
     CCSet *             m_pSet;
     CCTouch *           m_pTouch;
-
     CCEGL *            m_pEGL;
 
 	int					m_eInitOrientation;
+
 	Osp::Ui::Orientation  m_nowOrientation;
-	// bada
 	Osp::Base::Runtime::Timer* m_pTimer;
 };
 
