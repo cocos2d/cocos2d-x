@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Application>
+    <Entry>BasicApp</Entry>
+    <Name>
+        <English>BasicApp</English>
+    </Name>
+    <Vendor/>
+    <Description/>
+    <Icons>
+        <MainMenu>BasicApp_type4.png<Type1/>
+            <Type2/>
+            <Type3>BasicApp_type3.png</Type3>
+            <Type4>BasicApp_type4.png</Type4>
+        </MainMenu>
+        <Setting/>
+        <Ticker/>
+        <QuickPanel/>
+        <LaunchImage>Splash_type4.png<Type1/>
+            <Type2/>
+            <Type3>Splash_type3.png</Type3>
+            <Type4>Splash_type4.png</Type4>
+        </LaunchImage>
+    </Icons>
+    <AutoScaling>
+        <Enabled>true</Enabled>
+        <BaseResolution>NormalSize</BaseResolution>
+    </AutoScaling>
+</Application>
