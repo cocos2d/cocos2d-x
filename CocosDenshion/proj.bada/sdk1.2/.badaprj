@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bada>
+    <type>2</type>
+    <sdk>D:\bada\1.2.1</sdk>
+    <model>Wave_LP2</model>
+    <apiversioncheck>true</apiversioncheck>
+    <priviligecheck>false</priviligecheck>
+    <properties>
+        <data0 key="PT CmdArgs Target-Release" value=""/>
+        <data1 key="PT CertFile Simulator-Debug" value="${project_loc}\.Simulator-Debug\cert.cer"/>
+        <data2 key="PT CertFile Target-Release" value="${project_loc}\.Target-Release\cert.cer"/>
+        <data3 key="PT Output Simulator-Debug" value="${project_loc}\.Simulator-Debug"/>
+        <data4 key="PT CertFile Target-Debug" value="${project_loc}\.Target-Debug\cert.cer"/>
+        <data5 key="PT CmdArgs Target-Debug" value=""/>
+        <data6 key="PT Output Target-Release" value="${project_loc}\.Target-Release"/>
+        <data7 key="PT CmdArgs Simulator-Debug" value=""/>
+        <data8 key="PT Output Target-Debug" value="${project_loc}\.Target-Debug"/>
+    </properties>
+</bada>
