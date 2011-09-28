@@ -239,7 +239,7 @@ namespace cocos2d {
 			if( ! tile ) 
 			{
 				CCRect rect = m_pTileSet->rectForGID(gid);
-                                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 				tile = new CCSprite();
 				tile->initWithBatchNode(this, rect);
@@ -268,7 +268,7 @@ namespace cocos2d {
 	CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -318,7 +318,7 @@ namespace cocos2d {
 	CCSprite * CCTMXLayer::updateTileForGID(unsigned int gid, const CCPoint& pos)	
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
 		if( ! m_pReusedTile )
@@ -351,7 +351,7 @@ namespace cocos2d {
 	CCSprite * CCTMXLayer::appendTileForGID(unsigned int gid, const CCPoint& pos)
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -447,7 +447,7 @@ namespace cocos2d {
 				if( sprite )
 				{
 					CCRect rect = m_pTileSet->rectForGID(gid);
-                                        rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                                        rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 					sprite->setTextureRectInPixels(rect, false, rect.size);
 					m_pTiles[z] = gid;

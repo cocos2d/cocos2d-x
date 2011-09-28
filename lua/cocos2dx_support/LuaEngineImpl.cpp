@@ -156,6 +156,9 @@ bool CCLuaScriptModule::executeScriptFile(const std::string& filename)
 {
 	int nRet = luaL_dofile(d_state,filename.c_str());
 
+	// Collect
+	lua_gc(d_state, LUA_GCCOLLECT, 0);
+
 	if (nRet != 0)
 	{		        
         // print the error msg
@@ -187,7 +190,10 @@ int	CCLuaScriptModule::executeScriptGlobal(const std::string& function_name)
 	}
 
 	// call it
-	int error = lua_pcall(d_state,0,1,0);		
+	int error = lua_pcall(d_state,0,1,0);
+
+	// Collect
+	lua_gc(d_state, LUA_GCCOLLECT, 0);
 
 	// handle errors
 	if ( error )
@@ -621,6 +627,9 @@ bool CCLuaScriptModule::executeString(const std::string& str)
 {
 	// load code into lua and call it
 	int error =	luaL_dostring(d_state, str.c_str());
+
+	// Collect
+	lua_gc(d_state, LUA_GCCOLLECT, 0);
 
 	// handle errors
 	if (error)
