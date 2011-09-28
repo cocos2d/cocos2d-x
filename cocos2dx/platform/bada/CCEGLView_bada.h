@@ -41,8 +41,7 @@ class CCEGL;
 
 class CC_DLL CCEGLView :
 	public Osp::Ui::Controls::Form,
-	public Osp::Ui::ITouchEventListener,
-	public Osp::Base::Runtime::ITimerEventListener
+	public Osp::Ui::ITouchEventListener
 {
 public:
 
@@ -73,7 +72,7 @@ public:
 	bool Create(Osp::App::Application* pApp);
 	virtual result OnInitializing(void);
 	virtual result OnTerminating(void);
-	void OnTimerExpired(Osp::Base::Runtime::Timer& timer);
+
 	// touch event
 	virtual void OnTouchIndicated(const Osp::Ui::Control& source,
 		const Osp::Graphics::Point& startPosition, const Osp::Graphics::Point& currentPoint);
@@ -100,6 +99,7 @@ public:
 		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
 	virtual result OnDraw(void);
+	virtual void OnUserEventReceivedN(RequestId requestId, Osp::Base::Collection::IList* pArgs);
 private:
 
 	CCSize m_sSizeInPixel;
@@ -119,7 +119,7 @@ private:
 	int					m_eInitOrientation;
 
 	Osp::Ui::Orientation  m_nowOrientation;
-	Osp::Base::Runtime::Timer* m_pTimer;
+//	Osp::Base::Runtime::Timer* m_pTimer;
 };
 
 NS_CC_END;

@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Application>
-    <Entry>BasicApp</Entry>
+    <Entry>HelloWorld</Entry>
     <Name>
-        <English>BasicApp</English>
+        <English>HelloWorld</English>
+        <eng-GB>HelloWorld</eng-GB>
     </Name>
     <Vendor/>
     <Description/>
     <Icons>
-        <MainMenu>BasicApp_type4.png<Type1/>
-            <Type2/>
-            <Type3>BasicApp_type3.png</Type3>
-            <Type4>BasicApp_type4.png</Type4>
+        <MainMenu>test_type4.png<Type1/>
+            <Type2>test_type2.png</Type2>
+            <Type3>test_type3.png</Type3>
+            <Type4>test_type4.png</Type4>
         </MainMenu>
         <Setting/>
         <Ticker/>
         <QuickPanel/>
         <LaunchImage>Splash_type4.png<Type1/>
-            <Type2/>
+            <Type2>Splash_type2.png</Type2>
             <Type3>Splash_type3.png</Type3>
             <Type4>Splash_type4.png</Type4>
         </LaunchImage>
