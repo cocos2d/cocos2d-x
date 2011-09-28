@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bada>
-    <type>0</type>
-    <sdk>D:\bada\1.2.1</sdk>
-    <model>Wave_LP2</model>
-    <apiversioncheck>true</apiversioncheck>
-    <priviligecheck>false</priviligecheck>
-    <properties/>
-</bada>
