@@ -96,6 +96,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/AppDelegate.h</locationURI>
 		</link>
 		<link>
+			<name>test.android</name>
+			<type>2</type>
+			<location>/home/zhangxm/cocos2d-x/tests/test.android</location>
+		</link>
+		<link>
 			<name>tests</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
