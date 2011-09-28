@@ -167,6 +167,7 @@ bool CCImage::initWithString(
     result r = E_FAILURE;
 	do
 	{
+		int nLen = 0;
 		CC_BREAK_IF(! pText);       
 
 		BitmapDC& dc = sharedBitmapDC();
@@ -181,15 +182,25 @@ bool CCImage::initWithString(
 		r = dc.m_pCanvas->Lock(bufferInfo);
 		CC_BREAK_IF(IsFailed(r));
 
-		int nLen = bufferInfo.pitch * bufferInfo.height;
-
+		nLen = bufferInfo.pitch * bufferInfo.height;
 		CC_SAFE_DELETE(m_pData);
 		m_pData = new unsigned char [nLen];
+		memset(m_pData, 0, nLen);
 		CC_BREAK_IF(!m_pData);
 		memcpy(m_pData, bufferInfo.pPixels, nLen);
 
+		if (bufferInfo.bitsPerPixel == 32)
+		{
+			if (bufferInfo.width * 4 != bufferInfo.pitch)
+			{
+				m_nWidth = bufferInfo.pitch / 4;
+			}
+			else
+			{
+				m_nWidth = bufferInfo.width;
+			}
+		}
 
-		m_nWidth		= bufferInfo.width;
 		m_nHeight		= bufferInfo.height;
 
 		m_bHasAlpha	= true;
