@@ -52,6 +52,14 @@ class CCParticleSystem : public CCNode, public CCTextureProtocol {
 	void setBlendFunc(ccBlendFunc var);
 };
 
+class CCParticleSystemQuad : public CCParticleSystem {
+	static CCParticleSystemQuad * particleWithFile(const char *plistFile);
+};
+
+class CCParticleSystemPoint : public CCParticleSystem {
+	static CCParticleSystemPoint * particleWithFile(const char *plistFile);
+};
+
 // Inheritance is funky here in the examples.... in reality its a pragma-def .. not sure how to map that?
 
 class CCParticleFire : public CCParticleSystem {
