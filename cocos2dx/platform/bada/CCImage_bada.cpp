@@ -50,9 +50,7 @@ public:
 		do 
 		{
 			// text
-			mchar wideText[256] = {0};
-			MyGBKToUnicode((unsigned short*)wideText, 256, pszText);
-
+			Osp::Base::String strText(pszText);
 			// Set a font to the TextElement
 			Font font;
 			font.Construct(FONT_STYLE_PLAIN, fontSize);
@@ -61,7 +59,7 @@ public:
 			if (CCSize::CCSizeEqualToSize(dimensions, CCSizeZero))
 			{
 				Dimension dim;
-				font.GetTextExtent(wideText, wcslen(wideText), dim);
+				font.GetTextExtent(strText, strText.GetLength(), dim);
 				dimensions.width = dim.width;
 				dimensions.height = dim.height;
 			}
@@ -126,7 +124,7 @@ public:
 
 			// Create a TextElement
 			TextElement* pTextElement = new TextElement();
-			pTextElement->Construct(wideText);
+			pTextElement->Construct(strText);
 			// After Adding, set attributes of the TextElement
 			pTextElement->SetTextColor(Color::COLOR_WHITE);
 			pTextElement->SetFont(font);
