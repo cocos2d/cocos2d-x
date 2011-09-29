@@ -1,6 +1,5 @@
 #include "CCApplication_bada.h"
 #include "CCDirector.h"
-#include "Gbk_Unicode.h"
 
 using namespace Osp::App;
 using namespace Osp::System;

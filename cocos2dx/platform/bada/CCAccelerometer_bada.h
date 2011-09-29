@@ -43,13 +43,10 @@ public:
     static CCAccelerometer* sharedAccelerometer();
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
-    void update(float x, float y, float z, long sensorTimeStamp);
-
     virtual void OnDataReceived(Osp::Uix::SensorType sensorType, Osp::Uix::SensorData& sensorData , result r);
 private:
 	static CCAccelerometer* m_spCCAccelerometer;
 	CCAccelerometerDelegate* m_pAccelDelegate;
-	CCAcceleration m_obAccelerationValue;
 };
 
 }//namespace   cocos2d 
