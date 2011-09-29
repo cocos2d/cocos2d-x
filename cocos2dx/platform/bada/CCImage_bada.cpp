@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include <FGraphics.h>
-#include "Gbk_Unicode.h"
 using namespace Osp::Graphics;
 
 NS_CC_BEGIN;

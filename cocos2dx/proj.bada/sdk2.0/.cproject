@@ -109,7 +109,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="textures"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="tileMap_parallax_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="touch_dispatcher"/>
-						<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCPlatformFunc_bada.c|bada/CCPlatformFunc_bada.h|ios/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCPlatformFunc_bada.c|bada/CCPlatformFunc_bada.h|ios/|third_party/|win32/|wophone/|Linux/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|platform" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
