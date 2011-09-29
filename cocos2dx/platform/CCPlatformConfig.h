@@ -43,6 +43,8 @@ build for which target platform
 #define CC_PLATFORM_WOPHONE            3
 #define CC_PLATFORM_WIN32              4
 #define CC_PLATFORM_AIRPLAY            5
+#define CC_PLATFORM_LINUX              7
+
 #define CC_PLATFORM_BADA               6
 // Determine tartet platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -80,6 +82,13 @@ build for which target platform
         #define CC_SUPPORT_UNICODE     0
     #endif
 #endif
+
+// linux
+#if ! CC_TARGET_PLATFORM && defined(LINUX)
+    #undef  CC_TARGET_PLATFORM
+    #define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
+#endif
+
 // airplay
 #if ! CC_TARGET_PLATFORM && defined(AIRPLAY)
 #undef  CC_TARGET_PLATFORM
@@ -118,6 +127,10 @@ build for which target platform
 #if defined(CC_UNDER_AIRPLAY)
 #undef  CC_TARGET_PLATFORM
 #define CC_TARGET_PLATFORM			   CC_PLATFORM_AIRPLAY
+#endif
+#if defined(CC_UNDER_LINUX)
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM			   CC_PLATFORM_LINUX
 #endif
 
 #if defined(CC_UNDER_BADA)

@@ -37,14 +37,14 @@
 		BF1FAEA21352F5FA007553D9 /* CCParticleSystemPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF1FAEA11352F5FA007553D9 /* CCParticleSystemPoint.cpp */; };
 		BF233C2E1341748900494987 /* CCNS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF233C2C1341748900494987 /* CCNS.cpp */; };
 		BF233C2F1341748900494987 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = BF233C2D1341748900494987 /* CCNS.h */; };
+		BF23D4E7143315EB00657E08 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF23D4E3143315EB00657E08 /* AppDelegate.cpp */; };
+		BF23D4E8143315EB00657E08 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF23D4E5143315EB00657E08 /* HelloWorldScene.cpp */; };
 		BF315F90133DDEB000E0532D /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = BF315F8D133DDEAF00E0532D /* CCFileUtils.h */; };
 		BF315F91133DDEB000E0532D /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF315F8E133DDEAF00E0532D /* CCSAXParser.cpp */; };
 		BF315F92133DDEB000E0532D /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF315F8F133DDEAF00E0532D /* CCSAXParser.h */; };
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF492D4C1289302400A09262 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
-		BF755FAA12A1013F00450234 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755FA612A1013F00450234 /* AppDelegate.cpp */; };
-		BF755FAB12A1013F00450234 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF755FA812A1013F00450234 /* HelloWorldScene.cpp */; };
 		BF755FB012A1015E00450234 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAD12A1015E00450234 /* CloseNormal.png */; };
 		BF755FB112A1015E00450234 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAE12A1015E00450234 /* CloseSelected.png */; };
 		BF755FB212A1015E00450234 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = BF755FAF12A1015E00450234 /* HelloWorld.png */; };
@@ -610,6 +610,10 @@
 		BF1FAEA11352F5FA007553D9 /* CCParticleSystemPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParticleSystemPoint.cpp; sourceTree = "<group>"; };
 		BF233C2C1341748900494987 /* CCNS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNS.cpp; sourceTree = "<group>"; };
 		BF233C2D1341748900494987 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
+		BF23D4E3143315EB00657E08 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		BF23D4E4143315EB00657E08 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BF23D4E5143315EB00657E08 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
+		BF23D4E6143315EB00657E08 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		BF315F8D133DDEAF00E0532D /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		BF315F8E133DDEAF00E0532D /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		BF315F8F133DDEAF00E0532D /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
@@ -621,10 +625,6 @@
 		BF492D4B1289302400A09262 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
-		BF755FA612A1013F00450234 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
-		BF755FA712A1013F00450234 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = SOURCE_ROOT; };
-		BF755FA812A1013F00450234 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = ../HelloWorldScene.cpp; sourceTree = SOURCE_ROOT; };
-		BF755FA912A1013F00450234 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = ../HelloWorldScene.h; sourceTree = SOURCE_ROOT; };
 		BF755FAD12A1015E00450234 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		BF755FAE12A1015E00450234 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		BF755FAF12A1015E00450234 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -1218,8 +1218,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				BF23D4E2143315EB00657E08 /* Classes */,
 				BF5681CC1313A84D0055EEAC /* ios */,
-				BF755FA512A1012300450234 /* Classes */,
 				BF83517613275F5500F3C033 /* cocos2dx */,
 				BF755FAC12A1015E00450234 /* Resource */,
 				BF163FB9128E671C0010DC04 /* Resources-iPad */,
@@ -1259,6 +1259,18 @@
 			name = text_input_node;
 			sourceTree = "<group>";
 		};
+		BF23D4E2143315EB00657E08 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BF23D4E3143315EB00657E08 /* AppDelegate.cpp */,
+				BF23D4E4143315EB00657E08 /* AppDelegate.h */,
+				BF23D4E5143315EB00657E08 /* HelloWorldScene.cpp */,
+				BF23D4E6143315EB00657E08 /* HelloWorldScene.h */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = SOURCE_ROOT;
+		};
 		BF5681CC1313A84D0055EEAC /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -1269,17 +1281,6 @@
 				BF4DE6AC138BB89600CF907D /* RootViewController.mm */,
 			);
 			name = ios;
-			sourceTree = "<group>";
-		};
-		BF755FA512A1012300450234 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				BF755FA612A1013F00450234 /* AppDelegate.cpp */,
-				BF755FA712A1013F00450234 /* AppDelegate.h */,
-				BF755FA812A1013F00450234 /* HelloWorldScene.cpp */,
-				BF755FA912A1013F00450234 /* HelloWorldScene.h */,
-			);
-			name = Classes;
 			sourceTree = "<group>";
 		};
 		BF755FAC12A1015E00450234 /* Resource */ = {
@@ -2852,12 +2853,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF755FAA12A1013F00450234 /* AppDelegate.cpp in Sources */,
-				BF755FAB12A1013F00450234 /* HelloWorldScene.cpp in Sources */,
 				BF365AA812A103F70050DCF4 /* AppController.mm in Sources */,
 				BFA008F81344267700289DC3 /* CCCommon_ios.mm in Sources */,
 				BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */,
 				D4ABB4B313B4395300552E6E /* main.m in Sources */,
+				BF23D4E7143315EB00657E08 /* AppDelegate.cpp in Sources */,
+				BF23D4E8143315EB00657E08 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

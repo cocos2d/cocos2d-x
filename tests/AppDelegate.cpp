@@ -2,19 +2,18 @@
 
 #include "cocos2d.h"
 #include "tests/controller.h"
-#include "SimpleAudioEngine.h"
+//#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
-using namespace CocosDenshion;
+//using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
-
 }
 
 AppDelegate::~AppDelegate()
 {
-    SimpleAudioEngine::end();
+//    SimpleAudioEngine::end();
 }
 
 bool AppDelegate::initInstance()
@@ -62,11 +61,28 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 #endif
+<<<<<<< HEAD
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
         CCEGLView * pMainWnd = new CCEGLView();
         CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this));
         CCFileUtils::setResourcePath("/Res/");
 #endif
+=======
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+
+		// Initialize OpenGLView instance, that release by CCDirector when application terminate.
+		// The HelloWorld is designed as HVGA.
+		CCEGLView * pMainWnd = new CCEGLView();
+		CC_BREAK_IF(! pMainWnd
+				|| ! pMainWnd->Create("cocos2d: tests", 480, 320, 480, 320));
+
+		//set the base resource folder pay attention to add "/"
+		CCFileUtils::setResourcePath("../Res/");
+
+#endif  // CC_PLATFORM_LINUX
+
+>>>>>>> 4696003dafc5470d28559dcb2ee95630be480b77
         bRet = true;
     } while (0);
     return bRet;
@@ -107,12 +123,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->pause();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();   
+//    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->resume();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();   
+//    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

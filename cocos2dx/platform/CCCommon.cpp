@@ -186,6 +186,37 @@ NS_CC_END;
 
 #endif // CC_PLATFORM_ANDROID
 /****************************************************
+ * linux
+ ***************************************************/
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+
+#include <stdio.h>
+#include "CCStdC.h"
+
+NS_CC_BEGIN;
+
+void CCLog(const char * pszFormat, ...)
+{
+	char buf[MAX_LEN];
+	
+	va_list args;
+	va_start(args, pszFormat);    	
+	vsprintf(buf, pszFormat, args);
+	va_end(args);
+	
+	//TODO will copy how orx do
+	printf(buf);
+}
+
+// airplay no MessageBox, use CCLog instead
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+    CCLog("%s: %s", pszTitle, pszMsg);
+}
+
+NS_CC_END;
+#endif
+/****************************************************
  * airplay
  ***************************************************/
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
@@ -201,12 +232,12 @@ NS_CC_BEGIN;
 void CCLog(const char * pszFormat, ...)
 {
 	char buf[MAX_LEN];
-	
+
 	va_list args;
-	va_start(args, pszFormat);    	
+	va_start(args, pszFormat);
 	vsprintf(buf, pszFormat, args);
 	va_end(args);
-	
+
 	IwTrace(GAME, (buf));
 }
 
