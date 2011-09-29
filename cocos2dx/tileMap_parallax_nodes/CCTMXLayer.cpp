@@ -381,10 +381,6 @@ namespace cocos2d {
 		// append should be after addQuadFromSprite since it modifies the quantity values
 		ccCArrayInsertValueAtIndex(m_pAtlasIndexArray, (void*)z, indexForZ);
 
-		// set z tag
-		addSpriteWithoutQuad(m_pReusedTile, indexForZ, z);
-		m_pReusedTile->release();
-
 		return m_pReusedTile;
 	}
 
