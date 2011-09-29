@@ -62,7 +62,7 @@ cpvtoangle(const cpVect v)
 	return cpfatan2(v.y, v.x);
 }
 
-#ifdef SHP
+#if defined(SHP) && !defined(CC_BADA_2_0)
 int sprintf(char* buf, const char *format, ...);
 #endif
 

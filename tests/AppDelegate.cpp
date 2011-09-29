@@ -61,13 +61,6 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 		CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationLandscapeLeft);
 #endif
-<<<<<<< HEAD
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-        CCEGLView * pMainWnd = new CCEGLView();
-        CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this));
-        CCFileUtils::setResourcePath("/Res/");
-#endif
-=======
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 
@@ -82,7 +75,14 @@ bool AppDelegate::initInstance()
 
 #endif  // CC_PLATFORM_LINUX
 
->>>>>>> 4696003dafc5470d28559dcb2ee95630be480b77
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+
+		CCEGLView * pMainWnd = new CCEGLView();
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this));
+		CCFileUtils::setResourcePath("/Res/");
+
+#endif  // CC_PLATFORM_BADA
+
         bRet = true;
     } while (0);
     return bRet;

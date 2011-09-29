@@ -71,7 +71,7 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
-<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|third_party/|win32/|wophone/|Linux/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 <entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher|platform" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 </sourceEntries>
 </configuration>
@@ -722,7 +722,7 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|third_party/|win32/|wophone/|Linux/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -1380,7 +1380,7 @@
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|third_party/|win32/|wophone/|Linux/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 <entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
