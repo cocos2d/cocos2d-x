@@ -1,8 +1,6 @@
 #include "CCApplication_bada.h"
-
 #include "CCDirector.h"
 #include "Gbk_Unicode.h"
-
 
 using namespace Osp::App;
 using namespace Osp::System;
@@ -64,7 +62,7 @@ ccLanguageType CCApplication::getCurrentLanguage()
 
 void CCApplication::setAnimationInterval(double interval)
 {
-    s_nAnimationInterval = (long long)(interval * 1000);
+    s_nAnimationInterval = (long long)(interval * 1000.0f);
 }
 
 bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
@@ -72,49 +70,48 @@ bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
 	result r = E_FAILURE;
 	if (! initInstance() || !applicationDidFinishLaunching())
 		return false;
-//	m_pTimer = new Timer;
-//	if (null == m_pTimer)
-//	{
-//		return E_FAILURE;
-//	}
-//
-//	r = m_pTimer->Construct(*this);
-//	if (IsFailed(r))
-//	{
-//		delete m_pTimer;
-//		m_pTimer = null;
-//		return E_FAILURE;
-//	}
-//	m_pTimer->Start(1);
-//	CCEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
-//	pView->SendUserEvent(1000, null);
+	m_pTimer = new Timer;
+	if (null == m_pTimer)
+	{
+		return E_FAILURE;
+	}
+
+	r = m_pTimer->Construct(*this);
+	if (IsFailed(r))
+	{
+		delete m_pTimer;
+		m_pTimer = null;
+		return E_FAILURE;
+	}
+	m_pTimer->Start(s_nAnimationInterval);
+
 	return true;
 }
 
 
 bool CCApplication::OnAppTerminating(AppRegistry& appRegistry, bool forcedTermination)
 {
-//	if (m_pTimer)
-//	{
-//		m_pTimer->Cancel();
-//		delete m_pTimer;
-//		m_pTimer = null;
-//	}
+	if (m_pTimer)
+	{
+		m_pTimer->Cancel();
+		delete m_pTimer;
+		m_pTimer = null;
+	}
 	return true;
 }
 
 
 void CCApplication::OnForeground(void)
 {
-//	if (m_pTimer)
-//		m_pTimer->Start(1);
+	if (m_pTimer)
+		m_pTimer->Start(s_nAnimationInterval);
 }
 
 
 void CCApplication::OnBackground(void)
 {
-//	if (m_pTimer)
-//		m_pTimer->Cancel();
+	if (m_pTimer)
+		m_pTimer->Cancel();
 }
 
 
@@ -129,36 +126,8 @@ void CCApplication::OnBatteryLevelChanged(BatteryLevel batteryLevel)
 
 void CCApplication::OnTimerExpired(Timer& timer)
 {
-//	if (!m_pTimer)
-//	{
-//		return;
-//	}
-//
-//	static long long oldTick = 0, curTick = 0;
-//	SystemTime::GetTicks(curTick);
-//	if (curTick - oldTick > s_nAnimationInterval)
-//	{
-//		CCDirector::sharedDirector()->mainLoop();
-//		SystemTime::GetTicks(oldTick);
-//	}
-//	m_pTimer->Start(1);
-}
-
-void CCApplication::OnUserEventReceivedN(RequestId requestId, Osp::Base::Collection::IList* pArgs)
-{
-	static long long oldTick = 0, curTick = 0;
-	SystemTime::GetTicks(curTick);
-	if (curTick - oldTick > s_nAnimationInterval)
-	{
-		CCDirector::sharedDirector()->mainLoop();
-		CCEGLView * pView = CCDirector::sharedDirector()->getOpenGLView();
-		pView->SendUserEvent(1000, null);
-		SystemTime::GetTicks(oldTick);
-	}
-	else
-	{
-		Thread::Sleep(1);
-	}
+	m_pTimer->Start(s_nAnimationInterval);
+	CCDirector::sharedDirector()->mainLoop();
 }
 
 NS_CC_END;

@@ -99,7 +99,7 @@ public:
 		const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo);
 
 	virtual result OnDraw(void);
-	virtual void OnUserEventReceivedN(RequestId requestId, Osp::Base::Collection::IList* pArgs);
+
 private:
 
 	CCSize m_sSizeInPixel;
@@ -119,7 +119,6 @@ private:
 	int					m_eInitOrientation;
 
 	Osp::Ui::Orientation  m_nowOrientation;
-//	Osp::Base::Runtime::Timer* m_pTimer;
 };
 
 NS_CC_END;

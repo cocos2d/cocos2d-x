@@ -62,6 +62,10 @@ cpvtoangle(const cpVect v)
 	return cpfatan2(v.y, v.x);
 }
 
+#ifdef SHP
+int sprintf(char* buf, const char *format, ...);
+#endif
+
 char*
 cpvstr(const cpVect v)
 {

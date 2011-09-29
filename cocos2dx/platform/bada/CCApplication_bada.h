@@ -115,7 +115,6 @@ public:
 	void OnScreenOn (void);
 	void OnScreenOff (void);
 	void OnTimerExpired(Osp::Base::Runtime::Timer& timer);
-	virtual void OnUserEventReceivedN(RequestId requestId, Osp::Base::Collection::IList* pArgs);
 protected:
 	Osp::Base::Runtime::Timer* m_pTimer;
 };

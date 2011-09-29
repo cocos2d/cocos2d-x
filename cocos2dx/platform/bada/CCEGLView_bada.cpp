@@ -41,8 +41,6 @@ using namespace Osp::Ui;
 using namespace Osp::Ui::Controls;
 using namespace Osp::Graphics;
 
-#define TIME_OUT 10
-
 NS_CC_BEGIN;
 
 //////////////////////////////////////////////////////////////////////////
@@ -183,7 +181,6 @@ CCEGLView::CCEGLView()
 , m_bCaptured(false)
 , m_pEGL(NULL)
 , m_nowOrientation(ORIENTATION_PORTRAIT)
-//, m_pTimer(null)
 {
     m_pTouch    = new CCTouch;
     m_pSet      = new CCSet;
@@ -273,12 +270,6 @@ bool CCEGLView::isOpenGLReady()
 
 void CCEGLView::release()
 {
-//	if (m_pTimer)
-//	{
-//		m_pTimer->Cancel();
-//		delete m_pTimer;
-//		m_pTimer = null;
-//	}
 	Application::GetInstance()->Terminate();
 }
 
@@ -322,8 +313,8 @@ int CCEGLView::setDeviceOrientation(int eOritation)
 	{
 		if (m_bNotHVGA)
 		{
-			m_sSizeInPoint.width = 320;
-			m_sSizeInPoint.height = 480;
+			m_sSizeInPoint.width = 480;
+			m_sSizeInPoint.height = 800;
 			m_sSizeInPixel.width = 480;
 			m_sSizeInPixel.height = 800;
 		}
@@ -339,8 +330,8 @@ int CCEGLView::setDeviceOrientation(int eOritation)
 	{
 		if (m_bNotHVGA)
 		{
-			m_sSizeInPoint.width = 480;
-			m_sSizeInPoint.height = 320;
+			m_sSizeInPoint.width = 800;
+			m_sSizeInPoint.height = 480;
 			m_sSizeInPixel.width = 800;
 			m_sSizeInPixel.height = 480;
 		}
@@ -440,8 +431,8 @@ CCEGLView::OnInitializing(void)
 	else
 	{
 		m_bNotHVGA = true;
-		m_sSizeInPoint.width = 320;
-		m_sSizeInPoint.height = 480;
+		m_sSizeInPoint.width = 480;
+		m_sSizeInPoint.height = 800;
 		m_sSizeInPixel.width = 480;
 		m_sSizeInPixel.height = 800;
 	}
@@ -457,7 +448,7 @@ CCEGLView::OnInitializing(void)
 	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
 	m_rcViewPort.size.width = viewPortW;
 	m_rcViewPort.size.height = viewPortH;
-	SendUserEvent(1000, null);
+
 	return r;
 }
 
@@ -470,21 +461,6 @@ CCEGLView::OnTerminating(void)
 
 	return r;
 }
-
-//void
-//CCEGLView::OnTimerExpired(Timer& timer)
-//{
-//	if (!m_pTimer)
-//	{
-//		return;
-//	}
-//
-//	static long long oldTick = 0, curTick = 0;
-//	SystemTime::GetTicks(curTick);
-//
-//	m_pTimer->Start(TIME_OUT);
-//	CCDirector::sharedDirector()->mainLoop();
-//}
 
 // touch event
 void CCEGLView::OnTouchIndicated(const Osp::Ui::Control& source,
@@ -591,23 +567,6 @@ result CCEGLView::OnDraw(void)
 	CCDirector * pDirector = CCDirector::sharedDirector();
 	pDirector->drawScene();
 	return r;
-}
-
-void CCEGLView::OnUserEventReceivedN(RequestId requestId, Osp::Base::Collection::IList* pArgs)
-{
-	static long long oldTick = 0, curTick = 0;
-	SystemTime::GetTicks(curTick);
-	if (curTick - oldTick > 1000/60)
-	{
-		CCDirector::sharedDirector()->mainLoop();
-		SendUserEvent(1000, null);
-		SystemTime::GetTicks(oldTick);
-	}
-	else
-	{
-		SendUserEvent(1000, null);
-		Thread::Sleep(1);
-	}
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()
