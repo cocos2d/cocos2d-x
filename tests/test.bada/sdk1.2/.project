@@ -87,6 +87,11 @@
 			<locationURI>cocos2dx_root/tests/AppDelegate.cpp</locationURI>
 		</link>
 		<link>
+			<name>src</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/tests/test.bada/src</locationURI>
+		</link>
+		<link>
 			<name>tests</name>
 			<type>2</type>
 			<locationURI>cocos2dx_root/tests/tests</locationURI>

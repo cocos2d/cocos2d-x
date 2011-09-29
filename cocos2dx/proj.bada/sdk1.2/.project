@@ -206,10 +206,5 @@
 			<type>2</type>
 			<locationURI>cocos2dx_root/cocos2dx/touch_dispatcher</locationURI>
 		</link>
-		<link>
-			<name>platform/CCCamera.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/cocos2dx/CCCamera.cpp</locationURI>
-		</link>
 	</linkedResources>
 </projectDescription>
