@@ -4,7 +4,7 @@
 #include <FBase.h>
 #include <FMedia.h>
 #include <FSystem.h>
-
+#include <string>
 #include <map>
 #include <ctype.h>
 #include <stdio.h>
@@ -32,6 +32,7 @@ static EffectList	s_List;
 static float   s_fBackgroundMusicVolume = 1.0f;
 static float   s_fEffectsVolume = 1.0f;
 static bool    s_bWillPlayBackgroundMusic = false;
+static string s_strResourcePath = "/Res/";
 
 static unsigned int _Hash(const char *key)
 {
@@ -203,6 +204,16 @@ void SimpleAudioEngine::end()
 	}
 }
 
+void SimpleAudioEngine::setResource(const char* pszZipFileName)
+{
+
+}
+
+void SimpleAudioEngine::setResourcePath(const char *pszResourcePath)
+{
+	s_strResourcePath = pszResourcePath;
+}
+
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
 
@@ -231,8 +242,9 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 
 	setBackgroundMusicVolume(s_fBackgroundMusicVolume);
 
+	string strFilePath = s_strResourcePath+pszFilePath;
 	// OpenFile must use synchronous param, for after that it will playing.
-	result r = s_pBackPlayer->OpenFile(pszFilePath, false);
+	result r = s_pBackPlayer->OpenFile(strFilePath.c_str(), false);
     if (IsFailed(r))
     {
     	AppLog("Openfile fails\n");
@@ -352,7 +364,8 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 // for sound effects
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/* = false*/)
 {
-	unsigned int nRet = _Hash(pszFilePath);
+	string strFilePath = s_strResourcePath+pszFilePath;
+	unsigned int nRet = _Hash(strFilePath.c_str());
 
 	preloadEffect(pszFilePath);
 
@@ -382,7 +395,9 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 	{
 		BREAK_IF(! pszFilePath);
 
-		nRet = _Hash(pszFilePath);
+		string strFilePath = s_strResourcePath+pszFilePath;
+
+		nRet = _Hash(strFilePath.c_str());
 
 		BREAK_IF(s_List.end() != s_List.find(nRet));
 
@@ -392,7 +407,7 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 		}
 
 		MyAudioOutEventListener* pListener = new MyAudioOutEventListener();
-		pListener->Construct(pszFilePath);
+		pListener->Construct(strFilePath.c_str());
 		s_List.insert(Effect(nRet, pListener));
 
 	} while (0);
@@ -400,7 +415,8 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-	unsigned int nSoundId = _Hash(pszFilePath);
+	string strFilePath = s_strResourcePath+pszFilePath;
+	unsigned int nSoundId = _Hash(strFilePath.c_str());
 	MyAudioOutEventListener*& pListener = s_List[nSoundId];
 	delete pListener;
 	s_List.erase(nSoundId);
