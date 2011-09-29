@@ -33,7 +33,7 @@ move_files_into_android(){
             mv $file $APP_DIR/android
         fi
     done
-    rm -r $APP_DIR/android/asset
+    #rm -r $APP_DIR/android/assets
 }
 
 #copy linux's
@@ -55,19 +55,11 @@ move_eclipse_configures_into(){
 		do
 			cp $HELLOWORLD_ROOT/Linux/$file $APP_DIR/Linux/
 	    	done
-    	mv $APP_DIR/Linux/.project $APP_DIR/Linux/.project1
-	sed "s/HelloWorld/$projName/" $APP_DIR/Linux/.project1 > $APP_DIR/Linux/.project
-	rm $APP_DIR/Linux/.project1
 
-	mv $APP_DIR/Linux/.cproject $APP_DIR/Linux/.cproject1
-	
-	
-	
-	COCOS2DX_ROOT_TEMP=`echo ${COCOS2DX_ROOT//\//\\\/}`
-	echo $COCOS2DX_ROOT_TEMP
+	sed -i "s/HelloWorld/$projName/" $APP_DIR/Linux/.project
 
-	sed "s/stringMacro name=\"cocos2dx_loc\" type=\"VALUE_TEXT\" value=\"..\/..\/..\/\"/stringMacro name=\"cocos2dx_loc\" type=\"VALUE_TEXT\" value=\"$COCOS2DX_ROOT_TEMP\"/" $APP_DIR/Linux/.cproject1 > $APP_DIR/Linux/.cproject
-	rm $APP_DIR/Linux/.cproject1
+	sed -i "s:../../../:$COCOS2DX_ROOT:;s:helloworld:$projName:" $APP_DIR/Linux/.cproject
+        #sed -i "s/helloworld/$projName/" $APP_DIR/Linux/.cproject
 }
 
 #copy main sources
@@ -83,11 +75,11 @@ copy_cpp_h_from_helloworld(){
 
 # copy resources
 copy_resouces(){
-    mkdir $APP_DIR/Resource
+    mkdir $APP_DIR/Resources
     
     for file in $HELLOWORLD_ROOT/Resource/*
     do
-        cp $file $APP_DIR/Resource
+        cp $file $APP_DIR/Resources
     done
 }
 

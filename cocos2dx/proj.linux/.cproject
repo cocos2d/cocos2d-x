@@ -284,9 +284,6 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.1006169995" name="CCParticleSystemPoint.cpp" rcbsApplicability="disable" resourcePath="particle_nodes/CCParticleSystemPoint.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1024625311.1901035826">
-						<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1024625311.1901035826" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1024625311"/>
-					</fileInfo>
 					<sourceEntries>
 						<entry excluding="platform/android/CCThread_android.cpp|platform/android/CCImage_android.cpp|proj.wophone|platform/ios|proj.win32|platform/win32|proj.airplay|platform/third_party|platform/airplay|platform (copy)|platform/wophone|platform/android/CCFileUtils_android.cpp|platform/Linux" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
