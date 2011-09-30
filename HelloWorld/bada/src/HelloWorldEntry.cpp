@@ -1,7 +1,7 @@
 /**
  * This file contains the bada application entry point.
  */
-#include "../../AppDelegate.h"
+#include "../../Classes/AppDelegate.h"
 
 using namespace Osp::Base;
 using namespace Osp::Base::Collection;

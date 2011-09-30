@@ -172,8 +172,6 @@ private:
 //////////////////////////////////////////////////////////////////////////
 // impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
-
-
 CCEGLView::CCEGLView()
 : m_bNotHVGA(true)
 , m_pDelegate(NULL)
@@ -198,55 +196,7 @@ CCEGLView::~CCEGLView()
 
 CCSize CCEGLView::getSize()
 {
-	CCSize s;
-//	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
-//	{
-//		if (m_bNotHVGA)
-//		{
-//			s = CCSizeMake(480, 800);
-//		}
-//		else
-//		{
-//			s = CCSizeMake(320, 480);
-//		}
-//	}
-//	else
-//	{
-//		if (m_bNotHVGA)
-//		{
-//			s = CCSizeMake(800, 480);
-//		}
-//		else
-//		{
-//			s = CCSizeMake(480, 320);
-//		}
-//	}
-//
-
-	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
-	{
-	    if (m_bNotHVGA)
-	    {
-	    	s = CCSizeMake(MIN(m_sSizeInPoint.width, m_sSizeInPoint.height), MAX(m_sSizeInPoint.width, m_sSizeInPoint.height));
-	    }
-	    else
-	    {
-	    	s = CCSizeMake(MIN(m_sSizeInPixel.width, m_sSizeInPixel.height), MAX(m_sSizeInPixel.width, m_sSizeInPixel.height));
-	    }
-	}
-	else
-	{
-	    if (m_bNotHVGA)
-	    {
-	    	s = CCSizeMake(MAX(m_sSizeInPoint.width, m_sSizeInPoint.height), MIN(m_sSizeInPoint.width, m_sSizeInPoint.height));
-	    }
-	    else
-	    {
-	    	s = CCSizeMake(MAX(m_sSizeInPixel.width, m_sSizeInPixel.height), MIN(m_sSizeInPixel.width, m_sSizeInPixel.height));
-	    }
-	}
-
-    return s;
+	return CCSize((float)(m_sSizeInPoint.width), (float)(m_sSizeInPoint.height));
 }
 
 CCRect CCEGLView::getFrame()
@@ -313,15 +263,11 @@ int CCEGLView::setDeviceOrientation(int eOritation)
 	{
 		if (m_bNotHVGA)
 		{
-			m_sSizeInPoint.width = 480;
-			m_sSizeInPoint.height = 800;
 			m_sSizeInPixel.width = 480;
 			m_sSizeInPixel.height = 800;
 		}
 		else
 		{
-			m_sSizeInPoint.width = 320;
-			m_sSizeInPoint.height = 480;
 			m_sSizeInPixel.width = 320;
 			m_sSizeInPixel.height = 480;
 		}
@@ -330,25 +276,32 @@ int CCEGLView::setDeviceOrientation(int eOritation)
 	{
 		if (m_bNotHVGA)
 		{
-			m_sSizeInPoint.width = 800;
-			m_sSizeInPoint.height = 480;
 			m_sSizeInPixel.width = 800;
 			m_sSizeInPixel.height = 480;
 		}
 		else
 		{
-			m_sSizeInPoint.width = 480;
-			m_sSizeInPoint.height = 320;
 			m_sSizeInPixel.width = 480;
 			m_sSizeInPixel.height = 320;
 		}
 	}
+
+	// calculate the factor and the rect of viewport
+	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
+		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
+	int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
+	int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
+	m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
+	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
+	m_rcViewPort.size.width = viewPortW;
+	m_rcViewPort.size.height = viewPortH;
+
 	return m_eInitOrientation;
 }
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
-    if (m_bNotHVGA)
+//    if (m_bNotHVGA)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
         glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
@@ -356,18 +309,18 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
-    else
-    {
-        glViewport((GLint)x,
-            (GLint)y,
-            (GLint)w,
-            (GLint)h);
-    }
+//    else
+//    {
+//        glViewport((GLint)x,
+//            (GLint)y,
+//            (GLint)w,
+//            (GLint)h);
+//    }
 }
 
 void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 {
-    if (m_bNotHVGA)
+//    if (m_bNotHVGA)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
         glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
@@ -375,23 +328,23 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
-    else
-    {
-        glScissor((GLint)x,
-            (GLint)y,
-            (GLint)w,
-            (GLint)h);
-    }
+//    else
+//    {
+//        glScissor((GLint)x,
+//            (GLint)y,
+//            (GLint)w,
+//            (GLint)h);
+//    }
 }
 
-void CCEGLView::setIMEKeyboardState(bool /*bOpen*/)
+void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
 }
 
-//bada
-bool
-CCEGLView::Create(Osp::App::Application* pApp)
+bool CCEGLView::Create(Osp::App::Application* pApp, int width, int height)
 {
+	m_sSizeInPoint.width = width;
+	m_sSizeInPoint.height = height;
 	// Construct an XML form
 	Construct(FORM_STYLE_NORMAL);
 	Frame *pFrame = Application::GetInstance()->GetAppFrame()->GetFrame();
@@ -423,16 +376,12 @@ CCEGLView::OnInitializing(void)
 			|| (rc.width == 720 && rc.height == 480))
 	{
 		m_bNotHVGA = false;
-		m_sSizeInPoint.width = 320;
-		m_sSizeInPoint.height = 480;
 		m_sSizeInPixel.width = 320;
 		m_sSizeInPixel.height = 480;
 	}
 	else
 	{
 		m_bNotHVGA = true;
-		m_sSizeInPoint.width = 480;
-		m_sSizeInPoint.height = 800;
 		m_sSizeInPixel.width = 480;
 		m_sSizeInPixel.height = 800;
 	}
@@ -452,8 +401,7 @@ CCEGLView::OnInitializing(void)
 	return r;
 }
 
-result
-CCEGLView::OnTerminating(void)
+result CCEGLView::OnTerminating(void)
 {
 	result r = E_SUCCESS;
 
@@ -472,19 +420,22 @@ void CCEGLView::OnTouchIndicated(const Osp::Ui::Control& source,
 void CCEGLView::OnTouchPressed(const Osp::Ui::Control& source,
 	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
 {
-	AppLog("OnTouchPressed... x = %d, y = %d", currentPosition.x, currentPosition.y);
+	float x, y;
+	if (!m_bNotHVGA)
+	{
+		x = currentPosition.x * 2 / 3;
+		y = currentPosition.y * 2 / 3;
+	}
+	else
+	{
+		x = currentPosition.x;
+		y = currentPosition.y;
+	}
+	AppLog("OnTouchPressed... x = %f, y = %f", x, y);
 	if (m_pDelegate && m_pTouch)
 	{
 		m_bCaptured = true;
-		if (m_bNotHVGA)
-		{
-			m_pTouch->SetTouchInfo(0, (float)currentPosition.x, (float)currentPosition.y);
-		}
-		else
-		{
-			m_pTouch->SetTouchInfo(0, (float)currentPosition.x*2/3, (float)currentPosition.y*2/3);
-		}
-
+		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 		m_pSet->addObject(m_pTouch);
 		m_pDelegate->touchesBegan(m_pSet, NULL);
 	}
@@ -503,18 +454,22 @@ void CCEGLView::OnTouchLongPressed(const Osp::Ui::Control& source,
 void CCEGLView::OnTouchReleased(const Osp::Ui::Control& source,
 	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
 {
-	AppLog("OnTouchReleased... x = %d, y = %d", currentPosition.x, currentPosition.y);
+	float x, y;
+	if (!m_bNotHVGA)
+	{
+		x = currentPosition.x * 2 / 3;
+		y = currentPosition.y * 2 / 3;
+	}
+	else
+	{
+		x = currentPosition.x;
+		y = currentPosition.y;
+	}
+
+	AppLog("OnTouchReleased... x = %f, y = %f", x, y);
 	if (m_bCaptured)
 	{
-		if (m_bNotHVGA)
-		{
-			m_pTouch->SetTouchInfo(0, (float)currentPosition.x, (float)currentPosition.y);
-		}
-		else
-		{
-			m_pTouch->SetTouchInfo(0, (float)currentPosition.x*2/3, (float)currentPosition.y*2/3);
-		}
-
+		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
 		m_pDelegate->touchesEnded(m_pSet, NULL);
 		m_pSet->removeObject(m_pTouch);
 		m_bCaptured = false;
@@ -525,17 +480,21 @@ void CCEGLView::OnTouchReleased(const Osp::Ui::Control& source,
 void CCEGLView::OnTouchMoved(const Osp::Ui::Control& source,
 	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
 {
-	AppLog("OnTouchMoved... x = %d, y = %d", currentPosition.x, currentPosition.y);
+	float x, y;
+	if (!m_bNotHVGA)
+	{
+		x = currentPosition.x * 2 / 3;
+		y = currentPosition.y * 2 / 3;
+	}
+	else
+	{
+		x = currentPosition.x;
+		y = currentPosition.y;
+	}
+	AppLog("OnTouchMoved... x = %f, y = %f", x, y);
 	if (m_bCaptured)
 	{
-		if (m_bNotHVGA)
-		{
-			m_pTouch->SetTouchInfo(0, (float)currentPosition.x, (float)currentPosition.y);
-		}
-		else
-		{
-			m_pTouch->SetTouchInfo(0, (float)currentPosition.x*2/3, (float)currentPosition.y*2/3);
-		}
+		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
         m_pDelegate->touchesMoved(m_pSet, NULL);
 	}
 }

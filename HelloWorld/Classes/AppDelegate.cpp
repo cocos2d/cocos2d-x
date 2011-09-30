@@ -69,6 +69,15 @@ bool AppDelegate::initInstance() {
 		CCFileUtils::setResourcePath("../Resource/");
 
 #endif  // CC_PLATFORM_LINUX
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+
+		CCEGLView * pMainWnd = new CCEGLView();
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this, 480, 320));
+		CCFileUtils::setResourcePath("/Res/");
+
+#endif  // CC_PLATFORM_BADA
+
 		bRet = true;
 	} while (0);
 	return bRet;
@@ -85,7 +94,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	// turn on display FPS
 	pDirector->setDisplayFPS(true);
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+	pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
+#endif
 	// pDirector->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
 
 	// set FPS. the default value is 1.0/60 if you don't call this

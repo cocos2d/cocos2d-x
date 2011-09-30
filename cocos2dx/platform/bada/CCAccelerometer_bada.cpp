@@ -31,8 +31,11 @@ NS_CC_BEGIN;
 
 CCAccelerometer* CCAccelerometer::m_spCCAccelerometer = NULL;
 
-CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
+CCAccelerometer::CCAccelerometer() :
+  m_pAccelDelegate(NULL)
+, m_pSensor(NULL)
 {
+
 }
 
 CCAccelerometer::~CCAccelerometer() 
@@ -52,6 +55,14 @@ CCAccelerometer* CCAccelerometer::sharedAccelerometer()
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 {
 	m_pAccelDelegate = pDelegate;
+	if (pDelegate)
+	{
+		setEnable(true);
+	}
+	else
+	{
+		setEnable(false);
+	}
 }
 
 void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData, result r)
@@ -64,14 +75,47 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 	sensorData.GetValue((SensorDataKey)ACCELERATION_DATA_KEY_Y, y);
 	sensorData.GetValue((SensorDataKey)ACCELERATION_DATA_KEY_Z, z);
 
+	// only consider land postion, to be continued.
 	CCAcceleration AccValue;
-	AccValue.x = -x;
-	AccValue.y = -y;
-	AccValue.z = -z;
+	AccValue.x = y;
+	AccValue.y = -x;
+	AccValue.z = z;
 	AccValue.timestamp = timeStamp;
 
 	m_pAccelDelegate->didAccelerate(&AccValue);
-	AppLog("####################TimeStamp:[%d], Accel.x,y,z:[%f,%f,%f]", timeStamp, x, y, z);
+	AppLog("##TimeStamp:[%d], Accel.x,y,z:[%f,%f,%f]", timeStamp, x, y, z);
+}
+
+void CCAccelerometer::setEnable(bool bEnable)
+{
+	if (m_pSensor != NULL)
+	{
+		m_pSensor->RemoveSensorListener(*this);
+	}
+	CC_SAFE_DELETE(m_pSensor);
+	if (bEnable)
+	{
+		long	interval = 10;
+		bool	available = false;
+		result	r = E_INVALID_STATE;
+		m_pSensor = new SensorManager();
+		m_pSensor->Construct();
+
+		available = m_pSensor->IsAvailable(SENSOR_TYPE_ACCELERATION);
+
+		if (available)
+		{
+			long	intervalTemp = 0;
+			m_pSensor->GetMaxInterval(SENSOR_TYPE_ACCELERATION, intervalTemp);
+			if (interval > intervalTemp)
+				interval = intervalTemp;
+			m_pSensor->GetMinInterval(SENSOR_TYPE_ACCELERATION, intervalTemp);
+			if (interval < intervalTemp)
+				interval = intervalTemp;
+
+			r = m_pSensor->AddSensorListener(*this, SENSOR_TYPE_ACCELERATION, interval, false);
+		}
+	}
 }
 
 NS_CC_END;

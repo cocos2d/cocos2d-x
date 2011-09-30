@@ -78,7 +78,7 @@ bool AppDelegate::initInstance()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 
 		CCEGLView * pMainWnd = new CCEGLView();
-		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this));
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this, 480, 320));
 		CCFileUtils::setResourcePath("/Res/");
 
 #endif  // CC_PLATFORM_BADA
