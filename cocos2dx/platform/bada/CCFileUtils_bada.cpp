@@ -30,7 +30,7 @@ using namespace std;
 
 NS_CC_BEGIN;
 // record the resource path
-static string s_strResourcePath = "";
+static string s_strResourcePath = "/Res/";
 
 void CCFileUtils::setResourcePath(const char* pszResourcePath)
 {
