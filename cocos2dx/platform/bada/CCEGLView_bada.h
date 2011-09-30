@@ -68,8 +68,12 @@ public:
 	*/
 	static CCEGLView& sharedOpenGLView();
 
-	//bada
-	bool Create(Osp::App::Application* pApp);
+	/*
+	 * param
+	 *   width[in]: resource width
+	 *   height[in]: resource height
+	 */
+	bool Create(Osp::App::Application* pApp, int width, int height);
 	virtual result OnInitializing(void);
 	virtual result OnTerminating(void);
 

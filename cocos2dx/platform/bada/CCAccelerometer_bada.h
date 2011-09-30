@@ -45,8 +45,11 @@ public:
     void setDelegate(CCAccelerometerDelegate* pDelegate);
     virtual void OnDataReceived(Osp::Uix::SensorType sensorType, Osp::Uix::SensorData& sensorData , result r);
 private:
+    void setEnable(bool bEnable);
+
 	static CCAccelerometer* m_spCCAccelerometer;
 	CCAccelerometerDelegate* m_pAccelDelegate;
+	Osp::Uix::SensorManager* m_pSensor;
 };
 
 }//namespace   cocos2d 
