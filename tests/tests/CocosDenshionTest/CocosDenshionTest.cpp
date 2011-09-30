@@ -5,16 +5,12 @@
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	#define EFFECT_FILE		"effect2.ogg"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-	#define EFFECT_FILE		"/Res/effect1.wav"
 #else
-	#define EFFECT_FILE		"gui_close.WAV"//"effect1.wav"
+	#define EFFECT_FILE		"effect1.wav"
 #endif // CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	#define MUSIC_FILE		"music.mid"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-	#define MUSIC_FILE		"/Res/background.mp3"
 #else
 	#define MUSIC_FILE		"background.mp3"
 #endif // CC_PLATFORM_WIN32
