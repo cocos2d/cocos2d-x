@@ -5,7 +5,7 @@ class CCTimer : public CCObject
 
 	CCTimer(void);
 
-	
+
 	ccTime getInterval(void);
 
 	void setInterval(ccTime fInterval);
@@ -19,9 +19,9 @@ class CCTimer : public CCObject
 	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
 
 	//static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-	
+
 	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
-	bool initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds);
+	bool initWithScriptFuncName(int FUNCTION_OBJECT, ccTime fSeconds);
 
 	//SEL_SCHEDULE m_pfnSelector;
 	ccTime m_fInterval;
@@ -33,7 +33,7 @@ class CCTimer : public CCObject
 class CCScheduler : public CCObject
 {
     ~CCScheduler(void);
-	
+
 	ccTime getTimeScale(void);
 
 	void setTimeScale(ccTime fTimeScale);
@@ -42,8 +42,12 @@ class CCScheduler : public CCObject
 	void tick(ccTime dt);
 
 	void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
+
 	void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
+	void scheduleScriptFunc(int FUNCTION_OBJECT, ccTime fInterval, bool bPaused);
 	void unscheduleScriptFunc(const char *pszFuncName);
+	void unscheduleScriptFunc(int FUNCTION_OBJECT);
+
 	void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
 
 	void unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget);
@@ -51,7 +55,7 @@ class CCScheduler : public CCObject
 	void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
 
 	void unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget);
-	
+
 	void unscheduleAllSelectors(void);
 
 
@@ -70,6 +74,6 @@ class CCScheduler : public CCObject
 
 
 };
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 
