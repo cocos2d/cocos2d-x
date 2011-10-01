@@ -10,20 +10,21 @@ namespace cocos2d{
 
 
 	class CCMenuItem : public CCNode
-	{				 
+	{
 
 	public:
 		CCMenuItem();
 
-		static CCMenuItem * itemWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);		
+		static CCMenuItem * itemWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
 		bool initWithTarget(SelectorProtocol *rec, SEL_MenuHandler selector);
 
 		CCRect rect();
-		void activate();		
-		void selected();		
+		void activate();
+		void selected();
 		void unselected();
-		
+
 		void registerScriptHandler(const char* pszFunctionName);
+		void registerScriptHandler(int FUNCTION_OBJECT);
 
 	};
 
@@ -31,7 +32,7 @@ namespace cocos2d{
 	{
 
 	public:
-		CCMenuItemLabel();		
+		CCMenuItemLabel();
 
 		static CCMenuItemLabel * itemWithLabel(CCNode*label, SelectorProtocol* target, SEL_MenuHandler selector);
 		static CCMenuItemLabel* itemWithLabel(CCNode *label);
@@ -42,7 +43,7 @@ namespace cocos2d{
 
 		virtual void activate();
 		virtual void selected();
-		virtual void unselected();		
+		virtual void unselected();
 		virtual void setIsEnabled(bool enabled);
 		virtual void setOpacity(GLubyte opacity);
 		virtual GLubyte getOpacity();
@@ -58,7 +59,7 @@ namespace cocos2d{
 	class  CCMenuItemAtlasFont : public CCMenuItemLabel
 	{
 
-		CCMenuItemAtlasFont();		
+		CCMenuItemAtlasFont();
 		static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap);
 		/** creates a menu item from a string and atlas. Use it with MenuItemToggle */
 		static CCMenuItemAtlasFont* itemFromString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, SelectorProtocol* target, SEL_MenuHandler selector);
@@ -88,15 +89,15 @@ namespace cocos2d{
 
 	class  CCMenuItemSprite : public CCMenuItem, public CCRGBAProtocol
 	{
-		CCMenuItemSprite();		
-		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite);		
-		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, SelectorProtocol* target, SEL_MenuHandler selector);		
+		CCMenuItemSprite();
+		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite);
+		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, SelectorProtocol* target, SEL_MenuHandler selector);
 		static CCMenuItemSprite * itemFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
 		bool initFromNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, SelectorProtocol* target, SEL_MenuHandler selector);
 		void setColor(ccColor3B color);
 		ccColor3B getColor();
 		void setOpacity(GLubyte opacity);
-		GLubyte getOpacity();      
+		GLubyte getOpacity();
 		void selected();
 		void unselected();
 		void setIsEnabled(bool bEnabled);
@@ -107,10 +108,10 @@ namespace cocos2d{
 	class  CCMenuItemImage : public CCMenuItemSprite
 	{
 
-		CCMenuItemImage();	
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage);		
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);		
-		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, SelectorProtocol* target, SEL_MenuHandler selector);		
+		CCMenuItemImage();
+		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage);
+		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
+		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, SelectorProtocol* target, SEL_MenuHandler selector);
 		static CCMenuItemImage* itemFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
 		bool initFromNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, SelectorProtocol* target, SEL_MenuHandler selector);
 		void setColor(ccColor3B color);
@@ -124,11 +125,11 @@ namespace cocos2d{
 	{
 
 		CCMenuItemToggle();
-		
+
 		static CCMenuItemToggle* itemWithItem(CCMenuItem *item);
 		bool initWithItem(CCMenuItem *item);
 		void addSubItem(CCMenuItem *item);
-		
+
 		CCMenuItem* selectedItem();
 		// super methods
 		virtual void activate();
