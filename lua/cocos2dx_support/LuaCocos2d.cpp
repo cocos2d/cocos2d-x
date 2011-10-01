@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 09/27/11 23:04:35.
+** Generated automatically by tolua++-1.0.92 on Sat Oct  1 22:43:04 2011.
 */
 
 #include "LuaCocos2d.h"
@@ -12,10 +12,10 @@
 
 #include "tolua++.h"
 
-using namespace cocos2d;
-
 /* Exported function */
 TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);
+
+#include "LuaCocos2d.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
