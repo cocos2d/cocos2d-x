@@ -859,7 +859,7 @@ void OpenGLESState::uploadUniforms()
 
 void OpenGLESState::setCurrentProgram()
 {
-	if (OpenGLESConfig::USE_ONLY_UBER_SHADER) {
+	if (OpenGLESConfig::OPENGLESCONFIG_USE_ONLY_UBER_SHADER) {
 		static bool uberShaderCompiled = false;
 		if (!uberShaderCompiled) {
 			std::vector<ShaderSource *> vertexShaderSources;
@@ -954,7 +954,7 @@ void OpenGLESState::setCurrentProgram()
 		
 		addDefinesToShaderSources(vertexShaderSources, fragmentShaderSources);
 		
-		if (OpenGLESConfig::DEBUG) {
+		if (OpenGLESConfig::OPENGLESCONFIG_DEBUG) {
 			OPENGLES_LOG_MESSAGE("Using shader files:");
 			for (size_t i = 0; i < vertexShaderSources.size(); i++)
 			{

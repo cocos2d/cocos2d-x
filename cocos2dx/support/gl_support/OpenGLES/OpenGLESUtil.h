@@ -31,7 +31,7 @@
 #define OPENGLES_PRINT_BITS(X)
 #endif
 
-#define OPENGLES_LOG_MESSAGE(...) if (OpenGLES::OpenGLESConfig::DEBUG) { OpenGLES::OpenGLESUtil::logMessage(__VA_ARGS__); }
+#define OPENGLES_LOG_MESSAGE(...) if (OpenGLES::OpenGLESConfig::OPENGLESCONFIG_DEBUG) { OpenGLES::OpenGLESUtil::logMessage(__VA_ARGS__); }
 
 #include "OpenGLESContext.h"
 #include "OpenGLESString.h"

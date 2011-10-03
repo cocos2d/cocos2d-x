@@ -54,7 +54,7 @@ GLuint Shader::compile()
 	GLint compiled;
 	glGetShaderiv(id, GL_COMPILE_STATUS, &compiled);
 
-	if (!compiled || OpenGLESConfig::DEBUG)
+	if (!compiled || OpenGLESConfig::OPENGLESCONFIG_DEBUG)
 	{
 		GLint infoLength;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLength);

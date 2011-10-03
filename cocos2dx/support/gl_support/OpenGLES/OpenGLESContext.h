@@ -42,6 +42,7 @@ typedef long             GLintptr;
 typedef long             GLsizeiptr;
 
 /* Extensions */
+#if !defined (__ANDROID__)
 #define GL_OES_byte_coordinates           1
 #define GL_OES_compressed_paletted_texture 1
 #define GL_OES_draw_texture               1
@@ -52,6 +53,7 @@ typedef long             GLsizeiptr;
 #define GL_OES_point_sprite               1
 #define GL_OES_read_format                1
 #define GL_OES_single_precision           1
+#endif
 
 /* ClearBufferMask */
 #define GL_DEPTH_BUFFER_BIT               0x00000100
