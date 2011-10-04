@@ -38,8 +38,13 @@ typedef int             GLfixed;
 typedef int             GLclampx;
 
 /* GL types for handling large vertex buffer objects */
-typedef long             GLintptr;
-typedef long             GLsizeiptr;
+#if !defined (__ANDROID__)
+typedef int             GLintptr;
+typedef int             GLsizeiptr;
+#else
+typedef signed   long  int GLintptr;
+typedef signed   long  int  GLsizeiptr;
+#endif
 
 /* Extensions */
 #if !defined (__ANDROID__)
