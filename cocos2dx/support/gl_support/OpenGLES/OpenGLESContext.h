@@ -19,6 +19,7 @@
 
 #include "OpenGLESConfig.h"
 #include "OpenGLESImplementation.h"
+#include "ccConfig.h"
 
 typedef void            GLvoid;
 typedef char            GLchar;
@@ -39,8 +40,13 @@ typedef int             GLclampx;
 
 /* GL types for handling large vertex buffer objects */
 #if !defined (__ANDROID__)
+#ifdef CC_OPENGLES20_SUPPORT
+typedef long             GLintptr;
+typedef long             GLsizeiptr;
+#else
 typedef int             GLintptr;
 typedef int             GLsizeiptr;
+#endif
 #else
 typedef signed   long  int GLintptr;
 typedef signed   long  int  GLsizeiptr;

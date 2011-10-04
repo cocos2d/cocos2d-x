@@ -131,14 +131,14 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
     if (m_bNotHVGA)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
             (GLint)(y * factor) + m_rcViewPort.origin.y,
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
     else
     {
-        glViewport((GLint)x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport((GLint)x,
             (GLint)y,
             (GLint)w,
             (GLint)h);
@@ -150,14 +150,14 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
     if (m_bNotHVGA)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
             (GLint)(y * factor) + m_rcViewPort.origin.y,
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
     else
     {
-        glScissor((GLint)x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glScissor((GLint)x,
             (GLint)y,
             (GLint)w,
             (GLint)h);
