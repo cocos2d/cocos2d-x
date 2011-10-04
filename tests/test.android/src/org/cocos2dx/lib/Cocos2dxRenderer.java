@@ -27,14 +27,18 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	private final static long NANOSECONDSPERSECOND = 1000000000L;
 	private final static long NANOSECONDSPERMINISECOND = 1000000;
 	private static long animationInterval = (long)(1.0 / 60 * NANOSECONDSPERSECOND);
 	private long last;
+	private static final String TAG = Cocos2dxRenderer.class.getCanonicalName();
 	
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) { 	
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+    	String versions = gl.glGetString(GL10.GL_VERSION);
+    	Log.i(TAG, "GL_VERSION: " + versions);    	
     	nativeInit(Cocos2dxActivity.screenWidth, Cocos2dxActivity.screenHeight); 
     	last = System.nanoTime();
     }

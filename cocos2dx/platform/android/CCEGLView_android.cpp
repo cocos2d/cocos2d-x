@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCEGLView_android.h"
-//#include "GLES/gl.h"
+#include <GLES/gl.h>
 #include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "jni/MessageJni.h"
 
 #include <stdlib.h>
+#include "support/gl_support/OpenGLES/OpenGLES11/OpenGLES11Context.h"
+#include "support/gl_support/OpenGLES/OpenGLES20/OpenGLES20Context.h"
 
 namespace cocos2d {
 
@@ -167,6 +169,19 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
 	static CCEGLView instance;
+	
+	const char* version = (const char*)glGetString( GL_VERSION );
+	CCLOG("GL_VERSION: %s", version);
+	
+	OpenGLES::OpenGLESContext* glContext;
+	if (strcmp(version, "OpenGL ES 2.0") != 0) {
+		glContext = new OpenGLES::OpenGLES1::OpenGLES11Context;
+	} else {
+		glContext = new OpenGLES::OpenGLES2::OpenGLES20Context;		
+	}
+	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
+	director->setGLContext(glContext);		
+		
 	return instance;
 }
 
