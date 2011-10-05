@@ -160,6 +160,7 @@ NS_CC_END;
 #include <android/log.h>
 #include <stdio.h>
 #include <jni.h>
+#include <string>
 
 #include "android/jni/MessageJni.h"
 
@@ -167,14 +168,35 @@ NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
+	char buf[16 * 1024];
 
 	va_list args;
 	va_start(args, pszFormat);    	
-	vsprintf(buf, pszFormat, args);
+	vsnprintf(buf, sizeof(buf), pszFormat, args);
 	va_end(args);
 
-	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+	const int bufLen = 1000;
+	int pos = 0;
+	int size = strlen(buf);
+	while (size > 0) {
+		char text[bufLen + 1];
+		
+		int ts = bufLen;
+		char* cr = strstr(buf + pos, "\n");
+		if (cr) {
+			int crPos = strstr(buf + pos, "\n") - (buf + pos) + 1;
+			ts = (crPos < bufLen ? crPos : bufLen);
+		}
+		int s = std::min(bufLen, ts);
+		text[s] = 0;
+		memcpy(text, buf + pos, s);
+
+		__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  text);
+		
+		pos += ts;
+		size -= ts;
+   }
+			   
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)

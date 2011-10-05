@@ -5,10 +5,8 @@
 #endif
 
 
-// Uniforms
 uniform sampler2D u_texture;
 
-// Varyings
 varying vec2 v_texCoord;
 
 void main() 

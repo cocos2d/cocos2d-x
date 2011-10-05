@@ -144,6 +144,6 @@ LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/l
                  -ljpeg
 
 # define the macro to compile through support/zip_support/ioapi.c                
-LOCAL_CFLAGS := -DUSE_FILE32API
+LOCAL_CFLAGS := -DUSE_FILE32API -DDEBUG -DCOCOS2D_DEBUG=1
                                  
 include $(BUILD_SHARED_LIBRARY)

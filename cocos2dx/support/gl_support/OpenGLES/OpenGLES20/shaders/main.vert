@@ -1,5 +1,5 @@
-#define GL_FASTEST 0x1101
-#define GL_NICEST 0x1102
+#define OGL_FASTEST 0x1101
+#define OGL_NICEST 0x1102
 
 #if !defined(LIGHTING_ENABLED)
 	#define LIGHTING_ENABLED -1
@@ -92,12 +92,10 @@
 precision highp float;
 precision highp int;
 
-// Attributes
 attribute vec4 a_position;
 attribute vec4 a_color;
 attribute vec3 a_normal;
 
-// Uniforms
 uniform bool u_positionEnabled;
 uniform bool u_normalEnabled;
 uniform bool u_colorEnabled;
@@ -112,23 +110,19 @@ uniform bool u_fogEnabled;
 uniform int u_fogHint;
 uniform int u_lightingHint;
 
-// Varyings
 varying vec4 v_frontColor;
 varying vec4 v_backColor;
 varying float v_fogFactor;
 varying float v_eyeDistance;
 
-// Shader constants
 const int c_zero = 0;
 const int c_one = 1;
 const float c_zerof = 0.0;
 const float c_onef = 1.0;
 
-// Shader variables
 vec3 normal;
 vec4 vertexPositionInEye;
 
-// Functions
 void calcLighting();
 float calcFogFactor(float distanceToEye);
 void calcClipPlanes();
@@ -236,12 +230,12 @@ void main()
 	if (u_fogEnabled) {
 	#endif
 		
-	#if FOG_HINT == GL_FASTEST
+	#if FOG_HINT == OGL_FASTEST
 		v_fogFactor = calcFogFactor(-vertexPositionInEye.z);
-	#elif FOG_HINT == GL_NICEST
+	#elif FOG_HINT == OGL_NICEST
 		v_eyeDistance = -vertexPositionInEye.z;
 	#elif FOG_HINT == -1
-		if (u_fogHint == GL_FASTEST) {
+		if (u_fogHint == OGL_FASTEST) {
 			v_fogFactor = calcFogFactor(-vertexPositionInEye.z);
 		} else {
 			v_eyeDistance = -vertexPositionInEye.z;

@@ -41,6 +41,15 @@ CCEGLView::CCEGLView()
       m_pDelegate(NULL),
       m_fScreenScaleFactor(1.0)  
 {
+	const char* version = (const char*)glGetString( GL_VERSION );	
+	OpenGLES::OpenGLESContext* glContext;
+	if (strcmp(version, "OpenGL ES 2.0") != 0) {
+		glContext = new OpenGLES::OpenGLES1::OpenGLES11Context;
+	} else {
+		glContext = new OpenGLES::OpenGLES2::OpenGLES20Context;		
+	}
+	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
+	director->setGLContext(glContext);	
 }
 
 void CCEGLView::setFrameWidthAndHeight(int width, int height)
@@ -170,18 +179,6 @@ CCEGLView& CCEGLView::sharedOpenGLView()
 {
 	static CCEGLView instance;
 	
-	const char* version = (const char*)glGetString( GL_VERSION );
-	CCLOG("GL_VERSION: %s", version);
-	
-	OpenGLES::OpenGLESContext* glContext;
-	if (strcmp(version, "OpenGL ES 2.0") != 0) {
-		glContext = new OpenGLES::OpenGLES1::OpenGLES11Context;
-	} else {
-		glContext = new OpenGLES::OpenGLES2::OpenGLES20Context;		
-	}
-	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
-	director->setGLContext(glContext);		
-		
 	return instance;
 }
 

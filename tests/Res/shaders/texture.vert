@@ -1,5 +1,4 @@
 
-// Uniforms
 uniform bool u_texture0Enabled;
 uniform bool u_texture1Enabled;
 uniform bool u_texture2Enabled;
@@ -7,7 +6,6 @@ uniform bool u_texCoord0Enabled;
 uniform bool u_texCoord1Enabled;
 uniform bool u_texCoord2Enabled;
 
-// Functions
 void calcTexture0Coordinates();
 void calcTexture1Coordinates();
 void calcTexture2Coordinates();

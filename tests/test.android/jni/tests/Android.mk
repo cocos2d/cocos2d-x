@@ -109,5 +109,7 @@ LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/../../libs/armeabi) \
                 -lbox2d -lchipmunk \
                 -L$(call host-path, $(LOCAL_PATH)/../../../../cocos2dx/platform/third_party/android/libraries) -lcurl
             
+LOCAL_CFLAGS := -DDEBUG -DCOCOS2D_DEBUG=1
+			
 include $(BUILD_SHARED_LIBRARY)
                    

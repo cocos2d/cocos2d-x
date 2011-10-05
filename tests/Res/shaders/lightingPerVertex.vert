@@ -1,5 +1,4 @@
 
-// Functions
 vec4 calcDirectionalLight(Light light);
 vec4 calcDirectionalLightWithLocalViewer(Light light);
 vec4 calcPointLight(Light light);
@@ -13,7 +12,6 @@ vec4 calcLight(Light light);
 
 vec4 calcPerVertexLighting()
 {	
-	// TODO: Test if faster with vec3 because alpha is just u_material.diffuse.a
 	vec4 color = u_material.ambient * u_globalAmbientColor;
 	color += u_material.emission;
 	
@@ -136,7 +134,7 @@ vec4 calcDirectionalLight(Light light)
 	vec3 lightVector = light.position.xyz;
 	vec3 eyeVector = vec3(c_zerof, c_zerof, c_onef);
 	
-	vec3 halfVector = normalize(eyeVector + lightVector); // TODO: This could be precomputed
+	vec3 halfVector = normalize(eyeVector + lightVector);
 	float cosL = max(c_zerof, dot(normal, lightVector));
 	float cosH = dot(normal, halfVector);
 	
@@ -171,7 +169,6 @@ vec4 calcPointLight(Light light)
 {
 	vec3 lightVector = light.position.xyz - vertexPositionInEye.xyz;
 	
-	// TODO: if clause here because of heavy computation?
 	float attenuationFactor = calcBasicAttenuationFactor(light, lightVector);
 	
 	lightVector = normalize(lightVector);
@@ -198,7 +195,6 @@ vec4 calcPointLightWithLocalViewer(Light light)
 {
 	vec3 lightVector = light.position.xyz - vertexPositionInEye.xyz;
 	
-	// TODO: if clause here because of heavy computation?
 	float attenuationFactor = calcBasicAttenuationFactor(light, lightVector);
 	
 	lightVector = normalize(lightVector);
@@ -224,7 +220,6 @@ vec4 calcSpotLight(Light light)
 {
 	vec3 lightVector = light.position.xyz - vertexPositionInEye.xyz;
 	
-	// TODO: if clause here because of heavy computation?
 	float attenuationFactor = calcBasicAttenuationFactor(light, lightVector);
 	attenuationFactor *= calcSpotFactor(light, lightVector);
 	
@@ -251,7 +246,6 @@ vec4 calcSpotLightWithLocalViewer(Light light)
 {
 	vec3 lightVector = light.position.xyz - vertexPositionInEye.xyz;
 	
-	// TODO: if clause here because of heavy computation?
 	float attenuationFactor = calcBasicAttenuationFactor(light, lightVector);
 	attenuationFactor *= calcSpotFactor(light, lightVector);
 	

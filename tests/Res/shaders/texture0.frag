@@ -1,5 +1,3 @@
-
-
 #if !defined(TEXCOORD0_ENABLED)
 	#define TEXCOORD0_ENABLED -1
 #endif
@@ -68,7 +66,6 @@
 	#define TEXTURE0_ENV_OPERAND2_ALPHA -1
 #endif
 
-// Uniforms
 uniform sampler2D u_texture0Sampler;
 uniform int u_texture0Format;
 uniform bool u_texCoord0Enabled;
@@ -80,7 +77,6 @@ uniform float u_texture0EnvRGBScale;
 uniform float u_texture0EnvAlphaScale;
 uniform float u_texture0EnvBlurAmount;
 
-// Varyings
 varying vec4 v_texCoord0;
 
 void fetchTexture0Color()
@@ -111,99 +107,97 @@ void fetchTexture0Color()
 
 void calcTexture0Environment(inout vec4 color)
 {	
-#if TEXTURE0_ENV_MODE == GL_MODULATE
-	#if TEXTURE0_FORMAT == GL_ALPHA
+#if TEXTURE0_ENV_MODE == OGL_MODULATE
+	#if TEXTURE0_FORMAT == OGL_ALPHA
 		color.a = color.a * texture0Color.a;
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE
 		color.rgb = color.rgb * texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE_ALPHA
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE_ALPHA
 		color = color * texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_RGB
+	#elif TEXTURE0_FORMAT == OGL_RGB
 		color.rgb = color.rgb * texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_RGBA
+	#elif TEXTURE0_FORMAT == OGL_RGBA
 		color = color * texture0Color;
 	#endif
-#elif TEXTURE0_ENV_MODE == GL_ADD
-	#if TEXTURE0_FORMAT == GL_ALPHA
+#elif TEXTURE0_ENV_MODE == OGL_ADD
+	#if TEXTURE0_FORMAT == OGL_ALPHA
 		color.a = color.a * texture0Color.a;
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE
 		color.rgb = color.rgb + texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE_ALPHA
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE_ALPHA
 		color.rgb = color.rgb + texture0Color.rgb;
 		color.a = color.a * texture0Color.a;
-	#elif TEXTURE0_FORMAT == GL_RGB
+	#elif TEXTURE0_FORMAT == OGL_RGB
 		color.rgb = color.rgb + texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_RGBA
+	#elif TEXTURE0_FORMAT == OGL_RGBA
 		color.rgb = color.rgb + texture0Color.rgb;
 		color.a = color.a * texture0Color.a;
 	#endif
-#elif TEXTURE0_ENV_MODE == GL_DECAL
-	#if TEXTURE0_FORMAT == GL_ALPHA
-		// undefined
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE
-		// undefined
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE_ALPHA
-		// undefined
-	#elif TEXTURE0_FORMAT == GL_RGB
+#elif TEXTURE0_ENV_MODE == OGL_DECAL
+
+	#if TEXTURE0_FORMAT == OGL_ALPHA	
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE_ALPHA
+	#elif TEXTURE0_FORMAT == OGL_RGB
 		color.rgb = texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_RGBA
+	#elif TEXTURE0_FORMAT == OGL_RGBA
 		color.rgb = mix(color.rgb, texture0Color.rgb, texture0Color.a);
 	#endif
-#elif TEXTURE0_ENV_MODE == GL_BLEND
-	#if TEXTURE0_FORMAT == GL_ALPHA
+#elif TEXTURE0_ENV_MODE == OGL_BLEND
+
+	#if TEXTURE0_FORMAT == OGL_ALPHA
 		color.a = color.a * texture0Color.a;
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE
 		color.rgb = mix(color.rgb, u_texture0EnvColor.rgb, texture0Color.rgb);
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE_ALPHA
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE_ALPHA
 		color.rgb = mix(color.rgb, u_texture0EnvColor.rgb, texture0Color.rgb);
 		color.a = color.a * texture0Color.a;
-	#elif TEXTURE0_FORMAT == GL_RGB
+	#elif TEXTURE0_FORMAT == OGL_RGB
 		color.rgb = mix(color.rgb, u_texture0EnvColor.rgb, texture0Color.rgb);
-	#elif TEXTURE0_FORMAT == GL_RGBA
+	#elif TEXTURE0_FORMAT == OGL_RGBA
 		color.rgb = mix(color.rgb, u_texture0EnvColor.rgb, texture0Color.rgb);
 		color.a = color.a * texture0Color.a;
 	#endif
-#elif TEXTURE0_ENV_MODE == GL_REPLACE
-	#if TEXTURE0_FORMAT == GL_ALPHA
+#elif TEXTURE0_ENV_MODE == OGL_REPLACE
+
+	#if TEXTURE0_FORMAT == OGL_ALPHA
 		color.a = texture0Color.a;
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE
 		color.rgb = texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_LUMINANCE_ALPHA
+	#elif TEXTURE0_FORMAT == OGL_LUMINANCE_ALPHA
 		color = texture0Color;
-	#elif TEXTURE0_FORMAT == GL_RGB
+	#elif TEXTURE0_FORMAT == OGL_RGB
 		color.rgb = texture0Color.rgb;
-	#elif TEXTURE0_FORMAT == GL_RGBA
+	#elif TEXTURE0_FORMAT == OGL_RGBA
 		color = texture0Color;
 	#endif
-#elif TEXTURE0_ENV_MODE == GL_BLUR
+#elif TEXTURE0_ENV_MODE == OGL_BLUR
 	vec4 sample0 = texture0Color;
 	vec4 sample1 = texture2D(u_texture0Sampler, vec2(v_texCoord0.s - u_texture0EnvBlurAmount, v_texCoord0.t - u_texture0EnvBlurAmount));
 	vec4 sample2 = texture2D(u_texture0Sampler, vec2(v_texCoord0.s + u_texture0EnvBlurAmount, v_texCoord0.t + u_texture0EnvBlurAmount));
 	vec4 sample3 = texture2D(u_texture0Sampler, vec2(v_texCoord0.s - u_texture0EnvBlurAmount, v_texCoord0.t + u_texture0EnvBlurAmount));
 	vec4 sample4 = texture2D(u_texture0Sampler, vec2(v_texCoord0.s + u_texture0EnvBlurAmount, v_texCoord0.t - u_texture0EnvBlurAmount));
 	color = (sample0 + sample1 + sample2 + sample3 + sample4) / 5.0;
-#elif TEXTURE0_ENV_MODE == GL_COMBINE
+#elif TEXTURE0_ENV_MODE == OGL_COMBINE
 	vec4 arg0;
 	vec4 arg1;
 	vec4 arg2;
 
-	// SRC RGB
 	#if TEXTURE0_ENV_SRC0_RGB == 0
 		arg0.rgb = texture0Color.rgb;
 	#elif TEXTURE0_ENV_SRC0_RGB == 1
 		arg0.rgb = texture1Color.rgb;
 	#elif TEXTURE0_ENV_SRC0_RGB == 2
 		arg0.rgb = texture2Color.rgb;
-	#elif TEXTURE0_ENV_SRC0_RGB == GL_CONSTANT
+	#elif TEXTURE0_ENV_SRC0_RGB == OGL_CONSTANT
 		arg0.rgb = u_texture0EnvColor.rgb;
-	#elif TEXTURE0_ENV_SRC0_RGB == GL_PRIMARY_COLOR
+	#elif TEXTURE0_ENV_SRC0_RGB == OGL_PRIMARY_COLOR
 		arg0.rgb = v_frontColor.rgb;
-	#elif TEXTURE0_ENV_SRC0_RGB == GL_PREVIOUS
+	#elif TEXTURE0_ENV_SRC0_RGB == OGL_PREVIOUS
 		arg0.rgb = color.rgb;
 	#endif
 
-	// TODO: GL_SRC_ALPHA & GL_ONE_MINUS_SRC_ALPHA exists in SDK but no idea what they are supposed to do in this context..
-	#if TEXTURE0_ENV_OPERAND0_RGB == GL_ONE_MINUS_SRC_COLOR
+	#if TEXTURE0_ENV_OPERAND0_RGB == OGL_ONE_MINUS_SRC_COLOR
 		arg0.rgb = 1.0 - arg0.rgb;
 	#endif
 		
@@ -213,15 +207,15 @@ void calcTexture0Environment(inout vec4 color)
 		arg1.rgb = texture1Color.rgb;
 	#elif TEXTURE0_ENV_SRC1_RGB == 2
 		arg1.rgb = texture2Color.rgb;
-	#elif TEXTURE0_ENV_SRC1_RGB == GL_CONSTANT
+	#elif TEXTURE0_ENV_SRC1_RGB == OGL_CONSTANT
 		arg1.rgb = u_texture0EnvColor.rgb;
-	#elif TEXTURE0_ENV_SRC1_RGB == GL_PRIMARY_COLOR
+	#elif TEXTURE0_ENV_SRC1_RGB == OGL_PRIMARY_COLOR
 		arg1.rgb = v_frontColor.rgb;
-	#elif TEXTURE0_ENV_SRC1_RGB == GL_PREVIOUS
+	#elif TEXTURE0_ENV_SRC1_RGB == OGL_PREVIOUS
 		arg1.rgb = color.rgb;
 	#endif
 	
-	#if TEXTURE0_ENV_OPERAND0_RGB == GL_ONE_MINUS_SRC_COLOR
+	#if TEXTURE0_ENV_OPERAND0_RGB == OGL_ONE_MINUS_SRC_COLOR
 		arg1.rgb = 1.0 - arg1.rgb;
 	#endif
 
@@ -231,34 +225,33 @@ void calcTexture0Environment(inout vec4 color)
 		arg2.rgb = texture1Color.rgb;
 	#elif TEXTURE0_ENV_SRC2_RGB == 2
 		arg2.rgb = texture2Color.rgb;
-	#elif TEXTURE0_ENV_SRC2_RGB == GL_CONSTANT
+	#elif TEXTURE0_ENV_SRC2_RGB == OGL_CONSTANT
 		arg2.rgb = u_texture0EnvColor.rgb;
-	#elif TEXTURE0_ENV_SRC2_RGB == GL_PRIMARY_COLOR
+	#elif TEXTURE0_ENV_SRC2_RGB == OGL_PRIMARY_COLOR
 		arg2.rgb = v_frontColor.rgb;
-	#elif TEXTURE0_ENV_SRC2_RGB == GL_PREVIOUS
+	#elif TEXTURE0_ENV_SRC2_RGB == OGL_PREVIOUS
 		arg2.rgb = color.rgb;
 	#endif
 		
-	#if TEXTURE0_ENV_OPERAND2_RGB == GL_ONE_MINUS_SRC_COLOR
+	#if TEXTURE0_ENV_OPERAND2_RGB == OGL_ONE_MINUS_SRC_COLOR
 		arg2.rgb = 1.0 - arg2.rgb;
 	#endif
 		
-	// SRC ALPHA
 	#if TEXTURE0_ENV_SRC0_ALPHA == 0
 		arg0.a = texture0Color.a;
 	#elif TEXTURE0_ENV_SRC0_ALPHA == 1
 		arg0.a = texture1Color.a;
 	#elif TEXTURE0_ENV_SRC0_ALPHA == 2
 		arg0.a = texture2Color.a;
-	#elif TEXTURE0_ENV_SRC0_ALPHA == GL_CONSTANT
+	#elif TEXTURE0_ENV_SRC0_ALPHA == OGL_CONSTANT
 		arg0.a = u_texture0EnvColor.a;
-	#elif TEXTURE0_ENV_SRC0_ALPHA == GL_PRIMARY_COLOR
+	#elif TEXTURE0_ENV_SRC0_ALPHA == OGL_PRIMARY_COLOR
 		arg0.a = v_frontColor.a;
-	#elif TEXTURE0_ENV_SRC0_ALPHA == GL_PREVIOUS
+	#elif TEXTURE0_ENV_SRC0_ALPHA == OGL_PREVIOUS
 		arg0.a = color.a;
 	#endif
 		
-	#if TEXTURE0_ENV_OPERAND0_ALPHA == GL_ONE_MINUS_SRC_ALPHA
+	#if TEXTURE0_ENV_OPERAND0_ALPHA == OGL_ONE_MINUS_SRC_ALPHA
 		arg0.a = 1.0 - arg0.a;
 	#endif
 		
@@ -268,15 +261,15 @@ void calcTexture0Environment(inout vec4 color)
 		arg1.a = texture1Color.a;
 	#elif TEXTURE0_ENV_SRC1_ALPHA == 2
 		arg1.a = texture2Color.a;
-	#elif TEXTURE0_ENV_SRC1_ALPHA == GL_CONSTANT
+	#elif TEXTURE0_ENV_SRC1_ALPHA == OGL_CONSTANT
 		arg1.a = u_texture0EnvColor.a;
-	#elif TEXTURE0_ENV_SRC1_ALPHA == GL_PRIMARY_COLOR
+	#elif TEXTURE0_ENV_SRC1_ALPHA == OGL_PRIMARY_COLOR
 		arg1.a = v_frontColor.a;
-	#elif TEXTURE0_ENV_SRC1_ALPHA == GL_PREVIOUS
+	#elif TEXTURE0_ENV_SRC1_ALPHA == OGL_PREVIOUS
 		arg1.a = color.a;
 	#endif
 		
-	#if TEXTURE0_ENV_OPERAND0_ALPHA == GL_ONE_MINUS_SRC_ALPHA
+	#if TEXTURE0_ENV_OPERAND0_ALPHA == OGL_ONE_MINUS_SRC_ALPHA
 		arg1.a = 1.0 - arg1.a;
 	#endif
 		
@@ -286,54 +279,52 @@ void calcTexture0Environment(inout vec4 color)
 		arg2.a = texture1Color.a;
 	#elif TEXTURE0_ENV_SRC2_ALPHA == 2
 		arg2.a = texture2Color.a;
-	#elif TEXTURE0_ENV_SRC2_ALPHA == GL_CONSTANT
+	#elif TEXTURE0_ENV_SRC2_ALPHA == OGL_CONSTANT
 		arg2.a = u_texture0EnvColor.a;
-	#elif TEXTURE0_ENV_SRC2_ALPHA == GL_PRIMARY_COLOR
+	#elif TEXTURE0_ENV_SRC2_ALPHA == OGL_PRIMARY_COLOR
 		arg2.a = v_frontColor.a;
-	#elif TEXTURE0_ENV_SRC2_ALPHA == GL_PREVIOUS
+	#elif TEXTURE0_ENV_SRC2_ALPHA == OGL_PREVIOUS
 		arg2.a = color.a;
 	#endif
 		
-	#if TEXTURE0_ENV_OPERAND2_ALPHA == GL_ONE_MINUS_SRC_ALPHA
+	#if TEXTURE0_ENV_OPERAND2_ALPHA == OGL_ONE_MINUS_SRC_ALPHA
 		arg2.a = 1.0 - arg2.a;
 	#endif
 		
-	// COMBINE_RGB
-	#if TEXTURE0_ENV_COMBINE_RGB == GL_REPLACE
+	#if TEXTURE0_ENV_COMBINE_RGB == OGL_REPLACE
 		color.rgb = arg0.rgb;
-	#elif TEXTURE0_ENV_COMBINE_RGB == GL_MODULATE
+	#elif TEXTURE0_ENV_COMBINE_RGB == OGL_MODULATE
 		color.rgb = arg0.rgb * arg1.rgb;
-	#elif TEXTURE0_ENV_COMBINE_RGB == GL_ADD
+	#elif TEXTURE0_ENV_COMBINE_RGB == OGL_ADD
 		color.rgb = arg0.rgb + arg1.rgb;
-	#elif TEXTURE0_ENV_COMBINE_RGB == GL_ADD_SIGNED
+	#elif TEXTURE0_ENV_COMBINE_RGB == OGL_ADD_SIGNED
 		color.rgb = arg0.rgb + arg1.rgb - 0.5;
-	#elif TEXTURE0_ENV_COMBINE_RGB == GL_INTERPOLATE
+	#elif TEXTURE0_ENV_COMBINE_RGB == OGL_INTERPOLATE
 		color.rgb = mix(arg1.rgb, arg0.rgb, arg2.rgb);
-	#elif TEXTURE0_ENV_COMBINE_RGB == GL_SUBTRACT
+	#elif TEXTURE0_ENV_COMBINE_RGB == OGL_SUBTRACT
 		color.rgb = arg0.rgb - arg1.rgb;
-	#elif TEXTURE0_ENV_COMBINE_RGB == GL_DOT3_RGB
+	#elif TEXTURE0_ENV_COMBINE_RGB == OGL_DOT3_RGB
 		color.r = 4.0*((arg0.r - 0.5)*(arg1.r - 0.5) + (arg0.g - 0.5)*(arg1.g - 0.5) + (arg0.b - 0.5)*(arg1.b - 0.5));
 		color.g = color.r;
 		color.b = color.r;
-	#elif TEXTURE0_ENV_COMBINE_RGB == GL_DOT3_RGBA
+	#elif TEXTURE0_ENV_COMBINE_RGB == OGL_DOT3_RGBA
 		color.r = 4.0*((arg0.r - 0.5)*(arg1.r - 0.5) + (arg0.g - 0.5)*(arg1.g - 0.5) + (arg0.b - 0.5)*(arg1.b - 0.5));
 		color.g = color.r;
 		color.b = color.r;
 		color.a = color.r;
 	#endif
 
-	// COMBINE_ALPHA
-	#if TEXTURE0_ENV_COMBINE_ALPHA == GL_REPLACE
+	#if TEXTURE0_ENV_COMBINE_ALPHA == OGL_REPLACE
 		color.a = arg0.a;
-	#elif TEXTURE0_ENV_COMBINE_ALPHA == GL_MODULATE
+	#elif TEXTURE0_ENV_COMBINE_ALPHA == OGL_MODULATE
 		color.a = arg0.a * arg1.a;
-	#elif TEXTURE0_ENV_COMBINE_ALPHA == GL_ADD
+	#elif TEXTURE0_ENV_COMBINE_ALPHA == OGL_ADD
 		color.a = arg0.a + arg1.a;
-	#elif TEXTURE0_ENV_COMBINE_ALPHA == GL_ADD_SIGNED
+	#elif TEXTURE0_ENV_COMBINE_ALPHA == OGL_ADD_SIGNED
 		color.a = arg0.a + arg1.a - 0.5;
-	#elif TEXTURE0_ENV_COMBINE_ALPHA == GL_INTERPOLATE
+	#elif TEXTURE0_ENV_COMBINE_ALPHA == OGL_INTERPOLATE
 		color.a = mix(arg1.a, arg0.a, arg2.a);
-	#elif TEXTURE0_ENV_COMBINE_ALPHA == GL_SUBTRACT
+	#elif TEXTURE0_ENV_COMBINE_ALPHA == OGL_SUBTRACT
 		color.a = arg0.a - arg1.a;
 	#endif
 #endif

@@ -1,21 +1,16 @@
-
 #ifdef GL_FRAGMENT_PRECISION_HIGH
 	precision highp float;
 #else
 	precision mediump float;
 #endif
-
-#define GL_FASTEST 0x1101
-#define GL_NICEST 0x1102
-
+#define OGL_FASTEST 0x1101
+#define OGL_NICEST 0x1102
 #if !defined(TEXTURE0_ENABLED)
 	#define TEXTURE0_ENABLED -1
 #endif
-
 #if !defined(TEXTURE1_ENABLED)
 	#define TEXTURE1_ENABLED -1
 #endif
-
 #if !defined(TEXTURE2_ENABLED)
 	#define TEXTURE2_ENABLED -1
 #endif
@@ -60,25 +55,21 @@
 	#define CLIP_PLANE5_ENABLED -1
 #endif
 
-// Uniforms
 uniform bool u_fogEnabled;
 uniform vec3 u_fogColor;
 uniform int u_fogHint;
 uniform bool u_alphaTestEnabled;
 uniform bool u_lightingEnabled;
 
-// Varyings
 varying vec4 v_frontColor;
 varying float v_fogFactor;
 varying float v_eyeDistance;
 
-// Shader constants
 const int c_zero = 0;
 const int c_one = 1;
 const float c_zerof = 0.0;
 const float c_onef = 1.0;
 
-// Funtions
 float calcFogFactor(float distanceToEye);
 void calcLighting(out vec4 color);
 void clipPlanesTest();
@@ -125,12 +116,12 @@ void main()
 	#endif
 		
 	float fogFactor;
-	#if FOG_HINT == GL_FASTEST
+	#if FOG_HINT == OGL_FASTEST
 		fogFactor = v_fogFactor;
-	#elif FOG_HINT == GL_NICEST
+	#elif FOG_HINT == OGL_NICEST
 		fogFactor = calcFogFactor(v_eyeDistance);
 	#elif FOG_HINT == -1
-		if (u_fogHint == GL_FASTEST) {
+		if (u_fogHint == OGL_FASTEST) {
 			fogFactor = v_fogFactor;
 		} else {
 			fogFactor = calcFogFactor(v_eyeDistance);

@@ -5,14 +5,11 @@
 	#define TEXTURE2_MATRIX_ENABLED -1
 #endif
 
-// Attributes
 attribute vec4 a_texCoord2;
 
-// Uniforms
 uniform bool u_texture2MatrixEnabled;
 uniform mat4 u_texture2Matrix;
 
-// Varyings
 varying vec4 v_texCoord2;
 
 void calcTexture2Coordinates()

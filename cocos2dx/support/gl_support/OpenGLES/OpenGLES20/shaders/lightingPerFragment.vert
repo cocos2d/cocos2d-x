@@ -1,5 +1,4 @@
 
-// Varyings
 varying vec4 v_ambientAndEmission;
 varying vec3 v_normal;
 varying vec3 v_light0Vector;
@@ -9,7 +8,6 @@ varying vec3 v_light1HalfVector;
 varying vec3 v_light2Vector;
 varying vec3 v_light2HalfVector;
 
-// Functions
 void calcLightVaryingsForFragmentShader(Light light, vec3 eyeVector, out vec3 lightVector, out vec3 halfVector);
 
 
