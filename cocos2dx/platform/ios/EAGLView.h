@@ -69,6 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "ESRenderer.h"
+#include "support/gl_support/OpenGLES/OpenGLESContext.h"
 
 //CLASS INTERFACE:
 

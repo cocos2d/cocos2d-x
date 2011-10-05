@@ -40,16 +40,27 @@ typedef int             GLclampx;
 
 /* GL types for handling large vertex buffer objects */
 #if !defined (__ANDROID__)
-#ifdef CC_OPENGLES20_SUPPORT
-typedef long             GLintptr;
-typedef long             GLsizeiptr;
+#	if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#		include <Availability.h>
+#		if __IPHONE_OS_VERSION_MAX_ALLOWED >= 50000 
+#			ifdef CC_OPENGLES20_SUPPORT
+				typedef long GLintptr;
+				typedef long GLsizeiptr;
+#			else
+				typedef int GLintptr;
+				typedef int GLsizeiptr;
+#			endif
+#		else
+			typedef int GLintptr;
+			typedef int GLsizeiptr;
+#		endif
+#	else
+		typedef long GLintptr;
+		typedef long GLsizeiptr;
+#	endif
 #else
-typedef int             GLintptr;
-typedef int             GLsizeiptr;
-#endif
-#else
-typedef signed   long  int GLintptr;
-typedef signed   long  int  GLsizeiptr;
+	typedef signed   long  int GLintptr;
+	typedef signed   long  int  GLsizeiptr;
 #endif
 
 /* Extensions */
@@ -564,6 +575,7 @@ typedef signed   long  int  GLsizeiptr;
 #define GL_RGBA4                                            0x8056
 #define GL_RGB5_A1                                          0x8057
 #define GL_RGB565                                           0x8D62
+#define GL_RGBA8_OES                                        0x8058
 #define GL_DEPTH_COMPONENT16                                0x81A5
 #define GL_STENCIL_INDEX                                    0x1901
 #define GL_STENCIL_INDEX8                                   0x8D48
