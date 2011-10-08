@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bada>
-    <type>2</type>
-    <sdk>c:\bada\2.0.0b1</sdk>
+    <type>0</type>
+    <sdk>C:\bada\2.0.2</sdk>
     <model>WaveHVGA</model>
     <apiversioncheck>true</apiversioncheck>
     <priviligecheck>false</priviligecheck>
-    <properties>
-        <data0 key="PT CmdArgs Target-Release" value=""/>
-        <data1 key="PT CertFile Simulator-Debug" value="${project_loc}\.Simulator-Debug\cert.cer"/>
-        <data2 key="PT Output Simulator-Debug" value="${project_loc}\.Simulator-Debug"/>
-        <data3 key="PT CertFile Target-Release" value="${project_loc}\.Target-Release\cert.cer"/>
-        <data4 key="PT CertFile Target-Debug" value="${project_loc}\.Target-Debug\cert.cer"/>
-        <data5 key="PT CmdArgs Target-Debug" value=""/>
-        <data6 key="PT CmdArgs Simulator-Debug" value=""/>
-        <data7 key="PT Output Target-Release" value="${project_loc}\.Target-Release"/>
-        <data8 key="PT Output Target-Debug" value="${project_loc}\.Target-Debug"/>
-    </properties>
+    <properties/>
 </bada>
