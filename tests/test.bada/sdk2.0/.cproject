@@ -717,6 +717,10 @@
 									<listOptionValue builtIn="false" value="../../../../chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
 								</option>
+								<option id="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def.743869596" superClass="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="SHP"/>
+									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1760666481" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.release.489393580" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.exe.release">
@@ -738,6 +742,15 @@
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/arm-samsung-nucleuseabi/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/lib/gcc/arm-samsung-nucleuseabi/4.4.1&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/Target-Release&quot;"/>
+								</option>
+								<option id="osp.gnu.target.cpp.link.release.exe.option.userobjs.888121246" superClass="osp.gnu.target.cpp.link.release.exe.option.userobjs" valueType="userObjs">
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.809122631" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
