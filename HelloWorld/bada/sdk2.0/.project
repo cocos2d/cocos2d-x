@@ -82,14 +82,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>AppDelegate.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/HelloWorld/AppDelegate.cpp</locationURI>
-		</link>
-		<link>
-			<name>HelloWorldScene.cpp</name>
-			<type>1</type>
-			<locationURI>cocos2dx_root/HelloWorld/HelloWorldScene.cpp</locationURI>
+			<name>Classes</name>
+			<type>2</type>
+			<locationURI>cocos2dx_root/HelloWorld/Classes</locationURI>
 		</link>
 		<link>
 			<name>src</name>

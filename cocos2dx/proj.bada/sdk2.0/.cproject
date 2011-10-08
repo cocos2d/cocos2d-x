@@ -36,15 +36,14 @@
 							<tool command="arm-samsung-nucleuseabi-ar" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="" id="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug.946035858" name="bada Archiver" superClass="cdt.managedbuild.tool.osp.gnu.arm.archiver.lib.debug"/>
 							<tool command="arm-samsung-nucleuseabi-g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="" id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug.1200293080" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.lib.debug">
 								<option id="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths.252378151" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="C:/bada/2.0.0b1/Include"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx/platform"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx/platform/bada"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx/platform/third_party/bada/zlib"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx/platform/third_party/bada/libpng"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx/platform/third_party/bada/libjpeg"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="F:/Project/dumganhar/cocos2d-x/cocos2dx/proj.bada/sdk2.0/inc"/>
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/zlib"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 								</option>
 								<option id="osp.gnu.target.cpp.compiler.debug.lib.option.preprocessor.def.370566022" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.debug.lib.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="SHP"/>
@@ -820,7 +819,7 @@
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 								</option>
-								<option id="osp.gnu.target.cpp.compiler.release.lib.option.preprocessor.def.1672713039" superClass="osp.gnu.target.cpp.compiler.release.lib.option.preprocessor.def" valueType="definedSymbols">
+								<option id="osp.gnu.target.cpp.compiler.release.lib.option.preprocessor.def.1672713039" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.release.lib.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="SHP"/>
 									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
 								</option>
