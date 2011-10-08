@@ -196,19 +196,28 @@ CCEGLView::~CCEGLView()
 
 CCSize CCEGLView::getSize()
 {
-	return CCSize((float)(m_sSizeInPoint.width), (float)(m_sSizeInPoint.height));
+	CCSize s;
+	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
+	{
+		s = CCSizeMake(MIN(m_sSizeInPoint.width, m_sSizeInPoint.height), MAX(m_sSizeInPoint.width, m_sSizeInPoint.height));
+	}
+	else
+	{
+		s = CCSizeMake(MAX(m_sSizeInPoint.width, m_sSizeInPoint.height), MIN(m_sSizeInPoint.width, m_sSizeInPoint.height));
+	}
+	return s;
 }
 
 CCRect CCEGLView::getFrame()
 {
 	CCRect rc;
-	if (m_bNotHVGA)
+	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
 	{
-		rc = CCRectMake(0, 0, 800, 480);
+		rc = CCRectMake(0, 0, MIN(m_sSizeInPoint.width, m_sSizeInPoint.height), MAX(m_sSizeInPoint.width, m_sSizeInPoint.height));
 	}
 	else
 	{
-		rc = CCRectMake(0, 0, 480, 320);
+		rc = CCRectMake(0, 0, MAX(m_sSizeInPoint.width, m_sSizeInPoint.height), MIN(m_sSizeInPoint.width, m_sSizeInPoint.height));
 	}
 	return rc;
 }
@@ -256,85 +265,37 @@ static int badaOrientation[4] = {
 
 int CCEGLView::setDeviceOrientation(int eOritation)
 {
-	m_nowOrientation = (Orientation)badaOrientation[eOritation];
-	SetOrientation(m_nowOrientation);
+//	m_nowOrientation = (Orientation)badaOrientation[eOritation];
+//	SetOrientation(m_nowOrientation);
+//
+//	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
+//	{
+//		resize(MIN(m_sSizeInPixel.width, m_sSizeInPixel.height), MAX(m_sSizeInPixel.width, m_sSizeInPixel.height));
+//	}
+//	else
+//	{
+//		resize(MAX(m_sSizeInPixel.width, m_sSizeInPixel.height), MIN(m_sSizeInPixel.width, m_sSizeInPixel.height));
+//	}
 
-	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
-	{
-		if (m_bNotHVGA)
-		{
-			m_sSizeInPixel.width = 480;
-			m_sSizeInPixel.height = 800;
-		}
-		else
-		{
-			m_sSizeInPixel.width = 320;
-			m_sSizeInPixel.height = 480;
-		}
-	}
-	else
-	{
-		if (m_bNotHVGA)
-		{
-			m_sSizeInPixel.width = 800;
-			m_sSizeInPixel.height = 480;
-		}
-		else
-		{
-			m_sSizeInPixel.width = 480;
-			m_sSizeInPixel.height = 320;
-		}
-	}
-
-	// calculate the factor and the rect of viewport
-	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
-		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-	int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
-	int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
-	m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
-	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
-	m_rcViewPort.size.width = viewPortW;
-	m_rcViewPort.size.height = viewPortH;
-
-	return m_eInitOrientation;
+	return eOritation;
 }
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
-//    if (m_bNotHVGA)
-    {
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
-            (GLint)(y * factor) + m_rcViewPort.origin.y,
-            (GLint)(w * factor),
-            (GLint)(h * factor));
-    }
-//    else
-//    {
-//        glViewport((GLint)x,
-//            (GLint)y,
-//            (GLint)w,
-//            (GLint)h);
-//    }
+	float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+	glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
+		(GLint)(y * factor) + m_rcViewPort.origin.y,
+		(GLint)(w * factor),
+		(GLint)(h * factor));
 }
 
 void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 {
-//    if (m_bNotHVGA)
-    {
-        float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
-            (GLint)(y * factor) + m_rcViewPort.origin.y,
-            (GLint)(w * factor),
-            (GLint)(h * factor));
-    }
-//    else
-//    {
-//        glScissor((GLint)x,
-//            (GLint)y,
-//            (GLint)w,
-//            (GLint)h);
-//    }
+	float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
+	glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
+		(GLint)(y * factor) + m_rcViewPort.origin.y,
+		(GLint)(w * factor),
+		(GLint)(h * factor));
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
@@ -343,9 +304,8 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 
 bool CCEGLView::Create(Osp::App::Application* pApp, int width, int height)
 {
-	m_sSizeInPoint.width = width;
-	m_sSizeInPoint.height = height;
-	// Construct an XML form
+	m_sSizeInPoint.width = MIN(width, height);
+	m_sSizeInPoint.height = MAX(width, height);
 	Construct(FORM_STYLE_NORMAL);
 	Frame *pFrame = Application::GetInstance()->GetAppFrame()->GetFrame();
 
@@ -361,8 +321,20 @@ bool CCEGLView::Create(Osp::App::Application* pApp, int width, int height)
 	return true;
 }
 
-result
-CCEGLView::OnInitializing(void)
+
+void CCEGLView::resize(int width, int height)
+{
+	int viewPortW = (int)(width * m_fScreenScaleFactor);
+	int viewPortH = (int)(height * m_fScreenScaleFactor);
+	m_rcViewPort.origin.x = (width - viewPortW) / 2;
+	m_rcViewPort.origin.y = (height - viewPortH) / 2;
+	m_rcViewPort.size.width = viewPortW;
+	m_rcViewPort.size.height = viewPortH;
+	AppLog("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
+			m_rcViewPort.origin.x, m_rcViewPort.origin.y, m_rcViewPort.size.width, m_rcViewPort.size.height);
+}
+
+result CCEGLView::OnInitializing(void)
 {
 	result r = E_SUCCESS;
 
@@ -370,33 +342,26 @@ CCEGLView::OnInitializing(void)
 //	Touch touch;
 //	touch.SetMultipointEnabled(*this, true);
 
-
 	Rectangle rc = GetBounds();
 	if ((rc.width == 480 && rc.height == 720)
 			|| (rc.width == 720 && rc.height == 480))
 	{
 		m_bNotHVGA = false;
-		m_sSizeInPixel.width = 320;
-		m_sSizeInPixel.height = 480;
+		m_sSizeInPixel.width = rc.width / 1.5f;
+		m_sSizeInPixel.height = rc.height / 1.5f;
 	}
 	else
 	{
 		m_bNotHVGA = true;
-		m_sSizeInPixel.width = 480;
-		m_sSizeInPixel.height = 800;
+		m_sSizeInPixel.width = rc.width;
+		m_sSizeInPixel.height = rc.height;
 	}
-
-
 
 	// calculate the factor and the rect of viewport
 	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
 		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-	int viewPortW = (int)(m_sSizeInPoint.width * m_fScreenScaleFactor);
-	int viewPortH = (int)(m_sSizeInPoint.height * m_fScreenScaleFactor);
-	m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
-	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
-	m_rcViewPort.size.width = viewPortW;
-	m_rcViewPort.size.height = viewPortH;
+	AppLog("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
+	resize(m_sSizeInPixel.width, m_sSizeInPixel.height);
 
 	return r;
 }
@@ -439,9 +404,6 @@ void CCEGLView::OnTouchPressed(const Osp::Ui::Control& source,
 		m_pSet->addObject(m_pTouch);
 		m_pDelegate->touchesBegan(m_pSet, NULL);
 	}
-
-
-
 }
 
 void CCEGLView::OnTouchLongPressed(const Osp::Ui::Control& source,

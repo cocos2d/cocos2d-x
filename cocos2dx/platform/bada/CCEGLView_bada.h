@@ -74,6 +74,7 @@ public:
 	 *   height[in]: resource height
 	 */
 	bool Create(Osp::App::Application* pApp, int width, int height);
+	void resize(int width, int height);
 	virtual result OnInitializing(void);
 	virtual result OnTerminating(void);
 
