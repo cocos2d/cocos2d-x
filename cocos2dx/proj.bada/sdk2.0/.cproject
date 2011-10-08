@@ -820,6 +820,10 @@
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libpng"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/libjpeg"/>
 								</option>
+								<option id="osp.gnu.target.cpp.compiler.release.lib.option.preprocessor.def.1672713039" superClass="osp.gnu.target.cpp.compiler.release.lib.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="SHP"/>
+									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.2133750642" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.release.1188258588" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.lib.release">
@@ -833,7 +837,26 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="actions|base_nodes|cocoa|effects|include|keypad_dispatcher|label_nodes|layers_scenes_transitions_nodes|menu_nodes|misc_nodes|particle_nodes|platform|script_support|sprite_nodes|support|text_input_node|textures|tileMap_parallax_nodes|touch_dispatcher" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="actions"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="base_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocoa"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="effects"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="keypad_dispatcher"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="label_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="layers_scenes_transitions_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
+						<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|Linux/|third_party/airplay/|third_party/android/|third_party/bada/src/|third_party/ios/|third_party/linux/|third_party/win32/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="text_input_node"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="textures"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tileMap_parallax_nodes"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="touch_dispatcher"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
