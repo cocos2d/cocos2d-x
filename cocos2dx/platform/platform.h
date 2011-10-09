@@ -26,16 +26,17 @@ THE SOFTWARE.
 #define __PLATFORM_H__
 
 #include "CCThread.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN;
 
-struct cc_timeval
+struct CC_DLL cc_timeval
 {
     long	tv_sec;		// seconds
     long	tv_usec;    // microSeconds
 };
 
-class CCTime
+class CC_DLL CCTime
 {
 public:
     static int gettimeofdayCocos2d(struct cc_timeval *tp, void *tzp);
