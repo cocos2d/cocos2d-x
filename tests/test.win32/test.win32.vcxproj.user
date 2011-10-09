@@ -6,5 +6,7 @@
     <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\Res</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WindowsLocalDebugger</DebuggerFlavor>
     <DebuggerFlavor Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PATH=$(ProjectDir)..\..\cocos2dx\proj.win32\$(Configuration)\bin;$(ProjectDir)..\..\CocosDenshion\proj.win32\$(Configuration)\bin;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\libraries
+$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
   </PropertyGroup>
 </Project>

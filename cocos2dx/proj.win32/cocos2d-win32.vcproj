@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
-			IntermediateDirectory="$(ConfigurationName).win32"
+			OutputDirectory="$(ConfigurationName)/bin"
+			IntermediateDirectory="$(ConfigurationName)/obj"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -61,16 +61,16 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
+				AdditionalLibraryDirectories="..\platform\third_party\win32\libraries;&quot;$(OutDir)&quot;"
 				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames=" "
+				IgnoreDefaultLibraryNames="libcmt"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
@@ -101,8 +101,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
-			IntermediateDirectory="$(ConfigurationName).win32"
+			OutputDirectory="$(ConfigurationName)/bin"
+			IntermediateDirectory="$(ConfigurationName)/obj"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -141,15 +141,15 @@
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-				CommandLine="if not exist &quot;$(OutDir)&quot; mkdir &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libEGL.lib libgles_cm.lib libxml2.lib libzlib.lib libpng.lib libjpeg.lib libiconv.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
-				IgnoreDefaultLibraryNames=" "
+				AdditionalLibraryDirectories="..\platform\third_party\win32\libraries;&quot;$(OutDir)&quot;"
+				IgnoreDefaultLibraryNames="libcmt"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

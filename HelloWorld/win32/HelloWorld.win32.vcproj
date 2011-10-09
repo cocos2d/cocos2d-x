@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
-			IntermediateDirectory="$(ConfigurationName).win32"
+			OutputDirectory="$(ConfigurationName)/bin"
+			IntermediateDirectory="$(ConfigurationName)/obj"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)lua\tolua&quot;;&quot;$(SolutionDir)lua\src&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\cocos2dx\platform&quot;;&quot;$(ProjectDir)..\..\cocos2dx\include&quot;;&quot;$(ProjectDir)..\..\lua\tolua&quot;;&quot;$(ProjectDir)..\..\lua\src&quot;;&quot;$(ProjectDir)..\..\cocos2dx&quot;;&quot;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,7 +61,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
@@ -94,8 +93,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName).win32"
-			IntermediateDirectory="$(ConfigurationName).win32"
+			OutputDirectory="$(ConfigurationName)/bin"
+			IntermediateDirectory="$(ConfigurationName)/obj"
 			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -119,7 +118,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\cocos2dx\platform&quot;;&quot;$(ProjectDir)..\..\cocos2dx\include&quot;;&quot;$(ProjectDir)..\..\cocos2dx&quot;;&quot;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\OGLES&quot;;..\;.\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -138,7 +137,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcocos2d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
@@ -168,11 +166,15 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="xcopy /Y /Q &quot;$(ProjectDir)..\..\cocos2dx\proj.win32\$(ConfigurationName)\bin\*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;xcopy /Y /Q &quot;$(ProjectDir)..\..\cocos2dx\platform\third_party\win32\libraries\*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
+			RelativePathToProject=".\cocos2dx\proj.win32\cocos2d-win32.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
