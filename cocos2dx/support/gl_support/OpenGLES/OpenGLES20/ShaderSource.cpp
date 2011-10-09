@@ -44,9 +44,6 @@ bool ShaderSource::expandSource()
 	long pos = file->tell();
 	file->seek(0, SEEK_SET);
 
-	char pTmp[1024];
-	snprintf(pTmp, sizeof(pTmp), " size: %ld", pos);
-	
 	int n = file->read(tmp, 1, pos);
 	tmp[n] = '\0';
 	file->close();

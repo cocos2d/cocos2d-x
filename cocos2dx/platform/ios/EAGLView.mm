@@ -360,7 +360,7 @@ static cocos2d::CCTouch *s_pTouches[MAX_TOUCHES];
 	
 	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
 		pFormat = GL_RGB565;
-	else 
+	else
 		pFormat = GL_RGBA8_OES;
 	
 	return pFormat;

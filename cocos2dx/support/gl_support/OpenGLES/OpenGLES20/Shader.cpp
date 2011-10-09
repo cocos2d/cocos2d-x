@@ -112,9 +112,8 @@ char *convertStringToChar(const std::string &str)
 bool Shader::readShaderSource()
 {
 	char **shaderSources = (char **)malloc(sizeof(char *) * sources.size());
-	GLint *shaderLength = (GLint *)malloc(sizeof(GLint) * sources.size());
 
-	if (shaderSources == NULL || shaderLength == NULL)
+	if (shaderSources == NULL)
 	{
 		OPENGLES_LOG_MESSAGE(__FILE__, __LINE__, "ERROR: Cannot allocate memory.");
 		return false;
@@ -123,14 +122,9 @@ bool Shader::readShaderSource()
 	for (size_t i = 0; i < sources.size(); i++) 
 	{
 		shaderSources[i] = convertStringToChar(sources[i]->getSource());
-		shaderLength[i] = sources[i]->getSource().size();
-		
-//		OPENGLES_LOG_MESSAGE( sources[i]->getFile()->getName() );
-//		OPENGLES_LOG_MESSAGE( shaderSources[i] );
-//		OPENGLES_LOG_MESSAGE( shaderLength[i] );
 	}
 
-	glShaderSource(id, sources.size(), (const char **)shaderSources, shaderLength);
+	glShaderSource(id, sources.size(), (const char **)shaderSources, NULL);
 
 	for (size_t i = 0; i < sources.size(); i++)
 	{
