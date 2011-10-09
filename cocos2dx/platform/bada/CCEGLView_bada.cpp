@@ -197,27 +197,27 @@ CCEGLView::~CCEGLView()
 CCSize CCEGLView::getSize()
 {
 	CCSize s;
-	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
+//	if (m_bNotHVGA)
 	{
-		s = CCSizeMake(MIN(m_sSizeInPoint.width, m_sSizeInPoint.height), MAX(m_sSizeInPoint.width, m_sSizeInPoint.height));
+		s = CCSizeMake(m_sSizeInPoint.width, m_sSizeInPoint.height);
 	}
-	else
-	{
-		s = CCSizeMake(MAX(m_sSizeInPoint.width, m_sSizeInPoint.height), MIN(m_sSizeInPoint.width, m_sSizeInPoint.height));
-	}
+//	else
+//	{
+//		s = CCSizeMake(m_sSizeInPixel.width, m_sSizeInPixel.height);
+//	}
 	return s;
 }
 
 CCRect CCEGLView::getFrame()
 {
 	CCRect rc;
-	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
+//	if (m_bNotHVGA)
+//	{
+//		rc = CCRectMake(0, 0, m_sSizeInPixel.width, m_sSizeInPixel.height);
+//	}
+//	else
 	{
-		rc = CCRectMake(0, 0, MIN(m_sSizeInPoint.width, m_sSizeInPoint.height), MAX(m_sSizeInPoint.width, m_sSizeInPoint.height));
-	}
-	else
-	{
-		rc = CCRectMake(0, 0, MAX(m_sSizeInPoint.width, m_sSizeInPoint.height), MIN(m_sSizeInPoint.width, m_sSizeInPoint.height));
+		rc = CCRectMake(0, 0, m_sSizeInPoint.width, m_sSizeInPoint.height);
 	}
 	return rc;
 }
@@ -326,8 +326,8 @@ void CCEGLView::resize(int width, int height)
 {
 	int viewPortW = (int)(width * m_fScreenScaleFactor);
 	int viewPortH = (int)(height * m_fScreenScaleFactor);
-	m_rcViewPort.origin.x = (width - viewPortW) / 2;
-	m_rcViewPort.origin.y = (height - viewPortH) / 2;
+	m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
+	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
 	m_rcViewPort.size.width = viewPortW;
 	m_rcViewPort.size.height = viewPortH;
 	AppLog("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
@@ -361,7 +361,7 @@ result CCEGLView::OnInitializing(void)
 	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
 		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
 	AppLog("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
-	resize(m_sSizeInPixel.width, m_sSizeInPixel.height);
+	resize(m_sSizeInPoint.width, m_sSizeInPoint.height);
 
 	return r;
 }

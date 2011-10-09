@@ -64,15 +64,13 @@
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.851145674" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
 									<listOptionValue builtIn="false" value="CocosDenshion"/>
-									<listOptionValue builtIn="false" value="jpeg"/>
-									<listOptionValue builtIn="false" value="png"/>
-									<listOptionValue builtIn="false" value="zlib"/>
 									<listOptionValue builtIn="false" value="Box2D"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.paths.1425715273" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/Target-Debug&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.7607535" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

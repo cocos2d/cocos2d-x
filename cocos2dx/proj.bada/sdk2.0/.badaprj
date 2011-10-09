@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bada>
-    <type>0</type>
+    <type>3</type>
     <sdk>C:\bada\2.0.2</sdk>
     <model>WaveHVGA</model>
     <apiversioncheck>true</apiversioncheck>
     <priviligecheck>false</priviligecheck>
-    <properties/>
+    <properties>
+        <data0 key="PT CmdArgs Target-Release" value=""/>
+        <data1 key="PT CertFile Target-Release" value="${project_loc}\.Target-Release\cert.cer"/>
+        <data2 key="PT CertFile Target-Debug" value="${project_loc}\.Target-Debug\cert.cer"/>
+        <data3 key="PT CmdArgs Target-Debug" value=""/>
+        <data4 key="PT Output Target-Release" value="${project_loc}\.Target-Release"/>
+        <data5 key="PT Output Target-Debug" value="${project_loc}\.Target-Debug"/>
+    </properties>
 </bada>
