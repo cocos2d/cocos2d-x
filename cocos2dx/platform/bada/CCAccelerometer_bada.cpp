@@ -77,9 +77,9 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 
 	// only consider land postion, to be continued.
 	CCAcceleration AccValue;
-	AccValue.x = y;
-	AccValue.y = -x;
-	AccValue.z = z;
+	AccValue.x = -x;
+	AccValue.y = -y;
+	AccValue.z = -z;
 	AccValue.timestamp = timeStamp;
 
 	m_pAccelDelegate->didAccelerate(&AccValue);

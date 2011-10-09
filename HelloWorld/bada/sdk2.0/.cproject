@@ -52,13 +52,10 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug.1747969474" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug">
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.2056672880" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
-									<listOptionValue builtIn="false" value="jpeg"/>
-									<listOptionValue builtIn="false" value="zlib"/>
-									<listOptionValue builtIn="false" value="png"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.paths.1078498225" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/Target-Debug&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.userobjs.807623096" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.exe.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>

@@ -47,9 +47,6 @@
 <option id="osp.gnu.cpp.link.simual.debug.option.libs.985039748" name="Libraries (-l)" superClass="osp.gnu.cpp.link.simual.debug.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="osp_rt0"/>
 <listOptionValue builtIn="false" value="cocos2dx"/>
-<listOptionValue builtIn="false" value="jpeg"/>
-<listOptionValue builtIn="false" value="zlib"/>
-<listOptionValue builtIn="false" value="png"/>
 <listOptionValue builtIn="false" value="libc-newlib"/>
 <listOptionValue builtIn="false" value="FOsp"/>
 <listOptionValue builtIn="false" value="FGraphicsOpengl"/>
@@ -58,7 +55,7 @@
 <option id="osp.gnu.cpp.link.simual.debug.option.libs.paths.2049758738" name="Library search path (-L)" superClass="osp.gnu.cpp.link.simual.debug.option.libs.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${SIMULATOR_LIB_PATH}&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Lib&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/Simulator-Debug&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.543292516" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -538,15 +535,12 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug.1747969474" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug">
 <option id="osp.gnu.target.cpp.link.debug.exe.option.libs.2056672880" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="cocos2dx"/>
-<listOptionValue builtIn="false" value="jpeg"/>
-<listOptionValue builtIn="false" value="zlib"/>
-<listOptionValue builtIn="false" value="png"/>
 </option>
 <option id="osp.gnu.target.cpp.link.debug.exe.option.libs.paths.1078498225" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/arm-samsung-nucleuseabi/lib&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/lib/gcc/arm-samsung-nucleuseabi/4.4.1&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/Target-Debug&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 </option>
 <option id="osp.gnu.target.cpp.link.debug.exe.option.userobjs.807623096" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.exe.option.userobjs" valueType="userObjs">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
@@ -1035,15 +1029,12 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release.1446379106" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release">
 <option id="osp.gnu.target.cpp.link.release.exe.option.libs.902896095" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="cocos2dx"/>
-<listOptionValue builtIn="false" value="jpeg"/>
-<listOptionValue builtIn="false" value="zlib"/>
-<listOptionValue builtIn="false" value="png"/>
 </option>
 <option id="osp.gnu.target.cpp.link.release.exe.option.libs.paths.1336107112" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/arm-samsung-nucleuseabi/lib&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/lib/gcc/arm-samsung-nucleuseabi/4.4.1&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/Target-Release&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 </option>
 <option id="osp.gnu.target.cpp.link.release.exe.option.userobjs.2051939147" name="Other objects" superClass="osp.gnu.target.cpp.link.release.exe.option.userobjs" valueType="userObjs">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>

@@ -196,6 +196,10 @@ public: inline void set##funName(const varType& var){ varName = var; }
 #endif  // wophone VM
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include <FBaseConfig.h>
+#undef CC_DLL
+#define CC_DLL  _EXPORT_
+
 #ifndef CC_BADA_2_0
 #include "CCPlatformFunc_bada.h"
 #endif
