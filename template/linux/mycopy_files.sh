@@ -58,8 +58,7 @@ move_eclipse_configures_into(){
 
 	sed -i "s/HelloWorld/$projName/" $APP_DIR/Linux/.project
 
-	sed -i "s:../../../:$COCOS2DX_ROOT:;s:helloworld:$projName:" $APP_DIR/Linux/.cproject
-        #sed -i "s/helloworld/$projName/" $APP_DIR/Linux/.cproject
+	sed -i "s:\.\./\.\./\.\./:$COCOS2DX_ROOT:;s:helloworld:$projName:" $APP_DIR/Linux/.cproject
 }
 
 #copy main sources
@@ -71,6 +70,9 @@ copy_cpp_h_from_helloworld(){
             cp $file $APP_DIR/Classes
         fi
     done
+
+    # load resources from Resources, not Resource
+    sed -i "s:\.\./Resource/:\.\./Resources/:" $APP_DIR/Classes/AppDelegate.cpp
 }
 
 # copy resources
