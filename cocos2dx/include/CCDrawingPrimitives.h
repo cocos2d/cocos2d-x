@@ -63,6 +63,11 @@ The polygon can be closed or open
 */
 void CC_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon );
 
+/** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
+The polygon can be closed or open and optionally filled with current GL color
+*/
+void CC_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon , bool fill);
+
 /** draws a circle given the center, radius and number of segments. */
 void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, int segments, bool drawLineToCenter);
 
