@@ -55,7 +55,7 @@ CCAccelerometer* CCAccelerometer::sharedAccelerometer()
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 {
 	m_pAccelDelegate = pDelegate;
-	if (pDelegate)
+	if (pDelegate != NULL)
 	{
 		setEnable(true);
 	}
@@ -82,7 +82,10 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 	AccValue.z = -z;
 	AccValue.timestamp = timeStamp;
 
-	m_pAccelDelegate->didAccelerate(&AccValue);
+	if (m_pAccelDelegate != NULL)
+	{
+		m_pAccelDelegate->didAccelerate(&AccValue);
+	}
 	AppLog("##TimeStamp:[%d], Accel.x,y,z:[%f,%f,%f]", timeStamp, x, y, z);
 }
 
