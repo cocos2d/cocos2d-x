@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCEGLView_android.h"
-#include "GLES/gl.h"
+#include <GLES/gl.h>
 #include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "jni/MessageJni.h"
 
 #include <stdlib.h>
+#include "support/gl_support/OpenGLES/OpenGLES11/OpenGLES11Context.h"
+#include "support/gl_support/OpenGLES/OpenGLES20/OpenGLES20Context.h"
 
 namespace cocos2d {
 
@@ -39,6 +41,15 @@ CCEGLView::CCEGLView()
       m_pDelegate(NULL),
       m_fScreenScaleFactor(1.0)  
 {
+	const char* version = (const char*)glGetString( GL_VERSION );	
+	OpenGLES::OpenGLESContext* glContext;
+	if (strcmp(version, "OpenGL ES 2.0") != 0) {
+		glContext = new OpenGLES::OpenGLES1::OpenGLES11Context;
+	} else {
+		glContext = new OpenGLES::OpenGLES2::OpenGLES20Context;		
+	}
+	cocos2d::CCDirector *director = cocos2d::CCDirector::sharedDirector();
+	director->setGLContext(glContext);	
 }
 
 void CCEGLView::setFrameWidthAndHeight(int width, int height)
@@ -131,14 +142,14 @@ void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
     if (m_bNotHVGA)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport((GLint)(x * factor) + m_rcViewPort.origin.x,
             (GLint)(y * factor) + m_rcViewPort.origin.y,
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
     else
     {
-        glViewport((GLint)x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport((GLint)x,
             (GLint)y,
             (GLint)w,
             (GLint)h);
@@ -150,14 +161,14 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
     if (m_bNotHVGA)
     {
         float factor = m_fScreenScaleFactor / CC_CONTENT_SCALE_FACTOR();
-        glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glScissor((GLint)(x * factor) + m_rcViewPort.origin.x,
             (GLint)(y * factor) + m_rcViewPort.origin.y,
             (GLint)(w * factor),
             (GLint)(h * factor));
     }
     else
     {
-        glScissor((GLint)x,
+        cocos2d::CCDirector::sharedDirector()->getGLContext()->glScissor((GLint)x,
             (GLint)y,
             (GLint)w,
             (GLint)h);
@@ -167,6 +178,7 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 CCEGLView& CCEGLView::sharedOpenGLView()
 {
 	static CCEGLView instance;
+	
 	return instance;
 }
 

@@ -89,6 +89,24 @@ support/image_support/TGAlib.cpp \
 support/zip_support/ZipUtils.cpp \
 support/zip_support/ioapi.cpp \
 support/zip_support/unzip.cpp \
+support/gl_support/OpenGLES/OpenGLESConfig.cpp \
+support/gl_support/OpenGLES/OpenGLESContext.cpp \
+support/gl_support/OpenGLES/OpenGLESFile.cpp \
+support/gl_support/OpenGLES/OpenGLESImplementation.cpp \
+support/gl_support/OpenGLES/OpenGLESString.cpp \
+support/gl_support/OpenGLES/OpenGLESUtil.cpp \
+support/gl_support/OpenGLES/OpenGLES11/OpenGLES11Context.cpp \
+support/gl_support/OpenGLES/OpenGLES11/OpenGLES11Implementation.cpp \
+support/gl_support/OpenGLES/OpenGLES20/Attribute.cpp \
+support/gl_support/OpenGLES/OpenGLES20/MatrixStack.cpp \
+support/gl_support/OpenGLES/OpenGLES20/OpenGLES20Context.cpp \
+support/gl_support/OpenGLES/OpenGLES20/OpenGLES20Implementation.cpp \
+support/gl_support/OpenGLES/OpenGLES20/OpenGLESState.cpp \
+support/gl_support/OpenGLES/OpenGLES20/Shader.cpp \
+support/gl_support/OpenGLES/OpenGLES20/ShaderFile.cpp \
+support/gl_support/OpenGLES/OpenGLES20/ShaderProgram.cpp \
+support/gl_support/OpenGLES/OpenGLES20/ShaderSource.cpp \
+support/gl_support/OpenGLES/OpenGLES20/Uniform.cpp \
 text_input_node/CCIMEDispatcher.cpp \
 text_input_node/CCTextFieldTTF.cpp \
 textures/CCTexture2D.cpp \
@@ -109,6 +127,7 @@ touch_dispatcher/CCTouchHandler.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/platform \
+					$(LOCAL_PATH)/support/gl_support/OpenGLES \
                     $(LOCAL_PATH)/platform/third_party/android/iconv \
                     $(LOCAL_PATH)/platform/third_party/android/libpng \
                     $(LOCAL_PATH)/platform/third_party/android/libxml2 \
@@ -119,12 +138,13 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
 # because the new Windows toolchain doesn't support Cygwin's drive
 # mapping (i.e /cygdrive/c/ instead of C:/)  
 LOCAL_LDLIBS := -L$(call host-path, $(LOCAL_PATH)/platform/third_party/android/libraries) \
-                 -lGLESv1_CM -llog -lz \
+                 -lGLESv1_CM -lGLESv2 -llog -lz \
                  -lpng \
                  -lxml2 \
                  -ljpeg
 
 # define the macro to compile through support/zip_support/ioapi.c                
 LOCAL_CFLAGS := -DUSE_FILE32API
+#LOCAL_CFLAGS := -DUSE_FILE32API -DDEBUG -DCOCOS2D_DEBUG=1
                                  
 include $(BUILD_SHARED_LIBRARY)

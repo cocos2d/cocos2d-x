@@ -13,10 +13,14 @@ extern "C"
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
 {
+	LOGD( "Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(%i, %i)", w, h );
     if (!cocos2d::CCDirector::sharedDirector()->getOpenGLView())
     {
-	cocos2d::CCEGLView *view = &cocos2d::CCEGLView::sharedOpenGLView();
+		cocos2d::CCEGLView *view = &cocos2d::CCEGLView::sharedOpenGLView();
         view->setFrameWidthAndHeight(w, h);
+		
+		LOGD( "setFrameWidthAndHeight(%i, %i)", w, h );
+		
         // if you want to run in WVGA with HVGA resource, set it
         // view->create(480, 320);
         cocos2d::CCDirector::sharedDirector()->setOpenGLView(view);

@@ -1,6 +1,6 @@
 # set params
-ANDROID_NDK_ROOT=/cygdrive/e/android-ndk-r5
-COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
+ANDROID_NDK_ROOT=/Android/android-ndk-r5c
+COCOS2DX_ROOT=/Users/samlepirate/Dev/cocos2d-x
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
 # make sure assets is exist

@@ -75,7 +75,7 @@ GLuint ShaderProgram::createProgram(Shader *vertexShader, Shader *fragmentShader
 	GLint linked;
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
 	
-	if (!linked || OpenGLESConfig::DEBUG)
+	if (!linked || OpenGLESConfig::OPENGLESCONFIG_DEBUG)
 	{
 		GLint infoLength;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLength);

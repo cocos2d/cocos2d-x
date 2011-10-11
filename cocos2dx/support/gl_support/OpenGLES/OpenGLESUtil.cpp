@@ -15,6 +15,7 @@
  */
 
 #include "OpenGLESUtil.h"
+#include "cocos2d.h"
 
 using namespace OpenGLES;
 
@@ -56,12 +57,12 @@ void OpenGLESUtil::checkGlError(GLenum errorCode, const char *file, const unsign
 
 void OpenGLESUtil::logMessage(const char *file, int line, OpenGLESString msg)
 {
-	printf("%s:%d %s\n", file, line, msg().c_str());
+	CCLOG("%s:%d %s\n", file, line, msg().c_str());
 }
 
 void OpenGLESUtil::logMessage(OpenGLESString msg)
 {
-	printf("%s\n", msg().c_str());
+	CCLOG("%s\n", msg().c_str());
 }
 
 void OpenGLESUtil::print( const char* format, ... ) 
@@ -77,6 +78,6 @@ void OpenGLESUtil::printBits(int val)
 	for (int i = 0; i < 32; i++) {
 		int mask = 1 << i;
 		int bit = (val & mask) >> i;
-		printf("%d", bit);
+		CCLOG("%d", bit);
 	}
 }

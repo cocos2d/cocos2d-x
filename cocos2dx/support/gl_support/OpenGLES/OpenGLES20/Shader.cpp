@@ -54,7 +54,7 @@ GLuint Shader::compile()
 	GLint compiled;
 	glGetShaderiv(id, GL_COMPILE_STATUS, &compiled);
 
-	if (!compiled || OpenGLESConfig::DEBUG)
+	if (!compiled || OpenGLESConfig::OPENGLESCONFIG_DEBUG)
 	{
 		GLint infoLength;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLength);
@@ -82,6 +82,16 @@ GLuint Shader::compile()
 		}
 		else
 		{
+			GLint sourceLength;
+			glGetShaderiv(id, GL_SHADER_SOURCE_LENGTH, &sourceLength);
+			char *source = (char *)malloc(sizeof(char) * sourceLength);
+			GLsizei s = 0;
+			glGetShaderSource(id, sourceLength, &s, source);
+			OPENGLES_LOG_MESSAGE(OpenGLESString(source));
+			OPENGLES_LOG_MESSAGE( s );
+			free(source);
+			
+			
 			glDeleteShader(id);
 			return 0;
 		}

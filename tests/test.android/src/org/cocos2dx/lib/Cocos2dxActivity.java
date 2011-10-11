@@ -51,6 +51,7 @@ public class Cocos2dxActivity extends Activity{
     private static Handler handler;
     private final static int HANDLER_SHOW_DIALOG = 1;
     private static String packageName;
+    public static Cocos2dxActivity cocos2dxActivity;
 
     private static native void nativeSetPaths(String apkPath);
 
@@ -58,6 +59,8 @@ public class Cocos2dxActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        cocos2dxActivity = this;
+
         // get frame size
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
