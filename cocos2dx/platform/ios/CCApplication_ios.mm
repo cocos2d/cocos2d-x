@@ -138,6 +138,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"es"]){
         ret = kLanguageSpanish;
     }
+	else if ([languageCode isEqualToString:@"ru"]){
+        ret = kLanguageRussian;
+    }
 
     return ret;
 }
