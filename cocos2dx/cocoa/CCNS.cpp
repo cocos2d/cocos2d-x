@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include <vector>
 #include <string.h>
 #include <stdlib.h>
-#include <string.h>
+
 
 typedef std::vector<std::string> strArray;
 

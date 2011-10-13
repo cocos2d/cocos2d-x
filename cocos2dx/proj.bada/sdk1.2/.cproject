@@ -50,9 +50,6 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.linker.so.simul.2053689254" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.linker.so.simul">
 <option id="osp.gnu.cpp.link.simual.so.option.libs.1850464255" name="Libraries (-l)" superClass="osp.gnu.cpp.link.simual.so.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="osp_rt0"/>
-<listOptionValue builtIn="false" value="jpeg"/>
-<listOptionValue builtIn="false" value="png"/>
-<listOptionValue builtIn="false" value="zlib"/>
 <listOptionValue builtIn="false" value="libc-newlib"/>
 <listOptionValue builtIn="false" value="FOsp"/>
 <listOptionValue builtIn="false" value="FGraphicsOpengl"/>
@@ -62,6 +59,11 @@
 <listOptionValue builtIn="false" value="&quot;${SIMULATOR_LIB_PATH}&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Lib&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
+</option>
+<option id="osp.gnu.cpp.link.option.userobjs.560052621" name="Other objects" superClass="osp.gnu.cpp.link.option.userobjs" valueType="userObjs">
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.2/.Simulator-Debug/libjpeg.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.2/.Simulator-Debug/libpng.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.2/.Simulator-Debug/libzlib.a"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1985930839" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -680,6 +682,7 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.osp.gnu.target.so.debug.1119942620">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.osp.gnu.target.so.debug.1119942620" moduleId="org.eclipse.cdt.core.settings" name="Target-Debug">
@@ -726,12 +729,12 @@
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug.1530594670" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug.1173368112" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug">
-<option id="osp.gnu.target.cpp.link.debug.so.option.libs.391062396" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs" valueType="libs"/>
+<option id="osp.gnu.target.cpp.link.debug.so.option.libs.391062396" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs"/>
 <option id="osp.gnu.target.cpp.link.debug.so.option.userobjs.864509401" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.so.option.userobjs" valueType="userObjs">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.2/.Target-Debug/libjpeg.a}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/bada/src/png/sdk1.2/.Target-Debug/libpng.a}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/bada/src/zlib/sdk1.2/.Target-Debug/libzlib.a}&quot;"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.2/.Target-Debug/libjpeg.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.2/.Target-Debug/libpng.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.2/.Target-Debug/libzlib.a"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
@@ -1356,6 +1359,7 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.osp.gnu.target.so.release.157900877">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.osp.gnu.target.so.release.157900877" moduleId="org.eclipse.cdt.core.settings" name="Target-Release">
@@ -2031,6 +2035,7 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
