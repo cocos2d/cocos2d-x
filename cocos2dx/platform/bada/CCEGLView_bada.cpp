@@ -265,19 +265,32 @@ static int badaOrientation[4] = {
 
 int CCEGLView::setDeviceOrientation(int eOritation)
 {
-//	m_nowOrientation = (Orientation)badaOrientation[eOritation];
-//	SetOrientation(m_nowOrientation);
-//
-//	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
-//	{
-//		resize(MIN(m_sSizeInPixel.width, m_sSizeInPixel.height), MAX(m_sSizeInPixel.width, m_sSizeInPixel.height));
-//	}
-//	else
-//	{
-//		resize(MAX(m_sSizeInPixel.width, m_sSizeInPixel.height), MIN(m_sSizeInPixel.width, m_sSizeInPixel.height));
-//	}
+	m_nowOrientation = (Orientation)badaOrientation[eOritation];
+	SetOrientation(m_nowOrientation);
 
-	return eOritation;
+	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
+	{
+		int width = MIN(m_sSizeInPixel.width, m_sSizeInPixel.height);
+		m_sSizeInPixel.height = MAX(m_sSizeInPixel.width, m_sSizeInPixel.height);
+		m_sSizeInPixel.width = width;
+		width = MIN(m_sSizeInPoint.width, m_sSizeInPoint.height);
+		m_sSizeInPoint.height = MAX(m_sSizeInPoint.width, m_sSizeInPoint.height);
+		m_sSizeInPoint.width = width;
+		resize(m_sSizeInPoint.width, m_sSizeInPoint.height);
+	}
+	else
+	{
+		int width = MAX(m_sSizeInPixel.width, m_sSizeInPixel.height);
+		m_sSizeInPixel.height = MIN(m_sSizeInPixel.width, m_sSizeInPixel.height);
+		m_sSizeInPixel.width = width;
+		width = MAX(m_sSizeInPoint.width, m_sSizeInPoint.height);
+		m_sSizeInPoint.height = MIN(m_sSizeInPoint.width, m_sSizeInPoint.height);
+		m_sSizeInPoint.width = width;
+		resize(m_sSizeInPoint.width, m_sSizeInPoint.height);
+	}
+
+	return m_eInitOrientation;
+//	return eOritation;
 }
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)

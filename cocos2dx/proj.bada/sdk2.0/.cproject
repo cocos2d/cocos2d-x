@@ -56,9 +56,9 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug.151715746" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug">
 								<option id="osp.gnu.target.cpp.link.debug.so.option.userobjs.126345237" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.so.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/bada/src/libjpeg/sdk2.0/.Target-Debug/libjpeg.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/bada/src/png/sdk2.0/.Target-Debug/libpng.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/bada/src/zlib/sdk2.0/.Target-Debug/libzlib.a}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/libjpeg/sdk2.0/.Target-Debug/libjpeg.a"/>
+									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/png/sdk2.0/.Target-Debug/libpng.a"/>
+									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/zlib/sdk2.0/.Target-Debug/libzlib.a"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
@@ -518,6 +518,7 @@
 					</profile>
 				</scannerConfigBuildInfo>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.osp.gnu.target.so.release.562326387">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.osp.gnu.target.so.release.562326387" moduleId="org.eclipse.cdt.core.settings" name="Target-Release">
@@ -571,15 +572,15 @@
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release.896785834" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release">
 								<option id="osp.gnu.target.cpp.link.release.so.option.userobjs.1737890791" name="Other objects" superClass="osp.gnu.target.cpp.link.release.so.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/bada/src/libjpeg/sdk2.0/.Target-Release/libjpeg.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/bada/src/png/sdk2.0/.Target-Release/libpng.a}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/platform/third_party/bada/src/zlib/sdk2.0/.Target-Release/libzlib.a}&quot;"/>
+									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/libjpeg/sdk2.0/.Target-Release/libjpeg.a"/>
+									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/png/sdk2.0/.Target-Release/libpng.a"/>
+									<listOptionValue builtIn="false" value="../../../platform/third_party/bada/src/zlib/sdk2.0/.Target-Release/libzlib.a"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
 								</option>
-								<option id="osp.gnu.target.cpp.link.release.so.option.libs.paths.255541031" superClass="osp.gnu.target.cpp.link.release.so.option.libs.paths" valueType="libPaths">
+								<option id="osp.gnu.target.cpp.link.release.so.option.libs.paths.255541031" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.so.option.libs.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 								</option>
@@ -1033,6 +1034,7 @@
 					</profile>
 				</scannerConfigBuildInfo>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
