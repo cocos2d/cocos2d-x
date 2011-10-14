@@ -1,6 +1,4 @@
 #include "SimpleAudioEngine.h"
-#include "MyAudioOutListener.h"
-
 #include <FBase.h>
 #include <FMedia.h>
 #include <FSystem.h>
@@ -195,7 +193,7 @@ static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath, bool bLoo
 		r = pPlayer->OpenFile(strFilePath.c_str(), false);
 		if (IsFailed(r))
 		{
-			AppLog("Openfile fails\n");
+			AppLog("Open (%s) fails\n", strFilePath.c_str());
 			delete pPlayer;
 			pPlayer = NULL;
 			break;
@@ -357,6 +355,10 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
     if (s_pBackPlayer)
     {
     	s_pBackPlayer->SetVolume((int) (volume * 99));
+    	if (volume > 0.0f && s_pBackPlayer->GetVolume() == 0)
+    	{
+    		s_pBackPlayer->SetVolume(1);
+    	}
     }
     AppLog("volume = %f", volume);
     s_fBackgroundMusicVolume = volume;
@@ -394,6 +396,11 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 	if (p != s_List.end())
 	{
 		p->second->SetVolume((int) (s_fEffectsVolume * 99));
+    	if (s_fEffectsVolume > 0.0f && p->second->GetVolume() == 0)
+    	{
+    		p->second->SetVolume(1);
+    	}
+
 	    if (PLAYER_STATE_PLAYING == p->second->GetState())
 		{
 	    	r = p->second->Stop();

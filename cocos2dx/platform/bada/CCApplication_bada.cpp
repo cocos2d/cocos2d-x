@@ -5,6 +5,7 @@ using namespace Osp::App;
 using namespace Osp::System;
 using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
+using namespace Osp::Locales;
 
 NS_CC_BEGIN;
 
@@ -56,7 +57,27 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    return kLanguageEnglish;
+	ccLanguageType ret = kLanguageEnglish;
+	do
+	{
+		result r = E_SUCCESS;
+		String value;
+		r = SettingInfo::GetValue(L"Language", value);
+		if (value.Equals("ZHO", false))
+		{
+			r = SettingInfo::GetValue(L"Country", value);
+			if (value.Equals("HK", false) || value.Equals("TW", false))
+			{
+				ret = kLanguageChinese_Traditional;
+			}
+			else
+			{
+				ret = kLanguageChinese_Simplified;
+			}
+		}
+	} while (0);
+
+	return ret;
 }
 
 void CCApplication::setAnimationInterval(double interval)
