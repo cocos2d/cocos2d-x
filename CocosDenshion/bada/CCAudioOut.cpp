@@ -1,20 +1,68 @@
-/*
- * MyAudioOutListener.cpp
- *
- *  Created on: 2011-1-21
- *      Author: Administrator
- */
-
-#include "MyAudioOutListener.h"
+#include "CCAudioOut.h"
 #include <stdio.h>
-#include "WavHead.h"
-
 
 using namespace Osp::Base;
 using namespace Osp::Base::Collection;
 using namespace Osp::Media;
 
 #define MAX_BUFFER_SIZE	2520 // 840 byte
+
+typedef struct wave_tag
+{
+    char              ChunkID[5];
+    unsigned long int ChunkSize;
+    char              Format[5];
+    char              SubChunk1ID[5];
+    unsigned long int SubChunk1Size;
+    unsigned short int   AudioFormat;
+    unsigned short int   NumChannels;
+    unsigned long int    SampleRate;
+    unsigned long int    ByteRate;
+    unsigned short int   BlockAlign;
+    unsigned short int   BitsPerSample;
+    char              SubChunk2ID[5];
+    unsigned long int SubChunk2Size;
+}WAVE;
+
+static bool GetWaveHeadInfo(FILE*stream, WAVE& outWavHead)
+{
+	char szTmp[100] = {0};
+	int i = 0;
+
+    fread(outWavHead.ChunkID, 4, 1, stream);
+    outWavHead.ChunkID[4] = (char)0;
+    fread(&(outWavHead.ChunkSize),4, 1, stream);
+    fread(outWavHead.Format, 4, 1, stream);
+    outWavHead.Format[4] = (char)0;
+    fread(outWavHead.SubChunk1ID, 4, 1, stream);
+    outWavHead.SubChunk1ID[4] = (char)0;
+    fread(&(outWavHead.SubChunk1Size), 4, 1, stream);
+    fread(&(outWavHead.AudioFormat),   2, 1, stream);
+    fread(&(outWavHead.NumChannels),   2, 1, stream);
+    fread(&(outWavHead.SampleRate), 4, 1, stream);
+    fread(&(outWavHead.ByteRate),      4, 1, stream);
+    fread(&(outWavHead.BlockAlign), 2, 1, stream);
+    fread(&(outWavHead.BitsPerSample), 2, 1, stream);
+
+	fseek(stream, 0, SEEK_SET);
+	fread(szTmp, 64, 1, stream);
+
+	for (i = 0; i <= 60; i++)
+	{
+		if (szTmp[i] == 'd' && szTmp[i+1] == 'a' && szTmp[i+2] == 't' && szTmp[i+3] == 'a')
+		{
+			break;
+		}
+	}
+
+	fseek(stream, i, SEEK_SET);
+    fread(outWavHead.SubChunk2ID,      4, 1, stream);
+    outWavHead.SubChunk2ID[4] = (char)0;
+
+    fread(&(outWavHead.SubChunk2Size), 4, 1, stream);
+
+    return true;
+}
 
 MyAudioOutEventListener::MyAudioOutEventListener()
 {
