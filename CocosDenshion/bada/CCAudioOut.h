@@ -1,17 +1,8 @@
-/*
- * MyAudioOutListener.h
- *
- *  Created on: 2011-1-21
- *      Author: Administrator
- */
-
-#ifndef MYAUDIOOUTLISTENER_H_
-#define MYAUDIOOUTLISTENER_H_
+#ifndef __CCAUDIOOUT_H__
+#define __CCAUDIOOUT_H__
 
 #include <FBase.h>
 #include <FMedia.h>
-
-
 
 class MyAudioOutEventListener :
 	public Osp::Media::IAudioOutEventListener
@@ -24,9 +15,9 @@ public:
 
 	result Construct(const char* pszFilePath);
 
-	void play();
-	void stop();
-	void setVolume(int volume);
+	void Play();
+	void Stop();
+	void SetVolume(int volume);
 	/**
 	*	Notifies when the device has written a buffer completely.
 	*
