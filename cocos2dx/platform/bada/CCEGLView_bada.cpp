@@ -409,7 +409,7 @@ void CCEGLView::OnTouchPressed(const Osp::Ui::Control& source,
 		x = currentPosition.x;
 		y = currentPosition.y;
 	}
-	AppLog("OnTouchPressed... x = %f, y = %f", x, y);
+//	AppLog("OnTouchPressed... x = %f, y = %f", x, y);
 	if (m_pDelegate && m_pTouch)
 	{
 		m_bCaptured = true;
@@ -441,7 +441,7 @@ void CCEGLView::OnTouchReleased(const Osp::Ui::Control& source,
 		y = currentPosition.y;
 	}
 
-	AppLog("OnTouchReleased... x = %f, y = %f", x, y);
+//	AppLog("OnTouchReleased... x = %f, y = %f", x, y);
 	if (m_bCaptured)
 	{
 		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
@@ -466,7 +466,7 @@ void CCEGLView::OnTouchMoved(const Osp::Ui::Control& source,
 		x = currentPosition.x;
 		y = currentPosition.y;
 	}
-	AppLog("OnTouchMoved... x = %f, y = %f", x, y);
+//	AppLog("OnTouchMoved... x = %f, y = %f", x, y);
 	if (m_bCaptured)
 	{
 		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
