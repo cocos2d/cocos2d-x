@@ -56,7 +56,40 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    return kLanguageEnglish;
+	ccLanguageType ret = kLanguageEnglish;
+	do
+	{
+		result r = E_SUCCESS;
+		String value;
+		r = SettingInfo::GetValue(L"Language", value);
+		if (value.Equals("ZHO", false))
+		{
+//			r = SettingInfo::GetValue(L"Country", value);
+//			if (value.Equals("HK", false) || value.Equals("TW", false))
+//			{
+//
+//			}
+			ret = kLanguageChinese;
+		}
+		else if (value.Equals("FRA", false))
+		{
+			ret = kLanguageFrench;
+		}
+		else if (value.Equals("ITA", false))
+		{
+			ret = kLanguageItalian;
+		}
+		else if (value.Equals("DEU", false))
+		{
+			ret = kLanguageGerman;
+		}
+		else if (value.Equals("SPA", false))
+		{
+			ret = kLanguageSpanish;
+		}
+	} while (0);
+
+	return ret;
 }
 
 void CCApplication::setAnimationInterval(double interval)
