@@ -23,8 +23,9 @@ namespace CocosDenshion {
 
 #define MAX_BUFFER_SIZE	2520 // 840 byte
 
-typedef map<unsigned int, MyAudioOutEventListener*> EffectList;
-typedef pair<unsigned int ,MyAudioOutEventListener*> Effect;
+typedef map<unsigned int, Player*> EffectList;
+typedef pair<unsigned int ,Player*> Effect;
+
 
 static SimpleAudioEngine *s_pSharedAudioEngine = NULL;
 static Player       *s_pBackPlayer       = NULL;
@@ -46,16 +47,6 @@ static unsigned int _Hash(const char *key)
 		hash ^= (unsigned int) (unsigned char) toupper(*key);
 	}
 	return (hash);
-}
-
-static void unloadEffectAll()
-{
-	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
-	{
-		delete it->second;
-	}
-
-	s_List.clear();
 }
 
 class MyPlayerEventListener :
@@ -158,6 +149,68 @@ public:
 
 static 	MyPlayerEventListener s_playerListener;
 
+static void closeMediaPlayer(Player*& pPlayer)
+{
+	if (pPlayer != NULL)
+	{
+		PlayerState nowState = pPlayer->GetState();
+		if( nowState == PLAYER_STATE_PLAYING || nowState == PLAYER_STATE_PAUSED )
+		{
+			pPlayer->Stop();
+			pPlayer->Close();
+			AppLog("audio player closed");
+		}
+		else if(nowState == PLAYER_STATE_OPENED || nowState == PLAYER_STATE_ENDOFCLIP || nowState == PLAYER_STATE_STOPPED )
+		{
+			pPlayer->Close();
+			AppLog("audio player closed");
+		}
+	}
+}
+
+static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath, bool bLoop)
+{
+	bool bRet = false;
+	result r = E_FAILURE;
+
+	do
+	{
+		closeMediaPlayer(pPlayer);
+
+		if (pPlayer == NULL)
+		{
+			pPlayer = new Player();
+			r = pPlayer->Construct(s_playerListener, null);
+			if (IsFailed(r))
+			{
+				AppLog("player construct fails, pszFilePath = %s", pszFilePath);
+				delete pPlayer;
+				pPlayer = NULL;
+				break;
+			}
+		}
+
+		string strFilePath = s_strResourcePath+pszFilePath;
+		// OpenFile must use synchronous param, for after that it will playing.
+		r = pPlayer->OpenFile(strFilePath.c_str(), false);
+		if (IsFailed(r))
+		{
+			AppLog("Openfile fails\n");
+			delete pPlayer;
+			pPlayer = NULL;
+			break;
+		}
+		else
+		{
+			pPlayer->SetLooping(bLoop);
+			bRet = true;
+		}
+	}
+	while (0);
+
+	return bRet;
+}
+
 SimpleAudioEngine::SimpleAudioEngine()
 {
 
@@ -167,22 +220,17 @@ SimpleAudioEngine::~SimpleAudioEngine()
 {
 	AppLog("destroy SimpleAudioEngine");
 
-	unloadEffectAll();
-
-	if( s_pBackPlayer )
+	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
-		PlayerState nowState = s_pBackPlayer->GetState();
-		if( nowState == PLAYER_STATE_PLAYING || nowState == PLAYER_STATE_PAUSED )
-		{
-			s_pBackPlayer->Stop();
-			s_pBackPlayer->Close();
-		}else if(nowState == PLAYER_STATE_OPENED || nowState == PLAYER_STATE_ENDOFCLIP || nowState == PLAYER_STATE_STOPPED )
-		{
-			s_pBackPlayer->Close();
-		}
-		delete s_pBackPlayer;
-		s_pBackPlayer = null;
+		closeMediaPlayer(it->second);
+		delete it->second;
 	}
+
+	s_List.clear();
+
+	closeMediaPlayer(s_pBackPlayer);
+	delete s_pBackPlayer;
+	s_pBackPlayer = NULL;
 }
 
 SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
@@ -221,44 +269,16 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
-    if (s_pBackPlayer)
-    {
-		PlayerState nowState = s_pBackPlayer->GetState();
-		if( nowState == PLAYER_STATE_PLAYING || nowState == PLAYER_STATE_PAUSED )
-		{
-			s_pBackPlayer->Stop();
-			s_pBackPlayer->Close();
-		}else if(nowState == PLAYER_STATE_OPENED || nowState == PLAYER_STATE_ENDOFCLIP || nowState == PLAYER_STATE_STOPPED )
-		{
-			s_pBackPlayer->Close();
-		}
-    }
-    else
-    {
-    	s_pBackPlayer = new Player();
-    	result r = s_pBackPlayer->Construct(s_playerListener, null);
-    	AppLog("player construct return %d", r);
-    }
+	result r = E_FAILURE;
+	bool bRet = false;
+	bRet = openMediaPlayer(s_pBackPlayer, pszFilePath, bLoop);
 
 	setBackgroundMusicVolume(s_fBackgroundMusicVolume);
 
-	string strFilePath = s_strResourcePath+pszFilePath;
-	// OpenFile must use synchronous param, for after that it will playing.
-	result r = s_pBackPlayer->OpenFile(strFilePath.c_str(), false);
-    if (IsFailed(r))
-    {
-    	AppLog("Openfile fails\n");
-    }
-    else
-    {
-    	s_pBackPlayer->SetLooping(bLoop);
-    }
-
-    if (s_fBackgroundMusicVolume > 0.0f)
+    if (bRet && s_fBackgroundMusicVolume > 0.0f)
     {
     	r = s_pBackPlayer->Play();
     }
-
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -364,6 +384,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 // for sound effects
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/* = false*/)
 {
+	result r = E_FAILURE;
 	string strFilePath = s_strResourcePath+pszFilePath;
 	unsigned int nRet = _Hash(strFilePath.c_str());
 
@@ -372,8 +393,17 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 	EffectList::iterator p = s_List.find(nRet);
 	if (p != s_List.end())
 	{
-		p->second->setVolume((int) (s_fEffectsVolume * 99));
-		p->second->play();
+		p->second->SetVolume((int) (s_fEffectsVolume * 99));
+	    if (PLAYER_STATE_PLAYING == p->second->GetState())
+		{
+	    	r = p->second->Stop();
+		}
+
+    	r = p->second->Play();
+    	if (IsFailed(r))
+    	{
+    		AppLog("play effect fails, error code = %d", r);
+    	}
 	}
 
 	return nRet;
@@ -381,16 +411,17 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
-	MyAudioOutEventListener*& pListener = s_List[nSoundId];
-	if (pListener != null)
+	Player*& pPlayer = s_List[nSoundId];
+	if (pPlayer != NULL)
 	{
-		pListener->stop();
+		pPlayer->Stop();
 	}
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
 	int nRet = 0;
+	Player* pEffectPlayer = NULL;
 	do
 	{
 		BREAK_IF(! pszFilePath);
@@ -401,14 +432,18 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
 		BREAK_IF(s_List.end() != s_List.find(nRet));
 
-		if (s_List.size() >= 64)
+		// bada only support 10 player instance, we use one for background music, other for effect music.
+		if (s_List.size() >= 9)
 		{
-			unloadEffectAll();
+			// get the first effect, and remove it form list
+			AppLog("effect preload more than 9, delete the first effect");
+			pEffectPlayer = s_List.begin()->second;
+			closeMediaPlayer(pEffectPlayer);
+			s_List.erase(s_List.begin()->first);
 		}
 
-		MyAudioOutEventListener* pListener = new MyAudioOutEventListener();
-		pListener->Construct(strFilePath.c_str());
-		s_List.insert(Effect(nRet, pListener));
+		openMediaPlayer(pEffectPlayer, pszFilePath, false);
+		s_List.insert(Effect(nRet, pEffectPlayer));
 
 	} while (0);
 }
@@ -417,9 +452,8 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
 	string strFilePath = s_strResourcePath+pszFilePath;
 	unsigned int nSoundId = _Hash(strFilePath.c_str());
-	MyAudioOutEventListener*& pListener = s_List[nSoundId];
-	delete pListener;
-	s_List.erase(nSoundId);
+	Player*& pPlayer = s_List[nSoundId];
+	closeMediaPlayer(pPlayer);
 }
 
 } // end of namespace CocosDenshion
