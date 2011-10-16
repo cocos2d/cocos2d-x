@@ -62,6 +62,9 @@ public:
     void setScissorInPoints(float x, float y, float w, float h);
 
     void setIMEKeyboardState(bool bOpen);
+
+	void getScreenRectInView(CCRect& rect);
+
 	// static function
 	/**
 	@brief	get the shared main open gl window
