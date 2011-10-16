@@ -215,7 +215,7 @@ result MyAudioOutEventListener::Construct(const char* pszFilePath)
 	return r;
 }
 
-void MyAudioOutEventListener::play()
+void MyAudioOutEventListener::Play()
 {
 	if (__pAudioOut->GetState() == AUDIOOUT_STATE_PLAYING)
 	{
@@ -232,12 +232,12 @@ void MyAudioOutEventListener::play()
 	__playCount++;
 }
 
-void MyAudioOutEventListener::stop()
+void MyAudioOutEventListener::Stop()
 {
 	__pAudioOut->Stop();
 }
 
-void MyAudioOutEventListener::setVolume(int volume)
+void MyAudioOutEventListener::SetVolume(int volume)
 {
 	__pAudioOut->SetVolume(volume);
 }
