@@ -134,15 +134,32 @@ ccLanguageType CCApplication::getCurrentLanguage()
     LCID LanguageID = GetUserDefaultLCID();
     ccLanguageType ret = kLanguageEnglish;
 
-    int nCount = sizeof(arrayChineseCode) / sizeof(int);
-    for (int i = 0; i < nCount; ++i)
+    do 
     {
-        if (arrayChineseCode[i] == LanguageID)
+        int nCount = sizeof(arrayChineseCode) / sizeof(int);
+        for (int i = 0; i < nCount; ++i)
         {
-            ret = kLanguageChinese;
-            break;
+            if (arrayChineseCode[i] == LanguageID)
+            {
+                if (LanguageID == 2052)
+                {
+                    ret = kLanguageChinese_Simplified;
+                }
+                else
+                {
+                    ret = kLanguageChinese_Traditional;
+                }
+                break;
+            }
         }
-    }
+
+        CC_BREAK_IF(kLanguageEnglish != ret);
+
+        if (1041 == LanguageID)
+        {
+            ret = kLanguageJapanese;
+        }
+    } while (0);
 
     return ret;
 }

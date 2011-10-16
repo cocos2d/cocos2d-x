@@ -315,6 +315,14 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
 }
 
+void CCEGLView::getScreenRectInView(CCRect& rect)
+{
+	rect.origin.x       = -m_rcViewPort.origin.x / m_fScreenScaleFactor;
+	rect.origin.y       = -m_rcViewPort.origin.y / m_fScreenScaleFactor;
+	rect.size.width     = m_sSizeInPixel.width / m_fScreenScaleFactor;
+	rect.size.height    = m_sSizeInPixel.height / m_fScreenScaleFactor;
+}
+
 bool CCEGLView::Create(Osp::App::Application* pApp, int width, int height)
 {
 	m_sSizeInPoint.width = MIN(width, height);

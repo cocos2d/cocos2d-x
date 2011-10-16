@@ -5,6 +5,7 @@ using namespace Osp::App;
 using namespace Osp::System;
 using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
+using namespace Osp::Locales;
 
 NS_CC_BEGIN;
 
@@ -64,28 +65,15 @@ ccLanguageType CCApplication::getCurrentLanguage()
 		r = SettingInfo::GetValue(L"Language", value);
 		if (value.Equals("ZHO", false))
 		{
-//			r = SettingInfo::GetValue(L"Country", value);
-//			if (value.Equals("HK", false) || value.Equals("TW", false))
-//			{
-//
-//			}
-			ret = kLanguageChinese;
-		}
-		else if (value.Equals("FRA", false))
-		{
-			ret = kLanguageFrench;
-		}
-		else if (value.Equals("ITA", false))
-		{
-			ret = kLanguageItalian;
-		}
-		else if (value.Equals("DEU", false))
-		{
-			ret = kLanguageGerman;
-		}
-		else if (value.Equals("SPA", false))
-		{
-			ret = kLanguageSpanish;
+			r = SettingInfo::GetValue(L"Country", value);
+			if (value.Equals("HK", false) || value.Equals("TW", false))
+			{
+				ret = kLanguageChinese_Traditional;
+			}
+			else
+			{
+				ret = kLanguageChinese_Simplified;
+			}
 		}
 	} while (0);
 
