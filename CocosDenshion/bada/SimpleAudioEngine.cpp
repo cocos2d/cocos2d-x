@@ -449,8 +449,10 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 			s_List.erase(s_List.begin()->first);
 		}
 
-		openMediaPlayer(pEffectPlayer, pszFilePath, false);
-		s_List.insert(Effect(nRet, pEffectPlayer));
+		if (openMediaPlayer(pEffectPlayer, pszFilePath, false))
+		{
+			s_List.insert(Effect(nRet, pEffectPlayer));
+		}
 
 	} while (0);
 }
