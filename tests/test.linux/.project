@@ -98,7 +98,7 @@
 		<link>
 			<name>test.android</name>
 			<type>2</type>
-			<location>/home/zhangxm/cocos2d-x/tests/test.android</location>
+			<locationURI>PARENT-1-PROJECT_LOC/test.android</locationURI>
 		</link>
 		<link>
 			<name>tests</name>
