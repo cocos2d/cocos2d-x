@@ -1,6 +1,6 @@
 #ifndef __CCAUDIOOUT_H__
 #define __CCAUDIOOUT_H__
-
+#if 0
 #include <FBase.h>
 #include <FMedia.h>
 #include <FIo.h>
@@ -58,5 +58,5 @@ private:
 };
 
 }
-
+#endif
 #endif /* __CCAUDIOOUT_H__ */

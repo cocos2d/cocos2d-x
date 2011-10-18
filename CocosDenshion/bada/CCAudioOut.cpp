@@ -1,3 +1,4 @@
+#if 0
 #include "CCAudioOut.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -597,3 +598,4 @@ void CCAudioOut::Finalize(void)
 }
 
 }
+#endif
