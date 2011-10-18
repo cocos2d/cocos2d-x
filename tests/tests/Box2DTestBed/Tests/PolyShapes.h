@@ -74,6 +74,9 @@ public:
 				m_debugDraw->DrawPolygon(vertices, vertexCount, color);
 			}
 			break;
+                
+        default:
+            break;
 		}
 	}
 
