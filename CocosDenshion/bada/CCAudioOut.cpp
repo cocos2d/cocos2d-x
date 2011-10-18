@@ -1,11 +1,20 @@
 #include "CCAudioOut.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <vorbis/vorbisfile.h>
+#include <FSystem.h>
 
 using namespace Osp::Base;
 using namespace Osp::Base::Collection;
 using namespace Osp::Media;
+using namespace Osp::Io;
 
-#define MAX_BUFFER_SIZE	2520 // 840 byte
+namespace CocosDenshion {
+
+#define PRE_BUFFERING_NUM 2
+#define DEFAULT_VOLUME_LEVEL 5
 
 typedef struct wave_tag
 {
@@ -24,28 +33,25 @@ typedef struct wave_tag
     unsigned long int SubChunk2Size;
 }WAVE;
 
-static bool GetWaveHeadInfo(FILE*stream, WAVE& outWavHead)
+static void GetWaveHeadInfo(File* pFile, WAVE& outWavHead)
 {
 	char szTmp[100] = {0};
 	int i = 0;
+	memset(&outWavHead, 0, sizeof(WAVE));
+    pFile->Read(outWavHead.ChunkID, 4);
+    pFile->Read(&(outWavHead.ChunkSize),4);
+    pFile->Read(outWavHead.Format, 4);
+    pFile->Read(outWavHead.SubChunk1ID, 4);
+    pFile->Read(&(outWavHead.SubChunk1Size), 4);
+    pFile->Read(&(outWavHead.AudioFormat),   2);
+    pFile->Read(&(outWavHead.NumChannels),   2);
+    pFile->Read(&(outWavHead.SampleRate), 4);
+    pFile->Read(&(outWavHead.ByteRate),      4);
+    pFile->Read(&(outWavHead.BlockAlign), 2);
+    pFile->Read(&(outWavHead.BitsPerSample), 2);
 
-    fread(outWavHead.ChunkID, 4, 1, stream);
-    outWavHead.ChunkID[4] = (char)0;
-    fread(&(outWavHead.ChunkSize),4, 1, stream);
-    fread(outWavHead.Format, 4, 1, stream);
-    outWavHead.Format[4] = (char)0;
-    fread(outWavHead.SubChunk1ID, 4, 1, stream);
-    outWavHead.SubChunk1ID[4] = (char)0;
-    fread(&(outWavHead.SubChunk1Size), 4, 1, stream);
-    fread(&(outWavHead.AudioFormat),   2, 1, stream);
-    fread(&(outWavHead.NumChannels),   2, 1, stream);
-    fread(&(outWavHead.SampleRate), 4, 1, stream);
-    fread(&(outWavHead.ByteRate),      4, 1, stream);
-    fread(&(outWavHead.BlockAlign), 2, 1, stream);
-    fread(&(outWavHead.BitsPerSample), 2, 1, stream);
-
-	fseek(stream, 0, SEEK_SET);
-	fread(szTmp, 64, 1, stream);
+	pFile->Seek(FILESEEKPOSITION_BEGIN, 0);
+	pFile->Read(szTmp, 64);
 
 	for (i = 0; i <= 60; i++)
 	{
@@ -55,241 +61,539 @@ static bool GetWaveHeadInfo(FILE*stream, WAVE& outWavHead)
 		}
 	}
 
-	fseek(stream, i, SEEK_SET);
-    fread(outWavHead.SubChunk2ID,      4, 1, stream);
-    outWavHead.SubChunk2ID[4] = (char)0;
-
-    fread(&(outWavHead.SubChunk2Size), 4, 1, stream);
-
-    return true;
+	pFile->Seek(FILESEEKPOSITION_BEGIN, i);
+    pFile->Read(outWavHead.SubChunk2ID, 4);
+    pFile->Read(&(outWavHead.SubChunk2Size), 4);
 }
 
-MyAudioOutEventListener::MyAudioOutEventListener()
+int CCAudioOut::DecodeOgg(const char *infile)
 {
-	__totalWriteBufferNum = 0;
-	__playCount = 0;
-	__pDataArray = null;
-	__pAudioOut = null;
-	__pPcmBuffer = null;
-	__pcmLen = 0;
-}
+    FILE *in=NULL;
+    OggVorbis_File vf;
+    int bs = 0;
+    char buf[8192];
+    int buflen = 8192;
+    unsigned int written = 0;
+    int ret;
+    ogg_int64_t length = 0;
+    ogg_int64_t done = 0;
+    int size;
+    int seekable = 0;
+    int percent = 0;
+    char* pPcmBuffer = NULL;
 
-MyAudioOutEventListener::~MyAudioOutEventListener()
-{
-	AppLog("dealoc MyAudioOutEventListener");
-
-	if (__pDataArray != null)
-	{
-		__pDataArray->RemoveAll(true);
-		delete __pDataArray;
-		__pDataArray = null;
+	in = fopen(infile, "rb");
+	if(!in) {
+		AppLog("ERROR: Failed to open input file:\n");
+		return 1;
 	}
-	if (__pAudioOut != null)
+
+    if(ov_open(in, &vf, NULL, 0) < 0) {
+    	AppLog("ERROR: Failed to open input as vorbis\n");
+        fclose(in);
+//        fclose(out);
+        return 1;
+    }
+
+    if(ov_seekable(&vf)) {
+        seekable = 1;
+        length = ov_pcm_total(&vf, 0);
+        size = bits/8 * ov_info(&vf, 0)->channels;
+    }
+
+    if (ov_info(&vf,0)->channels == 2)
+    {
+    	__sampleChannelType = AUDIO_CHANNEL_TYPE_STEREO;
+    }
+    else
+    {
+    	__sampleChannelType = AUDIO_CHANNEL_TYPE_MONO;
+    }
+
+    __sampleRate = ov_info(&vf,0)->rate;
+    __sampleBitdepth = AUDIO_TYPE_PCM_S16_LE;
+
+
+    while((ret = ov_read(&vf, buf, buflen, endian, bits/8, sign, &bs)) != 0) {
+        if(bs != 0) {
+            AppLog("Only one logical bitstream currently supported\n");
+            break;
+        }
+
+        if(ret < 0 && !quiet) {
+            AppLog("Warning: hole in data\n");
+            continue;
+        }
+
+        if (__pAllPcmBuffer == null)
+        {
+        	__pAllPcmBuffer = (char*)malloc(ret);
+        }
+        else
+        {
+			__pAllPcmBuffer = (char*)realloc(__pAllPcmBuffer, written+ret);
+        }
+
+        memcpy(__pAllPcmBuffer+written, buf, ret);
+
+        written += ret;
+        if(!quiet && seekable) {
+            done += ret/size;
+            if((double)done/(double)length * 200. > (double)percent) {
+                percent = (double)done/(double)length *200;
+                AppLog("\r\t[%5.1f%%]", (double)percent/2.);
+            }
+        }
+    }
+
+    __iAllPcmBufferSize = written;
+
+//    if(seekable && !quiet)
+//        AppLog("\n");
+
+//    if(!raw)
+//        rewrite_header(out, written); /* We don't care if it fails, too late */
+
+    ov_clear(&vf);
+    fclose(in);
+//    fclose(out);
+    return 0;
+}
+
+
+CCAudioOut::CCAudioOut()
+{
+	AppLog("Enter");
+	__pAllPcmBuffer = null;
+	__iAllPcmBufferSize = 0;
+	__iAllPcmPos = 0;
+	quiet = 0;
+	bits = 16;
+	endian = 0;
+	raw = 0;
+	sign = 1;
+	__iFileType = 0;
+	__pFile = null;
+}
+
+CCAudioOut::~CCAudioOut()
+{
+	AppLog("Enter");
+	Finalize();
+	if(__pAudioOut)
 	{
-		__pAudioOut->Stop();
-		__pAudioOut->Unprepare();
 		delete __pAudioOut;
 		__pAudioOut = null;
 	}
-	if (__pPcmBuffer != null)
+
+	if (__pAllPcmBuffer)
 	{
-		delete[] __pPcmBuffer;
-		__pPcmBuffer = null;
+		free(__pAllPcmBuffer);
+		__pAllPcmBuffer = null;
 	}
 }
 
-result MyAudioOutEventListener::Construct(const char* pszFilePath)
+result CCAudioOut::Initialize(const char* pszFilePath)
 {
-	__pAudioOut = new AudioOut();
-	__pAudioOut->Construct(*this);
-	WAVE wavHead;
-	FILE* fp = fopen(pszFilePath, "rb");
-	if (fp != NULL)
+	AppLog("Enter");
+	// This is called when AudioOut form is moving on the foreground.
+	result r = E_SUCCESS;
+	__pAllPcmBuffer = null;
+	__iAllPcmBufferSize = 0;
+	__iAllPcmPos = 0;
+	if(__checkInitFiniPair == false)
 	{
-		if (GetWaveHeadInfo(fp, wavHead))
+		// Reset the configure variables
+		__finishChecker =0;
+		__bufWrittenCnt = PRE_BUFFERING_NUM;
+		__buffReadCnt = 0;
+		__buffWriteCnt = 0;
+
+
+		result r = E_FAILURE;
+		if (__pAudioOut == NULL)
 		{
-			__pPcmBuffer = new char[wavHead.SubChunk2Size];
-			__pcmLen = wavHead.SubChunk2Size;
-			fread(__pPcmBuffer, __pcmLen, 1, fp);
-			fclose(fp);
+			__pAudioOut = new AudioOut();
+			if (!__pAudioOut)
+			{
+				AppLog("[E_OUT_OF_MEMORY] m_pAudio new failed\n");
+				return r;
+			}
+
+			r = __pAudioOut->Construct(*this);
+			if (IsFailed(r))
+			{
+				AppLog("[Error] m_AudioOut.Construct failed");
+				return r;
+			}
 		}
 		else
 		{
-			fclose(fp);
-			return E_FAILURE;
+			AppLog("[Error] __pAudioOut is already existed\n");
 		}
-	}
 
-	__pDataArray = new ArrayList();
-
-	// AudioOut Preparation
-	AudioSampleType audioSampleType;
-	AudioChannelType audioChannelType;
-	int audioSampleRate = 0;
-
-	if (wavHead.BitsPerSample == 8)
-	{
-		audioSampleType = AUDIO_TYPE_PCM_U8;
-
-	}
-	else if (wavHead.BitsPerSample == 16)
-	{
-		audioSampleType = AUDIO_TYPE_PCM_S16_LE;
-	}
-	else
-	{
-		audioSampleType = AUDIO_TYPE_NONE;
-	}
-
-	if (wavHead.NumChannels == 1)
-	{
-		audioChannelType = AUDIO_CHANNEL_TYPE_MONO;
-	}
-	else if (wavHead.NumChannels == 2)
-	{
-		audioChannelType = AUDIO_CHANNEL_TYPE_STEREO;
-	}
-	else
-	{
-		audioChannelType = AUDIO_CHANNEL_TYPE_NONE;
-	}
-
-	audioSampleRate = wavHead.SampleRate;
-
-	result r = __pAudioOut->Prepare(audioSampleType, audioChannelType, audioSampleRate);
-	AppLog("The audio out prepare result is %s", GetErrorMessage(r));
-	AppLogDebug("The audio out prepare result in ApplogDebug message");
-
-	ByteBuffer* pTotalData = null;
-	pTotalData = new ByteBuffer();
-	pTotalData->Construct(__pcmLen);
-	pTotalData->SetArray((byte*)__pPcmBuffer, 0, __pcmLen);
-	pTotalData->Flip();
-
-	int totalSize = pTotalData->GetLimit();
-	int currentPosition = 0;
-	ByteBuffer* pItem = null;
-	byte givenByte;
-
-	// Binding data buffers into the array
-	if(totalSize > MAX_BUFFER_SIZE)
-	{
-		do
+		String strFile(pszFilePath);
+		if (strFile.EndsWith(".wav"))
 		{
-			pItem = new ByteBuffer();
-			pItem->Construct(MAX_BUFFER_SIZE);
-
-			for(int i = 0; i < MAX_BUFFER_SIZE; i++)
+			__iFileType = 0;
+			// Construct File for feeding buffers
+			__pFile = new File();
+			if(!__pFile)
 			{
-				// Read it per 1 byte
-				pTotalData->GetByte(currentPosition++,givenByte);
-				pItem->SetByte(givenByte);
-				if(currentPosition == totalSize )
-					break;
+				AppLog("[Error] __pFile new failed\n");
+				return E_SYSTEM;
 			}
-			__pDataArray->Add(*pItem);
 
-		}while(currentPosition < totalSize);
-		__totalWriteBufferNum = __pDataArray->GetCount();
-	}
-	else
-	{
-		pItem = new ByteBuffer();
-		pItem->Construct(totalSize);
-		for(int i = 0; i < totalSize; i++)
-		{
-			// Read it per 1 byte
-			pTotalData->GetByte(i, givenByte);
-			pItem->SetByte(givenByte);
+			r = __pFile->Construct(pszFilePath, L"rb");
+			if (IsFailed(r)) {
+				AppLog("[Error] __pFile.Construct failed : %d \n", r);
+				return r;
+			}
+
+			WAVE wavHead;
+			GetWaveHeadInfo(__pFile, wavHead);
+
+			if (wavHead.BitsPerSample == 8)
+			{
+				__sampleBitdepth = AUDIO_TYPE_PCM_U8;
+
+			}
+			else if (wavHead.BitsPerSample == 16)
+			{
+				__sampleBitdepth = AUDIO_TYPE_PCM_S16_LE;
+			}
+			else
+			{
+				__sampleBitdepth = AUDIO_TYPE_NONE;
+			}
+
+			if (wavHead.NumChannels == 1)
+			{
+				__sampleChannelType = AUDIO_CHANNEL_TYPE_MONO;
+			}
+			else if (wavHead.NumChannels == 2)
+			{
+				__sampleChannelType = AUDIO_CHANNEL_TYPE_STEREO;
+			}
+			else
+			{
+				__sampleChannelType = AUDIO_CHANNEL_TYPE_NONE;
+			}
+
+			__sampleRate = wavHead.SampleRate;
 		}
-		__pDataArray->Add(*pItem);
-		__totalWriteBufferNum = __pDataArray->GetCount();
-		// non-case for now, may the size of test file is bigger than MAX size
+		else if (strFile.EndsWith(".ogg"))
+		{
+			__iFileType = 1;
+			long long curTick, oldTick;
+			Osp::System::SystemTime::GetTicks(oldTick);
+			DecodeOgg(pszFilePath);
+			Osp::System::SystemTime::GetTicks(curTick);
+			AppLog("decode ogg to pcm waste %ld", (long)(curTick-oldTick));
+		}
+		// Prepare AudioOut
+		r = __pAudioOut->Prepare( __sampleBitdepth, __sampleChannelType, __sampleRate );
+		if (IsFailed(r))
+		{
+			AppLog("[Error] m_AudioOut.Prepare failed");
+			return r;
+		}
+
+		__bufferSize = __pAudioOut->GetMinBufferSize();
+		AppLog("[Info] __bufferSize=%d (MaxBuf=%d Min Size %d)\n", __bufferSize, __pAudioOut->GetMaxBufferSize(),__pAudioOut->GetMinBufferSize());
+
+		// Reset Volume or keeping a volume level
+		__volumeLevel = __volumeLevel == -1 ? DEFAULT_VOLUME_LEVEL : __volumeLevel;
+		r = __pAudioOut->SetVolume(DEFAULT_VOLUME_LEVEL);
+		if (IsFailed(r))
+		{
+			AppLog("[Error] m_AudioOut.SetVolume failed");
+			return r;
+		}
+
+		r = __byteBuffer[0].Construct(__bufferSize);
+		if (E_SUCCESS != r)
+		{
+			AppLog( "[Error] __byteBuffer[0].Construct failed..%d ",r);
+			return E_OUT_OF_MEMORY;
+		}
+		r = __byteBuffer[1].Construct(__bufferSize);
+		if (E_SUCCESS != r)
+		{
+			AppLog( "[Error] __byteBuffer[1].Construct failed..%d ",r);
+			return E_OUT_OF_MEMORY;
+		}
+		r = __byteBuffer[2].Construct(__bufferSize);
+		if (E_SUCCESS != r)
+		{
+			AppLog( "[Error] __byteBuffer[2].Construct failed..%d ",r);
+			return E_OUT_OF_MEMORY;
+		}
+		r = __byteBuffer[3].Construct(__bufferSize);
+		if (E_SUCCESS != r)
+		{
+			AppLog( "[Error] __byteBuffer[3].Construct failed..%d ",r);
+			return E_OUT_OF_MEMORY;
+		}
+
+		for (int i=0; i<4; i++)
+		{
+			FeedBuffer(); // Feeding buffers(4)
+		}
+
+		r = __pAudioOut->WriteBuffer(__byteBuffer[0]);
+		if (IsFailed(r))
+		{
+			AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+			return r;
+		}
+
+		r = __pAudioOut->WriteBuffer(__byteBuffer[1]);
+		if (IsFailed(r))
+		{
+			AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+			return r;
+		}
+
+		__checkInitFiniPair = true;
+
+	}else{
+		AppLog("[WANRNING] The application state is not proper");
 	}
-	delete pTotalData;
-	pTotalData = null;
-
-	// Start playing until the end of the array
-//	__pAudioOut->Start();
-
 	return r;
 }
 
-void MyAudioOutEventListener::Play()
+result CCAudioOut::FeedBuffer (void)
 {
-	if (__pAudioOut->GetState() == AUDIOOUT_STATE_PLAYING)
+	int readSize = 0;
+	result ret = E_SUCCESS;
+
+	if (__iFileType == 0)
 	{
-		__pAudioOut->Reset();
+		/*
+		 *  Read buffer from file
+		 */
+		if(__pFile)
+		{
+			readSize = __pFile->Read((char *)__byteBuffer[__buffWriteCnt].GetPointer (), __bufferSize);
+			if(readSize != 0)
+			{
+				__buffWriteCnt ++;
+				if (4 == __buffWriteCnt)
+				{
+					__buffWriteCnt = 0;
+				}
+			}else
+			{
+				AppLog("readSize = %d", readSize);
+				__finishChecker = PRE_BUFFERING_NUM;
+				__buffWriteCnt = 0;
+			}
+		}
+	}
+	else if (__iFileType == 1)
+	{// ogg
+		int iRemainSize = __iAllPcmBufferSize - __iAllPcmPos;
+		if (iRemainSize < __bufferSize)
+		{
+			memcpy((void*)__byteBuffer[__buffWriteCnt].GetPointer (), __pAllPcmBuffer+__iAllPcmPos, iRemainSize);
+			__iAllPcmPos += iRemainSize;
+		}
+		else
+		{
+			memcpy((void*)__byteBuffer[__buffWriteCnt].GetPointer (), __pAllPcmBuffer+__iAllPcmPos, __bufferSize);
+			__iAllPcmPos += __bufferSize;
+		}
+
+		if (__iAllPcmPos < __iAllPcmBufferSize)
+		{
+			__buffWriteCnt ++;
+			if (4 == __buffWriteCnt)
+			{
+				__buffWriteCnt = 0;
+			}
+		}
+		else
+		{
+			AppLog("readSize = %d", readSize);
+			__finishChecker = PRE_BUFFERING_NUM;
+			__buffWriteCnt = 0;
+			__iAllPcmPos = 0;
+		}
 	}
 
-	ByteBuffer* pWriteBuffer = null;
-	for (int i = 0; i < __totalWriteBufferNum; i++)
-	{
-		pWriteBuffer = static_cast<ByteBuffer*>(__pDataArray->GetAt(i));
-		__pAudioOut->WriteBuffer(*pWriteBuffer);
-	}
-	__pAudioOut->Start();
-	__playCount++;
+	return ret;
 }
 
-void MyAudioOutEventListener::Stop()
-{
-	__pAudioOut->Stop();
-}
 
-void MyAudioOutEventListener::SetVolume(int volume)
-{
-	__pAudioOut->SetVolume(volume);
-}
-
-/**
-*	Notifies when the device has written a buffer completely.
-*
-*	@param[in]	src	A pointer to the AudioOut instance that fired the event
-*/
-void MyAudioOutEventListener::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
+void CCAudioOut::ReFeedBuffer(void)
 {
 	result r = E_SUCCESS;
-
-	if( __playCount == __totalWriteBufferNum)
+	for (int i=0; i<4; i++)
 	{
-		// The End of array, it's time to finish
-		//cjh r = src.Unprepare();
+		FeedBuffer(); // Feeding buffers(4)
+	}
 
-		//Reset Variable
-		__playCount = 0;
-		//cjh __totalWriteBufferNum = 0;
+	r = __pAudioOut->WriteBuffer(__byteBuffer[0]);
+	if (IsFailed(r))
+	{
+		AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+	}
+
+	r = __pAudioOut->WriteBuffer(__byteBuffer[1]);
+	if (IsFailed(r))
+	{
+		AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+	}
+}
+
+void CCAudioOut::Play(void)
+{
+	AppLog("Enter");
+
+	result ret = E_SUCCESS;
+	AudioOutState state = __pAudioOut->GetState();
+	if( state == AUDIOOUT_STATE_STOPPED && __checkRestart)
+	{
+		// Last buffer is checked. Reset.
+		__checkRestart = false;
+		__bufWrittenCnt = PRE_BUFFERING_NUM;
+		__buffReadCnt = 0;
+		__pFile->Seek(FILESEEKPOSITION_BEGIN,0);
+
+		ReFeedBuffer();
+		ret = __pAudioOut->Start();
+		if (IsFailed(ret))
+		{
+			AppLog("[Error] m_AudioOut.Start failed : %d\n", ret);
+		}
+
+	}else if(state == AUDIOOUT_STATE_PREPARED || state == AUDIOOUT_STATE_STOPPED)
+	{
+
+		ret = __pAudioOut->Start();
+		if (IsFailed(ret))
+		{
+			AppLog("[Error] m_AudioOut.Start failed : %d\n", ret);
+		}
+	}
+
+}
+
+void CCAudioOut::Stop(void)
+{
+	AppLog("Enter");
+
+	result ret = E_SUCCESS;
+	if( __pAudioOut->GetState() == AUDIOOUT_STATE_PLAYING )
+	{
+		ret = __pAudioOut->Stop();
+		if (IsFailed(ret))
+		{
+			AppLog("[Error] m_AudioOut.Stop failed : %d\n", ret);
+		}
+	}
+	if (__pAudioOut)
+	{
+		delete __pAudioOut;
+		__pAudioOut = null;
+	}
+	delete this;
+}
+
+void CCAudioOut::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
+{
+	int ret;
+//	AppLog("thread name is %S", Thread::GetCurrentThread()->GetName().GetPointer());
+	AppLog("__buffReadCnt = %d", __buffReadCnt);
+	__byteBuffer[__buffReadCnt++].Clear ();
+
+	if (4 == __buffReadCnt)
+			__buffReadCnt = 0;
+
+	if(__finishChecker == 0)
+	{
+		ret = src.WriteBuffer(__byteBuffer[__bufWrittenCnt++]);
+		if (4 == __bufWrittenCnt)
+			__bufWrittenCnt = 0;
+		FeedBuffer();
 
 	}else
 	{
-		//Not yet reached the end of array
-		//Write the next buffer
-		__playCount++;
-//		ByteBuffer* pWriteBuffer = static_cast<ByteBuffer*>(__pDataArray->GetAt(__playCount++));
-//		r = src.WriteBuffer(*pWriteBuffer);
+		AppLog("__finishChecker = %d", __finishChecker);
+		__finishChecker--;
+		if(__finishChecker == 0)
+		{
+			AppLog("stop...");
+			__checkRestart = true;
+			Stop();
+		}
 	}
 }
 
-/**
- *	Notifies that the output device is being interrupted by a task of higher priority than AudioOut.
- *
- *	@param[in]	src							A pointer to the AudioOut instance that fired the event
- */
-void MyAudioOutEventListener::OnAudioOutInterrupted(Osp::Media::AudioOut& src)
+void CCAudioOut::OnAudioOutInterrupted(Osp::Media::AudioOut& src)
 {
-	AppLog("OnAudioOutInterrupted");
-	if (__pAudioOut->GetState() == AUDIOOUT_STATE_PLAYING)
+	AppLog("Enter");
+
+	Finalize();
+}
+
+void CCAudioOut::OnAudioOutReleased(Osp::Media::AudioOut& src)
+{
+	AppLog("Enter");
+
+//cjh	Initialize();
+}
+
+void CCAudioOut::Finalize(void)
+{
+	AppLog("Enter");
+
+	if(__checkInitFiniPair)
 	{
-		__pAudioOut->Stop();
+
+		// Set OnAudioOutBufferEndReached stop.
+		__finishChecker = PRE_BUFFERING_NUM;
+		__checkRestart = false;
+
+		if(__pAudioOut)
+		{
+
+			AudioOutState state = __pAudioOut->GetState();
+			result r = E_SUCCESS;
+
+			if(state == AUDIOOUT_STATE_PLAYING)
+			{
+				r = __pAudioOut->Reset();
+				if(IsFailed(r))
+				{
+					AppLog("[Error] AudioOut Reset is failed");
+				}
+
+			}
+
+			state = __pAudioOut->GetState();
+
+			if(state == AUDIOOUT_STATE_PREPARED || state == AUDIOOUT_STATE_STOPPED)
+			{
+				r = __pAudioOut->Unprepare();
+				if(IsFailed(r))
+				{
+					AppLog("[Error] AudioOut UnPrepare is failed");
+				}
+			}
+		}
+
+		if(__pFile)
+		{
+			delete __pFile;
+			__pFile = null;
+		}
+
+		__checkInitFiniPair = false;
+	}else{
+		AppLog("[WANRNING] This application state is not proper");
 	}
 }
 
-/**
- *	Notifies that the interrupted output device has been released.
- *
- *	@param[in]	src							A pointer to the AudioOut instance that fired the event
- */
-void MyAudioOutEventListener::OnAudioOutReleased(Osp::Media::AudioOut& src)
-{
-	AppLog("OnAudioOutReleased");
 }
