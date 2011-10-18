@@ -1,6 +1,6 @@
 #ifndef __CCAUDIOOUT_H__
 #define __CCAUDIOOUT_H__
-#if 0
+
 #include <FBase.h>
 #include <FMedia.h>
 #include <FIo.h>
@@ -22,20 +22,24 @@ public:
 	int DecodeOgg(const char *infile);
 	result Initialize(const char* pszFilePath);
 	result FeedBuffer (void);
+	result ReWriteBuffer(void);
 	void ReFeedBuffer(void);
 	void Finalize(void);
 
-	void Play(void);
-	void Stop(void);
+	result Play(void);
+	result Stop(void);
+	result Reset(void);
 	void SetVolume(int volume);
-
+	int GetVolume(void) const;
+	Osp::Media::AudioOutState GetState(void) const;
 private:
 	Osp::Media::AudioOut 	*__pAudioOut;
 	Osp::Base::ByteBuffer  	__byteBuffer [4];
+	bool __bBufferConstruted;
+	int __iUsedBufferCount;
 	Osp::Io::File 			*__pFile;
 	Osp::Media::AudioChannelType __sampleChannelType;
 	Osp::Media::AudioSampleType __sampleBitdepth;
-	bool					__checkRestart;
 	bool					__checkInitFiniPair;
 	int	__bufferSize;
 	int __finishChecker;
@@ -43,7 +47,7 @@ private:
 	int __buffReadCnt;
 	int __bufWrittenCnt;
 	int __volumeLevel;
-
+	bool __bShortPcmBuffer;
 
 	int __iFileType; // 0: wav; 1:ogg
 	int __sampleRate;
@@ -58,5 +62,5 @@ private:
 };
 
 }
-#endif
+
 #endif /* __CCAUDIOOUT_H__ */
