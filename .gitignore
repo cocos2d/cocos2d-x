@@ -37,6 +37,9 @@ assets/
 .project
 .cproject
 
+# Ignore files build by linuc
+*.o
+
 # Ignore files build by airplay
 build_*_xcode/
 
