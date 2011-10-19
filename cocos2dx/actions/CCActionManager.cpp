@@ -288,7 +288,7 @@ void CCActionManager::removeAction(CCAction *pAction)
 
 void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 {
-	assert(tag != kCCActionTagInvalid);
+    assert((int)tag != kCCActionTagInvalid);
 	assert(pTarget != NULL);
 
 	tHashElement *pElement = NULL;
@@ -301,7 +301,7 @@ void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 		{
 			CCAction *pAction = (CCAction*)pElement->actions->arr[i];
 
-			if (pAction->getTag() == tag && pAction->getOriginalTarget() == pTarget)
+            if (pAction->getTag() == (int)tag && pAction->getOriginalTarget() == pTarget)
 			{
 				removeActionAtIndex(i, pElement);
 				break;
@@ -314,7 +314,7 @@ void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 
 CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
 {
-	assert(tag != kCCActionTagInvalid);
+    assert((int)tag != kCCActionTagInvalid);
 
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
@@ -328,7 +328,7 @@ CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
 			{
 				CCAction *pAction = (CCAction*)pElement->actions->arr[i];
 
-				if (pAction->getTag() == tag)
+                if (pAction->getTag() == (int)tag)
 				{
 					return pAction;
 				}
