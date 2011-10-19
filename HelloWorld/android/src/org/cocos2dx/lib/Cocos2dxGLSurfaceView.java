@@ -146,7 +146,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     }
 
     protected void initView() {
-        mRenderer = new Cocos2dxRenderer();
+        mRenderer = new Cocos2dxRenderer();       
         setFocusableInTouchMode(true);
         setRenderer(mRenderer);
         
@@ -358,6 +358,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         	dumpEvent(event);
         }
         return true;
+    }
+    
+    /*
+     * This function is called before Cocos2dxRenderer.nativeInit(), so the width and height is correct.
+     */
+    protected void onSizeChanged(int w, int h, int oldw, int oldh){
+    	this.mRenderer.setScreenWidthAndHeight(w, h);
     }
     
  @Override
