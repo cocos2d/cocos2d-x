@@ -421,6 +421,8 @@ result CCAudioOut::FeedBuffer (void)
 			__iAllPcmPos += __bufferSize;
 		}
 
+		__iUsedBufferCount++;
+
 		if (__iAllPcmPos < __iAllPcmBufferSize)
 		{
 			__buffWriteCnt ++;
@@ -428,7 +430,6 @@ result CCAudioOut::FeedBuffer (void)
 			{
 				__buffWriteCnt = 0;
 			}
-			__iUsedBufferCount++;
 		}
 		else
 		{
