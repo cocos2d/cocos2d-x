@@ -82,11 +82,11 @@ typedef struct _hashScriptFuncEntry
 // implementation CCTimer
 
 CCTimer::CCTimer()
-: m_pTarget(NULL)
-, m_scriptFunc("")
+: m_pfnSelector(NULL)
 , m_fInterval(0.0f)
+, m_scriptFunc("")
+, m_pTarget(NULL)
 , m_fElapsed(0.0f)
-, m_pfnSelector(NULL)
 {
 
 }

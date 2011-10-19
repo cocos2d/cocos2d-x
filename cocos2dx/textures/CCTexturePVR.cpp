@@ -436,11 +436,11 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
         lowerCase[i] = tolower(lowerCase[i]);
     }
         
-    if (lowerCase.find(".ccz") != -1)
+    if (lowerCase.find(".ccz") != std::string::npos)
     {
         pvrlen = ZipUtils::ccInflateCCZFile(path, &pvrdata);
     }
-    else if (lowerCase.find(".gz") != -1)
+    else if (lowerCase.find(".gz") != std::string::npos)
     {
         pvrlen = ZipUtils::ccInflateGZipFile(path, &pvrdata);
     }
