@@ -184,7 +184,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         mainView = this;
     }
     
-    public void onPause(){    	
+    public void onPause(){
     	queueEvent(new Runnable() {
             @Override
             public void run() {
@@ -297,8 +297,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         case MotionEvent.ACTION_DOWN:
         	// there are only one finger on the screen
         	final int idDown = event.getPointerId(0);
-            final float xDown = event.getX(idDown);
-            final float yDown = event.getY(idDown);
+            final float xDown = xs[0];
+            final float yDown = ys[0];
             
             queueEvent(new Runnable() {
                 @Override
@@ -333,8 +333,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         case MotionEvent.ACTION_UP:  
         	// there are only one finger on the screen
         	final int idUp = event.getPointerId(0);
-            final float xUp = event.getX(idUp);
-            final float yUp = event.getY(idUp);
+            final float xUp = xs[0];
+            final float yUp = ys[0];
             
             queueEvent(new Runnable() {
                 @Override
@@ -374,6 +374,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     	}
         return super.onKeyDown(keyCode, event);
     }
+ 
     // Show an event in the LogCat view, for debugging
     private void dumpEvent(MotionEvent event) {
        String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,
