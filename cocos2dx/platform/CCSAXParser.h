@@ -33,7 +33,8 @@ NS_CC_BEGIN;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE) || \
     (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)   || \
     (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || \
-	(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)     || \
+	(CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 typedef unsigned char CC_XML_CHAR;
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
 typedef char CC_XML_CHAR;
@@ -41,7 +42,7 @@ typedef char CC_XML_CHAR;
 #error
 #endif
 
-class CCSAXDelegator
+class CC_DLL CCSAXDelegator
 {
 public:
 	virtual void startElement(void *ctx, const char *name, const char **atts) = 0;
@@ -49,7 +50,7 @@ public:
 	virtual void textHandler(void *ctx, const char *s, int len) = 0;
 };
 
-class CCSAXParser
+class CC_DLL CCSAXParser
 {
 	CCSAXDelegator*	m_pDelegator;
 public:

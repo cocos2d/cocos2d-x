@@ -196,11 +196,7 @@ void RenderTextureTest::ccTouchesMoved(CCSet* touches, CCEvent* event)
         }
     }
     // finish drawing and return context back to the screen
-#if CC_ENABLE_CACHE_TEXTTURE_DATA
     m_target->end(false);
-#else
-	m_target->end();
-#endif
 }
 
 void RenderTextureTest::ccTouchesEnded(CCSet* touches, CCEvent* event)

@@ -38,8 +38,7 @@ public:
 
     static CCAccelerometer* sharedAccelerometer();
 
-    void removeDelegate(CCAccelerometerDelegate* pDelegate);
-    void addDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(CCAccelerometerDelegate* pDelegate);
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:

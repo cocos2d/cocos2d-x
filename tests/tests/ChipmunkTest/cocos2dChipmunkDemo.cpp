@@ -44,6 +44,11 @@
 
 #define SLEEP_TICKS 16
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+
+#define glOrthof glOrtho
+#endif
+
 //extern chipmunkDemo Test;
 extern chipmunkDemo LogoSmash;
 extern chipmunkDemo Simple;
