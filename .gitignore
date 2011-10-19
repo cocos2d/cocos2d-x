@@ -37,7 +37,7 @@ assets/
 .project
 .cproject
 
-# Ignore files build by linuc
+# Ignore files build by linux
 *.o
 
 # Ignore files build by airplay
