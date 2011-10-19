@@ -3472,6 +3472,7 @@
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
@@ -3509,6 +3510,7 @@
 					"\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
