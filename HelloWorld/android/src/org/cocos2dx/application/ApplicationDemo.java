@@ -26,7 +26,6 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 
 public class ApplicationDemo extends Cocos2dxActivity{
