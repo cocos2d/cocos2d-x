@@ -1,0 +1,14 @@
+This tool can be used to generate a 'jumping off point' for creating cross platform mobile games using the LUA bindings
+with Cocos2d-x. 
+
+Usage is simple: 
+
+  'ant' 
+
+You will be asked 3 questions.
+
+1) The path to your NDK (e.g. /cygdrive/c/my_first_ndk or /usr/bin/my_first_ndk )
+2) The 'Name' of your project (e.g. AwesomeMegaDeath)
+3) The 'Pakage' of your project (e.g. org.my) 
+
+The script will then generate a folder with the name of your project ('AwesomeMegaDeath') in the top-level of the Cocos2d-x downloadable (i.e. a sibling of HellowWorld.)  And you should be able to use this project straight away from Visual Studio, Xcode and Eclipse (Please note with eclipse you will also need to execute the build_native.sh script in the android sub-folder.)

@@ -28,6 +28,8 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+
 //implementation CCParticleSystemPoint
 bool CCParticleSystemPoint::initWithTotalParticles(unsigned int numberOfParticles)
 {
@@ -201,5 +203,7 @@ void CCParticleSystemPoint::setEndSize(float size)
 		( size >= 0 && size <= CC_MAX_PARTICLE_SIZE), "PointParticleSystem only supports 0 <= size <= 64");
 	CCParticleSystem::setEndSize(size);
 }
+
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 
 }// namespace cocos2d

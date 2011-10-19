@@ -56,14 +56,16 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
 
 - (void) addDelegate: (cocos2d::CCAccelerometerDelegate *) delegate
 {
-    [[UIAccelerometer sharedAccelerometer] setDelegate:self];
     delegate_ = delegate;
-}
-
-- (void) removeDelegate: (cocos2d::CCAccelerometerDelegate *) delegate
-{
-    [[UIAccelerometer sharedAccelerometer] setDelegate:nil];
-    delegate_ = 0;
+    
+    if (delegate_)
+    {
+        [[UIAccelerometer sharedAccelerometer] setDelegate:self];
+    }
+    else 
+    {
+        [[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+    }
 }
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration

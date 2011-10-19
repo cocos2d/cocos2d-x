@@ -35,6 +35,7 @@ extern "C" {
 #include "CCObject.h"
 #include "LuaCocos2d.h"
 #include "LuaSimpleAudioEngine.h"
+#include "Cocos2dxLuaLoader.h"
 
 using namespace cocos2d;
 
@@ -67,14 +68,10 @@ CCLuaScriptModule::CCLuaScriptModule()
     CC_UNUSED_PARAM(nOpen);
     nOpen = tolua_SimpleAudioEngine_open(d_state);
     CC_UNUSED_PARAM(nOpen);
-	// init all standard libraries
-	/*luaopen_base(d_state);
-	luaopen_io(d_state);
-	luaopen_string(d_state);
-	luaopen_table(d_state);
-	luaopen_math(d_state);
-	*/
-	//luaopen_debug(d_state);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	addLuaLoader(loader_Android);
+#endif
 }
 
 
@@ -86,6 +83,10 @@ CCLuaScriptModule::CCLuaScriptModule(lua_State* state)
 	// just use the given state
 	d_ownsState = false;
 	d_state = state;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	addLuaLoader(loader_Android);
+#endif
 }
 
 
@@ -99,7 +100,6 @@ CCLuaScriptModule::~CCLuaScriptModule()
 		lua_close( d_state );
 	}
 	s_luaScriptModule = NULL;
-
 }
 
 
@@ -118,6 +118,36 @@ bool CCLuaScriptModule::addSearchPath(const std::string& path)
     return 0; // all done!
 }
 
+/*************************************************************************
+Add lua loader, now it is used on android
+*************************************************************************/
+void CCLuaScriptModule::addLuaLoader(lua_CFunction func)
+{
+	if (! func)
+	{
+		return;
+	}
+                                                           // stack content after the invoking of the function
+	// get loader table
+	lua_getglobal(d_state, "package");                     // package
+	lua_getfield(d_state, -1, "loaders");                  // package, loaders
+
+	// insert loader into index 2
+	lua_pushcfunction(d_state, func);                      // package, loaders, func
+	for (int i = lua_objlen(d_state, -2) + 1; i > 2; --i)
+	{
+		lua_rawgeti(d_state, -2, i - 1);                   // package, loaders, func, function
+		// we call lua_rawgeti, so the loader table now is at -3
+		lua_rawseti(d_state, -3, i);                       // package, loaders, func
+	}
+	lua_rawseti(d_state, -2, 2);                           // package, loaders
+
+	// set loaders into package
+	lua_setfield(d_state, -2, "loaders");                  // package
+
+	lua_pop(d_state, 1);
+}
+
 
 /*************************************************************************
 	Execute script file
@@ -125,13 +155,17 @@ bool CCLuaScriptModule::addSearchPath(const std::string& path)
 bool CCLuaScriptModule::executeScriptFile(const std::string& filename)
 {
 	int nRet = luaL_dofile(d_state,filename.c_str());
+
+	// Collect
+	lua_gc(d_state, LUA_GCCOLLECT, 0);
+
 	if (nRet != 0)
-	{
-		CCLog("executeScriptFile Error nRet = %d", nRet);
-		        
+	{		        
         // print the error msg
-        const char* strErrMsg = lua_tostring(d_state, -1);
-        CCLog("%s", strErrMsg);
+        CCLog("%s", lua_tostring(d_state, -1));
+
+		// pop the error code
+		lua_pop(d_state, 1);
         
 		return false;
 	}
@@ -156,7 +190,10 @@ int	CCLuaScriptModule::executeScriptGlobal(const std::string& function_name)
 	}
 
 	// call it
-	int error = lua_pcall(d_state,0,1,0);		
+	int error = lua_pcall(d_state,0,1,0);
+
+	// Collect
+	lua_gc(d_state, LUA_GCCOLLECT, 0);
 
 	// handle errors
 	if ( error )
@@ -181,8 +218,6 @@ int	CCLuaScriptModule::executeScriptGlobal(const std::string& function_name)
 
 	// return it
 	return ret;
-
-	
 }
 
 
@@ -232,9 +267,8 @@ bool CCLuaScriptModule::executeSchedule(const std::string& handler_name, ccTime 
 	}
 	// return it
 	return true;
-
-
 }
+
 bool CCLuaScriptModule::executeCallFunc(const std::string& handler_name)
 {
 	
@@ -270,8 +304,8 @@ bool CCLuaScriptModule::executeCallFunc(const std::string& handler_name)
 	}
 	// return it
 	return true;
-
 }
+
 bool CCLuaScriptModule::executeCallFuncN(const std::string& handler_name, CCNode* pNode)
 {
 
@@ -386,8 +420,8 @@ bool CCLuaScriptModule::executeCallFuncND(const std::string& handler_name, CCNod
 	}
 	// return it
 	return true;
-
 }
+
 bool CCLuaScriptModule::executeMenuHandler(const std::string& handler_name, CCObject* pobj)
 {
 
@@ -423,7 +457,6 @@ bool CCLuaScriptModule::executeMenuHandler(const std::string& handler_name, CCOb
 		}
 		// return it
 		return true;
-
 }
 
 bool CCLuaScriptModule::executeTouchesEvent(const std::string& handler_name, CCSet *pobj)
@@ -508,9 +541,8 @@ bool CCLuaScriptModule::executeTouch(const std::string& handler_name, CCTouch *p
 		}
 		// return it
 		return true;
-	
-
 }
+
 bool CCLuaScriptModule::executeEventHandler(const std::string& handler_name, CCEvent* pEvent)
 {
 
@@ -547,7 +579,6 @@ bool CCLuaScriptModule::executeEventHandler(const std::string& handler_name, CCE
 	}
 	// return it
 	return true;
-
 }
 
 bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int index, CCObject* pobj)
@@ -587,7 +618,6 @@ bool CCLuaScriptModule::executeListItem(const std::string& handler_name, int ind
 	}
 	// return it
 	return true;
-
 }
 
 /*************************************************************************
@@ -598,10 +628,16 @@ bool CCLuaScriptModule::executeString(const std::string& str)
 	// load code into lua and call it
 	int error =	luaL_dostring(d_state, str.c_str());
 
+	// Collect
+	lua_gc(d_state, LUA_GCCOLLECT, 0);
+
 	// handle errors
-	if ( error )
+	if (error)
 	{
-		CCLog("executeString %d", error);
+		// print error message and pop it
+		CCLog("%s", lua_tostring(d_state, -1));
+		lua_pop(d_state, 1);
+
 		return false;
 	}
 

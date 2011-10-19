@@ -3,15 +3,15 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := helloworld
 
 LOCAL_SRC_FILES := main.cpp \
-../../../AppDelegate.cpp \
-../../../HelloWorldScene.cpp
+../../../Classes/AppDelegate.cpp \
+../../../Classes/HelloWorldScene.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../cocos2dx \
                     $(LOCAL_PATH)/../../../../cocos2dx/platform \
                     $(LOCAL_PATH)/../../../../cocos2dx/include \
                     $(LOCAL_PATH)/../../../../cocos2dx/lua_support \
                     $(LOCAL_PATH)/../../../../CocosDenshion/include \
-                    $(LOCAL_PATH)/../../..
+                    $(LOCAL_PATH)/../../../Classes
 
 # it is used for ndk-r5  
 # if you build with ndk-r4, comment it  
