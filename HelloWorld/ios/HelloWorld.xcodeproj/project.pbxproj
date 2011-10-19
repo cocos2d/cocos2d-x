@@ -3001,6 +3001,7 @@
 					"\"$(SRCROOT)/../../cocos2dx\"",
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = HelloWorld;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3024,6 +3025,7 @@
 					"\"$(SRCROOT)/../../cocos2dx\"",
 				);
 				INFOPLIST_FILE = "HelloWorld-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = HelloWorld;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
