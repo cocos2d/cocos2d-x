@@ -1,8 +1,10 @@
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 :m_pLuaEngine(NULL)
@@ -11,6 +13,8 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
+	// end simple audio engine here, or it may crashed on win32
+	SimpleAudioEngine::sharedEngine()->end();
     CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
     CC_SAFE_DELETE(m_pLuaEngine);
 }
@@ -105,35 +109,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	}
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	// CCLuaScriptModule::sharedLuaScriptModule()->executeScriptFile("./../../HelloLua/Resource/hello.lua");
-	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile("./../../HelloLua/Resource/hello.lua");
-
-	/*
-	 * Another way to run lua script.
-	 * Load the file into memory and run it.
-	 *
-	unsigned long size;
-	char *pFileContent = (char*)CCFileUtils::getFileData("./../../HelloLua/Resource/hello.lua", "r", &size);
-	if (pFileContent)
-	{
-		// copy the file contents and add '\0' at the end, or the lua parser can not parse it
-		char *pTmp = new char[size + 1];
-		pTmp[size] = '\0';
-		memcpy(pTmp, pFileContent, size);
-		delete[] pFileContent;
-
-		string code(pTmp);
-		CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->excuteScriptFile(code);
-		delete []pTmp;
-	}
-	*/
-	
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
-    printf("%s", path.c_str());
+	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
 #endif 
 

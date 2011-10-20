@@ -23,6 +23,9 @@ if [ ! -d "lib/linux/Release" ]; then
 mkdir "lib/linux/Release"
 fi
 
+# copy cocosdenshino depended libs into lib/linux/Debug/
+cp CocosDenshion/third_party/fmod/api/lib/*.so lib/linux/Debug
+
 if [ $# -ne 0 ]; then
 	if [ $1 = "clean" ]; then
 		cd $p/cocos2dx/proj.linux
