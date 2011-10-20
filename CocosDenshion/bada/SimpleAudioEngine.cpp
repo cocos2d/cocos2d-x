@@ -410,12 +410,17 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 
 	    if (AUDIOOUT_STATE_PLAYING == p->second->GetState())
 		{
+            return nRet; // reset waste a lot of time, so just return.
 	    	AppLog("Reset effect...");
 	    	r = p->second->Reset();
 		}
 
 	    AppLog("play...");
-	    r = p->second->Play();
+
+	    if (s_fEffectsVolume > 0.0f)
+	    {
+	    	r = p->second->Play();
+	    }
 
     	if (IsFailed(r))
     	{
