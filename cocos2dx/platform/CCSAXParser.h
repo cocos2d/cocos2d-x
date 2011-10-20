@@ -43,7 +43,7 @@ typedef char CC_XML_CHAR;
 #error
 #endif
 
-class CCSAXDelegator
+class CC_DLL CCSAXDelegator
 {
 public:
 	virtual void startElement(void *ctx, const char *name, const char **atts) = 0;
@@ -51,7 +51,7 @@ public:
 	virtual void textHandler(void *ctx, const char *s, int len) = 0;
 };
 
-class CCSAXParser
+class CC_DLL CCSAXParser
 {
 	CCSAXDelegator*	m_pDelegator;
 public:

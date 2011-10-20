@@ -35,7 +35,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/cocos2dx-test/Debug}</value>
+					<value>${workspace_loc:/cocos2dx-test/Release}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -98,7 +98,7 @@
 		<link>
 			<name>test.android</name>
 			<type>2</type>
-			<location>/home/zhangxm/cocos2d-x/tests/test.android</location>
+			<locationURI>PARENT-1-PROJECT_LOC/test.android</locationURI>
 		</link>
 		<link>
 			<name>tests</name>
