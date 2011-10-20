@@ -615,15 +615,12 @@ void CCAudioOut::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
 void CCAudioOut::OnAudioOutInterrupted(Osp::Media::AudioOut& src)
 {
 	AppLog("Enter");
-
-	Finalize();
+	Reset();
 }
 
 void CCAudioOut::OnAudioOutReleased(Osp::Media::AudioOut& src)
 {
 	AppLog("Enter");
-
-//cjh	Initialize();
 }
 
 void CCAudioOut::Finalize(void)
