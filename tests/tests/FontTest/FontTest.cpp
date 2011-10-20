@@ -9,21 +9,13 @@ enum {
 };
 
 static int fontIdx = 0;
+
+static std::string fontList[] =
+{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-static std::string fontList[] =
-{
-	"American Typewriter",
+    "American Typewriter",
 	"Marker Felt",
-	"A Damn Mess",
-	"Abberancy",
-	"Abduction",
-	"Paint Boy",
-	"Schwarzwald Regular",
-	"Scissor Cuts",
-};
-#else
-static std::string fontList[] =
-{
+#endif
 	"fonts/A Damn Mess.ttf",
 	"fonts/Abberancy.ttf",
 	"fonts/Abduction.ttf",
@@ -31,7 +23,6 @@ static std::string fontList[] =
 	"fonts/Schwarzwald Regular.ttf",
 	"fonts/Scissor Cuts.ttf",
 };
-#endif
 
 static const char* nextAction(void)
 {
