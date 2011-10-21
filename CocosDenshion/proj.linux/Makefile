@@ -14,9 +14,9 @@ DEFINES = -DLINUX
 OBJECTS =   ../Linux/FmodAudioPlayer.o \
             ../Linux/SimpleAudioEngine.o \
 
-
 STATICLIBS = 
-SHAREDLIBS = -lfmodex
+SHAREDLIBS_DIR = ../third_party/fmod/api/lib
+SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 

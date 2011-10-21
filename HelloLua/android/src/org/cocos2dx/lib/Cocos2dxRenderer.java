@@ -33,10 +33,17 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	private final static long NANOSECONDSPERMINISECOND = 1000000;
 	private static long animationInterval = (long)(1.0 / 60 * NANOSECONDSPERSECOND);
 	private long last;
+	private int screenWidth;
+	private int screenHeight;
 	
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) { 	
-    	nativeInit(Cocos2dxActivity.screenWidth, Cocos2dxActivity.screenHeight); 
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) { 
+    	nativeInit(screenWidth, screenHeight); 
     	last = System.nanoTime();
+    }
+    
+    public void setScreenWidthAndHeight(int w, int h){
+    	this.screenWidth = w;
+    	this.screenHeight = h;
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h) {  	

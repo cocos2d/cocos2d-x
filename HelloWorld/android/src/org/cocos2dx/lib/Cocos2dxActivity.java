@@ -38,8 +38,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 public class Cocos2dxActivity extends Activity{
-	public static int screenWidth;
-    public static int screenHeight;
     private static Cocos2dxMusic backgroundMusicPlayer;
     private static Cocos2dxSound soundPlayer;
     private static Cocos2dxAccelerometer accelerometer;
@@ -57,8 +55,6 @@ public class Cocos2dxActivity extends Activity{
         // get frame size
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        screenWidth = dm.widthPixels;
-        screenHeight = dm.heightPixels;
         accelerometer = new Cocos2dxAccelerometer(this);
 
         // init media player and sound player
