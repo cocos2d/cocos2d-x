@@ -173,6 +173,7 @@ CCAudioOut::CCAudioOut()
 	__pAllPcmBuffer = null;
 	__iAllPcmBufferSize = 0;
 	__iAllPcmPos = 0;
+	__pAudioOut = null;
 	quiet = 0;
 	bits = 16;
 	endian = 0;
