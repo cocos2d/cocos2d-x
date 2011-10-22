@@ -20,11 +20,19 @@ FmodAudioPlayer* FmodAudioPlayer::sharedPlayer() {
 	return &s_SharedPlayer;
 }
 
-void ERRCHECK(FMOD_RESULT result) {
+void ERRCHECKWITHEXIT(FMOD_RESULT result) {
 	if (result != FMOD_OK) {
 		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
+//		exit(-1);
 	}
+}
+
+bool ERRCHECK(FMOD_RESULT result) {
+	if (result != FMOD_OK) {
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		return true;
+	}
+	return false;
 }
 
 FmodAudioPlayer::FmodAudioPlayer() :
@@ -32,7 +40,7 @@ FmodAudioPlayer::FmodAudioPlayer() :
 	init();
 }
 
-void FmodAudioPlayer::init(){
+void FmodAudioPlayer::init() {
 	//init
 	FMOD_RESULT result;
 	FMOD::ChannelGroup *masterChannelGroup;
@@ -42,22 +50,22 @@ void FmodAudioPlayer::init(){
 	 Create a System object and initialize.
 	 */
 	result = FMOD::System_Create(&pSystem);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	result = pSystem->setOutput(FMOD_OUTPUTTYPE_ALSA);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	result = pSystem->init(32, FMOD_INIT_NORMAL, 0);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	result = pSystem->createChannelGroup("Channel Group", &pChannelGroup);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	result = pSystem->getMasterChannelGroup(&masterChannelGroup);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	result = masterChannelGroup->addGroup(pChannelGroup);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	mapEffectSound.clear();
 
@@ -68,24 +76,24 @@ void FmodAudioPlayer::close() {
 	//BGM
 	if (pBGMChannel != NULL) {
 		result = pBGMChannel->stop();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 		pBGMChannel = 0;
 	}
 
 	if (pMusic != NULL) {
 		result = pMusic->release();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 		pMusic = 0;
 	}
 
 	result = pChannelGroup->release();
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 	sMusicPath.clear();
 
 	result = pSystem->close();
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 	result = pSystem->release();
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	init();
 }
@@ -95,21 +103,21 @@ FmodAudioPlayer::~FmodAudioPlayer() {
 	//BGM
 	if (pBGMChannel != NULL) {
 		result = pBGMChannel->stop();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 	}
 
 	if (pMusic != NULL) {
 		result = pMusic->release();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 	}
 
 	result = pChannelGroup->release();
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 	result = pSystem->close();
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 	result = pSystem->release();
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 }
 
 // BGM
@@ -120,7 +128,7 @@ void FmodAudioPlayer::preloadBackgroundMusic(const char* pszFilePath) {
 	if (pMusic && sNewMusicPath != sMusicPath) {
 		//release old
 		result = pMusic->release();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 
 		sMusicPath = sNewMusicPath;
 
@@ -137,8 +145,10 @@ void FmodAudioPlayer::playBackgroundMusic(const char* pszFilePath, bool bLoop) {
 		//load the new music
 		FMOD_RESULT result = pSystem->createSound(pszFilePath, FMOD_LOOP_NORMAL,
 				0, &pMusic);
-		ERRCHECK(result);
-		sMusicPath = string(pszFilePath) + szMusicSuffix;
+		if (!ERRCHECK(result)) {
+			sMusicPath = string(pszFilePath) + szMusicSuffix;
+		}
+
 	} else {
 		string sNewMusicPath = string(pszFilePath) + szMusicSuffix;
 		if (pBGMChannel) {
@@ -152,19 +162,20 @@ void FmodAudioPlayer::playBackgroundMusic(const char* pszFilePath, bool bLoop) {
 			//load the new music
 			FMOD_RESULT result = pSystem->createSound(pszFilePath,
 					FMOD_LOOP_NORMAL, 0, &pMusic);
-			sMusicPath = sNewMusicPath;
-			ERRCHECK(result);
+
+			if (!ERRCHECK(result)) {
+				sMusicPath = sNewMusicPath;
+			}
 		}
 
 	}
 
 	FMOD_RESULT result = pSystem->playSound(FMOD_CHANNEL_FREE, pMusic, true,
 			&pBGMChannel);
-	ERRCHECK(result);
-
-	pBGMChannel->setLoopCount((bLoop) ? -1 : 1);
-	result = pBGMChannel->setPaused(false);
-	ERRCHECK(result);
+	if (!ERRCHECK(result)) {
+		pBGMChannel->setLoopCount((bLoop) ? -1 : 1);
+		result = pBGMChannel->setPaused(false);
+	}
 }
 
 void FmodAudioPlayer::stopBackgroundMusic(bool bReleaseData) {
@@ -176,13 +187,14 @@ void FmodAudioPlayer::stopBackgroundMusic(bool bReleaseData) {
 	}
 	if (bReleaseData) {
 		result = pBGMChannel->stop();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 		result = pMusic->release();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 		pBGMChannel = 0;
+		pMusic = 0;
 	} else {
 		result = pBGMChannel->stop();
-		ERRCHECK(result);
+		ERRCHECKWITHEXIT(result);
 		pBGMChannel = 0;
 	}
 	sMusicPath.clear();
@@ -195,7 +207,7 @@ void FmodAudioPlayer::pauseBackgroundMusic() {
 	}
 	pSystem->update();
 	FMOD_RESULT result = pBGMChannel->setPaused(true);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 }
 
@@ -205,7 +217,7 @@ void FmodAudioPlayer::resumeBackgroundMusic() {
 	}
 	pSystem->update();
 	FMOD_RESULT result = pBGMChannel->setPaused(false);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 }
 
 void FmodAudioPlayer::rewindBackgroundMusic() {
@@ -214,7 +226,7 @@ void FmodAudioPlayer::rewindBackgroundMusic() {
 	}
 	pSystem->update();
 	FMOD_RESULT result = pBGMChannel->setPosition(0, FMOD_TIMEUNIT_MS);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 }
 
 bool FmodAudioPlayer::willPlayBackgroundMusic() {
@@ -229,7 +241,7 @@ bool FmodAudioPlayer::isBackgroundMusicPlaying() {
 	}
 	pSystem->update();
 	FMOD_RESULT result = pBGMChannel->isPlaying(&bPlaying);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 	return bPlaying;
 
 }
@@ -241,7 +253,7 @@ float FmodAudioPlayer::getBackgroundMusicVolume() {
 	}
 	pSystem->update();
 	FMOD_RESULT result = pBGMChannel->getVolume(&fVolumn);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 	return fVolumn;
 }
 
@@ -251,7 +263,7 @@ void FmodAudioPlayer::setBackgroundMusicVolume(float volume) {
 	}
 	pSystem->update();
 	FMOD_RESULT result = pBGMChannel->setVolume(volume);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 }
 //~BGM
@@ -261,13 +273,13 @@ float FmodAudioPlayer::getEffectsVolume() {
 	float fVolumn;
 	pSystem->update();
 	FMOD_RESULT result = pChannelGroup->getVolume(&fVolumn);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 }
 
 void FmodAudioPlayer::setEffectsVolume(float volume) {
 	pSystem->update();
 	FMOD_RESULT result = pChannelGroup->setVolume(volume);
-	ERRCHECK(result);
+	ERRCHECKWITHEXIT(result);
 
 }
 
@@ -275,31 +287,40 @@ unsigned int FmodAudioPlayer::playEffect(const char* pszFilePath, bool bLoop) {
 	FMOD::Channel* pChannel;
 	FMOD::Sound* pSound = NULL;
 
-	pSystem->update();
+	do {
+		pSystem->update();
 
-	map<string, FMOD::Sound*>::iterator l_it = mapEffectSound.find(
-			string(pszFilePath));
-	if (l_it == mapEffectSound.end()) {
-		//no load it yet
-		preloadEffect(pszFilePath);
-		l_it = mapEffectSound.find(string(pszFilePath));
-	}
-	pSound = l_it->second;
-	assert(pSound);
+		map<string, FMOD::Sound*>::iterator l_it = mapEffectSound.find(
+				string(pszFilePath));
+		if (l_it == mapEffectSound.end()) {
+			//no load it yet
+			preloadEffect(pszFilePath);
+			l_it = mapEffectSound.find(string(pszFilePath));
+		}
+		pSound = l_it->second;
+		if (pSound==NULL){
+			break;
+		}
 
-	FMOD_RESULT result = pSystem->playSound(FMOD_CHANNEL_FREE, pSound, true,
-			&pChannel);
-	ERRCHECK(result);
+		FMOD_RESULT result = pSystem->playSound(FMOD_CHANNEL_FREE, pSound, true,
+				&pChannel);
 
-	pChannel->setChannelGroup(pChannelGroup);
+		if (ERRCHECK(result)) {
+			printf("sound effect in %s could not be played", pszFilePath);
+			break;
+		}
 
-	//set its loop
-	pChannel->setLoopCount((bLoop) ? -1 : 1);
-	result = pChannel->setPaused(false);
+		pChannel->setChannelGroup(pChannelGroup);
 
-	mapEffectSoundChannel[iSoundChannelCount] = pChannel;
+		//set its loop
+		pChannel->setLoopCount((bLoop) ? -1 : 1);
+		result = pChannel->setPaused(false);
 
-	return iSoundChannelCount++;
+		mapEffectSoundChannel[iSoundChannelCount] = pChannel;
+		return iSoundChannelCount++;
+	} while (0);
+
+	return 0;
 }
 
 void FmodAudioPlayer::stopEffect(unsigned int nSoundId) {
@@ -326,10 +347,11 @@ void FmodAudioPlayer::preloadEffect(const char* pszFilePath) {
 	pSystem->update();
 	FMOD_RESULT result = pSystem->createSound(pszFilePath, FMOD_LOOP_NORMAL, 0,
 			&pLoadSound);
-	ERRCHECK(result);
-
+	if (ERRCHECK(result)){
+		printf("sound effect in %s could not be preload", pszFilePath);
+		return;
+	}
 	mapEffectSound[string(pszFilePath)] = pLoadSound;
-
 }
 
 void FmodAudioPlayer::unloadEffect(const char* pszFilePath) {
