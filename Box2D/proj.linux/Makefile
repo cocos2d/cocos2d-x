@@ -1,7 +1,7 @@
 CC      = gcc
 CXX     = g++
 AR      = ar
-TARGET	= libBox2D.a
+TARGET	= libbox2d.a
 CCFLAGS = -Wall -g -O2 
 CXXFLAGS = -Wall -g -O2 
 ARFLAGS = cr

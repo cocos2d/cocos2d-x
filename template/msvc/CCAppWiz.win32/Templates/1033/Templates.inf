@@ -21,17 +21,17 @@ Classes/HelloWorldScene.cpp
 [! endif]
 
 [! if CC_USE_LUA]
-Resource/Default.png
-Resource/crop.png
-Resource/farm.jpg
-Resource/land.png
-Resource/menu2.png
-Resource/Icon.png
-Resource/dog.png
-Resource/hello.lua
-Resource/menu1.png
+Resources/Default.png
+Resources/crop.png
+Resources/farm.jpg
+Resources/land.png
+Resources/menu2.png
+Resources/Icon.png
+Resources/dog.png
+Resources/hello.lua
+Resources/menu1.png
 [! else]
-Resource/CloseSelected.png
-Resource/CloseNormal.png
-Resource/HelloWorld.png
+Resources/CloseSelected.png
+Resources/CloseNormal.png
+Resources/HelloWorld.png
 [! endif]
