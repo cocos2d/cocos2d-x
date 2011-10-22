@@ -59,6 +59,12 @@ struct transformValues_ {
 	bool    visible;    
 };
 
+CCSprite* CCSprite::spriteWithNULL(){
+	CCSprite *pobSprite = new CCSprite();
+	pobSprite->init();
+	return pobSprite;
+}
+
 CCSprite* CCSprite::spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect)
 {
 	CCSprite *pobSprite = new CCSprite();
