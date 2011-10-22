@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "CCFileUtils.h"
 #include "CCImage.h"
 #include "support/ccUtils.h"
+#include "CCString.h"
 
 namespace   cocos2d {
 
@@ -396,6 +397,23 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 	m_pDictLock->unlock();
 
 	return texture;
+}
+
+const char* CCTextureCache::getKeyForTexture(CCTexture2D* texture)
+{
+	if( ! texture )
+		return NULL;
+
+	std::vector<std::string> keys = m_pTextures->allKeysForObject(texture);
+
+	if (keys.size() == 0)
+		return NULL;
+
+	CCString *pRet = new CCString();
+	pRet->autorelease();
+	pRet->m_sString = keys[0];
+
+	return pRet->m_sString.c_str();
 }
 
 // TextureCache - Remove
