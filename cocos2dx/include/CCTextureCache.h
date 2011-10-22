@@ -107,6 +107,8 @@ public:
 	*/
 	CCTexture2D* addUIImage(CCImage *image, const char *key);
 
+	const char* getKeyForTexture(CCTexture2D* texture);
+
 	/** Returns an already created texture. Returns nil if the texture doesn't exist.
 	@since v0.99.5
 	*/
