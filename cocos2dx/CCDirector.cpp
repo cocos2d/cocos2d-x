@@ -145,9 +145,7 @@ CCDirector::~CCDirector(void)
 	CCPoolManager::getInstance()->pop();
 
 	// delete m_pLastUpdate
-	CC_SAFE_DELETE(m_pLastUpdate);
-
-    CCKeypadDispatcher::purgeSharedDispatcher();
+	CC_SAFE_DELETE(m_pLastUpdate);    
 
 	// delete fps string
 	delete []m_pszFPS;
@@ -551,6 +549,7 @@ void CCDirector::purgeDirector()
 	// don't release the event handlers
 	// They are needed in case the director is run again
 	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
+	CCKeypadDispatcher::sharedDispatcher()->purgeSharedDispatcher();
 
     if (m_pRunningScene)
     {
