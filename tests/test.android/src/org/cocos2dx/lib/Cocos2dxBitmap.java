@@ -63,16 +63,19 @@ public class Cocos2dxBitmap{
     	Paint paint = newPaint(fontName, fontSize, alignment);
     	
     	TextProperty textProperty = computeTextProperty(content, paint, width, height);      	
-      
+
+        int bitmapTotalHeight = (height == 0 ? textProperty.totalHeight:height);
+
         // Draw text to bitmap
         Bitmap bitmap = Bitmap.createBitmap(textProperty.maxWidth, 
-        		textProperty.totalHeight, Bitmap.Config.ARGB_8888);
+        		bitmapTotalHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         
         // Draw string
         FontMetricsInt fm = paint.getFontMetricsInt();
         int x = 0;
-        int y = -fm.ascent;
+        int y = height == 0 ?(-fm.ascent):
+			(-fm.ascent + (height - textProperty.totalHeight)/2);
         String[] lines = textProperty.lines;
         for (String line : lines){
         	x = computeX(paint, line, textProperty.maxWidth, alignment);
