@@ -1,6 +1,9 @@
-# set params
-ANDROID_NDK_ROOT=/cygdrive/e/android-ndk-r5
-COCOS2DX_ROOT=/cygdrive/d/Work7/cocos2d-x
+#!/bin/sh
+
+source ../../utils.inc
+
+check_vars
+
 HELLOWORLD_ROOT=$COCOS2DX_ROOT/HelloWorld/android
 
 # make sure assets is exist
