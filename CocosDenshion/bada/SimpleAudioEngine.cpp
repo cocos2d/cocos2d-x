@@ -32,7 +32,7 @@ static EffectList	s_List;
 static float   s_fBackgroundMusicVolume = 1.0f;
 static float   s_fEffectsVolume = 1.0f;
 static bool    s_bWillPlayBackgroundMusic = false;
-static string s_strResourcePath = "/Res/";
+static string s_strResourcePath = "";
 
 static unsigned int _Hash(const char *key)
 {
