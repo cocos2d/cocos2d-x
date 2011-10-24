@@ -61,9 +61,9 @@
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 </option>
 <option id="osp.gnu.cpp.link.option.userobjs.560052621" name="Other objects" superClass="osp.gnu.cpp.link.option.userobjs" valueType="userObjs">
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.2/.Simulator-Debug/libjpeg.a"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.2/.Simulator-Debug/libpng.a"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.2/.Simulator-Debug/libzlib.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.0/.Simulator-Debug/libjpeg.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.0/.Simulator-Debug/libpng.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.0/.Simulator-Debug/libzlib.a"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1985930839" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -732,9 +732,9 @@
 <option id="osp.gnu.target.cpp.link.debug.so.option.libs.391062396" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs"/>
 <option id="osp.gnu.target.cpp.link.debug.so.option.userobjs.864509401" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.so.option.userobjs" valueType="userObjs">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.2/.Target-Debug/libjpeg.a"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.2/.Target-Debug/libpng.a"/>
-<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.2/.Target-Debug/libzlib.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.0/.Target-Debug/libjpeg.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.0/.Target-Debug/libpng.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.0/.Target-Debug/libzlib.a"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
@@ -1408,9 +1408,9 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release.151854314" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release">
 <option id="osp.gnu.target.cpp.link.release.so.option.userobjs.417748022" name="Other objects" superClass="osp.gnu.target.cpp.link.release.so.option.userobjs" valueType="userObjs">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.2/.Target-Release/libjpeg.a}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/bada/src/png/sdk1.2/.Target-Release/libpng.a}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cocos2dx/platform/third_party/bada/src/zlib/sdk1.2/.Target-Release/libzlib.a}&quot;"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk1.0/.Target-Release/libjpeg.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk1.0/.Target-Release/libpng.a"/>
+<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk1.0/.Target-Release/libzlib.a"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/StubDynCast.so&quot;"/>
