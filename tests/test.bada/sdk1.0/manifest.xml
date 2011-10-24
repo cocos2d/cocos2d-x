@@ -1,31 +1,27 @@
-<?xml version='1.0' ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Manifest>
-    <Id>14au3m3hk3</Id>
-    <Secret>C830DF8577DE404569384B237FC01769</Secret>
-  <AppVersion>1.0.0</AppVersion>
-  <ManifestVersion>1.1</ManifestVersion>
-    <Privileges>
-        <Privilege>
+	<Id>93bt1p123e</Id>
+	<Secret>9C645DDBA19C71BAD1204DA4DAA7A0B9</Secret>
+	<AppVersion>1.0.0</AppVersion>
+	<Privileges>
+	    <Privilege>
             <Name>SYSTEM_SERVICE</Name>
         </Privilege>
-        <Privilege>
-            <Name>WEB_SERVICE</Name>
-        </Privilege>
-    </Privileges>
-    <DeviceProfile>
-        <APIVersion>1.2</APIVersion>
-        <CPU>Cortex8</CPU>
-        <Accelerator3D>OpenGL-ES1.1</Accelerator3D>
-        <Accelerator3D>OpenGL-ES2.0</Accelerator3D>
-        <ScreenSize>480x800</ScreenSize>
-        <Connectivity>Bluetooth</Connectivity>
-        <Connectivity>Wi-Fi</Connectivity>
-        <Sensor>GPS</Sensor>
-        <Sensor>Wi-Fi_and_cell-based_positioning</Sensor>
-        <Sensor>Magnetic</Sensor>
-        <Sensor>Proximity</Sensor>
-        <Sensor>Accelerometer</Sensor>
-        <Sensor>Tilt</Sensor>
-        <UserInteraction>Vibration-effects</UserInteraction>
-    </DeviceProfile>
+	</Privileges>
+		<MinimumVRAMSize>4</MinimumVRAMSize>
+		<Accelerator3D>OpenGL-ES1.1</Accelerator3D>
+		<Accelerator3D>OpenGL-ES2.0</Accelerator3D>
+		<BluetoothProfile>OPP</BluetoothProfile>
+		<BluetoothProfile>SPP</BluetoothProfile>
+		<WiFiMode>Infrastructure</WiFiMode>
+		<WiFiMode>Ad-hoc</WiFiMode>
+		<Sensor>GPS</Sensor>
+		<Sensor>Accelerometer</Sensor>
+		<Sensor>Magnetic</Sensor>
+		<Sensor>Proximity</Sensor>
+		<InputDevice>Touch</InputDevice>
+		<ScreenSize>480x800</ScreenSize>
+		<SoundMixing>Enable</SoundMixing>
+		<APIVersion>1.0</APIVersion>
+	</DeviceProfile>
 </Manifest>
