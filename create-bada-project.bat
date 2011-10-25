@@ -30,14 +30,6 @@ if not exist bada (
     exit
 )
 
-if not exist Classes (
-    md Classes
-) else (
-    echo "Classes folder exist, cannot override!"
-    pause
-    exit
-)
-
 xcopy /y /s %COCOS2DX_ROOT%\HelloWorld\Resource\*.* Resource
 
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk1.0\Icons bada\sdk1.0\Icons
@@ -48,7 +40,6 @@ copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk1.0\application.xml bada\sdk1.0
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk1.0\manifest.xml bada\sdk1.0
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\src bada\src
 
-
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk2.0\Icons bada\sdk2.0\Icons
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk2.0\.badaprj bada\sdk2.0
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk2.0\.cproject bada\sdk2.0
@@ -57,7 +48,12 @@ copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk2.0\application.xml bada\sdk2.0
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\sdk2.0\manifest.xml bada\sdk2.0
 copy /y %COCOS2DX_ROOT%\HelloWorld\bada\src bada\src
 
-xcopy /y /s %COCOS2DX_ROOT%\HelloWorld\Classes\*.* Classes
+if not exist Classes (
+    md Classes
+    xcopy /y /s %COCOS2DX_ROOT%\HelloWorld\Classes\*.* Classes
+) else (
+    echo "Classes folder exist!"
+)
 
 :: rename HelloWorldEntry.cpp
 move bada\src\HelloWorldEntry.cpp bada\src\%PROJECT_NAME%Entry.cpp
