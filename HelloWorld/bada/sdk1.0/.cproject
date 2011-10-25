@@ -32,10 +32,13 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.exe.simul.1578617969" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.compiler.exe.simul">
 <option id="osp.gnu.cpp.compiler.simual.exe.option.include.paths.723348878" name="Include paths (-I)" superClass="osp.gnu.cpp.compiler.simual.exe.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="../../../../"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
+<listOptionValue builtIn="false" value="../../../../chipmunk/include/chipmunk"/>
+<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1554655425" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -47,6 +50,7 @@
 <option id="osp.gnu.cpp.link.simual.debug.option.libs.985039748" name="Libraries (-l)" superClass="osp.gnu.cpp.link.simual.debug.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="osp_rt0"/>
 <listOptionValue builtIn="false" value="cocos2dx"/>
+<listOptionValue builtIn="false" value="CocosDenshion"/>
 <listOptionValue builtIn="false" value="libc-newlib"/>
 <listOptionValue builtIn="false" value="FOsp"/>
 <listOptionValue builtIn="false" value="FGraphicsOpengl"/>
@@ -56,6 +60,10 @@
 <listOptionValue builtIn="false" value="&quot;${SIMULATOR_LIB_PATH}&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/Lib&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
+</option>
+<option id="osp.gnu.cpp.link.option.userobjs.982886296" name="Other objects" superClass="osp.gnu.cpp.link.option.userobjs" valueType="userObjs">
+<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk1.0/.Simulator-Debug/libBox2D.a"/>
+<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk1.0/.Simulator-Debug/libchipmunk.a"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.543292516" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -512,7 +520,7 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk1.0\.Target-Debug\libcocos2dx.so lib) &amp; (if not exist Res mkdir Res) &amp; (copy /y ..\..\Resource\*.* Res)">
+<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk1.0\.Target-Debug\libcocos2dx.so lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk1.0\.Target-Debug\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (copy /y ..\..\Resource\*.* Res)">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug.2127488964" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug.1117105675" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug"/>
@@ -521,10 +529,13 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug.1042444633" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.debug">
 <option id="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths.1118027441" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.exe.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="../../../../"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
+<listOptionValue builtIn="false" value="../../../../chipmunk/include/chipmunk"/>
+<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1707579424" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -535,6 +546,7 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug.1747969474" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug">
 <option id="osp.gnu.target.cpp.link.debug.exe.option.libs.2056672880" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="cocos2dx"/>
+<listOptionValue builtIn="false" value="CocosDenshion"/>
 </option>
 <option id="osp.gnu.target.cpp.link.debug.exe.option.libs.paths.1078498225" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
@@ -544,6 +556,8 @@
 </option>
 <option id="osp.gnu.target.cpp.link.debug.exe.option.userobjs.807623096" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.exe.option.userobjs" valueType="userObjs">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk1.0/.Target-Debug/libBox2D.a"/>
+<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk1.0/.Target-Debug/libchipmunk.a"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
@@ -1006,7 +1020,7 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.release.882869284" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.exe.release" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk1.0\.Target-Release\libcocos2dx.so lib) &amp; (if not exist Res mkdir Res) &amp; (copy /y ..\..\Resource\*.* Res)">
+<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.release.882869284" name="Target-Release" parent="cdt.managedbuild.config.osp.gnu.target.exe.release" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk1.0\.Target-Release\libcocos2dx.so lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk1.0\.Target-Release\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (copy /y ..\..\Resource\*.* Res)">
 <folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.release.882869284." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.target.exe.release.641425882" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.target.exe.release">
 <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.release.1305983074" name="Release Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.release"/>
@@ -1015,10 +1029,13 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.release.2090797071" name="bada C++ Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.compiler.exe.release">
 <option id="osp.gnu.target.cpp.compiler.release.exe.option.include.paths.1779725734" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.release.exe.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="../../../../"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform"/>
 <listOptionValue builtIn="false" value="../../../../cocos2dx/platform/bada"/>
+<listOptionValue builtIn="false" value="../../../../chipmunk/include/chipmunk"/>
+<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
 </option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1869011242" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 </tool>
@@ -1029,6 +1046,7 @@
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release.1446379106" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.release">
 <option id="osp.gnu.target.cpp.link.release.exe.option.libs.902896095" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="cocos2dx"/>
+<listOptionValue builtIn="false" value="CocosDenshion"/>
 </option>
 <option id="osp.gnu.target.cpp.link.release.exe.option.libs.paths.1336107112" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.exe.option.libs.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
@@ -1038,6 +1056,8 @@
 </option>
 <option id="osp.gnu.target.cpp.link.release.exe.option.userobjs.2051939147" name="Other objects" superClass="osp.gnu.target.cpp.link.release.exe.option.userobjs" valueType="userObjs">
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk1.0/.Target-Release/libBox2D.a"/>
+<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk1.0/.Target-Release/libchipmunk.a"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>

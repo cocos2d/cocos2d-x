@@ -9,6 +9,16 @@ set COCOS2DX_ROOT=%cd%
 
 set /p PROJECT_NAME=please input project name:
 
+if /i %PROJECT_NAME%==tests (
+    echo can't not use "tests" as a project name, because it is used for cocos2dx tests project.
+    goto END
+)
+
+if /i %PROJECT_NAME%==HelloWorld (
+    echo can't not use "HelloWorld" as a project name, because it is used for cocos2dx HelloWorld project.
+    goto END
+)
+
 if not exist %PROJECT_NAME% md %PROJECT_NAME%
 
 cd %PROJECT_NAME%
@@ -26,8 +36,7 @@ if not exist bada (
     md bada\src
 ) else (
     echo "bada project exist!"
-    pause
-    exit
+    goto END
 )
 
 xcopy /y /s %COCOS2DX_ROOT%\HelloWorld\Resource\*.* Resource
@@ -52,7 +61,7 @@ if not exist Classes (
     md Classes
     xcopy /y /s %COCOS2DX_ROOT%\HelloWorld\Classes\*.* Classes
 ) else (
-    echo "Classes folder exist!"
+    echo "Classes folder exist, it will not be override!"
 )
 
 :: rename HelloWorldEntry.cpp
@@ -61,11 +70,16 @@ move bada\src\HelloWorldEntry.cpp bada\src\%PROJECT_NAME%Entry.cpp
 cd bada\sdk1.0
 call :replace .cproject
 call :replace .project
+call :replace application.xml
 
 cd ..\..\bada\sdk2.0
 call :replace .cproject
 call :replace .project
+call :replace application.xml
 
+echo Congratulations, %PROJECT_NAME% project have been created, please import the project from BadaIDE.
+
+:END
 endlocal
 pause
 exit
