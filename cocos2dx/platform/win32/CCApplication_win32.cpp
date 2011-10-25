@@ -127,11 +127,6 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    int arrayChineseCode[] = {
-        2052, 4100, 1028, 3076, 5124
-    };
-
-    LCID LanguageID = GetUserDefaultLCID();
     ccLanguageType ret = kLanguageEnglish;
 
     do 
