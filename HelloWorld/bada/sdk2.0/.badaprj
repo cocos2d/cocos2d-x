@@ -2,7 +2,7 @@
 <bada>
     <type>0</type>
     <sdk>C:\bada\2.0.2</sdk>
-    <model>WaveWVGA</model>
+    <model>WaveHVGA</model>
     <apiversioncheck>true</apiversioncheck>
     <priviligecheck>false</priviligecheck>
     <properties/>
