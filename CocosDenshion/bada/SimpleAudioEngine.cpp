@@ -1,4 +1,5 @@
 #include "SimpleAudioEngine.h"
+#include "CCAudioOut.h"
 #include <FBase.h>
 #include <FMedia.h>
 #include <FSystem.h>
@@ -21,8 +22,8 @@ namespace CocosDenshion {
 
 #define MAX_BUFFER_SIZE	2520 // 840 byte
 
-typedef map<unsigned int, Player*> EffectList;
-typedef pair<unsigned int ,Player*> Effect;
+typedef map<unsigned int, CCAudioOut*> EffectList;
+typedef pair<unsigned int ,CCAudioOut*> Effect;
 
 
 static SimpleAudioEngine *s_pSharedAudioEngine = NULL;
@@ -31,7 +32,7 @@ static EffectList	s_List;
 static float   s_fBackgroundMusicVolume = 1.0f;
 static float   s_fEffectsVolume = 1.0f;
 static bool    s_bWillPlayBackgroundMusic = false;
-static string s_strResourcePath = "/Res/";
+static string s_strResourcePath = "";
 
 static unsigned int _Hash(const char *key)
 {
@@ -220,7 +221,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
 
 	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
 	{
-		closeMediaPlayer(it->second);
+		it->second->Reset();
 		delete it->second;
 	}
 
@@ -357,6 +358,7 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
     	s_pBackPlayer->SetVolume((int) (volume * 99));
     	if (volume > 0.0f && s_pBackPlayer->GetVolume() == 0)
     	{
+    		AppLog("volume is lowest");
     		s_pBackPlayer->SetVolume(1);
     	}
     }
@@ -386,49 +388,63 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 // for sound effects
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/* = false*/)
 {
+	long long curTick, oldTick;
+	SystemTime::GetTicks(oldTick);
 	result r = E_FAILURE;
 	string strFilePath = s_strResourcePath+pszFilePath;
 	unsigned int nRet = _Hash(strFilePath.c_str());
-
+	AppLog("play effect (%s)", pszFilePath);
 	preloadEffect(pszFilePath);
 
 	EffectList::iterator p = s_List.find(nRet);
 	if (p != s_List.end())
 	{
 		p->second->SetVolume((int) (s_fEffectsVolume * 99));
-    	if (s_fEffectsVolume > 0.0f && p->second->GetVolume() == 0)
+		int volume = p->second->GetVolume();
+		AppLog("volume = %d, s_fEffectsVolume = %f", volume, s_fEffectsVolume);
+    	if (s_fEffectsVolume > 0.0f && volume == 0)
     	{
+    		AppLog("effect volume is lowest");
     		p->second->SetVolume(1);
     	}
 
-	    if (PLAYER_STATE_PLAYING == p->second->GetState())
+	    if (AUDIOOUT_STATE_PLAYING == p->second->GetState())
 		{
-	    	r = p->second->Stop();
+            return nRet; // reset waste a lot of time, so just return.
+	    	AppLog("Reset effect...");
+	    	r = p->second->Reset();
 		}
 
-    	r = p->second->Play();
+	    AppLog("play...");
+
+	    if (s_fEffectsVolume > 0.0f)
+	    {
+	    	r = p->second->Play();
+	    }
+
     	if (IsFailed(r))
     	{
     		AppLog("play effect fails, error code = %d", r);
     	}
 	}
-
+	SystemTime::GetTicks(curTick);
+	AppLog("play effect waste %ld ms...", (long)(curTick-oldTick));
 	return nRet;
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
-	Player*& pPlayer = s_List[nSoundId];
+	CCAudioOut*& pPlayer = s_List[nSoundId];
 	if (pPlayer != NULL)
 	{
-		pPlayer->Stop();
+		pPlayer->Reset();
 	}
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
 	int nRet = 0;
-	Player* pEffectPlayer = NULL;
+	CCAudioOut* pEffectPlayer = NULL;
 	do
 	{
 		BREAK_IF(! pszFilePath);
@@ -439,17 +455,21 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
 		BREAK_IF(s_List.end() != s_List.find(nRet));
 
+		AppLog("not find effect, create it...");
 		// bada only support 10 player instance, we use one for background music, other for effect music.
-		if (s_List.size() >= 9)
+		if (s_List.size() >= 64)
 		{
 			// get the first effect, and remove it form list
 			AppLog("effect preload more than 9, delete the first effect");
 			pEffectPlayer = s_List.begin()->second;
-			closeMediaPlayer(pEffectPlayer);
+//			closeMediaPlayer(pEffectPlayer);
+			pEffectPlayer->Finalize();
 			s_List.erase(s_List.begin()->first);
 		}
-
-		if (openMediaPlayer(pEffectPlayer, pszFilePath, false))
+		if (pEffectPlayer == NULL)
+			pEffectPlayer = new CCAudioOut;
+		pEffectPlayer->Initialize(strFilePath.c_str());
+	//	if (openMediaPlayer(pEffectPlayer, pszFilePath, false))
 		{
 			s_List.insert(Effect(nRet, pEffectPlayer));
 		}
@@ -461,8 +481,9 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
 	string strFilePath = s_strResourcePath+pszFilePath;
 	unsigned int nSoundId = _Hash(strFilePath.c_str());
-	Player*& pPlayer = s_List[nSoundId];
-	closeMediaPlayer(pPlayer);
+	CCAudioOut*& pPlayer = s_List[nSoundId];
+	pPlayer->Reset();
+	//closeMediaPlayer(pPlayer);
 }
 
 } // end of namespace CocosDenshion

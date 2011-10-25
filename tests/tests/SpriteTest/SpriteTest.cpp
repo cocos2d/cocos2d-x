@@ -3190,6 +3190,7 @@ SpriteNilTexture::SpriteNilTexture()
     // TEST: If no texture is given, then Opacity + Color should work.
 
     sprite = new CCSprite();
+	sprite->init();
     sprite->setTextureRect( CCRectMake(0, 0, 300,300) );
     sprite->setColor(ccRED);
     sprite->setOpacity(128);
@@ -3198,6 +3199,7 @@ SpriteNilTexture::SpriteNilTexture()
     sprite->release();
 
     sprite = new CCSprite();
+	sprite->init();
     sprite->setTextureRect(CCRectMake(0, 0, 300,300));
     sprite->setColor(ccBLUE);
     sprite->setOpacity(128);

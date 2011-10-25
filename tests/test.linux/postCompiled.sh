@@ -3,26 +3,18 @@
 #1 is the config name
 #2 is the project name
 #3 is the cocos2d sdk base folder
-#4 is the resource folder name if it has
 
-echo $#
-if [ $# > 2 ]; then
-	echo "ok"
-else
-	echo "configname or proj name do not assign"
+if [ $# -lt 3 ];then
+	echo "usage sh postCompiled.sh confi-gname project-name cocos2dx-root"
 	exit
 fi
 
 
-if [ -d "../../test.android/libs" ];then
-	echo "create libs"
-else
+if [ ! -d "../../test.android/libs" ];then
 	mkdir ../../test.android/libs
 fi
 
-if [ -d "../../test.android/libs/armeabi" ];then
-	echo "create libs"
-else
+if [ ! -d "../../test.android/libs/armeabi" ];then
 	mkdir ../../test.android/libs/armeabi
 fi
 
