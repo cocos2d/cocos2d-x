@@ -15,6 +15,7 @@ cd %PROJECT_NAME%
 
 set PROJECT_ROOT=%COCOS2DX_ROOT%\%PROJECT_NAME%
 
+echo project root = %PROJECT_ROOT%
 
 if not exist bada (
     md Resource
@@ -61,7 +62,6 @@ xcopy /y /s %COCOS2DX_ROOT%\HelloWorld\Classes\*.* Classes
 :: rename HelloWorldEntry.cpp
 move bada\src\HelloWorldEntry.cpp bada\src\%PROJECT_NAME%Entry.cpp
 
-
 cd bada\sdk1.0
 call :replace .cproject
 call :replace .project
@@ -73,7 +73,6 @@ call :replace .project
 endlocal
 pause
 exit
-echo "end"
 
 :replace
 for /f "tokens=1* delims=:" %%a in ('findstr /n .* "%1"') do (
@@ -82,8 +81,7 @@ for /f "tokens=1* delims=:" %%a in ('findstr /n .* "%1"') do (
   ) else (
     set "var=%%b"
     set "var=!var:HelloWorld=%PROJECT_NAME%!"
-    echo.!var!>>tmp.txt
+    echo !var!>>tmp.txt
   )
 )
 move tmp.txt %1
-echo "end2"
