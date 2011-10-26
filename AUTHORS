@@ -3,15 +3,15 @@ cocos2d-x authors
 (ordered by the join in time)
 
 Core Developers:
-    Walzer Wang
-    Minggo Zhang
+    Zhe Wang (Walzer)
+    XiaoMing Zhang (Minggo)
     WenSheng Yang
     Bin Zhang
     RongHong Huang
-    JianHua Chen
+    JianHua Chen (Dumganhar)
 
 Developers:
-    HuaXu Cai
+    HuaXu Cai (laschweinski)
         author of linux port
         
     ciaranj 
@@ -20,7 +20,7 @@ Developers:
         add particle systems to lua bindings
         use ant to generate LuaCocos2d.cpp and lua projects
 
-    moadib
+    Marat Yakupov (moadib)
         add ability of simulating android enter/resume background on win32
         add ability of simulating android back/menu key on win32
 
@@ -45,7 +45,7 @@ Developers:
     Carlos Sessa
 	implement the accelerometer module onto Android
 
-    Dumganhar
+    JianHua Chen (Dumganhar)
         author of Bada port
 
 
