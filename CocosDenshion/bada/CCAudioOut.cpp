@@ -5,8 +5,10 @@
 #include <errno.h>
 #include <FSystem.h>
 
+#define OGG_SUPPORT
+
 #ifdef OGG_SUPPORT
-#include <vorbis/vorbisfile.h>
+#include "vorbis/vorbisfile.h"
 #endif
 
 using namespace Osp::Base;
@@ -84,27 +86,27 @@ int CCAudioOut::DecodeOgg(const char *infile)
     int size;
     int seekable = 0;
     int percent = 0;
-    char* pPcmBuffer = NULL;
 
+    AppLog("enter, %s", infile);
 	in = fopen(infile, "rb");
 	if(!in) {
 		AppLog("ERROR: Failed to open input file:\n");
 		return 1;
 	}
-
+	 AppLog("enter");
     if(ov_open(in, &vf, NULL, 0) < 0) {
     	AppLog("ERROR: Failed to open input as vorbis\n");
         fclose(in);
 //        fclose(out);
         return 1;
     }
-
+    AppLog("enter");
     if(ov_seekable(&vf)) {
         seekable = 1;
         length = ov_pcm_total(&vf, 0);
         size = bits/8 * ov_info(&vf, 0)->channels;
     }
-
+    AppLog("enter");
     if (ov_info(&vf,0)->channels == 2)
     {
     	__sampleChannelType = AUDIO_CHANNEL_TYPE_STEREO;
@@ -113,11 +115,11 @@ int CCAudioOut::DecodeOgg(const char *infile)
     {
     	__sampleChannelType = AUDIO_CHANNEL_TYPE_MONO;
     }
-
+    AppLog("enter");
     __sampleRate = ov_info(&vf,0)->rate;
     __sampleBitdepth = AUDIO_TYPE_PCM_S16_LE;
 
-
+    AppLog("enter");
     while((ret = ov_read(&vf, buf, buflen, endian, bits/8, sign, &bs)) != 0) {
         if(bs != 0) {
             AppLog("Only one logical bitstream currently supported\n");
@@ -158,10 +160,12 @@ int CCAudioOut::DecodeOgg(const char *infile)
 //    if(!raw)
 //        rewrite_header(out, written); /* We don't care if it fails, too late */
 
+    AppLog("enter");
     ov_clear(&vf);
     fclose(in);
 //    fclose(out);
 #endif
+    AppLog("enter");
     return 0;
 }
 
@@ -572,11 +576,14 @@ result CCAudioOut::Reset(void)
 
 void CCAudioOut::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
 {
-	result r = E_FAILURE;
 	if (__bShortPcmBuffer)
 	{
-		Reset();
-		AppLog("Reset...");
+		__iUsedBufferCount--;
+		if (__iUsedBufferCount <= 0)
+		{
+			Reset();
+			AppLog("Reset...");
+		}
 	}
 	else
 	{

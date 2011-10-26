@@ -127,36 +127,41 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    ccLanguageType ret = kLanguageEnglish;
+	int arrayChineseCode[] = {
+		2052, 4100, 1028, 3076, 5124
+	};
 
-    do 
-    {
-        int nCount = sizeof(arrayChineseCode) / sizeof(int);
-        for (int i = 0; i < nCount; ++i)
-        {
-            if (arrayChineseCode[i] == LanguageID)
-            {
-                if (LanguageID == 2052)
-                {
-                    ret = kLanguageChinese_Simplified;
-                }
-                else
-                {
-                    ret = kLanguageChinese_Traditional;
-                }
-                break;
-            }
-        }
+	LCID LanguageID = GetUserDefaultLCID();
+	ccLanguageType ret = kLanguageEnglish;
 
-        CC_BREAK_IF(kLanguageEnglish != ret);
+	do 
+	{
+		int nCount = sizeof(arrayChineseCode) / sizeof(int);
+		for (int i = 0; i < nCount; ++i)
+		{
+			if (arrayChineseCode[i] == LanguageID)
+			{
+				if (LanguageID == 2052)
+				{
+					ret = kLanguageChinese_Simplified;
+				}
+				else
+				{
+					ret = kLanguageChinese_Traditional;
+				}
+				break;
+			}
+		}
 
-        if (1041 == LanguageID)
-        {
-            ret = kLanguageJapanese;
-        }
-    } while (0);
+		CC_BREAK_IF(kLanguageEnglish != ret);
 
-    return ret;
+		if (1041 == LanguageID)
+		{
+			ret = kLanguageJapanese;
+		}
+	} while (0);
+
+	return ret;
 }
 
 NS_CC_END;
