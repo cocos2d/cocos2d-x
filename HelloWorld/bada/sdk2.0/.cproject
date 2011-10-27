@@ -713,7 +713,7 @@
 									<listOptionValue builtIn="false" value="../../../../chipmunk/include/chipmunk"/>
 									<listOptionValue builtIn="false" value="../../../../CocosDenshion/include"/>
 								</option>
-								<option id="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def.1056983953" superClass="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def" valueType="definedSymbols">
+								<option id="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def.1056983953" name="Defined symbols (-D)" superClass="osp.gnu.target.cpp.compiler.release.exe.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="SHP"/>
 									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
 								</option>
