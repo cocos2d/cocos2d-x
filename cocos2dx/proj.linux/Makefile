@@ -108,13 +108,18 @@ OBJECTS = ../actions/CCAction.o \
 					../CCScheduler.o \
 					../cocos2d.o 
 
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+STATICLIBS_DIR = ../platform/third_party/linux/libraries/lib64
+else
 STATICLIBS_DIR = ../platform/third_party/linux/libraries
-#STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-#						$(STATICLIBS_DIR)/libcurl.a \
-#						$(STATICLIBS_DIR)/libxml2.a \
-#						$(STATICLIBS_DIR)/libpng.a \
-#						$(STATICLIBS_DIR)/libjpeg.a
-						
+endif
+STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
+						$(STATICLIBS_DIR)/libcurl.a \
+						$(STATICLIBS_DIR)/libxml2.a \
+						$(STATICLIBS_DIR)/libpng.a \
+						$(STATICLIBS_DIR)/libjpeg.a
+
 SHAREDLIBS = -lglfw -lGL
 
 ####### Build rules

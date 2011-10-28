@@ -1,8 +1,8 @@
 CC      = gcc
 CXX     = g++
 TARGET	= libcocosdenshion.so
-CCFLAGS = -Wall -g -O2 
-CXXFLAGS = -Wall -g -O2 
+CCFLAGS = -Wall -g -O2 -fPIC
+CXXFLAGS = -Wall -g -O2 -fPIC
 VISIBILITY = 
 
 INCLUDES = -I.. \
