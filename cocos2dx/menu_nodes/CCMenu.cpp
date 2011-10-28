@@ -80,7 +80,7 @@ namespace cocos2d{
 
     bool CCMenu::init()
     {
-        va_list args;
+        va_list args = NULL;
         return initWithItems(0, args);
     }
 
