@@ -4,9 +4,9 @@
 # cygwin.
 # Don't modify the script until you know what you do.
 
-# set environment paramters
-NDK_ROOT="/home/laschweinski/android/android-ndk-r5"
-ANDROID_SDK_ROOT="/home/laschweinski/android/android-sdk-linux_86"
+source utils.inc
+
+check_vars
 
 # check if it was called by .bat file
 if [ $# -eq 5 ];then
@@ -56,4 +56,4 @@ check_path
 create_android_project
 
 # invoke template/android/copy_files.sh
-sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH
+sh `pwd`/template/android/copy_files.sh `pwd` $PROJECT_NAME $ANDROID_NDK_ROOT $PACKAGE_PATH

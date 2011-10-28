@@ -1,33 +1,33 @@
-CC      = gcc
-CXX     = g++
-TARGET	= libcocosdenshion.so
-CCFLAGS = -Wall -g -O2 
-CXXFLAGS = -Wall -g -O2 
-VISIBILITY = 
+TOP		=	../..
 
-INCLUDES = -I.. \
-		-I../include \
-		-I../third_party/fmod/api/inc 
+include $(TOP)/linux.config.mk
 
-DEFINES = -DLINUX
+TARGET		=	libcocosdenshion.so
+VISIBILITY	=	
 
-OBJECTS =   ../Linux/FmodAudioPlayer.o \
-            ../Linux/SimpleAudioEngine.o \
+INCLUDES	=	-I.. \
+			-I../include \
+			-I$(FMODINC)
 
-STATICLIBS = 
-SHAREDLIBS_DIR = ../third_party/fmod/api/lib
-SHAREDLIBS = -L$(SHAREDLIBS_DIR) -lfmodex
+OBJECTS		=	../Linux/FmodAudioPlayer.o \
+			../Linux/SimpleAudioEngine.o \
+
+STATICLIBS	= 
+#SHAREDLIBS_DIR	=	../third_party/fmod/api/lib
+#SHAREDLIBS	=	-L$(SHAREDLIBS_DIR) -lfmodex
+SHAREDLIBS_DIR	=	
+SHAREDLIBS	=	-L$(FMODDIR)/lib -l$(FMODLIB)
 
 ####### Build rules
 $(TARGET): $(OBJECTS) 
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
-	
+	$(CXX) $(CXXFLAGS) $(CXXLIBFLAGS) $(INCLUDES) $(DEFINES) $(OBJECTS) -shared -o $(TARGET) $(SHAREDLIBS) $(STATICLIBS)
+
 ####### Compile
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(CXXLIBFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
 
 %.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
-		
+	$(CC) $(CCFLAGS) $(CCLIBFLAGS) $(INCLUDES) $(DEFINES) $(VISIBILITY) -c $< -o $@
+
 clean: 
 	rm -f $(OBJECTS) $(TARGET) core

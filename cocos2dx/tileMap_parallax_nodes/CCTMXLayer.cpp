@@ -395,8 +395,10 @@ namespace cocos2d {
 		int *item = (int*)bsearch((void*)&key, (void*)&m_pAtlasIndexArray->arr[0], m_pAtlasIndexArray->num, sizeof(void*), compareInts);
 
 		CCAssert( item, "TMX atlas index not found. Shall not happen");
-
-		int index = ((int)item - (int)m_pAtlasIndexArray->arr) / sizeof(void*);
+		
+		// TODO: This line used to use int's, these are addresses and on 64bit machines, this is too short. There
+		// really needs to be some typedefs created for this project.
+		long index = ((long)item - (long)m_pAtlasIndexArray->arr) / sizeof(void*);
 		return index;
 	}
 	unsigned int CCTMXLayer::atlasIndexForNewZ(int z)
@@ -405,7 +407,10 @@ namespace cocos2d {
 		unsigned int i=0;
 		for( i=0; i< m_pAtlasIndexArray->num ; i++) 
 		{
-			int val = (int) m_pAtlasIndexArray->arr[i];
+			// TODO: This line used to use int's, these are addresses and on 64bit machines, this is too short. There
+			// really needs to be some typedefs created for this project.
+			long val = (long) m_pAtlasIndexArray->arr[i];
+
 			if( z < val )
 				break;
 		}	
@@ -472,7 +477,11 @@ namespace cocos2d {
 		CCAssert( m_pChildren->containsObject(sprite), "Tile does not belong to TMXLayer");
 
 		unsigned int atlasIndex = sprite->getAtlasIndex();
-		unsigned int zz = (unsigned int) m_pAtlasIndexArray->arr[atlasIndex];
+
+		// TODO: This line used to use int's, these are addresses and on 64bit machines, this is too short. There
+		// really needs to be some typedefs created for this project.
+		unsigned long zz = (unsigned long) m_pAtlasIndexArray->arr[atlasIndex];
+
 		m_pTiles[zz] = 0;
 		ccCArrayRemoveValueAtIndex(m_pAtlasIndexArray, atlasIndex);
 		CCSpriteBatchNode::removeChild(sprite, cleanup);

@@ -554,10 +554,14 @@ namespace cocos2d {
 				// int sizeHint = s.width * s.height * sizeof(uint32_t);
 				int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
 
-				int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+				// TODO: This line used to use int's, these are addresses and on 64bit machines, this is too short. There
+				// really needs to be some typedefs created for this project.
+				long inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
 				assert(inflatedLen == sizeHint);
 
-				inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
+				// TODO: This line used to use int's, these are addresses and on 64bit machines, this is too short. There
+				// really needs to be some typedefs created for this project.
+				inflatedLen = (long)&inflatedLen; // XXX: to avoid warings in compiler
 				
 				delete [] buffer;
 				buffer = NULL;

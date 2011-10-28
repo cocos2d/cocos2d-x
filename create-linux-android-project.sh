@@ -4,10 +4,9 @@
 # cygwin.
 # Don't modify the script until you know what you do.
 
-# set environment paramters
-NDK_ROOT="/home/zhangxm/bin/android-ndk-r6b"
-ANDROID_SDK_ROOT="/home/zhangxm/bin/android-sdk-linux_x86"
-COCOS2DX_ROOT="/home/zhangxm/cocos2d-x"
+source utils.inc
+
+check_vars
 
 # check if it was called by .bat file
 if [ $# -eq 5 ];then
@@ -59,4 +58,4 @@ create_android_project(){
 create_android_project
 
 # invoke template/android/copy_files.sh
-sh $COCOS2DX_ROOT/template/linux/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $NDK_ROOT $PACKAGE_PATH $PROREAL_DIR
+sh $COCOS2DX_ROOT/template/linux/mycopy_files.sh $COCOS2DX_ROOT $PROJECT_NAME $ANDROID_NDK_ROOT $PACKAGE_PATH $PROREAL_DIR
