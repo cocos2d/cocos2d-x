@@ -177,7 +177,7 @@ public:
 			if (iError) {
 				//no valid font found use default
 //				CCLog("no valid font, use default %s\n", pFontName);
-				iError = FT_New_Face( library, "/usr/share/fonts/truetype/freefont/FreeSans.ttf", 0, &face );
+				iError = FT_New_Face( library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face );
 			}
 			CC_BREAK_IF(iError);
 
