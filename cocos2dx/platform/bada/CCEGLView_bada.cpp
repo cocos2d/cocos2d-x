@@ -337,8 +337,8 @@ bool CCEGLView::Create(Osp::App::Application* pApp, int width, int height)
 
 void CCEGLView::resize(int width, int height)
 {
-	int viewPortW = (int)(width * m_fScreenScaleFactor);
-	int viewPortH = (int)(height * m_fScreenScaleFactor);
+	int viewPortW = (int)ceil(width * m_fScreenScaleFactor);
+	int viewPortH = (int)ceil(height * m_fScreenScaleFactor);
 	m_rcViewPort.origin.x = (m_sSizeInPixel.width - viewPortW) / 2;
 	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
 	m_rcViewPort.size.width = viewPortW;
@@ -441,7 +441,7 @@ void CCEGLView::OnTouchReleased(const Osp::Ui::Control& source,
 		y = currentPosition.y;
 	}
 
-//	AppLog("OnTouchReleased... x = %f, y = %f", x, y);
+	AppLog("OnTouchReleased... x = %f, y = %f", x, y);
 	if (m_bCaptured)
 	{
 		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
