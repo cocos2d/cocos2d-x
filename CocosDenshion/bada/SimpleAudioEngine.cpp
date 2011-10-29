@@ -274,7 +274,7 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 
 	setBackgroundMusicVolume(s_fBackgroundMusicVolume);
 
-    if (bRet && s_fBackgroundMusicVolume > 0.0f)
+    if (bRet)
     {
     	r = s_pBackPlayer->Play();
     }
@@ -438,6 +438,14 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 	if (pPlayer != NULL)
 	{
 		pPlayer->Reset();
+	}
+}
+
+void SimpleAudioEngine::stopAllEffects()
+{
+	for (EffectList::iterator it = s_List.begin(); it != s_List.end(); ++it)
+	{
+		it->second->Reset();
 	}
 }
 

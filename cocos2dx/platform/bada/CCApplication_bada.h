@@ -36,9 +36,10 @@ NS_CC_BEGIN;
 
 
 
-class CC_DLL CCApplication :
-	public Osp::App::Application,
-	public Osp::Base::Runtime::ITimerEventListener
+class CC_DLL CCApplication
+	: public Osp::App::Application
+	, public Osp::Base::Runtime::ITimerEventListener
+    , public Osp::Ui::IKeyEventListener
 {
 public:
     CCApplication();
@@ -105,16 +106,16 @@ public:
     Orientation setOrientation(Orientation orientation);
 //
 public:
-
-	bool OnAppInitializing(Osp::App::AppRegistry& appRegistry);
-	bool OnAppTerminating(Osp::App::AppRegistry& appRegistry, bool forcedTermination = false);
-	void OnForeground(void);
-	void OnBackground(void);
-	void OnLowMemory(void);
-	void OnBatteryLevelChanged(Osp::System::BatteryLevel batteryLevel);
-	void OnScreenOn (void);
-	void OnScreenOff (void);
-	void OnTimerExpired(Osp::Base::Runtime::Timer& timer);
+    virtual bool OnAppInitializing(Osp::App::AppRegistry& appRegistry);
+    virtual bool OnAppTerminating(Osp::App::AppRegistry& appRegistry, bool forcedTermination = false);
+    virtual void OnForeground(void);
+    virtual void OnBackground(void);
+	virtual void OnKeyPressed(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
+	virtual void OnKeyReleased(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
+	virtual void OnKeyLongPressed(const Osp::Ui::Control& source, Osp::Ui::KeyCode keyCode){}
+	virtual void OnLowMemory(void);
+	virtual void OnBatteryLevelChanged(Osp::System::BatteryLevel batteryLevel);
+	virtual void OnTimerExpired(Osp::Base::Runtime::Timer& timer);
 protected:
 	Osp::Base::Runtime::Timer* m_pTimer;
 };

@@ -36,9 +36,10 @@
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
 								</option>
-								<option id="osp.gnu.target.cpp.compiler.debug.so.option.include.paths.716302668" superClass="osp.gnu.target.cpp.compiler.debug.so.option.include.paths" valueType="includePath">
+								<option id="osp.gnu.target.cpp.compiler.debug.so.option.include.paths.716302668" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.debug.so.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 									<listOptionValue builtIn="false" value="../../../include"/>
+									<listOptionValue builtIn="false" value="../../../bada"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1952294255" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
@@ -47,6 +48,14 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug.1930124323" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug.1196904841" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug">
+								<option id="osp.gnu.target.cpp.link.debug.so.option.libs.paths.864633692" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
+								</option>
+								<option id="osp.gnu.target.cpp.link.debug.so.option.libs.218425042" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="vorbis"/>
+									<listOptionValue builtIn="false" value="ogg"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1773800931" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -480,6 +489,7 @@
 				</scannerConfigBuildInfo>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.osp.gnu.target.so.release.284388679">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.osp.gnu.target.so.release.284388679" moduleId="org.eclipse.cdt.core.settings" name="Target-Release">
@@ -513,9 +523,10 @@
 									<listOptionValue builtIn="false" value="SHP"/>
 									<listOptionValue builtIn="false" value="CC_BADA_2_0"/>
 								</option>
-								<option id="osp.gnu.target.cpp.compiler.release.so.option.include.paths.620428582" superClass="osp.gnu.target.cpp.compiler.release.so.option.include.paths" valueType="includePath">
+								<option id="osp.gnu.target.cpp.compiler.release.so.option.include.paths.620428582" name="Include paths (-I)" superClass="osp.gnu.target.cpp.compiler.release.so.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 									<listOptionValue builtIn="false" value="../../../include"/>
+									<listOptionValue builtIn="false" value="../../../bada"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.437912108" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
@@ -524,6 +535,14 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release.1201354205" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release.184411703" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release">
+								<option id="osp.gnu.target.cpp.link.release.so.option.libs.paths.870091860" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.so.option.libs.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
+								</option>
+								<option id="osp.gnu.target.cpp.link.release.so.option.libs.904097450" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.so.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="vorbis"/>
+									<listOptionValue builtIn="false" value="ogg"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.2118565794" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -957,6 +976,7 @@
 				</scannerConfigBuildInfo>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">

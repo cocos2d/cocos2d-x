@@ -5,6 +5,7 @@ using namespace Osp::App;
 using namespace Osp::System;
 using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
+using namespace Osp::Locales;
 
 NS_CC_BEGIN;
 
@@ -86,7 +87,6 @@ ccLanguageType CCApplication::getCurrentLanguage()
 		else if (value.Equals("SPA", false))
 		{
 			ret = kLanguageSpanish;
-		}
 	} while (0);
 
 	return ret;
@@ -102,6 +102,9 @@ bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
 	result r = E_FAILURE;
 	if (! initInstance() || !applicationDidFinishLaunching())
 		return false;
+
+	CCEGLView::sharedOpenGLView().AddKeyEventListener(*this);
+
 	m_pTimer = new Timer;
 	if (null == m_pTimer)
 	{
@@ -115,7 +118,6 @@ bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
 		m_pTimer = null;
 		return E_FAILURE;
 	}
-	m_pTimer->Start(s_nAnimationInterval);
 
 	return true;
 }
@@ -137,6 +139,7 @@ void CCApplication::OnForeground(void)
 {
 	if (m_pTimer)
 		m_pTimer->Start(s_nAnimationInterval);
+    applicationWillEnterForeground();
 }
 
 
@@ -144,6 +147,7 @@ void CCApplication::OnBackground(void)
 {
 	if (m_pTimer)
 		m_pTimer->Cancel();
+	applicationDidEnterBackground();
 }
 
 

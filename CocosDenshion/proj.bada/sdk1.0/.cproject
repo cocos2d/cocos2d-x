@@ -41,6 +41,18 @@
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.c.linker.so.simul.1722758305" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.simul.c.linker.so.simul"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.simul.cpp.linker.so.simul.1163741292" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.simul.cpp.linker.so.simul">
+<option id="osp.gnu.cpp.link.simual.so.option.libs.paths.869612088" name="Library search path (-L)" superClass="osp.gnu.cpp.link.simual.so.option.libs.paths" valueType="libPaths">
+<listOptionValue builtIn="false" value="&quot;${SIMULATOR_LIB_PATH}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/simulator&quot;"/>
+</option>
+<option id="osp.gnu.cpp.link.simual.so.option.libs.904733716" superClass="osp.gnu.cpp.link.simual.so.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="osp_rt0"/>
+<listOptionValue builtIn="false" value="vorbis"/>
+<listOptionValue builtIn="false" value="ogg"/>
+<listOptionValue builtIn="false" value="libc-newlib"/>
+<listOptionValue builtIn="false" value="FOsp"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.707095636" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -474,6 +486,7 @@
 </scannerConfigBuildInfo>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.osp.gnu.target.so.debug.422876169">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.osp.gnu.target.so.debug.422876169" moduleId="org.eclipse.cdt.core.settings" name="Target-Debug">
@@ -513,6 +526,16 @@
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug.1976944916" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug.1583046341" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.debug">
+<option id="osp.gnu.target.cpp.link.debug.so.option.libs.paths.1560032134" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs.paths" valueType="libPaths">
+<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/target&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/arm-samsung-nucleuseabi/lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/lib/gcc/arm-samsung-nucleuseabi/4.4.1&quot;"/>
+</option>
+<option id="osp.gnu.target.cpp.link.debug.so.option.libs.6816893" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="vorbis"/>
+<listOptionValue builtIn="false" value="ogg"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1168720299" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -946,6 +969,7 @@
 </scannerConfigBuildInfo>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.osp.gnu.target.so.release.1282106419">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.osp.gnu.target.so.release.1282106419" moduleId="org.eclipse.cdt.core.settings" name="Target-Release">
@@ -985,6 +1009,16 @@
 </tool>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release.166302644" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release.266361730" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.so.release">
+<option id="osp.gnu.target.cpp.link.release.so.option.libs.paths.1029348720" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.release.so.option.libs.paths" valueType="libPaths">
+<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib/target&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/arm-samsung-nucleuseabi/lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/lib/gcc/arm-samsung-nucleuseabi/4.4.1&quot;"/>
+</option>
+<option id="osp.gnu.target.cpp.link.release.so.option.libs.186816732" superClass="osp.gnu.target.cpp.link.release.so.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="vorbis"/>
+<listOptionValue builtIn="false" value="ogg"/>
+</option>
 <inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.676196363" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -1418,6 +1452,7 @@
 </scannerConfigBuildInfo>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
