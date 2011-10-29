@@ -173,6 +173,7 @@ CCAudioOut::CCAudioOut()
 	__pAllPcmBuffer = null;
 	__iAllPcmBufferSize = 0;
 	__iAllPcmPos = 0;
+	__pAudioOut = null;
 	quiet = 0;
 	bits = 16;
 	endian = 0;
@@ -421,6 +422,8 @@ result CCAudioOut::FeedBuffer (void)
 			__iAllPcmPos += __bufferSize;
 		}
 
+		__iUsedBufferCount++;
+
 		if (__iAllPcmPos < __iAllPcmBufferSize)
 		{
 			__buffWriteCnt ++;
@@ -428,7 +431,6 @@ result CCAudioOut::FeedBuffer (void)
 			{
 				__buffWriteCnt = 0;
 			}
-			__iUsedBufferCount++;
 		}
 		else
 		{
@@ -614,15 +616,12 @@ void CCAudioOut::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
 void CCAudioOut::OnAudioOutInterrupted(Osp::Media::AudioOut& src)
 {
 	AppLog("Enter");
-
-	Finalize();
+	Reset();
 }
 
 void CCAudioOut::OnAudioOutReleased(Osp::Media::AudioOut& src)
 {
 	AppLog("Enter");
-
-//cjh	Initialize();
 }
 
 void CCAudioOut::Finalize(void)
