@@ -40,10 +40,17 @@
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 									<listOptionValue builtIn="false" value="../../../include"/>
 									<listOptionValue builtIn="false" value="../../../bada"/>
+									<listOptionValue builtIn="false" value="../../../bada/vorbis"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.1952294255" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.debug.25148670" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.debug">
+								<option id="osp.gnu.target.c.compiler.debug.so.option.include.paths.46318178" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.debug.so.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="../../../include"/>
+									<listOptionValue builtIn="false" value="../../../bada"/>
+									<listOptionValue builtIn="false" value="../../../bada/vorbis"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.1332966355" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug.1930124323" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.debug"/>
@@ -52,10 +59,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 								</option>
-								<option id="osp.gnu.target.cpp.link.debug.so.option.libs.218425042" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="vorbis"/>
-									<listOptionValue builtIn="false" value="ogg"/>
-								</option>
+								<option id="osp.gnu.target.cpp.link.debug.so.option.libs.218425042" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs" valueType="libs"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1773800931" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -527,10 +531,17 @@
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
 									<listOptionValue builtIn="false" value="../../../include"/>
 									<listOptionValue builtIn="false" value="../../../bada"/>
+									<listOptionValue builtIn="false" value="../../../bada/vorbis"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input.437912108" superClass="cdt.managedbuild.tool.osp.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.release.12061378" name="bada C Compiler" superClass="cdt.managedbuild.tool.osp.gnu.target.c.compiler.so.release">
+								<option id="osp.gnu.target.c.compiler.release.so.option.include.paths.1313153533" name="Include paths (-I)" superClass="osp.gnu.target.c.compiler.release.so.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="../../../include"/>
+									<listOptionValue builtIn="false" value="../../../bada"/>
+									<listOptionValue builtIn="false" value="../../../bada/vorbis"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.c.compiler.input.1447896726" superClass="cdt.managedbuild.tool.osp.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release.1201354205" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.so.release"/>
@@ -539,10 +550,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 								</option>
-								<option id="osp.gnu.target.cpp.link.release.so.option.libs.904097450" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.so.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="vorbis"/>
-									<listOptionValue builtIn="false" value="ogg"/>
-								</option>
+								<option id="osp.gnu.target.cpp.link.release.so.option.libs.904097450" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.so.option.libs" valueType="libs"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.2118565794" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

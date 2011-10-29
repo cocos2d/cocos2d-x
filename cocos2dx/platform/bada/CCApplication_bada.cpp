@@ -65,11 +65,6 @@ ccLanguageType CCApplication::getCurrentLanguage()
 		r = SettingInfo::GetValue(L"Language", value);
 		if (value.Equals("ZHO", false))
 		{
-//			r = SettingInfo::GetValue(L"Country", value);
-//			if (value.Equals("HK", false) || value.Equals("TW", false))
-//			{
-//
-//			}
 			ret = kLanguageChinese;
 		}
 		else if (value.Equals("FRA", false))
@@ -87,6 +82,11 @@ ccLanguageType CCApplication::getCurrentLanguage()
 		else if (value.Equals("SPA", false))
 		{
 			ret = kLanguageSpanish;
+		}
+		else
+		{
+			ret = kLanguageEnglish;
+		}
 	} while (0);
 
 	return ret;
