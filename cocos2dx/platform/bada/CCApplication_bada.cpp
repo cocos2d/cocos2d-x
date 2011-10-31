@@ -65,15 +65,27 @@ ccLanguageType CCApplication::getCurrentLanguage()
 		r = SettingInfo::GetValue(L"Language", value);
 		if (value.Equals("ZHO", false))
 		{
-			r = SettingInfo::GetValue(L"Country", value);
-			if (value.Equals("HK", false) || value.Equals("TW", false))
-			{
-				ret = kLanguageChinese_Traditional;
-			}
-			else
-			{
-				ret = kLanguageChinese_Simplified;
-			}
+			ret = kLanguageChinese;
+		}
+		else if (value.Equals("FRA", false))
+		{
+			ret = kLanguageFrench;
+		}
+		else if (value.Equals("ITA", false))
+		{
+			ret = kLanguageItalian;
+		}
+		else if (value.Equals("DEU", false))
+		{
+			ret = kLanguageGerman;
+		}
+		else if (value.Equals("SPA", false))
+		{
+			ret = kLanguageSpanish;
+		}
+		else
+		{
+			ret = kLanguageEnglish;
 		}
 	} while (0);
 
@@ -90,6 +102,9 @@ bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
 	result r = E_FAILURE;
 	if (! initInstance() || !applicationDidFinishLaunching())
 		return false;
+
+	CCEGLView::sharedOpenGLView().AddKeyEventListener(*this);
+
 	m_pTimer = new Timer;
 	if (null == m_pTimer)
 	{
@@ -103,7 +118,6 @@ bool CCApplication::OnAppInitializing(AppRegistry& appRegistry)
 		m_pTimer = null;
 		return E_FAILURE;
 	}
-	m_pTimer->Start(s_nAnimationInterval);
 
 	return true;
 }
@@ -125,6 +139,7 @@ void CCApplication::OnForeground(void)
 {
 	if (m_pTimer)
 		m_pTimer->Start(s_nAnimationInterval);
+    applicationWillEnterForeground();
 }
 
 
@@ -132,6 +147,7 @@ void CCApplication::OnBackground(void)
 {
 	if (m_pTimer)
 		m_pTimer->Cancel();
+	applicationDidEnterBackground();
 }
 
 
