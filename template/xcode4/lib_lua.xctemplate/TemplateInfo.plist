@@ -12,6 +12,30 @@
 
 	<key>Definitions</key>
 	<dict>
+		<key>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</string>
+		</dict>
+		<key>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>cocos2dx_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/lua/cocos2dx_support/LuaCocos2d.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -843,6 +867,8 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp</string>
+		<string>libs/lua/cocos2dx_support/Cocos2dxLuaLoader.h</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.cpp</string>
 		<string>libs/lua/cocos2dx_support/LuaCocos2d.h</string>
 		<string>libs/lua/cocos2dx_support/LuaEngine.cpp</string>

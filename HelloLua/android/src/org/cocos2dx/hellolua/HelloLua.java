@@ -40,16 +40,6 @@ public class HelloLua extends Cocos2dxActivity{
 		
         mGLView = new LuaGLSurfaceView(this);
         setContentView(mGLView);
-
-        // Get the size of the mGLView after the layout happens
-        mGLView.post(new Runnable() {
-            
-            @Override
-            public void run() {
-                Cocos2dxActivity.screenHeight = mGLView.getHeight();
-                Cocos2dxActivity.screenWidth = mGLView.getWidth();
-            }
-        });
 	}
 	
 	 @Override

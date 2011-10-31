@@ -364,7 +364,8 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 	CCAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
 
 	CCTexture2D * texture = NULL;
-	std::string forKey = key;
+	// textureForKey() use full path,so the key should be full path
+	std::string forKey = CCFileUtils::fullPathFromRelativePath(key);
 
 	m_pDictLock->lock();
 
