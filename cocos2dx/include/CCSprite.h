@@ -196,7 +196,6 @@ public:
 	/** Creates an sprite with an CCBatchNode and a rect
 	*/
 	static CCSprite* spriteWithBatchNode(CCSpriteBatchNode *batchNode, const CCRect& rect);
-
 public:
 	virtual bool init(void);
 	virtual ~CCSprite(void);

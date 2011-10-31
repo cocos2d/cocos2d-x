@@ -33,7 +33,7 @@ move_files_into_android(){
 
 copy_cpp_h_from_helloworld(){
     mkdir $APP_DIR/Classes
-    for file in `ls $HELLOWORLD_ROOT/* | grep -E '.*\.[cpp|h]' `
+    for file in `ls $HELLOWORLD_ROOT/Classes/* | grep -E '.*\.[cpp|h]' `
     do
         if [ -f $file ];then
             cp $file $APP_DIR/Classes

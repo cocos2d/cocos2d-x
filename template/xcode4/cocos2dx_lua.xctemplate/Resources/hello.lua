@@ -1,3 +1,7 @@
+require "hello2"
+
+cocos2d.CCLuaLog("result is " .. myadd(3, 5))
+
 -- create scene & layer
 layerFarm = cocos2d.CCLayer:node()
 layerFarm:setIsTouchEnabled(true)
@@ -31,6 +35,7 @@ function btnTouchMove(e)
 end
 
 function btnTouchBegin(e)
+    cocos2d.CCScheduler:sharedScheduler():unscheduleScriptFunc("tick")
     cocos2d.CCLuaLog("btnTouchBegin")
     for k,v in ipairs(e) do
         pointBegin = v:locationInView(v:view())
@@ -132,7 +137,7 @@ layerMenu:addChild(menuTools)
 
 function tick()
 
-    point = spriteDog:getPosition();
+    local point = spriteDog:getPosition();
 
     if point.x > winSize.width then
         point.x = 0
@@ -144,10 +149,16 @@ function tick()
 
 end
 
+-- avoid memory leak
+collectgarbage( "setpause", 100) 
+collectgarbage( "setstepmul", 5000)
+
+
 cocos2d.CCScheduler:sharedScheduler():scheduleScriptFunc("tick", 0.01, false)
 
--- run 
 -- play background music
 CocosDenshion.SimpleAudioEngine:sharedEngine():playBackgroundMusic("background.mp3", true);  
-
+-- preload effect
+CocosDenshion.SimpleAudioEngine:sharedEngine():preloadEffect("effect1.wav");
+-- run 
 cocos2d.CCDirector:sharedDirector():runWithScene(sceneGame)
