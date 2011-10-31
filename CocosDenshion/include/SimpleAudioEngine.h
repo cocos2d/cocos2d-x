@@ -140,6 +140,11 @@ public:
     void stopEffect(unsigned int nSoundId);
 
     /**
+    @brief Stop all playing sound effects
+    */
+    void stopAllEffects();
+
+    /**
     @brief  		preload a compressed audio file
     @details	    the compressed audio will be decode to wave, then write into an 
     internal buffer in SimpleaudioEngine
