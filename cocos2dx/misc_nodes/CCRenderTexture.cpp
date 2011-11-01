@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "CCImage.h"
 #include "support/ccUtils.h"
+#include "CCTextureCache.h"
 #include "CCFileUtils.h"
 #include "CCGL.h"
 
@@ -41,6 +42,7 @@ CCRenderTexture::CCRenderTexture()
 , m_nOldFBO(0)
 , m_pTexture(0)
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+, m_pUITextureImage(NULL)
 {
 }
 
@@ -48,6 +50,8 @@ CCRenderTexture::~CCRenderTexture()
 {
     removeAllChildrenWithCleanup(true);
     ccglDeleteFramebuffers(1, &m_uFBO);
+
+	CC_SAFE_DELETE(m_pUITextureImage);
 }
 
 CCSprite * CCRenderTexture::getSprite()
@@ -100,7 +104,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         w *= (int)CC_CONTENT_SCALE_FACTOR();
         h *= (int)CC_CONTENT_SCALE_FACTOR();
 
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, &m_nOldFBO);
+        glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &m_nOldFBO);
 
         // textures must be power of two squared
         unsigned int powW = ccNextPOT(w);
@@ -157,7 +161,7 @@ void CCRenderTexture::begin()
 	// Save the current matrix
 	glPushMatrix();
 
-	CCSize texSize = m_pTexture->getContentSizeInPixels();
+	const CCSize& texSize = m_pTexture->getContentSizeInPixels();
 
 	// Calculate the adjustment ratios based on the old and new projections
 	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
@@ -200,14 +204,35 @@ void CCRenderTexture::beginWithClear(float r, float g, float b, float a)
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);     
 }
 
-void CCRenderTexture::end()
+void CCRenderTexture::end(bool bIsTOCacheTexture)
 {
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_nOldFBO);
 	// Restore the original matrix and viewport
 	glPopMatrix();
 	CCSize size = CCDirector::sharedDirector()->getDisplaySizeInPixels();
-//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
-    CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+	//	glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
+	CCDirector::sharedDirector()->getOpenGLView()->setViewPortInPoints(0, 0, size.width, size.height);
+
+#if CC_ENABLE_CACHE_TEXTTURE_DATA
+	if (bIsTOCacheTexture)
+	{
+		CC_SAFE_DELETE(m_pUITextureImage);
+
+		// to get the rendered texture data
+		const CCSize& s = m_pTexture->getContentSizeInPixels();
+		int tx = (int)s.width;
+		int ty = (int)s.height;
+		m_pUITextureImage = new CCImage;
+		if (true == getUIImageFromBuffer(m_pUITextureImage, 0, 0, tx, ty))
+		{
+			VolatileTexture::addDataTexture(m_pTexture, m_pUITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+		} 
+		else
+		{
+			CCLOG("Cache rendertexture failed!");
+		}
+	}
+#endif
 }
 
 void CCRenderTexture::clear(float r, float g, float b, float a)
@@ -239,14 +264,6 @@ bool CCRenderTexture::saveBuffer(int format, const char *fileName, int x, int y,
 	if (pImage != NULL && getUIImageFromBuffer(pImage, x, y, nWidth, nHeight))
 	{
 		std::string fullpath = CCFileUtils::getWriteablePath() + fileName;
-		if (kCCImageFormatPNG == format)
-		{
-			fullpath += ".png";
-		}
-		else
-		{
-			fullpath += ".jpg";
-		}
 		
 		bRet = pImage->saveToFile(fullpath.c_str());
 	}
@@ -264,7 +281,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		return false;
 	}
 
-	CCSize s = m_pTexture->getContentSizeInPixels();
+	const CCSize& s = m_pTexture->getContentSizeInPixels();
 	int tx = (int)s.width;
 	int ty = (int)s.height;
 
@@ -325,7 +342,7 @@ bool CCRenderTexture::getUIImageFromBuffer(CCImage *pImage, int x, int y, int nW
 		this->begin();
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 		glReadPixels(0,0,nReadBufferWidth,nReadBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
-		this->end();
+		this->end(false);
 
 		// to get the actual texture data 
 		// #640 the image read from rendertexture is upseted
@@ -363,7 +380,7 @@ CCData * CCRenderTexture::getUIImageAsDataFromBuffer(int format)
 // 
 //         CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 // 
-//         CCSize s = m_pTexture->getContentSizeInPixels();
+//         const CCSize& s = m_pTexture->getContentSizeInPixels();
 //         int tx = s.width;
 //         int ty = s.height;
 // 

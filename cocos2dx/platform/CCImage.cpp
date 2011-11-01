@@ -231,7 +231,7 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         // init png_info
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(!info_ptr);
-#if CC_TARGET_PLATFORM != CC_PLATFORM_BADA
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
         CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 #endif
         // set the read call back function
@@ -400,14 +400,14 @@ bool CCImage::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 			png_destroy_write_struct(&png_ptr, NULL);
 			break;
 		}
-
-		 //cjh if (setjmp(png_jmpbuf(png_ptr)))
-//		{
-//			fclose(fp);
-//			png_destroy_write_struct(&png_ptr, &info_ptr);
-//			break;
-//		}
-
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
+		if (setjmp(png_jmpbuf(png_ptr)))
+		{
+			fclose(fp);
+			png_destroy_write_struct(&png_ptr, &info_ptr);
+			break;
+		}
+#endif
 		png_init_io(png_ptr, fp);
 
 		if (!bIsToRGB && m_bHasAlpha)
