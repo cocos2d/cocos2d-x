@@ -115,7 +115,7 @@ CCObject* CCSet::anyObject()
 {
     if (!m_pSet || m_pSet->empty())
     {
-        return NULL;
+        return 0;
     }
     
     CCSetIterator it;
@@ -128,7 +128,7 @@ CCObject* CCSet::anyObject()
         }
     }
 
-    return NULL;
+    return 0;
 }
 
 }//namespace   cocos2d 

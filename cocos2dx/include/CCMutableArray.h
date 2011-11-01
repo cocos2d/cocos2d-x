@@ -60,7 +60,7 @@ public:
 
 	unsigned int getIndexOfObject(T pObject)
 	{
-		if (m_array.empty() || (pObject == NULL))
+                if (m_array.empty() || (pObject == 0))
 		{
 			return 0;
 		}
@@ -108,7 +108,7 @@ public:
 		if (iter != m_array.rend())
 			return *iter;
 
-		return NULL;
+                return 0;
 	}
 
 	T getObjectAtIndex(unsigned int uIndex)
@@ -117,7 +117,7 @@ public:
 
 		if (uIndex >= count())
 		{
-			return NULL;
+                        return 0;
 		}
 
 		return m_array[uIndex];
@@ -127,7 +127,7 @@ public:
 	void addObject(T pObject)
 	{
 		// make sure the pointer is not null
-		if (pObject == NULL)
+                if (pObject == 0)
 		{
 			return;
 		}
@@ -157,7 +157,7 @@ public:
 	{
 		assert(uIndex <= count());
 		// make sure the object is not null
-		if (pObject == NULL)
+                if (pObject == 0)
 		{
 			return;
 		}
@@ -344,9 +344,9 @@ public:
 
 	static CCMutableArray<T>* arrayWithArray(CCMutableArray<T> *pSrcArray)
 	{
-        CCMutableArray<T> *pDestArray = NULL;
+        CCMutableArray<T> *pDestArray = 0;
         
-		if (pSrcArray == NULL)
+                if (pSrcArray == 0)
 		{
             pDestArray = new CCMutableArray<T>();
 		}
