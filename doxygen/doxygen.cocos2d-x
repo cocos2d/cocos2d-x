@@ -1457,7 +1457,9 @@ INCLUDE_FILE_PATTERNS  =
 # instead of the = operator.
 
 PREDEFINED             = "CC_PROPERTY_READONLY(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual varType get##funName(void);" \
-                         "CC_PROPERTY(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual varType get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(varType var);"
+                         "CC_PROPERTY_READONLY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual const varType& get##funName(void);" \
+                         "CC_PROPERTY(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual varType get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(varType var);" \
+                         "CC_PROPERTY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual const varType& get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(const varType& var);" 
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 
