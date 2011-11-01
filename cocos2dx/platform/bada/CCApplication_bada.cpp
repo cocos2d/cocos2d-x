@@ -58,36 +58,33 @@ CCApplication& CCApplication::sharedApplication()
 ccLanguageType CCApplication::getCurrentLanguage()
 {
 	ccLanguageType ret = kLanguageEnglish;
-	do
+	result r = E_SUCCESS;
+	String value;
+	r = SettingInfo::GetValue(L"Language", value);
+	if (value.Equals("ZHO", false))
 	{
-		result r = E_SUCCESS;
-		String value;
-		r = SettingInfo::GetValue(L"Language", value);
-		if (value.Equals("ZHO", false))
-		{
-			ret = kLanguageChinese;
-		}
-		else if (value.Equals("FRA", false))
-		{
-			ret = kLanguageFrench;
-		}
-		else if (value.Equals("ITA", false))
-		{
-			ret = kLanguageItalian;
-		}
-		else if (value.Equals("DEU", false))
-		{
-			ret = kLanguageGerman;
-		}
-		else if (value.Equals("SPA", false))
-		{
-			ret = kLanguageSpanish;
-		}
-		else
-		{
-			ret = kLanguageEnglish;
-		}
-	} while (0);
+		ret = kLanguageChinese;
+	}
+	else if (value.Equals("FRA", false))
+	{
+		ret = kLanguageFrench;
+	}
+	else if (value.Equals("ITA", false))
+	{
+		ret = kLanguageItalian;
+	}
+	else if (value.Equals("DEU", false))
+	{
+		ret = kLanguageGerman;
+	}
+	else if (value.Equals("SPA", false))
+	{
+		ret = kLanguageSpanish;
+	}
+	else if (value.Equals("RUS", false))
+	{
+		ret = kLanguageRussian;
+	}
 
 	return ret;
 }
