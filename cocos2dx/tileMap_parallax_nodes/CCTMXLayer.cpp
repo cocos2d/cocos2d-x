@@ -396,7 +396,7 @@ namespace cocos2d {
 
 		CCAssert( item, "TMX atlas index not found. Shall not happen");
 
-		int index = ((int)item - (int)m_pAtlasIndexArray->arr) / sizeof(void*);
+        int index = ((size_t)item - (size_t)m_pAtlasIndexArray->arr) / sizeof(void*);
 		return index;
 	}
 	unsigned int CCTMXLayer::atlasIndexForNewZ(int z)
@@ -405,7 +405,7 @@ namespace cocos2d {
 		unsigned int i=0;
 		for( i=0; i< m_pAtlasIndexArray->num ; i++) 
 		{
-			int val = (int) m_pAtlasIndexArray->arr[i];
+            int val = (size_t) m_pAtlasIndexArray->arr[i];
 			if( z < val )
 				break;
 		}	
@@ -472,7 +472,7 @@ namespace cocos2d {
 		CCAssert( m_pChildren->containsObject(sprite), "Tile does not belong to TMXLayer");
 
 		unsigned int atlasIndex = sprite->getAtlasIndex();
-		unsigned int zz = (unsigned int) m_pAtlasIndexArray->arr[atlasIndex];
+        unsigned int zz = (size_t) m_pAtlasIndexArray->arr[atlasIndex];
 		m_pTiles[zz] = 0;
 		ccCArrayRemoveValueAtIndex(m_pAtlasIndexArray, atlasIndex);
 		CCSpriteBatchNode::removeChild(sprite, cleanup);
