@@ -1,8 +1,8 @@
 CC      = gcc
 CXX     = g++
 TARGET	= libcocos2d.so
-CCFLAGS = -Wall -g -O2 
-CXXFLAGS = -Wall -g -O2 
+CCFLAGS = -Wall -g -O2 -fPIC
+CXXFLAGS = -Wall -g -O2 -fPIC
 VISIBILITY = 
 
 INCLUDES = -I.. \
@@ -108,13 +108,18 @@ OBJECTS = ../actions/CCAction.o \
 					../CCScheduler.o \
 					../cocos2d.o 
 
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+STATICLIBS_DIR = ../platform/third_party/linux/libraries/lib64
+else
 STATICLIBS_DIR = ../platform/third_party/linux/libraries
+endif
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
 						$(STATICLIBS_DIR)/libcurl.a \
 						$(STATICLIBS_DIR)/libxml2.a \
 						$(STATICLIBS_DIR)/libpng.a \
-						$(STATICLIBS_DIR)/libjpeg.a 
-						
+						$(STATICLIBS_DIR)/libjpeg.a
+
 SHAREDLIBS = -lglfw -lGL
 
 ####### Build rules
