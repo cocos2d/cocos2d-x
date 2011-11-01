@@ -39,7 +39,7 @@ static void cc_qsort_impl(void** array, int left, int right, CCDataCompareFunc c
 
 int cc_qsort(void** array, int nr, CCDataCompareFunc cmp)
 {
-	if (array == NULL || cmp != NULL)
+	if (array == NULL || cmp == NULL)
 		return 0;
 
 	if(nr > 1)
