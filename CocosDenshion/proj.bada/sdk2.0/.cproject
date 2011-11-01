@@ -59,7 +59,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 								</option>
-								<option id="osp.gnu.target.cpp.link.debug.so.option.libs.218425042" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs" valueType="libs"/>
+								<option id="osp.gnu.target.cpp.link.debug.so.option.libs.218425042" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.so.option.libs"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.1773800931" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -550,7 +550,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PROJECT_ROOT}/lib&quot;"/>
 								</option>
-								<option id="osp.gnu.target.cpp.link.release.so.option.libs.904097450" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.so.option.libs" valueType="libs"/>
+								<option id="osp.gnu.target.cpp.link.release.so.option.libs.904097450" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.release.so.option.libs"/>
 								<inputType id="cdt.managedbuild.tool.osp.gnu.cpp.linker.input.2118565794" superClass="cdt.managedbuild.tool.osp.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

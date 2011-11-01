@@ -67,8 +67,6 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk2.0/.Target-Debug/libBox2D.a"/>
 									<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk2.0/.Target-Debug/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
@@ -738,8 +736,6 @@
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
 									<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk2.0/.Target-Release/libBox2D.a"/>
 									<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk2.0/.Target-Release/libchipmunk.a"/>
-									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libc-newlib.so&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/libm-newlib.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>

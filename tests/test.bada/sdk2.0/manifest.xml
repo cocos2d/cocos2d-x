@@ -5,6 +5,9 @@
 	<AppVersion>1.0.0</AppVersion>
 	<ManifestVersion>1.1</ManifestVersion>
 	<Privileges>
+		<Privilege>
+            <Name>SYSTEM_SERVICE</Name>
+        </Privilege>
 	</Privileges>
 	<DeviceProfile>
 		<CPU>ARM9</CPU>
