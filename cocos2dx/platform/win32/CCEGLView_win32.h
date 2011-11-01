@@ -62,8 +62,6 @@ public:
 
     void setIMEKeyboardState(bool bOpen);
 
-    void getScreenRectInView(CCRect& rect);
-
     // win32 platform function
     HWND getHWnd();
     void resize(int width, int height);
