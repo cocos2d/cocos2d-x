@@ -24,8 +24,9 @@ Developers:
         add ability of simulating android enter/resume background on win32
         add ability of simulating android back/menu key on win32
 
-    reflog
+    Eli Yukelzon (reflog)
         add a helper method to draw filled polygons
+	improvements to CCUserDefaults
 
     ZhuoShi Shun
 	contribute the lua binding of CocosDenshion
