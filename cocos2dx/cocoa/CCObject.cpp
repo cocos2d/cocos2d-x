@@ -32,7 +32,7 @@ CCObject* CCCopying::copyWithZone(CCZone *pZone)
 {
     CC_UNUSED_PARAM(pZone);
 	assert(0);
-	return NULL;
+        return 0;
 }
 
 
@@ -59,7 +59,7 @@ CCObject::~CCObject(void)
 
 CCObject* CCObject::copy()
 {
-	return copyWithZone(NULL);
+        return copyWithZone(0);
 }
 
 void CCObject::release(void)
