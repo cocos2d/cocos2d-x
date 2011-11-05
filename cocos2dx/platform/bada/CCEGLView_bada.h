@@ -78,6 +78,10 @@ public:
 	virtual result OnInitializing(void);
 	virtual result OnTerminating(void);
 
+	void onPenDown(int nIndex, float x, float y);
+	void onPenMove(const Osp::Ui::Control& source);
+	void onPenUp(int nIndex, float x, float y);
+
 	// touch event
 	virtual void OnTouchIndicated(const Osp::Ui::Control& source,
 		const Osp::Graphics::Point& startPosition, const Osp::Graphics::Point& currentPoint);
