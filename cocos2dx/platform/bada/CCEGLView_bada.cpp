@@ -35,6 +35,7 @@ THE SOFTWARE.
 
 using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
+using namespace Osp::Base::Collection;
 using namespace Osp::System;
 using namespace Osp::App;
 using namespace Osp::Ui;
@@ -43,11 +44,15 @@ using namespace Osp::Graphics;
 
 NS_CC_BEGIN;
 
+
+static CCEGLView * s_pMainWindow;
+#define MAX_TOUCHES         5
+static CCTouch* s_pTouches[MAX_TOUCHES] = { NULL };
+static HashMapT<int, int> s_idMap;
+static int s_iIndex = 0;
 //////////////////////////////////////////////////////////////////////////
 // impliment CCEGL
 //////////////////////////////////////////////////////////////////////////
-static CCEGLView * s_pMainWindow;
-
 class CCEGL
 {
 public:
@@ -350,10 +355,11 @@ void CCEGLView::resize(int width, int height)
 result CCEGLView::OnInitializing(void)
 {
 	result r = E_SUCCESS;
+	s_idMap.Construct();
 
 	AddTouchEventListener(*this);
-//	Touch touch;
-//	touch.SetMultipointEnabled(*this, true);
+	Touch touch;
+	touch.SetMultipointEnabled(*this, true);
 
 	Rectangle rc = GetBounds();
 	if ((rc.width == 480 && rc.height == 720)
@@ -388,109 +394,227 @@ result CCEGLView::OnTerminating(void)
 	return r;
 }
 
+void CCEGLView::onPenDown(int nIndex, float x, float y)
+{
+	AppLog("onPenDown nIndex = %d,x = %f, y=%f", nIndex, x, y);
+    if (m_pDelegate && nIndex < MAX_TOUCHES)
+    {
+        CCTouch* pTouch = s_pTouches[nIndex];
+        if (!pTouch)
+        {
+            pTouch = new CCTouch;
+        }
+
+        pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+        		(y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+        s_pTouches[nIndex] = pTouch;
+        CCSet set;
+        set.addObject(pTouch);
+        m_pDelegate->touchesBegan(&set, NULL);
+    }
+}
+
+void CCEGLView::onPenMove(const Control& source)
+{
+	IList *pList = null;
+    do
+    {
+        CC_BREAK_IF(!m_pDelegate);
+    	Touch touch;
+    	pList = touch.GetTouchInfoListN(source);
+    	CC_BREAK_IF(pList == NULL);
+
+        int nCount = pList->GetCount();
+        CC_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
+
+        AppLog("---------------touch count = %d ------------", nCount);
+        CCSet set;
+        float x = 0, y = 0;
+        for (int i = 0; i < nCount; ++i)
+        {
+            TouchInfo *pTouchInfo = static_cast<TouchInfo *>(pList->GetAt(i));
+            x = (float)pTouchInfo->position.x;
+            y = (float)pTouchInfo->position.y;
+
+            CCTouch* pTouch = s_pTouches[i];
+
+            CC_BREAK_IF(!pTouch);
+            AppLog("onPenMove nIndex = %d,x = %f, y=%f", i, x, y);
+
+        	if (!m_bNotHVGA)
+        	{
+        		x = x * 2 / 3;
+        		y = y * 2 / 3;
+        	}
+
+            pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+            		(y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+            set.addObject(pTouch);
+        }
+
+        m_pDelegate->touchesMoved(&set, NULL);
+    } while (0);
+
+    if (pList != null)
+    {
+   		pList->RemoveAll(true);
+    	delete pList;
+    }
+}
+
+void CCEGLView::onPenUp(int nIndex, float x, float y)
+{
+	AppLog("onPenUp nIndex = %d,x = %f, y=%f", nIndex, x, y);
+    if (m_pDelegate && nIndex < MAX_TOUCHES)
+    {
+        CCTouch* pTouch = s_pTouches[nIndex];
+        if (pTouch)
+        {
+            CCSet set;
+            pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor,
+            		(y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
+            set.addObject(pTouch);
+            m_pDelegate->touchesEnded(&set, NULL);
+
+            pTouch->release();
+            for (int i = nIndex; i < MAX_TOUCHES; ++i)
+            {
+                if (i != (MAX_TOUCHES - 1))
+                {
+                    s_pTouches[i] = s_pTouches[i + 1];
+                }
+                else
+                {
+                    s_pTouches[i] = NULL;
+                }
+            }
+        }
+    }
+}
+
 // touch event
-void CCEGLView::OnTouchIndicated(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& startPosition, const Osp::Graphics::Point& currentPoint)
+void CCEGLView::OnTouchIndicated(const Control& source,
+	const Point& startPosition, const Point& currentPoint)
 {
 
 }
 
-void CCEGLView::OnTouchPressed(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
+void CCEGLView::OnTouchPressed(const Control& source,
+	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
+	AppLog("touch id = %d", touchInfo.GetPointId());
 	float x, y;
 	if (!m_bNotHVGA)
 	{
-		x = currentPosition.x * 2 / 3;
-		y = currentPosition.y * 2 / 3;
+		x = touchInfo.GetCurrentPosition().x * 2 / 3;
+		y = touchInfo.GetCurrentPosition().y * 2 / 3;
 	}
 	else
 	{
-		x = currentPosition.x;
-		y = currentPosition.y;
+		x = touchInfo.GetCurrentPosition().x;
+		y = touchInfo.GetCurrentPosition().y;
 	}
-//	AppLog("OnTouchPressed... x = %f, y = %f", x, y);
-	if (m_pDelegate && m_pTouch)
+
+	if (s_iIndex >= 0)
 	{
-		m_bCaptured = true;
-		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-		m_pSet->addObject(m_pTouch);
-		m_pDelegate->touchesBegan(m_pSet, NULL);
+		s_idMap.Add(touchInfo.GetPointId(), s_iIndex);
+		onPenDown(s_iIndex, x, y);
 	}
+	else
+	{
+		s_iIndex = 0;
+	}
+	s_iIndex++;
 }
 
-void CCEGLView::OnTouchLongPressed(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
+void CCEGLView::OnTouchLongPressed(const Control& source,
+	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
 
 }
 
 
-void CCEGLView::OnTouchReleased(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
+void CCEGLView::OnTouchReleased(const Control& source,
+	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
+	result r = E_SUCCESS;
+	AppLog("touch id = %d", touchInfo.GetPointId());
 	float x, y;
 	if (!m_bNotHVGA)
 	{
-		x = currentPosition.x * 2 / 3;
-		y = currentPosition.y * 2 / 3;
+		x = touchInfo.GetCurrentPosition().x * 2 / 3;
+		y = touchInfo.GetCurrentPosition().y * 2 / 3;
 	}
 	else
 	{
-		x = currentPosition.x;
-		y = currentPosition.y;
+		x = touchInfo.GetCurrentPosition().x;
+		y = touchInfo.GetCurrentPosition().y;
 	}
 
-	AppLog("OnTouchReleased... x = %f, y = %f", x, y);
-	if (m_bCaptured)
+	int index = 0;
+	int id = touchInfo.GetPointId();
+	r = s_idMap.GetValue(id, index);
+
+	TryReturnVoid(r == E_SUCCESS, "can't get the point id = %d", id);
+
+	onPenUp(index, x, y);
+	s_idMap.Remove(id);
+
+	if (s_idMap.GetCount() > 0)
 	{
-		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-		m_pDelegate->touchesEnded(m_pSet, NULL);
-		m_pSet->removeObject(m_pTouch);
-		m_bCaptured = false;
+		int key = 0, value = 0;
+		ArrayListT<int> list;
+		list.Construct();
+		IMapEnumeratorT<int, int>*	pMapEnum = s_idMap.GetMapEnumeratorN();
+		while (pMapEnum->MoveNext() == E_SUCCESS)
+		{
+			pMapEnum->GetValue(value);
+			if (value > index)
+			{
+				pMapEnum->GetKey(key);
+				list.Add(key);
+				AppLog("[%d]=%d",key, value);
+			}
+		}
+
+		delete pMapEnum;
+
+		for (int i=0; i < list.GetCount(); i++)
+		{
+			list.GetAt(i, key);
+			s_idMap.GetValue(key, value);
+			value--;
+			s_idMap.SetValue(key, value);
+		}
 	}
+	s_iIndex--;
 }
 
 
-void CCEGLView::OnTouchMoved(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
+void CCEGLView::OnTouchMoved(const Control& source,
+	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
-	float x, y;
-	if (!m_bNotHVGA)
-	{
-		x = currentPosition.x * 2 / 3;
-		y = currentPosition.y * 2 / 3;
-	}
-	else
-	{
-		x = currentPosition.x;
-		y = currentPosition.y;
-	}
-//	AppLog("OnTouchMoved... x = %f, y = %f", x, y);
-	if (m_bCaptured)
-	{
-		m_pTouch->SetTouchInfo(0, (x - m_rcViewPort.origin.x) / m_fScreenScaleFactor, (y - m_rcViewPort.origin.y) / m_fScreenScaleFactor);
-        m_pDelegate->touchesMoved(m_pSet, NULL);
-	}
+	AppLog("touch id = %d", touchInfo.GetPointId());
+	onPenMove(source);
 }
 
 
-void CCEGLView::OnTouchDoublePressed(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
+void CCEGLView::OnTouchDoublePressed(const Control& source,
+	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
 
 }
 
 
-void CCEGLView::OnTouchFocusIn(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
+void CCEGLView::OnTouchFocusIn(const Control& source,
+	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
 
 }
 
 
-void CCEGLView::OnTouchFocusOut(const Osp::Ui::Control& source,
-	const Osp::Graphics::Point& currentPosition, const Osp::Ui::TouchEventInfo & touchInfo)
+void CCEGLView::OnTouchFocusOut(const Control& source,
+	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
 
 }
