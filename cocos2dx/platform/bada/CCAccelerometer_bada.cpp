@@ -86,7 +86,7 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 	{
 		m_pAccelDelegate->didAccelerate(&AccValue);
 	}
-	AppLog("##TimeStamp:[%d], Accel.x,y,z:[%f,%f,%f]", timeStamp, x, y, z);
+	//AppLog("##TimeStamp:[%d], Accel.x,y,z:[%f,%f,%f]", timeStamp, x, y, z);
 }
 
 void CCAccelerometer::setEnable(bool bEnable)
