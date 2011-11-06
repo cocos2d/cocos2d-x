@@ -348,7 +348,7 @@ void CCEGLView::resize(int width, int height)
 	m_rcViewPort.origin.y = (m_sSizeInPixel.height - viewPortH) / 2;
 	m_rcViewPort.size.width = viewPortW;
 	m_rcViewPort.size.height = viewPortH;
-	AppLog("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
+	//AppLog("m_rcViewPort.origin.x = %f, y = %f, width = %f, height = %f", \
 			m_rcViewPort.origin.x, m_rcViewPort.origin.y, m_rcViewPort.size.width, m_rcViewPort.size.height);
 }
 
@@ -379,7 +379,7 @@ result CCEGLView::OnInitializing(void)
 	// calculate the factor and the rect of viewport
 	m_fScreenScaleFactor =  MIN((float)m_sSizeInPixel.width / m_sSizeInPoint.width,
 		                         (float)m_sSizeInPixel.height / m_sSizeInPoint.height);
-	AppLog("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
+	//AppLog("rc.width = %d, rc.height = %d, m_fScreenScaleFactor = %f", rc.width, rc.height, m_fScreenScaleFactor);
 	resize(m_sSizeInPoint.width, m_sSizeInPoint.height);
 
 	return r;
@@ -396,7 +396,7 @@ result CCEGLView::OnTerminating(void)
 
 void CCEGLView::onPenDown(int nIndex, float x, float y)
 {
-	AppLog("onPenDown nIndex = %d,x = %f, y=%f", nIndex, x, y);
+	//AppLog("onPenDown nIndex = %d,x = %f, y=%f", nIndex, x, y);
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
         CCTouch* pTouch = s_pTouches[nIndex];
@@ -427,7 +427,7 @@ void CCEGLView::onPenMove(const Control& source)
         int nCount = pList->GetCount();
         CC_BREAK_IF(nCount <= 0 || nCount > MAX_TOUCHES);
 
-        AppLog("---------------touch count = %d ------------", nCount);
+        //AppLog("---------------touch count = %d ------------", nCount);
         CCSet set;
         float x = 0, y = 0;
         for (int i = 0; i < nCount; ++i)
@@ -439,7 +439,7 @@ void CCEGLView::onPenMove(const Control& source)
             CCTouch* pTouch = s_pTouches[i];
 
             CC_BREAK_IF(!pTouch);
-            AppLog("onPenMove nIndex = %d,x = %f, y=%f", i, x, y);
+            //AppLog("onPenMove nIndex = %d,x = %f, y=%f", i, x, y);
 
         	if (!m_bNotHVGA)
         	{
@@ -464,7 +464,7 @@ void CCEGLView::onPenMove(const Control& source)
 
 void CCEGLView::onPenUp(int nIndex, float x, float y)
 {
-	AppLog("onPenUp nIndex = %d,x = %f, y=%f", nIndex, x, y);
+	//AppLog("onPenUp nIndex = %d,x = %f, y=%f", nIndex, x, y);
     if (m_pDelegate && nIndex < MAX_TOUCHES)
     {
         CCTouch* pTouch = s_pTouches[nIndex];
@@ -502,7 +502,7 @@ void CCEGLView::OnTouchIndicated(const Control& source,
 void CCEGLView::OnTouchPressed(const Control& source,
 	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
-	AppLog("touch id = %d", touchInfo.GetPointId());
+	//AppLog("touch id = %d", touchInfo.GetPointId());
 	float x, y;
 	if (!m_bNotHVGA)
 	{
@@ -538,7 +538,7 @@ void CCEGLView::OnTouchReleased(const Control& source,
 	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
 	result r = E_SUCCESS;
-	AppLog("touch id = %d", touchInfo.GetPointId());
+	//AppLog("touch id = %d", touchInfo.GetPointId());
 	float x, y;
 	if (!m_bNotHVGA)
 	{
@@ -573,7 +573,7 @@ void CCEGLView::OnTouchReleased(const Control& source,
 			{
 				pMapEnum->GetKey(key);
 				list.Add(key);
-				AppLog("[%d]=%d",key, value);
+				//AppLog("[%d]=%d",key, value);
 			}
 		}
 
@@ -594,7 +594,7 @@ void CCEGLView::OnTouchReleased(const Control& source,
 void CCEGLView::OnTouchMoved(const Control& source,
 	const Point& currentPosition, const TouchEventInfo & touchInfo)
 {
-	AppLog("touch id = %d", touchInfo.GetPointId());
+	//AppLog("touch id = %d", touchInfo.GetPointId());
 	onPenMove(source);
 }
 
