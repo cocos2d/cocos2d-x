@@ -58,8 +58,6 @@ public:
     */
     static void setResource(const char* pszZipFileName);
 
-    static void setResourcePath(const char *pszResourcePath);
-
     /**
      @brief Preload background music
      @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
