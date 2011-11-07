@@ -9,7 +9,6 @@ CCLayer* restartDirectorTestCase();
 
 static int sceneIdx=-1;
 static ccDeviceOrientation s_currentOrientation = CCDeviceOrientationPortrait;
-static ccDeviceOrientation s_oldOrientation = CCDeviceOrientationPortrait;
 
 CCLayer* createTestCaseLayer(int index)
 {
@@ -216,13 +215,12 @@ void DirectorTestScene::runThisTest()
     s_currentOrientation = CCDeviceOrientationPortrait;
     CCLayer* pLayer = nextDirectorTestCase();
     addChild(pLayer);
-	s_oldOrientation = CCDirector::sharedDirector()->getDeviceOrientation();
-	CCLog("s_oldOri = %d", s_oldOrientation);
+
     CCDirector::sharedDirector()->replaceScene(this);
 }
 
 void DirectorTestScene::MainMenuCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->setDeviceOrientation(s_oldOrientation);
+    CCDirector::sharedDirector()->setDeviceOrientation(CCDeviceOrientationPortrait);
     TestScene::MainMenuCallback(pSender);
 }

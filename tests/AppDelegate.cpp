@@ -79,6 +79,7 @@ bool AppDelegate::initInstance()
 
 		CCEGLView * pMainWnd = new CCEGLView();
 		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this, 480, 320));
+		pMainWnd->setDeviceOrientation(Osp::Ui::ORIENTATION_LANDSCAPE);
 		CCFileUtils::setResourcePath("/Res/");
 
 #endif  // CC_PLATFORM_BADA
@@ -93,9 +94,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(&CCEGLView::sharedOpenGLView());
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    CCDirector::sharedDirector()->setDeviceOrientation(kCCDeviceOrientationLandscapeLeft);
-#endif
+
     // enable High Resource Mode(2x, such as iphone4) and maintains low resource on other devices.
     // pDirector->enableRetinaDisplay(true);
 

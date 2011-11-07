@@ -57,7 +57,7 @@ public:
     bool    canSetContentScaleFactor();
     void    setContentScaleFactor(float contentScaleFactor);
 
-	int setDeviceOrientation(int eOritation);
+	int setDeviceOrientation(Osp::Ui::Orientation eOritation);
     void setViewPortInPoints(float x, float y, float w, float h);
     void setScissorInPoints(float x, float y, float w, float h);
 

@@ -486,7 +486,7 @@ void ChipmunkTestLayer::onEnter()
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
 	// portraint
     //glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f); 
 	// landscape 
