@@ -1,7 +1,7 @@
 #!/bin/bash
 # set params
-ANDROID_NDK_ROOT=/home/laschweinski/android/android-ndk-r5/
-COCOS2DX_ROOT=/home/laschweinski/git/cocos2d-x
+ANDROID_NDK_ROOT=/cygdrive/e/android/android-ndk-r5
+COCOS2DX_ROOT=/cygdrive/f/Project/dumganhar/cocos2d-x
 TESTS_ROOT=$COCOS2DX_ROOT/tests/test.android
 
 # make sure assets is exist

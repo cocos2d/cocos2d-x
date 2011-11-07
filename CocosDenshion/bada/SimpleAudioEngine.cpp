@@ -48,6 +48,25 @@ static unsigned int _Hash(const char *key)
 	return (hash);
 }
 
+static string fullPathFromRelativePath(const char *pszRelativePath)
+{
+	string strRet="";
+	int len = strlen(pszRelativePath);
+	if (pszRelativePath == NULL || len <= 0)
+		return NULL;
+
+    if (len > 1 && pszRelativePath[0] == '/')
+    {
+    	strRet = pszRelativePath;
+    }
+    else
+    {
+    	strRet = s_strResourcePath;
+    	strRet += pszRelativePath;
+    }
+	return strRet;
+}
+
 class MyPlayerEventListener :
 	public IPlayerEventListener
 {
@@ -189,7 +208,7 @@ static bool openMediaPlayer(Player*& pPlayer, const char* pszFilePath, bool bLoo
 			}
 		}
 
-		string strFilePath = s_strResourcePath+pszFilePath;
+		string strFilePath = fullPathFromRelativePath(pszFilePath);
 		// OpenFile must use synchronous param, for after that it will playing.
 		r = pPlayer->OpenFile(strFilePath.c_str(), false);
 		if (IsFailed(r))
@@ -386,7 +405,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop/*
 	long long curTick, oldTick;
 	SystemTime::GetTicks(oldTick);
 	result r = E_FAILURE;
-	string strFilePath = s_strResourcePath+pszFilePath;
+	string strFilePath = fullPathFromRelativePath(pszFilePath);
 	unsigned int nRet = _Hash(strFilePath.c_str());
 	AppLog("play effect (%s)", pszFilePath);
 	preloadEffect(pszFilePath);
@@ -452,7 +471,7 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 	{
 		BREAK_IF(! pszFilePath);
 
-		string strFilePath = s_strResourcePath+pszFilePath;
+		string strFilePath = fullPathFromRelativePath(pszFilePath);
 
 		nRet = _Hash(strFilePath.c_str());
 
@@ -482,7 +501,7 @@ void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-	string strFilePath = s_strResourcePath+pszFilePath;
+	string strFilePath = fullPathFromRelativePath(pszFilePath);
 	unsigned int nSoundId = _Hash(strFilePath.c_str());
 	CCAudioOut*& pPlayer = s_List[nSoundId];
 	pPlayer->Reset();

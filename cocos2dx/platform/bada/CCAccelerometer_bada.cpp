@@ -24,7 +24,9 @@ THE SOFTWARE.
 
 #include "CCAccelerometer_bada.h"
 #include "ccMacros.h"
+#include "CCEGLView_bada.h"
 
+using namespace Osp::Ui;
 using namespace Osp::Uix;
 
 NS_CC_BEGIN;
@@ -75,7 +77,18 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 	sensorData.GetValue((SensorDataKey)ACCELERATION_DATA_KEY_Y, y);
 	sensorData.GetValue((SensorDataKey)ACCELERATION_DATA_KEY_Z, z);
 
-	// only consider land postion, to be continued.
+	/*
+	 * Because the axes are not swapped when the device's screen orientation changes.
+	 * So we should swap it here.
+	 */
+	Orientation orientation = CCEGLView::sharedOpenGLView().GetOrientation();
+	if (orientation == ORIENTATION_LANDSCAPE || orientation == ORIENTATION_LANDSCAPE_REVERSE)
+	{
+		float tmp = x;
+		x = -y;
+		y = tmp;
+	}
+
 	CCAcceleration AccValue;
 	AccValue.x = -x;
 	AccValue.y = -y;

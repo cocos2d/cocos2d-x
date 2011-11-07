@@ -30,7 +30,7 @@ using namespace std;
 
 NS_CC_BEGIN;
 // record the resource path
-static string s_strResourcePath = "/Res/";
+static string s_strResourcePath = "";
 
 void CCFileUtils::setResourcePath(const char* pszResourcePath)
 {
@@ -40,18 +40,14 @@ void CCFileUtils::setResourcePath(const char* pszResourcePath)
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
+	int len = strlen(pszRelativePath);
+	if (pszRelativePath == NULL || len <= 0)
+		return NULL;
 	CCString * pRet = new CCString();
     pRet->autorelease();
-    if ((strlen(pszRelativePath) > 1 && pszRelativePath[1] == ':')
-    		|| pszRelativePath[0] == '/')
+    if (len > 1 && pszRelativePath[0] == '/')
     {
         pRet->m_sString = pszRelativePath;
-    }
-    else if (strlen(pszRelativePath) > 0 && pszRelativePath[0] == '/')
-    {
-		char szDriver[3] = {s_strResourcePath[0], s_strResourcePath[1], 0};
-        pRet->m_sString = szDriver;
-        pRet->m_sString += pszRelativePath;
     }
     else
     {

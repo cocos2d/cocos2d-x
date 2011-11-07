@@ -183,7 +183,6 @@ CCEGLView::CCEGLView()
 , m_fScreenScaleFactor(1.0)
 , m_bCaptured(false)
 , m_pEGL(NULL)
-, m_nowOrientation(ORIENTATION_PORTRAIT)
 {
     m_pTouch    = new CCTouch;
     m_pSet      = new CCSet;
@@ -261,19 +260,11 @@ void CCEGLView::setContentScaleFactor(float contentScaleFactor)
 	m_fScreenScaleFactor = contentScaleFactor;
 }
 
-static int badaOrientation[4] = {
-		ORIENTATION_PORTRAIT,
-		ORIENTATION_PORTRAIT_REVERSE,
-		ORIENTATION_LANDSCAPE,
-		ORIENTATION_LANDSCAPE_REVERSE
-};
-
-int CCEGLView::setDeviceOrientation(int eOritation)
+int CCEGLView::setDeviceOrientation(Orientation eOritation)
 {
-	m_nowOrientation = (Orientation)badaOrientation[eOritation];
-	SetOrientation(m_nowOrientation);
+	SetOrientation(eOritation);
 
-	if (m_nowOrientation == ORIENTATION_PORTRAIT || m_nowOrientation == ORIENTATION_PORTRAIT_REVERSE)
+	if (eOritation == ORIENTATION_PORTRAIT || eOritation == ORIENTATION_PORTRAIT_REVERSE)
 	{
 		int width = MIN(m_sSizeInPixel.width, m_sSizeInPixel.height);
 		m_sSizeInPixel.height = MAX(m_sSizeInPixel.width, m_sSizeInPixel.height);
@@ -295,7 +286,6 @@ int CCEGLView::setDeviceOrientation(int eOritation)
 	}
 
 	return m_eInitOrientation;
-//	return eOritation;
 }
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)

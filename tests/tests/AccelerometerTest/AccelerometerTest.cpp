@@ -57,7 +57,7 @@ void AccelerometerTest::didAccelerate(CCAcceleration* pAccelerationValue)
 //     }
 // 
 //     m_fLastTime = fNow;
-
+	CCLog("acc x = %f, y=%f, z=%f", pAccelerationValue->x, pAccelerationValue->y, pAccelerationValue->z);
     CCDirector* pDir = CCDirector::sharedDirector();
     CCSize winSize   = pDir->getWinSize();
 
