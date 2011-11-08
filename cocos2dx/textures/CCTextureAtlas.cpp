@@ -155,7 +155,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 	m_pQuads = (ccV3F_C4B_T2F_Quad*)calloc( sizeof(ccV3F_C4B_T2F_Quad) * m_uCapacity, 1 );
 	m_pIndices = (GLushort *)calloc( sizeof(GLushort) * m_uCapacity * 6, 1 );
 
-	if( ! ( m_pQuads && m_pIndices) ) {
+	if( ! ( m_pQuads && m_pIndices) && m_uCapacity > 0) {
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
 		CC_SAFE_FREE(m_pQuads)
 		CC_SAFE_FREE(m_pIndices)
