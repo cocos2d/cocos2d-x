@@ -28,14 +28,16 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCTouchDispatcher.h"
 #include "CCAccelerometer_bada.h"
+#include "CCIMEDispatcher.h"
 #include <GLES/egl.h>
 #include <GLES/gl.h>
 #include <GLES/glext.h>
-
+#include <FText.h>
 
 using namespace Osp::Base;
 using namespace Osp::Base::Runtime;
 using namespace Osp::Base::Collection;
+using namespace Osp::Text;
 using namespace Osp::System;
 using namespace Osp::App;
 using namespace Osp::Ui;
@@ -178,7 +180,8 @@ private:
 // impliment CCEGLView
 //////////////////////////////////////////////////////////////////////////
 CCEGLView::CCEGLView()
-: m_bNotHVGA(true)
+: m_pKeypad(null)
+, m_bNotHVGA(true)
 , m_pDelegate(NULL)
 , m_fScreenScaleFactor(1.0)
 , m_bCaptured(false)
@@ -196,6 +199,7 @@ CCEGLView::~CCEGLView()
     CC_SAFE_DELETE(m_pTouch);
     CC_SAFE_DELETE(m_pDelegate);
 	CC_SAFE_DELETE(m_pEGL);
+	CC_SAFE_DELETE(m_pKeypad);
 }
 
 CCSize CCEGLView::getSize()
@@ -308,6 +312,13 @@ void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
+	if (bOpen)
+	{
+		const char * pszText = CCIMEDispatcher::sharedDispatcher()->getContentText();
+		m_pKeypad->SetText(pszText);
+	    m_pKeypad->SetShowState(bOpen);
+	    m_pKeypad->Show();
+	}
 }
 
 bool CCEGLView::Create(Osp::App::Application* pApp, int width, int height)
@@ -350,6 +361,10 @@ result CCEGLView::OnInitializing(void)
 	AddTouchEventListener(*this);
 	Touch touch;
 	touch.SetMultipointEnabled(*this, true);
+
+    m_pKeypad = new Keypad();
+    m_pKeypad->Construct(KEYPAD_STYLE_NORMAL, KEYPAD_MODE_ALPHA);
+    m_pKeypad->AddTextEventListener(*this);
 
 	Rectangle rc = GetBounds();
 	if ((rc.width == 480 && rc.height == 720)
@@ -615,6 +630,49 @@ result CCEGLView::OnDraw(void)
 	CCDirector * pDirector = CCDirector::sharedDirector();
 	pDirector->drawScene();
 	return r;
+}
+
+// Implement an ITextEventListener
+void CCEGLView::OnTextValueChanged(const Control& source)
+{
+	// clear textinput text
+	std::string strOldText = CCIMEDispatcher::sharedDispatcher()->getContentText();
+
+	for (int i = 0; i < strOldText.length(); i++)
+	{
+		CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+	}
+
+	String str = m_pKeypad->GetText();
+	if (str.GetLength() <= 0)
+	{
+		CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+	}
+	else
+	{
+		Utf8Encoding utf8;
+		ByteBuffer* pBuffer = utf8.GetBytesN(str);
+		if (pBuffer != null)
+		{
+			const char* pszText = (const char*)pBuffer->GetPointer();
+			if (pszText != NULL)
+			{
+				int len = strlen(pszText);
+				if (pszText[len-1] != '\n')
+				{
+					std::string strText = pszText;
+					strText.append("\n");
+					CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(strText.c_str(), strText.length());
+				}
+			}
+			delete pBuffer;
+		}
+	}
+}
+
+void CCEGLView::OnTextValueChangeCanceled(const Control& source)
+{
+	CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
 }
 
 CCEGLView& CCEGLView::sharedOpenGLView()

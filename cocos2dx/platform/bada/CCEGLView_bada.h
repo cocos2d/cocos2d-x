@@ -39,9 +39,10 @@ class EGLTouchDelegate;
 
 class CCEGL;
 
-class CC_DLL CCEGLView :
-	public Osp::Ui::Controls::Form,
-	public Osp::Ui::ITouchEventListener
+class CC_DLL CCEGLView
+	:public Osp::Ui::Controls::Form
+	,public Osp::Ui::ITouchEventListener
+	,public Osp::Ui::ITextEventListener
 {
 public:
 
@@ -109,7 +110,11 @@ public:
 
 	virtual result OnDraw(void);
 
+    virtual void OnTextValueChanged(const Osp::Ui::Control& source);
+	virtual void OnTextValueChangeCanceled(const Osp::Ui::Control& source);
+
 private:
+	Osp::Ui::Controls::Keypad *m_pKeypad;
 
 	CCSize m_sSizeInPixel;
 	CCSize m_sSizeInPoint;
