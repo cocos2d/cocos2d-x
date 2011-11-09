@@ -1,135 +1,58 @@
-namespace cocos2d {
 
-class CCParticleSystem : public CCNode, public CCTextureProtocol {
-	CCParticleSystem();
-	static CCParticleSystem * particleWithFile(const char *plistFile);
-	bool initWithFile(const char *plistFile);
-	bool initWithDictionary(CCDictionary<std::string, CCObject*> *dictionary);
-	bool initWithTotalParticles(unsigned int numberOfParticles);
+class CCParticleSystem : public CCNode
+{
+    // mode A
+    const CCPoint& getGravity();
 
-	// mode A
-	const CCPoint& getGravity();
-	void setGravity(const CCPoint& g);
-	float getSpeed();
-	void setSpeed(float speed);
-	float getSpeedVar();
-	void setSpeedVar(float speed);
-	float getTangentialAccel();
-	void setTangentialAccel(float t);
-	float getTangentialAccelVar();
-	void setTangentialAccelVar(float t);
-	float getRadialAccel();
-	void setRadialAccel(float t);
-	float getRadialAccelVar();
-	void setRadialAccelVar(float t);
-	// mode B
-	float getStartRadius();
-	void setStartRadius(float startRadius);
-	float getStartRadiusVar();
-	void setStartRadiusVar(float startRadiusVar);
-	float getEndRadius();
-	void setEndRadius(float endRadius);
-	float getEndRadiusVar();
-	void setEndRadiusVar(float endRadiusVar);
-	float getRotatePerSecond();
-	void setRotatePerSecond(float degrees);
-	float getRotatePerSecondVar();
-	void setRotatePerSecondVar(float degrees);
+    void setGravity(const CCPoint& g);
+    float getSpeed();
+    void setSpeed(float speed);
+    float getSpeedVar();
+    void setSpeedVar(float speed);
+    float getTangentialAccel();
+    void setTangentialAccel(float t);
+    float getTangentialAccelVar();
+    void setTangentialAccelVar(float t);
+    float getRadialAccel();
+    void setRadialAccel(float t);
+    float getRadialAccelVar();
+    void setRadialAccelVar(float t);
 
-	bool addParticle();
-	void initParticle(tCCParticle* particle);
-	void stopSystem();
-	void resetSystem();
-	bool isFull();
-	void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
-	void postStep();
-	void update(ccTime dt);
+    // mode B
+    float getStartRadius();
+    void setStartRadius(float startRadius);
+    float getStartRadiusVar();
+    void setStartRadiusVar(float startRadiusVar);
+    float getEndRadius();
+    void setEndRadius(float endRadius);
+    float getEndRadiusVar();
+    void setEndRadiusVar(float endRadiusVar);
+    float getRotatePerSecond();
+    void setRotatePerSecond(float degrees);
+    float getRotatePerSecondVar();
+    void setRotatePerSecondVar(float degrees);
 
-	CCTexture2D* getTexture(void);
-	void setTexture(CCTexture2D* var);
+    bool addParticle();
+    void initParticle(tCCParticle* particle);
+    void stopSystem();
+    void resetSystem();
+    bool isFull();
+    void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+    void postStep();
 
-	ccBlendFunc getBlendFunc(void);
-	void setBlendFunc(ccBlendFunc var);
+    CCTexture2D* getTexture(void);
+    void setTexture(CCTexture2D* var);
+
+    ccBlendFunc getBlendFunc(void);
+    void setBlendFunc(ccBlendFunc var);
+
+    static CCParticleSystem * particleWithFile(const char *plistFile);
 };
 
 class CCParticleSystemQuad : public CCParticleSystem {
-	static CCParticleSystemQuad * particleWithFile(const char *plistFile);
+    static CCParticleSystemQuad * particleWithFile(const char *plistFile);
 };
 
 class CCParticleSystemPoint : public CCParticleSystem {
-	static CCParticleSystemPoint * particleWithFile(const char *plistFile);
+    static CCParticleSystemPoint * particleWithFile(const char *plistFile);
 };
-
-// Inheritance is funky here in the examples.... in reality its a pragma-def .. not sure how to map that?
-
-class CCParticleFire : public CCParticleSystem {
-	CCParticleFire();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleFire *node(void);
-};
-
-class CCParticleFireworks : public CCParticleSystem {
-	CCParticleFireworks();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleFireworks *node(void);
-};
-
-class CCParticleSun : public CCParticleSystem {
-	CCParticleSun();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleSun *node(void);
-};
-
-class CCParticleGalaxy : public CCParticleSystem {
-	CCParticleGalaxy();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleGalaxy *node(void);
-};
-
-class CCParticleMeteor : public CCParticleSystem {
-	CCParticleMeteor();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleMeteor *node(void);
-};
-
-class CCParticleSpiral : public CCParticleSystem {
-	CCParticleSpiral();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleSpiral *node(void);
-};
-
-class CCParticleExplosion : public CCParticleSystem {
-	CCParticleExplosion();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleExplosion *node(void);
-};
-
-class CCParticleSmoke : public CCParticleSystem {
-	CCParticleSmoke();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleSmoke *node(void);
-};
-
-class CCParticleSnow : public CCParticleSystem {
-	CCParticleSnow();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleSnow *node(void);
-};
-
-class CCParticleRain : public CCParticleSystem {
-	CCParticleRain();
-	bool init();
-	bool initWithTotalParticles(unsigned int numberOfParticles);
-	static CCParticleRain *node(void);
-};
-
-} // namespace

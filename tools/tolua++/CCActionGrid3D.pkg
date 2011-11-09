@@ -1,150 +1,79 @@
 
-
-#include "CCActionGrid.h"
-
-namespace cocos2d
+class CCWaves3D : public CCGrid3DAction
 {
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
 
-	class  CCWaves3D : public CCGrid3DAction
-	{
+    static CCWaves3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+};
 
-		float getAmplitude(void);
-		void setAmplitude(float fAmplitude);
-		float getAmplitudeRate(void);
-		void setAmplitudeRate(float fAmplitudeRate);		
-		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+class CCFlipX3D : public CCGrid3DAction
+{
+    static CCFlipX3D* actionWithDuration(ccTime duration);
+};
 
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);	
-		static CCWaves3D* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+class CCFlipY3D : public CCFlipX3D
+{
+    static CCFlipY3D* actionWithDuration(ccTime duration);
+};
 
+class CCLens3D : public CCGrid3DAction
+{
+    float getLensEffect(void);
+    void setLensEffect(float fLensEffect);
+    CCPoint getPosition(void);
+    void setPosition(CCPoint position);
 
-	};
+    static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
+};
 
+class CCRipple3D : public CCGrid3DAction
+{
+    CCPoint getPosition(void);
+    void setPosition(CCPoint position);
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
 
-	class  CCFlipX3D : public CCGrid3DAction
-	{
+    static CCRipple3D* actionWithPosition(CCPoint pos, float r, int wav, float amp, ccGridSize gridSize, ccTime duration);
+};
 
-		bool initWithDuration(ccTime duration);
-		bool initWithSize(ccGridSize gridSize, ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
-		static CCFlipX3D* actionWithDuration(ccTime duration);
-	};
+class CCShaky3D : public CCGrid3DAction
+{
+    static CCShaky3D* actionWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
+};
 
+class CCLiquid : public CCGrid3DAction
+{
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
 
-	class  CCFlipY3D : public CCFlipX3D
-	{
+    static CCLiquid* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
+};
 
-		void update(ccTime time);
-		CCObject* copyWithZone(CCZone* pZone);
-			static CCFlipY3D* actionWithDuration(ccTime duration);
-	};
+class CCWaves : public CCGrid3DAction
+{
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
 
+    static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,ccTime duration);
+};
 
-	class  CCLens3D : public CCGrid3DAction
-	{
+class CCTwirl : public CCGrid3DAction
+{
+    CCPoint getPosition(void);
+    void setPosition(CCPoint position);
+    float getAmplitude(void);
+    void setAmplitude(float fAmplitude);
+    float getAmplitudeRate(void);
+    void setAmplitudeRate(float fAmplitudeRate);
 
-		float getLensEffect(void);
-		void setLensEffect(float fLensEffect);
-
-		CCPoint getPosition(void);
-		void setPosition(CCPoint position);
-
-		bool initWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
-
-
-		static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
-
-	};
-
-	/** @brief CCRipple3D action */
-	class  CCRipple3D : public CCGrid3DAction
-	{
-
-		CCPoint getPosition(void);
-		void setPosition(CCPoint position);
-
-		float getAmplitude(void);
-		void setAmplitude(float fAmplitude);
-
-		float getAmplitudeRate(void);
-		void setAmplitudeRate(float fAmplitudeRate);
-
-
-		bool initWithPosition(CCPoint pos, float r, int wav, float amp, ccGridSize gridSize, ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
-
-
-		static CCRipple3D* actionWithPosition(CCPoint pos, float r, int wav, float amp, ccGridSize gridSize, ccTime duration);
-
-	};
-
-
-	class  CCShaky3D : public CCGrid3DAction
-	{
-
-		bool initWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
-		virtual CCObject* copyWithZone(CCZone* pZone);
-		virtual void update(ccTime time);
-
-		static CCShaky3D* actionWithRange(int range, bool shakeZ, ccGridSize gridSize, ccTime duration);
-
-	};
-
-	/** @brief CCLiquid action */
-	class  CCLiquid : public CCGrid3DAction
-	{
-
-		float getAmplitude(void);
-		void setAmplitude(float fAmplitude);
-		float getAmplitudeRate(void);
-		void setAmplitudeRate(float fAmplitudeRate);
-		bool initWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
-
-
-		static CCLiquid* actionWithWaves(int wav, float amp, ccGridSize gridSize, ccTime duration);
-
-	};
-
-	/** @brief CCWaves action */
-	class  CCWaves : public CCGrid3DAction
-	{
-		float getAmplitude(void);
-		void setAmplitude(float fAmplitude);
-		float getAmplitudeRate(void);
-		void setAmplitudeRate(float fAmplitudeRate);
-		bool initWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,	ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
-
-
-		static CCWaves* actionWithWaves(int wav, float amp, bool h, bool v, ccGridSize gridSize,ccTime duration);
-
-	};
-
-
-	class  CCTwirl : public CCGrid3DAction
-	{
-		CCPoint getPosition(void);
-		void setPosition(CCPoint position);
-
-		float getAmplitude(void);
-		void setAmplitude(float fAmplitude);
-		float getAmplitudeRate(void);
-		void setAmplitudeRate(float fAmplitudeRate);
-		bool initWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,ccTime duration);
-		CCObject* copyWithZone(CCZone* pZone);
-		void update(ccTime time);
-
-
-		static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,ccTime duration);
-
-	};
-}
-
+    static CCTwirl* actionWithPosition(CCPoint pos, int t, float amp, ccGridSize gridSize,ccTime duration);
+};

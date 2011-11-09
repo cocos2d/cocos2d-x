@@ -1,87 +1,24 @@
 
-#include "CCMenuItem.h"
-#include "CCLayer.h"
+enum {
+    //* priority used by the menu
+    kCCMenuTouchPriority = -128,
+};
 
-namespace cocos2d{
+class CCMenu : public CCLayer
+{
+    void alignItemsVertically();
+    void alignItemsVerticallyWithPadding(float padding);
+    void alignItemsHorizontally();
+    void alignItemsHorizontallyWithPadding(float padding);
+    void alignItemsInColumns(unsigned int columns, va_list args);
+    void alignItemsInRows(unsigned int rows, va_list args);
 
-	typedef enum  
-	{
-		kCCMenuStateWaiting,
-		kCCMenuStateTrackingTouch
-	} tCCMenuState;
+    void setOpacity(GLubyte opacity);
+    GLubyte getOpacity(void);
+    void setColor(ccColor3B color);
+    ccColor3B getColor(void);
 
-	enum {
-		//* priority used by the menu
-		kCCMenuTouchPriority = -128,
-	};
-
-	class  CCMenu : public CCLayer, public CCRGBAProtocol
-	{
-	public:
-		CCMenu();
-		virtual ~CCMenu(){}		
-		static CCMenu*menuWithItem(CCMenuItem* item);
-		bool initWithItems(CCMenuItem* item, va_list args);	
-		void alignItemsVertically();
-
-		void alignItemsVerticallyWithPadding(float padding);	
-		void alignItemsHorizontally();		
-		void alignItemsHorizontallyWithPadding(float padding);
-
-
-		// void alignItemsInRows(unsigned int rows, ...);
-		void alignItemsInColumns(unsigned int columns, va_list args);
-
-		/** align items in columns of rows */
-		// void alignItemsInColumns(unsigned int columns, ...);
-		void alignItemsInRows(unsigned int rows, va_list args);
-
-		//super methods
-		void addChild(CCNode * child, int zOrder);
-		void addChild(CCNode * child, int zOrder, int tag);
-		void registerWithTouchDispatcher();
-		bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-		void ccTouchEnded(CCTouch* touch, CCEvent* event);
-		void ccTouchCancelled(CCTouch *touch, CCEvent* event);
-		void ccTouchMoved(CCTouch* touch, CCEvent* event);
-
-		void destroy(void);
-		void keep(void);
-
-
-		void onExit();
-
-		void setOpacity(GLubyte opacity);
-		GLubyte getOpacity(void);
-		ccColor3B getColor(void);
-		void setColor(ccColor3B color);
-		CCRGBAProtocol* convertToRGBAProtocol();
-
-
-		bool init();
-		static CCLayer *node(void);
-		void onEnter();
-		void onExit();
-		void onEnterTransitionDidFinish();
-		bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-		void destroy(void);
-		void keep(void);
-
-		void didAccelerate(CCAcceleration* pAccelerationValue) {}
-
-		void KeypadDestroy();
-		void KeypadKeep();
-		void registerWithTouchDispatcher(void);
-
-		void setIsTouchEnabled(bool bValue);
-		bool getIsTouchEnabled();
-
-		void setIsAccelerometerEnabled(bool bValue);
-		bool getIsAccelerometerEnabled();
-
-		void setIsKeypadEnabled(bool bValue);
-		bool getIsKeypadEnabled();
-	};
-
-}
-
+    static CCMenu* node();
+    static CCMenu* menuWithItem(CCMenuItem* item);
+    // static CCMenu* menuWithItems(CCMenuItem* item, ...);
+};
