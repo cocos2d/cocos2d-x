@@ -1,49 +1,21 @@
-namespace   cocos2d {
 
 class CCSpriteFrameCache : public CCObject
 {
+    void addSpriteFramesWithDictionary(CCDictionary<std::string, CCObject*> *pobDictionary, CCTexture2D *pobTexture);
+    void addSpriteFramesWithFile(const char *pszPlist);
+    void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
+    void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
+    void addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName);
 
-	bool init(void);
-	~CCSpriteFrameCache(void);
+    void removeSpriteFrames(void);
+    void removeUnusedSpriteFrames(void);
+    void removeSpriteFrameByName(const char *pszName);
+    void removeSpriteFramesFromFile(const char* plist);
+    void removeSpriteFramesFromDictionary(CCDictionary<std::string, CCSpriteFrame*> *dictionary);
+    void removeSpriteFramesFromTexture(CCTexture2D* texture);
 
-	void addSpriteFramesWithDictionary(CCDictionary<std::string, CCObject*> *pobDictionary, CCTexture2D *pobTexture);
+    CCSpriteFrame* spriteFrameByName(const char *pszName);
 
-	void addSpriteFramesWithFile(const char *pszPlist);
-
-	
-	void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
-
-	/** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. */
-	void addSpriteFramesWithFile(const char *pszPlist, CCTexture2D *pobTexture);
-
-	void addSpriteFrame(CCSpriteFrame *pobFrame, const char *pszFrameName);
-
-
-	void removeSpriteFrames(void);
-
-	void removeUnusedSpriteFrames(void);
-
-	/** Deletes an sprite frame from the sprite frame cache. */
-	void removeSpriteFrameByName(const char *pszName);
-
-	void removeSpriteFramesFromFile(const char* plist);
-
-	void removeSpriteFramesFromDictionary(CCDictionary<std::string, CCSpriteFrame*> *dictionary);
-
-	
-	void removeSpriteFramesFromTexture(CCTexture2D* texture);
-
-	CCSpriteFrame* spriteFrameByName(const char *pszName);
-
-
-	/** Returns the shared instance of the Sprite Frame cache */
-	static CCSpriteFrameCache* sharedSpriteFrameCache(void);
-
-	/** Purges the cache. It releases all the Sprite Frames and the retained instance. */
-	static void purgeSharedSpriteFrameCache(void);
-
-
+    static CCSpriteFrameCache* sharedSpriteFrameCache(void);
+    static void purgeSharedSpriteFrameCache(void);
 };
-}//namespace   cocos2d 
-
-
