@@ -1,6 +1,18 @@
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+FMODEX = libfmodex64
+FMODEXL = libfmodexL64
+VERSION = 4.38.00
+LIBDIR     = lib64/api/lib
+HDRDIR     = lib64/api/inc
+else
+FMODEX = libfmodex
+FMODEXL = libfmodexL
 VERSION = 4.36.01
 LIBDIR     = api/lib
 HDRDIR     = api/inc
+endif
+
 DESTLIBDIR = /usr/local/lib
 DESTHDRDIR = /usr/local/include/fmodex
 
@@ -49,8 +61,10 @@ fmod_examples:
 
 install:
 	@echo "Installing FMOD Ex libraries and headers..."
-	cp -f ${LIBDIR}/libfmodex-${VERSION}.so ${DESTLIBDIR}
-	cp -f ${LIBDIR}/libfmodexL-${VERSION}.so ${DESTLIBDIR}
+	cp -f ${LIBDIR}/${FMODEX}-${VERSION}.so ${DESTLIBDIR}
+	cp -f ${LIBDIR}/${FMODEXL}-${VERSION}.so ${DESTLIBDIR}
+	ln -s -f ${DESTLIBDIR}/${FMODEX}-${VERSION}.so ${DESTLIBDIR}/${FMODEX}.so
+	ln -s -f ${DESTLIBDIR}/${FMODEXL}-${VERSION}.so ${DESTLIBDIR}/${FMODEXL}.so
 	ldconfig -n ${DESTLIBDIR}
 	mkdir -p ${DESTHDRDIR}
 	cp -f ${HDRDIR}/*.h* ${DESTHDRDIR}
@@ -58,8 +72,10 @@ install:
 
 uninstall:
 	@echo "Uninstalling FMOD Ex libraries..."
-	rm -f ${DESTLIBDIR}/libfmodex-${VERSION}.so
-	rm -f ${DESTLIBDIR}/libfmodexL-${VERSION}.so
+	rm -f ${DESTLIBDIR}/${FMODEX}.so
+	rm -f ${DESTLIBDIR}/${FMODEXL}.so
+	rm -f ${DESTLIBDIR}/${FMODEX}-${VERSION}.so
+	rm -f ${DESTLIBDIR}/${FMODEXL}-${VERSION}.so
 	ldconfig -n ${DESTLIBDIR}
 	rm -rf ${DESTHDRDIR}
 	@echo "done."
