@@ -28,6 +28,10 @@
 #include "cocos2d.h"
 #include "tolua++.h"
 
+extern "C" {
+#include "tolua_fix.h"
+}
+
 #include <stdio.h>
 #include "CCKeypadDispatcher.h"
 #include "CCRibbon.h"
