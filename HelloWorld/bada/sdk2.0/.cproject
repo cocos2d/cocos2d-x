@@ -24,7 +24,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" prebuildStep="cd .. &amp; (if not exist lib mkdir lib) &amp; (copy /y ..\..\..\cocos2dx\proj.bada\sdk2.0\.Target-Debug\libcocos2dx.so lib) &amp; (copy /y ..\..\..\CocosDenshion\proj.bada\sdk2.0\.Target-Debug\libCocosDenshion.so lib) &amp; (if not exist Res mkdir Res) &amp; (copy /y ..\..\Resource\*.* Res)">
+				<configuration artifactExtension="exe" artifactName="HelloWorld" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682" name="Target-Debug" parent="cdt.managedbuild.config.osp.gnu.target.exe.debug" prebuildStep="cd.. &amp; (if not exist Res mkdir Res) &amp; (copy /y ..\..\Resource\*.* Res)">
 					<folderInfo id="cdt.managedbuild.config.osp.gnu.target.exe.debug.2113673682." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug.2127488964" name="bada GCC ToolChain" superClass="cdt.managedbuild.toolchain.osp.gnu.target.exe.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.Cygwin_PE;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug.1117105675" name="Debug Platform" osList="osp" superClass="cdt.managedbuild.target.osp.gnu.target.platform.exe.debug"/>
@@ -53,10 +53,7 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug.1406585521" name="bada C Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.c.linker.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug.1747969474" name="bada C++ Linker" superClass="cdt.managedbuild.tool.osp.gnu.target.cpp.linker.exe.debug">
-								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.2056672880" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="cocos2dx"/>
-									<listOptionValue builtIn="false" value="CocosDenshion"/>
-								</option>
+								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.2056672880" name="Libraries (-l)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs" valueType="libs"/>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.libs.paths.1078498225" name="Library search path (-L)" superClass="osp.gnu.target.cpp.link.debug.exe.option.libs.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDKROOT}/Tools/Toolchains/ARM/arm-samsung-nucleuseabi/lib&quot;"/>
@@ -65,8 +62,13 @@
 								</option>
 								<option id="osp.gnu.target.cpp.link.debug.exe.option.userobjs.807623096" name="Other objects" superClass="osp.gnu.target.cpp.link.debug.exe.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/osp_rt0.a&quot;"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/proj.bada/sdk2.0_StaticLib/.Target-Debug/libcocos2dx.a"/>
+									<listOptionValue builtIn="false" value="../../../../CocosDenshion/proj.bada/sdk2.0_StaticLib/.Target-Debug/libCocosDenshion.a"/>
 									<listOptionValue builtIn="false" value="../../../../Box2D/proj.bada/sdk2.0/.Target-Debug/libBox2D.a"/>
 									<listOptionValue builtIn="false" value="../../../../chipmunk/proj.bada/sdk2.0/.Target-Debug/libchipmunk.a"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/libjpeg/sdk2.0/.Target-Debug/libjpeg.a"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/png/sdk2.0/.Target-Debug/libpng.a"/>
+									<listOptionValue builtIn="false" value="../../../../cocos2dx/platform/third_party/bada/src/zlib/sdk2.0/.Target-Debug/libzlib.a"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FOsp.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsOpengl.so&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TARGET_LIB_PATH}/FGraphicsEgl.so&quot;"/>
