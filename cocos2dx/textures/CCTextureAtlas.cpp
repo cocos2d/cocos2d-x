@@ -346,6 +346,13 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 	m_pQuads = (ccV3F_C4B_T2F_Quad *)tmpQuads;
 	m_pIndices = (GLushort *)tmpIndices;
 
+#if CC_USES_VBO
+	glDeleteBuffers(2, m_pBuffersVBO);
+	// initial binding
+	glGenBuffers(2, &m_pBuffersVBO[0]);	
+	m_bDirty = true;
+#endif // CC_USES_VBO
+
 	this->initIndices();
 
 #if CC_USES_VBO
