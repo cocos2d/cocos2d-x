@@ -87,26 +87,26 @@ int CCAudioOut::DecodeOgg(const char *infile)
     int seekable = 0;
     int percent = 0;
 
-    AppLog("enter, %s", infile);
+    //AppLog("enter, %s", infile);
 	in = fopen(infile, "rb");
 	if(!in) {
-		AppLog("ERROR: Failed to open input file:\n");
+		//AppLog("ERROR: Failed to open input file:\n");
 		return 1;
 	}
-	 AppLog("enter");
+	 //AppLog("enter");
     if(ov_open(in, &vf, NULL, 0) < 0) {
-    	AppLog("ERROR: Failed to open input as vorbis\n");
+    	//AppLog("ERROR: Failed to open input as vorbis\n");
         fclose(in);
 //        fclose(out);
         return 1;
     }
-    AppLog("enter");
+    //AppLog("enter");
     if(ov_seekable(&vf)) {
         seekable = 1;
         length = ov_pcm_total(&vf, 0);
         size = bits/8 * ov_info(&vf, 0)->channels;
     }
-    AppLog("enter");
+    //AppLog("enter");
     if (ov_info(&vf,0)->channels == 2)
     {
     	__sampleChannelType = AUDIO_CHANNEL_TYPE_STEREO;
@@ -115,19 +115,19 @@ int CCAudioOut::DecodeOgg(const char *infile)
     {
     	__sampleChannelType = AUDIO_CHANNEL_TYPE_MONO;
     }
-    AppLog("enter");
+    //AppLog("enter");
     __sampleRate = ov_info(&vf,0)->rate;
     __sampleBitdepth = AUDIO_TYPE_PCM_S16_LE;
 
-    AppLog("enter");
+    //AppLog("enter");
     while((ret = ov_read(&vf, buf, buflen, endian, bits/8, sign, &bs)) != 0) {
         if(bs != 0) {
-            AppLog("Only one logical bitstream currently supported\n");
+            //AppLog("Only one logical bitstream currently supported\n");
             break;
         }
 
         if(ret < 0 && !quiet) {
-            AppLog("Warning: hole in data\n");
+            //AppLog("Warning: hole in data\n");
             continue;
         }
 
@@ -147,7 +147,7 @@ int CCAudioOut::DecodeOgg(const char *infile)
             done += ret/size;
             if((double)done/(double)length * 200. > (double)percent) {
                 percent = (double)done/(double)length *200;
-//                AppLog("[%5.1f%%]", (double)percent/2.);
+//                //AppLog("[%5.1f%%]", (double)percent/2.);
             }
         }
     }
@@ -155,24 +155,24 @@ int CCAudioOut::DecodeOgg(const char *infile)
     __iAllPcmBufferSize = written;
 
 //    if(seekable && !quiet)
-//        AppLog("\n");
+//        //AppLog("\n");
 
 //    if(!raw)
 //        rewrite_header(out, written); /* We don't care if it fails, too late */
 
-    AppLog("enter");
+    //AppLog("enter");
     ov_clear(&vf);
     fclose(in);
 //    fclose(out);
 #endif
-    AppLog("enter");
+    //AppLog("enter");
     return 0;
 }
 
 
 CCAudioOut::CCAudioOut()
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 	__volumeLevel = -1;
 	__pAllPcmBuffer = null;
 	__iAllPcmBufferSize = 0;
@@ -193,7 +193,7 @@ CCAudioOut::CCAudioOut()
 
 CCAudioOut::~CCAudioOut()
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 	Finalize();
 	if(__pAudioOut)
 	{
@@ -210,7 +210,7 @@ CCAudioOut::~CCAudioOut()
 
 result CCAudioOut::Initialize(const char* pszFilePath)
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 	// This is called when AudioOut form is moving on the foreground.
 	result r = E_SUCCESS;
 
@@ -234,20 +234,20 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			__pAudioOut = new AudioOut();
 			if (!__pAudioOut)
 			{
-				AppLog("[E_OUT_OF_MEMORY] m_pAudio new failed\n");
+				//AppLog("[E_OUT_OF_MEMORY] m_pAudio new failed\n");
 				return r;
 			}
 
 			r = __pAudioOut->Construct(*this);
 			if (IsFailed(r))
 			{
-				AppLog("[Error] m_AudioOut.Construct failed");
+				//AppLog("[Error] m_AudioOut.Construct failed");
 				return r;
 			}
 		}
 		else
 		{
-			AppLog("[Error] __pAudioOut is already existed\n");
+			//AppLog("[Error] __pAudioOut is already existed\n");
 		}
 
 		String strFile(pszFilePath);
@@ -258,13 +258,13 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			__pFile = new File();
 			if(!__pFile)
 			{
-				AppLog("[Error] __pFile new failed\n");
+				//AppLog("[Error] __pFile new failed\n");
 				return E_SYSTEM;
 			}
 
 			r = __pFile->Construct(pszFilePath, L"rb");
 			if (IsFailed(r)) {
-				AppLog("[Error] __pFile.Construct failed : %d \n", r);
+				//AppLog("[Error] __pFile.Construct failed : %d \n", r);
 				return r;
 			}
 
@@ -307,7 +307,7 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			}
 			else
 			{
-				AppLog("not more memory...");
+				//AppLog("not more memory...");
 			}
 		}
 		else if (strFile.EndsWith(".ogg"))
@@ -317,25 +317,25 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			Osp::System::SystemTime::GetTicks(oldTick);
 			DecodeOgg(pszFilePath);
 			Osp::System::SystemTime::GetTicks(curTick);
-			AppLog("decode ogg to pcm waste %ld", (long)(curTick-oldTick));
+			//AppLog("decode ogg to pcm waste %ld", (long)(curTick-oldTick));
 		}
 		// Prepare AudioOut
 		r = __pAudioOut->Prepare( __sampleBitdepth, __sampleChannelType, __sampleRate );
 		if (IsFailed(r))
 		{
-			AppLog("[Error] m_AudioOut.Prepare failed");
+			//AppLog("[Error] m_AudioOut.Prepare failed");
 			return r;
 		}
 
 		__bufferSize = __pAudioOut->GetMinBufferSize();
-		AppLog("[Info] __bufferSize=%d (MaxBuf=%d Min Size %d)\n", __bufferSize, __pAudioOut->GetMaxBufferSize(),__pAudioOut->GetMinBufferSize());
+		//AppLog("[Info] __bufferSize=%d (MaxBuf=%d Min Size %d)\n", __bufferSize, __pAudioOut->GetMaxBufferSize(),__pAudioOut->GetMinBufferSize());
 
 		// Reset Volume or keeping a volume level
 		__volumeLevel = __volumeLevel == -1 ? DEFAULT_VOLUME_LEVEL : __volumeLevel;
 		r = __pAudioOut->SetVolume(DEFAULT_VOLUME_LEVEL);
 		if (IsFailed(r))
 		{
-			AppLog("[Error] m_AudioOut.SetVolume failed");
+			//AppLog("[Error] m_AudioOut.SetVolume failed");
 			return r;
 		}
 
@@ -345,25 +345,25 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 			r = __byteBuffer[0].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				AppLog( "[Error] __byteBuffer[0].Construct failed..%d ",r);
+				//AppLog( "[Error] __byteBuffer[0].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 			r = __byteBuffer[1].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				AppLog( "[Error] __byteBuffer[1].Construct failed..%d ",r);
+				//AppLog( "[Error] __byteBuffer[1].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 			r = __byteBuffer[2].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				AppLog( "[Error] __byteBuffer[2].Construct failed..%d ",r);
+				//AppLog( "[Error] __byteBuffer[2].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 			r = __byteBuffer[3].Construct(__bufferSize);
 			if (E_SUCCESS != r)
 			{
-				AppLog( "[Error] __byteBuffer[3].Construct failed..%d ",r);
+				//AppLog( "[Error] __byteBuffer[3].Construct failed..%d ",r);
 				return E_OUT_OF_MEMORY;
 			}
 		}
@@ -381,7 +381,7 @@ result CCAudioOut::Initialize(const char* pszFilePath)
 		__checkInitFiniPair = true;
 
 	}else{
-		AppLog("[WANRNING] The application state is not proper");
+		//AppLog("[WANRNING] The application state is not proper");
 	}
 	return r;
 }
@@ -470,7 +470,7 @@ result CCAudioOut::ReWriteBuffer(void)
 			r = __pAudioOut->WriteBuffer(__byteBuffer[i]);
 			if (IsFailed(r))
 			{
-				AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+				//AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
 				return r;
 			}
 		}
@@ -487,7 +487,7 @@ result CCAudioOut::ReWriteBuffer(void)
 			r = __pAudioOut->WriteBuffer(__byteBuffer[i]);
 			if (IsFailed(r))
 			{
-				AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+				//AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
 				return r;
 			}
 		}
@@ -506,30 +506,30 @@ void CCAudioOut::ReFeedBuffer(void)
 	r = __pAudioOut->WriteBuffer(__byteBuffer[0]);
 	if (IsFailed(r))
 	{
-		AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+		//AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
 	}
 
 	r = __pAudioOut->WriteBuffer(__byteBuffer[1]);
 	if (IsFailed(r))
 	{
-		AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
+		//AppLog("[Error] m_AudioOut.WriteBuffer failed : %d\n", r);
 	}
 }
 
 result CCAudioOut::Play(void)
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 
 	result ret = E_FAILURE;
 	AudioOutState state = __pAudioOut->GetState();
 
 	if(state == AUDIOOUT_STATE_PREPARED || state == AUDIOOUT_STATE_STOPPED)
 	{
-		AppLog("Enter");
+		//AppLog("Enter");
 		ret = __pAudioOut->Start();
 		if (IsFailed(ret))
 		{
-			AppLog("[Error] m_AudioOut.Start failed : %d\n", ret);
+			//AppLog("[Error] m_AudioOut.Start failed : %d\n", ret);
 		}
 	}
 	return ret;
@@ -537,7 +537,7 @@ result CCAudioOut::Play(void)
 
 result CCAudioOut::Stop(void)
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 	result ret = E_FAILURE;
 
 	if( __pAudioOut->GetState() == AUDIOOUT_STATE_PLAYING )
@@ -545,7 +545,7 @@ result CCAudioOut::Stop(void)
 		ret = __pAudioOut->Stop();
 		if (IsFailed(ret))
 		{
-			AppLog("[Error] m_AudioOut.Stop failed : %d\n", ret);
+			//AppLog("[Error] m_AudioOut.Stop failed : %d\n", ret);
 		}
 	}
 
@@ -554,17 +554,17 @@ result CCAudioOut::Stop(void)
 
 result CCAudioOut::Reset(void)
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 	AudioOutState state = __pAudioOut->GetState();
 	result r = E_SUCCESS;
 
 	if(state == AUDIOOUT_STATE_PLAYING)
 	{
-		AppLog("reset ...");
+		//AppLog("reset ...");
 		r = __pAudioOut->Reset();
 		if(IsFailed(r))
 		{
-			AppLog("[Error] AudioOut Reset is failed");
+			//AppLog("[Error] AudioOut Reset is failed");
 		}
 		ReWriteBuffer();
 	}
@@ -580,14 +580,14 @@ void CCAudioOut::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
 		if (__iUsedBufferCount <= 0)
 		{
 			Reset();
-			AppLog("Reset...");
+			//AppLog("Reset...");
 		}
 	}
 	else
 	{
 		int ret;
-	//	AppLog("thread name is %S", Thread::GetCurrentThread()->GetName().GetPointer());
-		AppLog("__buffReadCnt = %d", __buffReadCnt);
+	//	//AppLog("thread name is %S", Thread::GetCurrentThread()->GetName().GetPointer());
+		//AppLog("__buffReadCnt = %d", __buffReadCnt);
 		__byteBuffer[__buffReadCnt++].Clear ();
 
 		if (4 == __buffReadCnt)
@@ -603,11 +603,11 @@ void CCAudioOut::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
 		}
 		else
 		{
-			AppLog("__finishChecker = %d", __finishChecker);
+			//AppLog("__finishChecker = %d", __finishChecker);
 			__finishChecker--;
 			if(__finishChecker == 0)
 			{
-				AppLog("Reset...");
+				//AppLog("Reset...");
 				Reset();
 				__bufWrittenCnt = PRE_BUFFERING_NUM;
 				__buffReadCnt = 0;
@@ -620,18 +620,18 @@ void CCAudioOut::OnAudioOutBufferEndReached(Osp::Media::AudioOut& src)
 
 void CCAudioOut::OnAudioOutInterrupted(Osp::Media::AudioOut& src)
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 	Reset();
 }
 
 void CCAudioOut::OnAudioOutReleased(Osp::Media::AudioOut& src)
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 }
 
 void CCAudioOut::Finalize(void)
 {
-	AppLog("Enter");
+	//AppLog("Enter");
 
 	if(__checkInitFiniPair)
 	{
@@ -650,7 +650,7 @@ void CCAudioOut::Finalize(void)
 				r = __pAudioOut->Reset();
 				if(IsFailed(r))
 				{
-					AppLog("[Error] AudioOut Reset is failed");
+					//AppLog("[Error] AudioOut Reset is failed");
 				}
 
 			}
@@ -662,7 +662,7 @@ void CCAudioOut::Finalize(void)
 				r = __pAudioOut->Unprepare();
 				if(IsFailed(r))
 				{
-					AppLog("[Error] AudioOut UnPrepare is failed");
+					//AppLog("[Error] AudioOut UnPrepare is failed");
 				}
 			}
 		}
@@ -675,7 +675,7 @@ void CCAudioOut::Finalize(void)
 
 		__checkInitFiniPair = false;
 	}else{
-		AppLog("[WANRNING] This application state is not proper");
+		//AppLog("[WANRNING] This application state is not proper");
 	}
 }
 
