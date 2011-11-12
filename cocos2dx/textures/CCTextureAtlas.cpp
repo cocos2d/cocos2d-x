@@ -187,6 +187,9 @@ char * CCTextureAtlas::description()
 
 void CCTextureAtlas::initIndices()
 {
+	if (m_uCapacity <= 0)
+		return;
+
 	for( unsigned int i=0; i < m_uCapacity; i++)
 	{
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
@@ -322,8 +325,20 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
 	m_uTotalQuads = min(m_uTotalQuads, newCapacity);
 	m_uCapacity = newCapacity;
 
-	void * tmpQuads = realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
-	void * tmpIndices = realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
+	void * tmpQuads = NULL;
+	void * tmpIndices = NULL;
+	
+	// when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return NULL,
+	// so here must judge whether m_pQuads and m_pIndices is NULL.
+	if (m_pQuads == NULL)
+		tmpQuads = calloc(sizeof(m_pQuads[0]) * m_uCapacity, 1);
+	else
+		tmpQuads = realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
+
+	if (m_pIndices == NULL)
+		tmpIndices = calloc(sizeof(m_pIndices[0]) * m_uCapacity * 6, 1);
+	else
+		tmpIndices = realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
 
 	if( ! ( tmpQuads && tmpIndices) ) {
 		//CCLOG("cocos2d: CCTextureAtlas: not enough memory");
@@ -379,6 +394,8 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
+	if (0 == n)
+		return;
 
 	glBindTexture(GL_TEXTURE_2D, m_pTexture->getName());
 
