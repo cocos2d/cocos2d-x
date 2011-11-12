@@ -256,8 +256,12 @@ NS_CC_END;
  ***************************************************/
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
 #include <FBaseSys.h>
+#include <FUi.h>
 #include <stdio.h>
 #include <stdarg.h>
+
+using namespace Osp::Ui::Controls;
+
 NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
@@ -271,10 +275,15 @@ void CCLog(const char * pszFormat, ...)
 	AppLog(buf);
 }
 
-// bada no MessageBox, use CCLog instead
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-    CCLog("%s: %s", pszTitle, pszMsg);
+	if (pszMsg != NULL && pszTitle != NULL)
+	{
+		int iRet = 0;
+		MessageBox msgBox;
+		msgBox.Construct(pszTitle, pszMsg, MSGBOX_STYLE_OK);
+		msgBox.ShowAndWait(iRet);
+	}
 }
 
 NS_CC_END;

@@ -90,7 +90,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCPlatformFunc_bada.c|bada/CCPlatformFunc_bada.h|bada/CCThread_bada.cpp|ios/|Linux/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|Linux/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="support"/>
@@ -519,6 +519,7 @@
 				</scannerConfigBuildInfo>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.osp.gnu.target.so.release.562326387">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.osp.gnu.target.so.release.562326387" moduleId="org.eclipse.cdt.core.settings" name="Target-Release">
@@ -606,7 +607,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="menu_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="misc_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="particle_nodes"/>
-						<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCPlatformFunc_bada.c|bada/CCPlatformFunc_bada.h|bada/CCThread_bada.cpp|ios/|Linux/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
+						<entry excluding="airplay/|android/|bada/CCFileUtils_bada.cpp|bada/CCImage_bada.cpp|bada/CCThread_bada.cpp|ios/|Linux/|third_party/|win32/|wophone/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="platform"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="script_support"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="sprite_nodes"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="support"/>
@@ -1035,6 +1036,7 @@
 				</scannerConfigBuildInfo>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
