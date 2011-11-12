@@ -79,9 +79,10 @@ public:
 	virtual result OnInitializing(void);
 	virtual result OnTerminating(void);
 
-	void onPenDown(int nIndex, float x, float y);
-	void onPenMove(const Osp::Ui::Control& source);
-	void onPenUp(int nIndex, float x, float y);
+	void onTouchesBegin(int id[], float x[], float y[], int pointerNumber);
+	void onTouchesMove(int id[], float x[], float y[], int pointerNumber);
+	void onTouchesEnd(int id[], float x[], float y[], int pointerNumber);
+	void onTouchEvent(const Osp::Ui::Control& source, Osp::Ui::TouchStatus status);
 
 	// touch event
 	virtual void OnTouchIndicated(const Osp::Ui::Control& source,
