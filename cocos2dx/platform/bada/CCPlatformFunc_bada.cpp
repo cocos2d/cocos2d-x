@@ -1,4 +1,14 @@
 #include "CCPlatformFunc_bada.h"
+#include <FApp.h>
+#include <FBase.h>
+#include <FUi.h>
+
+using namespace Osp::App;
+using namespace Osp::Base;
+using namespace Osp::Ui;
+using namespace Osp::Ui::Controls;
+
+#ifndef CC_BADA_2_0
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -1347,4 +1357,25 @@ void __assert_func(const char *file, int line, const char *a, const char *b)
 {
 
 }
+
+#endif
+
+void badaAssert(const char* pFunction, int lineNumber, const char* pszContent)
+{
+	int iRet = 0;
+	MessageBox msgBox;
+	String strContent;
+	strContent.Append("Func:");
+	strContent.Append(pFunction);
+	strContent.Append(",Line:");
+	strContent.Append(lineNumber);
+	strContent.Append(": (");
+	strContent.Append(pszContent);
+	strContent.Append(" )fails!");
+	msgBox.Construct("Assert", strContent, MSGBOX_STYLE_OK);
+	msgBox.ShowAndWait(iRet);
+	Application::GetInstance()->Terminate();
+}
+
+
 
