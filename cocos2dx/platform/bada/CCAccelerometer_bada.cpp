@@ -43,6 +43,7 @@ CCAccelerometer::CCAccelerometer() :
 CCAccelerometer::~CCAccelerometer() 
 {
 	m_spCCAccelerometer = NULL;
+	CC_SAFE_DELETE(m_pSensor);
 }
 
 CCAccelerometer* CCAccelerometer::sharedAccelerometer() 
@@ -104,21 +105,15 @@ void CCAccelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorDa
 
 void CCAccelerometer::setEnable(bool bEnable)
 {
-	if (m_pSensor != NULL)
+	result	r = E_INVALID_STATE;
+	static long	interval = 50;
+	if (m_pSensor == NULL)
 	{
-		m_pSensor->RemoveSensorListener(*this);
-	}
-	CC_SAFE_DELETE(m_pSensor);
-	if (bEnable)
-	{
-		long	interval = 10;
 		bool	available = false;
-		result	r = E_INVALID_STATE;
 		m_pSensor = new SensorManager();
 		m_pSensor->Construct();
 
 		available = m_pSensor->IsAvailable(SENSOR_TYPE_ACCELERATION);
-
 		if (available)
 		{
 			long	intervalTemp = 0;
@@ -128,8 +123,22 @@ void CCAccelerometer::setEnable(bool bEnable)
 			m_pSensor->GetMinInterval(SENSOR_TYPE_ACCELERATION, intervalTemp);
 			if (interval < intervalTemp)
 				interval = intervalTemp;
-
-			r = m_pSensor->AddSensorListener(*this, SENSOR_TYPE_ACCELERATION, interval, false);
+		}
+		else
+		{
+			delete m_pSensor;
+			m_pSensor = NULL;
+		}
+	}
+	if (m_pSensor != NULL)
+	{
+		if (bEnable)
+		{
+			r = m_pSensor->AddSensorListener(*this, SENSOR_TYPE_ACCELERATION, interval, true);
+		}
+		else
+		{
+			r = m_pSensor->RemoveSensorListener(*this);
 		}
 	}
 }
