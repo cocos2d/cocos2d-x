@@ -13,6 +13,7 @@ using namespace Osp::Ui::Controls;
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <ctype.h>
 #include <limits.h>
 #include <malloc.h>
 #include <errno.h>
@@ -65,14 +66,14 @@ static int errno = 0;
 	0,	0,	0,	0,	0,	0,	0,	0, \
 	0,	0,	0,	0,	0,	0,	0,	0
 
-char _ctype_b[128 + 256] = {
+static char _ctype_b[128 + 256] = {
     _CTYPE_DATA_128_255,
     _CTYPE_DATA_0_127,
     _CTYPE_DATA_128_255
 };
 
 
-char *__ctype_ptr__ = (char *) _ctype_b + 127;
+//char *__ctype_ptr__ = (char *) _ctype_b + 127;
 
 
 int sprintf(char* buf, const char *format, ...)
@@ -96,11 +97,11 @@ int sprintf(char* buf, const char *format, ...)
 /* The internal entry points for `strtoX' take an extra flag argument
    saying whether or not to parse locale-dependent number grouping.  */
 
-double __strtod_internal  (const char *__nptr,char **__endptr, int __group);
-float __strtof_internal (const char *__nptr, char **__endptr,int __group);
-long double __strtold_internal  (const char *__nptr,char **__endptr, int __group);
-long int __strtol_internal (const char *__nptr, char **__endptr,	int __base, int __group);
-unsigned long int __strtoul_internal  (const char *__nptr,  char **__endptr, int __base, int __group);
+static double __strtod_internal  (const char *__nptr,char **__endptr, int __group);
+static float __strtof_internal (const char *__nptr, char **__endptr,int __group);
+static long double __strtold_internal  (const char *__nptr,char **__endptr, int __group);
+static long int __strtol_internal (const char *__nptr, char **__endptr,	int __base, int __group);
+static unsigned long int __strtoul_internal  (const char *__nptr,  char **__endptr, int __base, int __group);
 
 
 #ifdef	__GNUC__
@@ -135,7 +136,7 @@ typedef struct _myiobuf {
 	char *_tmpfname;
 }MYFILE;
 
-int my_getc(MYFILE *fp)
+static int my_getc(MYFILE *fp)
 {
 	int c = -1;
 	// check for invalid stream
@@ -161,8 +162,7 @@ int my_getc(MYFILE *fp)
 	return c;
 }
 
-int
-sys_ungetc(int c, MYFILE *f)
+static int sys_ungetc(int c, MYFILE *f)
 {
 
 // 	if (!__validfp (f) || !OPEN4READING(f)) {
@@ -236,12 +236,12 @@ sys_ungetc(int c, MYFILE *f)
 #define flockfile(S) /* nothing */
 #define funlockfile(S) /* nothing */
 
-  char *wp = NULL;		/* Workspace.  */
-  size_t wpmax = 0;		/* Maximal size of workspace.  */
-  size_t wpsize = 0;		/* Currently used bytes in workspace.  */
+static char *wp = NULL;		/* Workspace.  */
+static size_t wpmax = 0;		/* Maximal size of workspace.  */
+static size_t wpsize = 0;		/* Currently used bytes in workspace.  */
 
 
-void ADDW(int Ch)							    								        \
+static void ADDW(int Ch)							    								        \
 {
       if (wpsize == wpmax)
   	{
@@ -257,8 +257,25 @@ void ADDW(int Ch)							    								        \
 
 }
 
+static int iswspace(wint_t c)
+{
+#ifdef _MB_CAPABLE
+  c = _jp2uc (c);
+  /** Based on Unicode 5.2.  Control chars 09-0D, plus all characters
+     from general category "Zs", which are not marked as decomposition
+     type "noBreak". */
+  return ((c >= 0x0009 && c <= 0x000d) || c == 0x0020 ||
+	  c == 0x1680 || c == 0x180e ||
+	  (c >= 0x2000 && c <= 0x2006) ||
+	  (c >= 0x2008 && c <= 0x200a) ||
+	  c == 0x2028 || c == 0x2029 ||
+	  c == 0x205f || c == 0x3000);
+#else
+  return (c < 0x100 ? isspace (c) : 0);
+#endif /** _MB_CAPABLE */
+}
 
-int __vfscanf (MYFILE *s, const char *format, va_list argptr)
+static int __vfscanf (MYFILE *s, const char *format, va_list argptr)
 {
   va_list arg;
   register const char *f = format;
@@ -699,7 +716,7 @@ int __vfscanf (MYFILE *s, const char *format, va_list argptr)
 		    conv_error ();					      \
 		  /* Allocate an initial buffer.  */			      \
 		  strsize = 100;					      \
-		  *strptr = malloc (strsize * sizeof (Type));		      \
+		  *strptr = (char*)malloc (strsize * sizeof (Type));		      \
 		  Str = (Type *) *strptr;				      \
 		}							      \
 	      else							      \
@@ -727,11 +744,11 @@ int __vfscanf (MYFILE *s, const char *format, va_list argptr)
 		  if ((flags & MMALLOC) && (char *) Str == *strptr + strsize)  \
 		    {							      \
 		      /* Enlarge the buffer.  */			      \
-		      Str = realloc (*strptr, strsize * 2 * sizeof (Type));   \
+		      Str = (Type*)realloc (*strptr, strsize * 2 * sizeof (Type));   \
 		      if (Str == NULL)					      \
 			{						      \
 			  /* Can't allocate that much.  Last-ditch effort.  */\
-			  Str = realloc (*strptr,			      \
+			  Str = (Type*)realloc (*strptr,			      \
 					 (strsize + 1) * sizeof (Type));      \
 			  if (Str == NULL)				      \
 			    {						      \
@@ -1178,11 +1195,11 @@ int __vfscanf (MYFILE *s, const char *format, va_list argptr)
 }
 
 
-double __strtod_internal  (const char *__nptr,char **__endptr, int __group)
+static double __strtod_internal  (const char *__nptr,char **__endptr, int __group)
 {
 	return strtod(__nptr,__endptr);
 }
-float __strtof_internal (const char *__nptr, char **__endptr,int __group)
+static float __strtof_internal (const char *__nptr, char **__endptr,int __group)
 {
 	return (float)strtod(__nptr,__endptr);
 }
@@ -1192,7 +1209,7 @@ static double powten[] =
   /*1e512L, 1e512L*1e512L, 1e2048L, 1e4096L*///cjh
 };
 
-long double __strtold_internal  (const char *s,char **sret, int __group)
+static long double __strtold_internal  (const char *s,char **sret, int __group)
 {
 
   long double r;		/* result */
@@ -1303,11 +1320,11 @@ long double __strtold_internal  (const char *s,char **sret, int __group)
 
   return 0;
 }
-long int __strtol_internal (const char *__nptr, char **__endptr,	int __base, int __group)
+static long int __strtol_internal (const char *__nptr, char **__endptr,	int __base, int __group)
 {
 	return strtol(__nptr,__endptr, __base);
 }
-unsigned long int __strtoul_internal  (const char *__nptr,  char **__endptr, int __base, int __group)
+static unsigned long int __strtoul_internal  (const char *__nptr,  char **__endptr, int __base, int __group)
 {
 	return strtoul(__nptr,__endptr, __base);
 }
@@ -1316,8 +1333,7 @@ unsigned long int __strtoul_internal  (const char *__nptr,  char **__endptr, int
 
 /* Read formatted input from S according to the format
    string FORMAT, using the argument list in ARG.  */
-int
-my_vsscanf (const char *s,const char *format,va_list arg)
+static int my_vsscanf (const char *s,const char *format,va_list arg)
 {
   MYFILE f;
 
@@ -1357,6 +1373,7 @@ void __assert_func(const char *file, int line, const char *a, const char *b)
 {
 
 }
+
 
 #endif
 
