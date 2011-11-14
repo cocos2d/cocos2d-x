@@ -195,7 +195,7 @@ public: inline void set##funName(const varType& var){ varName = var; }
     #else 		/* use a DLL library */
         #define CC_DLL     __declspec(dllimport)
     #endif
-#include <vld.h>
+
 #endif  // CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
