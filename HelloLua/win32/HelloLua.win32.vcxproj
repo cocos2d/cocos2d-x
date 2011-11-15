@@ -64,7 +64,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\CocosDenshion_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1;ENABLE_LUA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -81,7 +81,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libCocosDenshion.lib;libgles_cm.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -102,7 +102,7 @@
       <ProxyFileName>HelloLua_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\src;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(SolutionDir)\lua\cocos2dx_support;$(SolutionDir)\lua\CocosDenshion_support;$(SolutionDir)\lua\lua;$(SolutionDir)\lua\tolua;$(SolutionDir)\lua\src;.;$(SolutionDir)\cocos2dx;$(SolutionDir)\cocos2dx\include;$(SolutionDir)\cocos2dx\platform;$(SolutionDir)\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)\CocosDenshion\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -120,7 +120,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libCocosDenshion.lib;libgles_cm.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\lua\cocos2dx_support\LuaCocos2d.cpp" />
     <ClCompile Include="..\..\lua\cocos2dx_support\LuaEngine.cpp" />
     <ClCompile Include="..\..\lua\cocos2dx_support\LuaEngineImpl.cpp" />
+    <ClCompile Include="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -137,6 +138,7 @@
     <ClInclude Include="..\..\lua\cocos2dx_support\LuaCocos2d.h" />
     <ClInclude Include="..\..\lua\cocos2dx_support\LuaEngine.h" />
     <ClInclude Include="..\..\lua\cocos2dx_support\LuaEngineImpl.h" />
+    <ClInclude Include="..\..\lua\CocosDenshion_support\LuaSimpleAudioEngine.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
