@@ -51,6 +51,8 @@ CCNode::CCNode(void)
 , m_fScaleY(1.0f)
 , m_tPosition(CCPointZero)
 , m_tPositionInPixels(CCPointZero)
+, m_fSkewX(0.0)
+, m_fSkewY(0.0)
 // children (lazy allocs)
 , m_pChildren(NULL)
 // lazy alloc
@@ -70,8 +72,6 @@ CCNode::CCNode(void)
 , m_pUserData(NULL)
 , m_bIsTransformDirty(true)
 , m_bIsInverseDirty(true)
-, m_fSkewX(0.0)
-, m_fSkewY(0.0)
 #ifdef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 , m_bIsTransformGLDirty(true)
 #endif
@@ -243,13 +243,13 @@ void CCNode::setScaleY(float newScaleY)
 }
 
 /// position getter
-CCPoint CCNode::getPosition()
+const CCPoint& CCNode::getPosition()
 {
 	return m_tPosition;
 }
 
 /// position setter
-void CCNode::setPosition(CCPoint newPosition)
+void CCNode::setPosition(const CCPoint& newPosition)
 {
 	m_tPosition = newPosition;
 	if (CC_CONTENT_SCALE_FACTOR() == 1)
@@ -267,7 +267,7 @@ void CCNode::setPosition(CCPoint newPosition)
 #endif
 }
 
-void CCNode::setPositionInPixels(CCPoint newPosition)
+void CCNode::setPositionInPixels(const CCPoint& newPosition)
 {
     m_tPositionInPixels = newPosition;
 
@@ -287,7 +287,7 @@ void CCNode::setPositionInPixels(CCPoint newPosition)
 #endif // CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 }
 
-CCPoint CCNode::getPositionInPixels()
+const CCPoint& CCNode::getPositionInPixels()
 {
 	return m_tPositionInPixels;
 }
@@ -339,12 +339,12 @@ void CCNode::setIsVisible(bool var)
 
 
 /// anchorPoint getter
-CCPoint CCNode::getAnchorPoint()
+const CCPoint& CCNode::getAnchorPoint()
 {
 	return m_tAnchorPoint;
 }
 
-void CCNode::setAnchorPoint(CCPoint point)
+void CCNode::setAnchorPoint(const CCPoint& point)
 {
 	if( ! CCPoint::CCPointEqualToPoint(point, m_tAnchorPoint) ) 
 	{
@@ -358,18 +358,18 @@ void CCNode::setAnchorPoint(CCPoint point)
 }
 
 /// anchorPointInPixels getter
-CCPoint CCNode::getAnchorPointInPixels()
+const CCPoint& CCNode::getAnchorPointInPixels()
 {
 	return m_tAnchorPointInPixels;
 }
 
 /// contentSize getter
-CCSize CCNode::getContentSize()
+const CCSize& CCNode::getContentSize()
 {
 	return m_tContentSize;
 }
 
-void CCNode::setContentSize(CCSize size)
+void CCNode::setContentSize(const CCSize& size)
 {
 	if( ! CCSize::CCSizeEqualToSize(size, m_tContentSize) ) 
 	{
@@ -392,7 +392,7 @@ void CCNode::setContentSize(CCSize size)
 	}
 }
 
-void CCNode::setContentSizeInPixels(CCSize size)
+void CCNode::setContentSizeInPixels(const CCSize& size)
 {
 	if (! CCSize::CCSizeEqualToSize(size, m_tContentSizeInPixels))
 	{
@@ -416,7 +416,7 @@ void CCNode::setContentSizeInPixels(CCSize size)
 	}
 }
 
-CCSize CCNode::getContentSizeInPixels()
+const CCSize& CCNode::getContentSizeInPixels()
 {
 	return m_tContentSizeInPixels;
 }
@@ -1071,7 +1071,7 @@ CCAffineTransform CCNode::worldToNodeTransform(void)
 	return CCAffineTransformInvert(this->nodeToWorldTransform());
 }
 
-CCPoint CCNode::convertToNodeSpace(CCPoint worldPoint)
+CCPoint CCNode::convertToNodeSpace(const CCPoint& worldPoint)
 {
 	CCPoint ret;
 	if(CC_CONTENT_SCALE_FACTOR() == 1)
@@ -1088,7 +1088,7 @@ CCPoint CCNode::convertToNodeSpace(CCPoint worldPoint)
 	return ret;
 }
 
-CCPoint CCNode::convertToWorldSpace(CCPoint nodePoint)
+CCPoint CCNode::convertToWorldSpace(const CCPoint& nodePoint)
 {
 	CCPoint ret;
 	if(CC_CONTENT_SCALE_FACTOR() == 1)
@@ -1105,7 +1105,7 @@ CCPoint CCNode::convertToWorldSpace(CCPoint nodePoint)
 	return ret;
 }
 
-CCPoint CCNode::convertToNodeSpaceAR(CCPoint worldPoint)
+CCPoint CCNode::convertToNodeSpaceAR(const CCPoint& worldPoint)
 {
 	CCPoint nodePoint = convertToNodeSpace(worldPoint);
 	CCPoint anchorInPoints;
@@ -1121,7 +1121,7 @@ CCPoint CCNode::convertToNodeSpaceAR(CCPoint worldPoint)
 	return ccpSub(nodePoint, anchorInPoints);
 }
 
-CCPoint CCNode::convertToWorldSpaceAR(CCPoint nodePoint)
+CCPoint CCNode::convertToWorldSpaceAR(const CCPoint& nodePoint)
 {
 	CCPoint anchorInPoints;
 	if( CC_CONTENT_SCALE_FACTOR() == 1 )
@@ -1133,10 +1133,10 @@ CCPoint CCNode::convertToWorldSpaceAR(CCPoint nodePoint)
 		anchorInPoints = ccpMult( m_tAnchorPointInPixels, 1/CC_CONTENT_SCALE_FACTOR() );
 	}
 
-	nodePoint = ccpAdd(nodePoint, anchorInPoints);
-	return convertToWorldSpace(nodePoint);
+	CCPoint pt = ccpAdd(nodePoint, anchorInPoints);
+	return convertToWorldSpace(pt);
 }
-CCPoint CCNode::convertToWindowSpace(CCPoint nodePoint)
+CCPoint CCNode::convertToWindowSpace(const CCPoint& nodePoint)
 {
 	CCPoint worldPoint = this->convertToWorldSpace(nodePoint);
 	return CCDirector::sharedDirector()->convertToUI(worldPoint);

@@ -237,9 +237,9 @@ protected:
 	/** How many seconds the emitter wil run. -1 means 'forever' */
 	CC_PROPERTY(float, m_fDuration, Duration)
 	/** sourcePosition of the emitter */
-	CC_PROPERTY(CCPoint, m_tSourcePosition, SourcePosition)
+	CC_PROPERTY_PASS_BY_REF(CCPoint, m_tSourcePosition, SourcePosition)
 	/** Position variance of the emitter */
-	CC_PROPERTY(CCPoint, m_tPosVar, PosVar)
+	CC_PROPERTY_PASS_BY_REF(CCPoint, m_tPosVar, PosVar)
 	/** life, and life variation of each particle */
 	CC_PROPERTY(float, m_fLife, Life)
 	/** life variance of each particle */
@@ -252,8 +252,8 @@ protected:
 //////////////////////////////////////////////////////////////////////////
 public:
 	// mode A
-	virtual CCPoint getGravity();
-	virtual void setGravity(CCPoint g);
+	virtual const CCPoint& getGravity();
+	virtual void setGravity(const CCPoint& g);
 	virtual float getSpeed();
 	virtual void setSpeed(float speed);
 	virtual float getSpeedVar();
@@ -290,13 +290,13 @@ public:
 	/** end size variance in pixels of each particle */
 	CC_PROPERTY(float, m_fEndSizeVar, EndSizeVar)
 	/** start color of each particle */
-	CC_PROPERTY(ccColor4F, m_tStartColor, StartColor)
+	CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tStartColor, StartColor)
 	/** start color variance of each particle */
-	CC_PROPERTY(ccColor4F, m_tStartColorVar, StartColorVar)
+	CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tStartColorVar, StartColorVar)
 	/** end color and end color variation of each particle */
-	CC_PROPERTY(ccColor4F, m_tEndColor, EndColor)
+	CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tEndColor, EndColor)
 	/** end color variance of each particle */
-	CC_PROPERTY(ccColor4F, m_tEndColorVar, EndColorVar)
+	CC_PROPERTY_PASS_BY_REF(ccColor4F, m_tEndColorVar, EndColorVar)
 	//* initial angle of each particle
 	CC_PROPERTY(float, m_fStartSpin, StartSpin)
 	//* initial angle of each particle
@@ -372,7 +372,7 @@ public:
 	bool isFull();
 
 	//! should be overriden by subclasses
-	virtual void updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition);
+	virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
 	//! should be overriden by subclasses
 	virtual void postStep();
 

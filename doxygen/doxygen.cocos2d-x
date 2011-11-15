@@ -31,7 +31,7 @@ PROJECT_NAME           = cocos2d-x
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 1.0.0-x-0.9.0
+PROJECT_NUMBER         = 1.0.1-x-0.9.2
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description 
 # for a project that appears at the top of each page and should give viewer 
@@ -328,7 +328,7 @@ SYMBOL_CACHE_SIZE      = 0
 # Private class members and static file members will be hidden unless 
 # the EXTRACT_PRIVATE and EXTRACT_STATIC tags are set to YES
 
-EXTRACT_ALL            = NO
+EXTRACT_ALL            = YES
 
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class 
 # will be included in the documentation.
@@ -1456,7 +1456,10 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator 
 # instead of the = operator.
 
-PREDEFINED             = 
+PREDEFINED             = "CC_PROPERTY_READONLY(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual varType get##funName(void);" \
+                         "CC_PROPERTY_READONLY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual const varType& get##funName(void);" \
+                         "CC_PROPERTY(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual varType get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(varType var);" \
+                         "CC_PROPERTY_PASS_BY_REF(varType, varName, funName)=protected: varType varName;\n/** get##funName*/\n public: virtual const varType& get##funName(void);\n/** set##funName*/\n public: virtual void set##funName(const varType& var);" 
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 
@@ -1471,7 +1474,7 @@ EXPAND_AS_DEFINED      =
 # that are alone on a line, have an all uppercase name, and do not end with a 
 # semicolon, because these will confuse the parser if not removed.
 
-SKIP_FUNCTION_MACROS   = YES
+SKIP_FUNCTION_MACROS   = NO
 
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references

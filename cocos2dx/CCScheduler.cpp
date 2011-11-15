@@ -82,11 +82,11 @@ typedef struct _hashScriptFuncEntry
 // implementation CCTimer
 
 CCTimer::CCTimer()
-: m_pTarget(NULL)
-, m_scriptFunc("")
+: m_pfnSelector(NULL)
 , m_fInterval(0.0f)
+, m_scriptFunc("")
+, m_pTarget(NULL)
 , m_fElapsed(0.0f)
-, m_pfnSelector(NULL)
 {
 
 }
@@ -121,7 +121,7 @@ CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSel
 	return pTimer;
 }
 
-bool CCTimer::initWithScriptFuncName(const char *pszFuncName, cocos2d::ccTime fSeconds)
+bool CCTimer::initWithScriptFuncName(const char *pszFuncName, ccTime fSeconds)
 {
 	m_scriptFunc = string(pszFuncName);
 	m_fInterval = fSeconds;

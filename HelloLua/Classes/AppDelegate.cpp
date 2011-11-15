@@ -2,6 +2,7 @@
 #include "AppDelegate.h"
 //#include "SimpleAudioEngine.h"
 
+#include "SimpleAudioEngine.h"
 
 #include "SimpleAudioEngine.h"
 #define IPAD		0
@@ -126,6 +127,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	string path = CCFileUtils::fullPathFromRelativePath("hello.lua");
+	CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->addSearchPath(path.substr(0, path.find_last_of("/")).c_str());
     CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeScriptFile(path.c_str());
 #endif 
 

@@ -69,8 +69,15 @@ public:
 		 * and data.
 		 * use this appoach to decrease the jni call number
 		*/
+		jstring jstrText = methodInfo.env->NewStringUTF(text);
+		jstring jstrFont = methodInfo.env->NewStringUTF(pFontName);
+
 		methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, methodInfo.env->NewStringUTF(text), 
 			methodInfo.env->NewStringUTF(pFontName), (int)fontSize, eAlignMask, nWidth, nHeight);
+
+		methodInfo.env->DeleteLocalRef(jstrText);
+		methodInfo.env->DeleteLocalRef(jstrFont);
+		methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
 		return true;
 	}

@@ -78,7 +78,7 @@ CCApplication& CCApplication::sharedApplication()
 
 ccLanguageType CCApplication::getCurrentLanguage()
 {
-    char* pLanguageName = getCurrentLanguageJNI();
+    const char *pLanguageName = getCurrentLanguageJNI();
     ccLanguageType ret = kLanguageEnglish;
 
     if (0 == strcmp("zh", pLanguageName))
@@ -89,7 +89,27 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageEnglish;
     }
-
+    else if (0 == strcmp("fr", pLanguageName))
+    {
+        ret = kLanguageFrench;
+    }
+    else if (0 == strcmp("it", pLanguageName))
+    {
+        ret = kLanguageItalian;
+    }
+    else if (0 == strcmp("de", pLanguageName))
+    {
+        ret = kLanguageGerman;
+    }
+    else if (0 == strcmp("es", pLanguageName))
+    {
+        ret = kLanguageSpanish;
+    }
+	else if (0 == strcmp("ru", pLanguageName))
+    {
+        ret = kLanguageRussian;
+    }
+    
     return ret;
 }
 

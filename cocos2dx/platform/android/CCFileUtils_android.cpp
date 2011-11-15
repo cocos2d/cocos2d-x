@@ -27,50 +27,32 @@ NS_CC_BEGIN;
 #include "CCCommon.h"
 #include "jni/SystemInfoJni.h"
 
-#define  MAX_PATH 256
-
-using namespace std;
-
 // record the resource path
 static string s_strResourcePath = "";
 	
+/*
+ * This function is implemented for jni to set apk path.
+ */
 void CCFileUtils::setResourcePath(const char* pszResourcePath)
 {
 	CCAssert(pszResourcePath != NULL, "[FileUtils setRelativePath] -- wrong relative path");
 	
-	if (! pszResourcePath)
+	string tmp(pszResourcePath);
+
+	if ((! pszResourcePath) || tmp.find(".apk") == string::npos)
 	{
 		return;
 	}
-	
-	s_strResourcePath = pszResourcePath;
 
-	/*
-	 * If the path is set by user, and not end with "/", append it
-	 */
-	if (s_strResourcePath.find(".apk") == string::npos 
-		&& s_strResourcePath.find_last_of("/") != s_strResourcePath.length() - 1)
-	{
-		s_strResourcePath += "/";
-	}
+	s_strResourcePath = pszResourcePath;
 }
 
 const char* CCFileUtils::fullPathFromRelativePath(const char *pszRelativePath)
 {
-	if (s_strResourcePath.find(".apk") != string::npos)
-	{
-		return pszRelativePath;
-	}
-	else
-	{
-		CCString *pRet = new CCString();
-		pRet->autorelease();
-		pRet->m_sString = s_strResourcePath + pszRelativePath;
-		return pRet->m_sString.c_str();
-	}
+	return pszRelativePath;
 }
 
-const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
 {
 	std::string relativeFile = pszRelativeFile;
 	CCString *pRet = new CCString();
@@ -81,11 +63,16 @@ const char *CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
-{
-	string fullPath = pszFileName;
+{	
 	unsigned char * pData = 0;
+	string fullPath(pszFileName);
 
-	if (s_strResourcePath.find(".apk") != string::npos)
+	if ((! pszFileName) || (! pszMode))
+	{
+		return 0;
+	}
+
+	if (pszFileName[0] != '/')
 	{
 		// read from apk
 		fullPath.insert(0, "assets/");
@@ -99,12 +86,18 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 			FILE *fp = fopen(pszFileName, pszMode);
 			CC_BREAK_IF(!fp);
 
+			unsigned long size;
 			fseek(fp,0,SEEK_END);
-			*pSize = ftell(fp);
+			size = ftell(fp);
 			fseek(fp,0,SEEK_SET);
-			pData = new unsigned char[*pSize];
-			*pSize = fread(pData,sizeof(unsigned char), *pSize,fp);
+			pData = new unsigned char[size];
+			size = fread(pData,sizeof(unsigned char), size,fp);
 			fclose(fp);
+
+			if (pSize)
+			{
+				*pSize = size;
+			}			
 		} while (0);		
 	}
 
@@ -115,6 +108,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
         msg.append(fullPath.c_str()).append(") failed!");
         CCMessageBox(msg.c_str(), title.c_str());
     }
+
     return pData;
 }
 
@@ -133,14 +127,11 @@ string CCFileUtils::getWriteablePath()
 {
 	// the path is: /data/data/ + package name
 	string dir("/data/data/");
-	char* tmp = getPackageNameJNI();
+	const char *tmp = getPackageNameJNI();
 
 	if (tmp)
 	{
 		dir.append(tmp).append("/");
-
-		// release memory
-		delete [] tmp;
 
 		return dir;
 	}

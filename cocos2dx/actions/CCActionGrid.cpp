@@ -30,7 +30,7 @@ namespace cocos2d
 {
 	// implementation of CCGridAction
 
-	CCGridAction* CCGridAction::actionWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCGridAction* CCGridAction::actionWithSize(const ccGridSize& gridSize, ccTime duration)
 	{
 		CCGridAction *pAction = new CCGridAction();
 		if (pAction)
@@ -48,7 +48,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCGridAction::initWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCGridAction::initWithSize(const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCActionInterval::initWithDuration(duration))
 		{
@@ -106,7 +106,7 @@ namespace cocos2d
 		return CCReverseTime::actionWithAction(this);
 	}
 
-	CCObject* CCGridAction::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCGridAction::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCGridAction* pCopy = NULL;
@@ -136,19 +136,19 @@ namespace cocos2d
 		return CCGrid3D::gridWithSize(m_sGridSize);
 	}
 
-	ccVertex3F CCGrid3DAction::vertex(cocos2d::ccGridSize pos)
+	ccVertex3F CCGrid3DAction::vertex(const ccGridSize& pos)
 	{
 		CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
 		return g->vertex(pos);
 	}
 
-	ccVertex3F CCGrid3DAction::originalVertex(cocos2d::ccGridSize pos)
+	ccVertex3F CCGrid3DAction::originalVertex(const ccGridSize& pos)
 	{
 		CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
 		return g->originalVertex(pos);
 	}
 
-	void CCGrid3DAction::setVertex(cocos2d::ccGridSize pos, cocos2d::ccVertex3F vertex)
+	void CCGrid3DAction::setVertex(const ccGridSize& pos, const ccVertex3F& vertex)
 	{
 		CCGrid3D *g = (CCGrid3D*)m_pTarget->getGrid();
 		g->setVertex(pos, vertex);
@@ -161,19 +161,19 @@ namespace cocos2d
 		return CCTiledGrid3D::gridWithSize(m_sGridSize);
 	}
 
-	ccQuad3 CCTiledGrid3DAction::tile(cocos2d::ccGridSize pos)
+	ccQuad3 CCTiledGrid3DAction::tile(const ccGridSize& pos)
 	{
 		CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
 		return g->tile(pos);
 	}
 
-	ccQuad3 CCTiledGrid3DAction::originalTile(cocos2d::ccGridSize pos)
+	ccQuad3 CCTiledGrid3DAction::originalTile(const ccGridSize& pos)
 	{
 		CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
 		return g->originalTile(pos);
 	}
 
-	void CCTiledGrid3DAction::setTile(cocos2d::ccGridSize pos, cocos2d::ccQuad3 coords)
+	void CCTiledGrid3DAction::setTile(const ccGridSize& pos, const ccQuad3& coords)
 	{
 		CCTiledGrid3D *g = (CCTiledGrid3D*)m_pTarget->getGrid();
 		return g->setTile(pos, coords);
@@ -181,7 +181,7 @@ namespace cocos2d
 
 	// implementation CCAccelDeccelAmplitude
 
-	CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
+	CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::actionWithAction(CCAction *pAction, ccTime duration)
 	{
 		CCAccelDeccelAmplitude *pRet = new CCAccelDeccelAmplitude();
 		if (pRet)
@@ -199,7 +199,7 @@ namespace cocos2d
 		return pRet;
 	}
 
-	bool CCAccelDeccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
+	bool CCAccelDeccelAmplitude::initWithAction(CCAction *pAction, ccTime duration)
 	{
 		if (CCActionInterval::initWithDuration(duration))
 		{
@@ -224,7 +224,7 @@ namespace cocos2d
 		m_pOther->startWithTarget(pTarget);
 	}
 
-	void CCAccelDeccelAmplitude::update(cocos2d::ccTime time)
+	void CCAccelDeccelAmplitude::update(ccTime time)
 	{
 		float f = time * 2;
 
@@ -244,7 +244,7 @@ namespace cocos2d
 
 	// implementation of AccelAmplitude
 
-	CCAccelAmplitude* CCAccelAmplitude::actionWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
+	CCAccelAmplitude* CCAccelAmplitude::actionWithAction(CCAction *pAction, ccTime duration)
 	{
 		CCAccelAmplitude *pRet = new CCAccelAmplitude();
 		if (pRet)
@@ -262,7 +262,7 @@ namespace cocos2d
 		return pRet;
 	}
 
-	bool CCAccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
+	bool CCAccelAmplitude::initWithAction(CCAction *pAction, ccTime duration)
 	{
 		if (CCActionInterval::initWithDuration(duration))
 		{
@@ -287,7 +287,7 @@ namespace cocos2d
 		m_pOther->startWithTarget(pTarget);
 	}
 
-	void CCAccelAmplitude::update(cocos2d::ccTime time)
+	void CCAccelAmplitude::update(ccTime time)
 	{
         ((CCAccelAmplitude*)(m_pOther))->setAmplitudeRate(powf(time, m_fRate));
 		m_pOther->update(time);
@@ -300,7 +300,7 @@ namespace cocos2d
 
 	// DeccelAmplitude
 
-	CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
+	CCDeccelAmplitude* CCDeccelAmplitude::actionWithAction(CCAction *pAction, ccTime duration)
 	{
 		CCDeccelAmplitude *pRet = new CCDeccelAmplitude();
 		if (pRet)
@@ -318,7 +318,7 @@ namespace cocos2d
 		return pRet;
 	}
 
-	bool CCDeccelAmplitude::initWithAction(cocos2d::CCAction *pAction, cocos2d::ccTime duration)
+	bool CCDeccelAmplitude::initWithAction(CCAction *pAction, ccTime duration)
 	{
 		if (CCActionInterval::initWithDuration(duration))
 		{
@@ -343,7 +343,7 @@ namespace cocos2d
 		m_pOther->startWithTarget(pTarget);
 	}
 
-	void CCDeccelAmplitude::update(cocos2d::ccTime time)
+	void CCDeccelAmplitude::update(ccTime time)
 	{
         ((CCDeccelAmplitude*)(m_pOther))->setAmplitudeRate(powf((1 - time), m_fRate));
 		m_pOther->update(time);

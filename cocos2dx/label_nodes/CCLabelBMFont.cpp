@@ -147,7 +147,8 @@ namespace cocos2d{
         // parse spacing / padding
         std::string line;
         std::string strLeft(pBuffer, nBufSize);
-        while (strLeft.length() > 0)        {
+        while (strLeft.length() > 0)
+        {
             int pos = strLeft.find('\n');
 
             if (pos != (int)std::string::npos)
@@ -503,7 +504,7 @@ namespace cocos2d{
 				fontChar->setOpacity(255);
 			}
 
-            float yOffset = (float) (m_pConfiguration->m_uCommonHeight - fontDef.yOffset);
+            float yOffset = (float)(m_pConfiguration->m_uCommonHeight) - fontDef.yOffset;
 			fontChar->setPositionInPixels( ccp( nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width / 2.0f + kerningAmount,
 				                                (float) nextFontPositionY + yOffset - rect.size.height/2.0f ) );		
 
@@ -553,7 +554,8 @@ namespace cocos2d{
                 {
                     pNode->setIsVisible(false);
                 }
-            }		}
+            }
+		}
 		this->createFontChars();
 	}
 
@@ -568,7 +570,7 @@ namespace cocos2d{
     }
 
 	//LabelBMFont - CCRGBAProtocol protocol
-	void CCLabelBMFont::setColor(ccColor3B var)
+	void CCLabelBMFont::setColor(const ccColor3B& var)
 	{
 		m_tColor = var;
 		if (m_pChildren && m_pChildren->count() != 0)
@@ -581,9 +583,10 @@ namespace cocos2d{
                 {
                     pNode->setColor(m_tColor);
                 }
-            }		}
+            }
+		}
 	}
-	ccColor3B CCLabelBMFont::getColor()
+	const ccColor3B& CCLabelBMFont::getColor()
 	{
 		return m_tColor;
 	}
@@ -605,7 +608,8 @@ namespace cocos2d{
                         pRGBAProtocol->setOpacity(m_cOpacity);
                     }
                 }
-            }		}
+            }
+		}
 	}
 	GLubyte CCLabelBMFont::getOpacity()
 	{
@@ -628,7 +632,8 @@ namespace cocos2d{
                         pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
                     }
                 }
-            }		}
+            }
+		}
 	}
 	bool CCLabelBMFont::getIsOpacityModifyRGB()
 	{
@@ -636,7 +641,7 @@ namespace cocos2d{
 	}
 
 	// LabelBMFont - AnchorPoint
-	void CCLabelBMFont::setAnchorPoint(CCPoint point)
+	void CCLabelBMFont::setAnchorPoint(const CCPoint& point)
 	{
 		if( ! CCPoint::CCPointEqualToPoint(point, m_tAnchorPoint) )
 		{
@@ -650,7 +655,7 @@ namespace cocos2d{
 	void CCLabelBMFont::draw()
 	{
 		CCSpriteBatchNode::draw();
-		CCSize s = this->getContentSize();
+		const CCSize& s = this->getContentSize();
 		CCPoint vertices[4]={
 			ccp(0,0),ccp(s.width,0),
 			ccp(s.width,s.height),ccp(0,s.height),

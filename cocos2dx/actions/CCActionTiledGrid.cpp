@@ -41,7 +41,7 @@ namespace cocos2d
 
 	// implementation of ShakyTiles3D
 
-	CCShakyTiles3D* CCShakyTiles3D::actionWithRange(int nRange, bool bShakeZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCShakyTiles3D* CCShakyTiles3D::actionWithRange(int nRange, bool bShakeZ,const ccGridSize& gridSize, ccTime duration)
 	{
 		CCShakyTiles3D *pAction = new CCShakyTiles3D();
 
@@ -60,7 +60,7 @@ namespace cocos2d
 		return pAction;	
 	}
 
-	bool CCShakyTiles3D::initWithRange(int nRange, bool bShakeZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCShakyTiles3D::initWithRange(int nRange, bool bShakeZ, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -73,7 +73,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCShakyTiles3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCShakyTiles3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCShakyTiles3D* pCopy = NULL;
@@ -96,7 +96,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCShakyTiles3D::update(cocos2d::ccTime time)
+	void CCShakyTiles3D::update(ccTime time)
 	{
         CC_UNUSED_PARAM(time);
 		int i, j;
@@ -134,7 +134,7 @@ namespace cocos2d
 
 	// implementation of CCShatteredTiles3D
 
-	CCShatteredTiles3D* CCShatteredTiles3D::actionWithRange(int nRange, bool bShatterZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCShatteredTiles3D* CCShatteredTiles3D::actionWithRange(int nRange, bool bShatterZ, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCShatteredTiles3D *pAction = new CCShatteredTiles3D();
 
@@ -153,7 +153,7 @@ namespace cocos2d
 		return pAction;	
 	}
 
-	bool CCShatteredTiles3D::initWithRange(int nRange, bool bShatterZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCShatteredTiles3D::initWithRange(int nRange, bool bShatterZ, const ccGridSize& gridSize,  ccTime duration)
 	{
 		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -167,7 +167,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCShatteredTiles3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCShatteredTiles3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCShatteredTiles3D* pCopy = NULL;
@@ -190,7 +190,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCShatteredTiles3D::update(cocos2d::ccTime time)
+	void CCShatteredTiles3D::update(ccTime time)
 	{
         CC_UNUSED_PARAM(time);
 		int i, j;
@@ -233,7 +233,7 @@ namespace cocos2d
 
 	// implementation of CCShuffleTiles
 
-	CCShuffleTiles* CCShuffleTiles::actionWithSeed(int s, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCShuffleTiles* CCShuffleTiles::actionWithSeed(int s, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCShuffleTiles *pAction = new CCShuffleTiles();
 
@@ -252,7 +252,7 @@ namespace cocos2d
 		return pAction;	
 	}
 
-	bool CCShuffleTiles::initWithSeed(int s, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCShuffleTiles::initWithSeed(int s, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -266,7 +266,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCShuffleTiles::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCShuffleTiles::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCShuffleTiles* pCopy = NULL;
@@ -306,7 +306,7 @@ namespace cocos2d
 		}
 	}
 
-	ccGridSize CCShuffleTiles::getDelta(cocos2d::ccGridSize pos)
+	ccGridSize CCShuffleTiles::getDelta(const ccGridSize& pos)
 	{
 		CCPoint	pos2;
 
@@ -318,7 +318,7 @@ namespace cocos2d
 		return ccg((int)(pos2.x - pos.x), (int)(pos2.y - pos.y));
 	}
 
-	void CCShuffleTiles::placeTile(ccGridSize pos, Tile *t)
+	void CCShuffleTiles::placeTile(const ccGridSize& pos, Tile *t)
 	{
 		ccQuad3 coords = originalTile(pos);
 
@@ -378,7 +378,7 @@ namespace cocos2d
 		}
 	}
 
-	void CCShuffleTiles::update(cocos2d::ccTime time)
+	void CCShuffleTiles::update(ccTime time)
 	{
 		int i, j;
 
@@ -397,7 +397,7 @@ namespace cocos2d
 
 	// implementation of CCFadeOutTRTiles
 
-	CCFadeOutTRTiles* CCFadeOutTRTiles::actionWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime time)
+	CCFadeOutTRTiles* CCFadeOutTRTiles::actionWithSize(const ccGridSize& gridSize, ccTime time)
 	{
 		CCFadeOutTRTiles *pAction = new CCFadeOutTRTiles();
 
@@ -416,7 +416,7 @@ namespace cocos2d
 		return pAction;	
 	}
 
-	float CCFadeOutTRTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
+	float CCFadeOutTRTiles::testFunc(const ccGridSize& pos, ccTime time)
 	{
 		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), time);
 		if ((n.x + n.y) == 0.0f)
@@ -427,19 +427,19 @@ namespace cocos2d
 		return powf((pos.x + pos.y) / (n.x + n.y), 6);
 	}
 
-	void CCFadeOutTRTiles::turnOnTile(cocos2d::ccGridSize pos)
+	void CCFadeOutTRTiles::turnOnTile(const ccGridSize& pos)
 	{
 		setTile(pos, originalTile(pos));
 	}
 
-	void CCFadeOutTRTiles::turnOffTile(cocos2d::ccGridSize pos)
+	void CCFadeOutTRTiles::turnOffTile(const ccGridSize& pos)
 	{
 		ccQuad3 coords;
 		memset(&coords, 0, sizeof(ccQuad3));
 		setTile(pos, coords);
 	}
 
-	void CCFadeOutTRTiles::transformTile(cocos2d::ccGridSize pos, float distance)
+	void CCFadeOutTRTiles::transformTile(const ccGridSize& pos, float distance)
 	{
 		ccQuad3 coords = originalTile(pos);
 		CCPoint step = m_pTarget->getGrid()->getStep();
@@ -459,7 +459,7 @@ namespace cocos2d
 		setTile(pos, coords);
 	}
 
-	void CCFadeOutTRTiles::update(cocos2d::ccTime time)
+	void CCFadeOutTRTiles::update(ccTime time)
 	{
 		int i, j;
 
@@ -485,7 +485,7 @@ namespace cocos2d
 	}
 
 	// implementation of CCFadeOutBLTiles
-	CCFadeOutBLTiles* CCFadeOutBLTiles::actionWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime time)
+	CCFadeOutBLTiles* CCFadeOutBLTiles::actionWithSize(const ccGridSize& gridSize, ccTime time)
 	{
 		CCFadeOutBLTiles *pAction = new CCFadeOutBLTiles();
 
@@ -504,7 +504,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	float CCFadeOutBLTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
+	float CCFadeOutBLTiles::testFunc(const ccGridSize& pos, ccTime time)
 	{
 		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), (1.0f - time));
 		if ((pos.x + pos.y) == 0)
@@ -517,7 +517,7 @@ namespace cocos2d
 
 	// implementation of CCFadeOutUpTiles
 
-	CCFadeOutUpTiles* CCFadeOutUpTiles::actionWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime time)
+	CCFadeOutUpTiles* CCFadeOutUpTiles::actionWithSize(const ccGridSize& gridSize, ccTime time)
 	{
 		CCFadeOutUpTiles *pAction = new CCFadeOutUpTiles();
 
@@ -536,7 +536,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	float CCFadeOutUpTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
+	float CCFadeOutUpTiles::testFunc(const ccGridSize& pos, ccTime time)
 	{
 		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), time);
 		if (n.y == 0.0f)
@@ -547,7 +547,7 @@ namespace cocos2d
 		return powf(pos.y / n.y, 6);
 	}
 
-	void CCFadeOutUpTiles::transformTile(cocos2d::ccGridSize pos, float distance)
+	void CCFadeOutUpTiles::transformTile(const ccGridSize& pos, float distance)
 	{
 		ccQuad3 coords = originalTile(pos);
 		CCPoint step = m_pTarget->getGrid()->getStep();
@@ -561,7 +561,7 @@ namespace cocos2d
 	}
 
 	// implementation of CCFadeOutDownTiles
-	CCFadeOutDownTiles* CCFadeOutDownTiles::actionWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime time)
+	CCFadeOutDownTiles* CCFadeOutDownTiles::actionWithSize(const ccGridSize& gridSize, ccTime time)
 	{
 		CCFadeOutDownTiles *pAction = new CCFadeOutDownTiles();
 
@@ -580,7 +580,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	float CCFadeOutDownTiles::testFunc(cocos2d::ccGridSize pos, cocos2d::ccTime time)
+	float CCFadeOutDownTiles::testFunc(const ccGridSize& pos, ccTime time)
 	{
 		CCPoint n = ccpMult(ccp((float)m_sGridSize.x, (float)m_sGridSize.y), (1.0f - time));
 		if (pos.y == 0)
@@ -592,7 +592,7 @@ namespace cocos2d
 	}
 
 	// implementation of TurnOffTiles
-	CCTurnOffTiles* CCTurnOffTiles::actionWithSize(ccGridSize size, ccTime d)
+	CCTurnOffTiles* CCTurnOffTiles::actionWithSize(const ccGridSize& size, ccTime d)
 	{
 		CCTurnOffTiles* pAction = new CCTurnOffTiles();
 		if (pAction->initWithSize(size, d))
@@ -606,7 +606,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	CCTurnOffTiles* CCTurnOffTiles::actionWithSeed(int s, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCTurnOffTiles* CCTurnOffTiles::actionWithSeed(int s, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCTurnOffTiles *pAction = new CCTurnOffTiles();
 
@@ -625,7 +625,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCTurnOffTiles::initWithSeed(int s, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCTurnOffTiles::initWithSeed(int s, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -638,7 +638,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCTurnOffTiles::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCTurnOffTiles::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCTurnOffTiles* pCopy = NULL;
@@ -677,12 +677,12 @@ namespace cocos2d
 		}
 	}
 
-	void CCTurnOffTiles::turnOnTile(cocos2d::ccGridSize pos)
+	void CCTurnOffTiles::turnOnTile(const ccGridSize& pos)
 	{
 		setTile(pos, originalTile(pos));
 	}
 
-	void CCTurnOffTiles::turnOffTile(cocos2d::ccGridSize pos)
+	void CCTurnOffTiles::turnOffTile(const ccGridSize& pos)
 	{
 		ccQuad3 coords;
 
@@ -712,7 +712,7 @@ namespace cocos2d
 		shuffle(m_pTilesOrder, m_nTilesCount);
 	}
 
-	void CCTurnOffTiles::update(cocos2d::ccTime time)
+	void CCTurnOffTiles::update(ccTime time)
 	{
 		unsigned int i, l, t;
 
@@ -736,7 +736,7 @@ namespace cocos2d
 
 	// implementation of CCWavesTiles3D
 
-	CCWavesTiles3D* CCWavesTiles3D::actionWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCWavesTiles3D* CCWavesTiles3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCWavesTiles3D *pAction = new CCWavesTiles3D();
 
@@ -755,7 +755,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCWavesTiles3D::initWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCWavesTiles3D::initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -769,7 +769,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCWavesTiles3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCWavesTiles3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCWavesTiles3D* pCopy = NULL;
@@ -791,7 +791,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCWavesTiles3D::update(cocos2d::ccTime time)
+	void CCWavesTiles3D::update(ccTime time)
 	{
 		int i, j;
 
@@ -814,7 +814,7 @@ namespace cocos2d
 
 	// implementation of CCJumpTiles3D
 
-	CCJumpTiles3D* CCJumpTiles3D::actionWithJumps(int j, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCJumpTiles3D* CCJumpTiles3D::actionWithJumps(int j, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCJumpTiles3D *pAction = new CCJumpTiles3D();
 
@@ -833,7 +833,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCJumpTiles3D::initWithJumps(int j, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCJumpTiles3D::initWithJumps(int j, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCTiledGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -847,7 +847,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCJumpTiles3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCJumpTiles3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCJumpTiles3D* pCopy = NULL;
@@ -868,7 +868,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCJumpTiles3D::update(cocos2d::ccTime time)
+	void CCJumpTiles3D::update(ccTime time)
 	{
 		int i, j;
 
@@ -903,7 +903,7 @@ namespace cocos2d
 
 	// implementation of CCSplitRows
 
-	CCSplitRows* CCSplitRows::actionWithRows(int nRows, cocos2d::ccTime duration)
+	CCSplitRows* CCSplitRows::actionWithRows(int nRows, ccTime duration)
 	{
 		CCSplitRows *pAction = new CCSplitRows();
 
@@ -922,14 +922,14 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCSplitRows::initWithRows(int nRows, cocos2d::ccTime duration)
+	bool CCSplitRows::initWithRows(int nRows, ccTime duration)
 	{
 		m_nRows = nRows;
 
 		return CCTiledGrid3DAction::initWithSize(ccg(1, nRows), duration);
 	}
 
-	CCObject* CCSplitRows::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCSplitRows::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCSplitRows* pCopy = NULL;
@@ -957,7 +957,7 @@ namespace cocos2d
 		m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 	}
 
-	void CCSplitRows::update(cocos2d::ccTime time)
+	void CCSplitRows::update(ccTime time)
 	{
 		int j;
 
@@ -982,7 +982,7 @@ namespace cocos2d
 
 	// implementation of CCSplitCols
 
-	CCSplitCols* CCSplitCols::actionWithCols(int nCols, cocos2d::ccTime duration)
+	CCSplitCols* CCSplitCols::actionWithCols(int nCols, ccTime duration)
 	{
 		CCSplitCols *pAction = new CCSplitCols();
 
@@ -1001,13 +1001,13 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCSplitCols::initWithCols(int nCols, cocos2d::ccTime duration)
+	bool CCSplitCols::initWithCols(int nCols, ccTime duration)
 	{
 		m_nCols = nCols;
 		return CCTiledGrid3DAction::initWithSize(ccg(nCols, 1), duration);
 	}
 
-	CCObject* CCSplitCols::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCSplitCols::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCSplitCols* pCopy = NULL;
@@ -1034,7 +1034,7 @@ namespace cocos2d
 		m_winSize = CCDirector::sharedDirector()->getWinSizeInPixels();
 	}
 
-	void CCSplitCols::update(cocos2d::ccTime time)
+	void CCSplitCols::update(ccTime time)
 	{
 		int i;
 

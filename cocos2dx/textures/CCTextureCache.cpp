@@ -364,7 +364,8 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
 	CCAssert(image != NULL && key != NULL, "TextureCache: image MUST not be nill");
 
 	CCTexture2D * texture = NULL;
-	std::string forKey = key;
+	// textureForKey() use full path,so the key should be full path
+	std::string forKey = CCFileUtils::fullPathFromRelativePath(key);
 
 	m_pDictLock->lock();
 
@@ -534,7 +535,7 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
     vt->m_FmtImage    = format;
 }
 
-void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, CCSize contentSize)
+void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize)
 {
 	if (isReloading)
 		return;
@@ -559,7 +560,7 @@ void VolatileTexture::addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPix
 	vt->m_TextureSize = contentSize;
 }
 
-void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+void VolatileTexture::addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
     if (isReloading)
         return;

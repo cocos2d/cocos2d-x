@@ -48,7 +48,7 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 /** draws a point given x and y coordinate measured in points */
-void CC_DLL ccDrawPoint( CCPoint point );
+void CC_DLL ccDrawPoint( const CCPoint& point );
 
 /** draws an array of points.
  @since v0.7.2
@@ -56,25 +56,30 @@ void CC_DLL ccDrawPoint( CCPoint point );
 void CC_DLL ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints );
 
 /** draws a line given the origin and destination point measured in points */
-void CC_DLL ccDrawLine( CCPoint origin, CCPoint destination );
+void CC_DLL ccDrawLine( const CCPoint& origin, const CCPoint& destination );
 
 /** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
 The polygon can be closed or open
 */
 void CC_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon );
 
+/** draws a poligon given a pointer to CCPoint coordiantes and the number of vertices measured in points.
+The polygon can be closed or open and optionally filled with current GL color
+*/
+void CC_DLL ccDrawPoly( const CCPoint *vertices, int numOfVertices, bool closePolygon , bool fill);
+
 /** draws a circle given the center, radius and number of segments. */
-void CC_DLL ccDrawCircle( CCPoint center, float radius, float angle, int segments, bool drawLineToCenter);
+void CC_DLL ccDrawCircle( const CCPoint& center, float radius, float angle, int segments, bool drawLineToCenter);
 
 /** draws a quad bezier path
  @since v0.8
  */
-void CC_DLL ccDrawQuadBezier(CCPoint origin, CCPoint control, CCPoint destination, int segments);
+void CC_DLL ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, const CCPoint& destination, int segments);
 
 /** draws a cubic bezier path
  @since v0.8
  */
-void CC_DLL ccDrawCubicBezier(CCPoint origin, CCPoint control1, CCPoint control2, CCPoint destination, int segments);
+void CC_DLL ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments);
 }//namespace   cocos2d 
 
 #endif // __CCDRAWING_PRIMITIVES__
