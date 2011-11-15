@@ -98,7 +98,9 @@ public:
             m_pCurDict = new CCDictionary<std::string, CCObject*>();
             if(! m_pRootDict)
             {
+				// Because it will call m_pCurDict->release() later, so retain here.
                 m_pRootDict = m_pCurDict;
+				m_pRootDict->retain();
             }
             m_tState = SAX_DICT;
 
@@ -120,7 +122,8 @@ public:
                 CCDictionary<std::string, CCObject*>* pPreDict = m_tDictStack.top();
                 pPreDict->setObject(m_pCurDict, m_sCurKey);
             }
-            m_pCurDict->autorelease();
+
+			m_pCurDict->release();
 
             // record the dict state
             m_tStateStack.push(m_tState);
@@ -285,7 +288,15 @@ std::string& CCFileUtils::ccRemoveHDSuffixFromFile(std::string& path)
 
 CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
 {
-    CCDictMaker tMaker;
+	CCDictionary<std::string, CCObject*> *ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
+	ret->autorelease();
+
+	return ret;
+}
+
+CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
+{
+	CCDictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(pFileName);
 }
 
