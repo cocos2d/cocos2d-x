@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2010-2011 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 package org.cocos2dx.lib;
 
 import android.content.Context;
@@ -11,7 +34,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -124,7 +146,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     }
 
     protected void initView() {
-        mRenderer = new Cocos2dxRenderer();
+        mRenderer = new Cocos2dxRenderer();       
         setFocusableInTouchMode(true);
         setRenderer(mRenderer);
         
@@ -162,7 +184,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         mainView = this;
     }
     
-    public void onPause(){    	
+    public void onPause(){
     	queueEvent(new Runnable() {
             @Override
             public void run() {
@@ -200,9 +222,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     public void setTextField(TextView view) {
     	mTextField = view;
     	if (null != mTextField && null != textInputWraper) {
-    		LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mTextField.getLayoutParams();
-    		linearParams.height = 0;
-    		mTextField.setLayoutParams(linearParams);
     		mTextField.setOnEditorActionListener(textInputWraper);
     		this.requestFocus();
     	}
@@ -278,8 +297,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         case MotionEvent.ACTION_DOWN:
         	// there are only one finger on the screen
         	final int idDown = event.getPointerId(0);
-            final float xDown = event.getX(idDown);
-            final float yDown = event.getY(idDown);
+            final float xDown = xs[0];
+            final float yDown = ys[0];
             
             queueEvent(new Runnable() {
                 @Override
@@ -314,8 +333,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         case MotionEvent.ACTION_UP:  
         	// there are only one finger on the screen
         	final int idUp = event.getPointerId(0);
-            final float xUp = event.getX(idUp);
-            final float yUp = event.getY(idUp);
+            final float xUp = xs[0];
+            final float yUp = ys[0];
             
             queueEvent(new Runnable() {
                 @Override
@@ -341,6 +360,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         return true;
     }
     
+    /*
+     * This function is called before Cocos2dxRenderer.nativeInit(), so the width and height is correct.
+     */
+    protected void onSizeChanged(int w, int h, int oldw, int oldh){
+    	this.mRenderer.setScreenWidthAndHeight(w, h);
+    }
+    
  @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	final int kc = keyCode;
@@ -355,6 +381,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     	}
         return super.onKeyDown(keyCode, event);
     }
+ 
     // Show an event in the LogCat view, for debugging
     private void dumpEvent(MotionEvent event) {
        String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,

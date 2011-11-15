@@ -31,7 +31,7 @@ namespace cocos2d
 {
 	// implementation of CCWaves3D
 
-	CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCWaves3D* CCWaves3D::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCWaves3D *pAction = new CCWaves3D();
 
@@ -50,7 +50,7 @@ namespace cocos2d
 		return pAction;	
 	}
 
-	bool CCWaves3D::initWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCWaves3D::initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -64,7 +64,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCWaves3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCWaves3D* pCopy = NULL;
@@ -88,16 +88,16 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCWaves3D::update(cocos2d::ccTime time)
+	void CCWaves3D::update(ccTime time)
 	{
 		int i, j;
-
 		for (i = 0; i < m_sGridSize.x + 1; ++i)
 		{
 			for (j = 0; j < m_sGridSize.y + 1; ++j)
 			{
 				ccVertex3F v = originalVertex(ccg(i ,j));
 				v.z += (sinf((CGFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate);
+				CCLog("v.z offset is %f\n", (sinf((CGFloat)M_PI * time * m_nWaves * 2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate));
 				setVertex(ccg(i, j), v);
 			}
 		}
@@ -105,7 +105,7 @@ namespace cocos2d
 
 	// implementation of CCFlipX3D
 
-	CCFlipX3D* CCFlipX3D::actionWithDuration(cocos2d::ccTime duration)
+	CCFlipX3D* CCFlipX3D::actionWithDuration(ccTime duration)
 	{
 		CCFlipX3D *pAction = new CCFlipX3D();
 
@@ -124,12 +124,12 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCFlipX3D::initWithDuration(cocos2d::ccTime duration)
+	bool CCFlipX3D::initWithDuration(ccTime duration)
 	{
 		return CCGrid3DAction::initWithSize(ccg(1, 1), duration);
 	}
 
-	bool CCFlipX3D::initWithSize(cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCFlipX3D::initWithSize(const ccGridSize& gridSize, ccTime duration)
 	{
 		if (gridSize.x != 1 || gridSize.y != 1)
 		{
@@ -142,7 +142,7 @@ namespace cocos2d
 		return CCGrid3DAction::initWithSize(gridSize, duration);
 	}
 
-	CCObject* CCFlipX3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCFlipX3D* pCopy = NULL;
@@ -165,7 +165,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCFlipX3D::update(cocos2d::ccTime time)
+	void CCFlipX3D::update(ccTime time)
 	{
 		CGFloat angle = (CGFloat)M_PI * time; // 180 degrees
 		CGFloat mz = sinf(angle);
@@ -273,7 +273,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCFlipY3D::update(cocos2d::ccTime time)
+	void CCFlipY3D::update(ccTime time)
 	{
 		CGFloat angle = (CGFloat)M_PI * time; // 180 degrees
 		CGFloat mz = sinf( angle );
@@ -340,7 +340,7 @@ namespace cocos2d
 
 	// implementation of Lens3D
 
-	CCLens3D* CCLens3D::actionWithPosition(cocos2d::CCPoint pos, float r, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCLens3D* CCLens3D::actionWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCLens3D *pAction = new CCLens3D();
 
@@ -359,7 +359,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCLens3D::initWithPosition(cocos2d::CCPoint pos, float r, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCLens3D::initWithPosition(const CCPoint& pos, float r, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -375,7 +375,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCLens3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCLens3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCLens3D* pCopy = NULL;
@@ -398,7 +398,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-    void CCLens3D::setPosition(CCPoint pos)
+    void CCLens3D::setPosition(const CCPoint& pos)
     {
         if( ! CCPoint::CCPointEqualToPoint(pos, m_position) ) {
             m_position = pos;
@@ -409,7 +409,7 @@ namespace cocos2d
         }
     }
 
-	void CCLens3D::update(cocos2d::ccTime time)
+	void CCLens3D::update(ccTime time)
 	{
         CC_UNUSED_PARAM(time);
 		if (m_bDirty)
@@ -454,7 +454,7 @@ namespace cocos2d
 
 	// implementation of Ripple3D
 
-	CCRipple3D* CCRipple3D::actionWithPosition(cocos2d::CCPoint pos, float r, int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCRipple3D* CCRipple3D::actionWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCRipple3D *pAction = new CCRipple3D();
 
@@ -473,7 +473,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCRipple3D::initWithPosition(cocos2d::CCPoint pos, float r, int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCRipple3D::initWithPosition(const CCPoint& pos, float r, int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -489,14 +489,14 @@ namespace cocos2d
 		return false;
 	}
 
-    void CCRipple3D::setPosition(CCPoint position)
+    void CCRipple3D::setPosition(const CCPoint& position)
     {
         m_position = position;
         m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
         m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
     }
 
-	CCObject* CCRipple3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCRipple3D* pCopy = NULL;
@@ -519,7 +519,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCRipple3D::update(cocos2d::ccTime time)
+	void CCRipple3D::update(ccTime time)
 	{
 		int i, j;
 	
@@ -545,7 +545,7 @@ namespace cocos2d
 
 	// implementation of Shaky3D
 
-	CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCShaky3D* CCShaky3D::actionWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCShaky3D *pAction = new CCShaky3D();
 
@@ -564,7 +564,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCShaky3D::initWithRange(int range, bool shakeZ, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCShaky3D::initWithRange(int range, bool shakeZ, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -577,7 +577,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCShaky3D::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCShaky3D* pCopy = NULL;
@@ -600,7 +600,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCShaky3D::update(cocos2d::ccTime time)
+	void CCShaky3D::update(ccTime time)
 	{
         CC_UNUSED_PARAM(time);
 		int i, j;
@@ -624,7 +624,7 @@ namespace cocos2d
 
 	// implementation of Liquid
 
-	CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCLiquid* CCLiquid::actionWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCLiquid *pAction = new CCLiquid();
 
@@ -643,7 +643,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCLiquid::initWithWaves(int wav, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCLiquid::initWithWaves(int wav, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -657,7 +657,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCLiquid::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCLiquid::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCLiquid* pCopy = NULL;
@@ -680,7 +680,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCLiquid::update(cocos2d::ccTime time)
+	void CCLiquid::update(ccTime time)
 	{
 		int i, j;
 
@@ -698,7 +698,7 @@ namespace cocos2d
 
 	// implementation of Waves
 
-	CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCWaves* CCWaves::actionWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCWaves *pAction = new CCWaves();
 
@@ -717,7 +717,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCWaves::initWithWaves(int wav, float amp, bool h, bool v, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCWaves::initWithWaves(int wav, float amp, bool h, bool v, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -733,7 +733,7 @@ namespace cocos2d
 		return false;
 	}
 
-	CCObject* CCWaves::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCWaves::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCWaves* pCopy = NULL;
@@ -756,7 +756,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCWaves::update(cocos2d::ccTime time)
+	void CCWaves::update(ccTime time)
 	{
 		int i, j;
 
@@ -783,7 +783,7 @@ namespace cocos2d
 
 	// implementation of Twirl
 
-	CCTwirl* CCTwirl::actionWithPosition(cocos2d::CCPoint pos, int t, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	CCTwirl* CCTwirl::actionWithPosition(CCPoint pos, int t, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		CCTwirl *pAction = new CCTwirl();
 
@@ -802,7 +802,7 @@ namespace cocos2d
 		return pAction;
 	}
 
-	bool CCTwirl::initWithPosition(cocos2d::CCPoint pos, int t, float amp, cocos2d::ccGridSize gridSize, cocos2d::ccTime duration)
+	bool CCTwirl::initWithPosition(const CCPoint& pos, int t, float amp, const ccGridSize& gridSize, ccTime duration)
 	{
 		if (CCGrid3DAction::initWithSize(gridSize, duration))
 		{
@@ -817,14 +817,14 @@ namespace cocos2d
 		return false;
 	}
 
-    void CCTwirl::setPosition(CCPoint position)
+    void CCTwirl::setPosition(const CCPoint& position)
     {
         m_position = position;
         m_positionInPixels.x = position.x * CC_CONTENT_SCALE_FACTOR();
         m_positionInPixels.y = position.y * CC_CONTENT_SCALE_FACTOR();
     }
 
-	CCObject* CCTwirl::copyWithZone(cocos2d::CCZone *pZone)
+	CCObject* CCTwirl::copyWithZone(CCZone *pZone)
 	{
 		CCZone* pNewZone = NULL;
 		CCTwirl* pCopy = NULL;
@@ -848,7 +848,7 @@ namespace cocos2d
 		return pCopy;
 	}
 
-	void CCTwirl::update(cocos2d::ccTime time)
+	void CCTwirl::update(ccTime time)
 	{
 		int i, j;
 		CCPoint	c = m_positionInPixels;

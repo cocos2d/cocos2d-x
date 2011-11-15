@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "CCCommon.h"
 #include "CCAccelerometerDelegate.h"
-#include <list>
 
 namespace   cocos2d {
 
@@ -39,13 +38,12 @@ public:
 
     static CCAccelerometer* sharedAccelerometer();
 
-    void removeDelegate(CCAccelerometerDelegate* pDelegate);
-    void addDelegate(CCAccelerometerDelegate* pDelegate);
+    void setDelegate(CCAccelerometerDelegate* pDelegate);
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:
 	static CCAccelerometer* m_spCCAccelerometer;
-	std::list<CCAccelerometerDelegate*>* m_pAccelDelegates;
+	CCAccelerometerDelegate* m_pAccelDelegate;
 	CCAcceleration m_obAccelerationValue;
 };
 

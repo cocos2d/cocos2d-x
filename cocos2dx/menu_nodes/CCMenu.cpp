@@ -434,7 +434,7 @@ namespace cocos2d{
 		va_list args;
 		va_start(args, rows);
 
-		this->alignItemsInColumns(rows, args);
+		this->alignItemsInRows(rows, args);
 
 		va_end(args);
 	}
@@ -573,7 +573,7 @@ namespace cocos2d{
 		return m_cOpacity;
 	}
 
-	void CCMenu::setColor(cocos2d::ccColor3B var)
+	void CCMenu::setColor(const ccColor3B& var)
 	{
 		m_tColor = var;
 
@@ -595,12 +595,12 @@ namespace cocos2d{
 		}
 	}
 
-	ccColor3B CCMenu::getColor(void)
+	const ccColor3B& CCMenu::getColor(void)
 	{
 		return m_tColor;
 	}
 
-	CCMenuItem* CCMenu::itemForTouch(cocos2d::CCTouch *touch)
+	CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
 	{
 		CCPoint touchLocation = touch->locationInView(touch->view());
 		touchLocation = CCDirector::sharedDirector()->convertToGL(touchLocation);

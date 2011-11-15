@@ -61,11 +61,14 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 	public:
 		//override static method
 		/** Allocates and initializes the action */
 		static CCShow * action();
 	};
+
+
 
 	/** 
 	@brief Hide the node
@@ -78,6 +81,7 @@ namespace cocos2d {
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCFiniteTimeAction * reverse(void);
+		virtual CCObject* copyWithZone(CCZone *pZone);
 	public:
 		//override static method
 		/** Allocates and initializes the action */
@@ -157,9 +161,9 @@ namespace cocos2d {
 		CCPlace(){}
 		virtual ~CCPlace(){}
 		/** creates a Place action with a position */
-		static CCPlace * actionWithPosition(CCPoint pos);
+		static CCPlace * actionWithPosition(const CCPoint& pos);
 		/** Initializes a Place action with a position */
-		bool initWithPosition(CCPoint pos);
+		bool initWithPosition(const CCPoint& pos);
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
 		virtual CCObject* copyWithZone(CCZone *pZone);
@@ -174,8 +178,9 @@ namespace cocos2d {
 	public:
 		CCCallFunc()
             : m_pSelectorTarget(NULL)
-            , m_pCallFunc(NULL)
 			, m_scriptFuncName("")
+            , m_pCallFunc(NULL)
+
         {
 		}
 		virtual ~CCCallFunc()
@@ -201,7 +206,7 @@ namespace cocos2d {
 		virtual void execute();
 		//super methods
 		virtual void startWithTarget(CCNode *pTarget);
-		CCObject * copyWithZone(cocos2d::CCZone *pZone);
+		CCObject * copyWithZone(CCZone *pZone);
 
 		void registerScriptFunction(const char* pszFunctionName);
 

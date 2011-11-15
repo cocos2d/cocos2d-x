@@ -285,6 +285,9 @@
 		BF82FCF613A87F1A00616D55 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB713A87F1A00616D55 /* tolua_map.c */; };
 		BF82FCF713A87F1A00616D55 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB813A87F1A00616D55 /* tolua_push.c */; };
 		BF82FCF813A87F1A00616D55 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = BF82FCB913A87F1A00616D55 /* tolua_to.c */; };
+		BF87A2931414CC3B0025E979 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF87A2911414CC3B0025E979 /* Cocos2dxLuaLoader.cpp */; };
+		BF87A2941414CC3B0025E979 /* Cocos2dxLuaLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = BF87A2921414CC3B0025E979 /* Cocos2dxLuaLoader.h */; };
+		BF87A2A21414CCF60025E979 /* hello2.lua in Resources */ = {isa = PBXBuildFile; fileRef = BF87A2A11414CCF60025E979 /* hello2.lua */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
 		D463AE1613F572CF00374EAA /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D463AE1513F572CF00374EAA /* CCTexturePVR.cpp */; };
 		D4742F4F13F6273F002ED151 /* FontLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D4742F4413F6273F002ED151 /* FontLabel.h */; };
@@ -632,6 +635,9 @@
 		BF82FCB713A87F1A00616D55 /* tolua_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_map.c; sourceTree = "<group>"; };
 		BF82FCB813A87F1A00616D55 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		BF82FCB913A87F1A00616D55 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
+		BF87A2911414CC3B0025E979 /* Cocos2dxLuaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cocos2dxLuaLoader.cpp; sourceTree = "<group>"; };
+		BF87A2921414CC3B0025E979 /* Cocos2dxLuaLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dxLuaLoader.h; sourceTree = "<group>"; };
+		BF87A2A11414CCF60025E979 /* hello2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello2.lua; sourceTree = "<group>"; };
 		D403B5D8135D1AF1004B518D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		D463AE1513F572CF00374EAA /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
 		D4742F4413F6273F002ED151 /* FontLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontLabel.h; sourceTree = "<group>"; };
@@ -826,6 +832,8 @@
 		BF23C09F13B038AB00F32062 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				BF87A2911414CC3B0025E979 /* Cocos2dxLuaLoader.cpp */,
+				BF87A2921414CC3B0025E979 /* Cocos2dxLuaLoader.h */,
 				BF23C0A013B038AB00F32062 /* LuaCocos2d.h */,
 				BF23C0A113B038AB00F32062 /* LuaEngineImpl.h */,
 				BF23C0A213B038AB00F32062 /* LuaEngine.h */,
@@ -847,6 +855,7 @@
 		BF82F40313A8647B00616D55 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BF87A2A11414CCF60025E979 /* hello2.lua */,
 				655118CB13FAC63F00A8A20B /* effect1.wav */,
 				655118CC13FAC63F00A8A20B /* background.mp3 */,
 				D4CEAD9313B4770300780515 /* land.png */,
@@ -1625,6 +1634,7 @@
 				D4742F5713F6273F002ED151 /* ZAttributedStringPrivate.h in Headers */,
 				D4742F5813F6273F002ED151 /* ZFont.h in Headers */,
 				655118C513FAC48300A8A20B /* LuaSimpleAudioEngine.h in Headers */,
+				BF87A2941414CC3B0025E979 /* Cocos2dxLuaLoader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1707,6 +1717,7 @@
 				D4CEAD9A13B4770400780515 /* crop.png in Resources */,
 				655118CD13FAC63F00A8A20B /* effect1.wav in Resources */,
 				655118CE13FAC63F00A8A20B /* background.mp3 in Resources */,
+				BF87A2A21414CCF60025E979 /* hello2.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1878,6 +1889,7 @@
 				D4742F5613F6273F002ED151 /* ZAttributedString.m in Sources */,
 				D4742F5913F6273F002ED151 /* ZFont.m in Sources */,
 				655118C413FAC48300A8A20B /* LuaSimpleAudioEngine.cpp in Sources */,
+				BF87A2931414CC3B0025E979 /* Cocos2dxLuaLoader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1912,7 +1924,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
@@ -1957,7 +1969,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/include/libxml2/\"",

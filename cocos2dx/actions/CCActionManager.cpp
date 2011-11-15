@@ -189,7 +189,7 @@ void CCActionManager::resumeTarget(CCObject *pTarget)
 
 // run
 
-void CCActionManager::addAction(cocos2d::CCAction *pAction, CCNode *pTarget, bool paused)
+void CCActionManager::addAction(CCAction *pAction, CCNode *pTarget, bool paused)
 {
 	assert(pAction != NULL);
 	assert(pTarget != NULL);
@@ -261,7 +261,7 @@ void CCActionManager::removeAllActionsFromTarget(CCObject *pTarget)
 	}
 }
 
-void CCActionManager::removeAction(cocos2d::CCAction *pAction)
+void CCActionManager::removeAction(CCAction *pAction)
 {
 	// explicit null handling
 	if (pAction == NULL)
@@ -288,7 +288,7 @@ void CCActionManager::removeAction(cocos2d::CCAction *pAction)
 
 void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 {
-	assert(tag != kCCActionTagInvalid);
+    assert((int)tag != kCCActionTagInvalid);
 	assert(pTarget != NULL);
 
 	tHashElement *pElement = NULL;
@@ -301,7 +301,7 @@ void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 		{
 			CCAction *pAction = (CCAction*)pElement->actions->arr[i];
 
-			if (pAction->getTag() == tag && pAction->getOriginalTarget() == pTarget)
+            if (pAction->getTag() == (int)tag && pAction->getOriginalTarget() == pTarget)
 			{
 				removeActionAtIndex(i, pElement);
 				break;
@@ -314,7 +314,7 @@ void CCActionManager::removeActionByTag(unsigned int tag, CCObject *pTarget)
 
 CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
 {
-	assert(tag != kCCActionTagInvalid);
+    assert((int)tag != kCCActionTagInvalid);
 
 	tHashElement *pElement = NULL;
 	HASH_FIND_INT(m_pTargets, &pTarget, pElement);
@@ -328,7 +328,7 @@ CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
 			{
 				CCAction *pAction = (CCAction*)pElement->actions->arr[i];
 
-				if (pAction->getTag() == tag)
+                if (pAction->getTag() == (int)tag)
 				{
 					return pAction;
 				}
@@ -357,7 +357,7 @@ unsigned int CCActionManager::numberOfRunningActionsInTarget(CCObject *pTarget)
 }
 
 // main loop
-void CCActionManager::update(cocos2d::ccTime dt)
+void CCActionManager::update(ccTime dt)
 {
 	for (tHashElement *elt = m_pTargets; elt != NULL; )
 	{

@@ -64,10 +64,10 @@ public:
 	{}
 	virtual ~CCMotionStreak(){}
 	/** creates the a MotionStreak. The image will be loaded using the TextureMgr. */
-	static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
+	static CCMotionStreak * streakWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color);
 
 	/** initializes a MotionStreak. The file will be loaded using the TextureMgr. */
-	bool initWithFade(float fade, float seg, const char *imagePath, float width, float length, ccColor4B color);
+	bool initWithFade(float fade, float seg, const char *imagePath, float width, float length, const ccColor4B& color);
 
 	/** polling function */
 	void update(ccTime delta);

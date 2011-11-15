@@ -28,6 +28,8 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+
 //implementation CCParticleSystemPoint
 bool CCParticleSystemPoint::initWithTotalParticles(unsigned int numberOfParticles)
 {
@@ -75,7 +77,7 @@ CCParticleSystemPoint * CCParticleSystemPoint::particleWithFile(const char *plis
         return pRet;
 }
 
-void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, CCPoint newPosition)
+void CCParticleSystemPoint::updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition)
 {
 	// place vertices and colos in array
     m_pVertices[m_uParticleIdx].pos = vertex2(newPosition.x, newPosition.y);
@@ -201,5 +203,7 @@ void CCParticleSystemPoint::setEndSize(float size)
 		( size >= 0 && size <= CC_MAX_PARTICLE_SIZE), "PointParticleSystem only supports 0 <= size <= 64");
 	CCParticleSystem::setEndSize(size);
 }
+
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 
 }// namespace cocos2d

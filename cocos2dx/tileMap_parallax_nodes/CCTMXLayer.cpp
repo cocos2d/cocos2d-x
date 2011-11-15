@@ -221,7 +221,7 @@ namespace cocos2d {
 	}
 
 	// CCTMXLayer - obtaining tiles/gids
-	CCSprite * CCTMXLayer::tileAt(CCPoint pos)
+	CCSprite * CCTMXLayer::tileAt(const CCPoint& pos)
 	{
 		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
 		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -239,7 +239,7 @@ namespace cocos2d {
 			if( ! tile ) 
 			{
 				CCRect rect = m_pTileSet->rectForGID(gid);
-                                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 				tile = new CCSprite();
 				tile->initWithBatchNode(this, rect);
@@ -255,7 +255,7 @@ namespace cocos2d {
 		}
 		return tile;
 	}
-	unsigned int CCTMXLayer::tileGIDAt(CCPoint pos)
+	unsigned int CCTMXLayer::tileGIDAt(const CCPoint& pos)
 	{
 		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
 		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -265,10 +265,10 @@ namespace cocos2d {
 	}
 
 	// CCTMXLayer - adding helper methods
-	CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, CCPoint pos)
+	CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -315,10 +315,10 @@ namespace cocos2d {
 		m_pTiles[z] = gid;
 		return m_pReusedTile;
 	}
-	CCSprite * CCTMXLayer::updateTileForGID(unsigned int gid, CCPoint pos)	
+	CCSprite * CCTMXLayer::updateTileForGID(unsigned int gid, const CCPoint& pos)	
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
 		if( ! m_pReusedTile )
@@ -348,10 +348,10 @@ namespace cocos2d {
 
 	// used only when parsing the map. useless after the map was parsed
 	// since lot's of assumptions are no longer true
-	CCSprite * CCTMXLayer::appendTileForGID(unsigned int gid, CCPoint pos)
+	CCSprite * CCTMXLayer::appendTileForGID(unsigned int gid, const CCPoint& pos)
 	{
 		CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 		int z = (int)(pos.x + pos.y * m_tLayerSize.width);
 
@@ -396,7 +396,7 @@ namespace cocos2d {
 
 		CCAssert( item, "TMX atlas index not found. Shall not happen");
 
-		int index = ((int)item - (int)m_pAtlasIndexArray->arr) / sizeof(void*);
+        int index = ((size_t)item - (size_t)m_pAtlasIndexArray->arr) / sizeof(void*);
 		return index;
 	}
 	unsigned int CCTMXLayer::atlasIndexForNewZ(int z)
@@ -405,7 +405,7 @@ namespace cocos2d {
 		unsigned int i=0;
 		for( i=0; i< m_pAtlasIndexArray->num ; i++) 
 		{
-			int val = (int) m_pAtlasIndexArray->arr[i];
+            int val = (size_t) m_pAtlasIndexArray->arr[i];
 			if( z < val )
 				break;
 		}	
@@ -413,7 +413,7 @@ namespace cocos2d {
 	}
 
 	// CCTMXLayer - adding / remove tiles
-	void CCTMXLayer::setTileGID(unsigned int gid, CCPoint pos)
+	void CCTMXLayer::setTileGID(unsigned int gid, const CCPoint& pos)
 	{
 		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
 		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -443,7 +443,7 @@ namespace cocos2d {
 				if( sprite )
 				{
 					CCRect rect = m_pTileSet->rectForGID(gid);
-                                        rect = CCRect::CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
+                                        rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
 
 					sprite->setTextureRectInPixels(rect, false, rect.size);
 					m_pTiles[z] = gid;
@@ -472,12 +472,12 @@ namespace cocos2d {
 		CCAssert( m_pChildren->containsObject(sprite), "Tile does not belong to TMXLayer");
 
 		unsigned int atlasIndex = sprite->getAtlasIndex();
-		unsigned int zz = (unsigned int) m_pAtlasIndexArray->arr[atlasIndex];
+        unsigned int zz = (size_t) m_pAtlasIndexArray->arr[atlasIndex];
 		m_pTiles[zz] = 0;
 		ccCArrayRemoveValueAtIndex(m_pAtlasIndexArray, atlasIndex);
 		CCSpriteBatchNode::removeChild(sprite, cleanup);
 	}
-	void CCTMXLayer::removeTileAt(CCPoint pos)
+	void CCTMXLayer::removeTileAt(const CCPoint& pos)
 	{
 		CCAssert( pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
 		CCAssert( m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -527,7 +527,7 @@ namespace cocos2d {
 	}
 
 	//CCTMXLayer - obtaining positions, offset
-	CCPoint CCTMXLayer::calculateLayerOffset(CCPoint pos)
+	CCPoint CCTMXLayer::calculateLayerOffset(const CCPoint& pos)
 	{
 		CCPoint ret = CCPointZero;
 		switch( m_uLayerOrientation ) 
@@ -545,7 +545,7 @@ namespace cocos2d {
 		}
 		return ret;	
 	}
-	CCPoint CCTMXLayer::positionAt(CCPoint pos)
+	CCPoint CCTMXLayer::positionAt(const CCPoint& pos)
 	{
 		CCPoint ret = CCPointZero;
 		switch( m_uLayerOrientation )
@@ -562,19 +562,19 @@ namespace cocos2d {
 		}
 		return ret;
 	}
-	CCPoint CCTMXLayer::positionForOrthoAt(CCPoint pos)
+	CCPoint CCTMXLayer::positionForOrthoAt(const CCPoint& pos)
 	{
         CCPoint xy = CCPointMake(pos.x * m_tMapTileSize.width,
                                 (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height);
         return xy;
 	}
-	CCPoint CCTMXLayer::positionForIsoAt(CCPoint pos)
+	CCPoint CCTMXLayer::positionForIsoAt(const CCPoint& pos)
 	{
         CCPoint xy = CCPointMake(m_tMapTileSize.width /2 * ( m_tLayerSize.width + pos.x - pos.y - 1),
                                  m_tMapTileSize.height /2 * (( m_tLayerSize.height * 2 - pos.x - pos.y) - 2));
         return xy;
 	}
-	CCPoint CCTMXLayer::positionForHexAt(CCPoint pos)
+	CCPoint CCTMXLayer::positionForHexAt(const CCPoint& pos)
 	{
 		float diffY = 0;
 		if( (int)pos.x % 2 == 1 )
@@ -586,7 +586,7 @@ namespace cocos2d {
                                 (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY);
         return xy;
 	}
-	int CCTMXLayer::vertexZForPos(CCPoint pos)
+	int CCTMXLayer::vertexZForPos(const CCPoint& pos)
 	{
 		int ret = 0;
 		unsigned int maxVal = 0;

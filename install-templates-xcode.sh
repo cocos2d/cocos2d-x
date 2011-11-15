@@ -2,7 +2,7 @@
 
 echo 'cocos2d-x template installer'
 
-COCOS2D_VER='cocos2d-1.0.0-x-0.9.0'
+COCOS2D_VER='cocos2d-1.0.1-x-0.9.1'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 
@@ -101,13 +101,13 @@ copy_base_files(){
 copy_cocos2d_files(){
 	echo ...copying cocos2d files
 	copy_files cocos2dx "$LIBS_DIR"
-    copy_files LICENSE.cocos2d-x "$LIBS_DIR"
+    copy_files licenses/LICENSE_cocos2d-x.txt "$LIBS_DIR"
 }
 
 copy_cocosdenshion_files(){
 	echo ...copying CocosDenshion files
 	copy_files CocosDenshion "$LIBS_DIR"
-    # copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
+    # copy_files licenses/LICENSE_CocosDenshion.txt "$LIBS_DIR"
 }
 
 # copy_cocosdenshionextras_files(){
@@ -118,7 +118,7 @@ copy_cocosdenshion_files(){
 # copy_fontlabel_files(){
 #	echo ...copying FontLabel files
 #	copy_files external/FontLabel "$LIBS_DIR"
-#    copy_files LICENSE_FontLabel.txt "$LIBS_DIR"
+#    copy_files licenses/LICENSE_FontLabel.txt "$LIBS_DIR"
 # }
 
 # copy_cocoslive_files(){
@@ -127,7 +127,7 @@ copy_cocosdenshion_files(){
 
 #	echo ...copying TouchJSON files
 #	copy_files external/TouchJSON "$LIBS_DIR"
-#    copy_files LICENSE_TouchJSON.txt "$LIBS_DIR"
+#    copy_files licenses/LICENSE_TouchJSON.txt "$LIBS_DIR"
 # }
 
 print_template_banner(){
@@ -285,7 +285,7 @@ copy_xcode4_project_templates(){
 
 	echo ...copying Chipmunk files
 	copy_files chipmunk "$LIBS_DIR"
-    copy_files LICENSE.chipmunk "$LIBS_DIR"
+    copy_files licenses/LICENSE_chipmunk.txt "$LIBS_DIR"
 
 	echo done!
 
@@ -297,7 +297,7 @@ copy_xcode4_project_templates(){
 
 	echo ...copying Box2D files
 	copy_files Box2D "$LIBS_DIR"
-    copy_files LICENSE.box2d "$LIBS_DIR"
+    copy_files licenses/LICENSE_box2d.txt "$LIBS_DIR"
 
 	echo done!
 
@@ -310,8 +310,8 @@ copy_xcode4_project_templates(){
 
     echo ...copying lua files
     copy_files lua "$LIBS_DIR"
-    copy_files LICENSE.lua "$LIBS_DIR"
-    copy_files LICENSE.tolua++ "$LIBS_DIR"
+    copy_files licenses/LICENSE_lua.txt "$LIBS_DIR"
+    copy_files licenses/LICENSE_tolua++.txt "$LIBS_DIR"
 
     echo done!
 

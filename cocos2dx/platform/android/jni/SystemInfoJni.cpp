@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "SystemInfoJni.h"
 #include "JniHelper.h"
+#include "CCString.h"
 
 #include <android/log.h>
 #include <jni.h>
@@ -39,10 +40,9 @@ using namespace cocos2d;
 
 extern "C"
 {
-	char* getPackageNameJNI()
+	const char* getPackageNameJNI()
 	{
 		JniMethodInfo t;
-		char* ret = 0;
 
 		if (JniHelper::getStaticMethodInfo(t, 
 						"org/cocos2dx/lib/Cocos2dxActivity",
@@ -50,21 +50,24 @@ extern "C"
 						"()Ljava/lang/String;"))
 		{
 			jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
-			ret = (char*)JniHelper::jstring2string(str).c_str();
+			t.env->DeleteLocalRef(t.classID);
+			CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
+			ret->autorelease();
 
-			LOGD("package name %s", ret);
+			LOGD("package name %s", ret->m_sString.c_str());
+
+			return ret->m_sString.c_str();
 		}
 
-		return ret;
+		return 0;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
     // handle get current language
     //////////////////////////////////////////////////////////////////////////
-    char* getCurrentLanguageJNI()
+    const char* getCurrentLanguageJNI()
     {
         JniMethodInfo t;
-        char* ret = 0;
 
         if (JniHelper::getStaticMethodInfo(t
             , "org/cocos2dx/lib/Cocos2dxActivity"
@@ -72,11 +75,15 @@ extern "C"
             , "()Ljava/lang/String;"))
         {
             jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
-			ret = (char*)JniHelper::jstring2string(str).c_str();
+			t.env->DeleteLocalRef(t.classID);
+	        CCString *ret = new CCString(JniHelper::jstring2string(str).c_str());
+			ret->autorelease();
 
-			LOGD("language name %s", ret);
+	        LOGD("language name %s", ret.c_str());
+
+			return ret->m_sString.c_str();
         }
 
-        return ret;
+        return 0;
     }
 }

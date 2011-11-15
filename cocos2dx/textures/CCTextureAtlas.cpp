@@ -42,11 +42,11 @@ namespace   cocos2d {
 
 CCTextureAtlas::CCTextureAtlas()
     :m_pIndices(NULL)
-	,m_pTexture(NULL)	
-	,m_pQuads(NULL)
 #if CC_USES_VBO
-	, m_bDirty(false)
+    , m_bDirty(false)
 #endif
+    ,m_pTexture(NULL)
+	,m_pQuads(NULL)
 {}
 
 CCTextureAtlas::~CCTextureAtlas()
@@ -364,7 +364,7 @@ void CCTextureAtlas::drawQuads()
 
 void CCTextureAtlas::drawNumberOfQuads(unsigned int n)
 {
-	this->drawNumberOfQuads(m_uTotalQuads, 0);
+	this->drawNumberOfQuads(n, 0);
 }
 
 void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)

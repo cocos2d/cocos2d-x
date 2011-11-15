@@ -69,7 +69,7 @@ CCTextFieldTTF::~CCTextFieldTTF()
 // static constructor
 //////////////////////////////////////////////////////////////////////////
 
-CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {		
     CCTextFieldTTF *pRet = new CCTextFieldTTF();
     if(pRet && pRet->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
@@ -105,7 +105,7 @@ CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholde
 // initialize
 //////////////////////////////////////////////////////////////////////////
 
-bool CCTextFieldTTF::initWithPlaceHolder(const char *placeholder, CCSize dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
+bool CCTextFieldTTF::initWithPlaceHolder(const char *placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char *fontName, float fontSize)
 {
     if (placeholder)
     {

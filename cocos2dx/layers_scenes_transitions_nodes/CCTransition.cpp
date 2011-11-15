@@ -1035,7 +1035,7 @@ CCTransitionFade::~CCTransitionFade()
 }
 
 
-CCTransitionFade * CCTransitionFade::transitionWithDuration(ccTime duration, CCScene *scene, ccColor3B color)
+CCTransitionFade * CCTransitionFade::transitionWithDuration(ccTime duration, CCScene *scene, const ccColor3B& color)
 {
 	CCTransitionFade * pTransition = new CCTransitionFade();
 	pTransition->initWithDuration(duration, scene, color);
@@ -1043,7 +1043,7 @@ CCTransitionFade * CCTransitionFade::transitionWithDuration(ccTime duration, CCS
 	return pTransition;
 }
 
-bool CCTransitionFade::initWithDuration(ccTime duration, CCScene *scene, ccColor3B color)
+bool CCTransitionFade::initWithDuration(ccTime duration, CCScene *scene, const ccColor3B& color)
 {
 	if (CCTransitionScene::initWithDuration(duration, scene))
 	{
@@ -1350,7 +1350,7 @@ void CCTransitionFadeTR::onEnter()
 }
 
 
-CCActionInterval*  CCTransitionFadeTR::actionWithSize(ccGridSize size)
+CCActionInterval*  CCTransitionFadeTR::actionWithSize(const ccGridSize& size)
 {
 	return CCFadeOutTRTiles::actionWithSize(size, m_fDuration);
 }
@@ -1374,7 +1374,7 @@ CCTransitionFadeBL::~CCTransitionFadeBL()
 {
 }
 
-CCActionInterval*  CCTransitionFadeBL::actionWithSize(ccGridSize size)
+CCActionInterval*  CCTransitionFadeBL::actionWithSize(const ccGridSize& size)
 {
 	return CCFadeOutBLTiles::actionWithSize(size, m_fDuration);
 }
@@ -1391,7 +1391,7 @@ CCTransitionFadeUp::~CCTransitionFadeUp()
 {
 }
 
-CCActionInterval* CCTransitionFadeUp::actionWithSize(ccGridSize size)
+CCActionInterval* CCTransitionFadeUp::actionWithSize(const ccGridSize& size)
 {
 	return CCFadeOutUpTiles::actionWithSize(size, m_fDuration);
 }
@@ -1408,7 +1408,7 @@ CCTransitionFadeDown::~CCTransitionFadeDown()
 {
 }
 
-CCActionInterval* CCTransitionFadeDown::actionWithSize(ccGridSize size)
+CCActionInterval* CCTransitionFadeDown::actionWithSize(const ccGridSize& size)
 {
 	return CCFadeOutDownTiles::actionWithSize(size, m_fDuration);
 }

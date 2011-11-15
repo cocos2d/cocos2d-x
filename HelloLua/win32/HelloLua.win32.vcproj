@@ -135,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)lua\cocos2dx_support&quot;;&quot;.$(SolutionDir)\lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)lua\tolua&quot;;&quot;$(SolutionDir)lua\lua&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)CocosDenshion\Include&quot;"
+				AdditionalIncludeDirectories="..\Classes;&quot;$(SolutionDir)lua\cocos2dx_support&quot;;&quot;$(SolutionDir)lua\CocosDenshion_support&quot;;&quot;$(SolutionDir)lua\tolua&quot;;&quot;$(SolutionDir)lua\lua&quot;;&quot;$(SolutionDir)cocos2dx&quot;;&quot;$(SolutionDir)cocos2dx\include&quot;;&quot;$(SolutionDir)cocos2dx\platform&quot;;&quot;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES&quot;;&quot;$(SolutionDir)CocosDenshion\Include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG"
 				ExceptionHandling="0"
 				RuntimeLibrary="2"
@@ -204,6 +204,14 @@
 			<Filter
 				Name="cocos2dx_support"
 				>
+				<File
+					RelativePath="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\lua\cocos2dx_support\Cocos2dxLuaLoader.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\lua\cocos2dx_support\LuaCocos2d.cpp"
 					>

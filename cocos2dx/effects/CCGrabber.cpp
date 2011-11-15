@@ -46,7 +46,7 @@ namespace cocos2d
 		ccglGenFramebuffers(1, &m_fbo);
 	}
 
-	void CCGrabber::grab(cocos2d::CCTexture2D *pTexture)
+	void CCGrabber::grab(CCTexture2D *pTexture)
 	{
 		// If the gles version is lower than GLES_VER_1_0, 
 		// all the functions in CCGrabber return directly.
@@ -74,7 +74,7 @@ namespace cocos2d
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, m_oldFBO);
 	}
 	
-	void CCGrabber::beforeRender(cocos2d::CCTexture2D *pTexture)
+	void CCGrabber::beforeRender(CCTexture2D *pTexture)
 	{
         CC_UNUSED_PARAM(pTexture);
 		// If the gles version is lower than GLES_VER_1_0, 
