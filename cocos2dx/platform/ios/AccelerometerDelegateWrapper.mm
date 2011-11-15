@@ -84,6 +84,29 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     accelerationCpp.z = acceleration.z;
     accelerationCpp.timestamp = acceleration.timestamp;
     
+    double tmp = accelerationCpp.x;
+    
+    switch ([[UIApplication sharedApplication] statusBarOrientation]) 
+    {
+    case UIInterfaceOrientationLandscapeRight:
+        accelerationCpp.x = -acceleration.y;
+        accelerationCpp.y = tmp;
+        break;
+        
+    case UIInterfaceOrientationLandscapeLeft:
+        accelerationCpp.x = acceleration.y;
+        accelerationCpp.y = -tmp;
+        break;
+        
+    case UIInterfaceOrientationPortraitUpsideDown:
+        accelerationCpp.x = -accelerationCpp.y;
+        accelerationCpp.y = -tmp;
+        break;
+            
+    case UIInterfaceOrientationPortrait:
+        break;
+    }
+    
     for (AccelerometerDelegateWrapper *wrapper in delegateWrappers) {
         [wrapper didAccelerate: &accelerationCpp];
     }

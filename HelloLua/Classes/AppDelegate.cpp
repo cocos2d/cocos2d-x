@@ -3,7 +3,7 @@
 //#include "SimpleAudioEngine.h"
 
 
-#define IPHONE_4	0
+#include "SimpleAudioEngine.h"
 #define IPAD		0
 
 #if IPAD
@@ -18,6 +18,7 @@
 #endif
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 :m_pLuaEngine(NULL)
@@ -27,7 +28,8 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-//    SimpleAudioEngine::end();
+	// end simple audio engine here, or it may crashed on win32
+	SimpleAudioEngine::sharedEngine()->end();
     CCScriptEngineManager::sharedScriptEngineManager()->removeScriptEngine();
     CC_SAFE_DELETE(m_pLuaEngine);
 }

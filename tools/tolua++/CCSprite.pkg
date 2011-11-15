@@ -137,7 +137,6 @@ class  CCSprite : public CCNode, public CCTextureProtocol, public CCRGBAProtocol
   bool initWithFile(const char *pszFilename, CCRect rect);
 
 	bool initWithBatchNode(CCSpriteBatchNode *batchNode, CCRect rect);
-  bool initWithSpriteSheet(CCSpriteSheetInternalOnly *pSpriteSheet, CCRect rect);
 
 	bool initWithBatchNodeRectInPixels(CCSpriteBatchNode *batchNode, CCRect rect);
 

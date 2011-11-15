@@ -17,6 +17,10 @@
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
+		655118C413FAC48300A8A20B /* LuaSimpleAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 655118B813FAC3BD00A8A20B /* LuaSimpleAudioEngine.cpp */; };
+		655118C513FAC48300A8A20B /* LuaSimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 655118B913FAC3BD00A8A20B /* LuaSimpleAudioEngine.h */; };
+		655118CD13FAC63F00A8A20B /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 655118CB13FAC63F00A8A20B /* effect1.wav */; };
+		655118CE13FAC63F00A8A20B /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 655118CC13FAC63F00A8A20B /* background.mp3 */; };
 		BF23C0A613B038AB00F32062 /* LuaCocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = BF23C0A013B038AB00F32062 /* LuaCocos2d.h */; };
 		BF23C0A713B038AB00F32062 /* LuaEngineImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = BF23C0A113B038AB00F32062 /* LuaEngineImpl.h */; };
 		BF23C0A813B038AB00F32062 /* LuaEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = BF23C0A213B038AB00F32062 /* LuaEngine.h */; };
@@ -356,6 +360,10 @@
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		506EE05E10304ED200A389B3 /* libcocos2d libraries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d libraries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		655118B813FAC3BD00A8A20B /* LuaSimpleAudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaSimpleAudioEngine.cpp; path = CocosDenshion_support/LuaSimpleAudioEngine.cpp; sourceTree = "<group>"; };
+		655118B913FAC3BD00A8A20B /* LuaSimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaSimpleAudioEngine.h; path = CocosDenshion_support/LuaSimpleAudioEngine.h; sourceTree = "<group>"; };
+		655118CB13FAC63F00A8A20B /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
+		655118CC13FAC63F00A8A20B /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		BF23C0A013B038AB00F32062 /* LuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocos2d.h; sourceTree = "<group>"; };
 		BF23C0A113B038AB00F32062 /* LuaEngineImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaEngineImpl.h; sourceTree = "<group>"; };
 		BF23C0A213B038AB00F32062 /* LuaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaEngine.h; sourceTree = "<group>"; };
@@ -806,6 +814,15 @@
 			name = libs;
 			sourceTree = "<group>";
 		};
+		655118B713FAC39400A8A20B /* CocosDenshion_support */ = {
+			isa = PBXGroup;
+			children = (
+				655118B913FAC3BD00A8A20B /* LuaSimpleAudioEngine.h */,
+				655118B813FAC3BD00A8A20B /* LuaSimpleAudioEngine.cpp */,
+			);
+			name = CocosDenshion_support;
+			sourceTree = "<group>";
+		};
 		BF23C09F13B038AB00F32062 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -830,6 +847,8 @@
 		BF82F40313A8647B00616D55 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				655118CB13FAC63F00A8A20B /* effect1.wav */,
+				655118CC13FAC63F00A8A20B /* background.mp3 */,
 				D4CEAD9313B4770300780515 /* land.png */,
 				D4CEAD9413B4770300780515 /* farm.jpg */,
 				D4CEAD9513B4770400780515 /* dog.png */,
@@ -1343,6 +1362,7 @@
 		BF82FC4913A87F1900616D55 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				655118B713FAC39400A8A20B /* CocosDenshion_support */,
 				D4E4FF0C13B2F23800A3F698 /* lua */,
 				BF23C09F13B038AB00F32062 /* cocos2dx_support */,
 				BF82FCB213A87F1A00616D55 /* tolua */,
@@ -1604,6 +1624,7 @@
 				D4742F5513F6273F002ED151 /* ZAttributedString.h in Headers */,
 				D4742F5713F6273F002ED151 /* ZAttributedStringPrivate.h in Headers */,
 				D4742F5813F6273F002ED151 /* ZFont.h in Headers */,
+				655118C513FAC48300A8A20B /* LuaSimpleAudioEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +1705,8 @@
 				D4CEAD9813B4770400780515 /* farm.jpg in Resources */,
 				D4CEAD9913B4770400780515 /* dog.png in Resources */,
 				D4CEAD9A13B4770400780515 /* crop.png in Resources */,
+				655118CD13FAC63F00A8A20B /* effect1.wav in Resources */,
+				655118CE13FAC63F00A8A20B /* background.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1854,6 +1877,7 @@
 				D4742F5413F6273F002ED151 /* FontManager.m in Sources */,
 				D4742F5613F6273F002ED151 /* ZAttributedString.m in Sources */,
 				D4742F5913F6273F002ED151 /* ZFont.m in Sources */,
+				655118C413FAC48300A8A20B /* LuaSimpleAudioEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1896,6 +1920,7 @@
 					"\"$(SRCROOT)/../../lua/tolua\"",
 					"\"$(SRCROOT)/../../lua/src\"",
 					"$(SRCROOT)/../../lua/cocos2dx_support",
+					"$(SRCROOT)/../../lua/CocosDenshion_support",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -2033,6 +2058,7 @@
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Debug;
 		};
@@ -2053,6 +2079,7 @@
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv6 armv7 i386";
 			};
 			name = Release;
 		};

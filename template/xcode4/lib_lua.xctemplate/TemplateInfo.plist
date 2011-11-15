@@ -84,6 +84,30 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>CocosDenshion_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</string>
+		</dict>
+		<key>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>lua</string>
+				<string>CocosDenshion_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/lua/lua/lapi.c</key>
 		<dict>
 			<key>Group</key>
@@ -825,6 +849,8 @@
 		<string>libs/lua/cocos2dx_support/LuaEngine.h</string>
 		<string>libs/lua/cocos2dx_support/LuaEngineImpl.cpp</string>
 		<string>libs/lua/cocos2dx_support/LuaEngineImpl.h</string>
+		<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.cpp</string>
+		<string>libs/lua/CocosDenshion_support/LuaSimpleAudioEngine.h</string>
 		<string>libs/lua/lua/lapi.c</string>
 		<string>libs/lua/lua/lapi.h</string>
 		<string>libs/lua/lua/lauxlib.c</string>

@@ -115,3 +115,6 @@ $pfile "CCMenuItem.pkg"
 $pfile "CCMotionStreak.pkg"
 
 $pfile "CCCommon.pkg"
+$pfile "CCFileUtils.pkg"
+
+$pfile "CCParticleSystem.pkg"
