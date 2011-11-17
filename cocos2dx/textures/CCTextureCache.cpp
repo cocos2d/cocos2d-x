@@ -23,6 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#define COCOS2D_DEBUG 1
 
 #include <stack>
 #include <string>
@@ -48,7 +49,7 @@ typedef struct _AsyncStruct
 	SEL_CallFuncO		selector;
 } AsyncStruct;
 
-static cocos2d::CCImage	    *s_pImageAsync;
+static cocos2d::CCImage* s_pImageAsync;
 // only allow one loading thread at a time
 static pthread_mutex_t		s_loadingThreadMutex;
 // condition
@@ -71,10 +72,22 @@ static void* loadImage(void* data)
 
 	CCLOG("thread 0x%x is loading image %s", pthread_self(), filename);
 
-	s_pImageAsync = new CCImage();
-	s_pImageAsync->initWithImageFile(filename);
+	CCImage *tmpImage = new CCImage();
+	tmpImage->initWithImageFile(filename);
+	s_pImageAsync = tmpImage;
 
-	// wait for rendering thread to comsume the image
+	/* Wait for rendering thread to comsume the image.
+	 * The implemntation of pthread_cond_wait() of win32 has a bug, it can not
+	 * wait the condition at first time.
+	 */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	static bool firstRun = true;
+	if (firstRun)
+	{
+		pthread_cond_wait(&s_condition, &s_conditionMutex);
+		firstRun = false;
+	}
+#endif
     pthread_cond_wait(&s_condition, &s_conditionMutex);
 
 	CCLOG("thread 0x%x has pass the condition, new loading thread is avalable", pthread_self());
@@ -174,6 +187,7 @@ void CCTextureCache::addImageAsyncCallBack(ccTime dt)
 	// the image is generated in loading thread
 	if (s_pImageAsync != NULL)
 	{
+		
 		SelectorProtocol *target = s_pAsyncObject->target;
 		SEL_CallFuncO selector = s_pAsyncObject->selector;
 		const char* filename = s_pAsyncObject->filename.c_str();
