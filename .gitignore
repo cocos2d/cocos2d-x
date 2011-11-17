@@ -1,6 +1,9 @@
 
 #ignore thumbnails created by windows
 Thumbs.db
+*~
+*.swp
+
 #Ignore files build by Visual Studio
 *.obj
 *.exe
@@ -27,6 +30,9 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+*.sdf
+*.opensdf
+ipch/
 
 # Ignore files build by ndk and eclipse
 libs/

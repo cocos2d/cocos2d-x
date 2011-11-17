@@ -19,14 +19,15 @@
 
 using namespace OpenGLES;
 
-OpenGLESImplementation::OpenGLESImplementation() 
+OpenGLESImplementation::OpenGLESImplementation()
+	: shaderBinaryFormats(0)
 {
 	
 }
 
 OpenGLESImplementation::~OpenGLESImplementation() 
 {
-	free(shaderBinaryFormats);
+	delete[] shaderBinaryFormats;
 }
 
 void OpenGLESImplementation::print()

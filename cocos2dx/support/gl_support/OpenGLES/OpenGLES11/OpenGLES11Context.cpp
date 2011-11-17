@@ -18,34 +18,7 @@
 #include "OpenGLESUtil.h"
 #include "OpenGLES11Implementation.h"
 
-#include "CCPlatformConfig.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "OpenGLES/ES1/gl.h"
-#include "OpenGLES/ES1/glext.h"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#error "Not tested platform"
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#error "Not tested platform"
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-#error "Not tested platform"
-#include <IwGL.h>
-#endif
+#include "CCGLHeader.h"
 
 using namespace OpenGLES::OpenGLES1;
 
@@ -762,49 +735,49 @@ void OpenGLES11Context::glDeleteBuffers (GLsizei n, const GLuint *buffers)
 
 void OpenGLES11Context::glDrawTexsOES (GLshort x, GLshort y, GLshort z, GLshort width, GLshort height)
 {
-	::glDrawTexsOES(x, y, z, width, height);
+	glDrawTexsOES(x, y, z, width, height);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glDrawTexiOES (GLint x, GLint y, GLint z, GLint width, GLint height)
 {
-	::glDrawTexiOES(x, y, z, width, height);
+	glDrawTexiOES(x, y, z, width, height);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glDrawTexxOES (GLfixed x, GLfixed y, GLfixed z, GLfixed width, GLfixed height)
 {
-	::glDrawTexxOES(x, y, z, width, height);
+	glDrawTexxOES(x, y, z, width, height);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glDrawTexsvOES (const GLshort *coords)
 {
-	::glDrawTexsvOES(coords);
+	glDrawTexsvOES(coords);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glDrawTexivOES (const GLint *coords)
 {
-	::glDrawTexivOES(coords);
+	glDrawTexivOES(coords);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glDrawTexxvOES (const GLfixed *coords) 
 {
-	::glDrawTexxvOES(coords);
+	glDrawTexxvOES(coords);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glDrawTexfOES (GLfloat x, GLfloat y, GLfloat z, GLfloat width, GLfloat height)
 {
-	::glDrawTexfOES(x, y, z, width, height);
+	glDrawTexfOES(x, y, z, width, height);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glDrawTexfvOES (const GLfloat *coords)
 {
-	::glDrawTexfvOES(coords);
+	glDrawTexfvOES(coords);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
@@ -990,31 +963,31 @@ void OpenGLES11Context::glTexParameteriv (GLenum target, GLenum pname, const GLi
 
 void OpenGLES11Context::glCurrentPaletteMatrixOES (GLuint matrixpaletteindex)
 {
-	::glCurrentPaletteMatrixOES(matrixpaletteindex);
+	glCurrentPaletteMatrixOES(matrixpaletteindex);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glLoadPaletteFromModelViewMatrixOES (void)
 {
-	::glLoadPaletteFromModelViewMatrixOES();
+	glLoadPaletteFromModelViewMatrixOES();
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glMatrixIndexPointerOES (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
 {
-	::glMatrixIndexPointerOES(size, type, stride, pointer);
+	glMatrixIndexPointerOES(size, type, stride, pointer);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glWeightPointerOES (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
 {
-	::glWeightPointerOES(size, type, stride, pointer);
+	glWeightPointerOES(size, type, stride, pointer);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
 void OpenGLES11Context::glPointSizePointerOES (GLenum type, GLsizei stride, const GLvoid *pointer)
 {
-	::glPointSizePointerOES(type, stride, pointer);
+	glPointSizePointerOES(type, stride, pointer);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
 }
 
@@ -1067,7 +1040,9 @@ void OpenGLES11Context::glBlendEquationSeparate (GLenum modeRGB, GLenum modeAlph
 void OpenGLES11Context::glBlendFuncSeparate (GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
 {
 #ifdef GL_OES_blend_func_separate
-	::glBlendFuncSeparateOES(srcRGB, dstRGB, srcAlpha, dstAlpha);
+#if  (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+	glBlendFuncSeparateOES(srcRGB, dstRGB, srcAlpha, dstAlpha);
+#endif
 #else
 	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: No effect in OpenGL ES 1.x");
 #endif
@@ -1128,11 +1103,11 @@ void OpenGLES11Context::glDisableVertexAttribArray (GLuint index)
 }
 
 void OpenGLES11Context::glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: Not implemented on Android");
-#else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	::glDiscardFramebufferEXT(target, numAttachments, attachments);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+#else
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: No effect in OpenGL ES 1.x");
 #endif
 }
 
@@ -1307,20 +1282,20 @@ void OpenGLES11Context::glRenderbufferStorage (GLenum target, GLenum internalfor
 }
 
 void OpenGLES11Context::glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: Not implemented on Android");
-#else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	::glRenderbufferStorageMultisampleAPPLE(target, samples, internalformat, width, height);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+#else
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: No effect in OpenGL ES 1.x");
 #endif
 }
 
 void OpenGLES11Context::glResolveMultisampleFramebufferAPPLE(void) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: Not implemented on Android");
-#else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	::glResolveMultisampleFramebufferAPPLE();
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+#else
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: No effect in OpenGL ES 1.x");
 #endif
 }
 

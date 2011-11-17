@@ -127,7 +127,7 @@ touch_dispatcher/CCTouchHandler.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/platform \
-					$(LOCAL_PATH)/support/gl_support/OpenGLES \
+                    $(LOCAL_PATH)/support/gl_support/OpenGLES \
                     $(LOCAL_PATH)/platform/third_party/android/iconv \
                     $(LOCAL_PATH)/platform/third_party/android/libpng \
                     $(LOCAL_PATH)/platform/third_party/android/libxml2 \

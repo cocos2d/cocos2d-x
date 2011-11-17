@@ -70,6 +70,15 @@
     <Filter Include="script_support">
       <UniqueIdentifier>{e20bbd88-a111-40c3-9d5d-387a4c9cd4d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\gl_support">
+      <UniqueIdentifier>{4577b4f6-3c79-4b0f-94a0-76d2c209c622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\gl_support\OpenGLES">
+      <UniqueIdentifier>{44e076f1-8e2c-4066-ac6e-506cea320745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\gl_support\OpenGLES\OpenGLES11">
+      <UniqueIdentifier>{6359573e-168e-4f99-a83f-ac6390db4b36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -332,6 +341,30 @@
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp">
       <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESConfig.cpp">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESContext.cpp">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESFile.cpp">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESImplementation.cpp">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESString.cpp">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESUtil.cpp">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -689,6 +722,36 @@
     <ClInclude Include="..\CCConfiguration.h" />
     <ClInclude Include="..\include\CCTexturePVR.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESConfig.h">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESContext.h">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESFile.h">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESImplementation.h">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESMath.h">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESString.h">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESUtil.h">
+      <Filter>support\gl_support\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCGLHeader.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
