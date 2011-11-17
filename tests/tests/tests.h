@@ -44,6 +44,7 @@
 #include "Texture2dTest/Texture2dTest.h"
 #include "FontTest/FontTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
+#include "TextureCacheTest/TextureCacheTest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
 	#include "ChipmunkTest/cocos2dChipmunkDemo.h"
@@ -98,6 +99,7 @@ enum
     TEST_BUGS,
 	TEST_FONTS,
 	TEST_CURRENT_LANGUAGE,
+	TEST_TEXTURECACHE,
 
     TESTS_COUNT,
 };
@@ -144,6 +146,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "BugsTest",
 	"FontTest",
 	"CurrentLanguageTest",
+	"TextureCacheTest"
 };
 
 #endif

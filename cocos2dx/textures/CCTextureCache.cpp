@@ -69,7 +69,7 @@ static void* loadImage(void* data)
 	s_pAsyncObject = (AsyncStruct*)data;
 	const char *filename = s_pAsyncObject->filename.c_str();
 
-	CCLOG("thread 0x%x is loading image %s", pthread_self(), (void*)filename);
+	CCLOG("thread 0x%x is loading image %s", pthread_self(), filename);
 
 	s_pImageAsync = new CCImage();
 	s_pImageAsync->initWithImageFile(filename);
