@@ -23,6 +23,7 @@
 #include "OpenGLESState.h"
 #include <string>
 
+using namespace OpenGLES;
 using namespace OpenGLES::OpenGLES2;
 
 ShaderProgram::ShaderProgram(OpenGLESString name, Shader *vertexShader, Shader *fragmentShader) : name(name)

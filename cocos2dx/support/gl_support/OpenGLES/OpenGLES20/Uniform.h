@@ -17,34 +17,7 @@
 #ifndef Uniform_H_
 #define Uniform_H_
 
-#include "CCPlatformConfig.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "OpenGLES/ES2/gl.h"
-#include "OpenGLES/ES2/glext.h"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
-#error "Not tested platform"
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#error "Not tested platform"
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
-#error "Not tested platform"
-#include <IwGL.h>
-#endif
+#include "CCGL2Header.h"
 
 #include <string>
 #include <sstream>
@@ -93,7 +66,7 @@ namespace OpenGLES {
 			Uniform();
 			~Uniform();
 			
-			void setValue(T val);
+			inline void setValue(T val);
 			virtual const T getValue();
 			void upload(ShaderProgram *program);
 			virtual std::vector<ShaderFile *> getAdditionalRequiredShaderFiles();
@@ -229,7 +202,7 @@ namespace OpenGLES {
 		}
 		
 		template <class T>
-		void Uniform<T>::setValue( T val )
+		inline void Uniform<T>::setValue( T val )
 		{
 			// TODO: Profile whether this if clause is an optimization
 			//if (value != val) {

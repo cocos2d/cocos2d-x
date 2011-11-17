@@ -23,6 +23,7 @@
 #include "Shader.h"
 #include "OpenGLESImplementation.h"
 
+using namespace OpenGLES;
 using namespace OpenGLES::OpenGLES2;
 
 OpenGLESState::OpenGLESState() : stateShaderPrograms(), currentStateShaderProgram(0), stateSize(1 + (UniformId::STATE_UNIFORM_BOOL_COUNT / 32) + UniformId::STATE_UNIFORM_INT_COUNT), stateSizeBool(1 + (UniformId::STATE_UNIFORM_BOOL_COUNT / 32)), activeTexture(0), clientActiveTexture(0)

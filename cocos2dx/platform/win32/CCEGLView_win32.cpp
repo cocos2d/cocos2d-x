@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 
 #include "EGL/egl.h"
-#include "support/gl_support/OpenGLES/OpenGLES11/OpenGLES11Context.h"
-//#include "support/gl_support/OpenGLES/OpenGLES20/OpenGLES20Context.h"
+#include "OpenGLES11/OpenGLES11Context.h"
+#include "OpenGLES20/OpenGLES20Context.h"
 
 #include "CCSet.h"
 #include "ccMacros.h"
@@ -98,7 +98,12 @@ public:
 				|| (iConfigs != 1));
 
 			EGLContext eglContext;
-			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
+			const EGLint * pAttribsList = 0;
+#if CC_OPENGLES20_SUPPORT
+			EGLint ai32ContextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+			pAttribsList = ai32ContextAttribs;
+#endif
+			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, pAttribsList);
 			CC_BREAK_IF(EGL_NO_CONTEXT == eglContext);
 
 			EGLSurface eglSurface;
@@ -112,14 +117,11 @@ public:
 			pEGL->m_eglContext = eglContext;
 			pEGL->m_eglSurface = eglSurface;
 
-			if (2 == nMajor) 
-			{
-
-			}
-			else
-			{
-				pEGL->m_pglContent = new OpenGLES::OpenGLES1::OpenGLES11Context();
-			}
+#if CC_OPENGLES20_SUPPORT
+			pEGL->m_pglContent = new OpenGLES::OpenGLES2::OpenGLES20Context();
+#else
+			pEGL->m_pglContent = new OpenGLES::OpenGLES1::OpenGLES11Context();
+#endif
 			CC_BREAK_IF(! pEGL->m_pglContent);
 			bSuccess = TRUE;
 		} while (0);
@@ -184,7 +186,7 @@ private:
 };
 
 //////////////////////////////////////////////////////////////////////////
-// impliment CCEGLView
+// implement CCEGLView
 //////////////////////////////////////////////////////////////////////////
 static CCEGLView * s_pMainWindow;
 static const WCHAR * kWindowClassName = L"Cocos2dxWin32";

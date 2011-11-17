@@ -79,6 +79,9 @@
     <Filter Include="support\gl_support\OpenGLES\OpenGLES11">
       <UniqueIdentifier>{6359573e-168e-4f99-a83f-ac6390db4b36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="support\gl_support\OpenGLES\OpenGLES20">
+      <UniqueIdentifier>{de78f02c-8e78-4f34-b9ac-3a14110544ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp">
@@ -365,6 +368,36 @@
     </ClCompile>
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.cpp">
       <Filter>support\gl_support\OpenGLES\OpenGLES11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Implementation.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLESState.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Shader.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderFile.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderProgram.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderSource.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClCompile>
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Uniform.cpp">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -752,6 +785,36 @@
     </ClInclude>
     <ClInclude Include="..\platform\CCGLHeader.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Implementation.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLESState.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Shader.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderFile.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderProgram.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderSource.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
+    </ClInclude>
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Uniform.h">
+      <Filter>support\gl_support\OpenGLES\OpenGLES20</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

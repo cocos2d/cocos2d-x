@@ -74,7 +74,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -110,7 +110,7 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libgles_cm.lib;libglesv2.lib;libxml2.lib;libzlib.lib;libpng.lib;libjpeg.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -192,6 +192,16 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClCompile Include="..\support\ccUtils.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Implementation.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLESState.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Shader.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderFile.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderProgram.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderSource.cpp" />
+    <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLES20\Uniform.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESConfig.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESContext.cpp" />
     <ClCompile Include="..\support\gl_support\OpenGLES\OpenGLESFile.cpp" />
@@ -340,6 +350,16 @@ xcopy /Y /Q "$(SolutionDir)cocos2dx\platform\third_party\win32\libraries\*.*" "$
     <ClInclude Include="..\support\ccUtils.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Context.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES11\OpenGLES11Implementation.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Attribute.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\MatrixStack.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Context.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLES20Implementation.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\OpenGLESState.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Shader.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderFile.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderProgram.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\ShaderSource.h" />
+    <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLES20\Uniform.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESConfig.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESContext.h" />
     <ClInclude Include="..\support\gl_support\OpenGLES\OpenGLESFile.h" />

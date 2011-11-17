@@ -20,7 +20,24 @@
 using namespace OpenGLES;
 
 OpenGLESImplementation::OpenGLESImplementation()
-	: shaderBinaryFormats(0)
+: colorReadFormat(0)
+, colorReadType(0)
+, maxCombinedTextureImageUnits(3)
+, maxCubeMapTextureSize(0)
+, maxFragmentUniformVectors(0)
+, maxRenderBufferSize(0)
+, maxTextureImageUnits(3)
+, maxTextureSize(0)
+, maxVaryingVectors(0)
+, maxVertexAttribs(0)
+, maxVertexTextureImageUnits(0)
+, maxVertexUniformVectors(0)
+, numCompressedTextureFormats(0)
+, numShaderBinaryFormats(1)
+, shaderBinaryFormats(0)
+, shaderCompilerSupported(false)
+, depthBits(0)
+, stencilBits(0)
 {
 	
 }
