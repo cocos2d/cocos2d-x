@@ -5,7 +5,7 @@
 
 TextureCacheTest::TextureCacheTest()
 : m_nNumberOfSprites(24)
-, m_nNumberOfLoadedSprites(1)
+, m_nNumberOfLoadedSprites(0)
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
@@ -49,8 +49,7 @@ void TextureCacheTest::loadingCallBack(CCObject *obj)
 {
 	++m_nNumberOfLoadedSprites;
 	char tmp[10];
-	//sprintf(tmp,"%%d", ((float)m_nNumberOfLoadedSprites / m_nNumberOfSprites) * 100);
-	sprintf(tmp,"%d", m_nNumberOfLoadedSprites);
+	sprintf(tmp,"%%%d", (int)(((float)m_nNumberOfLoadedSprites / m_nNumberOfSprites) * 100));
 	m_pLabelPercent->setString(tmp);
 
 	if (m_nNumberOfLoadedSprites == m_nNumberOfSprites)
