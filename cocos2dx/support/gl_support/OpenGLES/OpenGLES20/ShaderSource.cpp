@@ -33,7 +33,7 @@ ShaderSource::ShaderSource( ShaderFile *file, std::string additionalSource ) : f
 
 bool ShaderSource::expandSource()
 {
-	static char tmp[1024*16];
+	static char tmp[1024*32];
 
 	if (!file->open())
 	{

@@ -113,12 +113,12 @@ void CCEGLView::touchesCancelled(CCSet *set)
 
 void CCEGLView::setViewPortInPoints(float x, float y, float w, float h)
 {
-    glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
 }
 
 void CCEGLView::setScissorInPoints(float x, float y, float w, float h)
 {
-    glScissor((GLint)x, (GLint)y, (GLint)w, (GLint)h);
+    cocos2d::CCDirector::sharedDirector()->getGLContext()->glScissor((GLint)x, (GLint)y, (GLint)w, (GLint)h);
 }
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)

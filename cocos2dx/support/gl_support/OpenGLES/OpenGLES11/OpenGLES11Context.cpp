@@ -17,8 +17,35 @@
 #include "OpenGLES11Context.h"
 #include "OpenGLESUtil.h"
 #include "OpenGLES11Implementation.h"
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
+
+#include "CCPlatformConfig.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "OpenGLES/ES1/gl.h"
+#include "OpenGLES/ES1/glext.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE)
+#error "Not tested platform"
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#error "Not tested platform"
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_AIRPLAY)
+#error "Not tested platform"
+#include <IwGL.h>
+#endif
 
 using namespace OpenGLES::OpenGLES1;
 
@@ -1101,8 +1128,12 @@ void OpenGLES11Context::glDisableVertexAttribArray (GLuint index)
 }
 
 void OpenGLES11Context::glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: Not implemented on Android");
+#else
 	::glDiscardFramebufferEXT(target, numAttachments, attachments);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+#endif
 }
 
 void OpenGLES11Context::glEnableVertexAttribArray (GLuint index)
@@ -1276,13 +1307,21 @@ void OpenGLES11Context::glRenderbufferStorage (GLenum target, GLenum internalfor
 }
 
 void OpenGLES11Context::glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: Not implemented on Android");
+#else
 	::glRenderbufferStorageMultisampleAPPLE(target, samples, internalformat, width, height);
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);
+#endif
 }
 
 void OpenGLES11Context::glResolveMultisampleFramebufferAPPLE(void) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	OPENGLES_LOG_DEBUG_MESSAGE(__FILE__, __LINE__, "WARNING: Not implemented on Android");
+#else
 	::glResolveMultisampleFramebufferAPPLE();
 	OPENGLES_CHECK_GL_ERROR(glGetError(), __FILE__, __LINE__);	
+#endif
 }
 
 void OpenGLES11Context::glShaderBinary (GLsizei n, const GLuint* shaders, GLenum binaryformat, const GLvoid* binary, GLsizei length)
