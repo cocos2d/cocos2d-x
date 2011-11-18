@@ -89,6 +89,12 @@ public:
     */
     static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFile(const char *pFileName);
 
+	/*
+	@brief The same meaning as dictionaryWithContentsOfFile(), but it doesn't call autorelease, so the
+	       invoker should call release().
+	*/
+	static CCDictionary<std::string, CCObject*> *dictionaryWithContentsOfFileThreadSafe(const char *pFileName);
+
 	/**
 	@brief   Get the writeable path
 	@return  The path that can write/read file

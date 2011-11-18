@@ -116,7 +116,7 @@ static TestScene* CreateTestScene(int nIdx)
 		pScene = new FontTestScene(); break;
 	case TEST_CURRENT_LANGUAGE:
 		pScene = new CurrentLanguageTestScene(); break;
-		break;
+	case TEST_TEXTURECACHE: pScene = new TextureCacheTestScene(); break;
 #endif
 	
     default:

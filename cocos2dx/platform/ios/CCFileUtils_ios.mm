@@ -291,7 +291,16 @@ namespace cocos2d {
         pRet->m_sString += pszFilename;
         return pRet->m_sString.c_str();
     }
+    
     CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFile(const char *pFileName)
+    {
+        CCDictionary<std::string, CCObject*> *ret = dictionaryWithContentsOfFileThreadSafe(pFileName);
+	      ret->autorelease();
+	      
+	      return ret;
+    }
+    
+    CCDictionary<std::string, CCObject*> *CCFileUtils::dictionaryWithContentsOfFileThreadSafe(const char *pFileName)
     {
         NSString* pPath = [NSString stringWithUTF8String:pFileName];
         NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
@@ -301,9 +310,10 @@ namespace cocos2d {
             id value = [pDict objectForKey:key];
             static_addValueToCCDict(key, value, pRet);
         }
-        pRet->autorelease();
+
         return pRet;
     }
+    
     unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
     {
         unsigned char * pBuffer = NULL;
