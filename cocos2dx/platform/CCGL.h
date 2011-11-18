@@ -138,6 +138,12 @@ extern PFNGLDELETEBUFFERSARBPROC 			glDeleteBuffersARB;
 #include <IwGL.h>
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include "GLES/gl.h"
+#include "GLES/glext.h"
+
+#endif
+
 NS_CC_BEGIN;
 
 /*
