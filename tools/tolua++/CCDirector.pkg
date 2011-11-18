@@ -1,4 +1,15 @@
 
+typedef enum {
+    /// Device oriented vertically, home button on the bottom
+    kCCDeviceOrientationPortrait = 0, // UIDeviceOrientationPortrait,
+    /// Device oriented vertically, home button on the top
+    kCCDeviceOrientationPortraitUpsideDown = 1, // UIDeviceOrientationPortraitUpsideDown,
+    /// Device oriented horizontally, home button on the right
+    kCCDeviceOrientationLandscapeLeft = 2, // UIDeviceOrientationLandscapeLeft,
+    /// Device oriented horizontally, home button on the left
+    kCCDeviceOrientationLandscapeRight = 3, // UIDeviceOrientationLandscapeRight,
+} ccDeviceOrientation;
+
 class CCDirector : public CCObject
 {
     CCScene* getRunningScene(void);
@@ -36,6 +47,8 @@ class CCDirector : public CCObject
 
     void setContentScaleFactor(CGFloat scaleFactor);
     CGFloat getContentScaleFactor(void);
+
+    int getDeviceOrientation();
 
     static CCDirector* sharedDirector(void);
 };

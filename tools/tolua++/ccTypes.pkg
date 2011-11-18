@@ -1,4 +1,6 @@
 
+typedef _lua_function       LUA_FUNCTION;
+
 typedef unsigned char    GLubyte;
 typedef int              GLint;
 typedef int              GLsizei;

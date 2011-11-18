@@ -11,8 +11,10 @@ class CCScheduler : public CCObject
     ccTime getTimeScale(void);
     void setTimeScale(ccTime fTimeScale);
 
-    void scheduleScriptFunc(const char *pszFuncName, ccTime fInterval, bool bPaused);
-    void unscheduleScriptFunc(const char *pszFuncName);
+
+    int scheduleScriptFunc(LUA_FUNCTION function, ccTime fInterval, bool bPaused);
+    void unscheduleScriptFunc(int handle);
+
     void scheduleUpdateForTarget(SelectorProtocol *pTarget, int nPriority, bool bPaused);
     void unscheduleUpdateForTarget(const SelectorProtocol *pTarget);
 
@@ -25,5 +27,3 @@ class CCScheduler : public CCObject
 
     static CCScheduler* sharedScheduler(void);
 };
-
-// } // namespace cocos2d

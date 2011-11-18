@@ -18,7 +18,9 @@
 
     <replace file="LuaCocos2d.cpp">
       <replacetoken><![CDATA[tolua_pushusertype_ccobject(tolua_S,(void*)tolua_ret]]></replacetoken>
-      <replacevalue><![CDATA[tolua_pushusertype_ccobject(tolua_S, &tolua_ret->m_refId, (void*)tolua_ret]]></replacevalue>
+      <replacevalue><![CDATA[int uID = (tolua_ret) ? tolua_ret->m_uID : -1;
+    int* pRefID = (tolua_ret) ? &tolua_ret->m_refID : NULL;
+    tolua_pushusertype_ccobject(tolua_S, uID, pRefID, (void*)tolua_ret]]></replacevalue>
     </replace>
 
     <replace file="LuaCocos2d.cpp">
@@ -33,8 +35,32 @@
     </replace>
 
     <replace file="LuaCocos2d.cpp">
-      <replacetoken><![CDATA[#include "LuaCocos2d.h"]]></replacetoken>
-      <replacevalue><![CDATA[#include "LuaCocos2d.h"
+      <replacetoken><![CDATA["LUA_FUNCTION",0,&tolua_err]]></replacetoken>
+      <replacevalue><![CDATA[&tolua_err]]></replacevalue>
+    </replace>
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA[LUA_FUNCTION function = *((LUA_FUNCTION*)  tolua_ref_function(tolua_S,]]></replacetoken>
+      <replacevalue><![CDATA[int function = (tolua_ref_function(tolua_S,]]></replacevalue>
+    </replace>
+
+    <replace file="LuaCocos2d.cpp">
+      <replacetoken><![CDATA[#ifndef __cplusplus
+#include "stdlib.h"
+#endif
+#include "string.h"
+
+#include "tolua++.h"
+
+/* Exported function */
+TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]]></replacetoken>
+      <replacevalue><![CDATA[#include <vector>
+#include <map>
+#include "LuaCocos2d.h"
+#include "tolua_fix.h"
+#include "cocos2d.h"
+#include "CCRibbon.h"
+
 using namespace cocos2d;]]></replacevalue>
     </replace>
 

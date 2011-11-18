@@ -13,7 +13,9 @@ class CCNode : public CCObject
     float   getScaleY();
     void    setScaleY(float newScaleY);
     CCPoint getPosition();
+    void    getPosition(float* x = 0, float* y = 0);
     void    setPosition(CCPoint newPosition);
+    void    setPosition(float x, float y);
 
     float   getSkewX();
     void    setSkewX(float skewX);
@@ -55,7 +57,7 @@ class CCNode : public CCObject
     void    transformAncestors(void);
     CCRect  boundingBox(void);
 
-    CCAction*   runAction(CCAction* action);
+    void    runAction(CCAction* action);
     void    stopAllActions(void);
     void    stopAction(CCAction* action);
 
