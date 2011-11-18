@@ -57,7 +57,7 @@ To enabled set it to 1. Disabled by default.
  If enabled, FontLabel will be used to render .ttf files.
  If the .ttf file is not found, then it will use the standard UIFont class
  If disabled, the standard UIFont class will be used.
- 
+
  To disable set it to 0. Enabled by default.
 
  Only valid for cocos2d-ios. Not supported on cocos2d-mac
@@ -70,7 +70,7 @@ To enabled set it to 1. Disabled by default.
  If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
  You will need to add the fps_images.png to your project.
  If disabled, the FPS will be rendered using CCLabel (slow rendering)
- 
+
  To enable set it to a value different than 0. Enabled by default.
  */
 #ifndef CC_DIRECTOR_FAST_FPS
@@ -81,7 +81,7 @@ To enabled set it to 1. Disabled by default.
  Senconds between FPS updates.
  0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  Having a bigger number means a more reliable FPS
- 
+
  Default value: 0.1f
  */
 #ifndef CC_DIRECTOR_FPS_INTERVAL
@@ -93,13 +93,13 @@ To enabled set it to 1. Disabled by default.
  dispatch all the events, even if there are not events to dispatch.
  If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  Otherwise, it is safe to leave it disabled.
- 
+
  To enable set it to 1. Disabled by default.
- 
+
  @warning This feature is experimental
  */
 #ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
- #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
+#define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
 #endif
 
 /** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
@@ -120,7 +120,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 /** @def CC_COCOSNODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
- 
+
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_COCOSNODE_RENDER_SUBPIXEL
@@ -130,7 +130,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
  If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
  If disabled, integer pixels will be used.
- 
+
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
@@ -162,7 +162,7 @@ Disabled by default on iPhone with ARMv6 processors.
  But computing the Affine matrix is relative expensive.
  But according to performance tests, Affine matrix performs better.
  This parameter doesn't affect CCSpriteBatchNode nodes.
- 
+
  To enable set it to a value different than 0. Enabled by default.
 
  */
@@ -185,7 +185,7 @@ To enable set it to a value different than 0. Enabled by default.
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
  Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
  It seems it is the recommend way, but it is much slower, so, enable it at your own risk
- 
+
  To enable set it to a value different than 0. Disabled by default.
 
  */
@@ -198,7 +198,7 @@ To enable set it to a value different than 0. Enabled by default.
  NPOT textures have the following limitations:
 	- They can't have mipmaps
 	- They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
- 
+
  To enable set it to a value different than 0. Disabled by default.
 
  This value governs only the PNG, GIF, BMP, images.
@@ -213,7 +213,7 @@ To enable set it to a value different than 0. Enabled by default.
 #endif
 
 /** @def CC_RETINA_DISPLAY_SUPPORT
-If enabled, cocos2d supports retina display. 
+If enabled, cocos2d supports retina display.
 For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
 
 To enable set it to 1. Use 0 to disable it. Enabled by default.
@@ -238,7 +238,7 @@ If the file doesn't exist it will use the non-retina display image.
 Platforms: Only used on Retina Display devices like iPhone 4.
 
 @since v0.99.5
-*/ 
+*/
 #ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX "-hd"
 #endif
@@ -261,7 +261,7 @@ Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
- 
+
  To enable set it to a value different than 0. Disabled by default:
  0 -- disabled
  1 -- draw bounding box
@@ -297,7 +297,7 @@ To enable set it to a value different than 0. Disabled by default.
 /** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of LabeltAtlas will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
- 
+
  To enable set it to a value different than 0. Disabled by default.
  */
 #ifndef CC_LABELATLAS_DEBUG_DRAW
@@ -308,7 +308,7 @@ To enable set it to a value different than 0. Disabled by default.
  If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
  once per second showing average time (in milliseconds) required to execute the specific routine(s).
  Useful for debugging purposes only. It is recommened to leave it disabled.
- 
+
  To enable set it to a value different than 0. Disabled by default.
  */
 #ifndef CC_ENABLE_PROFILERS

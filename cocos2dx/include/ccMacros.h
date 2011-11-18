@@ -73,11 +73,11 @@ simple macro that swaps 2 variables
 default gl blend src function. Compatible with premultiplied alpha images.
 */
 #if CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
-    #define CC_BLEND_SRC GL_ONE
-    #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+#define CC_BLEND_SRC GL_ONE
+#define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
 #else
-    #define CC_BLEND_SRC GL_SRC_ALPHA
-    #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+#define CC_BLEND_SRC GL_SRC_ALPHA
+#define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
 #endif // ! CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 
 /** @def CC_BLEND_DST
@@ -99,7 +99,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	glEnable(GL_TEXTURE_2D);						\
 }
 
-/** @def CC_DISABLE_DEFAULT_GL_STATES 
+/** @def CC_DISABLE_DEFAULT_GL_STATES
  Disable default GL states:
 	- GL_TEXTURE_2D
 	- GL_VERTEX_ARRAY
@@ -166,16 +166,16 @@ Converts a rect in points to pixels
 #endif
 
 /**
-Helper marcos which converts 4-byte little/big endian 
+Helper marcos which converts 4-byte little/big endian
 integral number to the machine native number representation
- 
+
 It should work same as apples CFSwapInt32LittleToHost(..)
 */
 
 /// when define returns true it means that our architecture uses big endian
-#define CC_HOST_IS_BIG_ENDIAN (bool)(*(unsigned short *)"\0\xff" < 0x100) 
+#define CC_HOST_IS_BIG_ENDIAN (bool)(*(unsigned short *)"\0\xff" < 0x100)
 #define CC_SWAP32(i)  ((i & 0x000000ff) << 24 | (i & 0x0000ff00) << 8 | (i & 0x00ff0000) >> 8 | (i & 0xff000000) >> 24)
-#define CC_SWAP16(i)  ((i & 0x00ff) << 8 | (i &0xff00) >> 8)   
+#define CC_SWAP16(i)  ((i & 0x00ff) << 8 | (i &0xff00) >> 8)
 #define CC_SWAP_INT32_LITTLE_TO_HOST(i) ((CC_HOST_IS_BIG_ENDIAN == true)? CC_SWAP32(i) : (i) )
 #define CC_SWAP_INT16_LITTLE_TO_HOST(i) ((CC_HOST_IS_BIG_ENDIAN == true)? CC_SWAP16(i) : (i) )
 #define CC_SWAP_INT32_BIG_TO_HOST(i)    ((CC_HOST_IS_BIG_ENDIAN == true)? (i) : CC_SWAP32(i) )

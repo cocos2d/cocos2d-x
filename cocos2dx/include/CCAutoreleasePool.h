@@ -30,36 +30,36 @@ THE SOFTWARE.
 namespace cocos2d {
 class CC_DLL CCAutoreleasePool : public CCObject
 {
-	CCMutableArray<CCObject*>*	m_pManagedObjectArray;	
+    CCMutableArray<CCObject*>*	m_pManagedObjectArray;
 public:
-	CCAutoreleasePool(void);
-	~CCAutoreleasePool(void);
+    CCAutoreleasePool(void);
+    ~CCAutoreleasePool(void);
 
-	void addObject(CCObject *pObject);
-	void removeObject(CCObject *pObject);
+    void addObject(CCObject *pObject);
+    void removeObject(CCObject *pObject);
 
-	void clear();
+    void clear();
 };
 
 class CC_DLL CCPoolManager
 {
-	CCMutableArray<CCAutoreleasePool*>*	m_pReleasePoolStack;	
-	CCAutoreleasePool*					m_pCurReleasePool;
+    CCMutableArray<CCAutoreleasePool*>*	m_pReleasePoolStack;
+    CCAutoreleasePool*					m_pCurReleasePool;
 
-	CCAutoreleasePool* getCurReleasePool();
+    CCAutoreleasePool* getCurReleasePool();
 public:
-	CCPoolManager();
-	~CCPoolManager();
-	void finalize();
-	void push();
-	void pop();
+    CCPoolManager();
+    ~CCPoolManager();
+    void finalize();
+    void push();
+    void pop();
 
-	void removeObject(CCObject* pObject);
-	void addObject(CCObject* pObject);
+    void removeObject(CCObject* pObject);
+    void addObject(CCObject* pObject);
 
-	static CCPoolManager* getInstance();
+    static CCPoolManager* getInstance();
 
-	friend class CCAutoreleasePool;
+    friend class CCAutoreleasePool;
 };
 
 }

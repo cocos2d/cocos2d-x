@@ -80,7 +80,7 @@ protected:
 
     /**
     @brief	attach the pDeleate with ime.
-    @return If the old delegate can detattach with ime and the new delegate 
+    @return If the old delegate can detattach with ime and the new delegate
             can attach with ime, return true, otherwise return false.
     */
     bool attachDelegateWithIME(CCIMEDelegate * pDelegate);
@@ -93,7 +93,7 @@ protected:
 
 private:
     CCIMEDispatcher();
-    
+
     class Impl;
     Impl * m_pImpl;
 };

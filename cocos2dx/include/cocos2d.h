@@ -116,7 +116,7 @@ THE SOFTWARE.
 #include "CCImage.h"
 #include "CCFileUtils.h"
 #include "CCAccelerometer.h"
- 
+
 //
 // cocos2d macros
 //
@@ -127,6 +127,6 @@ namespace   cocos2d {
 
 const char* cocos2dVersion();
 
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __COCOS2D_H__

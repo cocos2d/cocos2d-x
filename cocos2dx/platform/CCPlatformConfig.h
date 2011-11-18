@@ -50,42 +50,42 @@ build for which target platform
 
 // iphone
 #if ! CC_TARGET_PLATFORM && (defined(TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR))
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
-    #define CC_SUPPORT_MULTITHREAD 0
-    #define CC_SUPPORT_UNICODE 0
-    #define CC_SUPPORT_PVRTC
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
+#define CC_SUPPORT_MULTITHREAD 0
+#define CC_SUPPORT_UNICODE 0
+#define CC_SUPPORT_PVRTC
 #endif
 
 // android
 #if ! CC_TARGET_PLATFORM && defined(ANDROID)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
 #endif
 
 // wophone
 #if ! CC_TARGET_PLATFORM && defined(_TRANZDA_VM_)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
 #endif
 
 // win32
 #if ! CC_TARGET_PLATFORM && (defined(WIN32) && defined(_WINDOWS))
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_WIN32
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_WIN32
 
-    #define CC_SUPPORT_MULTITHREAD     1
-    #if defined(UNICODE)
-        #define CC_SUPPORT_UNICODE     1
-    #else
-        #define CC_SUPPORT_UNICODE     0
-    #endif
+#define CC_SUPPORT_MULTITHREAD     1
+#if defined(UNICODE)
+#define CC_SUPPORT_UNICODE     1
+#else
+#define CC_SUPPORT_UNICODE     0
+#endif
 #endif
 
 // linux
 #if ! CC_TARGET_PLATFORM && defined(LINUX)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
 #endif
 
 // airplay
@@ -99,23 +99,23 @@ build for which target platform
 
 // Check user assigned target platform.
 #if defined(CC_UNDER_IOS)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
 #endif
 
 #if defined(CC_UNDER_ANDROID)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_ANDROID
 #endif
 
 #if defined(CC_UNDER_WOPHONE)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_WOPHONE
 #endif
 
 #if defined(CC_UNDER_WIN32)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM         CC_PLATFORM_WIN32
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_WIN32
 #endif
 
 #if defined(CC_UNDER_AIRPLAY)
@@ -128,11 +128,11 @@ build for which target platform
 #endif
 // Check user assigned supportive of multi-thread
 #if defined(CC_ENABLE_MULTITHREAD)
-    #undef  CC_SUPPORT_MULTITHREAD
-    #define CC_SUPPORT_MULTITHREAD     1
+#undef  CC_SUPPORT_MULTITHREAD
+#define CC_SUPPORT_MULTITHREAD     1
 #elif defined(CC_DISABLE_MULTITHREAD)
-    #undef  CC_SUPPORT_MULTITHREAD
-    #define CC_SUPPORT_MULTITHREAD     0
+#undef  CC_SUPPORT_MULTITHREAD
+#define CC_SUPPORT_MULTITHREAD     0
 #endif
 
 // Check user assigned supportive of unicode
@@ -150,8 +150,8 @@ build for which target platform
 
 // check user set platform
 #if ! CC_TARGET_PLATFORM
-    #error  "Can not recognize the target platform, compling under a unsupported platform?"
-#endif 
+#error  "Can not recognize the target platform, compling under a unsupported platform?"
+#endif
 
 // cocos2d-x havn't support multi-thread yet
 #undef  CC_SUPPORT_MULTITHREAD
@@ -163,7 +163,7 @@ build for which target platform
 
 // Check the supportive of platform
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#pragma warning (disable:4127)  
+#pragma warning (disable:4127)
 #endif  // CC_PLATFORM_WIN32
 
 #endif  // __CC_PLATFORM_CONFIG_H__

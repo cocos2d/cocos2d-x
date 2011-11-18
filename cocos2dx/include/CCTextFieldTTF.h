@@ -40,7 +40,7 @@ public:
     @brief	If the sender doesn't want to attach with IME, return true;
     */
     virtual bool onTextFieldAttachWithIME(CCTextFieldTTF * sender)
-    { 
+    {
         CC_UNUSED_PARAM(sender);
         return false;
     }
@@ -119,10 +119,10 @@ public:
     //////////////////////////////////////////////////////////////////////////
     // properties
     //////////////////////////////////////////////////////////////////////////
-    
+
     CC_SYNTHESIZE(CCTextFieldDelegate *, m_pDelegate, Delegate);
     CC_SYNTHESIZE_READONLY(int, m_nCharCount, CharCount);
-	CC_SYNTHESIZE_PASS_BY_REF(ccColor3B, m_ColorSpaceHolder, ColorSpaceHolder);
+    CC_SYNTHESIZE_PASS_BY_REF(ccColor3B, m_ColorSpaceHolder, ColorSpaceHolder);
 
     // input text property
 public:

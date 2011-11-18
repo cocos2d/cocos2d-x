@@ -28,62 +28,62 @@ THE SOFTWARE.
 #include "ccMacros.h"
 namespace cocos2d {
 
-	//implementation CCTMXObjectGroup
+//implementation CCTMXObjectGroup
 
-	CCTMXObjectGroup::CCTMXObjectGroup()
-        :m_tPositionOffset(CCPointZero)
-		,m_sGroupName("")		
-	{
-		m_pObjects = new CCMutableArray<CCStringToStringDictionary*>();
-		m_pProperties = new CCStringToStringDictionary();
-	}
-	CCTMXObjectGroup::~CCTMXObjectGroup()
-	{
-		CCLOGINFO( "cocos2d: deallocing.");
-		CC_SAFE_RELEASE(m_pObjects);
-		CC_SAFE_RELEASE(m_pProperties);
-	}
-	CCStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
-	{
-		if (m_pObjects && m_pObjects->count() > 0)
-		{
-			CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
-			for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
-			{
-				CCString *name = (*it)->objectForKey(std::string("name"));
-				if (name && name->m_sString == objectName)
-				{
-					return *it;
-				}
-			}
-		}
-		// object not found
-		return NULL;	
-	}
-	CCString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
-	{
-		return m_pProperties->objectForKey(std::string(propertyName));
-	}
+CCTMXObjectGroup::CCTMXObjectGroup()
+    :m_tPositionOffset(CCPointZero)
+    ,m_sGroupName("")
+{
+    m_pObjects = new CCMutableArray<CCStringToStringDictionary*>();
+    m_pProperties = new CCStringToStringDictionary();
+}
+CCTMXObjectGroup::~CCTMXObjectGroup()
+{
+    CCLOGINFO( "cocos2d: deallocing.");
+    CC_SAFE_RELEASE(m_pObjects);
+    CC_SAFE_RELEASE(m_pProperties);
+}
+CCStringToStringDictionary * CCTMXObjectGroup::objectNamed(const char *objectName)
+{
+    if (m_pObjects && m_pObjects->count() > 0)
+    {
+        CCMutableArray<CCStringToStringDictionary*>::CCMutableArrayIterator it;
+        for (it = m_pObjects->begin(); it != m_pObjects->end(); ++it)
+        {
+            CCString *name = (*it)->objectForKey(std::string("name"));
+            if (name && name->m_sString == objectName)
+            {
+                return *it;
+            }
+        }
+    }
+    // object not found
+    return NULL;
+}
+CCString *CCTMXObjectGroup::propertyNamed(const char* propertyName)
+{
+    return m_pProperties->objectForKey(std::string(propertyName));
+}
 
-	CCStringToStringDictionary * CCTMXObjectGroup::getProperties()
-	{ 
-		return m_pProperties;
-	}
-	void CCTMXObjectGroup::setProperties(CCStringToStringDictionary * properties)
-	{
-		CC_SAFE_RETAIN(properties);
-		CC_SAFE_RELEASE(m_pProperties);
-		m_pProperties = properties;
-	}
-	CCMutableArray<CCStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
-	{
-		return m_pObjects;
-	}
-	void CCTMXObjectGroup::setObjects(CCMutableArray<CCStringToStringDictionary*> * objects)
-	{
-		CC_SAFE_RETAIN(objects);
-		CC_SAFE_RELEASE(m_pObjects);
-		m_pObjects = objects;
-	}
+CCStringToStringDictionary * CCTMXObjectGroup::getProperties()
+{
+    return m_pProperties;
+}
+void CCTMXObjectGroup::setProperties(CCStringToStringDictionary * properties)
+{
+    CC_SAFE_RETAIN(properties);
+    CC_SAFE_RELEASE(m_pProperties);
+    m_pProperties = properties;
+}
+CCMutableArray<CCStringToStringDictionary*> *CCTMXObjectGroup::getObjects()
+{
+    return m_pObjects;
+}
+void CCTMXObjectGroup::setObjects(CCMutableArray<CCStringToStringDictionary*> * objects)
+{
+    CC_SAFE_RETAIN(objects);
+    CC_SAFE_RELEASE(m_pObjects);
+    m_pObjects = objects;
+}
 
 }// namespace cocos2d

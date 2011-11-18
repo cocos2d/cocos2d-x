@@ -30,61 +30,61 @@ THE SOFTWARE.
 #include "CCAtlasNode.h"
 namespace cocos2d {
 
-	typedef std::map<std::string, int> StringToIntegerDictionary;
-	typedef std::pair<std::string, int> StringToIntegerPair;
-	struct sImageTGA;
-	/** @brief CCTileMapAtlas is a subclass of CCAtlasNode.
+typedef std::map<std::string, int> StringToIntegerDictionary;
+typedef std::pair<std::string, int> StringToIntegerPair;
+struct sImageTGA;
+/** @brief CCTileMapAtlas is a subclass of CCAtlasNode.
 
-	It knows how to render a map based of tiles.
-	The tiles must be in a .PNG format while the map must be a .TGA file.
+It knows how to render a map based of tiles.
+The tiles must be in a .PNG format while the map must be a .TGA file.
 
-	For more information regarding the format, please see this post:
-	http://www.cocos2d-iphone.org/archives/27
+For more information regarding the format, please see this post:
+http://www.cocos2d-iphone.org/archives/27
 
-	All features from CCAtlasNode are valid in CCTileMapAtlas
+All features from CCAtlasNode are valid in CCTileMapAtlas
 
-	IMPORTANT:
-	This class is deprecated. It is maintained for compatibility reasons only.
-	You SHOULD not use this class.
-	Instead, use the newer TMX file format: CCTMXTiledMap
-	*/
-	class CC_DLL CCTileMapAtlas : public CCAtlasNode 
-	{
-		/** TileMap info */
-		CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
-	public:
-		CCTileMapAtlas();
-		virtual ~CCTileMapAtlas();
-		/** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-		The tile file will be loaded using the TextureMgr.
-		*/
-		static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-		/** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-		The file will be loaded using the TextureMgr.
-		*/
-		bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-		/** returns a tile from position x,y.
-		For the moment only channel R is used
-		*/
-		ccColor3B tileAt(const ccGridSize& position);
-		/** sets a tile at position x,y.
-		For the moment only channel R is used
-		*/
-		void setTile(const ccColor3B& tile, const ccGridSize& position);
-		/** dealloc the map from memory */
-		void releaseMap();
-	private:
-		void loadTGAfile(const char *file);
-		void calculateItemsToRender();
-		void updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index);
-		void updateAtlasValues();
+IMPORTANT:
+This class is deprecated. It is maintained for compatibility reasons only.
+You SHOULD not use this class.
+Instead, use the newer TMX file format: CCTMXTiledMap
+*/
+class CC_DLL CCTileMapAtlas : public CCAtlasNode
+{
+    /** TileMap info */
+    CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
+public:
+    CCTileMapAtlas();
+    virtual ~CCTileMapAtlas();
+    /** creates a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
+    The tile file will be loaded using the TextureMgr.
+    */
+    static CCTileMapAtlas * tileMapAtlasWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    /** initializes a CCTileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
+    The file will be loaded using the TextureMgr.
+    */
+    bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    /** returns a tile from position x,y.
+    For the moment only channel R is used
+    */
+    ccColor3B tileAt(const ccGridSize& position);
+    /** sets a tile at position x,y.
+    For the moment only channel R is used
+    */
+    void setTile(const ccColor3B& tile, const ccGridSize& position);
+    /** dealloc the map from memory */
+    void releaseMap();
+private:
+    void loadTGAfile(const char *file);
+    void calculateItemsToRender();
+    void updateAtlasValueAt(const ccGridSize& pos, const ccColor3B& value, unsigned int index);
+    void updateAtlasValues();
 
-	protected:
-		//! x,y to altas dicctionary
-		StringToIntegerDictionary *m_pPosToAtlasIndex;
-		//! numbers of tiles to render
-		int				m_nItemsToRender;
-	};
+protected:
+    //! x,y to altas dicctionary
+    StringToIntegerDictionary *m_pPosToAtlasIndex;
+    //! numbers of tiles to render
+    int				m_nItemsToRender;
+};
 
 }// namespace cocos2d
 #endif //__CCTILE_MAP_ATLAS__

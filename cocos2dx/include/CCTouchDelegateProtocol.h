@@ -30,96 +30,122 @@ THE SOFTWARE.
 #include <map>
 #include "CCObject.h"
 #include "ccConfig.h"
-#include "CCScriptSupport.h"
+#include "LuaEngine.h"
 
-namespace   cocos2d {
+namespace cocos2d
+{
 
 typedef enum
 {
-	ccTouchDelegateStandardBit = 1 << 0,
-	ccTouchDelegateTargetedBit = 1 << 1,
-	ccTouchDelegateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
+    ccTouchDelegateStandardBit = 1 << 0,
+    ccTouchDelegateTargetedBit = 1 << 1,
+    ccTouchDelegateAllBit      = (ccTouchDelegateStandardBit | ccTouchDelegateTargetedBit),
 } ccTouchDelegateFlag;
 
 class CCTouch;
 class CCEvent;
 class CCSet;
 class CCTouchDispatcher;
-	
+
 class CC_DLL CCTouchDelegate
 {
 protected:
-	ccTouchDelegateFlag m_eTouchDelegateType;
-	std::map<int, std::string> *m_pEventTypeFuncMap;
+    ccTouchDelegateFlag m_eTouchDelegateType;
+    std::map<int, std::string> *m_pEventTypeFuncMap;
 
 public:
-	friend class CCTouchDispatcher; // only CCTouchDispatcher & children can change m_eTouchDelegateType
-	inline ccTouchDelegateFlag getTouchDelegateType(void) { return m_eTouchDelegateType; }
+    friend class CCTouchDispatcher; // only CCTouchDispatcher & children can change m_eTouchDelegateType
+    inline ccTouchDelegateFlag getTouchDelegateType(void) {
+        return m_eTouchDelegateType;
+    }
 
-	CCTouchDelegate() : m_pEventTypeFuncMap(NULL) {}
+    CCTouchDelegate() : m_pEventTypeFuncMap(NULL) {}
 
-	virtual ~CCTouchDelegate()
-	{
-		CC_SAFE_DELETE(m_pEventTypeFuncMap);
-	}
-	
-	//! call the release() in child(layer or menu)
-	virtual void destroy(void) {}
-	//! call the retain() in child (layer or menu)
-	virtual void keep(void) {}
+    virtual ~CCTouchDelegate()
+    {
+        CC_SAFE_DELETE(m_pEventTypeFuncMap);
+    }
 
-	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
-	// optional
+    //! call the release() in child(layer or menu)
+    virtual void destroy(void) {}
+    //! call the retain() in child(layer or menu)
+    virtual void keep(void) {}
 
-	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+        return false;
+    };
+    // optional
 
-	// optional
- 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
- 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
- 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
- 	virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
 
-	// functions for script call back
-	inline void registerScriptTouchHandler(int eventType, const char* pszScriptFunctionName)
-	{
-		if (m_pEventTypeFuncMap == NULL)
-		{
-			m_pEventTypeFuncMap = new std::map<int, std::string>();
-		}
+    // optional
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
 
-		(*m_pEventTypeFuncMap)[eventType] = pszScriptFunctionName;
-	}
+    // functions for script call back
+    inline void registerScriptTouchHandler(int eventType, const char* pszScriptFunctionName)
+    {
+        if (m_pEventTypeFuncMap == NULL)
+        {
+            m_pEventTypeFuncMap = new std::map<int, std::string>();
+        }
 
-	inline bool isScriptHandlerExist(int eventType)
-	{
-		if (m_pEventTypeFuncMap)
-		{
-			return (*m_pEventTypeFuncMap)[eventType].size() != 0;
-		}
+        (*m_pEventTypeFuncMap)[eventType] = pszScriptFunctionName;
+    }
 
-		return false;
-	}
+    inline bool isScriptHandlerExist(int eventType)
+    {
+        if (m_pEventTypeFuncMap)
+        {
+            return (*m_pEventTypeFuncMap)[eventType].size() != 0;
+        }
 
-	inline void excuteScriptTouchHandler(int eventType, CCTouch *pTouch)
-	{
-		if (m_pEventTypeFuncMap && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
-		{
-			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
-				                                                                                     pTouch);
-		}
-		
-	}
+        return false;
+    }
 
-	inline void excuteScriptTouchesHandler(int eventType, CCSet *pTouches)
-	{
-		if (m_pEventTypeFuncMap && CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine())
-		{
-			CCScriptEngineManager::sharedScriptEngineManager()->getScriptEngine()->executeTouchesEvent((*m_pEventTypeFuncMap)[eventType].c_str(),
-				                                                                                        pTouches);
-		}
-	}
+    inline void excuteScriptTouchHandler(int eventType, CCTouch *pTouch)
+    {
+        if (m_pEventTypeFuncMap)
+        {
+//            LuaEngine::sharedEngine()->executeTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(), pTouch);
+        }
+
+    }
+
+    inline void excuteScriptTouchesHandler(int eventType, CCSet *pTouches)
+    {
+        if (m_pEventTypeFuncMap)
+        {
+//            LuaEngine::sharedEngine()->executeTouchEvent((*m_pEventTypeFuncMap)[eventType].c_str(), pTouches);
+        }
+    }
 };
 /**
  @brief
@@ -129,42 +155,71 @@ public:
  - 2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
  ended/cancelled update you're sure it's your touch. This frees you from doing a
- lot of checks when doing multi-touch. 
+ lot of checks when doing multi-touch.
 
  (The name TargetedTouchDelegate relates to updates "targeting" their specific
  handler, without bothering the other handlers.)
  @since v0.8
  */
- class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
- {
- public:
- 	CCTargetedTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateTargetedBit; }
- 	/** Return YES to claim the touch.
- 	 @since v0
-	 */
- 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) { CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);return false;};
- 
- 	// optional
- 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
- 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
- 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
- };
- 
+class CC_DLL CCTargetedTouchDelegate : public CCTouchDelegate
+{
+public:
+    CCTargetedTouchDelegate() {
+        m_eTouchDelegateType = ccTouchDelegateTargetedBit;
+    }
+    /** Return YES to claim the touch.
+     @since v0
+     */
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+        return false;
+    };
+
+    // optional
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouch);
+        CC_UNUSED_PARAM(pEvent);
+    }
+};
+
 /** @brief
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
  @since v0.8
  */
- class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
- {
- public:
- 	CCStandardTouchDelegate() { m_eTouchDelegateType = ccTouchDelegateStandardBit; }
- 	// optional
- 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
- 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
- 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
- };
+class CC_DLL CCStandardTouchDelegate : public CCTouchDelegate
+{
+public:
+    CCStandardTouchDelegate() {
+        m_eTouchDelegateType = ccTouchDelegateStandardBit;
+    }
+    // optional
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
+    virtual void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent) {
+        CC_UNUSED_PARAM(pTouches);
+        CC_UNUSED_PARAM(pEvent);
+    }
+};
 
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __TOUCH_DISPATHCHER_CCTOUCH_DELEGATE_PROTOCOL_H__

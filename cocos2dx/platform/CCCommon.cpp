@@ -167,19 +167,19 @@ NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
+    char buf[MAX_LEN];
 
-	va_list args;
-	va_start(args, pszFormat);    	
-	vsprintf(buf, pszFormat, args);
-	va_end(args);
+    va_list args;
+    va_start(args, pszFormat);
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
 
-	__android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
-	showMessageBoxJNI(pszMsg, pszTitle);
+    showMessageBoxJNI(pszMsg, pszTitle);
 }
 
 NS_CC_END;
@@ -197,15 +197,15 @@ NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
-	
-	va_list args;
-	va_start(args, pszFormat);    	
-	vsprintf(buf, pszFormat, args);
-	va_end(args);
-	
-	//TODO will copy how orx do
-	printf(buf);
+    char buf[MAX_LEN];
+
+    va_list args;
+    va_start(args, pszFormat);
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
+
+    //TODO will copy how orx do
+    printf(buf);
 }
 
 // airplay no MessageBox, use CCLog instead
@@ -231,14 +231,14 @@ NS_CC_BEGIN;
 
 void CCLog(const char * pszFormat, ...)
 {
-	char buf[MAX_LEN];
+    char buf[MAX_LEN];
 
-	va_list args;
-	va_start(args, pszFormat);
-	vsprintf(buf, pszFormat, args);
-	va_end(args);
+    va_list args;
+    va_start(args, pszFormat);
+    vsprintf(buf, pszFormat, args);
+    va_end(args);
 
-	IwTrace(GAME, (buf));
+    IwTrace(GAME, (buf));
 }
 
 // airplay no MessageBox, use CCLog instead
