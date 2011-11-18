@@ -1107,6 +1107,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="TextureCacheTest"
+					>
+					<File
+						RelativePath="..\tests\TextureCacheTest\TextureCacheTest.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\tests\TextureCacheTest\TextureCacheTest.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
