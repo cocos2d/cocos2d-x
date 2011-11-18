@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		AD7C5EB614750E2E008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */; };
+		ADF1707D1474F632004E9212 /* TextureCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADF1707B1474F632004E9212 /* TextureCacheTest.cpp */; };
 		BF137F48131E3A7B000F7B64 /* LabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF137F46131E3A7B000F7B64 /* LabelTest.cpp */; };
 		BF170DAF12928DE900B8313A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		BF170DB112928DE900B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -442,7 +444,6 @@
 		BF835BD113276C7900F3C033 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83593F13276C7700F3C033 /* CCPlatformMacros.h */; };
 		BF835BD213276C7900F3C033 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83594013276C7700F3C033 /* CCStdC.cpp */; };
 		BF835BD313276C7900F3C033 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83594113276C7700F3C033 /* CCStdC.h */; };
-		BF835BD413276C7900F3C033 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF83594213276C7700F3C033 /* CCThread.cpp */; };
 		BF835BD513276C7900F3C033 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83594313276C7700F3C033 /* CCThread.h */; };
 		BF835BD713276C7900F3C033 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF83594613276C7700F3C033 /* AccelerometerDelegateWrapper.h */; };
 		BF835BD813276C7900F3C033 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF83594713276C7700F3C033 /* AccelerometerDelegateWrapper.mm */; };
@@ -569,6 +570,9 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iphone_Prefix.pch; path = ../iphone_Prefix.pch; sourceTree = "<group>"; };
+		AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread_ios.mm; sourceTree = "<group>"; };
+		ADF1707B1474F632004E9212 /* TextureCacheTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureCacheTest.cpp; sourceTree = "<group>"; };
+		ADF1707C1474F632004E9212 /* TextureCacheTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCacheTest.h; sourceTree = "<group>"; };
 		BF137F46131E3A7B000F7B64 /* LabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTest.cpp; sourceTree = "<group>"; };
 		BF137F47131E3A7B000F7B64 /* LabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTest.h; sourceTree = "<group>"; };
 		BF170DAB12928DAA00B8313A /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1097,7 +1101,6 @@
 		BF83593F13276C7700F3C033 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		BF83594013276C7700F3C033 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		BF83594113276C7700F3C033 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		BF83594213276C7700F3C033 /* CCThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread.cpp; sourceTree = "<group>"; };
 		BF83594313276C7700F3C033 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		BF83594613276C7700F3C033 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
 		BF83594713276C7700F3C033 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
@@ -1303,6 +1306,15 @@
 				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ADF1707A1474F632004E9212 /* TextureCacheTest */ = {
+			isa = PBXGroup;
+			children = (
+				ADF1707B1474F632004E9212 /* TextureCacheTest.cpp */,
+				ADF1707C1474F632004E9212 /* TextureCacheTest.h */,
+			);
+			path = TextureCacheTest;
 			sourceTree = "<group>";
 		};
 		BF137F45131E3A7B000F7B64 /* LabelTest */ = {
@@ -1751,6 +1763,7 @@
 		BF31E11812E979A100D4F513 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				ADF1707A1474F632004E9212 /* TextureCacheTest */,
 				BF1E7A4213E2629800C2D68B /* FontTest */,
 				BF1EB66513D6B915008D2559 /* Texture2dTest */,
 				BF1B263F13C7108F009769C6 /* BugsTest */,
@@ -2437,7 +2450,6 @@
 				BF83593F13276C7700F3C033 /* CCPlatformMacros.h */,
 				BF83594013276C7700F3C033 /* CCStdC.cpp */,
 				BF83594113276C7700F3C033 /* CCStdC.h */,
-				BF83594213276C7700F3C033 /* CCThread.cpp */,
 				BF83594313276C7700F3C033 /* CCThread.h */,
 				BF83594513276C7700F3C033 /* ios */,
 				BF83596C13276C7700F3C033 /* platform.cpp */,
@@ -2449,6 +2461,7 @@
 		BF83594513276C7700F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				AD7C5EB514750E2E008E5647 /* CCThread_ios.mm */,
 				BF1E7A4813E2637200C2D68B /* FontLabel */,
 				BFA00A1E134426C600289DC3 /* CCCommon_ios.mm */,
 				BF83594613276C7700F3C033 /* AccelerometerDelegateWrapper.h */,
@@ -3099,6 +3112,7 @@
 				BF1EB66813D6B915008D2559 /* Texture2dTest.cpp in Sources */,
 				BF1E7BC513E273DF00C2D68B /* FontTest.cpp in Sources */,
 				BF1B49F013FE04C300838E41 /* CurrentLanguageTest.cpp in Sources */,
+				ADF1707D1474F632004E9212 /* TextureCacheTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3150,7 +3164,6 @@
 				BF835BBE13276C7900F3C033 /* CCCommon.cpp in Sources */,
 				BF835BC313276C7900F3C033 /* CCGL.cpp in Sources */,
 				BF835BD213276C7900F3C033 /* CCStdC.cpp in Sources */,
-				BF835BD413276C7900F3C033 /* CCThread.cpp in Sources */,
 				BF835BD813276C7900F3C033 /* AccelerometerDelegateWrapper.mm in Sources */,
 				BF835BDA13276C7900F3C033 /* CCAccelerometer_ios.mm in Sources */,
 				BF835BDC13276C7900F3C033 /* CCApplication_ios.mm in Sources */,
@@ -3209,6 +3222,7 @@
 				BF1E7A5913E2637200C2D68B /* FontManager.m in Sources */,
 				BF1E7A5B13E2637200C2D68B /* ZAttributedString.m in Sources */,
 				BF1E7A5E13E2637200C2D68B /* ZFont.m in Sources */,
+				AD7C5EB614750E2E008E5647 /* CCThread_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
