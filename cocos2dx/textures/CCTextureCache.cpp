@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "support/ccUtils.h"
 #include "CCScheduler.h"
 #include "pthread.h"
+#include "CCThread.h"
 
 namespace   cocos2d {
 
@@ -59,6 +60,10 @@ static AsyncStruct			*s_pAsyncObject;
 
 static void* loadImage(void* data)
 {
+	// create autorelease pool for iOS
+	CCThread thread;
+	thread.createAutoreleasePool();
+
 	if (! ((AsyncStruct*)data)->filename.c_str())
 	{
 		return 0;
