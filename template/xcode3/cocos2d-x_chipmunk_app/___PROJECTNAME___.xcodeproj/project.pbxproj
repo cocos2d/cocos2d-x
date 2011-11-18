@@ -20,6 +20,7 @@
 		507023151076758E00393637 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 507023141076758E00393637 /* grossini_dance_atlas.png */; };
 		50F4144910692EE7002A0D5E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144410692EE7002A0D5E /* Default.png */; };
 		50F4144B10692EE7002A0D5E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144610692EE7002A0D5E /* Icon.png */; };
+		AD7C64A114751A5C008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C64A014751A5C008E5647 /* CCThread_ios.mm */; };
 		BF126D011373EF1F00C4ABC5 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF126D001373EF1F00C4ABC5 /* CCUserDefault.h */; };
 		BF126D031373EF2A00C4ABC5 /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF126D021373EF2A00C4ABC5 /* CCUserDefault.cpp */; };
 		BF152AF212E16B4200703484 /* LICENSE.cocos2d-x in Resources */ = {isa = PBXBuildFile; fileRef = BF152AF112E16B4200703484 /* LICENSE.cocos2d-x */; };
@@ -246,7 +247,6 @@
 		BF836CB413287D3600F3C033 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = BF836A2213287D3500F3C033 /* CCPlatformMacros.h */; };
 		BF836CB513287D3600F3C033 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF836A2313287D3500F3C033 /* CCStdC.cpp */; };
 		BF836CB613287D3600F3C033 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = BF836A2413287D3500F3C033 /* CCStdC.h */; };
-		BF836CB713287D3600F3C033 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF836A2513287D3500F3C033 /* CCThread.cpp */; };
 		BF836CB813287D3600F3C033 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = BF836A2613287D3500F3C033 /* CCThread.h */; };
 		BF836CBA13287D3600F3C033 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF836A2913287D3500F3C033 /* AccelerometerDelegateWrapper.h */; };
 		BF836CBB13287D3600F3C033 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF836A2A13287D3500F3C033 /* AccelerometerDelegateWrapper.mm */; };
@@ -357,6 +357,7 @@
 		507023141076758E00393637 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
 		50F4144410692EE7002A0D5E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		50F4144610692EE7002A0D5E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		AD7C64A014751A5C008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread_ios.mm; sourceTree = "<group>"; };
 		BF126D001373EF1F00C4ABC5 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		BF126D021373EF2A00C4ABC5 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
 		BF152AF112E16B4200703484 /* LICENSE.cocos2d-x */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE.cocos2d-x"; sourceTree = "<group>"; };
@@ -583,7 +584,6 @@
 		BF836A2213287D3500F3C033 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		BF836A2313287D3500F3C033 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		BF836A2413287D3500F3C033 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		BF836A2513287D3500F3C033 /* CCThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread.cpp; sourceTree = "<group>"; };
 		BF836A2613287D3500F3C033 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		BF836A2913287D3500F3C033 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
 		BF836A2A13287D3500F3C033 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
@@ -1219,7 +1219,6 @@
 				BF836A2213287D3500F3C033 /* CCPlatformMacros.h */,
 				BF836A2313287D3500F3C033 /* CCStdC.cpp */,
 				BF836A2413287D3500F3C033 /* CCStdC.h */,
-				BF836A2513287D3500F3C033 /* CCThread.cpp */,
 				BF836A2613287D3500F3C033 /* CCThread.h */,
 				BF836A2813287D3500F3C033 /* ios */,
 				BF836A4F13287D3500F3C033 /* platform.cpp */,
@@ -1231,6 +1230,7 @@
 		BF836A2813287D3500F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				AD7C64A014751A5C008E5647 /* CCThread_ios.mm */,
 				BF1E78BA13E2522500C2D68B /* FontLabel */,
 				BFA008E51344246700289DC3 /* CCCommon_ios.mm */,
 				BF836A2913287D3500F3C033 /* AccelerometerDelegateWrapper.h */,
@@ -1730,7 +1730,6 @@
 				BF836CA113287D3600F3C033 /* CCCommon.cpp in Sources */,
 				BF836CA613287D3600F3C033 /* CCGL.cpp in Sources */,
 				BF836CB513287D3600F3C033 /* CCStdC.cpp in Sources */,
-				BF836CB713287D3600F3C033 /* CCThread.cpp in Sources */,
 				BF836CBB13287D3600F3C033 /* AccelerometerDelegateWrapper.mm in Sources */,
 				BF836CBD13287D3600F3C033 /* CCAccelerometer_ios.mm in Sources */,
 				BF836CBF13287D3600F3C033 /* CCApplication_ios.mm in Sources */,
@@ -1791,6 +1790,7 @@
 				BF1E78CD13E2522500C2D68B /* ZAttributedString.m in Sources */,
 				BF1E78D013E2522500C2D68B /* ZFont.m in Sources */,
 				D4C3D24013F25C7F00192C16 /* CCTexturePVR.cpp in Sources */,
+				AD7C64A114751A5C008E5647 /* CCThread_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1832,6 +1832,14 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/linux/libraries/lib64\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/linux/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -1869,6 +1877,14 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/android/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/linux/libraries/lib64\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/linux/libraries\"",
+					"\"$(SRCROOT)/libs/cocos2dx/platform/third_party/win32/libraries\"",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",

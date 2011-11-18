@@ -21,6 +21,7 @@
 		655118C513FAC48300A8A20B /* LuaSimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 655118B913FAC3BD00A8A20B /* LuaSimpleAudioEngine.h */; };
 		655118CD13FAC63F00A8A20B /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 655118CB13FAC63F00A8A20B /* effect1.wav */; };
 		655118CE13FAC63F00A8A20B /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 655118CC13FAC63F00A8A20B /* background.mp3 */; };
+		AD7C5EBE14751231008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EBD14751231008E5647 /* CCThread_ios.mm */; };
 		BF23C0A613B038AB00F32062 /* LuaCocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = BF23C0A013B038AB00F32062 /* LuaCocos2d.h */; };
 		BF23C0A713B038AB00F32062 /* LuaEngineImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = BF23C0A113B038AB00F32062 /* LuaEngineImpl.h */; };
 		BF23C0A813B038AB00F32062 /* LuaEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = BF23C0A213B038AB00F32062 /* LuaEngine.h */; };
@@ -207,7 +208,6 @@
 		BF82FB6713A8657800616D55 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F78F13A8657300616D55 /* CCSAXParser.h */; };
 		BF82FB6813A8657800616D55 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F79013A8657300616D55 /* CCStdC.cpp */; };
 		BF82FB6913A8657800616D55 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F79113A8657300616D55 /* CCStdC.h */; };
-		BF82FB6A13A8657800616D55 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F79213A8657300616D55 /* CCThread.cpp */; };
 		BF82FB6B13A8657800616D55 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F79313A8657300616D55 /* CCThread.h */; };
 		BF82FB6C13A8657800616D55 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F79413A8657300616D55 /* platform.h */; };
 		BF82FB6D13A8657800616D55 /* CCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = BF82F79513A8657300616D55 /* CCCommon.h */; };
@@ -367,6 +367,7 @@
 		655118B913FAC3BD00A8A20B /* LuaSimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LuaSimpleAudioEngine.h; path = CocosDenshion_support/LuaSimpleAudioEngine.h; sourceTree = "<group>"; };
 		655118CB13FAC63F00A8A20B /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
 		655118CC13FAC63F00A8A20B /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		AD7C5EBD14751231008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread_ios.mm; sourceTree = "<group>"; };
 		BF23C0A013B038AB00F32062 /* LuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCocos2d.h; sourceTree = "<group>"; };
 		BF23C0A113B038AB00F32062 /* LuaEngineImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaEngineImpl.h; sourceTree = "<group>"; };
 		BF23C0A213B038AB00F32062 /* LuaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaEngine.h; sourceTree = "<group>"; };
@@ -557,7 +558,6 @@
 		BF82F78F13A8657300616D55 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		BF82F79013A8657300616D55 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		BF82F79113A8657300616D55 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		BF82F79213A8657300616D55 /* CCThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread.cpp; sourceTree = "<group>"; };
 		BF82F79313A8657300616D55 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		BF82F79413A8657300616D55 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
 		BF82F79513A8657300616D55 /* CCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCommon.h; sourceTree = "<group>"; };
@@ -1138,7 +1138,6 @@
 				BF82F78F13A8657300616D55 /* CCSAXParser.h */,
 				BF82F79013A8657300616D55 /* CCStdC.cpp */,
 				BF82F79113A8657300616D55 /* CCStdC.h */,
-				BF82F79213A8657300616D55 /* CCThread.cpp */,
 				BF82F79313A8657300616D55 /* CCThread.h */,
 				BF82F79413A8657300616D55 /* platform.h */,
 				BF82F79513A8657300616D55 /* CCCommon.h */,
@@ -1155,6 +1154,7 @@
 		BF82F4C913A8657100616D55 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				AD7C5EBD14751231008E5647 /* CCThread_ios.mm */,
 				D4742F4313F6273F002ED151 /* FontLabel */,
 				BF82F4CA13A8657100616D55 /* AccelerometerDelegateWrapper.h */,
 				BF82F4CB13A8657100616D55 /* AccelerometerDelegateWrapper.mm */,
@@ -1828,7 +1828,6 @@
 				BF82FB6113A8657800616D55 /* CCCommon.cpp in Sources */,
 				BF82FB6413A8657800616D55 /* CCGL.cpp in Sources */,
 				BF82FB6813A8657800616D55 /* CCStdC.cpp in Sources */,
-				BF82FB6A13A8657800616D55 /* CCThread.cpp in Sources */,
 				BF82FB6E13A8657800616D55 /* CCFileUtils.cpp in Sources */,
 				BF82FB7313A8657800616D55 /* CCSAXParser.cpp in Sources */,
 				BF82FB7413A8657800616D55 /* platform.cpp in Sources */,
@@ -1890,6 +1889,7 @@
 				D4742F5913F6273F002ED151 /* ZFont.m in Sources */,
 				655118C413FAC48300A8A20B /* LuaSimpleAudioEngine.cpp in Sources */,
 				BF87A2931414CC3B0025E979 /* Cocos2dxLuaLoader.cpp in Sources */,
+				AD7C5EBE14751231008E5647 /* CCThread_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

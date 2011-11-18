@@ -281,6 +281,22 @@ public:
 		return m_array.rbegin();
 	}
 
+	CCMutableArrayIterator getLastValidIterator(void)
+	{
+		CCMutableArrayIterator iter;
+		CCMutableArrayIterator ret;
+		for (iter = m_array.begin(); iter != m_array.end(); ++iter)
+		{
+			ret = iter;
+			if (! (*iter))
+			{
+				break;
+			}
+		}
+
+		return ret;
+	}
+
 	/*
 	 * end is a keyword of lua, so should use other name
 	 * to export to lua
