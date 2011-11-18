@@ -24,7 +24,9 @@ class CCLens3D : public CCGrid3DAction
     float getLensEffect(void);
     void setLensEffect(float fLensEffect);
     CCPoint getPosition(void);
+    void getPosition(float* x = 0, float* y = 0);
     void setPosition(CCPoint position);
+    void setPosition(float x, float y);
 
     static CCLens3D* actionWithPosition(CCPoint pos, float r, ccGridSize gridSize, ccTime duration);
 };
@@ -32,7 +34,9 @@ class CCLens3D : public CCGrid3DAction
 class CCRipple3D : public CCGrid3DAction
 {
     CCPoint getPosition(void);
+    void getPosition(float* x = 0, float* y = 0);
     void setPosition(CCPoint position);
+    void setPosition(float x, float y);
     float getAmplitude(void);
     void setAmplitude(float fAmplitude);
     float getAmplitudeRate(void);

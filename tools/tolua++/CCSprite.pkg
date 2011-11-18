@@ -49,7 +49,9 @@ class CCSprite : public CCNode
 
 	void setDirtyRecursively(bool bValue);
 	void setPosition(CCPoint pos);
+	void setPosition(float x, float y);
 	void setPositionInPixels(CCPoint pos);
+	void setPositionInPixels(float x, float y);
 	void setRotation(float fRotation);
 	void setSkewX(float sx);
 	void setSkewY(float sy);

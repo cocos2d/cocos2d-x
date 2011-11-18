@@ -1,4 +1,8 @@
 
+_is_functions = _is_functions or {}
+_to_functions = _to_functions or {}
+_push_functions = _push_functions or {}
+
 local CCObjectTypes = {
     "CCObject",
     "CCAction",
@@ -168,10 +172,11 @@ local CCObjectTypes = {
     "CCTouchHandler",
 }
 
-_push_functions = _push_functions or {}
-
+-- register CCObject types
 for i = 1, #CCObjectTypes do
     _push_functions[CCObjectTypes[i]] = "tolua_pushusertype_ccobject"
 end
 
-
+-- register LUA_FUNCTION type
+_to_functions["LUA_FUNCTION"] = "tolua_ref_function"
+_is_functions["LUA_FUNCTION"] = "tolua_isfunction"
