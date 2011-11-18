@@ -88,8 +88,10 @@ static TestScene* CreateTestScene(int nIdx)
 	case TEST_ACCELEROMRTER:
         pScene = new AccelerometerTestScene(); break;
 #endif
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
     case TEST_KEYPAD:
         pScene = new KeypadTestScene(); break;
+#endif
 	case TEST_COCOSDENSHION:
 		pScene = new CocosDenshionTestScene(); break;
     case TEST_PERFORMANCE:
@@ -97,8 +99,11 @@ static TestScene* CreateTestScene(int nIdx)
     case TEST_ZWOPTEX:
         pScene = new ZwoptexTestScene(); break;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)
+// bada don't support libcurl
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	case TEST_CURL:
 		pScene = new CurlTestScene(); break;
+#endif
 	case TEST_USERDEFAULT:
 		pScene = new UserDefaultTestScene(); break;
 #endif
