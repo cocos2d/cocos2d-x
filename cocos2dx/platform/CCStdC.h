@@ -32,25 +32,25 @@ THE SOFTWARE.
 // for math.h on win32 platform
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-    #if ! defined(_USE_MATH_DEFINES)
-        #define _USE_MATH_DEFINES       // make M_PI can be use
-    #endif
+#if ! defined(_USE_MATH_DEFINES)
+#define _USE_MATH_DEFINES       // make M_PI can be use
+#endif
 
-    #if ! defined(isnan)
-        #define isnan   _isnan
-    #endif
+#if ! defined(isnan)
+#define isnan   _isnan
+#endif
 
 #endif  // CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_))
 
-    #if ! defined(_USE_MATH_DEFINES)
-        #define _USE_MATH_DEFINES       // make M_PI can be use
-    #endif
+#if ! defined(_USE_MATH_DEFINES)
+#define _USE_MATH_DEFINES       // make M_PI can be use
+#endif
 
-    #if ! defined(isnan)
-        #define isnan   _isnan
-    #endif
+#if ! defined(isnan)
+#define isnan   _isnan
+#endif
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WOPHONE && defined(_TRANZDA_VM_)
 

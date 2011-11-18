@@ -1,158 +1,158 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (C) 2010      Lam Pham
- 
-http://www.cocos2d-x.org
+ Copyright (c) 2010-2011 cocos2d-x.org
+ Copyright (C) 2010      Lam Pham
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ http://www.cocos2d-x.org
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #include "CCActionProgressTimer.h"
 #include "CCProgressTimer.h"
 
 namespace cocos2d
 {
-	#define kProgressTimerCast CCProgressTimer*
+#define kProgressTimerCast CCProgressTimer*
 
-    // implementation of CCProgressTo
+// implementation of CCProgressTo
 
-	CCProgressTo* CCProgressTo::actionWithDuration(ccTime duration, float fPercent)
-	{
-		CCProgressTo *pProgressTo = new CCProgressTo();
-		pProgressTo->initWithDuration(duration, fPercent);
-		pProgressTo->autorelease();
+CCProgressTo* CCProgressTo::actionWithDuration(ccTime duration, float fPercent)
+{
+    CCProgressTo *pProgressTo = new CCProgressTo();
+    pProgressTo->initWithDuration(duration, fPercent);
+    pProgressTo->autorelease();
 
-		return pProgressTo;
-	}
- 
-	bool CCProgressTo::initWithDuration(ccTime duration, float fPercent)
-	{
-		if (CCActionInterval::initWithDuration(duration))
-		{
-			m_fTo = fPercent;
+    return pProgressTo;
+}
 
-			return true;
-		}
+bool CCProgressTo::initWithDuration(ccTime duration, float fPercent)
+{
+    if (CCActionInterval::initWithDuration(duration))
+    {
+        m_fTo = fPercent;
 
-		return false;
-	}
+        return true;
+    }
 
-	CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
-	{
-		CCZone* pNewZone = NULL;
-		CCProgressTo* pCopy = NULL;
-		if(pZone && pZone->m_pCopyObject) 
-		{
-			//in case of being called at sub class
-			pCopy = (CCProgressTo*)(pZone->m_pCopyObject);
-		}
-		else
-		{
-			pCopy = new CCProgressTo();
-			pZone = pNewZone = new CCZone(pCopy);
-		}
+    return false;
+}
 
-		CCActionInterval::copyWithZone(pZone);
+CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    CCProgressTo* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject)
+    {
+        //in case of being called at sub class
+        pCopy = (CCProgressTo*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = new CCProgressTo();
+        pZone = pNewZone = new CCZone(pCopy);
+    }
 
-		pCopy->initWithDuration(m_fDuration, m_fTo);
+    CCActionInterval::copyWithZone(pZone);
 
-		CC_SAFE_DELETE(pNewZone);
-		return pCopy;
-	}
+    pCopy->initWithDuration(m_fDuration, m_fTo);
 
-	void CCProgressTo::startWithTarget(CCNode *pTarget)
-	{
-		CCActionInterval::startWithTarget(pTarget);
-		m_fFrom = ((kProgressTimerCast)(pTarget))->getPercentage();
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
 
-		// XXX: Is this correct ?
-		// Adding it to support CCRepeat
-		if (m_fFrom == 100)
-		{
-			m_fFrom = 0;
-		}
-	}
+void CCProgressTo::startWithTarget(CCNode *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    m_fFrom = ((kProgressTimerCast)(pTarget))->getPercentage();
 
-	void CCProgressTo::update(ccTime time)
-	{
-		((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
-	}
+    // XXX: Is this correct ?
+    // Adding it to support CCRepeat
+    if (m_fFrom == 100)
+    {
+        m_fFrom = 0;
+    }
+}
 
-	// implementation of CCProgressFromTo
- 
-	CCProgressFromTo* CCProgressFromTo::actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
-	{
-		CCProgressFromTo *pProgressFromTo = new CCProgressFromTo();
-		pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
-		pProgressFromTo->autorelease();
+void CCProgressTo::update(ccTime time)
+{
+    ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
+}
 
-		return pProgressFromTo;
-	}
+// implementation of CCProgressFromTo
 
-	bool CCProgressFromTo::initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
-	{
-		if (CCActionInterval::initWithDuration(duration))
-		{
-			m_fTo = fToPercentage;
-			m_fFrom = fFromPercentage;
+CCProgressFromTo* CCProgressFromTo::actionWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
+{
+    CCProgressFromTo *pProgressFromTo = new CCProgressFromTo();
+    pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
+    pProgressFromTo->autorelease();
 
-			return true;
-		}
+    return pProgressFromTo;
+}
 
-		return false;
-	}
+bool CCProgressFromTo::initWithDuration(ccTime duration, float fFromPercentage, float fToPercentage)
+{
+    if (CCActionInterval::initWithDuration(duration))
+    {
+        m_fTo = fToPercentage;
+        m_fFrom = fFromPercentage;
 
-	CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
-	{
-		CCZone* pNewZone = NULL;
-		CCProgressFromTo* pCopy = NULL;
-		if(pZone && pZone->m_pCopyObject) 
-		{
-			//in case of being called at sub class
-			pCopy = (CCProgressFromTo*)(pZone->m_pCopyObject);
-		}
-		else
-		{
-			pCopy = new CCProgressFromTo();
-			pZone = pNewZone = new CCZone(pCopy);
-		}
+        return true;
+    }
 
-		CCActionInterval::copyWithZone(pZone);
+    return false;
+}
 
-		pCopy->initWithDuration(m_fDuration, m_fFrom, m_fTo);
+CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    CCProgressFromTo* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject)
+    {
+        //in case of being called at sub class
+        pCopy = (CCProgressFromTo*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = new CCProgressFromTo();
+        pZone = pNewZone = new CCZone(pCopy);
+    }
 
-		CC_SAFE_DELETE(pNewZone);
-		return pCopy;
-	}
+    CCActionInterval::copyWithZone(pZone);
 
-	CCActionInterval* CCProgressFromTo::reverse(void)
-	{
-		return CCProgressFromTo::actionWithDuration(m_fDuration, m_fTo, m_fFrom);
-	}
+    pCopy->initWithDuration(m_fDuration, m_fFrom, m_fTo);
 
-	void CCProgressFromTo::startWithTarget(CCNode *pTarget)
-	{
-		CCActionInterval::startWithTarget(pTarget);
-	}
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
 
-	void CCProgressFromTo::update(ccTime time)
-	{
-		((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
-	}
+CCActionInterval* CCProgressFromTo::reverse(void)
+{
+    return CCProgressFromTo::actionWithDuration(m_fDuration, m_fTo, m_fFrom);
+}
 
-}// end of namespace cocos2d
+void CCProgressFromTo::startWithTarget(CCNode *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+}
+
+void CCProgressFromTo::update(ccTime time)
+{
+    ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
+}
+
+} // namespace cocos2d

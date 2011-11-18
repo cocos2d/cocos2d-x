@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2011 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada 
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 
 http://www.cocos2d-x.org
@@ -49,40 +49,40 @@ Limitations:
 * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCParticleSystemQuad.
 */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-class CC_DLL CCParticleSystemPoint : public CCParticleSystemQuad{
-	//nothing to do
+class CC_DLL CCParticleSystemPoint : public CCParticleSystemQuad {
+    //nothing to do
 };
 #else
 class CC_DLL CCParticleSystemPoint : public CCParticleSystem
-{	
+{
 public:
-	CCParticleSystemPoint()
-		:m_pVertices(NULL)	
-	{}
-	virtual ~CCParticleSystemPoint();
+    CCParticleSystemPoint()
+        :m_pVertices(NULL)
+    {}
+    virtual ~CCParticleSystemPoint();
 
     /** creates an initializes a CCParticleSystemPoint from a plist file.
-    This plist files can be creted manually or with Particle Designer:  
+    This plist files can be creted manually or with Particle Designer:
     */
     static CCParticleSystemPoint * particleWithFile(const char *plistFile);
 
-	// super methods
-	virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-	virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
-	virtual void postStep();
-	virtual void draw();
-	virtual void setStartSpin(float var);
-	virtual void setStartSpinVar(float var);
-	virtual void setEndSpin(float var);
-	virtual void setEndSpinVar(float var);
-	virtual void setStartSize(float var);
-	virtual void setEndSize(float var);
+    // super methods
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
+    virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+    virtual void postStep();
+    virtual void draw();
+    virtual void setStartSpin(float var);
+    virtual void setStartSpinVar(float var);
+    virtual void setEndSpin(float var);
+    virtual void setEndSpinVar(float var);
+    virtual void setStartSize(float var);
+    virtual void setEndSize(float var);
 protected:
-	//! Array of (x,y,size) 
-	ccPointSprite *m_pVertices;
-	//! vertices buffer id
+    //! Array of (x,y,size)
+    ccPointSprite *m_pVertices;
+    //! vertices buffer id
 # if CC_USES_VBO
-	GLuint	m_uVerticesID;	
+    GLuint	m_uVerticesID;
 #endif
 };
 #endif

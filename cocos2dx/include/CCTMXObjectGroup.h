@@ -34,35 +34,39 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-	/** @brief CCTMXObjectGroup represents the TMX object group.
-	@since v0.99.0
-	*/
-	class CC_DLL CCTMXObjectGroup : public CCObject
-	{
-		/** offset position of child objects */
-		CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
-		/** list of properties stored in a dictionary */
-		CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
-		/** array of the objects */
-		CC_PROPERTY(CCMutableArray<CCStringToStringDictionary*>*, m_pObjects, Objects);
-	public:
-		CCTMXObjectGroup();
-		virtual ~CCTMXObjectGroup();
+/** @brief CCTMXObjectGroup represents the TMX object group.
+@since v0.99.0
+*/
+class CC_DLL CCTMXObjectGroup : public CCObject
+{
+    /** offset position of child objects */
+    CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
+    /** list of properties stored in a dictionary */
+    CC_PROPERTY(CCStringToStringDictionary*, m_pProperties, Properties);
+    /** array of the objects */
+    CC_PROPERTY(CCMutableArray<CCStringToStringDictionary*>*, m_pObjects, Objects);
+public:
+    CCTMXObjectGroup();
+    virtual ~CCTMXObjectGroup();
 
-		inline const char* getGroupName(){ return m_sGroupName.c_str(); }
-		inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
+    inline const char* getGroupName() {
+        return m_sGroupName.c_str();
+    }
+    inline void setGroupName(const char *groupName) {
+        m_sGroupName = groupName;
+    }
 
-		/** return the value for the specific property name */
-		CCString *propertyNamed(const char* propertyName);
+    /** return the value for the specific property name */
+    CCString *propertyNamed(const char* propertyName);
 
-		/** return the dictionary for the specific object name.
-		It will return the 1st object found on the array for the given name.
-		*/
-		CCStringToStringDictionary *objectNamed(const char *objectName);
-	protected:	
-		/** name of the group */
-		std::string m_sGroupName;
-	};
+    /** return the dictionary for the specific object name.
+    It will return the 1st object found on the array for the given name.
+    */
+    CCStringToStringDictionary *objectNamed(const char *objectName);
+protected:
+    /** name of the group */
+    std::string m_sGroupName;
+};
 
 }// namespace cocos2d
 #endif //__CCTMX_OBJECT_GROUP_H__

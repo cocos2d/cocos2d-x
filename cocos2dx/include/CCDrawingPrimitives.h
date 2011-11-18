@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #ifndef __CCDRAWING_PRIMITIVES__
 #define __CCDRAWING_PRIMITIVES__
-	
+
 /**
  @file
  Drawing OpenGL ES primitives.
@@ -37,10 +37,10 @@ THE SOFTWARE.
  - ccDrawCircle
  - ccDrawQuadBezier
  - ccDrawCubicBezier
- 
+
  You can change the color, width and other property by calling the
  glColor4ub(), glLineWidth(), glPointSize().
- 
+
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
 
@@ -80,6 +80,6 @@ void CC_DLL ccDrawQuadBezier(const CCPoint& origin, const CCPoint& control, cons
  @since v0.8
  */
 void CC_DLL ccDrawCubicBezier(const CCPoint& origin, const CCPoint& control1, const CCPoint& control2, const CCPoint& destination, int segments);
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __CCDRAWING_PRIMITIVES__

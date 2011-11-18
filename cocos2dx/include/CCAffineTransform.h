@@ -29,8 +29,8 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 struct CCAffineTransform {
-  CGFloat a, b, c, d;
-  CGFloat tx, ty;
+    CGFloat a, b, c, d;
+    CGFloat tx, ty;
 };
 
 CCAffineTransform __CCAffineTransformMake(CGFloat a, CGFloat b, CGFloat c, CGFloat d, CGFloat tx, CGFloat ty);
@@ -53,6 +53,6 @@ bool CCAffineTransformEqualToTransform(const CCAffineTransform& t1, const CCAffi
 CCAffineTransform CCAffineTransformInvert(const CCAffineTransform& t);
 
 extern const CCAffineTransform CCAffineTransformIdentity;
-}//namespace   cocos2d 
+}//namespace   cocos2d
 
 #endif // __COCOA_CGAFFINETRANSFORM_H__
