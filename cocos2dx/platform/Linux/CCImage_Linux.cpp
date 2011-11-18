@@ -57,7 +57,7 @@ public:
 		FT_Load_Glyph(face, FT_Get_Char_Index(face, cLastChar),
 				FT_LOAD_DEFAULT);
 
-		oTempLine.iLineWidth = iCurXCursor - SHIFT6(face->glyph->metrics.horiAdvance+face->glyph->metrics.horiBearingX-face->glyph->metrics.width)/*-iInterval*/;//TODO interval
+        oTempLine.iLineWidth = iCurXCursor - SHIFT6((face->glyph->metrics.horiAdvance + face->glyph->metrics.horiBearingX - face->glyph->metrics.width))/*-iInterval*/;//TODO interval
 		iMaxLineWidth = MAX(iMaxLineWidth, oTempLine.iLineWidth);
 		ss.clear();
 		ss.str("");
@@ -177,7 +177,7 @@ public:
 			if (iError) {
 				//no valid font found use default
 //				CCLog("no valid font, use default %s\n", pFontName);
-				iError = FT_New_Face( library, "/usr/share/fonts/truetype/freefont/FreeSans.ttf", 0, &face );
+				iError = FT_New_Face( library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face );
 			}
 			CC_BREAK_IF(iError);
 
@@ -204,7 +204,7 @@ public:
 
 			memset(m_pData,0, iMaxLineWidth * iMaxLineHeight*4);
 
-			for (int i = 0; i < vLines.size(); i++) {
+            for (size_t i = 0; i < vLines.size(); i++) {
 				pText = vLines[i].sLineStr.c_str();
 				//initialize the origin cursor
 				iCurXCursor = computeLineStart(face, eAlignMask, *pText, i);

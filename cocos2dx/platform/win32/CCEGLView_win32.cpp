@@ -349,6 +349,7 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 else if (VK_ESCAPE == wParam)
                 {
                     // ESC input
+					CCDirector::sharedDirector()->end();
                 }
             }
             else if (wParam < 128)
