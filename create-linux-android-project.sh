@@ -24,7 +24,7 @@ KERNEL_NAME=`uname -s | grep "CYGWIN*"`
 if [ $KERNEL_NAME"hi" != "hi" ]; then
     echo "Error!!!"
     echo "Don't run in cygwin. You should run corresponding bat."
-    exit 
+    exit
 fi
 
 # ok, it was run under linux
@@ -34,7 +34,7 @@ fi
 #    if [ ! -f create-android-project.sh ];then
 #        echo Error!!!
 #        echo Please run in cocos2dx root
-#        exit 
+#        exit
 #    fi
 #}
 
