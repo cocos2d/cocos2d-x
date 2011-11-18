@@ -75,6 +75,15 @@ bool AppDelegate::initInstance()
 
 #endif  // CC_PLATFORM_LINUX
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+
+		CCEGLView * pMainWnd = new CCEGLView();
+		CC_BREAK_IF(! pMainWnd|| ! pMainWnd->Create(this, 480, 320));
+		pMainWnd->setDeviceOrientation(Osp::Ui::ORIENTATION_LANDSCAPE);
+		CCFileUtils::setResourcePath("/Res/");
+
+#endif  // CC_PLATFORM_BADA
+
         bRet = true;
     } while (0);
     return bRet;
