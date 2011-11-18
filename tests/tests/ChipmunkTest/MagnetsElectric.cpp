@@ -9,6 +9,7 @@
 #include "chipmunk.h"
 #include "drawSpace.h"
 #include "ChipmunkDemo.h"
+#include "CCCommon.h"
 
 #define WIDTH 600
 #define HEIGHT 400

@@ -250,3 +250,42 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 NS_CC_END;
 
 #endif // CC_PLATFORM_AIRPLAY
+
+/****************************************************
+ * bada
+ ***************************************************/
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
+#include <FBaseSys.h>
+#include <FUi.h>
+#include <stdio.h>
+#include <stdarg.h>
+
+using namespace Osp::Ui::Controls;
+
+NS_CC_BEGIN;
+
+void CCLog(const char * pszFormat, ...)
+{
+	char buf[MAX_LEN] = {0};
+
+	va_list args;
+	va_start(args, pszFormat);
+	vsnprintf(buf, MAX_LEN, pszFormat, args);
+	va_end(args);
+	AppLog(buf);
+}
+
+void CCMessageBox(const char * pszMsg, const char * pszTitle)
+{
+	if (pszMsg != NULL && pszTitle != NULL)
+	{
+		int iRet = 0;
+		MessageBox msgBox;
+		msgBox.Construct(pszTitle, pszMsg, MSGBOX_STYLE_OK);
+		msgBox.ShowAndWait(iRet);
+	}
+}
+
+NS_CC_END;
+
+#endif // CC_PLATFORM_BADA
