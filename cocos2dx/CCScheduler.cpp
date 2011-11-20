@@ -200,7 +200,7 @@ int CCScheduler::scheduleScriptFunc(int refID, ccTime fInterval, bool bPaused)
     CCSchedulerFuncEntry* entry = CCSchedulerFuncEntry::entryWithRefID(refID, fInterval, bPaused);
     m_scriptFunctions->addObject(entry);
 
-    CCLOG("CCScheduler::scheduleScriptFunc() - add script entry, handle: %d, refid: %d", entry->getHandle(), refID);
+//    CCLOG("CCScheduler::scheduleScriptFunc() - add script entry, handle: %d, refid: %d", entry->getHandle(), refID);
     return entry->getHandle();
 }
 

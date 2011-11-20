@@ -42,6 +42,6 @@ CCSchedulerFuncEntry::~CCSchedulerFuncEntry(void)
 {
     m_timer->release();
     LuaEngine::sharedEngine()->releaseRefID(m_refID);
-    CCLOG("CCSchedulerFuncEntry::~CCSchedulerFuncEntry() - remove script entry, handle: %d, refid: %d",
-          m_handle, m_refID);
+//    CCLOG("CCSchedulerFuncEntry::~CCSchedulerFuncEntry() - remove script entry, handle: %d, refid: %d",
+//          m_handle, m_refID);
 }
