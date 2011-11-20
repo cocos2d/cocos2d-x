@@ -25,12 +25,13 @@
  ****************************************************************************/
 
 #include "CCScheduler.h"
+#include "CCTimer.h"
 #include "ccMacros.h"
 #include "support/data_support/utlist.h"
-#include "support/data_support/ccCArray.h"
-#include "CCMutableArray.h"
-
-#include <assert.h>
+#include "support/data_support/uthash.h"
+#include "CCArray.h"
+#include "CCLuaSupport.h"
+#include "LuaEngine.h"
 
 using namespace std;
 
@@ -69,132 +70,21 @@ typedef struct _hashSelectorEntry
     UT_hash_handle				hh;
 } tHashSelectorEntry;
 
-typedef struct CCSchedulerFuncEntry
-{
-    CCTimer*    timer;
-    bool        paused;
-    int         refID;
-} _CCSchedulerFuncEntry;
-
-
-// implementation CCTimer
-
-CCTimer::CCTimer()
-    : m_pTarget(NULL)
-    , m_refID(0)
-    , m_fInterval(0.0f)
-    , m_fElapsed(0.0f)
-    , m_pfnSelector(NULL)
-{
-}
-
-CCTimer::~CCTimer()
-{
-    if (m_refID)
-    {
-        LuaEngine::sharedEngine()->releaseRefID(m_refID);
-    }
-}
-
-CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector)
-{
-    CCTimer *pTimer = new CCTimer();
-
-    pTimer->initWithTarget(pTarget, pfnSelector);
-    pTimer->autorelease();
-
-    return pTimer;
-}
-
-CCTimer* CCTimer::timerWithScriptFunc(int refid, ccTime fSeconds)
-{
-    CCTimer *pTimer = new CCTimer();
-
-    pTimer->initWithScriptFunc(refid, fSeconds);
-    pTimer->autorelease();
-
-    return pTimer;
-}
-
-CCTimer* CCTimer::timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
-{
-    CCTimer *pTimer = new CCTimer();
-
-    pTimer->initWithTarget(pTarget, pfnSelector, fSeconds);
-    pTimer->autorelease();
-
-    return pTimer;
-}
-
-bool CCTimer::initWithScriptFunc(int newRefID, ccTime fSeconds)
-{
-    LuaEngine::sharedEngine()->retainRefID(newRefID);
-    if (m_refID)
-    {
-        LuaEngine::sharedEngine()->releaseRefID(m_refID);
-    }
-    m_refID = newRefID;
-    m_fInterval = fSeconds;
-    m_fElapsed = -1;
-    return true;
-}
-
-
-bool CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector)
-{
-    return initWithTarget(pTarget, pfnSelector, 0);
-}
-
-bool CCTimer::initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds)
-{
-    m_pTarget = pTarget;
-    m_pfnSelector = pfnSelector;
-    m_fElapsed = -1;
-    m_fInterval = fSeconds;
-    return true;
-}
-
-void CCTimer::update(ccTime dt)
-{
-    if (m_fElapsed == -1)
-    {
-        m_fElapsed = 0;
-    }
-    else
-    {
-        m_fElapsed += dt;
-    }
-
-    if (m_fElapsed >= m_fInterval)
-    {
-        if (m_pfnSelector)
-        {
-            (m_pTarget->*m_pfnSelector)(m_fElapsed);
-            m_fElapsed = 0;
-        }
-        if (m_refID)
-        {
-            LuaEngine::sharedEngine()->executeSchedule(m_refID, m_fElapsed);
-            m_fElapsed = 0;
-        }
-    }
-}
-
 
 // implementation of CCScheduler
 
 static CCScheduler *pSharedScheduler;
 
 CCScheduler::CCScheduler(void)
-    : m_fTimeScale(0.0)
-    , m_pUpdatesNegList(NULL)
-    , m_pUpdates0List(NULL)
-    , m_pUpdatesPosList(NULL)
-    , m_pHashForUpdates(NULL)
-    , m_pHashForSelectors(NULL)
-    , m_pCurrentTarget(NULL)
-    , m_bCurrentTargetSalvaged(false)
-    , m_scriptHandleCount(0)
+: m_fTimeScale(0.0)
+, m_pUpdatesNegList(NULL)
+, m_pUpdates0List(NULL)
+, m_pUpdatesPosList(NULL)
+, m_pHashForUpdates(NULL)
+, m_pHashForSelectors(NULL)
+, m_pCurrentTarget(NULL)
+, m_bCurrentTargetSalvaged(false)
+, m_scriptFunctions(NULL)
 {
     assert(pSharedScheduler == NULL);
 }
@@ -202,7 +92,9 @@ CCScheduler::CCScheduler(void)
 CCScheduler::~CCScheduler(void)
 {
     unscheduleAllSelectors();
+    unscheduleScriptFunctions();
     pSharedScheduler = NULL;
+    m_scriptFunctions->release();
 }
 
 CCScheduler* CCScheduler::sharedScheduler(void)
@@ -236,7 +128,8 @@ bool CCScheduler::init(void)
     m_pHashForSelectors = NULL;
     m_bUpdateHashLocked = false;
 
-    clearScriptFunctions();
+    m_scriptFunctions = CCArray::arrayWithCapacity(20);
+    m_scriptFunctions->retain();
 
     return true;
 }
@@ -304,47 +197,28 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *p
 
 int CCScheduler::scheduleScriptFunc(int refID, ccTime fInterval, bool bPaused)
 {
-    m_scriptHandleCount++;
-    LuaEngine::sharedEngine()->retainRefID(refID);
-    CCSchedulerFuncEntry* entry = new CCSchedulerFuncEntry();
-    entry->refID = refID;
-    entry->paused = bPaused;
-    entry->timer = new CCTimer();
-    entry->timer->initWithScriptFunc(refID, fInterval);
-    m_scriptFunctions[m_scriptHandleCount] = entry;
+    CCSchedulerFuncEntry* entry = CCSchedulerFuncEntry::entryWithRefID(refID, fInterval, bPaused);
+    m_scriptFunctions->addObject(entry);
 
-    CCLOG("CCScheduler::scheduleScriptFunc() - add script entry, handle: %d, refid: %d", m_scriptHandleCount, refID);
-    return m_scriptHandleCount;
+    CCLOG("CCScheduler::scheduleScriptFunc() - add script entry, handle: %d, refid: %d", entry->getHandle(), refID);
+    return entry->getHandle();
 }
 
 void CCScheduler::unscheduleScriptFunc(int handle)
 {
-    std::map<int, CCSchedulerFuncEntry*>::iterator it = m_scriptFunctions.find(handle);
-    if (it != m_scriptFunctions.end())
+    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
     {
-        CCSchedulerFuncEntry* entry = it->second;
-        CCLOG("CCScheduler::unscheduleScriptFunc() - remove script entry, handle: %d", it->first);
-
-        LuaEngine::sharedEngine()->releaseRefID(entry->refID);
-        delete entry->timer;
-        m_scriptFunctions.erase(it);
+        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
+        if (entry->getHandle() == handle)
+        {
+            entry->markDeleted();
+        }
     }
 }
 
-void CCScheduler::clearScriptFunctions()
+void CCScheduler::unscheduleScriptFunctions()
 {
-    std::map<int, CCSchedulerFuncEntry*>::iterator it = m_scriptFunctions.begin();
-    while (it != m_scriptFunctions.end())
-    {
-        CCSchedulerFuncEntry* entry = it->second;
-        if (entry->refID)
-        {
-            LuaEngine::sharedEngine()->releaseRefID(entry->refID);
-        }
-        if (entry->timer) delete entry->timer;
-        delete entry;
-    }
-    m_scriptFunctions.clear();
+    m_scriptFunctions->removeAllObjects();
 }
 
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget)
@@ -578,7 +452,7 @@ void CCScheduler::unscheduleAllSelectors(void)
         unscheduleUpdateForTarget(pEntry->target);
     }
 
-    clearScriptFunctions();
+    unscheduleScriptFunctions();
 }
 
 void CCScheduler::unscheduleAllSelectorsForTarget(SelectorProtocol *pTarget)
@@ -769,7 +643,7 @@ void CCScheduler::tick(ccTime dt)
     {
         if (pEntry->markedForDeletion)
         {
-            //            this->removeUpdateFromHash(pEntry);
+//            this->removeUpdateFromHash(pEntry);
         }
     }
 
@@ -787,18 +661,19 @@ void CCScheduler::tick(ccTime dt)
     m_pCurrentTarget = NULL;
 
     // Interate all script functions
-    if (m_scriptFunctions.size())
+    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
     {
-        std::map<int, CCSchedulerFuncEntry*>::iterator it = m_scriptFunctions.begin();
-        while (it != m_scriptFunctions.end())
+        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
+        if (!entry->isMarkDeleted() && !entry->isPaused())
         {
-            CCSchedulerFuncEntry* entry = it->second;
-            if (!entry->paused)
-            {
-                entry->timer->update(dt);
-            }
-            it++;
+            entry->getTimer()->update(dt);
         }
+    }
+    
+    for (int i = m_scriptFunctions->count() - 1; i >= 0; i--)
+    {
+        CCSchedulerFuncEntry* entry = (CCSchedulerFuncEntry*)m_scriptFunctions->objectAtIndex(i);
+        if (entry->isMarkDeleted()) m_scriptFunctions->removeObjectAtIndex(i);
     }
 }
 

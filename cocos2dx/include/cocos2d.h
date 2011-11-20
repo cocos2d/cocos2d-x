@@ -88,6 +88,7 @@ THE SOFTWARE.
 #include "CCTouchDispatcher.h"
 #include "CCDrawingPrimitives.h"
 #include "CCScheduler.h"
+#include "CCTimer.h"
 
 // havn't implement on wophone and airplay
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_AIRPLAY)

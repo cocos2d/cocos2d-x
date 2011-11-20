@@ -27,67 +27,13 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include <string>
 #include "CCObject.h"
 #include "selector_protocol.h"
-#include "support/data_support/uthash.h"
-#include "LuaEngine.h"
 
 namespace cocos2d
 {
-
-struct CCSchedulerFuncEntry;
-
-
-//
-// CCTimer
-//
-/** @brief Light weight timer */
-class CC_DLL CCTimer : public CCObject
-{
-public:
-    CCTimer(void);
-    ~CCTimer();
-
-    /** get interval in seconds */
-    inline ccTime getInterval(void) {
-        return m_fInterval;
-    }
-    /** set interval in seconds */
-    inline void setInterval(ccTime fInterval) {
-        m_fInterval = fInterval;
-    }
-
-    /** Initializes a timer with a target and a selector. */
-    bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-
-    /** Initializes a timer with a target, a selector and an interval in seconds. */
-    bool initWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-
-    bool initWithScriptFunc(int refid, ccTime fSeconds);
-
-    /** triggers the timer */
-    void update(ccTime dt);
-
-public:
-    /** Allocates a timer with a target and a selector. */
-    static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector);
-
-    /** Allocates a timer with a script function. */
-    static CCTimer* timerWithScriptFunc(int refid, ccTime fSeconds);
-
-    /** Allocates a timer with a target, a selector and an interval in seconds. */
-    static CCTimer* timerWithTarget(SelectorProtocol *pTarget, SEL_SCHEDULE pfnSelector, ccTime fSeconds);
-
-public:
-    SEL_SCHEDULE m_pfnSelector;
-    ccTime m_fInterval;
-    int m_refID;
-
-protected:
-    SelectorProtocol *m_pTarget;
-    ccTime m_fElapsed;
-};
+    
+class CCArray;
 
 //
 // CCScheduler
@@ -147,7 +93,7 @@ public:
     /** Unschedule the script function
      */
     void unscheduleScriptFunc(int handle);
-
+    void unscheduleScriptFunctions();
 
     void scheduleSelector(SEL_SCHEDULE pfnSelector, SelectorProtocol *pTarget, ccTime fInterval, bool bPaused);
 
@@ -219,7 +165,6 @@ private:
 
     void priorityIn(struct _listEntry **ppList, SelectorProtocol *pTarget, int nPriority, bool bPaused);
     void appendIn(struct _listEntry **ppList, SelectorProtocol *pTarget, bool bPaused);
-    void clearScriptFunctions();
 
 protected:
     ccTime m_fTimeScale;
@@ -240,8 +185,7 @@ protected:
     bool m_bUpdateHashLocked;
 
     // Used for "script function call back with interval"
-    int m_scriptHandleCount;
-    std::map<int, CCSchedulerFuncEntry*> m_scriptFunctions;
+    CCArray* m_scriptFunctions;
 };
 
 } // namespace cocos2d
