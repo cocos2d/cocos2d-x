@@ -17,6 +17,12 @@ TOLUA_API void tolua_prepare_ccobject_table(lua_State* L)
 
 TOLUA_API void tolua_pushusertype_ccobject(lua_State* L, int refid, int* p_refid, void* ptr, const char* type)
 {
+    if (ptr == NULL || p_refid == NULL)
+    {
+        lua_pushnil(L);
+        return;
+    }
+
     if (*p_refid == 0)
     {
         *p_refid = refid;
