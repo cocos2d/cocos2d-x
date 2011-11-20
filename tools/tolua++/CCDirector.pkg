@@ -15,14 +15,12 @@ class CCDirector : public CCObject
     CCScene* getRunningScene(void);
 
     double getAnimationInterval(void);
-    void setAnimationInterval(double dValue);
 
     bool isDisplayFPS(void);
     void setDisplayFPS(bool bDisplayFPS);
 
     bool isRetinaDisplay();
     bool isPaused(void);
-    bool isSendCleanupToScene(void);
     unsigned int getFrames(void);
 
     CCSize getWinSize(void);
@@ -32,20 +30,11 @@ class CCDirector : public CCObject
     CCPoint convertToGL(CCPoint obPoint);
     CCPoint convertToUI(CCPoint obPoint);
 
-    float getZEye(void);
-
     void runWithScene(CCScene *pScene);
     void pushScene(CCScene *pScene);
     void popScene(void);
     void replaceScene(CCScene *pScene);
 
-    void pause(void);
-    void resume(void);
-
-    void drawScene(void);
-    void purgeCachedData(void);
-
-    void setContentScaleFactor(CGFloat scaleFactor);
     CGFloat getContentScaleFactor(void);
 
     int getDeviceOrientation();
