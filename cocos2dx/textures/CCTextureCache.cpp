@@ -157,7 +157,7 @@ void CCTextureCache::addImageAsync(const char *path, SelectorProtocol *target, S
 	texture = m_pTextures->objectForKey(pathKey);
 
 	std::string fullpath = pathKey;
-	if (texture = m_pTextures->objectForKey(pathKey))
+	if ((texture = m_pTextures->objectForKey(pathKey)))
 	{
 		(target->*selector)(texture);
 		return;
