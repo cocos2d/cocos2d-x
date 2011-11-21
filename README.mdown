@@ -35,3 +35,37 @@ Contact us
 [9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
+
+
+
+Lua Support FIX Readme
+------------------
+   * CCScheduler support local function
+   * Support autorelease C++ object
+   * When C++ object deletd set Lua object userdata to nil
+   * Add CCNode:setPosition(x, y), CCNode::getPosition(), huge performance boost
+   * Remove needless class and functions from tolua++ .pkg files, improved performance
+
+**How to use:**
+
+    local scheduler = CCScheduler:sharedScheduler()
+
+    local handle    -- save script callback handle
+
+    local frameCount = 0
+    local function onEnterFrame(dt)
+        print("onEnterFrame:", frameCount)
+        frameCount = frameCount + 1
+        if frameCount >= 60 then
+            -- remove script callback
+            scheduler:unscheduleScriptFunc(handle)
+        end
+    end
+
+    handle = scheduler:scheduleScriptFunc(onEnterFrame, 1.0 / 60, false)
+
+
+**TODO:**
+   * When C++ object deleted, remove Lua object userdata
+   * CCMenuItem support script function
+
