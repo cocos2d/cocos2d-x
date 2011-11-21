@@ -20,6 +20,7 @@
 		50F4144810692EE7002A0D5E /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144310692EE7002A0D5E /* blocks.png */; };
 		50F4144910692EE7002A0D5E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144410692EE7002A0D5E /* Default.png */; };
 		50F4144B10692EE7002A0D5E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F4144610692EE7002A0D5E /* Icon.png */; };
+		AD7C5EEA147518E5008E5647 /* CCThread_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD7C5EE9147518E5008E5647 /* CCThread_ios.mm */; };
 		BF126CF31373EEFC00C4ABC5 /* CCUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = BF126CF21373EEFC00C4ABC5 /* CCUserDefault.h */; };
 		BF126CF51373EF0A00C4ABC5 /* CCUserDefault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF126CF41373EF0A00C4ABC5 /* CCUserDefault.cpp */; };
 		BF151BD612E13A1A00703484 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF151BD512E13A1A00703484 /* HelloWorldScene.cpp */; };
@@ -269,7 +270,6 @@
 		BF836755132878B700F3C033 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364C3132878B500F3C033 /* CCPlatformMacros.h */; };
 		BF836756132878B700F3C033 /* CCStdC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8364C4132878B500F3C033 /* CCStdC.cpp */; };
 		BF836757132878B700F3C033 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364C5132878B500F3C033 /* CCStdC.h */; };
-		BF836758132878B700F3C033 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF8364C6132878B500F3C033 /* CCThread.cpp */; };
 		BF836759132878B700F3C033 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364C7132878B500F3C033 /* CCThread.h */; };
 		BF83675B132878B700F3C033 /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF8364CA132878B500F3C033 /* AccelerometerDelegateWrapper.h */; };
 		BF83675C132878B700F3C033 /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF8364CB132878B500F3C033 /* AccelerometerDelegateWrapper.mm */; };
@@ -378,6 +378,7 @@
 		50F4144310692EE7002A0D5E /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		50F4144410692EE7002A0D5E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		50F4144610692EE7002A0D5E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		AD7C5EE9147518E5008E5647 /* CCThread_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCThread_ios.mm; sourceTree = "<group>"; };
 		BF126CF21373EEFC00C4ABC5 /* CCUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUserDefault.h; sourceTree = "<group>"; };
 		BF126CF41373EF0A00C4ABC5 /* CCUserDefault.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUserDefault.cpp; sourceTree = "<group>"; };
 		BF151BD412E1372A00703484 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
@@ -628,7 +629,6 @@
 		BF8364C3132878B500F3C033 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		BF8364C4132878B500F3C033 /* CCStdC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
 		BF8364C5132878B500F3C033 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		BF8364C6132878B500F3C033 /* CCThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread.cpp; sourceTree = "<group>"; };
 		BF8364C7132878B500F3C033 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		BF8364CA132878B500F3C033 /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
 		BF8364CB132878B500F3C033 /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
@@ -1293,7 +1293,6 @@
 				BF8364C3132878B500F3C033 /* CCPlatformMacros.h */,
 				BF8364C4132878B500F3C033 /* CCStdC.cpp */,
 				BF8364C5132878B500F3C033 /* CCStdC.h */,
-				BF8364C6132878B500F3C033 /* CCThread.cpp */,
 				BF8364C7132878B500F3C033 /* CCThread.h */,
 				BF8364C9132878B500F3C033 /* ios */,
 				BF8364F0132878B500F3C033 /* platform.cpp */,
@@ -1305,6 +1304,7 @@
 		BF8364C9132878B500F3C033 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				AD7C5EE9147518E5008E5647 /* CCThread_ios.mm */,
 				BF1E789913E2519100C2D68B /* FontLabel */,
 				BFA008C21344242B00289DC3 /* CCCommon_ios.mm */,
 				BF8364CA132878B500F3C033 /* AccelerometerDelegateWrapper.h */,
@@ -1815,7 +1815,6 @@
 				BF836742132878B700F3C033 /* CCCommon.cpp in Sources */,
 				BF836747132878B700F3C033 /* CCGL.cpp in Sources */,
 				BF836756132878B700F3C033 /* CCStdC.cpp in Sources */,
-				BF836758132878B700F3C033 /* CCThread.cpp in Sources */,
 				BF83675C132878B700F3C033 /* AccelerometerDelegateWrapper.mm in Sources */,
 				BF83675E132878B700F3C033 /* CCAccelerometer_ios.mm in Sources */,
 				BF836760132878B700F3C033 /* CCApplication_ios.mm in Sources */,
@@ -1875,6 +1874,7 @@
 				BF1E78AC13E2519100C2D68B /* ZAttributedString.m in Sources */,
 				BF1E78AF13E2519100C2D68B /* ZFont.m in Sources */,
 				D4C3D23013F25BAA00192C16 /* CCTexturePVR.cpp in Sources */,
+				AD7C5EEA147518E5008E5647 /* CCThread_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

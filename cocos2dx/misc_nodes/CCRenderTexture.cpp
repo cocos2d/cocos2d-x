@@ -41,8 +41,8 @@ CCRenderTexture::CCRenderTexture()
 , m_uFBO(0)
 , m_nOldFBO(0)
 , m_pTexture(0)
-, m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 , m_pUITextureImage(NULL)
+, m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 {
 }
 

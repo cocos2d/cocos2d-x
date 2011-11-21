@@ -1,11 +1,8 @@
 #include "GLES-Render.h"
 #include "CCGL.h"
-
-
-#include <cstdio>
-#include <cstdarg>
-
-#include <cstring>
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
 
 GLESDebugDraw::GLESDebugDraw()
 	: mRatio( 1.0f )

@@ -82,11 +82,11 @@ typedef struct _hashScriptFuncEntry
 // implementation CCTimer
 
 CCTimer::CCTimer()
-: m_pTarget(NULL)
-, m_scriptFunc("")
+: m_pfnSelector(NULL)
 , m_fInterval(0.0f)
+, m_scriptFunc("")
+, m_pTarget(NULL)
 , m_fElapsed(0.0f)
-, m_pfnSelector(NULL)
 {
 
 }
@@ -569,6 +569,16 @@ void CCScheduler::unscheduleAllSelectors(void)
 	DL_FOREACH_SAFE(m_pUpdatesPosList, pEntry, pTmp)
 	{
         unscheduleUpdateForTarget(pEntry->target);
+	}
+
+	// unschedule all script functions
+	for (tHashScriptFuncEntry *elt = m_pHashForScriptFunctions; elt != NULL; )
+	{
+		tHashScriptFuncEntry *pNextElement = (tHashScriptFuncEntry *)elt->hh.next;
+		elt->timer->release();
+		HASH_DEL(m_pHashForScriptFunctions, elt);
+		free(elt);
+		elt = pNextElement;
 	}
 }
 

@@ -93,7 +93,7 @@ CCPoolManager* CCPoolManager::getInstance()
 CCPoolManager::CCPoolManager()
 {
 	m_pReleasePoolStack = new CCMutableArray<CCAutoreleasePool*>();	
-	m_pCurReleasePool = NULL;
+        m_pCurReleasePool = 0;
 }
 
 CCPoolManager::~CCPoolManager()
@@ -102,7 +102,7 @@ CCPoolManager::~CCPoolManager()
 	finalize();
 
 	// we only release the last autorelease pool here 
-	m_pCurReleasePool = NULL;
+        m_pCurReleasePool = 0;
 	m_pReleasePoolStack->removeObjectAtIndex(0);
 
 	CC_SAFE_DELETE(m_pReleasePoolStack);

@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
+
 typedef std::vector<std::string> strArray;
 
 // string toolkit
