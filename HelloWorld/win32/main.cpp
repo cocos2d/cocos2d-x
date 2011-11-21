@@ -1,6 +1,6 @@
 #include "main.h"
 
-#include "AppDelegate.h"
+#include "../Classes/AppDelegate.h"
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
 					   HINSTANCE hPrevInstance,

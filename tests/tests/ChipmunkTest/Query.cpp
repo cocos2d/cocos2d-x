@@ -24,6 +24,7 @@
 #include <math.h>
 #include <string.h>
 
+#include "CCCommon.h"
 #include "chipmunk.h"
 #include "drawSpace.h"
 #include "ChipmunkDemo.h"

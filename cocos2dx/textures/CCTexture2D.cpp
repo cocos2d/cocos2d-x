@@ -229,8 +229,8 @@ bool CCTexture2D::initWithImage(CCImage * uiImage)
 #if CC_TEXTURE_NPOT_SUPPORT
 	if( conf->isSupportsNPOT() ) 
 	{
-		POTWide = uiimage->getWidth();
-		POTHigh = uiimage->getHeight();
+		POTWide = uiImage->getWidth();
+		POTHigh = uiImage->getHeight();
 	}
 	else 
 #endif

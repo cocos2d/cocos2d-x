@@ -545,7 +545,44 @@ void CCDirector::end()
 {
 	m_bPurgeDirecotorInNextLoop = true;
 }
-	
+
+
+void CCDirector::resetDirector()
+{
+	// don't release the event handlers
+	// They are needed in case the director is run again
+	CCTouchDispatcher::sharedDispatcher()->removeAllDelegates();
+
+    if (m_pRunningScene)
+    {
+    	m_pRunningScene->onExit();
+    	m_pRunningScene->cleanup();
+    	m_pRunningScene->release();
+    }
+    
+	m_pRunningScene = NULL;
+	m_pNextScene = NULL;
+
+	// remove all objects, but don't release it.
+	// runWithScene might be executed after 'end'.
+	m_pobScenesStack->removeAllObjects();
+
+	stopAnimation();
+
+	CC_SAFE_RELEASE_NULL(m_pProjectionDelegate);
+
+	// purge bitmap cache
+	CCLabelBMFont::purgeCachedData();
+
+	// purge all managers
+	CCAnimationCache::purgeSharedAnimationCache();
+ 	CCSpriteFrameCache::purgeSharedSpriteFrameCache();
+	CCActionManager::sharedManager()->purgeSharedManager();
+	CCScheduler::purgeSharedScheduler();
+	CCTextureCache::purgeSharedTextureCache();
+}
+
+
 void CCDirector::purgeDirector()
 {
 	// don't release the event handlers
