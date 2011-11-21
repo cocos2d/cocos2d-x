@@ -331,14 +331,19 @@ namespace cocos2d {
             *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
             fclose(fp);
         } while (0);
-
-        if (! pBuffer && getIsPopupNotify()) 
+        
+        if (! pBuffer)
         {
-            std::string title = "Notification";
-            std::string msg = "Get data from file(";
-            msg.append(pszFileName).append(") failed!");
+            CCLOG("Get data from file(%s) failed!", pszFileName);
+            
+            if (getIsPopupNotify()) 
+            {
+                std::string title = "Notification";
+                std::string msg = "Get data from file(";
+                msg.append(pszFileName).append(") failed!");
 
-            CCMessageBox(msg.c_str(), title.c_str());
+                CCMessageBox(msg.c_str(), title.c_str());
+            }
         }
         return pBuffer;
     }
