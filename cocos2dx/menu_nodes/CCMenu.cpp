@@ -80,8 +80,8 @@ CCMenu* CCMenu::menuWithItem(CCMenuItem* item)
 
 bool CCMenu::init()
 {
-    va_list args;
-        return initWithItems(0, NULL);
+//    va_list args;
+    return initWithItems(0, NULL);
 }
 
 bool CCMenu::initWithItems(CCMenuItem* item, va_list args)
