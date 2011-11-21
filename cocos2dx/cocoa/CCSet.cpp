@@ -128,7 +128,6 @@ CCObject* CCSet::anyObject()
         }
     }
     return 0;
-    return NULL;
 }
 
 } // namespace cocos2d
