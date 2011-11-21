@@ -65,8 +65,8 @@ CCObject::~CCObject(void)
 }
 
 CCObject* CCObject::copy()
-        return copyWithZone(0);
-    return copyWithZone(NULL);
+{
+    return copyWithZone(0);
 }
 
 void CCObject::release(void)
